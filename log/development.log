@@ -1,0 +1,174 @@
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("schema_migrations")
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+Migrating to CreateUsers (20101221145017)
+  [1m[36mSQL (0.6ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101221145017')
+Migrating to AddSessionsTable (20101221145212)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.2ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.2ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20101221145212')[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+
+
+Started GET "/Users" for 127.0.0.1 at 2010-12-21 12:11:06 -0800
+
+ActionController::RoutingError (No route matches "/Users"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/User" for 127.0.0.1 at 2010-12-21 12:11:10 -0800
+
+ActionController::RoutingError (No route matches "/User"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-21 12:11:39 -0800
+
+SyntaxError (/Users/joew/Git/da-bv-rails/app/controllers/application_controller.rb:24: syntax error, unexpected keyword_and, expecting keyword_end
+  and return false 
+     ^):
+  app/controllers/users_controller.rb:1:in `<top (required)>'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.9ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (14.6ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (26.5ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-21 12:11:57 -0800
+
+SyntaxError (/Users/joew/Git/da-bv-rails/app/controllers/application_controller.rb:24: syntax error, unexpected keyword_and, expecting keyword_end
+  and return false 
+     ^):
+  app/controllers/users_controller.rb:1:in `<top (required)>'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.1ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-21 12:12:26 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (46.8ms)
+Completed 200 OK in 125ms (Views: 51.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-21 12:12:31 -0800
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (39.7ms)
+Rendered users/new.html.erb within layouts/application (43.8ms)
+Completed 200 OK in 82ms (Views: 48.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/edit" for 127.0.0.1 at 2010-12-21 12:12:37 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"edit"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 0) LIMIT 1
+Completed   in 9ms
+
+ActiveRecord::RecordNotFound (Couldn't find User with ID=edit):
+  app/controllers/users_controller.rb:17:in `show'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.9ms)
+
+
+Started GET "/users/edit/1" for 127.0.0.1 at 2010-12-21 12:12:45 -0800
+
+ActionController::RoutingError (No route matches "/users/edit/1"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-21 12:15:40 -0800
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 7ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-21 12:15:41 -0800
+
+SyntaxError (/Users/joew/Git/da-bv-rails/app/controllers/sessions_controller.rb:2: syntax error, unexpected modifier_if, expecting ';' or '\n'
+  def create if user = User.authenticate(par...
+               ^
+/Users/joew/Git/da-bv-rails/app/controllers/sessions_controller.rb:8: syntax error, unexpected keyword_end, expecting $end):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.6ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-21 12:16:35 -0800
+
+SyntaxError (/Users/joew/Git/da-bv-rails/app/controllers/sessions_controller.rb:2: syntax error, unexpected modifier_if, expecting ';' or '\n'
+  def create if 
+               ^
+/Users/joew/Git/da-bv-rails/app/controllers/sessions_controller.rb:9: syntax error, unexpected keyword_end, expecting $end):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-21 12:17:20 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 8ms (Views: 7.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-21 12:17:31 -0800
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (9.4ms)
+Rendered users/new.html.erb within layouts/application (13.3ms)
+Completed 200 OK in 26ms (Views: 17.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-21 12:17:35 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (31.5ms)
+Completed 200 OK in 43ms (Views: 35.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-21 12:17:39 -0800
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (7.2ms)
+Rendered users/new.html.erb within layouts/application (11.3ms)
+Completed 200 OK in 24ms (Views: 15.5ms | ActiveRecord: 0.6ms)
