@@ -28,4 +28,3 @@ Bv::Application.configure do
     require_dependency File.join("app","models","#{c}.rb")
   end
 end
-
