@@ -1,0 +1,2 @@
+class SwtorCharacter < Character
+end

@@ -1,0 +1,37 @@
+<%= form_for @character, :as => :character, :url => game_character_path, :html => {:method => :put} do |f| %>
+  <% if @character.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:</h2>
+
+      <ul>
+      <% @character.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :rank %><br />
+    <%= f.text_field :rank %>
+  </div>
+  <div class="field">
+    <%= f.label :faction %><br />
+    <%= f.text_field :faction %>
+  </div>
+  <div class="field">
+    <%= f.label :race %><br />
+    <%= f.text_field :race %>
+  </div>
+  <div class="field">
+    <%= f.label "Class" %><br />
+    <%= f.text_field :klass %>
+  </div>  
+  <div class="actions">
+    <%= submit_or_cancel(f) %>
+  </div>
+<% end %>

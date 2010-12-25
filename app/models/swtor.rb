@@ -1,0 +1,2 @@
+class Swtor < Game
+end

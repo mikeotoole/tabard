@@ -1,0 +1,25 @@
+<%= form_for([@game, @game.characters.new]) do |f| %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :rank %><br />
+    <%= f.text_field :rank %>
+  </div>
+  <div class="field">
+    <%= f.label :faction %><br />
+    <%= f.text_field :faction %>
+  </div>
+  <div class="field">
+    <%= f.label :race %><br />
+    <%= f.text_field :race %>
+  </div>
+  <div class="field">
+    <%= f.label "Class" %><br />
+    <%= f.text_field :klass %>
+  </div>  
+  <div class="actions">
+    <%= f.submit 'Add' %>
+  </div>
+<% end %>
