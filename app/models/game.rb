@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
  has_many :characters, :dependent => :destroy
+ has_many :game_profiles, :dependent => :destroy
  
  validates_presence_of :name
  

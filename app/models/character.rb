@@ -1,5 +1,6 @@
 class Character < ActiveRecord::Base
  belongs_to :game
+ belongs_to :game_profile
  
  validates_presence_of :name
  

@@ -7243,3 +7243,1133 @@ Rendered characters/_character.html.erb (1.9ms)
 Rendered characters/new.html.erb (30.5ms)
 Rendered games/show.html.erb within layouts/application (67.1ms)
 Completed 200 OK in 72ms (Views: 69.3ms | ActiveRecord: 3.9ms)
+  [1m[36mSQL (0.9ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.4ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.1ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.0ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (2.6ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (2.6ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.8ms)[0m  CREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (2.9ms)[0m  CREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (2.5ms)[0m  [1mCREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.0ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (2.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("schema_migrations")
+  [1m[36mSQL (3.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (3.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225041158')
+  [1m[36mSQL (3.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101221145017')[0m
+  [1m[35mSQL (3.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101221145212')
+  [1m[36mSQL (3.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224000720')[0m
+  [1m[35mSQL (4.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224000802')
+  [1m[36mSQL (3.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224072524')[0m
+  [1m[35mSQL (3.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224072550')
+  [1m[36mSQL (2.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225002140')[0m
+  [1m[35mSQL (2.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225002345')
+  [1m[36mSQL (4.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225020855')[0m
+  [1m[35mSQL (2.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225021019')
+  [1m[36mSQL (3.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225025103')[0m
+  [1m[35mSQL (3.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225032452')
+  [1m[36mSQL (3.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225040424')[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:09:09 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (35.3ms)
+Completed 200 OK in 50ms (Views: 38.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:09:18 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered users/show.html.erb within layouts/application (58.9ms)
+Completed 200 OK in 74ms (Views: 61.6ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-24 23:09:25 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 10ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:09:25 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 18ms (Views: 17.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:09:29 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/show.html.erb within layouts/application (15.0ms)
+Completed 200 OK in 60ms (Views: 18.2ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-24 23:10:32 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 10ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:10:32 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (14.6ms)
+Completed 200 OK in 18ms (Views: 17.7ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:10:34 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered users/show.html.erb within layouts/application (16.1ms)
+Completed 200 OK in 60ms (Views: 19.2ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:10:38 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (8.1ms)
+Completed 200 OK in 23ms (Views: 11.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:10:39 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (15.5ms)
+Completed 200 OK in 19ms (Views: 18.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:10:42 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 52ms (Views: 13.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:10:49 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (16.6ms)
+Completed 200 OK in 20ms (Views: 19.7ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-24 23:10:54 -0700
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"majqMunUlC0XDQ76uMLnzaLkyVqnOf6YCahP+dRG368=", "email"=>"joew@timjoe.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."email" = 'joew@timjoe.com') LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 17ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:10:54 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (16.5ms)
+Completed 200 OK in 61ms (Views: 19.3ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-24 23:11:01 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Rendered users/_form.html.erb (6.9ms)
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/edit.html.erb within layouts/application (15.7ms)
+Completed 200 OK in 59ms (Views: 18.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-24 23:11:04 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (44.1ms)
+Completed 200 OK in 57ms (Views: 46.8ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:11:06 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (16.8ms)
+Completed 200 OK in 33ms (Views: 19.7ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-24 23:11:08 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (9.2ms)
+Completed 200 OK in 32ms (Views: 12.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/profiles/2/edit" for 127.0.0.1 at 2010-12-24 23:11:13 -0700
+  Processing by ProfilesController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1[0m
+Rendered profiles/_form.html.erb (2.5ms)
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/edit.html.erb within layouts/application (12.2ms)
+Completed 200 OK in 30ms (Views: 15.4ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/profiles/2" for 127.0.0.1 at 2010-12-24 23:11:16 -0700
+  Processing by ProfilesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"majqMunUlC0XDQ76uMLnzaLkyVqnOf6YCahP+dRG368=", "profile"=>{"name"=>"My user profile"}, "commit"=>"Update Profile", "id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+Redirected to http://localhost:3000/profiles/2
+Completed 302 Found in 45ms
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-24 23:11:16 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (9.2ms)
+Completed 200 OK in 28ms (Views: 12.2ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:11:17 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (14.5ms)
+Completed 200 OK in 32ms (Views: 18.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-24 23:11:35 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 26ms (Views: 12.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:11:37 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 29ms (Views: 14.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/profiles/3" for 127.0.0.1 at 2010-12-24 23:11:38 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 3) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 55ms (Views: 12.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:11:43 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (40.1ms)
+Completed 200 OK in 58ms (Views: 43.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-24 23:11:56 -0700
+  Processing by ProfilesController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/new.html.erb within layouts/application (11.6ms)
+Completed 200 OK in 33ms (Views: 14.6ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-24 23:12:11 -0700
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"majqMunUlC0XDQ76uMLnzaLkyVqnOf6YCahP+dRG368=", "profile"=>{"type_helper"=>"GameProfile", "name"=>"My test profile"}, "commit"=>"Create Profile"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id") VALUES ('My test profile', '2010-12-25 06:12:11.375550', '2010-12-25 06:12:11.375550', 'GameProfile', 1)
+Redirected to http://localhost:3000/profiles/4
+Completed 302 Found in 23ms
+
+
+Started GET "/profiles/4" for 127.0.0.1 at 2010-12-24 23:12:11 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 4) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (9.4ms)
+Completed 200 OK in 27ms (Views: 12.4ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:12:20 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (12.2ms)
+Completed 200 OK in 57ms (Views: 15.1ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles/4/edit" for 127.0.0.1 at 2010-12-24 23:12:23 -0700
+  Processing by ProfilesController#edit as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 4) LIMIT 1
+Rendered profiles/_form.html.erb (2.6ms)
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/edit.html.erb within layouts/application (14.4ms)
+Completed 200 OK in 61ms (Views: 17.6ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:12:24 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (43.5ms)
+Completed 200 OK in 60ms (Views: 46.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/profiles/4" for 127.0.0.1 at 2010-12-24 23:12:26 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 4) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (8.6ms)
+Completed 200 OK in 26ms (Views: 11.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-24 23:12:29 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (12.2ms)
+Completed 200 OK in 30ms (Views: 15.0ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:22:00 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (16.0ms)
+Completed 200 OK in 30ms (Views: 18.7ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/logout" for 127.0.0.1 at 2010-12-24 23:22:03 -0700
+  Processing by SessionsController#destroy as HTML
+Redirected to http://localhost:3000/
+Completed 302 Found in 32ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:22:03 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (8.7ms)
+Completed 200 OK in 22ms (Views: 11.9ms | ActiveRecord: 2.1ms)
+  [1m[36mSQL (1.4ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.1ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.1ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (2.0ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "profiles"
+  [1m[36mSQL (1.1ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.1ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "users"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+  [1m[35mSQL (0.0ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.5ms)[0m  [1mALTER TABLE "characters" ADD "game_profile_id" integer[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101225061826')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (0.7ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.1ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.1ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "profiles"
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.1ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.2ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.1ms)[0m  DROP TABLE "users"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:25:34 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 18ms (Views: 6.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-24 23:25:36 -0700
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (6.1ms)
+Rendered users/new.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 51ms (Views: 13.0ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2010-12-24 23:25:45 -0700
+  Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2Ou1xlJFkYB7Raa1rCrpimSZklI49+NBV7XylZcprqE=", "user"=>{"email"=>"test", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'test') LIMIT 1
+Rendered users/_form.html.erb (4.8ms)
+Rendered users/new.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 79ms (Views: 11.1ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2010-12-24 23:25:56 -0700
+  Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2Ou1xlJFkYB7Raa1rCrpimSZklI49+NBV7XylZcprqE=", "user"=>{"email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('mpotoole@gmail.com', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', '2010-12-25 06:25:56.594529', '2010-12-25 06:25:56.594529')
+Redirected to http://localhost:3000/users/1
+Completed 302 Found in 54ms
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:25:56 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/show.html.erb within layouts/application (13.7ms)
+Completed 200 OK in 70ms (Views: 58.1ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-24 23:27:09 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (9.0ms)
+Completed 200 OK in 23ms (Views: 12.4ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:27:10 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/show.html.erb within layouts/application (13.7ms)
+Completed 200 OK in 30ms (Views: 18.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-24 23:27:16 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (8.2ms)
+Completed 200 OK in 25ms (Views: 11.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-24 23:27:18 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 38ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:27:18 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 18ms (Views: 18.0ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-24 23:27:28 -0700
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2Ou1xlJFkYB7Raa1rCrpimSZklI49+NBV7XylZcprqE=", "email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 17ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:27:29 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (48.9ms)
+Completed   in 64ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb__3473584848098393971_2151866660__1082854835505038237'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.6ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:27:51 -0700
+  Processing by SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered sessions/new.html.erb within layouts/application (50.8ms)
+Completed   in 54ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb__3473584848098393971_2152778000__1082854835505038237'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-24 23:27:52 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (14.8ms)
+Completed   in 28ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb__3473584848098393971_2159423420__1082854835505038237'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.6ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2010-12-24 23:27:54 -0700
+  Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2Ou1xlJFkYB7Raa1rCrpimSZklI49+NBV7XylZcprqE=", "user"=>{"email"=>"test", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'test') LIMIT 1
+Rendered users/_form.html.erb (5.8ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/new.html.erb within layouts/application (14.0ms)
+Completed   in 37ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb__3473584848098393971_2158047060__1082854835505038237'
+  app/controllers/users_controller.rb:51:in `block (2 levels) in create'
+  app/controllers/users_controller.rb:46:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (33.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (37.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:27:58 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (14.2ms)
+Completed   in 31ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb__3473584848098393971_2153884460__1082854835505038237'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:28:17 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (37.6ms)
+Completed   in 55ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb___3765516891289888073_2181736700__3105801717952266158'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.0ms)
+  [1m[36mSQL (0.8ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (4.1ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "profiles"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.9ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "users"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:29:21 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 17ms (Views: 6.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-24 23:29:23 -0700
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (7.9ms)
+Rendered users/new.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 52ms (Views: 14.6ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2010-12-24 23:29:32 -0700
+  Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"heecdVlOITDepIWCybUP2fZEWnF2nOuK3fa7KD07cic=", "user"=>{"email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('mpotoole@gmail.com', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', '2010-12-25 06:29:32.871970', '2010-12-25 06:29:32.871970')
+Redirected to http://localhost:3000/users/1
+Completed 302 Found in 58ms
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-24 23:29:32 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.1ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/show.html.erb within layouts/application (20.8ms)
+Completed 200 OK in 39ms (Views: 24.1ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-24 23:29:41 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 36ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:29:41 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (15.0ms)
+Completed 200 OK in 19ms (Views: 18.9ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:29:44 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (13.6ms)
+Completed 200 OK in 17ms (Views: 16.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:29:45 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (8.1ms)
+Completed 200 OK in 24ms (Views: 11.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-24 23:29:48 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 11ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:29:48 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (42.6ms)
+Completed 200 OK in 46ms (Views: 46.2ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:29:50 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (8.7ms)
+Completed 200 OK in 23ms (Views: 12.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-24 23:29:52 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+Redirected to http://localhost:3000/login
+Completed 302 Found in 10ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-24 23:29:52 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (15.0ms)
+Completed 200 OK in 19ms (Views: 18.2ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-24 23:30:03 -0700
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"heecdVlOITDepIWCybUP2fZEWnF2nOuK3fa7KD07cic=", "email"=>"mpotoole@gamil.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'mpotoole@gamil.com') LIMIT 1
+Rendered sessions/new.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 21ms (Views: 6.1ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-24 23:30:17 -0700
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"heecdVlOITDepIWCybUP2fZEWnF2nOuK3fa7KD07cic=", "email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 42ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-24 23:30:17 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (14.5ms)
+Completed   in 29ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb___3765516891289888073_2159771980__3105801717952266158'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.2ms)
+  [1m[36mProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users"
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 23:33:01 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (25.5ms)
+Completed   in 30ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb___3765516891289888073_2168705960__3105801717952266158'
+  app/controllers/games_controller.rb:7:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.6ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 23:33:05 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (26.9ms)
+Completed   in 31ms
+
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    12:   <h1><%= link_to "BV", root_path %></h1> 
+    13:   <div id="user_bar">
+    14:     <% if logged_in? %> 
+    15:       Hello, <%= current_user.user_profile.name %>
+    16:       <%= link_to "Edit User", edit_user_path(current_user) %> | 
+    17:       <%= link_to "Logout", logout_path %>
+    18:     <% else %> 
+  app/views/layouts/application.html.erb:15:in `_app_views_layouts_application_html_erb___3765516891289888073_2168736220__3105801717952266158'
+  app/controllers/games_controller.rb:7:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 23:34:29 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 6ms (Views: 5.6ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 23:34:34 -0700
+  Processing by GamesController#new as HTML
+Rendered games/_form.html.erb (6.8ms)
+Rendered games/new.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 15ms (Views: 12.8ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 23:34:44 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"heecdVlOITDepIWCybUP2fZEWnF2nOuK3fa7KD07cic=", "game"=>{"type_helper"=>"Swtor", "name"=>"Star Wars", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('Star Wars', '2010-12-25 06:34:44.769943', '2010-12-25 06:34:44.769943', 'Swtor', NULL, 't')
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 10ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 23:34:44 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (17.7ms)
+Rendered games/show.html.erb within layouts/application (29.8ms)
+Completed 200 OK in 34ms (Views: 32.8ms | ActiveRecord: 2.6ms)
+
+
+Started POST "/games/1/characters" for 127.0.0.1 at 2010-12-24 23:34:55 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"heecdVlOITDepIWCybUP2fZEWnF2nOuK3fa7KD07cic=", "character"=>{"name"=>"Star Wars Character", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Star Wars Character', '2010-12-25 06:34:55.288015', '2010-12-25 06:34:55.288015', 'SwtorCharacter', '', '', '', NULL, NULL, NULL, NULL)
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 22ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 23:34:55 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (2.3ms)
+  [1m[35mCharacter Load (32.9ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (2.4ms)
+Rendered characters/new.html.erb (4.4ms)
+Rendered games/show.html.erb within layouts/application (57.0ms)
+Completed 200 OK in 61ms (Views: 27.3ms | ActiveRecord: 35.7ms)
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+  [1m[35mSQL (0.0ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.5ms)[0m  [1mALTER TABLE "profiles" ADD "game_id" integer[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101225064758')
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 23:53:08 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.3ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 1.0ms)

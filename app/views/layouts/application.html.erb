@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<% if false %>
 <div id="header"> 
   <h1><%= link_to "BV", root_path %></h1> 
   <div id="user_bar">
@@ -20,6 +21,7 @@
     <% end %> 
   </div>
 </div>
+<% end %>
 	
 <%= content_tag :p, notice, :class => 'notice' if notice.present? %> 
 <%= content_tag :p, alert, :class => 'alert' if alert.present? %>
