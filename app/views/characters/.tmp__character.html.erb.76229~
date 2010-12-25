@@ -1,0 +1,11 @@
+<%= div_for character do %>
+  <h3>
+    <%= link_to character.name, character %>
+	<% if character.owned_by? current_user %>
+      	<span class='actions'>
+        	<%= link_to "Edit", edit_character_path(character) %>
+        	<%= link_to "Delete", character, :confirm => "Are you sure?", :method => :delete %>
+      	</span>
+	<% end %>	
+  </h3>
+<% end %>

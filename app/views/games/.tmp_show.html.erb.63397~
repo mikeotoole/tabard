@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @game.name %>
+</p>
+<%= link_to 'Edit', edit_game_path(@game) %>
+
+<h3>Characters</h3>
+<div id="characters">
+  <%= render @game.characters %>
+</div>
+
+<%= render :file => 'characters/new' %>
+<br/>
+
+<%= link_to 'Back', games_path %>

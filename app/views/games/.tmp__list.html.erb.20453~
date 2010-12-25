@@ -1,0 +1,11 @@
+<%= div_for list do %>
+  <h3>
+    <%= link_to list.name, list %>
+	<% if list.owned_by? current_user %>
+      	<span class='actions'>
+        	<%= link_to "Edit", edit_list_path(list) %>
+        	<%= link_to "Delete", list, :confirm => "Are you sure?", :method => :delete %>
+      	</span>
+	<% end %>	
+  </h3>
+<% end %>

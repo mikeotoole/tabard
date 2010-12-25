@@ -1,0 +1,13 @@
+<%= form_for([@game, @game.characters.new]) do |f| %>
+  <div class="field">
+    <%= f.label "Game" %><br />
+    <%= f.text_field :game_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.check_box :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Add' %>
+  </div>
+<% end %>
