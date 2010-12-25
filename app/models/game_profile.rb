@@ -1,0 +1,2 @@
+class GameProfile < Profile
+end

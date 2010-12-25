@@ -1,4 +1,11 @@
 Bv::Application.routes.draw do
+  root :to => "users#index"
+  resources :profiles
+
+  resources :permissions
+
+  resources :roles
+
   resources :users
   resource :session
   match '/login' => "sessions#new", :as => "login"

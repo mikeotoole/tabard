@@ -1,0 +1,2 @@
+class UserProfile < Profile
+end

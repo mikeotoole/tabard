@@ -5,11 +5,19 @@
   <%= @user.email %>
 </p>
 
-<p>
-  <b>Password:</b>
-  <%= @user.password %>
-</p>
+<div>
+  <h3>User Profile</h3>
+  <%= link_to "Show", profile_path(@user.user_profile) %>
+</div>
 
+<div>
+  <h3>Game Profiles</h3>
+  <ul>
+    <% @user.game_profiles.each do |gprof| %>
+      <li><%= link_to "Show", profile_path(gprof) %></li>
+    <% end %>
+  </ul>
+</div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
