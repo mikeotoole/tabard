@@ -3693,3 +3693,1978 @@ Started GET "/games" for 127.0.0.1 at 2010-12-24 18:30:17 -0700
   [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games"
 Rendered games/index.html.erb within layouts/application (5.6ms)
 Completed 200 OK in 11ms (Views: 9.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 18:33:53 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (1.1ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (19.4ms)
+Completed 200 OK in 79ms (Views: 23.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 18:33:55 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mSQL (0.6ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.1ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (2.0ms)
+Rendered characters/new.html.erb (5.9ms)
+Rendered games/show.html.erb within layouts/application (64.4ms)
+Completed 200 OK in 76ms (Views: 68.2ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 18:35:09 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (5.4ms)
+Rendered characters/edit.html.erb within layouts/application (22.3ms)
+Completed   in 31ms
+
+ActionView::Template::Error (undefined method `character_path' for #<#<Class:0x00000100ceddc0>:0x00000100cea0d0>):
+    2: 
+    3: <%= render 'form' %>
+    4: 
+    5: <%= link_to 'Show', @character %> |
+    6: <%= link_to 'Back', characters_path %>
+  app/views/characters/edit.html.erb:5:in `_app_views_characters_edit_html_erb__156301833870960261_2154249240_2365574291164188038'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.2ms)
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.1ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225002345')[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224000720')
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224000802')[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224072524')
+  [1m[36mSQL (0.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224072550')[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225002140')
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 20:44:20 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.8ms)
+Rendered characters/edit.html.erb within layouts/application (11.6ms)
+Completed   in 17ms
+
+ActionView::Template::Error (undefined method `character_path' for #<#<Class:0x00000102b98a18>:0x00000102b92140>):
+    2: 
+    3: <%= render 'form' %>
+    4: 
+    5: <%= link_to 'Show', @character %> |
+    6: <%= link_to 'Back', characters_path %>
+  app/views/characters/edit.html.erb:5:in `_app_views_characters_edit_html_erb__156301833870960261_2170320460_2365574291164188038'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.3ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:44:22 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.9ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (13.4ms)
+Completed 200 OK in 18ms (Views: 15.5ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 20:44:23 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 9ms (Views: 7.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:44:46 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/show.html.erb within layouts/application (18.0ms)
+Completed   in 86ms
+
+ActionView::Template::Error (Missing partial swtors/swtor with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/mpotoole/digitalAugment Inc/Development/git/da-bv-rails/app/views"):
+    1: <%= render @game %>
+    2: 
+    3: <h3>Characters:</h3>
+    4: <div id="characters">
+  app/views/games/show.html.erb:1:in `_app_views_games_show_html_erb___4065528483682401238_2181417780_2398385987506982819'
+  app/controllers/games_controller.rb:18:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.3ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (8.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:45:40 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/show.html.erb within layouts/application (1.5ms)
+Completed   in 6ms
+
+ActionView::Template::Error (Missing partial swtors/swtor with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/mpotoole/digitalAugment Inc/Development/git/da-bv-rails/app/views"):
+    1: <%= render @game %>
+    2: 
+    3: <h3>Characters:</h3>
+    4: <div id="characters">
+  app/views/games/show.html.erb:1:in `_app_views_games_show_html_erb___4065528483682401238_2155492340_2398385987506982819'
+  app/controllers/games_controller.rb:18:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.2ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:45:50 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.8ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.8ms)
+Rendered characters/new.html.erb (5.5ms)
+Rendered games/show.html.erb within layouts/application (46.6ms)
+Completed 200 OK in 110ms (Views: 48.6ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 20:45:54 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.7ms)
+Rendered characters/edit.html.erb within layouts/application (21.4ms)
+Completed   in 53ms
+
+ActionView::Template::Error (undefined method `character_path' for #<#<Class:0x00000104045510>:0x000001040432d8>):
+    2: 
+    3: <%= render 'form' %>
+    4: 
+    5: <%= link_to 'Show', @character %> |
+    6: <%= link_to 'Back', characters_path %>
+  app/views/characters/edit.html.erb:5:in `_app_views_characters_edit_html_erb__3921255462040060082_2181172720__4322827393900175377'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.6ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:46:20 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.7ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (3.4ms)
+Rendered games/show.html.erb within layouts/application (13.0ms)
+Completed 200 OK in 18ms (Views: 15.8ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 20:47:43 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (17.6ms)
+Rendered characters/edit.html.erb within layouts/application (35.9ms)
+Completed   in 98ms
+
+ActionView::Template::Error (undefined method `character_path' for #<#<Class:0x000001016514e8>:0x0000010164f0d0>):
+    2: 
+    3: <%= render 'form' %>
+    4: 
+    5: <%= link_to 'Show', @character %> |
+    6: <%= link_to 'Back', characters_path %>
+  app/views/characters/edit.html.erb:5:in `_app_views_characters_edit_html_erb__2271651248099911089_2159164420__920913211218238483'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.4ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 20:48:12 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (4.0ms)
+Rendered characters/edit.html.erb within layouts/application (6.9ms)
+Completed 200 OK in 12ms (Views: 10.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 20:49:18 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.9ms)
+Rendered characters/edit.html.erb within layouts/application (6.7ms)
+Completed 200 OK in 12ms (Views: 10.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:49:22 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.3ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.9ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (3.6ms)
+Rendered games/show.html.erb within layouts/application (58.0ms)
+Completed 200 OK in 67ms (Views: 60.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 20:49:27 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.9ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (10.3ms)
+Completed 200 OK in 15ms (Views: 13.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:49:30 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.4ms)
+Rendered characters/new.html.erb (4.3ms)
+Rendered games/show.html.erb within layouts/application (14.4ms)
+Completed 200 OK in 20ms (Views: 16.9ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 20:49:38 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.9ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (6.4ms)
+Completed 200 OK in 12ms (Views: 10.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 20:49:49 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mCharacter Load (1.3ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (13.3ms)
+Completed 200 OK in 19ms (Views: 15.3ms | ActiveRecord: 2.0ms)
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.3ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225002345')[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224000720')
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224000802')[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224072524')
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224072550')[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225002140')
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 20:53:57 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.9ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 9ms (Views: 7.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 20:56:09 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (7.1ms)
+Rendered games/new.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 14ms (Views: 13.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:10:04 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (1.2ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 11ms (Views: 8.6ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:10:35 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (2.1ms)
+  [1m[36mCharacter Load (1.3ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.7ms)
+Rendered characters/new.html.erb (5.9ms)
+Rendered games/show.html.erb within layouts/application (51.4ms)
+Completed 200 OK in 119ms (Views: 53.6ms | ActiveRecord: 2.4ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:10:45 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test SWTOR", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 2ms
+
+NoMethodError (undefined method `character' for #<Swtor:0x0000010290c3f8>):
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:11:35 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.8ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.9ms)
+Rendered characters/new.html.erb (4.0ms)
+Rendered games/show.html.erb within layouts/application (14.6ms)
+Completed 200 OK in 20ms (Views: 16.9ms | ActiveRecord: 1.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:11:36 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test SWTOR", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Completed   in 4ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:13:18 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.8ms)
+  [1m[36mCharacter Load (1.1ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (2.3ms)
+Rendered characters/new.html.erb (4.8ms)
+Rendered games/show.html.erb within layouts/application (16.3ms)
+Completed 200 OK in 21ms (Views: 18.4ms | ActiveRecord: 1.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:13:20 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test SWTOR", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 4ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:13:24 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.9ms)
+  [1m[35mCharacter Load (1.4ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.7ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (15.4ms)
+Completed 200 OK in 21ms (Views: 17.8ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:15:04 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (1.1ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (22.2ms)
+Completed 200 OK in 94ms (Views: 26.0ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:15:08 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.6ms)
+  [1m[35mCharacter Load (1.3ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (2.0ms)
+Rendered characters/new.html.erb (5.9ms)
+Rendered games/show.html.erb within layouts/application (69.2ms)
+Completed 200 OK in 76ms (Views: 71.0ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:15:18 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"test swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Completed   in 4ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.7ms)
+  [1m[36mGame Load (1.0ms)[0m  [1mSELECT "games".* FROM "games"[0m
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:19:06 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.6ms)
+  [1m[36mCharacter Load (1.1ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (13.0ms)
+Completed 200 OK in 44ms (Views: 40.8ms | ActiveRecord: 1.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:19:08 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"test swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 3ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.1ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:19:14 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (1.0ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.9ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.8ms)
+Rendered characters/new.html.erb (3.4ms)
+Rendered games/show.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 20ms (Views: 16.4ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:19:14 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 9ms (Views: 7.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:19:39 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (1.3ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.7ms)
+Rendered characters/new.html.erb (6.2ms)
+Rendered games/show.html.erb within layouts/application (46.0ms)
+Completed 200 OK in 108ms (Views: 47.8ms | ActiveRecord: 2.2ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:20:05 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"SWTOR PC", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 3ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.3ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:20:41 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (1.1ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.5ms)
+  [1m[35mCharacter Load (1.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.5ms)
+Rendered characters/new.html.erb (4.2ms)
+Rendered games/show.html.erb within layouts/application (16.3ms)
+Completed 200 OK in 24ms (Views: 20.2ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:20:42 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"SWTOR PC", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Completed   in 35ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:20:54 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.9ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.1ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (12.7ms)
+Completed 200 OK in 18ms (Views: 14.6ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:20:55 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (10.7ms)
+Completed 200 OK in 16ms (Views: 14.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:20:58 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.4ms)
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (2.0ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 18ms (Views: 15.9ms | ActiveRecord: 1.7ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:21:03 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Completed   in 3ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:21:24 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (1.1ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.7ms)
+Rendered characters/new.html.erb (4.2ms)
+Rendered games/show.html.erb within layouts/application (40.4ms)
+Completed 200 OK in 45ms (Views: 42.7ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:21:29 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.3ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.4ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (12.8ms)
+Completed 200 OK in 18ms (Views: 14.8ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:22:32 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:22:53 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (6.1ms)
+Rendered games/show.html.erb within layouts/application (50.9ms)
+Completed 200 OK in 118ms (Views: 54.8ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:22:59 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 2ms
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.<<):
+  app/models/character.rb:26:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:23:57 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.4ms)
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.4ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (12.7ms)
+Completed 200 OK in 18ms (Views: 14.8ms | ActiveRecord: 1.6ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:23:58 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.9ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Completed   in 2ms
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.<<):
+  app/models/character.rb:26:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.6ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:24:02 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (2.3ms)
+Rendered characters/new.html.erb (4.7ms)
+Rendered games/show.html.erb within layouts/application (16.1ms)
+Completed 200 OK in 21ms (Views: 18.3ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:24:12 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 77ms
+
+NameError (uninitialized constant Game_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.5ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:24:35 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (2.0ms)
+  [1m[36mCharacter Load (1.4ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.7ms)
+Rendered characters/new.html.erb (7.8ms)
+Rendered games/show.html.erb within layouts/application (49.3ms)
+Completed 200 OK in 114ms (Views: 51.0ms | ActiveRecord: 2.4ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:24:38 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 5ms
+
+LoadError (Expected /Users/mpotoole/digitalAugment Inc/Development/git/da-bv-rails/app/models/swtor_character.rb to define Swtor_character):
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.5ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:25:18 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.8ms)
+  [1m[36mCharacter Load (1.1ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (5.5ms)
+Rendered games/show.html.erb within layouts/application (54.2ms)
+Completed 200 OK in 126ms (Views: 56.4ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:25:20 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Completed   in 8ms
+
+ActiveRecord::UnknownAttributeError (unknown attribute: game_type):
+  app/models/character.rb:28:in `new'
+  app/models/character.rb:28:in `factory'
+  app/controllers/characters_controller.rb:44:in `create'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.7ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:27:48 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.8ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (5.5ms)
+Rendered games/show.html.erb within layouts/application (51.7ms)
+Completed 200 OK in 114ms (Views: 53.7ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:27:50 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (NULL, 'swtor pc', '2010-12-25 04:27:50.673750', '2010-12-25 04:27:50.673750', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 23ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:27:50 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.2ms)
+Rendered characters/new.html.erb (3.6ms)
+Rendered games/show.html.erb within layouts/application (12.2ms)
+Completed 200 OK in 17ms (Views: 14.2ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:28:05 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (NULL, 'swtor pc', '2010-12-25 04:28:05.867052', '2010-12-25 04:28:05.867052', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 43ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:28:05 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (2.3ms)
+  [1m[36mCharacter Load (1.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.4ms)
+Rendered characters/new.html.erb (3.8ms)
+Rendered games/show.html.erb within layouts/application (14.5ms)
+Completed 200 OK in 19ms (Views: 16.4ms | ActiveRecord: 3.0ms)
+  [1m[35mCharacter Load (1.5ms)[0m  SELECT "characters".* FROM "characters"
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:30:44 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"New swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (NULL, 'New swtor pc', '2010-12-25 04:30:45.333404', '2010-12-25 04:30:45.333404', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 149ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:30:45 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (1.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered characters/_character.html.erb (20.6ms)
+Rendered games/show.html.erb within layouts/application (37.2ms)
+Completed   in 45ms
+
+ActionView::Template::Error (undefined method `character_character_path' for #<#<Class:0x00000102964030>:0x0000010295d258>):
+    3:     <%= character.name %>
+    4:       <span class='actions'>
+    5:    		<%= link_to( 'Edit', edit_game_character_path(@game, character)) %>
+    6:        	<%= link_to( 'Delete', [@game, character], :confirm => 'Are you sure?', :method => :delete) %>
+    7:       </span>
+    8:   </h3>
+    9: <% end %>
+  app/views/characters/_character.html.erb:6:in `block in _app_views_characters__character_html_erb___300858314994645221_2168460780_3365382766979862201'
+  app/views/characters/_character.html.erb:1:in `_app_views_characters__character_html_erb___300858314994645221_2168460780_3365382766979862201'
+  app/views/games/show.html.erb:1:in `_app_views_games_show_html_erb__3166594358878283790_2169162780__3614676206006093556'
+  app/controllers/games_controller.rb:18:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.8ms)
+  [1m[36mCharacter Load (2.4ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+
+
+Started GET "/gamees" for 127.0.0.1 at 2010-12-24 21:33:28 -0700
+
+ActionController::RoutingError (No route matches "/gamees"):
+  
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:33:30 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (1.0ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (19.4ms)
+Completed 200 OK in 81ms (Views: 22.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:33:33 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.4ms)
+  [1m[35mCharacter Load (1.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (5.4ms)
+Rendered games/show.html.erb within layouts/application (61.5ms)
+Completed 200 OK in 69ms (Views: 63.5ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:33:39 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (3.8ms)
+Rendered characters/edit.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 17ms (Views: 10.2ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:33:40 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (1.1ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mUPDATE "characters" SET "faction" = '', "race" = '', "klass" = '', "updated_at" = '2010-12-25 04:33:40.984657' WHERE ("characters"."id" = 2)[0m
+Redirected to 
+Completed   in 10ms
+
+NoMethodError (undefined method `character_url' for #<CharactersController:0x00000100a114f8>):
+  app/controllers/characters_controller.rb:64:in `block (2 levels) in update'
+  app/controllers/characters_controller.rb:62:in `update'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.8ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:34:15 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.9ms)
+Rendered characters/edit.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 14ms (Views: 11.8ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:34:25 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.8ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (6.4ms)
+Rendered games/show.html.erb within layouts/application (45.9ms)
+Completed 200 OK in 108ms (Views: 48.8ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:34:27 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.5ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (4.4ms)
+Rendered characters/edit.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 15ms (Views: 10.4ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:34:31 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.9ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Redirected to 
+Completed   in 5ms
+
+NoMethodError (undefined method `character_url' for #<CharactersController:0x00000101afc380>):
+  app/controllers/characters_controller.rb:64:in `block (2 levels) in update'
+  app/controllers/characters_controller.rb:62:in `update'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.4ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:34:37 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.8ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.6ms)
+Rendered characters/edit.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 37ms (Views: 35.3ms | ActiveRecord: 1.8ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:34:43 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character YAY", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.9ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  UPDATE "characters" SET "name" = 'Test Character YAY', "updated_at" = '2010-12-25 04:34:43.926555' WHERE ("characters"."id" = 2)
+Redirected to 
+Completed   in 8ms
+
+NoMethodError (undefined method `character_url' for #<CharactersController:0x00000101bf55c0>):
+  app/controllers/characters_controller.rb:64:in `block (2 levels) in update'
+  app/controllers/characters_controller.rb:62:in `update'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.0ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:36:37 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mCharacter Load (0.6ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (18.5ms)
+Rendered characters/edit.html.erb within layouts/application (21.4ms)
+Completed 200 OK in 83ms (Views: 24.6ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:36:39 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.9ms)
+  [1m[35mCharacter Load (0.8ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.5ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (53.4ms)
+Completed 200 OK in 64ms (Views: 56.1ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:36:40 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (3.9ms)
+Rendered characters/edit.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 11ms (Views: 9.6ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:36:43 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character YAY", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[35mGame Load (0.9ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Redirected to 
+Completed   in 5ms
+
+ActionController::ActionControllerError (Cannot redirect to nil!):
+  app/controllers/characters_controller.rb:65:in `block (2 levels) in update'
+  app/controllers/characters_controller.rb:63:in `update'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.1ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:37:27 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.8ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.8ms)
+Rendered characters/edit.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 12ms (Views: 10.1ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:37:29 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character YAY", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+  [1m[35mCharacter Load (0.4ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 5ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:29 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.2ms)
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (34.9ms)
+Rendered games/show.html.erb within layouts/application (45.6ms)
+Completed 200 OK in 50ms (Views: 48.1ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:37:32 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (3.7ms)
+Rendered characters/edit.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 11ms (Views: 9.4ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:37:35 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Test Character", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"5", "id"=>"2"}
+  [1m[35mGame Load (1.0ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  UPDATE "characters" SET "name" = 'Test Character', "updated_at" = '2010-12-25 04:37:35.638331' WHERE ("characters"."id" = 2)
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 10ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:35 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.0ms)
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.4ms)
+Rendered characters/new.html.erb (3.5ms)
+Rendered games/show.html.erb within layouts/application (15.6ms)
+Completed 200 OK in 20ms (Views: 18.0ms | ActiveRecord: 3.8ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:37:37 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[36mCharacter Load (0.9ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+Rendered characters/_form.html.erb (4.5ms)
+Rendered characters/edit.html.erb within layouts/application (7.4ms)
+Completed 200 OK in 12ms (Views: 10.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:38 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.2ms)
+Rendered characters/new.html.erb (3.3ms)
+Rendered games/show.html.erb within layouts/application (12.1ms)
+Completed 200 OK in 17ms (Views: 14.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/games/5/characters/2/edit" for 127.0.0.1 at 2010-12-24 21:37:39 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"5", "id"=>"2"}
+  [1m[35mCharacter Load (0.7ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+Rendered characters/_form.html.erb (3.8ms)
+Rendered characters/edit.html.erb within layouts/application (6.5ms)
+Completed 200 OK in 11ms (Views: 9.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:40 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.6ms)
+  [1m[35mCharacter Load (0.8ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered characters/_character.html.erb (1.6ms)
+Rendered characters/new.html.erb (3.6ms)
+Rendered games/show.html.erb within layouts/application (13.3ms)
+Completed 200 OK in 18ms (Views: 15.7ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/games/5/characters/2" for 127.0.0.1 at 2010-12-24 21:37:45 -0700
+  Processing by CharactersController#destroy as HTML
+  Parameters: {"authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game_id"=>"5", "id"=>"2"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+  [1m[35mCharacter Load (0.5ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mDELETE FROM "characters" WHERE ("characters"."id" = 2)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 7ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:45 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (3.4ms)
+Rendered games/show.html.erb within layouts/application (9.5ms)
+Completed 200 OK in 14ms (Views: 12.2ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:37:51 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (10.3ms)
+Completed 200 OK in 15ms (Views: 13.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:37:57 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (3.4ms)
+Rendered games/show.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 14ms (Views: 12.1ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:38:10 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"SWTOR PC Yay", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (NULL, 'SWTOR PC Yay', '2010-12-25 04:38:10.214387', '2010-12-25 04:38:10.214387', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 48ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:38:10 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (3.4ms)
+Rendered games/show.html.erb within layouts/application (9.5ms)
+Completed 200 OK in 14ms (Views: 12.4ms | ActiveRecord: 1.9ms)
+  [1m[36mCharacter Load (1.6ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:55:38 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"SWTOR PC YAYYAY", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.3ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (1, 'SWTOR PC YAYYAY', '2010-12-25 04:55:39.252193', '2010-12-25 04:55:39.252193', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 134ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:55:39 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/show.html.erb within layouts/application (20.9ms)
+Completed   in 28ms
+
+ActionView::Template::Error (Missing partial swtor_characters/swtor_character with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/mpotoole/digitalAugment Inc/Development/git/da-bv-rails/app/views"):
+    1: <%= render @game %>
+    2: 
+    3: <h3>Characters:</h3>
+    4: <div id="characters">
+  app/views/games/show.html.erb:1:in `_app_views_games_show_html_erb___4149428768185347549_2181746960__2203900216551546835'
+  app/controllers/games_controller.rb:18:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.8ms)
+  [1m[36mCharacter Load (1.5ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:56:51 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (25.9ms)
+Completed   in 35ms
+
+ActionView::Template::Error (undefined method `swtor_character_path' for #<#<Class:0x00000104338ce0>:0x000001043340c8>):
+    11: <% @games.each do |game| %>
+    12:   <tr>
+    13:     <td><%= game.name %></td>
+    14:     <td><%= link_to 'Show', game %></td>
+    15:     <td><%= link_to 'Edit', edit_game_path(game) %></td>
+    16:     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
+    17:   </tr>
+  app/views/games/index.html.erb:14:in `block in _app_views_games_index_html_erb___3570931796616098106_2182714780__2203900216551546835'
+  app/views/games/index.html.erb:11:in `each'
+  app/views/games/index.html.erb:11:in `_app_views_games_index_html_erb___3570931796616098106_2182714780__2203900216551546835'
+  app/controllers/games_controller.rb:7:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:57:21 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.9ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (17.4ms)
+Completed   in 56ms
+
+ActionView::Template::Error (undefined method `swtor_character_path' for #<#<Class:0x00000104424960>:0x0000010441bb30>):
+    11: <% @games.each do |game| %>
+    12:   <tr>
+    13:     <td><%= game.name %></td>
+    14:     <td><%= link_to 'Show', game %></td>
+    15:     <td><%= link_to 'Edit', edit_game_path(game) %></td>
+    16:     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
+    17:   </tr>
+  app/views/games/index.html.erb:14:in `block in _app_views_games_index_html_erb___3570931796616098106_2183186280__2203900216551546835'
+  app/views/games/index.html.erb:11:in `each'
+  app/views/games/index.html.erb:11:in `_app_views_games_index_html_erb___3570931796616098106_2183186280__2203900216551546835'
+  app/controllers/games_controller.rb:7:in `index'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 21:57:35 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (1.0ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (18.3ms)
+Completed 200 OK in 80ms (Views: 22.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:57:39 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.1ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (43.2ms)
+Rendered games/show.html.erb within layouts/application (61.8ms)
+Completed 200 OK in 69ms (Views: 64.6ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 21:57:48 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"swtor pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (1, 'swtor pc', '2010-12-25 04:57:48.810810', '2010-12-25 04:57:48.810810', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 26ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 21:57:48 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1[0m
+Rendered games/_game.html.erb (2.8ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.7ms)
+Rendered games/show.html.erb within layouts/application (13.8ms)
+Completed 200 OK in 18ms (Views: 16.7ms | ActiveRecord: 2.1ms)
+  [1m[36mSQL (0.6ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.2ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (3.3ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.4ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (1.1ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:02:51 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 9ms (Views: 7.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 22:02:53 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (8.2ms)
+Rendered games/new.html.erb within layouts/application (11.8ms)
+Completed 200 OK in 16ms (Views: 15.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 22:03:05 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game"=>{"type_helper"=>"Swtor", "name"=>"My SWTOR Game", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('My SWTOR Game', '2010-12-25 05:03:05.949975', '2010-12-25 05:03:05.949975', 'Swtor', NULL, 't')
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 12ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:03:05 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (2.1ms)
+  [1m[35mCharacter Load (0.3ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (5.6ms)
+Rendered games/show.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 19ms (Views: 16.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:03:11 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 9ms (Views: 7.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 22:03:13 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (3.9ms)
+Rendered games/new.html.erb within layouts/application (34.0ms)
+Completed 200 OK in 38ms (Views: 37.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 22:03:22 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game"=>{"type_helper"=>"Wow", "name"=>"My WOW Game", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('My WOW Game', '2010-12-25 05:03:22.760799', '2010-12-25 05:03:22.760799', 'Wow', NULL, 't')
+Redirected to http://localhost:3000/games/2
+Completed 302 Found in 7ms
+
+
+Started GET "/games/2" for 127.0.0.1 at 2010-12-24 22:03:22 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1[0m
+Rendered games/_game.html.erb (1.7ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 2)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.3ms)
+Rendered games/show.html.erb within layouts/application (11.2ms)
+Completed 200 OK in 16ms (Views: 14.2ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:03:25 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (31.6ms)
+Completed 200 OK in 38ms (Views: 36.6ms | ActiveRecord: 0.8ms)
+  [1m[36mGame Load (1.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mCharacter Load (0.3ms)[0m  SELECT "characters".* FROM "characters"
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:04:21 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 16ms (Views: 13.8ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/games/1/characters" for 127.0.0.1 at 2010-12-24 22:04:31 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"My SWTOR PC", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"1"}
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (1, 'My SWTOR PC', '2010-12-25 05:04:31.382549', '2010-12-25 05:04:31.382549', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 27ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:04:31 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)[0m
+Rendered characters/_character.html.erb (1.5ms)
+Rendered characters/new.html.erb (4.2ms)
+Rendered games/show.html.erb within layouts/application (22.6ms)
+Completed 200 OK in 28ms (Views: 25.3ms | ActiveRecord: 2.5ms)
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:04:53 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (4.6ms)
+Completed 200 OK in 10ms (Views: 8.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/2" for 127.0.0.1 at 2010-12-24 22:04:56 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1[0m
+Rendered games/_game.html.erb (1.6ms)
+  [1m[35mCharacter Load (0.2ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 2)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.0ms)
+Rendered games/show.html.erb within layouts/application (10.9ms)
+Completed 200 OK in 16ms (Views: 13.9ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/games/2/characters" for 127.0.0.1 at 2010-12-24 22:05:05 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"My WOW PC", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"2"}
+  [1m[36mGame Load (0.8ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (1, 'My WOW PC', '2010-12-25 05:05:05.846483', '2010-12-25 05:05:05.846483', 'WowCharacter', '', '', '', NULL, NULL, NULL)
+Redirected to http://localhost:3000/games/2
+Completed 302 Found in 24ms
+
+
+Started GET "/games/2" for 127.0.0.1 at 2010-12-24 22:05:05 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mGame Load (1.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1[0m
+Rendered games/_game.html.erb (33.1ms)
+  [1m[35mCharacter Load (0.3ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 2)
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.2ms)
+Rendered games/show.html.erb within layouts/application (42.7ms)
+Completed 200 OK in 49ms (Views: 45.8ms | ActiveRecord: 3.1ms)
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters"
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:05:16 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 9ms (Views: 7.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:05:18 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)[0m
+Rendered characters/_character.html.erb (8.8ms)
+Rendered characters/new.html.erb (32.5ms)
+Rendered games/show.html.erb within layouts/application (53.7ms)
+Completed 200 OK in 58ms (Views: 55.8ms | ActiveRecord: 1.6ms)
+
+
+Started POST "/games/1/characters/2" for 127.0.0.1 at 2010-12-24 22:05:24 -0700
+  Processing by CharactersController#destroy as HTML
+  Parameters: {"authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game_id"=>"1", "id"=>"2"}
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+  [1m[36mCharacter Load (0.6ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 2) LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  DELETE FROM "characters" WHERE ("characters"."type" = 'WowCharacter') AND ("characters"."id" = 2)
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 13ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:05:24 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.6ms)
+  [1m[35mCharacter Load (0.7ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (6.4ms)
+Rendered characters/new.html.erb (3.6ms)
+Rendered games/show.html.erb within layouts/application (22.3ms)
+Completed 200 OK in 27ms (Views: 25.3ms | ActiveRecord: 2.9ms)
+
+
+Started POST "/games/1/characters" for 127.0.0.1 at 2010-12-24 22:06:52 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"sw pc 2", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"1"}
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (1, 'sw pc 2', '2010-12-25 05:06:52.998856', '2010-12-25 05:06:52.998856', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 27ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:06:53 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (28.3ms)
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (7.6ms)
+Rendered characters/new.html.erb (4.1ms)
+Rendered games/show.html.erb within layouts/application (51.2ms)
+Completed 200 OK in 56ms (Views: 53.5ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/games/1/characters/3/edit" for 127.0.0.1 at 2010-12-24 22:06:57 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"1", "id"=>"3"}
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 3) LIMIT 1[0m
+Rendered characters/_form.html.erb (38.3ms)
+Rendered characters/edit.html.erb within layouts/application (41.3ms)
+Completed 200 OK in 50ms (Views: 44.8ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/games/1/characters/3" for 127.0.0.1 at 2010-12-24 22:07:02 -0700
+  Processing by CharactersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"sw pc 2", "rank"=>"1", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Update Character", "game_id"=>"1", "id"=>"3"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 3) LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  UPDATE "characters" SET "rank" = 1, "updated_at" = '2010-12-25 05:07:02.190423' WHERE ("characters"."type" = 'SwtorCharacter') AND ("characters"."id" = 3)
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 24ms
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:07:02 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (34.5ms)
+Rendered characters/new.html.erb (3.8ms)
+Rendered games/show.html.erb within layouts/application (50.7ms)
+Completed 200 OK in 56ms (Views: 53.3ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/games/1/characters/3/edit" for 127.0.0.1 at 2010-12-24 22:07:04 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"1", "id"=>"3"}
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters"."id" = 3) LIMIT 1[0m
+Rendered characters/_form.html.erb (9.5ms)
+Rendered characters/edit.html.erb within layouts/application (12.3ms)
+Completed 200 OK in 21ms (Views: 15.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:07:07 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+Rendered games/_game.html.erb (30.8ms)
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)[0m
+Rendered characters/_character.html.erb (10.3ms)
+Rendered characters/new.html.erb (4.8ms)
+Rendered games/show.html.erb within layouts/application (57.7ms)
+Completed 200 OK in 63ms (Views: 60.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/games/1/characters/3/edit" for 127.0.0.1 at 2010-12-24 22:09:24 -0700
+  Processing by CharactersController#edit as HTML
+  Parameters: {"game_id"=>"1", "id"=>"3"}
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mCharacter Load (0.4ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters"."id" = 3) LIMIT 1
+Rendered characters/_form.html.erb (19.1ms)
+Rendered characters/edit.html.erb within layouts/application (22.5ms)
+Completed 200 OK in 104ms (Views: 25.9ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-24 22:09:27 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (28.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.7ms)
+  [1m[35mCharacter Load (1.0ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (2.3ms)
+Rendered characters/new.html.erb (10.4ms)
+Rendered games/show.html.erb within layouts/application (57.6ms)
+Completed 200 OK in 95ms (Views: 59.9ms | ActiveRecord: 29.6ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:09:29 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (10.5ms)
+Completed 200 OK in 16ms (Views: 14.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/2" for 127.0.0.1 at 2010-12-24 22:09:31 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mGame Load (0.5ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 2)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 15ms (Views: 13.0ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/games/2/characters" for 127.0.0.1 at 2010-12-24 22:09:41 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Wow pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"2"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (2, 'Wow pc', '2010-12-25 05:09:41.848386', '2010-12-25 05:09:41.848386', 'WowCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/2
+Completed 302 Found in 52ms
+
+
+Started GET "/games/2" for 127.0.0.1 at 2010-12-24 22:09:41 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 2) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 2)[0m
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (4.7ms)
+Rendered games/show.html.erb within layouts/application (15.9ms)
+Completed 200 OK in 21ms (Views: 18.3ms | ActiveRecord: 2.4ms)
+  [1m[36mCharacter Load (1.8ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:09:59 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 22:10:01 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (6.8ms)
+Rendered games/new.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 14ms (Views: 13.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 22:10:16 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game"=>{"type_helper"=>"Wow", "name"=>"My other wow game", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('My other wow game', '2010-12-25 05:10:16.398949', '2010-12-25 05:10:16.398949', 'Wow', NULL, 't')[0m
+Redirected to http://localhost:3000/games/3
+Completed 302 Found in 12ms
+
+
+Started GET "/games/3" for 127.0.0.1 at 2010-12-24 22:10:16 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 3) LIMIT 1
+Rendered games/_game.html.erb (1.8ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 3)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.0ms)
+Rendered games/show.html.erb within layouts/application (11.0ms)
+Completed 200 OK in 16ms (Views: 14.3ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/games/3/characters" for 127.0.0.1 at 2010-12-24 22:10:28 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"wow pc for game 2", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"3"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 3) LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (3, 'wow pc for game 2', '2010-12-25 05:10:28.778249', '2010-12-25 05:10:28.778249', 'WowCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/3
+Completed 302 Found in 8ms
+
+
+Started GET "/games/3" for 127.0.0.1 at 2010-12-24 22:10:28 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mGame Load (0.5ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 3) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.6ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 3)[0m
+Rendered characters/_character.html.erb (1.2ms)
+Rendered characters/new.html.erb (3.7ms)
+Rendered games/show.html.erb within layouts/application (12.3ms)
+Completed 200 OK in 17ms (Views: 14.9ms | ActiveRecord: 2.1ms)
+  [1m[35mCharacter Load (1.4ms)[0m  SELECT "characters".* FROM "characters"
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:10:47 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (1.1ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 13ms (Views: 10.6ms | ActiveRecord: 1.1ms)
+  [1m[36mSQL (0.7ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.0ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.3ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (3.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (3.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (2.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225002345')[0m
+  [1m[35mSQL (2.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224000720')
+  [1m[36mSQL (2.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224000802')[0m
+  [1m[35mSQL (2.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224072524')
+  [1m[36mSQL (2.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224072550')[0m
+  [1m[35mSQL (2.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225002140')
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 22:13:31 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (30.6ms)
+Rendered games/new.html.erb within layouts/application (34.1ms)
+Completed 200 OK in 39ms (Views: 38.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 22:13:47 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game"=>{"type_helper"=>"Swtor", "name"=>"Star Wars!", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('Star Wars!', '2010-12-25 05:13:47.183233', '2010-12-25 05:13:47.183233', 'Swtor', NULL, 't')[0m
+Redirected to http://localhost:3000/games/4
+Completed 302 Found in 5ms
+
+
+Started GET "/games/4" for 127.0.0.1 at 2010-12-24 22:13:47 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mGame Load (0.7ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 4) LIMIT 1
+Rendered games/_game.html.erb (1.7ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 4)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (4.1ms)
+Rendered games/show.html.erb within layouts/application (11.2ms)
+Completed 200 OK in 16ms (Views: 14.4ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/games/4/characters" for 127.0.0.1 at 2010-12-24 22:14:03 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Star Man", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"4"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 4) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (4, 'Star Man', '2010-12-25 05:14:03.217962', '2010-12-25 05:14:03.217962', 'SwtorCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/4
+Completed 302 Found in 59ms
+
+
+Started GET "/games/4" for 127.0.0.1 at 2010-12-24 22:14:03 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mGame Load (0.5ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 4) LIMIT 1
+Rendered games/_game.html.erb (1.5ms)
+  [1m[36mCharacter Load (0.7ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 4)[0m
+Rendered characters/_character.html.erb (7.8ms)
+Rendered characters/new.html.erb (32.9ms)
+Rendered games/show.html.erb within layouts/application (53.1ms)
+Completed 200 OK in 58ms (Views: 56.2ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 22:16:28 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (1.1ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (19.8ms)
+Completed 200 OK in 78ms (Views: 23.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 22:16:31 -0700
+  Processing by GamesController#new as HTML
+Rendered games/_form.html.erb (7.9ms)
+Rendered games/new.html.erb within layouts/application (10.6ms)
+Completed 200 OK in 14ms (Views: 13.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/games" for 127.0.0.1 at 2010-12-24 22:16:51 -0700
+  Processing by GamesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "game"=>{"type_helper"=>"Wow", "name"=>"Another WOW game WTF", "is_active"=>"1"}, "commit"=>"Create Game"}
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('Another WOW game WTF', '2010-12-25 05:16:51.502412', '2010-12-25 05:16:51.502412', 'Wow', NULL, 't')[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 46ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 22:16:51 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (1.1ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (1.4ms)
+  [1m[36mCharacter Load (0.2ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (18.7ms)
+Rendered games/show.html.erb within layouts/application (27.8ms)
+Completed 200 OK in 33ms (Views: 30.7ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/games/5/characters" for 127.0.0.1 at 2010-12-24 22:17:00 -0700
+  Processing by CharactersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VdDvkvvHzyzc8LaqKt5v6qPb7qE50ze+NO2m1QZ8GJ8=", "character"=>{"name"=>"Another wow pc", "rank"=>"", "faction"=>"", "race"=>"", "klass"=>""}, "commit"=>"Add", "game_id"=>"5"}
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank") VALUES (5, 'Another wow pc', '2010-12-25 05:17:00.314466', '2010-12-25 05:17:00.314466', 'WowCharacter', '', '', '', NULL, NULL, NULL)[0m
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 44ms
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 22:17:00 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (2.1ms)
+  [1m[36mCharacter Load (0.8ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered characters/_character.html.erb (1.3ms)
+Rendered characters/new.html.erb (5.6ms)
+Rendered games/show.html.erb within layouts/application (16.5ms)
+Completed 200 OK in 22ms (Views: 19.6ms | ActiveRecord: 2.5ms)

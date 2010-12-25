@@ -31,7 +31,7 @@ class CharactersController < ApplicationController
 #      format.xml  { render :xml => @character }
 #    end
 #  end
-#
+
   # GET /characters/1/edit
   def edit
     @character = Character.find(params[:id])
@@ -41,7 +41,7 @@ class CharactersController < ApplicationController
   # POST /games/game_id/characters.xml
   def create
     @game = Game.find(params[:game_id])
-    @character = @game.character.factory(params[:type], params[:character])
+    @character = @game.characters.factory(@game.type, @game.id, params[:character])
 
     respond_to do |format|
       if @character.save
@@ -57,11 +57,12 @@ class CharactersController < ApplicationController
   # PUT /games/game_id/characters/1
   # PUT /games/game_id/characters/1.xml
   def update
+    @game = Game.find(params[:game_id])
     @character = Character.find(params[:id])
 
     respond_to do |format|
       if @character.update_attributes(params[:character])
-        format.html { redirect_to(@character, :notice => 'Character was successfully updated.') }
+        format.html { redirect_to(@game, :notice => 'Character was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

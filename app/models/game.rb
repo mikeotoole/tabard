@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
  
   # Used to offer a dynamically generated list of subclass to choose from. 
   def self.select_options
-    subclasses.map{ |c| c.to_s }.sort
+    descendants.map{ |c| c.to_s }.sort
   end
 
   def type_helper
