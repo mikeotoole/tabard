@@ -3217,3 +3217,117 @@ Started GET "/games" for 127.0.0.1 at 2010-12-24 16:56:51 -0700
   [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games"[0m
 Rendered games/index.html.erb within layouts/application (5.7ms)
 Completed 200 OK in 11ms (Views: 9.2ms | ActiveRecord: 0.4ms)
+  [1m[36mSQL (0.6ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.5ms)[0m  [1mALTER TABLE "games" ADD "extra" varchar(255)[0m
+  [1m[35mSQL (0.1ms)[0m  ALTER TABLE "games" ADD "is_active" boolean
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20101225002140')[0m
+Migrating to AddManyAttributesToCharacters (20101225002345)
+  [1m[35mSQL (0.3ms)[0m  ALTER TABLE "characters" ADD "faction" varchar(255)
+  [1m[36mSQL (0.1ms)[0m  [1mALTER TABLE "characters" ADD "race" varchar(255)[0m
+  [1m[35mSQL (0.1ms)[0m  ALTER TABLE "characters" ADD "klass" varchar(255)
+  [1m[36mSQL (0.1ms)[0m  [1mALTER TABLE "characters" ADD "server" varchar(255)[0m
+  [1m[35mSQL (0.1ms)[0m  ALTER TABLE "characters" ADD "extra" varchar(255)
+  [1m[36mSQL (0.1ms)[0m  [1mALTER TABLE "characters" ADD "rank" intager[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101225002345')
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("games")[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 17:35:28 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.8ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 10ms (Views: 8.6ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 17:35:40 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (35.4ms)
+Rendered games/new.html.erb within layouts/application (36.8ms)
+Completed   in 41ms
+
+ActionView::Template::Error (undefined method `is_active' for #<Game:0x00000101267418>):
+    21:   </div>
+    22:   <div class="field">
+    23:     <%= f.label :is_active %><br />
+    24:     <%= f.check_box :is_active %>
+    25:   </div>
+    26:   <div class="actions">
+    27:     <%= submit_or_cancel(f) %>
+  app/views/games/_form.html.erb:24:in `block in _app_views_games__form_html_erb___2734928451653753769_2157057300__1377435252276694286'
+  app/views/games/_form.html.erb:1:in `_app_views_games__form_html_erb___2734928451653753769_2157057300__1377435252276694286'
+  app/views/games/new.html.erb:3:in `_app_views_games_new_html_erb___634899138359667570_2157094840__2674037633963082700'
+  app/controllers/games_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.3ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.7ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 17:37:04 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (11.5ms)
+Rendered games/new.html.erb within layouts/application (14.3ms)
+Completed 200 OK in 21ms (Views: 17.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 17:37:22 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mGame Load (23.9ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Rendered games/index.html.erb within layouts/application (9.8ms)
+Completed 200 OK in 67ms (Views: 13.0ms | ActiveRecord: 23.9ms)
+
+
+Started GET "/games/new" for 127.0.0.1 at 2010-12-24 17:37:25 -0700
+  Processing by GamesController#new as HTML
+DEPRECATION WARNING: subclasses is deprecated and will be removed from Rails 3.0 (use descendants instead). (called from select_options at app/models/game.rb:18)
+Rendered games/_form.html.erb (4.5ms)
+Rendered games/new.html.erb within layouts/application (8.1ms)
+Completed 200 OK in 12ms (Views: 11.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-24 17:37:39 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mGame Load (0.9ms)[0m  SELECT "games".* FROM "games"
+Rendered games/index.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2010-12-24 17:37:42 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 5) LIMIT 1
+Rendered games/_game.html.erb (28.8ms)
+  [1m[36mCharacter Load (0.3ms)[0m  [1mSELECT "characters".* FROM "characters" WHERE ("characters".game_id = 5)[0m
+Rendered collection (0.0ms)
+Rendered characters/new.html.erb (19.0ms)
+Rendered games/show.html.erb within layouts/application (69.5ms)
+Completed 200 OK in 77ms (Views: 72.6ms | ActiveRecord: 1.2ms)
