@@ -32,10 +32,10 @@ class CharactersController < ApplicationController
 #    end
 #  end
 #
-#  # GET /characters/1/edit
-#  def edit
-#    @character = Character.find(params[:id])
-#  end
+  # GET /characters/1/edit
+  def edit
+    @character = Character.find(params[:id])
+  end
 
   # POST /games/game_id/characters
   # POST /games/game_id/characters.xml

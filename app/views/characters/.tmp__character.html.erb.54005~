@@ -1,9 +1,0 @@
-<%= div_for character do %>
-  <h3>
-    <%= character.name %>
-      	<span class='actions'>
-      		<%= link_to( 'Edit', edit_game_character_path(@game, character)) %>
-        	<%= link_to( 'Delete', [@game, character], :confirm => 'Are you sure?', :method => :delete) %>
-      	</span>
-  </h3>
-<% end %>
