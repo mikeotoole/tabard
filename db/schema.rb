@@ -12,6 +12,29 @@
 
 ActiveRecord::Schema.define(:version => 20101225041158) do
 
+  create_table "characters", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+    t.string   "faction"
+    t.string   "race"
+    t.string   "klass"
+    t.string   "server"
+    t.string   "extra"
+    t.integer  "rank"
+  end
+
+  create_table "games", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+    t.string   "extra"
+    t.boolean  "is_active"
+  end
+
   create_table "permissions", :force => true do |t|
     t.string   "name"
     t.integer  "role_id"

@@ -10,6 +10,10 @@ Bv::Application.routes.draw do
   resource :session
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
+  
+  resources :games do
+    resources :characters
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
