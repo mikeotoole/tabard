@@ -4,5 +4,4 @@ class WowCharacter < Character
 #  def self.showall
 #    @characters = Character.find(:all)
 #  end
-  
 end
