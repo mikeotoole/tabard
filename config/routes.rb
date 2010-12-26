@@ -1,4 +1,6 @@
 Bv::Application.routes.draw do
+  resources :system_resources
+
   root :to => "users#index"
   resources :profiles
 

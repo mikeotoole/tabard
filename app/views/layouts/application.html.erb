@@ -8,13 +8,17 @@
 </head>
 <body>
 
-<% if false %>
+<% if true %>
 <div id="header"> 
   <h1><%= link_to "BV", root_path %></h1> 
   <div id="user_bar">
     <% if logged_in? %> 
-      Hello, <%= current_user.user_profile.name %>
-      <%= link_to "Edit User", edit_user_path(current_user) %> | 
+      <% if current_user.user_profile == nil %>
+        Please Click <%= link_to "Here", new_profile_path %> to Finish Creating Your Account |
+      <% else %>
+        Hello, <%= current_user.user_profile.name %>
+        <%= link_to "Edit User", edit_user_path(current_user) %> |
+      <% end %> 
       <%= link_to "Logout", logout_path %>
     <% else %> 
       <%= link_to "Login", login_path %>

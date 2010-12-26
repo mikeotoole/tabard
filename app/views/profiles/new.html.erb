@@ -14,9 +14,7 @@
   <% end %>
 
   <div class="field">
-    Type: <br />
-    <%= f.select( :type_helper, Profile.select_options) %>
-  </div>
+    Type: <%= @profile.type_helper %>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>

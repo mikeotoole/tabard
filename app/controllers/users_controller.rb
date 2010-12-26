@@ -45,8 +45,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(@user, :notice => 'User was successfully created.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        #Push them to the login page...
+        format.html { redirect_to(login_path, :notice => 'User was successfully created. Please log in to finish your profile creation.') }
+        format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }

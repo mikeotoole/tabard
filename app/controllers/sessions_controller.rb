@@ -2,9 +2,14 @@ class SessionsController < ApplicationController
   def create  
     if user = User.authenticate(params[:email], params[:password])
       session[:user_id] = user.id
-      redirect_to root_path, :notice => "Logged in successfully" 
+      if user.user_profile == nil
+        @profile_type = "UserProfile"
+        redirect_to new_profile_path, :notice => "Logged in successfully. Please create a user profile to finish setting up your account."
+      else
+        redirect_to root_path, :notice => "Logged in successfully."
+      end 
     else
-      flash.now[:alert] = "Invalid login/password combination"
+      flash.now[:alert] = "Invalid login/password combination."
       render :action => 'new' 
     end
   end
