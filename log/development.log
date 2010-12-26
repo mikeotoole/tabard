@@ -9336,3 +9336,1047 @@ Started GET "/" for 127.0.0.1 at 2010-12-25 20:21:27 -0800
   [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
 Rendered users/index.html.erb within layouts/application (12.6ms)
 Completed 200 OK in 34ms (Views: 17.0ms | ActiveRecord: 2.8ms)
+  [1m[36mSQL (1.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.8ms)[0m  [1mALTER TABLE "permissions" ADD "access" varchar(255)[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101226042457')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("system_resources")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("users")[0m
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+  [1m[35mSQL (0.2ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.7ms)[0m  [1mALTER TABLE "permissions" ADD "show" boolean[0m
+  [1m[35mSQL (0.2ms)[0m  ALTER TABLE "permissions" ADD "create" boolean
+  [1m[36mSQL (0.2ms)[0m  [1mALTER TABLE "permissions" ADD "update" boolean[0m
+  [1m[35mSQL (0.2ms)[0m  ALTER TABLE "permissions" ADD "delete" boolean
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20101226120913')[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("characters")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("games")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("permissions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("profiles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 04:43:27 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 68ms (Views: 18.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-26 04:43:33 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (22.2ms)
+Completed 200 OK in 27ms (Views: 26.6ms | ActiveRecord: 1.4ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-26 04:43:42 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Ipyd7Aybzqm42lh7JJggxOrO5Nlc0hjuxD8xHsWTNYs=", "email"=>"joew@timjoe.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'joew@timjoe.com') LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 70ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 04:43:42 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (62.0ms)
+Completed 200 OK in 82ms (Views: 65.4ms | ActiveRecord: 3.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:43:46 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Completed   in 24ms
+
+NoMethodError (undefined method `can_show' for #<User:0x00000100c697f0>):
+  app/controllers/games_controller.rb:5:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (34.6ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (40.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:44:09 -0800
+  Processing by GamesController#index as HTML
+Redirected to http://localhost:3000/
+Completed 403 Forbidden in 1ms
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:45:04 -0800
+  Processing by GamesController#index as HTML
+Redirected to http://localhost:3000/
+Completed 403 Forbidden in 1ms
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:45:06 -0800
+  Processing by GamesController#index as HTML
+Redirected to http://localhost:3000/
+Completed 403 Forbidden in 1ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 04:45:09 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (21.2ms)
+Completed 200 OK in 41ms (Views: 24.9ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:47:06 -0800
+  Processing by GamesController#index as HTML
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 7ms (Views: 6.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:48:03 -0800
+  Processing by GamesController#index as HTML
+Completed   in 18ms
+
+ActionView::MissingTemplate (Missing template games/nothing with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/joew/Git/da-bv-rails/app/views"):
+  app/controllers/games_controller.rb:13:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/missing_template.erb within rescues/layout (0.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:48:14 -0800
+  Processing by GamesController#index as HTML
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 1ms (Views: 0.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:48:36 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Completed   in 27ms
+
+NoMethodError (undefined method `can_show' for #<User:0x000001013476f8>):
+  app/controllers/games_controller.rb:5:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.7ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.2ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:56:06 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.4ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+SQLite3::SQLException: no such column: roles.user_id: SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+Completed   in 38ms
+
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: roles.user_id: SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)):
+  app/models/user.rb:30:in `can_show'
+  app/controllers/games_controller.rb:5:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.7ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.2ms)
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.5ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.7ms)[0m  [1mALTER TABLE "roles" ADD "user_id" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101226125752')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("system_resources")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("users")[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:58:10 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 70ms (Views: 1.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 04:58:11 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 71ms (Views: 1.0ms | ActiveRecord: 1.2ms)
+  [1m[36mSQL (1.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mAREL (0.7ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at", "user_id") VALUES ('Admin', '2010-12-26 12:59:19.510509', '2010-12-26 12:59:19.510509', NULL)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (1.2ms)[0m  [1mSELECT "roles".* FROM "roles" LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSystemResource Load (0.4ms)[0m  SELECT "system_resources".* FROM "system_resources"
+  [1m[36mPermission Load (1.0ms)[0m  [1mSELECT "permissions".* FROM "permissions"[0m
+  [1m[35mPermission Load (0.3ms)[0m  SELECT "permissions".* FROM "permissions"
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (26.7ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE TEMPORARY TABLE "altered_permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create" boolean, "update" boolean, "delete" boolean) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.4ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (0.4ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create" boolean, "update" boolean, "delete" boolean) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("altered_permissions")[0m
+  [1m[35mSQL (0.6ms)[0m  DROP TABLE "altered_permissions"
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TEMPORARY TABLE "altered_permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update" boolean, "delete" boolean) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.5ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (0.3ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update" boolean, "delete" boolean) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("altered_permissions")[0m
+  [1m[35mSQL (0.2ms)[0m  DROP TABLE "altered_permissions"
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TEMPORARY TABLE "altered_permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete" boolean) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.3ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (0.3ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete" boolean) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("altered_permissions")[0m
+  [1m[35mSQL (0.2ms)[0m  DROP TABLE "altered_permissions"
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TEMPORARY TABLE "altered_permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.2ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (0.3ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("altered_permissions")[0m
+  [1m[35mSQL (0.2ms)[0m  DROP TABLE "altered_permissions"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20101226130836')[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("characters")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("games")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("permissions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("profiles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mPermission Load (1.0ms)[0m  [1mSELECT "permissions".* FROM "permissions"[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mAREL (0.6ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Game Full Access', NULL, '2010-12-26 13:11:41.993431', '2010-12-26 13:11:41.993431', NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.4ms)[0m  [1mSELECT "roles".* FROM "roles" LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  UPDATE "roles" SET "user_id" = 1, "updated_at" = '2010-12-26 13:12:33.668954' WHERE ("roles"."id" = 1)
+  [1m[36mAREL (0.5ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2010-12-26 13:12:51.038940' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" LIMIT 1
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 2) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mAREL (0.8ms)[0m  [1mUPDATE "permissions" SET "permissionable_id" = 3, "permissionable_type" = 'SystemResource', "updated_at" = '2010-12-26 13:14:05.371590' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'joew@timjoe.com') AND ("users".id <> 1) LIMIT 1
+  [1m[36mAREL (0.9ms)[0m  [1mUPDATE "permissions" SET "show_p" = 't', "create_p" = 't', "update_p" = 't', "delete_p" = 't', "updated_at" = '2010-12-26 13:14:46.225596' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:15:17 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.6ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (9.9ms)
+Completed 200 OK in 130ms (Views: 14.2ms | ActiveRecord: 2.8ms)
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mPermission Load (0.4ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:09 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (43.0ms)
+Completed 200 OK in 161ms (Views: 46.8ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:10 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (9.8ms)
+Completed 200 OK in 126ms (Views: 13.8ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:12 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (42.3ms)
+Completed 200 OK in 157ms (Views: 46.1ms | ActiveRecord: 2.7ms)
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mPermission Load (0.4ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1
+  [1m[36mSystemResource Load (0.9ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" LIMIT 1
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:52 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 124ms (Views: 13.4ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:53 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 128ms (Views: 14.1ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:16:54 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 124ms (Views: 13.4ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 05:16:56 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (21.7ms)
+Completed 200 OK in 44ms (Views: 25.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:17:00 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 155ms (Views: 45.3ms | ActiveRecord: 2.8ms)
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" LIMIT 1
+  [1m[36mAREL (0.8ms)[0m  [1mUPDATE "permissions" SET "permissionable_id" = 1, "updated_at" = '2010-12-26 13:18:35.646103' WHERE ("permissions"."id" = 1)[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:18:48 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 113ms (Views: 1.1ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/roles" for 127.0.0.1 at 2010-12-26 05:19:10 -0800
+  Processing by RolesController#index as HTML
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered roles/index.html.erb within layouts/application (80.4ms)
+Completed 200 OK in 96ms (Views: 84.6ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/roles/1/edit" for 127.0.0.1 at 2010-12-26 05:19:17 -0800
+  Processing by RolesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles"."id" = 1) LIMIT 1
+Rendered roles/_form.html.erb (12.1ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered roles/edit.html.erb within layouts/application (86.1ms)
+Completed 200 OK in 103ms (Views: 90.1ms | ActiveRecord: 1.7ms)
+  [1m[36mPermission Load (1.2ms)[0m  [1mSELECT "permissions".* FROM "permissions" LIMIT 1[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:24:53 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+Completed   in 113ms
+
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  app/controllers/games_controller.rb:10:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:26:48 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1[0m
+Completed   in 112ms
+
+NoMethodError (undefined method `redirect' for #<GamesController:0x00000103002450>):
+  app/controllers/games_controller.rb:6:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.6ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:26:58 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/games?nothing=true
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+Completed   in 112ms
+
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  app/controllers/games_controller.rb:10:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:27:36 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 144ms (Views: 1.0ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:29:13 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 113ms (Views: 1.1ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:29:14 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 113ms (Views: 1.0ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:29:22 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 112ms (Views: 1.0ms | ActiveRecord: 2.0ms)
+  [1m[35mUser Load (0.6ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mPermission Load (0.4ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (1.0ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mPermission Load (0.3ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1[0m
+  [1m[35mPermission Load (0.3ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.3ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1) LIMIT 1
+  [1m[36mPermission Load (0.3ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mAREL (0.9ms)[0m  [1mUPDATE "permissions" SET "permissionable_id" = 3, "updated_at" = '2010-12-26 13:31:56.534246' WHERE ("permissions"."id" = 1)[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:32:01 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.3ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (9.9ms)
+Completed 200 OK in 134ms (Views: 14.0ms | ActiveRecord: 2.8ms)
+  [1m[35mAREL (0.5ms)[0m  UPDATE "permissions" SET "show_p" = 'f', "updated_at" = '2010-12-26 13:32:13.292080' WHERE ("permissions"."id" = 1)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:32:15 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 160ms (Views: 1.2ms | ActiveRecord: 2.1ms)
+  [1m[36mAREL (0.5ms)[0m  [1mUPDATE "permissions" SET "show_p" = 't', "updated_at" = '2010-12-26 13:32:26.595375' WHERE ("permissions"."id" = 1)[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:32:28 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 137ms (Views: 13.8ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:32:44 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.5ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.3ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 135ms (Views: 14.0ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 05:32:45 -0800
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" WHERE ("roles".user_id = 1)
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.2ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered games/index.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 561ms (Views: 14.1ms | ActiveRecord: 2.9ms)
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.9ms)[0m  [1mCREATE TEMPORARY TABLE "altered_roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "user_id" integer) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.5ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (0.3ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("altered_roles")[0m
+  [1m[35mSQL (0.6ms)[0m  DROP TABLE "altered_roles"
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE TABLE "roles_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101226133949')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles_users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (1.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.7ms)[0m  [1mALTER TABLE "roles" ADD "user_id" integer[0m
+  [1m[35mSQL (0.5ms)[0m  DROP TABLE "roles_users"
+  [1m[36mAREL (0.2ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20101226133949'[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("characters")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("games")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("permissions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("profiles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("roles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.8ms)[0m  [1mCREATE TEMPORARY TABLE "altered_roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "user_id" integer) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.5ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (0.2ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("altered_roles")[0m
+  [1m[35mSQL (0.6ms)[0m  DROP TABLE "altered_roles"
+  [1m[36mSQL (0.2ms)[0m  [1mCREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101226133949')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles_users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT "roles".* FROM "roles" LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2010-12-26 14:03:06.923283', '2010-12-26 14:03:06.923283')
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'joew@timjoe.com') AND ("users".id <> 1) LIMIT 1
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('User Full Access', 1, '2010-12-26 14:03:57.074312', '2010-12-26 14:03:57.074312', NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+  [1m[36mAREL (0.8ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Role Full Access', 1, '2010-12-26 14:04:11.479614', '2010-12-26 14:04:11.479614', NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  UPDATE "roles" SET "created_at" = '2010-12-26 14:03:06.923283', "updated_at" = '2010-12-26 14:03:06.923283' WHERE ("roles"."id" = 1)
+  [1m[36mPermission Load (1.0ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions"."id" = 2) LIMIT 1[0m
+  [1m[35mAREL (0.8ms)[0m  UPDATE "permissions" SET "show_p" = 't', "create_p" = 't', "update_p" = 't', "delete_p" = 't', "updated_at" = '2010-12-26 14:05:55.840221' WHERE ("permissions"."id" = 2)
+  [1m[36mPermission Load (1.0ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions"."id" = 3) LIMIT 1[0m
+  [1m[35mAREL (0.8ms)[0m  UPDATE "permissions" SET "show_p" = 't', "create_p" = 't', "update_p" = 't', "delete_p" = 't', "updated_at" = '2010-12-26 14:06:24.054550' WHERE ("permissions"."id" = 3)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources"[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 2) LIMIT 1
+  [1m[36mAREL (0.5ms)[0m  [1mUPDATE "permissions" SET "permissionable_id" = 2, "permissionable_type" = 'SystemResource', "updated_at" = '2010-12-26 14:07:11.868247' WHERE ("permissions"."id" = 3)[0m
+  [1m[35mPermission Load (0.6ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions"."id" = 2) LIMIT 1
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" LIMIT 1[0m
+  [1m[35mAREL (0.8ms)[0m  UPDATE "permissions" SET "permissionable_id" = 1, "permissionable_type" = 'SystemResource', "updated_at" = '2010-12-26 14:08:03.392497' WHERE ("permissions"."id" = 2)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 ) LIMIT 1
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 06:11:37 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (54.8ms)
+Completed 200 OK in 85ms (Views: 58.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-26 06:11:42 -0800
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mPermission Load (0.9ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1
+Rendered users/_form.html.erb (5.3ms)
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/edit.html.erb within layouts/application (16.5ms)
+Completed 200 OK in 149ms (Views: 20.7ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/logout" for 127.0.0.1 at 2010-12-26 06:11:44 -0800
+  Processing by SessionsController#destroy as HTML
+Redirected to http://localhost:3000/
+Completed 302 Found in 4ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 06:11:44 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 39ms (Views: 18.4ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-26 06:11:46 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (26.5ms)
+Completed 200 OK in 31ms (Views: 30.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 06:16:22 -0800
+  Processing by GamesController#index as HTML
+Redirected to http://localhost:3000/login
+Completed 302 Found in 20ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-26 06:16:22 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (27.4ms)
+Completed 200 OK in 33ms (Views: 32.3ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-26 06:16:34 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"HsyrnLrjXTKJ9oYbPCgg6Avl6zK+z1ge3dGBkx/nrU8=", "email"=>"joew@timjoe.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."email" = 'joew@timjoe.com') LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 65ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 06:16:34 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (59.2ms)
+Completed 200 OK in 87ms (Views: 62.8ms | ActiveRecord: 4.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 06:16:38 -0800
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mPermission Load (0.9ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.2ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (9.9ms)
+Completed 200 OK in 141ms (Views: 13.8ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-26 06:17:07 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (21.5ms)
+Completed 200 OK in 47ms (Views: 25.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/roles" for 127.0.0.1 at 2010-12-26 06:17:27 -0800
+  Processing by RolesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+  [1m[36mPermission Load (0.9ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 1) LIMIT 1[0m
+  [1m[35mSystemResource Load (0.2ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 2) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles"[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered roles/index.html.erb within layouts/application (11.7ms)
+Completed 200 OK in 144ms (Views: 15.8ms | ActiveRecord: 3.6ms)
