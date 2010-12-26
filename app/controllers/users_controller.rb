@@ -45,8 +45,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(@user, :notice => 'User was successfully created.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        #Push them to the login page...
+        format.html { redirect_to(login_path, :notice => 'User was successfully created. Please log in to finish your profile creation.') }
+        format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
@@ -73,12 +74,16 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-      format.xml  { head :ok }
+    if !current_user.can_delete("User") 
+      render :nothing => true, :status => :forbidden
+    else 
+      @user = User.find(params[:id])
+      @user.destroy
+  
+      respond_to do |format|
+        format.html { redirect_to(users_url) }
+        format.xml  { head :ok }
+      end
     end
   end
 end

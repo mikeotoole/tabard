@@ -13,14 +13,71 @@ class User < ActiveRecord::Base
   has_many :game_profiles
   has_one :user_profile
   
+  has_and_belongs_to_many :roles
+  
   before_save :encrypt_new_password
+  
   def self.authenticate(email, password) 
     user = find_by_email(email) 
     return user if user && user.authenticated?(password)
   end
+  
   def authenticated?(password) 
     self.hashed_password == encrypt(password)
   end
+  
+  def can_show(system_resource_name)
+    self.roles.each do |role|
+      role.permissions.each do |permission|
+        if permission.permissionable.is_a? SystemResource
+          if (permission.permissionable.name == system_resource_name) && (permission.show_p == true)
+            return true
+          end
+        end
+      end
+    end
+    false
+  end
+  
+  def can_create(system_resource_name)
+    self.roles.each do |role|
+      role.permissions.each do |permission|
+        if permission.permissionable.is_a? SystemResource
+          if permission.permissionable.name == system_resource_name && permission.create_p
+            return true
+          end
+        end
+      end
+    end
+    false
+  end
+  
+  def can_update(system_resource_name)
+    self.roles.each do |role|
+      role.permissions.each do |permission|
+        if permission.permissionable.is_a? SystemResource
+          if permission.permissionable.name == system_resource_name && permission.update_p
+            return true
+          end
+        end
+      end
+    end
+    false
+  end
+  
+  def can_delete(system_resource_name)
+    self.roles.each do |role|
+      role.permissions.each do |permission|
+        if permission.permissionable.is_a? SystemResource
+          if permission.permissionable.name == system_resource_name && permission.delete_p
+            return true
+          end
+        end
+      end
+    end
+    false
+  end
+  
   protected 
     def encrypt_new_password
       return if password.blank?

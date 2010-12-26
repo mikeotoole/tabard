@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+SystemResource.create(:name => "User")
+SystemResource.create(:name => "Role")
+SystemResource.create(:name => "Game")

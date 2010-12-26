@@ -22,11 +22,8 @@ The User will select what game they want a profile for. -->
   </div>
 <% end %>
 
-  <div class="field">
-    Game: <br />
-	<%= collection_select(:type_helper, :id, Game.all, :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
-  </div>
-
+    Type: <%= @profile.type_helper %>
+    <%= f.hidden_field :type_helper, :value => @profile.type_helper%>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
