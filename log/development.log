@@ -11010,3 +11010,614 @@ Started GET "/roles" for 127.0.0.1 at 2010-12-26 06:17:27 -0800
 Rendered roles/index.html.erb within layouts/application (11.7ms)
 Completed 200 OK in 144ms (Views: 15.8ms | ActiveRecord: 3.6ms)
 >>>>>>> 74f4d9158382b0a1c2673d1abf6bec568c158582
+  [1m[36mSQL (0.6ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (16.6ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (12.5ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (214.3ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "profiles"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (198.6ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (2.1ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "users"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226133949')
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226000200')[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226003943')
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226042457')[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226120913')
+  [1m[36mSQL (0.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226125752')[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226130836')
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2010-12-26 19:45:31.750407', '2010-12-26 19:45:31.750407')
+  [1m[36mAREL (0.2ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2010-12-26 19:45:31.816816', '2010-12-26 19:45:31.816816')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2010-12-26 19:45:31.819266', '2010-12-26 19:45:31.819266')
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 12:45:46 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 29ms (Views: 8.6ms | ActiveRecord: 24.6ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2010-12-26 12:45:49 -0700
+  Processing by UsersController#new as HTML
+Rendered users/_form.html.erb (8.3ms)
+Rendered users/new.html.erb within layouts/application (12.1ms)
+Completed 200 OK in 32ms (Views: 15.8ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2010-12-26 12:46:02 -0700
+  Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vRXeq6+2z7Pp9nqZ/wCEzuP5Z042mPW3JyX8BeGOCLE=", "user"=>{"email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('mpotoole@gmail.com', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', '2010-12-26 19:46:02.329101', '2010-12-26 19:46:02.329101')[0m
+Redirected to http://localhost:3000/login
+Completed 302 Found in 34ms
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-26 12:46:02 -0700
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (48.5ms)
+Completed 200 OK in 52ms (Views: 51.7ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-26 12:46:14 -0700
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vRXeq6+2z7Pp9nqZ/wCEzuP5Z042mPW3JyX8BeGOCLE=", "email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/profiles/new
+Completed 302 Found in 57ms
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-26 12:46:14 -0700
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (35.6ms)
+Completed 200 OK in 72ms (Views: 40.3ms | ActiveRecord: 2.7ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-26 12:46:23 -0700
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vRXeq6+2z7Pp9nqZ/wCEzuP5Z042mPW3JyX8BeGOCLE=", "profile"=>{"type_helper"=>"UserProfile", "name"=>"Mike O'Toole"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Mike O''Toole', '2010-12-26 19:46:23.845415', '2010-12-26 19:46:23.845415', 'UserProfile', 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/1
+Completed 302 Found in 68ms
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-26 12:46:23 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (41.9ms)
+Completed 200 OK in 74ms (Views: 44.9ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-26 12:46:26 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles"
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/index.html.erb within layouts/application (38.3ms)
+Completed 200 OK in 61ms (Views: 41.4ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 12:46:29 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (17.6ms)
+Completed 200 OK in 34ms (Views: 20.2ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 12:46:35 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (51.9ms)
+Completed 200 OK in 70ms (Views: 54.5ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-26 12:46:37 -0700
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 32ms (Views: 8.4ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-26 12:46:45 -0700
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vRXeq6+2z7Pp9nqZ/wCEzuP5Z042mPW3JyX8BeGOCLE=", "profile"=>{"type_helper"=>"GameProfile", "name"=>"Mike's Game"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Mike''s Game', '2010-12-26 19:46:46.007888', '2010-12-26 19:46:46.007888', 'GameProfile', 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/2
+Completed 302 Found in 26ms
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-26 12:46:46 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (9.8ms)
+Completed 200 OK in 33ms (Views: 12.6ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-26 12:46:47 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/index.html.erb within layouts/application (12.1ms)
+Completed 200 OK in 34ms (Views: 14.8ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 12:46:54 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (14.8ms)
+Completed 200 OK in 34ms (Views: 17.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 12:46:56 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (17.8ms)
+Completed 200 OK in 38ms (Views: 20.4ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-26 12:47:03 -0700
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 34ms (Views: 11.0ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-26 12:47:10 -0700
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vRXeq6+2z7Pp9nqZ/wCEzuP5Z042mPW3JyX8BeGOCLE=", "profile"=>{"type_helper"=>"GameProfile", "name"=>"Mike's 2nd"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Mike''s 2nd', '2010-12-26 19:47:10.550664', '2010-12-26 19:47:10.550664', 'GameProfile', 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/3
+Completed 302 Found in 53ms
+
+
+Started GET "/profiles/3" for 127.0.0.1 at 2010-12-26 12:47:10 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 3) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 68ms (Views: 13.1ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 12:47:12 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (43.1ms)
+Completed 200 OK in 61ms (Views: 45.9ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 12:47:14 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (44.2ms)
+Completed 200 OK in 66ms (Views: 46.6ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-26 12:47:30 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Rendered users/_form.html.erb (34.7ms)
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/edit.html.erb within layouts/application (42.8ms)
+Completed 200 OK in 64ms (Views: 46.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-26 12:47:34 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (42.9ms)
+Completed 200 OK in 62ms (Views: 45.5ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 12:47:36 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (16.2ms)
+Completed 200 OK in 34ms (Views: 18.8ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 12:47:39 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (18.2ms)
+Completed 200 OK in 38ms (Views: 20.4ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 12:49:06 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 62ms (Views: 28.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 12:49:09 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 35ms (Views: 0.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/game" for 127.0.0.1 at 2010-12-26 12:49:20 -0700
+
+ActionController::RoutingError (No route matches "/game"):
+  
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 12:49:23 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 63ms (Views: 0.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-26 12:50:06 -0700
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 61ms (Views: 0.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 12:51:24 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (20.2ms)
+Completed 200 OK in 40ms (Views: 23.5ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/characters" for 127.0.0.1 at 2010-12-26 12:51:44 -0700
+
+ActionController::RoutingError (No route matches "/characters"):
+  
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 12:51:52 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 63ms (Views: 0.8ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 13:13:07 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 63ms (Views: 0.8ms | ActiveRecord: 1.6ms)
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games"[0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mAREL (0.5ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('test game', '2010-12-26 20:14:38.343183', '2010-12-26 20:14:38.343183', NULL, NULL, NULL)[0m
+  [1m[35mGame Load (0.5ms)[0m  SELECT "games".* FROM "games"
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 13:14:50 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 63ms (Views: 0.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 13:14:51 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 60ms (Views: 0.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 13:14:57 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (48.3ms)
+Completed 200 OK in 79ms (Views: 64.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/1/edit" for 127.0.0.1 at 2010-12-26 13:15:05 -0700
+  Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+Rendered users/_form.html.erb (6.2ms)
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/edit.html.erb within layouts/application (45.0ms)
+Completed 200 OK in 67ms (Views: 47.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-26 13:15:11 -0700
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (14.8ms)
+Completed 200 OK in 32ms (Views: 18.1ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 13:15:14 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (17.1ms)
+Completed 200 OK in 38ms (Views: 19.4ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-26 13:15:16 -0700
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 33ms (Views: 13.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles/1/edit" for 127.0.0.1 at 2010-12-26 13:15:18 -0700
+  Processing by ProfilesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 1) LIMIT 1
+Rendered profiles/_form.html.erb (2.8ms)
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/edit.html.erb within layouts/application (13.7ms)
+Completed 200 OK in 34ms (Views: 16.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-26 13:15:21 -0700
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (12.6ms)
+Completed 200 OK in 33ms (Views: 15.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-26 13:15:27 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (16.6ms)
+Completed 200 OK in 38ms (Views: 19.7ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 13:15:35 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (18.7ms)
+Completed 200 OK in 37ms (Views: 20.7ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2010-12-26 13:15:51 -0700
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (14.5ms)
+Completed 200 OK in 35ms (Views: 17.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 13:15:55 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (17.5ms)
+Completed 200 OK in 36ms (Views: 19.7ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 13:16:06 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 34ms (Views: 0.7ms | ActiveRecord: 0.9ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.2ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2010-12-26 22:34:14.489066', '2010-12-26 22:34:14.489066')
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2010-12-26 22:34:14.496613', '2010-12-26 22:34:14.496613')[0m
+  [1m[35mPermission Load (0.3ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mAREL (1.1ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Game Full Access', 1, '2010-12-26 22:34:44.572510', '2010-12-26 22:34:44.572510', NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.7ms)[0m  UPDATE "permissions" SET "show_p" = 't', "create_p" = 't', "update_p" = 't', "delete_p" = 't', "updated_at" = '2010-12-26 22:35:31.507072' WHERE ("permissions"."id" = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources"[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 15:38:18 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 90ms (Views: 1.0ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-26 15:38:20 -0700
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (17.1ms)
+Completed 200 OK in 42ms (Views: 20.2ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 15:38:36 -0700
+  Processing by GamesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.3ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 85ms (Views: 0.9ms | ActiveRecord: 1.7ms)
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT "roles".* FROM "roles" LIMIT 1[0m
+  [1m[35mRole Load (0.2ms)[0m  SELECT "roles".* FROM "roles" LIMIT 1
+  [1m[36mPermission Load (0.8ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mPermission Load (0.6ms)[0m  SELECT "permissions".* FROM "permissions" LIMIT 1
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" LIMIT 1[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mPermission Load (0.6ms)[0m  [1mSELECT "permissions".* FROM "permissions" LIMIT 1[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" LIMIT 1
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mPermission Load (0.8ms)[0m  SELECT "permissions".* FROM "permissions" LIMIT 1
+  [1m[36mAREL (0.6ms)[0m  [1mUPDATE "permissions" SET "permissionable_id" = 3, "permissionable_type" = 'SystemResource', "updated_at" = '2010-12-26 22:41:25.035930' WHERE ("permissions"."id" = 1)[0m
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 15:41:32 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.3ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games"
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/index.html.erb within layouts/application (15.9ms)
+Completed 200 OK in 180ms (Views: 74.9ms | ActiveRecord: 3.0ms)
+  [1m[35mAREL (0.6ms)[0m  UPDATE "permissions" SET "show_p" = 'f', "updated_at" = '2010-12-26 22:41:57.419129' WHERE ("permissions"."id" = 1)
+
+
+Started GET "/games" for 127.0.0.1 at 2010-12-26 15:42:02 -0700
+  Processing by GamesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mPermission Load (0.5ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSystemResource Load (0.2ms)[0m  [1mSELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1[0m
+Rendered text template (0.0ms)
+Completed 403 Forbidden in 107ms (Views: 1.0ms | ActiveRecord: 1.8ms)
+  [1m[36mAREL (0.7ms)[0m  [1mUPDATE "permissions" SET "show_p" = 't', "updated_at" = '2010-12-26 22:42:37.706396' WHERE ("permissions"."id" = 1)[0m
