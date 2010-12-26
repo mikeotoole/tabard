@@ -9055,3 +9055,284 @@ Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 17:18:53 -0800
   [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
 Rendered profiles/new.html.erb within layouts/application (7.0ms)
 Completed 200 OK in 72ms (Views: 11.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:07:13 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (50.8ms)
+Completed 200 OK in 87ms (Views: 55.0ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:08:54 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/new.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 39ms (Views: 11.2ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-25 20:09:04 -0800
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/UGLpS1w0LHmisJ/qAHFBX41hmri3Oh2sAFLm072PfE=", "profile"=>{"name"=>"Joe's User Profile"}, "commit"=>"Create Profile"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Joe''s User Profile', '2010-12-26 04:09:04.996841', '2010-12-26 04:09:04.996841', NULL, 1, NULL)
+Redirected to http://localhost:3000/profiles/1
+Completed 302 Found in 35ms
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-25 20:09:05 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (16.7ms)
+Completed 200 OK in 78ms (Views: 21.5ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:09:07 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (53.0ms)
+Completed 200 OK in 73ms (Views: 56.8ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:09:25 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (20.8ms)
+Completed 200 OK in 41ms (Views: 24.6ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-25 20:09:31 -0800
+  Processing by ProfilesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/index.html.erb within layouts/application (14.4ms)
+Completed 200 OK in 39ms (Views: 18.8ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/profiles/1" for 127.0.0.1 at 2010-12-25 20:09:33 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (13.5ms)
+Completed 200 OK in 69ms (Views: 17.6ms | ActiveRecord: 1.6ms)
+  [1m[36mSQL (1.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles"
+  [1m[36mProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mAREL (0.5ms)[0m  [1mUPDATE "profiles" SET "type" = 'UserProfile', "updated_at" = '2010-12-26 04:12:17.898689' WHERE ("profiles"."id" = 1)[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:12:27 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (54.6ms)
+Completed 200 OK in 74ms (Views: 58.0ms | ActiveRecord: 1.8ms)
+  [1m[35mAREL (0.5ms)[0m  DELETE FROM "profiles" WHERE ("profiles"."id" = 1)
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:12:54 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (22.1ms)
+Completed 200 OK in 42ms (Views: 26.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:12:56 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Completed   in 27ms
+
+ArgumentError (wrong number of arguments (1 for 0)):
+  app/models/profile.rb:19:in `type_helper'
+  app/controllers/profiles_controller.rb:31:in `new'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.9ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.3ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:13:29 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 39ms (Views: 11.2ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-25 20:13:38 -0800
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/UGLpS1w0LHmisJ/qAHFBX41hmri3Oh2sAFLm072PfE=", "profile"=>{"name"=>"Joe's User Profile"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Joe''s User Profile', '2010-12-26 04:13:38.650047', '2010-12-26 04:13:38.650047', NULL, 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/2
+Completed 302 Found in 60ms
+
+
+Started GET "/profiles/2" for 127.0.0.1 at 2010-12-25 20:13:38 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (15.7ms)
+Completed 200 OK in 41ms (Views: 19.9ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:17:02 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/new.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 39ms (Views: 11.3ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-25 20:17:09 -0800
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/UGLpS1w0LHmisJ/qAHFBX41hmri3Oh2sAFLm072PfE=", "profile"=>{"name"=>"J Profile"}, "commit"=>"Create Profile"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+#<Profile:0x00000101c457f0>
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('J Profile', '2010-12-26 04:17:09.105107', '2010-12-26 04:17:09.105107', NULL, 1, NULL)
+Redirected to http://localhost:3000/profiles/3
+Completed 302 Found in 29ms
+
+
+Started GET "/profiles/3" for 127.0.0.1 at 2010-12-25 20:17:09 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 3) LIMIT 1
+  [1m[36mUserProfile Load (1.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/show.html.erb within layouts/application (17.9ms)
+Completed 200 OK in 78ms (Views: 21.5ms | ActiveRecord: 5.5ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:19:30 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (39.2ms)
+Completed 200 OK in 71ms (Views: 43.7ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-25 20:19:36 -0800
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/UGLpS1w0LHmisJ/qAHFBX41hmri3Oh2sAFLm072PfE=", "profile"=>{"type_helper"=>"UserProfile", "name"=>"Please Work"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Please Work', '2010-12-26 04:19:36.965291', '2010-12-26 04:19:36.965291', 'UserProfile', 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/4
+Completed 302 Found in 29ms
+
+
+Started GET "/profiles/4" for 127.0.0.1 at 2010-12-25 20:19:36 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 4) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (14.3ms)
+Completed 200 OK in 39ms (Views: 18.1ms | ActiveRecord: 4.1ms)
+  [1m[35mProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mDELETE FROM "profiles" WHERE ("profiles"."id" = 2)[0m
+  [1m[35mProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mDELETE FROM "profiles" WHERE ("profiles"."id" = 3)[0m
+  [1m[35mProfile Load (5.5ms)[0m  SELECT "profiles".* FROM "profiles" LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mDELETE FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles"."id" = 4)[0m
+
+
+Started GET "/profiles/4" for 127.0.0.1 at 2010-12-25 20:19:53 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.1ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 4) LIMIT 1
+Completed   in 53ms
+
+ActiveRecord::RecordNotFound (Couldn't find Profile with ID=4):
+  app/controllers/profiles_controller.rb:17:in `show'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.0ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (9.6ms)
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:20:08 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (20.8ms)
+Completed 200 OK in 41ms (Views: 24.7ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/profiles/new" for 127.0.0.1 at 2010-12-25 20:20:11 -0800
+  Processing by ProfilesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/new.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 38ms (Views: 11.2ms | ActiveRecord: 1.2ms)
+
+
+Started POST "/profiles" for 127.0.0.1 at 2010-12-25 20:20:16 -0800
+  Processing by ProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/UGLpS1w0LHmisJ/qAHFBX41hmri3Oh2sAFLm072PfE=", "profile"=>{"type_helper"=>"UserProfile", "name"=>"J Account"}, "commit"=>"Create Profile"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('J Account', '2010-12-26 04:20:16.457521', '2010-12-26 04:20:16.457521', 'UserProfile', 1, NULL)[0m
+Redirected to http://localhost:3000/profiles/5
+Completed 302 Found in 29ms
+
+
+Started GET "/profiles/5" for 127.0.0.1 at 2010-12-25 20:20:16 -0800
+  Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 5) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered profiles/show.html.erb within layouts/application (53.4ms)
+Completed 200 OK in 82ms (Views: 57.3ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/profiles" for 127.0.0.1 at 2010-12-25 20:20:25 -0800
+  Processing by ProfilesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles"
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered profiles/index.html.erb within layouts/application (15.2ms)
+Completed 200 OK in 40ms (Views: 19.3ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/logout" for 127.0.0.1 at 2010-12-25 20:21:27 -0800
+  Processing by SessionsController#destroy as HTML
+Redirected to http://localhost:3000/
+Completed 302 Found in 3ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-25 20:21:27 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+Rendered users/index.html.erb within layouts/application (12.6ms)
+Completed 200 OK in 34ms (Views: 17.0ms | ActiveRecord: 2.8ms)

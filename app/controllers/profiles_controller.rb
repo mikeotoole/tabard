@@ -28,9 +28,11 @@ class ProfilesController < ApplicationController
     if @profile_type == "UserProfile" || current_user.user_profile == nil
       flash.now[:alert] = "Please create a user profile to finish creating your account."
       @profile = UserProfile.new
+      @profile.type = "UserProfile"
     else
       flash.now[:alert] = "Please create a game profile."
       @profile = GameProfile.new
+      @profile.type = "GameProfile"
     end
     @profile.user = current_user
     respond_to do |format|

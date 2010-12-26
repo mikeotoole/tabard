@@ -15,6 +15,7 @@
 
   <div class="field">
     Type: <%= @profile.type_helper %>
+    <%= f.hidden_field :type_helper, :value => @profile.type_helper%>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
