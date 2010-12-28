@@ -14,11 +14,7 @@
 
 <div>
   <h3>Game Profiles</h3>
-  <ul>
-    <% @user.game_profiles.each do |gprof| %>
-      <li><%= link_to "Show", profile_path(gprof) %></li>
-    <% end %>
-  </ul>
+  <%= render @user.game_profiles %>
 </div>
-<%= link_to 'New Profile', new_profile_path %> |
+<%= link_to 'New Profile', profiles_newgame_path %> |
 <%= link_to 'Back', users_path %>

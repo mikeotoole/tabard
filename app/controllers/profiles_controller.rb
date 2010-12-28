@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate  
+  
   # GET /profiles
   # GET /profiles.xml
   def index
@@ -40,6 +41,19 @@ class ProfilesController < ApplicationController
       format.xml  { render :xml => @profile }
     end
   end
+  
+  # GET /profiles/newgame
+  # GET /profiles/newgame.xml
+  def newgame
+    flash.now[:alert] = "Please create a game profile."
+    @profile = GameProfile.new
+    @profile.type_helper = "GameProfile"
+    @profile.user = current_user
+    respond_to do |format|
+      format.html # newgame.html.erb
+      format.xml  { render :xml => @profile }
+    end
+  end
 
   # GET /profiles/1/edit
   def edit
@@ -49,8 +63,14 @@ class ProfilesController < ApplicationController
   # POST /profiles
   # POST /profiles.xml
   def create
-    @profile = Profile.new(params[:profile])
-    @profile.user = current_user
+    if @profile == nil
+      logger.debug "profile was nil"
+      @profile = Profile.new(params[:profile])
+      @profile.user = current_user
+    else
+      @profile.update_attributes(params[:profile])
+    end
+
     respond_to do |format|
       if @profile.save
         format.html { redirect_to(@profile, :notice => 'Profile was successfully created.') }

@@ -1,0 +1,2 @@
+module GameProfilesHelper
+end

@@ -1,17 +1,20 @@
 Bv::Application.routes.draw do
-  resources :system_resources
-
   root :to => "users#index"
-  resources :profiles
-
-  resources :permissions
-
-  resources :roles
-
-  resources :users
-  resource :session
+  
+  match '/profiles/newgame' => "profiles#newgame"
+  #match '/gameprofiles/:id' => "profiles#showgame"
+  
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
+  
+  resources :profiles
+  
+  resources :permissions
+  resources :roles    
+  resources :system_resources
+  
+  resources :users
+  resource :session
   
   resources :games do
     resources :characters
