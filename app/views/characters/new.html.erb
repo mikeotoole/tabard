@@ -1,4 +1,5 @@
 <%= form_for([@game, @game.characters.new]) do |f| %>
+<%= f.hidden_field :game_profile_id, :value => @profile.id%>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>

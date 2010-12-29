@@ -45,10 +45,11 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to(@game, :notice => 'Character was successfully created.') }
+        @profile = Profile.find(@character.game_profile_id)
+        format.html { redirect_to(@profile, :notice => 'Character was successfully created.') }
         format.xml  { render :xml => @character, :status => :created, :location => @character }
       else
-        format.html { redirect_to @game, :alert => 'Unable to add character' }
+        format.html { redirect_to @profile, :alert => 'Unable to add character' }
         format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
       end
     end

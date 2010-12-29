@@ -14,7 +14,9 @@
 
 <div>
   <h3>Game Profiles</h3>
-  <%= render @user.game_profiles %>
+  <% if @user.game_profiles != nil %>
+  	<%= render @user.game_profiles %>
+  <% end %>
 </div>
 <%= link_to 'New Profile', profiles_newgame_path %> |
 <%= link_to 'Back', users_path %>

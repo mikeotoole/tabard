@@ -11,7 +11,8 @@
       </ul>
     </div>
   <% end %>
-
+  
+	<%= f.hidden_field :type_helper, :value => "GameProfile"%>
   <div class="field">
     Game: <br />
 	<%= collection_select(:profile, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>

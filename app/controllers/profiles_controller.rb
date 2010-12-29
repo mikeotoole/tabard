@@ -16,10 +16,20 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.xml
   def show
     @profile = Profile.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @profile }
+    if @profile.game_id != nil
+      @game = Game.find(@profile.game_id)
+    end
+    
+    if @profile.type == "GameProfile"
+      respond_to do |format|
+        format.html { render :file => 'profiles/showgame' }
+        format.xml  { render :xml => @profile }
+      end
+    else
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @profile }
+      end
     end
   end
 

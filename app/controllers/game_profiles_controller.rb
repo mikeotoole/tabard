@@ -1,4 +1,5 @@
 class GameProfilesController < ProfilesController
+# currently this controller is not being used.  
   
   # GET /profiles/1
   # GET /profiles/1.xml
