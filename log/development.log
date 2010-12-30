@@ -10380,3 +10380,133 @@ Started GET "/roles" for 127.0.0.1 at 2010-12-26 06:17:27 -0800
   [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
 Rendered roles/index.html.erb within layouts/application (11.7ms)
 Completed 200 OK in 144ms (Views: 15.8ms | ActiveRecord: 3.6ms)
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-27 22:28:56 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 42ms (Views: 18.3ms | ActiveRecord: 0.8ms)
+  [1m[36mSQL (22.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (1.1ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2010-12-30 04:37:36.100176', '2010-12-30 04:37:36.100176')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2010-12-30 04:37:36.161973', '2010-12-30 04:37:36.161973')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2010-12-30 04:37:36.175560', '2010-12-30 04:37:36.175560')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2010-12-30 04:37:36.214481', '2010-12-30 04:37:36.214481', 4, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2010-12-30 04:37:36.226940', '2010-12-30 04:37:36.226940', 5, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2010-12-30 04:37:36.240514', '2010-12-30 04:37:36.240514', 6, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2010-12-30 04:37:36.307630', '2010-12-30 04:37:36.307630')
+  [1m[36mAREL (0.2ms)[0m  [1mUPDATE "permissions" SET "role_id" = 2, "updated_at" = '2010-12-30 04:37:36.312314' WHERE ("permissions"."id" = 4)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 2, "updated_at" = '2010-12-30 04:37:36.313888' WHERE ("permissions"."id" = 5)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 2, "updated_at" = '2010-12-30 04:37:36.314839' WHERE ("permissions"."id" = 6)[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2010-12-30 04:37:36.387652', '2010-12-30 04:37:36.387652')[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (2, 2, '2010-12-30 04:37:36.390503', '2010-12-30 04:37:36.390503')
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (2.1ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "games"
+  [1m[36mSQL (9.6ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (6.2ms)[0m  [1mDROP TABLE "permissions"[0m
+  [1m[35mSQL (2.0ms)[0m  CREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (11.8ms)[0m  DROP TABLE "profiles"
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (5.0ms)[0m  [1mDROP TABLE "roles"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (5.2ms)[0m  DROP TABLE "roles_users"
+  [1m[36mSQL (7.9ms)[0m  [1mCREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "sessions"[0m
+  [1m[35mSQL (5.1ms)[0m  CREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (5.2ms)[0m  [1mCREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (6.7ms)[0m  [1mDROP TABLE "system_resources"[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (14.0ms)[0m  DROP TABLE "users"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2010-12-30 04:37:44.023562', '2010-12-30 04:37:44.023562')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2010-12-30 04:37:44.113400', '2010-12-30 04:37:44.113400')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2010-12-30 04:37:44.116551', '2010-12-30 04:37:44.116551')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2010-12-30 04:37:44.151757', '2010-12-30 04:37:44.151757', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2010-12-30 04:37:44.163256', '2010-12-30 04:37:44.163256', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2010-12-30 04:37:44.166818', '2010-12-30 04:37:44.166818', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2010-12-30 04:37:44.230815', '2010-12-30 04:37:44.230815')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2010-12-30 04:37:44.235234' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2010-12-30 04:37:44.236572' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2010-12-30 04:37:44.237475' WHERE ("permissions"."id" = 3)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2010-12-30 04:37:44.282535', '2010-12-30 04:37:44.282535')
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2010-12-30 04:37:44.285410', '2010-12-30 04:37:44.285410')[0m
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
+  [1m[36mRole Load (0.3ms)[0m  [1mSELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 ) LIMIT 1[0m
+  [1m[35mPermission Load (0.7ms)[0m  SELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSystemResource Load (0.4ms)[0m  SELECT "system_resources".* FROM "system_resources"
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" LIMIT 1
