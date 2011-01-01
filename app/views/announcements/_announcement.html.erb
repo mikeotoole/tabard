@@ -1,0 +1,9 @@
+<%= div_for announcement do %>
+  <h3>
+    <%= link_to announcement.title, announcement %> 
+      <span class='actions'>
+      	<%= link_to( 'Edit', edit_announcement_path(announcement)) %>
+        <%= link_to( 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete) %>
+      </span>
+  </h3>
+<% end %>

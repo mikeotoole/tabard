@@ -1,4 +1,5 @@
 class Game < ActiveRecord::Base
+ has_many :GameAnnouncements
  has_many :characters, :dependent => :destroy
  has_many :game_profiles, :dependent => :destroy
  

@@ -14,6 +14,9 @@ class GameAnnouncementsController < ApplicationController
   # GET /game_announcements/1.xml
   def show
     @game_announcement = GameAnnouncement.find(params[:id])
+    if @game_announcement.game_id != nil
+      @game = Game.find(@game_announcement.game_id)
+    end
 
     respond_to do |format|
       format.html # show.html.erb

@@ -10,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="field">
+	<%= f.label 'Type' %><br />
+	<%= f.select :type_helper, Announcement::select_options %>
+  </div>
 
   <div class="field">
     <%= f.label :title %><br />
@@ -21,7 +26,7 @@
   </div>
   <div class="field">
     <%= f.label :game_id %><br />
-    <%= f.text_field :game_id %>
+	<%= f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
   </div>
   <div class="actions">
     <%= f.submit %>

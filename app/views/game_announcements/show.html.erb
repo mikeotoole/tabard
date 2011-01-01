@@ -1,5 +1,19 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Title:</b>
+  <%= @game_announcement.title %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @game_announcement.body %>
+</p>
+
+<p>
+  <b>Game:</b>
+  <%= render @game %>
+</p>
 
 <%= link_to 'Edit', edit_game_announcement_path(@game_announcement) %> |
-<%= link_to 'Back', game_announcements_path %>
+<%= link_to 'Back', 'javascript:history.go(-1);' %>

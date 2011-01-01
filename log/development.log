@@ -16236,3 +16236,1192 @@ Migrating to CreateAcknowledgmentOfAnnouncements (20101231035428)
   [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
   [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
   [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 16:46:28 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (26.0ms)
+Completed 200 OK in 158ms (Views: 30.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2010-12-31 16:46:32 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (47.5ms)
+Completed 200 OK in 51ms (Views: 51.0ms | ActiveRecord: 18.6ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2010-12-31 16:46:45 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"p1WrkaGKcoNGuf6zex+vyeUZUgEkJyMr4Cmz/5Fix+I=", "email"=>"mpotoole@gmail.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'mpotoole@gmail.com') LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 67ms
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 16:46:45 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (23.8ms)
+Completed 200 OK in 71ms (Views: 26.4ms | ActiveRecord: 63.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 16:46:48 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (2.1ms)
+Rendered users/show.html.erb within layouts/application (145.2ms)
+Completed   in 166ms
+
+ActionView::Template::Error (undefined local variable or method `new_announcemnet_path' for #<#<Class:0x000001010b3e50>:0x00000101045d60>):
+    17:   <% end %>
+    18: </div>
+    19: <%= link_to 'New Profile', profiles_newgame_path %> |
+    20: <%= link_to 'New Announcement', new_announcemnet_path %> |
+    21: <%= link_to 'Edit User', edit_user_path(@user) %> |
+    22: <%= link_to 'Back', users_path %>
+  app/views/users/show.html.erb:20:in `_app_views_users_show_html_erb__2871382853676374084_2155104880_278144304987017156'
+  app/controllers/users_controller.rb:19:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (8.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 16:47:02 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (20.4ms)
+Completed 200 OK in 67ms (Views: 24.3ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:47:08 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (70.0ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (135.1ms)
+Completed 200 OK in 215ms (Views: 155.8ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 16:47:31 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (1.7ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (20.5ms)
+Completed 200 OK in 43ms (Views: 23.4ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:47:52 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (8.6ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (80.8ms)
+Completed 200 OK in 105ms (Views: 84.1ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 16:47:58 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (2.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (46.6ms)
+Completed 200 OK in 96ms (Views: 49.0ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:49:07 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (6.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (82.9ms)
+Completed 200 OK in 110ms (Views: 86.8ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 16:49:09 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (2.2ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (21.3ms)
+Completed 200 OK in 73ms (Views: 24.4ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:54:09 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/new.html.erb within layouts/application (5.8ms)
+Completed   in 72ms
+
+ActionView::Template::Error (undefined local variable or method `f' for #<#<Class:0x000001014cd220>:0x000001014c0980>):
+    2: 
+    3: <div class="field">
+    4: 	Type: <br />
+    5: 	<%= f.select( :type_helper, Announcement.select_options) %>
+    6: </div>
+    7: 
+    8: <%= render 'form' %>
+  app/views/announcements/new.html.erb:5:in `_app_views_announcements_new_html_erb___1304769339082562078_2158347340_278144304987017156'
+  app/controllers/announcements_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.0ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:54:47 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/new.html.erb within layouts/application (0.6ms)
+Completed   in 22ms
+
+ActionView::Template::Error (wrong number of arguments (2 for 3)):
+    2: 
+    3: <div class="field">
+    4: 	Type: <br />
+    5: 	<%= select( :type_helper, Announcement.select_options) %>
+    6: </div>
+    7: 
+    8: <%= render 'form' %>
+  app/views/announcements/new.html.erb:5:in `_app_views_announcements_new_html_erb___1304769339082562078_2157070280_278144304987017156'
+  app/controllers/announcements_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.5ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.3ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 16:56:22 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/new.html.erb within layouts/application (0.7ms)
+Completed   in 32ms
+
+ActionView::Template::Error (wrong number of arguments (2 for 3)):
+    2: 
+    3: <div class="field">
+    4: 	Type: <br />
+    5: 	<%= select :type_helper, Announcement::select_options %>
+    6: </div>
+    7: 
+    8: <%= render 'form' %>
+  app/views/announcements/new.html.erb:5:in `_app_views_announcements_new_html_erb___1304769339082562078_2154685120_278144304987017156'
+  app/controllers/announcements_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.9ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:00:24 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (7.2ms)
+Rendered announcements/new.html.erb within layouts/application (8.7ms)
+Completed   in 38ms
+
+ActionView::Template::Error (undefined method `type' for #<Announcement:0x00000100d2b0a8>):
+    13:   
+    14:   <div class="field">
+    15: 	<%= f.label 'Type' %><br />
+    16: 	<%= f.select :type_helper, Announcement::select_options %>
+    17:   </div>
+    18: 
+    19:   <div class="field">
+  app/models/announcement.rb:11:in `type_helper'
+  app/views/announcements/_form.html.erb:16:in `block in _app_views_announcements__form_html_erb___1700078293113947666_2154182300__3632046112865439918'
+  app/views/announcements/_form.html.erb:1:in `_app_views_announcements__form_html_erb___1700078293113947666_2154182300__3632046112865439918'
+  app/views/announcements/new.html.erb:3:in `_app_views_announcements_new_html_erb___1304769339082562078_2154205880_278144304987017156'
+  app/controllers/announcements_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.5ms)
+  [1m[36mSQL (23.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+Migrating to CreateAnnouncements (20101231035140)
+Migrating to CreateAcknowledgmentOfAnnouncements (20101231035428)
+Migrating to AddTypeToAnnouncements (20110101010358)
+  [1m[35mSQL (0.0ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.5ms)[0m  [1mALTER TABLE "announcements" ADD "type" varchar(255)[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110101010358')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("acknowledgment_of_announcements")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("announcements")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles_users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:05:53 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (8.2ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (15.9ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (56.8ms)
+Completed 200 OK in 100ms (Views: 44.1ms | ActiveRecord: 16.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:08:11 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (79.6ms)
+Completed 200 OK in 131ms (Views: 99.7ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:08:14 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.9ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (56.4ms)
+Completed 200 OK in 105ms (Views: 59.1ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:08:16 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (45.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (107.7ms)
+Completed 200 OK in 114ms (Views: 110.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:11:19 -0800
+  Processing by AnnouncementsController#new as HTML
+Rendered announcements/_form.html.erb (39.6ms)
+Rendered announcements/new.html.erb within layouts/application (41.2ms)
+Completed   in 50ms
+
+ActionView::Template::Error (wrong number of arguments (7 for 6)):
+    26:   </div>
+    27:   <div class="field">
+    28:     <%= f.label :game_id %><br />
+    29: 	<%= f.collection_select(:announcement, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
+    30:   </div>
+    31:   <div class="actions">
+    32:     <%= f.submit %>
+  app/views/announcements/_form.html.erb:29:in `block in _app_views_announcements__form_html_erb___722087212984664635_2154215060__3514268578257956015'
+  app/views/announcements/_form.html.erb:1:in `_app_views_announcements__form_html_erb___722087212984664635_2154215060__3514268578257956015'
+  app/views/announcements/new.html.erb:3:in `_app_views_announcements_new_html_erb__2825850531269129888_2154242840_149327138128767117'
+  app/controllers/announcements_controller.rb:29:in `new'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (8.0ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:11:41 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered announcements/_form.html.erb (69.7ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.7ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (118.4ms)
+Completed 200 OK in 124ms (Views: 121.7ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:30:43 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (24.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (2.5ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (98.7ms)
+Completed 200 OK in 159ms (Views: 85.4ms | ActiveRecord: 48.3ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:30:45 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered announcements/_form.html.erb (6.3ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (73.8ms)
+Completed 200 OK in 77ms (Views: 75.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:31:08 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE (is_active = 't')
+Rendered announcements/_form.html.erb (5.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (71.7ms)
+Completed 200 OK in 75ms (Views: 73.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:31:11 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered announcements/_form.html.erb (4.8ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (38.4ms)
+Completed 200 OK in 42ms (Views: 40.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/site_announcements/new" for 127.0.0.1 at 2010-12-31 17:32:54 -0800
+  Processing by SiteAnnouncementsController#new as HTML
+Rendered site_announcements/_form.html.erb (4.0ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/new.html.erb within layouts/application (66.0ms)
+Completed 200 OK in 78ms (Views: 74.9ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:32:57 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[35mGame Load (0.5ms)[0m  SELECT "games".* FROM "games" WHERE (is_active = 't')
+Rendered announcements/_form.html.erb (4.4ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (37.5ms)
+Completed 200 OK in 41ms (Views: 39.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/game_announcements/new" for 127.0.0.1 at 2010-12-31 17:32:58 -0800
+  Processing by GameAnnouncementsController#new as HTML
+Rendered game_announcements/_form.html.erb (2.8ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/new.html.erb within layouts/application (66.0ms)
+Completed 200 OK in 89ms (Views: 85.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:33:03 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered announcements/_form.html.erb (4.4ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (67.9ms)
+Completed 200 OK in 72ms (Views: 70.1ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/game_announcements/new" for 127.0.0.1 at 2010-12-31 17:36:44 -0800
+  Processing by GameAnnouncementsController#new as HTML
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE (is_active = 't')
+Rendered game_announcements/_form.html.erb (35.7ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/new.html.erb within layouts/application (72.0ms)
+Completed 200 OK in 76ms (Views: 74.1ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/game_announcements/new" for 127.0.0.1 at 2010-12-31 17:37:19 -0800
+  Processing by GameAnnouncementsController#new as HTML
+  [1m[36mGame Load (0.9ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered game_announcements/_form.html.erb (6.4ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/new.html.erb within layouts/application (42.6ms)
+Completed 200 OK in 47ms (Views: 44.7ms | ActiveRecord: 2.2ms)
+
+
+Started POST "/game_announcements" for 127.0.0.1 at 2010-12-31 17:38:11 -0800
+  Processing by GameAnnouncementsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"p1WrkaGKcoNGuf6zex+vyeUZUgEkJyMr4Cmz/5Fix+I=", "game_announcement"=>{"title"=>"Test Game Announcement", "body"=>"This is a test of the game announcement system. This is only a test.", "game_id"=>"1"}, "commit"=>"Create Game announcement"}
+  [1m[35mAREL (34.1ms)[0m  INSERT INTO "announcements" ("title", "body", "game_id", "created_at", "updated_at", "type") VALUES ('Test Game Announcement', 'This is a test of the game announcement system. This is only a test.', 1, '2011-01-01 01:38:11.889059', '2011-01-01 01:38:11.889059', 'GameAnnouncement')
+Redirected to http://localhost:3000/game_announcements/1
+Completed 302 Found in 43ms
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:38:11 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGameAnnouncement Load (0.3ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/show.html.erb within layouts/application (82.1ms)
+Completed 200 OK in 130ms (Views: 127.7ms | ActiveRecord: 36.8ms)
+
+
+Started GET "/game_announcements" for 127.0.0.1 at 2010-12-31 17:38:16 -0800
+  Processing by GameAnnouncementsController#index as HTML
+  [1m[35mGameAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement')
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.7ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/index.html.erb within layouts/application (71.2ms)
+Completed 200 OK in 92ms (Views: 89.7ms | ActiveRecord: 2.0ms)
+  [1m[36mAnnouncement Load (0.8ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+
+
+Started GET "/game_announcements/new" for 127.0.0.1 at 2010-12-31 17:39:23 -0800
+  Processing by GameAnnouncementsController#new as HTML
+  [1m[36mGame Load (0.7ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered game_announcements/_form.html.erb (5.8ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/new.html.erb within layouts/application (41.9ms)
+Completed 200 OK in 46ms (Views: 43.9ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:39:24 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[35mGame Load (0.6ms)[0m  SELECT "games".* FROM "games" WHERE (is_active = 't')
+Rendered announcements/_form.html.erb (5.6ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered announcements/new.html.erb within layouts/application (76.2ms)
+Completed 200 OK in 107ms (Views: 105.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:39:26 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (50.5ms)
+Completed 200 OK in 90ms (Views: 71.1ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:39:27 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.9ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (23.9ms)
+Completed 200 OK in 75ms (Views: 26.5ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/announcements/new" for 127.0.0.1 at 2010-12-31 17:39:39 -0800
+  Processing by AnnouncementsController#new as HTML
+  [1m[36mGame Load (0.6ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered announcements/_form.html.erb (4.8ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered announcements/new.html.erb within layouts/application (39.2ms)
+Completed 200 OK in 43ms (Views: 41.2ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/site_announcements/new" for 127.0.0.1 at 2010-12-31 17:39:45 -0800
+  Processing by SiteAnnouncementsController#new as HTML
+Rendered site_announcements/_form.html.erb (3.0ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/new.html.erb within layouts/application (62.7ms)
+Completed 200 OK in 67ms (Views: 65.3ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/site_announcements" for 127.0.0.1 at 2010-12-31 17:40:23 -0800
+  Processing by SiteAnnouncementsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"p1WrkaGKcoNGuf6zex+vyeUZUgEkJyMr4Cmz/5Fix+I=", "site_announcement"=>{"type_helper"=>"SiteAnnouncement", "title"=>"Test Site Announcement", "body"=>"This is a test."}, "commit"=>"Create Site announcement"}
+  [1m[35mAREL (15.6ms)[0m  INSERT INTO "announcements" ("title", "body", "game_id", "created_at", "updated_at", "type") VALUES ('Test Site Announcement', 'This is a test.', NULL, '2011-01-01 01:40:23.285853', '2011-01-01 01:40:23.285853', 'SiteAnnouncement')
+Redirected to http://localhost:3000/site_announcements/2
+Completed 302 Found in 25ms
+
+
+Started GET "/site_announcements/2" for 127.0.0.1 at 2010-12-31 17:40:23 -0800
+  Processing by SiteAnnouncementsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSiteAnnouncement Load (0.4ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/show.html.erb within layouts/application (89.5ms)
+Completed 200 OK in 111ms (Views: 108.9ms | ActiveRecord: 18.3ms)
+
+
+Started GET "/site_announcements" for 127.0.0.1 at 2010-12-31 17:40:25 -0800
+  Processing by SiteAnnouncementsController#index as HTML
+  [1m[35mSiteAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement')
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered site_announcements/index.html.erb within layouts/application (63.7ms)
+Completed 200 OK in 70ms (Views: 67.7ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:40:31 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (19.1ms)
+Completed 200 OK in 40ms (Views: 22.5ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:40:32 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (2.0ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (56.3ms)
+Completed 200 OK in 79ms (Views: 60.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:42:27 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (86.2ms)
+Completed   in 120ms
+
+ActionView::Template::Error (uninitialized constant ActionView::CompiledTemplates::Announcemunt):
+    7: 
+    8: <div>
+    9:   <h3>Announcements</h3>
+    10:   <%= render Announcemunt.all %>
+    11: </div>
+    12: 
+    13: <div>
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2153069400_149327138128767117'
+  app/controllers/users_controller.rb:19:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.9ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:44:27 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (15.3ms)
+Completed   in 34ms
+
+ActionView::Template::Error (uninitialized constant ActionView::CompiledTemplates::Announcemunt):
+    7: 
+    8: <div>
+    9:   <h3>Announcements</h3>
+    10:   <%= render Announcemunt.all %>
+    11: </div>
+    12: 
+    13: <div>
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2155535660_149327138128767117'
+  app/controllers/users_controller.rb:19:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (31.6ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (35.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:44:30 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (34.7ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (89.6ms)
+Completed 200 OK in 125ms (Views: 75.7ms | ActiveRecord: 35.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:44:32 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/index.html.erb within layouts/application (18.1ms)
+Completed 200 OK in 67ms (Views: 22.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:45:35 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (18.5ms)
+Completed 200 OK in 40ms (Views: 21.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:45:37 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+Completed   in 48ms
+
+NameError (uninitialized constant UsersController::Announcemunt):
+  app/controllers/users_controller.rb:18:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.7ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:46:27 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (16.6ms)
+Rendered users/show.html.erb within layouts/application (23.3ms)
+Completed   in 74ms
+
+ActionView::Template::Error (Missing partial game_announcements/game_announcement with {:handlers=>[:erb, :rjs, :builder, :rhtml, :rxml], :formats=>[:html], :locale=>[:en, :en]} in view paths "/Users/mpotoole/digitalAugment Inc/Development/git/da-bv-rails/app/views"):
+    7: 
+    8: <div>
+    9:   <h3>Announcements</h3>
+    10:   <%= render @announcements %>
+    11: </div>
+    12: 
+    13: <div>
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2157951920_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.3ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:49:09 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (10.6ms)
+Rendered users/show.html.erb within layouts/application (16.0ms)
+Completed   in 54ms
+
+ActionView::Template::Error (undefined local variable or method `announcement' for #<#<Class:0x00000100d99490>:0x00000100d8d488>):
+    1: <%= div_for announcement do %>
+    2:   <h3>
+    3:     <%= link_to announcement.title, announcement %> 
+    4:       <span class='actions'>
+  app/views/game_announcements/_game_announcement.html.erb:1:in `_app_views_game_announcements__game_announcement_html_erb__1903561234079741021_2154211380_400947123729063918'
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2154583760_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.2ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:49:52 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (11.3ms)
+Rendered users/show.html.erb within layouts/application (17.7ms)
+Completed   in 79ms
+
+ActionView::Template::Error (undefined local variable or method `announcement' for #<#<Class:0x000001020e0b48>:0x000001020da2e8>):
+    1: <%= div_for announcement do %>
+    2:   <h3>
+    3:     <%= link_to announcement.title, announcement %> 
+    4:       <span class='actions'>
+  app/views/game_announcements/_game_announcement.html.erb:1:in `_app_views_game_announcements__game_announcement_html_erb__1903561234079741021_2157259240_400947123729063918'
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2164700500_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:50:00 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (92.0ms)
+Completed 200 OK in 119ms (Views: 96.8ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:50:02 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (29.8ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered users/show.html.erb within layouts/application (8.3ms)
+Completed   in 60ms
+
+ActionView::Template::Error (undefined method `model_name' for NilClass:Class):
+    7: 
+    8: <div>
+    9:   <h3>Announcements</h3>
+    10:   <%= render @announcement %>
+    11: </div>
+    12: 
+    13: <div>
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2181430680_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.3ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (7.9ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:50:27 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.5ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (13.7ms)
+Rendered users/show.html.erb within layouts/application (21.7ms)
+Completed   in 53ms
+
+ActionView::Template::Error (undefined local variable or method `announcement' for #<#<Class:0x0000010124fd68>:0x00000101246088>):
+    1: <%= div_for announcement do %>
+    2:   <h3>
+    3:     <%= link_to announcement.title, announcement %> 
+    4:       <span class='actions'>
+  app/views/game_announcements/_game_announcement.html.erb:1:in `_app_views_game_announcements__game_announcement_html_erb__1903561234079741021_2154954360_400947123729063918'
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2157053900_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.0ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.9ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:51:04 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (13.9ms)
+Rendered users/show.html.erb within layouts/application (50.8ms)
+Completed   in 73ms
+
+ActionView::Template::Error (undefined local variable or method `announcement' for #<#<Class:0x00000100b26c08>:0x00000100b1a2f0>):
+    2:   <h3>
+    3:     <%= link_to game_announcement.title, game_announcement %> 
+    4:       <span class='actions'>
+    5:       	<%= link_to( 'Edit', edit_game_announcement_path(announcement)) %>
+    6:         <%= link_to( 'Delete', game_announcement, :confirm => 'Are you sure?', :method => :delete) %>
+    7:       </span>
+    8:   </h3>
+  app/views/game_announcements/_game_announcement.html.erb:5:in `block in _app_views_game_announcements__game_announcement_html_erb__1903561234079741021_2181362680_400947123729063918'
+  app/views/game_announcements/_game_announcement.html.erb:1:in `_app_views_game_announcements__game_announcement_html_erb__1903561234079741021_2181362680_400947123729063918'
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2153278000_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.2ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (8.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:51:17 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (16.2ms)
+Rendered users/show.html.erb within layouts/application (21.6ms)
+Completed   in 42ms
+
+ActionView::Template::Error (undefined local variable or method `announcement' for #<#<Class:0x00000100f2e030>:0x00000100f24350>):
+    1: <%= div_for announcement do %>
+    2:   <h3>
+    3:     <%= link_to announcement.title, announcement %> 
+    4:       <span class='actions'>
+  app/views/site_announcements/_site_announcement.html.erb:1:in `_app_views_site_announcements__site_announcement_html_erb__2555283744097732315_2154582800__3949381591371295333'
+  app/views/users/show.html.erb:10:in `_app_views_users_show_html_erb__742827428488635126_2155405780_149327138128767117'
+  app/controllers/users_controller.rb:20:in `show'
+
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (0.9ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.8ms)
+Rendered /Users/mpotoole/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:51:51 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.5ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (6.3ms)
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (2.1ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (58.1ms)
+Completed 200 OK in 110ms (Views: 61.6ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:51:57 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/show.html.erb within layouts/application (34.8ms)
+Completed 200 OK in 73ms (Views: 70.5ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:51:59 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (43.9ms)
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (69.3ms)
+Completed 200 OK in 101ms (Views: 72.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/site_announcements/2" for 127.0.0.1 at 2010-12-31 17:52:01 -0800
+  Processing by SiteAnnouncementsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSiteAnnouncement Load (0.4ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/show.html.erb within layouts/application (57.8ms)
+Completed 200 OK in 119ms (Views: 116.9ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:52:02 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (5.2ms)
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (1.6ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (25.3ms)
+Completed 200 OK in 46ms (Views: 27.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/game_announcements/1/edit" for 127.0.0.1 at 2010-12-31 17:52:08 -0800
+  Processing by GameAnnouncementsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mGame Load (1.2ms)[0m  [1mSELECT "games".* FROM "games" WHERE (is_active = 't')[0m
+Rendered game_announcements/_form.html.erb (6.8ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/edit.html.erb within layouts/application (74.3ms)
+Completed 200 OK in 97ms (Views: 93.6ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:52:14 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.3ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (4.9ms)
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (1.7ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (27.0ms)
+Completed 200 OK in 90ms (Views: 29.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/site_announcements/2/edit" for 127.0.0.1 at 2010-12-31 17:52:15 -0800
+  Processing by SiteAnnouncementsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mSiteAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1
+Rendered site_announcements/_form.html.erb (3.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered site_announcements/edit.html.erb within layouts/application (34.8ms)
+Completed 200 OK in 50ms (Views: 48.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:52:17 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.2ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (32.9ms)
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.7ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (52.5ms)
+Completed 200 OK in 72ms (Views: 55.6ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/site_announcements/2/edit" for 127.0.0.1 at 2010-12-31 17:53:00 -0800
+  Processing by SiteAnnouncementsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSiteAnnouncement Load (0.4ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1[0m
+Rendered site_announcements/_form.html.erb (3.2ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/edit.html.erb within layouts/application (75.2ms)
+Completed 200 OK in 80ms (Views: 77.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/site_announcements" for 127.0.0.1 at 2010-12-31 17:53:02 -0800
+  Processing by SiteAnnouncementsController#index as HTML
+  [1m[35mSiteAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement')
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered site_announcements/index.html.erb within layouts/application (32.7ms)
+Completed 200 OK in 74ms (Views: 72.0ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:53:06 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (47.6ms)
+Completed 200 OK in 66ms (Views: 50.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:53:07 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (5.6ms)
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (1.9ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (80.5ms)
+Completed 200 OK in 100ms (Views: 83.1ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:53:10 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.2ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/show.html.erb within layouts/application (61.5ms)
+Completed 200 OK in 66ms (Views: 64.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/game_announcements" for 127.0.0.1 at 2010-12-31 17:53:12 -0800
+  Processing by GameAnnouncementsController#index as HTML
+  [1m[36mGameAnnouncement Load (0.3ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement')[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/index.html.erb within layouts/application (36.9ms)
+Completed 200 OK in 70ms (Views: 68.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:55:07 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (20.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/show.html.erb within layouts/application (94.2ms)
+Completed 200 OK in 99ms (Views: 77.0ms | ActiveRecord: 21.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2010-12-31 17:55:12 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/index.html.erb within layouts/application (18.3ms)
+Completed 200 OK in 87ms (Views: 71.1ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:55:16 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (5.1ms)
+  [1m[35mUserProfile Load (0.6ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (1.8ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (27.3ms)
+Completed 200 OK in 77ms (Views: 29.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/site_announcements/2" for 127.0.0.1 at 2010-12-31 17:55:19 -0800
+  Processing by SiteAnnouncementsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mSiteAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered site_announcements/show.html.erb within layouts/application (35.5ms)
+Completed 200 OK in 40ms (Views: 38.2ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/site_announcements/2" for 127.0.0.1 at 2010-12-31 17:55:34 -0800
+  Processing by SiteAnnouncementsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSiteAnnouncement Load (0.4ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'SiteAnnouncement') AND ("announcements"."id" = 2) LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered site_announcements/show.html.erb within layouts/application (89.5ms)
+Completed 200 OK in 94ms (Views: 91.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:55:39 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.4ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (6.3ms)
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (2.3ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (26.6ms)
+Completed 200 OK in 82ms (Views: 29.7ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:55:41 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.3ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/show.html.erb within layouts/application (60.4ms)
+Completed 200 OK in 65ms (Views: 63.0ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:56:58 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements"
+Rendered collection (6.0ms)
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mGameProfile Load (0.3ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')
+Rendered profiles/_profile.html.erb (1.9ms)
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/show.html.erb within layouts/application (68.3ms)
+Completed 200 OK in 129ms (Views: 106.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:56:59 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGameAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1[0m
+  [1m[35mGame Load (0.4ms)[0m  SELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1
+Rendered games/_game.html.erb (1.9ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered game_announcements/show.html.erb within layouts/application (71.9ms)
+Completed 200 OK in 107ms (Views: 74.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2010-12-31 17:57:07 -0800
+  Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mRole Load (0.4ms)[0m  SELECT * FROM "roles" INNER JOIN "roles_users" ON "roles".id = "roles_users".role_id WHERE ("roles_users".user_id = 1 )
+  [1m[36mPermission Load (0.4ms)[0m  [1mSELECT "permissions".* FROM "permissions" WHERE ("permissions".role_id = 1)[0m
+  [1m[35mSystemResource Load (0.3ms)[0m  SELECT "system_resources".* FROM "system_resources" WHERE ("system_resources"."id" = 3) LIMIT 1
+  [1m[36mGame Load (0.5ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.8ms)
+  [1m[35mCharacter Load (32.7ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_id = 1)
+Rendered characters/_character.html.erb (7.1ms)
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered games/show.html.erb within layouts/application (116.0ms)
+Completed 200 OK in 290ms (Views: 87.2ms | ActiveRecord: 37.3ms)
+
+
+Started GET "/game_announcements/1" for 127.0.0.1 at 2010-12-31 17:57:13 -0800
+  Processing by GameAnnouncementsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mGameAnnouncement Load (0.4ms)[0m  SELECT "announcements".* FROM "announcements" WHERE ("announcements"."type" = 'GameAnnouncement') AND ("announcements"."id" = 1) LIMIT 1
+  [1m[36mGame Load (0.4ms)[0m  [1mSELECT "games".* FROM "games" WHERE ("games"."id" = 1) LIMIT 1[0m
+Rendered games/_game.html.erb (1.5ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered game_announcements/show.html.erb within layouts/application (71.9ms)
+Completed 200 OK in 78ms (Views: 74.7ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2010-12-31 17:57:19 -0800
+  Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1mSELECT "announcements".* FROM "announcements"[0m
+Rendered collection (4.5ms)
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.3ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered profiles/_profile.html.erb (2.1ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/show.html.erb within layouts/application (28.1ms)
+Completed 200 OK in 85ms (Views: 30.9ms | ActiveRecord: 1.9ms)

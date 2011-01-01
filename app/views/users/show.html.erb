@@ -5,7 +5,10 @@
   <%= @user.email %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %>
+<div>
+  <h3>Announcements</h3>
+  <%= render @announcements %>
+</div>
 
 <div>
   <h3>User Profile</h3>
@@ -19,4 +22,6 @@
   <% end %>
 </div>
 <%= link_to 'New Profile', profiles_newgame_path %> |
+<%= link_to 'New Announcement', new_announcement_path %> |
+<%= link_to 'Edit User', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
