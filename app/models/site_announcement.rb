@@ -1,0 +1,2 @@
+class SiteAnnouncement < Announcement
+end

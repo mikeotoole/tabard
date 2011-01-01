@@ -1,0 +1,2 @@
+module SiteAnnouncementsHelper
+end

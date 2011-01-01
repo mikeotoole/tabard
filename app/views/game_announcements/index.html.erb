@@ -1,0 +1,21 @@
+<h1>Listing game_announcements</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @game_announcements.each do |game_announcement| %>
+  <tr>
+    <td><%= link_to 'Show', game_announcement %></td>
+    <td><%= link_to 'Edit', edit_game_announcement_path(game_announcement) %></td>
+    <td><%= link_to 'Destroy', game_announcement, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Game announcement', new_game_announcement_path %>

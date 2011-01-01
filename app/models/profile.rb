@@ -1,6 +1,9 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   
+  has_many :AcknowledgmentOfAnnouncements
+  has_many :Announcements, :through => AcknowledgmentOfAnnouncement
+  
   # Lets the subclasses use the parents routes. 
   def self.inherited(child)
     child.instance_eval do

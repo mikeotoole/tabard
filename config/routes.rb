@@ -1,4 +1,12 @@
 Bv::Application.routes.draw do
+  resources :game_announcements
+
+  resources :site_announcements
+
+  resources :announcements do
+    resources :acknowledgment_of_announcements
+  end
+
   root :to => "users#index"
   
   match '/profiles/newgame' => "profiles#newgame"
@@ -7,7 +15,9 @@ Bv::Application.routes.draw do
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   
-  resources :profiles
+  resources :profiles do
+    resources :acknowledgment_of_announcements
+  end
   
   resources :permissions
   resources :roles    

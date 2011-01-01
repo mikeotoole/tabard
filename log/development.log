@@ -16176,3 +16176,63 @@ Rendered characters/new.html.erb (4.9ms)
 Rendered profiles/showgame.html.erb within layouts/application (57.4ms)
 Completed 200 OK in 79ms (Views: 59.3ms | ActiveRecord: 4.4ms)
   [1m[36mCharacter Load (2.2ms)[0m  [1mSELECT "characters".* FROM "characters"[0m
+  [1m[36mSQL (17.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+Migrating to CreateAnnouncements (20101231035140)
+  [1m[35mSQL (0.0ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.5ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101231035140')
+Migrating to CreateAcknowledgmentOfAnnouncements (20101231035428)
+  [1m[36mSQL (0.4ms)[0m  [1mCREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20101231035428')
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("acknowledgment_of_announcements")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("announcements")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("roles_users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
