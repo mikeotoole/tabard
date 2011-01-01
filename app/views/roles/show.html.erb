@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @role.name %>
-</p>
+<%= render @role %>
 
 
 <%= link_to 'Edit', edit_role_path(@role) %> |

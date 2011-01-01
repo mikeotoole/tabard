@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password
   
+  def name
+    user_profile.name
+  end
+  
   def self.authenticate(email, password) 
     user = find_by_email(email) 
     return user if user && user.authenticated?(password)

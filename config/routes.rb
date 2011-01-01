@@ -1,11 +1,15 @@
 Bv::Application.routes.draw do
-  resources :game_announcements
 
-  resources :site_announcements
+  resources :discussion_spaces
+
+  resources :system_resources
 
   resources :announcements do
     resources :acknowledgment_of_announcements
   end
+  
+  resources :site_announcements
+  resources :game_announcements
 
   root :to => "users#index"
   
@@ -21,7 +25,6 @@ Bv::Application.routes.draw do
   
   resources :permissions
   resources :roles    
-  resources :system_resources
   
   resources :users
   resource :session
