@@ -15,7 +15,42 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  
+  <div class="field">
+    <%= f.label "Users" %><br />
+    <% for user in User.all %>
+      <%= check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user) %>
+      <%= label_tag dom_id(user), user.name, :class => "check_box_label" %>
+    <% end %>
+  </div>
+  
+  <div class="field">
+    <%= f.label "Permissions" %><br />
+    <table>
+      <tr>
+        <th>Resource</th>
+        <th>Create</th>
+        <th>Show</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>Modify</th>
+      </tr>
+      <% for permission in @role.permissions %>
+        <tr>
+          <td>
+            <%= permission.permissionable_name %>
+          </td>
+          <td><%= permission.create_p %></td>
+          <td><%= permission.show_p %></td>
+          <td><%= permission.update_p %></td>
+          <td><%= permission.delete_p %></td>
+          <td><%= link_to "Edit", edit_permission_path(permission) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_or_cancel(f) %>
   </div>
 <% end %>

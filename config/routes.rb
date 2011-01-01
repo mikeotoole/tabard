@@ -1,4 +1,6 @@
 Bv::Application.routes.draw do
+  resources :discussion_spaces
+
   resources :system_resources
 
   root :to => "users#index"

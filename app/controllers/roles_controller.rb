@@ -64,6 +64,9 @@ class RolesController < ApplicationController
   
       respond_to do |format|
         if @role.save
+          for resource in SystemResource.all
+            @role.permissions.create(:permissionable => resource, :name => resource.name, :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+          end
           format.html { redirect_to(@role, :notice => 'Role was successfully created.') }
           format.xml  { render :xml => @role, :status => :created, :location => @role }
         else

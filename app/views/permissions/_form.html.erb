@@ -16,10 +16,30 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :role_id %><br />
-    <%= f.text_field :role_id %>
+    <h4>Associated Role</h4>
+    <%= @permission.role.name %>
+  </div>
+  <div class="field">
+    <h4>Resource</h4>
+    <%= @permission.permissionable_name %>
+    <p>
+      <%= f.label "Create Permission" %>
+      <%= f.check_box :create_p %>
+    </p>
+    <p>
+      <%= f.label "Show Permission" %>
+      <%= f.check_box :show_p %>
+    </p>
+    <p>
+      <%= f.label "Update Permission" %>
+      <%= f.check_box :update_p %>
+    </p>
+    <p>
+      <%= f.label "Delete Permission" %>
+      <%= f.check_box :delete_p %>
+    </p>    
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_or_cancel(f) %>
   </div>
 <% end %>
