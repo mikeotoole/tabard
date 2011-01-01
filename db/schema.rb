@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110101010358) do
+ActiveRecord::Schema.define(:version => 20110101011029) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(:version => 20110101010358) do
     t.string   "extra"
     t.integer  "rank"
     t.integer  "game_profile_id"
+  end
+
+  create_table "discussion_spaces", :force => true do |t|
+    t.string   "name"
+    t.boolean  "system"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "games", :force => true do |t|
