@@ -15,6 +15,10 @@ Bv::Application.routes.draw do
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   
+  resource :active_profile
+  match '/activate_profile' => "active_profiles#new", :as => "activate_profile"
+  match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
+  
   resources :games do
     resources :characters
   end

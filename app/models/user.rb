@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password
   
+  def profiles
+    (Array.new() << (user_profile)).concat(game_profiles)
+  end
+  
   def name
     user_profile.name
   end
