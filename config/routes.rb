@@ -14,12 +14,19 @@ Bv::Application.routes.draw do
   root :to => "users#index"
   
   match '/profiles/newgame' => "profiles#newgame"
-  #match '/gameprofiles/:id' => "profiles#showgame"
   
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   
   resources :profiles do
+    resources :acknowledgment_of_announcements
+  end
+  
+  resources :game_profiles do
+    resources :acknowledgment_of_announcements
+  end
+  
+  resources :user_profiles do
     resources :acknowledgment_of_announcements
   end
   
@@ -36,6 +43,8 @@ Bv::Application.routes.draw do
   resources :games do
     resources :characters
   end
+  
+  resources :characters
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

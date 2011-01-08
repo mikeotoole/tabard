@@ -10,9 +10,8 @@ class User < ActiveRecord::Base
                     :presence => true, 
                     :if => :password_required?
                     
-  has_many :game_profiles
   has_one :user_profile
-  
+  has_many :game_profiles, :through => :user_profile
   has_many :characters, :through => :game_profiles
   
   has_and_belongs_to_many :roles

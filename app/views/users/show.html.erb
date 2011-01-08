@@ -11,17 +11,11 @@
 </div>
 
 <div>
-  <h3>User Profile</h3>
-  <%= link_to "Show", profile_path(@user.user_profile) %>
+  <h3>
+  <%= link_to "User Profile", user_profile_path(@user.user_profile) %>
+  </h3>
 </div>
 
-<div>
-  <h3>Game Profiles</h3>
-  <% if @user.game_profiles != nil %>
-  	<%= render @user.game_profiles %>
-  <% end %>
-</div>
-<%= link_to 'New Profile', profiles_newgame_path %> |
 <%= link_to 'New Announcement', new_announcement_path %> |
 <%= link_to 'Edit User', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
