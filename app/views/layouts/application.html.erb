@@ -21,12 +21,7 @@
           <%= current_profile.name %>
           <%= link_to "Deactivate Profile", deactivate_profile_path %> |
         <% else %>
-          <%= session[:profile_id] %>
-          <%= form_tag active_profile_path do %>
-              <%= label_tag "Profile" %>
-              <%= collection_select(:active_profile, :profile_id, current_user.profiles, :id, :name) %>
-              <%= submit_tag 'Activate' %>
-          <% end %> |
+          <%= render :partial => "active_profile/form", :locals => {:current_user => current_user } %> |
         <% end %>
         <%= link_to "Edit User", edit_user_path(current_user) %> |
       <% end %> 

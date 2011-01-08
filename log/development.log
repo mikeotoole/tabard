@@ -21412,3 +21412,1883 @@ Started GET "/" for 127.0.0.1 at 2011-01-07 03:08:13 -0800
 Rendered users/index.html.erb within layouts/application (29.8ms)
 Completed 200 OK in 56ms (Views: 33.1ms | ActiveRecord: 4.7ms)
 >>>>>>> ab864a73282db9b052c60e466a421d057d8f5111
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:52:08 -0800
+
+ActiveRecord::StatementInvalid (Could not find table 'sessions'):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (9.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (15.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:52:12 -0800
+
+ActiveRecord::StatementInvalid (Could not find table 'sessions'):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.3ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (7.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:52:15 -0800
+
+ActiveRecord::StatementInvalid (Could not find table 'sessions'):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.3ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.1ms)
+
+
+Started GET "/roles" for 127.0.0.1 at 2011-01-07 17:54:22 -0800
+  Processing by RolesController#index as HTML
+Redirected to http://localhost:3000/login
+Completed 302 Found in 29ms
+
+ActiveRecord::StatementInvalid (Could not find table 'sessions'):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.1ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:54:26 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+SQLite3::SQLException: no such table: users: SELECT "users".* FROM "users"
+Completed   in 66ms
+
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such table: users: SELECT "users".* FROM "users"):
+  app/controllers/users_controller.rb:6:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.6ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.1ms)
+  [1m[36mSQL (0.6ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.1ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.1ms)[0m  [1mCREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (7.4ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (3.5ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (8.7ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (12.2ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("schema_migrations")[0m
+  [1m[35mSQL (1.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (8.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110101011029')[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101221145017')
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101221145212')[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224000720')
+  [1m[36mSQL (4.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224000802')[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101224072524')
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101224072550')[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225002140')
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225002345')[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225020855')
+  [1m[36mSQL (7.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225021019')[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225025103')
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225032452')[0m
+  [1m[35mSQL (4.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225040424')
+  [1m[36mSQL (52.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225041158')[0m
+  [1m[35mSQL (11.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101225061826')
+  [1m[36mSQL (2.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101225064758')[0m
+  [1m[35mSQL (2.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226000200')
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226003943')[0m
+  [1m[35mSQL (23.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226042457')
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226120913')[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226125752')
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101226130836')[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101226133949')
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20101231035140')[0m
+  [1m[35mSQL (6.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20101231035428')
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20110101010358')[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 01:54:43.566326', '2011-01-08 01:54:43.566326')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 01:54:43.659007', '2011-01-08 01:54:43.659007')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 01:54:43.668676', '2011-01-08 01:54:43.668676')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 01:54:43.679447', '2011-01-08 01:54:43.679447', 'UserProfile', NULL, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 01:54:43.741095', '2011-01-08 01:54:43.741095', 1, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 01:54:43.754141', '2011-01-08 01:54:43.754141', 2, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 01:54:43.769105', '2011-01-08 01:54:43.769105', 3, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 01:54:43.841236', '2011-01-08 01:54:43.841236')
+  [1m[36mAREL (0.2ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 01:54:43.852021' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 01:54:43.853510' WHERE ("permissions"."id" = 2)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 01:54:43.854552' WHERE ("permissions"."id" = 3)[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2011-01-08 01:54:43.956186', '2011-01-08 01:54:43.956186')[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2011-01-08 01:54:43.959184', '2011-01-08 01:54:43.959184')
+  [1m[36mAREL (0.3ms)[0m  [1mUPDATE "profiles" SET "user_id" = 1, "updated_at" = '2011-01-08 01:54:43.967749' WHERE ("profiles"."type" = 'UserProfile') AND ("profiles"."id" = 1)[0m
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:54:54 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (31.5ms)
+Completed 200 OK in 147ms (Views: 36.2ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2011-01-07 17:54:57 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (26.9ms)
+Completed 200 OK in 32ms (Views: 31.6ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2011-01-07 17:55:05 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"PdhaWPlXm2zmlrSI6SsTMXQNbS+/4jKeDpXIXZYqJ3E=", "email"=>"admin@example.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 46ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 17:55:05 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.2ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/index.html.erb within layouts/application (39.0ms)
+Completed 200 OK in 65ms (Views: 42.5ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/character" for 127.0.0.1 at 2011-01-07 18:05:32 -0800
+
+ActionController::RoutingError (No route matches "/character"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/characters" for 127.0.0.1 at 2011-01-07 18:05:34 -0800
+
+ActionController::RoutingError (No route matches "/characters"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/characters/new" for 127.0.0.1 at 2011-01-07 18:05:37 -0800
+
+ActionController::RoutingError (No route matches "/characters/new"):
+  
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.7ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.2ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:06:53.628378', '2011-01-08 02:06:53.628378')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:06:53.719841', '2011-01-08 02:06:53.719841')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:06:53.722590', '2011-01-08 02:06:53.722590')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:06:53.733197', '2011-01-08 02:06:53.733197', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:06:53.757537', '2011-01-08 02:06:53.757537', 'WowCharacter', 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:06:53.807488', '2011-01-08 02:06:53.807488', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow Profile', '2011-01-08 02:06:53.825789', '2011-01-08 02:06:53.825789', 'GameProfile', NULL, 1)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:06:53.855342', '2011-01-08 02:06:53.855342', 1, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:06:53.867877', '2011-01-08 02:06:53.867877', 2, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:06:53.871163', '2011-01-08 02:06:53.871163', 3, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:06:53.927969', '2011-01-08 02:06:53.927969')
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:06:53.932342' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:06:53.933670' WHERE ("permissions"."id" = 2)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:06:53.934575' WHERE ("permissions"."id" = 3)[0m
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:09:35 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 47ms (Views: 10.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2011-01-07 18:09:37 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (56.9ms)
+Completed 200 OK in 62ms (Views: 61.3ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2011-01-07 18:09:46 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rm9Z6GHrc2eb7JBKW0GLCf4SCknN9CixllaesMeBt3M=", "email"=>"admin@example.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1
+Rendered sessions/new.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 36ms (Views: 9.6ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2011-01-07 18:09:54 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rm9Z6GHrc2eb7JBKW0GLCf4SCknN9CixllaesMeBt3M=", "email"=>"admin@example.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1[0m
+Rendered sessions/new.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 34ms (Views: 9.6ms | ActiveRecord: 1.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.7ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.8ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.7ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:10:58.445200', '2011-01-08 02:10:58.445200')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:10:58.536676', '2011-01-08 02:10:58.536676')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:10:58.539457', '2011-01-08 02:10:58.539457')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:10:58.550048', '2011-01-08 02:10:58.550048', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:10:58.574216', '2011-01-08 02:10:58.574216', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:10:58.595425', '2011-01-08 02:10:58.595425', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow Profile', '2011-01-08 02:10:58.642300', '2011-01-08 02:10:58.642300', 'GameProfile', NULL, 1)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:10:58.671684', '2011-01-08 02:10:58.671684', 1, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:10:58.683627', '2011-01-08 02:10:58.683627', 2, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:10:58.686633', '2011-01-08 02:10:58.686633', 3, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:10:58.743371', '2011-01-08 02:10:58.743371')
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:10:58.747933' WHERE ("permissions"."id" = 1)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:10:58.749343' WHERE ("permissions"."id" = 2)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:10:58.750301' WHERE ("permissions"."id" = 3)[0m
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (312.6ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.8ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (2.0ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (9.5ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.9ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (4.1ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (8.4ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (8.5ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (6.3ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (7.7ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (10.5ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (5.5ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.9ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (2.1ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (2.3ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (5.6ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.2ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (4.0ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (12.6ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (7.8ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.5ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.5ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:11:49.341838', '2011-01-08 02:11:49.341838')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:11:49.435651', '2011-01-08 02:11:49.435651')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:11:49.439063', '2011-01-08 02:11:49.439063')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:11:49.450722', '2011-01-08 02:11:49.450722', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:11:49.475024', '2011-01-08 02:11:49.475024', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:11:49.524827', '2011-01-08 02:11:49.524827', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow Profile', '2011-01-08 02:11:49.547084', '2011-01-08 02:11:49.547084', 'GameProfile', NULL, 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "characters" SET "game_profile_id" = 2, "updated_at" = '2011-01-08 02:11:49.553859' WHERE ("characters"."id" = 1)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:11:49.581301', '2011-01-08 02:11:49.581301', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:11:49.592844', '2011-01-08 02:11:49.592844', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:11:49.604490', '2011-01-08 02:11:49.604490', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:11:49.663253', '2011-01-08 02:11:49.663253')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:11:49.667751' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:11:49.669009' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:11:49.669963' WHERE ("permissions"."id" = 3)
+  [1m[36mSQL (1.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateDiscussionSpaces (20110101011029)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.6ms)[0m  [1mDROP TABLE "discussion_spaces"[0m
+  [1m[35mAREL (0.2ms)[0m  DELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20110101011029'
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("acknowledgment_of_announcements")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("announcements")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("games")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("permissions")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("profiles")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("roles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles_users")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_updated_at')[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_session_id')
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("system_resources")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+  [1m[36mSQL (1.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+Migrating to CreateUsers (20101221145017)
+Migrating to AddSessionsTable (20101221145212)
+Migrating to CreateGames (20101224000720)
+Migrating to CreateCharacters (20101224000802)
+Migrating to AddTypeToGames (20101224072524)
+Migrating to AddTypeToCharacters (20101224072550)
+Migrating to AddExtraAndIsactiveToGames (20101225002140)
+Migrating to AddManyAttributesToCharacters (20101225002345)
+Migrating to CreateRoles (20101225020855)
+Migrating to CreatePermissions (20101225021019)
+Migrating to CreateProfiles (20101225025103)
+Migrating to AddTypeToProfile (20101225032452)
+Migrating to AddUserIdToProfile (20101225040424)
+Migrating to RenamePasswordToHashedPassword (20101225041158)
+Migrating to AddGameProfileIdToCharacter (20101225061826)
+Migrating to AddGameIdToProfiles (20101225064758)
+Migrating to CreateSystemResources (20101226000200)
+Migrating to AddMissingAssociationColumnsForPermissions (20101226003943)
+Migrating to AddAccessToPermission (20101226042457)
+Migrating to AddMoreToPermission (20101226120913)
+Migrating to AddUserIdToRole (20101226125752)
+Migrating to RenameDangerousAttributeError (20101226130836)
+Migrating to CorrectAssociationForRolesAndUsers (20101226133949)
+Migrating to CreateAnnouncements (20101231035140)
+Migrating to CreateAcknowledgmentOfAnnouncements (20101231035428)
+Migrating to AddTypeToAnnouncements (20110101010358)
+Migrating to CreateDiscussionSpaces (20110101011029)
+  [1m[35mSQL (0.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (0.7ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110101011029')
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("acknowledgment_of_announcements")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("announcements")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("characters")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("discussion_spaces")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("games")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("permissions")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("profiles")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("roles")[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("roles_users")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_list("sessions")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_info('index_sessions_on_updated_at')
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("system_resources")
+  [1m[36mSQL (0.0ms)[0m  [1mPRAGMA index_list("users")[0m
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.7ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.2ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.7ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (1.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:12:24.182139', '2011-01-08 02:12:24.182139')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:12:24.273426', '2011-01-08 02:12:24.273426')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:12:24.276059', '2011-01-08 02:12:24.276059')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:12:24.286650', '2011-01-08 02:12:24.286650', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:12:24.310289', '2011-01-08 02:12:24.310289', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (84.9ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:12:24.330781', '2011-01-08 02:12:24.330781', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (181.8ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow Profile', '2011-01-08 02:12:24.467784', '2011-01-08 02:12:24.467784', 'GameProfile', NULL, 1)
+  [1m[36mAREL (0.2ms)[0m  [1mUPDATE "characters" SET "game_profile_id" = 2, "updated_at" = '2011-01-08 02:12:24.655901' WHERE ("characters"."id" = 1)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:12:24.682664', '2011-01-08 02:12:24.682664', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:12:24.695501', '2011-01-08 02:12:24.695501', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:12:24.699676', '2011-01-08 02:12:24.699676', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:12:24.757411', '2011-01-08 02:12:24.757411')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:12:24.761816' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:12:24.763107' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:12:24.764175' WHERE ("permissions"."id" = 3)
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.3ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (29.6ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (2.0ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (6.1ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (10.8ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.7ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (9.6ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (8.1ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (2.0ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (9.8ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (5.4ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.2ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.8ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (9.3ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (5.0ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (11.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.5ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:13:20.392497', '2011-01-08 02:13:20.392497')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:13:20.512926', '2011-01-08 02:13:20.512926')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:13:20.515575', '2011-01-08 02:13:20.515575')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:13:20.525927', '2011-01-08 02:13:20.525927', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:13:20.549585', '2011-01-08 02:13:20.549585', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:13:20.598814', '2011-01-08 02:13:20.598814', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:13:20.628442', '2011-01-08 02:13:20.628442', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:13:20.639485', '2011-01-08 02:13:20.639485', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:13:20.642482', '2011-01-08 02:13:20.642482', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:13:20.670081', '2011-01-08 02:13:20.670081')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:13:20.674867' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:13:20.676218' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:13:20.677189' WHERE ("permissions"."id" = 3)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2011-01-08 02:13:20.756276', '2011-01-08 02:13:20.756276')
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2011-01-08 02:13:20.759200', '2011-01-08 02:13:20.759200')[0m
+  [1m[35mAREL (0.2ms)[0m  UPDATE "profiles" SET "user_id" = 1, "updated_at" = '2011-01-08 02:13:20.763449' WHERE ("profiles"."type" = 'UserProfile') AND ("profiles"."id" = 1)
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGameProfile Load (0.2ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'GameProfile')
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.9ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.2ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.3ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (1.7ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.2ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.6ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.5ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.9ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.5ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:14:41.178651', '2011-01-08 02:14:41.178651')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:14:41.269636', '2011-01-08 02:14:41.269636')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:14:41.272459', '2011-01-08 02:14:41.272459')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:14:41.283365', '2011-01-08 02:14:41.283365', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:14:41.307991', '2011-01-08 02:14:41.307991', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:14:41.329191', '2011-01-08 02:14:41.329191', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow profile', '2011-01-08 02:14:41.377916', '2011-01-08 02:14:41.377916', 'GameProfile', NULL, NULL)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "characters" SET "game_profile_id" = 2, "updated_at" = '2011-01-08 02:14:41.384341' WHERE ("characters"."id" = 1)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:14:41.410441', '2011-01-08 02:14:41.410441', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:14:41.422322', '2011-01-08 02:14:41.422322', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:14:41.425440', '2011-01-08 02:14:41.425440', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:14:41.483173', '2011-01-08 02:14:41.483173')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:14:41.487629' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:14:41.488831' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:14:41.489761' WHERE ("permissions"."id" = 3)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2011-01-08 02:14:41.537142', '2011-01-08 02:14:41.537142')
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2011-01-08 02:14:41.539886', '2011-01-08 02:14:41.539886')[0m
+  [1m[35mAREL (0.2ms)[0m  UPDATE "profiles" SET "user_id" = 1, "updated_at" = '2011-01-08 02:14:41.543754' WHERE ("profiles"."type" = 'UserProfile') AND ("profiles"."id" = 1)
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mGameProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'GameProfile')
+  [1m[36mGameProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'GameProfile') LIMIT 1[0m
+  [1m[35mCharacter Load (0.7ms)[0m  SELECT "characters".* FROM "characters" WHERE ("characters".game_profile_id = 2)
+  [1m[36mSQL (1.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "acknowledgment_of_announcements"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "acknowledgment_of_announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "announcement_id" integer, "profile_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "announcements"
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE TABLE "announcements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "body" text, "game_id" integer, "created_at" datetime, "updated_at" datetime, "type" varchar(255)) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "characters"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "characters" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "game_id" integer, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "faction" varchar(255), "race" varchar(255), "klass" varchar(255), "server" varchar(255), "extra" varchar(255), "rank" integer, "game_profile_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.3ms)[0m  DROP TABLE "discussion_spaces"
+  [1m[36mSQL (1.6ms)[0m  [1mCREATE TABLE "discussion_spaces" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "system" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.4ms)[0m  [1mDROP TABLE "games"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "games" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "extra" varchar(255), "is_active" boolean) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "permissions"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "permissions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "role_id" integer, "created_at" datetime, "updated_at" datetime, "permissionable_id" integer, "permissionable_type" varchar(255), "access" varchar(255), "show_p" boolean, "create_p" boolean, "update_p" boolean, "delete_p" boolean) [0m
+  [1m[35mSQL (0.4ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.8ms)[0m  [1mDROP TABLE "profiles"[0m
+  [1m[35mSQL (1.6ms)[0m  CREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime, "type" varchar(255), "user_id" integer, "game_id" integer) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.4ms)[0m  DROP TABLE "roles"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "roles_users"[0m
+  [1m[35mSQL (1.5ms)[0m  CREATE TABLE "roles_users" ("role_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "sessions"
+  [1m[36mSQL (1.4ms)[0m  [1mCREATE TABLE "sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" varchar(255) NOT NULL, "data" text, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (1.2ms)[0m  [1mCREATE INDEX "index_sessions_on_session_id" ON "sessions" ("session_id")[0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("sessions")
+  [1m[36mSQL (0.1ms)[0m  [1mPRAGMA index_info('index_sessions_on_session_id')[0m
+  [1m[35mSQL (1.2ms)[0m  CREATE INDEX "index_sessions_on_updated_at" ON "sessions" ("updated_at")
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (1.5ms)[0m  DROP TABLE "system_resources"
+  [1m[36mSQL (1.8ms)[0m  [1mCREATE TABLE "system_resources" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.5ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (1.6ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35mSQL (1.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255), "hashed_password" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.4ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mSQL (0.3ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.3ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations"[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('User', '2011-01-08 02:15:58.909706', '2011-01-08 02:15:58.909706')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Role', '2011-01-08 02:15:59.001070', '2011-01-08 02:15:59.001070')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "system_resources" ("name", "created_at", "updated_at") VALUES ('Game', '2011-01-08 02:15:59.003756', '2011-01-08 02:15:59.003756')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "games" ("name", "created_at", "updated_at", "type", "extra", "is_active") VALUES ('World of Warcraft', '2011-01-08 02:15:59.014421', '2011-01-08 02:15:59.014421', NULL, NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "characters" ("game_id", "name", "created_at", "updated_at", "type", "faction", "race", "klass", "server", "extra", "rank", "game_profile_id") VALUES (1, 'Blaggarth', '2011-01-08 02:15:59.037908', '2011-01-08 02:15:59.037908', NULL, 'Alliance', 'Dwarf', NULL, 'Medivh', NULL, 0, NULL)
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Admin', '2011-01-08 02:15:59.058065', '2011-01-08 02:15:59.058065', 'UserProfile', NULL, NULL)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "profiles" ("name", "created_at", "updated_at", "type", "user_id", "game_id") VALUES ('Wow profile', '2011-01-08 02:15:59.106272', '2011-01-08 02:15:59.106272', 'GameProfile', NULL, NULL)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "characters" SET "game_profile_id" = 2, "updated_at" = '2011-01-08 02:15:59.112669' WHERE ("characters"."id" = 1)[0m
+  [1m[35mAREL (0.4ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access User', NULL, '2011-01-08 02:15:59.137467', '2011-01-08 02:15:59.137467', 1, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Role', NULL, '2011-01-08 02:15:59.149580', '2011-01-08 02:15:59.149580', 2, 'SystemResource', NULL, 't', 't', 't', 't')[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "permissions" ("name", "role_id", "created_at", "updated_at", "permissionable_id", "permissionable_type", "access", "show_p", "create_p", "update_p", "delete_p") VALUES ('Full Access Game', NULL, '2011-01-08 02:15:59.152533', '2011-01-08 02:15:59.152533', 3, 'SystemResource', NULL, 't', 't', 't', 't')
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at") VALUES ('Admin', '2011-01-08 02:15:59.209306', '2011-01-08 02:15:59.209306')[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:15:59.213791' WHERE ("permissions"."id" = 1)
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:15:59.215017' WHERE ("permissions"."id" = 2)[0m
+  [1m[35mAREL (0.1ms)[0m  UPDATE "permissions" SET "role_id" = 1, "updated_at" = '2011-01-08 02:15:59.215947' WHERE ("permissions"."id" = 3)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1[0m
+  [1m[35mAREL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES ('admin@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2011-01-08 02:15:59.265853', '2011-01-08 02:15:59.265853')
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "profiles" SET "user_id" = 1, "updated_at" = '2011-01-08 02:15:59.269104' WHERE ("profiles"."type" = 'GameProfile') AND ("profiles"."id" = 2)[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "roles_users" ("role_id", "user_id", "created_at", "updated_at") VALUES (1, 1, '2011-01-08 02:15:59.270224', '2011-01-08 02:15:59.270224')
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "profiles" SET "user_id" = 1, "updated_at" = '2011-01-08 02:15:59.274528' WHERE ("profiles"."type" = 'UserProfile') AND ("profiles"."id" = 1)[0m
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:16:12 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+Rendered users/index.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 50ms (Views: 18.5ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2011-01-07 18:16:14 -0800
+  Processing by SessionsController#new as HTML
+Rendered sessions/new.html.erb within layouts/application (55.4ms)
+Completed 200 OK in 60ms (Views: 59.8ms | ActiveRecord: 1.4ms)
+
+
+Started POST "/session" for 127.0.0.1 at 2011-01-07 18:16:21 -0800
+  Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"B6PJYOTksGPDM0yKw6ZbSr8v8GS+buZ1uXC8RanVRek=", "email"=>"admin@example.com", "password"=>"[FILTERED]", "commit"=>"Login"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."email" = 'admin@example.com') LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 76ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:16:21 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/index.html.erb within layouts/application (44.5ms)
+Completed 200 OK in 102ms (Views: 47.5ms | ActiveRecord: 4.6ms)
+
+
+Started POST "/active_profile" for 127.0.0.1 at 2011-01-07 18:16:25 -0800
+  Processing by ActiveProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"B6PJYOTksGPDM0yKw6ZbSr8v8GS+buZ1uXC8RanVRek=", "active_profile"=>{"profile_id"=>"2"}, "commit"=>"Activate"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 25ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:16:25 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+Rendered users/index.html.erb within layouts/application (30.4ms)
+Completed 200 OK in 56ms (Views: 33.8ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/deactivate_profile" for 127.0.0.1 at 2011-01-07 18:16:27 -0800
+  Processing by ActiveProfilesController#destroy as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 25ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:16:27 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered users/index.html.erb within layouts/application (63.4ms)
+Completed 200 OK in 88ms (Views: 66.4ms | ActiveRecord: 4.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:23:16 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+Rendered users/_form.html.erb (15.8ms)
+Rendered users/index.html.erb within layouts/application (98.2ms)
+Completed   in 134ms
+
+ActionView::Template::Error (undefined method `model_name' for NilClass:Class):
+    1: <%= form_for(@user) do |f| %>
+    2:   <% if @user.errors.any? %>
+    3:     <div id="error_explanation">
+    4:       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  app/views/users/_form.html.erb:1:in `_app_views_users__form_html_erb__1622768348193893329_2164034400__2054521474809108429'
+  app/views/layouts/application.html.erb:24:in `_app_views_layouts_application_html_erb___3132141180714628200_2162628780__4568913170446030613'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.1ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (10.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:23:32 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+Rendered users/_form.html.erb (1.3ms)
+Rendered users/index.html.erb within layouts/application (23.5ms)
+Completed   in 78ms
+
+ActionView::Template::Error (undefined method `model_name' for NilClass:Class):
+    1: <%= form_for(@user) do |f| %>
+    2:   <% if @user.errors.any? %>
+    3:     <div id="error_explanation">
+    4:       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  app/views/users/_form.html.erb:1:in `_app_views_users__form_html_erb__1622768348193893329_2162682520__2054521474809108429'
+  app/views/layouts/application.html.erb:24:in `_app_views_layouts_application_html_erb___3132141180714628200_2163437100__4568913170446030613'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.2ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (10.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:24:02 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+ERROR: compiling _app_views_layouts_application_html_erb___3132141180714628200_2162451360__4568913170446030613 RAISED /Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:33: unknown regexp options - dv
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:36: syntax error, unexpected tIDENTIFIER, expecting ')'
+...g :p, notice, :class => 'notice' if notice.present? );@outpu...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:37: syntax error, unexpected tIDENTIFIER, expecting ')'
+...tag :p, alert, :class => 'alert' if alert.present? );@output...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:41: syntax error, unexpected '<', expecting ')'
+</body>
+ ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:42: unknown regexp options - htl
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: unterminated string meets end of file
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: syntax error, unexpected $end, expecting ')'
+Function body:           def _app_views_layouts_application_html_erb___3132141180714628200_2162451360__4568913170446030613(local_assigns)
+            _old_virtual_path, @_virtual_path = @_virtual_path, "layouts/application";_old_output_buffer = @output_buffer;;@output_buffer = ActionView::OutputBuffer.new;@output_buffer.safe_concat('<!DOCTYPE html>
+<html>
+<head>
+  <title>Bv</title>
+  ');@output_buffer.append= ( stylesheet_link_tag :all );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( javascript_include_tag :defaults );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( csrf_meta_tag );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('</head>
+<body>
+
+'); if true 
+@output_buffer.safe_concat('<div id="header"> 
+  <h1>');@output_buffer.append= ( link_to "BV", root_path );@output_buffer.safe_concat('</h1> 
+  <div id="user_bar">
+');     if logged_in?  
+       if current_user.user_profile == nil 
+@output_buffer.safe_concat('        Please Click ');@output_buffer.append= ( link_to "Here", new_profile_path );@output_buffer.safe_concat(' to Finish Creating Your Account |
+');       else 
+@output_buffer.safe_concat('        Hello, ');@output_buffer.append= ( current_user.user_profile.name );@output_buffer.safe_concat(' |
+');         if profile_active? 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( current_profile.name );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('          ');@output_buffer.append= ( link_to "Deactivate Profile", deactivate_profile_path );@output_buffer.safe_concat(' |
+');         else 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( #render :partial => 'form', :object => :active_profile );@output_buffer.safe_concat('
+');         end 
+@output_buffer.safe_concat('        ');@output_buffer.append= ( link_to "Edit User", edit_user_path(current_user) );@output_buffer.safe_concat(' |
+');       end  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Logout", logout_path );@output_buffer.safe_concat('
+');     else  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Login", login_path );@output_buffer.safe_concat('
+');     end  
+@output_buffer.safe_concat('  </div>
+</div>
+'); end 
+@output_buffer.safe_concat('	
+');@output_buffer.append= ( content_tag :p, notice, :class => 'notice' if notice.present? );@output_buffer.safe_concat(' 
+');@output_buffer.append= ( content_tag :p, alert, :class => 'alert' if alert.present? );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+');@output_buffer.append= ( yield );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+</body>
+</html>
+');@output_buffer.to_s
+          ensure
+            @_virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+Backtrace: /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `module_eval'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `compile'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:134:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:54:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:127:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/layouts.rb:80:in `_render_layout'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:62:in `block in _render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:56:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:26:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:114:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:108:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/renderers.rb:47:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/compatibility.rb:55:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:101:in `render_to_string'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:92:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:17:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/benchmark.rb:309:in `realtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:78:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/railties/controller_runtime.rb:15:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:261:in `block in retrieve_response_from_mimes'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `respond_to'
+/Users/joew/Git/da-bv-rails/app/controllers/users_controller.rb:8:in `index'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:4:in `send_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:151:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:11:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:430:in `_run__3054273619934283710__process_action__541021985221765372__callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:409:in `_run_process_action_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:93:in `run_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rescue.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:120:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:40:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:138:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:178:in `block in action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:27:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:148:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:93:in `block in recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:68:in `optimized_each'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:92:in `recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:139:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:492:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/head.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/methodoverride.rb:24:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/flash.rb:182:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/session/abstract_store.rb:149:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/cookies.rb:295:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:32:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/query_cache.rb:28:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:12:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:31:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:353:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:46:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:415:in `_run_call_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:44:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/sendfile.rb:107:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/remote_ip.rb:48:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/show_exceptions.rb:46:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/logger.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/runtime.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `block in call'
+<internal:prelude>:10:in `synchronize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/static.rb:30:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:168:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:77:in `method_missing'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/log_tailer.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/content_length.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/handler/webrick.rb:52:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+Rendered users/index.html.erb within layouts/application (11.1ms)
+Completed   in 36ms
+
+ActionView::Template::Error (/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:33: unknown regexp options - dv
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:36: syntax error, unexpected tIDENTIFIER, expecting ')'
+...g :p, notice, :class => 'notice' if notice.present? );@outpu...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:37: syntax error, unexpected tIDENTIFIER, expecting ')'
+...tag :p, alert, :class => 'alert' if alert.present? );@output...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:41: syntax error, unexpected '<', expecting ')'
+</body>
+ ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:42: unknown regexp options - htl
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: unterminated string meets end of file
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: syntax error, unexpected $end, expecting ')'):
+    30:       <%= link_to "Login", login_path %>
+    31:     <% end %> 
+    32:   </div>
+    33: </div>
+    34: <% end %>
+    35: 	
+    36: <%= content_tag :p, notice, :class => 'notice' if notice.present? %> 
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (34.3ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (40.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:24:29 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+ERROR: compiling _app_views_layouts_application_html_erb___3132141180714628200_2154620160__4568913170446030613 RAISED /Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:33: unknown regexp options - dv
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:36: syntax error, unexpected tIDENTIFIER, expecting ')'
+...g :p, notice, :class => 'notice' if notice.present? );@outpu...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:37: syntax error, unexpected tIDENTIFIER, expecting ')'
+...tag :p, alert, :class => 'alert' if alert.present? );@output...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:41: syntax error, unexpected '<', expecting ')'
+</body>
+ ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:42: unknown regexp options - htl
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: unterminated string meets end of file
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: syntax error, unexpected $end, expecting ')'
+Function body:           def _app_views_layouts_application_html_erb___3132141180714628200_2154620160__4568913170446030613(local_assigns)
+            _old_virtual_path, @_virtual_path = @_virtual_path, "layouts/application";_old_output_buffer = @output_buffer;;@output_buffer = ActionView::OutputBuffer.new;@output_buffer.safe_concat('<!DOCTYPE html>
+<html>
+<head>
+  <title>Bv</title>
+  ');@output_buffer.append= ( stylesheet_link_tag :all );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( javascript_include_tag :defaults );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( csrf_meta_tag );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('</head>
+<body>
+
+'); if true 
+@output_buffer.safe_concat('<div id="header"> 
+  <h1>');@output_buffer.append= ( link_to "BV", root_path );@output_buffer.safe_concat('</h1> 
+  <div id="user_bar">
+');     if logged_in?  
+       if current_user.user_profile == nil 
+@output_buffer.safe_concat('        Please Click ');@output_buffer.append= ( link_to "Here", new_profile_path );@output_buffer.safe_concat(' to Finish Creating Your Account |
+');       else 
+@output_buffer.safe_concat('        Hello, ');@output_buffer.append= ( current_user.user_profile.name );@output_buffer.safe_concat(' |
+');         if profile_active? 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( current_profile.name );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('          ');@output_buffer.append= ( link_to "Deactivate Profile", deactivate_profile_path );@output_buffer.safe_concat(' |
+');         else 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( "LOL" #render :partial => 'form', :object => :active_profile );@output_buffer.safe_concat('
+');         end 
+@output_buffer.safe_concat('        ');@output_buffer.append= ( link_to "Edit User", edit_user_path(current_user) );@output_buffer.safe_concat(' |
+');       end  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Logout", logout_path );@output_buffer.safe_concat('
+');     else  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Login", login_path );@output_buffer.safe_concat('
+');     end  
+@output_buffer.safe_concat('  </div>
+</div>
+'); end 
+@output_buffer.safe_concat('	
+');@output_buffer.append= ( content_tag :p, notice, :class => 'notice' if notice.present? );@output_buffer.safe_concat(' 
+');@output_buffer.append= ( content_tag :p, alert, :class => 'alert' if alert.present? );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+');@output_buffer.append= ( yield );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+</body>
+</html>
+');@output_buffer.to_s
+          ensure
+            @_virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+Backtrace: /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `module_eval'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `compile'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:134:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:54:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:127:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/layouts.rb:80:in `_render_layout'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:62:in `block in _render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:56:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:26:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:114:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:108:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/renderers.rb:47:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/compatibility.rb:55:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:101:in `render_to_string'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:92:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:17:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/benchmark.rb:309:in `realtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:78:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/railties/controller_runtime.rb:15:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:261:in `block in retrieve_response_from_mimes'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `respond_to'
+/Users/joew/Git/da-bv-rails/app/controllers/users_controller.rb:8:in `index'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:4:in `send_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:151:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:11:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:430:in `_run__3054273619934283710__process_action__541021985221765372__callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:409:in `_run_process_action_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:93:in `run_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rescue.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:120:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:40:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:138:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:178:in `block in action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:27:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:148:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:93:in `block in recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:68:in `optimized_each'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:92:in `recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:139:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:492:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/head.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/methodoverride.rb:24:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/flash.rb:182:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/session/abstract_store.rb:149:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/cookies.rb:295:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:32:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/query_cache.rb:28:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:12:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:31:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:353:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:46:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:415:in `_run_call_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:44:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/sendfile.rb:107:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/remote_ip.rb:48:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/show_exceptions.rb:46:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/logger.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/runtime.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `block in call'
+<internal:prelude>:10:in `synchronize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/static.rb:30:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:168:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:77:in `method_missing'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/log_tailer.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/content_length.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/handler/webrick.rb:52:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+Rendered users/index.html.erb within layouts/application (11.4ms)
+Completed   in 36ms
+
+ActionView::Template::Error (/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:33: unknown regexp options - dv
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:36: syntax error, unexpected tIDENTIFIER, expecting ')'
+...g :p, notice, :class => 'notice' if notice.present? );@outpu...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:37: syntax error, unexpected tIDENTIFIER, expecting ')'
+...tag :p, alert, :class => 'alert' if alert.present? );@output...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:41: syntax error, unexpected '<', expecting ')'
+</body>
+ ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:42: unknown regexp options - htl
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: unterminated string meets end of file
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:43: syntax error, unexpected $end, expecting ')'):
+    30:       <%= link_to "Login", login_path %>
+    31:     <% end %> 
+    32:   </div>
+    33: </div>
+    34: <% end %>
+    35: 	
+    36: <%= content_tag :p, notice, :class => 'notice' if notice.present? %> 
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.9ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (9.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:28:41 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (30.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+ERROR: compiling _app_views_layouts_application_html_erb___3132141180714628200_2163380760__4568913170446030613 RAISED /Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:24: syntax error, unexpected '{', expecting tASSOC
+...active_profile/form', :locals {:current_user => current_user...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:25: syntax error, unexpected keyword_end, expecting ')'
+');         end 
+               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:27: syntax error, unexpected keyword_end, expecting ')'
+');       end  
+             ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:29: syntax error, unexpected keyword_else, expecting ')'
+');     else  
+            ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:31: syntax error, unexpected keyword_end, expecting ')'
+');     end  
+           ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:34: syntax error, unexpected keyword_end, expecting ')'
+'); end 
+       ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:44: syntax error, unexpected keyword_ensure, expecting ')'
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:46: syntax error, unexpected keyword_end, expecting ')'
+Function body:           def _app_views_layouts_application_html_erb___3132141180714628200_2163380760__4568913170446030613(local_assigns)
+            _old_virtual_path, @_virtual_path = @_virtual_path, "layouts/application";_old_output_buffer = @output_buffer;;@output_buffer = ActionView::OutputBuffer.new;@output_buffer.safe_concat('<!DOCTYPE html>
+<html>
+<head>
+  <title>Bv</title>
+  ');@output_buffer.append= ( stylesheet_link_tag :all );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( javascript_include_tag :defaults );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  ');@output_buffer.append= ( csrf_meta_tag );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('</head>
+<body>
+
+'); if true 
+@output_buffer.safe_concat('<div id="header"> 
+  <h1>');@output_buffer.append= ( link_to "BV", root_path );@output_buffer.safe_concat('</h1> 
+  <div id="user_bar">
+');     if logged_in?  
+       if current_user.user_profile == nil 
+@output_buffer.safe_concat('        Please Click ');@output_buffer.append= ( link_to "Here", new_profile_path );@output_buffer.safe_concat(' to Finish Creating Your Account |
+');       else 
+@output_buffer.safe_concat('        Hello, ');@output_buffer.append= ( current_user.user_profile.name );@output_buffer.safe_concat(' |
+');         if profile_active? 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( current_profile.name );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('          ');@output_buffer.append= ( link_to "Deactivate Profile", deactivate_profile_path );@output_buffer.safe_concat(' |
+');         else 
+@output_buffer.safe_concat('          ');@output_buffer.append= ( render :partial => 'active_profile/form', :locals {:current_user => current_user } );@output_buffer.safe_concat(' |
+');         end 
+@output_buffer.safe_concat('        ');@output_buffer.append= ( link_to "Edit User", edit_user_path(current_user) );@output_buffer.safe_concat(' |
+');       end  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Logout", logout_path );@output_buffer.safe_concat('
+');     else  
+@output_buffer.safe_concat('      ');@output_buffer.append= ( link_to "Login", login_path );@output_buffer.safe_concat('
+');     end  
+@output_buffer.safe_concat('  </div>
+</div>
+'); end 
+@output_buffer.safe_concat('	
+');@output_buffer.append= ( content_tag :p, notice, :class => 'notice' if notice.present? );@output_buffer.safe_concat(' 
+');@output_buffer.append= ( content_tag :p, alert, :class => 'alert' if alert.present? );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+');@output_buffer.append= ( yield );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('
+</body>
+</html>
+');@output_buffer.to_s
+          ensure
+            @_virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+Backtrace: /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `module_eval'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:255:in `compile'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:134:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:54:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/template.rb:127:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/layouts.rb:80:in `_render_layout'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:62:in `block in _render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:56:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_view/render/rendering.rb:26:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:114:in `_render_template'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:108:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/renderers.rb:47:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/compatibility.rb:55:in `render_to_body'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:101:in `render_to_string'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:92:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:17:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/benchmark.rb:309:in `realtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:78:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/railties/controller_runtime.rb:15:in `cleanup_view_runtime'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:261:in `block in retrieve_response_from_mimes'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/mime_responds.rb:192:in `respond_to'
+/Users/joew/Git/da-bv-rails/app/controllers/users_controller.rb:8:in `index'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/implicit_render.rb:4:in `send_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:151:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rendering.rb:11:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:430:in `_run__3054273619934283710__process_action__541021985221765372__callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:409:in `_run_process_action_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:93:in `run_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/notifications.rb:52:in `instrument'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rescue.rb:17:in `process_action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/base.rb:120:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/abstract_controller/rendering.rb:40:in `process'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:138:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_controller/metal.rb:178:in `block in action'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:62:in `dispatch'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:27:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:148:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:93:in `block in recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:68:in `optimized_each'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:92:in `recognize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:139:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/routing/route_set.rb:492:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/head.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/methodoverride.rb:24:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/flash.rb:182:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/session/abstract_store.rb:149:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/cookies.rb:295:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:32:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/query_cache.rb:28:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:12:in `cache'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/query_cache.rb:31:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activerecord-3.0.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:353:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:46:in `block in call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/callbacks.rb:415:in `_run_call_callbacks'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/callbacks.rb:44:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/sendfile.rb:107:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/remote_ip.rb:48:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/show_exceptions.rb:46:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/logger.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/runtime.rb:17:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/activesupport-3.0.3/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `block in call'
+<internal:prelude>:10:in `synchronize'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/lock.rb:11:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/static.rb:30:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:168:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/application.rb:77:in `method_missing'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/railties-3.0.3/lib/rails/rack/log_tailer.rb:14:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/content_length.rb:13:in `call'
+/Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/rack-1.2.1/lib/rack/handler/webrick.rb:52:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+/Users/joew/.rvm/rubies/ruby-1.9.2-p0/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+Rendered users/index.html.erb within layouts/application (11.4ms)
+Completed   in 67ms
+
+ActionView::Template::Error (/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:24: syntax error, unexpected '{', expecting tASSOC
+...active_profile/form', :locals {:current_user => current_user...
+...                               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:25: syntax error, unexpected keyword_end, expecting ')'
+');         end 
+               ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:27: syntax error, unexpected keyword_end, expecting ')'
+');       end  
+             ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:29: syntax error, unexpected keyword_else, expecting ')'
+');     else  
+            ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:31: syntax error, unexpected keyword_end, expecting ')'
+');     end  
+           ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:34: syntax error, unexpected keyword_end, expecting ')'
+'); end 
+       ^
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:44: syntax error, unexpected keyword_ensure, expecting ')'
+/Users/joew/Git/da-bv-rails/app/views/layouts/application.html.erb:46: syntax error, unexpected keyword_end, expecting ')'):
+    21:           <%= current_profile.name %>
+    22:           <%= link_to "Deactivate Profile", deactivate_profile_path %> |
+    23:         <% else %>
+    24:           <%= render :partial => 'active_profile/form', :locals {:current_user => current_user } %> |
+    25:         <% end %>
+    26:         <%= link_to "Edit User", edit_user_path(current_user) %> |
+    27:       <% end %> 
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.8ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (9.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:29:27 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mGameProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles".user_id = 1) AND ("profiles"."type" = 'GameProfile')[0m
+Rendered active_profile/_form.html.erb (22.6ms)
+Rendered users/index.html.erb within layouts/application (45.8ms)
+Completed 200 OK in 101ms (Views: 48.9ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:45:31 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" INNER JOIN "profiles" ON "characters".game_profile_id = "profiles".id WHERE (("profiles".user_id = 1) AND (("profiles"."type" = 'GameProfile')))[0m
+Rendered active_profile/_form.html.erb (13.7ms)
+Rendered users/index.html.erb within layouts/application (36.0ms)
+Completed   in 63ms
+
+ActionView::Template::Error (undefined method `game_profile_id' for #<UserProfile:0x00000100d9d568>):
+    1: <%= session[:profile_id] %>
+    2: <%= form_tag active_profile_path do %>
+    3:     <%= label_tag "Profile" %>
+    4:     <%= collection_select(:active_profile, :profile_id, current_user.active_profile_helper_collection, :game_profile_id, :name) %>
+    5:     <%= submit_tag 'Activate' %>
+    6: <% end %>
+  app/views/active_profile/_form.html.erb:4:in `block in _app_views_active_profile__form_html_erb___2924980130874101756_2154616940__2653887093039919769'
+  app/views/active_profile/_form.html.erb:2:in `_app_views_active_profile__form_html_erb___2924980130874101756_2154616940__2653887093039919769'
+  app/views/layouts/application.html.erb:24:in `_app_views_layouts_application_html_erb___3132141180714628200_2162570280__4568913170446030613'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.3ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (10.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:46:26 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mCharacter Load (0.9ms)[0m  [1mSELECT "characters".* FROM "characters" INNER JOIN "profiles" ON "characters".game_profile_id = "profiles".id WHERE (("profiles".user_id = 1) AND (("profiles"."type" = 'GameProfile')))[0m
+Rendered active_profile/_form.html.erb (12.9ms)
+Rendered users/index.html.erb within layouts/application (35.9ms)
+Completed   in 94ms
+
+ActionView::Template::Error (undefined method `active_profile_id' for #<UserProfile:0x00000101e13410>):
+    1: <%= session[:profile_id] %>
+    2: <%= form_tag active_profile_path do %>
+    3:     <%= label_tag "Profile" %>
+    4:     <%= collection_select(:active_profile, :profile_id, current_user.active_profile_helper_collection, :active_profile_id, :name) %>
+    5:     <%= submit_tag 'Activate' %>
+    6: <% end %>
+  app/views/active_profile/_form.html.erb:4:in `block in _app_views_active_profile__form_html_erb___2924980130874101756_2163235780__2653887093039919769'
+  app/views/active_profile/_form.html.erb:2:in `_app_views_active_profile__form_html_erb___2924980130874101756_2163235780__2653887093039919769'
+  app/views/layouts/application.html.erb:24:in `_app_views_layouts_application_html_erb___3132141180714628200_2172876060__4568913170446030613'
+  app/controllers/users_controller.rb:8:in `index'
+
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.0ms)
+Rendered /Users/joew/.rvm/gems/ruby-1.9.2-p0/gems/actionpack-3.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (9.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:46:47 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.5ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mCharacter Load (0.9ms)[0m  SELECT "characters".* FROM "characters" INNER JOIN "profiles" ON "characters".game_profile_id = "profiles".id WHERE (("profiles".user_id = 1) AND (("profiles"."type" = 'GameProfile')))
+  [1m[36mGameProfile Load (0.6ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'GameProfile') AND ("profiles"."id" = 2) LIMIT 1[0m
+Rendered active_profile/_form.html.erb (51.8ms)
+Rendered users/index.html.erb within layouts/application (134.0ms)
+Completed 200 OK in 173ms (Views: 136.0ms | ActiveRecord: 3.2ms)
+
+
+Started POST "/active_profile" for 127.0.0.1 at 2011-01-07 18:46:52 -0800
+  Processing by ActiveProfilesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"B6PJYOTksGPDM0yKw6ZbSr8v8GS+buZ1uXC8RanVRek=", "active_profile"=>{"profile_id"=>"2"}, "commit"=>"Activate"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 28ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:46:53 -0800
+  Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1
+  [1m[36mUserProfile Load (0.4ms)[0m  [1mSELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."id" = 2) LIMIT 1
+Rendered users/index.html.erb within layouts/application (30.5ms)
+Completed 200 OK in 60ms (Views: 33.7ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/deactivate_profile" for 127.0.0.1 at 2011-01-07 18:46:55 -0800
+  Processing by ActiveProfilesController#destroy as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 28ms
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-07 18:46:56 -0800
+  Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE ("users"."id" = 1) LIMIT 1[0m
+  [1m[35mUserProfile Load (0.5ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'UserProfile') AND ("profiles".user_id = 1) LIMIT 1
+  [1m[36mCharacter Load (1.0ms)[0m  [1mSELECT "characters".* FROM "characters" INNER JOIN "profiles" ON "characters".game_profile_id = "profiles".id WHERE (("profiles".user_id = 1) AND (("profiles"."type" = 'GameProfile')))[0m
+  [1m[35mGameProfile Load (0.4ms)[0m  SELECT "profiles".* FROM "profiles" WHERE ("profiles"."type" = 'GameProfile') AND ("profiles"."id" = 2) LIMIT 1
+Rendered active_profile/_form.html.erb (14.2ms)
+Rendered users/index.html.erb within layouts/application (69.7ms)
+Completed 200 OK in 97ms (Views: 71.8ms | ActiveRecord: 5.2ms)

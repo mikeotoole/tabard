@@ -4,6 +4,10 @@ class Character < ActiveRecord::Base
  
  validates_presence_of :name
  
+ def active_profile_id
+   game_profile.id
+ end
+ 
   # Lets the subclasses use the parents routes. 
   def self.inherited(child)
     child.instance_eval do

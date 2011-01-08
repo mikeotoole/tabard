@@ -1,9 +1,6 @@
+<%= session[:profile_id] %>
 <%= form_tag active_profile_path do %>
-  <div class="field">
     <%= label_tag "Profile" %>
-    <%= f.collection_select() %>
-  </div>
-  <div class="actions">
+    <%= collection_select(:active_profile, :profile_id, current_user.active_profile_helper_collection, :active_profile_id, :name) %>
     <%= submit_tag 'Activate' %>
-  </div>
 <% end %>

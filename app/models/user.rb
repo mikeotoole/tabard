@@ -13,12 +13,18 @@ class User < ActiveRecord::Base
   has_many :game_profiles
   has_one :user_profile
   
+  has_many :characters, :through => :game_profiles
+  
   has_and_belongs_to_many :roles
   
   before_save :encrypt_new_password
   
   def profiles
     (Array.new() << (user_profile)).concat(game_profiles)
+  end
+  
+  def active_profile_helper_collection
+    (Array.new() << (user_profile)).concat(characters)
   end
   
   def name
