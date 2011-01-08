@@ -5,7 +5,12 @@ class ActiveProfilesController < ApplicationController
     #Add the profile_id to session
     #session[:profile_id] = whatever
     #Redirect to root?
-    session[:profile_id] = params[:active_profile][:profile_id]
+    if params[:active_profile][:character_id] == "-1" 
+      session[:profile_id] = current_user.user_profile_id
+    else 
+      session[:character_id] = params[:active_profile][:character_id]
+      session[:profile_id] = Character.find_by_id(params[:active_profile][:character_id]).active_profile_id
+    end
     redirect_to root_path, :notice => "Profile activated."
   end
   
@@ -16,6 +21,7 @@ class ActiveProfilesController < ApplicationController
   def destroy 
     #Unset the session[:profile_id]
     session[:profile_id] = nil
+    session[:character_id] = nil
     redirect_to root_path, :notice => "Profile deactivated."
   end
 end

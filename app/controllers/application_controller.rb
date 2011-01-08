@@ -17,6 +17,9 @@ class ApplicationController < ActionController::Base
       current_user.is_a? User
     end
     
+    # Make logged_in? available in templates as a helper 
+    helper_method :logged_in?
+    
     #predicate method to test for an active profile
     def profile_active?
       current_profile != nil
@@ -32,8 +35,18 @@ class ApplicationController < ActionController::Base
     
     helper_method :current_profile
     
-    # Make logged_in? available in templates as a helper 
-    helper_method :logged_in?
+    def character_active?
+      current_character != nil
+    end
+    
+    helper_method :character_active?
+    
+    def current_character
+      return unless session[:character_id]
+      @current_character ||= Character.find_by_id(session[:character_id]) 
+    end
+    
+    helper_method :current_character
     
     def access_denied 
       redirect_to login_path, :notice => "Please log in to continue" and return false 

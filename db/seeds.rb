@@ -15,7 +15,7 @@ eliand = Character.create(:name => "Eliand", :faction => "Alliance", :race => "N
 yoda = Character.create(:name => "Yoda", :faction => "Republic", :race => "Species Unknown", :server => "Obi-Wan", :rank => "10", :game => swtor, :type_helper => "SwtorCharacter")
 adminProfile = UserProfile.create(:name => "Admin")
 wowProfile = GameProfile.create(:name => "Wow profile", :characters => [blaggarth,eliand], :game => wow)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda])
+swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda], :game => swtor)
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allGamePermission = Permission.create(:permissionable => gameResource, :name => "Full Access Game", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
