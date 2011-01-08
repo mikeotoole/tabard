@@ -1,25 +1,33 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:edit, :update, :destroy]
+  before_filter :authenticate, :except => [:new, :create]
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
+    if !current_user.can_show("User") 
+      render :nothing => true, :status => :forbidden
+    else 
+      @users = User.all
+  
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @users }
+      end
     end
   end
 
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find(params[:id])
-    @announcements = Announcement.all
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
+    if !current_user.can_show("User") and User.find(params[:id]) != current_user
+      render :nothing => true, :status => :forbidden
+    else 
+      @user = User.find(params[:id])
+      @announcements = Announcement.all
+      
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @user }
+      end
     end
   end
 
@@ -36,9 +44,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if !current_user.can_update("User") 
-      @user = current_user #can only update themselves
-      flash.now[:alert] = "You do not have permissions to edit other users. You are being directed to your own user."
+    if !current_user.can_update("User") and User.find(params[:id]) != current_user
+      render :nothing => true, :status => :forbidden
     else 
       @user = User.find(params[:id])
     end

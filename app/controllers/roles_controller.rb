@@ -37,6 +37,11 @@ class RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.new
+      @permissions = Array.new() 
+      for resource in SystemResource.all
+        @permissions << Permission.new(:permissionable => resource, :name => resource.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
+      end
+      @users = User.all
   
       respond_to do |format|
         format.html # new.html.erb
@@ -51,6 +56,8 @@ class RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])
+      @permissions = @role.permissions
+      @users = User.all
     end
   end
 
@@ -64,9 +71,6 @@ class RolesController < ApplicationController
   
       respond_to do |format|
         if @role.save
-          for resource in SystemResource.all
-            @role.permissions.create(:permissionable => resource, :name => resource.name, :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
-          end
           format.html { redirect_to(@role, :notice => 'Role was successfully created.') }
           format.xml  { render :xml => @role, :status => :created, :location => @role }
         else

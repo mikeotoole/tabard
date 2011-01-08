@@ -44,6 +44,13 @@ class SystemResourcesController < ApplicationController
 
     respond_to do |format|
       if @system_resource.save
+        for role in Role.all
+          if role.users.include?(current_user)
+            role.permissions << Permission.new(:permissionable => @system_resource, :name => "Creator Permissions", :show_p => true, :create_p => true, :update_p => true, :delete_p => true) 
+          else
+            role.permissions << Permission.new(:permissionable => @system_resource, :name => @system_resource.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
+          end
+        end
         format.html { redirect_to(@system_resource, :notice => 'System resource was successfully created.') }
         format.xml  { render :xml => @system_resource, :status => :created, :location => @system_resource }
       else
