@@ -36,7 +36,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = current_user
+    if !current_user.can_update("User") 
+      @user = current_user #can only update themselves
+      flash.now[:alert] = "You do not have permissions to edit other users. You are being directed to your own user."
+    else 
+      @user = User.find(params[:id])
+    end
   end
 
   # POST /users
@@ -59,8 +64,11 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = current_user
-
+    if !current_user.can_update("User") and User.find(params[:id]) != current_user
+      render :nothing => true, :status => :forbidden
+    else 
+      @user = User.find(params[:id])
+    end
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
