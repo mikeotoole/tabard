@@ -16,7 +16,18 @@
       <% if current_user.user_profile == nil %>
         Please Click <%= link_to "Here", new_profile_path %> to Finish Creating Your Account |
       <% else %>
-        Hello, <%= current_user.user_profile.name %>
+        Hello, <%= current_user.user_profile.name %> |
+        <% if profile_active? %>
+          <%= current_profile.name %>
+          <%= link_to "Deactivate Profile", deactivate_profile_path %> |
+        <% else %>
+          <%= session[:profile_id] %>
+          <%= form_tag active_profile_path do %>
+              <%= label_tag "Profile" %>
+              <%= collection_select(:active_profile, :profile_id, current_user.profiles, :id, :name) %>
+              <%= submit_tag 'Activate' %>
+          <% end %> |
+        <% end %>
         <%= link_to "Edit User", edit_user_path(current_user) %> |
       <% end %> 
       <%= link_to "Logout", logout_path %>

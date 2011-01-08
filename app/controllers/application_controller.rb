@@ -16,6 +16,22 @@ class ApplicationController < ActionController::Base
     def logged_in?
       current_user.is_a? User
     end
+    
+    #predicate method to test for an active profile
+    def profile_active?
+      current_profile != nil
+    end
+    
+    helper_method :profile_active?
+    
+    # Returns the currently active_profile or nil if there isn't one 
+    def current_profile
+      return unless session[:profile_id]
+      @current_profile ||= Profile.find_by_id(session[:profile_id]) 
+    end
+    
+    helper_method :current_profile
+    
     # Make logged_in? available in templates as a helper 
     helper_method :logged_in?
     

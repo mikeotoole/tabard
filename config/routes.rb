@@ -29,6 +29,10 @@ Bv::Application.routes.draw do
   resources :users
   resource :session
   
+  resource :active_profile
+  match '/activate_profile' => "active_profiles#new", :as => "activate_profile"
+  match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
+  
   resources :games do
     resources :characters
   end

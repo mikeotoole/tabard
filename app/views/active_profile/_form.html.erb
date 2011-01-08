@@ -1,0 +1,9 @@
+<%= form_tag active_profile_path do %>
+  <div class="field">
+    <%= label_tag "Profile" %>
+    <%= f.collection_select() %>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Activate' %>
+  </div>
+<% end %>
