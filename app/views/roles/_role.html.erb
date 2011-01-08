@@ -10,7 +10,6 @@
   <table>
     <thead>
       <tr>
-        <th>Permission Name</th>
         <th>Resource</th>
         <th>Show</th>
         <th>Create</th>
@@ -21,7 +20,6 @@
     <tbody>
       <% for permission in role.permissions %>
         <tr>
-          <td><%= permission.name %></td>
           <td><%= permission.permissionable_name %></td>
           <td><%= permission.show_p %></td>
           <td><%= permission.create_p %></td>
