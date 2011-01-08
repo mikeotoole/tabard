@@ -1,6 +1,6 @@
 <%= session[:profile_id] %>
 <%= form_tag active_profile_path do %>
     <%= label_tag "Profile" %>
-    <%= collection_select(:active_profile, :profile_id, current_user.active_profile_helper_collection, :active_profile_id, :name) %>
+    <%= collection_select(:active_profile, :character_id, current_user.active_profile_helper_collection, :character_id, :name) %>
     <%= submit_tag 'Activate' %>
 <% end %>

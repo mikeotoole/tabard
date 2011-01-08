@@ -1,5 +1,5 @@
 class UserProfile < Profile
-  def active_profile_id
-    self.id
+  def character_id
+    -1
   end
 end

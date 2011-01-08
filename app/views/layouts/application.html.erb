@@ -18,6 +18,9 @@
       <% else %>
         Hello, <%= current_user.user_profile.name %> |
         <% if profile_active? %>
+          <% if character_active? %>
+            [<%= current_character.name %>]
+          <% end %>
           <%= current_profile.name %>
           <%= link_to "Deactivate Profile", deactivate_profile_path %> |
         <% else %>

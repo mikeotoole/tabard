@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     (Array.new() << (user_profile)).concat(characters)
   end
   
+  def user_profile_id
+    user_profile.id
+  end
+  
   def name
     user_profile.name
   end
