@@ -5,13 +5,4 @@
   <%= render @game.characters %>
 </div>
 
-<% if false %>
-<!-- Characters are now only added from inside a game profile. -->
-<br/>
-<h3>Add New Character:</h3>
-
-<%= render :file => 'characters/new' %>
-<br/>
-<% end %>
-
-<%= link_to 'Back', games_path %>
+<%= js_back %>

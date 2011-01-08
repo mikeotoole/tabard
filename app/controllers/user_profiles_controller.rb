@@ -1,5 +1,5 @@
-class GameProfilesController < ProfilesController
-  before_filter :authenticate  
+class UserProfilesController < ApplicationController
+    before_filter :authenticate  
   
   # GET /profiles
   # GET /profiles.xml
@@ -11,22 +11,50 @@ class GameProfilesController < ProfilesController
       format.xml  { render :xml => @profiles }
     end
   end
-    
+
   # GET /profiles/1
   # GET /profiles/1.xml
   def show
     @profile = Profile.find(params[:id])
-    @game = Game.file(@profile.game_id)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @profile }
+    if @profile.game_id != nil
+      @game = Game.find(@profile.game_id)
+    end
+    
+    if @profile.type == "GameProfile"
+      respond_to do |format|
+        format.html { render :file => 'profiles/showgame' }
+        format.xml  { render :xml => @profile }
+      end
+    else
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @profile }
+      end
     end
   end
 
   # GET /profiles/new
   # GET /profiles/new.xml
   def new
+    if @profile_type == "UserProfile" || current_user.user_profile == nil
+      flash.now[:alert] = "Please create a user profile to finish creating your account."
+      @profile = UserProfile.new
+      @profile.type = "UserProfile"
+    else
+      flash.now[:alert] = "Please create a game profile."
+      @profile = GameProfile.new
+      @profile.type = "GameProfile"
+    end
+    @profile.user = current_user
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @profile }
+    end
+  end
+  
+  # GET /profiles/newgame
+  # GET /profiles/newgame.xml
+  def newgame
     flash.now[:alert] = "Please create a game profile."
     @profile = GameProfile.new
     @profile.type_helper = "GameProfile"
@@ -90,5 +118,5 @@ class GameProfilesController < ProfilesController
       format.html { redirect_to(profiles_url) }
       format.xml  { head :ok }
     end
-  end 
+  end
 end
