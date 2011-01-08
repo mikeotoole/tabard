@@ -31,18 +31,18 @@ class CharactersController < ApplicationController
   # POST /games/game_id/characters.xml
   def create
     @game = Game.find_by_id(params[:game][:game_id])
-    @profile = GameProfile.find(:first, :conditions => { :game_id => @game.id })
+    @gameprofiles = current_user.user_profile.game_profiles
+    @profile = @gameprofiles.find(:first, :conditions => { :game_id => @game.id })
     if @profile == nil
       user_profile = UserProfile.find(:first, :conditions => { :user_id => current_user.id})
       @profile = GameProfile.create(:game_id => @game.id, :user_profile_id => user_profile.id)
-    end
-    
+    end   
     
     @character = @game.characters.factory(@game.type, @game.id, @profile.id, params[:character])
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :notice => 'Character was successfully created.' }
+        format.html { redirect_to current_user.user_profile, :notice => 'Character was successfully created.' }
         format.xml  { render :xml => @character, :status => :created, :location => @character }
       else
         format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :alert => 'Unable to add character' }

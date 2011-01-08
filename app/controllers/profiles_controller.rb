@@ -75,7 +75,7 @@ class ProfilesController < ApplicationController
   def create
     if @profile == nil
       logger.debug "profile was nil"
-      @profile = Profile.new(params[:profile])
+      @profile = UserProfile.new(params[:profile])
       @profile.user = current_user
     else
       @profile.update_attributes(params[:profile])

@@ -36,7 +36,10 @@ class RolesController < ApplicationController
       end
       @users = User.all
   
-      respond_with(@role,@permissions,@users)
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @role }
+      end
     end
   end
 

@@ -23,7 +23,17 @@ class User < ActiveRecord::Base
   end
   
   def active_profile_helper_collection
-    (Array.new() << (user_profile)).concat(characters)
+    (Array.new() << (user_profile)).concat(characters_hack)
+  end
+  
+  def characters_hack
+    characterArray = Array.new()
+    for gprof in user_profile.game_profiles
+      for charact in gprof.characters
+        characterArray << charact
+      end
+    end
+    characterArray
   end
   
   def user_profile_id
@@ -31,7 +41,7 @@ class User < ActiveRecord::Base
   end
   
   def name
-    user_profile.name
+    user_profile != nil ? user_profile.name : email
   end
   
   def self.authenticate(email, password) 
