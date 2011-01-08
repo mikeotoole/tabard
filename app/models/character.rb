@@ -25,16 +25,14 @@ class Character < ActiveRecord::Base
     self.type = type
   end
  
- def self.factory(class_name, game_id, params = nil)
+  def self.factory(class_name, game_id, params = nil)
     params[:game_id] ||= game_id
-    #class_name = params[:game_type]
-    #class_name << "Character"
     class_name << "Character"
     if defined? class_name.constantize
       class_name.constantize.new(params)
     else
       Character.new(params)
     end
- end
+  end
  
 end
