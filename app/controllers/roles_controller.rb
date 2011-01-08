@@ -1,4 +1,5 @@
 class RolesController < ApplicationController
+  respond_to :html, :xml
   before_filter :authenticate
   # GET /roles
   # GET /roles.xml
@@ -7,11 +8,7 @@ class RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @roles = Role.all
-    
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @roles }
-      end
+      respond_with(@roles)
     end
   end
 
@@ -22,11 +19,7 @@ class RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])
-  
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @role }
-      end
+      respond_with(@role)
     end
   end
 
@@ -43,10 +36,7 @@ class RolesController < ApplicationController
       end
       @users = User.all
   
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @role }
-      end
+      respond_with(@role,@permissions,@users)
     end
   end
 
@@ -69,15 +59,10 @@ class RolesController < ApplicationController
     else 
       @role = Role.new(params[:role])
   
-      respond_to do |format|
-        if @role.save
-          format.html { redirect_to(@role, :notice => 'Role was successfully created.') }
-          format.xml  { render :xml => @role, :status => :created, :location => @role }
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
-        end
+      if @role.save
+        flash[:notice] = 'Role was successfully created.'
       end
+      respond_with(@role)
     end
   end
 
@@ -88,16 +73,10 @@ class RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])
-  
-      respond_to do |format|
-        if @role.update_attributes(params[:role])
-          format.html { redirect_to(@role, :notice => 'Role was successfully updated.') }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
-        end
+      if @role.update_attributes(params[:role])
+        flash[:notice] = 'Role was successfully updated.'
       end
+      respond_with(@role)
     end
   end
 
@@ -109,11 +88,7 @@ class RolesController < ApplicationController
     else 
       @role = Role.find(params[:id])
       @role.destroy
-  
-      respond_to do |format|
-        format.html { redirect_to(roles_url) }
-        format.xml  { head :ok }
-      end
+      respond_with(@role)
     end
   end
 end
