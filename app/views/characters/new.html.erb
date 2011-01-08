@@ -1,5 +1,8 @@
-<%= form_for([@game, @game.characters.new]) do |f| %>
-<%= f.hidden_field :game_profile_id, :value => @profile.id%>
+<%= form_for(@character) do |f| %>
+  <div class="field">
+    Game: <br />
+	<%= collection_select(:game, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
+  </div>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>

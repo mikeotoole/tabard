@@ -1,0 +1,9 @@
+<%= div_for profile do %>
+  <h3>
+    <%= link_to profile.name, profile %> 
+      <span class='actions'>
+      	<%= link_to( 'Edit', edit_profile_path(profile)) %>
+        <%= link_to( 'Delete', profile, :confirm => 'Are you sure?', :method => :delete) %>
+      </span>
+  </h3>
+<% end %>

@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @profile.name %>
+</p>
+
+<div>
+  <h3>Characters</h3>	
+  <% if @profile.game_profiles != nil %>
+  	<% for profiles in @profile.game_profiles %>
+		<% for characters in profiles.characters %>
+  			<%= render characters %>
+		<% end %>
+	<% end %>
+  <% end %>
+</div>
+
+<%= link_to 'New Character', new_character_path %> |
+<%= link_to 'Edit User Profile', edit_profile_path(@profile) %> |
+<%= js_back %>
