@@ -29,15 +29,12 @@ class Character < ActiveRecord::Base
     self.type = type
   end
  
- def self.factory(class_name, game_id, profile_id, params = nil)
-    params[:game_id] ||= game_id
-    params[:game_profile_id] ||= profile_id
-    #class_name = params[:game_type]
-    #class_name << "Character"
+ def self.factory(class_name, params = nil)
     class_name << "Character"
     if defined? class_name.constantize
       class_name.constantize.new(params)
     else
+      #TODO a base character type is created here. May just make this an error.
       Character.new(params)
     end
  end

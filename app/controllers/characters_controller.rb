@@ -30,15 +30,15 @@ class CharactersController < ApplicationController
   # POST /games/game_id/characters
   # POST /games/game_id/characters.xml
   def create
-    @game = Game.find_by_id(params[:game][:game_id])
-    @gameprofiles = current_user.user_profile.game_profiles
+    @game = Game.find_by_id(params[:character][:game_id])
+    @gameprofiles = current_user.all_game_profiles
     @profile = @gameprofiles.find(:first, :conditions => { :game_id => @game.id })
     if @profile == nil
       user_profile = UserProfile.find(:first, :conditions => { :user_id => current_user.id})
       @profile = GameProfile.create(:game_id => @game.id, :user_profile_id => user_profile.id)
     end   
-    
-    @character = @game.characters.factory(@game.type, @game.id, @profile.id, params[:character])
+    params[:character][:game_profile_id] = @profile.id
+    @character = @game.characters.factory(@game.type, params[:character])
 
     respond_to do |format|
       if @character.save

@@ -7,13 +7,7 @@
 
 <div>
   <h3>Characters</h3>	
-  <% if @profile.game_profiles != nil %>
-  	<% for profiles in @profile.game_profiles %>
-		<% for characters in profiles.characters %>
-  			<%= render characters %>
-		<% end %>
-	<% end %>
-  <% end %>
+  	<%= render @profile.all_characters %>
 </div>
 
 <%= link_to 'New Character', new_character_path %> |

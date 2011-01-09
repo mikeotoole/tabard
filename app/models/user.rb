@@ -23,17 +23,15 @@ class User < ActiveRecord::Base
   end
   
   def active_profile_helper_collection
-    (Array.new() << (user_profile)).concat(characters_hack)
+    (Array.new() << (user_profile)).concat(characters)
   end
   
-  def characters_hack
-    characterArray = Array.new()
-    for gprof in user_profile.game_profiles
-      for charact in gprof.characters
-        characterArray << charact
-      end
-    end
-    characterArray
+  def characters
+    self.user_profile.all_characters
+  end
+ 
+  def all_game_profiles
+    self.user_profile.game_profiles
   end
   
   def user_profile_id
