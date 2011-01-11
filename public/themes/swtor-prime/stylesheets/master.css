@@ -1,5 +1,6 @@
 @import url(../../stylesheets/reset.css);
 @import url(layout.css);
+@import url(typography.css);
 
 @font-face {
   font-family: 'SansationRegular';
