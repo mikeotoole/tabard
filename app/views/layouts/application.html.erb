@@ -5,7 +5,7 @@
 <html>
 <head>
   <title>Bv</title>
-  <%= stylesheet_link_tag '/themes/' + @theme + '/stylesheets/master.css' %>
+  <%= stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css' %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
