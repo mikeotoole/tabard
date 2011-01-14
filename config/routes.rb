@@ -45,6 +45,8 @@ Bv::Application.routes.draw do
   end
   
   resources :characters
+  
+  resources :management
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
