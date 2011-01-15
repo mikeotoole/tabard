@@ -1,0 +1,2 @@
+module Management::ThemesHelper
+end

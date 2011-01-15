@@ -42,7 +42,18 @@ Bv::Application.routes.draw do
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   
-  match '/management' => "management#index"
+  match 'management' => "management/management#index"
+  
+  namespace "management" do
+    resources :users
+    resources :games
+    resources :roles
+    resources :newsletters
+    resources :page_spaces
+    resources :discussion_pages
+    resources :themes
+    resources :team_speaks
+  end
   
   resources :profiles do
     resources :acknowledgment_of_announcements
