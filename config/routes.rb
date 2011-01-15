@@ -1,5 +1,9 @@
 Bv::Application.routes.draw do
 
+  resources :comments
+
+  resources :discussions
+
   resources :discussion_spaces
 
   resources :system_resources
