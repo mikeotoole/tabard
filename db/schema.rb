@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110108071307) do
+ActiveRecord::Schema.define(:version => 20110115170844) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
     t.datetime "updated_at"
   end
 
+  create_table "donations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -57,6 +67,31 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
     t.string   "type"
     t.string   "extra"
     t.boolean  "is_active"
+  end
+
+  create_table "letters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "newsletters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "page_spaces", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permissions", :force => true do |t|
@@ -108,6 +143,11 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
 
   create_table "system_resources", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "team_speaks", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
