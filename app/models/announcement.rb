@@ -1,6 +1,5 @@
 class Announcement < Discussion
   has_many :AcknowledgmentOfAnnouncements
-  has_many :Profiles, :through => :AcknowledgmentOfAnnouncement
   
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
