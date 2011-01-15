@@ -1,0 +1,17 @@
+<%= form_for(@team_speak) do |f| %>
+  <% if @team_speak.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team_speak.errors.count, "error") %> prohibited this team_speak from being saved:</h2>
+
+      <ul>
+      <% @team_speak.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

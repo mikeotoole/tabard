@@ -1,10 +1,30 @@
 Bv::Application.routes.draw do
 
+  resources :recurring_events
+
+  resources :game_locations
+
+  resources :locations
+
+  resources :events
+
+  resources :team_speaks
+
+  resources :page_spaces
+
+  resources :pages
+
+  resources :letters
+
+  resources :donations
+
+  resources :newsletters
+
+  resources :discussion_spaces
+
   resources :comments
 
   resources :discussions
-
-  resources :discussion_spaces
 
   resources :system_resources
 
@@ -21,6 +41,8 @@ Bv::Application.routes.draw do
   
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
+  
+  match '/management' => "management#index"
   
   resources :profiles do
     resources :acknowledgment_of_announcements
