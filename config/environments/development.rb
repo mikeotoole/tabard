@@ -24,7 +24,7 @@ Bv::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   # This will force the models to be loaded so that subclasses can be seen by there parent.
-  %w[game wow swtor character wow_character swtor_character profile game_profile user_profile announcement site_announcement game_announcement].each do |c|
+  %w[game wow swtor character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
     require_dependency File.join("app","models","#{c}.rb")
   end
 end
