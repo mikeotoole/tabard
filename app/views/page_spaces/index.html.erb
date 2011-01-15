@@ -1,0 +1,21 @@
+<h1>Listing page_spaces</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @page_spaces.each do |page_space| %>
+  <tr>
+    <td><%= link_to 'Show', page_space %></td>
+    <td><%= link_to 'Edit', edit_page_space_path(page_space) %></td>
+    <td><%= link_to 'Destroy', page_space, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Page space', new_page_space_path %>
