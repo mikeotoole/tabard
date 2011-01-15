@@ -1,0 +1,2 @@
+module TeamspeaksHelper
+end

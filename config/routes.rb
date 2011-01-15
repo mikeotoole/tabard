@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
 
+  resources :teamspeaks
+
   resources :recurring_events
 
   resources :game_locations
@@ -50,9 +52,9 @@ Bv::Application.routes.draw do
     resources :roles
     resources :newsletters
     resources :page_spaces
-    resources :discussion_pages
+    resources :discussion_spaces
     resources :themes
-    resources :team_speaks
+    resources :teamspeaks
   end
   
   resources :profiles do

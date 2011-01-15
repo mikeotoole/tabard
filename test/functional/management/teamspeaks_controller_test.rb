@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TeamSpeakTest < ActiveSupport::TestCase
+class Management::TeamspeaksControllerTest < ActionController::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
