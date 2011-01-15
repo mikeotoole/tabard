@@ -22,6 +22,10 @@ Bv::Application.routes.draw do
 
   resources :discussion_spaces
 
+  resources :comments
+
+  resources :discussions
+
   resources :system_resources
 
   resources :announcements do

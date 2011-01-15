@@ -1,15 +1,2 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @discussion_space.name %>
-</p>
-
-<p>
-  <b>System:</b>
-  <%= @discussion_space.system %>
-</p>
-
-
-<%= link_to 'Edit', edit_discussion_space_path(@discussion_space) %> |
+<%= render @discussion_space %>
 <%= link_to 'Back', discussion_spaces_path %>

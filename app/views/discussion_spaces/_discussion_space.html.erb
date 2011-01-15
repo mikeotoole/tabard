@@ -1,0 +1,10 @@
+<%= div_for discussion_space do %>
+  <h3><%= discussion_space.name %></h3>
+  <p>By: <%= discussion_space.user_profile %></p>
+  <% if !discussion_space.system %>
+    <span class='actions'>
+      <%= link_to "Edit", edit_discussion_space_path(discussion_space) %>
+      <%= link_to "Delete", discussion_space, :confirm => "Are you sure?", :method => :delete %>
+    </span>
+  <% end %>
+<% end %>
