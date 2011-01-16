@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
 
+  resources :teamspeaks
+
   resources :recurring_events
 
   resources :game_locations
@@ -42,7 +44,18 @@ Bv::Application.routes.draw do
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   
-  match '/management' => "management#index"
+  match 'management' => "management/management#index"
+  
+  namespace "management" do
+    resources :users
+    resources :games
+    resources :roles
+    resources :newsletters
+    resources :page_spaces
+    resources :discussion_spaces
+    resources :themes
+    resources :teamspeaks
+  end
   
   resources :profiles do
     resources :acknowledgment_of_announcements
