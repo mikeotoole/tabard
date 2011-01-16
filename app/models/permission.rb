@@ -12,4 +12,8 @@ class Permission < ActiveRecord::Base
     end
     "unknown"
   end
+  
+  def system_resource_permission
+    permissionable.is_a? SystemResource
+  end
 end

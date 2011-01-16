@@ -1,0 +1,17 @@
+<%= div_for discussion do %>
+  <%= link_to discussion.discussion_space.name, discussion.discussion_space %>
+  <h3><%= discussion.name %></h3>
+  <p>By: <%= discussion.user_profile %></p>
+  <p>By: <%= discussion.character %></p>
+  <p>Body: <%= discussion.body %></p>
+  <h4>Comments</h4>
+  <ul>
+    <% discussion.comments.each do  |comment| %>
+      <li><%= link_to "COMMENT", comment %></li>
+    <% end %>
+  </ul>
+  <span class='actions'>
+    <%= link_to "Edit", edit_discussion_path(discussion) %>
+    <%= link_to "Delete", discussion, :confirm => "Are you sure?", :method => :delete %>
+  </span>
+<% end %>

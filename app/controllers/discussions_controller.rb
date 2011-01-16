@@ -1,12 +1,14 @@
 class DiscussionsController < ApplicationController
+  respond_to :html, :xml
+  before_filter :authenticate
   # GET /discussions
   # GET /discussions.xml
   def index
-    @discussions = Discussion.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @discussions }
+    if !current_user.can_show("Discussion")
+      render :nothing => true, :status => :forbidden 
+    else
+      @discussions = Discussion.all
+      respond_with(@discussions)
     end
   end
 
@@ -14,10 +16,10 @@ class DiscussionsController < ApplicationController
   # GET /discussions/1.xml
   def show
     @discussion = Discussion.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @discussion }
+    if !current_user.can_show(@discussion) and !current_user.can_show("Discussion")
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@discussion)
     end
   end
 
@@ -25,30 +27,36 @@ class DiscussionsController < ApplicationController
   # GET /discussions/new.xml
   def new
     @discussion = Discussion.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @discussion }
+    if !current_user.can_create("Discussion")
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@discussion)
     end
   end
 
   # GET /discussions/1/edit
   def edit
     @discussion = Discussion.find(params[:id])
+    if !current_user.can_update("Discussion") and !current_user.can_update(@discussion)
+      render :nothing => true, :status => :forbidden
+    end
   end
 
   # POST /discussions
   # POST /discussions.xml
   def create
-    @discussion = Discussion.new(params[:discussion])
-
-    respond_to do |format|
+    if !current_user.can_create("Discussion")
+      render :nothing => true, :status => :forbidden
+    else
+      @discussion = Discussion.new(params[:discussion])
       if @discussion.save
-        format.html { redirect_to(@discussion, :notice => 'Discussion was successfully created.') }
-        format.xml  { render :xml => @discussion, :status => :created, :location => @discussion }
+        flash[:notice] = 'Discussion was successfully created.'
+        respond_with(@discussion)
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -57,14 +65,17 @@ class DiscussionsController < ApplicationController
   # PUT /discussions/1.xml
   def update
     @discussion = Discussion.find(params[:id])
-
-    respond_to do |format|
+    if !current_user.can_update("Discussion") and !current_user.can_update(@discussion)
+      render :nothing => true, :status => :forbidden
+    else
       if @discussion.update_attributes(params[:discussion])
-        format.html { redirect_to(@discussion, :notice => 'Discussion was successfully updated.') }
-        format.xml  { head :ok }
+        flash[:notice] = 'Discussion was successfully updated.'
+        respond_with(@discussion)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -73,11 +84,11 @@ class DiscussionsController < ApplicationController
   # DELETE /discussions/1.xml
   def destroy
     @discussion = Discussion.find(params[:id])
-    @discussion.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(discussions_url) }
-      format.xml  { head :ok }
+    if !current_user.can_delete("Discussion") and !current_user.can_delete(@discussion)
+      render :nothing => true, :status => :forbidden
+    else 
+      @discussion.destroy
+      respond_with(@discussion)
     end
   end
 end

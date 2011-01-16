@@ -20,11 +20,11 @@ Bv::Application.routes.draw do
 
   resources :newsletters
 
-  resources :discussion_spaces
+  resources :discussion_spaces 
+  
+  resources :discussions
 
   resources :comments
-
-  resources :discussions
 
   resources :system_resources
 

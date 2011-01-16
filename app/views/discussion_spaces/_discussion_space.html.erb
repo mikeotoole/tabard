@@ -7,4 +7,10 @@
       <%= link_to "Delete", discussion_space, :confirm => "Are you sure?", :method => :delete %>
     </span>
   <% end %>
+  <h4>Discussions</h4>
+  <ul>
+    <% discussion_space.discussions.each do |discussion| %>
+      <li><%= link_to discussion.name, discussion %></li>
+    <% end %>
+  </ul>
 <% end %>

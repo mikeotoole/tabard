@@ -86,7 +86,7 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   # DELETE /roles/1.xml
   def destroy
-    if !current_user.can_show("Role") 
+    if !current_user.can_delete("Role") 
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])

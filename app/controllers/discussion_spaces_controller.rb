@@ -1,12 +1,14 @@
 class DiscussionSpacesController < ApplicationController
+  respond_to :html, :xml
+  before_filter :authenticate
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-    @discussion_spaces = DiscussionSpace.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @discussion_spaces }
+    if !current_user.can_show("DiscussionSpace")
+      render :nothing => true, :status => :forbidden
+    else
+      @discussion_spaces = DiscussionSpace.all
+      respond_with(@discussion_spaces)
     end
   end
 
@@ -14,10 +16,10 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/1.xml
   def show
     @discussion_space = DiscussionSpace.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @discussion_space }
+    if !current_user.can_show(@discussion_space) and !current_user.can_show("DiscussionSpace")
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@discussion_space)
     end
   end
 
@@ -25,30 +27,36 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/new.xml
   def new
     @discussion_space = DiscussionSpace.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @discussion_space }
+    if !current_user.can_create("DiscussionSpace")
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@discussion_space)
     end
   end
 
   # GET /discussion_spaces/1/edit
   def edit
     @discussion_space = DiscussionSpace.find(params[:id])
+    if !current_user.can_update("DiscussionSpace") and !current_user.can_update(@discussion_space)
+      render :nothing => true, :status => :forbidden
+    end
   end
 
   # POST /discussion_spaces
   # POST /discussion_spaces.xml
   def create
-    @discussion_space = DiscussionSpace.new(params[:discussion_space])
-
-    respond_to do |format|
+    if !current_user.can_create("DiscussionSpace")
+      render :nothing => true, :status => :forbidden
+    else
+      @discussion_space = DiscussionSpace.new(params[:discussion_space])
       if @discussion_space.save
-        format.html { redirect_to(@discussion_space, :notice => 'Discussion space was successfully created.') }
-        format.xml  { render :xml => @discussion_space, :status => :created, :location => @discussion_space }
+        flash[:notice] = 'Discussion space was successfully created.'
+        respond_with(@discussion_space)
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -57,14 +65,17 @@ class DiscussionSpacesController < ApplicationController
   # PUT /discussion_spaces/1.xml
   def update
     @discussion_space = DiscussionSpace.find(params[:id])
-
-    respond_to do |format|
+    if !current_user.can_update("DiscussionSpace") and !current_user.can_update(@discussion_space)
+      render :nothing => true, :status => :forbidden
+    else
       if @discussion_space.update_attributes(params[:discussion_space])
-        format.html { redirect_to(@discussion_space, :notice => 'Discussion space was successfully updated.') }
-        format.xml  { head :ok }
+        flash[:notice] = 'Discussion space was successfully updated.'
+        respond_with(@discussion_space)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -73,11 +84,11 @@ class DiscussionSpacesController < ApplicationController
   # DELETE /discussion_spaces/1.xml
   def destroy
     @discussion_space = DiscussionSpace.find(params[:id])
-    @discussion_space.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(discussion_spaces_url) }
-      format.xml  { head :ok }
+    if !current_user.can_delete("DiscussionSpace") and !current_user.can_delete(@discussion_space)
+      render :nothing => true, :status => :forbidden
+    else 
+      @discussion_space.destroy
+      respond_with(@discussion_space)
     end
   end
 end
