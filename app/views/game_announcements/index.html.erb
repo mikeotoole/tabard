@@ -1,21 +1,28 @@
-<h1>Listing game_announcements</h1>
+<h1>Listing Game Announcements</h1>
 
 <table>
   <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Game</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @game_announcements.each do |game_announcement| %>
+<% @game_announcements.each do |announcement| %>
   <tr>
-    <td><%= link_to 'Show', game_announcement %></td>
-    <td><%= link_to 'Edit', edit_game_announcement_path(game_announcement) %></td>
-    <td><%= link_to 'Destroy', game_announcement, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= announcement.name %></td>
+    <td><%= announcement.body %></td>
+    <td><%= Game.find(announcement.game_id).name %></td>
+    <td><%= link_to 'Show', announcement %></td>
+    <td><%= link_to 'Edit', edit_game_announcement_path(announcement) %></td>
+    <td><%= link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Game announcement', new_game_announcement_path %>
+<%= link_to 'New Game Announcement', new_game_announcement_path %> |
+<%= link_to 'All Announcements', announcements_path %>

@@ -58,6 +58,7 @@ class Management::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        UserProfile.create(:user_id => @user.id)
         format.html { redirect_to(management_users_path, :notice => 'User was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else

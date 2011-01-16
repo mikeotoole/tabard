@@ -2,8 +2,8 @@
   <h3>
     <%= link_to game.name, game %>
       	<span class='actions'>
-        	<%= link_to "Edit", edit_game_path(game) %>
-        	<%= link_to "Delete", game, :confirm => "Are you sure?", :method => :delete %>
+        	<%= link_to "Edit", edit_management_game_path(game) %>
+        	<%= link_to "Delete", [:management, game], :confirm => "Are you sure?", :method => :delete %>
       	</span>
   </h3>
 <% end %>

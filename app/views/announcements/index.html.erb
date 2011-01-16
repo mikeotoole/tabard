@@ -4,7 +4,6 @@
   <tr>
     <th>Title</th>
     <th>Body</th>
-    <th>Game</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +11,8 @@
 
 <% @announcements.each do |announcement| %>
   <tr>
-    <td><%= announcement.title %></td>
+    <td><%= announcement.name %></td>
     <td><%= announcement.body %></td>
-    <td><%= announcement.game_id %></td>
     <td><%= link_to 'Show', announcement %></td>
     <td><%= link_to 'Edit', edit_announcement_path(announcement) %></td>
     <td><%= link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete %></td>

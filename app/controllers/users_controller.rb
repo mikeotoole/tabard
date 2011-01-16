@@ -22,7 +22,10 @@ class UsersController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @user = User.find(params[:id])
-      @announcements = Announcement.all
+      @userprofile = UserProfile.find(:first, :conditions => {:user_id => @user.id})
+      @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
+      @profiles << @userprofile
+      @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
       
       respond_to do |format|
         format.html # show.html.erb

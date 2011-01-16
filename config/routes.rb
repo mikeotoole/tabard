@@ -34,6 +34,8 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
+  resources :acknowledgment_of_announcements
+  
   resources :site_announcements
   resources :game_announcements
 

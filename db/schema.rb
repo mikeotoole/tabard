@@ -10,13 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110115213201) do
+ActiveRecord::Schema.define(:version => 20110116020359) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "acknowledged"
   end
 
   create_table "characters", :force => true do |t|
@@ -155,11 +156,6 @@ ActiveRecord::Schema.define(:version => 20110115213201) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
-
-  create_table "site_announcements", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "system_resources", :force => true do |t|
     t.string   "name"

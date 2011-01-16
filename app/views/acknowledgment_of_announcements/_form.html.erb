@@ -10,8 +10,13 @@
       </ul>
     </div>
   <% end %>
+  
+  	<div class="field">
+    	<%= f.label :acknowledged %><br />
+    	<%= f.check_box :acknowledged %>
+  	</div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Acknowledge'%>
   </div>
 <% end %>
