@@ -1,6 +1,6 @@
 <%= div_for role do %>
   <h3><%= role.name %></h3>
-  <p><%= link_to "Edit", edit_role_path(role) %> | <%= link_to "Delete", role, :confirm => "Are you sure?", :method => :delete %></p> 
+  <p><%= link_to "Edit", edit_management_role_path(role) %> | <%= link_to "Delete", [:management, role], :confirm => "Are you sure?", :method => :delete %></p> 
   <h4>Users</h4>
   <ul>
     <% for user in role.users %>

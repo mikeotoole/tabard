@@ -69,8 +69,7 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :permissions
-  resources :roles    
+  resources :permissions  
   
   resources :users
   resource :session
