@@ -1,4 +1,5 @@
-@mixin heading($size) {
+@mixin heading($size, $color) {
+  color: $color;
   font-family: 'SansationRegular', serif;
   font-size: $size;
   line-height: 1em;
@@ -11,9 +12,9 @@ body {
   line-height: 1.5em;
 }
 
-h1 { @include heading(2.4em) }
-h2 { @include heading(1.8em) }
-h3 { @include heading(1.2em) }
+h1 { @include heading(2.4em, #5ba7b4) }
+h2 { @include heading(1.8em, #5ba7b4) }
+h3 { @include heading(1.2em, #5ba7b4) }
 
 p
 ol,
@@ -25,12 +26,10 @@ blockquote {
 
 #header {
   .title {
-    @include heading(2.4em);
-    color: #939393;
+    @include heading(2.4em, #939393);
   }
   .slogan {
-    @include heading(0.9em);
-    color: #484c4e;
+    @include heading(0.9em, #484c4e);
     letter-spacing: 0.2em;
   }
 }

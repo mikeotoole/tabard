@@ -54,3 +54,7 @@ body {
           -moz-border-radius: 5px;
           color: #4c91a1;
           text-shadow: 0.1em 0.1em 0.1em #000; }
+
+#body {
+  position: absolute;
+  top: 325px; }
