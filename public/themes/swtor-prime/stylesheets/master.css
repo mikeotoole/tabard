@@ -1,6 +1,10 @@
-@import url(../../stylesheets/reset.css);
-@import url(layout.css);
-@import url(typography.css);
+@import url(../../../stylesheets/reset.css);
+@import url(type.css) all;
+@import url(screen.css) screen;
+/*
+@import url(print.css) print;
+@import url(handheld.css) handheld;
+*/
 
 @font-face {
   font-family: 'SansationRegular';
@@ -12,6 +16,7 @@
   font-weight: normal;
   font-style: normal;
 }
+/*
 @font-face {
   font-family: 'SansationLight';
   src: url('../fonts/sansation_light-webfont.eot');
@@ -22,6 +27,7 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
 @font-face {
   font-family: 'SansationBold';
   src: url('../fonts/sansation_bold-webfont.eot');

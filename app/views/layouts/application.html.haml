@@ -1,5 +1,5 @@
 !!! XML
-!!!
+!!! Strict
 %html{:dir => "ltr", :lang => "en-US", "xml:lang" => "en-US", :xmlns => "http://www.w3.org/1999/xhtml"}
   %html
     %head
@@ -31,6 +31,15 @@
               = link_to "Logout", logout_path
             - else
               = link_to "Login", login_path
+      .container
+        #menu
+          #login
+          %ul
+            %li
+              = link_to 'Info', '#'
+              = link_to 'Events', '#'
+              = link_to 'Resources', '#'
+              = link_to 'Discussion', '#'
       - if false
         = content_tag :p, notice, :class => 'notice' if notice.present?
         = content_tag :p, alert, :class => 'alert' if alert.present?

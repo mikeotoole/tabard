@@ -1,0 +1,32 @@
+body {
+  font-family: arial, sans-serif;
+  font-size: 100.01%;
+  line-height: 1.5; }
+
+h1,
+h2,
+h3 {
+  font-family: 'SansationRegular', serif; }
+
+h1 {
+  font-size: 2.4em; }
+
+h2 {
+  font-size: 1.8em; }
+
+h3 {
+  font-size: 1.2em; }
+
+p
+ol,
+ul,
+dl,
+blockquote {
+  font-size: 0.8em; }
+
+#menu ul {
+  font-size: 1.2em;
+  font-family: 'SansationBold', serif; }
+  #menu ul a {
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #4e4f4f; }
