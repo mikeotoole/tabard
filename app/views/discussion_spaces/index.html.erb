@@ -3,9 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>System</th>
-    <th></th>
-    <th></th>
+    <th>System Created</th>
     <th></th>
   </tr>
 
@@ -14,8 +12,6 @@
     <td><%= discussion_space.name %></td>
     <td><%= discussion_space.system %></td>
     <td><%= link_to 'Show', discussion_space %></td>
-    <td><%= link_to 'Edit', edit_discussion_space_path(discussion_space) %></td>
-    <td><%= link_to 'Destroy', discussion_space, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -1,0 +1,2 @@
+class GameLocation < Location
+end

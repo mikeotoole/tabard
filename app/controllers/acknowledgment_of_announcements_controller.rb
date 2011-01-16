@@ -60,7 +60,7 @@ class AcknowledgmentOfAnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @acknowledgment_of_announcement.update_attributes(params[:acknowledgment_of_announcement])
-        format.html { redirect_to(@acknowledgment_of_announcement, :notice => 'Acknowledgment of announcement was successfully updated.') }
+        format.html { redirect_to(current_user, :notice => 'Acknowledgment of announcement was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

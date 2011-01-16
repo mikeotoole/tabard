@@ -1,0 +1,33 @@
+<%= div_for role do %>
+  <h3><%= role.name %></h3>
+  <p><%= link_to "Edit", edit_management_role_path(role) %> | <%= link_to "Delete", [:management, role], :confirm => "Are you sure?", :method => :delete %></p> 
+  <h4>Users</h4>
+  <ul>
+    <% for user in role.users %>
+      <li><%= user.name %></li>
+    <% end %>
+  </ul>
+  <h4>Permissions</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Show</th>
+        <th>Create</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for permission in role.permissions %>
+        <tr>
+          <td><%= permission.permissionable_name %></td>
+          <td><%= permission.show_p %></td>
+          <td><%= permission.create_p %></td>
+          <td><%= permission.update_p %></td>
+          <td><%= permission.delete_p %></td>
+        </tr>
+      <% end %>  
+    </tbody>
+  </table>
+<% end %>
