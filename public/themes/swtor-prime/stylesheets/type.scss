@@ -40,8 +40,7 @@ input[type=submit] {
 }
 input[type=text],
 input[type=password] {
-  color: #464646;
-  
+  color: #464646;  
   &:focus,
   &:hover {
     color: #181a1b;
@@ -51,6 +50,9 @@ input[type=password] {
 #header {
   .title {
     @include heading(2.4em, #939393);
+    &:hover {
+      color: #5ba7b4;
+    } 
   }
   .slogan {
     @include heading(0.9em, #484c4e);
@@ -65,16 +67,39 @@ input[type=password] {
   ul {
     font-family: 'SansationBold', serif;
     font-size: 1.2em;
-  
     a {
       color: #181a1b;
       text-transform: uppercase;
-      text-shadow: 0.1em 0.1em 0.1em #4e4f4f;
-      
+      text-shadow: 1px 1px 1px #4e4f4f;
       &:hover {
         color: #4c91a1;
-        text-shadow: 0.1em 0.1em 0.1em #000;
+        text-shadow: 1px 1px 1px #000;
       }
+    }
+  }
+}
+
+#footer {
+  a {
+    color: #454545;    
+    &:hover {
+      color: #5ba7b4;
+    }
+  }
+  .menu {
+    h3 {
+      color: #747474;
+    }
+    ul {
+      line-height: 1em;
+    }
+  }
+  .copyright {
+    color: #333;
+    font-size: 0.7em;
+    line-height: 1.4em;    
+    a {
+      text-decoration: underline;
     }
   }
 }
