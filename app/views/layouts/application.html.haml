@@ -43,21 +43,20 @@
       .container
       
         #menu
-          = form_tag(session_path, :id => 'login') do
-            .field
-              = label_tag :email
-              = text_field_tag :email
-            .field
-              = label_tag :password
-              = password_field_tag :password
-            .actions
-              = submit_tag 'Login'
+          = form_tag(session_path, :class => 'login') do
+            = label_tag :email
+            = text_field_tag(:email, '', {:spellcheck => false})
+            -#
+              .field
+                = label_tag :password
+                = password_field_tag :password
+            = submit_tag 'Sign in'
           %ul
             %li
-              = link_to 'Info', '#'
-              = link_to 'Events', '#'
-              = link_to 'Resources', '#'
-              = link_to 'Discussion', '#'
+              = link_to 'Info', :pages
+              = link_to 'Events', :events
+              = link_to 'Resources', :system_resources
+              = link_to 'Discussions', :discussion_spaces
               
         #body
           = yield

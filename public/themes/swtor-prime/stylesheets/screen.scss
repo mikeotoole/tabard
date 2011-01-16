@@ -11,6 +11,46 @@ body {
   width: 960px;
 }
 
+button,
+input[type=button],
+input[type=submit] {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 15px;
+  border: 1px solid #000;
+  border-bottom-color: #323333;
+  border-right-color: #323333;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
+  
+  &:focus,
+  &:hover {
+    background-color: #3394b4 !important;
+    background-position: 0 -60px !important;
+  }
+}
+input[type=text],
+input[type=password] {
+  height: 28px;
+  line-height: 28px;
+  padding: 0 7px;
+  border: 1px solid #000;
+  border-bottom-color: #323333;
+  border-right-color: #323333;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: url(../images/input-sprite.png) 0 0 repeat-x #a9a9a9;
+  
+  &:focus,
+  &:hover {
+    background-color: #bababa;
+    background-position: 0 -30px;
+  }
+}
+
 #header {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;
@@ -36,6 +76,46 @@ body {
   position: absolute;
   width: 970px;
   
+  .login {
+    background: url(../images/icon-lock.png) 310px -2px no-repeat;
+    height: 95px;
+    left: 15px;
+    position: absolute;
+    top: 15px;
+    width: 335px;
+    
+    input[type=text] {
+      -webkit-border-top-right-radius: 0;
+      -webkit-border-bottom-right-radius: 0;
+      -moz-border-radius-topright: 0;
+      -moz-border-radius-bottomright: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: #a9a9a9;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 210px;
+    }    
+    input[type=submit] {
+      background-color: #3e778b;
+      background-position: 0 -30px;
+      -webkit-border-top-left-radius: 0;
+      -webkit-border-bottom-left-radius: 0;
+      -moz-border-radius-topleft: 0;
+      -moz-border-radius-bottomleft: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-color: #525252;
+      border-right-color: #525252;
+      padding: 0;
+      position: absolute;
+      right: 30px;
+      top: 0;
+      width: 80px;
+    }
+  }
+  
   ul {
     height: 58px;
     left: 365px;
@@ -54,7 +134,6 @@ body {
         line-height: 38px;
         margin: 10px 0 10px 10px;
         padding: 0 10px;
-        text-shadow: 0.1em 0.1em 0.1em #4e4f4f;
         vertical-align: middle;
         
         &:hover {
@@ -62,8 +141,6 @@ body {
           border-radius: 5px;
           -webkit-border-radius: 5px;
           -moz-border-radius: 5px;
-          color: #4c91a1;
-          text-shadow: 0.1em 0.1em 0.1em #000;
         }
       }
     }
