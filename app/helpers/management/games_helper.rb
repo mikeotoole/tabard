@@ -1,0 +1,2 @@
+module Management::GamesHelper
+end

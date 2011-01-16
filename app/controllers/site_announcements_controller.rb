@@ -14,6 +14,7 @@ class SiteAnnouncementsController < ApplicationController
   # GET /site_announcements/1.xml
   def show
     @site_announcement = SiteAnnouncement.find(params[:id])
+    @acknowledgments = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:announcement_id => @site_announcement.id})
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,9 +42,18 @@ class SiteAnnouncementsController < ApplicationController
   # POST /site_announcements.xml
   def create
     @site_announcement = SiteAnnouncement.new(params[:site_announcement])
+    @users = User.find(:all, :conditions => {:is_active => true})
+    
+    logger.debug "Number of users found: #{@users.count}"
 
     respond_to do |format|
       if @site_announcement.save
+        for user in @users     
+          @profile = UserProfile.find_by_id(user)
+          if @profile != nil
+            AcknowledgmentOfAnnouncement.create(:announcement_id => @site_announcement.id, :profile_id => @profile.id, :acknowledged => false)
+          end
+        end
         format.html { redirect_to(@site_announcement, :notice => 'Site announcement was successfully created.') }
         format.xml  { render :xml => @site_announcement, :status => :created, :location => @site_announcement }
       else
@@ -76,7 +86,7 @@ class SiteAnnouncementsController < ApplicationController
     @site_announcement.destroy
 
     respond_to do |format|
-      format.html { redirect_to(site_announcements_url) }
+      format.html { redirect_to(announcements_path) }
       format.xml  { head :ok }
     end
   end

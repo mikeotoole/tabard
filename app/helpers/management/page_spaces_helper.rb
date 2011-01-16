@@ -1,0 +1,2 @@
+module Management::PageSpacesHelper
+end

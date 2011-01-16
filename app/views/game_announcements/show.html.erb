@@ -2,7 +2,7 @@
 
 <p>
   <b>Title:</b>
-  <%= @game_announcement.title %>
+  <%= @game_announcement.name %>
 </p>
 
 <p>
@@ -15,5 +15,23 @@
   <%= render @game %>
 </p>
 
+<p>
+  <b>Acknowledgments:</b>
+  <table>
+  <tr>
+    <th>Character Name</th>
+    <th>Acknowledged</th>
+  </tr>
+
+<% @acknowledgments.each do |ack| %>
+  <tr>
+    <td><%= ack.displayname %></td>
+	<td><%= ack.acknowledged %></td>
+  </tr>
+<% end %>
+</table>
+</p>
+
 <%= link_to 'Edit', edit_game_announcement_path(@game_announcement) %> |
-<%= link_to 'Back', 'javascript:history.go(-1);' %>
+<%= link_to 'Game Announcements', game_announcements_path %> |
+<%= link_to 'All Announcements', announcements_path %>

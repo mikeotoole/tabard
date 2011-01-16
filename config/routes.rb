@@ -1,6 +1,32 @@
 Bv::Application.routes.draw do
 
+  resources :teamspeaks
+
+  resources :recurring_events
+
+  resources :game_locations
+
+  resources :locations
+
+  resources :events
+
+  resources :team_speaks
+
+  resources :page_spaces
+
+  resources :pages
+
+  resources :letters
+
+  resources :donations
+
+  resources :newsletters
+
   resources :discussion_spaces
+
+  resources :comments
+
+  resources :discussions
 
   resources :system_resources
 
@@ -8,15 +34,30 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
+  resources :acknowledgment_of_announcements
+  
   resources :site_announcements
   resources :game_announcements
 
-  root :to => "users#index"
+  root :to => "home#index"
   
   match '/profiles/newgame' => "profiles#newgame"
   
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
+  
+  match 'management' => "management/management#index"
+  
+  namespace "management" do
+    resources :users
+    resources :games
+    resources :roles
+    resources :newsletters
+    resources :page_spaces
+    resources :discussion_spaces
+    resources :themes
+    resources :teamspeaks
+  end
   
   resources :profiles do
     resources :acknowledgment_of_announcements
@@ -30,8 +71,7 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :permissions
-  resources :roles    
+  resources :permissions  
   
   resources :users
   resource :session

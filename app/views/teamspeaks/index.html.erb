@@ -1,0 +1,21 @@
+<h1>Listing teamspeaks</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @teamspeaks.each do |teamspeak| %>
+  <tr>
+    <td><%= link_to 'Show', teamspeak %></td>
+    <td><%= link_to 'Edit', edit_teamspeak_path(teamspeak) %></td>
+    <td><%= link_to 'Destroy', teamspeak, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Teamspeak', new_teamspeak_path %>

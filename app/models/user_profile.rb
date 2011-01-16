@@ -7,6 +7,10 @@ class UserProfile < Profile
   def all_characters
     self.characters
   end
+
+  def displayname
+    self.name
+  end
   
   def character_id
     -1

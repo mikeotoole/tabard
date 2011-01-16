@@ -1,21 +1,26 @@
-<h1>Listing site_announcements</h1>
+<h1>Listing Site Announcements</h1>
 
 <table>
   <tr>
+    <th>Title</th>
+    <th>Body</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @site_announcements.each do |site_announcement| %>
+<% @site_announcements.each do |announcement| %>
   <tr>
-    <td><%= link_to 'Show', site_announcement %></td>
-    <td><%= link_to 'Edit', edit_site_announcement_path(site_announcement) %></td>
-    <td><%= link_to 'Destroy', site_announcement, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= announcement.name %></td>
+    <td><%= announcement.body %></td>
+    <td><%= link_to 'Show', announcement %></td>
+    <td><%= link_to 'Edit', edit_site_announcement_path(announcement) %></td>
+    <td><%= link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Site announcement', new_site_announcement_path %>
+<%= link_to 'New Site Announcement', new_site_announcement_path %> |
+<%= link_to 'All Announcements', announcements_path %>

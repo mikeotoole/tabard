@@ -1,0 +1,31 @@
+<h1>Listing discussions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Body</th>
+    <th>Discussion space</th>
+    <th>Character</th>
+    <th>User profile</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @discussions.each do |discussion| %>
+  <tr>
+    <td><%= discussion.name %></td>
+    <td><%= discussion.body %></td>
+    <td><%= discussion.discussion_space_id %></td>
+    <td><%= discussion.character_id %></td>
+    <td><%= discussion.user_profile_id %></td>
+    <td><%= link_to 'Show', discussion %></td>
+    <td><%= link_to 'Edit', edit_discussion_path(discussion) %></td>
+    <td><%= link_to 'Destroy', discussion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Discussion', new_discussion_path %>

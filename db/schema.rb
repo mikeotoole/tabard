@@ -10,22 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110108071307) do
+ActiveRecord::Schema.define(:version => 20110116020359) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "announcements", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.integer  "game_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
+    t.boolean  "acknowledged"
   end
 
   create_table "characters", :force => true do |t|
@@ -43,9 +35,43 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
     t.integer  "game_profile_id"
   end
 
+  create_table "comments", :force => true do |t|
+    t.text     "body"
+    t.integer  "character_id"
+    t.integer  "user_profile_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
     t.boolean  "system"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_profile_id"
+    t.integer  "game_id"
+  end
+
+  create_table "discussions", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
+    t.integer  "discussion_space_id"
+    t.integer  "character_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+    t.integer  "game_id"
+  end
+
+  create_table "donations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -57,6 +83,31 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
     t.string   "type"
     t.string   "extra"
     t.boolean  "is_active"
+  end
+
+  create_table "letters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "newsletters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "page_spaces", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permissions", :force => true do |t|
@@ -112,11 +163,17 @@ ActiveRecord::Schema.define(:version => 20110108071307) do
     t.datetime "updated_at"
   end
 
+  create_table "teamspeaks", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active"
   end
 
 end

@@ -1,0 +1,2 @@
+class RecurringEvent < Event
+end
