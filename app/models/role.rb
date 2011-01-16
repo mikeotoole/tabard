@@ -36,7 +36,7 @@ class Role < ActiveRecord::Base
   end
   
   def show_system_resources
-    show_permissions.keep_if {|p| p.system_resource_permission}
+    show_permissionables.keep_if {|p| p.}
   end
   
   def create_system_resources

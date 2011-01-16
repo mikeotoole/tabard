@@ -59,15 +59,15 @@ class User < ActiveRecord::Base
       if(role.show_permissionables.include?(system_resource_name))
         return true
       end
-      if(system_resource_name.respond_to?('check_user_show_permissions'))
-        if(system_resource_name.check_user_show_permissions(self))
-          return true
-        end
-      end
       role.show_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
           return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_show_permissions'))
+      if(system_resource_name.check_user_show_permissions(self))
+        return true
       end
     end
     false
@@ -78,15 +78,15 @@ class User < ActiveRecord::Base
       if(role.create_permissionables.include?(system_resource_name))
         return true
       end
-      if(system_resource_name.respond_to?('check_user_create_permissions'))
-        if(system_resource_name.check_user_show_permissions(self))
-          return true
-        end
-      end
       role.create_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
           return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_create_permissions'))
+      if(system_resource_name.check_user_create_permissions(self))
+        return true
       end
     end
     false
@@ -97,15 +97,15 @@ class User < ActiveRecord::Base
       if(role.update_permissionables.include?(system_resource_name))
         return true
       end
-      if(system_resource_name.respond_to?('check_user_update_permissions'))
-        if(system_resource_name.check_user_show_permissions(self))
-          return true
-        end
-      end
       role.update_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
           return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_update_permissions'))
+      if(system_resource_name.check_user_update_permissions(self))
+        return true
       end
     end
     false
@@ -116,15 +116,15 @@ class User < ActiveRecord::Base
       if(role.delete_permissionables.include?(system_resource_name))
         return true
       end
-      if(system_resource_name.respond_to?('check_user_delete_permissions'))
-        if(system_resource_name.check_user_show_permissions(self))
-          return true
-        end
-      end
       role.delete_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
           return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_delete_permissions'))
+      if(system_resource_name.check_user_delete_permissions(self))
+        return true
       end
     end
     false

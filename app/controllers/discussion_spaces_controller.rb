@@ -4,12 +4,8 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-    if !current_user.can_show("DiscussionSpace")
-      render :nothing => true, :status => :forbidden
-    else
-      @discussion_spaces = DiscussionSpace.all
+      @discussion_spaces = DiscussionSpace.all.keep_if { |a| current_user.can_show(a) }
       respond_with(@discussion_spaces)
-    end
   end
 
   # GET /discussion_spaces/1

@@ -4,19 +4,15 @@ class DiscussionsController < ApplicationController
   # GET /discussions
   # GET /discussions.xml
   def index
-    if !current_user.can_show("Discussion")
-      render :nothing => true, :status => :forbidden 
-    else
-      @discussions = Discussion.all
-      respond_with(@discussions)
-    end
+    @discussions = Discussion.all
+    respond_with(@discussions)
   end
 
   # GET /discussions/1
   # GET /discussions/1.xml
   def show
     @discussion = Discussion.find(params[:id])
-    if !current_user.can_show(@discussion) and !current_user.can_show("Discussion")
+    if !current_user.can_show(@discussion)
       render :nothing => true, :status => :forbidden
     else
       respond_with(@discussion)
@@ -37,7 +33,7 @@ class DiscussionsController < ApplicationController
   # GET /discussions/1/edit
   def edit
     @discussion = Discussion.find(params[:id])
-    if !current_user.can_update("Discussion") and !current_user.can_update(@discussion)
+    if !current_user.can_update(@discussion)
       render :nothing => true, :status => :forbidden
     end
   end
@@ -65,7 +61,7 @@ class DiscussionsController < ApplicationController
   # PUT /discussions/1.xml
   def update
     @discussion = Discussion.find(params[:id])
-    if !current_user.can_update("Discussion") and !current_user.can_update(@discussion)
+    if !current_user.can_update(@discussion)
       render :nothing => true, :status => :forbidden
     else
       if @discussion.update_attributes(params[:discussion])
@@ -84,7 +80,7 @@ class DiscussionsController < ApplicationController
   # DELETE /discussions/1.xml
   def destroy
     @discussion = Discussion.find(params[:id])
-    if !current_user.can_delete("Discussion") and !current_user.can_delete(@discussion)
+    if !current_user.can_delete(@discussion)
       render :nothing => true, :status => :forbidden
     else 
       @discussion.destroy
