@@ -4,7 +4,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.all.keep_if { |a| current_user.can_show(a) }
+      @discussion_spaces = DiscussionSpace.all
       respond_with(@discussion_spaces)
   end
 
