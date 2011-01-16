@@ -5,6 +5,7 @@ body {
 
 .container {
   margin: 0 auto;
+  position: relative;
   text-align: left;
   width: 960px; }
 
@@ -13,6 +14,14 @@ body {
   height: 115px;
   position: relative;
   margin: 0 0 40px; }
+  #header .title {
+    left: 0;
+    position: absolute;
+    top: 30px; }
+  #header .slogan {
+    left: 0;
+    position: absolute;
+    top: 70px; }
 
 #menu {
   background: url(../images/menu.png) 0 0 no-repeat;

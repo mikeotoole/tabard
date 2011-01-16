@@ -11,7 +11,7 @@ Bv::Application.routes.draw do
   resources :site_announcements
   resources :game_announcements
 
-  root :to => "users#index"
+  root :to => "discussion_spaces#index"
   
   match '/profiles/newgame' => "profiles#newgame"
   
