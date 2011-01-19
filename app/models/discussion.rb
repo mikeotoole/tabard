@@ -8,21 +8,21 @@ class Discussion < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_show(self.discussion_space) or user.can_show("Discussion")
+    user.can_show(DiscussionSpace.find(self.discussion_space.id)) or user.can_show("Discussion")
   end
   
   def check_user_create_permissions(user)
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_create(self.discussion_space) or user.can_create("Discussion")
+    user.can_create(DiscussionSpace.find(self.discussion_space.id)) or user.can_create("Discussion")
   end
   
   def check_user_update_permissions(user)
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_update(self.discussion_space) or user.can_update("Discussion")
+    user.can_update(DiscussionSpace.find(self.discussion_space.id)) or user.can_update("Discussion")
   end
   
   def check_user_delete_permissions(user)
