@@ -25,8 +25,6 @@ pageResource = SystemResource.create(:name => "Page")
 pageSpace = PageSpace.create(:name => "Boss Strategies")
 page = Page.create(:title => "Sarlacc Pit", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => pageSpace)
 
-guildWarning = SiteAnnouncements.create(:title => "No more goofing off on vent!", :body => "You guys are way off topic in vent during raid. Anymore goofing off and you will be gkicked. This is your last warning!")
-
 adminProfile = UserProfile.create(:name => "Admin")
 
 userProfile = UserProfile.create(:name => "RoboBilly")
