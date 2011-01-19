@@ -29,6 +29,7 @@ class Discussion < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
+    #Hack
     user.can_delete(DiscussionSpace.find(self.discussion_space.id)) or user.can_delete("Discussion")
   end
 end

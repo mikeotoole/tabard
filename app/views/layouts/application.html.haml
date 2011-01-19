@@ -56,7 +56,7 @@
                 Want to join?
               = link_to 'Apply now', '#', :class => 'button'
           %ul
-            %li= link_to 'Info', :pages
+            %li= link_to 'Info', page_spaces_path
             %li= link_to 'Events', :events
             %li= link_to 'Resources', :system_resources
             %li= link_to 'Discussions', :discussion_spaces
@@ -75,11 +75,10 @@
               %li= link_to 'Test Page 3', '#'
               %li= link_to 'Test Page 4', '#'
           .menu
-            %h3 Resources
+            %h3 Info
             %ul
-              %li= link_to 'Wiki Page Space 1', '#'
-              %li= link_to 'Wiki Page Space 2', '#'
-              %li= link_to 'Wiki Page Space 3', '#'
+              - PageSpace.all.each do |page_space| 
+                %li= link_to page_space.name, page_space
           .menu
             %h3 Members
             %ul

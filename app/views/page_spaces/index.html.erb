@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Name</th>
     <th></th>
     <th></th>
     <th></th>
@@ -9,13 +10,14 @@
 
 <% @page_spaces.each do |page_space| %>
   <tr>
-    <td><%= link_to 'Show', page_space %></td>
-    <td><%= link_to 'Edit', edit_page_space_path(page_space) %></td>
-    <td><%= link_to 'Destroy', page_space, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= page_space.name %></td>
+    <td><%= link_to( 'Show', page_space) %></td>
+    <td><%= (logged_in? and current_user.can_update(page_space)) ? link_to( 'Edit', edit_page_space_path(page_space)) : "No Edit Permissions" %></td>
+    <td><%= (logged_in? and current_user.can_delete(page_space)) ? link_to( 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Page space', new_page_space_path %>
+<%= (logged_in? and current_user.can_create("PageSpace")) ? link_to( 'New Page Space', new_page_space_path) : "No Create Permissions" %>

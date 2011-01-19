@@ -11,7 +11,12 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_or_cancel(f) %>
   </div>
 <% end %>

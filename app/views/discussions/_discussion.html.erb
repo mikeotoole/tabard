@@ -7,7 +7,7 @@
   <h4>Comments</h4>
   <ul>
     <% discussion.comments.each do  |comment| %>
-      <li><%= link_to "COMMENT", comment %></li>
+      <%= render comment %>
     <% end %>
   </ul>
   <span class='actions'>

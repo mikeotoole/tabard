@@ -1,13 +1,12 @@
 class PagesController < ApplicationController
+  respond_to :html, :xml
+  before_filter :authenticate, :except => [:index, :show]
   # GET /pages
   # GET /pages.xml
   def index
     @pages = Page.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @pages }
-    end
+    respond_with(@pages)
   end
 
   # GET /pages/1
@@ -15,40 +14,44 @@ class PagesController < ApplicationController
   def show
     @page = Page.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @page }
-    end
+    respond_with(@page)
   end
 
   # GET /pages/new
   # GET /pages/new.xml
   def new
     @page = Page.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @page }
+    if !current_user.can_create("Page")
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@page)
     end
   end
 
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
+    if !current_user.can_update("Page") and !current_user.can_update(@page)
+      render :nothing => true, :status => :forbidden
+    end
   end
 
   # POST /pages
   # POST /pages.xml
   def create
-    @page = Page.new(params[:page])
-
-    respond_to do |format|
+    if !current_user.can_create("Page")
+      render :nothing => true, :status => :forbidden
+    else
+      @page = Page.new(params[:page])
+      
       if @page.save
-        format.html { redirect_to(@page, :notice => 'Page was successfully created.') }
-        format.xml  { render :xml => @page, :status => :created, :location => @page }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        flash[:notice] = 'Page was successfully created.'
+        respond_with(@page)
+      else 
+        respond_to do |format|
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -57,14 +60,17 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
-
-    respond_to do |format|
+    if !current_user.can_update("Page") and !current_user.can_update(@page)
+      render :nothing => true, :status => :forbidden
+    else
       if @page.update_attributes(params[:page])
-        format.html { redirect_to(@page, :notice => 'Page was successfully updated.') }
-        format.xml  { head :ok }
+        flash[:notice] = 'Page was successfully updated.'
+        respond_with(@page)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -73,11 +79,11 @@ class PagesController < ApplicationController
   # DELETE /pages/1.xml
   def destroy
     @page = Page.find(params[:id])
-    @page.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(pages_url) }
-      format.xml  { head :ok }
+    if !current_user.can_delete("Page") and !current_user.can_delete(@page)
+      render :nothing => true, :status => :forbidden
+    else
+      @page.destroy
+      respond_with(@page)
     end
   end
 end

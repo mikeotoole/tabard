@@ -1,0 +1,10 @@
+<%= div_for page do %>
+  <h3><%= page.title %></h3>
+  <span class='actions'>
+    <td><%= (logged_in? and current_user.can_update(page)) ? link_to( 'Edit', edit_page_path(page)) : "No Edit Permissions" %></td>
+    <td><%= (logged_in? and current_user.can_delete(page)) ? link_to( 'Delete', page, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
+  </span>
+  <p>
+    <%= page.body %>
+  </p>
+<% end %>
