@@ -38,6 +38,11 @@ i,
 em {
   color: #aaa; }
 
+a {
+  text-decoration: underline; }
+  a:hover {
+    color: #5ba7b4; }
+
 button,
 .button,
 input[type=button],
@@ -69,8 +74,8 @@ input[type=password] {
   font-size: 2.4em;
   line-height: 1em;
   text-transform: uppercase; }
-  #header .title:hover {
-    color: #5ba7b4; }
+  #header .title a {
+    text-decoration: none; }
 #header .slogan {
   color: #484c4e;
   font-family: 'SansationRegular', serif;
@@ -81,10 +86,8 @@ input[type=password] {
 
 #menu {
   color: #181a1b; }
-  #menu a {
-    text-decoration: underline; }
-    #menu a:hover {
-      color: #fff; }
+  #menu a:hover {
+    color: #fff; }
   #menu .login input[type=submit] {
     color: #181a1b !important; }
   #menu .login .apply {
@@ -113,7 +116,8 @@ input[type=password] {
     font-weight: bold; }
 
 #footer a {
-  color: #454545; }
+  color: #454545;
+  text-decoration: none; }
   #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {

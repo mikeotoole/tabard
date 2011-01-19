@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(:version => 20110119065125) do
     t.boolean  "acknowledged"
   end
 
-  create_table "announcements", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.integer  "game_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
-  end
-
   create_table "characters", :force => true do |t|
     t.integer  "game_id"
     t.string   "name"
@@ -169,11 +160,6 @@ ActiveRecord::Schema.define(:version => 20110119065125) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
-
-  create_table "site_announcements", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "system_resources", :force => true do |t|
     t.string   "name"

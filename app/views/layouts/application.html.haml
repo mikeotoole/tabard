@@ -49,9 +49,9 @@
                 %span= 'Want to join?'
                 = link_to 'Apply now', '#'
           %ul
-            %li= link_to 'Info', page_spaces_path
+            %li= link_to 'Info', '#'
             %li= link_to 'Events', :events
-            %li= link_to 'Resources', :system_resources
+            %li= link_to 'Resources', page_spaces_path
             %li= link_to 'Discussions', :discussion_spaces
               
       #body
@@ -68,7 +68,7 @@
               %li= link_to 'Test Page 3', '#'
               %li= link_to 'Test Page 4', '#'
           .menu
-            %h3 Info
+            %h3 Resources
             %ul
               - PageSpace.all.each do |page_space| 
                 %li= link_to page_space.name, page_space
