@@ -35,14 +35,15 @@ button,
 .button,
 input[type=button],
 input[type=submit] {
-  color: #4c91a1;
+  color: #4c91a1 !important;
   display: inline-block;
   font-family: 'SansationBold', serif;
   font-size: 0.8em;
   line-height: 30px;
   text-transform: uppercase;
+  text-decoration: none !important;
   &:hover {
-    color: #181a1b;
+    color: #181a1b !important;
   }
 }
 input[type=text],
@@ -67,14 +68,30 @@ input[type=password] {
   }
 }
 
-#menu {  
-  .login {
-    span {
-      color: #181a1b;
-      font-size: 0.8em;
+#menu {
+  color: #181a1b;
+  a {
+    text-decoration: underline;
+    &:hover {
+      color: #fff;
     }
+  }
+  .login {
     input[type=submit] {
-      color: #181a1b;
+      color: #181a1b !important;
+    }
+    .apply {
+      font-size: 0.8em;
+      line-height: 1em;
+    }
+    .remember {
+      line-height: 1.2em;
+      label {
+        font-size: 0.8em;
+        &:hover {
+          color: #fff;
+        }
+      }
     }
   }  
   ul {
@@ -82,12 +99,21 @@ input[type=password] {
     font-size: 1.2em;
     a {
       color: #181a1b;
+      text-decoration: none;
       text-transform: uppercase;
       text-shadow: 1px 1px 1px #4e4f4f;
       &:hover {
         color: #4c91a1;
         text-shadow: 1px 1px 1px #000;
       }
+    }
+  }
+  #userbox {
+    p {
+      font-size: 0.8em;
+    }
+    .salutation {
+      font-weight: bold;
     }
   }
 }
