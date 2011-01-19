@@ -39,11 +39,20 @@ em {
   color: #aaa; }
 
 button,
+.button,
 input[type=button],
 input[type=submit] {
+  color: #4c91a1;
+  display: inline-block;
   font-family: 'SansationBold', serif;
   font-size: 0.8em;
+  line-height: 30px;
   text-transform: uppercase; }
+  button:hover,
+  .button:hover,
+  input[type=button]:hover,
+  input[type=submit]:hover {
+    color: #181a1b; }
 
 input[type=text],
 input[type=password] {
@@ -69,7 +78,10 @@ input[type=password] {
   text-transform: uppercase;
   letter-spacing: 0.2em; }
 
-#menu .login {
+#menu .login span {
+  color: #181a1b;
+  font-size: 0.8em; }
+#menu .login input[type=submit] {
   color: #181a1b; }
 #menu ul {
   font-family: 'SansationBold', serif;

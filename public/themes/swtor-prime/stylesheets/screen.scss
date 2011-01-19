@@ -12,6 +12,7 @@ body {
 }
 
 button,
+.button,
 input[type=button],
 input[type=submit] {
   height: 30px;
@@ -80,7 +81,7 @@ input[type=password] {
     position: absolute;
     top: 15px;
     width: 335px;
-    z-index: 2;    
+    z-index: 2;
     input[type=text] {
       -webkit-border-top-right-radius: 0;
       -webkit-border-bottom-right-radius: 0;
@@ -94,7 +95,15 @@ input[type=password] {
       position: absolute;
       top: 0;
       width: 209px;
-    }    
+    }  
+    input[type=password] {
+      border-bottom-color: #a9a9a9;
+      border-right-color: #a9a9a9;
+      left: 0;
+      position: absolute;
+      top: 40px;
+      width: 189px;
+    }
     input[type=submit] {
       background-color: #3e778b;
       background-position: 0 -30px;
@@ -111,6 +120,18 @@ input[type=password] {
       right: 30px;
       top: 0;
       width: 80px;
+    }
+    .apply {
+      height: 54px;
+      line-height: 1.2em;
+      padding: 3px 0 5px 10px;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      border-left: 1px solid #757575;
+      .button {
+        display: block;
+      }
     }
   }
   ul {

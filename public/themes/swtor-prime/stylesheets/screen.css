@@ -10,6 +10,7 @@ body {
   width: 960px; }
 
 button,
+.button,
 input[type=button],
 input[type=submit] {
   height: 30px;
@@ -23,6 +24,8 @@ input[type=submit] {
   border-radius: 5px;
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c; }
   button:focus, button:hover,
+  .button:focus,
+  .button:hover,
   input[type=button]:focus,
   input[type=button]:hover,
   input[type=submit]:focus,
@@ -89,6 +92,13 @@ input[type=password] {
       position: absolute;
       top: 0;
       width: 209px; }
+    #menu .login input[type=password] {
+      border-bottom-color: #a9a9a9;
+      border-right-color: #a9a9a9;
+      left: 0;
+      position: absolute;
+      top: 40px;
+      width: 189px; }
     #menu .login input[type=submit] {
       background-color: #3e778b;
       background-position: 0 -30px;
@@ -105,6 +115,16 @@ input[type=password] {
       right: 30px;
       top: 0;
       width: 80px; }
+    #menu .login .apply {
+      height: 54px;
+      line-height: 1.2em;
+      padding: 3px 0 5px 10px;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      border-left: 1px solid #757575; }
+      #menu .login .apply .button {
+        display: block; }
   #menu ul {
     background: url(../images/menu.png) top center no-repeat;
     height: 284px;
