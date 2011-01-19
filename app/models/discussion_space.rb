@@ -30,8 +30,4 @@ class DiscussionSpace < ActiveRecord::Base
     end
     user.can_delete("DiscussionSpace")
   end
-  
-  def ==(other)
-    other.class == self.class and other.id == self.id 
-  end
 end
