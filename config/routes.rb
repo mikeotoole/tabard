@@ -34,6 +34,8 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
+  resources :acknowledgment_of_announcements
+  
   resources :site_announcements
   resources :game_announcements
 
@@ -69,8 +71,7 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :permissions
-  resources :roles    
+  resources :permissions  
   
   resources :users
   resource :session

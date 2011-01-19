@@ -1,3 +1,3 @@
-class SiteAnnouncement < ActiveRecord::Base
+class SiteAnnouncement < Announcement
     has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
 end

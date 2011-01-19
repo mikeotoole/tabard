@@ -1,0 +1,105 @@
+@mixin heading($size, $color) {
+  color: $color;
+  font-family: 'SansationRegular', serif;
+  font-size: $size;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+body {
+  color: #808080;
+  font-family: arial, sans-serif;
+  font-size: 100.01%;
+  line-height: 1.5em;
+}
+
+h1 { @include heading(2.4em, #5ba7b4) }
+h2 { @include heading(1.8em, #5ba7b4) }
+h3 { @include heading(1.2em, #5ba7b4) }
+
+p
+ol,
+ul,
+dl,
+blockquote {
+  font-size: 0.8em;
+}
+b,
+strong,
+i,
+em {
+  color: #aaa;
+}
+
+button,
+input[type=button],
+input[type=submit] {
+  font-family: 'SansationBold', serif;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+input[type=text],
+input[type=password] {
+  color: #464646;  
+  &:focus,
+  &:hover {
+    color: #181a1b;
+  }
+}
+
+#header {
+  .title {
+    @include heading(2.4em, #939393);
+    &:hover {
+      color: #5ba7b4;
+    } 
+  }
+  .slogan {
+    @include heading(0.9em, #484c4e);
+    letter-spacing: 0.2em;
+  }
+}
+
+#menu {  
+  .login {
+    color: #181a1b;
+  }  
+  ul {
+    font-family: 'SansationBold', serif;
+    font-size: 1.2em;
+    a {
+      color: #181a1b;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 1px #4e4f4f;
+      &:hover {
+        color: #4c91a1;
+        text-shadow: 1px 1px 1px #000;
+      }
+    }
+  }
+}
+
+#footer {
+  a {
+    color: #454545;    
+    &:hover {
+      color: #5ba7b4;
+    }
+  }
+  .menu {
+    h3 {
+      color: #747474;
+    }
+    ul {
+      line-height: 1em;
+    }
+  }
+  .copyright {
+    color: #333;
+    font-size: 0.7em;
+    line-height: 1.4em;    
+    a {
+      text-decoration: underline;
+    }
+  }
+}

@@ -7,6 +7,5 @@ module ApplicationHelper
   
   def js_back
     link_to 'Back', 'javascript:history.go(-1);'
-  end
-  
+  end  
 end

@@ -1,0 +1,7 @@
+<%= div_for acknowledgment_of_announcement do %>
+<% @acknowledgment_of_announcement = acknowledgment_of_announcement %>
+  <h3>
+  	<%= link_to acknowledgment_of_announcement.title, Announcement.find_by_id(acknowledgment_of_announcement.announcement_id) %>
+    <%= render 'acknowledgment_of_announcements/form' %>
+  </h3>
+<% end %>

@@ -4,11 +4,16 @@ class UserProfile < Profile
   has_many :game_profiles
   has_many :characters, :through => :game_profiles 
   
-  def all_user_characters
+  def all_characters
+    self.characters
+  end
 
+  def displayname
+    self.name
   end
   
   def character_id
     -1
   end
+  
 end

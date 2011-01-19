@@ -1,0 +1,88 @@
+!!! XML
+!!! Strict
+%html{:dir => 'ltr', :lang => 'en-US', 'xml:lang' => 'en-US', :xmlns => 'http://www.w3.org/1999/xhtml'}
+  %head
+    %title Brutal Venom
+    = stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css'
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
+  %body
+      
+    #header
+      .container
+        .title= link_to 'Brutal Venom', root_path
+        .slogan We need a slogan
+        -#user_bar
+          - if logged_in?
+            - if current_user.user_profile == nil
+              Please Click #{link_to 'Here', new_profile_path} to Finish Creating Your Account |
+            - else
+              Hello, #{current_user.user_profile.name} |
+              - if profile_active?
+                - if character_active?
+                  [#{current_character.name}]
+                = current_profile.name
+                = link_to 'Deactivate Profile', deactivate_profile_path
+                |
+              - else
+                = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+                |
+              = link_to 'Edit User', edit_user_path(current_user)
+              |
+            = link_to 'Logout', logout_path
+          - else
+            = link_to 'Login', login_path
+            
+    - if notice.present? || alert.present?
+      #messages
+        .container
+          = content_tag :p, notice, :class => 'notice' if notice.present?
+          = content_tag :p, alert, :class => 'alert' if alert.present?
+          
+    #menu    
+      .container      
+        = form_tag(session_path, :class => 'login') do
+          = label_tag :email
+          = text_field_tag(:email, '', {:title => 'Enter your email address', :spellcheck => false})
+          -#
+            .field
+              = label_tag :password
+              = password_field_tag :password
+          = submit_tag 'Sign in'
+        %ul
+          %li= link_to 'Info', :pages
+          %li= link_to 'Events', :events
+          %li= link_to 'Resources', :system_resources
+          %li= link_to 'Discussions', :discussion_spaces
+            
+    #body
+      .container
+        = yield
+    
+    #footer
+      .container
+        .menu
+          %h3 Brutal Venom
+          %ul
+            %li= link_to 'Test Page 1', #
+            %li= link_to 'Test Page 2', #
+            %li= link_to 'Test Page 3', #
+            %li= link_to 'Test Page 4', #
+        .menu
+          %h3 Resources
+          %ul
+            %li= link_to 'Wiki', #
+            %li= link_to 'Downloads', #
+            %li= link_to 'Newsletter', :newsletters
+        .menu
+          %h3 Members
+          %ul
+            %li= link_to 'Events', :events
+            %li= link_to 'Discussions', :discussion_spaces
+            %li= link_to 'Donations', #
+        %p.copyright
+          = link_to 'Privacy Policy', #
+          &nbsp;|&nbsp;
+          = link_to 'Terms of Use', #
+          %br/
+          &copy; Copyright digitalAugment Inc, 2010.        

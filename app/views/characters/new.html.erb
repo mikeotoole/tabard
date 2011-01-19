@@ -1,7 +1,7 @@
 <%= form_for(@character) do |f| %>
   <div class="field">
     Game: <br />
-	<%= collection_select(:game, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
+	<%= collection_select(:character, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
   </div>
   <div class="field">
     <%= f.label :name %><br />

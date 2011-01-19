@@ -1,5 +1,5 @@
 class Announcement < Discussion
-  has_many :AcknowledgmentOfAnnouncements
+  has_many :AcknowledgmentOfAnnouncements, :dependent => :destroy
   
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
