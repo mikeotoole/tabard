@@ -15,16 +15,17 @@ button,
 .button,
 input[type=button],
 input[type=submit] {
-  height: 30px;
-  line-height: 30px;
-  padding: 0 15px;
+  background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
   border: 1px solid #000;
   border-bottom-color: #323333;
   border-right-color: #323333;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
+  height: 30px;
+  line-height: 30px;
+  padding: 0 15px;
+  text-align: center;
   &:focus,
   &:hover {
     background-color: #3394b4 !important;
@@ -33,16 +34,16 @@ input[type=submit] {
 }
 input[type=text],
 input[type=password] {
-  height: 28px;
-  line-height: 28px;
-  padding: 0 7px;
+  background: url(../images/input-sprite.png) 0 0 repeat-x #a9a9a9;  
   border: 1px solid #000;
   border-bottom-color: #323333;
   border-right-color: #323333;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  background: url(../images/input-sprite.png) 0 0 repeat-x #a9a9a9;  
+  height: 28px;
+  line-height: 28px;
+  padding: 0 7px;
   &:focus,
   &:hover {
     background-color: #bababa;
@@ -73,66 +74,83 @@ input[type=password] {
   .container {
     background: url(../images/header-temp.jpg) 0 74px no-repeat;
     height: 300px;
-  }  
+  }
   .login {
-    background: url(../images/icon-lock.png) 310px -2px no-repeat;
+    background: url(../images/icon-lock.png) -7px 13px no-repeat;
     height: 95px;
     left: 5px;
     position: absolute;
     top: 15px;
     width: 335px;
     z-index: 2;
+    label {
+      display: none;
+    }
     input[type=text] {
-      -webkit-border-top-right-radius: 0;
-      -webkit-border-bottom-right-radius: 0;
-      -moz-border-radius-topright: 0;
-      -moz-border-radius-bottomright: 0;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
       border-bottom-color: #a9a9a9;
       border-right-color: #a9a9a9;
-      left: 0;
+      left: 25px;
       position: absolute;
       top: 0;
-      width: 209px;
+      width: 174px;
     }  
     input[type=password] {
       border-bottom-color: #a9a9a9;
       border-right-color: #a9a9a9;
-      left: 0;
+      left: 25px;
       position: absolute;
-      top: 40px;
-      width: 189px;
+      top: 32px;
+      width: 174px;
     }
     input[type=submit] {
       background-color: #3e778b;
       background-position: 0 -30px;
-      -webkit-border-top-left-radius: 0;
-      -webkit-border-bottom-left-radius: 0;
-      -moz-border-radius-topleft: 0;
-      -moz-border-radius-bottomleft: 0;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
       border-bottom-color: #525252;
       border-right-color: #525252;
+      font-size: 0.9em;
       padding: 0;
       position: absolute;
-      right: 30px;
-      top: 0;
-      width: 80px;
-    }
-    .apply {
-      height: 54px;
-      line-height: 1.2em;
-      padding: 3px 0 5px 10px;
-      position: absolute;
       right: 0;
+      top: 0;
+      width: 110px;
+    }
+    .remember {
+      height: 15px;
+      line-height: 15px;
+      overflow: hidden;
+      position: absolute;
+      right: -15px;
       top: 40px;
-      border-left: 1px solid #757575;
-      .button {
+      width: 125px;
+      input {
+        left: -100px;
+        position: absolute;
+      }
+      label {
+        background: url(../images/checkbox.png) 0 0 no-repeat;
         display: block;
+        height: 15px;
+        line-height: 15px;
+        padding: 0 0 0 20px;
+        &.checked {
+          background-position: 0 -20px;
+        }
       }
     }
+    .apply {
+      bottom: 0;
+      border-top: 1px solid #666;
+      left: 0;
+      padding: 5px 0 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+  #userbox {
+    left: 5px;
+    position: absolute;
+    top: 10px;
+    z-index: 2;
   }
   ul {
     background: url(../images/menu.png) top center no-repeat;
