@@ -32,11 +32,18 @@ em {
 }
 
 button,
+.button,
 input[type=button],
 input[type=submit] {
+  color: #4c91a1;
+  display: inline-block;
   font-family: 'SansationBold', serif;
   font-size: 0.8em;
+  line-height: 30px;
   text-transform: uppercase;
+  &:hover {
+    color: #181a1b;
+  }
 }
 input[type=text],
 input[type=password] {
@@ -62,7 +69,13 @@ input[type=password] {
 
 #menu {  
   .login {
-    color: #181a1b;
+    span {
+      color: #181a1b;
+      font-size: 0.8em;
+    }
+    input[type=submit] {
+      color: #181a1b;
+    }
   }  
   ul {
     font-family: 'SansationBold', serif;
