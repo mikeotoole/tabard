@@ -31,6 +31,13 @@ em {
   color: #aaa;
 }
 
+a {
+  text-decoration: underline;
+  &:hover {
+    color: #5ba7b4;
+  }
+}
+
 button,
 .button,
 input[type=button],
@@ -58,8 +65,8 @@ input[type=password] {
 #header {
   .title {
     @include heading(2.4em, #939393);
-    &:hover {
-      color: #5ba7b4;
+    a { 
+      text-decoration: none;
     } 
   }
   .slogan {
@@ -71,7 +78,6 @@ input[type=password] {
 #menu {
   color: #181a1b;
   a {
-    text-decoration: underline;
     &:hover {
       color: #fff;
     }
@@ -120,7 +126,8 @@ input[type=password] {
 
 #footer {
   a {
-    color: #454545;    
+    color: #454545;
+    text-decoration: none;
     &:hover {
       color: #5ba7b4;
     }
