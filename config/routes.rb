@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
 
+  resources :registration_applications
+
   resources :teamspeaks
 
   resources :recurring_events
