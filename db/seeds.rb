@@ -52,6 +52,6 @@ disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickie
 comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)
 comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
 
-disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace1)
+disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace)
 disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
 

@@ -44,7 +44,7 @@ Bv::Application.routes.draw do
 
   resources :discussion_spaces 
   
-  resources :discussions
+  resources :discussions 
 
   resources :comments
 
