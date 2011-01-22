@@ -1,0 +1,2 @@
+class TextBoxQuestion < Question
+end

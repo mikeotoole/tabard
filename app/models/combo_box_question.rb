@@ -1,0 +1,2 @@
+class ComboBoxQuestion < Question
+end

@@ -25,6 +25,8 @@ class RegistrationApplicationsController < ApplicationController
   # GET /registration_applications/new.xml
   def new
     @registration_application = RegistrationApplication.new
+    @user = User.new
+    @profile = GameProfile.new
 
     respond_to do |format|
       format.html # new.html.erb

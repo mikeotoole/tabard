@@ -51,6 +51,15 @@ class User < ActiveRecord::Base
     self.hashed_password == encrypt(password)
   end
   
+  # Returns a collection of the currently logged in users unacknowledged announcements or nil if empty.
+  def current_announcements
+      @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
+      @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
+      @profiles << @userprofile
+      @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+      @acknowledgment_of_announcements
+  end
+  
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
     self.roles.each do |role|

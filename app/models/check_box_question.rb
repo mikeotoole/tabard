@@ -1,0 +1,2 @@
+class CheckBoxQuestion < Question
+end
