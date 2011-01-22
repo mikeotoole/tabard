@@ -1,5 +1,9 @@
 Bv::Application.routes.draw do
 
+  resources :answers
+
+  resources :questions
+
   resources :registration_applications
 
   resources :teamspeaks
