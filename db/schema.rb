@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110122194514) do
+ActiveRecord::Schema.define(:version => 20110122211732) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -84,12 +84,6 @@ ActiveRecord::Schema.define(:version => 20110122194514) do
     t.datetime "updated_at"
   end
 
-  create_table "forms", :force => true do |t|
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "games", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -150,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20110122194514) do
     t.integer  "user_id"
     t.integer  "game_id"
     t.integer  "user_profile_id"
+    t.integer  "default_character_id"
   end
 
   create_table "questions", :force => true do |t|
@@ -188,6 +183,13 @@ ActiveRecord::Schema.define(:version => 20110122194514) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "site_forms", :force => true do |t|
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
   create_table "system_resources", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -205,6 +207,7 @@ ActiveRecord::Schema.define(:version => 20110122194514) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_active"
+    t.boolean  "is_applicant"
   end
 
 end
