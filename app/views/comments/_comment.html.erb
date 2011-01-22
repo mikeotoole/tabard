@@ -8,7 +8,7 @@
     <%= link_to "Delete", [comment], :confirm => "Are you sure?", :method => :delete %>
   </span>
   <h5>New Comment</h5>
-  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => comment, :user_profile_id => current_user.user_profile.id, :character_id => current_character.id}) %>
+  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => comment, :user_profile_id => current_user.user_profile_id, :character_id => (character_active? ? current_character.id : nil)}) %>
   <P>NEED TO ADD INDENTING</P>
   <ul>
     <% comment.comments.each do  |subcomment| %>

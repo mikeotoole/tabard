@@ -15,5 +15,5 @@
     <% end %>
   </ul>
   <h5>New Comment</h5>
-  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => discussion, :user_profile_id => current_user.user_profile.id, :character_id => current_character.id}) %>
+  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => discussion, :user_profile_id => current_user.user_profile_id, :character_id => (character_active? ? current_character.id : nil)}) %>
 <% end %> 
