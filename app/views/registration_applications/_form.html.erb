@@ -11,22 +11,9 @@
     </div>
   <% end %>
   
-  <div class="field">
-    <%= f.label 'Name' %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label 'E-Mail' %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label 'Password' %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label 'Password Confirmation' %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
+  <%= render 'users/form' %>
+  
+  <%= render 'game_profiles/form' %>
 
   <div class="actions">
     <%= f.submit %>

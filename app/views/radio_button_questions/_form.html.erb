@@ -1,0 +1,17 @@
+<%= form_for(@radio_button_question) do |f| %>
+  <% if @radio_button_question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@radio_button_question.errors.count, "error") %> prohibited this radio_button_question from being saved:</h2>
+
+      <ul>
+      <% @radio_button_question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

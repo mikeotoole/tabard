@@ -1,5 +1,19 @@
 Bv::Application.routes.draw do
 
+  resources :registration_answers
+
+  resources :text_box_questions
+
+  resources :radio_button_questions
+
+  resources :text_questions
+
+  resources :check_box_questions
+
+  resources :combo_box_questions
+
+  resources :forms
+
   resources :answers
 
   resources :questions

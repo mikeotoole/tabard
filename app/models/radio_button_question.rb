@@ -1,0 +1,2 @@
+class RadioButtonQuestion < Question
+end
