@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
 
+  resources :site_forms
+
   resources :registration_answers
 
   resources :text_box_questions
@@ -11,8 +13,6 @@ Bv::Application.routes.draw do
   resources :check_box_questions
 
   resources :combo_box_questions
-
-  resources :forms
 
   resources :answers
 
@@ -77,6 +77,7 @@ Bv::Application.routes.draw do
     resources :discussion_spaces
     resources :themes
     resources :teamspeaks
+    resources :site_forms
   end
   
   resources :profiles do
