@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
     #commentable??
     if(@discussion != nil)
       @comment.commentable = @discussion
-    end
+    end 
     if @comment.save
       flash[:notice] = 'Comment was successfully created.'
       redirect_to(:back)

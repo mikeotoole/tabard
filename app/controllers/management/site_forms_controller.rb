@@ -10,6 +10,15 @@ class Management::SiteFormsController < ApplicationController
         format.xml  { render :xml => @site_form }
       end
   end
+  
+  def show
+    @site_form = SiteForm.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @site_form }
+    end
+  end
 
   # GET /management/site_forms/new
   # GET /management/site_forms/new.xml
@@ -34,7 +43,7 @@ class Management::SiteFormsController < ApplicationController
 
     respond_to do |format|
       if @site_form.save
-        format.html { redirect_to(management_site_forms_path, :notice => 'Form was successfully created.') }
+        format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully created.') }
         format.xml  { render :xml => @site_form, :status => :created }
       else
         format.html { render :action => "new" }

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @site_form.name %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%= @site_form.message %>
+</p>
+
+<p>
+  <b>Questions:</b>
+  <% @site_form.questions.each do  |question| %>
+    <%= render question %>
+  <% end %>
+</p>
+
+<h5>New Question</h5>
+  <%= render( :file => 'questions/new.html.erb', :locals => {:site_form_id => @site_form.id}) %>
+
+
+<%= link_to 'Edit', edit_management_site_form_path(@site_form) %> |
+<%= link_to 'Back', management_site_forms_path %>

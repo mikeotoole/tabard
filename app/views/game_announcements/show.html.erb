@@ -15,6 +15,16 @@
   <%= render @game %>
 </p>
 
+<h5>Comments</h5>
+<ul>
+  <% @game_announcement.comments.each do  |comment| %>
+    <%= render comment %>
+  <% end %>
+</ul>
+
+<h5>New Comment</h5>
+  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => @game_announcement, :user_profile_id => current_user.user_profile_id, :character_id => (character_active? ? current_character.id : nil)}) %>
+
 <p>
   <b>Acknowledgments:</b>
   <table>

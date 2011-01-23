@@ -11,7 +11,7 @@
 <% @site_form.each do |site_form| %>
   <tr>
     <td><%= site_form.name %></td>
-    <td><%= link_to 'Show', site_form %></td>
+    <td><%= link_to 'Show', [:management, site_form] %></td>
     <td><%= link_to 'Edit', edit_management_site_form_path(site_form) %></td>
     <td><%= link_to 'Destroy', [:management, site_form], :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
