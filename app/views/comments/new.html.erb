@@ -1,15 +1,9 @@
 <%= form_for([@comment], :remote => true, :html => {:style => 'display: none;'}) do |f| %>
   <div class="field"> 
-    <%= hidden_field(:comment, :character_id) %>
-    <%= hidden_field(:comment, :user_profile_id) %>
-    <%= hidden_field(:comment, :commentable_id) %>
-    <%= hidden_field(:comment, :commentable_type) %> 
-  </div>
-  <div class="field"> 
     <%= f.label :body %><br /> 
     <%= f.text_area :body %>
   </div> 
   <div class="actions">
-    <%= f.submit 'Add Comment' %>
+    <%= f.submit 'Add Comment' %> <%= link_to "Cancel", "#", :onClick => "$('#new_comment').detach(); $('.new_comment_link').show();" %>
   </div>
 <% end %>

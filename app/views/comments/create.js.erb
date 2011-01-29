@@ -1,2 +1,3 @@
-$('#comments').append("<%= escape_javascript(render(@comment)) %>");
-$('#new_comment')[0].reset();
+$('#comments').closest().append("<%= escape_javascript(render(@comment)) %>");
+$('#new_comment').detach();
+$('.new_comment_link').unhide()
