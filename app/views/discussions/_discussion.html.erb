@@ -1,14 +1,13 @@
 <%= div_for discussion do %>
   <%= link_to discussion.discussion_space.name, discussion.discussion_space %>
   <h3><%= discussion.name %></h3>
-  <p>By: <%= discussion.user_profile %></p>
-  <p>By: <%= discussion.character %></p>
+  <%= ((discussion.charater_posted?) ? link_to(discussion.characters_name ,discussion.character) : link_to(discussion.users_name, discussion.user_profile))%>
+  <div class="discussion_body"><%= discussion.body %></div>
   <span class='actions'>
     <td><%= (logged_in? and current_user.can_update(discussion)) ? link_to( 'Edit', edit_discussion_path(discussion)) : "No Edit Permissions" %></td>
     <td><%= (logged_in? and current_user.can_delete(discussion)) ? link_to( 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
     <%= link_to "New Comment", new_comment_path(:format => :js, :commentable_id => discussion.id, :commentable_type => discussion.class), :remote => true, :class => 'new_comment_link' %>
   </span>
-  <p>Body: <%= discussion.body %></p>
   <h4>Comments</h4>
   <div class="comments">
     <% discussion.comments.each do  |comment| %>

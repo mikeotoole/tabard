@@ -1,8 +1,6 @@
 <%= div_for comment do %>
-  <p>By: <%= comment.user_profile %></p>
-  <p>By: <%= comment.character %></p>
-  <p>Body: <%= comment.body %></p>
-  <p>Item: <%= link_to "Commentable needs a name helper...", comment.commentable %></p>
+  <%= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))%>
+  <div class="comment_body"><%= comment.body %></div>
   <span class='actions'>
     <td><%= (logged_in? and current_user.can_update(comment)) ? link_to( 'Edit', edit_comment_path(comment)) : "" %></td>
     <td><%= (logged_in? and current_user.can_delete(comment)) ? link_to( 'Delete', comment, :confirm => 'Are you sure?', :method => :delete) : "" %></td>

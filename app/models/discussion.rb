@@ -4,6 +4,18 @@ class Discussion < ActiveRecord::Base
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
   
+  def users_name
+    user_profile.displayname
+  end
+  
+  def characters_name
+    character.name
+  end
+  
+  def charater_posted?
+    character != nil
+  end
+  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true
