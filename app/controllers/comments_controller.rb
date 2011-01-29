@@ -21,6 +21,10 @@ class CommentsController < ApplicationController
   # GET /comments/new.xml
   def new
     @comment = Comment.new
+    @comment.user_profile = current_user.user_profile
+    @comment.character = (character_active? ? current_character : nil)
+    @comment.commentable_id = params[:commentable_id]
+    @comment.commentable_type = params[:commentable_type]
     respond_with(@comment)
   end
 
@@ -34,13 +38,10 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(params[:comment])
     #commentable??
-    if(@discussion != nil)
-      @comment.commentable = @discussion
-    end 
     if @comment.save
       flash[:notice] = 'Comment was successfully created.'
-      redirect_to(:back)
-        #respond_with(@comment)
+      #redirect_to(:back)
+      respond_with(@comment)
     else
       respond_to do |format|
         format.html { render :action => "new" }

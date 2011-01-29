@@ -8,12 +8,11 @@
       <td><%= (logged_in? and current_user.can_delete(discussion)) ? link_to( 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
   </span>
   <p>Body: <%= discussion.body %></p>
+  <%= link_to "new_comment", new_comment_path(:format => :js, :commentable_id => discussion.id, :commentable_type => discussion.class), :remote => true, :id => 'new_comment_link' %>
   <h4>Comments</h4>
-  <ul>
+  <div id="comments">
     <% discussion.comments.each do  |comment| %>
       <%= render comment %>
     <% end %>
-  </ul>
-  <h5>New Comment</h5>
-  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => discussion, :user_profile_id => current_user.user_profile_id, :character_id => (character_active? ? current_character.id : nil)}) %>
+  </div>
 <% end %> 
