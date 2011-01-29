@@ -10,7 +10,7 @@
   </span>
   <p>Body: <%= discussion.body %></p>
   <h4>Comments</h4>
-  <div id="comments">
+  <div class="comments">
     <% discussion.comments.each do  |comment| %>
       <%= render comment %>
     <% end %>
