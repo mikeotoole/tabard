@@ -16,14 +16,12 @@
 </p>
 
 <h5>Comments</h5>
-<ul>
+<div class="comments">
   <% @game_announcement.comments.each do  |comment| %>
     <%= render comment %>
   <% end %>
-</ul>
-
-<h5>New Comment</h5>
-  <%= render( :file => 'comments/new.html.erb', :locals => {:commentable => @game_announcement, :user_profile_id => current_user.user_profile_id, :character_id => (character_active? ? current_character.id : nil)}) %>
+</div>
+<%= link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @game_announcement.id, :commentable_type => @game_announcement.class), :remote => true, :class => 'new_comment_link' %>
 
 <p>
   <b>Acknowledgments:</b>
