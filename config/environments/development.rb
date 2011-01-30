@@ -27,4 +27,9 @@ Bv::Application.configure do
   %w[game wow swtor character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
     require_dependency File.join("app","models","#{c}.rb")
   end
+  
+  # This will force the models to be loaded so that subclasses can be seen by there parent.
+  %w[question check_box_question combo_box_question radio_button_question text_box_question text_question].each do |c|
+    require_dependency File.join("app","models","#{c}.rb")
+  end
 end

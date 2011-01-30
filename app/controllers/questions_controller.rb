@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  respond_to :html, :xml, :js
   # GET /questions
   # GET /questions.xml
   def index
@@ -15,21 +16,26 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @question }
-    end
+    respond_with(@question)
   end
 
   # GET /questions/new
   # GET /questions/new.xml
   def new
-    @question = Question.new
+       
+   @form = SiteForm.find_by_id(params[:site_form_id])
+   
+       
+   @question = case params[:q_type]
+    when 'CheckBoxQuestion' then @check_box_question = CheckBoxQuestion.new(:site_form_id => @form.id)
+    when 'ComboBoxQuestion' then @combo_box_question = ComboBoxQuestion.new
+    when 'RadioButtonQuestion' then @radio_button_question = RadioButtonQuestion.new
+    when 'TextBoxQuestion' then @text_box_question = TextBoxQuestion.new
+    when 'TextQuestion' then @text_question = TextQuestion.new           
+    else Question.new
+  end
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @question }
-    end
+    respond_with(@question)
   end
 
   # GET /questions/1/edit
