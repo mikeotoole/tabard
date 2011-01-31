@@ -1,0 +1,9 @@
+<%= div_for radio_button_question do %>
+  <h3>
+    <%= radio_button_question.content %> 
+      <span class='actions'>
+      	<%= link_to( 'Edit', edit_radio_button_question_path(radio_button_question)) %>
+        <%= link_to( 'Delete', radio_button_question, :confirm => 'Are you sure?', :method => :delete) %>
+      </span>
+  </h3>
+<% end %>

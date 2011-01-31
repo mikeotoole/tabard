@@ -1,2 +1,0 @@
-class SiteFormsController < ApplicationController
-end

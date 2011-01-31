@@ -1,0 +1,9 @@
+<%= div_for check_box_question do %>
+  <h3>
+    <%= check_box_question.content %> 
+      <span class='actions'>
+      	<%= link_to( 'Edit', edit_check_box_question_path(check_box_question)) %>
+        <%= link_to( 'Delete', check_box_question, :confirm => 'Are you sure?', :method => :delete) %>
+      </span>
+  </h3>
+<% end %>

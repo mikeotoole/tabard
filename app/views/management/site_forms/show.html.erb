@@ -10,16 +10,24 @@
   <%= @site_form.message %>
 </p>
 
-<p>
+<div id="questions">
   <b>Questions:</b>
   <% @site_form.questions.each do  |question| %>
     <%= render question %>
   <% end %>
-</p>
+</div>
 
 <h5>New Question</h5>
-  <%= render( :file => 'questions/new.html.erb', :locals => {:site_form_id => @site_form.id}) %>
 
+<%= form_tag( new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get')   %>
+<%= hidden_field_tag(:site_form_id, @site_form.id ) %>
+<%= select_tag(:q_type, options_for_select(Question::select_options)) %>
+
+<%= submit_tag 'Add Question' %>
+
+</form>
+
+<br />
 
 <%= link_to 'Edit', edit_management_site_form_path(@site_form) %> |
 <%= link_to 'Back', management_site_forms_path %>
