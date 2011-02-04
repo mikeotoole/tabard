@@ -1,13 +1,12 @@
 class CommentsController < ApplicationController
+  respond_to :html, :xml, :js
+  before_filter :authenticate
   # GET /comments
   # GET /comments.xml
   def index
     @comments = Comment.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @comments }
-    end
+    respond_with(@comments)
   end
 
   # GET /comments/1
@@ -15,21 +14,18 @@ class CommentsController < ApplicationController
   def show
     @comment = Comment.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @comment }
-    end
+    respond_with(@comment)
   end
 
   # GET /comments/new
   # GET /comments/new.xml
   def new
     @comment = Comment.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @comment }
-    end
+    @comment.user_profile = current_user.user_profile
+    @comment.character = (character_active? ? current_character : nil)
+    @comment.commentable_id = params[:commentable_id]
+    @comment.commentable_type = params[:commentable_type]
+    respond_with(@comment)
   end
 
   # GET /comments/1/edit
@@ -41,14 +37,16 @@ class CommentsController < ApplicationController
   # POST /comments.xml
   def create
     @comment = Comment.new(params[:comment])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to(@comment, :notice => 'Comment was successfully created.') }
-        format.xml  { render :xml => @comment, :status => :created, :location => @comment }
-      else
+    #commentable??
+    if @comment.save
+      flash[:notice] = 'Comment was successfully created.'
+      #redirect_to(:back)
+      respond_with(@comment)
+    else
+      respond_to do |format|
         format.html { render :action => "new" }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+        format.js { render 'fail_create.js.erb' }
       end
     end
   end

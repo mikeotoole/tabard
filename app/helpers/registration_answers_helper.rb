@@ -1,0 +1,2 @@
+module RegistrationAnswersHelper
+end

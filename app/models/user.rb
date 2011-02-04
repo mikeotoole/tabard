@@ -51,14 +51,30 @@ class User < ActiveRecord::Base
     self.hashed_password == encrypt(password)
   end
   
+  # Returns a collection of the currently logged in users unacknowledged announcements or nil if empty.
+  def current_announcements
+      @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
+      @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
+      @profiles << @userprofile
+      @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+      @acknowledgment_of_announcements
+  end
+  
+  #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
     self.roles.each do |role|
-      role.permissions.each do |permission|
-        if permission.permissionable.is_a? SystemResource
-          if (permission.permissionable.name == system_resource_name) && (permission.show_p == true)
-            return true
-          end
+      if(role.show_permissionables.include?(system_resource_name))
+        return true
+      end
+      role.show_system_resources.each do |s_resource|
+        if(s_resource.permissionable_name == system_resource_name)
+          return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_show_permissions'))
+      if(system_resource_name.check_user_show_permissions(self))
+        return true
       end
     end
     false
@@ -66,12 +82,18 @@ class User < ActiveRecord::Base
   
   def can_create(system_resource_name)
     self.roles.each do |role|
-      role.permissions.each do |permission|
-        if permission.permissionable.is_a? SystemResource
-          if permission.permissionable.name == system_resource_name && permission.create_p
-            return true
-          end
+      if(role.create_permissionables.include?(system_resource_name))
+        return true
+      end
+      role.create_system_resources.each do |s_resource|
+        if(s_resource.permissionable_name == system_resource_name)
+          return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_create_permissions'))
+      if(system_resource_name.check_user_create_permissions(self))
+        return true
       end
     end
     false
@@ -79,12 +101,18 @@ class User < ActiveRecord::Base
   
   def can_update(system_resource_name)
     self.roles.each do |role|
-      role.permissions.each do |permission|
-        if permission.permissionable.is_a? SystemResource
-          if permission.permissionable.name == system_resource_name && permission.update_p
-            return true
-          end
+      if(role.update_permissionables.include?(system_resource_name))
+        return true
+      end
+      role.update_system_resources.each do |s_resource|
+        if(s_resource.permissionable_name == system_resource_name)
+          return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_update_permissions'))
+      if(system_resource_name.check_user_update_permissions(self))
+        return true
       end
     end
     false
@@ -92,12 +120,18 @@ class User < ActiveRecord::Base
   
   def can_delete(system_resource_name)
     self.roles.each do |role|
-      role.permissions.each do |permission|
-        if permission.permissionable.is_a? SystemResource
-          if permission.permissionable.name == system_resource_name && permission.delete_p
-            return true
-          end
+      if(role.delete_permissionables.include?(system_resource_name))
+        return true
+      end
+      role.delete_system_resources.each do |s_resource|
+        if(s_resource.permissionable_name == system_resource_name)
+          return true
         end
+      end
+    end
+    if(system_resource_name.respond_to?('check_user_delete_permissions'))
+      if(system_resource_name.check_user_delete_permissions(self))
+        return true
       end
     end
     false

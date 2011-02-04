@@ -1,0 +1,21 @@
+<h1>Listing registration_applications</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @registration_applications.each do |registration_application| %>
+  <tr>
+    <td><%= link_to 'Show', registration_application %></td>
+    <td><%= link_to 'Edit', edit_registration_application_path(registration_application) %></td>
+    <td><%= link_to 'Destroy', registration_application, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Registration application', new_registration_application_path %>

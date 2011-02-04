@@ -19,13 +19,13 @@
     <td><%= discussion.discussion_space_id %></td>
     <td><%= discussion.character_id %></td>
     <td><%= discussion.user_profile_id %></td>
-    <td><%= link_to 'Show', discussion %></td>
-    <td><%= link_to 'Edit', edit_discussion_path(discussion) %></td>
-    <td><%= link_to 'Destroy', discussion, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= current_user.can_show(discussion) ? link_to('Show', discussion) : "No Show Permissions" %></td>
+    <td><%= current_user.can_update(discussion) ? link_to( 'Edit', edit_discussion_path(discussion)) : "No Edit Permissions" %></td>
+    <td><%= current_user.can_delete(discussion) ? link_to( 'Destroy', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Discussion', new_discussion_path %>
+<%= current_user.can_create("Discussion") ? link_to( 'New Discussion', new_discussion_path) : "No Create Permissions" %>

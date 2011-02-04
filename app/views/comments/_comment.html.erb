@@ -1,0 +1,14 @@
+<%= div_for comment do %>
+  <%= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))%>
+  <div class="comment_body"><%= comment.body %></div>
+  <span class='actions'>
+    <td><%= (logged_in? and current_user.can_update(comment)) ? link_to( 'Edit', edit_comment_path(comment)) : "" %></td>
+    <td><%= (logged_in? and current_user.can_delete(comment)) ? link_to( 'Delete', comment, :confirm => 'Are you sure?', :method => :delete) : "" %></td>
+    <%= link_to "New Comment", new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'new_comment_link' %>
+  </span>
+  <div class="comment">
+    <% comment.comments.each do  |subcomment| %>
+      <%= render subcomment %>
+    <% end %>
+  </div>
+<% end %>

@@ -8,4 +8,12 @@ module ApplicationHelper
   def js_back
     link_to 'Back', 'javascript:history.go(-1);'
   end  
+  
+  def language_selector
+    if I18n.locale == :en
+      link_to "Local - Pt", url_for(:locale => 'pt-br') 
+    else
+      link_to "Local - En", url_for(:locale => 'en')
+    end 
+  end
 end

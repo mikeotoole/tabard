@@ -9,8 +9,7 @@ class SessionsController < ApplicationController
         redirect_to root_path, :notice => "Logged in successfully."
       end 
     else
-      flash.now[:alert] = "Invalid login/password combination."
-      render :action => 'new' 
+      redirect_to root_path, :alert => "Invalid email/password combination."
     end
   end
   

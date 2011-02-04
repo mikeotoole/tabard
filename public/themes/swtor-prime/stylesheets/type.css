@@ -38,12 +38,27 @@ i,
 em {
   color: #aaa; }
 
+a {
+  text-decoration: underline; }
+  a:hover {
+    color: #5ba7b4; }
+
 button,
+.button,
 input[type=button],
 input[type=submit] {
+  color: #4c91a1 !important;
+  display: inline-block;
   font-family: 'SansationBold', serif;
   font-size: 0.8em;
-  text-transform: uppercase; }
+  line-height: 30px;
+  text-transform: uppercase;
+  text-decoration: none !important; }
+  button:hover,
+  .button:hover,
+  input[type=button]:hover,
+  input[type=submit]:hover {
+    color: #181a1b !important; }
 
 input[type=text],
 input[type=password] {
@@ -59,8 +74,8 @@ input[type=password] {
   font-size: 2.4em;
   line-height: 1em;
   text-transform: uppercase; }
-  #header .title:hover {
-    color: #5ba7b4; }
+  #header .title a {
+    text-decoration: none; }
 #header .slogan {
   color: #484c4e;
   font-family: 'SansationRegular', serif;
@@ -69,21 +84,40 @@ input[type=password] {
   text-transform: uppercase;
   letter-spacing: 0.2em; }
 
-#menu .login {
+#menu {
   color: #181a1b; }
-#menu ul {
-  font-family: 'SansationBold', serif;
-  font-size: 1.2em; }
-  #menu ul a {
-    color: #181a1b;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 1px #4e4f4f; }
-    #menu ul a:hover {
-      color: #4c91a1;
-      text-shadow: 1px 1px 1px #000; }
+  #menu a:hover {
+    color: #fff; }
+  #menu .login input[type=submit] {
+    color: #181a1b !important; }
+  #menu .login .apply {
+    font-size: 0.8em;
+    line-height: 1em; }
+  #menu .login .remember {
+    line-height: 1.2em; }
+    #menu .login .remember label {
+      font-size: 0.8em; }
+      #menu .login .remember label:hover {
+        color: #fff; }
+  #menu ul {
+    font-family: 'SansationBold', serif;
+    font-size: 1.2em; }
+    #menu ul a {
+      color: #181a1b;
+      text-decoration: none;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 1px #4e4f4f; }
+      #menu ul a:hover {
+        color: #4c91a1;
+        text-shadow: 1px 1px 1px #000; }
+  #menu #userbox p {
+    font-size: 0.8em; }
+  #menu #userbox .salutation {
+    font-weight: bold; }
 
 #footer a {
-  color: #454545; }
+  color: #454545;
+  text-decoration: none; }
   #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {

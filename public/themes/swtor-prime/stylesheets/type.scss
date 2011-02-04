@@ -31,12 +31,27 @@ em {
   color: #aaa;
 }
 
+a {
+  text-decoration: underline;
+  &:hover {
+    color: #5ba7b4;
+  }
+}
+
 button,
+.button,
 input[type=button],
 input[type=submit] {
+  color: #4c91a1 !important;
+  display: inline-block;
   font-family: 'SansationBold', serif;
   font-size: 0.8em;
+  line-height: 30px;
   text-transform: uppercase;
+  text-decoration: none !important;
+  &:hover {
+    color: #181a1b !important;
+  }
 }
 input[type=text],
 input[type=password] {
@@ -50,8 +65,8 @@ input[type=password] {
 #header {
   .title {
     @include heading(2.4em, #939393);
-    &:hover {
-      color: #5ba7b4;
+    a { 
+      text-decoration: none;
     } 
   }
   .slogan {
@@ -60,15 +75,37 @@ input[type=password] {
   }
 }
 
-#menu {  
+#menu {
+  color: #181a1b;
+  a {
+    &:hover {
+      color: #fff;
+    }
+  }
   .login {
-    color: #181a1b;
+    input[type=submit] {
+      color: #181a1b !important;
+    }
+    .apply {
+      font-size: 0.8em;
+      line-height: 1em;
+    }
+    .remember {
+      line-height: 1.2em;
+      label {
+        font-size: 0.8em;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
   }  
   ul {
     font-family: 'SansationBold', serif;
     font-size: 1.2em;
     a {
       color: #181a1b;
+      text-decoration: none;
       text-transform: uppercase;
       text-shadow: 1px 1px 1px #4e4f4f;
       &:hover {
@@ -77,11 +114,20 @@ input[type=password] {
       }
     }
   }
+  #userbox {
+    p {
+      font-size: 0.8em;
+    }
+    .salutation {
+      font-weight: bold;
+    }
+  }
 }
 
 #footer {
   a {
-    color: #454545;    
+    color: #454545;
+    text-decoration: none;
     &:hover {
       color: #5ba7b4;
     }

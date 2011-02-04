@@ -1,5 +1,25 @@
 Bv::Application.routes.draw do
 
+  resources :site_forms
+
+  resources :registration_answers
+
+  resources :text_box_questions
+
+  resources :radio_button_questions
+
+  resources :text_questions
+
+  resources :check_box_questions
+
+  resources :combo_box_questions
+
+  resources :answers
+
+  resources :questions
+
+  resources :registration_applications
+
   resources :teamspeaks
 
   resources :recurring_events
@@ -22,11 +42,11 @@ Bv::Application.routes.draw do
 
   resources :newsletters
 
-  resources :discussion_spaces
+  resources :discussion_spaces 
+  
+  resources :discussions 
 
   resources :comments
-
-  resources :discussions
 
   resources :system_resources
 
@@ -57,6 +77,7 @@ Bv::Application.routes.draw do
     resources :discussion_spaces
     resources :themes
     resources :teamspeaks
+    resources :site_forms
   end
   
   resources :profiles do
