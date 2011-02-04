@@ -13,14 +13,20 @@
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
-
+      
       - if logged_in? && current_user.unacknowledged_announcements
-        = form_tag(announcements_path, :id => 'announcements') do
+        = form_tag(announcement_acknowledgement_path, :remote => true, :id => 'announcements') do
           %ul.container
             - current_user.unacknowledged_announcements.each do |announcement|
               %li
-                = link_to announcement.snippet << '&hellip;', '#', :title => 'Read announcement and comments.'
-                %button{:type => 'submit', :value => announcement.id} Mark as seen
+                = link_to announcement.snippet, announcement.path, :title => 'Read announcement and comments.'
+                %button{:type => 'submit', :name => 'id', :value => announcement.id} Mark as seen
+            - if notice.present?
+              %li.notice
+                %span= notice
+            - if alert.present?
+              %li.alert
+                %span= alert
 
       #menu    
         .container              

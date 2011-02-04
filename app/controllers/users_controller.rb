@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @user = User.find(params[:id])
-      @acknowledgment_of_announcements = @user.current_announcements
+      @acknowledgment_of_announcements = @user.unacknowledged_announcements
       
       respond_to do |format|
         format.html # show.html.erb

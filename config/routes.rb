@@ -58,6 +58,8 @@ Bv::Application.routes.draw do
   
   resources :site_announcements
   resources :game_announcements
+  
+  match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
 
   root :to => "home#index"
   

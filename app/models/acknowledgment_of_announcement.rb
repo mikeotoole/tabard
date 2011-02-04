@@ -1,14 +1,14 @@
 class AcknowledgmentOfAnnouncement < ActiveRecord::Base
   belongs_to :Announcement
   belongs_to :Profile
-    
-  def id
-    self.announcement_id
-  end
   
   def author_name
     @profile = Profile.find_by_id(self.profile_id)
     @profile.displayname
+  end
+  
+  def path
+    Announcement.find_by_id(self.announcement_id)
   end
   
   def title
@@ -23,7 +23,8 @@ class AcknowledgmentOfAnnouncement < ActiveRecord::Base
   
   def snippet(n=30)
     @announcement = Announcement.find_by_id(self.announcement_id)
-    @announcement.body.split(' ')[0,n].inject{|sum,word| sum + ' ' + word}
+    snippet = (@announcement.body.split(' ')[0,n].inject{|sum,word| sum + ' ' + word}).to_s
+    snippet.length < @announcement.body.length ? snippet << '&hellip;' : snippet
   end
   
 end

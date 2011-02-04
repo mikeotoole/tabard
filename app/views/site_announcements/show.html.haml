@@ -20,7 +20,7 @@
         %th Acknowledged
       - @acknowledgments.each do |ack|
         %tr
-          %td= ack.displayname
+          %td= ack.author_name
           %td= ack.acknowledged
   = link_to 'Edit', edit_site_announcement_path(@site_announcement)
   |
