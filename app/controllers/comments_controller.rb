@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
     @comment.character = (character_active? ? current_character : nil)
     @comment.commentable_id = params[:commentable_id]
     @comment.commentable_type = params[:commentable_type]
+    @comment.html_target = params[:html_target]
     respond_with(@comment)
   end
 

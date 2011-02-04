@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  attr_accessor :html_target
+  
   belongs_to :commentable, :polymorphic => true
   belongs_to :character
   belongs_to :user_profile
@@ -24,7 +26,7 @@ class Comment < ActiveRecord::Base
   end
   
   def original_comment_item
-  	(commentable.kind_of?(Comment)) ? "commentable.original_comment_item" : commentable
+  	(commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
   end
   
   def check_user_show_permissions(user)
