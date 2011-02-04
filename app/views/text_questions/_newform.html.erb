@@ -1,7 +1,7 @@
-<%= form_for(@text_question) do |f| %>
+<%= form_for(@text_question, :remote => true) do |f| %>
   <% if @text_question.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@text_question.errors.count, "error") %> prohibited this text_question from being saved:</h2>
+      <h2><%= pluralize(@text_question.errors.count, "error") %> prohibited this question from being saved:</h2>
 
       <ul>
       <% @text_question.errors.full_messages.each do |msg| %>
@@ -12,7 +12,11 @@
   <% end %>
   
   <div class="field">
-    <%= f.label :content %><br />
+    <%= f.hidden_field :site_form_id %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :content, "Question" %><br />
     <%= f.text_area :content, :rows => 3 %>
   </div>
 

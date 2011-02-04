@@ -1,13 +1,12 @@
 class ComboBoxQuestionsController < ApplicationController
+  respond_to :html, :xml, :js
+  
   # GET /combo_box_questions
   # GET /combo_box_questions.xml
   def index
     @combo_box_questions = ComboBoxQuestion.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @combo_box_questions }
-    end
+    respond_with(@combo_box_questions)
   end
 
   # GET /combo_box_questions/1
@@ -15,10 +14,7 @@ class ComboBoxQuestionsController < ApplicationController
   def show
     @combo_box_question = ComboBoxQuestion.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @combo_box_question }
-    end
+    respond_with(@combo_box_question)
   end
 
   # GET /combo_box_questions/new
@@ -26,10 +22,7 @@ class ComboBoxQuestionsController < ApplicationController
   def new
     @combo_box_question = ComboBoxQuestion.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @combo_box_question }
-    end
+    respond_with(@combo_box_question)
   end
 
   # GET /combo_box_questions/1/edit
@@ -42,26 +35,27 @@ class ComboBoxQuestionsController < ApplicationController
   def create
     @combo_box_question = ComboBoxQuestion.new(params[:combo_box_question])
 
-    respond_to do |format|
       if @combo_box_question.save
-        format.html { redirect_to(@combo_box_question, :notice => 'Combo box question was successfully created.') }
-        format.xml  { render :xml => @combo_box_question, :status => :created, :location => @combo_box_question }
+        respond_with(@combo_box_question)
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @combo_box_question.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+         format.html { render :action => "new" }
+         format.xml  { render :xml => @combo_box_question.errors, :status => :unprocessable_entity }
+        end
       end
-    end
   end
 
   # PUT /combo_box_questions/1
   # PUT /combo_box_questions/1.xml
   def update
     @combo_box_question = ComboBoxQuestion.find(params[:id])
+    @form = SiteForm.find(@combo_box_question.site_form_id)
 
     respond_to do |format|
       if @combo_box_question.update_attributes(params[:combo_box_question])
-        format.html { redirect_to(@combo_box_question, :notice => 'Combo box question was successfully updated.') }
+        format.html { redirect_to([:management, @form], :notice => 'Question was successfully updated.') }
         format.xml  { head :ok }
+        format.js { redirect_to([:management, @form], :notice => 'Question was successfully updated.') }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @combo_box_question.errors, :status => :unprocessable_entity }
@@ -73,10 +67,12 @@ class ComboBoxQuestionsController < ApplicationController
   # DELETE /combo_box_questions/1.xml
   def destroy
     @combo_box_question = ComboBoxQuestion.find(params[:id])
+    @form = SiteForm.find(@combo_box_question.site_form_id)
+    
     @combo_box_question.destroy
 
     respond_to do |format|
-      format.html { redirect_to(combo_box_questions_url) }
+      format.html { redirect_to([:management, @form]) }
       format.xml  { head :ok }
     end
   end
