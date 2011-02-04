@@ -51,6 +51,56 @@ input[type=password] {
   }
 }
 
+#announcements {
+  margin: -5px 0 15px;
+  li {
+    height: 39px;
+    margin: 5px 0 0 -10px;
+    position: relative;
+    a {
+      bottom: 0;
+      color: #caa59d;
+      display: block;
+      background: #6e2222;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      left: 0;
+      line-height: 39px;
+      overflow: hidden;
+      padding: 0 15px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      white-space: nowrap;
+      z-index: 1;
+      &focus,
+      &:hover {
+        color: #fff;
+        background: #902525;
+      }
+    }
+    button {
+      background: url(../images/announcement-button-sprite.png) 0 0 no-repeat;
+      border: 0;
+      height: 39px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: 200px;
+      width: 122px;
+      z-index: 2;
+      &:focus,
+      &:hover {
+        background-color: transparent !important;
+        background-position: 0 -41px !important;
+        border: 0;
+      }
+    }
+  }
+}
+
 #header {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;

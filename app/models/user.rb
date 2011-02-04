@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
   
   # Returns a collection of the currently logged in users unacknowledged announcements or nil if empty.
-  def current_announcements
+  def unacknowledged_announcements
       @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
       @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
       @profiles << @userprofile

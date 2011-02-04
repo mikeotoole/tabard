@@ -13,13 +13,15 @@
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
-              
-      - if notice.present? || alert.present?
-        #messages
-          .container
-            = content_tag :p, notice, :class => 'notice' if notice.present?
-            = content_tag :p, alert, :class => 'alert' if alert.present?
-            
+
+      - if logged_in? && current_user.unacknowledged_announcements
+        = form_tag(announcements_path, :id => 'announcements') do
+          %ul.container
+            - current_user.unacknowledged_announcements.each do |announcement|
+              %li
+                = link_to announcement.snippet << '&hellip;', '#', :title => 'Read announcement and comments.'
+                %button{:type => 'submit', :value => announcement.id} Mark as seen
+
       #menu    
         .container              
           - if logged_in?
@@ -53,11 +55,11 @@
             %li= link_to 'Events', :events
             %li= link_to 'Resources', page_spaces_path
             %li= link_to 'Discussions', :discussion_spaces
-              
+
       #body
         .container
           = yield
-      
+
       #footer
         .container
           .menu
@@ -86,4 +88,4 @@
             &nbsp;|&nbsp;
             = link_to 'Terms of Use', '#'
             %br/
-            &copy; Copyright digitalAugment Inc, 2010.        
+            &copy; Copyright digitalAugment Inc, 2010.

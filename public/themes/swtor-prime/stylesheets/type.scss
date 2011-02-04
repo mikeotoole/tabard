@@ -62,6 +62,14 @@ input[type=password] {
   }
 }
 
+#announcements {
+  li {
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
 #header {
   .title {
     @include heading(2.4em, #939393);

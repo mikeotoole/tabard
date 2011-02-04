@@ -68,6 +68,9 @@ input[type=password] {
   input[type=password]:hover {
     color: #181a1b; }
 
+#announcements li a {
+  text-decoration: none; }
+
 #header .title {
   color: #939393;
   font-family: 'SansationRegular', serif;
