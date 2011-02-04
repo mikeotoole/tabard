@@ -19,6 +19,10 @@ class Comment < ActiveRecord::Base
   end
   
   def html_classes
+    temp_html_classes = Array.new()
+    (has_been_locked) ? temp_html_classes << " .locked" :
+    (has_been_edited) ? temp_html_classes << " .edited" :
+    temp_html_classes << " .OMG"
   	#locked
   	#op
   	#deleted
