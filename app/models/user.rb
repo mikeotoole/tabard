@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password
   
+  def owns(resource)
+    resource.respond_to?('owned_by_user') ? resource.owned_by_user : false
+  end
+  
   def profiles
     (Array.new() << (user_profile)).concat(game_profiles)
   end

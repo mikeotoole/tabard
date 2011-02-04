@@ -12,7 +12,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/1.xml
   def show
     @discussion_space = DiscussionSpace.find(params[:id])
-    if !current_user.can_show(@discussion_space) and !current_user.can_show("DiscussionSpace")
+    if !current_user.can_show(@discussion_space)
       render :nothing => true, :status => :forbidden
     else
       respond_with(@discussion_space)
@@ -23,7 +23,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/new.xml
   def new
     @discussion_space = DiscussionSpace.new
-    if !current_user.can_create("DiscussionSpace")
+    if !current_user.can_create(@discussion_space)
       render :nothing => true, :status => :forbidden
     else
       respond_with(@discussion_space)
@@ -33,18 +33,19 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/1/edit
   def edit
     @discussion_space = DiscussionSpace.find(params[:id])
-    if !current_user.can_update("DiscussionSpace") and !current_user.can_update(@discussion_space)
+    if !current_user.can_update(@discussion_space)
       render :nothing => true, :status => :forbidden
     end
+    respond_with(@discussion_space)
   end
 
   # POST /discussion_spaces
   # POST /discussion_spaces.xml
   def create
-    if !current_user.can_create("DiscussionSpace")
+    @discussion_space = DiscussionSpace.new(params[:discussion_space])
+    if !current_user.can_create(@discussion_space)
       render :nothing => true, :status => :forbidden
     else
-      @discussion_space = DiscussionSpace.new(params[:discussion_space])
       if @discussion_space.save
         flash[:notice] = 'Discussion space was successfully created.'
         respond_with(@discussion_space)
@@ -61,7 +62,7 @@ class DiscussionSpacesController < ApplicationController
   # PUT /discussion_spaces/1.xml
   def update
     @discussion_space = DiscussionSpace.find(params[:id])
-    if !current_user.can_update("DiscussionSpace") and !current_user.can_update(@discussion_space)
+    if !current_user.can_update(@discussion_space)
       render :nothing => true, :status => :forbidden
     else
       if @discussion_space.update_attributes(params[:discussion_space])
@@ -80,7 +81,7 @@ class DiscussionSpacesController < ApplicationController
   # DELETE /discussion_spaces/1.xml
   def destroy
     @discussion_space = DiscussionSpace.find(params[:id])
-    if !current_user.can_delete("DiscussionSpace") and !current_user.can_delete(@discussion_space)
+    if !current_user.can_delete(@discussion_space)
       render :nothing => true, :status => :forbidden
     else 
       @discussion_space.destroy

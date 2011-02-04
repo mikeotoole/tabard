@@ -11,9 +11,6 @@ class DiscussionSpace < ActiveRecord::Base
   end
   
   def check_user_create_permissions(user)
-    if user.user_profile == self.user_profile
-      return true
-    end
     user.can_create("DiscussionSpace")
   end
   

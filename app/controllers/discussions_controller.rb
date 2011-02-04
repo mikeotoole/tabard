@@ -23,7 +23,7 @@ class DiscussionsController < ApplicationController
   # GET /discussions/new.xml
   def new
     @discussion = Discussion.new
-    if !current_user.can_create("Discussion")
+    if !current_user.can_create(@discussion)
       render :nothing => true, :status => :forbidden
     else
       respond_with(@discussion)
@@ -41,10 +41,10 @@ class DiscussionsController < ApplicationController
   # POST /discussions
   # POST /discussions.xml
   def create
-    if !current_user.can_create("Discussion")
+    @discussion = Discussion.new(params[:discussion])
+    if !current_user.can_create(@discussion)
       render :nothing => true, :status => :forbidden
     else
-      @discussion = Discussion.new(params[:discussion])
       if @discussion.save
         flash[:notice] = 'Discussion was successfully created.'
         respond_with(@discussion)

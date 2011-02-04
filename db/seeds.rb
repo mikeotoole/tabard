@@ -15,10 +15,15 @@ blaggarth = Character.create(:name => "Blaggarth", :faction => "Alliance", :race
 eliand = Character.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :rank => "10", :game => wow, :type_helper => "WowCharacter")
 yoda = Character.create(:name => "Yoda", :faction => "Republic", :race => "Species Unknown", :server => "Obi-Wan", :rank => "10", :game => swtor, :type_helper => "SwtorCharacter")
 
+commentResource = SystemResource.create(:name => "Comment")
+
 discussionSpaceResource = SystemResource.create(:name => "DiscussionSpace")
 discussionResource = SystemResource.create(:name => "Discussion")
 discSpace = DiscussionSpace.create(:name => "General", :system => false)
 discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false)
+
+siteAnnouncementResource = SystemResource.create(:name => "SiteAnnouncement")
+gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
 pageResource = SystemResource.create(:name => "Page")
@@ -34,11 +39,14 @@ swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allGamePermission = Permission.create(:permissionable => gameResource, :name => "Full Access Game", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allSiteAnnouncementPermission = Permission.create(:permissionable => siteAnnouncementResource, :name => "Full Access SiteAnnouncement", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allGameAnnouncementPermission = Permission.create(:permissionable => gameAnnouncementResource, :name => "Full Access GameAnnouncement", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allDiscussionSpacePermission = Permission.create(:permissionable => discussionSpaceResource, :name => "Full Access DiscussionSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allDiscussionPermission = Permission.create(:permissionable => discussionResource, :name => "Full Access Discussion", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allCommentPermission = Permission.create(:permissionable => commentResource, :name => "Full Access Comment", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allPageSpacePermission = Permission.create(:permissionable => pageSpaceResource, :name => "Full Access PageSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allPagePermission = Permission.create(:permissionable => pageResource, :name => "Full Access Page", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
-adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allDiscussionPermission,allPageSpacePermission,allPagePermission])
+adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile, :is_active => true)
 
 viewUserPermission = Permission.create(:permissionable => userResource, :name => "View Access User", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)

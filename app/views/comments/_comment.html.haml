@@ -4,7 +4,7 @@
   %span
     HTML CLASS [#{comment.html_classes}]
   = ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
-  .comment_body= comment.body
+  .comment_body= comment.has_been_deleted ? "COMMENT HAS BEEN DELETED" : comment.body
   %span.actions
   %td= (logged_in? and current_user.can_update(comment)) ? link_to( 'Edit', edit_comment_path(comment)) : ""
   %td= (logged_in? and current_user.can_delete(comment)) ? link_to( 'Delete', comment, :confirm => 'Are you sure?', :method => :delete) : ""
