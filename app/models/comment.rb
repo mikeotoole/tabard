@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
-  attr_accessor :html_target
+  attr_accessor :form_target
+  attr_accessor :comment_target
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :character

@@ -1,3 +1,5 @@
-$("<%= escape_javascript render(:file => 'comments/new.html.erb') %>").insertAfter('<%=@comment.html_target %>'); 
-$('#new_comment').slideDown();
-$('.new_comment_link').hide();
+$('#new_comment').remove();
+form_target = $('<%=@comment.form_target %>');
+form_html = "<%= escape_javascript render(:file => 'comments/new.html.haml') %>";
+form_target.append(form_html); 
+$('#new_comment').hide().slideDown();
