@@ -1,0 +1,9 @@
+<%= div_for answer do %>
+  <h3>
+    <%= answer.content %> 
+      <span class='actions'>
+      	<%= link_to( 'Edit', edit_answer_path(answer)) %>
+        <%= link_to( 'Delete', answer, :confirm => 'Are you sure?', :method => :delete) %>
+      </span>
+  </h3>
+<% end %>

@@ -14,7 +14,7 @@ class CheckBoxQuestionsController < ApplicationController
   def show
     @check_box_question = CheckBoxQuestion.find(params[:id])
 
-    respond_with(@check_box_questions)
+    respond_with(@check_box_question)
   end
 
   # GET /check_box_questions/new
@@ -22,7 +22,7 @@ class CheckBoxQuestionsController < ApplicationController
   def new
     @check_box_question = CheckBoxQuestion.new
 
-    respond_with(@check_box_questions)
+    respond_with(@check_box_question)
   end
 
   # GET /check_box_questions/1/edit
@@ -34,7 +34,6 @@ class CheckBoxQuestionsController < ApplicationController
   # POST /check_box_questions.xml
   def create
     @check_box_question = CheckBoxQuestion.new(params[:check_box_question])
-
 
       if @check_box_question.save
         respond_with(@check_box_question)
