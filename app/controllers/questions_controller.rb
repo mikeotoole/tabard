@@ -21,19 +21,23 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   # GET /questions/new.xml
-  def new
-       
-   @form = SiteForm.find_by_id(params[:site_form_id])
-   
+  def new      
+   @form = SiteForm.find_by_id(params[:site_form_id])  
        
    @question = case params[:q_type]
     when 'CheckBoxQuestion' then @check_box_question = CheckBoxQuestion.new(:site_form_id => @form.id)
-    when 'ComboBoxQuestion' then @combo_box_question = ComboBoxQuestion.new
-    when 'RadioButtonQuestion' then @radio_button_question = RadioButtonQuestion.new
-    when 'TextBoxQuestion' then @text_box_question = TextBoxQuestion.new
-    when 'TextQuestion' then @text_question = TextQuestion.new           
+      3.times { @check_box_question.answers.build }
+      @check_box_question
+    when 'ComboBoxQuestion' then @combo_box_question = ComboBoxQuestion.new(:site_form_id => @form.id)
+      3.times { @combo_box_question.answers.build }
+      @combo_box_question
+    when 'RadioButtonQuestion' then @radio_button_question = RadioButtonQuestion.new(:site_form_id => @form.id)
+      3.times { @radio_button_question.answers.build }
+      @radio_button_question
+    when 'TextBoxQuestion' then @text_box_question = TextBoxQuestion.new(:site_form_id => @form.id)
+    when 'TextQuestion' then @text_question = TextQuestion.new(:site_form_id => @form.id) 
     else Question.new
-  end
+   end
 
     respond_with(@question)
   end
