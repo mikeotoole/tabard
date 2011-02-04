@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110129183027) do
+ActiveRecord::Schema.define(:version => 20110204044225) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -51,6 +51,9 @@ ActiveRecord::Schema.define(:version => 20110129183027) do
     t.string   "commentable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_been_deleted"
+    t.boolean  "has_been_edited"
+    t.boolean  "has_been_locked"
   end
 
   create_table "discussion_spaces", :force => true do |t|

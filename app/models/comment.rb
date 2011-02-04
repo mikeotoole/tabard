@@ -16,6 +16,17 @@ class Comment < ActiveRecord::Base
     character != nil
   end
   
+  def html_classes
+  	#locked
+  	#op
+  	#deleted
+  	#edited
+  end
+  
+  def original_comment_item
+  	(commentable.kind_of?(Comment)) ? "commentable.original_comment_item" : commentable
+  end
+  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true
@@ -29,6 +40,9 @@ class Comment < ActiveRecord::Base
   end
   
   def check_user_update_permissions(user)
+  	if has_been_locked 
+  		return false
+  	end
     if user.user_profile == self.user_profile
       return true
     end
@@ -38,6 +52,7 @@ class Comment < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
+    user.can_delete(original_comment_item) or user.can_delete("Comment")
   end
   
   # The commentable_type always needs to be of the base class type and not the subclass type.
