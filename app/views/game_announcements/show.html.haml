@@ -1,0 +1,31 @@
+= div_for @game_announcement do
+  %p#notice= notice
+  %p
+    %b Title:
+    = @game_announcement.name
+  %p
+    %b Body:
+    = @game_announcement.body
+  %p
+    %b Game:
+    = render @game
+  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @game_announcement.id, :commentable_type => @game_announcement.class, :html_target => "#game_announcement_"+@game_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
+  %h5 Comments
+  .comments
+    %ol
+      - @game_announcement.comments.each do  |comment|
+        = render comment
+  %p
+    %b Acknowledgments:
+    %table
+      %tr
+        %th Character Name
+        %th Acknowledged
+      - @acknowledgments.each do |ack|
+        %tr
+          %td= ack.displayname
+          %td= ack.acknowledged
+  = link_to 'Edit', edit_game_announcement_path(@game_announcement)
+  |
+  \#{link_to 'Game Announcements', game_announcements_path} |
+  \#{link_to 'All Announcements', announcements_path}

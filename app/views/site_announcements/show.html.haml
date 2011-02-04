@@ -1,0 +1,28 @@
+= div_for @site_announcement do
+  %p#notice= notice
+  %p
+    %b Title:
+    = @site_announcement.name
+  %p
+    %b Body:
+    = @site_announcement.body
+  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @site_announcement.id, :commentable_type => @site_announcement.class, :html_target => "#game_announcement_"+@site_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
+  %h5 Comments
+  .comment
+    %ol
+      - @site_announcement.comments.each do  |comment|
+        = render comment
+  %p
+    %b Acknowledgments:
+    %table
+      %tr
+        %th User Name
+        %th Acknowledged
+      - @acknowledgments.each do |ack|
+        %tr
+          %td= ack.displayname
+          %td= ack.acknowledged
+  = link_to 'Edit', edit_site_announcement_path(@site_announcement)
+  |
+  \#{link_to 'Site Announcements', site_announcements_path} |
+  \#{link_to 'All Announcements', announcements_path}
