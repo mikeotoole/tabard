@@ -1,25 +1,25 @@
-= div_for @game_announcement do
+= div_for @gameannouncement do
   %p#notice= notice
-  %p
-    %b Title:
-    = @game_announcement.name
-  %p
-    %b Body:
-    = @game_announcement.body
-  %p
-    %b Game:
-    = render @game
-  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @game_announcement.id, :commentable_type => @game_announcement.class, :html_target => "#game_announcement_"+@game_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
-  %h5 Comments
+  %h1= @game_announcement.name
+  %p= @game_announcement.body
+  
+  %h2 Comments
+  
   .comments
-    %ol
-      - @game_announcement.comments.each do  |comment|
-        = render comment
+    - if @game_announcement.comments.size > 0
+      %ol
+        - @game_announcement.comments.each do  |comment|
+          = render comment
+        
+  .reply
+    %h2 Leave a Comment
+    %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => @game_announcement.id, :commentable_type => @game_announcement.class, :form_target => '#game_announcement_' + @game_announcement.id.to_s + ' .reply', :comment_target => '#game_announcement_' + @game_announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+  
   %p
     %b Acknowledgments:
     %table
       %tr
-        %th Character Name
+        %th User Name
         %th Acknowledged
       - @acknowledgments.each do |ack|
         %tr
@@ -27,5 +27,5 @@
           %td= ack.acknowledged
   = link_to 'Edit', edit_game_announcement_path(@game_announcement)
   |
-  \#{link_to 'Game Announcements', game_announcements_path} |
+  \#{link_to 'game Announcements', game_announcements_path} |
   \#{link_to 'All Announcements', announcements_path}

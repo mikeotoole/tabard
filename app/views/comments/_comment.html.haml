@@ -1,14 +1,11 @@
-= content_tag_for(:li, comment) do
-  %span
-    Original comment item #{comment.original_comment_item.name}
-  %span
-    HTML CLASS [#{comment.html_classes}]
-  = ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
-  .comment_body= comment.has_been_deleted ? "COMMENT HAS BEEN DELETED" : comment.body
+= content_tag_for(:li, comment, :class => comment.html_classes) do
+  %span.author= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
+  %span.body= comment.has_been_deleted ? "COMMENT HAS BEEN DELETED" : comment.body
   %span.actions
-  %td= (logged_in? and current_user.can_update(comment)) ? link_to( 'Edit', edit_comment_path(comment)) : ""
-  %td= (logged_in? and current_user.can_delete(comment)) ? link_to( 'Delete', comment, :confirm => 'Are you sure?', :method => :delete) : ""
-  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class, :html_target => "#comment_"+comment.id.to_s+" ol:first"), :remote => true, :class => 'new_comment_link'
-  %ol
-    - comment.comments.each do |subcomment|
-      = render subcomment
+    = (logged_in? and current_user.can_update(comment)) ? (link_to 'Edit', edit_comment_path(comment)) : ''
+    = (logged_in? and current_user.can_delete(comment)) ? (link_to 'Delete', comment, :confirm => 'Are you sure?', :method => :delete) : ''
+    = link_to 'Add Comment', new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class, :form_target => "#comment_"+comment.id.to_s, :comment_target => "#comment_"+comment.id.to_s), :remote => true, :class => 'new_comment_link'
+  - if comment.comments.size > 0
+    %ol
+      - comment.comments.each do |subcomment|
+        = render subcomment

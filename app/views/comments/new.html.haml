@@ -1,0 +1,12 @@
+= form_for([@comment], :remote => true) do |f|
+  = hidden_field(:comment, :character_id)
+  = hidden_field(:comment, :user_profile_id)
+  = hidden_field(:comment, :commentable_id)
+  = hidden_field(:comment, :commentable_type)
+  = hidden_field(:comment, :form_target)
+  = hidden_field(:comment, :comment_target)
+  .field
+    = f.text_area :body, { :title => 'Comment text' }
+  .actions
+    = f.submit 'Add Comment'
+    = link_to "Cancel", "#", :onClick => "$('#new_comment').detach(); $('.new_comment_link').show();return false;"

@@ -1,17 +1,20 @@
 = div_for @site_announcement do
   %p#notice= notice
-  %p
-    %b Title:
-    = @site_announcement.name
-  %p
-    %b Body:
-    = @site_announcement.body
-  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @site_announcement.id, :commentable_type => @site_announcement.class, :html_target => "#site_announcement_"+@site_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
-  %h5 Comments
-  .comment
-    %ol
-      - @site_announcement.comments.each do  |comment|
-        = render comment
+  %h1= @site_announcement.name
+  %p= @site_announcement.body
+  
+  %h2 Comments
+  
+  .comments
+    - if @site_announcement.comments.size > 0
+      %ol
+        - @site_announcement.comments.each do  |comment|
+          = render comment
+        
+  .reply
+    %h2 Leave a Comment
+    %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => @site_announcement.id, :commentable_type => @site_announcement.class, :form_target => '#site_announcement_' + @site_announcement.id.to_s + ' .reply', :comment_target => '#site_announcement_' + @site_announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+  
   %p
     %b Acknowledgments:
     %table

@@ -1,3 +1,6 @@
-$('<%=@comment.html_target%>').append("<%= escape_javascript(render(@comment)) %>");
-$('#new_comment').detach();
+comment_target = $('<%=@comment.comment_target%>');
+comment_html = "<%= escape_javascript(render(@comment)) %>";
+if(!comment_target.find('ol').length) comment_target.append('<ol>');
+comment_target.find('ol:first').append(comment_html); 
+$('#new_comment').remove();
 $('.new_comment_link').show();
