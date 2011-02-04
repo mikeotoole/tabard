@@ -6,7 +6,7 @@
   %p
     %b Body:
     = @site_announcement.body
-  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @site_announcement.id, :commentable_type => @site_announcement.class, :html_target => "#game_announcement_"+@site_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
+  = link_to "New Comment", new_comment_path(:format => :js, :commentable_id => @site_announcement.id, :commentable_type => @site_announcement.class, :html_target => "#site_announcement_"+@site_announcement.id.to_s+" .comments ol:first"), :remote => true, :class => 'new_comment_link'
   %h5 Comments
   .comment
     %ol
