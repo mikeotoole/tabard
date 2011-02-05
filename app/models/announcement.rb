@@ -5,7 +5,7 @@ class Announcement < Discussion
   
   def assign_to_discussion_space
     if DiscussionSpace.where(:announcement_space => true).exists?
-      self.discussion_space = DiscussionSpace.where(:announcement_space => true).limit(1)
+      self.discussion_space = DiscussionSpace.where(:announcement_space => true)
     else
       self.discussion_space = DiscussionSpace.create(:name => "Site Announcements", :system => true, :announcement_space => true)
     end 
