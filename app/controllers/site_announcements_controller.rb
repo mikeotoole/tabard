@@ -77,7 +77,7 @@ class SiteAnnouncementsController < ApplicationController
     else
       if @site_announcement.update_attributes(params[:site_announcement])
         flash[:notice] = 'Site announcement was successfully updated.'
-        render(@site_announcement)
+        respond_with(@site_announcement)
       else
         respond_to do |format|
           format.html { render :action => "edit" }

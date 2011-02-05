@@ -43,6 +43,7 @@ class DiscussionSpacesController < ApplicationController
   # POST /discussion_spaces.xml
   def create
     @discussion_space = DiscussionSpace.new(params[:discussion_space])
+    @discussion_space.system = false
     if !current_user.can_create(@discussion_space)
       render :nothing => true, :status => :forbidden
     else

@@ -2,7 +2,7 @@ class SiteAnnouncement < Announcement
     has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
     
   def check_user_show_permissions(user)
-    user.can_show("SiteAnnouncement")
+    true
   end
   
   def check_user_create_permissions(user)

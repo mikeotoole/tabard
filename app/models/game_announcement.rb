@@ -1,9 +1,19 @@
 class GameAnnouncement < Announcement
-  belongs_to :Game
+  belongs_to :game
+  belongs_to :discussion_space
   has_many :GameProfiles, :through => :AcknowledgmentOfAnnouncement
   
+  def assign_to_discussion_space
+    self.discussion_space = self.game.announcement_space
+  end
+  
   def check_user_show_permissions(user)
-    user.can_show("GameAnnouncement") or user.can_show("SiteAnnouncement")
+    user.all_game_profiles.each do |gameprofile|
+      if game.id == gameprofile.game_id
+        return true
+      end
+    end
+    user.can_show("GameAnnouncement") or user.can_show("SiteAnnouncement") 
   end
   
   def check_user_create_permissions(user)
