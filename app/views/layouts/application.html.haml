@@ -19,7 +19,7 @@
           %ul.container
             - current_user.unacknowledged_announcements.each do |announcement|
               %li
-                = link_to(announcement, { :title => 'Read the full announcement and comments.' }) do
+                = link_to(announcement.path, { :title => 'Read the full announcement and comments.' }) do
                   %strong= announcement.title << ':'
                   = announcement.snippet
                 %button{ :type => 'submit', :name => 'id', :value => announcement.id, :title => 'Mark as seen.' } Mark as seen
