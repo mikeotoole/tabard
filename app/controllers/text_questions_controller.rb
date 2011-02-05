@@ -48,8 +48,12 @@ class TextQuestionsController < ApplicationController
   # PUT /text_questions/1
   # PUT /text_questions/1.xml
   def update
-    @text_question = TextQuestion.find(params[:id])
-    @form = SiteForm.find(@text_question.site_form_id)    
+    @old_text_question = TextQuestion.find(params[:id])
+    @form = SiteForm.find(@old_text_question.site_form_id)
+    @text_question = @old_text_question.clone
+    @old_text_question.site_form_id = nil
+    @old_text_question.save
+    @text_question.save
 
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])

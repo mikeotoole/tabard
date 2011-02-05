@@ -2,6 +2,7 @@ class Announcement < Discussion
   has_many :AcknowledgmentOfAnnouncements, :dependent => :destroy
   
   before_create :assign_to_discussion_space
+  after_create :create_acknowledgments
   
   def assign_to_discussion_space
     if DiscussionSpace.where(:announcement_space => true).exists?
@@ -11,6 +12,10 @@ class Announcement < Discussion
     end 
   end
   
+  def create_acknowledgments
+    true
+  end  
+    
   def snippet(n=30)
     snippet = (self.body.split(' ')[0,n].inject{|sum,word| sum + ' ' + word}).to_s
     snippet.length < self.body.length ? snippet << '&hellip;' : snippet
