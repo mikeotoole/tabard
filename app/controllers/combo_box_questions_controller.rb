@@ -69,7 +69,8 @@ class ComboBoxQuestionsController < ApplicationController
     @combo_box_question = ComboBoxQuestion.find(params[:id])
     @form = SiteForm.find(@combo_box_question.site_form_id)
     
-    @combo_box_question.destroy
+    @combo_box_question.site_form_id = nil
+    @combo_box_question.save
 
     respond_to do |format|
       format.html { redirect_to([:management, @form]) }

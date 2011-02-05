@@ -47,17 +47,7 @@ class SiteAnnouncementsController < ApplicationController
     if !current_user.can_create(@site_announcement)
       render :nothing => true, :status => :forbidden
     else
-      @users = User.find(:all, :conditions => {:is_active => true})
-    
-      logger.debug "Number of users found: #{@users.count}"
       if @site_announcement.save
-        for user in @users     
-          @profile = UserProfile.find_by_id(user)
-          if @profile != nil
-            AcknowledgmentOfAnnouncement.create(:announcement_id => @site_announcement.id, :profile_id => @profile.id, :acknowledged => false)
-          end
-        end
-        flash[:notice] = 'Site announcement was successfully created.'
         respond_with(@site_announcement)
       else
         respond_to do |format|

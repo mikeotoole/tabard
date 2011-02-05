@@ -69,7 +69,8 @@ class RadioButtonQuestionsController < ApplicationController
     @radio_button_question = RadioButtonQuestion.find(params[:id])
     @form = SiteForm.find(@radio_button_question.site_form_id)
     
-    @radio_button_question.destroy
+    @radio_button_question.site_form_id = nil
+    @radio_button_question.save
 
     respond_to do |format|
       format.html { redirect_to([:management, @form]) }
