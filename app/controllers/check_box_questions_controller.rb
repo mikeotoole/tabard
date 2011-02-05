@@ -69,7 +69,8 @@ class CheckBoxQuestionsController < ApplicationController
     @check_box_question = CheckBoxQuestion.find(params[:id])
     @form = SiteForm.find(@check_box_question.site_form_id)
     
-    @check_box_question.destroy
+    @check_box_question.site_form_id = nil
+    @check_box_question.save
 
     respond_to do |format|
       format.html { redirect_to([:management, @form]) }

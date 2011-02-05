@@ -69,7 +69,8 @@ class TextQuestionsController < ApplicationController
     @text_question = TextQuestion.find(params[:id])
     @form = SiteForm.find(@text_question.site_form_id)   
 
-    @text_question.destroy
+    @text_question.site_form_id = nil
+    @text_question.save
 
     respond_to do |format|
       format.html { redirect_to([:management, @form]) }
