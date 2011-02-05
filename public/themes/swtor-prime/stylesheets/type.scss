@@ -30,6 +30,12 @@ i,
 em {
   color: #aaa;
 }
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
 
 a {
   text-decoration: underline;
@@ -66,6 +72,25 @@ input[type=password] {
   li {
     a {
       text-decoration: none;
+    }
+    a,
+    span,
+    strong {
+      color: #caa59d;
+    }
+    &:focus,
+    &:hover {
+      a,
+      span,
+      strong {
+        color: #fff;
+      }
+    }
+    &.alert span {
+      color: #000;
+    }
+    &.notice span {
+      color: #000;
     }
   }
 }

@@ -38,6 +38,12 @@ i,
 em {
   color: #aaa; }
 
+strong {
+  font-weight: bold; }
+
+em {
+  font-style: italic; }
+
 a {
   text-decoration: underline; }
   a:hover {
@@ -70,6 +76,18 @@ input[type=password] {
 
 #announcements li a {
   text-decoration: none; }
+#announcements li a,
+#announcements li span,
+#announcements li strong {
+  color: #caa59d; }
+#announcements li:focus a,
+#announcements li:focus span,
+#announcements li:focus strong, #announcements li:hover a, #announcements li:hover span, #announcements li:hover strong {
+  color: #fff; }
+#announcements li.alert span {
+  color: #000; }
+#announcements li.notice span {
+  color: #000; }
 
 #header .title {
   color: #939393;

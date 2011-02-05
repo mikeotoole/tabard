@@ -60,7 +60,6 @@ input[type=password] {
     a,
     span {
       bottom: 0;
-      color: #caa59d;
       display: block;
       background: #6e2222;
       border-radius: 5px;
@@ -75,18 +74,17 @@ input[type=password] {
       top: 0;
       white-space: nowrap;
       z-index: 1;
-      &:focus,
-      &:hover {
-        color: #fff;
-        background: #902525;
-      }
+    }    
+    &:focus a,
+    &:focus span,
+    &:hover a,
+    &hover span {
+      background: #902525;
     }
     &.alert span {
-      color: #000;
       background: #9c9b22;
     }
     &.notice span {
-      color: #000;
       background: #c3c3c3;
     }
     button {
