@@ -19,8 +19,11 @@
     <%= f.label :body %><br />
     <%= f.text_area :body %>
   </div>
-
+  <div class="field">
+    <%= f.label :comments_enabled %><br />
+    <%= f.check_box :comments_enabled %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_or_cancel(f) %>
   </div>
 <% end %>

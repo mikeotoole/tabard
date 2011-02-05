@@ -16,15 +16,18 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :game_id %><br />
+  <%= f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
+  </div>
+  <div class="field">
     <%= f.label :body %><br />
     <%= f.text_area :body %>
   </div>
   <div class="field">
-    <%= f.label :game_id %><br />
-	<%= f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game") %>
+    <%= f.label :comments_enabled %><br />
+    <%= f.check_box :comments_enabled %>
   </div>
-
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_or_cancel(f) %>
   </div>
 <% end %>
