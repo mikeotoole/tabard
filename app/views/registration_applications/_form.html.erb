@@ -1,4 +1,4 @@
-<%= form_for(@registration_application) do |f| %>
+<%= form_for(@registration_application) do |application| %>
   <% if @registration_application.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@registration_application.errors.count, "error") %> prohibited this registration_application from being saved:</h2>
@@ -10,12 +10,34 @@
       </ul>
     </div>
   <% end %>
+	
+	<%= fields_for :user do |user| %>
+		<div class="field">
+	    <%= user.label :email %><br />
+	    <%= user.text_field :email %>
+	  </div>
+	  <div class="field">
+	    <%= user.label :password %><br />
+	    <%= user.password_field :password %>
+	  </div>
+	  <div class="field">
+	    <%= user.label :password_confirmation %><br />
+	    <%= user.password_field :password_confirmation %>
+	  </div>
+	<% end %>
   
-  <%= render 'users/form' %>
-  
-  <%= render 'game_profiles/form' %>
+  <%= fields_for :user_profile do |profile| %>
+	  <div class="field">
+	    <%= profile.label :name %><br />
+	    <%= profile.text_field :name %>
+	  </div>
+	<% end %>
+	
+	<%= for question in @registration_application.questions do %>
+	 <%= render question %>
+	<% end %> 
 
   <div class="actions">
-    <%= f.submit %>
+    <%= application.submit %>
   </div>
 <% end %>

@@ -56,6 +56,8 @@ viewGeneralDiscussionSpacePermission = Permission.create(:permissionable => disc
 viewerRole = Role.create(:name => "Viewer", :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :roles => [viewerRole], :user_profile => userProfile, :is_active => true)
 
+#Generate some normal activity for demonstration purposes
+
 disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
 comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)
 comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
@@ -63,3 +65,5 @@ comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, 
 disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace)
 disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
 
+GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
+SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")

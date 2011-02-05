@@ -25,8 +25,9 @@ class RegistrationApplicationsController < ApplicationController
   # GET /registration_applications/new.xml
   def new
     @registration_application = RegistrationApplication.new
-    @user = User.new
-    @profile = GameProfile.new
+    @form = SiteForm.last
+    
+    @registration_application.questions = @form.questions
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,6 +44,13 @@ class RegistrationApplicationsController < ApplicationController
   # POST /registration_applications.xml
   def create
     @registration_application = RegistrationApplication.new(params[:registration_application])
+    @user = User.new(params[:user])
+    @profile = UserProfile.new(params[:user_profile])
+    
+    @user.save
+    @profile.user_id = @user.id
+    @profile.save
+    @registration_application.user_profile_id = @profile.id
 
     respond_to do |format|
       if @registration_application.save

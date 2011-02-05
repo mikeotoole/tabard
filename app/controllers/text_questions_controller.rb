@@ -68,7 +68,7 @@ class TextQuestionsController < ApplicationController
   def destroy
     @text_question = TextQuestion.find(params[:id])
     @form = SiteForm.find(@text_question.site_form_id)   
-    
+
     @text_question.destroy
 
     respond_to do |format|

@@ -6,6 +6,10 @@ class GameProfile < Profile
   validates_presence_of :game
   validates_presence_of :user_profile
   
+  def game_id
+    game.id
+  end
+  
   #TODO This needs to be the profiles main charcters name
   def displayname
     self.name

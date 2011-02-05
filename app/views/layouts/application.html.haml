@@ -14,7 +14,7 @@
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
       
-      - if logged_in? && current_user.unacknowledged_announcements
+      - if (logged_in? && current_user.unacknowledged_announcements)
         = form_tag(announcement_acknowledgement_path, :remote => true, :id => 'announcements') do
           %ul.container
             - current_user.unacknowledged_announcements.each do |announcement|

@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     helper_method :current_character
     
     def access_denied 
-      redirect_to root_path, :notice => "Please log in to continue" and return false 
+      redirect_to root_path, :alert => "Please log in to continue" and return false 
     end
     
     

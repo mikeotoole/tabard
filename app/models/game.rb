@@ -2,8 +2,22 @@ class Game < ActiveRecord::Base
  has_many :GameAnnouncements
  has_many :characters, :dependent => :destroy
  has_many :game_profiles, :dependent => :destroy
+ has_many :discussion_spaces
  
  validates_presence_of :name
+ 
+ after_create :create_game_discussion_space
+ 
+ def create_game_discussion_space
+   discussion_space = DiscussionSpace.create :name => self.name+" Announcements",
+                                             :system => true,
+                                             :game => self
+   self.announcement_space_id = discussion_space.id
+ end
+ 
+ def announcement_space
+   DiscussionSpace.find_by_id(self.announcement_space_id)
+ end
  
  # Lets the subclasses use the parents routes. 
   def self.inherited(child)
