@@ -1,13 +1,13 @@
 class AnnouncementsController < ApplicationController
+  respond_to :html, :xml
+  before_filter :authenticate
+  
   # GET /announcements
   # GET /announcements.xml
   def index
     @announcements = Announcement.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @announcements }
-    end
+    respond_with(@announcements)
   end
 
 #  # GET /announcements/1
@@ -26,17 +26,19 @@ class AnnouncementsController < ApplicationController
   def new
     @announcement = Announcement.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @announcement }
+    respond_with(@announcements)
+  end
+
+  # GET /announcements/1/edit
+  def edit
+    @announcement = Announcement.find(params[:id])
+    if !current_user.can_update(@announcement)
+      render :nothing => true, :status => :forbidden
+    else
+      respond_with(@announcement)
     end
   end
 
-#  # GET /announcements/1/edit
-#  def edit
-#    @announcement = Announcement.find(params[:id])
-#  end
-#
 #  # POST /announcements
 #  # POST /announcements.xml
 #  def create

@@ -1,6 +1,7 @@
 class GameAnnouncementsController < ApplicationController
   respond_to :html, :xml
   before_filter :authenticate
+  
   # GET /game_announcements
   # GET /game_announcements.xml
   def index
@@ -66,7 +67,7 @@ class GameAnnouncementsController < ApplicationController
           end
         end
         flash[:notice] = 'Game announcement was successfully created.'
-        render_with(@game_announcement)
+        respond_with(@game_announcement)
       else
         respond_to do |format|
           format.html { render :action => "new" }
@@ -85,7 +86,7 @@ class GameAnnouncementsController < ApplicationController
     else
       if @game_announcement.update_attributes(params[:game_announcement])
         flash[:notice] = 'Game announcement was successfully updated.'
-        render_with(@game_announcement)
+        respond_with(@game_announcement)
       else
         respond_to do |format|
           format.html { render :action => "edit" }
@@ -99,7 +100,7 @@ class GameAnnouncementsController < ApplicationController
   # DELETE /game_announcements/1.xml
   def destroy
     @game_announcement = GameAnnouncement.find(params[:id])
-    if !current_user.can_destroy(@game_announcement)
+    if !current_user.can_delete(@game_announcement)
       render :nothing => true, :status => :forbidden
     else
       @game_announcement.destroy
