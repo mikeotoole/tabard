@@ -1,7 +1,7 @@
 class SiteAnnouncement < Announcement
   has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
     
-  def after_create
+  def create_acknowledgments
     @users = User.find(:all, :conditions => {:is_active => true})
     
     for user in @users     
