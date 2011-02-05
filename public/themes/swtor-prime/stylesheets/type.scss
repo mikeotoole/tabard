@@ -55,6 +55,7 @@ input[type=submit] {
   line-height: 30px;
   text-transform: uppercase;
   text-decoration: none !important;
+  &:focus,
   &:hover {
     color: #181a1b !important;
   }
@@ -74,9 +75,12 @@ input[type=password] {
       text-decoration: none;
     }
     a,
-    span,
-    strong {
+    span {
       color: #caa59d;
+    }
+    strong {
+      color: #fff;
+      text-transform: uppercase;
     }
     &:focus,
     &:hover {

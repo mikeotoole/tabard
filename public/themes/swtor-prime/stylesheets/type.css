@@ -60,9 +60,12 @@ input[type=submit] {
   line-height: 30px;
   text-transform: uppercase;
   text-decoration: none !important; }
-  button:hover,
+  button:focus, button:hover,
+  .button:focus,
   .button:hover,
+  input[type=button]:focus,
   input[type=button]:hover,
+  input[type=submit]:focus,
   input[type=submit]:hover {
     color: #181a1b !important; }
 
@@ -77,9 +80,11 @@ input[type=password] {
 #announcements li a {
   text-decoration: none; }
 #announcements li a,
-#announcements li span,
-#announcements li strong {
+#announcements li span {
   color: #caa59d; }
+#announcements li strong {
+  color: #fff;
+  text-transform: uppercase; }
 #announcements li:focus a,
 #announcements li:focus span,
 #announcements li:focus strong, #announcements li:hover a, #announcements li:hover span, #announcements li:hover strong {

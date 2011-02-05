@@ -88,20 +88,20 @@ input[type=password] {
       background: #c3c3c3;
     }
     button {
-      background: url(../images/announcement-button-sprite.png) 0 0 no-repeat;
+      background: url(../images/announcement-button-sprite.png) 0 -1px no-repeat;
       border: 0;
       height: 39px;
       overflow: hidden;
       position: absolute;
       top: 0;
       right: 0;
-      text-indent: 200px;
+      text-indent: -500em;
       width: 122px;
       z-index: 2;
       &:focus,
       &:hover {
         background-color: transparent !important;
-        background-position: 0 -41px !important;
+        background-position: 0 -42px !important;
         border: 0;
       }
     }

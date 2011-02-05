@@ -8,7 +8,7 @@
   .comments
     - if @site_announcement.comments.size > 0
       %ol
-        - @site_announcement.comments.each do  |comment|
+        - @site_announcement.comments.each do |comment|
           = render comment
         
   .reply

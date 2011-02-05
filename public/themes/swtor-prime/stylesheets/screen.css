@@ -82,19 +82,19 @@ input[type=password] {
     #announcements li.notice span {
       background: #c3c3c3; }
     #announcements li button {
-      background: url(../images/announcement-button-sprite.png) 0 0 no-repeat;
+      background: url(../images/announcement-button-sprite.png) 0 -1px no-repeat;
       border: 0;
       height: 39px;
       overflow: hidden;
       position: absolute;
       top: 0;
       right: 0;
-      text-indent: 200px;
+      text-indent: -500em;
       width: 122px;
       z-index: 2; }
       #announcements li button:focus, #announcements li button:hover {
         background-color: transparent !important;
-        background-position: 0 -41px !important;
+        background-position: 0 -42px !important;
         border: 0; }
 
 #header {
