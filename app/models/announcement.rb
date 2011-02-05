@@ -14,6 +14,11 @@ class Announcement < Discussion
   
   def create_acknowledgments
     true
+  end  
+    
+  def snippet(n=30)
+    snippet = (self.body.split(' ')[0,n].inject{|sum,word| sum + ' ' + word}).to_s
+    snippet.length < self.body.length ? snippet << '&hellip;' : snippet
   end
   
   def self.select_options
