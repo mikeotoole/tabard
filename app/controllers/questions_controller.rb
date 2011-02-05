@@ -86,7 +86,8 @@ class QuestionsController < ApplicationController
   def destroy
     @question = Question.find(params[:id])
     @form = SiteForm.find(@question.site_form_id)
-    @question.destroy
+    @question.site_form_id = nil
+    @question.save
 
     respond_to do |format|
       format.html { redirect_to([:management, @form]) }
