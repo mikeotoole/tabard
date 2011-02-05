@@ -22,9 +22,7 @@ class AcknowledgmentOfAnnouncement < ActiveRecord::Base
   end
   
   def snippet(n=30)
-    @announcement = Announcement.find_by_id(self.announcement_id)
-    snippet = (@announcement.body.split(' ')[0,n].inject{|sum,word| sum + ' ' + word}).to_s
-    snippet.length < @announcement.body.length ? snippet << '&hellip;' : snippet
+    Announcement.find_by_id(self.announcement_id).snippet(n)
   end
   
 end

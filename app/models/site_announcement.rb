@@ -1,6 +1,6 @@
 class SiteAnnouncement < Announcement
     has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
-    
+   
   def check_user_show_permissions(user)
     true
   end
