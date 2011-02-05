@@ -1,10 +1,6 @@
 <%= div_for combo_box_question do %>
   <h3>
     <%= combo_box_question.content %> 
-      <span class='actions'>
-      	<%= link_to( 'Edit', edit_combo_box_question_path(combo_box_question)) %>
-        <%= link_to( 'Delete', combo_box_question, :confirm => 'Are you sure?', :method => :delete) %>
-      </span>
 			<br />
       <ul>
         <% for answer in combo_box_question.answers %>

@@ -1,7 +1,5 @@
 Bv::Application.routes.draw do
 
-  resources :site_forms
-
   resources :registration_answers
 
   resources :text_box_questions
