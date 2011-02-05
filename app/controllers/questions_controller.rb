@@ -67,8 +67,10 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.xml
   def update
     #TODO this needs to create a new question and not change the existing one (Change for all types of questions).
-    @question = Question.find(params[:id])
-    @form = SiteForm.find(@question.site_form_id)
+    @old_question = Question.find(params[:id])
+    @form = SiteForm.find(@old_question.site_form_id)
+    @question = @old_question.clone
+    @question.save
 
     respond_to do |format|
       if @question.update_attributes(params[:question])

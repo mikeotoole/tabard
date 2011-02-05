@@ -1,7 +1,11 @@
 class SiteAnnouncement < Announcement
+<<<<<<< HEAD
+    has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
+   
+=======
   has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
     
-  def create_acknowledgments
+  def after_create
     @users = User.find(:all, :conditions => {:is_active => true})
     
     for user in @users     
@@ -12,6 +16,7 @@ class SiteAnnouncement < Announcement
     end
   end
     
+>>>>>>> c7b1ee09b11162a7027f2cf70584cd7ff53790c7
   def check_user_show_permissions(user)
     true
   end
