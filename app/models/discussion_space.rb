@@ -6,7 +6,7 @@ class DiscussionSpace < ActiveRecord::Base
   validate :only_one_announcement_space
   
   def only_one_announcement_space
-    errors.add("There can be only one!  ...announcement space") if DiscussionSpace.where(:announcement_space => true).exists?
+    errors.add(:id, "There can be only one!  ...announcement space") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
   end
   
   def check_user_show_permissions(user)
@@ -24,13 +24,13 @@ class DiscussionSpace < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_update("DiscussionSpace")
+    user.can_update("DiscussionSpace") and not self.system
   end
   
   def check_user_delete_permissions(user)
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_delete("DiscussionSpace")
+    user.can_delete("DiscussionSpace") and not self.system
   end
 end
