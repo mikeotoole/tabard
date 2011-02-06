@@ -3,4 +3,6 @@ class RegistrationApplication < ActiveRecord::Base
   has_many :comments, :as => :commentable
   has_many :registration_answers, :dependent => :destroy
   has_many :questions, :through => :registration_answers
+  
+  accepts_nested_attributes_for :registration_answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
 end

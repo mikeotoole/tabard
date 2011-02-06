@@ -1,11 +1,6 @@
 <%= div_for combo_box_question do %>
   <h3>
-    <%= combo_box_question.content %> 
-			<br />
-      <ul>
-        <% for answer in combo_box_question.answers %>
-          <li><%=h answer.content %></li>
-        <% end %>
-      </ul>
+    <%= combo_box_question.content %> <br />
+			<%= collection_select(:question_answers, :answer_id, combo_box_question.answers, :id, :content, options ={:prompt => "Select an answer"}, :class =>"answer") %>
   </h3>
 <% end %>

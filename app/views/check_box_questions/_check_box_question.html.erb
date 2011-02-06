@@ -4,7 +4,8 @@
 			<br />
 			<ul>
         <% for answer in check_box_question.answers %>
-          <li><%= answer.content %></li>
+					<%= check_box_tag :question_answers, answer.id %>
+					<%= label_tag answer.content %>
         <% end %>
       </ul>
   </h3>
