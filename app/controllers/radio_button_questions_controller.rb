@@ -48,8 +48,14 @@ class RadioButtonQuestionsController < ApplicationController
   # PUT /radio_button_questions/1
   # PUT /radio_button_questions/1.xml
   def update
-    @radio_button_question = RadioButtonQuestion.find(params[:id])
-    @form = SiteForm.find(@radio_button_question.site_form_id)
+    @old_radio_button_question = RadioButtonQuestion.find(params[:id])
+    @form = SiteForm.find(@old_radio_button_question.site_form_id)  
+    
+    @radio_button_question = @old_radio_button_question.clone
+    @radio_button_question.answers = @old_radio_button_question.answers   
+    
+    @old_radio_button_question.site_form_id = nil
+    @old_radio_button_question.save
 
     respond_to do |format|
       if @radio_button_question.update_attributes(params[:radio_button_question])

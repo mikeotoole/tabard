@@ -48,8 +48,14 @@ class CheckBoxQuestionsController < ApplicationController
   # PUT /check_box_questions/1
   # PUT /check_box_questions/1.xml
   def update
-    @check_box_question = CheckBoxQuestion.find(params[:id])
-    @form = SiteForm.find(@check_box_question.site_form_id)
+    @old_check_box_question = CheckBoxQuestion.find(params[:id])
+    @form = SiteForm.find(@old_check_box_question.site_form_id)
+    
+    @check_box_question = @old_check_box_question.clone
+    @check_box_question.answers = @old_check_box_question.answers
+    
+    @old_check_box_question.site_form_id = nil
+    @old_check_box_question.save
 
     respond_to do |format|
       if @check_box_question.update_attributes(params[:check_box_question])

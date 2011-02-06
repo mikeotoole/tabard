@@ -48,8 +48,14 @@ class ComboBoxQuestionsController < ApplicationController
   # PUT /combo_box_questions/1
   # PUT /combo_box_questions/1.xml
   def update
-    @combo_box_question = ComboBoxQuestion.find(params[:id])
-    @form = SiteForm.find(@combo_box_question.site_form_id)
+    @old_combo_box_question = ComboBoxQuestion.find(params[:id])
+    @form = SiteForm.find(@old_combo_box_question.site_form_id)
+    
+    @combo_box_question = @old_combo_box_question.clone
+    @combo_box_question.answers = @old_combo_box_question.answers 
+    
+    @old_combo_box_question.site_form_id = nil
+    @old_combo_box_question.save
 
     respond_to do |format|
       if @combo_box_question.update_attributes(params[:combo_box_question])

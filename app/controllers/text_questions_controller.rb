@@ -50,10 +50,11 @@ class TextQuestionsController < ApplicationController
   def update
     @old_text_question = TextQuestion.find(params[:id])
     @form = SiteForm.find(@old_text_question.site_form_id)
+    
     @text_question = @old_text_question.clone
+    
     @old_text_question.site_form_id = nil
     @old_text_question.save
-    @text_question.save
 
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])
