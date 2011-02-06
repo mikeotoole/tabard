@@ -1,4 +1,4 @@
-= div_for announcement do
+%div{ :id => 'announcement_' << announcement.id.to_s } 
   %p#notice= notice
   %h1= announcement.name
   %p= announcement.body
@@ -10,12 +10,11 @@
       %ol
         - announcement.comments.each do |comment|
           = render comment
-  .reply
+  %p.reply
     - if announcement.comments_enabled?
-      %h2 Leave a Comment
-      %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+      = link_to 'Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
     - else
-      %p.comments-disabled Comments are disabled.
+      Comments are disabled.
 
   %p
     %b Acknowledgments:
