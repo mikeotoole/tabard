@@ -26,8 +26,7 @@ class RegistrationApplicationsController < ApplicationController
   def new
     @registration_application = RegistrationApplication.new
     @form = SiteForm.last
-    
-    @registration_application.questions = @form.questions
+    @registration_application.registration_answers.build
 
     respond_to do |format|
       format.html # new.html.erb
