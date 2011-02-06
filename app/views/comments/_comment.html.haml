@@ -1,11 +1,13 @@
-= content_tag_for(:li, comment, :class => comment.html_classes) do
+%li{ :id => 'comment_' << comment.id.to_s, :class => comment.html_classes.join(' ') }
+  %img{ :src => '/themes/' << current_theme << '/images/avatar.png', :alt => '', :class => 'avatar' }/
   %span.author= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
-  %span.body= comment.has_been_deleted ? "COMMENT HAS BEEN DELETED" : comment.body
-  - if logged_in?
-    %span.actions
-      = link_to 'Edit', edit_comment_path(comment) if current_user.can_update(comment)
-      = link_to 'Delete', comment, :confirm => 'Are you sure?', :method => :delete if current_user.can_delete(comment)
-      = link_to 'Reply', new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class, :form_target => "#comment_"+comment.id.to_s, :comment_target => "#comment_"+comment.id.to_s), :remote => true, :class => 'new_comment_link' if comment.original_comment_item.comments_enabled? and current_user.can_create('Comment')
+  %span.body
+    = comment.has_been_deleted ? "<em>Comment has been deleted.</em>" : comment.body
+    - if logged_in?
+      %span.actions
+        = link_to 'Edit', edit_comment_path(comment), :class => 'edit' if current_user.can_update(comment)
+        = link_to 'Delete', comment, :confirm => 'Are you sure?', :method => :delete, :class => 'edit' if current_user.can_delete(comment)
+        = link_to 'Reply', new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class, :form_target => "#comment_"+comment.id.to_s, :comment_target => "#comment_"+comment.id.to_s), :remote => true, :class => 'new_comment_link' if comment.original_comment_item.comments_enabled? and current_user.can_create('Comment')
   - if comment.comments.size > 0
     %ol
       - comment.comments.each do |subcomment|

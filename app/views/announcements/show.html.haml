@@ -1,6 +1,7 @@
 %div{ :id => 'announcement_' << announcement.id.to_s } 
   %p#notice= notice
   %h1= announcement.name
+  %p= link_to 'Edit', edit_announcement_path(announcement)
   %p= announcement.body
   
   %h2 Comments
@@ -12,7 +13,7 @@
           = render comment
   %p.reply
     - if announcement.comments_enabled?
-      = link_to 'Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+      = link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link button' if current_user.can_create('comment')
     - else
       Comments are disabled.
   - if current_user.can_show(announcement.class.to_s)
@@ -27,7 +28,6 @@
             %td= ack.author_name
             %td= ack.acknowledged
 
-  = link_to 'Edit', edit_announcement_path(announcement)
   %ul
     %li= link_to 'Site Announcements', site_announcements_path
     %li= link_to 'Game Announcements', game_announcements_path

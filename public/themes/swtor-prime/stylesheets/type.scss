@@ -10,19 +10,25 @@ body {
   color: #808080;
   font-family: arial, sans-serif;
   font-size: 100.01%;
-  line-height: 1.5em;
+  line-height: 1.3em;
 }
 
 h1 { @include heading(2.4em, #5ba7b4) }
 h2 { @include heading(1.8em, #5ba7b4) }
 h3 { @include heading(1.2em, #5ba7b4) }
 
-p
+p,
 ol,
 ul,
 dl,
 blockquote {
-  font-size: 0.8em;
+  font-size: 0.9em;
+  p,
+  ol,
+  ul,
+  blockquote {
+    font-size: 100%;
+  }
 }
 b,
 strong,
@@ -51,7 +57,7 @@ input[type=submit] {
   color: #4c91a1 !important;
   display: inline-block;
   font-family: 'SansationBold', serif;
-  font-size: 0.8em;
+  font-size: 1em;
   line-height: 30px;
   text-transform: uppercase;
   text-decoration: none !important;
@@ -61,12 +67,16 @@ input[type=submit] {
   }
 }
 input[type=text],
-input[type=password] {
+input[type=password],
+textarea {
   color: #464646;  
   &:focus,
   &:hover {
     color: #181a1b;
   }
+}
+textarea {
+  line-height: 1.3em !important;
 }
 
 #announcements {
@@ -80,6 +90,8 @@ input[type=password] {
     }
     strong {
       color: #fff;
+      font-family: 'SansationRegular', serif;
+      font-weight: normal;
       text-transform: uppercase;
     }
     &:focus,
@@ -114,10 +126,8 @@ input[type=password] {
 
 #menu {
   color: #181a1b;
-  a {
-    &:hover {
-      color: #fff;
-    }
+  a:hover {
+    color: #00abe3;
   }
   .login {
     input[type=submit] {
@@ -132,7 +142,7 @@ input[type=password] {
       label {
         font-size: 0.8em;
         &:hover {
-          color: #fff;
+          color: #37cdff;
         }
       }
     }
@@ -157,6 +167,31 @@ input[type=password] {
     }
     .salutation {
       font-weight: bold;
+    }
+  }
+}
+
+.comments {
+  span {
+    &.author a {
+      color: #5ba7b4;
+      font-family: 'SansationBold', serif;
+      font-size: 1.2em;
+      text-decoration: none;
+    }
+    &.actions a {
+      color: #666;
+      font-size: 0.8em;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+#new_comment {
+  .actions {
+    input {
+      color: #fff !important;
     }
   }
 }
