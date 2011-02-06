@@ -52,7 +52,6 @@ class Comment < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_show(original_comment_item) or user.can_update("Comment")
   end
   
   def check_user_delete_permissions(user)
