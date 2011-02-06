@@ -7,3 +7,5 @@ tmp/**/*
 Icon?
 
 *~
+*.orig
+
