@@ -20,14 +20,12 @@ class Comment < ActiveRecord::Base
   end
   
   def html_classes
-    temp_html_classes = Array.new()
-    (has_been_locked) ? temp_html_classes << " .locked" :
-    (has_been_edited) ? temp_html_classes << " .edited" :
-    temp_html_classes << " .OMG"
-  	#locked
-  	#op
-  	#deleted
-  	#edited
+    html_classes = Array.new()
+    html_classes << 'locked' if has_been_locked
+    html_classes << 'edited' if has_been_edited
+    #html_classes << 'deleted' if has_been_deleted
+    #html_classes << 'op' if is_by_op
+    html_classes
   end
   
   def original_comment_item
@@ -54,7 +52,6 @@ class Comment < ActiveRecord::Base
     if user.user_profile == self.user_profile
       return true
     end
-    user.can_show(original_comment_item) or user.can_update("Comment")
   end
   
   def check_user_delete_permissions(user)

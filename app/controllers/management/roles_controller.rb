@@ -1,6 +1,6 @@
 class Management::RolesController < ApplicationController
   respond_to :html, :xml
-  before_filter :authenticate
+  before_filter :authenticate, :get_avalible_permissionables
   # GET /management/roles
   # GET /management/roles.xml
   def index
@@ -30,10 +30,6 @@ class Management::RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.new
-      @permissions = Array.new() 
-      for resource in SystemResource.all
-        @permissions << Permission.new(:permissionable => resource, :name => resource.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
-      end
       @users = User.all
   
       respond_to do |format|
@@ -92,6 +88,19 @@ class Management::RolesController < ApplicationController
       @role = Role.find(params[:id])
       @role.destroy
       respond_with([:management, @role])
+    end
+  end
+  
+  def get_avalible_permissionables
+    @permissions = Array.new() 
+    for resource in SystemResource.all
+      @permissions << Permission.new(:permissionable => resource, :name => resource.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
+    end
+    for discussionS in DiscussionSpace.all
+      @permissions << Permission.new(:permissionable => discussionS, :name => discussionS.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
+    end
+    for pageS in PageSpace.all
+      @permissions << Permission.new(:permissionable => pageS, :name => pageS.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
     end
   end
 end

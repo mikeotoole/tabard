@@ -40,7 +40,7 @@
         <%= p.hidden_field :name %>
         <tr>
           <td>
-            <%= p.text_field :permissionable_name, :disabled => true %>
+            <%= p.object.permissionable_name %>
           </td>
           <td><%= p.check_box(:show_p) %></td>
           <td><%= p.check_box(:create_p) %></td>

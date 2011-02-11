@@ -1,10 +1,9 @@
-!!! XML
-!!! Strict
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 %html{:dir => 'ltr', :lang => 'en-US', 'xml:lang' => 'en-US', :xmlns => 'http://www.w3.org/1999/xhtml'}
   %head
     %title Brutal Venom
     = stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css'
-    = javascript_include_tag 'jquery-1.4.4.min.js', 'rails', 'application'
+    = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
   %body
     #bg
@@ -14,22 +13,22 @@
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
       
-      - if (logged_in? && current_user.unacknowledged_announcements)
-        = form_tag(announcement_acknowledgement_path, :remote => true, :id => 'announcements') do
-          %ul.container
+      - if flash[:messages] || has_announcements?
+        != has_announcements? ? '<form method="post" action="' << announcement_acknowledgement_path << '" data-remote="true" id="announcements">' : '<div id="announcements">'
+        %ul.container
+          - if has_announcements?
             - current_user.unacknowledged_announcements.each do |announcement|
-              %li
-                = link_to(announcement.path, { :title => 'Read the full announcement and comments.' }) do
-                  %strong= announcement.title << ':'
+              %li{ :class => 'announcement_' << announcement.id.to_s }
+                = link_to(announcement.path, { :class => 'msg', :title => 'Read the full announcement and comments.' }) do
+                  %strong= announcement.title
+                  &mdash;
                   = announcement.snippet
                 %button{ :type => 'submit', :name => 'id', :value => announcement.id, :title => 'Mark as seen.' } Mark as seen
-            - if notice.present?
-              %li.notice
-                %span= notice
-            - if alert.present?
-              %li.alert
-                %span= alert
-
+          - if flash[:messages]
+            - flash[:messages].each do |message|
+              = render :partial => 'layouts/flash_message', :locals => { :message => message }
+        != has_announcements? ? '</form>' : '</div>'
+       
       #menu    
         .container              
           - if logged_in?

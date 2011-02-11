@@ -1,7 +1,0 @@
-<%= form_tag active_profile_path do %>
-  <p>
-    <%= label_tag "Profile" %>
-    <%= collection_select(:active_profile, :character_id, current_user.active_profile_helper_collection, :character_id, :name) %>
-    <%= submit_tag 'Activate' %>
-  </p>
-<% end %>

@@ -1,5 +1,25 @@
-$('#new_comment').remove();
 form_target = $('<%=@comment.form_target %>');
-form_html = "<%= escape_javascript render(:file => 'comments/new.html.haml') %>";
-form_target.append(form_html); 
-$('#new_comment').hide().slideDown();
+
+$('a.new_comment_link').show();
+form_link = form_target.find('.new_comment_link:first');
+form_link.hide();
+
+if(!form_target.children('#new_comment').length) {
+  $($('#new_comment').data('form_link')).show();
+  $('#new_comment').remove();
+  form_html = "<%= escape_javascript render(:file => 'comments/new.html.haml') %>";
+  form_target.append(form_html);
+}
+
+$('#new_comment')
+  .data('form_link', form_link)
+  .hide()
+  .slideDown(300)
+  .find('textarea')
+  .focus()
+  .bind('blur', function(){
+    if(!$.trim($(this).val()).length) {
+      $($('#new_comment').data('form_link')).show();
+      $('#new_comment').remove();
+    }
+  });

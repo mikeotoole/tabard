@@ -1,3 +1,9 @@
+jQuery.extend(jQuery.expr[':'], {
+  focus: function(element) { 
+    return element == document.activeElement; 
+  }
+});
+
 $(document).ready(function() {
   
   //form field enhancements
@@ -35,6 +41,10 @@ $(document).ready(function() {
       break;
     }
   });
+  
+  //announcements
+  $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
+  $('#announcements .dismiss').bind('click', function(){ $(this).parent('li').slideUp(300); });
 	
 });
 

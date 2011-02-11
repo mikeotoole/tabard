@@ -9,6 +9,10 @@ class Permission < ActiveRecord::Base
   def permissionable_name
     if permissionable.is_a?(SystemResource)
       return permissionable.name
+    else 
+      if permissionable.respond_to?('name')
+        return (permissionable.class.to_s + " | " + permissionable.name.to_s)
+      end
     end
     "unknown"
   end

@@ -8,5 +8,5 @@
   .field
     = f.text_area :body, { :title => 'Comment text' }
   .actions
-    = f.submit 'Add Comment'
-    = link_to "Cancel", "#", :onClick => "$('#new_comment').detach(); $('.new_comment_link').show();return false;"
+    = f.submit 'Comment'
+    = link_to 'Cancel', '#', :onClick => "$($('#new_comment').data('form_link')).show(); $('#new_comment').hide(); return false;"
