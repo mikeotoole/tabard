@@ -42,6 +42,10 @@ $(document).ready(function() {
     }
   });
   
+  //announcements
+  $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
+  $('#announcements .dismiss').bind('click', function(){ $(this).parent('li').slideUp(300); });
+  
   function remove_fields(link) {
 	  $(link).prev("input[type=hidden]").val("1");
 	  $(link).closest(".fields").hide();

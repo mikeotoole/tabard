@@ -66,8 +66,7 @@ textarea {
     height: 39px;
     margin: 5px 0 0 -10px;
     position: relative; }
-    #announcements li a,
-    #announcements li span {
+    #announcements li .msg {
       bottom: 0;
       display: block;
       background: #6e2222;
@@ -83,12 +82,28 @@ textarea {
       top: 0;
       white-space: nowrap;
       z-index: 1; }
-    #announcements li:focus a, #announcements li:focus span, #announcements li:hover a, #announcements lihover span {
+    #announcements li:focus .msg, #announcements li:hover .msg {
       background: #902525; }
-    #announcements li.alert span {
+    #announcements li.alert .msg {
       background: #9c9b22; }
-    #announcements li.notice span {
+    #announcements li.notice .msg {
       background: #c3c3c3; }
+    #announcements li .dismiss {
+      background: url(../images/flash-close-sprite.png) 0 -1px no-repeat;
+      border: 0;
+      height: 39px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: -500em;
+      width: 46px;
+      z-index: 2; }
+      #announcements li .dismiss:focus, #announcements li .dismiss:hover {
+        background-color: transparent !important;
+        background-position: 0 -42px !important;
+        border: 0; }
     #announcements li button {
       background: url(../images/announcement-button-sprite.png) 0 -1px no-repeat;
       border: 0;

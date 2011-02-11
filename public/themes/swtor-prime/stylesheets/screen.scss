@@ -63,8 +63,7 @@ textarea {
     height: 39px;
     margin: 5px 0 0 -10px;
     position: relative;
-    a,
-    span {
+    .msg {
       bottom: 0;
       display: block;
       background: #6e2222;
@@ -81,17 +80,34 @@ textarea {
       white-space: nowrap;
       z-index: 1;
     }    
-    &:focus a,
-    &:focus span,
-    &:hover a,
-    &hover span {
+    &:focus .msg,
+    &:hover .msg {
       background: #902525;
     }
-    &.alert span {
+    &.alert .msg {
       background: #9c9b22;
     }
-    &.notice span {
+    &.notice .msg {
       background: #c3c3c3;
+    }
+    .dismiss {
+      background: url(../images/flash-close-sprite.png) 0 -1px no-repeat;
+      border: 0;
+      height: 39px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: -500em;
+      width: 46px;
+      z-index: 2;
+      &:focus,
+      &:hover {
+        background-color: transparent !important;
+        background-position: 0 -42px !important;
+        border: 0;
+      }
     }
     button {
       background: url(../images/announcement-button-sprite.png) 0 -1px no-repeat;
