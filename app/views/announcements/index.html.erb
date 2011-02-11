@@ -13,9 +13,9 @@
   <tr>
     <td><%= announcement.name %></td>
     <td><%= announcement.body %></td>
-    <td><%= link_to 'Show', announcement %></td>
-    <td><%= link_to 'Edit', edit_announcement_path(announcement) %></td>
-    <td><%= link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= current_user.can_show(announcement) ? link_to('Show', announcement) : "No Show Permissions" %></td>
+    <td><%= current_user.can_update(announcement) ? link_to('Edit', edit_announcement_path(announcement)) : "No Edit Permissions" %></td>
+    <td><%= current_user.can_delete(announcement) ? link_to('Destroy', announcement, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
   </tr>
 <% end %>
 </table>

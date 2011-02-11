@@ -25,7 +25,6 @@ class AnnouncementsController < ApplicationController
   # GET /announcements/new.xml
   def new
     @announcement = Announcement.new
-
     respond_with(@announcements)
   end
 
