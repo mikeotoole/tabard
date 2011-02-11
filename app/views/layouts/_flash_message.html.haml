@@ -1,0 +1,6 @@
+%li{ :class => message[:class] }
+  %span
+    - if message[:title]
+      %strong= message[:title]
+      &mdash;
+    = message[:body]

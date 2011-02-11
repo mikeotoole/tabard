@@ -118,9 +118,7 @@ textarea {
 #announcements li:focus span,
 #announcements li:focus strong, #announcements li:hover a, #announcements li:hover span, #announcements li:hover strong {
   color: #fff; }
-#announcements li.alert span {
-  color: #000; }
-#announcements li.notice span {
+#announcements li.alert span, #announcements li.alert span *, #announcements li.notice span, #announcements li.notice span * {
   color: #000; }
 
 #header .title {

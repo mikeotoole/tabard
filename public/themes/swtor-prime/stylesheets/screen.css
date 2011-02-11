@@ -94,6 +94,7 @@ textarea {
       border: 0;
       height: 39px;
       overflow: hidden;
+      padding: 0;
       position: absolute;
       top: 0;
       right: 0;

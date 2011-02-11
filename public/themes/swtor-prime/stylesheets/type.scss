@@ -102,10 +102,10 @@ textarea {
         color: #fff;
       }
     }
-    &.alert span {
-      color: #000;
-    }
-    &.notice span {
+    &.alert span,
+    &.alert span *,
+    &.notice span,
+    &.notice span * {
       color: #000;
     }
   }
