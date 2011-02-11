@@ -3,10 +3,13 @@
     <%= check_box_question.content %> 
 			<br />
 			<ul>
-        <% for answer in check_box_question.answers %>
-					<%= check_box_tag :question_answers, answer.id %>
-					<%= label_tag answer.content %>
-        <% end %>
+        <% for panswer in check_box_question.predefined_answers %>
+				  <%= application.fields_for :registration_answers do |answer| %>
+				    <%= answer.check_box :content, {}, panswer.content, "" %>
+            <%= label_tag dom_id(panswer), panswer.content, :class => "check_box_label" %>
+					  <%= answer.hidden_field(:question_id, :value => check_box_question.id) %>
+          <% end %>
+				<% end %>
       </ul>
   </h3>
 <% end %>

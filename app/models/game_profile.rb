@@ -10,7 +10,7 @@ class GameProfile < Profile
     game.id
   end
   
-  #TODO This needs to be the profiles main charcters name
+  #TODO This needs to be the profiles main characters name
   def displayname
     self.name
   end

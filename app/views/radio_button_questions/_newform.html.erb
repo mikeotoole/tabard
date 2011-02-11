@@ -20,10 +20,10 @@
     <%= f.text_area :content, :rows => 3 %>
   </div>
 
-  <%= f.fields_for :answers do |builder| %>
-    <%= render 'answer_fields', :f => builder %>
+  <%= f.fields_for :predefined_answers do |builder| %>
+    <%= render 'predefined_answer_fields', :f => builder %>
   <% end %>
-  <p><%= link_to_add_fields "Add Answer", f, :answers %></p>
+  <p><%= link_to_add_fields "Add Answer", f, :predefined_answers %></p>
 
   <div class="actions">
     <%= f.submit %>

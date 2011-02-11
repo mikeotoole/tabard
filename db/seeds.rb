@@ -67,3 +67,21 @@ disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :us
 
 GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
 SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
+
+#Default site form creation
+defaultForm = SiteForm.create(:name => "Default Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.")
+checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => defaultForm)
+PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
+PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
+PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
+comboboxQ = ComboBoxQuestion.create(:content => "Combo boxes are?", :site_form => defaultForm)
+PredefinedAnswer.create(:content => "Awesome", :question => comboboxQ)
+PredefinedAnswer.create(:content => "Fun", :question => comboboxQ)
+PredefinedAnswer.create(:content => "Silly", :question => comboboxQ)
+PredefinedAnswer.create(:content => "Don't Care", :question => comboboxQ)
+radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :site_form => defaultForm)
+PredefinedAnswer.create(:content => "True", :question => radioQ)
+PredefinedAnswer.create(:content => "False", :question => radioQ)
+PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
+TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => defaultForm)
+TextQuestion.create(:content => "This is a ____ text question.", :site_form => defaultForm)

@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
 
+<p><%= @registration_application.name %></p>
 
-<%= link_to 'Edit', edit_registration_application_path(@registration_application) %> |
-<%= link_to 'Back', registration_applications_path %>
+<p><%= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:registration_application =>  @registration_application} %></p>

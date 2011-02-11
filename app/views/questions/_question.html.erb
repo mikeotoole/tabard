@@ -1,9 +1,5 @@
 <%= div_for question do %>
   <h3>
     <%= question.content %> 
-      <span class='actions'>
-      	<%= link_to( 'Edit', edit_question_path(question)) %>
-        <%= link_to( 'Delete', question, :confirm => 'Are you sure?', :method => :delete) %>
-      </span>
   </h3>
 <% end %>

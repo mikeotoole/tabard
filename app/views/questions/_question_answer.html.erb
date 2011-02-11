@@ -1,0 +1,6 @@
+<%= div_for question_answer do %>
+  <h3>
+    <%= question_answer.content %>
+		<%= render RegistrationAnswer.where(:registration_application_id => registration_application.id, :question_id => question_answer.id) %>
+  </h3>
+<% end %>
