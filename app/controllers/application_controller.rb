@@ -1,5 +1,24 @@
 class ApplicationController < ActionController::Base
-    helper :all # include all helpers, all the time
+  helper :all # include all helpers, all the time
+  before_filter :group_flash_messages
+  after_filter :clear_flash_messages
+  
+  # Puts all of the notices and alerts into the messages array
+  def group_flash_messages
+    if alert.present?
+      flash[:messages] = Array.new unless flash[:messages]
+      flash[:messages] << { :class => 'alert', :body => alert }
+    end
+    if notice.present?
+     flash[:messages] = Array.new unless flash[:messages]
+     flash[:messages] << { :class => 'notice', :body => notice }
+    end
+  end
+  
+  # Removes all flash messages
+  def clear_flash_messages
+    flash[:messages] = Array.new
+  end  
   
   protected
     
@@ -21,6 +40,12 @@ class ApplicationController < ActionController::Base
       current_user.is_a? User
     end
     helper_method :logged_in?
+    
+    # Lets the view know if there are announcements to be displayed 
+    def has_announcements?
+      logged_in? && current_user.unacknowledged_announcements
+    end
+    helper_method :has_announcements?
     
     #predicate method to test for an active profile
     def profile_active?

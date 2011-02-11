@@ -4,18 +4,18 @@
   %p= link_to 'Edit', edit_announcement_path(announcement)
   %p= announcement.body
   
-  %h2 Comments
-  
   .comments
     - if announcement.comments.size > 0
+      %h2 Comments
       %ol
         - announcement.comments.each do |comment|
           = render comment
   %p.reply
     - if announcement.comments_enabled?
-      = link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link button' if current_user.can_create('comment')
+      = link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => announcement.id, :commentable_type => announcement.class, :form_target => '#announcement_' + announcement.id.to_s + ' .reply', :comment_target => '#announcement_' + announcement.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link button' if current_user.can_create('Comment')
     - else
       Comments are disabled.
+
   - if current_user.can_show(announcement.class.to_s)
     %p
       %b Acknowledgments:

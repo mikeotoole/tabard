@@ -1,0 +1,6 @@
+$('#announcements .announcement_<%= @announcement_acknowledgement.id.to_s %>').slideUp(300);
+<% if flash[:messages].present? %>
+  $('#announcements ul')
+    .append("<%= escape_javascript render :partial => 'layouts/flash_message', :locals => { :message => flash[:messages].first } %>");
+  $('#announcements ul li:last').hide().slideDown(300);
+<% end %>
