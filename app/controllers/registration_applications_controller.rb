@@ -44,6 +44,7 @@ class RegistrationApplicationsController < ApplicationController
   # POST /registration_applications
   # POST /registration_applications.xml
   def create
+    
     @registration_application = RegistrationApplication.new(params[:registration_application])
     @user = User.new(params[:user])
     @profile = UserProfile.new(params[:user_profile])
@@ -54,8 +55,6 @@ class RegistrationApplicationsController < ApplicationController
     @profile.user_id = @user.id
     @profile.save
     @registration_application.user_profile_id = @profile.id
-    
-    @character = Character.new(params[:character[0]])
 
     respond_to do |format|
       if @registration_application.save
