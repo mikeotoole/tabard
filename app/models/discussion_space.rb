@@ -3,18 +3,22 @@ class DiscussionSpace < ActiveRecord::Base
   belongs_to :game
   has_many :discussions
   
-  validate :only_one_announcement_space
+  validate :only_one_announcement_space, :only_one_registration_application_space
   
   def only_one_announcement_space
     errors.add(:id, "There can be only one!  ...announcement space") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
   end
   
-  def registration_application_space
+  def self.registration_application_space
     if DiscussionSpace.where(:registration_application_space => true).exists?
       return DiscussionSpace.where(:registration_application_space => true).first
     else
       return DiscussionSpace.create(:name => "Registration Applications", :system => true, :registration_application_space => true)
     end 
+  end
+  
+  def only_one_registration_application_space
+    errors.add(:id, "There can be only one!  ...registration applicaiton space") if (DiscussionSpace.where(:registration_application_space => true).exists? and self.registration_application_space)
   end
   
   def check_user_show_permissions(user)

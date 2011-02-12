@@ -5,7 +5,7 @@ class Discussion < ActiveRecord::Base
   has_many :comments, :as => :commentable
   
   def users_name
-    user_profile.displayname
+    user_profile.displayname if user_profile
   end
   
   def characters_name

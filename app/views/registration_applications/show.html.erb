@@ -3,3 +3,5 @@
 <p><%= @registration_application.name %></p>
 
 <p><%= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:registration_application =>  @registration_application} %></p>
+
+<%= render @registration_application.discussion %>
