@@ -23,6 +23,16 @@ Bv::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   
+  #Mail setting for development
+  ActionMailer::Base.smtp_setting = {
+    :address              => #add ,
+    :port                 => #add ,
+    :user_name            => #add ,
+    :password             => #add ,
+    :authentication       => 'plain',
+    :enable_starttls_auto => true 
+  }
+  
   # This will force the models to be loaded so that subclasses can be seen by there parent.
   %w[game wow swtor character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
     require_dependency File.join("app","models","#{c}.rb")
