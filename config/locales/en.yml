@@ -2,4 +2,15 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  general:
+    are_you_sure: Are you sure?
+    back: Back
+    canel: Cancel
+    create: Create
+    delete: Delete
+    edit: Edit
+    editing: Editing
+    terms_of_use: Terms of use
   hello: "Hello world"
+  
+          
