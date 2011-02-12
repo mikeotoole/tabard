@@ -1,0 +1,15 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+pirate:
+  general:
+    are_you_sure: Are you sure? Yar
+    back: Back Yar
+    canel: Cancel Yar
+    create: Create Yar
+    delete: Delete Yar
+    edit: Edit Yar
+    editing: Editing Yar
+    terms_of_use: This be the terms land lover!
+  hello: "Ahoy world"
+  

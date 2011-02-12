@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :group_flash_messages
+  before_filter :group_flash_messages, :set_local
   after_filter :clear_flash_messages
   
   # Puts all of the notices and alerts into the messages array
@@ -21,6 +21,9 @@ class ApplicationController < ActionController::Base
   end  
   
   protected
+    def set_local
+      I18n.locale = params[:locale] unless params[:locale].blank?
+    end
     
     # Returns the currently logged in user or nil if there isn't one 
     def current_user

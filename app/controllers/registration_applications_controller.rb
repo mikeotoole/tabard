@@ -28,6 +28,8 @@ class RegistrationApplicationsController < ApplicationController
     @form = SiteForm.first
     @registration_application.registration_answers.build
 
+    @characters = Character.new
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @registration_application }
@@ -46,16 +48,20 @@ class RegistrationApplicationsController < ApplicationController
     @user = User.new(params[:user])
     @profile = UserProfile.new(params[:user_profile])
     
+    @user.is_applicant = true
+    @user.is_active = false
     @user.save
     @profile.user_id = @user.id
     @profile.save
     @registration_application.user_profile_id = @profile.id
+    
+    @character = Character.new(params[:character[0]])
 
     respond_to do |format|
       if @registration_application.save
         format.html { redirect_to(@registration_application, :notice => 'Registration application was successfully created.') }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
-      else
+      else    
         format.html { render :action => "new" }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end

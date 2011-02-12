@@ -1,9 +1,11 @@
 module CharactersHelper
   
-  def link_to_add_character
+  def link_to_add_character(name, f, association)
     new_object = Character.new
-    render("character_fields")
-    link_to_function("Add Character", "add_fields(this, 'character', '#{escape_javascript(fields)}')")
+    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+      render(association.to_s.singularize + "_fields", :f => builder)
+    end
+    link_to_function(name, "add_fields(this, '#{association}', '#{escape_javascript(fields)}')")
   end
   
 end

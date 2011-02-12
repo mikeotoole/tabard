@@ -39,5 +39,8 @@ module Bv
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # Setting the locale
+    config.i18n.default_locale = 'en'
   end
 end
