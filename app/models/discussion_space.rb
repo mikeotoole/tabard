@@ -25,6 +25,10 @@ class DiscussionSpace < ActiveRecord::Base
     errors.add(:id, "Internal rails error, no user found to create a discussion space.") if (!user_profile and !system)
   end
   
+  def user_profile_name
+    user_profile.displayname if user_profile
+  end
+  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true

@@ -1,7 +1,7 @@
 <%= div_for discussion_space do %>
   <h3><%= discussion_space.name %></h3>
   <% if !discussion_space.system %>
-    <p>By: <%= discussion_space.user_profile %></p>
+    <p>Created By: <%= discussion_space.user_profile_name %></p>
   <% end %>
   <% if !discussion_space.system %>
     <span class='actions'>
@@ -9,7 +9,7 @@
       <td><%= (logged_in? and current_user.can_delete(discussion_space)) ? link_to( 'Delete', discussion_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
     </span>
   <% end %>
-  <h4>Discussions</h4>
+  <h4>Active Discussions</h4>
   <ul>
     <% discussion_space.discussions.each do |discussion| %>
       <li><%= link_to discussion.name, discussion %> | <%= discussion.number_of_comments %> comments</li>
