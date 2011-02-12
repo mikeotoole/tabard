@@ -19,8 +19,6 @@ commentResource = SystemResource.create(:name => "Comment")
 
 discussionSpaceResource = SystemResource.create(:name => "DiscussionSpace")
 discussionResource = SystemResource.create(:name => "Discussion")
-discSpace = DiscussionSpace.create(:name => "General", :system => false)
-discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false)
 
 siteAnnouncementResource = SystemResource.create(:name => "SiteAnnouncement")
 gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
@@ -49,14 +47,17 @@ allPagePermission = Permission.create(:permissionable => pageResource, :name => 
 adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile, :is_active => true)
 
+
+#Generate some normal activity for demonstration purposes
+discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile)
+discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile)
+
 viewUserPermission = Permission.create(:permissionable => userResource, :name => "View Access User", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewRolePermission = Permission.create(:permissionable => roleResource, :name => "View Access Role", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGamePermission = Permission.create(:permissionable => gameResource, :name => "View Access Game", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGeneralDiscussionSpacePermission = Permission.create(:permissionable => discSpace, :name => "View General Discussion Space", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewerRole = Role.create(:name => "Viewer", :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :roles => [viewerRole], :user_profile => userProfile, :is_active => true)
-
-#Generate some normal activity for demonstration purposes
 
 disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
 comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)

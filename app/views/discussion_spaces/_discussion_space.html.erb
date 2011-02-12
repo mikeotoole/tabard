@@ -12,7 +12,7 @@
   <h4>Discussions</h4>
   <ul>
     <% discussion_space.discussions.each do |discussion| %>
-      <li><%= link_to discussion.name, discussion %></li>
+      <li><%= link_to discussion.name, discussion %> | <%= discussion.number_of_comments %> comments</li>
     <% end %>
   </ul>
 <% end %>
