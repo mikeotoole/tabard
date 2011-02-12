@@ -18,4 +18,8 @@ class RegistrationApplication < ActiveRecord::Base
     self.registration_answers.collect { |answer|answer.question }.uniq
   end
   
+  def applicant_email
+    self.user_profile.user.email
+  end
+  
 end

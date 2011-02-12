@@ -15,13 +15,23 @@ Bv::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+  #Mail setting for development
+  ActionMailer::Base.smtp_settings = {
+    :address              => "secure.emailsrvr.com",
+    :port                 => 587,
+    :user_name            => "development@digitalaugment.com",
+    :password             => 'fcsC9bvMqAw1GJ',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true 
+  }
   
   # This will force the models to be loaded so that subclasses can be seen by there parent.
   %w[game wow swtor character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
