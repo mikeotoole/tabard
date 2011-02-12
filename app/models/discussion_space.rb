@@ -9,6 +9,14 @@ class DiscussionSpace < ActiveRecord::Base
     errors.add(:id, "There can be only one!  ...announcement space") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
   end
   
+  def registration_application_space
+    if DiscussionSpace.where(:registration_application_space => true).exists?
+      return DiscussionSpace.where(:registration_application_space => true).first
+    else
+      return DiscussionSpace.create(:name => "Registration Applications", :system => true, :registration_application_space => true)
+    end 
+  end
+  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true
