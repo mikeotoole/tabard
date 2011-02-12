@@ -16,6 +16,14 @@ class Discussion < ActiveRecord::Base
     character != nil
   end
   
+  def number_of_comments
+   temp_total_num_comments = comments.size
+   comments.each do |comment|
+     temp_total_num_comments += comment.number_of_comments
+   end 
+   temp_total_num_comments
+  end
+  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true

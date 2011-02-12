@@ -4,7 +4,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.all
+      @discussion_spaces = DiscussionSpace.order("system DESC, name ASC")
       respond_with(@discussion_spaces)
   end
 

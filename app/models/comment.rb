@@ -19,6 +19,14 @@ class Comment < ActiveRecord::Base
     character != nil
   end
   
+  def number_of_comments
+   temp_total_num_comments = comments.size
+   comments.each do |comment|
+     temp_total_num_comments += comment.number_of_comments
+   end 
+   temp_total_num_comments
+  end
+  
   def html_classes
     html_classes = Array.new()
     html_classes << 'locked' if has_been_locked

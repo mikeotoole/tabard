@@ -3,10 +3,10 @@ class DiscussionSpace < ActiveRecord::Base
   belongs_to :game
   has_many :discussions
   
-  validate :only_one_announcement_space, :only_one_registration_application_space
+  validate :only_one_announcement_space, :only_one_registration_application_space, :has_a_user_profile
   
   def only_one_announcement_space
-    errors.add(:id, "There can be only one!  ...announcement space") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
+    errors.add(:id, "There can be only one!  ...announcement space.") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
   end
   
   def self.registration_application_space
@@ -18,7 +18,11 @@ class DiscussionSpace < ActiveRecord::Base
   end
   
   def only_one_registration_application_space
-    errors.add(:id, "There can be only one!  ...registration applicaiton space") if (DiscussionSpace.where(:registration_application_space => true).exists? and self.registration_application_space)
+    errors.add(:id, "There can be only one!  ...registration applicaiton space.") if (DiscussionSpace.where(:registration_application_space => true).exists? and self.registration_application_space)
+  end
+  
+  def has_a_user_profile
+    errors.add(:id, "Internal rails error, no user found to create a discussion space.") if (!user_profile and !system)
   end
   
   def check_user_show_permissions(user)
