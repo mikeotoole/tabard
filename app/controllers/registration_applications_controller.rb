@@ -25,7 +25,7 @@ class RegistrationApplicationsController < ApplicationController
   # GET /registration_applications/new.xml
   def new
     @registration_application = RegistrationApplication.new
-    @form = SiteForm.last
+    @form = SiteForm.first
     @registration_application.registration_answers.build
 
     respond_to do |format|

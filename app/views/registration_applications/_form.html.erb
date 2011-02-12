@@ -33,9 +33,12 @@
 	  </div>
 	<% end %>
 	
-	<% @form.questions.each do |question|  %>
-	 <%= render :partial => question, :locals => {:application => application} %>
-	<% end %> 
+	
+	<% if @form != nil %>
+	 <% @form.questions.each do |question|  %>
+	   <%= render :partial => question, :locals => {:application => application} %>
+	 <% end %>
+	<% end %>
 
   <div class="actions">
     <%= application.submit %>

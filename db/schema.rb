@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211054239) do
+ActiveRecord::Schema.define(:version => 20110212013801) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(:version => 20110211054239) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "thankyou"
   end
 
   create_table "system_resources", :force => true do |t|
