@@ -33,11 +33,19 @@
 	  </div>
 	<% end %>
 	
-	<% @form.questions.each do |question|  %>
-	 <%= render :partial => question, :locals => {:application => application} %>
-	<% end %> 
+	<div class="fields">
+	 <%= fields_for :character do |character| %>
+	   <% link_to_add_character("Add Character", character, :character)%>
+   <% end %>
+	</div>
+	
+	<% if @form != nil %>
+	 <% @form.questions.each do |question|  %>
+	   <%= render :partial => question, :locals => {:application => application} %>
+	 <% end %>
+	<% end %>
 
   <div class="actions">
-    <%= application.submit %>
+    <%= application.submit 'Submit Application', :disable_with => 'Please Wait...' %>
   </div>
 <% end %>

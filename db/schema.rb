@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20110212062214) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "thankyou"
   end
 
   create_table "system_resources", :force => true do |t|
