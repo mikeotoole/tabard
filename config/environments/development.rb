@@ -25,10 +25,10 @@ Bv::Application.configure do
   
   #Mail setting for development
   ActionMailer::Base.smtp_setting = {
-    :address              => #add ,
-    :port                 => #add ,
-    :user_name            => #add ,
-    :password             => #add ,
+    :address              => secure.emailsrvr.com,
+    :port                 => 25,
+    :user_name            => development.digitalaugment.com,
+    :password             => fcsC9bvMqAw1GJ,
     :authentication       => 'plain',
     :enable_starttls_auto => true 
   }
