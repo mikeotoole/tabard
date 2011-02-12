@@ -1,5 +1,5 @@
 class ApplicationNotifier < ActionMailer::Base
-  default :from => "dr_tran@OMG.com"
+  default :from => "brutal_venom@digitalaugment.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -9,6 +9,6 @@ class ApplicationNotifier < ActionMailer::Base
   def email_applicant(registration_application)
     @greeting = "Hi"
 
-    mail(:to => registration_application.applicant_email, :subject=> "321, DR TRAN")
+    mail(:to => registration_application.applicant_email, :subject=> "Welcome to brutal venom")
   end
 end
