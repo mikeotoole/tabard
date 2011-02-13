@@ -1,0 +1,5 @@
+%h1 Listing roles
+- @roles.each do |role|
+  = render role
+%br/
+= link_to 'New Role', new_management_role_path

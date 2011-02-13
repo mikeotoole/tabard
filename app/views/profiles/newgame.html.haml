@@ -1,0 +1,22 @@
+%h1 New profile
+= form_for(@profile) do |f|
+  - if @profile.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@profile.errors.count, "error")
+        prohibited this profile from being saved:
+      %ul
+        - @profile.errors.full_messages.each do |msg|
+          %li= msg
+  = f.hidden_field :type_helper, :value => "GameProfile"
+  .field
+    Game:
+    %br/
+    = collection_select(:profile, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .actions
+    = f.submit
+= link_to 'Back', profiles_path

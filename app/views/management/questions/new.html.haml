@@ -1,0 +1,8 @@
+= form_for([Question.new]) do |f|
+  = hidden_field(:question, :site_form_id, :value => site_form_id )
+  .field
+    = f.label 'Question'
+    %br/
+    = f.text_area :content
+  .actions
+    = f.submit 'Add Question'

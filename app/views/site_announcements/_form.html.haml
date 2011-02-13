@@ -1,0 +1,23 @@
+= form_for(@site_announcement) do |f|
+  - if @site_announcement.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@site_announcement.errors.count, "error")
+        prohibited this site_announcement from being saved:
+      %ul
+        - @site_announcement.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :body
+    %br/
+    = f.text_area :body
+  .field
+    = f.label :comments_enabled
+    %br/
+    = f.check_box :comments_enabled
+  .actions
+    = submit_or_cancel(f)

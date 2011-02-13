@@ -1,13 +1,16 @@
 class RegistrationApplicationsController < ApplicationController
+  respond_to :html, :xml
+  before_filter :authenticate
+  
   # GET /registration_applications
   # GET /registration_applications.xml
   def index
     @registration_applications = RegistrationApplication.all
+  
+    #TODO need to get the registration form. Becouse of the seed it is the first one. There should be a better way to insure this however.
+    @form = SiteForm.first
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @registration_applications }
-    end
+    respond_with(@registration_applications)
   end
 
   # GET /registration_applications/1
@@ -15,25 +18,20 @@ class RegistrationApplicationsController < ApplicationController
   def show
     @registration_application = RegistrationApplication.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @registration_application }
-    end
+    respond_with(@registration_application)
   end
 
   # GET /registration_applications/new
   # GET /registration_applications/new.xml
   def new
     @registration_application = RegistrationApplication.new
+    #TODO need to get the current registration form. Becouse of the seed it is the first one. There should be a better way to insure this however.
     @form = SiteForm.first
     @registration_application.registration_answers.build
 
     @characters = Character.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @registration_application }
-    end
+    respond_with(@registration_application)
   end
 
   # GET /registration_applications/1/edit

@@ -1,9 +1,0 @@
-<%= div_for combo_box_question do %>
-  <h3>
-    <%= combo_box_question.content %> <br />
-		<%= application.fields_for :registration_answers do |answer| %>
-		  <%= answer.collection_select(:content, combo_box_question.predefined_answers, :content, :content, options ={:prompt => "Select an answer"}, :class =>"predefined_answer") %>
-      <%= answer.hidden_field(:question_id, :value => combo_box_question.id) %>
-    <% end %>
-  </h3>
-<% end %>

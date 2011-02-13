@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  has_many :predefined_answers  
+  has_many :predefined_answers, :dependent => :destroy 
   belongs_to :site_form
   
   accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true

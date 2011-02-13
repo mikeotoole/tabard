@@ -10,11 +10,15 @@ class RegistrationApplication < ActiveRecord::Base
     self.user_profile.name
   end
   
+  def submission_date
+    self.created_at
+  end
+  
   def all_answers
     self.registration_answers
   end
   
-  def all_questions  
+  def all_questions
     self.registration_answers.collect { |answer|answer.question }.uniq
   end
   

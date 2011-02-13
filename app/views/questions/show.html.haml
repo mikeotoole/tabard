@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %b Content:
+  = @question.content
+= link_to 'Edit', edit_question_path(@question)
+|
+\#{js_back}

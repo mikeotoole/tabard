@@ -1,0 +1,3 @@
+$('#questions').append("#{escape_javascript(render(:partial => 'management/check_box_questions/check_box_question', :object => @check_box_question))}");
+$('#new_check_box_question').detach();
+$('.new_question_link').show();

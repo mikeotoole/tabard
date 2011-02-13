@@ -1,0 +1,11 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @profile.name
+%div
+  %h3 Characters
+  = render @profile.all_characters
+= link_to 'New Character', new_character_path
+|
+\#{link_to 'Edit User Profile', edit_profile_path(@profile)} |
+\#{js_back}

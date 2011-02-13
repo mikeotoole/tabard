@@ -1,0 +1,17 @@
+%h1 Listing users
+%table
+  %tr
+    %th Email
+    %th Is Active
+    %th
+    %th
+    %th
+  - @users.each do |user|
+    %tr
+      %td= user.email
+      %td= user.is_active
+      %td= link_to 'Show', user
+      %td= link_to 'Edit', edit_management_user_path(user)
+      %td= link_to 'Destroy', [:management, user], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New User', new_management_user_path

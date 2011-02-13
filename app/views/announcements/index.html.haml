@@ -1,0 +1,17 @@
+%h1 Listing announcements
+%table
+  %tr
+    %th Title
+    %th Body
+    %th
+    %th
+    %th
+  - @announcements.each do |announcement|
+    %tr
+      %td= announcement.name
+      %td= announcement.body
+      %td= current_user.can_show(announcement) ? link_to('Show', announcement) : "No Show Permissions"
+      %td= current_user.can_update(announcement) ? link_to('Edit', edit_announcement_path(announcement)) : "No Edit Permissions"
+      %td= current_user.can_delete(announcement) ? link_to('Destroy', announcement, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
+%br/
+= link_to 'New Announcement', new_announcement_path

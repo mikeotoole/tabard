@@ -1,0 +1,27 @@
+= form_for(@character) do |f|
+  .field
+    Game:
+    %br/
+    = collection_select(:character, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :rank
+    %br/
+    = f.text_field :rank
+  .field
+    = f.label :faction
+    %br/
+    = f.text_field :faction
+  .field
+    = f.label :race
+    %br/
+    = f.text_field :race
+  .field
+    = f.label "Class"
+    %br/
+    = f.text_field :klass
+  .actions
+    = f.submit 'Add'

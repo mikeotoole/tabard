@@ -1,0 +1,4 @@
+= div_for question_answer do
+  %h3
+    = question_answer.content
+    = render question_answer.answers(registration_application.id)

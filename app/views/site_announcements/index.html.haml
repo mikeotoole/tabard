@@ -1,0 +1,19 @@
+%h1 Listing Site Announcements
+%table
+  %tr
+    %th Title
+    %th Body
+    %th
+    %th
+    %th
+  - @site_announcements.each do |announcement|
+    %tr
+      %td= announcement.name
+      %td= announcement.body
+      %td= current_user.can_show(announcement) ? link_to('Show', announcement) : "No Show Permissions"
+      %td= current_user.can_update(announcement) ? link_to('Edit', edit_announcement_path(announcement)) : "No Edit Permissions"
+      %td= current_user.can_delete(announcement) ? link_to('Destroy', announcement, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
+%br/
+= current_user.can_create("SiteAnnouncement") ? link_to('New Site Announcement', new_site_announcement_path) : "No Create Permissions"
+|
+\#{link_to 'All Announcements', announcements_path}

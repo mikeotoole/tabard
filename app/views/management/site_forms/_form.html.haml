@@ -1,0 +1,23 @@
+= form_for [:management, @site_form] do |f|
+  - if @site_form.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@site_form.errors.count, "error")
+        prohibited this form from being saved:
+      %ul
+        - @site_form.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :message, "Welcome Message"
+    %br/
+    = f.text_area :message
+  .field
+    = f.label :thankyou, "Submission Thank You Message"
+    %br/
+    = f.text_area :thankyou
+  .actions
+    = submit_or_cancel(f)

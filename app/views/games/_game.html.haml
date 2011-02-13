@@ -1,0 +1,6 @@
+= div_for game do
+  %h3
+    = link_to game.name, game
+    %span.actions
+      = link_to "Edit", edit_management_game_path(game)
+      = link_to "Delete", [:management, game], :confirm => "Are you sure?", :method => :delete

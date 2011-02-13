@@ -1,0 +1,13 @@
+%h1 Listing radio_button_questions
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @radio_button_questions.each do |radio_button_question|
+    %tr
+      %td= link_to 'Show', radio_button_question
+      %td= link_to 'Edit', edit_radio_button_question_path(radio_button_question)
+      %td= link_to 'Destroy', radio_button_question, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Radio button question', new_radio_button_question_path

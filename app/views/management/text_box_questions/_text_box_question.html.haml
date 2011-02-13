@@ -1,0 +1,6 @@
+= div_for text_box_question do
+  %h3
+    = text_box_question.content
+    %span.actions
+      = link_to( 'Edit', edit_text_box_question_path(text_box_question))
+      = link_to( 'Delete', text_box_question, :confirm => 'Are you sure?', :method => :delete)

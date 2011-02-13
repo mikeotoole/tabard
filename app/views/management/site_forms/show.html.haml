@@ -1,0 +1,23 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @site_form.name
+%p
+  %b Welcome Message:
+  = @site_form.message
+%p
+  %b Thank You Message:
+  = @site_form.thankyou
+#questions
+  %b Questions:
+  - @site_form.questions.each do  |question|
+    = render question
+%h5 New Question
+= form_tag( new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get')
+= hidden_field_tag(:site_form_id, @site_form.id )
+= select_tag(:q_type, options_for_select(Question::select_options))
+= submit_tag 'Add Question'
+%br/
+= link_to 'Edit', edit_management_site_form_path(@site_form)
+|
+\#{link_to 'Back', management_site_forms_path}
