@@ -12,6 +12,7 @@
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
+          %p.locale= language_selector
       
       - if flash[:messages] || has_announcements?
         != has_announcements? ? '<form method="post" action="' << announcement_acknowledgement_path << '" data-remote="true" id="announcements">' : '<div id="announcements">'
@@ -28,6 +29,7 @@
             - flash[:messages].each do |message|
               = render :partial => 'layouts/flash_message', :locals => { :message => message }
         != has_announcements? ? '</form>' : '</div>'
+        - flash[:messages] = nil
        
       #menu    
         .container              
@@ -58,10 +60,26 @@
                 %span= 'Want to join?'
                 = link_to 'Apply now', new_registration_application_path
           %ul
-            %li= link_to 'Info', '#'
-            %li= link_to 'Events', :events
-            %li= link_to 'Resources', page_spaces_path
-            %li= link_to 'Discussions', :discussion_spaces
+            %li.main
+              = link_to 'Info', '#'
+              %ul
+                %li= link_to 'Test Page 1', '#'
+                %li= link_to 'Test Page 2', '#'
+                %li= link_to 'Test Page 3', '#'
+            %li.main
+              = link_to 'Events', :events
+            %li.main
+              = link_to 'Resources', page_spaces_path
+              - if PageSpace.all
+                %ul
+                  - PageSpace.all.each do |page_space| 
+                    %li= link_to page_space.name, page_space
+            %li.main
+              = link_to 'Discussions', :discussion_spaces
+              - if DiscussionSpace.all
+                %ul
+                  - DiscussionSpace.all.each do |discussion_space| 
+                    %li= link_to discussion_space.name, discussion_space
 
       #body
         .container
@@ -75,12 +93,12 @@
               %li= link_to 'Test Page 1', '#'
               %li= link_to 'Test Page 2', '#'
               %li= link_to 'Test Page 3', '#'
-              %li= link_to 'Test Page 4', '#'
           .menu
             %h3 Resources
-            %ul
-              - PageSpace.all.each do |page_space| 
-                %li= link_to page_space.name, page_space
+            - if PageSpace.all
+              %ul
+                - PageSpace.all.each do |page_space| 
+                  %li= link_to page_space.name, page_space
           .menu
             %h3 Members
             %ul
@@ -88,8 +106,7 @@
               %li= link_to 'Discussions', :discussion_spaces
               %li= link_to 'Newsletter', :newsletters
               %li= link_to 'Donations', '#'
-          %p
-            = language_selector
+              
           %p.copyright
             = link_to 'Privacy Policy', '#'
             &nbsp;|&nbsp;

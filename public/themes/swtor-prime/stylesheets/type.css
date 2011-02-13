@@ -138,9 +138,9 @@ textarea {
   letter-spacing: 0.2em; }
 
 #menu {
-  color: #181a1b; }
+  color: #aaa; }
   #menu a:hover {
-    color: #00abe3; }
+    color: #fff; }
   #menu .login input[type=submit] {
     color: #181a1b !important; }
   #menu .login .apply {
@@ -151,18 +151,23 @@ textarea {
     #menu .login .remember label {
       font-size: 0.8em; }
       #menu .login .remember label:hover {
-        color: #37cdff; }
-  #menu ul {
+        color: #fff; }
+  #menu ul li a {
+    color: #181a1b;
     font-family: 'SansationBold', serif;
-    font-size: 1.2em; }
-    #menu ul a {
-      color: #181a1b;
-      text-decoration: none;
-      text-transform: uppercase;
-      text-shadow: 1px 1px 1px #4e4f4f; }
-      #menu ul a:hover {
-        color: #4c91a1;
-        text-shadow: 1px 1px 1px #000; }
+    font-size: 1.2em;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #4e4f4f; }
+  #menu ul li:hover a {
+    color: #fff; }
+  #menu ul li:hover ul a {
+    color: #666;
+    font-family: arial, sans-serif;
+    font-size: 0.7em;
+    letter-spacing: 0.1em; }
+    #menu ul li:hover ul a:hover {
+      color: #fff; }
   #menu #userbox p {
     font-size: 0.8em; }
   #menu #userbox .salutation {
@@ -183,17 +188,21 @@ textarea {
   color: #fff !important; }
 
 #footer a {
-  color: #454545;
+  color: #666;
   text-decoration: none; }
   #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {
-  color: #747474; }
+  color: #999; }
 #footer .menu ul {
   line-height: 1em; }
+  #footer .menu ul a {
+    font-size: 0.7em;
+    letter-spacing: 0.1em; }
+    #footer .menu ul a:hover {
+      color: #fff; }
 #footer .copyright {
   color: #333;
-  font-size: 0.7em;
-  line-height: 1.4em; }
+  font-size: 0.7em; }
   #footer .copyright a {
     text-decoration: underline; }

@@ -1,0 +1,35 @@
+= form_for(@registration_application) do |application|
+  - if @registration_application.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@registration_application.errors.count, "error")
+        prohibited this registration_application from being saved:
+      %ul
+        - @registration_application.errors.full_messages.each do |msg|
+          %li= msg
+  = fields_for :user do |user|
+    %p.field
+      = user.label :email
+      %br/
+      = user.text_field :email
+    %p.field
+      = user.label :password
+      %br/
+      = user.password_field :password
+    %p.field
+      = user.label :password_confirmation
+      %br/
+      = user.password_field :password_confirmation
+  = fields_for :user_profile do |profile|
+    %p.field
+      = profile.label :name
+      %br/
+      = profile.text_field :name
+  .fields
+    = fields_for :character do |character|
+      - link_to_add_character("Add Character", character, :character)
+  - if @form != nil
+    - @form.questions.each do |question|
+      = render :partial => question, :locals => {:application => application}
+  .actions
+    = application.submit 'Submit Application', :disable_with => 'Please Wait...'
