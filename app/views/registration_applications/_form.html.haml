@@ -8,20 +8,20 @@
         - @registration_application.errors.full_messages.each do |msg|
           %li= msg
   = fields_for :user do |user|
-    .field
+    %p.field
       = user.label :email
       %br/
       = user.text_field :email
-    .field
+    %p.field
       = user.label :password
       %br/
       = user.password_field :password
-    .field
+    %p.field
       = user.label :password_confirmation
       %br/
       = user.password_field :password_confirmation
   = fields_for :user_profile do |profile|
-    .field
+    %p.field
       = profile.label :name
       %br/
       = profile.text_field :name

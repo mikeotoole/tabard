@@ -125,9 +125,9 @@ textarea {
 }
 
 #menu {
-  color: #181a1b;
+  color: #aaa;
   a:hover {
-    color: #00abe3;
+    color: #fff;
   }
   .login {
     input[type=submit] {
@@ -142,22 +142,36 @@ textarea {
       label {
         font-size: 0.8em;
         &:hover {
-          color: #37cdff;
+          color: #fff;
         }
       }
     }
   }  
   ul {
-    font-family: 'SansationBold', serif;
-    font-size: 1.2em;
-    a {
-      color: #181a1b;
-      text-decoration: none;
-      text-transform: uppercase;
-      text-shadow: 1px 1px 1px #4e4f4f;
+    li {
+      a {
+        color: #181a1b;
+        font-family: 'SansationBold', serif;
+        font-size: 1.2em;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 1px #4e4f4f;
+      }
       &:hover {
-        color: #4c91a1;
-        text-shadow: 1px 1px 1px #000;
+        a {
+          color: #fff;
+        }
+        ul {
+          a {
+            color: #666;
+            font-family: arial, sans-serif;
+            font-size: 0.7em;
+            letter-spacing: 0.1em;
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
       }
     }
   }
@@ -198,7 +212,7 @@ textarea {
 
 #footer {
   a {
-    color: #454545;
+    color: #666;
     text-decoration: none;
     &:hover {
       color: #5ba7b4;
@@ -206,16 +220,22 @@ textarea {
   }
   .menu {
     h3 {
-      color: #747474;
+      color: #999;
     }
     ul {
       line-height: 1em;
+      a {
+        font-size: 0.7em;
+        letter-spacing: 0.1em;
+        &:hover {
+          color: #fff;
+        }
+      }
     }
   }
   .copyright {
     color: #333;
     font-size: 0.7em;
-    line-height: 1.4em;    
     a {
       text-decoration: underline;
     }
