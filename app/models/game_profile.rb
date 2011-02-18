@@ -12,7 +12,11 @@ class GameProfile < Profile
   
   #TODO This needs to be the profiles main characters name
   def displayname
-    self.name
+    self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name" 
+  end
+  
+  def default_character
+    Character.find_by_id(self.default_character_id)
   end
   
 end
