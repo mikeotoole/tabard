@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212194740) do
+ActiveRecord::Schema.define(:version => 20110218043545) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -200,6 +200,8 @@ ActiveRecord::Schema.define(:version => 20110212194740) do
     t.string   "name"
     t.string   "thankyou"
     t.boolean  "current"
+    t.boolean  "registration_application_form"
+    t.boolean  "published"
   end
 
   create_table "system_resources", :force => true do |t|

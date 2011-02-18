@@ -70,7 +70,7 @@ GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are su
 SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
 #Default site form creation
-defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.")
+defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :registration_application_form => true, :published => true)
 checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => defaultForm)
 PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
 PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
