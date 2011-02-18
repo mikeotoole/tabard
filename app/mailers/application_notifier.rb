@@ -1,5 +1,5 @@
 class ApplicationNotifier < ActionMailer::Base
-  default :from => "dr_tran@OMG.com"
+  default :from => "noreply@example.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -7,8 +7,13 @@ class ApplicationNotifier < ActionMailer::Base
   #   en.application_notifier.email_applicant.subject
   #
   def email_applicant(registration_application)
-    @greeting = "Hi"
+    @thankyou = registration_application.thankyou_message
 
-    mail(:to => registration_application.applicant_email, :subject=> "321, DR TRAN")
+    mail(:to => registration_application.applicant_email, :subject=> "Application Received" )
+  end
+  def update_applicant(registration_application)
+    @thankyou = registration_application.thankyou_message
+
+    mail(:to => registration_application.applicant_email, :subject=> "Application Updated" )
   end
 end

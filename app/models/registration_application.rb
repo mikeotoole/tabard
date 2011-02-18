@@ -6,6 +6,10 @@ class RegistrationApplication < ActiveRecord::Base
   
   accepts_nested_attributes_for :registration_answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
   
+  def thankyou_message
+    "THANK YOU SO MUCH!"  
+  end
+  
   def name
     self.user_profile.name
   end
