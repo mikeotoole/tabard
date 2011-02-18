@@ -31,8 +31,8 @@ page = Page.create(:title => "Sarlacc Pit", :body => "Don't get eaten! It is rea
 adminProfile = UserProfile.create(:name => "Admin")
 
 userProfile = UserProfile.create(:name => "RoboBilly")
-wowProfile = GameProfile.create(:name => "Wow profile", :characters => [blaggarth,eliand], :game => wow, :user_profile => userProfile)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda], :game => swtor, :user_profile => userProfile)
+wowProfile = GameProfile.create(:name => "Wow profile", :characters => [blaggarth,eliand], :default_character_id => eliand.id, :game => wow, :user_profile => userProfile)
+swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda], :default_character_id => yoda.id, :game => swtor, :user_profile => userProfile)
 
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
