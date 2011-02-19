@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
  
  validates_presence_of :name
  
- after_create :create_game_discussion_space
+ after_create :create_game_discussion_space, :create_character_discussion_space
  
  def create_game_discussion_space
    discussion_space = DiscussionSpace.create :name => self.name+" Announcements",
@@ -15,8 +15,19 @@ class Game < ActiveRecord::Base
    self.announcement_space_id = discussion_space.id
  end
  
+ def create_character_discussion_space
+   discussion_space = DiscussionSpace.create :name => self.name+" Characters",
+                                             :system => true,
+                                             :game => self
+   self.character_discussion_space_id = discussion_space.id
+ end
+ 
  def announcement_space
    DiscussionSpace.find_by_id(self.announcement_space_id)
+ end
+ 
+ def character_discussion_space
+   DiscussionSpace.find_by_id(self.character_discussion_space_id)
  end
  
  # Lets the subclasses use the parents routes. 

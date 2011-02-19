@@ -1,15 +1,27 @@
 class Character < ActiveRecord::Base
-  belongs_to :game
-  belongs_to :game_profile
-
-  validates_presence_of :name
+ belongs_to :game
+ belongs_to :game_profile
+ belongs_to :discussion
  
-  def active_profile_id
-    game_profile.id
-  end
+ validates_presence_of :name
+ 
+ after_create :create_discussion
+ 
+ def active_profile_id
+   game_profile.id
+ end
  
   def character_id
     id
+  end
+ 
+  def create_discussion
+    user_profile = self.game_profile.user_profile if game_profile
+    self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
+                                        :name => self.name,
+                                        :body => "Character Discussion",
+                                        :character => self,
+                                        :user_profile => user_profile)                                 
   end
  
   # Lets the subclasses use the parents routes. 
