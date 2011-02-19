@@ -16,10 +16,12 @@ class Character < ActiveRecord::Base
  end
  
   def create_discussion
+    user_profile = self.game_profile.user_profile if game_profile
     self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
                                         :name => self.name,
                                         :body => "Character Discussion",
-                                        :character => self)                                 
+                                        :character => self,
+                                        :user_profile => user_profile)                                 
   end
  
   # Lets the subclasses use the parents routes. 
