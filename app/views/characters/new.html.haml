@@ -23,5 +23,9 @@
     = f.label "Class"
     %br/
     = f.text_field :klass
+  .field
+    = label_tag "Default Character"  
+    %br/
+    = check_box_tag 'default_character'
   .actions
     = f.submit 'Add'

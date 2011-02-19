@@ -30,12 +30,31 @@ class User < ActiveRecord::Base
     (Array.new() << (user_profile)).concat(characters)
   end
   
+  def add_character(character, default)  
+    @gameprofiles = self.all_game_profiles
+    if @gameprofiles
+      @profile = @gameprofiles.find(:first, :conditions => { :game_id => character.game_id })
+    else
+      exit errors.add "User has no user profile!"
+    end
+    if @profile == nil
+      @profile = GameProfile.create(:game_id => character.game_id, :user_profile => self.user_profile)
+      @profile.default_character = character
+      @profile.save
+    elsif default
+      @profile.default_character = character
+      @profile.save
+    end
+    character.game_profile = @profile
+    character.save
+  end
+  
   def characters
     self.user_profile.all_characters
   end
  
   def all_game_profiles
-    self.user_profile.game_profiles
+    self.user_profile.game_profiles if user_profile
   end
   
   def user_profile_id

@@ -19,4 +19,8 @@ class GameProfile < Profile
     Character.find_by_id(self.default_character_id)
   end
   
+  def default_character=(character)
+    self.default_character_id = character.id
+  end
+  
 end

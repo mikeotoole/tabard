@@ -1,16 +1,16 @@
 class Character < ActiveRecord::Base
- belongs_to :game
- belongs_to :game_profile
+  belongs_to :game
+  belongs_to :game_profile
+
+  validates_presence_of :name
  
- validates_presence_of :name
+  def active_profile_id
+    game_profile.id
+  end
  
- def active_profile_id
-   game_profile.id
- end
- 
- def character_id
-   id
- end
+  def character_id
+    id
+  end
  
   # Lets the subclasses use the parents routes. 
   def self.inherited(child)
@@ -29,7 +29,7 @@ class Character < ActiveRecord::Base
     self.type = type
   end
  
- def self.factory(class_name, params = nil)
+  def self.factory(class_name, params = nil)
     class_name << "Character"
     if defined? class_name.constantize
       class_name.constantize.new(params)
@@ -37,6 +37,6 @@ class Character < ActiveRecord::Base
       #TODO a base character type is created here. May just make this an error.
       Character.new(params)
     end
- end
+  end
  
 end
