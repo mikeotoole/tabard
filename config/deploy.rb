@@ -18,7 +18,7 @@ namespace :deploy do
   end
 
   task :stop, :roles => :app do
-    # Do nothing.
+    # Do Nothing
   end
 
   desc "Restart Application"
