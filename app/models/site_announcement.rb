@@ -2,13 +2,10 @@ class SiteAnnouncement < Announcement
   has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
     
   def create_acknowledgments
-    @users = User.find(:all, :conditions => {:is_active => true})
+    @userprofiles = UserProfile.active_profiles
     
-    for user in @users     
-      @profile = UserProfile.find_by_id(user)
-      if @profile != nil
-        AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => @profile.id, :acknowledged => false)
-      end
+    for profile in @userprofiles     
+      AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => profile.id, :acknowledged => false)
     end
   end
     

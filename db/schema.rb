@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110219201543) do
+ActiveRecord::Schema.define(:version => 20110220014652) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20110219201543) do
     t.integer  "user_profile_id"
     t.integer  "default_character_id"
     t.integer  "discussion_space_id"
+    t.integer  "status"
   end
 
   create_table "questions", :force => true do |t|
@@ -224,8 +225,6 @@ ActiveRecord::Schema.define(:version => 20110219201543) do
     t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_active"
-    t.boolean  "is_applicant"
   end
 
 end

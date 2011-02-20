@@ -16,7 +16,12 @@ Bv::Application.routes.draw do
 
   resources :questions
 
-  resources :registration_applications
+  resources :registration_applications do
+    member do
+      post :accept
+      post :reject
+    end
+  end
 
   resources :teamspeaks
 

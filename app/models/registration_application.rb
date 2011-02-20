@@ -19,6 +19,10 @@ class RegistrationApplication < ActiveRecord::Base
     self.user_profile.name
   end
   
+  def status
+    self.user_profile.status_string
+  end
+  
   def submission_date
     self.created_at
   end
