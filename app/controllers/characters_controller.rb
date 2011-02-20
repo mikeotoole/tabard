@@ -27,7 +27,6 @@ class CharactersController < ApplicationController
   # POST /games/game_id/characters
   # POST /games/game_id/characters.xml
   def create
-    #TODO This @gmame object is also found in the before_create. Could be optimized.
     @game = Game.find_by_id(params[:character][:game_id])
     @character = @game.characters.factory(@game.type, params[:character])
 
