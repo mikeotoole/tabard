@@ -36,6 +36,9 @@ class Discussion < ActiveRecord::Base
   end
   
   def check_user_update_permissions(user)
+    if has_been_locked 
+      return false
+    end
     if user.user_profile == self.user_profile
       return true
     end
@@ -43,10 +46,17 @@ class Discussion < ActiveRecord::Base
   end
   
   def check_user_delete_permissions(user)
+    if has_been_locked 
+      return false
+    end
     if user.user_profile == self.user_profile
       return true
     end
     #Hack
     user.can_delete(DiscussionSpace.find(self.discussion_space.id)) or user.can_delete("Discussion")
+  end
+  
+  def can_user_lock(user)
+    user.can_special_permissions("Discussion","lock")
   end
 end

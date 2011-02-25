@@ -34,6 +34,10 @@ class Role < ActiveRecord::Base
     permissions.where(:delete_p => true).collect {|a| a.permissionable}
   end
   
+  def special_permissionables
+    permissions.extra_special_permissions
+  end
+  
   def show_system_resources
     show_permissions.keep_if {|p| p.system_resource_permission}
   end

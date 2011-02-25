@@ -1,0 +1,15 @@
+= form_for [:management, @discussion_space] do |f|
+  - if @discussion_space.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@discussion_space.errors.count, "error")
+        prohibited this discussion_space from being saved:
+      %ul
+        - @discussion_space.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .actions
+    = submit_or_cancel(f)

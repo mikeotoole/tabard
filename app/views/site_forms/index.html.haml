@@ -1,0 +1,8 @@
+%h1 Listing Forms
+%table
+  %tr
+    %th Name
+  - @site_form.each do |site_form|
+    %tr
+      %td= link_to site_form.name, new_submission_path(:locals => {:site_form => site_form.id})
+      

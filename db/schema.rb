@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110225044025) do
     t.string   "type"
     t.integer  "game_id"
     t.boolean  "comments_enabled",    :default => true
+    t.boolean  "has_been_locked"
   end
 
   create_table "donations", :force => true do |t|

@@ -160,6 +160,23 @@ class User < ActiveRecord::Base
     false
   end
   
+  def can_special_permissions(system_resource_name,permission_string)
+    permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
+    if !permissionable_id
+      return false
+    end
+    corrected_permission = "%"<<permission_string<<"%"
+    self.roles.each do |role|
+      if(role.special_permissionables.where("access like ? and permissionable_type = 'SystemResource' and permissionable_id = ?", 
+        corrected_permission, 
+        permissionable_id).exists?
+      )
+        return true
+      end
+    end
+    false
+  end
+  
   protected 
     def encrypt_new_password
       return if password.blank?
