@@ -4,14 +4,22 @@
   = ((discussion.charater_posted?) ? link_to(discussion.characters_name ,discussion.character) : link_to(discussion.users_name, discussion.user_profile))
   .discussion_body= discussion.body
   %span.actions
-  %td= (logged_in? and current_user.can_update(discussion)) ? link_to( 'Edit', edit_discussion_path(discussion)) : "No Edit Permissions"
-  %td= (logged_in? and current_user.can_delete(discussion)) ? link_to( 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
+    - if (logged_in? and discussion.can_user_lock(current_user))
+      - if discussion.has_been_locked
+        %td= discussion.can_user_lock(current_user)  ? link_to( 'Unlock', root_path) : "No Unlock Permissions"
+      - else
+        %td= discussion.can_user_lock(current_user)  ? link_to( 'Lock', root_path) : "No Lock Permissions"
+    %td= (logged_in? and current_user.can_update(discussion)) ? link_to( 'Edit', edit_discussion_path(discussion)) : "No Edit Permissions"
+    %td= (logged_in? and current_user.can_delete(discussion)) ? link_to( 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
   %h2 Comments
   .comments
     -if discussion.comments.size > 0
       %ol
         - discussion.comments.each do  |comment|
           = render comment
-  .reply
-    %h2 Leave a Comment
-    %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => discussion.id, :commentable_type => discussion.class, :form_target => '#discussion_' + discussion.id.to_s + ' .reply', :comment_target => '#discussion_' + discussion.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+  - if discussion.has_been_locked
+    %h2 This Discussion is Locked!
+  - else
+    .reply
+      %h2 Leave a Comment
+      %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => discussion.id, :commentable_type => discussion.class, :form_target => '#discussion_' + discussion.id.to_s + ' .reply', :comment_target => '#discussion_' + discussion.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'

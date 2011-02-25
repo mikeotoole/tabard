@@ -1,6 +1,7 @@
 class Permission < ActiveRecord::Base
   belongs_to :role
   belongs_to :permissionable, :polymorphic => true
+  scope :extra_special_permissions, :conditions => ["access <> ''"]
   
   def role_name
     role != nil ? role.name : ""

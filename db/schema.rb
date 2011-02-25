@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110219201543) do
+ActiveRecord::Schema.define(:version => 20110225040600) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110219201543) do
     t.string   "type"
     t.integer  "game_id"
     t.boolean  "comments_enabled",    :default => true
+    t.boolean  "has_been_locked"
   end
 
   create_table "donations", :force => true do |t|
