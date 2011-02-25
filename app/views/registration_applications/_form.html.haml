@@ -10,10 +10,14 @@
   = fields_for :user do |user|
     %p.field
       = user.label :email
+      - if @user.errors[:email].any?
+        = @user.errors[:email]
       %br/
       = user.text_field :email
     %p.field
       = user.label :password
+      - if @user.errors[:password].any?
+        = @user.errors[:password]
       %br/
       = user.password_field :password
     %p.field
@@ -23,6 +27,8 @@
   = fields_for :user_profile do |profile|
     %p.field
       = profile.label :name
+      - if @profile.errors[:name].any?
+        = @profile.errors[:name]
       %br/
       = profile.text_field :name
   .fields

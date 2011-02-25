@@ -1,6 +1,15 @@
 class SessionsController < ApplicationController
   def create  
     if user = User.authenticate(params[:email], params[:password])
+      if !user.user_profile.is_active
+        if user.user_profile.is_applicant
+          redirect_to root_path, :alert => "Your application has not been approved yet."
+        else
+          redirect_to root_path, :alert => "You are not authorized to access the site."
+        end       
+        return
+      end
+      
       session[:user_id] = user.id
       if user.user_profile == nil
         @profile_type = "UserProfile"

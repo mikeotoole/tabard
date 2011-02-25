@@ -4,17 +4,14 @@ class GameAnnouncement < Announcement
   has_many :GameProfiles, :through => :AcknowledgmentOfAnnouncement
   
   def create_acknowledgments
-    @users = User.find(:all, :conditions => {:is_active => true})
+    @userprofiles = UserProfile.active_profiles
     @game = Game.find(:first, :conditions => {:id => self.game_id})
       
-    for user in @users
-      @userprofile = UserProfile.find_by_id(user)
-      if @userprofile != nil
-        @gameprofile = @userprofile.game_profiles.find(:first, :conditions => {:game_id => @game.id})
+    for profile in @userprofiles
+      @gameprofile = profile.game_profiles.find(:first, :conditions => {:game_id => @game.id})
         if @gameprofile != nil
           AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => @gameprofile.id, :acknowledged => false)
         end
-      end
     end
   end
   

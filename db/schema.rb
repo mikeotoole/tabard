@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20110225040600) do
     t.integer  "user_profile_id"
     t.integer  "default_character_id"
     t.integer  "discussion_space_id"
+    t.integer  "status"
   end
 
   create_table "questions", :force => true do |t|
@@ -225,8 +226,6 @@ ActiveRecord::Schema.define(:version => 20110225040600) do
     t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_active"
-    t.boolean  "is_applicant"
   end
 
 end

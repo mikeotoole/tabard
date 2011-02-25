@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails'
-#gem 'mysql'
+gem 'mysql'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
 gem 'capistrano'
