@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
 
+  resources :submissions
+
   resources :registration_answers
 
   resources :text_box_questions
@@ -84,6 +86,8 @@ Bv::Application.routes.draw do
     resources :teamspeaks
     resources :site_forms
   end
+  
+  resources :site_forms
   
   resources :profiles do
     resources :acknowledgment_of_announcements

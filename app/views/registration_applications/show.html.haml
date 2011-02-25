@@ -1,7 +1,7 @@
 %p
 %h3= @registration_application.name + " - " + @registration_application.status
 
-%p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:registration_application =>  @registration_application}
+%p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:submission =>  @registration_application}
 
 = button_to 'Accept Application', accept_registration_application_path(@registration_application) 
 = button_to 'Reject Application', reject_registration_application_path(@registration_application)

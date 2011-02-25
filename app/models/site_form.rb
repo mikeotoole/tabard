@@ -11,4 +11,8 @@ class SiteForm < ActiveRecord::Base
     SiteForm.find(:first, :conditions => { :registration_application_form => true })
   end
   
+  def self.published
+    SiteForm.find(:all, :conditions => { :published => true, :registration_application_form => false })
+  end
+  
 end

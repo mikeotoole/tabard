@@ -19,5 +19,14 @@
     = f.label :thankyou, "Submission Thank You Message"
     %br/
     = f.text_area :thankyou
+  .field
+    = f.label :published, "Publish Form"
+    %br/
+    = f.check_box :published
+    
+  %p
+    = #select_tag(:q_type, options_for_select(Question::select_options))
+    = #link_to_add_question "Add Question", f, :questions, :q_type
+     
   .actions
     = submit_or_cancel(f)

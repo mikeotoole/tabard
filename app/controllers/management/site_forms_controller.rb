@@ -41,6 +41,7 @@ class Management::SiteFormsController < ApplicationController
   def create
     @site_form = SiteForm.new(params[:site_form])
 
+    @site_form.registration_application_form = false
     respond_to do |format|
       if @site_form.save
         format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully created.') }
@@ -71,11 +72,20 @@ class Management::SiteFormsController < ApplicationController
   # DELETE /management/site_forms/1.xml
   def destroy
       @site_form = SiteForm.find(params[:id])
-      @site_form.destroy
-  
-      respond_to do |format|
-        format.html { redirect_to(management_site_forms_path) }
-        format.xml  { head :ok }
+      
+      if @site_form.registration_application_form != true
+        @site_form.destroy
+        respond_to do |format|
+          format.html { redirect_to(management_site_forms_path) }
+          format.xml  { head :ok }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to(management_site_forms_path, :alert => 'The registration application form can not be deleted.') }
+          format.xml  { head :ok }
+        end
       end
   end
-end
+  
+end  
+  
