@@ -6,9 +6,9 @@
   %span.actions
     - if (logged_in? and discussion.can_user_lock(current_user))
       - if discussion.has_been_locked
-        %td= discussion.can_user_lock(current_user)  ? link_to( 'Unlock', root_path) : "No Unlock Permissions"
+        %td= discussion.can_user_lock(current_user)  ? link_to( 'Unlock', unlock_discussion_path(discussion), :method => :post) : "No Unlock Permissions"
       - else
-        %td= discussion.can_user_lock(current_user)  ? link_to( 'Lock', root_path) : "No Lock Permissions"
+        %td= discussion.can_user_lock(current_user)  ? link_to( 'Lock', lock_discussion_path(discussion), :method => :post) : "No Lock Permissions"
     %td= (logged_in? and current_user.can_update(discussion)) ? link_to( 'Edit', edit_discussion_path(discussion)) : "No Edit Permissions"
     %td= (logged_in? and current_user.can_delete(discussion)) ? link_to( 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
   %h2 Comments

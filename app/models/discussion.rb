@@ -32,7 +32,10 @@ class Discussion < ActiveRecord::Base
   end
   
   def check_user_create_permissions(user)
-    user.can_create(DiscussionSpace.find(self.discussion_space.id)) or user.can_create("Discussion")
+    if(self.discussion_space)
+      return user.can_create(DiscussionSpace.find(self.discussion_space.id))
+    end
+    user.can_create("Discussion")
   end
   
   def check_user_update_permissions(user)
