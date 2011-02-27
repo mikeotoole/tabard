@@ -3,7 +3,7 @@
     = radio_button_question.content
     %br/
   %ul
-    = application.fields_for :registration_answers do |answer|
+    = submission.fields_for :answers do |answer|
       - for panswer in radio_button_question.predefined_answers
         = answer.radio_button :content, panswer.content
         = label_tag panswer.content

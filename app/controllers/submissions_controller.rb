@@ -1,14 +1,22 @@
 class SubmissionsController < ApplicationController
+  before_filter :authenticate  
+  respond_to :html, :xml
+  
+  # GET /submissions
+  # GET /submissions.xml
+  def index
+    @site_form = SiteForm.find_by_id(params[:site_form])
+    @submissions = @site_form.submissions
+
+    respond_with @submissions
+  end
 
   # GET /submissions/1
   # GET /submissions/1.xml
   def show
     @submission = Submission.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @submission }
-    end
+    respond_with @submission
   end
 
   # GET /submissions/new
@@ -16,12 +24,11 @@ class SubmissionsController < ApplicationController
   def new
     @submission = Submission.new
     
-    @form = SiteForm.find_by_id(params[:site_form])
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @submission }
-    end
+    @site_form = SiteForm.find_by_id(params[:site_form])
+  
+    @submission.site_form = @site_form
+    @submission.answers.build
+    respond_with @submission
   end
 
   # GET /submissions/1/edit
@@ -33,6 +40,8 @@ class SubmissionsController < ApplicationController
   # POST /submissions.xml
   def create
     @submission = Submission.new(params[:submission])
+    
+    @submission.user_profile = current_user.user_profile
 
     respond_to do |format|
       if @submission.save
@@ -49,6 +58,7 @@ class SubmissionsController < ApplicationController
   # PUT /submissions/1.xml
   def update
     @submission = Submission.find(params[:id])
+    @site_form = @submission.site_form
 
     respond_to do |format|
       if @submission.update_attributes(params[:submission])

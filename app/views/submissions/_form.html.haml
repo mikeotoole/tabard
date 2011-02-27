@@ -1,4 +1,4 @@
-= form_for(@submission) do |f|
+= form_for(@submission) do |submission|
   - if @submission.errors.any?
     #error_explanation
       %h2
@@ -7,8 +7,11 @@
       %ul
         - @submission.errors.full_messages.each do |msg|
           %li= msg
-  - if @form != nil
-    - @form.questions.each do |question|
-      = render :partial => question, :locals => {:application => @form}
+  = submission.hidden_field :site_form_id    
+  - if @site_form != nil
+    %h1= @site_form.name
+    %h2= @site_form.message  
+    - @site_form.questions.each do |question|
+      = render :partial => question, :locals => {:submission => submission}
   .actions
-    = f.submit  'Submit Form', :disable_with => 'Please Wait...'
+    = submission.submit  'Submit Form', :disable_with => 'Please Wait...'

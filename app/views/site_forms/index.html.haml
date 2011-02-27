@@ -2,7 +2,15 @@
 %table
   %tr
     %th Name
+    %th 
+      View Submissions 
+      =# This should only show if user has permission to view.
+    %th 
+      Published  
+      =# This should only show if user has permission to view.
   - @site_form.each do |site_form|
     %tr
-      %td= link_to site_form.name, new_submission_path(:locals => {:site_form => site_form.id})
+      %td= link_to site_form.name, new_submission_path(:site_form => site_form)
+      %td= link_to "Submissions", submissions_path(:site_form => site_form) # This should only show if user has permission to view.
+      %td= site_form.published  # This should only show if user has permission to view.
       

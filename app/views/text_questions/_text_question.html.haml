@@ -2,6 +2,6 @@
   %h3
     = text_question.content
     %br/
-    = application.fields_for :registration_answers do |answer|
+    = submission.fields_for :answers do |answer|
       = answer.text_field :content
       = answer.hidden_field(:question_id, :value => text_question.id)

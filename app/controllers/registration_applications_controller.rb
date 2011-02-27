@@ -28,7 +28,8 @@ class RegistrationApplicationsController < ApplicationController
     @user = User.new
     
     @form = SiteForm.application_form
-    @registration_application.registration_answers.build
+    @registration_application.site_form = @form
+    @registration_application.answers.build
 
     respond_with(@registration_application)
   end

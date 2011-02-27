@@ -7,6 +7,8 @@
       %ul
         - @registration_application.errors.full_messages.each do |msg|
           %li= msg
+          
+  = application.hidden_field :site_form_id            
   = fields_for :user do |user|
     %p.field
       = user.label :email
@@ -36,6 +38,6 @@
       - link_to_add_character("Add Character", character, :character)
   - if @form != nil
     - @form.questions.each do |question|
-      = render :partial => question, :locals => {:application => application}
+      = render :partial => question, :locals => {:submission => application}
   .actions
     = application.submit 'Submit Application', :disable_with => 'Please Wait...'

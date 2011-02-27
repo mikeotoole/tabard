@@ -16,8 +16,8 @@ class Question < ActiveRecord::Base
     self.type = type
   end
   
-  def answers(registration_application_id)
-    RegistrationAnswer.where(:registration_application_id => registration_application_id, :question_id => self.id)
+  def answers(submission_id)
+    Answer.where(:submission_id => submission_id, :question_id => self.id)
   end
   
 end

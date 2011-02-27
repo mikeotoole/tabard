@@ -1,0 +1,12 @@
+%h1 
+  = @site_form.name
+  Submissions
+%table
+  %tr
+    %th Username
+    %th Date Submitted
+  - @submissions.each do |submission|
+    %tr
+      %td= link_to submission.name, submission_path(submission)
+      %td= submission.created_at
+      

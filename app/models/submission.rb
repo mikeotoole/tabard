@@ -1,5 +1,6 @@
 class Submission < ActiveRecord::Base
   belongs_to :user_profile
+  belongs_to :site_form
   
   has_many :answers, :dependent => :destroy
   has_many :questions, :through => :answers  
@@ -8,6 +9,10 @@ class Submission < ActiveRecord::Base
   
   def name
     self.user_profile.name
+  end
+  
+  def thankyou_message
+    self.site_form.thankyou
   end
   
   def submission_date
@@ -23,13 +28,7 @@ class Submission < ActiveRecord::Base
   end
   
   def form
-    myanswers = self.answers
-    if myanswers != nil
-      form = myanswers.first.question.form_id
-    else
-      form = nil
-    end
-    form
+    self.site_form
   end
   
 end
