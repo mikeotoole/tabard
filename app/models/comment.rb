@@ -41,7 +41,7 @@ class Comment < ActiveRecord::Base
   end
   
   def replys_locked?
-    !self.original_comment_item.comments_enabled? or (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+    self.has_been_locked or !self.original_comment_item.comments_enabled? or (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
@@ -60,7 +60,7 @@ class Comment < ActiveRecord::Base
   end
   
   def check_user_update_permissions(user)
-  	if has_been_locked 
+  	if self.has_been_locked or self.replys_locked?
   		return false
   	end
     if user.user_profile == self.user_profile
@@ -70,7 +70,7 @@ class Comment < ActiveRecord::Base
   end
   
   def check_user_delete_permissions(user)
-    if has_been_locked 
+    if self.has_been_locked or self.replys_locked? or self.has_been_deleted
       return false
     end
     if user.user_profile == self.user_profile

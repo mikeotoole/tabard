@@ -10,7 +10,12 @@
       </ul>
     </div>
   <% end %>
-
+  <div>
+    <span>Discussion Space: <%= @discussion.discussion_space.name%></span>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :discussion_space_id %>
+  </div>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>

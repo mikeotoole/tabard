@@ -49,10 +49,20 @@ Bv::Application.routes.draw do
 
   resources :discussion_spaces 
   
-  resources :discussions 
+  resources :discussions do
+    member do
+      post :lock
+      post :unlock
+    end
+  end
 
-  resources :comments
-
+  resources :comments do
+    member do
+      post :lock
+      post :unlock
+    end
+  end
+  
   resources :system_resources
 
   resources :announcements do

@@ -9,6 +9,9 @@
       <td><%= (logged_in? and current_user.can_delete(discussion_space)) ? link_to( 'Delete', discussion_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions" %></td>
     </span>
   <% end %>
+  <span class="actions">
+    <%= (logged_in? and current_user.can_create("Discussion") || current_user.can_create(discussion_space)) ? link_to( 'New Discussion', new_discussion_path(:discussion_space => discussion_space)) : "No permissions to create a new discussion" %></td>
+  </span>
   <h4>Active Discussions</h4>
   <ul>
     <% discussion_space.discussions.each do |discussion| %>

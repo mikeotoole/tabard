@@ -23,6 +23,7 @@ class DiscussionsController < ApplicationController
   # GET /discussions/new.xml
   def new
     @discussion = Discussion.new
+    @discussion.discussion_space = DiscussionSpace.find_by_id(params[:discussion_space])
     if !current_user.can_create(@discussion)
       render :nothing => true, :status => :forbidden
     else
@@ -45,6 +46,8 @@ class DiscussionsController < ApplicationController
     if !current_user.can_create(@discussion)
       render :nothing => true, :status => :forbidden
     else
+      @discussion.user_profile = current_user.user_profile
+      @discussion.character = (character_active? ? current_character : nil)
       if @discussion.save
         flash[:notice] = 'Discussion was successfully created.'
         respond_with(@discussion)
@@ -86,5 +89,35 @@ class DiscussionsController < ApplicationController
       @discussion.destroy
       respond_with(@discussion)
     end
+  end
+  
+  def lock
+    @discussion = Discussion.find_by_id(params[:id])
+    if @discussion.can_user_lock(current_user)
+      @discussion.has_been_locked = true
+      if @discussion.save 
+        flash[:notice] = "Discussion was successfully locked."
+      else
+        flash[:alert] = "Discussion was not locked, internal rails error."
+      end
+      redirect_to :back
+      return
+    end
+    render :nothing => true, :status => :forbidden
+  end
+  
+  def unlock
+    @discussion = Discussion.find_by_id(params[:id])
+    if @discussion.can_user_lock(current_user)
+      @discussion.has_been_locked = false
+      if @discussion.save 
+        flash[:notice] = "Discussion was successfully unlocked."
+      else
+        flash[:alert] = "Discussion was not unlocked, internal rails error."
+      end
+      redirect_to :back
+      return
+    end
+    render :nothing => true, :status => :forbidden
   end
 end
