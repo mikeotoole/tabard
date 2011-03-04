@@ -2,7 +2,12 @@ class SiteForm < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
   
-  validates_uniqueness_of :registration_application_form
+  validate :only_one_registration_application_form
+  
+  def only_one_registration_application_form
+    form = SiteForm.find(:first, :conditions => { :registration_application_form => true })
+    errors.add(:id, "There can be only one!  ...registration application form.") if (form and self.registration_application_form and form.id != self.id)
+  end
   
   def self.application_form
     SiteForm.find(:first, :conditions => { :registration_application_form => true })
