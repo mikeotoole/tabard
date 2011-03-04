@@ -5,11 +5,8 @@ class SiteFormsController < ApplicationController
   # GET /site_forms
   # GET /site_forms.xml
   def index
-    if current_user.can_update("SiteForm") #if user has permission to view submissions. See comment below.
-      @site_form = SiteForm.find(:all, :conditions => {:registration_application_form => false})
-    else # See the view. The links to the submissions will need to be hidden.
-      @site_form = SiteForm.published
-    end
-      respond_with @site_form
+      @site_forms = SiteForm.find(:all, :conditions => {:registration_application_form => false})
+      @site_forms.delete_if {|site_form| !site_form.check_user_show_permissions(current_user)}
+      respond_with @site_forms
   end
 end

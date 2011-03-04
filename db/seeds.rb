@@ -7,6 +7,7 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
+siteFormResource = SystemResource.create(:name => "SiteForm")
 
 gameResource = SystemResource.create(:name => "Game")
 wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
@@ -47,7 +48,8 @@ allDiscussionPermission = Permission.create(:permissionable => discussionResourc
 allCommentPermission = Permission.create(:permissionable => commentResource, :name => "Full Access Comment", :show_p => true, :create_p => true, :update_p => true, :delete_p => true, :access => "lock")
 allPageSpacePermission = Permission.create(:permissionable => pageSpaceResource, :name => "Full Access PageSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allPagePermission = Permission.create(:permissionable => pageResource, :name => "Full Access Page", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
-adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission])
+allSiteFormPermission = Permission.create(:permissionable => siteFormResource, :name => "Full Access Site Form", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile)
 
 
@@ -97,3 +99,8 @@ PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
 PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
 PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
 
+testForm2 = SiteForm.create(:name => "Test Form 2", :message => "This is a test form for testing submissions. This is not published.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => false)
+checkboxQ2 = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => testForm2)
+PredefinedAnswer.create(:content => "Happy", :question => checkboxQ2)
+PredefinedAnswer.create(:content => "Sad", :question => checkboxQ2)
+PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ2)

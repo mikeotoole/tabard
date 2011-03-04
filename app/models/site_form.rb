@@ -12,4 +12,20 @@ class SiteForm < ActiveRecord::Base
     SiteForm.find(:all, :conditions => { :published => true, :registration_application_form => false })
   end
   
+  def check_user_show_permissions(user)
+    return true if self.published
+    user.can_show("SiteForm")
+  end
+  
+  def check_user_create_permissions(user)
+    user.can_create("SiteForm")
+  end
+  
+  def check_user_update_permissions(user)
+    user.can_update("SiteForm")
+  end
+  
+  def check_user_delete_permissions(user)
+    user.can_delete("SiteForm")
+  end
 end
