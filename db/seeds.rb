@@ -72,7 +72,7 @@ disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :us
 GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
 SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
-#Default site form creation
+#Registration application site form creation
 defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :registration_application_form => true, :published => true)
 checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => defaultForm)
 PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
@@ -89,3 +89,11 @@ PredefinedAnswer.create(:content => "False", :question => radioQ)
 PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
 TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => defaultForm)
 TextQuestion.create(:content => "This is a ____ text question.", :site_form => defaultForm)
+
+#Test site form creation
+testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)
+checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => testForm)
+PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
+PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
+PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
+
