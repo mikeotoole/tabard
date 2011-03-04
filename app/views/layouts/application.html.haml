@@ -70,15 +70,15 @@
               = link_to 'Events', :events
             %li.main
               = link_to 'Resources', page_spaces_path
-              - if PageSpace.all
+              - if nav_page_spaces
                 %ul
-                  - PageSpace.all.each do |page_space| 
+                  - nav_page_spaces.each do |page_space| 
                     %li= link_to page_space.name, page_space
             %li.main
-              = link_to 'Discussions', :discussion_spaces
-              - if DiscussionSpace.all
+              = link_to 'Discussions', :discussion_spaces if current_user
+              - if nav_discussions
                 %ul
-                  - DiscussionSpace.all.each do |discussion_space| 
+                  - nav_discussions.each do |discussion_space| 
                     %li= link_to discussion_space.name, discussion_space
 
       #body
@@ -95,15 +95,15 @@
               %li= link_to 'Test Page 3', '#'
           .menu
             %h3 Resources
-            - if PageSpace.all
+            - if nav_page_spaces
               %ul
-                - PageSpace.all.each do |page_space| 
+                - nav_page_spaces.each do |page_space| 
                   %li= link_to page_space.name, page_space
           .menu
             %h3 Members
             %ul
               %li= link_to 'Events', :events
-              %li= link_to 'Discussions', :discussion_spaces
+              %li= link_to 'Discussions', :discussion_spaces if current_user and current_user.can_show("DiscussionSpace")
               %li= link_to 'Newsletter', :newsletters
               %li= link_to 'Donations', '#'
               

@@ -42,34 +42,30 @@ class DiscussionSpace < ActiveRecord::Base
     user_profile.displayname if user_profile
   end
   
+  def list_in_navigation
+    !self.personal_space
+  end
+  
   def check_user_show_permissions(user)
-    if user_profile_space
-      return true
-    end
-    if self.game and self.game.character_discussion_space_id = self.id
-      return true
-    end
-    if user.user_profile == self.user_profile
-      return true
-    end
-    user.can_show("DiscussionSpace") or self.announcement_space
+    return true if user_profile_space and user
+    return true if self.game and self.game.character_discussion_space_id = self.id and user
+    return true if user and user.user_profile == self.user_profile
+    return self.announcement_space if self.announcement_space and user
+    user.can_show("DiscussionSpace") if user 
   end
   
   def check_user_create_permissions(user)
+    return true if user and user.user_profile == self.user_profile
     user.can_create("DiscussionSpace")
   end
   
   def check_user_update_permissions(user)
-    if user.user_profile == self.user_profile
-      return true
-    end
+    return true if user and user.user_profile == self.user_profile
     user.can_update("DiscussionSpace") and not self.system
   end
   
   def check_user_delete_permissions(user)
-    if user.user_profile == self.user_profile
-      return true
-    end
+    return true if user and user.user_profile == self.user_profile
     user.can_delete("DiscussionSpace") and not self.system
   end
 end

@@ -78,6 +78,19 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, :alert => "Please log in to continue" and return false 
     end
     
+    # Varibles for navigation
+    def nav_discussions
+      DiscussionSpace.all.delete_if {|discussion_space| !discussion_space.check_user_show_permissions(current_user) or !discussion_space.list_in_navigation}
+    end
+    
+    helper_method :nav_discussions
+    
+    def nav_page_spaces
+      PageSpace.all.delete_if {|page_space| !page_space.check_user_show_permissions(current_user)}
+    end
+    
+    helper_method :nav_page_spaces
+    
     
     # Returns the currently active theme folder name
     def current_theme

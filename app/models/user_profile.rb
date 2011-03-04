@@ -7,7 +7,9 @@ class UserProfile < Profile
   
   has_many :registration_applications
   
-  after_create :create_discussion
+  belongs_to :personal_discussion_space, :class_name => "DiscussionSpace"
+  
+  after_create :create_discussion, :create_personal_space
   
   # User can only have one user profile
   validates_uniqueness_of :user_id
@@ -95,6 +97,13 @@ class UserProfile < Profile
     self.discussion = Discussion.create(:discussion_space => DiscussionSpace.user_profile_space,
                                         :name => self.displayname,
                                         :body => "User Profile Discussion",
+                                        :user_profile => self)
+  end
+  
+  def create_personal_space
+    self.personal_discussion_space = DiscussionSpace.create(:name => self.displayname.to_s+" Personal Discussion Space",
+                                        :system => true,
+                                        :personal_space => true,
                                         :user_profile => self)
   end
   

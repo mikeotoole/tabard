@@ -60,6 +60,7 @@ class Discussion < ActiveRecord::Base
   end
   
   def can_user_lock(user)
+    return true if user and user.user_profile == self.discussion_space.user_profile
     user.can_special_permissions("Discussion","lock")
   end
 end
