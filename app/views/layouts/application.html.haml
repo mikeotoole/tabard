@@ -89,10 +89,10 @@
         .container
           .menu
             %h3 Brutal Venom
-            %ul
-              %li= link_to 'Test Page 1', '#'
-              %li= link_to 'Test Page 2', '#'
-              %li= link_to 'Test Page 3', '#'
+            - if nav_featured_pages
+              %ul
+                - nav_featured_pages.each do |page| 
+                  %li= link_to page.title, page
           .menu
             %h3 Resources
             - if nav_page_spaces
