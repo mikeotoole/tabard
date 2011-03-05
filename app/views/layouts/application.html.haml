@@ -35,7 +35,8 @@
         .container              
           - if logged_in?
             #userbox
-              %p.salutation= 'Hello, ' << current_user.user_profile.name
+              %p.salutation 
+                Hello, #{link_to current_user.user_profile.name, current_user}
               - if profile_active?
                 %p
                   - if character_active?

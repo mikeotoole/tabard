@@ -8,6 +8,10 @@
         - @page.errors.full_messages.each do |msg|
           %li= msg
   .field
+    = f.label :page_space
+    %br/
+    = f.collection_select(:page_space_id, PageSpace.all, :id, :name)
+  .field
     = f.label :title
     %br/
     = f.text_field :title
