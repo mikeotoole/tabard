@@ -2,15 +2,15 @@
   .field
     Game:
     %br/
-    = collection_select(:character, :game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+    = collection_select(:character, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
   .field
     = f.label :name
     %br/
     = f.text_field :name
   .field
-    = f.label :rank
+    = f.label :level
     %br/
-    = f.text_field :rank
+    = f.text_field :level
   .field
     = f.label :faction
     %br/
@@ -20,9 +20,9 @@
     %br/
     = f.text_field :race
   .field
-    = f.label "Class"
+    = f.label :class
     %br/
-    = f.text_field :klass
+    = f.text_field :class
   .field
     = label_tag "Default Character"  
     %br/

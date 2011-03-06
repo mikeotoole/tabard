@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
                     
   has_one :user_profile
   has_many :game_profiles, :through => :user_profile
-  has_many :characters, :through => :game_profiles
   
   has_and_belongs_to_many :roles
   
@@ -30,6 +29,7 @@ class User < ActiveRecord::Base
     (Array.new() << (user_profile)).concat(characters)
   end
   
+  #TODO This needs to change for the new character model
   def add_character(character, default)  
     @gameprofiles = self.all_game_profiles
     if @gameprofiles
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
   
   def characters
-    self.user_profile.all_characters
+    self.user_profile.characters
   end
  
   def all_game_profiles

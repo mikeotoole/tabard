@@ -3,7 +3,6 @@ class UserProfile < Profile
   belongs_to :discussion
 
   has_many :game_profiles
-  has_many :characters, :through => :game_profiles 
   
   has_many :registration_applications
   
@@ -80,15 +79,23 @@ class UserProfile < Profile
     UserProfile.find(:all, :conditions => {:status => 2})
   end
   
-  def all_characters
-    self.characters
+  #TODO Can this be implemented better?
+  def characters
+     characters = Array.new()
+     #self.game_profiles.collect!{|game_profile| characters << game_profile.all_characters}
+     for game_profile in self.game_profiles
+       for chara in game_profile.characters
+         characters << chara
+       end
+     end
+     characters
   end
   
   def displayname
     self.name
   end
   
-  #TODO What is this??
+  # Used by active profile to see selected item is a user profile
   def character_id
     -1
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110304055218) do
+ActiveRecord::Schema.define(:version => 20110306004835) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -29,20 +29,12 @@ ActiveRecord::Schema.define(:version => 20110304055218) do
     t.integer  "submission_id"
   end
 
-  create_table "characters", :force => true do |t|
-    t.integer  "game_id"
-    t.string   "name"
+  create_table "character_proxies", :force => true do |t|
+    t.integer  "game_profile_id"
+    t.integer  "character_id"
+    t.string   "character_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type"
-    t.string   "faction"
-    t.string   "race"
-    t.string   "klass"
-    t.string   "server"
-    t.string   "extra"
-    t.integer  "rank"
-    t.integer  "game_profile_id"
-    t.integer  "discussion_id"
   end
 
   create_table "comments", :force => true do |t|
@@ -157,10 +149,10 @@ ActiveRecord::Schema.define(:version => 20110304055218) do
     t.integer  "user_id"
     t.integer  "game_id"
     t.integer  "user_profile_id"
-    t.integer  "default_character_id"
     t.integer  "discussion_space_id"
     t.integer  "status"
     t.integer  "personal_discussion_space_id"
+    t.integer  "default_character_proxy_id"
   end
 
   create_table "questions", :force => true do |t|
@@ -214,6 +206,13 @@ ActiveRecord::Schema.define(:version => 20110304055218) do
     t.string   "type"
   end
 
+  create_table "swtor_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "server"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "system_resources", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -228,6 +227,16 @@ ActiveRecord::Schema.define(:version => 20110304055218) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "hashed_password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wow_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "faction"
+    t.string   "race"
+    t.integer  "level"
+    t.string   "server"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,2 @@
+class WowCharactersController < ApplicationController
+end

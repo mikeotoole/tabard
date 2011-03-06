@@ -12,9 +12,12 @@ siteFormResource = SystemResource.create(:name => "SiteForm")
 gameResource = SystemResource.create(:name => "Game")
 wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
 swtor = Game.create(:name => "Star Wars the Old Republic", :type_helper => "Swtor", :is_active => true)
-blaggarth = Character.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :rank => "10", :game => wow, :type_helper => "WowCharacter")
-eliand = Character.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :rank => "10", :game => wow, :type_helper => "WowCharacter")
-yoda = Character.create(:name => "Yoda", :faction => "Republic", :race => "Species Unknown", :server => "Obi-Wan", :rank => "10", :game => swtor, :type_helper => "SwtorCharacter")
+blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :level => "10")
+eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10")
+yoda = SwtorCharacter.create(:name => "Yoda", :server => "Obi-Wan")
+bcp = CharacterProxy.create(:character => blaggarth)
+ecp = CharacterProxy.create(:character => eliand)
+ycp = CharacterProxy.create(:character => yoda)
 
 commentResource = SystemResource.create(:name => "Comment")
 
@@ -35,8 +38,9 @@ adminProfile.set_active
 userProfile = UserProfile.create(:name => "RoboBilly")
 userProfile.set_active
 
-wowProfile = GameProfile.create(:name => "Wow profile", :characters => [blaggarth,eliand], :default_character_id => eliand.id, :game => wow, :user_profile => userProfile)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :characters => [yoda], :default_character_id => yoda.id, :game => swtor, :user_profile => userProfile)
+#TODO user profile is not being set...
+wowProfile = GameProfile.create(:name => "Wow profile", :character_proxies => [bcp,ecp], :default_character_proxy_id => ecp.id, :game => wow, :user_profile => userProfile)
+swtorProfile = GameProfile.create(:name => "SWTOR profile", :character_proxies => [ycp], :default_character_proxy_id => ycp.id, :game => swtor, :user_profile => userProfile)
 
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)

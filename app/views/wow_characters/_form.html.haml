@@ -1,0 +1,35 @@
+= form_for @character, :as => :character, :url => character_path, :html => {:method => :put} do |f|
+  - if @character.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@character.errors.count, "error")
+        prohibited this character from being saved:
+      %ul
+        - @character.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :level
+    %br/
+    = f.text_field :level
+  .field
+    = f.label :faction
+    %br/
+    = f.text_field :faction
+  .field
+    = f.label :race
+    %br/
+    = f.text_field :race
+  .field
+    = f.label :class
+    %br/
+    = f.text_field :class
+  .field
+    = label_tag "Default Character"  
+    %br/
+    = check_box_tag 'default_character'
+  .actions
+    = submit_or_cancel(f)

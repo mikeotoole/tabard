@@ -1,0 +1,2 @@
+module SwtorCharactersHelper
+end

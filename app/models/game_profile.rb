@@ -1,5 +1,5 @@
 class GameProfile < Profile
-  has_many :characters, :dependent => :destroy
+  has_many :character_proxies, :dependent => :destroy
   belongs_to :game
   belongs_to :user_profile
   
@@ -10,17 +10,21 @@ class GameProfile < Profile
     game.id
   end
   
-  #TODO This needs to be the profiles main characters name
+  def characters
+    self.character_proxies.collect!{|proxy| proxy.character}
+  end
+  
   def displayname
     self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name" 
   end
   
   def default_character
-    Character.find_by_id(self.default_character_id)
+    cp = CharacterProxy.find_by_id(self.default_character_proxy_id)
+    cp ? cp.character : nil
   end
   
   def default_character=(character)
-    self.default_character_id = character.id
+    self.default_character_proxy_id = character.character_proxy_id
   end
   
 end

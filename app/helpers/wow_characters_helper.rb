@@ -1,0 +1,2 @@
+module WowCharactersHelper
+end

@@ -30,6 +30,10 @@ class Game < ActiveRecord::Base
    DiscussionSpace.find_by_id(self.character_discussion_space_id)
  end
  
+  def self.active
+    Game.where("is_active = ?", true)
+  end
+ 
  # Lets the subclasses use the parents routes. 
   def self.inherited(child)
     child.instance_eval do

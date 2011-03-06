@@ -68,13 +68,15 @@ class ApplicationController < ActionController::Base
     end    
     helper_method :character_active?
     
+    #TODO Is there a better way to get the current character
     def current_character
       return unless session[:character_id]
-      @current_character ||= Character.find_by_id(session[:character_id]) 
-    end    
+      proxy = CharacterProxy.find_by_character_id(session[:character_id])
+      @current_character ||= proxy.character if proxy
+    end
     helper_method :current_character
     
-    def access_denied 
+    def access_denied
       redirect_to root_path, :alert => "Please log in to continue" and return false 
     end
     

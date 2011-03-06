@@ -9,7 +9,7 @@ class ActiveProfilesController < ApplicationController
       session[:profile_id] = current_user.user_profile_id
     else 
       session[:character_id] = params[:active_profile][:character_id]
-      session[:profile_id] = Character.find_by_id(params[:active_profile][:character_id]).active_profile_id
+      session[:profile_id] = CharacterProxy.find_by_character_id(params[:active_profile][:character_id]).active_profile_id
     end
     redirect_to root_path, :notice => "Profile activated."
   end

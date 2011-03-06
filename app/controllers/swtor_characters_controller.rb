@@ -1,0 +1,2 @@
+class SwtorCharactersController < ApplicationController
+end

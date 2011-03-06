@@ -1,0 +1,19 @@
+= form_for(@character) do |f|
+  .field
+    Game:
+    %br/
+    = collection_select(:character, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :server
+    %br/
+    = f.text_field :server
+  .field
+    = label_tag "Default Character"  
+    %br/
+    = check_box_tag 'default_character'
+  .actions
+    = f.submit 'Add'
