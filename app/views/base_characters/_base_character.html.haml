@@ -1,0 +1,6 @@
+= div_for base_character do
+  %h3
+    = base_character.name
+    %span.actions
+      = link_to( 'Edit', edit_base_character_path(base_character))
+      = link_to( 'Delete', base_character, :confirm => 'Are you sure?', :method => :delete)

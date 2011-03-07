@@ -1,10 +1,10 @@
-class CharactersController < ApplicationController
+class BaseCharactersController < ApplicationController
   before_filter :authenticate
   respond_to :html, :xml, :js
   
   # GET /characters/1/edit
   def edit
-    @character = Character.find(params[:id])
+    @character = CharacterProxy.find_by_character_id(params[:id])
   end
   
   # GET /characters/1

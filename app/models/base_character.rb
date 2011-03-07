@@ -37,7 +37,7 @@ class BaseCharacter < ActiveRecord::Base
   def self.inherited(child)
     child.instance_eval do
       def model_name
-        Character.model_name
+        BaseCharacter.model_name
       end
     end
     super

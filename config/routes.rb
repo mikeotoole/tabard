@@ -121,10 +121,10 @@ Bv::Application.routes.draw do
   match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
   
   resources :games do
-    resources :characters
+    resources :base_characters
   end
   
-  resources :characters
+  resources :base_characters
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
