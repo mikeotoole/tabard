@@ -8,10 +8,10 @@ class BaseCharactersController < ApplicationController
       if @game != nil
         case @game.type
           when "Swtor"
-            redirect_to(new_swtor_character_path)
+            redirect_to(new_swtor_character_path(@game))
             return
           when "Wow"
-            redirect_to(new_wow_character_path)
+            redirect_to(new_wow_character_path(@game))
             return
         end
       else
