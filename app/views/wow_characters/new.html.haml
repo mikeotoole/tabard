@@ -1,31 +1,3 @@
-= form_for(@character) do |f|
-  .field
-    Game:
-    %br/
-    = collection_select(:character, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
-  .field
-    = f.label :name
-    %br/
-    = f.text_field :name
-  .field
-    = f.label :level
-    %br/
-    = f.text_field :level
-  .field
-    = f.label :faction
-    %br/
-    = f.text_field :faction
-  .field
-    = f.label :race
-    %br/
-    = f.text_field :race
-  .field
-    = f.label :class
-    %br/
-    = f.text_field :class
-  .field
-    = label_tag "Default Character"  
-    %br/
-    = check_box_tag 'default_character'
-  .actions
-    = f.submit 'Add'
+%h1 New World of Warcraft Character
+= render 'form'
+= js_back

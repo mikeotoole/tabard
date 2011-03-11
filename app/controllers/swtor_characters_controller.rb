@@ -1,5 +1,7 @@
 class SwtorCharactersController < ApplicationController
-  
+  before_filter :authenticate
+  respond_to :html, :xml, :js
+    
   def index
     @characters = BaseCharacter.all
   end
@@ -21,7 +23,8 @@ class SwtorCharactersController < ApplicationController
   # GET /characters/new
   # GET /characters/new.xml
   def new
-      @character = Character.new
+      @character = SwtorCharacter.new
+      #TODO need to set game_id
   
       respond_with(@character)
   end

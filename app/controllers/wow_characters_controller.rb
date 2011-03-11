@@ -1,4 +1,6 @@
 class WowCharactersController < ApplicationController
+  before_filter :authenticate
+  respond_to :html, :xml, :js
   
   def index
     @characters = BaseCharacter.all
@@ -21,7 +23,8 @@ class WowCharactersController < ApplicationController
   # GET /characters/new
   # GET /characters/new.xml
   def new
-      @character = Character.new
+      @character = WowCharacter.new
+      #TODO need to set game_id
   
       respond_with(@character)
   end
