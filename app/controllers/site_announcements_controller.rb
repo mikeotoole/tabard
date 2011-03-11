@@ -1,6 +1,7 @@
 class SiteAnnouncementsController < ApplicationController
   respond_to :html, :xml
   before_filter :authenticate
+  
   # GET /site_announcements
   # GET /site_announcements.xml
   def index
