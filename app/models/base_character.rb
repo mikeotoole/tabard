@@ -1,7 +1,7 @@
 class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
   
-  #belongs_to :game
+  belongs_to :game
   has_one :character_proxy, :as => :character
   
   #TODO refactor for new model
@@ -34,14 +34,14 @@ class BaseCharacter < ActiveRecord::Base
   # end
  
   # Lets the subclasses use the parents routes. 
-  def self.inherited(child)
-    child.instance_eval do
-      def model_name
-        BaseCharacter.model_name
-      end
-    end
-    super
-  end
+  # def self.inherited(child)
+  #   child.instance_eval do
+  #     def model_name
+  #       BaseCharacter.model_name
+  #     end
+  #   end
+  #   super
+  # end
  
   # def self.factory(class_name, params = nil)
   #   class_name << "Character"

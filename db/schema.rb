@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110306004835) do
+ActiveRecord::Schema.define(:version => 20110311051223) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(:version => 20110306004835) do
     t.string   "server"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
   end
 
   create_table "system_resources", :force => true do |t|
@@ -239,6 +240,7 @@ ActiveRecord::Schema.define(:version => 20110306004835) do
     t.string   "server"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
   end
 
 end

@@ -11,7 +11,13 @@ class GameProfile < Profile
   end
   
   def characters
-    self.character_proxies.collect!{|proxy| proxy.character}
+    #self.character_proxies.collect!{|proxy| proxy.character}
+    
+    characters = Array.new()
+    for proxy in self.character_proxies
+        characters << proxy.character
+    end
+    characters
   end
   
   def displayname

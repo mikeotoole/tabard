@@ -82,7 +82,6 @@ class UserProfile < Profile
   #TODO Can this be implemented better?
   def characters
      characters = Array.new()
-     #self.game_profiles.collect!{|game_profile| characters << game_profile.all_characters}
      for game_profile in self.game_profiles
        for chara in game_profile.characters
          characters << chara
