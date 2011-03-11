@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       end
       
       session[:user_id] = user.id
-      if user.user_profile != nil
+      if user.user_profile == nil
         @profile_type = "UserProfile"
         redirect_to new_profile_path, :notice => (
           "Logged in as <em>#{user.name}</em>." +
