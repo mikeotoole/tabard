@@ -5,14 +5,10 @@ roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
 
 gameResource = SystemResource.create(:name => "Game")
+
+# Sample Games
 wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
 swtor = Game.create(:name => "Star Wars the Old Republic", :type_helper => "Swtor", :is_active => true)
-blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :level => "10", :game => wow)
-eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10", :game => wow)
-yoda = SwtorCharacter.create(:name => "Yoda", :server => "Obi-Wan", :game => swtor)
-bcp = CharacterProxy.create(:character => blaggarth)
-ecp = CharacterProxy.create(:character => eliand)
-ycp = CharacterProxy.create(:character => yoda)
 
 commentResource = SystemResource.create(:name => "Comment")
 
@@ -24,18 +20,10 @@ gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
 pageResource = SystemResource.create(:name => "Page")
-pageSpace = PageSpace.create(:name => "Boss Strategies")
-page = Page.create(:title => "Sarlacc Pit", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => pageSpace)
 
+# Admin User
 adminProfile = UserProfile.create(:name => "Admin")
 adminProfile.set_active
-
-userProfile = UserProfile.create(:name => "RoboBilly")
-userProfile.set_active
-
-#TODO user profile is not being set...
-wowProfile = GameProfile.create(:name => "Wow profile", :character_proxies => [bcp,ecp], :default_character_proxy_id => ecp.id, :game => wow, :user_profile => userProfile)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :character_proxies => [ycp], :default_character_proxy_id => ycp.id, :game => swtor, :user_profile => userProfile)
 
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
@@ -51,10 +39,24 @@ allSiteFormPermission = Permission.create(:permissionable => siteFormResource, :
 adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile)
 
-
-#Generate some normal activity for demonstration purposes
+# Sample Discussion Spaces
 discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile)
 discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile)
+
+# General User
+userProfile = UserProfile.create(:name => "RoboBilly")
+userProfile.set_active
+
+blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :level => "10", :game => wow)
+eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10", :game => wow)
+yoda = SwtorCharacter.create(:name => "Yoda", :server => "Obi-Wan", :game => swtor)
+
+bcp = CharacterProxy.create(:character => blaggarth)
+ecp = CharacterProxy.create(:character => eliand)
+ycp = CharacterProxy.create(:character => yoda)
+
+wowProfile = GameProfile.create(:name => "Wow profile", :character_proxies => [bcp,ecp], :default_character_proxy_id => ecp.id, :game => wow, :user_profile => userProfile)
+swtorProfile = GameProfile.create(:name => "SWTOR profile", :character_proxies => [ycp], :default_character_proxy_id => ycp.id, :game => swtor, :user_profile => userProfile)
 
 viewUserPermission = Permission.create(:permissionable => userResource, :name => "View Access User", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewRolePermission = Permission.create(:permissionable => roleResource, :name => "View Access Role", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
@@ -62,16 +64,6 @@ viewGamePermission = Permission.create(:permissionable => gameResource, :name =>
 viewGeneralDiscussionSpacePermission = Permission.create(:permissionable => discSpace, :name => "View General Discussion Space", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewerRole = Role.create(:name => "Viewer", :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :roles => [viewerRole], :user_profile => userProfile)
-
-disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
-comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)
-comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
-
-disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace, :has_been_locked => true)
-disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
-
-GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
-SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
 #Registration application site form creation
 defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :registration_application_form => true, :published => true)
@@ -90,6 +82,29 @@ PredefinedAnswer.create(:content => "False", :question => radioQ)
 PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
 TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => defaultForm)
 TextQuestion.create(:content => "This is a ____ text question.", :site_form => defaultForm)
+
+#Generate some normal activity for demonstration purposes
+
+# Sample Discussions
+disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
+comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)
+comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
+
+disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace, :has_been_locked => true)
+disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
+
+# Sample Announcements
+GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
+SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
+
+# Sample Page Space/Pages
+bossPageSpace = PageSpace.create(:name => "Boss Strategies")
+sarlaccPage = Page.create(:title => "Sarlacc Pit Strategy", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => bossPageSpace, :featured_page => true)
+rockLobsterPage = Page.create(:title => "Rock Lobster", :body => "Bring a pot, this boss is super delicious!", :page_space => bossPageSpace)
+
+guildInformationPageSpace = PageSpace.create(:name => "Guild Information")
+guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic story]", :page_space => guildInformationPageSpace, :featured_page => true)
+guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
 
 #Test site form creation
 testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)

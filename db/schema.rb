@@ -10,7 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20110311051223) do
+=======
+ActiveRecord::Schema.define(:version => 20110305172619) do
+>>>>>>> 343395901aa8099993bbccd6b58e12e114d66939
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -125,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20110311051223) do
     t.string   "title"
     t.text     "body"
     t.integer  "page_space_id"
+    t.boolean  "featured_page"
   end
 
   create_table "permissions", :force => true do |t|

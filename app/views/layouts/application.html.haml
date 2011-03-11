@@ -35,7 +35,8 @@
         .container              
           - if logged_in?
             #userbox
-              %p.salutation= 'Hello, ' << current_user.user_profile.name
+              %p.salutation 
+                Hello, #{link_to current_user.user_profile.name, current_user}
               - if profile_active?
                 %p
                   - if character_active?
@@ -89,10 +90,10 @@
         .container
           .menu
             %h3 Brutal Venom
-            %ul
-              %li= link_to 'Test Page 1', '#'
-              %li= link_to 'Test Page 2', '#'
-              %li= link_to 'Test Page 3', '#'
+            - if nav_featured_pages
+              %ul
+                - nav_featured_pages.each do |page| 
+                  %li= link_to page.title, page
           .menu
             %h3 Resources
             - if nav_page_spaces

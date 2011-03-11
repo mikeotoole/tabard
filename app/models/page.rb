@@ -1,6 +1,17 @@
 class Page < ActiveRecord::Base
   belongs_to :page_space
   
+  scope :featured_pages, :conditions => {:featured_page => true}
+  scope :alphabetical, order("title ASC")
+  
+  validate :limit_number_of_pages
+  
+  def limit_number_of_pages
+    # TODO we will want to put this in a better spot...
+    max_number_of_featured_pages = 5
+    errors.add(:featured_page, "The maximum number of featured pages [#{max_number_of_featured_pages}] has been reached. Please unselect one to make room.") if(max_number_of_featured_pages <= Page.featured_pages.size and self.featured_page)
+  end
+  
   def check_user_show_permissions(user)
     return true
   end

@@ -93,6 +93,11 @@ class ApplicationController < ActionController::Base
     
     helper_method :nav_page_spaces
     
+    def nav_featured_pages
+      Page.featured_pages.alphabetical
+    end
+    
+    helper_method :nav_featured_pages
     
     # Returns the currently active theme folder name
     def current_theme

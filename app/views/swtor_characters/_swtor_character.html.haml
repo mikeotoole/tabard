@@ -1,0 +1,6 @@
+= div_for swtor_character do
+  %h3
+    = swtor_character.name
+    %span.actions
+      = link_to( 'Edit', edit_swtor_character_path(swtor_character))
+      = link_to( 'Delete', swtor_character, :confirm => 'Are you sure?', :method => :delete)
