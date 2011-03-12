@@ -38,7 +38,8 @@ class GameProfile < Profile
   end
   
   def default_proxy_adder(character_proxy)
-    self.default_character_proxy_id = character_proxy.id
+    self.default_character_proxy_id = character_proxy.id unless self.default_character_proxy_id
+    self.save
   end
   
 end
