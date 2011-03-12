@@ -8,8 +8,8 @@ class CharacterProxy < ActiveRecord::Base
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end
   
-  def active_profile_id
-    self.game_profile.id
-  end
+  # def active_profile_id
+  #   self.game_profile.id
+  # end
   
 end

@@ -1,6 +1,5 @@
 class Game < ActiveRecord::Base
  has_many :GameAnnouncements
- has_many :base_characters, :dependent => :destroy
  has_many :game_profiles, :dependent => :destroy
  has_many :discussion_spaces
  
@@ -47,10 +46,6 @@ class Game < ActiveRecord::Base
   # Used to offer a dynamically generated list of subclass to choose from. 
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
-  end
-  
-  def characters
-    self.base_characters
   end
 
   def type_helper

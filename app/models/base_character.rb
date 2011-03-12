@@ -8,7 +8,8 @@ class BaseCharacter < ActiveRecord::Base
   #belongs_to :discussion
    
   validates_presence_of :name, :game
-   
+  
+  #TODO refactor for new model   
   #after_create :create_discussion
    
   def character_proxy_id
@@ -44,7 +45,6 @@ class BaseCharacter < ActiveRecord::Base
   #   if defined? class_name.constantize
   #     class_name.constantize.new(params)
   #   else
-  #     #TODO a base character type is created here. May just make this an error.
   #     Character.new(params)
   #   end
   # end

@@ -87,7 +87,7 @@ Bv::Application.routes.draw do
   
   namespace "management" do
     resources :users
-    resources :games
+    resources :games, :except => :show
     resources :roles
     resources :newsletters
     resources :page_spaces
@@ -120,7 +120,7 @@ Bv::Application.routes.draw do
   match '/activate_profile' => "active_profiles#new", :as => "activate_profile"
   match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
   
-  resources :games do
+  resources :games, :only => [:index, :show] do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
   end
