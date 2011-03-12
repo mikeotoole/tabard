@@ -104,6 +104,7 @@ class UserProfile < Profile
                                         :name => self.displayname,
                                         :body => "User Profile Discussion",
                                         :user_profile => self)
+    self.save
   end
   
   def create_personal_space
@@ -111,6 +112,7 @@ class UserProfile < Profile
                                         :system => true,
                                         :personal_space => true,
                                         :user_profile => self)
+    self.save
   end
   
 end
