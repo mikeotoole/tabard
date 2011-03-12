@@ -51,12 +51,14 @@ blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :r
 eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10", :game => wow)
 yoda = SwtorCharacter.create(:name => "Yoda", :server => "Obi-Wan", :game => swtor)
 
-bcp = CharacterProxy.create(:character => blaggarth)
-ecp = CharacterProxy.create(:character => eliand)
-ycp = CharacterProxy.create(:character => yoda)
 
-wowProfile = GameProfile.create(:name => "Wow profile", :character_proxies => [bcp,ecp], :default_character_proxy_id => ecp.id, :game => wow, :user_profile => userProfile)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :character_proxies => [ycp], :default_character_proxy_id => ycp.id, :game => swtor, :user_profile => userProfile)
+
+wowProfile = GameProfile.create(:name => "Wow profile", :game => wow, :user_profile => userProfile)
+swtorProfile = GameProfile.create(:name => "SWTOR profile", :game => swtor, :user_profile => userProfile)
+
+bcp = CharacterProxy.create(:character => blaggarth, :game_profile => wowProfile)
+ecp = CharacterProxy.create(:character => eliand, :game_profile => wowProfile)
+ycp = CharacterProxy.create(:character => yoda, :game_profile => swtorProfile)
 
 viewUserPermission = Permission.create(:permissionable => userResource, :name => "View Access User", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewRolePermission = Permission.create(:permissionable => roleResource, :name => "View Access Role", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
