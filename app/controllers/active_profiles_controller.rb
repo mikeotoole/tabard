@@ -11,7 +11,8 @@ class ActiveProfilesController < ApplicationController
       session[:character_id] = params[:active_profile][:character_id]
       session[:profile_id] = CharacterProxy.find_by_character_id(params[:active_profile][:character_id]).active_profile_id
     end
-    redirect_to root_path, :notice => "Profile activated."
+    active_profile_name = current_character ? current_character.name : current_user.name
+    redirect_to root_path, :notice => "Profile <em>#{active_profile_name}</em> activated."
   end
   
   def update

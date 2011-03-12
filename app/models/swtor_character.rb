@@ -1,7 +1,8 @@
 class SwtorCharacter < BaseCharacter
+  # belongs_to :swtor, :foreign_key => :game_id
+  # 
+  # def game
+  #   self.swtor
+  # end
   
-  def game
-    Game.find_by_type("Swtor")
-  end
-
 end

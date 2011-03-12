@@ -14,14 +14,12 @@ button,
 input[type=button],
 input[type=submit] {
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
-  border: 1px solid #000;
-  border-bottom-color: #323333;
-  border-right-color: #323333;
+  border: 1px solid #181a1b;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  height: 30px;
-  line-height: 30px;
+  height: 24px;
+  line-height: 24px;
   padding: 0 15px;
   text-align: center; }
   button:focus, button:hover,
@@ -64,7 +62,7 @@ textarea {
   margin: -5px 0 15px; }
   #announcements li {
     height: 39px;
-    margin: 5px 0 0 -10px;
+    margin: 5px 0 0;
     position: relative; }
     #announcements li .msg {
       bottom: 0;
@@ -134,90 +132,27 @@ textarea {
     left: 0;
     position: absolute;
     top: 70px; }
-  #header .locale {
+  #header .userbox {
     position: absolute;
     right: 0;
     top: 10px; }
+    #header .userbox form,
+    #header .userbox form * {
+      display: inline; }
 
 #menu {
-  height: 300px;
+  height: 60px;
   margin: 0 0 20px; }
   #menu .container {
-    background: url(../images/header-temp.jpg) 0 74px no-repeat;
     height: 300px; }
-  #menu .login {
-    background: url(../images/icon-lock.png) -7px 13px no-repeat;
-    height: 95px;
-    left: 5px;
-    position: absolute;
-    top: 15px;
-    width: 335px;
-    z-index: 2; }
-    #menu .login label {
-      display: none; }
-    #menu .login input[type=text] {
-      border-bottom-color: #a9a9a9;
-      border-right-color: #a9a9a9;
-      left: 25px;
-      position: absolute;
-      top: 0;
-      width: 174px; }
-    #menu .login input[type=password] {
-      border-bottom-color: #a9a9a9;
-      border-right-color: #a9a9a9;
-      left: 25px;
-      position: absolute;
-      top: 32px;
-      width: 174px; }
-    #menu .login input[type=submit] {
-      background-color: #3e778b;
-      background-position: 0 -30px;
-      border-bottom-color: #525252;
-      border-right-color: #525252;
-      padding: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 110px; }
-    #menu .login .remember {
-      height: 15px;
-      line-height: 15px;
-      overflow: hidden;
-      position: absolute;
-      right: -15px;
-      top: 40px;
-      width: 125px; }
-      #menu .login .remember input {
-        left: -100px;
-        position: absolute; }
-      #menu .login .remember label {
-        background: url(../images/checkbox.png) 0 0 no-repeat;
-        display: block;
-        height: 15px;
-        line-height: 15px;
-        padding: 0 0 0 20px; }
-        #menu .login .remember label.checked {
-          background-position: 0 -20px; }
-    #menu .login .apply {
-      bottom: 0;
-      border-top: 1px solid #666;
-      left: 0;
-      padding: 5px 0 0;
-      position: absolute;
-      right: 0; }
-  #menu #userbox {
-    left: 5px;
-    position: absolute;
-    top: 10px;
-    z-index: 2; }
   #menu ul {
     background: url(../images/menu.png) top center no-repeat;
-    height: 284px;
-    left: -10px;
-    padding: 16px 0 0 375px;
+    height: 60px;
+    left: 0;
+    padding: 0 7px;
     position: absolute;
     top: 0;
-    width: 595px;
+    width: 946px;
     z-index: 1; }
     #menu ul li {
       float: left;
@@ -380,3 +315,77 @@ textarea {
     right: 0;
     top: 0;
     width: 220px; }
+
+.logged_out #announcements li {
+  margin: 5px 0 0 -10px; }
+.logged_out #menu {
+  height: 300px; }
+  .logged_out #menu .container {
+    background: url(../images/header-temp.jpg) 0 74px no-repeat;
+    height: 300px; }
+  .logged_out #menu .login {
+    background: url(../images/icon-lock.png) -7px 13px no-repeat;
+    height: 95px;
+    left: 5px;
+    position: absolute;
+    top: 15px;
+    width: 335px;
+    z-index: 2; }
+    .logged_out #menu .login label {
+      display: none; }
+    .logged_out #menu .login input[type=text] {
+      border-bottom-color: #a9a9a9;
+      border-right-color: #a9a9a9;
+      left: 25px;
+      position: absolute;
+      top: 0;
+      width: 174px; }
+    .logged_out #menu .login input[type=password] {
+      border-bottom-color: #a9a9a9;
+      border-right-color: #a9a9a9;
+      left: 25px;
+      position: absolute;
+      top: 32px;
+      width: 174px; }
+    .logged_out #menu .login input[type=submit] {
+      background-color: #3e778b;
+      background-position: 0 -30px;
+      border-bottom-color: #525252;
+      border-right-color: #525252;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 110px; }
+    .logged_out #menu .login .remember {
+      height: 15px;
+      line-height: 15px;
+      overflow: hidden;
+      position: absolute;
+      right: -15px;
+      top: 40px;
+      width: 125px; }
+      .logged_out #menu .login .remember input {
+        left: -100px;
+        position: absolute; }
+      .logged_out #menu .login .remember label {
+        background: url(../images/checkbox.png) 0 0 no-repeat;
+        display: block;
+        height: 15px;
+        line-height: 15px;
+        padding: 0 0 0 20px; }
+        .logged_out #menu .login .remember label.checked {
+          background-position: 0 -40px; }
+    .logged_out #menu .login .apply {
+      bottom: 0;
+      border-top: 1px solid #666;
+      left: 0;
+      padding: 5px 0 0;
+      position: absolute;
+      right: 0; }
+  .logged_out #menu ul {
+    background-image: url(../images/menu-home.png);
+    height: 284px;
+    left: -10px;
+    padding: 16px 0 0 375px;
+    width: 595px; }

@@ -1,11 +1,16 @@
 %p#notice= notice
 %p
   %b Game:
-  = render @game
+  = render @game if @game
 %p
   %b Name:
   = @character.name
+  %br/
+  %b Server:
+  = @character.server  
+  
 = link_to 'User Profile', user_profile_path(UserProfile.find(current_user))
 |
-\#{link_to 'Edit', edit_character_path(@character)} |
+\#{link_to 'Edit', edit_game_swtor_character_path(@game, @character)}
+|
 \#{js_back}

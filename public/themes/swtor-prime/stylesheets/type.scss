@@ -13,9 +13,12 @@ body {
   line-height: 1.3em;
 }
 
-h1 { @include heading(2.4em, #5ba7b4) }
-h2 { @include heading(1.8em, #5ba7b4) }
-h3 { @include heading(1.2em, #5ba7b4) }
+h1 {
+  @include heading(2.4em, #5ba7b4);
+  text-shadow: 2px 2px 2px #000;
+}
+h2 { @include heading(1.8em, #5ba7b4); }
+h3 { @include heading(1.2em, #5ba7b4); }
 
 p,
 ol,
@@ -88,6 +91,12 @@ textarea {
     span {
       color: #caa59d;
     }
+    span a {
+      text-decoration: underline;
+    }
+    em {
+      font-weight: bold;
+    }
     strong {
       color: #fff;
       font-family: 'SansationRegular', serif;
@@ -103,10 +112,24 @@ textarea {
       }
     }
     &.alert span,
-    &.alert span *,
+    &.alert span * {
+      color: #000;
+      a {
+        color: #dddca6;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
     &.notice span,
     &.notice span * {
       color: #000;
+      a {
+        color: #8b3030;
+        &:hover {
+          color: #a13c3c;
+        }
+      }
     }
   }
 }
@@ -114,13 +137,17 @@ textarea {
 #header {
   .title {
     @include heading(2.4em, #939393);
-    a { 
+    text-shadow: 2px 2px 2px #000;
+    a {
       text-decoration: none;
     } 
   }
   .slogan {
     @include heading(0.9em, #484c4e);
     letter-spacing: 0.2em;
+  }
+  .userbox {
+    font-size: 0.8em;
   }
 }
 
@@ -151,11 +178,10 @@ textarea {
     li {
       a {
         color: #181a1b;
-        font-family: 'SansationBold', serif;
-        font-size: 1.2em;
+        font-family: 'SansationRegular', serif;
+        font-size: 1.3em;
         text-decoration: none;
         text-transform: uppercase;
-        text-shadow: 1px 1px 1px #4e4f4f;
       }
       &:hover {
         a {

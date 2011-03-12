@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  
   def create  
     if user = User.authenticate(params[:email], params[:password])
       if !user.user_profile.is_active
@@ -13,9 +14,13 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       if user.user_profile == nil
         @profile_type = "UserProfile"
-        redirect_to new_profile_path, :notice => "Logged in successfully. Please create a user profile to finish setting up your account."
+        redirect_to new_profile_path, :notice => (
+          "Logged in as <em>#{user.name}</em>." +
+          " Please create a <a href=\"#{new_profile_path}\">new profile</a>" +
+          " to finish setting up your account."
+        )
       else
-        redirect_to root_path, :notice => "Logged in successfully."
+        redirect_to root_path, :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
       end 
     else
       redirect_to root_path, :alert => "Invalid email/password combination."

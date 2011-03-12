@@ -3,4 +3,4 @@
     - if message[:title]
       %strong= message[:title]
       &mdash;
-    = message[:body]
+    = raw(message[:body])

@@ -5,14 +5,26 @@
     = stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css'
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
-  %body
+  %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
       
       #header
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
-          %p.locale= language_selector
+          %p.locale
+            =language_selector
+          - if logged_in?
+            .userbox
+              - if profile_active?
+                - if character_active?
+                  [#{current_character.name}]
+                = current_profile.name
+                = link_to 'Change', deactivate_profile_path, :class => 'button'
+              - else
+                = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+              =link_to 'Account', edit_user_path(current_user), :class => 'button'
+              =link_to 'Logout', logout_path, :class => 'button'
       
       - if flash[:messages] || has_announcements?
         != has_announcements? ? '<form method="post" action="' << announcement_acknowledgement_path << '" data-remote="true" id="announcements">' : '<div id="announcements">'
@@ -33,22 +45,7 @@
        
       #menu    
         .container              
-          - if logged_in?
-            #userbox
-              %p.salutation 
-                Hello, #{link_to current_user.user_profile.name, current_user}
-              - if profile_active?
-                %p
-                  - if character_active?
-                    [#{current_character.name}]
-                  = current_profile.name
-                  = link_to 'Deactivate Profile', deactivate_profile_path, :class => 'button'
-              - else
-                = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
-              %p
-                = link_to 'Edit User', edit_user_path(current_user), :class => 'button'
-                = link_to 'Logout', logout_path, :class => 'button'
-          - else
+          - if !logged_in?
             = form_tag(session_path, :class => 'login') do
               = label_tag :email
               = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})

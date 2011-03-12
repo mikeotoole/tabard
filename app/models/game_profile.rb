@@ -21,7 +21,7 @@ class GameProfile < Profile
   end
   
   def displayname
-    self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name" 
+    self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name"
   end
   
   def default_character
@@ -31,6 +31,10 @@ class GameProfile < Profile
   
   def default_character=(character)
     self.default_character_proxy_id = character.character_proxy_id
+  end
+  
+  def self.users_game_profile(userprofile, game)
+    @gameprofile = GameProfile.find_by_user_profile_id_and_game_id(userprofile.id, game.id) if userprofile and game
   end
   
 end

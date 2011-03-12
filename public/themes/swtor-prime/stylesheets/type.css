@@ -9,7 +9,8 @@ h1 {
   font-family: 'SansationRegular', serif;
   font-size: 2.4em;
   line-height: 1em;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px #000; }
 
 h2 {
   color: #5ba7b4;
@@ -109,6 +110,10 @@ textarea {
 #announcements li a,
 #announcements li span {
   color: #caa59d; }
+#announcements li span a {
+  text-decoration: underline; }
+#announcements li em {
+  font-weight: bold; }
 #announcements li strong {
   color: #fff;
   font-family: 'SansationRegular', serif;
@@ -118,15 +123,26 @@ textarea {
 #announcements li:focus span,
 #announcements li:focus strong, #announcements li:hover a, #announcements li:hover span, #announcements li:hover strong {
   color: #fff; }
-#announcements li.alert span, #announcements li.alert span *, #announcements li.notice span, #announcements li.notice span * {
+#announcements li.alert span, #announcements li.alert span * {
   color: #000; }
+  #announcements li.alert span a, #announcements li.alert span * a {
+    color: #dddca6; }
+    #announcements li.alert span a:hover, #announcements li.alert span * a:hover {
+      color: #fff; }
+#announcements li.notice span, #announcements li.notice span * {
+  color: #000; }
+  #announcements li.notice span a, #announcements li.notice span * a {
+    color: #8b3030; }
+    #announcements li.notice span a:hover, #announcements li.notice span * a:hover {
+      color: #a13c3c; }
 
 #header .title {
   color: #939393;
   font-family: 'SansationRegular', serif;
   font-size: 2.4em;
   line-height: 1em;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px #000; }
   #header .title a {
     text-decoration: none; }
 #header .slogan {
@@ -136,6 +152,8 @@ textarea {
   line-height: 1em;
   text-transform: uppercase;
   letter-spacing: 0.2em; }
+#header .userbox {
+  font-size: 0.8em; }
 
 #menu {
   color: #aaa; }
@@ -154,11 +172,10 @@ textarea {
         color: #fff; }
   #menu ul li a {
     color: #181a1b;
-    font-family: 'SansationBold', serif;
-    font-size: 1.2em;
+    font-family: 'SansationRegular', serif;
+    font-size: 1.3em;
     text-decoration: none;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 1px #4e4f4f; }
+    text-transform: uppercase; }
   #menu ul li:hover a {
     color: #fff; }
   #menu ul li:hover ul a {

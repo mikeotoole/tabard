@@ -1,7 +1,8 @@
 class WowCharacter < BaseCharacter
-  
-  def game
-    Game.find_by_type("Wow")
-  end
+  # belongs_to :wow, :foreign_key => :game_id
+  # 
+  # def game
+  #   self.wow
+  # end
   
 end
