@@ -13,9 +13,12 @@ class BaseCharactersController < ApplicationController
           when "Wow"
             redirect_to(new_game_wow_character_path(@game))
             return
+          else
+            redirect_to(:back, :alert => 'Game not found.')
+            return
         end
       else
-        redirect_to(:back)
+        redirect_to(:back, :alert => 'Please select a game.')
       end  
   end
 end

@@ -5,7 +5,21 @@
 %p
   %b Name:
   = @character.name
+  %br/
+  %b Level:
+  = @character.level
+  %br/
+  %b Faction:
+  = @character.faction
+  %br/
+  %b Race:
+  = @character.race
+  %br/
+  %b Server:
+  = @character.server
+  
 = link_to 'User Profile', user_profile_path(UserProfile.find(current_user))
 |
-\#{link_to 'Edit', edit_wow_character_path(@character)} |
+\#{link_to 'Edit', edit_game_wow_character_path(@game, @character)}
+|
 \#{js_back}

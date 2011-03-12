@@ -2,6 +2,8 @@ class CharacterProxy < ActiveRecord::Base
   belongs_to :game_profile
   belongs_to :character, :polymorphic => true
   
+  validates_presence_of :game_profile, :character
+  
   def self.all_characters
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end

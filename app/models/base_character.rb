@@ -2,7 +2,7 @@ class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
   
   belongs_to :game
-  has_one :character_proxy, :as => :character
+  has_one :character_proxy, :as => :character, :dependent => :destroy
   
   #TODO refactor for new model
   #belongs_to :discussion

@@ -48,6 +48,10 @@ class Game < ActiveRecord::Base
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
+  
+  def characters
+    self.base_characters
+  end
 
   def type_helper
     self.type
