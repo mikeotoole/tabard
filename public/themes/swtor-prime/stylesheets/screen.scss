@@ -16,14 +16,12 @@ button,
 input[type=button],
 input[type=submit] {
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
-  border: 1px solid #000;
-  border-bottom-color: #323333;
-  border-right-color: #323333;
+  border: 1px solid #181a1b;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  height: 30px;
-  line-height: 30px;
+  height: 24px;
+  line-height: 24px;
   padding: 0 15px;
   text-align: center;
   &:focus,
@@ -61,7 +59,7 @@ textarea {
   margin: -5px 0 15px;
   li {
     height: 39px;
-    margin: 5px 0 0 -10px;
+    margin: 5px 0 0;
     position: relative;
     .msg {
       bottom: 0;
@@ -146,105 +144,32 @@ textarea {
     position: absolute;
     top: 70px;
   }
-  .locale {
+  .userbox {
     position: absolute;
     right: 0;
     top: 10px;
+    form,
+    form * {
+      display: inline;
+    }
   }
 }
 
 #menu {
-  height: 300px;
-  margin: 0 0 20px;  
+  height: 60px;
+  margin: 0 0 20px;
   .container {
-    background: url(../images/header-temp.jpg) 0 74px no-repeat;
     height: 300px;
-  }
-  .login {
-    background: url(../images/icon-lock.png) -7px 13px no-repeat;
-    height: 95px;
-    left: 5px;
-    position: absolute;
-    top: 15px;
-    width: 335px;
-    z-index: 2;
-    label {
-      display: none;
-    }
-    input[type=text] {
-      border-bottom-color: #a9a9a9;
-      border-right-color: #a9a9a9;
-      left: 25px;
-      position: absolute;
-      top: 0;
-      width: 174px;
-    }  
-    input[type=password] {
-      border-bottom-color: #a9a9a9;
-      border-right-color: #a9a9a9;
-      left: 25px;
-      position: absolute;
-      top: 32px;
-      width: 174px;
-    }
-    input[type=submit] {
-      background-color: #3e778b;
-      background-position: 0 -30px;
-      border-bottom-color: #525252;
-      border-right-color: #525252;
-      padding: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 110px;
-    }
-    .remember {
-      height: 15px;
-      line-height: 15px;
-      overflow: hidden;
-      position: absolute;
-      right: -15px;
-      top: 40px;
-      width: 125px;
-      input {
-        left: -100px;
-        position: absolute;
-      }
-      label {
-        background: url(../images/checkbox.png) 0 0 no-repeat;
-        display: block;
-        height: 15px;
-        line-height: 15px;
-        padding: 0 0 0 20px;
-        &.checked {
-          background-position: 0 -20px;
-        }
-      }
-    }
-    .apply {
-      bottom: 0;
-      border-top: 1px solid #666;
-      left: 0;
-      padding: 5px 0 0;
-      position: absolute;
-      right: 0;
-    }
-  }
-  #userbox {
-    left: 5px;
-    position: absolute;
-    top: 10px;
-    z-index: 2;
   }
   ul {
     background: url(../images/menu.png) top center no-repeat;
-    height: 284px;
-    left: -10px;
-    padding: 16px 0 0 375px;
+    height: 60px;
+    left: 0;
+    padding: 0 7px;
     position: absolute;
     top: 0;
-    width: 595px;
-    z-index: 1;  
+    width: 946px;
+    z-index: 1;
     li {
       float: left;
       position: relative;
@@ -445,5 +370,95 @@ textarea {
     right: 0;
     top: 0;
     width: 220px;
+  }
+}
+
+.logged_out {
+  #announcements li {
+    margin: 5px 0 0 -10px;
+  }
+  #menu {
+    height: 300px;
+    .container {
+      background: url(../images/header-temp.jpg) 0 74px no-repeat;
+      height: 300px;
+    }
+    .login {
+      background: url(../images/icon-lock.png) -7px 13px no-repeat;
+      height: 95px;
+      left: 5px;
+      position: absolute;
+      top: 15px;
+      width: 335px;
+      z-index: 2;
+      label {
+        display: none;
+      }
+      input[type=text] {
+        border-bottom-color: #a9a9a9;
+        border-right-color: #a9a9a9;
+        left: 25px;
+        position: absolute;
+        top: 0;
+        width: 174px;
+      }  
+      input[type=password] {
+        border-bottom-color: #a9a9a9;
+        border-right-color: #a9a9a9;
+        left: 25px;
+        position: absolute;
+        top: 32px;
+        width: 174px;
+      }
+      input[type=submit] {
+        background-color: #3e778b;
+        background-position: 0 -30px;
+        border-bottom-color: #525252;
+        border-right-color: #525252;
+        padding: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 110px;
+      }
+      .remember {
+        height: 15px;
+        line-height: 15px;
+        overflow: hidden;
+        position: absolute;
+        right: -15px;
+        top: 40px;
+        width: 125px;
+        input {
+          left: -100px;
+          position: absolute;
+        }
+        label {
+          background: url(../images/checkbox.png) 0 0 no-repeat;
+          display: block;
+          height: 15px;
+          line-height: 15px;
+          padding: 0 0 0 20px;
+          &.checked {
+            background-position: 0 -40px;
+          }
+        }
+      }
+      .apply {
+        bottom: 0;
+        border-top: 1px solid #666;
+        left: 0;
+        padding: 5px 0 0;
+        position: absolute;
+        right: 0;
+      }
+    }
+    ul {
+      background-image: url(../images/menu-home.png);
+      height: 284px;
+      left: -10px;
+      padding: 16px 0 0 375px;
+      width: 595px;
+    }
   }
 }

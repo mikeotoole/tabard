@@ -36,7 +36,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/new
   # GET /profiles/new.xml
   def new
-    if @profile_type == "UserProfile" || current_user.user_profile == nil
+    if @profile_type == "UserProfile" || current_user.user_profile == nil || @profile_type == nil
       flash.now[:alert] = "Please create a user profile to finish creating your account."
       @profile = UserProfile.new
       @profile.type = "UserProfile"
