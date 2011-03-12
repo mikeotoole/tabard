@@ -1,5 +1,5 @@
 class GameProfile < Profile
-  has_many :character_proxies, :dependent => :destroy
+  has_many :character_proxies, :dependent => :destroy, :after_add => :default_proxy_adder
   belongs_to :game
   belongs_to :user_profile
   
@@ -26,7 +26,7 @@ class GameProfile < Profile
   
   def default_character
     cp = CharacterProxy.find_by_id(self.default_character_proxy_id)
-    cp ? cp.character : nil
+    cp.character if cp
   end
   
   def default_character=(character)
@@ -35,6 +35,10 @@ class GameProfile < Profile
   
   def self.users_game_profile(userprofile, game)
     @gameprofile = GameProfile.find_by_user_profile_id_and_game_id(userprofile.id, game.id) if userprofile and game
+  end
+  
+  def default_proxy_adder(character_proxy)
+    self.default_character_proxy_id = character_proxy.id
   end
   
 end

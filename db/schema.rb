@@ -37,6 +37,22 @@ ActiveRecord::Schema.define(:version => 20110311051223) do
     t.datetime "updated_at"
   end
 
+  create_table "characters", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+    t.string   "faction"
+    t.string   "race"
+    t.string   "klass"
+    t.string   "server"
+    t.string   "extra"
+    t.integer  "rank"
+    t.integer  "game_profile_id"
+    t.integer  "discussion_id"
+  end
+
   create_table "comments", :force => true do |t|
     t.text     "body"
     t.integer  "character_id"
