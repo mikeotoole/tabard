@@ -1,15 +1,6 @@
 %h1 Listing games
-%table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-  - @games.each do |game|
-    %tr
-      %td= game.name
-      %td= link_to 'Show', game
-      %td= link_to 'Edit', edit_management_game_path(game)
-      %td= link_to 'Destroy', [:management, game], :confirm => 'Are you sure?', :method => :delete
+=render @games
 %br/
 = link_to 'New Game', new_management_game_path
+|
+= link_to 'Management', management_path
