@@ -1,5 +1,7 @@
 = form_for @character do |f|
   .field
+    = f.hidden_field :game_id
+  .field
     = f.label :name
     %br/
     = f.text_field :name

@@ -1,11 +1,11 @@
 %p#notice= notice
 %p
   %b Game:
-  = render @game
+  = render @game if @game
 %p
   %b Name:
   = @character.name
 = link_to 'User Profile', user_profile_path(UserProfile.find(current_user))
 |
-\#{link_to 'Edit', edit_character_path(@character)} |
+\#{link_to 'Edit', edit_wow_character_path(@character)} |
 \#{js_back}

@@ -125,9 +125,9 @@ Bv::Application.routes.draw do
     resources :swtor_characters
   end
   
-  resources :base_characters
   resources :wow_characters
   resources :swtor_characters
+  resources :base_characters
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

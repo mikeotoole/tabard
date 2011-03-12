@@ -3,57 +3,57 @@ class SwtorCharactersController < ApplicationController
   respond_to :html, :xml, :js
     
   def index
-    @characters = BaseCharacter.all
+    @characters = SwtorCharacter.all
   end
   
-  # GET /characters/1/edit
+  # GET /swtor_characters/1/edit
   def edit
-    @character = CharacterProxy.find_by_character_id(params[:id])
+    @character = SwtorCharacter.find_by_id(params[:id])
   end
   
-  # GET /characters/1
-  # GET /characters/1.xml
+  # GET /swtor_characters/1
+  # GET /swtor_characters/1.xml
   def show
-      @character = Character.find(params[:id])
-      @game = Game.find(@character.game_id)
+      @character = SwtorCharacter.find_by_id(params[:id])
+      @game = Game.find_by_id(@character.game_id) if @character
   
       respond_with(@character)
   end
   
-  # GET /characters/new
-  # GET /characters/new.xml
+  # GET /swtor_characters/new
+  # GET /swtor_characters/new.xml
   def new
       @character = SwtorCharacter.new
-      #TODO need to set game_id
+      @character.game_id = params[:game_id]
   
       respond_with(@character)
   end
 
-  # POST /games/game_id/characters
-  # POST /games/game_id/characters.xml
+  # POST /swtor_characters
+  # POST /swtor_characters.xml
   def create
-    @game = Game.find_by_id(params[:character][:game_id])
-    @character = @game.characters.factory(@game.type, params[:character])
+    @character = SwtorCharacter.new(params[:swtor_character])
+    #TODO need to add the CharacterProxy
 
     respond_to do |format|
       if @character.save
-        current_user.add_character(@character, params[:default_character])
-        format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :notice => 'Character was successfully created.' }
+        format.html { redirect_to(game_character_path(@game, @character), :notice => 'Character was successfully created.') }
+        format.xml  { render :xml => @character, :status => :created, :location => @character }
       else
-        format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :alert => 'Unable to add character' }
+        format.html { render :action => "new" }
         format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # PUT /games/game_id/characters/1
-  # PUT /games/game_id/characters/1.xml
+  # PUT /swtor_characters/1
+  # PUT /swtor_characters/1.xml
   def update
-    @character = Character.find(params[:id])
-    @game = Game.find(@character.game_id)
+    @character = SwtorCharacter.find_by_id(params[:id])
+    @game = Game.find_by_id(@character.game_id) if @character
 
     respond_to do |format|
-      if @character.update_attributes(params[:character])
+      if @character.update_attributes(params[:swtor_character])
         flash[:notice] = 'Character was successfully updated.'
         respond_with(@character)
       else
@@ -63,11 +63,11 @@ class SwtorCharactersController < ApplicationController
     end
   end
 
-  # DELETE /characters/1
-  # DELETE /characters/1.xml
+  # DELETE /swtor_characters/1
+  # DELETE /swtor_characters/1.xml
   def destroy
-    @character = Character.find(params[:id])
-    @character.destroy
+    @character = SwtorCharacter.find_by_id(params[:id])
+    @character.destroy if @character
     
     respond_to do |format|
       format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :notice => 'Character deleted' }
