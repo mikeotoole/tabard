@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110311051223) do
+ActiveRecord::Schema.define(:version => 20110313002830) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(:version => 20110311051223) do
     t.integer  "user_id"
     t.integer  "game_id"
     t.integer  "user_profile_id"
-    t.integer  "discussion_space_id"
+    t.integer  "discussion_id"
     t.integer  "status"
     t.integer  "personal_discussion_space_id"
     t.integer  "default_character_proxy_id"
