@@ -14,13 +14,7 @@
           .slogan We need a slogan
           - if logged_in?
             .userbox
-              - if profile_active?
-                - if character_active?
-                  [#{current_character.name}]
-                = current_profile.name
-                = link_to 'Switch', deactivate_profile_path, :class => 'button'
-              - else
-                = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+              = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
               =link_to 'Account', edit_user_path(current_user), :class => 'button'
               =link_to 'Logout', logout_path, :class => 'button'
       
@@ -90,7 +84,7 @@
                 - locales.each do |locale|
                   %li{ :class => locale[:locale] + (locale[:is_current] ? ' current' : '') }
                     = link_to({ :locale => locale[:locale] }) do
-                      %img{ :src => 'images/locales/' + locale[:locale] + '.png', :alt => '' }
+                      = image_tag '/images/locales/' + locale[:locale] + '.png', :alt => ''
                       = locale[:language]
 
       #body

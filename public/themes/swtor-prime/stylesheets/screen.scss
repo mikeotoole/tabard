@@ -167,9 +167,6 @@ textarea {
     form,
     form * {
       display: inline-block;
-      button {
-        background-position: 0 -30px;
-      }
     }
   }
 }
@@ -293,6 +290,9 @@ textarea {
             padding: 0 7px;
             position: absolute;
             right: 108px;
+            &:focus {
+              background: #333;
+            }
           }
           button {
             background-position: 0 -30px;

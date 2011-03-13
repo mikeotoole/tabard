@@ -169,9 +169,6 @@ textarea {
     #header .userbox form,
     #header .userbox form * {
       display: inline-block; }
-      #header .userbox form button,
-      #header .userbox form * button {
-        background-position: 0 -30px; }
 
 #menu {
   height: 60px;
@@ -336,6 +333,8 @@ textarea {
             padding: 0 7px;
             position: absolute;
             right: 108px; }
+            #menu ul li.search form input:focus {
+              background: #333; }
           #menu ul li.search form button {
             background-position: 0 -30px;
             position: absolute;
