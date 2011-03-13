@@ -111,6 +111,7 @@ class UserProfile < Profile
                                         :system => true,
                                         :personal_space => true,
                                         :user_profile => self)
+    self.save
   end
   
 end
