@@ -56,9 +56,9 @@ class User < ActiveRecord::Base
     self.user_profile.characters
   end
  
-  # def all_game_profiles
-  #   self.user_profile.game_profiles if user_profile
-  # end
+  def all_game_profiles
+    self.user_profile.game_profiles if user_profile
+  end
   
   def user_profile_id
     user_profile.id

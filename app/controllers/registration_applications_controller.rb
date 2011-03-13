@@ -27,9 +27,8 @@ class RegistrationApplicationsController < ApplicationController
     @profile = UserProfile.new 
     @user = User.new
     
-    @form = SiteForm.application_form
-    @registration_application.site_form = @form
-    @registration_application.answers.build
+    @registration_application.site_form = SiteForm.application_form
+    @registration_application.answers.build if @registration_application.answers.count == 0
 
     respond_with(@registration_application)
   end
@@ -63,8 +62,8 @@ class RegistrationApplicationsController < ApplicationController
         format.html { redirect_to root_path, :notice => 'Registration application was successfully submitted. Confirmation emailed.' }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
-        @form = SiteForm.application_form
-        format.html { render :action => "new", :object => @registration_application }
+        @registration_application.answers.build if @registration_application.answers.count == 0
+        format.html { render :action => "new" }#, :object => @registration_application }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end
     end
