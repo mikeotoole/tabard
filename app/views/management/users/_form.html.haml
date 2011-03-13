@@ -12,10 +12,6 @@
     %br/
     = f.text_field :email
   .field
-    = f.label :is_active
-    %br/
-    = f.check_box :is_active
-  .field
     = f.label :password
     %br/
     = f.password_field :password
@@ -23,5 +19,10 @@
     = f.label :password_confirmation
     %br/
     = f.password_field :password_confirmation
+  = f.fields_for :user_profile do |profile_fields|
+    .field
+      = profile_fields.label :name
+      %br/
+      = profile_fields.text_field :name   
   .actions
     = submit_or_cancel(f)

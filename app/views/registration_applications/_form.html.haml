@@ -33,11 +33,12 @@
         = @profile.errors[:name]
       %br/
       = profile.text_field :name
-  .fields
-    = fields_for :character do |character|
-      - link_to_add_character("Add Character", character, :character)
-  - if @form != nil
-    - @form.questions.each do |question|
+  -#.fields
+    = #fields_for :character do |character|
+      - #link_to_add_character("Add Character", character, :character)
+  - if @registration_application.site_form != nil
+    - @registration_application.site_form.questions.each do |question|
       = render :partial => question, :locals => {:submission => application}
   .actions
-    = application.submit 'Submit Application', :disable_with => 'Please Wait...'
+    = application.submit 'Submit Application' #, :disable_with => 'Please Wait...'
+    

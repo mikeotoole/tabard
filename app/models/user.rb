@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password
   
+  accepts_nested_attributes_for :user_profile
+  
   def owns(resource)
     resource.respond_to?('owned_by_user') ? resource.owned_by_user : false
   end
@@ -54,9 +56,9 @@ class User < ActiveRecord::Base
     self.user_profile.characters
   end
  
-  # def all_game_profiles
-  #   self.user_profile.game_profiles if user_profile
-  # end
+  def all_game_profiles
+    self.user_profile.game_profiles if user_profile
+  end
   
   def user_profile_id
     user_profile.id
@@ -65,6 +67,14 @@ class User < ActiveRecord::Base
   #TODO should this return email if user_profile.name is blank?
   def name
     user_profile != nil ? user_profile.name : email
+  end
+  
+  def status_string
+    self.user_profile.status_string
+  end
+  
+  def is_inactive
+    self.user_profile.is_inactive
   end
   
   def self.authenticate(email, password) 

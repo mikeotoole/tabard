@@ -1,5 +1,8 @@
-= render @game
+%h1= @game.name
+%br/
 %h3 Characters:
-#characters
-  = render @game.characters
+- if @game.characters != nil
+  - for character in @game.characters
+    = render :partial => character
+  
 = js_back

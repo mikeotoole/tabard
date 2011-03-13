@@ -1,17 +1,22 @@
 %h1 Listing users
 %table
   %tr
+    %th Name
     %th Email
-    %th Is Active
+    %th User Status
     %th
     %th
     %th
   - @users.each do |user|
     %tr
-      %td= user.email
-      %td= user.is_active
-      %td= link_to 'Show', user
+      %td= link_to user.name, user_profile_path(user.user_profile)
+      %td= link_to user.email, user
+      %td= user.status_string
       %td= link_to 'Edit', edit_management_user_path(user)
-      %td= link_to 'Destroy', [:management, user], :confirm => 'Are you sure?', :method => :delete
+      - if user.is_inactive
+        %td= link_to 'Activate', activate_management_user_path(user)
+        %td= link_to 'Destroy', [:management, user], :confirm => 'Are you sure? This will remove everything about user including characters.', :method => :delete
+      - else  
+        %td= link_to 'Deactivate', deactivate_management_user_path(user), :confirm => 'Are you sure? This keep user from logging in. All user information will be kept.'
 %br/
 = link_to 'New User', new_management_user_path

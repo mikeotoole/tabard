@@ -1,5 +1,20 @@
 %h1 Editing Game
-= render 'form'
-= link_to 'Show', @game
-|
-\#{link_to js_back}
+= form_for [:management, @game] do |f|
+  - if @game.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@game.errors.count, "error")
+        prohibited this game from being saved:
+      %ul
+        - @game.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :is_active
+    %br/
+    = f.check_box :is_active
+  .actions
+    = submit_or_cancel(f)

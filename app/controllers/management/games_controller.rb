@@ -1,5 +1,8 @@
 class Management::GamesController < ApplicationController
-   before_filter :authenticate
+  before_filter :authenticate
+  respond_to :html, :xml   
+   
+   
   # GET /management/games
   # GET /management/games.xml
   def index
@@ -7,28 +10,9 @@ class Management::GamesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @games = Game.all
-  
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @games }
-      end
+      respond_with(@games)
     end
   end
-
-#  # GET /management/games/1
-#  # GET /management/games/1.xml
-#  def show
-#    if !current_user.can_show("Game") 
-#      render :nothing => true, :status => :forbidden
-#    else 
-#      @game = Game.find(params[:id])
-#  
-#      respond_to do |format|
-#        format.html # show.html.erb
-#        format.xml  { render :xml => @game }
-#      end
-#    end
-#  end
 
   # GET /management/games/new
   # GET /management/games/new.xml
@@ -37,11 +21,7 @@ class Management::GamesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @game = Game.new
-  
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @game }
-      end
+      respond_with(@game)
     end
   end
 
