@@ -24,8 +24,9 @@ class User < ActiveRecord::Base
     resource.respond_to?('owned_by_user') ? resource.owned_by_user : false
   end
   
-  def profiles
-    (Array.new() << (user_profile)).concat(game_profiles)
+  def set_active_profile(profile)
+    #profile.active = true
+    #profile.save
   end
   
   def active_profile_helper_collection

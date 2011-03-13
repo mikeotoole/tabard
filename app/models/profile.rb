@@ -16,7 +16,6 @@ class Profile < ActiveRecord::Base
     super
   end
   
-  
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
