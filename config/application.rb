@@ -41,6 +41,6 @@ module Bv
     config.filter_parameters += [:password]
     
     # Setting the locale
-    config.i18n.default_locale = 'en'
+    config.i18n.default_locale = 'en-us'
   end
 end

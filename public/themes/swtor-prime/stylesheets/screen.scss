@@ -1,3 +1,22 @@
+@mixin border_radius($top_left, $top_right: $top_left, $bottom_right: $top_left, $bottom_left: $top_left) {
+  @if unitless($top_left) { $top_left: 1px * $top_left }
+  @if unitless($top_right) { $top_right: 1px * $top_right }
+  @if unitless($bottom_right) { $bottom_right: 1px * $bottom_right }
+  @if unitless($bottom_left) { $bottom_left: 1px * $bottom_left }
+  -webkit-border-top-left-radius: $top_left;
+  -webkit-border-top-right-radius: $top_right;
+  -webkit-border-bottom-right-radius: $bottom_right;
+  -webkit-border-bottom-left-radius: $bottom_left;
+  -moz-border-radius-topleft: $top_left;
+  -moz-border-radius-topright: $top_right;
+  -moz-border-radius-bottomright: $bottom_right;
+  -moz-border-radius-bottomleft: $bottom_left;
+  border-top-left-radius: $top_left;
+  border-top-right-radius: $top_right;
+  border-bottom-right-radius: $bottom_right;
+  border-bottom-left-radius: $bottom_left;
+}
+
 body {
   background: #181a1b;
   min-width: 980px;
@@ -17,10 +36,8 @@ input[type=button],
 input[type=submit] {
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
   border: 1px solid #181a1b;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  height: 24px;
+  @include border_radius(5);
+  height: 26px;
   line-height: 24px;
   padding: 0 15px;
   text-align: center;
@@ -30,6 +47,9 @@ input[type=submit] {
     background-position: 0 -60px !important;
   }
 }
+.button {
+  height: 24px;
+}
 input[type=text],
 input[type=password],
 textarea {
@@ -37,9 +57,7 @@ textarea {
   border: 1px solid #000;
   border-bottom-color: #323333;
   border-right-color: #323333;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  @include border_radius(5);
   height: 28px;
   line-height: 28px;
   padding: 0 7px;
@@ -65,9 +83,7 @@ textarea {
       bottom: 0;
       display: block;
       background: #6e2222;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
+      @include border_radius(5);
       left: 0;
       line-height: 39px;
       overflow: hidden;
@@ -150,7 +166,10 @@ textarea {
     top: 10px;
     form,
     form * {
-      display: inline;
+      display: inline-block;
+      button {
+        background-position: 0 -30px;
+      }
     }
   }
 }
@@ -174,54 +193,151 @@ textarea {
       float: left;
       position: relative;
       a {
+        border: 1px solid transparent;
         float: left;
         display: block;
         height: 24px;
         line-height: 24px;
         margin: 7px 0;
         padding: 10px 18px;
+        position: relative;
       }
-      ul {
+      ul,
+      form {
         display: none;
       }
       &:hover {
         a {
           background: #000;
-          border-radius: 4px;
-          -webkit-border-radius: 4px;
-          -moz-border-radius: 4px;
+          border: 1px solid #666;
+          border-bottom: 0;
+          @include border_radius(4,4,0,0);
         }
-        ul {
+        ul,
+        form {
           background: #000;
-          border-radius: 4px;
-          -webkit-border-radius: 4px;
-          -moz-border-radius: 4px;
+          border: 1px solid #666;
+          @include border_radius(0,4,4,4);
+          border-top: 0;
           display: block;
           height: auto;
           left: 0;
           position: absolute;
           padding: 10px;
-          top: 38px;
+          top: 46px;
           width: 200px;
           li {
             display: inline;
             float: none;
             a {
               background: transparent;
+              border: 0;
               border-left: 3px solid transparent;
-              border-radius: 3px;
-              -webkit-border-radius: 3px;
-              -moz-border-radius: 3px;
+              @include border_radius(3);
               border-top: 1px solid #222;
               float: none;
               height: auto;
               line-height: 1.2em;
               margin: 0;
               padding: 10px 5px;
+              &:focus,
               &:hover {
-                background: #3e778b;
+                background-color: #3e778b;
                 border-left-color: #ccc;
                 padding: 10px 2px 10px 8px;
+              }
+            }
+            &.current {
+              a {
+                background-image: url(../images/bullet-arrow.png);
+                background-position: 2px center;
+                background-repeat: no-repeat;
+                padding-left: 14px;
+                &:focus,
+                &:hover {
+                  background-position: 5px center;
+                  padding-left: 17px;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.search {
+        float: none;
+        position: absolute;
+        right: 7px;
+        a.main {
+          background-image: url(../images/menu-icons.png);
+          background-position: -65px -7px;
+          background-repeat: no-repeat;
+          overflow: hidden;
+          text-indent: -500em;
+          width: 14px;
+        }
+        &:hover a.main {
+          background-position: -65px -67px;
+        }
+        form {
+          @include border_radius(4,0,4,4);
+          height: 24px;
+          left: auto;
+          right: 0;
+          width: 300px;
+          input {
+            background: #222;
+            @include border_radius(3);
+            height: 24px;
+            left: 10px;
+            line-height: 24px;
+            padding: 0 7px;
+            position: absolute;
+            right: 108px;
+          }
+          button {
+            background-position: 0 -30px;
+            position: absolute;
+            right: 10px;
+            &:focus,
+            &:hover {
+              background-position: 0 -60px;
+            }
+          }
+        }
+      }
+      &.locale {
+        float: none;
+        position: absolute;
+        right: 57px;
+        a.main {
+          background-image: url(../images/menu-icons.png);
+          background-position: -5px -7px;
+          background-repeat: no-repeat;
+          overflow: hidden;
+          padding-bottom: 5px;
+          text-indent: -500em;
+          width: 14px;
+          z-index: 2;
+        }
+        &:hover a.main {
+          background-position: -5px -67px;
+        }
+        ul {
+          @include border_radius(4,0,4,4);
+          left: auto;
+          right: 0;
+          img {
+            border: 1px solid #000;
+            position: absolute;
+            right: 11px;
+            top: 10px;
+          }
+          a {
+            background-image: none;
+            &:focus,
+            &:hover {
+              img {
+                border-color: #fff;
               }
             }
           }
@@ -258,9 +374,7 @@ textarea {
         }
         &.body {
           background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-          border-radius: 3px;
-          -webkit-border-radius: 3px;
-          -moz-border-radius: 3px;
+          @include border_radius(3);
           margin: 0 0 2px;
           min-height: 30px;
           padding: 45px 20px 20px 105px;
@@ -280,6 +394,7 @@ textarea {
             padding: 0 5px;
             margin: 0 2px 0 0;
             text-decoration: none;
+            &:focus,
             &:hover {
               background: #5ba7b4;
             }
@@ -305,9 +420,7 @@ textarea {
 }
 #new_comment {
   background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
+  @include border_radius(3);
   height: 150px;
   padding: 20px;
   position: relative;
@@ -350,13 +463,12 @@ textarea {
     a {
       border-top: 1px solid #222;
       border-left: 3px solid transparent;
-      border-radius: 3px;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
+      @include border_radius(3);
       display: block;
       margin: 0 0 0 -3px;
       padding: 7px 14px 7px 0;
-      text-transform: uppercase;      
+      text-transform: uppercase;
+      &:focus,
       &:hover {
         background: #3e778b;
         border-left: 3px solid #ccc;
