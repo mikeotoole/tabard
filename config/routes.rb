@@ -86,7 +86,12 @@ Bv::Application.routes.draw do
   match 'management' => "management/management#index"
   
   namespace "management" do
-    resources :users
+    resources :users, :except => :show do
+      member do
+        get :activate
+        get :deactivate
+      end
+    end
     resources :games, :except => :show
     resources :roles
     resources :newsletters
@@ -113,7 +118,7 @@ Bv::Application.routes.draw do
   
   resources :permissions  
   
-  resources :users
+  resources :users, :only => [:index, :show, :edit]
   resource :session
   
   resource :active_profile
