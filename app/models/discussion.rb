@@ -1,11 +1,15 @@
 class Discussion < ActiveRecord::Base
   belongs_to :user_profile
-  belongs_to :character
+  belongs_to :character_proxy
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
   
   def users_name
     user_profile.displayname if user_profile
+  end
+  
+  def character
+    character_proxy.character if character_proxy
   end
   
   def characters_name
