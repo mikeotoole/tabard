@@ -48,6 +48,7 @@ em {
 
 a {
   text-decoration: underline;
+  &:focus,
   &:hover {
     color: #5ba7b4;
   }
@@ -116,6 +117,7 @@ textarea {
       color: #000;
       a {
         color: #dddca6;
+        &:focus,
         &:hover {
           color: #fff;
         }
@@ -126,6 +128,7 @@ textarea {
       color: #000;
       a {
         color: #8b3030;
+        &:focus,
         &:hover {
           color: #a13c3c;
         }
@@ -153,8 +156,11 @@ textarea {
 
 #menu {
   color: #aaa;
-  a:hover {
-    color: #fff;
+  a {
+    &:focus,
+    &:hover {
+      color: #fff;
+    }
   }
   .login {
     input[type=submit] {
@@ -173,7 +179,7 @@ textarea {
         }
       }
     }
-  }  
+  }
   ul {
     li {
       a {
@@ -193,21 +199,20 @@ textarea {
             font-family: arial, sans-serif;
             font-size: 0.7em;
             letter-spacing: 0.1em;
+            &:focus,
             &:hover {
               color: #fff;
             }
+          }
+          .current a {
+            color: #fff;
           }
         }
       }
     }
   }
-  #userbox {
-    p {
-      font-size: 0.8em;
-    }
-    .salutation {
-      font-weight: bold;
-    }
+  .search button {
+    color: #000 !important;
   }
 }
 
@@ -222,6 +227,7 @@ textarea {
     &.actions a {
       color: #666;
       font-size: 0.8em;
+      &:focus,
       &:hover {
         color: #000;
       }
@@ -240,6 +246,7 @@ textarea {
   a {
     color: #666;
     text-decoration: none;
+    &:focus,
     &:hover {
       color: #5ba7b4;
     }
@@ -253,6 +260,7 @@ textarea {
       a {
         font-size: 0.7em;
         letter-spacing: 0.1em;
+        &:focus,
         &:hover {
           color: #fff;
         }

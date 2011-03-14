@@ -68,7 +68,7 @@ em {
 
 a {
   text-decoration: underline; }
-  a:hover {
+  a:focus, a:hover {
     color: #5ba7b4; }
 
 button,
@@ -127,13 +127,13 @@ textarea {
   color: #000; }
   #announcements li.alert span a, #announcements li.alert span * a {
     color: #dddca6; }
-    #announcements li.alert span a:hover, #announcements li.alert span * a:hover {
+    #announcements li.alert span a:focus, #announcements li.alert span a:hover, #announcements li.alert span * a:focus, #announcements li.alert span * a:hover {
       color: #fff; }
 #announcements li.notice span, #announcements li.notice span * {
   color: #000; }
   #announcements li.notice span a, #announcements li.notice span * a {
     color: #8b3030; }
-    #announcements li.notice span a:hover, #announcements li.notice span * a:hover {
+    #announcements li.notice span a:focus, #announcements li.notice span a:hover, #announcements li.notice span * a:focus, #announcements li.notice span * a:hover {
       color: #a13c3c; }
 
 #header .title {
@@ -157,7 +157,7 @@ textarea {
 
 #menu {
   color: #aaa; }
-  #menu a:hover {
+  #menu a:focus, #menu a:hover {
     color: #fff; }
   #menu .login input[type=submit] {
     color: #181a1b !important; }
@@ -183,12 +183,12 @@ textarea {
     font-family: arial, sans-serif;
     font-size: 0.7em;
     letter-spacing: 0.1em; }
-    #menu ul li:hover ul a:hover {
+    #menu ul li:hover ul a:focus, #menu ul li:hover ul a:hover {
       color: #fff; }
-  #menu #userbox p {
-    font-size: 0.8em; }
-  #menu #userbox .salutation {
-    font-weight: bold; }
+  #menu ul li:hover ul .current a {
+    color: #fff; }
+  #menu .search button {
+    color: #000 !important; }
 
 .comments span.author a {
   color: #5ba7b4;
@@ -198,7 +198,7 @@ textarea {
 .comments span.actions a {
   color: #666;
   font-size: 0.8em; }
-  .comments span.actions a:hover {
+  .comments span.actions a:focus, .comments span.actions a:hover {
     color: #000; }
 
 #new_comment .actions input {
@@ -207,7 +207,7 @@ textarea {
 #footer a {
   color: #666;
   text-decoration: none; }
-  #footer a:hover {
+  #footer a:focus, #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {
   color: #999; }
@@ -216,7 +216,7 @@ textarea {
   #footer .menu ul a {
     font-size: 0.7em;
     letter-spacing: 0.1em; }
-    #footer .menu ul a:hover {
+    #footer .menu ul a:focus, #footer .menu ul a:hover {
       color: #fff; }
 #footer .copyright {
   color: #333;

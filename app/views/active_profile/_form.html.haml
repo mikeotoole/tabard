@@ -1,5 +1,10 @@
 = form_tag active_profile_path do
-  %p
-    = label_tag 'active_profile_character_id', 'Profile'
-    = collection_select(:active_profile, :character_id, current_user.active_profile_helper_collection, :character_id, :name)
-    = submit_tag 'Activate'
+  - if profile_active?
+    %h3
+      Active Profile
+    = link_to "Profile", @profile
+  - else
+    Select a Profile
+  = collection_select(:active_profile, :character_id, current_user.active_profile_helper_collection, :character_id, :name)
+  %button{ :type => 'submit' }
+    Switch

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :group_flash_messages, :set_local
+  before_filter :group_flash_messages, :set_locale
   after_filter :clear_flash_messages
   
   # Puts all of the notices and alerts into the messages array
@@ -21,7 +21,30 @@ class ApplicationController < ActionController::Base
   end  
   
   protected
-    def set_local
+  
+    def profiles
+      profile_collection = current_user.active_profile_helper_collection
+      profiles = Array.new  
+      profile_collection.each do |profile| 
+        profiles << { :name => profile.name, :is_current => false }       
+      end
+      profiles[0].is_current = true
+      profiles
+    end
+    helper_method :profiles
+  
+    def locales
+      locales = [
+        { :locale => 'en-us', :language => 'American English' },
+        { :locale => 'pirate', :language => 'Pirate' },
+        { :locale => 'zombie', :language => 'Zombie' }]
+      locales.each do |locale|
+        locale[:is_current] = I18n.locale.to_s == locale[:locale] ? true : false
+      end
+    end
+    helper_method :locales
+  
+    def set_locale
       I18n.locale = params[:locale] unless params[:locale].blank?
     end
     
@@ -31,6 +54,7 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find_by_id(session[:user_id]) 
     end 
     helper_method :current_user
+    
     
     # Filter method to enforce a login requirement 
     # Apply as a before_filter on any controller you want to protect 

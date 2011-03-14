@@ -64,7 +64,7 @@ class UserProfile < Profile
   end
   
   def set_active
-    self.status = 2  
+    self.status = 2
   end
   
   def set_inactive

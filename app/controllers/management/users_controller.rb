@@ -35,6 +35,7 @@ class Management::UsersController < ApplicationController
   # GET /management/users/new.xml
   def new
     @user = User.new
+    @user.user_profile = UserProfile.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -58,7 +59,8 @@ class Management::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        UserProfile.create(:user_id => @user.id)
+        @user.user_profile.set_active
+        @user.user_profile.save
         format.html { redirect_to(management_users_path, :notice => 'User was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else
@@ -99,6 +101,44 @@ class Management::UsersController < ApplicationController
       respond_to do |format|
         format.html { redirect_to(management_users_path) }
         format.xml  { head :ok }
+      end
+    end
+  end
+  
+  def activate
+    if !current_user.can_update("User") and User.find(params[:id]) != current_user
+      render :nothing => true, :status => :forbidden
+    else 
+      @user = User.find(params[:id])
+      @user.user_profile.set_active
+      
+      respond_to do |format|
+        if @user.user_profile.save
+          format.html { redirect_to(management_users_path, :notice => 'User was successfully activated.') }
+          format.xml  { head :ok }
+        else
+          format.html { redirect_to(management_users_path, :alert => 'Error making active.') }
+          format.xml  { render :xml => @user.user_profile.errors, :status => :unprocessable_entity }
+        end
+      end
+    end
+  end
+  
+  def deactivate
+    if !current_user.can_update("User") and User.find(params[:id]) != current_user
+      render :nothing => true, :status => :forbidden
+    else 
+      @user = User.find(params[:id])
+      @user.user_profile.set_inactive
+      
+      respond_to do |format|
+        if @user.user_profile.save
+          format.html { redirect_to(management_users_path, :notice => 'User was successfully deactivated.') }
+          format.xml  { head :ok }
+        else
+          format.html { redirect_to(management_users_path, :alert => 'Error making inactive.') }
+          format.xml  { render :xml => @user.user_profile.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

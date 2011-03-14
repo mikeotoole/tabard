@@ -3,13 +3,13 @@
 
 pirate:
   general:
-    are_you_sure: Are you sure? Yar
+    are_you_sure: Are you sure, land lubber?
     back: Back Yar
     canel: Cancel Yar
     create: Create Yar
     delete: Delete Yar
     edit: Edit Yar
     editing: Editing Yar
-    terms_of_use: This be the terms land lover!
+    terms_of_use: Terms of the Sea
   hello: "Ahoy world"
   

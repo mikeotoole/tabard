@@ -12,17 +12,9 @@
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
-          %p.locale
-            =language_selector
           - if logged_in?
             .userbox
-              - if profile_active?
-                - if character_active?
-                  [#{current_character.name}]
-                = current_profile.name
-                = link_to 'Change', deactivate_profile_path, :class => 'button'
-              - else
-                = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+              = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
               =link_to 'Account', edit_user_path(current_user), :class => 'button'
               =link_to 'Logout', logout_path, :class => 'button'
       
@@ -58,26 +50,42 @@
                 %span= 'Want to join?'
                 = link_to 'Apply now', new_registration_application_path
           %ul
-            %li.main
-              = link_to 'Info', '#'
+            %li
+              = link_to 'Info', '#', { :class => 'main' }
               %ul
                 %li= link_to 'Test Page 1', '#'
                 %li= link_to 'Test Page 2', '#'
                 %li= link_to 'Test Page 3', '#'
-            %li.main
-              = link_to 'Events', :events
-            %li.main
-              = link_to 'Resources', page_spaces_path
+            %li
+              = link_to 'Events', :events, { :class => 'main' }
+            %li
+              = link_to 'Resources', page_spaces_path, { :class => 'main' }
               - if nav_page_spaces
                 %ul
                   - nav_page_spaces.each do |page_space| 
                     %li= link_to page_space.name, page_space
-            %li.main
-              = link_to 'Discussions', :discussion_spaces if current_user
+            %li
+              = link_to 'Discussions', :discussion_spaces, { :class => 'main' } if current_user
               - if nav_discussions
                 %ul
                   - nav_discussions.each do |discussion_space| 
                     %li= link_to discussion_space.name, discussion_space
+            %li.search
+              %a.main
+                Search
+              %form
+                %input
+                %button{ :type => 'submit' }
+                  Search
+            %li.locale
+              %a.main
+                Language
+              %ul
+                - locales.each do |locale|
+                  %li{ :class => locale[:locale] + (locale[:is_current] ? ' current' : '') }
+                    = link_to({ :locale => locale[:locale] }) do
+                      = image_tag '/images/locales/' + locale[:locale] + '.png', :alt => ''
+                      = locale[:language]
 
       #body
         .container
