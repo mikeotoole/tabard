@@ -2,14 +2,11 @@ class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
   
   belongs_to :game
-  has_one :character_proxy, :as => :character, :dependent => :destroy
   
-  #TODO refactor for new model
-  #belongs_to :discussion
+  belongs_to :discussion
    
   validates_presence_of :name, :game
-  
-  #TODO refactor for new model   
+     
   #after_create :create_discussion
    
   def character_proxy_id
@@ -20,15 +17,16 @@ class BaseCharacter < ActiveRecord::Base
     self.id
   end
  
-  #TODO refactor for new model
-  # def create_discussion
-  #   user_profile = self.game_profile.user_profile if game_profile
-  #   self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
-  #                                       :name => self.name,
-  #                                       :body => "Character Discussion",
-  #                                       :character => self,
-  #                                       :user_profile => user_profile)                                 
-  # end
+  def create_discussion
+    return if self.discussion
+    user_profile = self.character_proxy.game_profile.user_profile if self.character_proxy and self.character_proxy.game_profile 
+    self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
+                                        :name => self.name,
+                                        :body => "Character Discussion",
+                                        :character_proxy => self.character_proxy,
+                                        :user_profile => user_profile)   
+    self.save
+  end
  
   # Lets the subclasses use the parents routes. 
   # def self.inherited(child)

@@ -4,6 +4,25 @@ class Role < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy
   accepts_nested_attributes_for :permissions
   
+  before_save :check_for_default_role
+  
+  def check_for_default_role
+    if Role.where(:default_role => true).exists?
+      return unless self.default_role
+      
+      Role.where(:default_role => true).each do |role|
+        role.default_role = false
+        role.save
+      end
+    else
+      self.default_role = true unless self.default_role
+    end
+  end
+  
+  def self.get_default_role
+    return Role.where(:default_role => true).first if Role.where(:default_role => true).exists?
+  end
+  
   def show_permissions
     permissions.where(:show_p => true)
   end

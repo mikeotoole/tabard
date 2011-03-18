@@ -9,3 +9,4 @@ Icon?
 *~
 *.orig
 
+.sass-cache

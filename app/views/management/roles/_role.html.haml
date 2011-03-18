@@ -1,5 +1,6 @@
 = div_for role do
-  %h3= role.name
+  %h3
+    = role.default_role ? "#{role.name} | Default Role" : role.name
   %p
     = link_to "Edit", edit_management_role_path(role)
     | #{link_to "Delete", [:management, role], :confirm => "Are you sure?", :method => :delete}

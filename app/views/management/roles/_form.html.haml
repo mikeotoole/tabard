@@ -12,6 +12,10 @@
     %br/
     = f.text_field :name
   .field
+    = f.label :default_role
+    %br/
+    = f.check_box :default_role
+  .field
     = f.label "Users"
     %br/
     - for user in @users

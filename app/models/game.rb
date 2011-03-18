@@ -8,17 +8,19 @@ class Game < ActiveRecord::Base
  after_create :create_game_discussion_space, :create_character_discussion_space
  
  def create_game_discussion_space
-   discussion_space = DiscussionSpace.create :name => self.name+" Announcements",
+   discussion_space = DiscussionSpace.create( :name => self.name+" Announcements",
                                              :system => true,
-                                             :game => self
+                                             :game => self)
    self.announcement_space_id = discussion_space.id
+   self.save
  end
  
  def create_character_discussion_space
-   discussion_space = DiscussionSpace.create :name => self.name+" Characters",
+   discussion_space = DiscussionSpace.create( :name => self.name+" Characters",
                                              :system => true,
-                                             :game => self
+                                             :game => self)
    self.character_discussion_space_id = discussion_space.id
+   self.save
  end
  
  def announcement_space

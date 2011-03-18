@@ -18,7 +18,13 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password
   
+  after_create :assign_default_role
+  
   accepts_nested_attributes_for :user_profile
+  
+  def assign_default_role
+    self.roles << Role.get_default_role unless not(Role.get_default_role) or self.roles.count >= 1
+  end
   
   def owns(resource)
     resource.respond_to?('owned_by_user') ? resource.owned_by_user : false
@@ -98,6 +104,7 @@ class User < ActiveRecord::Base
   
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
+    return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.show_permissionables.include?(system_resource_name))
         return true
@@ -117,6 +124,7 @@ class User < ActiveRecord::Base
   end
   
   def can_create(system_resource_name)
+    return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.create_permissionables.include?(system_resource_name))
         return true
@@ -136,6 +144,7 @@ class User < ActiveRecord::Base
   end
   
   def can_update(system_resource_name)
+    return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.update_permissionables.include?(system_resource_name))
         return true
@@ -155,6 +164,7 @@ class User < ActiveRecord::Base
   end
   
   def can_delete(system_resource_name)
+    return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.delete_permissionables.include?(system_resource_name))
         return true
@@ -174,6 +184,7 @@ class User < ActiveRecord::Base
   end
   
   def can_special_permissions(system_resource_name,permission_string)
+    return false if not self.user_profile.is_active 
     permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
     if !permissionable_id
       return false
