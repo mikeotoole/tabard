@@ -51,19 +51,6 @@ class ProfilesController < ApplicationController
       format.xml  { render :xml => @profile }
     end
   end
-  
-  # GET /profiles/newgame
-  # GET /profiles/newgame.xml
-  def newgame
-    flash.now[:alert] = "Please create a game profile."
-    @profile = GameProfile.new
-    @profile.type_helper = "GameProfile"
-    @profile.user = current_user
-    respond_to do |format|
-      format.html # newgame.html.erb
-      format.xml  { render :xml => @profile }
-    end
-  end
 
   # GET /profiles/1/edit
   def edit

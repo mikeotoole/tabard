@@ -29,6 +29,7 @@ class GameAnnouncementsController < ApplicationController
   # GET /game_announcements/new.xml
   def new
     @game_announcement = GameAnnouncement.new
+    @game_announcement.game = Game.find_by_id(params[:game_id]) if params[:game_id]
     if !current_user.can_create(@game_announcement)
       render :nothing => true, :status => :forbidden
     else

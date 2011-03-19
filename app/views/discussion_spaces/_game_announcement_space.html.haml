@@ -1,0 +1,10 @@
+= div_for discussion_space do
+  %h3= discussion_space.name
+  %span.actions
+    = current_user.can_create("GameAnnouncement") ? link_to('New Game Announcement', :controller => 'game_announcements',:action => 'new', :game_id => discussion_space.game_id) : "No Create Permissions"
+  %h4 Active Discussions
+  %ul
+    - discussion_space.discussions.each do |discussion|
+      %li
+        = link_to discussion.name, discussion
+        | #{discussion.number_of_comments} comments

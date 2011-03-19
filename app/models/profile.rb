@@ -6,16 +6,6 @@ class Profile < ActiveRecord::Base
   
   validates_presence_of :name
   
-  # Lets the subclasses use the parents routes. 
-  def self.inherited(child)
-    child.instance_eval do
-      def model_name
-        Profile.model_name
-      end
-    end
-    super
-  end
-  
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end

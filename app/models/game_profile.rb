@@ -25,8 +25,9 @@ class GameProfile < Profile
   end
   
   def default_character
-    cp = CharacterProxy.find_by_id(self.default_character_proxy_id)
-    cp.character if cp
+    proxy = CharacterProxy.find_by_id(self.default_character_proxy_id)
+    c = proxy.character if proxy
+    c
   end
   
   def default_character=(character)
