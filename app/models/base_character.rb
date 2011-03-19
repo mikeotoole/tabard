@@ -27,6 +27,11 @@ class BaseCharacter < ActiveRecord::Base
                                         :user_profile => user_profile)   
     self.save
   end
+  
+  def default
+    game_profile = CharacterProxy.character_game_profile(self)
+    (game_profile.default_character == self) if game_profile
+  end
  
   # Lets the subclasses use the parents routes. 
   # def self.inherited(child)

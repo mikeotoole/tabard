@@ -19,8 +19,7 @@
   = @character.server
   %br/
   %b Default:
-  - if current_user. @character
-    = true
+  = @character.default
   
 = link_to 'User Profile', user_profile_path(UserProfile.find(current_user))
 |

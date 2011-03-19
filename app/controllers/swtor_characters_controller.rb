@@ -73,7 +73,7 @@ class SwtorCharactersController < ApplicationController
     
     if params[:default]
       @gameProfile = CharacterProxy.character_game_profile(@character)
-      @gameProfile.default_character_proxy_id = @proxy if @gameProfile
+      @gameProfile.default_character_proxy_id = @character.character_proxy if @gameProfile
       @gameProfile.save if @gameProfile
     end
 
