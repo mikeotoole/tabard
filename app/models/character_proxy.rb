@@ -10,6 +10,12 @@ class CharacterProxy < ActiveRecord::Base
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end
   
+  def self.character_game_profile(character)
+    proxy = CharacterProxy.find_by_character_id(character)
+    profile = proxy.game_profile if proxy
+    profile
+  end
+  
   def active_profile_id
     self.game_profile.id
   end

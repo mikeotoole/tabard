@@ -32,13 +32,21 @@ class WowCharactersController < ApplicationController
     @game = Game.find_by_id(@character.game_id) if @character
     
     userProfile = current_user.user_profile
+    if !userProfile
+      current_user.user_profile = UserProfile.create(:name => "Please set name")
+    end
+    
     @gameProfile = GameProfile.users_game_profile(userProfile, @game)
     
     if @gameProfile
       @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
+      if params[:default]
+        @gameProfile.default_character_proxy_id = @proxy
+      end
     else
       @gameProfile = GameProfile.new(:game => @game, :user_profile => userProfile, :name => userProfile.name + " "+ @game.name + " Profile")
       @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
+      @gameProfile.default_character_proxy_id = @proxy
     end
     
     @proxy.valid?
@@ -63,6 +71,12 @@ class WowCharactersController < ApplicationController
   def update
     @character = WowCharacter.find_by_id(params[:id])
     @game = Game.find_by_id(@character.game_id) if @character
+    
+    if params[:default]
+      @gameProfile = CharacterProxy.character_game_profile(@character)
+      @gameProfile.default_character_proxy_id = @proxy if @gameProfile
+      @gameProfile.save if @gameProfile
+    end
 
     if @character.update_attributes(params[:wow_character])
       flash[:notice] = 'Character was successfully updated.'

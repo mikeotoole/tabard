@@ -21,7 +21,7 @@ class GameProfilesController < ProfilesController
     @profile.type_helper = "GameProfile"
     @profile.user = current_user
     respond_to do |format|
-      format.html # newgame.html.erb
+      format.html # new.html.erb
       format.xml  { render :xml => @profile }
     end
   end

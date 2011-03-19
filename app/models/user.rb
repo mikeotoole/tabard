@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
     user_profile.id
   end
   
-  #TODO should this return email if user_profile.name is blank?
+  #TODO should the email never be returned for privacy?
   def name
     user_profile != nil ? user_profile.name : email
   end
