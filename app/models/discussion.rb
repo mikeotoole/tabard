@@ -13,7 +13,7 @@ class Discussion < ActiveRecord::Base
   end
   
   def characters_name
-    character.name
+    character.name if character_proxy
   end
   
   def charater_posted?

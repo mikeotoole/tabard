@@ -1,7 +1,7 @@
 = div_for discussion do
   = link_to discussion.discussion_space.name, discussion.discussion_space
   %h3= discussion.name
-  = ((discussion.charater_posted?) ? link_to(discussion.characters_name ,discussion.character) : link_to(discussion.users_name, discussion.user_profile))
+  = (discussion.charater_posted?) ? render(discussion.character) : render(discussion.user_profile)
   .discussion_body= discussion.body
   %span.actions
     - if (logged_in? and discussion.can_user_lock(current_user))
