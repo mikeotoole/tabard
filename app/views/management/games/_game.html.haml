@@ -1,7 +1,7 @@
 = div_for game do
   %h3
     = link_to game.name, game
-    Active
+    Active:
     = game.is_active
     %span.actions
       = link_to "Edit", edit_management_game_path(game)

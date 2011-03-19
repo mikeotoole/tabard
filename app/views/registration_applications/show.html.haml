@@ -1,9 +1,10 @@
 %p
-%h3= @registration_application.name + " - " + @registration_application.status
+%h3= @registration_application.name + " - " + @registration_application.status_string
 
 %p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:submission =>  @registration_application}
 
-= button_to 'Accept Application', accept_registration_application_path(@registration_application) 
-= button_to 'Reject Application', reject_registration_application_path(@registration_application)
+= button_to 'Accept Application', accept_registration_application_path(@registration_application) if @registration_application.status != 2
+
+= button_to 'Reject Application', reject_registration_application_path(@registration_application) if @registration_application.status != 4
 
 = render :partial => "management/discussion_spaces/registration_application_space", :locals => {:discussion => @registration_application.discussion}
