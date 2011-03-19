@@ -73,9 +73,8 @@ class WowCharactersController < ApplicationController
     @game = Game.find_by_id(@character.game_id) if @character
     
     if params[:default]
-      logger.debug "Default is true"
       @gameProfile = CharacterProxy.character_game_profile(@character)
-      @gameProfile.default_character_proxy_id = @character.character_proxy if @gameProfile
+      @gameProfile.default_character_proxy_id = @character.character_proxy_id if @gameProfile
       @gameProfile.save if @gameProfile
     end
 

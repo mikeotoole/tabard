@@ -29,8 +29,7 @@ class BaseCharacter < ActiveRecord::Base
   end
   
   def default
-    game_profile = CharacterProxy.character_game_profile(self)
-    (game_profile.default_character == self) if game_profile
+    self.character_proxy.game_profile.default_character.id == self.id
   end
  
   # Lets the subclasses use the parents routes. 
