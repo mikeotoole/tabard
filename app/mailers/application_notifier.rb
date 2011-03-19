@@ -11,9 +11,21 @@ class ApplicationNotifier < ActionMailer::Base
 
     mail(:to => registration_application.applicant_email, :subject=> "Application Received" )
   end
-  def update_applicant(registration_application)
-    @thankyou = registration_application.thankyou_message
+  
+  def accept_notification(registration_application)
+    #TODO we will need to add these from some global variable
+    @login_path = "www.lololololol.com"
+    @guild_name = "Guild Name"
+    @applicant = registration_application.name
+    
+    mail(:to => registration_application.applicant_email, :subject=> "Application Accepted" )
+  end
+  
+  def reject_notification(registration_application)
+    #TODO we will need to add these from some global variable
+    @guild_name = "Guild Name"
+    @applicant = registration_application.name
 
-    mail(:to => registration_application.applicant_email, :subject=> "Application Updated" )
+    mail(:to => registration_application.applicant_email, :subject=> "Application Rejected" )
   end
 end

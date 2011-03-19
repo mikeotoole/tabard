@@ -92,7 +92,8 @@ class RegistrationApplicationsController < ApplicationController
     @registration_application.user_profile.set_active
     
     if @registration_application.user_profile.save
-      #TODO Need to email applicant
+      ApplicationNotifier.accept_notification(@registration_application).deliver
+      
       flash[:notice] = 'Registration application was successfully accepted.'
       respond_with(@registration_application)
     else
@@ -108,7 +109,8 @@ class RegistrationApplicationsController < ApplicationController
     @registration_application.user_profile.set_rejected
     
     if @registration_application.user_profile.save
-      #TODO Need to email applicant
+      ApplicationNotifier.reject_notification(@registration_application).deliver      
+
       flash[:notice] = 'Registration application was successfully rejected.'
       respond_with(@registration_application)
     else
