@@ -1,2 +1,4 @@
 = link_to "Back to discussion space index", discussion_spaces_path
-= render @discussion_space
+= render(:partial => "site_announcement_space", :locals => { :discussion_space => @discussion_space }) if(@discussion_space.system and @discussion_space.announcement_space)
+= render(:partial => "game_announcement_space", :locals => { :discussion_space => @discussion_space }) if(@discussion_space.system and @discussion_space.game != nil)
+= render @discussion_space if !@discussion_space.system
