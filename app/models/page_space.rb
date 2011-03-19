@@ -1,5 +1,5 @@
 class PageSpace < ActiveRecord::Base
-  has_many :pages
+  has_many :pages, :dependent => :destroy
   
   def check_user_show_permissions(user)
     return true

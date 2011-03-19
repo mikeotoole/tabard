@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
     
     # Varibles for navigation
     def nav_discussions
-      DiscussionSpace.all.delete_if {|discussion_space| !discussion_space.check_user_show_permissions(current_user) or !discussion_space.list_in_navigation}
+      DiscussionSpace.all.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}
     end
     
     helper_method :nav_discussions

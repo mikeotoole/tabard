@@ -64,7 +64,8 @@ viewUserPermission = Permission.create(:permissionable => userResource, :name =>
 viewRolePermission = Permission.create(:permissionable => roleResource, :name => "View Access Role", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGamePermission = Permission.create(:permissionable => gameResource, :name => "View Access Game", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGeneralDiscussionSpacePermission = Permission.create(:permissionable => discSpace, :name => "View General Discussion Space", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
-viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission])
+viewCommentPermission = Permission.create(:permissionable => commentResource, :name => "Full Access Comment", :show_p => true, :create_p => true, :update_p => true, :delete_p => false)
+viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission,viewCommentPermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
 
 #Registration application site form creation
