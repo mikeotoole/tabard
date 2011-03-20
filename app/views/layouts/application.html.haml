@@ -77,11 +77,12 @@
             %li
               = link_to 'Active Profiles', user_profile_path(current_user), { :class => 'main' } if current_user
               %ul
-                - profiles.each do |profile|
-                  %li{ :class => profile[:name] + (profile[:is_current] ? ' current' : '') }
-                    = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
-                      = #image_tag '/images/profiles/' + profile[:profile_type] + '.png', :alt => ''
-                      = profile[:name]
+                - if profiles
+                  - profiles.each do |profile|
+                    %li{ :class => profile[:name] + (profile[:is_current] ? ' current' : '') }
+                      = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
+                        = #image_tag '/images/profiles/' + profile[:profile_type] + '.png', :alt => ''
+                        = profile[:name]
             %li.search
               %a.main
                 Search

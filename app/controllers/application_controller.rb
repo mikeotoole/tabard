@@ -24,12 +24,14 @@ class ApplicationController < ActionController::Base
 
   # Returns an Array with the users profile and characters info.
   def profiles
-    profile_collection = current_user.active_profile_helper_collection
-    profiles = Array.new  
-    profile_collection.each do |profile| 
-      profiles << { :name => profile.name, :is_current => false, :profile_id => profile.id, :type => profile.class }       
+    if current_user
+      profile_collection = current_user.active_profile_helper_collection
+      profiles = Array.new  
+      profile_collection.each do |profile| 
+        profiles << { :name => profile.name, :is_current => false, :profile_id => profile.id, :type => profile.class }       
+      end
+      profiles
     end
-    profiles
   end
   helper_method :profiles
   
