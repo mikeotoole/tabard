@@ -121,14 +121,14 @@ Bv::Application.routes.draw do
   resources :users, :only => [:index, :show, :edit]
   resource :session
   
-  resource :active_profile
-  match '/activate_profile' => "active_profiles#new", :as => "activate_profile"
-  match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
+  match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
   resources :games, :only => [:index, :show] do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
   end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
   
   resources :base_characters, :only => :new
 

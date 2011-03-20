@@ -6,4 +6,9 @@ class SwtorCharacter < BaseCharacter
   def game
     self.swtor
   end
+  
+  def description
+    "SWTOR Character"
+  end    
+  
 end

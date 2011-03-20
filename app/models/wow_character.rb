@@ -6,4 +6,9 @@ class WowCharacter < BaseCharacter
   def game
     self.wow
   end
+  
+  def description
+    "WoW Character"
+  end  
+  
 end
