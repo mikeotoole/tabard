@@ -1,9 +1,9 @@
 class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
   
-  belongs_to :game
-  
+  belongs_to :game 
   belongs_to :discussion
+  has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
    
   validates_presence_of :name, :game
    
@@ -27,7 +27,7 @@ class BaseCharacter < ActiveRecord::Base
   end
   
   def default
-    self.character_proxy.game_profile.default_character == self
+    self.character_proxy_id == self.character_proxy.game_profile.default_character_proxy_id
   end
  
   # Lets the subclasses use the parents routes. 
