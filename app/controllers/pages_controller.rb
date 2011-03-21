@@ -1,4 +1,11 @@
 class PagesController < ApplicationController
+  uses_tiny_mce :options => {
+                              :theme => 'advanced',
+                              :theme_advanced_resizing => true,
+                              :theme_advanced_resize_horizontal => false,
+                              :plugins => %w{ table fullscreen }
+                            },
+                :only => [:new, :create, :edit, :update]
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   # GET /pages
