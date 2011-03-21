@@ -1,13 +1,11 @@
 class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
   
-  belongs_to :game
-  
+  belongs_to :game 
   belongs_to :discussion
+  has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
    
   validates_presence_of :name, :game
-     
-  #after_create :create_discussion
    
   def character_proxy_id
     character_proxy.id
@@ -23,14 +21,13 @@ class BaseCharacter < ActiveRecord::Base
     self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
                                         :name => self.name,
                                         :body => "Character Discussion",
-                                        :character_proxy => self.character_proxy,
+                                        :character_proxy_id => self.character_proxy.id,
                                         :user_profile => user_profile)   
     self.save
   end
   
   def default
-    game_profile = CharacterProxy.character_game_profile(self)
-    (game_profile.default_character == self) if game_profile
+    self.character_proxy_id == self.character_proxy.game_profile.default_character_proxy_id
   end
  
   # Lets the subclasses use the parents routes. 

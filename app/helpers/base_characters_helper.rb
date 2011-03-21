@@ -1,4 +1,4 @@
-module CharactersHelper
+module BaseCharactersHelper
   
   def link_to_add_character(name, f, association)
     new_object = Character.new

@@ -34,18 +34,14 @@ class SwtorCharactersController < ApplicationController
     @character = SwtorCharacter.new(params[:swtor_character])
     @game = Game.find_by_id(@character.game_id) if @character
     
-    userProfile = current_user.user_profile
+    userProfile = current_user.user_profile   
     @gameProfile = GameProfile.users_game_profile(userProfile, @game)
     
     if @gameProfile
       @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      if params[:default]
-        @gameProfile.default_character_proxy_id = @proxy
-      end
     else
       @gameProfile = GameProfile.new(:game => @game, :user_profile => userProfile, :name => userProfile.name + " "+ @game.name + " Profile")
       @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      @gameProfile.default_character_proxy_id = @proxy
     end
     
     @proxy.valid?
@@ -55,8 +51,12 @@ class SwtorCharactersController < ApplicationController
       if @gameProfile.valid? and @proxy.valid? and @character.save
         @gameProfile.save
         @proxy.save
+        if params[:default]
+          @gameProfile.default_character_proxy_id = @proxy.id
+        end
+        @gameProfile.save
         
-        format.html { redirect_to([@game, @character], :notice => 'Character was successfully created.') }
+        format.html { redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
         format.xml  { render :xml => @character, :status => :created, :location => @character }
       else
         format.html { render :action => "new" }
@@ -73,7 +73,7 @@ class SwtorCharactersController < ApplicationController
     
     if params[:default]
       @gameProfile = CharacterProxy.character_game_profile(@character)
-      @gameProfile.default_character_proxy_id = @character.character_proxy if @gameProfile
+      @gameProfile.default_character_proxy_id = @character.character_proxy_id if @gameProfile
       @gameProfile.save if @gameProfile
     end
 

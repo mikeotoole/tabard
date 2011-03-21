@@ -15,7 +15,10 @@
           .slogan We need a slogan
           - if logged_in?
             .userbox
-              = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+              %ul
+              - if profile_active?
+                = link_to current_profile.name, current_profile
+                = current_profile.description
               =link_to 'Account', edit_user_path(current_user), :class => 'button'
               =link_to 'Logout', logout_path, :class => 'button'
       
@@ -71,6 +74,16 @@
                 %ul
                   - nav_discussions.each do |discussion_space| 
                     %li= link_to discussion_space.name, discussion_space
+                    
+            %li
+              = link_to 'Active Profiles', user_profile_path(current_user), { :class => 'main' } if current_user
+              %ul
+                - if profiles
+                  - profiles.each do |profile|
+                    %li{ :class => profile[:name] + (profile[:is_current] ? ' current' : '') }
+                      = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
+                        = #image_tag '/images/profiles/' + profile[:profile_type] + '.png', :alt => ''
+                        = profile[:name]
             %li.search
               %a.main
                 Search

@@ -94,6 +94,10 @@ class UserProfile < Profile
     self.name
   end
   
+  def description
+    "Account Profile"
+  end  
+  
   # Used by active profile to see selected item is a user profile
   def character_id
     -1
