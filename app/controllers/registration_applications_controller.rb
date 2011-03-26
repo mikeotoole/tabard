@@ -6,7 +6,6 @@ class RegistrationApplicationsController < ApplicationController
   # GET /registration_applications.xml
   def index
     @registration_applications = RegistrationApplication.all
-  
     @form = SiteForm.application_form
 
     respond_with(@registration_applications)
