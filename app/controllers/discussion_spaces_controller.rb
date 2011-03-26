@@ -26,7 +26,7 @@ class DiscussionSpacesController < ApplicationController
         return
       # Registraion Appication Space
       elsif(@discussion_space.system and @discussion_space.registration_application_space != nil)
-        @registration_applications = RegistrationApplication.all
+        @registration_applications = RegistrationApplication.all_new
         @form = SiteForm.application_form
         render :file => 'discussion_spaces/registration_application_space'
         return  

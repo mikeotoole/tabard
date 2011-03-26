@@ -126,6 +126,7 @@ Bv::Application.routes.draw do
   resources :games, :only => [:index, :show] do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
+    resources :game_announcements, :only => [:new, :create]
   end
   resources :wow_characters, :only => :show
   resources :swtor_characters, :only => :show

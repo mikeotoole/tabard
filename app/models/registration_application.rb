@@ -3,6 +3,10 @@ class RegistrationApplication < Submission
 
   after_create :generate_discussion
   
+  def self.all_new
+    RegistrationApplication.find(:all, :conditions => {:status => 1})
+  end
+  
   def status_string
     self.user_profile.status_string
   end
