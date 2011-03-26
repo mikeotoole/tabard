@@ -6,6 +6,8 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
 gem 'capistrano'
 
+gem 'tiny_mce'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

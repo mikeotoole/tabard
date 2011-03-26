@@ -6,4 +6,4 @@
   %td= (logged_in? and current_user.can_update(page)) ? link_to( 'Edit', edit_page_path(page)) : "No Edit Permissions"
   %td= (logged_in? and current_user.can_delete(page)) ? link_to( 'Delete', page, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
   %p
-    = page.body
+    = raw(page.body)
