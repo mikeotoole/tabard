@@ -31,7 +31,7 @@ class UserProfile < Profile
     if self.status == 1
       return true
     else
-      return false  
+      return false
     end
   end
   

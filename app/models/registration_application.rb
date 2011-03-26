@@ -4,7 +4,7 @@ class RegistrationApplication < Submission
   after_create :generate_discussion
   
   def self.all_new
-    RegistrationApplication.find(:all, :conditions => {:status => 1})
+    RegistrationApplication.all.delete_if {|application| (!application.user_profile.is_applicant)} 
   end
   
   def status_string
