@@ -5,7 +5,7 @@ class Announcement < Discussion
   after_create :create_acknowledgments
   
   def assign_to_discussion_space
-    if DiscussionSpace.where(:announcement_space => true).exists?
+    if DiscussionSpace.site_announcement_space.exists?
       self.discussion_space = DiscussionSpace.where(:announcement_space => true).first
     else
       self.discussion_space = DiscussionSpace.create(:name => "Site Announcements", :system => true, :announcement_space => true)

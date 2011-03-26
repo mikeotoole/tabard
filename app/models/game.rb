@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
  has_many :game_announcements
  has_many :game_profiles, :dependent => :destroy
  has_many :discussion_spaces
+ has_many :page_spaces
  
  validates_presence_of :name
  
@@ -10,7 +11,8 @@ class Game < ActiveRecord::Base
  def create_game_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Announcements",
                                              :system => true,
-                                             :game => self)
+                                             :game => self,
+                                             :announcement_space => true)
    self.announcement_space_id = discussion_space.id
    self.save
  end

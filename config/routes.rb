@@ -37,9 +37,9 @@ Bv::Application.routes.draw do
 
   resources :team_speaks
 
-  resources :page_spaces
-
-  resources :pages
+  resources :page_spaces do
+    resources :pages
+  end  
 
   resources :letters
 
