@@ -1,22 +1,27 @@
 class ActiveProfilesController < ApplicationController
   before_filter :authenticate
   
-  def create    
-    if defined? params[:type].constantize
-      profile = params[:type].constantize.find_by_id(params[:id])
+  def create   
+    if params[:type] =~ /UserProfile|Character$/
+      if defined? params[:type].constantize
+        profile = params[:type].constantize.find_by_id(params[:id])
       
-      session[:profile_id] = params[:id]    
-      session[:profile_type] = params[:type]
-    end  
+        session[:profile_id] = params[:id]    
+        session[:profile_type] = params[:type]
+      end  
     
-    if profile
-      active_profile_name = profile.name
-      redirect_to root_path, :notice => "Profile <em>#{active_profile_name}</em> activated."
-      return
-    else
+      if profile
+        active_profile_name = profile.name
+        redirect_to root_path, :notice => "Profile <em>#{active_profile_name}</em> activated."
+        return
+      else
+        redirect_to root_path, :alert => "Error setting active profile"
+        return
+      end
+    else  
       redirect_to root_path, :alert => "Error setting active profile"
       return
-    end    
+    end  
   end
   
   # def update

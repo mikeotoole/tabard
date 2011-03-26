@@ -63,15 +63,15 @@
               = link_to 'Events', :events, { :class => 'main' }
             %li
               = link_to 'Resources', page_spaces_path, { :class => 'main' }
-              - if nav_page_spaces
+              - if dynamic_page_spaces
                 %ul
-                  - nav_page_spaces.each do |page_space| 
+                  - dynamic_page_spaces.each do |page_space| 
                     %li= link_to page_space.name, page_space
             %li
               = link_to 'Discussions', :discussion_spaces, { :class => 'main' } if current_user
-              - if nav_discussions
+              - if dynamic_discussions
                 %ul
-                  - nav_discussions.each do |discussion_space| 
+                  - dynamic_discussions.each do |discussion_space| 
                     %li= link_to discussion_space.name, discussion_space
                     
             %li
@@ -114,9 +114,9 @@
                   %li= link_to page.title, page
           .menu
             %h3 Resources
-            - if nav_page_spaces
+            - if dynamic_page_spaces
               %ul
-                - nav_page_spaces.each do |page_space| 
+                - dynamic_page_spaces.each do |page_space| 
                   %li= link_to page_space.name, page_space
           .menu
             %h3 Members

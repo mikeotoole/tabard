@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end  
   
   protected
-
+  
   # Returns an Array with the users profile and characters info.
   def profiles
     if current_user
@@ -96,17 +96,40 @@ class ApplicationController < ActionController::Base
   end
   
   # Varibles for navigation
+  def dynamic_discussions
+    if session[:profile_type] =~ /Character$/
+      if defined? session[:profile_type].constantize
+        @character_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id]) 
+        if @character_profile
+          return nav_discussions.delete_if {|discussion_space| (discussion_space.game_id != nil and @character_profile.game_id != discussion_space.game_id)}
+        end
+      end
+    end
+    nav_discussions
+  end
+  helper_method :dynamic_discussions
+  
+  # This is used by dynamic_discussions. Use the dynamic_discussions method for the collection of discussion spaces.
   def nav_discussions
-    DiscussionSpace.all.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}
+    DiscussionSpace.all.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
   end
   
-  helper_method :nav_discussions
+  def dynamic_page_spaces
+    if session[:profile_type] =~ /Character$/
+      if defined? session[:profile_type].constantize
+        @character_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id]) 
+        if @character_profile
+          return nav_page_spaces.delete_if {|page_space| (page_space.game_id != nil and @character_profile.game_id != page_space.game_id)}
+        end
+      end
+    end
+    nav_page_spaces
+  end
+  helper_method :dynamic_page_spaces
   
   def nav_page_spaces
     PageSpace.all.delete_if {|page_space| !page_space.check_user_show_permissions(current_user)}
-  end
-  
-  helper_method :nav_page_spaces
+  end 
   
   def nav_featured_pages
     Page.featured_pages.alphabetical
