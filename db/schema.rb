@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110326182250) do
+ActiveRecord::Schema.define(:version => 20110327023912) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -87,6 +87,14 @@ ActiveRecord::Schema.define(:version => 20110326182250) do
     t.datetime "updated_at"
   end
 
+  create_table "folders", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -104,6 +112,23 @@ ActiveRecord::Schema.define(:version => 20110326182250) do
   end
 
   create_table "locations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "message_copies", :force => true do |t|
+    t.integer  "recipient_id"
+    t.integer  "message_id"
+    t.integer  "folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "deleted"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "author_id"
+    t.string   "subject"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

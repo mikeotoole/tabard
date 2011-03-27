@@ -1,0 +1,16 @@
+%h2 Sent Messages
+%table
+  %tr
+    %th To
+    %th Subject
+    %th Sent
+  - for message in @messages
+    %tr
+      %td
+        - if message.recipients
+          - message.recipients.each do |profile|
+            = profile.name
+      %td= link_to h(message.subject), sent_path(message)
+      %td 
+        = distance_of_time_in_words(message.created_at, Time.now)
+        ago

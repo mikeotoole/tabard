@@ -1,0 +1,21 @@
+%h2= h @message.subject
+%p
+  %strong From:
+  = h @message.author.name
+%p
+  %strong To:
+  - if @message.recipients
+    - @message.recipients.each do |profile|
+      = profile.name
+%p
+  %strong Received:
+  = @message.created_at.to_s(:long)
+%pre= h @message.body
+
+= button_to "Reply", reply_message_path(@message)
+= button_to "Reply All", reply_all_message_path(@message)
+= button_to "Forward", forward_message_path(@message)
+- unless @message.deleted
+  = button_to "Delete", message_path(@message), :method => "delete"
+- else
+  = button_to "Undelete", undelete_message_path(@message), :method => "put"

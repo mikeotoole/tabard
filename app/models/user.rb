@@ -1,4 +1,4 @@
-require 'digest'
+require 'digest/sha1'
 class User < ActiveRecord::Base
   attr_accessor :password
   
@@ -21,6 +21,26 @@ class User < ActiveRecord::Base
   after_create :assign_default_role
   
   accepts_nested_attributes_for :user_profile
+  
+  def sent_messages
+    self.user_profile.sent_messages
+  end
+  
+  def received_messages
+    self.user_profile.received_messages
+  end
+  
+  def deleted_received_messages
+    self.user_profile.deleted_received_messages
+  end
+  
+  def inbox
+    self.user_profile.inbox
+  end
+  
+  def folders
+    self.user_profile.folders
+  end
   
   def assign_default_role
     self.roles << Role.get_default_role unless not(Role.get_default_role) or self.roles.count >= 1

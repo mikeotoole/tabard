@@ -19,6 +19,7 @@
               - if profile_active?
                 = link_to current_profile.name, current_profile
                 = current_profile.description
+              =render :partial => "layouts/mailbox_list"  
               =link_to 'Account', edit_user_path(current_user), :class => 'button'
               =link_to 'Logout', logout_path, :class => 'button'
       

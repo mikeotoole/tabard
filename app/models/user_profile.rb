@@ -1,17 +1,36 @@
 class UserProfile < Profile
   belongs_to :user
-  belongs_to :discussion
 
   has_many :game_profiles
   
+  #TODO Shouldn't this be has_one? -MO'
   has_many :registration_applications
   
+  belongs_to :discussion
   belongs_to :personal_discussion_space, :class_name => "DiscussionSpace"
-  
+
+  has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id"
+  has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
+  has_many :folders
+
+  before_create :build_inbox 
   after_create :create_discussion, :create_personal_space
+ 
   
   # User can only have one user profile
   validates_uniqueness_of :user_id
+  
+  def inbox
+    folders.find_by_name("Inbox")
+  end
+
+  def build_inbox
+    folders.build(:name => "Inbox")
+  end
+  
+  def deleted_received_messages
+    self.received_messages.delete_if {|message| message.deleted == false or message.deleted == nil}
+  end
   
   def status_string
     if is_applicant
