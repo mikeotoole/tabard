@@ -7,7 +7,11 @@ class DiscussionSpace < ActiveRecord::Base
            :only_one_user_profile_space
   
   def only_one_announcement_space
-    errors.add(:id, "There can be only one!  ...announcement space.") if (DiscussionSpace.where(:announcement_space => true).exists? and self.announcement_space)
+    errors.add(:id, "There can be only one!  ...announcement space.") if (DiscussionSpace.site_announcement_space.exists? and self.announcement_space and self.game_id = nil)
+  end
+  
+  def self.site_announcement_space
+    DiscussionSpace.where(:announcement_space => true, :game_id => nil)
   end
   
   def self.registration_application_space

@@ -1,15 +1,15 @@
 = div_for page_space do
   %h3= page_space.name
+  - if page_space.game
+    %h4= link_to page_space.game_name, page_space.game
   %span.actions
   %td= (logged_in? and current_user.can_update(page_space)) ? link_to( 'Edit', edit_page_space_path(page_space)) : "No Edit Permissions"
   %td= (logged_in? and current_user.can_delete(page_space)) ? link_to( 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
-  %td= link_to "New Page", new_page_path
   %h4 Pages
-  %table
-    %thead
-      %tr
-        %th Title
-    %tbody
+  -if page_space.pages.size > 0
+    %td= (logged_in? and current_user.can_create(page_space)) ? link_to( "New Page", new_page_space_page_path(page_space)) : "No Create Permissions"
+    %ul
       - page_space.pages.each do |page|
-        %tr
-          %td= link_to page.title, page
+        %li= link_to page.title, [page_space,page]
+  -else
+    %td= (logged_in? and current_user.can_create(page_space)) ? link_to( "Create a Page", new_page_space_page_path(page_space)) : "No Create Permissions"

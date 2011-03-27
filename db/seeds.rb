@@ -101,7 +101,7 @@ GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are su
 SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
 # Sample Page Space/Pages
-bossPageSpace = PageSpace.create(:name => "Boss Strategies")
+bossPageSpace = PageSpace.create(:name => "SWTOR Boss Strategies", :game => swtor)
 sarlaccPage = Page.create(:title => "Sarlacc Pit Strategy", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => bossPageSpace, :featured_page => true)
 rockLobsterPage = Page.create(:title => "Rock Lobster", :body => "Bring a pot, this boss is super delicious!", :page_space => bossPageSpace)
 

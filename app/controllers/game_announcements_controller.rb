@@ -49,7 +49,7 @@ class GameAnnouncementsController < ApplicationController
   # POST /game_announcements
   # POST /game_announcements.xml
   def create
-    @game_announcement = game_announcements.new(params[:game_announcement])
+    @game_announcement = game_announcement_helper.new(params[:game_announcement])
     if !current_user.can_create(@game_announcement)
       render :nothing => true, :status => :forbidden
     else 
@@ -98,7 +98,7 @@ class GameAnnouncementsController < ApplicationController
   end
   
   private
-  #Nested Controller Helper
+  #Nested Resource Helper
   def game_announcement_helper
     @game ? @game.game_announcements : GameAnnouncement
   end
