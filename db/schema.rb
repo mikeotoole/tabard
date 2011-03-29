@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110326182250) do
+ActiveRecord::Schema.define(:version => 20110326220122) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20110326182250) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
-    t.integer  "character_id"
+    t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"

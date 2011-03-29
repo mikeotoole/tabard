@@ -37,13 +37,25 @@ class ApplicationController < ActionController::Base
   
   # Predicate method to test for an active profile.
   def profile_active?
-    current_profile != nil
+    session[:profile_type] =~ /UserProfile/
   end    
   helper_method :profile_active?
   
+  def character_active?
+    session[:profile_type] =~ /Character$/
+  end
+  helper_method :character_active?
+  
+  def current_character
+    return unless character_active?
+    if defined? session[:profile_type].constantize
+      @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
+    end
+  end
+  
   # Returns the currently active_profile or nil if there isn't one.
   def current_profile
-    return unless session[:profile_id]
+    return unless profile_active?
     if defined? session[:profile_type].constantize
       @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
     end   

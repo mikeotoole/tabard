@@ -4,6 +4,17 @@ class Discussion < ActiveRecord::Base
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
   
+  before_create :use_default_character
+  
+  def use_default_character
+    return unless self.user_profile and self.respond_to?('game') and self.discussion_space and self.discussion_space.game
+    self.user_profile.game_profiles.each do |game_profile|
+      if(game_profile.game.id == self.discussion_space.game.id)
+        self.character_proxy_id = game_profile.default_character_proxy_id
+      end
+    end
+  end
+  
   def users_name
     user_profile.displayname if user_profile
   end

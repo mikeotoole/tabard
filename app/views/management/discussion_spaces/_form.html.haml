@@ -11,5 +11,9 @@
     = f.label :name
     %br/
     = f.text_field :name
+  .field
+    = f.label :game_id
+    %br/
+    = f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select an optional game", :include_blank => true}, :class =>"game")
   .actions
     = submit_or_cancel(f)
