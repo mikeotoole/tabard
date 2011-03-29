@@ -1,4 +1,20 @@
 Bv::Application.routes.draw do
+ 
+  resources :sent, :only => [:show, :new, :create]
+  match '/sent_messages' => "sent#index"
+  
+  resources :messages, :only => [:show, :destroy] do
+    member do
+      post :reply
+      post :forward
+      post :reply_all
+      post :undelete
+    end
+  end
+      
+  resource :mailbox, :only => :show
+  match '/inbox' => "mailbox#index"
+  match '/trash' => "mailbox#trash"
 
   resources :submissions
 
