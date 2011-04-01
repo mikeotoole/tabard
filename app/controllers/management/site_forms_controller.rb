@@ -24,6 +24,7 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/new.xml
   def new
     @site_form = SiteForm.new
+    @site_form.profile_notifications ||= []
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,6 +35,8 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/1/edit
   def edit
       @site_form = SiteForm.find(params[:id])
+      
+      @site_form.profile_notifications ||= []
   end
 
   # POST /management/site_forms
@@ -59,7 +62,7 @@ class Management::SiteFormsController < ApplicationController
       @site_form = SiteForm.find(params[:id])
     respond_to do |format|
       if @site_form.update_attributes(params[:site_form])
-        format.html { redirect_to(management_site_forms_path, :notice => 'Form was successfully updated.') }
+        format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

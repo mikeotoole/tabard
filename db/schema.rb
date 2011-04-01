@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110327023912) do
+ActiveRecord::Schema.define(:version => 20110401050157) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -134,6 +134,13 @@ ActiveRecord::Schema.define(:version => 20110327023912) do
   end
 
   create_table "newsletters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "site_form_id"
+    t.integer  "user_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

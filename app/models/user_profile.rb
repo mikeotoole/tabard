@@ -3,7 +3,7 @@ class UserProfile < Profile
 
   has_many :game_profiles
   
-  #TODO Shouldn't this be has_one? -MO'
+  #TODO Shouldn't this be has_one? -MO
   has_many :registration_applications
   
   belongs_to :discussion
@@ -12,10 +12,13 @@ class UserProfile < Profile
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id"
   has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
   has_many :folders
+  
+  has_many :notifications
+  has_many :site_form_notifications, :through => :notification, :source => :site_form
 
   before_create :build_inbox 
   after_create :create_discussion, :create_personal_space
- 
+  
   
   # User can only have one user profile
   validates_uniqueness_of :user_id
@@ -94,6 +97,8 @@ class UserProfile < Profile
     self.status = 4
   end
   
+  # This is confusing because we have something called an active profile. 
+  # But this returns all the user profiles that have an active status. -MO
   def self.active_profiles
     UserProfile.find(:all, :conditions => {:status => 2})
   end
@@ -118,9 +123,9 @@ class UserProfile < Profile
   end  
   
   # Used by active profile to see selected item is a user profile
-  def character_id
-    -1
-  end
+  # def character_id
+  #   -1
+  # end
   
   def create_discussion
     self.discussion = Discussion.create(:discussion_space => DiscussionSpace.user_profile_space,
