@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20110327023912) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
-    t.integer  "character_id"
+    t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"

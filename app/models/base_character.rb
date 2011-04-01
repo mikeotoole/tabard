@@ -49,4 +49,19 @@ class BaseCharacter < ActiveRecord::Base
   #   end
   # end
  
+  def check_user_show_permissions(user)
+    return true
+  end
+  
+  def check_user_create_permissions(user)
+    return true
+  end
+  
+  def check_user_update_permissions(user)
+    self.character_proxy.game_profile.user_profile.id == user.user_profile.id or user.can_update("Character")
+  end
+  
+  def check_user_delete_permissions(user)
+    self.character_proxy.game_profile.user_profile.id == user.user_profile.id or user.can_delete("Character")
+  end
 end
