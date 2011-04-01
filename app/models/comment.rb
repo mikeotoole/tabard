@@ -9,6 +9,9 @@ class Comment < ActiveRecord::Base
   
   before_create :use_default_character
   
+  def character_proxy_id
+    self.character_proxy.id
+  end
   def use_default_character
     return if self.character_proxy or not(self.user_profile)
     if(self.original_comment_item.respond_to?('game'))

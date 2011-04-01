@@ -2,5 +2,5 @@
   %h3
     = link_to swtor_character.name, game_swtor_character_path(swtor_character.game, swtor_character)
     %span.actions
-      = link_to( 'Edit', edit_game_swtor_character_path(swtor_character.game, swtor_character))
-      = link_to( 'Delete', [swtor_character.game, swtor_character], :confirm => 'Are you sure?', :method => :delete)
+      = current_user.can_update(swtor_character) ? link_to( 'Edit', edit_game_swtor_character_path(swtor_character.game, swtor_character)) : "No Edit Permissions"
+      = current_user.can_delete(wow_character) ? link_to( 'Delete', [swtor_character.game, swtor_character], :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"

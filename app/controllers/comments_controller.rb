@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       @comment.user_profile = current_user.user_profile
-      @comment.character_proxy_id = (character_active? ? current_character.character_proxy.id : nil)
+      @comment.character_proxy_id = current_character.character_proxy.id if character_active?
       @comment.commentable_id = params[:commentable_id]
       @comment.commentable_type = params[:commentable_type]
       @comment.form_target = params[:form_target]
