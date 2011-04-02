@@ -16,8 +16,6 @@ Bv::Application.routes.draw do
   match '/inbox' => "mailbox#index"
   match '/trash' => "mailbox#trash"
 
-  resources :submissions
-
   resources :registration_answers
 
   resources :text_box_questions
@@ -120,7 +118,9 @@ Bv::Application.routes.draw do
     resources :site_forms
   end
   
-  resources :site_forms
+  resources :site_forms do
+    resources :submissions, :only => [:index, :show, :new, :create]
+  end
   
   resources :profiles do
     resources :acknowledgment_of_announcements
