@@ -126,6 +126,11 @@ class User < ActiveRecord::Base
   def can_show(system_resource_name)
     logger.debug("Show permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_show_permissions'))
+      if(system_resource_name.check_user_show_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.show_permissionables.include?(system_resource_name))
         return true
@@ -136,17 +141,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_show_permissions'))
-      if(system_resource_name.check_user_show_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_create(system_resource_name)
     logger.debug("Create permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_create_permissions'))
+      if(system_resource_name.check_user_create_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.create_permissionables.include?(system_resource_name))
         return true
@@ -157,17 +162,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_create_permissions'))
-      if(system_resource_name.check_user_create_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_update(system_resource_name)
     logger.debug("Update permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_update_permissions'))
+      if(system_resource_name.check_user_update_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.update_permissionables.include?(system_resource_name))
         return true
@@ -178,17 +183,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_update_permissions'))
-      if(system_resource_name.check_user_update_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_delete(system_resource_name)
     logger.debug("Delete permission request for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active 
+    return false if not self.user_profile.is_active
+    if(system_resource_name.respond_to?('check_user_delete_permissions'))
+      if(system_resource_name.check_user_delete_permissions(self))
+        return true
+      end
+    end 
     self.roles.each do |role|
       if(role.delete_permissionables.include?(system_resource_name))
         return true
@@ -197,11 +202,6 @@ class User < ActiveRecord::Base
         if(s_resource.permissionable_name == system_resource_name)
           return true
         end
-      end
-    end
-    if(system_resource_name.respond_to?('check_user_delete_permissions'))
-      if(system_resource_name.check_user_delete_permissions(self))
-        return true
       end
     end
     false
