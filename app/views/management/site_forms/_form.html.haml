@@ -23,6 +23,13 @@
     = f.label :published, "Publish Form"
     %br/
     = f.check_box :published
+  .field
+    = f.label "Send Submission Notifications To" 
+    #recipientchecklist
+      - for profile in UserProfile.active_profiles
+        = check_box_tag 'notifications[]', profile.id , @site_form.profile_notifications.include?(profile)
+        =h profile.name
+        %br/
     
   %p
     = #select_tag(:q_type, options_for_select(Question::select_options))
