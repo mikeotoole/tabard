@@ -1,4 +1,4 @@
-<%= form_for(@permission) do |f| %>
+<%= form_for [:management,@role,@permission] do |f| %>
   <% if @permission.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@permission.errors.count, "error") %> prohibited this permission from being saved:</h2>
@@ -10,18 +10,10 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <h4>Associated Role</h4>
-    <%= @permission.role_name %>
-  </div>
   <div class="field">
     <h4>Resource</h4>
-    <%= @permission.permissionable_name %>
+    <%= collection_select(:permission, :permissionable_id, @permissionables, :id, :name) %>
+    <%= collection_select(:permission, :permissionable_type, @permissionables, :class, :name) %>
     <p>
       <%= f.label "Create Permission" %>
       <%= f.check_box :create_p %>

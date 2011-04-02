@@ -109,7 +109,9 @@ Bv::Application.routes.draw do
       end
     end
     resources :games, :except => :show
-    resources :roles
+    resources :roles do
+      resources :permissions
+    end
     resources :newsletters
     resources :page_spaces
     resources :discussion_spaces
@@ -131,8 +133,6 @@ Bv::Application.routes.draw do
   resources :user_profiles do
     resources :acknowledgment_of_announcements
   end
-  
-  resources :permissions  
   
   resources :users, :only => [:index, :show, :edit]
   resource :session

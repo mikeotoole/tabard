@@ -124,6 +124,7 @@ class User < ActiveRecord::Base
   
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
+    logger.debug("Show permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.show_permissionables.include?(system_resource_name))
@@ -144,6 +145,7 @@ class User < ActiveRecord::Base
   end
   
   def can_create(system_resource_name)
+    logger.debug("Create permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.create_permissionables.include?(system_resource_name))
@@ -164,6 +166,7 @@ class User < ActiveRecord::Base
   end
   
   def can_update(system_resource_name)
+    logger.debug("Update permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.update_permissionables.include?(system_resource_name))
@@ -184,6 +187,7 @@ class User < ActiveRecord::Base
   end
   
   def can_delete(system_resource_name)
+    logger.debug("Delete permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     self.roles.each do |role|
       if(role.delete_permissionables.include?(system_resource_name))
@@ -204,6 +208,7 @@ class User < ActiveRecord::Base
   end
   
   def can_special_permissions(system_resource_name,permission_string)
+    logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
     if !permissionable_id
