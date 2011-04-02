@@ -2,8 +2,10 @@ class SiteForm < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
   
-  has_many :notifications
+  has_many :notifications, :dependent => :destroy
   has_many :profile_notifications, :through => :notifications, :source => :user_profile
+  
+  #accepts_nested_attributes_for :notifications, :reject_if => lambda { |a| a[:user_profile].blank? }, :allow_destroy => true
   
   validate :only_one_registration_application_form
   

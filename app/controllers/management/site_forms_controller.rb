@@ -24,7 +24,6 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/new.xml
   def new
     @site_form = SiteForm.new
-    @site_form.profile_notifications ||= []
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,8 +34,6 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/1/edit
   def edit
       @site_form = SiteForm.find(params[:id])
-      
-      @site_form.profile_notifications ||= []
   end
 
   # POST /management/site_forms
@@ -47,6 +44,11 @@ class Management::SiteFormsController < ApplicationController
     @site_form.registration_application_form = false
     respond_to do |format|
       if @site_form.save
+        
+        params[:notifications].each do |profile_id|
+          Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id)
+        end
+        
         format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully created.') }
         format.xml  { render :xml => @site_form, :status => :created }
       else
@@ -62,6 +64,15 @@ class Management::SiteFormsController < ApplicationController
       @site_form = SiteForm.find(params[:id])
     respond_to do |format|
       if @site_form.update_attributes(params[:site_form])
+        
+        @site_form.notifications.each do |notification|
+          notification.destroy unless params[:notifications].include?(notification.user_profile)
+        end
+        
+        params[:notifications].each do |profile_id|
+          Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id) unless @site_form.profile_notifications.include?(profile_id)
+        end       
+        
         format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully updated.') }
         format.xml  { head :ok }
       else

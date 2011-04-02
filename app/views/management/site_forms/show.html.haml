@@ -15,7 +15,7 @@
   %b Notifications Sent To:
   - if !@site_form.profile_notifications.empty?
     - @site_form.profile_notifications.each do  |profile|
-      = render partal => "user_profiles/profile" , :locals => { :profile => profile }
+      = render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
   - else
     None     
   
