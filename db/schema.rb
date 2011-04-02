@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110401050157) do
+ActiveRecord::Schema.define(:version => 20110402222448) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(:version => 20110401050157) do
     t.integer  "status"
     t.integer  "personal_discussion_space_id"
     t.integer  "default_character_proxy_id"
+    t.boolean  "is_system_profile"
   end
 
   create_table "questions", :force => true do |t|

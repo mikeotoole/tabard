@@ -16,12 +16,25 @@ class UserProfile < Profile
   has_many :notifications
   has_many :site_form_notifications, :through => :notification, :source => :site_form
 
-  before_create :build_inbox 
+  before_create :build_inbox
   after_create :create_discussion, :create_personal_space
   
   
   # User can only have one user profile
   validates_uniqueness_of :user_id
+  validate :only_one_system_profile
+  
+  def only_one_system_profile
+    errors.add(:id, "There can be only one!  ...system profile.") if (UserProfile.where(:is_system_profile => true).exists? and self.is_system_profile)
+  end
+  
+  def self.system_profile
+    if self.where(:is_system_profile => true).exists?
+      return self.where(:is_system_profile => true).first
+    else
+      return self.create(:name => "System Profile", :is_system_profile => true, :status => 0)
+    end
+  end
   
   def inbox
     folders.find_by_name("Inbox")
@@ -131,14 +144,14 @@ class UserProfile < Profile
     self.discussion = Discussion.create(:discussion_space => DiscussionSpace.user_profile_space,
                                         :name => self.displayname,
                                         :body => "User Profile Discussion",
-                                        :user_profile => self)
+                                        :user_profile => self) unless self.is_system_profile
   end
   
   def create_personal_space
     self.personal_discussion_space = DiscussionSpace.create(:name => self.displayname.to_s+" Personal Discussion Space",
                                         :system => true,
                                         :personal_space => true,
-                                        :user_profile => self)
+                                        :user_profile => self) unless self.is_system_profile
     self.save
   end
   
