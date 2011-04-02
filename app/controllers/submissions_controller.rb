@@ -44,6 +44,14 @@ class SubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
+
+        # Send massages to users of notify list.
+        if !@submission.site_form.notifications.empty?
+          Message.create(:author => UserProfile.system_profile, :to => @submission.site_form.profile_notifications, 
+                          :subject => "New Submission for Form " + @submission.site_form.name, 
+                          :body => "You have a new submission to view. \n<a href=" + site_form_submission_url(@submission.site_form, @submission) + ">Submission</a>\n\nThis is an automatically generated message sent because you are on the notification list for this form.\nReplies will not be seen.")
+        end
+        
         format.html { redirect_to([@submission.site_form, @submission], :notice => 'Submission was successfully created.') }
         format.xml  { render :xml => @submission, :status => :created, :location => @submission }
       else

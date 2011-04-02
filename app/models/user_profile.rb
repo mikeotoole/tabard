@@ -32,7 +32,7 @@ class UserProfile < Profile
     if self.where(:is_system_profile => true).exists?
       return self.where(:is_system_profile => true).first
     else
-      return self.create(:name => "System Profile", :is_system_profile => true, :status => 0)
+      return self.create(:name => "System", :is_system_profile => true, :status => 0)
     end
   end
   

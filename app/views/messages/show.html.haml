@@ -10,10 +10,10 @@
 %p
   %strong Received:
   = @message.created_at.to_s(:long)
-%pre= h @message.body
+%pre= raw @message.body
 
-= button_to "Reply", reply_message_path(@message)
-= button_to "Reply All", reply_all_message_path(@message)
+= button_to "Reply", reply_message_path(@message) unless @message.author == UserProfile.system_profile
+= button_to "Reply All", reply_all_message_path(@message) unless @message.author == UserProfile.system_profile
 = button_to "Forward", forward_message_path(@message)
 - unless @message.deleted
   = button_to "Delete", message_path(@message), :method => "delete"
