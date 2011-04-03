@@ -1,10 +1,11 @@
 class CharacterProxy < ActiveRecord::Base
   belongs_to :game_profile
-  belongs_to :character, :polymorphic => true
+  belongs_to :character, :polymorphic => true, :autosave => true
   
-  validates_presence_of :game_profile, :character
+  #TODO validate game_profile
+  #validates_presence_of :character 
   
-  after_create :default_gp_checker, :create_character_discussion
+  after_create :default_gp_checker
   
   def self.all_characters
     CharacterProxy.all.collect!{|proxy| proxy.character}
@@ -24,7 +25,7 @@ class CharacterProxy < ActiveRecord::Base
     self.game_profile.default_proxy_adder(self)
   end
   
-  def create_character_discussion
-    self.character.create_discussion
-  end
+  # def create_character_discussion
+  #   self.character.create_discussion
+  # end
 end

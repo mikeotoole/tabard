@@ -1,7 +1,9 @@
 class GameProfile < Profile
-  has_many :character_proxies, :dependent => :destroy, :after_add => :default_proxy_adder
+  has_many :character_proxies, :dependent => :destroy, :autosave => true
   belongs_to :game
   belongs_to :user_profile
+  
+  belongs_to :default_character_proxy, :class_name => "CharacterProxy"
   
   validates_presence_of :game
   validates_presence_of :user_profile
@@ -24,12 +26,14 @@ class GameProfile < Profile
     self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name"
   end
   
+  #TODO updated using association
   def default_character
     proxy = CharacterProxy.find_by_id(self.default_character_proxy_id)
     c = proxy.character if proxy
     c
   end
   
+  #TODO updated using association
   def default_character=(character)
     self.default_character_proxy_id = character.character_proxy_id
   end
@@ -40,7 +44,6 @@ class GameProfile < Profile
   
   def default_proxy_adder(character_proxy)
     self.default_character_proxy_id = character_proxy.id unless self.default_character_proxy_id
-    self.save
   end
   
 end

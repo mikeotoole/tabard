@@ -1,10 +1,9 @@
 class UserProfile < Profile
   belongs_to :user
 
-  has_many :game_profiles
+  has_many :game_profiles, :autosave => true
   
-  #TODO Shouldn't this be has_one? -MO
-  has_many :registration_applications
+  has_one :registration_application
   
   belongs_to :discussion
   belongs_to :personal_discussion_space, :class_name => "DiscussionSpace"
@@ -23,6 +22,26 @@ class UserProfile < Profile
   # User can only have one user profile
   validates_uniqueness_of :user_id
   validate :only_one_system_profile
+  
+  def build_character(character, is_default = false) 
+    
+    self.game_profiles.each do |game_profile|
+      if game_profile.game_id == character.game_id       
+        proxy = game_profile.character_proxies.build(:character => character)
+        game_profile.default_character_proxy = proxy if is_default and proxy
+        game_profile.valid?
+        logger.debug "*****" + game_profile.errors.full_messages.join(" | ")
+        return true
+      end
+    end
+    
+    # create new game profile
+    game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile")
+    game_profile.character_proxies.build(:character => character)
+    game_profile.valid?
+    logger.debug "*****" + game_profile.errors.full_messages.join(" | ")
+    self.game_profiles << game_profile
+  end
   
   def only_one_system_profile
     errors.add(:id, "There can be only one!  ...system profile.") if (UserProfile.where(:is_system_profile => true).exists? and self.is_system_profile)

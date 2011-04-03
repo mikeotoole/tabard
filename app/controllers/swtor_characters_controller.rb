@@ -46,30 +46,11 @@ class SwtorCharactersController < ApplicationController
     if !current_user.can_create(@character)
       render :nothing => true, :status => :forbidden
     else
-      @game = Game.find_by_id(@character.game_id) if @character
-      
-      userProfile = current_user.user_profile   
-      @gameProfile = GameProfile.users_game_profile(userProfile, @game)
-      
-      if @gameProfile
-        @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      else
-        @gameProfile = GameProfile.new(:game => @game, :user_profile => userProfile, :name => userProfile.name + " "+ @game.name + " Profile")
-        @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      end
-      
-      @proxy.valid?
-      @character.valid?
+      profile = UserProfile.find_by_user_id(current_user.id)
+      profile.build_character(@character, params[:default])
   
       respond_to do |format|
-        if @gameProfile.valid? and @proxy.valid? and @character.save
-          @gameProfile.save
-          @proxy.save
-          if params[:default]
-            @gameProfile.default_character_proxy_id = @proxy.id
-          end
-          @gameProfile.save
-          
+        if profile.save         
           format.html { redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
