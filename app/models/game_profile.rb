@@ -5,8 +5,7 @@ class GameProfile < Profile
   
   belongs_to :default_character_proxy, :class_name => "CharacterProxy"
   
-  validates_presence_of :game
-  validates_presence_of :user_profile
+  validates_presence_of :user_profile, :game
   
   def game_id
     game.id
