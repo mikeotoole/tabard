@@ -29,8 +29,6 @@ class UserProfile < Profile
       if game_profile.game_id == character.game_id       
         proxy = game_profile.character_proxies.build(:character => character)
         game_profile.default_character_proxy = proxy if is_default and proxy
-        game_profile.valid?
-        logger.debug "*****" + game_profile.errors.full_messages.join(" | ")
         return true
       end
     end
@@ -38,8 +36,6 @@ class UserProfile < Profile
     # create new game profile
     game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile")
     game_profile.character_proxies.build(:character => character)
-    game_profile.valid?
-    logger.debug "*****" + game_profile.errors.full_messages.join(" | ")
     self.game_profiles << game_profile
   end
   

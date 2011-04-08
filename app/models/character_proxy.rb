@@ -2,8 +2,8 @@ class CharacterProxy < ActiveRecord::Base
   belongs_to :game_profile
   belongs_to :character, :polymorphic => true, :autosave => true
   
-  #TODO validate game_profile
-  #validates_presence_of :character 
+  #TODO validate game_profile. Becouse of our creation design does this need to happen? If so it will need to be an after_create. -MO
+  validates_presence_of :character
   
   after_create :default_gp_checker
   

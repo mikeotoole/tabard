@@ -13,8 +13,6 @@ class GameProfile < Profile
   end
   
   def characters
-    #self.character_proxies.collect!{|proxy| proxy.character}
-    
     characters = Array.new()
     for proxy in self.character_proxies
         characters << proxy.character
@@ -26,16 +24,12 @@ class GameProfile < Profile
     self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name"
   end
   
-  #TODO updated using association
   def default_character
-    proxy = CharacterProxy.find_by_id(self.default_character_proxy_id)
-    c = proxy.character if proxy
-    c
+    self.default_character_proxy.character if self.default_character_proxy
   end
   
-  #TODO updated using association
   def default_character=(character)
-    self.default_character_proxy_id = character.character_proxy_id
+    self.default_character_proxy = character.character_proxy
   end
   
   def self.users_game_profile(userprofile, game)
@@ -43,7 +37,10 @@ class GameProfile < Profile
   end
   
   def default_proxy_adder(character_proxy)
-    self.default_character_proxy_id = character_proxy.id unless self.default_character_proxy_id
+    unless self.default_character_proxy
+      self.default_character_proxy = character_proxy
+      self.save
+    end
   end
   
 end
