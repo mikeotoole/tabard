@@ -14,7 +14,7 @@
           .slogan We need a slogan
           - if logged_in?
             .userbox
-              = render :partial => 'active_profile/form', :locals => {:current_user => current_user }
+              = render :partial => 'active_profile/form', :locals => { :current_user => current_user }
               =link_to 'Account', edit_user_path(current_user), :class => 'button'
               =link_to 'Logout', logout_path, :class => 'button'
       
