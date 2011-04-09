@@ -1,0 +1,11 @@
+%h2
+  Sent: #{h(@message.subject)}
+%p
+  %strong To:
+  - if @message.recipients
+    - @message.recipients.each do |profile|
+      = profile.name
+%p
+  %strong Sent:
+  = @message.created_at.to_s(:long)
+%pre= h @message.body

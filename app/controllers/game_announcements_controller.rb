@@ -1,6 +1,6 @@
 class GameAnnouncementsController < ApplicationController
   respond_to :html, :xml
-  before_filter :authenticate
+  before_filter :authenticate, :grab_game_from_game_id
   
   # GET /game_announcements
   # GET /game_announcements.xml
@@ -28,8 +28,7 @@ class GameAnnouncementsController < ApplicationController
   # GET /game_announcements/new
   # GET /game_announcements/new.xml
   def new
-    @game_announcement = GameAnnouncement.new
-    @game_announcement.game = Game.find_by_id(params[:game_id]) if params[:game_id]
+    @game_announcement = game_announcement_helper.new
     if !current_user.can_create(@game_announcement)
       render :nothing => true, :status => :forbidden
     else
@@ -39,7 +38,7 @@ class GameAnnouncementsController < ApplicationController
 
   # GET /game_announcements/1/edit
   def edit
-    @game_announcement = GameAnnouncement.find(params[:id])
+    @game_announcement = game_announcement_helper.find(params[:id])
     if !current_user.can_update(@game_announcement)
       render :nothing => true, :status => :forbidden
     else
@@ -50,7 +49,7 @@ class GameAnnouncementsController < ApplicationController
   # POST /game_announcements
   # POST /game_announcements.xml
   def create
-    @game_announcement = GameAnnouncement.new(params[:game_announcement])
+    @game_announcement = game_announcement_helper.new(params[:game_announcement])
     if !current_user.can_create(@game_announcement)
       render :nothing => true, :status => :forbidden
     else 
@@ -96,5 +95,15 @@ class GameAnnouncementsController < ApplicationController
 
       respond_with(@game_announcement)
     end
+  end
+  
+  private
+  #Nested Resource Helper
+  def game_announcement_helper
+    @game ? @game.game_announcements : GameAnnouncement
+  end
+  
+  def grab_game_from_game_id
+    @game = Game.find_by_id(params[:game_id]) if params[:game_id]
   end
 end

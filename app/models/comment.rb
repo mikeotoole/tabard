@@ -3,20 +3,40 @@ class Comment < ActiveRecord::Base
   attr_accessor :comment_target
   
   belongs_to :commentable, :polymorphic => true
-  belongs_to :character
+  belongs_to :character_proxy
   belongs_to :user_profile
   has_many :comments, :as => :commentable
+  
+  before_create :use_default_character
+  
+  def character_proxy_id
+    self.character_proxy.id
+  end
+  def use_default_character
+    return if self.character_proxy or not(self.user_profile)
+    if(self.original_comment_item.respond_to?('game'))
+      self.user_profile.game_profiles.each do |game_profile|
+        if(game_profile.game.id == original_comment_item.game.id)
+          self.character_proxy_id = game_profile.default_character_proxy_id
+        end
+      end
+    end
+  end
   
   def users_name
     user_profile.displayname
   end
   
   def characters_name
-    character.name
+    character_proxy.character.name
+  end
+  
+  def character
+    character_proxy.character if character_proxy
   end
   
   def charater_posted?
-    character != nil
+    character_proxy != nil
   end
   
   def number_of_comments

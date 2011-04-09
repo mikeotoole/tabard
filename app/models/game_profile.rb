@@ -1,18 +1,17 @@
 class GameProfile < Profile
-  has_many :character_proxies, :dependent => :destroy, :after_add => :default_proxy_adder
+  has_many :character_proxies, :dependent => :destroy, :autosave => true
   belongs_to :game
   belongs_to :user_profile
   
-  validates_presence_of :game
-  validates_presence_of :user_profile
+  belongs_to :default_character_proxy, :class_name => "CharacterProxy"
+  
+  validates_presence_of :user_profile, :game
   
   def game_id
     game.id
   end
   
   def characters
-    #self.character_proxies.collect!{|proxy| proxy.character}
-    
     characters = Array.new()
     for proxy in self.character_proxies
         characters << proxy.character
@@ -25,13 +24,11 @@ class GameProfile < Profile
   end
   
   def default_character
-    proxy = CharacterProxy.find_by_id(self.default_character_proxy_id)
-    c = proxy.character if proxy
-    c
+    self.default_character_proxy.character if self.default_character_proxy
   end
   
   def default_character=(character)
-    self.default_character_proxy_id = character.character_proxy_id
+    self.default_character_proxy = character.character_proxy
   end
   
   def self.users_game_profile(userprofile, game)
@@ -39,8 +36,10 @@ class GameProfile < Profile
   end
   
   def default_proxy_adder(character_proxy)
-    self.default_character_proxy_id = character_proxy.id unless self.default_character_proxy_id
-    self.save
+    unless self.default_character_proxy
+      self.default_character_proxy = character_proxy
+      self.save
+    end
   end
   
 end

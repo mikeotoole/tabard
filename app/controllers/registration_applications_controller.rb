@@ -6,7 +6,6 @@ class RegistrationApplicationsController < ApplicationController
   # GET /registration_applications.xml
   def index
     @registration_applications = RegistrationApplication.all
-  
     @form = SiteForm.application_form
 
     respond_with(@registration_applications)
@@ -41,24 +40,14 @@ class RegistrationApplicationsController < ApplicationController
   # POST /registration_applications
   # POST /registration_applications.xml
   def create
-    @registration_application = RegistrationApplication.new(params[:registration_application])
     @user = User.new(params[:user])
-    @profile = UserProfile.new(params[:user_profile])
+    @profile = @user.build_user_profile(params[:user_profile])
+    @registration_application = @profile.build_registration_application(params[:registration_application])
     
     @profile.set_applicant
 
-    # Force errors to display if @profile.valid? fails in the if statement
-    @registration_application.valid?
-    @user.valid?
-
     respond_to do |format|
-      if @profile.valid? && @user.valid? && @registration_application.valid?
-        @user.save
-        @profile.user_id = @user.id
-        @profile.save
-        @registration_application.user_profile_id = @profile.id
-        @registration_application.save
-        
+      if @user.save      
         format.html { redirect_to root_path, :notice => 'Registration application was successfully submitted. Confirmation emailed.' }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else

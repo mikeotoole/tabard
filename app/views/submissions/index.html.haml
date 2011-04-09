@@ -1,12 +1,16 @@
 %h1 
   = @site_form.name
-  Submissions
-%table
-  %tr
-    %th Username
-    %th Date Submitted
-  - @submissions.each do |submission|
+- if !@submissions.empty?
+  %h3 Submissions 
+  %table
     %tr
-      %td= link_to submission.name, submission_path(submission)
-      %td= submission.created_at
-      
+      %th Username
+      %th Submitted
+    - @submissions.each do |submission|
+      %tr
+        %td= link_to submission.name, site_form_submission_path(@site_form, submission)
+        %td
+          = distance_of_time_in_words(submission.created_at, Time.now)
+          ago
+- else
+  No Submissions For This Form

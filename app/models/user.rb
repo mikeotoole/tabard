@@ -1,4 +1,4 @@
-require 'digest'
+require 'digest/sha1'
 class User < ActiveRecord::Base
   attr_accessor :password
   
@@ -21,6 +21,26 @@ class User < ActiveRecord::Base
   after_create :assign_default_role
   
   accepts_nested_attributes_for :user_profile
+  
+  def sent_messages
+    self.user_profile.sent_messages
+  end
+  
+  def received_messages
+    self.user_profile.received_messages
+  end
+  
+  def deleted_received_messages
+    self.user_profile.deleted_received_messages
+  end
+  
+  def inbox
+    self.user_profile.inbox
+  end
+  
+  def folders
+    self.user_profile.folders
+  end
   
   def assign_default_role
     self.roles << Role.get_default_role unless not(Role.get_default_role) or self.roles.count >= 1
@@ -104,7 +124,13 @@ class User < ActiveRecord::Base
   
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
+    logger.debug("Show permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_show_permissions'))
+      if(system_resource_name.check_user_show_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.show_permissionables.include?(system_resource_name))
         return true
@@ -115,16 +141,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_show_permissions'))
-      if(system_resource_name.check_user_show_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_create(system_resource_name)
+    logger.debug("Create permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_create_permissions'))
+      if(system_resource_name.check_user_create_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.create_permissionables.include?(system_resource_name))
         return true
@@ -135,16 +162,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_create_permissions'))
-      if(system_resource_name.check_user_create_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_update(system_resource_name)
+    logger.debug("Update permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
+    if(system_resource_name.respond_to?('check_user_update_permissions'))
+      if(system_resource_name.check_user_update_permissions(self))
+        return true
+      end
+    end
     self.roles.each do |role|
       if(role.update_permissionables.include?(system_resource_name))
         return true
@@ -155,16 +183,17 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_update_permissions'))
-      if(system_resource_name.check_user_update_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_delete(system_resource_name)
-    return false if not self.user_profile.is_active 
+    logger.debug("Delete permission request for user #{self.name} with #{system_resource_name}")
+    return false if not self.user_profile.is_active
+    if(system_resource_name.respond_to?('check_user_delete_permissions'))
+      if(system_resource_name.check_user_delete_permissions(self))
+        return true
+      end
+    end 
     self.roles.each do |role|
       if(role.delete_permissionables.include?(system_resource_name))
         return true
@@ -175,15 +204,11 @@ class User < ActiveRecord::Base
         end
       end
     end
-    if(system_resource_name.respond_to?('check_user_delete_permissions'))
-      if(system_resource_name.check_user_delete_permissions(self))
-        return true
-      end
-    end
     false
   end
   
   def can_special_permissions(system_resource_name,permission_string)
+    logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 
     permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
     if !permissionable_id

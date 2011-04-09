@@ -31,7 +31,7 @@
         %th Create
         %th Update
         %th Delete
-      = f.fields_for :permissions, @permissions do |p|
+      = f.fields_for :permissions, @role.permissions do |p|
         = p.hidden_field :permissionable_id
         = p.hidden_field :permissionable_type
         = p.hidden_field :name
@@ -42,5 +42,6 @@
           %td= p.check_box(:create_p)
           %td= p.check_box(:update_p)
           %td= p.check_box(:delete_p)
+  =link_to "New Premission", new_management_role_permission_path(@role)
   .actions
     = submit_or_cancel(f)

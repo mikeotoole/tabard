@@ -44,6 +44,11 @@ class Management::SiteFormsController < ApplicationController
     @site_form.registration_application_form = false
     respond_to do |format|
       if @site_form.save
+        
+        params[:notifications].each do |profile_id|
+          Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id)
+        end
+        
         format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully created.') }
         format.xml  { render :xml => @site_form, :status => :created }
       else
@@ -59,7 +64,16 @@ class Management::SiteFormsController < ApplicationController
       @site_form = SiteForm.find(params[:id])
     respond_to do |format|
       if @site_form.update_attributes(params[:site_form])
-        format.html { redirect_to(management_site_forms_path, :notice => 'Form was successfully updated.') }
+        
+        @site_form.notifications.each do |notification|
+          notification.destroy unless params[:notifications].include?(notification.user_profile)
+        end
+        
+        params[:notifications].each do |profile_id|
+          Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id) unless @site_form.profile_notifications.include?(profile_id)
+        end       
+        
+        format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -3,6 +3,10 @@ class RegistrationApplication < Submission
 
   after_create :generate_discussion
   
+  def self.all_new
+    RegistrationApplication.all.delete_if {|application| (!application.user_profile.is_applicant)} 
+  end
+  
   def status_string
     self.user_profile.status_string
   end

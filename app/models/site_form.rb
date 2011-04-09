@@ -2,6 +2,9 @@ class SiteForm < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
   
+  has_many :notifications, :dependent => :destroy
+  has_many :profile_notifications, :through => :notifications, :source => :user_profile
+  
   validate :only_one_registration_application_form
   
   def only_one_registration_application_form

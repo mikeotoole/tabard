@@ -5,6 +5,7 @@ roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
 
 gameResource = SystemResource.create(:name => "Game")
+characterResource = SystemResource.create(:name => "Character")
 
 # Sample Games
 wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
@@ -28,6 +29,7 @@ adminProfile.set_active
 allUserPermission = Permission.create(:permissionable => userResource, :name => "Full Access User", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allRolePermission = Permission.create(:permissionable => roleResource, :name => "Full Access Role", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allGamePermission = Permission.create(:permissionable => gameResource, :name => "Full Access Game", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allCharacterPermission = Permission.create(:permissionable => characterResource, :name => "Full Access Character", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allSiteAnnouncementPermission = Permission.create(:permissionable => siteAnnouncementResource, :name => "Full Access SiteAnnouncement", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allGameAnnouncementPermission = Permission.create(:permissionable => gameAnnouncementResource, :name => "Full Access GameAnnouncement", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allDiscussionSpacePermission = Permission.create(:permissionable => discussionSpaceResource, :name => "Full Access DiscussionSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
@@ -36,7 +38,7 @@ allCommentPermission = Permission.create(:permissionable => commentResource, :na
 allPageSpacePermission = Permission.create(:permissionable => pageSpaceResource, :name => "Full Access PageSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allPagePermission = Permission.create(:permissionable => pageResource, :name => "Full Access Page", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allSiteFormPermission = Permission.create(:permissionable => siteFormResource, :name => "Full Access Site Form", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
-adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission])
+adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allCharacterPermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile)
 
 # Sample Discussion Spaces
@@ -63,8 +65,10 @@ ycp = CharacterProxy.create(:character => yoda, :game_profile => swtorProfile)
 viewUserPermission = Permission.create(:permissionable => userResource, :name => "View Access User", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewRolePermission = Permission.create(:permissionable => roleResource, :name => "View Access Role", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGamePermission = Permission.create(:permissionable => gameResource, :name => "View Access Game", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
+viewCharacterPermission = Permission.create(:permissionable => characterResource, :name => "View Access Character", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
 viewGeneralDiscussionSpacePermission = Permission.create(:permissionable => discSpace, :name => "View General Discussion Space", :show_p => true, :create_p => false, :update_p => false, :delete_p => false)
-viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewGeneralDiscussionSpacePermission])
+viewCommentPermission = Permission.create(:permissionable => commentResource, :name => "Full Access Comment", :show_p => true, :create_p => true, :update_p => true, :delete_p => false)
+viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewCharacterPermission,viewGeneralDiscussionSpacePermission,viewCommentPermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
 
 #Registration application site form creation
@@ -100,7 +104,7 @@ GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are su
 SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
 # Sample Page Space/Pages
-bossPageSpace = PageSpace.create(:name => "Boss Strategies")
+bossPageSpace = PageSpace.create(:name => "SWTOR Boss Strategies", :game => swtor)
 sarlaccPage = Page.create(:title => "Sarlacc Pit Strategy", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => bossPageSpace, :featured_page => true)
 rockLobsterPage = Page.create(:title => "Rock Lobster", :body => "Bring a pot, this boss is super delicious!", :page_space => bossPageSpace)
 

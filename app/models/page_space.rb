@@ -1,5 +1,10 @@
 class PageSpace < ActiveRecord::Base
-  has_many :pages
+  has_many :pages, :dependent => :destroy
+  belongs_to :game
+  
+  def game_name
+    self.game.name if self.game
+  end
   
   def check_user_show_permissions(user)
     return true

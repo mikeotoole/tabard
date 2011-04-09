@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317214219) do
+ActiveRecord::Schema.define(:version => 20110402222448) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -37,25 +37,9 @@ ActiveRecord::Schema.define(:version => 20110317214219) do
     t.datetime "updated_at"
   end
 
-  create_table "characters", :force => true do |t|
-    t.integer  "game_id"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
-    t.string   "faction"
-    t.string   "race"
-    t.string   "klass"
-    t.string   "server"
-    t.string   "extra"
-    t.integer  "rank"
-    t.integer  "game_profile_id"
-    t.integer  "discussion_id"
-  end
-
   create_table "comments", :force => true do |t|
     t.text     "body"
-    t.integer  "character_id"
+    t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -103,6 +87,14 @@ ActiveRecord::Schema.define(:version => 20110317214219) do
     t.datetime "updated_at"
   end
 
+  create_table "folders", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -124,7 +116,31 @@ ActiveRecord::Schema.define(:version => 20110317214219) do
     t.datetime "updated_at"
   end
 
+  create_table "message_copies", :force => true do |t|
+    t.integer  "recipient_id"
+    t.integer  "message_id"
+    t.integer  "folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "deleted"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "author_id"
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "newsletters", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "site_form_id"
+    t.integer  "user_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20110317214219) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "game_id"
   end
 
   create_table "pages", :force => true do |t|
@@ -170,6 +187,7 @@ ActiveRecord::Schema.define(:version => 20110317214219) do
     t.integer  "status"
     t.integer  "personal_discussion_space_id"
     t.integer  "default_character_proxy_id"
+    t.boolean  "is_system_profile"
   end
 
   create_table "questions", :force => true do |t|

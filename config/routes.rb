@@ -1,6 +1,20 @@
 Bv::Application.routes.draw do
-
-  resources :submissions
+ 
+  resources :sent, :only => [:show, :new, :create]
+  match '/sent_messages' => "sent#index"
+  
+  resources :messages, :only => [:show, :destroy] do
+    member do
+      post :reply
+      post :forward
+      post :reply_all
+      post :undelete
+    end
+  end
+      
+  resource :mailbox, :only => :show
+  match '/inbox' => "mailbox#index"
+  match '/trash' => "mailbox#trash"
 
   resources :registration_answers
 
@@ -37,9 +51,9 @@ Bv::Application.routes.draw do
 
   resources :team_speaks
 
-  resources :page_spaces
-
-  resources :pages
+  resources :page_spaces do
+    resources :pages
+  end  
 
   resources :letters
 
@@ -93,7 +107,9 @@ Bv::Application.routes.draw do
       end
     end
     resources :games, :except => :show
-    resources :roles
+    resources :roles do
+      resources :permissions
+    end
     resources :newsletters
     resources :page_spaces
     resources :discussion_spaces
@@ -102,7 +118,9 @@ Bv::Application.routes.draw do
     resources :site_forms
   end
   
-  resources :site_forms
+  resources :site_forms do
+    resources :submissions, :only => [:index, :show, :new, :create]
+  end
   
   resources :profiles do
     resources :acknowledgment_of_announcements
@@ -116,19 +134,18 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :permissions  
-  
   resources :users, :only => [:index, :show, :edit]
   resource :session
   
-  resource :active_profile
-  match '/activate_profile' => "active_profiles#new", :as => "activate_profile"
-  match '/deactivate_profile' => "active_profiles#destroy", :as => "deactivate_profile"
+  match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
   resources :games, :only => [:index, :show] do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
+    resources :game_announcements, :only => [:new, :create]
   end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
   
   resources :base_characters, :only => :new
 

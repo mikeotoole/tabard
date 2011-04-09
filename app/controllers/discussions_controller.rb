@@ -47,7 +47,7 @@ class DiscussionsController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       @discussion.user_profile = current_user.user_profile
-      @discussion.character = (character_active? ? current_character : nil)
+      @discussion.character_proxy = (character_active? ? current_character.character_proxy : nil)
       if @discussion.save
         flash[:notice] = 'Discussion was successfully created.'
         respond_with(@discussion)

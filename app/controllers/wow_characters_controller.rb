@@ -5,63 +5,57 @@ class WowCharactersController < ApplicationController
   # GET /game/game_id/wow_characters/1/edit
   def edit
     @character = WowCharacter.find_by_id(params[:id])
+    if !current_user.can_update(@character)
+        render :nothing => true, :status => :forbidden
+    end
   end
   
   # GET /game/game_id/wow_characters/1
   # GET /game/game_id/wow_characters/1.xml
   def show
       @character = WowCharacter.find_by_id(params[:id])
-      @game = Game.find_by_id(@character.game_id) if @character
-  
-      respond_with(@character)
+      if !current_user.can_show(@character)
+        render :nothing => true, :status => :forbidden
+      else
+        @game = Game.find_by_id(@character.game_id) if @character
+    
+        respond_with(@character)
+      end
   end
   
   # GET /game/game_id/wow_characters/new
   # GET /game/game_id/wow_characters/new.xml
   def new
       @character = WowCharacter.new
-      @character.game_id = params[:game_id] 
+      if !current_user.can_create(@character)
+        render :nothing => true, :status => :forbidden
+      else
+        @character.game_id = params[:game_id] 
   
-      respond_with(@character)
+        respond_with(@character)
+      end
   end
 
   # POST /game/game_id/wow_characters
   # POST /game/game_id/wow_characters.xml
   def create
     @character = WowCharacter.new(params[:wow_character])
-    @game = Game.find_by_id(@character.game_id) if @character
-    
-    userProfile = current_user.user_profile
-    if !userProfile
-      current_user.user_profile = UserProfile.create(:name => "Please set name")
-    end
-    
-    @gameProfile = GameProfile.users_game_profile(userProfile, @game)
-    
-    if @gameProfile
-      @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      if params[:default]
-        @gameProfile.default_character_proxy_id = @proxy
-      end
+    if !current_user.can_create(@character)
+      render :nothing => true, :status => :forbidden
     else
-      @gameProfile = GameProfile.new(:game => @game, :user_profile => userProfile, :name => userProfile.name + " "+ @game.name + " Profile")
-      @proxy = CharacterProxy.new(:game_profile => @gameProfile, :character => @character)
-      @gameProfile.default_character_proxy_id = @proxy
-    end
-    
-    @proxy.valid?
-    @character.valid?
-
-    respond_to do |format|
-      if @gameProfile.valid? and @proxy.valid? and @character.save
-        @gameProfile.save
-        @proxy.save
-        
-        format.html { redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
-        format.xml  { render :xml => @character, :status => :created, :location => @character }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
+      
+      profile = UserProfile.find_by_user_id(current_user.id)
+      profile.build_character(@character, params[:default])
+  
+      respond_to do |format|
+        if profile.save
+          format.html { redirect_to [@character.game, @character], :notice => 'Character was successfully created.' }#redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
+          format.xml  { render :xml => @character, :status => :created, :location => @character }
+        else
+          flash[:notice] = profile.errors.full_messages.join(" | ")
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -70,22 +64,25 @@ class WowCharactersController < ApplicationController
   # PUT /game/game_id/wow_characters/1.xml
   def update
     @character = WowCharacter.find_by_id(params[:id])
-    @game = Game.find_by_id(@character.game_id) if @character
-    
-    if params[:default]
-      logger.debug "Default is true"
-      @gameProfile = CharacterProxy.character_game_profile(@character)
-      @gameProfile.default_character_proxy_id = @character.character_proxy if @gameProfile
-      @gameProfile.save if @gameProfile
-    end
-
-    if @character.update_attributes(params[:wow_character])
-      flash[:notice] = 'Character was successfully updated.'
-      respond_with(@game, @character)
+    if !current_user.can_update(@character)
+      render :nothing => true, :status => :forbidden
     else
-      respond_to do |format|
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
+      @game = Game.find_by_id(@character.game_id) if @character
+      
+      if params[:default]
+        @gameProfile = CharacterProxy.character_game_profile(@character)
+        @gameProfile.default_character_proxy_id = @character.character_proxy_id if @gameProfile
+        @gameProfile.save if @gameProfile
+      end
+  
+      if @character.update_attributes(params[:wow_character])
+        flash[:notice] = 'Character was successfully updated.'
+        respond_with(@game, @character)
+      else
+        respond_to do |format|
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -94,11 +91,15 @@ class WowCharactersController < ApplicationController
   # DELETE /game/game_id/wow_characters/1.xml
   def destroy
     @character = WowCharacter.find_by_id(params[:id])
-    @character.destroy if @character
-    
-    respond_to do |format|
-      format.html { redirect_to user_profile_path(UserProfile.find_by_id(current_user)), :notice => 'Character deleted' }
-      format.xml  { head :ok }
+    if !current_user.can_delete(@character)
+      render :nothing => true, :status => :forbidden
+    else
+      @character.destroy if @character
+      
+      respond_to do |format|
+        format.html { redirect_to user_profile_path(UserProfile.find_by_id(current_user)), :notice => 'Character deleted' }
+        format.xml  { head :ok }
+      end
     end
   end
 end
