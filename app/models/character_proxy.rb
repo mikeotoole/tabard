@@ -5,7 +5,7 @@ class CharacterProxy < ActiveRecord::Base
   #TODO validate game_profile. Becouse of our creation design does this need to happen? If so it will need to be an after_create. -MO
   validates_presence_of :character
   
-  after_create :default_gp_checker, :validate_game_profile, :create_character_discussion
+  after_create :default_gp_checker, :validate_game_profile
   
   def self.all_characters
     CharacterProxy.all.collect!{|proxy| proxy.character}
@@ -29,16 +29,6 @@ class CharacterProxy < ActiveRecord::Base
     unless self.game_profile
       logger.error "**ERROR** CharacterProxy was missing it's game profile! This very bad."
     end
-  end
-  
-  def create_character_discussion
-    return if self.character.discussion
-    user_profile = self.game_profile.user_profile if self.game_profile
-    character.discussion = Discussion.create(:discussion_space => character.game.character_discussion_space,
-                                        :name => character.name,
-                                        :body => "Character Discussion",
-                                        :user_profile => self.game_profile.user_profile,
-                                        :character_proxy_id => self.id)
   end
   
   # def create_character_discussion

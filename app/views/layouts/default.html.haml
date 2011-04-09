@@ -6,54 +6,35 @@
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
     = include_tiny_mce_if_needed
-  %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
+  %body{ :class => "logged_out #{params[:controller]}_view" }
     #bg
       
       #header
         .container
           .title= link_to 'Brutal Venom', root_path
           .slogan We need a slogan
-          - if logged_in?
-            .userbox
-              %ul
-              - if profile_active?
-                = link_to current_profile.name, current_profile
-                = current_profile.description
-              =render :partial => "layouts/mailbox_list"  
-              =link_to 'Account', edit_user_path(current_user), :class => 'button'
-              =link_to 'Logout', logout_path, :class => 'button'
       
       - if flash[:messages] || has_announcements?
-        != has_announcements? ? '<form method="post" action="' << announcement_acknowledgement_path << '" data-remote="true" id="announcements">' : '<div id="announcements">'
-        %ul.container
-          - if has_announcements?
-            - current_user.unacknowledged_announcements.each do |announcement|
-              %li{ :class => 'announcement_' << announcement.id.to_s }
-                = link_to(announcement.path, { :class => 'msg', :title => 'Read the full announcement and comments.' }) do
-                  %strong= announcement.title
-                  &mdash;
-                  = announcement.snippet
-                %button{ :type => 'submit', :name => 'id', :value => announcement.id, :title => 'Mark as seen.' } Mark as seen
-          - if flash[:messages]
-            - flash[:messages].each do |message|
-              = render :partial => 'layouts/flash_message', :locals => { :message => message }
-        != has_announcements? ? '</form>' : '</div>'
+        #announcements
+          %ul.container
+            - if flash[:messages]
+              - flash[:messages].each do |message|
+                = render :partial => 'layouts/flash_message', :locals => { :message => message }
         - flash[:messages] = nil
        
       #menu    
-        .container              
-          - if !logged_in?
-            = form_tag(session_path, :class => 'login') do
-              = label_tag :email
-              = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
-              = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
-              %p.remember
-                = check_box_tag('remember')
-                = label_tag 'remember', 'Remember me'
-              = submit_tag 'Sign in'
-              %p.apply
-                %span= 'Want to join?'
-                = link_to 'Apply now', new_registration_application_path
+        .container
+          = form_tag(session_path, :class => 'login') do
+            = label_tag :email
+            = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
+            = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
+            %p.remember
+              = check_box_tag('remember')
+              = label_tag 'remember', 'Remember me'
+            = submit_tag 'Sign in'
+            %p.apply
+              %span= 'Want to join?'
+              = link_to 'Apply now', new_registration_application_path
           %ul
             %li
               = link_to 'Info', '#', { :class => 'main' }
@@ -69,22 +50,6 @@
                 %ul
                   - dynamic_page_spaces.each do |page_space| 
                     %li= link_to page_space.name, page_space
-            %li
-              = link_to 'Discussions', :discussion_spaces, { :class => 'main' } if current_user
-              - if dynamic_discussions
-                %ul
-                  - dynamic_discussions.each do |discussion_space| 
-                    %li= link_to discussion_space.name, discussion_space
-                    
-            %li
-              = link_to 'Active Profiles', user_profile_path(current_user), { :class => 'main' } if current_user
-              %ul
-                - if profiles
-                  - profiles.each do |profile|
-                    %li{ :class => profile[:name] + (profile[:is_current] ? ' current' : '') }
-                      = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
-                        = #image_tag '/images/profiles/' + profile[:profile_type] + '.png', :alt => ''
-                        = profile[:name]
             %li.search
               %a.main
                 Search
@@ -120,13 +85,6 @@
               %ul
                 - dynamic_page_spaces.each do |page_space| 
                   %li= link_to page_space.name, page_space
-          .menu
-            %h3 Members
-            %ul
-              %li= link_to 'Events', :events
-              %li= link_to 'Discussions', :discussion_spaces if current_user and current_user.can_show("DiscussionSpace")
-              %li= link_to 'Newsletter', :newsletters
-              %li= link_to 'Donations', '#'
               
           %p.copyright
             = link_to 'Privacy Policy', '#'
