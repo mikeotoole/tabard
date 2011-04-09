@@ -6,8 +6,6 @@ class BaseCharacter < ActiveRecord::Base
   has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
    
   validates_presence_of :name, :game
-  
-  #after_create :create_discussion
    
   def character_proxy_id
     character_proxy.id
@@ -15,16 +13,6 @@ class BaseCharacter < ActiveRecord::Base
    
   def character_id
     self.id
-  end
- 
-  def create_discussion
-    return if self.discussion
-    user_profile = self.character_proxy.game_profile.user_profile if self.character_proxy and self.character_proxy.game_profile 
-    self.discussion = Discussion.create(:discussion_space => game.character_discussion_space,
-                                        :name => self.name,
-                                        :body => "Character Discussion",
-                                        :user_profile => user_profile)
-                                        # :character_proxy_id => self.character_proxy.id,
   end
   
   def default
