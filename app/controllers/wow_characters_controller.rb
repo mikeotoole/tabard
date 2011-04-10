@@ -1,5 +1,5 @@
 class WowCharactersController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:new]
   respond_to :html, :xml, :js
   
   # GET /game/game_id/wow_characters/1/edit
@@ -27,13 +27,16 @@ class WowCharactersController < ApplicationController
   # GET /game/game_id/wow_characters/new.xml
   def new
       @character = WowCharacter.new
-      if !current_user.can_create(@character)
-        render :nothing => true, :status => :forbidden
-      else
-        @character.game_id = params[:game_id] 
+      #TODO fix this
+      # if !format.js and !current_user.can_create(@character)
+      #   render :nothing => true, :status => :forbidden
+      # else
+        @character.game_id = params[:game_id]
+        
+        @new_id = Time.now.to_f
   
         respond_with(@character)
-      end
+      # end
   end
 
   # POST /game/game_id/wow_characters

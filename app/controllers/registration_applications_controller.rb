@@ -28,6 +28,8 @@ class RegistrationApplicationsController < ApplicationController
     
     @registration_application.site_form = SiteForm.application_form
     @registration_application.answers.build if @registration_application.answers.count == 0
+    
+    @games = Game.active
 
     respond_with(@registration_application)
   end
@@ -44,13 +46,26 @@ class RegistrationApplicationsController < ApplicationController
     @profile = @user.build_user_profile(params[:user_profile])
     @registration_application = @profile.build_registration_application(params[:registration_application])
     
-    @profile.set_applicant
+    @profile.set_applicant   
+    
+    if params[:wow_character]
+      params[:wow_character].each do |character|
+        @profile.build_character(WowCharacter.new(character.last))
+      end
+    end
+    
+    if params[:swtor_character]
+      params[:swtor_character].each do |character|
+        @profile.build_character(SwtorCharacter.new(character.last))
+      end
+    end
 
     respond_to do |format|
       if @user.save      
         format.html { redirect_to root_path, :notice => 'Registration application was successfully submitted. Confirmation emailed.' }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
+        @games = Game.active
         @registration_application.answers.build if @registration_application.answers.count == 0
         format.html { render :action => "new" }#, :object => @registration_application }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }

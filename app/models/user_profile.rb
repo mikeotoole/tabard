@@ -23,6 +23,7 @@ class UserProfile < Profile
   validates_uniqueness_of :user_id
   validate :only_one_system_profile
   
+  #This will add a new character, creating the game profile if needed.
   def build_character(character, is_default = false) 
     
     self.game_profiles.each do |game_profile|
@@ -34,7 +35,7 @@ class UserProfile < Profile
     end
     
     # create new game profile
-    game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile")
+    game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile", :user_profile => self)
     game_profile.character_proxies.build(:character => character)
     self.game_profiles << game_profile
   end

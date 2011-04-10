@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                     :presence => true, 
                     :if => :password_required?
                     
-  has_one :user_profile
+  has_one :user_profile, :autosave => true
   has_many :game_profiles, :through => :user_profile
   
   has_many :roles_users
@@ -57,26 +57,6 @@ class User < ActiveRecord::Base
   
   def active_profile_helper_collection
     (Array.new() << (user_profile)).concat(characters)
-  end
-  
-  #TODO This needs to change for the new character model
-  def add_character(character, default)  
-    @gameprofiles = self.all_game_profiles
-    if @gameprofiles
-      @profile = @gameprofiles.find(:first, :conditions => { :game_id => character.game_id })
-    else
-      exit errors.add "User has no user profile!"
-    end
-    if @profile == nil
-      @profile = GameProfile.create(:game_id => character.game_id, :user_profile => self.user_profile)
-      @profile.default_character = character
-      @profile.save
-    elsif default
-      @profile.default_character = character
-      @profile.save
-    end
-    character.game_profile = @profile
-    character.save
   end
   
   def characters
