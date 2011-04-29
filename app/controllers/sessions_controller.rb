@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  def new
+    session[:pre_login_url] = request.env["HTTP_REFERER"]  
+  end  
   
   def create  
     if user = User.authenticate(params[:email], params[:password])
@@ -20,7 +23,11 @@ class SessionsController < ApplicationController
           " to finish setting up your account."
         )
       else
-        redirect_to root_path, :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
+        if session[:pre_login_url] 
+          redirect_to session[:pre_login_url], :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
+        else
+          redirect_to root_path, :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
+        end        
       end 
     else
       redirect_to root_path, :alert => "Invalid email/password combination."
