@@ -1,5 +1,5 @@
 class SwtorCharactersController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:new]
   respond_to :html, :xml, :js
     
   # GET /game/game_id/swtor_characters/1/edit
@@ -27,16 +27,16 @@ class SwtorCharactersController < ApplicationController
   # GET /game/game_id/swtor_characters/new.xml
   def new
       @character = SwtorCharacter.new
-      if !current_user.can_create(@character)
-        render :nothing => true, :status => :forbidden
-      else
+      #TODO fix this
+      # if !current_user.can_create(@character)
+      #   render :nothing => true, :status => :forbidden
+      # else
         @character.game_id = params[:game_id]
         
-        @gameProfile = GameProfile.new
-        @proxy = CharacterProxy.new
+        @new_id = Time.now.to_f
     
         respond_with(@character)
-      end
+      # end
   end
 
   # POST /game/game_id/swtor_characters

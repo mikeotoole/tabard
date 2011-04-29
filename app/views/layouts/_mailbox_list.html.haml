@@ -1,8 +1,9 @@
 #mailbox_list
-  %p= link_to "Compose", new_sent_path
-  %p
-    %strong Mailboxes
-  %ul
-    %li= link_to "Inbox", inbox_path
-    %li= link_to "Sent", sent_messages_path
-    %li= link_to "Trash", trash_path
+  %p.compose= link_to "Compose", new_sent_path
+  .mailboxes
+    %p
+      %strong Mailboxes
+    %ul
+      %li.inbox= link_to "Inbox", inbox_path
+      %li.sent= link_to "Sent", sent_messages_path
+      %li.trash= link_to "Trash", trash_path

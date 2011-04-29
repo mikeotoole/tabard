@@ -8,6 +8,8 @@ class Game < ActiveRecord::Base
  
  after_create :create_game_discussion_space, :create_character_discussion_space
  
+ scope :active, :conditions => {:is_active => true}
+ 
  def create_game_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Announcements",
                                              :system => true,
@@ -33,9 +35,9 @@ class Game < ActiveRecord::Base
    DiscussionSpace.find_by_id(self.character_discussion_space_id)
  end
  
-  def self.active
-    Game.where("is_active = ?", true)
-  end
+  # def self.active
+  #   Game.where("is_active = ?", true)
+  # end
  
  # Lets the subclasses use the parents routes. 
   def self.inherited(child)

@@ -1,5 +1,5 @@
 class BaseCharactersController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:new]
   respond_to :html, :xml, :js
   
   # GET /base_characters/new
@@ -8,10 +8,16 @@ class BaseCharactersController < ApplicationController
       if @game != nil
         case @game.type
           when "Swtor"
-            redirect_to(new_game_swtor_character_path(@game))
+            respond_to do |format|
+              format.html { redirect_to(new_game_swtor_character_path(@game)) }
+              format.js { redirect_to(new_game_swtor_character_path(@game, :format => :js)) }
+            end
             return
           when "Wow"
-            redirect_to(new_game_wow_character_path(@game))
+            respond_to do |format|
+              format.html { redirect_to(new_game_wow_character_path(@game)) }
+              format.js { redirect_to(new_game_wow_character_path(@game, :format => :js)) }
+            end
             return
           else
             redirect_to(:back, :alert => 'Game not found.')
