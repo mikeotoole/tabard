@@ -168,6 +168,49 @@ textarea {
     form * {
       display: inline-block;
     }
+    * {
+      display: inline-block;
+    }
+    #mailbox_list {
+      a {
+        background: url(../images/mail-icons.png) no-repeat;
+        height: 50px;
+        margin: 0 -8px;
+        overflow: hidden;
+        position: relative;
+        text-indent: -500px;
+        top: -16px;
+        width: 50px;
+      }
+      .compose a {
+        background-position: 0 0;
+        &:hover { background-position: 0 -49px; }
+      }
+      display: inline;
+      .mailboxes {
+        ul {
+          display: inline; 
+          li {
+            display: inline;
+            &.inbox a {
+              background-position: -50px 0;
+              z-index: 3;
+              &:hover { background-position: -50px -49px; }
+            }
+            &.sent a {
+              background-position: -100px 0;
+              z-index: 2;
+              &:hover { background-position: -100px -49px; }
+            }
+            &.trash a {
+              background-position: -150px 0;
+              z-index: 1;
+              &:hover { background-position: -150px -49px; }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
