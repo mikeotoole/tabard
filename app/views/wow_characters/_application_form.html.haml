@@ -1,5 +1,5 @@
 %h3 New WOW Character
-= fields_for :wow_character, @character, :index => @new_id.to_s do |f|
+= fields_for :wow_character, @character, :index => Time.now.to_f.to_s do |f|
   .field
     = f.hidden_field :game_id
   .field

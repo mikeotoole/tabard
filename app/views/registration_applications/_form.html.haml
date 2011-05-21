@@ -33,6 +33,18 @@
         = @profile.errors[:name]
       %br/
       = profile.text_field :name
+  
+  %ul
+    - if @wowCharacters
+      - @wowCharacters.each do |character|
+        - @character = character
+        = render(:file => 'wow_characters/_application_form.html.haml', :locals => { :character => @character })
+        
+    - if @swtorCharacters
+      - @swtorCharacters.each do |character|
+        - @character = character
+        = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })        
+      
   #newcharacters
   %ul
     - if @games
