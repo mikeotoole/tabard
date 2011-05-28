@@ -72,9 +72,9 @@ class RegistrationApplicationsController < ApplicationController
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
         @games = Game.active
-        
+        @registration_application.answers.clear
         @registration_application.answers.build if @registration_application.answers.count == 0
-        format.html { render :action => "new" }#, :object => @registration_application }
+        format.html { render :action => "new" }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end
     end
