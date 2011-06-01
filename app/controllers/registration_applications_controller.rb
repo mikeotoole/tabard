@@ -46,17 +46,23 @@ class RegistrationApplicationsController < ApplicationController
     @profile = @user.build_user_profile(params[:user_profile])
     @registration_application = @profile.build_registration_application(params[:registration_application])
     
-    @profile.set_applicant   
+    @profile.set_applicant
     
     if params[:wow_character]
+      @wowCharacters = Array.new
       params[:wow_character].each do |character|
-        @profile.build_character(WowCharacter.new(character.last))
+        newWow = WowCharacter.new(character.last)
+        @wowCharacters << newWow
+        @profile.build_character(newWow)
       end
     end
     
     if params[:swtor_character]
+      @swtorCharacters = Array.new
       params[:swtor_character].each do |character|
-        @profile.build_character(SwtorCharacter.new(character.last))
+        newSwtor = SwtorCharacter.new(character.last)
+        @swtorCharacters << newSwtor
+        @profile.build_character(newSwtor)
       end
     end
 
@@ -66,8 +72,9 @@ class RegistrationApplicationsController < ApplicationController
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
         @games = Game.active
+        @registration_application.answers.clear
         @registration_application.answers.build if @registration_application.answers.count == 0
-        format.html { render :action => "new" }#, :object => @registration_application }
+        format.html { render :action => "new" }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end
     end

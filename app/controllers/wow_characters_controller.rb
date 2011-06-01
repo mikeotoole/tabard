@@ -32,8 +32,6 @@ class WowCharactersController < ApplicationController
       #   render :nothing => true, :status => :forbidden
       # else
         @character.game_id = params[:game_id]
-        
-        @new_id = Time.now.to_f
   
         respond_with(@character)
       # end

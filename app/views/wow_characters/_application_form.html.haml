@@ -1,0 +1,26 @@
+%h3 New WOW Character
+= fields_for :wow_character, @character, :index => Time.now.to_f.to_s do |f|
+  .field
+    = f.hidden_field :game_id
+  .field
+    = f.label :name
+    - if @character.errors[:name].any?
+      = @character.errors[:name]    
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :level
+    %br/
+    = f.text_field :level
+  .field
+    = f.label :faction
+    %br/
+    = f.text_field :faction
+  .field
+    = f.label :race
+    %br/
+    = f.text_field :race
+  .field
+    = f.label :server
+    %br/
+    = f.text_field :server
