@@ -50,10 +50,10 @@
     - if @games
       - @games.each do |game|
         = link_to("New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true)
-      
+        
   - if @registration_application.site_form != nil
     - @registration_application.site_form.questions.each do |question|
-      = render :partial => question, :locals => {:submission => application}
+      = render :partial => question, :locals => {:submission => application, :actual_submission => @registration_application}
   .actions
     = application.submit 'Submit Application' #, :disable_with => 'Please Wait...'
     

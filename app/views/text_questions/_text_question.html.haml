@@ -2,6 +2,4 @@
   %h3
     = text_question.content
     %br/
-    = submission.fields_for :answers do |answer|
-      = answer.text_field :content
-      = answer.hidden_field(:question_id, :value => text_question.id)
+    = text_field_tag("answer_helper[#{text_question.id}][#{(actual_submission.contains_answer_to_question(text_question) != nil ? actual_submission.contains_answer_to_question(text_question).id : -text_question.id)}]",(actual_submission.contains_answer_to_question(text_question) != nil ? actual_submission.contains_answer_to_question(text_question).content : ""))

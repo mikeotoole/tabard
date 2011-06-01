@@ -4,7 +4,6 @@
     %br/
   %ul
     - for panswer in check_box_question.predefined_answers
-      = submission.fields_for :answers do |answer|
-        = answer.check_box :content, {}, panswer.content, ""
-        = label_tag dom_id(panswer), panswer.content, :class => "check_box_label"
-        = answer.hidden_field(:question_id, :value => check_box_question.id)
+      = check_box_tag("answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]",panswer.content,actual_submission.contains_predefined_answer(panswer) != nil)
+      = label_tag "answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]", panswer.content, :class => "check_box_label"
+        
