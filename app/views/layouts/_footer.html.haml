@@ -1,0 +1,30 @@
+#footer
+  .container
+    .menu
+      %h3 Brutal Venom
+      - if nav_featured_pages
+        %ul
+          - nav_featured_pages.each do |page| 
+            %li= link_to page.title, [page.page_space, page]
+    .menu
+      %h3 Resources
+      - if dynamic_page_spaces
+        %ul
+          - dynamic_page_spaces.each do |page_space| 
+            %li= link_to page_space.name, page_space
+    
+    -if logged_in?
+      .menu
+        %h3 Members
+        %ul
+          %li= link_to 'Events', :events
+          %li= link_to 'Discussions', :discussion_spaces if current_user.can_show("DiscussionSpace")
+          %li= link_to 'Newsletter', :newsletters
+          %li= link_to 'Donations', '#'
+        
+    %p.copyright
+      = link_to 'Privacy Policy', '#'
+      &nbsp;|&nbsp;
+      = link_to t('general.terms_of_use'), '#'
+      %br/
+      &copy; Copyright digitalAugment Inc, 2010.

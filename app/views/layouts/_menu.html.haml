@@ -1,0 +1,52 @@
+#menu
+  .container
+    -if !logged_in?
+      = form_tag(session_path, :class => 'login') do
+        = label_tag :email
+        = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
+        = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
+        %p.remember
+          = check_box_tag('remember')
+          = label_tag 'remember', 'Remember me'
+        = submit_tag 'Sign in'
+        %p.apply
+          %span= 'Want to join?'
+          = link_to 'Apply now', new_registration_application_path
+    %ul
+      %li
+        = link_to 'Info', '#', { :class => 'main' }
+        %ul
+          %li= link_to 'Test Page 1', '#'
+          %li= link_to 'Test Page 2', '#'
+          %li= link_to 'Test Page 3', '#'
+      %li
+        = link_to 'Events', :events, { :class => 'main' }
+      %li
+        = link_to 'Resources', page_spaces_path, { :class => 'main' }
+        - if dynamic_page_spaces
+          %ul
+            - dynamic_page_spaces.each do |page_space| 
+              %li= link_to page_space.name, page_space
+      - if logged_in?
+        %li
+          = link_to 'Discussions', :discussion_spaces, { :class => 'main' }
+          - if dynamic_discussions
+            %ul
+              - dynamic_discussions.each do |discussion_space| 
+                %li= link_to discussion_space.name, discussion_space
+      %li.search
+        %a.main
+          Search
+        %form
+          %input
+          %button{ :type => 'submit' }
+            Search
+      %li.locale
+        %a.main
+          Language
+        %ul
+          - locales.each do |locale|
+            %li{ :class => locale[:locale] + (locale[:is_current] ? ' current' : '') }
+              = link_to({ :locale => locale[:locale] }) do
+                = image_tag '/images/locales/' + locale[:locale] + '.png', :alt => ''
+                = locale[:language]

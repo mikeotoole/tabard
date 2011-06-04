@@ -1,0 +1,9 @@
+#header
+  .container
+    .title= link_to 'Brutal Venom', root_path
+    .slogan We need a slogan
+    = render :partial => "layouts/userbox" if logged_in?
+          
+= render :partial => "layouts/flash_messages"
+- flash[:messages] = nil
+= render :partial => "layouts/menu"

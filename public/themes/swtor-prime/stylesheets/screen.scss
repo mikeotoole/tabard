@@ -171,7 +171,55 @@ textarea {
     * {
       display: inline-block;
     }
-    #mailbox_list {
+    .profile {
+      > a {
+        background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
+        border: 1px solid #181a1b;
+        @include border_radius(5);
+        font-weight: normal;
+        height: 26px;
+        line-height: 24px;
+        overflow: hidden;
+        padding: 0 15px;
+        position: relative;
+        text-decoration: none;
+        width: 142px;
+        z-index: 3;
+      }
+      ul {
+        display: none;
+      }
+      &:focus,
+      &:hover {
+        > a {
+          background-color: #3e778b !important;
+          background-position: 0 -60px !important;
+        }
+        ul {
+          background: #000;
+          border: 1px solid #666;
+          @include border_radius(0,0,4,4);
+          border-top: 0;
+          display: block;
+          margin: -4px 1px 0;
+          overflow: hidden;
+          padding: 3px 10px 5px;
+          position: absolute;
+          width: 150px;
+          z-index: 2;
+          li {
+            display: block;
+            a {
+              border-top: 1px solid #333;
+              display: block;
+              padding: 5px;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+    #mail {
       a {
         background: url(../images/mail-icons.png) no-repeat;
         height: 50px;
@@ -182,31 +230,28 @@ textarea {
         top: -16px;
         width: 50px;
       }
-      .compose a {
-        background-position: 0 0;
-        &:hover { background-position: 0 -49px; }
-      }
-      display: inline;
-      .mailboxes {
-        ul {
-          display: inline; 
-          li {
-            display: inline;
-            &.inbox a {
-              background-position: -50px 0;
-              z-index: 3;
-              &:hover { background-position: -50px -49px; }
-            }
-            &.sent a {
-              background-position: -100px 0;
-              z-index: 2;
-              &:hover { background-position: -100px -49px; }
-            }
-            &.trash a {
-              background-position: -150px 0;
-              z-index: 1;
-              &:hover { background-position: -150px -49px; }
-            }
+      ul {
+        display: inline; 
+        li {
+          display: inline;
+          &.inbox a {
+            background-position: -50px 0;
+            z-index: 3;
+            &:hover { background-position: -50px -49px; }
+          }
+          &.compose a {
+            background-position: 0 0;
+            &:hover { background-position: 0 -49px; }
+          }
+          &.sent a {
+            background-position: -100px 0;
+            z-index: 2;
+            &:hover { background-position: -100px -49px; }
+          }
+          &.trash a {
+            background-position: -150px 0;
+            z-index: 1;
+            &:hover { background-position: -150px -49px; }
           }
         }
       }

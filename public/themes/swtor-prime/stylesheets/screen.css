@@ -171,40 +171,97 @@ textarea {
       display: inline-block; }
     #header .userbox * {
       display: inline-block; }
-    #header .userbox #mailbox_list {
+    #header .userbox .profile > a {
+      background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
+      border: 1px solid #181a1b;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      font-weight: normal;
+      height: 26px;
+      line-height: 24px;
+      overflow: hidden;
+      padding: 0 15px;
+      position: relative;
+      text-decoration: none;
+      width: 142px;
+      z-index: 3; }
+    #header .userbox .profile ul {
+      display: none; }
+    #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
+      background-color: #3e778b !important;
+      background-position: 0 -60px !important; }
+    #header .userbox .profile:focus ul, #header .userbox .profile:hover ul {
+      background: #000;
+      border: 1px solid #666;
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      -moz-border-radius-topleft: 0px;
+      -moz-border-radius-topright: 0px;
+      -moz-border-radius-bottomright: 4px;
+      -moz-border-radius-bottomleft: 4px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-top: 0;
+      display: block;
+      margin: -4px 1px 0;
+      overflow: hidden;
+      padding: 3px 10px 5px;
+      position: absolute;
+      width: 150px;
+      z-index: 2; }
+      #header .userbox .profile:focus ul li, #header .userbox .profile:hover ul li {
+        display: block; }
+        #header .userbox .profile:focus ul li a, #header .userbox .profile:hover ul li a {
+          border-top: 1px solid #333;
+          display: block;
+          padding: 5px;
+          text-decoration: none; }
+    #header .userbox #mail a {
+      background: url(../images/mail-icons.png) no-repeat;
+      height: 50px;
+      margin: 0 -8px;
+      overflow: hidden;
+      position: relative;
+      text-indent: -500px;
+      top: -16px;
+      width: 50px; }
+    #header .userbox #mail ul {
       display: inline; }
-      #header .userbox #mailbox_list a {
-        background: url(../images/mail-icons.png) no-repeat;
-        height: 50px;
-        margin: 0 -8px;
-        overflow: hidden;
-        position: relative;
-        text-indent: -500px;
-        top: -16px;
-        width: 50px; }
-      #header .userbox #mailbox_list .compose a {
-        background-position: 0 0; }
-        #header .userbox #mailbox_list .compose a:hover {
-          background-position: 0 -49px; }
-      #header .userbox #mailbox_list .mailboxes ul {
+      #header .userbox #mail ul li {
         display: inline; }
-        #header .userbox #mailbox_list .mailboxes ul li {
-          display: inline; }
-          #header .userbox #mailbox_list .mailboxes ul li.inbox a {
-            background-position: -50px 0;
-            z-index: 3; }
-            #header .userbox #mailbox_list .mailboxes ul li.inbox a:hover {
-              background-position: -50px -49px; }
-          #header .userbox #mailbox_list .mailboxes ul li.sent a {
-            background-position: -100px 0;
-            z-index: 2; }
-            #header .userbox #mailbox_list .mailboxes ul li.sent a:hover {
-              background-position: -100px -49px; }
-          #header .userbox #mailbox_list .mailboxes ul li.trash a {
-            background-position: -150px 0;
-            z-index: 1; }
-            #header .userbox #mailbox_list .mailboxes ul li.trash a:hover {
-              background-position: -150px -49px; }
+        #header .userbox #mail ul li.inbox a {
+          background-position: -50px 0;
+          z-index: 3; }
+          #header .userbox #mail ul li.inbox a:hover {
+            background-position: -50px -49px; }
+        #header .userbox #mail ul li.compose a {
+          background-position: 0 0; }
+          #header .userbox #mail ul li.compose a:hover {
+            background-position: 0 -49px; }
+        #header .userbox #mail ul li.sent a {
+          background-position: -100px 0;
+          z-index: 2; }
+          #header .userbox #mail ul li.sent a:hover {
+            background-position: -100px -49px; }
+        #header .userbox #mail ul li.trash a {
+          background-position: -150px 0;
+          z-index: 1; }
+          #header .userbox #mail ul li.trash a:hover {
+            background-position: -150px -49px; }
 
 #menu {
   height: 60px;

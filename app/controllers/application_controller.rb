@@ -2,16 +2,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :group_flash_messages, :set_locale
   after_filter :clear_flash_messages
-  layout :layout_selecter
-  
-  # Selects the proper layout depending on if the user is logged in or not
-  def layout_selecter
-    if logged_in?
-      "logged_in"
-    else
-      "default"
-    end
-  end
+
   # Puts all of the notices and alerts into the messages array
   def group_flash_messages
     if alert.present?
