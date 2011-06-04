@@ -151,6 +151,20 @@ textarea {
   }
   .userbox {
     font-size: 0.8em;
+    .profile {
+      > a {
+        color: #4c91a1 !important;
+        display: inline-block;
+        font-family: 'SansationRegular', serif;
+        text-transform: uppercase;
+      }
+      &:focus,
+      &:hover {
+        > a {
+          color: #000 !important;
+        }
+      }
+    }
   }
 }
 

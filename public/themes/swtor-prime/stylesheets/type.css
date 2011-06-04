@@ -154,6 +154,13 @@ textarea {
   letter-spacing: 0.2em; }
 #header .userbox {
   font-size: 0.8em; }
+  #header .userbox .profile > a {
+    color: #4c91a1 !important;
+    display: inline-block;
+    font-family: 'SansationRegular', serif;
+    text-transform: uppercase; }
+  #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
+    color: #000 !important; }
 
 #menu {
   color: #aaa; }
