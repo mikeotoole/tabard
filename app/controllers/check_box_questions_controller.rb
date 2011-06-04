@@ -52,7 +52,7 @@ class CheckBoxQuestionsController < ApplicationController
     @form = SiteForm.find(@old_check_box_question.site_form_id)
     
     @check_box_question = @old_check_box_question.clone
-    @check_box_question.answers = @old_check_box_question.answers
+    @check_box_question.predefined_answers = @old_check_box_question.predefined_answers
     
     @old_check_box_question.site_form_id = nil
     @old_check_box_question.save
