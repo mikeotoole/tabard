@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    #should make sure this is in the same domain...
     session[:pre_login_url] = request.env["HTTP_REFERER"]  
   end  
   

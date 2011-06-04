@@ -27,7 +27,7 @@ class RegistrationApplicationsController < ApplicationController
     @user = User.new
     
     @registration_application.site_form = SiteForm.application_form
-    @registration_application.answers.build if @registration_application.answers.count == 0
+    #@registration_application.answers.build if @registration_application.answers.count == 0
     
     @games = Game.active
 
@@ -65,6 +65,15 @@ class RegistrationApplicationsController < ApplicationController
         @profile.build_character(newSwtor)
       end
     end
+    @registration_application.answers.clear
+    if params[:answer_helper]
+      @answer_helper = params[:answer_helper]
+      params[:answer_helper].each do |question_id, question|
+        question.each do |answer_id, answer|
+          @registration_application.answers << Answer.new(:question_id => question_id, :content => answer)
+        end  
+      end
+    end
 
     respond_to do |format|
       if @user.save      
@@ -72,8 +81,8 @@ class RegistrationApplicationsController < ApplicationController
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
         @games = Game.active
-        @registration_application.answers.clear
-        @registration_application.answers.build if @registration_application.answers.count == 0
+        #@registration_application.answers.clear
+        #@registration_application.answers.build if @registration_application.answers.count == 0
         format.html { render :action => "new" }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end

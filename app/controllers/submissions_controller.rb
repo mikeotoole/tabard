@@ -32,6 +32,7 @@ class SubmissionsController < ApplicationController
   
     @submission.site_form = @site_form
     @submission.answers.build
+    #Setup predefined answers
     respond_with @submission
   end
 
