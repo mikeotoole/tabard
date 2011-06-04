@@ -482,6 +482,50 @@ textarea {
   #body h3,
   #body p {
     padding: 0 0 10px; }
+  #body table {
+    width: 100%; }
+    #body table tbody td {
+      background: #1a353a;
+      border-top: 1px solid #3e778b;
+      padding: 8px 12px; }
+    #body table tbody tr:nth-child(2n) td {
+      background: #112326; }
+    #body table thead th {
+      background: #3e778b;
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -webkit-border-bottom-right-radius: 0px;
+      -webkit-border-bottom-left-radius: 0px;
+      -moz-border-radius-topleft: 4px;
+      -moz-border-radius-topright: 4px;
+      -moz-border-radius-bottomright: 0px;
+      -moz-border-radius-bottomleft: 0px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      padding: 10px; }
+    #body table tfoot th {
+      background: #3e778b;
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      -moz-border-radius-topleft: 0px;
+      -moz-border-radius-topright: 0px;
+      -moz-border-radius-bottomright: 4px;
+      -moz-border-radius-bottomleft: 4px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      padding: 10px; }
+    #body table .amount {
+      text-align: right;
+      width: 40px; }
+    #body table .edit {
+      text-align: center;
+      width: 80px; }
 
 .comments ol li {
   position: relative; }

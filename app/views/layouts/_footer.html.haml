@@ -1,11 +1,12 @@
 #footer
   .container
-    .menu
-      %h3 Brutal Venom
-      - if nav_featured_pages
+    - if nav_featured_pages
+      .menu
+        %h3 Brutal Venom
         %ul
           - nav_featured_pages.each do |page| 
             %li= link_to page.title, [page.page_space, page]
+          %li= link_to 'Games', games_path
     .menu
       %h3 Resources
       - if dynamic_page_spaces
@@ -17,6 +18,7 @@
       .menu
         %h3 Members
         %ul
+          %li= link_to 'Announcements', announcements_path
           %li= link_to 'Events', :events
           %li= link_to 'Discussions', :discussion_spaces if current_user.can_show("DiscussionSpace")
           %li= link_to 'Newsletter', :newsletters

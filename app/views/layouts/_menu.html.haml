@@ -14,13 +14,23 @@
           = link_to 'Apply now', new_registration_application_path
     %ul
       %li
-        = link_to 'Info', '#', { :class => 'main' }
+        = link_to 'Info', :page_spaces, { :class => 'main' }
         %ul
-          %li= link_to 'Test Page 1', '#'
-          %li= link_to 'Test Page 2', '#'
-          %li= link_to 'Test Page 3', '#'
-      %li
-        = link_to 'Events', :events, { :class => 'main' }
+          - nav_featured_pages.each do |page| 
+            %li= link_to page.title, [page.page_space, page]
+          %li= link_to 'Games', games_path
+      -if logged_in?
+        %li
+          =link_to 'Members', user_profiles_path
+          %ul
+            %li= link_to 'Announcements', announcements_path
+            %li= link_to 'Events', :events
+            %li= link_to 'Discussions', :discussion_spaces if current_user.can_show("DiscussionSpace")
+            %li= link_to 'Newsletter', :newsletters
+            %li= link_to 'Donations', '#'
+      -if !logged_in?
+        %li
+          = link_to 'Events', :events, { :class => 'main' }
       %li
         = link_to 'Resources', page_spaces_path, { :class => 'main' }
         - if dynamic_page_spaces
@@ -34,6 +44,20 @@
             %ul
               - dynamic_discussions.each do |discussion_space| 
                 %li= link_to discussion_space.name, discussion_space
+      - if logged_in? #really, if can manage
+        %li
+          = link_to 'Management', :management, { :class => 'main' }
+          %ul
+            %li= link_to 'Applications', registration_applications_path
+            %li= link_to 'Users', management_users_path
+            %li= link_to 'Games', management_games_path
+            %li= link_to 'Roles', management_roles_path
+            %li= link_to 'Newsletters', management_newsletters_path
+            %li= link_to 'Page Spaces', management_page_spaces_path
+            %li= link_to 'Discussion Spaces', management_discussion_spaces_path
+            %li= link_to 'Themes', management_themes_path
+            %li= link_to 'TeamSpeak', management_teamspeaks_path
+            %li= link_to 'Forms', management_site_forms_path
       %li.search
         %a.main
           Search

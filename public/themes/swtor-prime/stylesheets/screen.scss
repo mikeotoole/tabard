@@ -446,6 +446,43 @@ textarea {
   p {
     padding: 0 0 10px;
   }
+  table {
+    width: 100%;
+    tbody {
+      td {
+        background: #1a353a;
+        border-top: 1px solid #3e778b;
+        padding: 8px 12px;
+      }
+      tr:nth-child(2n) {
+        td {
+          background: #112326;
+        }
+      }
+    }
+    thead {
+      th {
+        background: #3e778b;
+        @include border_radius(4,4,0,0);
+        padding: 10px;
+      }
+    }
+    tfoot {
+      th {
+        background: #3e778b;
+        @include border_radius(0,0,4,4);
+        padding: 10px;
+      }
+    }
+    .amount {
+      text-align: right;
+      width: 40px;
+    }
+    .edit {
+      text-align: center;
+      width: 80px;
+    }
+  }
 }
 
 .comments {

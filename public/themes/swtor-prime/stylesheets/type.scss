@@ -83,6 +83,31 @@ textarea {
   line-height: 1.3em !important;
 }
 
+table {
+  color: #c0e1ed;
+  a:hover {
+    color: #fff;
+  }
+  tbody {
+    font-size: .8em;
+    th {
+      font-weight: bold;
+    }
+    td {
+      font-weight: normal;
+    }
+  }
+  thead,
+  tfoot {
+    th {
+      color: #fff;
+      font-family: 'SansationRegular', serif;
+      font-size: 1.4em;
+      font-weight: normal;
+    }
+  }
+}
+
 #announcements {
   li {
     a {

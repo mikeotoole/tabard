@@ -1,17 +1,20 @@
-%h1 Listing discussion_spaces
+%h1 Discussions
 %table
-  %tr
-    %th Name
-    %th Number of Discussions
-    %th
-    %th
-    %th
-  - @discussion_spaces.each do |discussion_space|
+  %tbody
+    - @discussion_spaces.each do |discussion_space|
+      %tr
+        %td.amount= discussion_space.discussions.size if discussion_space.discussions.size > 0
+        %td.edit
+          = link_to 'Edit', edit_discussion_space_path(discussion_space) if current_user.can_update(discussion_space)
+          = link_to 'Delete', discussion_space, :confirm => 'Are you sure?', :method => :delete if current_user.can_delete(discussion_space)
+        %td.name= link_to discussion_space.name, discussion_space if current_user.can_show(discussion_space)
+  %thead
     %tr
-      %td= discussion_space.name
-      %td= discussion_space.discussions.size
-      %td= current_user.can_show(discussion_space) ? link_to( 'Show', discussion_space) : "No Show Permissions"
-      %td= current_user.can_update(discussion_space) ? link_to( 'Edit', edit_discussion_space_path(discussion_space)) : "No Edit Permissions"
-      %td= current_user.can_delete(discussion_space) ? link_to( 'Delete', discussion_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
-%br/
-= current_user.can_create("DiscussionSpace") ? link_to( 'New Discussion Space', new_discussion_space_path) : "No Create Permissions"
+      %th.amount #
+      %th.edit
+      %th.name Name
+  %tfoot
+    %tr
+      %th{ :colspan => 2 }
+        = link_to( 'New Space', new_discussion_space_path) if current_user.can_create("DiscussionSpace")
+      %td
