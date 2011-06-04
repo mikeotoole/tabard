@@ -52,7 +52,7 @@ class ComboBoxQuestionsController < ApplicationController
     @form = SiteForm.find(@old_combo_box_question.site_form_id)
     
     @combo_box_question = @old_combo_box_question.clone
-    @combo_box_question.answers = @old_combo_box_question.answers 
+    @combo_box_question.predefined_answers = @old_combo_box_question.predefined_answers 
     
     @old_combo_box_question.site_form_id = nil
     @old_combo_box_question.save
