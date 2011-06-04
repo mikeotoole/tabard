@@ -35,7 +35,7 @@ class Submission < ActiveRecord::Base
   end
   
   def name
-    self.user_profile.name
+    self.user_profile.name if self.user_profile
   end
   
   def thankyou_message

@@ -32,7 +32,7 @@
       - if @profile.errors[:name].any?
         = @profile.errors[:name]
       %br/
-      = profile.text_field :name
+      = profile.text_field :name, :value => @profile.name
   
   %ul
     - if @wowCharacters
