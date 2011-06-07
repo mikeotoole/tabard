@@ -1,12 +1,10 @@
 body {
   background: #181a1b;
-  min-width: 980px;
-  text-align: center; }
+  min-width: 980px; }
 
 .container {
   margin: 0 auto;
   position: relative;
-  text-align: left;
   width: 960px; }
 
 button,
@@ -91,6 +89,9 @@ textarea {
   height: 10em;
   padding: 0.3em 7px; }
 
+label {
+  display: block; }
+
 #announcements {
   margin: -5px 0 15px; }
   #announcements li {
@@ -158,6 +159,10 @@ textarea {
       top: 0;
       right: 0;
       text-indent: -500em;
+      -moz-transition: none;
+      -o-transition: none;
+      -webkit-transition: none;
+      transition: none;
       width: 122px;
       z-index: 2; }
       #announcements li button:focus, #announcements li button:hover {
@@ -169,7 +174,8 @@ textarea {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;
   position: relative;
-  margin: 0 0 40px; }
+  margin: 0 0 40px;
+  z-index: 11; }
   #header .title {
     left: 0;
     position: absolute;
@@ -213,11 +219,11 @@ textarea {
       height: 26px;
       line-height: 26px;
       overflow: hidden;
-      padding: 0 15px;
       position: relative;
+      padding: 0 15px;
       text-decoration: none;
       width: 142px;
-      z-index: 3; }
+      z-index: 11; }
       #header .userbox .profile > a:hover {
         border-color: #fff; }
     #header .userbox .profile ul {
@@ -315,9 +321,9 @@ textarea {
 
 #menu {
   height: 60px;
-  margin: 0 0 20px; }
-  #menu .container {
-    height: 300px; }
+  margin: 0 0 20px;
+  position: relative;
+  z-index: 10; }
   #menu ul {
     background: url(../images/menu.png) top center no-repeat;
     height: 60px;
@@ -566,49 +572,88 @@ textarea {
       background: #112326; }
     #body table thead th {
       background: #3e778b;
-      -moz-border-radius-topleft: 4px;
-      -moz-border-radius-topright: 4px;
-      -moz-border-radius-bottomright: 0px;
-      -moz-border-radius-bottomleft: 0px;
-      -o-border-radius-topleft: 4px;
-      -o-border-radius-topright: 4px;
-      -o-border-radius-bottomright: 0px;
-      -o-border-radius-bottomleft: 0px;
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -webkit-border-bottom-right-radius: 0px;
-      -webkit-border-bottom-left-radius: 0px;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-      padding: 10px; }
+      padding: 8px 12px; }
+      #body table thead th:first-child {
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px; }
+      #body table thead th:last-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px; }
+    #body table tfoot td {
+      border-top: 4px solid #3e778b;
+      padding: 8px 12px; }
     #body table tfoot th {
       background: #3e778b;
-      -moz-border-radius-topleft: 0px;
-      -moz-border-radius-topright: 0px;
-      -moz-border-radius-bottomright: 4px;
-      -moz-border-radius-bottomleft: 4px;
-      -o-border-radius-topleft: 0px;
-      -o-border-radius-topright: 0px;
-      -o-border-radius-bottomright: 4px;
-      -o-border-radius-bottomleft: 4px;
-      -webkit-border-top-left-radius: 0px;
-      -webkit-border-top-right-radius: 0px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 4px;
-      border-bottom-left-radius: 4px;
-      padding: 10px; }
+      padding: 8px 12px; }
+      #body table tfoot th:first-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 4px; }
+      #body table tfoot th:last-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 0px; }
     #body table .amount {
-      text-align: right;
-      width: 40px; }
+      width: 20px; }
+    #body table .button {
+      margin: 0 -12px; }
     #body table td.edit,
     #body table th.edit {
-      text-align: center;
-      width: 50px; }
+      width: 48px; }
       #body table td.edit a.edit,
       #body table td.edit a.delete,
       #body table th.edit a.edit,
@@ -637,39 +682,215 @@ textarea {
         position: absolute;
         text-indent: -500em;
         width: 30px; }
-        #body table td.edit a.edit:hover,
-        #body table td.edit a.delete:hover,
-        #body table th.edit a.edit:hover,
-        #body table th.edit a.delete:hover {
-          background-color: #3fa8c2; }
-        #body table td.edit a.edit.edit,
-        #body table td.edit a.delete.edit,
-        #body table th.edit a.edit.edit,
-        #body table th.edit a.delete.edit {
-          background-position: 0 -60px;
-          margin: -5px 0 0 -5px; }
-          #body table td.edit a.edit.edit:hover,
-          #body table td.edit a.delete.edit:hover,
-          #body table th.edit a.edit.edit:hover,
-          #body table th.edit a.delete.edit:hover {
-            background-position: 0 0; }
-        #body table td.edit a.edit.delete,
-        #body table td.edit a.delete.delete,
-        #body table th.edit a.edit.delete,
-        #body table th.edit a.delete.delete {
-          background-position: -30px -60px;
-          margin: -5px 0 0 30px; }
-          #body table td.edit a.edit.delete:hover,
-          #body table td.edit a.delete.delete:hover,
-          #body table th.edit a.edit.delete:hover,
-          #body table th.edit a.delete.delete:hover {
-            background-position: -30px 0; }
+    #body table td.edit a.edit,
+    #body table td.edit a.delete {
+      -moz-opacity: 0.7;
+      -o-opacity: 0.7;
+      -webkit-opacity: 0.7;
+      filter: alpha(opacity=70);
+      -moz-transition: opacity 0.3s linear;
+      -o-transition: opacity 0.3s linear;
+      -webkit-transition: opacity 0.3s linear;
+      transition: opacity 0.3s linear; }
+      #body table td.edit a.edit:hover,
+      #body table td.edit a.delete:hover {
+        background-color: #3fa8c2;
+        -moz-opacity: 1;
+        -o-opacity: 1;
+        -webkit-opacity: 1;
+        filter: alpha(opacity=100);
+        -moz-transition: opacity 0.1s linear;
+        -o-transition: opacity 0.1s linear;
+        -webkit-transition: opacity 0.1s linear;
+        transition: opacity 0.1s linear; }
+      #body table td.edit a.edit.edit,
+      #body table td.edit a.delete.edit {
+        background-position: 0 -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.edit.edit:hover,
+        #body table td.edit a.delete.edit:hover {
+          background-position: 0 0; }
+      #body table td.edit a.edit.delete,
+      #body table td.edit a.delete.delete {
+        background-position: -30px -30px;
+        margin: -5px 0 0 28px; }
+        #body table td.edit a.edit.delete:hover,
+        #body table td.edit a.delete.delete:hover {
+          background-position: -30px 0; }
+    #body table th.edit a.edit:hover,
+    #body table th.edit a.delete:hover {
+      background-color: #fff; }
+    #body table th.edit a.edit.edit,
+    #body table th.edit a.delete.edit {
+      background-position: 0 -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.edit.edit:hover,
+      #body table th.edit a.delete.edit:hover {
+        background-position: 0 0; }
+    #body table th.edit a.edit.delete,
+    #body table th.edit a.delete.delete {
+      background-position: -30px -30px;
+      margin: -5px 0 0 27px; }
+      #body table th.edit a.edit.delete:hover,
+      #body table th.edit a.delete.delete:hover {
+        background-position: -30px 0; }
+  #body button,
   #body .button {
     background-color: #3e778b !important;
     background-position: 0 -30px !important; }
+    #body button:hover,
     #body .button:hover {
       background-position: 0 -60px !important;
       border-color: #fff; }
+  #body #bcrumb {
+    background: #333;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -o-border-radius-topleft: 0px;
+    -o-border-radius-topright: 0px;
+    -o-border-radius-bottomright: 4px;
+    -o-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    margin: -25px 0 20px;
+    padding: 5px 0 0 12px; }
+    #body #bcrumb a,
+    #body #bcrumb span {
+      display: block;
+      float: left;
+      line-height: 30px;
+      margin: 0 0 0 -12px;
+      padding: 0 22px;
+      position: relative; }
+    #body #bcrumb a {
+      background: url(../images/bcrumb-div.png) right 0 no-repeat; }
+      #body #bcrumb a:hover {
+        background: url(../images/bcrumb-div.png) right -31px no-repeat #555555; }
+      #body #bcrumb a:first-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 4px;
+        padding: 0 22px 0 25px; }
+    #body #bcrumb a:nth-child(0) {
+      z-index: 9; }
+    #body #bcrumb a:nth-child(1) {
+      z-index: 8; }
+    #body #bcrumb a:nth-child(2) {
+      z-index: 7; }
+    #body #bcrumb a:nth-child(3) {
+      z-index: 6; }
+    #body #bcrumb a:nth-child(4) {
+      z-index: 5; }
+    #body #bcrumb a:nth-child(5) {
+      z-index: 4; }
+    #body #bcrumb a:nth-child(6) {
+      z-index: 3; }
+    #body #bcrumb a:nth-child(7) {
+      z-index: 2; }
+    #body #bcrumb span {
+      z-index: 1; }
+  #body .add {
+    background: url(../images/icons-16.png) -60px -30px no-repeat #333333 !important;
+    border: 0;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -o-border-radius-topleft: 4px;
+    -o-border-radius-topright: 4px;
+    -o-border-radius-bottomright: 4px;
+    -o-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -500em;
+    -moz-transition: none;
+    -o-transition: none;
+    -webkit-transition: none;
+    transition: none;
+    width: 30px; }
+    #body .add:hover {
+      background-color: #3fa8c2 !important;
+      background-position: -60px 0 !important; }
+
+#page {
+  position: relative; }
+  #page #actions {
+    right: 0;
+    position: absolute;
+    top: 0; }
+    #page #actions a.edit,
+    #page #actions a.delete {
+      background: url(../images/icons-16.png) no-repeat #333333;
+      -moz-border-radius-topleft: 4px;
+      -moz-border-radius-topright: 4px;
+      -moz-border-radius-bottomright: 4px;
+      -moz-border-radius-bottomleft: 4px;
+      -o-border-radius-topleft: 4px;
+      -o-border-radius-topright: 4px;
+      -o-border-radius-bottomright: 4px;
+      -o-border-radius-bottomleft: 4px;
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      display: inline-block;
+      height: 30px;
+      overflow: hidden;
+      padding: 0;
+      text-indent: -500em;
+      width: 30px; }
+      #page #actions a.edit:hover,
+      #page #actions a.delete:hover {
+        background-color: #3fa8c2; }
+      #page #actions a.edit.edit,
+      #page #actions a.delete.edit {
+        background-position: 0 -30px; }
+        #page #actions a.edit.edit:hover,
+        #page #actions a.delete.edit:hover {
+          background-position: 0 0; }
+      #page #actions a.edit.delete,
+      #page #actions a.delete.delete {
+        background-position: -30px -30px; }
+        #page #actions a.edit.delete:hover,
+        #page #actions a.delete.delete:hover {
+          background-position: -30px 0; }
 
 .comments ol li {
   position: relative; }

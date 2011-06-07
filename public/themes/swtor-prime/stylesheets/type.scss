@@ -1,9 +1,10 @@
-@mixin heading($size, $color) {
+@mixin heading($size, $color, $shadow: '') {
   color: $color;
   font-family: 'SansationRegular', serif;
   font-size: $size;
   line-height: 1em;
   text-transform: uppercase;
+  @if $shadow != '' { text-shadow: $shadow }
 }
 
 body {
@@ -11,14 +12,17 @@ body {
   font-family: arial, sans-serif;
   font-size: 100.01%;
   line-height: 1.3em;
+  text-align: center;
+}
+.container {
+  text-align: left;
 }
 
 h1 {
-  @include heading(2.4em, #5ba7b4);
-  text-shadow: 2px 2px 2px #000;
+  @include heading(1.6em, #5ba7b4, 2px 2px 2px #000);
 }
-h2 { @include heading(1.8em, #5ba7b4); }
-h3 { @include heading(1.2em, #5ba7b4); }
+h2 { @include heading(1.3em, #fff, 1px 1px 1px #000); }
+h3 { @include heading(0.9em, #fff, 1px 1px 1px #000); }
 
 p,
 ol,
@@ -70,6 +74,14 @@ input[type=submit] {
     color: #181a1b !important;
   }
 }
+#body button,
+#body .button {
+  color: #000 !important;
+  &:focus,
+  &:hover {
+    color: #181a1b !important;
+  }
+}
 input[type=text],
 input[type=password],
 textarea {
@@ -88,6 +100,13 @@ table {
   a:hover {
     color: #fff;
   }
+  caption {
+    font-size: 1.6em;
+    text-align: left;
+    * {
+      font-size: 1em;
+    }
+  }
   tbody {
     font-size: .8em;
     th {
@@ -102,12 +121,36 @@ table {
     th {
       color: #fff;
       font-family: 'SansationRegular', serif;
-      font-size: 1.4em;
+      font-size: 1.2em;
       font-weight: normal;
     }
   }
+  thead,
+  tfoot {
+    td {
+      color: #fff;
+      font-size: .8em;
+    }
+  }
+  .amount {
+    text-align: right;
+  }
   .button {
     color: #000 !important;
+  }
+}
+
+#bcrumb {
+  font-size: .75em;
+  a {
+    color: #888 !important;
+    text-decoration: none !important;
+    &:hover {
+      color: #fff !important;
+    }
+  }
+  span {
+    color: #666;
   }
 }
 

@@ -28,16 +28,22 @@
   transition: $transition;
 }
 
+@mixin opacity($opacity) {
+  $ie_opacity: $opacity * 100;
+  -moz-opacity: $opacity;
+  -o-opacity: $opacity;
+  -webkit-opacity: $opacity;
+  filter: alpha(opacity=$ie_opacity);
+}
+
 body {
   background: #181a1b;
   min-width: 980px;
-  text-align: center;
 }
 
 .container {
   margin: 0 auto;
   position: relative;
-  text-align: left;
   width: 960px;
 }
 
@@ -83,6 +89,9 @@ textarea {
   background-image: none;
   height: 10em;
   padding: 0.3em 7px;
+}
+label {
+  display: block;
 }
 
 #announcements {
@@ -145,6 +154,7 @@ textarea {
       top: 0;
       right: 0;
       text-indent: -500em;
+      @include transition(none);
       width: 122px;
       z-index: 2;
       &:focus,
@@ -161,7 +171,8 @@ textarea {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;
   position: relative;
-  margin: 0 0 40px;  
+  margin: 0 0 40px;
+  z-index: 11;
   .title {
     left: 0;
     position: absolute;
@@ -197,11 +208,11 @@ textarea {
         height: 26px;
         line-height: 26px;
         overflow: hidden;
-        padding: 0 15px;
         position: relative;
+        padding: 0 15px;
         text-decoration: none;
         width: 142px;
-        z-index: 3;
+        z-index: 11;
         &:hover {
           border-color: #fff;
         }
@@ -289,9 +300,8 @@ textarea {
 #menu {
   height: 60px;
   margin: 0 0 20px;
-  .container {
-    height: 300px;
-  }
+  position: relative;
+  z-index: 10;
   ul {
     background: url(../images/menu.png) top center no-repeat;
     height: 60px;
@@ -464,7 +474,6 @@ textarea {
 
 #body {
   margin: 0 0 60px;
-  
   h1 {
     padding: 0 0 10px;
   }
@@ -490,25 +499,40 @@ textarea {
     thead {
       th {
         background: #3e778b;
-        @include border_radius(4,4,0,0);
-        padding: 10px;
+        padding: 8px 12px;
+        &:first-child {
+          @include border_radius(4,0,0,0);
+        }
+        &:last-child {
+          @include border_radius(0,4,0,0);
+        }
       }
     }
     tfoot {
+      td {
+        border-top: 4px solid #3e778b;
+        padding: 8px 12px;
+      }
       th {
         background: #3e778b;
-        @include border_radius(0,0,4,4);
-        padding: 10px;
+        padding: 8px 12px;
+        &:first-child {
+          @include border_radius(0,0,0,4);
+        }
+        &:last-child {
+          @include border_radius(0,0,4,0);
+        }
       }
     }
     .amount {
-      text-align: right;
-      width: 40px;
+      width: 20px;
+    }
+    .button {
+      margin: 0 -12px;
     }
     td.edit,
     th.edit {
-      text-align: center;
-      width: 50px;
+      width: 48px;
       a.edit,
       a.delete {
         background: url(../images/icons-16.png) no-repeat;
@@ -520,19 +544,50 @@ textarea {
         position: absolute;
         text-indent: -500em;
         width: 30px;
+      }
+    }
+    td.edit {
+      a.edit,
+      a.delete {
+        @include opacity(.7);
+        @include transition(opacity .3s linear);
         &:hover {
           background-color: #3fa8c2;
+          @include opacity(1);
+          @include transition(opacity .1s linear);
         }
         &.edit {
-          background-position: 0 -60px;
-          margin: -5px 0 0 -5px;
+          background-position: 0 -30px;
+          margin: -5px 0 0 -8px;
           &:hover {
             background-position: 0 0;
           }
         }
         &.delete {
-          background-position: -30px -60px;
-          margin: -5px 0 0 30px;
+          background-position: -30px -30px;
+          margin: -5px 0 0 28px;
+          &:hover {
+            background-position: -30px 0;
+          }
+        }
+      }
+    }
+    th.edit {
+      a.edit,
+      a.delete {
+        &:hover {
+          background-color: #fff;
+        }
+        &.edit {
+          background-position: 0 -30px;
+          margin: -5px 0 0 -7px;
+          &:hover {
+            background-position: 0 0;
+          }
+        }
+        &.delete {
+          background-position: -30px -30px;
+          margin: -5px 0 0 27px;
           &:hover {
             background-position: -30px 0;
           }
@@ -540,12 +595,100 @@ textarea {
       }
     }
   }
+  button,
   .button {
     background-color: #3e778b !important;
     background-position: 0 -30px !important;
     &:hover {
       background-position: 0 -60px !important;
       border-color: #fff;
+    }
+  }
+  #bcrumb {
+    background: #333;
+    @include border_radius(0,0,4,4);
+    height: 30px;
+    line-height: 30px;
+    margin: -25px 0 20px;
+    padding: 5px 0 0 12px;
+    a,
+    span {
+      display: block;
+      float: left;
+      line-height: 30px;
+      margin: 0 0 0 -12px;
+      padding: 0 22px;
+      position: relative;
+    }
+    a {
+      background: url(../images/bcrumb-div.png) right 0 no-repeat;
+      &:hover {
+        background: url(../images/bcrumb-div.png) right -31px no-repeat #555;
+      }
+      &:first-child {
+        @include border_radius(0,0,0,4);
+        padding: 0 22px 0 25px;
+      }
+    }
+    a:nth-child(0) { z-index: 9; }
+    a:nth-child(1) { z-index: 8; }
+    a:nth-child(2) { z-index: 7; }
+    a:nth-child(3) { z-index: 6; }
+    a:nth-child(4) { z-index: 5; }
+    a:nth-child(5) { z-index: 4; }
+    a:nth-child(6) { z-index: 3; }
+    a:nth-child(7) { z-index: 2; }
+    span { z-index: 1; }
+  }
+  .add {
+    background: url(../images/icons-16.png) -60px -30px no-repeat #333 !important;
+    border: 0;
+    @include border_radius(4);
+    display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -500em;
+    @include transition(none);
+    width: 30px;
+    &:hover {
+      background-color: #3fa8c2 !important;
+      background-position: -60px 0 !important;
+    }
+  }
+}
+
+#page {
+  position: relative;
+  #actions {
+    right: 0;
+    position: absolute;
+    top: 0;
+    a.edit,
+    a.delete {
+      background: url(../images/icons-16.png) no-repeat #333;
+      @include border_radius(4);
+      display: inline-block;
+      height: 30px;
+      overflow: hidden;
+      padding: 0;
+      text-indent: -500em;
+      width: 30px;
+      &:hover {
+        background-color: #3fa8c2;
+      }
+      &.edit {
+        background-position: 0 -30px;
+        &:hover {
+          background-position: 0 0;
+        }
+      }
+      &.delete {
+        background-position: -30px -30px;
+        &:hover {
+          background-position: -30px 0;
+        }
+      }
     }
   }
 }
