@@ -1,9 +1,15 @@
-= div_for page do
-  %h3= page.title
-  - if page.featured_page
-    %h4 Featured Page
-  %span.actions
-  %td= (logged_in? and current_user.can_update(page)) ? link_to( 'Edit', edit_page_space_page_path(page.page_space,page)) : "No Edit Permissions"
-  %td= (logged_in? and current_user.can_delete(page)) ? link_to( 'Delete', [page.page_space,page], :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
+%p#bcrumb
+  = link_to 'Page Spaces', :page_spaces
+  - if page.page_space.game
+    = link_to page.page_space.game_name, page.page_space.game
+  = link_to page.page_space.name, page.page_space
+  %span= page.title
+#page{ :class => (page.featured_page ? 'featured' : '') }
+  %h1= page.title
+  %p#actions
+    - if logged_in? and current_user.can_update(page)
+      = link_to 'Edit', edit_page_space_page_path(page.page_space,page), :class => 'edit', :title => 'Edit'
+    - if logged_in? and current_user.can_delete(page)
+      = link_to 'Delete', [page.page_space,page], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   %p
-    = raw(page.body)
+    = page.body

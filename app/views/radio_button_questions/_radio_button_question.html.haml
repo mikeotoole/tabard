@@ -3,8 +3,6 @@
     = radio_button_question.content
     %br/
   %ul
-    = submission.fields_for :answers do |answer|
-      - for panswer in radio_button_question.predefined_answers
-        = answer.radio_button :content, panswer.content
-        = label_tag panswer.content
-        = answer.hidden_field(:question_id, :value => radio_button_question.id)
+    - for panswer in radio_button_question.predefined_answers
+      = radio_button_tag("answer_helper[#{radio_button_question.id}][#{(actual_submission.contains_predefined_answer_from_collection(radio_button_question.predefined_answers) != nil ? actual_submission.contains_predefined_answer_from_collection(radio_button_question.predefined_answers).id : -radio_button_question.id)}]",panswer.content,actual_submission.contains_predefined_answer(panswer) != nil)
+      = label_tag "answer_helper_#{radio_button_question.id}_#{(actual_submission.contains_predefined_answer_from_collection(radio_button_question.predefined_answers) != nil ? actual_submission.contains_predefined_answer_from_collection(radio_button_question.predefined_answers).id : -radio_button_question.id)}_#{panswer.content}", panswer.content

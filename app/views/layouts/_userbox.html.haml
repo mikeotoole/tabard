@@ -1,0 +1,20 @@
+.userbox
+  Profile:
+  .profile
+    = link_to (profile_active? ? current_profile.name : raw('&laquo; select &raquo;')), user_profile_path(current_user), { :class => 'main' }
+    %ul
+      -if profiles
+        - profiles.each do |profile|
+          %li{ :class => profile[:is_current] ? 'current' : '' }
+            = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
+              = #image_tag '/images/profiles/' + profile[:profile_type] + '.png', :alt => ''
+              = profile[:name]
+  #mail
+    %ul
+      %li.inbox= link_to "Inbox", inbox_path, { :title => "Inbox" }
+      %li.compose= link_to "Compose", new_sent_path, { :title => "New Message" }
+      %li.sent= link_to "Sent", sent_messages_path, { :title => "Sent Items" }
+      %li.trash= link_to "Trash", trash_path, { :title => "Trash" }
+  %p
+    =link_to 'Account', edit_user_path(current_user), :class => 'button'
+    =link_to 'Logout', logout_path, :class => 'button'

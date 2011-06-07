@@ -1,8 +1,22 @@
+%p#bcrumb
+  = link_to 'Games', :games
+  %span= @game.name
+
 %h1= @game.name
-%br/
-%h3 Characters:
+
 - if @game.characters != nil
-  - for character in @game.characters
-    = render :partial => character
-  
-= js_back
+  %table
+    %thead
+      %tr
+        %th.name Characters
+        %th.edit
+    %tbody
+      - for character in @game.characters
+        %tr
+          %td.name
+            = link_to character.name, character
+          %td.edit
+            - if current_user.can_update(character)
+              = link_to 'Edit', character, :class => 'edit', :title => 'Edit'
+            - if current_user.can_delete(character)
+              = link_to 'Delete', character, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'

@@ -28,6 +28,7 @@ class TextQuestionsController < ApplicationController
   # GET /text_questions/1/edit
   def edit
     @text_question = TextQuestion.find(params[:id])
+    respond_with(@text_question)
   end
 
   # POST /text_questions

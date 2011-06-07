@@ -4,7 +4,7 @@ class UserProfilesController < ProfilesController
   # GET /user_profiles
   # GET /user_profiles.xml
   def index
-    @profiles = Profile.all
+    @profiles = Profile.find(:all, :conditions => { :type => 'UserProfile' })
 
     respond_to do |format|
       format.html # index.html.erb

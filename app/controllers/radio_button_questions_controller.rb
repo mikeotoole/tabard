@@ -52,7 +52,7 @@ class RadioButtonQuestionsController < ApplicationController
     @form = SiteForm.find(@old_radio_button_question.site_form_id)  
     
     @radio_button_question = @old_radio_button_question.clone
-    @radio_button_question.answers = @old_radio_button_question.answers   
+    @radio_button_question.predefined_answers = @old_radio_button_question.predefined_answers   
     
     @old_radio_button_question.site_form_id = nil
     @old_radio_button_question.save

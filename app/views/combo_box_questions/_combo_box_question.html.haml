@@ -2,6 +2,4 @@
   %h3
     = combo_box_question.content
     %br/
-    = submission.fields_for :answers do |answer|
-      = answer.collection_select(:content, combo_box_question.predefined_answers, :content, :content, options ={:prompt => "Select an answer"}, :class =>"predefined_answer")
-      = answer.hidden_field(:question_id, :value => combo_box_question.id)
+    = select_tag("answer_helper[#{combo_box_question.id}][#{(actual_submission.contains_predefined_answer_from_collection(combo_box_question.predefined_answers) != nil ? actual_submission.contains_predefined_answer_from_collection(combo_box_question.predefined_answers).id : -combo_box_question.id)}]",options_from_collection_for_select(combo_box_question.predefined_answers, 'content', 'content', (actual_submission.contains_predefined_answer_from_collection(combo_box_question.predefined_answers) != nil ? actual_submission.contains_predefined_answer_from_collection(combo_box_question.predefined_answers).content : nil)), :class =>"predefined_answer")

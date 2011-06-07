@@ -1,15 +1,26 @@
-= div_for page_space do
-  %h3= page_space.name
+%p#bcrumb
+  = link_to 'Page Spaces', :page_spaces
   - if page_space.game
-    %h4= link_to page_space.game_name, page_space.game
-  %span.actions
-  %td= (logged_in? and current_user.can_update(page_space)) ? link_to( 'Edit', edit_page_space_path(page_space)) : "No Edit Permissions"
-  %td= (logged_in? and current_user.can_delete(page_space)) ? link_to( 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
-  %h4 Pages
-  -if page_space.pages.size > 0
-    %td= (logged_in? and current_user.can_create(page_space)) ? link_to( "New Page", new_page_space_page_path(page_space)) : "No Create Permissions"
-    %ul
-      - page_space.pages.each do |page|
-        %li= link_to page.title, [page_space,page]
-  -else
-    %td= (logged_in? and current_user.can_create(page_space)) ? link_to( "Create a Page", new_page_space_page_path(page_space)) : "No Create Permissions"
+    = link_to page_space.game_name, page_space.game
+  %span= page_space.name
+  
+%table
+  %thead
+    %tr
+      %th.name
+        = page_space.name
+      %th.edit
+        - if logged_in? and current_user.can_update(page_space)
+          = link_to 'Edit', edit_page_space_path(page_space), :class => 'edit', :title => 'Edit'
+        - if logged_in? and current_user.can_delete(page_space)
+          = link_to 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  %tbody
+    - page_space.pages.each do |page|
+      %tr
+        %td.name= link_to page.title, [page_space,page]
+        %td.edit
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        - if logged_in? and current_user.can_create("PageSpace")
+          = link_to 'Create a Page', new_page_space_page_path(page_space), :class => 'button'

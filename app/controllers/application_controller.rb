@@ -2,16 +2,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :group_flash_messages, :set_locale
   after_filter :clear_flash_messages
-  layout :layout_selecter
-  
-  # Selects the proper layout depending on if the user is logged in or not
-  def layout_selecter
-    if logged_in?
-      "logged_in"
-    else
-      "default"
-    end
-  end
+
   # Puts all of the notices and alerts into the messages array
   def group_flash_messages
     if alert.present?
@@ -37,7 +28,7 @@ class ApplicationController < ActionController::Base
       profile_collection = current_user.active_profile_helper_collection
       profiles = Array.new  
       profile_collection.each do |profile| 
-        profiles << { :name => profile.name, :is_current => false, :profile_id => profile.id, :type => profile.class }       
+        profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }       
       end
       profiles
     end
@@ -46,7 +37,7 @@ class ApplicationController < ActionController::Base
   
   # Predicate method to test for an active profile.
   def profile_active?
-    session[:profile_type] =~ /UserProfile/
+    session[:profile_type] =~ /UserProfile/ || character_active?
   end    
   helper_method :profile_active?
   
@@ -61,6 +52,7 @@ class ApplicationController < ActionController::Base
       @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
     end
   end
+  helper_method :current_character
   
   # Returns the currently active_profile or nil if there isn't one.
   def current_profile

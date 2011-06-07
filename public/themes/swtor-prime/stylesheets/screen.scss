@@ -3,30 +3,47 @@
   @if unitless($top_right) { $top_right: 1px * $top_right }
   @if unitless($bottom_right) { $bottom_right: 1px * $bottom_right }
   @if unitless($bottom_left) { $bottom_left: 1px * $bottom_left }
-  -webkit-border-top-left-radius: $top_left;
-  -webkit-border-top-right-radius: $top_right;
-  -webkit-border-bottom-right-radius: $bottom_right;
-  -webkit-border-bottom-left-radius: $bottom_left;
   -moz-border-radius-topleft: $top_left;
   -moz-border-radius-topright: $top_right;
   -moz-border-radius-bottomright: $bottom_right;
   -moz-border-radius-bottomleft: $bottom_left;
+  -o-border-radius-topleft: $top_left;
+  -o-border-radius-topright: $top_right;
+  -o-border-radius-bottomright: $bottom_right;
+  -o-border-radius-bottomleft: $bottom_left;
+  -webkit-border-top-left-radius: $top_left;
+  -webkit-border-top-right-radius: $top_right;
+  -webkit-border-bottom-right-radius: $bottom_right;
+  -webkit-border-bottom-left-radius: $bottom_left;
   border-top-left-radius: $top_left;
   border-top-right-radius: $top_right;
   border-bottom-right-radius: $bottom_right;
   border-bottom-left-radius: $bottom_left;
 }
 
+@mixin transition($transition) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin opacity($opacity) {
+  $ie_opacity: $opacity * 100;
+  -moz-opacity: $opacity;
+  -o-opacity: $opacity;
+  -webkit-opacity: $opacity;
+  filter: alpha(opacity=$ie_opacity);
+}
+
 body {
   background: #181a1b;
   min-width: 980px;
-  text-align: center;
 }
 
 .container {
   margin: 0 auto;
   position: relative;
-  text-align: left;
   width: 960px;
 }
 
@@ -45,6 +62,7 @@ input[type=submit] {
   &:hover {
     background-color: #3e778b !important;
     background-position: 0 -60px !important;
+    @include transition(background-position 0.15s linear);
   }
 }
 .button {
@@ -71,6 +89,9 @@ textarea {
   background-image: none;
   height: 10em;
   padding: 0.3em 7px;
+}
+label {
+  display: block;
 }
 
 #announcements {
@@ -133,6 +154,7 @@ textarea {
       top: 0;
       right: 0;
       text-indent: -500em;
+      @include transition(none);
       width: 122px;
       z-index: 2;
       &:focus,
@@ -149,7 +171,8 @@ textarea {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;
   position: relative;
-  margin: 0 0 40px;  
+  margin: 0 0 40px;
+  z-index: 11;
   .title {
     left: 0;
     position: absolute;
@@ -171,7 +194,70 @@ textarea {
     * {
       display: inline-block;
     }
-    #mailbox_list {
+    .button {
+      border: 1px solid #666;
+      &:hover {
+        border-color: #fff;
+      }
+    }
+    .profile {
+      > a {
+        background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
+        border: 1px solid #666;
+        @include border_radius(5);
+        height: 26px;
+        line-height: 26px;
+        overflow: hidden;
+        position: relative;
+        padding: 0 15px;
+        text-decoration: none;
+        width: 142px;
+        z-index: 11;
+        &:hover {
+          border-color: #fff;
+        }
+      }
+      ul {
+        display: none;
+      }
+      &:focus,
+      &:hover {
+        > a {
+          background-color: #3e778b !important;
+          background-position: 0 -60px !important;
+          border-color: #fff;
+        }
+        ul {
+          background: #000;
+          border: 1px solid #666;
+          @include border_radius(0,0,4,4);
+          border-top: 0;
+          display: block;
+          margin: -4px 1px 0;
+          overflow: hidden;
+          padding: 8px 10px;
+          position: absolute;
+          width: 150px;
+          z-index: 2;
+          li {
+            display: block;
+            a {
+              border-top: 1px solid #333;
+              display: block;
+              margin: 3px 0;
+              padding: 2px 5px;
+              text-decoration: none;
+              &:hover {
+                border-left: 3px solid #eee;
+                @include border_radius(3);
+                background: #3e778b;
+              }
+            }
+          }
+        }
+      }
+    }
+    #mail {
       a {
         background: url(../images/mail-icons.png) no-repeat;
         height: 50px;
@@ -182,31 +268,28 @@ textarea {
         top: -16px;
         width: 50px;
       }
-      .compose a {
-        background-position: 0 0;
-        &:hover { background-position: 0 -49px; }
-      }
-      display: inline;
-      .mailboxes {
-        ul {
-          display: inline; 
-          li {
-            display: inline;
-            &.inbox a {
-              background-position: -50px 0;
-              z-index: 3;
-              &:hover { background-position: -50px -49px; }
-            }
-            &.sent a {
-              background-position: -100px 0;
-              z-index: 2;
-              &:hover { background-position: -100px -49px; }
-            }
-            &.trash a {
-              background-position: -150px 0;
-              z-index: 1;
-              &:hover { background-position: -150px -49px; }
-            }
+      ul {
+        display: inline; 
+        li {
+          display: inline;
+          &.inbox a {
+            background-position: -50px 0;
+            z-index: 3;
+            &:hover { background-position: -50px -49px; }
+          }
+          &.compose a {
+            background-position: 0 0;
+            &:hover { background-position: 0 -49px; }
+          }
+          &.sent a {
+            background-position: -100px 0;
+            z-index: 2;
+            &:hover { background-position: -100px -49px; }
+          }
+          &.trash a {
+            background-position: -150px 0;
+            z-index: 1;
+            &:hover { background-position: -150px -49px; }
           }
         }
       }
@@ -217,9 +300,8 @@ textarea {
 #menu {
   height: 60px;
   margin: 0 0 20px;
-  .container {
-    height: 300px;
-  }
+  position: relative;
+  z-index: 10;
   ul {
     background: url(../images/menu.png) top center no-repeat;
     height: 60px;
@@ -392,7 +474,6 @@ textarea {
 
 #body {
   margin: 0 0 60px;
-  
   h1 {
     padding: 0 0 10px;
   }
@@ -400,6 +481,215 @@ textarea {
   h3,
   p {
     padding: 0 0 10px;
+  }
+  table {
+    width: 100%;
+    tbody {
+      td {
+        background: #1a353a;
+        border-top: 1px solid #3e778b;
+        padding: 8px 12px;
+      }
+      tr:nth-child(2n) {
+        td {
+          background: #112326;
+        }
+      }
+    }
+    thead {
+      th {
+        background: #3e778b;
+        padding: 8px 12px;
+        &:first-child {
+          @include border_radius(4,0,0,0);
+        }
+        &:last-child {
+          @include border_radius(0,4,0,0);
+        }
+      }
+    }
+    tfoot {
+      td {
+        border-top: 4px solid #3e778b;
+        padding: 8px 12px;
+      }
+      th {
+        background: #3e778b;
+        padding: 8px 12px;
+        &:first-child {
+          @include border_radius(0,0,0,4);
+        }
+        &:last-child {
+          @include border_radius(0,0,4,0);
+        }
+      }
+    }
+    .amount {
+      width: 20px;
+    }
+    .button {
+      margin: 0 -12px;
+    }
+    td.edit,
+    th.edit {
+      width: 48px;
+      a.edit,
+      a.delete {
+        background: url(../images/icons-16.png) no-repeat;
+        @include border_radius(4);
+        display: block;
+        height: 30px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        text-indent: -500em;
+        width: 30px;
+      }
+    }
+    td.edit {
+      a.edit,
+      a.delete {
+        @include opacity(.7);
+        @include transition(opacity .3s linear);
+        &:hover {
+          background-color: #3fa8c2;
+          @include opacity(1);
+          @include transition(opacity .1s linear);
+        }
+        &.edit {
+          background-position: 0 -30px;
+          margin: -5px 0 0 -8px;
+          &:hover {
+            background-position: 0 0;
+          }
+        }
+        &.delete {
+          background-position: -30px -30px;
+          margin: -5px 0 0 28px;
+          &:hover {
+            background-position: -30px 0;
+          }
+        }
+      }
+    }
+    th.edit {
+      a.edit,
+      a.delete {
+        &:hover {
+          background-color: #fff;
+        }
+        &.edit {
+          background-position: 0 -30px;
+          margin: -5px 0 0 -7px;
+          &:hover {
+            background-position: 0 0;
+          }
+        }
+        &.delete {
+          background-position: -30px -30px;
+          margin: -5px 0 0 27px;
+          &:hover {
+            background-position: -30px 0;
+          }
+        }
+      }
+    }
+  }
+  button,
+  .button {
+    background-color: #3e778b !important;
+    background-position: 0 -30px !important;
+    &:hover {
+      background-position: 0 -60px !important;
+      border-color: #fff;
+    }
+  }
+  #bcrumb {
+    background: #333;
+    @include border_radius(0,0,4,4);
+    height: 30px;
+    line-height: 30px;
+    margin: -25px 0 20px;
+    padding: 5px 0 0 12px;
+    a,
+    span {
+      display: block;
+      float: left;
+      line-height: 30px;
+      margin: 0 0 0 -12px;
+      padding: 0 22px;
+      position: relative;
+    }
+    a {
+      background: url(../images/bcrumb-div.png) right 0 no-repeat;
+      &:hover {
+        background: url(../images/bcrumb-div.png) right -31px no-repeat #555;
+      }
+      &:first-child {
+        @include border_radius(0,0,0,4);
+        padding: 0 22px 0 25px;
+      }
+    }
+    a:nth-child(0) { z-index: 9; }
+    a:nth-child(1) { z-index: 8; }
+    a:nth-child(2) { z-index: 7; }
+    a:nth-child(3) { z-index: 6; }
+    a:nth-child(4) { z-index: 5; }
+    a:nth-child(5) { z-index: 4; }
+    a:nth-child(6) { z-index: 3; }
+    a:nth-child(7) { z-index: 2; }
+    span { z-index: 1; }
+  }
+  .add {
+    background: url(../images/icons-16.png) -60px -30px no-repeat #333 !important;
+    border: 0;
+    @include border_radius(4);
+    display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -500em;
+    @include transition(none);
+    width: 30px;
+    &:hover {
+      background-color: #3fa8c2 !important;
+      background-position: -60px 0 !important;
+    }
+  }
+}
+
+#page {
+  position: relative;
+  #actions {
+    right: 0;
+    position: absolute;
+    top: 0;
+    a.edit,
+    a.delete {
+      background: url(../images/icons-16.png) no-repeat #333;
+      @include border_radius(4);
+      display: inline-block;
+      height: 30px;
+      overflow: hidden;
+      padding: 0;
+      text-indent: -500em;
+      width: 30px;
+      &:hover {
+        background-color: #3fa8c2;
+      }
+      &.edit {
+        background-position: 0 -30px;
+        &:hover {
+          background-position: 0 0;
+        }
+      }
+      &.delete {
+        background-position: -30px -30px;
+        &:hover {
+          background-position: -30px 0;
+        }
+      }
+    }
   }
 }
 
