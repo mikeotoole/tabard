@@ -121,6 +121,8 @@ table {
     font-family: 'SansationRegular', serif;
     font-size: 1.4em;
     font-weight: normal; }
+  table .button {
+    color: #000 !important; }
 
 #announcements li a {
   text-decoration: none; }
@@ -174,10 +176,22 @@ table {
   #header .userbox .profile > a {
     color: #4c91a1 !important;
     display: inline-block;
-    font-family: 'SansationRegular', serif;
-    text-transform: uppercase; }
+    font-size: 0.9em;
+    font-family: 'SansationBold', serif;
+    text-transform: uppercase;
+    font-weight: normal; }
   #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
     color: #000 !important; }
+  #header .userbox .profile:focus ul a, #header .userbox .profile:hover ul a {
+    font-family: arial, sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase; }
+    #header .userbox .profile:focus ul a:hover, #header .userbox .profile:hover ul a:hover {
+      color: #fff; }
+  #header .userbox .profile .current > a {
+    color: #fff !important;
+    font-weight: bold; }
 
 #menu {
   color: #aaa; }

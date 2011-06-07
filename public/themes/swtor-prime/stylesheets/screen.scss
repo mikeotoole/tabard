@@ -3,18 +3,29 @@
   @if unitless($top_right) { $top_right: 1px * $top_right }
   @if unitless($bottom_right) { $bottom_right: 1px * $bottom_right }
   @if unitless($bottom_left) { $bottom_left: 1px * $bottom_left }
-  -webkit-border-top-left-radius: $top_left;
-  -webkit-border-top-right-radius: $top_right;
-  -webkit-border-bottom-right-radius: $bottom_right;
-  -webkit-border-bottom-left-radius: $bottom_left;
   -moz-border-radius-topleft: $top_left;
   -moz-border-radius-topright: $top_right;
   -moz-border-radius-bottomright: $bottom_right;
   -moz-border-radius-bottomleft: $bottom_left;
+  -o-border-radius-topleft: $top_left;
+  -o-border-radius-topright: $top_right;
+  -o-border-radius-bottomright: $bottom_right;
+  -o-border-radius-bottomleft: $bottom_left;
+  -webkit-border-top-left-radius: $top_left;
+  -webkit-border-top-right-radius: $top_right;
+  -webkit-border-bottom-right-radius: $bottom_right;
+  -webkit-border-bottom-left-radius: $bottom_left;
   border-top-left-radius: $top_left;
   border-top-right-radius: $top_right;
   border-bottom-right-radius: $bottom_right;
   border-bottom-left-radius: $bottom_left;
+}
+
+@mixin transition($transition) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
 }
 
 body {
@@ -45,6 +56,7 @@ input[type=submit] {
   &:hover {
     background-color: #3e778b !important;
     background-position: 0 -60px !important;
+    @include transition(background-position 0.15s linear);
   }
 }
 .button {
@@ -171,20 +183,28 @@ textarea {
     * {
       display: inline-block;
     }
+    .button {
+      border: 1px solid #666;
+      &:hover {
+        border-color: #fff;
+      }
+    }
     .profile {
       > a {
         background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;  
-        border: 1px solid #181a1b;
+        border: 1px solid #666;
         @include border_radius(5);
-        font-weight: normal;
         height: 26px;
-        line-height: 24px;
+        line-height: 26px;
         overflow: hidden;
         padding: 0 15px;
         position: relative;
         text-decoration: none;
         width: 142px;
         z-index: 3;
+        &:hover {
+          border-color: #fff;
+        }
       }
       ul {
         display: none;
@@ -194,6 +214,7 @@ textarea {
         > a {
           background-color: #3e778b !important;
           background-position: 0 -60px !important;
+          border-color: #fff;
         }
         ul {
           background: #000;
@@ -203,7 +224,7 @@ textarea {
           display: block;
           margin: -4px 1px 0;
           overflow: hidden;
-          padding: 3px 10px 5px;
+          padding: 8px 10px;
           position: absolute;
           width: 150px;
           z-index: 2;
@@ -212,8 +233,14 @@ textarea {
             a {
               border-top: 1px solid #333;
               display: block;
-              padding: 5px;
+              margin: 3px 0;
+              padding: 2px 5px;
               text-decoration: none;
+              &:hover {
+                border-left: 3px solid #eee;
+                @include border_radius(3);
+                background: #3e778b;
+              }
             }
           }
         }
@@ -478,9 +505,47 @@ textarea {
       text-align: right;
       width: 40px;
     }
-    .edit {
+    td.edit,
+    th.edit {
       text-align: center;
-      width: 80px;
+      width: 50px;
+      a.edit,
+      a.delete {
+        background: url(../images/icons-16.png) no-repeat;
+        @include border_radius(4);
+        display: block;
+        height: 30px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        text-indent: -500em;
+        width: 30px;
+        &:hover {
+          background-color: #3fa8c2;
+        }
+        &.edit {
+          background-position: 0 -60px;
+          margin: -5px 0 0 -5px;
+          &:hover {
+            background-position: 0 0;
+          }
+        }
+        &.delete {
+          background-position: -30px -60px;
+          margin: -5px 0 0 30px;
+          &:hover {
+            background-position: -30px 0;
+          }
+        }
+      }
+    }
+  }
+  .button {
+    background-color: #3e778b !important;
+    background-position: 0 -30px !important;
+    &:hover {
+      background-position: 0 -60px !important;
+      border-color: #fff;
     }
   }
 }

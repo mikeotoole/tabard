@@ -15,14 +15,18 @@ input[type=button],
 input[type=submit] {
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
   border: 1px solid #181a1b;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
   -moz-border-radius-bottomleft: 5px;
+  -o-border-radius-topleft: 5px;
+  -o-border-radius-topright: 5px;
+  -o-border-radius-bottomright: 5px;
+  -o-border-radius-bottomleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -39,7 +43,11 @@ input[type=submit] {
   input[type=submit]:focus,
   input[type=submit]:hover {
     background-color: #3e778b !important;
-    background-position: 0 -60px !important; }
+    background-position: 0 -60px !important;
+    -moz-transition: background-position 0.15s linear;
+    -o-transition: background-position 0.15s linear;
+    -webkit-transition: background-position 0.15s linear;
+    transition: background-position 0.15s linear; }
 
 .button {
   height: 24px; }
@@ -51,14 +59,18 @@ textarea {
   border: 1px solid #000;
   border-bottom-color: #323333;
   border-right-color: #323333;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
   -moz-border-radius-bottomleft: 5px;
+  -o-border-radius-topleft: 5px;
+  -o-border-radius-topright: 5px;
+  -o-border-radius-bottomright: 5px;
+  -o-border-radius-bottomleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -89,14 +101,18 @@ textarea {
       bottom: 0;
       display: block;
       background: #6e2222;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -webkit-border-bottom-right-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
       -moz-border-radius-topleft: 5px;
       -moz-border-radius-topright: 5px;
       -moz-border-radius-bottomright: 5px;
       -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -171,46 +187,60 @@ textarea {
       display: inline-block; }
     #header .userbox * {
       display: inline-block; }
+    #header .userbox .button {
+      border: 1px solid #666; }
+      #header .userbox .button:hover {
+        border-color: #fff; }
     #header .userbox .profile > a {
       background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
-      border: 1px solid #181a1b;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -webkit-border-bottom-right-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
+      border: 1px solid #666;
       -moz-border-radius-topleft: 5px;
       -moz-border-radius-topright: 5px;
       -moz-border-radius-bottomright: 5px;
       -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       border-bottom-left-radius: 5px;
-      font-weight: normal;
       height: 26px;
-      line-height: 24px;
+      line-height: 26px;
       overflow: hidden;
       padding: 0 15px;
       position: relative;
       text-decoration: none;
       width: 142px;
       z-index: 3; }
+      #header .userbox .profile > a:hover {
+        border-color: #fff; }
     #header .userbox .profile ul {
       display: none; }
     #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
       background-color: #3e778b !important;
-      background-position: 0 -60px !important; }
+      background-position: 0 -60px !important;
+      border-color: #fff; }
     #header .userbox .profile:focus ul, #header .userbox .profile:hover ul {
       background: #000;
       border: 1px solid #666;
-      -webkit-border-top-left-radius: 0px;
-      -webkit-border-top-right-radius: 0px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
       -moz-border-radius-topleft: 0px;
       -moz-border-radius-topright: 0px;
       -moz-border-radius-bottomright: 4px;
       -moz-border-radius-bottomleft: 4px;
+      -o-border-radius-topleft: 0px;
+      -o-border-radius-topright: 0px;
+      -o-border-radius-bottomright: 4px;
+      -o-border-radius-bottomleft: 4px;
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       border-bottom-right-radius: 4px;
@@ -219,7 +249,7 @@ textarea {
       display: block;
       margin: -4px 1px 0;
       overflow: hidden;
-      padding: 3px 10px 5px;
+      padding: 8px 10px;
       position: absolute;
       width: 150px;
       z-index: 2; }
@@ -228,8 +258,28 @@ textarea {
         #header .userbox .profile:focus ul li a, #header .userbox .profile:hover ul li a {
           border-top: 1px solid #333;
           display: block;
-          padding: 5px;
+          margin: 3px 0;
+          padding: 2px 5px;
           text-decoration: none; }
+          #header .userbox .profile:focus ul li a:hover, #header .userbox .profile:hover ul li a:hover {
+            border-left: 3px solid #eee;
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 3px;
+            -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            background: #3e778b; }
     #header .userbox #mail a {
       background: url(../images/mail-icons.png) no-repeat;
       height: 50px;
@@ -296,14 +346,18 @@ textarea {
         background: #000;
         border: 1px solid #666;
         border-bottom: 0;
-        -webkit-border-top-left-radius: 4px;
-        -webkit-border-top-right-radius: 4px;
-        -webkit-border-bottom-right-radius: 0px;
-        -webkit-border-bottom-left-radius: 0px;
         -moz-border-radius-topleft: 4px;
         -moz-border-radius-topright: 4px;
         -moz-border-radius-bottomright: 0px;
         -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 0px;
@@ -312,14 +366,18 @@ textarea {
       #menu ul li:hover form {
         background: #000;
         border: 1px solid #666;
-        -webkit-border-top-left-radius: 0px;
-        -webkit-border-top-right-radius: 4px;
-        -webkit-border-bottom-right-radius: 4px;
-        -webkit-border-bottom-left-radius: 4px;
         -moz-border-radius-topleft: 0px;
         -moz-border-radius-topright: 4px;
         -moz-border-radius-bottomright: 4px;
         -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
         border-top-left-radius: 0px;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
@@ -341,14 +399,18 @@ textarea {
             background: transparent;
             border: 0;
             border-left: 3px solid transparent;
-            -webkit-border-top-left-radius: 3px;
-            -webkit-border-top-right-radius: 3px;
-            -webkit-border-bottom-right-radius: 3px;
-            -webkit-border-bottom-left-radius: 3px;
             -moz-border-radius-topleft: 3px;
             -moz-border-radius-topright: 3px;
             -moz-border-radius-bottomright: 3px;
             -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
@@ -390,14 +452,18 @@ textarea {
         #menu ul li.search:hover a.main {
           background-position: -65px -67px; }
         #menu ul li.search form {
-          -webkit-border-top-left-radius: 4px;
-          -webkit-border-top-right-radius: 0px;
-          -webkit-border-bottom-right-radius: 4px;
-          -webkit-border-bottom-left-radius: 4px;
           -moz-border-radius-topleft: 4px;
           -moz-border-radius-topright: 0px;
           -moz-border-radius-bottomright: 4px;
           -moz-border-radius-bottomleft: 4px;
+          -o-border-radius-topleft: 4px;
+          -o-border-radius-topright: 0px;
+          -o-border-radius-bottomright: 4px;
+          -o-border-radius-bottomleft: 4px;
+          -webkit-border-top-left-radius: 4px;
+          -webkit-border-top-right-radius: 0px;
+          -webkit-border-bottom-right-radius: 4px;
+          -webkit-border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
           border-top-right-radius: 0px;
           border-bottom-right-radius: 4px;
@@ -408,14 +474,18 @@ textarea {
           width: 300px; }
           #menu ul li.search form input {
             background: #222;
-            -webkit-border-top-left-radius: 3px;
-            -webkit-border-top-right-radius: 3px;
-            -webkit-border-bottom-right-radius: 3px;
-            -webkit-border-bottom-left-radius: 3px;
             -moz-border-radius-topleft: 3px;
             -moz-border-radius-topright: 3px;
             -moz-border-radius-bottomright: 3px;
             -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
@@ -450,14 +520,18 @@ textarea {
         #menu ul li.locale:hover a.main {
           background-position: -5px -67px; }
         #menu ul li.locale ul {
-          -webkit-border-top-left-radius: 4px;
-          -webkit-border-top-right-radius: 0px;
-          -webkit-border-bottom-right-radius: 4px;
-          -webkit-border-bottom-left-radius: 4px;
           -moz-border-radius-topleft: 4px;
           -moz-border-radius-topright: 0px;
           -moz-border-radius-bottomright: 4px;
           -moz-border-radius-bottomleft: 4px;
+          -o-border-radius-topleft: 4px;
+          -o-border-radius-topright: 0px;
+          -o-border-radius-bottomright: 4px;
+          -o-border-radius-bottomleft: 4px;
+          -webkit-border-top-left-radius: 4px;
+          -webkit-border-top-right-radius: 0px;
+          -webkit-border-bottom-right-radius: 4px;
+          -webkit-border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
           border-top-right-radius: 0px;
           border-bottom-right-radius: 4px;
@@ -492,14 +566,18 @@ textarea {
       background: #112326; }
     #body table thead th {
       background: #3e778b;
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -webkit-border-bottom-right-radius: 0px;
-      -webkit-border-bottom-left-radius: 0px;
       -moz-border-radius-topleft: 4px;
       -moz-border-radius-topright: 4px;
       -moz-border-radius-bottomright: 0px;
       -moz-border-radius-bottomleft: 0px;
+      -o-border-radius-topleft: 4px;
+      -o-border-radius-topright: 4px;
+      -o-border-radius-bottomright: 0px;
+      -o-border-radius-bottomleft: 0px;
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -webkit-border-bottom-right-radius: 0px;
+      -webkit-border-bottom-left-radius: 0px;
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
       border-bottom-right-radius: 0px;
@@ -507,14 +585,18 @@ textarea {
       padding: 10px; }
     #body table tfoot th {
       background: #3e778b;
-      -webkit-border-top-left-radius: 0px;
-      -webkit-border-top-right-radius: 0px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
       -moz-border-radius-topleft: 0px;
       -moz-border-radius-topright: 0px;
       -moz-border-radius-bottomright: 4px;
       -moz-border-radius-bottomleft: 4px;
+      -o-border-radius-topleft: 0px;
+      -o-border-radius-topright: 0px;
+      -o-border-radius-bottomright: 4px;
+      -o-border-radius-bottomleft: 4px;
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       border-bottom-right-radius: 4px;
@@ -523,9 +605,71 @@ textarea {
     #body table .amount {
       text-align: right;
       width: 40px; }
-    #body table .edit {
+    #body table td.edit,
+    #body table th.edit {
       text-align: center;
-      width: 80px; }
+      width: 50px; }
+      #body table td.edit a.edit,
+      #body table td.edit a.delete,
+      #body table th.edit a.edit,
+      #body table th.edit a.delete {
+        background: url(../images/icons-16.png) no-repeat;
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        display: block;
+        height: 30px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        text-indent: -500em;
+        width: 30px; }
+        #body table td.edit a.edit:hover,
+        #body table td.edit a.delete:hover,
+        #body table th.edit a.edit:hover,
+        #body table th.edit a.delete:hover {
+          background-color: #3fa8c2; }
+        #body table td.edit a.edit.edit,
+        #body table td.edit a.delete.edit,
+        #body table th.edit a.edit.edit,
+        #body table th.edit a.delete.edit {
+          background-position: 0 -60px;
+          margin: -5px 0 0 -5px; }
+          #body table td.edit a.edit.edit:hover,
+          #body table td.edit a.delete.edit:hover,
+          #body table th.edit a.edit.edit:hover,
+          #body table th.edit a.delete.edit:hover {
+            background-position: 0 0; }
+        #body table td.edit a.edit.delete,
+        #body table td.edit a.delete.delete,
+        #body table th.edit a.edit.delete,
+        #body table th.edit a.delete.delete {
+          background-position: -30px -60px;
+          margin: -5px 0 0 30px; }
+          #body table td.edit a.edit.delete:hover,
+          #body table td.edit a.delete.delete:hover,
+          #body table th.edit a.edit.delete:hover,
+          #body table th.edit a.delete.delete:hover {
+            background-position: -30px 0; }
+  #body .button {
+    background-color: #3e778b !important;
+    background-position: 0 -30px !important; }
+    #body .button:hover {
+      background-position: 0 -60px !important;
+      border-color: #fff; }
 
 .comments ol li {
   position: relative; }
@@ -538,14 +682,18 @@ textarea {
       z-index: 2; }
     .comments ol li span.body {
       background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-      -webkit-border-top-left-radius: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
       -moz-border-radius-topleft: 3px;
       -moz-border-radius-topright: 3px;
       -moz-border-radius-bottomright: 3px;
       -moz-border-radius-bottomleft: 3px;
+      -o-border-radius-topleft: 3px;
+      -o-border-radius-topright: 3px;
+      -o-border-radius-bottomright: 3px;
+      -o-border-radius-bottomleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
@@ -584,14 +732,18 @@ textarea {
 
 #new_comment {
   background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-topright: 3px;
   -moz-border-radius-bottomright: 3px;
   -moz-border-radius-bottomleft: 3px;
+  -o-border-radius-topleft: 3px;
+  -o-border-radius-topright: 3px;
+  -o-border-radius-bottomright: 3px;
+  -o-border-radius-bottomleft: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -631,14 +783,18 @@ textarea {
     #footer .menu a {
       border-top: 1px solid #222;
       border-left: 3px solid transparent;
-      -webkit-border-top-left-radius: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
       -moz-border-radius-topleft: 3px;
       -moz-border-radius-topright: 3px;
       -moz-border-radius-bottomright: 3px;
       -moz-border-radius-bottomleft: 3px;
+      -o-border-radius-topleft: 3px;
+      -o-border-radius-topright: 3px;
+      -o-border-radius-bottomright: 3px;
+      -o-border-radius-bottomleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;

@@ -106,6 +106,9 @@ table {
       font-weight: normal;
     }
   }
+  .button {
+    color: #000 !important;
+  }
 }
 
 #announcements {
@@ -180,13 +183,30 @@ table {
       > a {
         color: #4c91a1 !important;
         display: inline-block;
-        font-family: 'SansationRegular', serif;
+        font-size: 0.9em;
+        font-family: 'SansationBold', serif;
         text-transform: uppercase;
+        font-weight: normal;
       }
       &:focus,
       &:hover {
         > a {
           color: #000 !important;
+        }
+        ul a {
+          font-family: arial, sans-serif;
+          font-size: 0.9em;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          &:hover {
+            color: #fff;
+          }
+        }
+      }
+      .current {
+        > a {
+          color: #fff !important;
+          font-weight: bold;
         }
       }
     }
