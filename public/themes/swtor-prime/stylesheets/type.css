@@ -138,13 +138,14 @@ table {
   table tfoot th {
     color: #fff;
     font-family: 'SansationRegular', serif;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: normal; }
   table thead td,
   table tfoot td {
     color: #fff;
     font-size: .8em; }
-  table .amount {
+  table td.amount,
+  table th.amount {
     text-align: right; }
   table .button {
     color: #000 !important; }
@@ -283,7 +284,8 @@ table {
   #footer a:focus, #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {
-  color: #999; }
+  color: #bbb;
+  font-size: 1em; }
 #footer .menu ul {
   line-height: 1em; }
   #footer .menu ul a {

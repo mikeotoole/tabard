@@ -13,18 +13,23 @@
   
   - if @profile.characters != nil
     %table
-      %thead
-        %tr
-          %th.name Name
-          %th.edit
-      %tbody
-        - @profile.characters.each do |character|
+      - if @profile.characters.size > 0
+        %thead
           %tr
-            %td.name
-              = link_to character.name, character
-            %td.edit
-              = link_to 'Edit', character, :class => 'edit', :title => 'Edit'
-              = link_to 'Delete', character, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+            %th.name Name
+            %th.edit
+        %tbody
+          - @profile.characters.each do |character|
+            %tr
+              %td.name
+                = link_to character.name, character
+              %td.edit
+                = link_to 'Edit', character, :class => 'edit', :title => 'Edit'
+                = link_to 'Delete', character, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - else
+        %tbody
+          %tr
+            %td{ :colspan => 2 } There are no characters yet.
       %tfoot
         %tr
           %td{ :colspan => 2 }

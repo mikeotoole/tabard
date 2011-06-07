@@ -15,10 +15,18 @@
         - if logged_in? and current_user.can_delete(page_space)
           = link_to 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   %tbody
-    - page_space.pages.each do |page|
+    - if page_space.pages.size > 0
+      - page_space.pages.each do |page|
+        %tr
+          %td.name= link_to page.title, [page_space,page]
+          %td.edit
+            - if current_user.can_update(page)
+              = link_to 'Edit', edit_page_path(page), :class => 'edit', :title => 'Edit'
+            - if current_user.can_delete(page)
+              = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+    - else
       %tr
-        %td.name= link_to page.title, [page_space,page]
-        %td.edit
+        %td{ :colspan => 3 } This page space has no active pages.
   %tfoot
     %tr
       %td{ :colspan => 3 }

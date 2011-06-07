@@ -121,7 +121,7 @@ table {
     th {
       color: #fff;
       font-family: 'SansationRegular', serif;
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: normal;
     }
   }
@@ -132,8 +132,11 @@ table {
       font-size: .8em;
     }
   }
-  .amount {
-    text-align: right;
+  td,
+  th {
+    &.amount {
+      text-align: right;
+    }
   }
   .button {
     color: #000 !important;
@@ -355,7 +358,8 @@ table {
   }
   .menu {
     h3 {
-      color: #999;
+      color: #bbb;
+      font-size: 1em;
     }
     ul {
       line-height: 1em;

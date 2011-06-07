@@ -1,7 +1,9 @@
-%div{ :id => 'announcement_' << announcement.id.to_s } 
-  %p#notice= notice
+#page
   %h1= announcement.name
-  %p= link_to 'Edit', edit_announcement_path(announcement)
+  
+  %p#actions
+    = link_to 'Edit', edit_announcement_path(announcement), :class => 'edit'
+  
   %p= announcement.body
   
   .comments
@@ -17,16 +19,25 @@
       Comments are disabled.
 
   - if current_user.can_show(announcement.class.to_s)
-    %p
-      %b Acknowledgments:
-      %table
+    %table
+      %caption
+        %h2 Acknowledgments
+      %thead
         %tr
-          %th User Name
-          %th Acknowledged
-        - @acknowledgments.each do |ack|
+          %th.name User Name
+          %th.ack Acknowledged
+      %tbody
+        - if @acknowledgments.size > 0
+          - @acknowledgments.each do |ack|
+            %tr
+              %td= ack.author_name
+              %td= ack.acknowledged
+        - else
           %tr
-            %td= ack.author_name
-            %td= ack.acknowledged
+            %td{ :colspan => 2 }
+      %tfoot
+        %tr
+          %td{ :colspan => 2 }
 
   %ul
     %li= link_to 'Site Announcements', site_announcements_path

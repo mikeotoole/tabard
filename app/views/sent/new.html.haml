@@ -1,17 +1,16 @@
-%h2 Compose
+%h1 New Message To
 - form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
-  %p
-    To:
-    %br/
-    #recipientchecklist
-      - for user in UserProfile.active_profiles
+  %ul.recipientchecklist
+    - for user in UserProfile.active_profiles
+      %li
         = check_box_tag "message[to][]", user.id, @message.to.include?(user.id)
         =h user.name
-        %br/
-  %p
-    Subject: #{f.text_field :subject}
-  %p
-    Body:
-    %br/
+  %br/
+  %p.field
+    = f.label 'Subject'
+    = f.text_field :subject
+  %p.field
+    = f.label 'Body'
     = f.text_area :body
-  %p= submit_tag "Send"
+  %p.field
+    = submit_tag "Send"

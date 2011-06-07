@@ -524,6 +524,7 @@ label {
         }
       }
     }
+    .ack,
     .amount {
       width: 20px;
     }
@@ -533,9 +534,11 @@ label {
     td.edit,
     th.edit {
       width: 48px;
-      a.edit,
-      a.delete {
-        background: url(../images/icons-16.png) no-repeat;
+      a.activate,
+      a.deactivate,
+      a.delete,
+      a.edit {
+        background: url(../images/icons-16.png) no-repeat rgba(0,0,0,.5);
         @include border_radius(4);
         display: block;
         height: 30px;
@@ -547,8 +550,10 @@ label {
       }
     }
     td.edit {
-      a.edit,
-      a.delete {
+      a.activate,
+      a.deactivate,
+      a.delete,
+      a.edit {
         @include opacity(.7);
         @include transition(opacity .3s linear);
         &:hover {
@@ -556,11 +561,18 @@ label {
           @include opacity(1);
           @include transition(opacity .1s linear);
         }
-        &.edit {
-          background-position: 0 -30px;
+        &.activate {
+          background-position: -90px -30px;
           margin: -5px 0 0 -8px;
           &:hover {
-            background-position: 0 0;
+            background-position: -90px 0;
+          }
+        }
+        &.deactivate {
+          background-position: -120px -30px;
+          margin: -5px 0 0 -8px;
+          &:hover {
+            background-position: -120px 0;
           }
         }
         &.delete {
@@ -570,19 +582,35 @@ label {
             background-position: -30px 0;
           }
         }
+        &.edit {
+          background-position: 0 -30px;
+          margin: -5px 0 0 -8px;
+          &:hover {
+            background-position: 0 0;
+          }
+        }
       }
     }
     th.edit {
-      a.edit,
-      a.delete {
+      a.activate,
+      a.deactivate,
+      a.delete,
+      a.edit {
         &:hover {
           background-color: #fff;
         }
-        &.edit {
-          background-position: 0 -30px;
+        &.activate{
+          background-position: -90px -30px;
           margin: -5px 0 0 -7px;
           &:hover {
-            background-position: 0 0;
+            background-position: -90px 0;
+          }
+        }
+        &.deactivate{
+          background-position: -120px -30px;
+          margin: -5px 0 0 -7px;
+          &:hover {
+            background-position: -120px 0;
           }
         }
         &.delete {
@@ -590,6 +618,13 @@ label {
           margin: -5px 0 0 27px;
           &:hover {
             background-position: -30px 0;
+          }
+        }
+        &.edit {
+          background-position: 0 -30px;
+          margin: -5px 0 0 -7px;
+          &:hover {
+            background-position: 0 0;
           }
         }
       }

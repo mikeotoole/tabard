@@ -647,6 +647,7 @@ label {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 4px;
         border-bottom-left-radius: 0px; }
+    #body table .ack,
     #body table .amount {
       width: 20px; }
     #body table .button {
@@ -654,11 +655,15 @@ label {
     #body table td.edit,
     #body table th.edit {
       width: 48px; }
-      #body table td.edit a.edit,
+      #body table td.edit a.activate,
+      #body table td.edit a.deactivate,
       #body table td.edit a.delete,
-      #body table th.edit a.edit,
-      #body table th.edit a.delete {
-        background: url(../images/icons-16.png) no-repeat;
+      #body table td.edit a.edit,
+      #body table th.edit a.activate,
+      #body table th.edit a.deactivate,
+      #body table th.edit a.delete,
+      #body table th.edit a.edit {
+        background: url(../images/icons-16.png) no-repeat rgba(0, 0, 0, 0.5);
         -moz-border-radius-topleft: 4px;
         -moz-border-radius-topright: 4px;
         -moz-border-radius-bottomright: 4px;
@@ -682,8 +687,10 @@ label {
         position: absolute;
         text-indent: -500em;
         width: 30px; }
-    #body table td.edit a.edit,
-    #body table td.edit a.delete {
+    #body table td.edit a.activate,
+    #body table td.edit a.deactivate,
+    #body table td.edit a.delete,
+    #body table td.edit a.edit {
       -moz-opacity: 0.7;
       -o-opacity: 0.7;
       -webkit-opacity: 0.7;
@@ -692,8 +699,10 @@ label {
       -o-transition: opacity 0.3s linear;
       -webkit-transition: opacity 0.3s linear;
       transition: opacity 0.3s linear; }
-      #body table td.edit a.edit:hover,
-      #body table td.edit a.delete:hover {
+      #body table td.edit a.activate:hover,
+      #body table td.edit a.deactivate:hover,
+      #body table td.edit a.delete:hover,
+      #body table td.edit a.edit:hover {
         background-color: #3fa8c2;
         -moz-opacity: 1;
         -o-opacity: 1;
@@ -703,37 +712,99 @@ label {
         -o-transition: opacity 0.1s linear;
         -webkit-transition: opacity 0.1s linear;
         transition: opacity 0.1s linear; }
-      #body table td.edit a.edit.edit,
-      #body table td.edit a.delete.edit {
-        background-position: 0 -30px;
+      #body table td.edit a.activate.activate,
+      #body table td.edit a.deactivate.activate,
+      #body table td.edit a.delete.activate,
+      #body table td.edit a.edit.activate {
+        background-position: -90px -30px;
         margin: -5px 0 0 -8px; }
-        #body table td.edit a.edit.edit:hover,
-        #body table td.edit a.delete.edit:hover {
-          background-position: 0 0; }
-      #body table td.edit a.edit.delete,
-      #body table td.edit a.delete.delete {
+        #body table td.edit a.activate.activate:hover,
+        #body table td.edit a.deactivate.activate:hover,
+        #body table td.edit a.delete.activate:hover,
+        #body table td.edit a.edit.activate:hover {
+          background-position: -90px 0; }
+      #body table td.edit a.activate.deactivate,
+      #body table td.edit a.deactivate.deactivate,
+      #body table td.edit a.delete.deactivate,
+      #body table td.edit a.edit.deactivate {
+        background-position: -120px -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.activate.deactivate:hover,
+        #body table td.edit a.deactivate.deactivate:hover,
+        #body table td.edit a.delete.deactivate:hover,
+        #body table td.edit a.edit.deactivate:hover {
+          background-position: -120px 0; }
+      #body table td.edit a.activate.delete,
+      #body table td.edit a.deactivate.delete,
+      #body table td.edit a.delete.delete,
+      #body table td.edit a.edit.delete {
         background-position: -30px -30px;
         margin: -5px 0 0 28px; }
-        #body table td.edit a.edit.delete:hover,
-        #body table td.edit a.delete.delete:hover {
+        #body table td.edit a.activate.delete:hover,
+        #body table td.edit a.deactivate.delete:hover,
+        #body table td.edit a.delete.delete:hover,
+        #body table td.edit a.edit.delete:hover {
           background-position: -30px 0; }
-    #body table th.edit a.edit:hover,
-    #body table th.edit a.delete:hover {
+      #body table td.edit a.activate.edit,
+      #body table td.edit a.deactivate.edit,
+      #body table td.edit a.delete.edit,
+      #body table td.edit a.edit.edit {
+        background-position: 0 -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.activate.edit:hover,
+        #body table td.edit a.deactivate.edit:hover,
+        #body table td.edit a.delete.edit:hover,
+        #body table td.edit a.edit.edit:hover {
+          background-position: 0 0; }
+    #body table th.edit a.activate:hover,
+    #body table th.edit a.deactivate:hover,
+    #body table th.edit a.delete:hover,
+    #body table th.edit a.edit:hover {
       background-color: #fff; }
-    #body table th.edit a.edit.edit,
-    #body table th.edit a.delete.edit {
-      background-position: 0 -30px;
+    #body table th.edit a.activate.activate,
+    #body table th.edit a.deactivate.activate,
+    #body table th.edit a.delete.activate,
+    #body table th.edit a.edit.activate {
+      background-position: -90px -30px;
       margin: -5px 0 0 -7px; }
-      #body table th.edit a.edit.edit:hover,
-      #body table th.edit a.delete.edit:hover {
-        background-position: 0 0; }
-    #body table th.edit a.edit.delete,
-    #body table th.edit a.delete.delete {
+      #body table th.edit a.activate.activate:hover,
+      #body table th.edit a.deactivate.activate:hover,
+      #body table th.edit a.delete.activate:hover,
+      #body table th.edit a.edit.activate:hover {
+        background-position: -90px 0; }
+    #body table th.edit a.activate.deactivate,
+    #body table th.edit a.deactivate.deactivate,
+    #body table th.edit a.delete.deactivate,
+    #body table th.edit a.edit.deactivate {
+      background-position: -120px -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.activate.deactivate:hover,
+      #body table th.edit a.deactivate.deactivate:hover,
+      #body table th.edit a.delete.deactivate:hover,
+      #body table th.edit a.edit.deactivate:hover {
+        background-position: -120px 0; }
+    #body table th.edit a.activate.delete,
+    #body table th.edit a.deactivate.delete,
+    #body table th.edit a.delete.delete,
+    #body table th.edit a.edit.delete {
       background-position: -30px -30px;
       margin: -5px 0 0 27px; }
-      #body table th.edit a.edit.delete:hover,
-      #body table th.edit a.delete.delete:hover {
+      #body table th.edit a.activate.delete:hover,
+      #body table th.edit a.deactivate.delete:hover,
+      #body table th.edit a.delete.delete:hover,
+      #body table th.edit a.edit.delete:hover {
         background-position: -30px 0; }
+    #body table th.edit a.activate.edit,
+    #body table th.edit a.deactivate.edit,
+    #body table th.edit a.delete.edit,
+    #body table th.edit a.edit.edit {
+      background-position: 0 -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.activate.edit:hover,
+      #body table th.edit a.deactivate.edit:hover,
+      #body table th.edit a.delete.edit:hover,
+      #body table th.edit a.edit.edit:hover {
+        background-position: 0 0; }
   #body button,
   #body .button {
     background-color: #3e778b !important;
