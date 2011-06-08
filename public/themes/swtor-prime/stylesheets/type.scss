@@ -3,7 +3,6 @@
   font-family: 'SansationRegular', serif;
   font-size: $size;
   line-height: 1em;
-  text-transform: uppercase;
   @if $shadow != '' { text-shadow: $shadow }
 }
 
@@ -20,9 +19,15 @@ body {
 
 h1 {
   @include heading(1.6em, #5ba7b4, 2px 2px 2px #000);
+  text-transform: uppercase;
 }
-h2 { @include heading(1.3em, #fff, 1px 1px 1px #000); }
-h3 { @include heading(0.9em, #fff, 1px 1px 1px #000); }
+h2 {
+  @include heading(1.3em, #fff, 1px 1px 1px #000);
+  text-transform: uppercase;
+}
+h3 {
+  @include heading(1.1em, #fff, 1px 1px 1px #000);
+}
 
 p,
 ol,
@@ -101,7 +106,6 @@ table {
     color: #fff;
   }
   caption {
-    font-size: 1.6em;
     text-align: left;
     * {
       font-size: 1em;
@@ -359,7 +363,7 @@ table {
   .menu {
     h3 {
       color: #bbb;
-      font-size: 1em;
+      text-transform: uppercase;
     }
     ul {
       line-height: 1em;

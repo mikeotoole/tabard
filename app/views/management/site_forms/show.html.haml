@@ -1,34 +1,65 @@
-%p#notice= notice
-%p
-  %b Name:
-  = @site_form.name
-%p
-  %b Welcome Message:
-  = @site_form.message
-%p
-  %b Thank You Message:
-  = @site_form.thankyou
-%p
-  %b Published:
-  = @site_form.published
-%p
-  %b Notifications Sent To:
-  - if !@site_form.profile_notifications.empty?
-    - @site_form.profile_notifications.each do  |profile|
-      = render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
-  - else
-    None
+%p#bcrumb
+  = link_to 'Management', :management
+  = link_to 'Site Forms', :management_site_forms
+  %span= @site_form.name
+
+#page
+
+  %h1= @site_form.name
   
-#questions
-  %b Questions:
-  - @site_form.questions.each do  |question|
-    = render question
-%h5 New Question
-= form_tag( new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get')
-= hidden_field_tag(:site_form_id, @site_form.id )
-= select_tag(:q_type, options_for_select(Question::select_options))
-= submit_tag 'Add Question'
-%br/
-= link_to 'Edit', edit_management_site_form_path(@site_form)
-|
-\#{link_to 'Back', management_site_forms_path}
+  %table#form_settings
+    %thead
+      %th.name Field Name
+      %th.text Values
+      %th.edit
+        - if current_user.can_update(@site_form)
+          = link_to 'Edit', edit_management_site_form_path(@site_form), :class => 'edit', :title => 'Edit Form'
+        - if current_user.can_delete(@site_form)
+          = link_to 'Delete', @site_form, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Form'
+    %tbody
+      %tr
+        %th.name Welcome Message
+        %td.text{ :colspan => 2 }= @site_form.message
+      %tr
+        %th.name Thank You Message
+        %td.text{ :colspan => 2 }= @site_form.thankyou
+      %tr
+        %th.name Published
+        %td.text{ :colspan => 2 }
+          = @site_form.published ? 'Yes' : 'No'
+      %tr
+        %th.name Notifications Sent To
+        %td.text{ :colspan => 2 }
+          - if !@site_form.profile_notifications.empty?
+            - @site_form.profile_notifications.each do  |profile|
+              = render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
+          - else
+            Nobody
+
+  %h2 Form Questions
+  %table#form_questions
+    %thead
+      %th.name Question
+      %th.text Answers
+      %th.edit
+    %tbody
+      - @site_form.questions.each do |question|
+        %tr
+          %th.name= question.content
+          %td.text
+            - if question.predefined_answers.size > 0
+              %ul
+                - question.predefined_answers.each do |answer|
+                  %li= answer.content
+          %td.edit
+            - if current_user.can_update(question)
+              = link_to 'Edit', edit_question_path(question), :class => 'edit', :title => 'Edit'
+            - if current_user.can_delete(question)
+              = link_to 'Delete', question, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+    %tfoot
+      %tr
+        %td{ :colspan => 3 }
+          = form_tag( new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get')
+          = hidden_field_tag(:site_form_id, @site_form.id )
+          = select_tag(:q_type, options_for_select(Question::select_options))
+          = submit_tag 'Add Question', :class => 'add', :title => 'Add Question'

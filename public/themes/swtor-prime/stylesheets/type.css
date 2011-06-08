@@ -13,23 +13,22 @@ h1 {
   font-family: 'SansationRegular', serif;
   font-size: 1.6em;
   line-height: 1em;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 2px black; }
+  text-shadow: 2px 2px 2px black;
+  text-transform: uppercase; }
 
 h2 {
   color: white;
   font-family: 'SansationRegular', serif;
   font-size: 1.3em;
   line-height: 1em;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 1px black; }
+  text-shadow: 1px 1px 1px black;
+  text-transform: uppercase; }
 
 h3 {
   color: white;
   font-family: 'SansationRegular', serif;
-  font-size: 0.9em;
+  font-size: 1.1em;
   line-height: 1em;
-  text-transform: uppercase;
   text-shadow: 1px 1px 1px black; }
 
 p,
@@ -124,7 +123,6 @@ table {
   table a:hover {
     color: #fff; }
   table caption {
-    font-size: 1.6em;
     text-align: left; }
     table caption * {
       font-size: 1em; }
@@ -196,7 +194,6 @@ table {
   font-family: 'SansationRegular', serif;
   font-size: 2.4em;
   line-height: 1em;
-  text-transform: uppercase;
   text-shadow: 2px 2px 2px #000; }
   #header .title a {
     text-decoration: none; }
@@ -205,7 +202,6 @@ table {
   font-family: 'SansationRegular', serif;
   font-size: 0.9em;
   line-height: 1em;
-  text-transform: uppercase;
   letter-spacing: 0.2em; }
 #header .userbox {
   font-size: 0.8em; }
@@ -285,7 +281,7 @@ table {
     color: #5ba7b4; }
 #footer .menu h3 {
   color: #bbb;
-  font-size: 1em; }
+  text-transform: uppercase; }
 #footer .menu ul {
   line-height: 1em; }
   #footer .menu ul a {

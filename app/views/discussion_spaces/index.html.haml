@@ -1,6 +1,6 @@
+%h1 Discussion Spaces
+
 %table
-  %caption
-    %h1 Discussion Spaces
   - if @discussion_spaces.size > 0
     %thead
       %tr
@@ -11,7 +11,7 @@
       - @discussion_spaces.each do |discussion_space|
         - if current_user.can_show(discussion_space)
           %tr
-            %td.amount= discussion_space.discussions.size
+            %td.amount= discussion_space.discussions.size if discussion_space.discussions.size > 0
             %td.name= link_to discussion_space.name, discussion_space
             %td.edit
               - if current_user.can_update(discussion_space)
