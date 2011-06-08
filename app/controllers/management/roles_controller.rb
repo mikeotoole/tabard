@@ -85,8 +85,10 @@ class Management::RolesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])
-      @role.destroy
-      respond_with([:management, @role])
+      if @role.destroy
+        flash[:notice] = 'Role was succesfully deleted.'
+        redirect_to(:back)
+      end
     end
   end
 end

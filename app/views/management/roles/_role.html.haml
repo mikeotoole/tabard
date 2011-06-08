@@ -26,5 +26,5 @@
           %td= permission.create_p
           %td= permission.update_p
           %td= permission.delete_p
-          %td= link_to 'Remove This Permission', [:management,@role,permission], :confirm => 'Are you sure?', :method => :delete
-  %span= link_to 'Add New Permission', new_management_role_permission_path(@role)
+          %td= link_to 'Remove This Permission', [:management,role,permission], :confirm => 'Are you sure?', :method => :delete
+  %span= link_to 'Add New Permission', new_management_role_permission_path(role)
