@@ -1,13 +1,27 @@
+%p#bcrumb
+  = link_to 'Management', :management
+  %span Registration Applications
+
 %h1 Registration Applications
+
 %table
-  %tr
-    %th Name
-    %th Date
-    %th Status
-    - @registration_applications.each do |registration_application|
+  - if - @registration_applications.size > 0
+    %thead
       %tr
-        %td= link_to registration_application.name, registration_application
-        %td= registration_application.submission_date
-        %td= registration_application.status_string
-%br/
-= link_to 'Edit Registration Application Form', management_site_form_path(@form)
+        %th.name Name
+        %th.date Date
+        %th.status Status
+    %tbody
+      - @registration_applications.each do |registration_application|
+        %tr
+          %td= link_to registration_application.name, registration_application
+          %td= registration_application.submission_date
+          %td= registration_application.status_string
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 3 } There are no pending applications.
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        = link_to 'Edit Application Form', management_site_form_path(@form), :class => 'button'

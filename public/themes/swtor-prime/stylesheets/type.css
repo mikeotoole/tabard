@@ -2,29 +2,35 @@ body {
   color: #808080;
   font-family: arial, sans-serif;
   font-size: 100.01%;
-  line-height: 1.3em; }
+  line-height: 1.3em;
+  text-align: center; }
+
+.container {
+  text-align: left; }
 
 h1 {
   color: #5ba7b4;
   font-family: 'SansationRegular', serif;
-  font-size: 2.4em;
+  font-size: 1.6em;
   line-height: 1em;
   text-transform: uppercase;
-  text-shadow: 2px 2px 2px #000; }
+  text-shadow: 2px 2px 2px black; }
 
 h2 {
-  color: #5ba7b4;
+  color: white;
   font-family: 'SansationRegular', serif;
-  font-size: 1.8em;
+  font-size: 1.3em;
   line-height: 1em;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  text-shadow: 1px 1px 1px black; }
 
 h3 {
-  color: #5ba7b4;
+  color: white;
   font-family: 'SansationRegular', serif;
-  font-size: 1.2em;
+  font-size: 0.9em;
   line-height: 1em;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  text-shadow: 1px 1px 1px black; }
 
 p,
 ol,
@@ -91,6 +97,14 @@ input[type=submit] {
   input[type=submit]:hover {
     color: #181a1b !important; }
 
+#body button,
+#body .button {
+  color: #000 !important; }
+  #body button:focus, #body button:hover,
+  #body .button:focus,
+  #body .button:hover {
+    color: #181a1b !important; }
+
 input[type=text],
 input[type=password],
 textarea {
@@ -109,6 +123,11 @@ table {
   color: #c0e1ed; }
   table a:hover {
     color: #fff; }
+  table caption {
+    font-size: 1.6em;
+    text-align: left; }
+    table caption * {
+      font-size: 1em; }
   table tbody {
     font-size: .8em; }
     table tbody th {
@@ -119,8 +138,27 @@ table {
   table tfoot th {
     color: #fff;
     font-family: 'SansationRegular', serif;
-    font-size: 1.4em;
+    font-size: 1em;
     font-weight: normal; }
+  table thead td,
+  table tfoot td {
+    color: #fff;
+    font-size: .8em; }
+  table td.amount,
+  table th.amount {
+    text-align: right; }
+  table .button {
+    color: #000 !important; }
+
+#bcrumb {
+  font-size: .75em; }
+  #bcrumb a {
+    color: #888 !important;
+    text-decoration: none !important; }
+    #bcrumb a:hover {
+      color: #fff !important; }
+  #bcrumb span {
+    color: #666; }
 
 #announcements li a {
   text-decoration: none; }
@@ -174,10 +212,22 @@ table {
   #header .userbox .profile > a {
     color: #4c91a1 !important;
     display: inline-block;
-    font-family: 'SansationRegular', serif;
-    text-transform: uppercase; }
+    font-size: 0.9em;
+    font-family: 'SansationBold', serif;
+    text-transform: uppercase;
+    font-weight: normal; }
   #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
     color: #000 !important; }
+  #header .userbox .profile:focus ul a, #header .userbox .profile:hover ul a {
+    font-family: arial, sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase; }
+    #header .userbox .profile:focus ul a:hover, #header .userbox .profile:hover ul a:hover {
+      color: #fff; }
+  #header .userbox .profile .current > a {
+    color: #fff !important;
+    font-weight: bold; }
 
 #menu {
   color: #aaa; }
@@ -234,7 +284,8 @@ table {
   #footer a:focus, #footer a:hover {
     color: #5ba7b4; }
 #footer .menu h3 {
-  color: #999; }
+  color: #bbb;
+  font-size: 1em; }
 #footer .menu ul {
   line-height: 1em; }
   #footer .menu ul a {

@@ -1,3 +1,8 @@
-%h1 Editing discussion_space
+%p#bcrumb
+  = link_to 'Management', :management
+  = link_to 'Discussion Spaces', management_discussion_spaces_path
+  %span= @discussion_space.name
+  
+%h1 Editing Discussion
+
 = render 'form'
-= js_back

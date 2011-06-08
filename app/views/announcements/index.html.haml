@@ -1,17 +1,25 @@
-%h1 Listing announcements
+%h1 Announcements
 %table
-  %tr
-    %th Title
-    %th Body
-    %th
-    %th
-    %th
-  - @announcements.each do |announcement|
+  %thead
     %tr
-      %td= announcement.name
-      %td= announcement.body
-      %td= current_user.can_show(announcement) ? link_to('Show', announcement) : "No Show Permissions"
-      %td= current_user.can_update(announcement) ? link_to('Edit', edit_announcement_path(announcement)) : "No Edit Permissions"
-      %td= current_user.can_delete(announcement) ? link_to('Destroy', announcement, :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"
-%br/
-= link_to 'New Announcement', new_announcement_path
+      %th.type Type
+      %th.name Title
+      %th.text Message
+      %th.edit
+  - if @announcements.size > 0
+    %tbody
+      - @announcements.each do |announcement|
+        - if current_user.can_show(announcement)
+          %tr
+            %td.type= link_to announcement.type.gsub(/announcement/i, ''), :announcements
+            %td.name= link_to announcement.name, announcement
+            %td.text= announcement.body
+            %td.edit
+              - if current_user.can_update(announcement)
+                = link_to 'Edit', edit_announcement_path(announcement), :class => 'edit', :title => 'Edit'
+              - if current_user.can_delete(announcement)
+                = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 4 }
+        = link_to 'New Announcement', new_announcement_path, :class => 'button'

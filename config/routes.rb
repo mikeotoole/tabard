@@ -16,21 +16,14 @@ Bv::Application.routes.draw do
   match '/inbox' => "mailbox#index"
   match '/trash' => "mailbox#trash"
 
-  resources :registration_answers
-
-  resources :text_box_questions
-
-  resources :radio_button_questions
-
-  resources :text_questions
-
-  resources :check_box_questions
-
-  resources :combo_box_questions
-
-  resources :answers
-
-  resources :questions
+  resources :registration_answers,
+    :text_box_questions,
+    :radio_button_questions,
+    :text_questions,
+    :check_box_questions,
+    :combo_box_questions,
+    :answers,
+    :questions
 
   resources :registration_applications do
     member do
@@ -39,29 +32,22 @@ Bv::Application.routes.draw do
     end
   end
 
-  resources :teamspeaks
-
-  resources :recurring_events
-
-  resources :game_locations
-
-  resources :locations
-
-  resources :events
-
-  resources :team_speaks
+  resources :teamspeaks,
+    :recurring_events,
+    :game_locations,
+    :locations,
+    :events,
+    :team_speaks
 
   resources :page_spaces do
     resources :pages
   end  
 
-  resources :letters
+  resources :letters,
+    :donations,
+    :newsletters
 
-  resources :donations
-
-  resources :newsletters
-
-  resources :discussion_spaces 
+  resources :discussion_spaces
   
   resources :discussions do
     member do
@@ -83,10 +69,9 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :acknowledgment_of_announcements
-  
-  resources :site_announcements
-  resources :game_announcements
+  resources :acknowledgment_of_announcements,
+    :site_announcements,
+    :game_announcements
   
   match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
 
@@ -110,12 +95,12 @@ Bv::Application.routes.draw do
     resources :roles do
       resources :permissions
     end
-    resources :newsletters
-    resources :page_spaces
-    resources :discussion_spaces
-    resources :themes
-    resources :teamspeaks
-    resources :site_forms
+    resources :newsletters,
+      :page_spaces,
+      :discussion_spaces,
+      :themes,
+      :teamspeaks,
+      :site_forms
   end
   
   resources :site_forms do

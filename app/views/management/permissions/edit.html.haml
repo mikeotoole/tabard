@@ -1,0 +1,5 @@
+%h1 Editing permission
+= render 'form'
+= link_to 'Show', [:management,@role,@permission]
+|
+\#{link_to 'Back', management_role_permission_path(@role)}

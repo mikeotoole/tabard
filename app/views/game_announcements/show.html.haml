@@ -1,1 +1,6 @@
+%p#bcrumb
+  = link_to 'Announcements', :announcements
+  = link_to 'Game Announcements', :game_announcements
+  %span= @game_announcement.name
+
 = render :template => 'announcements/show', :locals => { :announcement => @game_announcement }

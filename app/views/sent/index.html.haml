@@ -1,16 +1,25 @@
-%h2 Sent Messages
 %table
-  %tr
-    %th To
-    %th Subject
-    %th Sent
-  - for message in @messages
+  %caption
+    %h1 Sent Messages
+  - if @messages.size > 0
+    %thead
+      %tr
+        %th.name To
+        %th.subject Subject
+        %th.date Sent
+    %tbody
+      - for message in @messages
+        %tr
+          %td
+            - if message.recipients
+              - message.recipients.each do |profile|
+                = profile.name
+          %td= link_to h(message.subject), message_path(message)
+          %td= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 3 } No messages.
+  %tfoot
     %tr
-      %td
-        - if message.recipients
-          - message.recipients.each do |profile|
-            = profile.name
-      %td= link_to h(message.subject), sent_path(message)
-      %td 
-        = distance_of_time_in_words(message.created_at, Time.now)
-        ago
+      %td{ :colspan => 3 }

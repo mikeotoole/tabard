@@ -1,12 +1,10 @@
 body {
   background: #181a1b;
-  min-width: 980px;
-  text-align: center; }
+  min-width: 980px; }
 
 .container {
   margin: 0 auto;
   position: relative;
-  text-align: left;
   width: 960px; }
 
 button,
@@ -15,14 +13,18 @@ input[type=button],
 input[type=submit] {
   background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
   border: 1px solid #181a1b;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
   -moz-border-radius-bottomleft: 5px;
+  -o-border-radius-topleft: 5px;
+  -o-border-radius-topright: 5px;
+  -o-border-radius-bottomright: 5px;
+  -o-border-radius-bottomleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -39,7 +41,11 @@ input[type=submit] {
   input[type=submit]:focus,
   input[type=submit]:hover {
     background-color: #3e778b !important;
-    background-position: 0 -60px !important; }
+    background-position: 0 -60px !important;
+    -moz-transition: background-position 0.15s linear;
+    -o-transition: background-position 0.15s linear;
+    -webkit-transition: background-position 0.15s linear;
+    transition: background-position 0.15s linear; }
 
 .button {
   height: 24px; }
@@ -51,14 +57,18 @@ textarea {
   border: 1px solid #000;
   border-bottom-color: #323333;
   border-right-color: #323333;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
   -moz-border-radius-bottomleft: 5px;
+  -o-border-radius-topleft: 5px;
+  -o-border-radius-topright: 5px;
+  -o-border-radius-bottomright: 5px;
+  -o-border-radius-bottomleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -79,6 +89,9 @@ textarea {
   height: 10em;
   padding: 0.3em 7px; }
 
+label {
+  display: block; }
+
 #announcements {
   margin: -5px 0 15px; }
   #announcements li {
@@ -89,14 +102,18 @@ textarea {
       bottom: 0;
       display: block;
       background: #6e2222;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -webkit-border-bottom-right-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
       -moz-border-radius-topleft: 5px;
       -moz-border-radius-topright: 5px;
       -moz-border-radius-bottomright: 5px;
       -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -142,6 +159,10 @@ textarea {
       top: 0;
       right: 0;
       text-indent: -500em;
+      -moz-transition: none;
+      -o-transition: none;
+      -webkit-transition: none;
+      transition: none;
       width: 122px;
       z-index: 2; }
       #announcements li button:focus, #announcements li button:hover {
@@ -153,7 +174,8 @@ textarea {
   background: url(../images/header-bg.png) 0 0 repeat-x #181a1b;
   height: 115px;
   position: relative;
-  margin: 0 0 40px; }
+  margin: 0 0 40px;
+  z-index: 11; }
   #header .title {
     left: 0;
     position: absolute;
@@ -171,46 +193,60 @@ textarea {
       display: inline-block; }
     #header .userbox * {
       display: inline-block; }
+    #header .userbox .button {
+      border: 1px solid #666; }
+      #header .userbox .button:hover {
+        border-color: #fff; }
     #header .userbox .profile > a {
       background: url(../images/button-sprite.png) 0 0 repeat-x #2c2c2c;
-      border: 1px solid #181a1b;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -webkit-border-bottom-right-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
+      border: 1px solid #666;
       -moz-border-radius-topleft: 5px;
       -moz-border-radius-topright: 5px;
       -moz-border-radius-bottomright: 5px;
       -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       border-bottom-left-radius: 5px;
-      font-weight: normal;
       height: 26px;
-      line-height: 24px;
+      line-height: 26px;
       overflow: hidden;
-      padding: 0 15px;
       position: relative;
+      padding: 0 15px;
       text-decoration: none;
       width: 142px;
-      z-index: 3; }
+      z-index: 11; }
+      #header .userbox .profile > a:hover {
+        border-color: #fff; }
     #header .userbox .profile ul {
       display: none; }
     #header .userbox .profile:focus > a, #header .userbox .profile:hover > a {
       background-color: #3e778b !important;
-      background-position: 0 -60px !important; }
+      background-position: 0 -60px !important;
+      border-color: #fff; }
     #header .userbox .profile:focus ul, #header .userbox .profile:hover ul {
       background: #000;
       border: 1px solid #666;
-      -webkit-border-top-left-radius: 0px;
-      -webkit-border-top-right-radius: 0px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
       -moz-border-radius-topleft: 0px;
       -moz-border-radius-topright: 0px;
       -moz-border-radius-bottomright: 4px;
       -moz-border-radius-bottomleft: 4px;
+      -o-border-radius-topleft: 0px;
+      -o-border-radius-topright: 0px;
+      -o-border-radius-bottomright: 4px;
+      -o-border-radius-bottomleft: 4px;
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       border-bottom-right-radius: 4px;
@@ -219,7 +255,7 @@ textarea {
       display: block;
       margin: -4px 1px 0;
       overflow: hidden;
-      padding: 3px 10px 5px;
+      padding: 8px 10px;
       position: absolute;
       width: 150px;
       z-index: 2; }
@@ -228,8 +264,28 @@ textarea {
         #header .userbox .profile:focus ul li a, #header .userbox .profile:hover ul li a {
           border-top: 1px solid #333;
           display: block;
-          padding: 5px;
+          margin: 3px 0;
+          padding: 2px 5px;
           text-decoration: none; }
+          #header .userbox .profile:focus ul li a:hover, #header .userbox .profile:hover ul li a:hover {
+            border-left: 3px solid #eee;
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 3px;
+            -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            background: #3e778b; }
     #header .userbox #mail a {
       background: url(../images/mail-icons.png) no-repeat;
       height: 50px;
@@ -265,9 +321,9 @@ textarea {
 
 #menu {
   height: 60px;
-  margin: 0 0 20px; }
-  #menu .container {
-    height: 300px; }
+  margin: 0 0 20px;
+  position: relative;
+  z-index: 10; }
   #menu ul {
     background: url(../images/menu.png) top center no-repeat;
     height: 60px;
@@ -296,14 +352,18 @@ textarea {
         background: #000;
         border: 1px solid #666;
         border-bottom: 0;
-        -webkit-border-top-left-radius: 4px;
-        -webkit-border-top-right-radius: 4px;
-        -webkit-border-bottom-right-radius: 0px;
-        -webkit-border-bottom-left-radius: 0px;
         -moz-border-radius-topleft: 4px;
         -moz-border-radius-topright: 4px;
         -moz-border-radius-bottomright: 0px;
         -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 0px;
@@ -312,14 +372,18 @@ textarea {
       #menu ul li:hover form {
         background: #000;
         border: 1px solid #666;
-        -webkit-border-top-left-radius: 0px;
-        -webkit-border-top-right-radius: 4px;
-        -webkit-border-bottom-right-radius: 4px;
-        -webkit-border-bottom-left-radius: 4px;
         -moz-border-radius-topleft: 0px;
         -moz-border-radius-topright: 4px;
         -moz-border-radius-bottomright: 4px;
         -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
         border-top-left-radius: 0px;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
@@ -341,14 +405,18 @@ textarea {
             background: transparent;
             border: 0;
             border-left: 3px solid transparent;
-            -webkit-border-top-left-radius: 3px;
-            -webkit-border-top-right-radius: 3px;
-            -webkit-border-bottom-right-radius: 3px;
-            -webkit-border-bottom-left-radius: 3px;
             -moz-border-radius-topleft: 3px;
             -moz-border-radius-topright: 3px;
             -moz-border-radius-bottomright: 3px;
             -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
@@ -390,14 +458,18 @@ textarea {
         #menu ul li.search:hover a.main {
           background-position: -65px -67px; }
         #menu ul li.search form {
-          -webkit-border-top-left-radius: 4px;
-          -webkit-border-top-right-radius: 0px;
-          -webkit-border-bottom-right-radius: 4px;
-          -webkit-border-bottom-left-radius: 4px;
           -moz-border-radius-topleft: 4px;
           -moz-border-radius-topright: 0px;
           -moz-border-radius-bottomright: 4px;
           -moz-border-radius-bottomleft: 4px;
+          -o-border-radius-topleft: 4px;
+          -o-border-radius-topright: 0px;
+          -o-border-radius-bottomright: 4px;
+          -o-border-radius-bottomleft: 4px;
+          -webkit-border-top-left-radius: 4px;
+          -webkit-border-top-right-radius: 0px;
+          -webkit-border-bottom-right-radius: 4px;
+          -webkit-border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
           border-top-right-radius: 0px;
           border-bottom-right-radius: 4px;
@@ -408,14 +480,18 @@ textarea {
           width: 300px; }
           #menu ul li.search form input {
             background: #222;
-            -webkit-border-top-left-radius: 3px;
-            -webkit-border-top-right-radius: 3px;
-            -webkit-border-bottom-right-radius: 3px;
-            -webkit-border-bottom-left-radius: 3px;
             -moz-border-radius-topleft: 3px;
             -moz-border-radius-topright: 3px;
             -moz-border-radius-bottomright: 3px;
             -moz-border-radius-bottomleft: 3px;
+            -o-border-radius-topleft: 3px;
+            -o-border-radius-topright: 3px;
+            -o-border-radius-bottomright: 3px;
+            -o-border-radius-bottomleft: 3px;
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
@@ -450,14 +526,18 @@ textarea {
         #menu ul li.locale:hover a.main {
           background-position: -5px -67px; }
         #menu ul li.locale ul {
-          -webkit-border-top-left-radius: 4px;
-          -webkit-border-top-right-radius: 0px;
-          -webkit-border-bottom-right-radius: 4px;
-          -webkit-border-bottom-left-radius: 4px;
           -moz-border-radius-topleft: 4px;
           -moz-border-radius-topright: 0px;
           -moz-border-radius-bottomright: 4px;
           -moz-border-radius-bottomleft: 4px;
+          -o-border-radius-topleft: 4px;
+          -o-border-radius-topright: 0px;
+          -o-border-radius-bottomright: 4px;
+          -o-border-radius-bottomleft: 4px;
+          -webkit-border-top-left-radius: 4px;
+          -webkit-border-top-right-radius: 0px;
+          -webkit-border-bottom-right-radius: 4px;
+          -webkit-border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
           border-top-right-radius: 0px;
           border-bottom-right-radius: 4px;
@@ -492,40 +572,396 @@ textarea {
       background: #112326; }
     #body table thead th {
       background: #3e778b;
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -webkit-border-bottom-right-radius: 0px;
-      -webkit-border-bottom-left-radius: 0px;
-      -moz-border-radius-topleft: 4px;
-      -moz-border-radius-topright: 4px;
-      -moz-border-radius-bottomright: 0px;
-      -moz-border-radius-bottomleft: 0px;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-      padding: 10px; }
+      padding: 8px 12px; }
+      #body table thead th:first-child {
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px; }
+      #body table thead th:last-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px; }
+    #body table tfoot td {
+      border-top: 4px solid #3e778b;
+      padding: 8px 12px; }
     #body table tfoot th {
       background: #3e778b;
-      -webkit-border-top-left-radius: 0px;
-      -webkit-border-top-right-radius: 0px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
-      -moz-border-radius-topleft: 0px;
-      -moz-border-radius-topright: 0px;
+      padding: 8px 12px; }
+      #body table tfoot th:first-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 4px; }
+      #body table tfoot th:last-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 0px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 0px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 0px; }
+    #body table .ack,
+    #body table .amount {
+      width: 20px; }
+    #body table .button {
+      margin: 0 -12px; }
+    #body table td.edit,
+    #body table th.edit {
+      width: 48px; }
+      #body table td.edit a.activate,
+      #body table td.edit a.deactivate,
+      #body table td.edit a.delete,
+      #body table td.edit a.edit,
+      #body table th.edit a.activate,
+      #body table th.edit a.deactivate,
+      #body table th.edit a.delete,
+      #body table th.edit a.edit {
+        background: url(../images/icons-16.png) no-repeat rgba(0, 0, 0, 0.5);
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 4px;
+        -o-border-radius-topright: 4px;
+        -o-border-radius-bottomright: 4px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        display: block;
+        height: 30px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        text-indent: -500em;
+        width: 30px; }
+    #body table td.edit a.activate,
+    #body table td.edit a.deactivate,
+    #body table td.edit a.delete,
+    #body table td.edit a.edit {
+      -moz-opacity: 0.7;
+      -o-opacity: 0.7;
+      -webkit-opacity: 0.7;
+      filter: alpha(opacity=70);
+      -moz-transition: opacity 0.3s linear;
+      -o-transition: opacity 0.3s linear;
+      -webkit-transition: opacity 0.3s linear;
+      transition: opacity 0.3s linear; }
+      #body table td.edit a.activate:hover,
+      #body table td.edit a.deactivate:hover,
+      #body table td.edit a.delete:hover,
+      #body table td.edit a.edit:hover {
+        background-color: #3fa8c2;
+        -moz-opacity: 1;
+        -o-opacity: 1;
+        -webkit-opacity: 1;
+        filter: alpha(opacity=100);
+        -moz-transition: opacity 0.1s linear;
+        -o-transition: opacity 0.1s linear;
+        -webkit-transition: opacity 0.1s linear;
+        transition: opacity 0.1s linear; }
+      #body table td.edit a.activate.activate,
+      #body table td.edit a.deactivate.activate,
+      #body table td.edit a.delete.activate,
+      #body table td.edit a.edit.activate {
+        background-position: -90px -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.activate.activate:hover,
+        #body table td.edit a.deactivate.activate:hover,
+        #body table td.edit a.delete.activate:hover,
+        #body table td.edit a.edit.activate:hover {
+          background-position: -90px 0; }
+      #body table td.edit a.activate.deactivate,
+      #body table td.edit a.deactivate.deactivate,
+      #body table td.edit a.delete.deactivate,
+      #body table td.edit a.edit.deactivate {
+        background-position: -120px -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.activate.deactivate:hover,
+        #body table td.edit a.deactivate.deactivate:hover,
+        #body table td.edit a.delete.deactivate:hover,
+        #body table td.edit a.edit.deactivate:hover {
+          background-position: -120px 0; }
+      #body table td.edit a.activate.delete,
+      #body table td.edit a.deactivate.delete,
+      #body table td.edit a.delete.delete,
+      #body table td.edit a.edit.delete {
+        background-position: -30px -30px;
+        margin: -5px 0 0 28px; }
+        #body table td.edit a.activate.delete:hover,
+        #body table td.edit a.deactivate.delete:hover,
+        #body table td.edit a.delete.delete:hover,
+        #body table td.edit a.edit.delete:hover {
+          background-position: -30px 0; }
+      #body table td.edit a.activate.edit,
+      #body table td.edit a.deactivate.edit,
+      #body table td.edit a.delete.edit,
+      #body table td.edit a.edit.edit {
+        background-position: 0 -30px;
+        margin: -5px 0 0 -8px; }
+        #body table td.edit a.activate.edit:hover,
+        #body table td.edit a.deactivate.edit:hover,
+        #body table td.edit a.delete.edit:hover,
+        #body table td.edit a.edit.edit:hover {
+          background-position: 0 0; }
+    #body table th.edit a.activate:hover,
+    #body table th.edit a.deactivate:hover,
+    #body table th.edit a.delete:hover,
+    #body table th.edit a.edit:hover {
+      background-color: #fff; }
+    #body table th.edit a.activate.activate,
+    #body table th.edit a.deactivate.activate,
+    #body table th.edit a.delete.activate,
+    #body table th.edit a.edit.activate {
+      background-position: -90px -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.activate.activate:hover,
+      #body table th.edit a.deactivate.activate:hover,
+      #body table th.edit a.delete.activate:hover,
+      #body table th.edit a.edit.activate:hover {
+        background-position: -90px 0; }
+    #body table th.edit a.activate.deactivate,
+    #body table th.edit a.deactivate.deactivate,
+    #body table th.edit a.delete.deactivate,
+    #body table th.edit a.edit.deactivate {
+      background-position: -120px -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.activate.deactivate:hover,
+      #body table th.edit a.deactivate.deactivate:hover,
+      #body table th.edit a.delete.deactivate:hover,
+      #body table th.edit a.edit.deactivate:hover {
+        background-position: -120px 0; }
+    #body table th.edit a.activate.delete,
+    #body table th.edit a.deactivate.delete,
+    #body table th.edit a.delete.delete,
+    #body table th.edit a.edit.delete {
+      background-position: -30px -30px;
+      margin: -5px 0 0 27px; }
+      #body table th.edit a.activate.delete:hover,
+      #body table th.edit a.deactivate.delete:hover,
+      #body table th.edit a.delete.delete:hover,
+      #body table th.edit a.edit.delete:hover {
+        background-position: -30px 0; }
+    #body table th.edit a.activate.edit,
+    #body table th.edit a.deactivate.edit,
+    #body table th.edit a.delete.edit,
+    #body table th.edit a.edit.edit {
+      background-position: 0 -30px;
+      margin: -5px 0 0 -7px; }
+      #body table th.edit a.activate.edit:hover,
+      #body table th.edit a.deactivate.edit:hover,
+      #body table th.edit a.delete.edit:hover,
+      #body table th.edit a.edit.edit:hover {
+        background-position: 0 0; }
+  #body button,
+  #body .button {
+    background-color: #3e778b !important;
+    background-position: 0 -30px !important; }
+    #body button:hover,
+    #body .button:hover {
+      background-position: 0 -60px !important;
+      border-color: #fff; }
+  #body #bcrumb {
+    background: #333;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -o-border-radius-topleft: 0px;
+    -o-border-radius-topright: 0px;
+    -o-border-radius-bottomright: 4px;
+    -o-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    margin: -25px 0 20px;
+    padding: 5px 0 0 12px; }
+    #body #bcrumb a,
+    #body #bcrumb span {
+      display: block;
+      float: left;
+      line-height: 30px;
+      margin: 0 0 0 -12px;
+      padding: 0 22px;
+      position: relative; }
+    #body #bcrumb a {
+      background: url(../images/bcrumb-div.png) right 0 no-repeat; }
+      #body #bcrumb a:hover {
+        background: url(../images/bcrumb-div.png) right -31px no-repeat #555555; }
+      #body #bcrumb a:first-child {
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 4px;
+        -o-border-radius-topleft: 0px;
+        -o-border-radius-topright: 0px;
+        -o-border-radius-bottomright: 0px;
+        -o-border-radius-bottomleft: 4px;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 4px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 4px;
+        padding: 0 22px 0 25px; }
+    #body #bcrumb a:nth-child(0) {
+      z-index: 9; }
+    #body #bcrumb a:nth-child(1) {
+      z-index: 8; }
+    #body #bcrumb a:nth-child(2) {
+      z-index: 7; }
+    #body #bcrumb a:nth-child(3) {
+      z-index: 6; }
+    #body #bcrumb a:nth-child(4) {
+      z-index: 5; }
+    #body #bcrumb a:nth-child(5) {
+      z-index: 4; }
+    #body #bcrumb a:nth-child(6) {
+      z-index: 3; }
+    #body #bcrumb a:nth-child(7) {
+      z-index: 2; }
+    #body #bcrumb span {
+      z-index: 1; }
+  #body .add {
+    background: url(../images/icons-16.png) -60px -30px no-repeat #333333 !important;
+    border: 0;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -o-border-radius-topleft: 4px;
+    -o-border-radius-topright: 4px;
+    -o-border-radius-bottomright: 4px;
+    -o-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -500em;
+    -moz-transition: none;
+    -o-transition: none;
+    -webkit-transition: none;
+    transition: none;
+    width: 30px; }
+    #body .add:hover {
+      background-color: #3fa8c2 !important;
+      background-position: -60px 0 !important; }
+
+#page {
+  position: relative; }
+  #page #actions {
+    right: 0;
+    position: absolute;
+    top: 0; }
+    #page #actions a.edit,
+    #page #actions a.delete {
+      background: url(../images/icons-16.png) no-repeat #333333;
+      -moz-border-radius-topleft: 4px;
+      -moz-border-radius-topright: 4px;
       -moz-border-radius-bottomright: 4px;
       -moz-border-radius-bottomleft: 4px;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      -o-border-radius-topleft: 4px;
+      -o-border-radius-topright: 4px;
+      -o-border-radius-bottomright: 4px;
+      -o-border-radius-bottomleft: 4px;
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
       border-bottom-left-radius: 4px;
-      padding: 10px; }
-    #body table .amount {
-      text-align: right;
-      width: 40px; }
-    #body table .edit {
-      text-align: center;
-      width: 80px; }
+      display: inline-block;
+      height: 30px;
+      overflow: hidden;
+      padding: 0;
+      text-indent: -500em;
+      width: 30px; }
+      #page #actions a.edit:hover,
+      #page #actions a.delete:hover {
+        background-color: #3fa8c2; }
+      #page #actions a.edit.edit,
+      #page #actions a.delete.edit {
+        background-position: 0 -30px; }
+        #page #actions a.edit.edit:hover,
+        #page #actions a.delete.edit:hover {
+          background-position: 0 0; }
+      #page #actions a.edit.delete,
+      #page #actions a.delete.delete {
+        background-position: -30px -30px; }
+        #page #actions a.edit.delete:hover,
+        #page #actions a.delete.delete:hover {
+          background-position: -30px 0; }
 
 .comments ol li {
   position: relative; }
@@ -538,14 +974,18 @@ textarea {
       z-index: 2; }
     .comments ol li span.body {
       background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-      -webkit-border-top-left-radius: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
       -moz-border-radius-topleft: 3px;
       -moz-border-radius-topright: 3px;
       -moz-border-radius-bottomright: 3px;
       -moz-border-radius-bottomleft: 3px;
+      -o-border-radius-topleft: 3px;
+      -o-border-radius-topright: 3px;
+      -o-border-radius-bottomright: 3px;
+      -o-border-radius-bottomleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
@@ -584,14 +1024,18 @@ textarea {
 
 #new_comment {
   background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-topright: 3px;
   -moz-border-radius-bottomright: 3px;
   -moz-border-radius-bottomleft: 3px;
+  -o-border-radius-topleft: 3px;
+  -o-border-radius-topright: 3px;
+  -o-border-radius-bottomright: 3px;
+  -o-border-radius-bottomleft: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -631,14 +1075,18 @@ textarea {
     #footer .menu a {
       border-top: 1px solid #222;
       border-left: 3px solid transparent;
-      -webkit-border-top-left-radius: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
       -moz-border-radius-topleft: 3px;
       -moz-border-radius-topright: 3px;
       -moz-border-radius-bottomright: 3px;
       -moz-border-radius-bottomleft: 3px;
+      -o-border-radius-topleft: 3px;
+      -o-border-radius-topright: 3px;
+      -o-border-radius-bottomright: 3px;
+      -o-border-radius-bottomleft: 3px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;

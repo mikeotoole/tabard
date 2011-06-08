@@ -1,3 +1,8 @@
-%h1 Editing page_space
+%p#bcrumb
+  = link_to 'Management', :management
+  = link_to 'Page Space', management_page_spaces_path
+  %span= @page_space.name
+
+%h1= 'Editing "' + @page_space.name + '"'
+
 = render 'form'
-= js_back

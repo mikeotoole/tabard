@@ -1,15 +1,24 @@
-%h1 Listing Forms
+%p#bcrumb
+  = link_to 'Management', :management
+  %span Forms
+
+%h1 Forms Management
+
 %table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-  - @site_form.each do |site_form|
+  %thead
     %tr
-      %td= site_form.name
-      %td= link_to 'Show', [:management, site_form]
-      %td= link_to 'Edit', edit_management_site_form_path(site_form)
-      %td= link_to 'Destroy', [:management, site_form], :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Form', new_management_site_form_path
+      %th.name Name
+      %th.edit
+  - if @site_form.size > 0
+    %tbody
+      - @site_form.each do |site_form|
+        %tr
+          %td.name
+            = link_to site_form.name, [:management, site_form]
+          %td.edit
+            = link_to 'Edit', edit_management_site_form_path(site_form), :class => 'edit', :title => 'Edit'
+            = link_to 'Delete', [:management, site_form], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 2 }
+        = link_to 'New Form', new_management_site_form_path, :class => 'button'
