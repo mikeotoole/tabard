@@ -57,8 +57,8 @@ class Management::PermissionsController < ApplicationController
   def destroy
     @permission = @role.permissions.find(params[:id])
     if @permission.destroy
-      flash[:notice] = 'Permission was succesfully created.'
-      redirect_to([:management,@role])
+      flash[:notice] = 'Permission was succesfully deleted.'
+      redirect_to(:back)
     end
   end
   

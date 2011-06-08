@@ -81,12 +81,14 @@ class Management::RolesController < ApplicationController
   # DELETE /management/roles/1
   # DELETE /management/roles/1.xml
   def destroy
-    if !current_user.can_show("Role") 
+    if !current_user.can_delete("Role") 
       render :nothing => true, :status => :forbidden
     else 
       @role = Role.find(params[:id])
-      @role.destroy
-      respond_with([:management, @role])
+      if @role.destroy
+        flash[:notice] = 'Role was succesfully deleted.'
+        redirect_to(:back)
+      end
     end
   end
 end
