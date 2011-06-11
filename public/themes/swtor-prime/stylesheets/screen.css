@@ -557,18 +557,21 @@ label {
 #body {
   margin: 0 0 60px; }
   #body h1 {
-    padding: 0 0 10px; }
+    padding: 0 0 1em; }
   #body h2,
-  #body h3,
+  #body h3 {
+    padding: 1em 0 .5em; }
   #body p {
-    padding: 0 0 10px; }
+    padding: 0 0 .5em; }
   #body table {
     width: 100%; }
-    #body table tbody td {
+    #body table tbody td,
+    #body table tbody th {
       background: #1a353a;
       border-top: 1px solid #3e778b;
       padding: 8px 12px; }
-    #body table tbody tr:nth-child(2n) td {
+    #body table tbody tr:nth-child(2n) td,
+    #body table tbody tr:nth-child(2n) th {
       background: #112326; }
     #body table thead th {
       background: #3e778b;
@@ -923,7 +926,8 @@ label {
     position: absolute;
     top: 0; }
     #page #actions a.edit,
-    #page #actions a.delete {
+    #page #actions a.delete,
+    #page #actions a.show {
       background: url(../images/icons-16.png) no-repeat #333333;
       -moz-border-radius-topleft: 4px;
       -moz-border-radius-topright: 4px;
@@ -948,20 +952,33 @@ label {
       text-indent: -500em;
       width: 30px; }
       #page #actions a.edit:hover,
-      #page #actions a.delete:hover {
+      #page #actions a.delete:hover,
+      #page #actions a.show:hover {
         background-color: #3fa8c2; }
       #page #actions a.edit.edit,
-      #page #actions a.delete.edit {
+      #page #actions a.delete.edit,
+      #page #actions a.show.edit {
         background-position: 0 -30px; }
         #page #actions a.edit.edit:hover,
-        #page #actions a.delete.edit:hover {
+        #page #actions a.delete.edit:hover,
+        #page #actions a.show.edit:hover {
           background-position: 0 0; }
       #page #actions a.edit.delete,
-      #page #actions a.delete.delete {
+      #page #actions a.delete.delete,
+      #page #actions a.show.delete {
         background-position: -30px -30px; }
         #page #actions a.edit.delete:hover,
-        #page #actions a.delete.delete:hover {
+        #page #actions a.delete.delete:hover,
+        #page #actions a.show.delete:hover {
           background-position: -30px 0; }
+      #page #actions a.edit.show,
+      #page #actions a.delete.show,
+      #page #actions a.show.show {
+        background-position: -150px -30px; }
+        #page #actions a.edit.show:hover,
+        #page #actions a.delete.show:hover,
+        #page #actions a.show.show:hover {
+          background-position: -150px 0; }
 
 .comments ol li {
   position: relative; }

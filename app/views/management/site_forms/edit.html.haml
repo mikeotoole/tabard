@@ -1,5 +1,9 @@
+%p#bcrumb
+  = link_to 'Management', :management
+  = link_to 'Site Forms', :management_site_forms
+  = link_to @site_form.name, @site_form
+  %span Edit
+
 %h1 Editing Form
+  
 = render 'form'
-= link_to 'Show', [:management, @site_form]
-|
-\#{link_to js_back}
