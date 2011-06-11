@@ -4,7 +4,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.order("system DESC, name ASC")
+      @discussion_spaces = DiscussionSpace.user_generated.order("name ASC")
       if !current_user.can_show("DiscussionSpace")
         render_insufficient_privileges
       else
@@ -21,17 +21,17 @@ class DiscussionSpacesController < ApplicationController
       render_insufficient_privileges
     else   
       # Site Announcement Space
-      if(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game == nil)
-        render :partial => 'discussion_spaces/site_announcement_space'
+      #if(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game == nil)
+      #  render :partial => 'discussion_spaces/site_announcement_space'
       # Game Announcement Space
-      elsif(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game != nil)
-        render :partial => 'discussion_spaces/game_announcement_space'
+      #elsif(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game != nil)
+      #  render :partial => 'discussion_spaces/game_announcement_space'
       # Registraion Appication Space
-      elsif(@discussion_space.system and @discussion_space.registration_application_space != nil)
-        @registration_applications = RegistrationApplication.all_new
-        @form = SiteForm.application_form
-        render :partial => 'discussion_spaces/registration_application_space'  
-      end  
+      #elsif(@discussion_space.system and @discussion_space.registration_application_space != nil)
+      #  @registration_applications = RegistrationApplication.all_new
+      #  @form = SiteForm.application_form
+      #  render :partial => 'discussion_spaces/registration_application_space'  
+      #end 
       respond_with(@discussion_space)
     end
   end
