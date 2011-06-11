@@ -6,6 +6,10 @@ class DiscussionSpace < ActiveRecord::Base
   validate :only_one_announcement_space, :only_one_registration_application_space, :has_a_user_profile,
            :only_one_user_profile_space
   
+  def game_name
+    self.game.name if self.game
+  end
+  
   def only_one_announcement_space
     errors.add(:id, "There can be only one!  ...announcement space.") if (DiscussionSpace.site_announcement_space.exists? and self.announcement_space and self.game_id = nil)
   end
