@@ -21,17 +21,17 @@ class PageSpacesController < ApplicationController
   # GET /page_spaces/new.xml
   def new
     @page_space = PageSpace.new
-    if !current_user.can_create("PageSpace")
+    if !current_user.can_create(@page_space)
       render :nothing => true, :status => :forbidden
     else
-      respond_with(@discussion_space)
+      respond_with(@page_space)
     end
   end
 
   # GET /page_spaces/1/edit
   def edit
     @page_space = PageSpace.find(params[:id])
-    if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
+    if !current_user.can_update(@page_space)
       render :nothing => true, :status => :forbidden
     end
   end
@@ -39,10 +39,10 @@ class PageSpacesController < ApplicationController
   # POST /page_spaces
   # POST /page_spaces.xml
   def create
-    if !current_user.can_create("PageSpace")
+    @page_space = PageSpace.new(params[:page_space])
+    if !current_user.can_create(@page_space)
       render :nothing => true, :status => :forbidden
     else
-      @page_space = PageSpace.new(params[:page_space])
   
       if @page_space.save
         flash[:notice] = 'Page space was successfully created.'
@@ -60,7 +60,7 @@ class PageSpacesController < ApplicationController
   # PUT /page_spaces/1.xml
   def update
     @page_space = PageSpace.find(params[:id])
-    if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
+    if !current_user.can_update(@page_space)
       render :nothing => true, :status => :forbidden
     else
       
@@ -80,7 +80,7 @@ class PageSpacesController < ApplicationController
   # DELETE /page_spaces/1.xml
   def destroy
     @page_space = PageSpace.find(params[:id])
-    if !current_user.can_delete("PageSpace") and !current_user.can_delete(@page_space)
+    if !current_user.can_delete(@page_space)
       render :nothing => true, :status => :forbidden
     else 
       @page_space.destroy

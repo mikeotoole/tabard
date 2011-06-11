@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :group_flash_messages, :set_locale
+  before_filter :set_locale, :group_flash_messages
   after_filter :clear_flash_messages
 
   # Puts all of the notices and alerts into the messages array
@@ -17,8 +17,14 @@ class ApplicationController < ActionController::Base
   
   # Removes all flash messages
   def clear_flash_messages
-    flash[:messages] = Array.new
+    #flash[:messages] = Array.new
   end  
+  
+  def add_new_flash_message(message_body, message_class='notice', message_title='')
+    flash[:messages] = Array.new unless flash[:messages] 
+    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+  end
+  helper_method :add_new_flash_message
   
   protected
   
@@ -70,7 +76,7 @@ class ApplicationController < ActionController::Base
       { :locale => 'zombie', :language => 'Zombie' }]
     locales.each do |locale|
       locale[:is_current] = I18n.locale.to_s == locale[:locale] ? true : false
-    end
+    end 
   end
   helper_method :locales
 
@@ -155,4 +161,15 @@ class ApplicationController < ActionController::Base
     return @theme = 'swtor-prime'
   end
   helper_method :current_theme
+  
+  def render_404
+     render "status_code/404", :layout => "status_codes", :status => :not_found
+  end
+  helper_method :render_404
+  
+  def render_insufficient_privileges
+    render_404
+  end
+  helper_method :render_insufficient_privileges
+  
 end

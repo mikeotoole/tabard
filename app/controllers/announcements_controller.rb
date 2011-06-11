@@ -28,15 +28,15 @@ class AnnouncementsController < ApplicationController
     respond_with(@announcements)
   end
 
-  # GET /announcements/1/edit
-  def edit
-    @announcement = Announcement.find(params[:id])
-    if !current_user.can_update(@announcement)
-      render :nothing => true, :status => :forbidden
-    else
-      respond_with(@announcement)
-    end
-  end
+#  # GET /announcements/1/edit
+#  def edit
+#    @announcement = Announcement.find(params[:id])
+#    if !current_user.can_update(@announcement)
+#      render :nothing => true, :status => :forbidden
+#    else
+#      respond_with(@announcement)
+#    end
+#  end
 
 #  # POST /announcements
 #  # POST /announcements.xml
