@@ -23,17 +23,14 @@ class DiscussionSpacesController < ApplicationController
       # Site Announcement Space
       if(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game == nil)
         render :partial => 'discussion_spaces/site_announcement_space'
-        return
       # Game Announcement Space
       elsif(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game != nil)
         render :partial => 'discussion_spaces/game_announcement_space'
-        return
       # Registraion Appication Space
       elsif(@discussion_space.system and @discussion_space.registration_application_space != nil)
         @registration_applications = RegistrationApplication.all_new
         @form = SiteForm.application_form
-        render :partial => 'discussion_spaces/registration_application_space'
-        return  
+        render :partial => 'discussion_spaces/registration_application_space'  
       end  
       respond_with(@discussion_space)
     end
