@@ -93,7 +93,6 @@ Bv::Application.routes.draw do
         get :deactivate
       end
     end
-    resources :games, :except => :show
     resources :roles do
       resources :permissions
     end
@@ -126,7 +125,7 @@ Bv::Application.routes.draw do
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
-  resources :games, :only => [:index, :show] do
+  resources :games do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
     resources :game_announcements, :only => [:new, :create]

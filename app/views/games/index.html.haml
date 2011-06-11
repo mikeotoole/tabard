@@ -16,9 +16,9 @@
             = link_to game.name, game
           %td.edit
             - if logged_in? and current_user.can_update(game)
-              = link_to "Edit", edit_management_game_path(game), :class => 'edit', :title => 'Edit'
+              = link_to "Edit", edit_game_path(game), :class => 'edit', :title => 'Edit'
             - if logged_in? and current_user.can_delete(game)
-              = link_to "Delete", [:management, game], :confirm => "Are you sure?", :method => :delete, :class => 'delete', :title => 'Delete'
+              = link_to "Delete", game, :confirm => "Are you sure?", :method => :delete, :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %tr
@@ -26,5 +26,5 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        - if logged_in? and current_user.can_create(@games)
-          = link_to 'Add New Game', new_management_game_path, :class => 'button'
+        - if logged_in? and current_user.can_create('Game')
+          = link_to 'Add New Game', new_game_path, :class => 'button'

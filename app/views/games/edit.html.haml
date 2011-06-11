@@ -1,7 +1,7 @@
 %h1
   = 'Editing "' + @game.name + '"'
   
-= form_for [:management, @game] do |f|
+= form_for @game do |f|
   %p.field
     = f.label :name
     = f.text_field :name
