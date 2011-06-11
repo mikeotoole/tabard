@@ -1,7 +1,7 @@
 %p#bcrumb
-  = link_to 'Management', :management
-  = link_to 'Page Space', management_page_spaces_path
-  %span= @page_space.name
+  = link_to 'Page Spaces', page_spaces_path
+  = link_to @page_space.name, @page_space
+  %span Edit
 
 %h1= 'Editing "' + @page_space.name + '"'
 

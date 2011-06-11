@@ -1,25 +1,27 @@
+%h1 Page Spaces
+
 %table
-  %caption
-    %h1 Page Spaces
-  %thead
-    %tr
-      %th.amount #
-      %th.name Name
-      %th.game Game
-      %th.edit
-  %tbody
-    - @page_spaces.each do |page_space|
+  - if @page_spaces.size > 0
+    %thead
       %tr
-        %td.amount= page_space.pages.size.to_s
-        %td.name= link_to page_space.name, page_space
-        %td.game= page_space.game_name
-        %td.edit
-          - if logged_in? and current_user.can_update(page_space)
-            = link_to 'Edit', edit_page_space_path(page_space), :class => 'edit', :title => 'Edit'
-          - if logged_in? and current_user.can_delete(page_space)
-            = link_to 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+        %th.name Name
+        %th.edit
+    %tbody
+      - @page_spaces.each do |page_space|
+        %tr
+          %td.name
+            = link_to page_space.name, page_space
+          %td.edit
+            - if logged_in? and current_user.can_update(page_space)
+              = link_to 'Edit', edit_page_space_path(page_space), :class => 'edit', :title => 'Edit'
+            - if logged_in? and current_user.can_delete(page_space)
+              = link_to 'Delete', page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 4 } There are currenty no page spaces.
   %tfoot
     %tr
-      %td{ :colspan => 4 }
+      %td{ :colspan => 2 }
         - if logged_in? and current_user.can_create("PageSpace")
           = link_to 'New Page Space', new_page_space_path, :class => 'button'
