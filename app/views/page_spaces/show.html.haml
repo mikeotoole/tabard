@@ -33,4 +33,4 @@
       %tr
         %td{ :colspan => 3 }
           - if logged_in? and current_user.can_create("PageSpace")
-            = link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button'
+            = link_to 'Create New Page', new_page_space_page_path(@page_space), :class => 'button'

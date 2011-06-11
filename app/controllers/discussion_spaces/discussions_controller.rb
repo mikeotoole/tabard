@@ -36,6 +36,6 @@ class DiscussionSpaces::DiscussionsController < ApplicationController
   end
   
   def get_discussion_space_from_id
-    @discussion_space = DiscussionSpace.get_by_id(params[:discussion_space_id])
+    @discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
   end
 end
