@@ -7,7 +7,8 @@ class PagesController < ApplicationController
                             },
                 :only => [:new, :create, :edit, :update]
   respond_to :html, :xml
-  before_filter :authenticate, :grab_page_space_from_page_space_id
+  before_filter :authenticate, :except => [:index, :show]
+  before_filter :grab_page_space_from_page_space_id
   # GET /pages
   # GET /pages.xml
   def index
