@@ -1,32 +1,36 @@
 %p#bcrumb
-  = link_to 'Page Spaces', :page_spaces
+  = link_to 'Topics', :page_spaces
   %span= @page_space.name
+
+#page
+  %h1= @page_space.name
   
-%table
-  %thead
-    %tr
-      %th.name
-        = @page_space.name
-      %th.edit
-        - if logged_in? and current_user.can_update(@page_space)
-          = link_to 'Edit', edit_page_space_path(@page_space), :class => 'edit', :title => 'Edit'
-        - if logged_in? and current_user.can_delete(@page_space)
-          = link_to 'Delete', @page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  %tbody
-    - if @page_space.pages.size > 0
-      - @page_space.pages.each do |page|
-        %tr
-          %td.name= link_to page.title, [@page_space,page]
-          %td.edit
-            - if logged_in? and current_user.can_update(page)
-              = link_to 'Edit', edit_page_space_page_path(@page_space,page), :class => 'edit', :title => 'Edit'
-            - if logged_in? and current_user.can_delete(page)
-              = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-    - else
+  %p#actions
+    - if logged_in? and current_user.can_update(@page_space)
+      = link_to 'Edit', edit_page_space_path(@page_space), :class => 'edit', :title => 'Edit'
+    - if logged_in? and current_user.can_delete(@page_space)
+      = link_to 'Delete', @page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  
+  %table
+    %thead
       %tr
-        %td{ :colspan => 3 } This page space has no active pages.
-  %tfoot
-    %tr
-      %td{ :colspan => 3 }
-        - if logged_in? and current_user.can_create("PageSpace")
-          = link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button'
+        %th.name Page
+        %th.edit
+    %tbody
+      - if @page_space.pages.size > 0
+        - @page_space.pages.each do |page|
+          %tr
+            %td.name= link_to page.title, [@page_space,page]
+            %td.edit
+              - if logged_in? and current_user.can_update(page)
+                = link_to 'Edit', edit_page_space_page_path(@page_space,page), :class => 'edit', :title => 'Edit'
+              - if logged_in? and current_user.can_delete(page)
+                = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - else
+        %tr
+          %td{ :colspan => 3 } This page space has no active pages.
+    %tfoot
+      %tr
+        %td{ :colspan => 3 }
+          - if logged_in? and current_user.can_create("PageSpace")
+            = link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button'

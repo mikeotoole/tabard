@@ -1,11 +1,11 @@
-%h1 Page Spaces
+%h1 Topics
 
 %table
   - if @page_spaces.size > 0
     %thead
       %tr
-        %th.amount #
-        %th.name Page
+        %th.amount Pages
+        %th.name Topic
         %th.name Game
         %th.edit
     %tbody
@@ -31,4 +31,4 @@
     %tr
       %td{ :colspan => 4 }
         - if logged_in? and current_user.can_create("PageSpace")
-          = link_to 'New Page Space', new_page_space_path, :class => 'button'
+          = link_to 'Create New Topic', new_page_space_path, :class => 'button'
