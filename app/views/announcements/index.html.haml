@@ -11,7 +11,7 @@
       - @announcements.each do |announcement|
         - if current_user.can_show(announcement)
           %tr
-            %td.type= link_to announcement.type.gsub(/announcement/i, ''), :announcements
+            %td.type= link_to announcement.type.gsub(/announcement/i, ''), announcement.type.constantize
             %td.name= link_to announcement.name, announcement
             %td.text= announcement.body
             %td.edit
