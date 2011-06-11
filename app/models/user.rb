@@ -145,6 +145,10 @@ class User < ActiveRecord::Base
     false
   end
   
+  def can_manage
+  	true # TODO
+  end
+  
   def can_update(system_resource_name)
     logger.debug("Update permission request for user #{self.name} with #{system_resource_name}")
     return false if not self.user_profile.is_active 

@@ -20,9 +20,9 @@
         %tr
           %td.name= link_to page.title, [page_space,page]
           %td.edit
-            - if current_user.can_update(page)
+            - if logged_in? and current_user.can_update(page)
               = link_to 'Edit', edit_page_path(page), :class => 'edit', :title => 'Edit'
-            - if current_user.can_delete(page)
+            - if logged_in? and current_user.can_delete(page)
               = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
     - else
       %tr

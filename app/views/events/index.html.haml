@@ -1,0 +1,25 @@
+%h1 Events
+%table
+  - if @events.size > 0
+    %thead
+      %tr
+        %th.date Date
+        %th.name Event
+        %th.edit
+    %tbody
+      - @events.each do |event|
+        %tr
+          %td.date= event.date
+          %td.name= link_to event.name, event
+          %td.edit
+            - if logged_in? and current_user.can_update(event)
+              = link_to 'Edit', edit_event_path(event), :class => 'edit', :title => 'Edit'
+            - if logged_in? and current_user.can_delete(event)
+              = link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 3 } There are no current events.
+  %tfoot
+    %td{ :colspan => 3 }
+      = link_to 'New Event', new_event_path, :class => 'button'

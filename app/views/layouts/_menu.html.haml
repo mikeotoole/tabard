@@ -44,7 +44,7 @@
             %ul
               - dynamic_discussions.each do |discussion_space| 
                 %li= link_to discussion_space.name, discussion_space
-      - if logged_in? #really, if can manage
+      - if logged_in? and current_user.can_manage
         %li
           = link_to 'Management', :management, { :class => 'main' }
           %ul
