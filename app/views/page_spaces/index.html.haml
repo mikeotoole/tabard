@@ -4,13 +4,17 @@
   - if @page_spaces.size > 0
     %thead
       %tr
-        %th.name Name
+        %th.name Page
+        %th.name Game
         %th.edit
     %tbody
       - @page_spaces.each do |page_space|
         %tr
           %td.name
             = link_to page_space.name, page_space
+          %td.name
+            - if page_space.game != nil
+              = link_to page_space.game_name, page_space.game
           %td.edit
             - if logged_in? and current_user.can_update(page_space)
               = link_to 'Edit', edit_page_space_path(page_space), :class => 'edit', :title => 'Edit'
@@ -19,9 +23,9 @@
   - else
     %tbody
       %tr
-        %td{ :colspan => 4 } There are currenty no page spaces.
+        %td{ :colspan => 3 } There are currenty no page spaces.
   %tfoot
     %tr
-      %td{ :colspan => 2 }
+      %td{ :colspan => 3 }
         - if logged_in? and current_user.can_create("PageSpace")
           = link_to 'New Page Space', new_page_space_path, :class => 'button'
