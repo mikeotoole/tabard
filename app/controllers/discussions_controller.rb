@@ -1,31 +1,13 @@
 class DiscussionsController < ApplicationController
   respond_to :html, :xml
   before_filter :authenticate
-  # GET /discussions
-  # GET /discussions.xml
-  def index
-    @discussions = Discussion.all
-    respond_with(@discussions)
-  end
-
+  
   # GET /discussions/1
   # GET /discussions/1.xml
   def show
     @discussion = Discussion.find(params[:id])
     if !current_user.can_show(@discussion)
-      render :nothing => true, :status => :forbidden
-    else
-      respond_with(@discussion)
-    end
-  end
-
-  # GET /discussions/new
-  # GET /discussions/new.xml
-  def new
-    @discussion = Discussion.new
-    @discussion.discussion_space = DiscussionSpace.find_by_id(params[:discussion_space])
-    if !current_user.can_create(@discussion)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@discussion)
     end
@@ -35,28 +17,7 @@ class DiscussionsController < ApplicationController
   def edit
     @discussion = Discussion.find(params[:id])
     if !current_user.can_update(@discussion)
-      render :nothing => true, :status => :forbidden
-    end
-  end
-
-  # POST /discussions
-  # POST /discussions.xml
-  def create
-    @discussion = Discussion.new(params[:discussion])
-    if !current_user.can_create(@discussion)
-      render :nothing => true, :status => :forbidden
-    else
-      @discussion.user_profile = current_user.user_profile
-      @discussion.character_proxy = (character_active? ? current_character.character_proxy : nil)
-      if @discussion.save
-        flash[:notice] = 'Discussion was successfully created.'
-        respond_with(@discussion)
-      else
-        respond_to do |format|
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
-        end
-      end
+      render_insufficient_privileges
     end
   end
 
@@ -65,10 +26,10 @@ class DiscussionsController < ApplicationController
   def update
     @discussion = Discussion.find(params[:id])
     if !current_user.can_update(@discussion)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @discussion.update_attributes(params[:discussion])
-        flash[:notice] = 'Discussion was successfully updated.'
+        add_new_flash_message('Discussion was successfully updated.')
         respond_with(@discussion)
       else
         respond_to do |format|
@@ -84,7 +45,7 @@ class DiscussionsController < ApplicationController
   def destroy
     @discussion = Discussion.find(params[:id])
     if !current_user.can_delete(@discussion)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @discussion.destroy
       respond_with(@discussion)
@@ -96,14 +57,14 @@ class DiscussionsController < ApplicationController
     if @discussion.can_user_lock(current_user)
       @discussion.has_been_locked = true
       if @discussion.save 
-        flash[:notice] = "Discussion was successfully locked."
+        add_new_flash_message("Discussion was successfully locked.")
       else
-        flash[:alert] = "Discussion was not locked, internal rails error."
+        add_new_flash_message("Discussion was not locked, internal rails error.", 'alert')
       end
       redirect_to :back
       return
     end
-    render :nothing => true, :status => :forbidden
+    render_insufficient_privileges
   end
   
   def unlock
@@ -111,13 +72,13 @@ class DiscussionsController < ApplicationController
     if @discussion.can_user_lock(current_user)
       @discussion.has_been_locked = false
       if @discussion.save 
-        flash[:notice] = "Discussion was successfully unlocked."
+        add_new_flash_message("Discussion was successfully unlocked.")
       else
-        flash[:alert] = "Discussion was not unlocked, internal rails error."
+        add_new_flash_message("Discussion was not unlocked, internal rails error.", 'alert')
       end
       redirect_to :back
       return
     end
-    render :nothing => true, :status => :forbidden
+    render_insufficient_privileges
   end
 end

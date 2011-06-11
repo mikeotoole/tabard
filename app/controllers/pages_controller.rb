@@ -52,7 +52,7 @@ class PagesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       if @page.save
-        flash[:notice] = 'Page was successfully created.'
+        add_new_flash_message('Page was successfully created.')
         respond_with([@page_space,@page])
       else 
         respond_to do |format|
@@ -71,7 +71,7 @@ class PagesController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       if @page.update_attributes(params[:page])
-        flash[:notice] = 'Page was successfully updated.'
+        add_new_flash_message('Page was successfully updated.')
         respond_with(@page)
       else
         respond_to do |format|
