@@ -49,9 +49,11 @@ Bv::Application.routes.draw do
     :donations,
     :newsletters
 
-  resources :discussion_spaces
+  resources :discussion_spaces do
+    resources :discussions, :controller => 'discussion_spaces/discussions', :only => [:new, :create]
+  end
   
-  resources :discussions, :except => [:index] do
+  resources :discussions, :except => [:index, :new, :create] do
     member do
       post :lock
       post :unlock

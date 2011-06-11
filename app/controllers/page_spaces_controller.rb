@@ -43,7 +43,7 @@ class PageSpacesController < ApplicationController
     else
   
       if @page_space.save
-        flash[:notice] = 'Page space was successfully created.'
+        add_new_flash_message('Page space was successfully created.')
         respond_with(@page_space)
       else 
         respond_to do |format|
@@ -63,7 +63,7 @@ class PageSpacesController < ApplicationController
     else
       
       if @page_space.update_attributes(params[:page_space])
-        flash[:notice] = 'Page space was successfully updated.'
+        add_new_flash_message('Page space was successfully updated.')
         respond_with(@page_space)
       else
         respond_to do |format|
