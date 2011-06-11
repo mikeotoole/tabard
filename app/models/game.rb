@@ -61,4 +61,19 @@ class Game < ActiveRecord::Base
     self.type = type
   end
 
+  def check_user_show_permissions(user)
+    user.can_show("Game")
+  end
+  
+  def check_user_create_permissions(user)
+    user.can_create("Game")
+  end
+  
+  def check_user_update_permissions(user)
+    user.can_update("Game")
+  end
+  
+  def check_user_delete_permissions(user)
+    user.can_delete("Game")
+  end
 end
