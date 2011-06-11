@@ -1,0 +1,13 @@
+= form_for(@discussion) do |f|
+  = f.hidden_field :discussion_space_id
+  %p.field
+    = f.label :name
+    = f.text_field :name
+  %p.field
+    = f.label :body
+    = f.text_area :body
+  %p.field
+    = f.label :comments_enabled
+    = f.check_box :comments_enabled
+  %p.actions
+    = submit_or_cancel(f)

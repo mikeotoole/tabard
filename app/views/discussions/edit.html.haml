@@ -1,0 +1,9 @@
+%p#bcrumb
+  = link_to 'Discussion Spaces', discussion_spaces_path
+  = link_to @discussion.discussion_space.name, @discussion.discussion_space
+  = link_to @discussion.name, @discussion
+  %span Edit
+
+%h1= 'Editing "' + @discussion.name + '"'
+
+= render 'form'

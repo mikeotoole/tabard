@@ -2,8 +2,9 @@
 %table
   %thead
     %tr
-      %th.type Type
+      %th.amount Comments
       %th.name Title
+      %th.type Type
       %th.text Message
       %th.edit
   - if @announcements.size > 0
@@ -11,8 +12,9 @@
       - @announcements.each do |announcement|
         - if current_user.can_show(announcement)
           %tr
-            %td.type= link_to announcement.type.gsub(/announcement/i, ''), announcement.type.constantize
+            %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
             %td.name= link_to announcement.name, announcement
+            %td.type= link_to announcement.type.gsub(/announcement/i, ''), announcement.type.constantize
             %td.text= announcement.body
             %td.edit
               - if current_user.can_update(announcement)
@@ -21,5 +23,5 @@
                 = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   %tfoot
     %tr
-      %td{ :colspan => 4 }
+      %td{ :colspan => 5 }
         = link_to 'New Announcement', new_announcement_path, :class => 'button'

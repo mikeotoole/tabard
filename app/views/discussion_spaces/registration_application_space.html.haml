@@ -1,13 +1,14 @@
-%h1 Registration Applications
-%table
-  %tr
-    %th Name
-    %th Date
-    %th Status
-    - @registration_applications.each do |registration_application|
-      %tr
-        %td= link_to registration_application.name, registration_application
-        %td= registration_application.submission_date
-        %td= registration_application.status_string
-%br/
-= link_to 'Edit Registration Application Form', management_site_form_path(@form)
+= div_for discussion do
+  = link_to 'All Applications', registration_applications_path
+  .discussion_body= discussion.body
+  %span.actions
+  %h2 Comments
+  .comments
+    -if discussion.comments.size > 0
+      %ol
+        - discussion.comments.each do  |comment|
+          = render comment
+  .reply
+    %h2 Leave a Comment
+    %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => discussion.id, :commentable_type => discussion.class, :form_target => '#discussion_' + discussion.id.to_s + ' .reply', :comment_target => '#discussion_' + discussion.id.to_s + ' .comments'), :remote => true, :class => 'new_comment_link'
+

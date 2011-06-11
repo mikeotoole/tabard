@@ -1,1 +1,33 @@
-= render @discussion_space
+%p#bcrumb
+  = link_to 'Discussion Spaces', discussion_spaces_path
+  %span= @discussion_space.name
+
+%table
+  %thead
+    %tr
+      %th.name
+        = @discussion_space.name
+      %th.edit
+        - if logged_in? and current_user.can_update(@discussion_space)
+          = link_to 'Edit', edit_discussion_space_path(@discussion_space), :class => 'edit', :title => 'Edit'
+        - if logged_in? and current_user.can_delete(@discussion_space)
+          = link_to 'Delete', @discussion_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  %tbody
+    - if @discussion_space.discussions.size > 0
+      - @discussion_space.discussions.each do |discussion|
+        %tr
+          %td.name
+            = link_to discussion.name, discussion
+          %td.edit
+            - if current_user.can_update(discussion)
+              = link_to 'Edit', edit_discussion_path(discussion), :class => 'edit', :title => 'Edit'
+            - if current_user.can_delete(@discussion_space)
+              = link_to 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+    - else
+      %tr
+        %td{ :colspan => 3 } This discussion space has no active discussions.
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        - if logged_in? and current_user.can_create("discussionSpace")
+          = link_to 'Create a discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button'
