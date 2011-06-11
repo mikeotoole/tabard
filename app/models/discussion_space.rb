@@ -6,6 +6,9 @@ class DiscussionSpace < ActiveRecord::Base
   validate :only_one_announcement_space, :only_one_registration_application_space, :has_a_user_profile,
            :only_one_user_profile_space
   
+  scope :user_generated, where(:system => false)
+  scope :system_generated, where(:system => true)
+  
   def game_name
     self.game.name if self.game
   end
