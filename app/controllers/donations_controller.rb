@@ -1,15 +1,4 @@
 class DonationsController < ApplicationController
-  # GET /donations
-  # GET /donations.xml
-  def index
-    @donations = Donation.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @donations }
-    end
-  end
-
   # GET /donations/1
   # GET /donations/1.xml
   def show

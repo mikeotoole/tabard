@@ -51,7 +51,7 @@ Bv::Application.routes.draw do
 
   resources :discussion_spaces
   
-  resources :discussions do
+  resources :discussions, :except => [:index] do
     member do
       post :lock
       post :unlock
