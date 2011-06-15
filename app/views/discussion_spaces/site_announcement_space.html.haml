@@ -1,9 +1,0 @@
-%h3= @discussion_space.name
-%span.actions
-  = (logged_in? and current_user.can_create("SiteAnnouncement")) ? link_to( 'New Site Announcement', new_site_announcement_path) : "No permissions to create a new site announcement"
-%h4 Active Discussions
-%ul
-  - @discussion_space.discussions.each do |discussion|
-    %li
-      = link_to discussion.name, discussion
-      | #{discussion.number_of_comments} comments
