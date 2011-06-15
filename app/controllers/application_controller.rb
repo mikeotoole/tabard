@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   
   # This is used by dynamic_discussions. Use the dynamic_discussions method for the collection of discussion spaces.
   def nav_discussions
-    DiscussionSpace.all.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
+    DiscussionSpace.regular_discussions.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
   end
   
   def dynamic_page_spaces

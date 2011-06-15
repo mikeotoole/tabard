@@ -4,7 +4,7 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.user_generated.order("name ASC")
+      @discussion_spaces = DiscussionSpace.regular_discussions.order("name ASC")
       if !current_user.can_show("DiscussionSpace")
         render_insufficient_privileges
       else
@@ -16,7 +16,10 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/1.xml
   def show
     @discussion_space = DiscussionSpace.find(params[:id])
-    
+    if @discussion_space.system
+      render_404
+      return
+    end
     if !current_user.can_show(@discussion_space)
       render_insufficient_privileges
     else   
