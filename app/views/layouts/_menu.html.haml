@@ -43,7 +43,7 @@
           - if dynamic_discussions
             %ul
               - dynamic_discussions.each do |discussion_space| 
-                %li= link_to discussion_space.name, discussion_space
+                %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
       - if logged_in? and @management_items.size > 0
         %li
           = link_to 'Management', :management, { :class => 'main' }
