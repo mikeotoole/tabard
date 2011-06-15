@@ -1,22 +1,28 @@
-%h1= h @folder.name
+%h1= @folder.name
 
 %table
   - if @messages.size > 0
     %thead
       %tr
+        %th.subject Message Subject
         %th.name From
-        %th.subject Subject
         %th.date Received
+        %th.edit
     %tbody
-      - for message in @messages
+      - @messages.each do |message|
         %tr
-          %td= h message.author.name
-          %td= link_to h(message.subject), message_path(message)
-          %td= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+          %td.subject= link_to message.subject, message_path(message)
+          %td.name= link_to message.author.name, message.author
+          %td.date= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+          %td.edit
+            - if current_user.can_delete(message)
+              = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %tr
-        %td{ :colspan => 3 } No messages.
+        %td{ :colspan => 4 } No messages.
   %tfoot
     %tr
-      %td{ :colspan => 3 }
+      %td{ :colspan => 4 }
+        - if logged_in? and current_user.can_create('Message') or 1
+          = link_to 'New Message', new_sent_path, :class => 'button'

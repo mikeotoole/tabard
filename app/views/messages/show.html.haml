@@ -1,21 +1,29 @@
-%h2= h @message.subject
-%p
-  %strong From:
-  = h @message.author.name
-%p
-  %strong To:
-  - if @message.recipients
-    - @message.recipients.each do |profile|
-      = profile.name
-%p
-  %strong Received:
-  = @message.created_at.to_s(:long)
-%pre= raw @message.body
+%p#bcrumb
+  = link_to 'Inbox', inbox_path
+  %span= @message.subject
 
-= button_to "Reply", reply_message_path(@message) unless @message.author == UserProfile.system_profile
-= button_to "Reply All", reply_all_message_path(@message) unless @message.author == UserProfile.system_profile
-= button_to "Forward", forward_message_path(@message)
-- unless @message.deleted
-  = button_to "Delete", message_path(@message), :method => "delete"
-- else
-  = button_to "Undelete", undelete_message_path(@message), :method => "put"
+#page
+  %h1= @message.subject
+  
+  %p= YAML::dump(@message)
+  
+  %p#actions
+    = button_to "Reply", reply_message_path(@message) unless @message.author == UserProfile.system_profile
+    = button_to "Reply All", reply_all_message_path(@message) unless @message.author == UserProfile.system_profile
+    = button_to "Forward", forward_message_path(@message)
+    - unless @message.deleted
+      = button_to "Delete", message_path(@message), :method => "delete"
+    - else
+      = button_to "Undelete", undelete_message_path(@message), :method => "put"
+  %p
+    %strong Received:
+    = @message.created_at.to_s(:long)
+  %p
+    %strong From:
+    = h @message.author.name
+  %p
+    %strong To:
+    - if @message.recipients
+      - @message.recipients.each do |profile|
+        = profile.name
+  %p= @message.body
