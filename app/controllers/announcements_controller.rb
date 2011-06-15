@@ -6,8 +6,10 @@ class AnnouncementsController < ApplicationController
   # GET /announcements.xml
   def index
     @announcements = Announcement.all
-
-    respond_with(@announcements)
+    @site_announcements = Announcement.find(:all, :conditions => { :type => 'SiteAnnouncement' })
+    @game_announcements = Announcement.find(:all, :conditions => { :type => 'GameAnnouncement' })
+    
+    respond_with(@announcements, @site_announcements, @game_announcements)
   end
 
 #  # GET /announcements/1
@@ -23,10 +25,10 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements/new
   # GET /announcements/new.xml
-  def new
-    @announcement = Announcement.new
-    respond_with(@announcements)
-  end
+#  def new
+#    @announcement = Announcement.new
+#    respond_with(@announcements)
+#  end
 
 #  # GET /announcements/1/edit
 #  def edit

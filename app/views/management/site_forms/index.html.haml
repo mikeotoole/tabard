@@ -5,20 +5,33 @@
 %h1 Forms Management
 
 %table
-  %thead
-    %tr
-      %th.name Name
-      %th.edit
   - if @site_form.size > 0
+    %thead
+      %tr
+        %th.name Name
+        %th Published
+        %th Submissions
+        %th.edit
     %tbody
       - @site_form.each do |site_form|
         %tr
           %td.name
             = link_to site_form.name, [:management, site_form]
+          %td
+            = site_form.published? ? 'Yes' : 'No'
+          %td
+            - if site_form.submissions.size > 0
+              = link_to site_form.submissions.size, site_form_submissions_path(site_form)
+            - else
+              None
           %td.edit
             = link_to 'Edit', edit_management_site_form_path(site_form), :class => 'edit', :title => 'Edit'
             = link_to 'Delete', [:management, site_form], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else
+    %body
+      %tr
+        %td{ :colspan =>4 } There are no forms.
   %tfoot
     %tr
-      %td{ :colspan => 2 }
+      %td{ :colspan => 4 }
         = link_to 'New Form', new_management_site_form_path, :class => 'button'

@@ -654,7 +654,7 @@ label {
     #body table .amount {
       width: 20px; }
     #body table .button {
-      margin: 0 -12px; }
+      margin: 0 12px 0 -12px; }
     #body table td.edit,
     #body table th.edit {
       width: 48px; }

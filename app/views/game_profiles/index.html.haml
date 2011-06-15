@@ -1,15 +1,27 @@
-%h1 Listing profiles
+%p#bcrumb
+  = link_to 'Profiles', profiles_path
+  %span Game Profiles
+
+%h1 Game Profiles
+
 %table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-  - @profiles.each do |profile|
+  - if @profiles.size > 0
+    %thead
+      %tr
+        %th.name Name
+        %th.edit
+    %tbody
+      - @profiles.each do |profile|
+        %tr
+          %td.name= link_to profile.name, profile
+          %td.edit
+            = link_to 'Edit', edit_profile_path(profile), :class => 'edit', :title => 'Edit'
+            = link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else 
+    %tbody
+      %tr
+        %td{ :colspan => 2 } No profiles.
+  %tfoot
     %tr
-      %td= profile.name
-      %td= link_to 'Show', profile
-      %td= link_to 'Edit', edit_profile_path(profile)
-      %td= link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Profile', profiles_newgame_path
+      %td{ :colspan => 2 }
+        = link_to 'New Game Profile', profiles_newgame_path, :class => 'button'

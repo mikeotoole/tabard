@@ -1,5 +1,6 @@
 %p#bcrumb
-  = link_to 'User Profiles', :user_profiles
+  = link_to 'Profiles', profiles_path
+  = link_to 'User Profiles', user_profiles_path
   %span= @profile.name
 
 %p#notice= notice
@@ -9,7 +10,12 @@
     
   %h2 Characters
   #actions
-    = link_to 'Edit User Profile', edit_profile_path(@profile), :class => 'edit', :title => 'Edit'
+    - if logged_in?
+      - if current_user.can_update(@profile)
+        = link_to 'Edit', edit_profile_path(@profile), :class => 'edit', :title => 'Edit Profile'
+      - if current_user.can_delete(@profile)
+        = link_to 'Delete', @profile, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Profile'
+    
   
   - if @profile.characters != nil
     %table
@@ -33,6 +39,7 @@
       %tfoot
         %tr
           %td{ :colspan => 2 }
-            = form_tag(new_base_character_path, :method => :get) do
-              = collection_select(:game, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
-              %button{ :type => 'submit', :class => 'add', :title => 'Add Character to Game' } Add Character to Game
+            - if logged_in? and current_user.can_create('Character')
+              = form_tag(new_base_character_path, :method => :get) do
+                = collection_select(:game, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+                %button{ :type => 'submit', :class => 'add', :title => 'Add Character to Game' } Add Character to Game

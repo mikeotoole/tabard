@@ -1,3 +1,8 @@
+%p#bcrumb
+  = link_to 'Games', games_path
+  = link_to @character.game.name, @character.game
+  %span New Character
+
 %h1 New Star Wars: The Old Republic Character
+
 = render 'form'
-= js_back

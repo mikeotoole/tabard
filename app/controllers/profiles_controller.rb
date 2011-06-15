@@ -1,15 +1,15 @@
 class ProfilesController < ApplicationController
+  respond_to :html, :xml
   before_filter :authenticate  
   
   # GET /profiles
   # GET /profiles.xml
   def index
     @profiles = Profile.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @profiles }
-    end
+    @user_profiles = Profile.find(:all, :conditions => { :type => 'UserProfile' })
+    @game_profiles = Profile.find(:all, :conditions => { :type => 'GameProfile' })
+    
+    respond_with(@profiles, @site_profiles, @game_profiles)
   end
 
   # GET /profiles/1

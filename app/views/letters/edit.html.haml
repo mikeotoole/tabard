@@ -1,0 +1,8 @@
+%p#bcrumb
+  = link_to 'Letters', letters_path
+  = link_to @letter.name, @letter
+  %span Edit
+
+%h1 Editing letter
+
+= render 'form'

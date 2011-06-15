@@ -21,5 +21,7 @@
       %tr
         %td{ :colspan => 3 } There are no current events.
   %tfoot
-    %td{ :colspan => 3 }
-      = link_to 'New Event', new_event_path, :class => 'button'
+    %tr
+      %td{ :colspan => 3 }
+        - if logged_in? and current_user.can_create('Event')
+          = link_to 'New Event', new_event_path, :class => 'button'

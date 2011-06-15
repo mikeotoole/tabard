@@ -3,4 +3,11 @@
   = link_to 'Game Announcements', :game_announcements
   %span= @game_announcement.name
 
-= render :template => 'announcements/show', :locals => { :announcement => @game_announcement }
+#page
+  %h1= @game_announcement.name
+
+  %span#actions
+    = link_to 'Edit', edit_game_announcement_path(@game_announcement), :class => 'edit', :title => 'Edit'
+    = link_to 'Delete', @game_announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  
+  %p#announcement= @game_announcement.body

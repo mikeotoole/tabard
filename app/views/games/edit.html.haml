@@ -1,12 +1,9 @@
+%p#bcrumb
+  = link_to 'Games', games_path
+  = link_to @game.name, @game
+  %span Edit
+
 %h1
   = 'Editing "' + @game.name + '"'
-  
-= form_for @game do |f|
-  %p.field
-    = f.label :name
-    = f.text_field :name
-  %p.field
-    = f.label :is_active
-    = f.check_box :is_active
-  .actions
-    = submit_or_cancel(f)
+
+= render 'form'

@@ -1,0 +1,12 @@
+= form_for @game do |f|
+  %p.field
+    = f.label "Game Type"
+    = f.select :type_helper, Game::select_options
+  %p.field
+    = f.label :name
+    = f.text_field :name
+  %p.field
+    = f.label :is_active
+    = f.check_box :is_active
+  %p.actions
+    = submit_or_cancel(f)

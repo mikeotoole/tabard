@@ -5,16 +5,18 @@
 %h1 Game Announcements
 
 %table
-  %thead
-    %tr
-      %th.name Title
-      %th.text Message
-      %th.edit
   - if @game_announcements.size > 0
+    %thead
+      %tr
+        %th.amount Comments
+        %th.name Title
+        %th.text Message
+        %th.edit
     %tbody
       - @game_announcements.each do |announcement|
         - if current_user.can_show(announcement)
           %tr
+            %td.amount= announcement.comments.size > 0 ? announcements.comments.size : 'None'
             %td.name= link_to announcement.name, announcement
             %td.text= announcement.body
             %td.edit
@@ -22,7 +24,12 @@
                 = link_to 'Edit', edit_announcement_path(announcement), :class => 'edit', :title => 'Edit'
               - if current_user.can_delete(announcement)
                 = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 4 } There are no game announcements.
   %tfoot
     %tr
-      %td{ :colspan => 3 }
-        = link_to 'New Announcement', new_game_announcement_path, :class => 'button'
+      %td{ :colspan => 4 }
+        - if logged_in? and current_user.can_create('GameAnnouncement')
+          = link_to 'New Announcement', new_game_announcement_path, :class => 'button'

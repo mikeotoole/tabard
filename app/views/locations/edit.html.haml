@@ -1,0 +1,8 @@
+%p#bcrumb
+  = link_to 'Locations', locations_path
+  = link_to @location.name, @location
+  %span Edit
+
+%h1 Editing Location
+
+= render 'form'

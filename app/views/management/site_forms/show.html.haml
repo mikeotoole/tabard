@@ -9,13 +9,14 @@
   
   %table#form_settings
     %thead
-      %th.name Field Name
-      %th.text Values
-      %th.edit
-        - if current_user.can_update(@site_form)
-          = link_to 'Edit', edit_management_site_form_path(@site_form), :class => 'edit', :title => 'Edit Form'
-        - if current_user.can_delete(@site_form)
-          = link_to 'Delete', @site_form, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Form'
+      %tr
+        %th.name Field Name
+        %th.text Values
+        %th.edit
+          - if logged_in? and current_user.can_update(@site_form)
+            = link_to 'Edit', edit_management_site_form_path(@site_form), :class => 'edit', :title => 'Edit Form'
+          - if logged_in? and current_user.can_delete(@site_form)
+            = link_to 'Delete', @site_form, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Form'
     %tbody
       %tr
         %th.name Welcome Message
@@ -39,9 +40,10 @@
   %h2 Form Questions
   %table#form_questions
     %thead
-      %th.name Question
-      %th.text Answers
-      %th.edit
+      %tr
+        %th.name Question
+        %th.text Answers
+        %th.edit
     %tbody
       - @site_form.questions.each do |question|
         %tr
@@ -52,9 +54,9 @@
                 - question.predefined_answers.each do |answer|
                   %li= answer.content
           %td.edit
-            - if current_user.can_update(question)
+            - if logged_in? and current_user.can_update(question)
               = link_to 'Edit', edit_question_path(question), :class => 'edit', :title => 'Edit'
-            - if current_user.can_delete(question)
+            - if logged_in? and current_user.can_delete(question)
               = link_to 'Delete', question, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
     %tfoot
       %tr

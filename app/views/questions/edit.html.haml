@@ -1,5 +1,9 @@
+%p#bcrumb
+  = link_to 'Management', management_path
+  = link_to 'Forms', management_site_forms_path
+  = link_to @question.site_form.name, @question.site_form
+  %span Edit Question
+
 %h1 Editing question
+
 = render 'form'
-= link_to 'Show', @question
-|
-\#{js_back}

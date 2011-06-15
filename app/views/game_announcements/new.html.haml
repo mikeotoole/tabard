@@ -1,3 +1,8 @@
+%p#bcrumb
+  = link_to 'Announcements', announcements_path
+  = link_to 'Game Announcements', game_announcements_path
+  %span New
+
 %h1 New Game Announcement
+
 = render 'form'
-= link_to 'Back', game_announcements_path

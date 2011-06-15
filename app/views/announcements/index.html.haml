@@ -1,27 +1,48 @@
 %h1 Announcements
+
 %table
-  %thead
-    %tr
-      %th.amount Comments
-      %th.name Title
-      %th.type Type
-      %th.text Message
-      %th.edit
   - if @announcements.size > 0
+    %thead
+      %tr
+        %th.amount Comments
+        %th.name Title
+        %th.type Type
+        %th.text Message
+        %th.edit
     %tbody
-      - @announcements.each do |announcement|
-        - if current_user.can_show(announcement)
-          %tr
-            %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
-            %td.name= link_to announcement.name, announcement
-            %td.type= link_to announcement.type.gsub(/announcement/i, ''), announcement.type.constantize
-            %td.text= announcement.body
-            %td.edit
-              - if current_user.can_update(announcement)
-                = link_to 'Edit', edit_announcement_path(announcement), :class => 'edit', :title => 'Edit'
-              - if current_user.can_delete(announcement)
-                = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - if @site_announcements
+        - @site_announcements.each do |announcement|
+          - if current_user.can_show(announcement)
+            %tr
+              %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
+              %td.name= link_to announcement.name, announcement
+              %td.type= link_to 'Site', :site_announcements
+              %td.text= announcement.body
+              %td.edit
+                - if current_user.can_update(announcement)
+                  = link_to 'Edit', edit_site_announcement_path(announcement), :class => 'edit', :title => 'Edit'
+                - if current_user.can_delete(announcement)
+                  = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - if @game_announcements
+        - @game_announcements.each do |announcement|
+          - if current_user.can_show(announcement)
+            %tr
+              %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
+              %td.name= link_to announcement.name, announcement
+              %td.type= link_to 'Game', :game_announcements
+              %td.text= announcement.body
+              %td.edit
+                - if current_user.can_update(announcement)
+                  = link_to 'Edit', edit_game_announcement_path(announcement), :class => 'edit', :title => 'Edit'
+                - if current_user.can_delete(announcement)
+                  = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+  - else
+    %tbody
+      %td{ :colspan => 5 } There are no site announcements.
   %tfoot
     %tr
       %td{ :colspan => 5 }
-        = link_to 'New Announcement', new_announcement_path, :class => 'button'
+        - if logged_in? and current_user.can_create('SiteAnnouncement')
+          = link_to 'New Site Announcement', new_site_announcement_path, :class => 'button'
+        - if logged_in? and current_user.can_create('GameAnnouncement')
+          = link_to 'New Game Announcement', new_game_announcement_path, :class => 'button'

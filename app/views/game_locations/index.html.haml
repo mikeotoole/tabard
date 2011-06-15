@@ -1,0 +1,30 @@
+%p#bcrumb
+  = link_to 'Locations', locations_path
+  %span Game Locations
+
+%h1 Game Locations
+
+%table
+  - if @game_locations.size > 0
+    %thead
+      %tr
+        %th.name Location
+        %th.edit
+    %tbody
+      - @game_locations.each do |game_location|
+        %tr
+          %td.name= link_to game_location.name, game_location
+          %td.edit
+            - if logged_in? and current_user.can_update(game_location)
+              = link_to 'Edit', edit_game_location_path(game_location), :class => 'edit', :title => 'Edit Game Location'
+            - if logged_in? and current_user.can_delete(game_location)
+              = link_to 'Delete', game_location, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete Game Location'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 2 } There are no game locations.
+  %tfoot
+    %tr
+      %td{ :colspan => 2 }
+        - if logged_in? and current_user.can_create('GameLocation')
+          = link_to 'New Game Location', new_game_location_path, :class => 'button'

@@ -1,4 +1,12 @@
-%p#notice= notice
-= link_to 'Edit', edit_event_path(@event)
-|
-\#{link_to 'Back', events_path}
+%p#bcrumb
+  = link_to 'Events', events_path
+  %span= "##{@event.id}"
+
+#page
+  %h1= "Event ##{@event}"
+  
+  %p#actions
+    - if logged_in? and current_user.can_update(@event)
+      = link_to 'Edit', edit_management_site_form_path(@event), :class => 'edit', :title => 'Edit Event'
+    - if logged_in? and current_user.can_delete(@event)
+      = link_to 'Delete', @event, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Event'

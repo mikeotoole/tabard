@@ -1,0 +1,15 @@
+%p#bcrumb
+  = link_to 'Letter', letters_path
+  = @letter.name
+
+#page
+  #h1= @letter.name
+  
+  %p#actions
+    - if logged_in?
+      - if current_user.can_update(@letter)
+        = link_to 'Edit', edit_letter_path(@letter), :class => 'edit', :title => 'Edit Letter'
+      - if current_user.can_delete(@letter)
+        = link_to 'Delete', @letter, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Letter'
+  
+  %p#letter

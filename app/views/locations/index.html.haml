@@ -1,0 +1,26 @@
+%h1 Locations
+
+%table
+  - if @locations.size > 0
+    %thead
+      %tr
+        %th.name Location
+        %th.edit
+    %tbody
+      - @locations.each do |location|
+        %tr
+          %td.name= link_to location.name, location
+          %td.edit
+            - if logged_in? and current_user.can_update(location)
+              = link_to 'Edit', edit_location_path(location), :class => 'edit', :title => 'Edit Location'
+            - if logged_in? and current_user.can_delete(location)
+              = link_to 'Delete', location, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete Location'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 2 } There are no locations.
+  %tfoot
+    %tr
+      %td{ :colspan => 2 }
+        - if logged_in? and current_user.can_create('Location')
+          = link_to 'New Location', new_location_path, :class => 'button'

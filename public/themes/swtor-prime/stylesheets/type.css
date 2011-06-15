@@ -86,7 +86,8 @@ input[type=submit] {
   font-size: 1em;
   line-height: 30px;
   text-transform: uppercase;
-  text-decoration: none !important; }
+  text-decoration: none !important;
+  word-spacing: .3em; }
   button:focus, button:hover,
   .button:focus,
   .button:hover,
