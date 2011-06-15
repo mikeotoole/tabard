@@ -145,7 +145,7 @@ class User < ActiveRecord::Base
     false
   end
   
-  def can_manage
+  def can_manage(system_resource_name)
   	true # TODO
   end
   

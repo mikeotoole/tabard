@@ -43,18 +43,13 @@
           - if dynamic_discussions
             %ul
               - dynamic_discussions.each do |discussion_space| 
-                %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
-      - if logged_in? and current_user.can_manage
+                %li= link_to discussion_space.name, discussion_space
+      - if logged_in? and @management_items.size > 0
         %li
           = link_to 'Management', :management, { :class => 'main' }
           %ul
-            %li= link_to 'Applications', registration_applications_path
-            %li= link_to 'Users', management_users_path
-            %li= link_to 'Roles', management_roles_path
-            %li= link_to 'Newsletters', management_newsletters_path
-            %li= link_to 'Themes', management_themes_path
-            %li= link_to 'TeamSpeak', management_teamspeaks_path
-            %li= link_to 'Forms', management_site_forms_path
+            -@management_items.each do |nav_item|
+              %li= link_to nav_item[:title], nav_item[:link]
       %li.search
         %a.main
           Search
