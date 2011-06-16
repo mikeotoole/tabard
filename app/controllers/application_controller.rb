@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     #flash[:messages] = Array.new
   end  
   
-  def add_new_flash_message(message_body, message_class='notice', message_title='')
+  def add_new_flash_message(message_body, message_class="notice", message_title="")
     flash[:messages] = Array.new unless flash[:messages] 
     flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
   end
@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   
   # This is used by dynamic_discussions. Use the dynamic_discussions method for the collection of discussion spaces.
   def nav_discussions
-    DiscussionSpace.regular_discussions.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
+    DiscussionSpace.where{(system == false) | (registration_application_space == true) | (personal_space == true)}.delete_if {|discussion_space| (current_user and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
   end
   
   def dynamic_page_spaces
@@ -176,19 +176,19 @@ class ApplicationController < ActionController::Base
     @management_items = Array.new()
     return true unless logged_in?
     #application
-    @management_items << {:link => registration_applications_path, :title => "Applications"} if current_user.can_manage("test")
+    @management_items << {:link => registration_applications_path, :title => "Applications"} if current_user.can_manage("RegistrationApplication")
     #user
-    @management_items << {:link => management_users_path, :title => "Users"} if current_user.can_manage("test")
+    @management_items << {:link => management_users_path, :title => "Users"} if current_user.can_manage("User")
     #roles
-    @management_items << {:link => management_roles_path, :title => "Roles"} if current_user.can_manage("test")
+    @management_items << {:link => management_roles_path, :title => "Roles"} if current_user.can_manage("Role")
     #newsletter
-    @management_items << {:link => management_newsletters_path, :title => "Newsletters"} if current_user.can_manage("test")
+    @management_items << {:link => management_newsletters_path, :title => "Newsletters"} if current_user.can_manage("Newsletter")
     #themes
-    @management_items << {:link => management_themes_path, :title => "Themes"} if current_user.can_manage("test")
+    @management_items << {:link => management_themes_path, :title => "Themes"} if current_user.can_manage("Theme")
     #teamspeak
-    @management_items << {:link => management_teamspeaks_path, :title => "Teamspeak"} if current_user.can_manage("test")
+    @management_items << {:link => management_teamspeaks_path, :title => "Teamspeak"} if current_user.can_manage("Teamspeak")
     #forms
-    @management_items << {:link => management_site_forms_path, :title => "Forms"} if current_user.can_manage("test")
+    @management_items << {:link => management_site_forms_path, :title => "Forms"} if current_user.can_manage("SiteForm")
   end
   
 end

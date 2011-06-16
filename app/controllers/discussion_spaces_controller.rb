@@ -4,7 +4,8 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.regular_discussions.order("name ASC")
+      @discussion_spaces = DiscussionSpace.where{(system == false) | (registration_application_space == true) | (personal_space == true)}.order("name ASC")
+      @discussion_spaces.delete_if {|discussion_space| (!current_user.can_show(discussion_space))}
       if !current_user.can_show("DiscussionSpace")
         render_insufficient_privileges
       else

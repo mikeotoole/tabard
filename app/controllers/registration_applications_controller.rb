@@ -31,6 +31,7 @@ class RegistrationApplicationsController < ApplicationController
     
     @games = Game.active
 
+    add_new_flash_message(@registration_application.site_form.message)
     respond_with(@registration_application)
   end
 
@@ -77,7 +78,9 @@ class RegistrationApplicationsController < ApplicationController
 
     respond_to do |format|
       if @user.save      
-        format.html { redirect_to root_path, :notice => 'Registration application was successfully submitted. Confirmation emailed.' }
+        add_new_flash_message('Registration application was successfully submitted.')
+        add_new_flash_message(@registration_application.site_form.thankyou)
+        format.html { redirect_to root_path }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
       else
         @games = Game.active
@@ -114,7 +117,8 @@ class RegistrationApplicationsController < ApplicationController
     if @registration_application.user_profile.save
       ApplicationNotifier.accept_notification(@registration_application).deliver
       
-      flash[:notice] = 'Registration application was successfully accepted.'
+      add_new_flash_message('Registration application was successfully accepted.')
+      add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
       respond_with(@registration_application)
     else
       flash[:alert] = @registration_application.errors
@@ -131,7 +135,8 @@ class RegistrationApplicationsController < ApplicationController
     if @registration_application.user_profile.save
       ApplicationNotifier.reject_notification(@registration_application).deliver      
 
-      flash[:notice] = 'Registration application was successfully rejected.'
+      add_new_flash_message('Registration application was successfully rejected.')
+      add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
       respond_with(@registration_application)
     else
       flash[:alert] = @registration_application.errors
@@ -143,8 +148,10 @@ class RegistrationApplicationsController < ApplicationController
   # DELETE /registration_applications/1.xml
   def destroy
     @registration_application = RegistrationApplication.find(params[:id])
-    @registration_application.destroy
-
+    if(@registration_application.destroy) 
+      add_new_flash_message('Registration application was successfully deleted.')
+    end  
+    
     respond_to do |format|
       format.html { redirect_to(registration_applications_url) }
       format.xml  { head :ok }

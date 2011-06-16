@@ -3,6 +3,10 @@
 userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
+registrationApplicationResource = SystemResource.create(:name => "RegistrationApplication")
+newsletterResource = SystemResource.create(:name => "Newsletter")
+themeResource = SystemResource.create(:name => "Theme")
+teamspeakResource = SystemResource.create(:name => "Teamspeak")
 
 gameResource = SystemResource.create(:name => "Game")
 characterResource = SystemResource.create(:name => "Character")
@@ -38,7 +42,11 @@ allCommentPermission = Permission.create(:permissionable => commentResource, :na
 allPageSpacePermission = Permission.create(:permissionable => pageSpaceResource, :name => "Full Access PageSpace", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allPagePermission = Permission.create(:permissionable => pageResource, :name => "Full Access Page", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
 allSiteFormPermission = Permission.create(:permissionable => siteFormResource, :name => "Full Access Site Form", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
-adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allCharacterPermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission])
+allRegistrationApplicationPermission = Permission.create(:permissionable => registrationApplicationResource, :name => "Full Access Registration Application", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allNewsletterPermission = Permission.create(:permissionable => newsletterResource, :name => "Full Access Newsletter", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allThemePermission = Permission.create(:permissionable => themeResource, :name => "Full Access Theme", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+allTeamspeakPermission = Permission.create(:permissionable => teamspeakResource, :name => "Full Access Teamspeak", :show_p => true, :create_p => true, :update_p => true, :delete_p => true)
+adminRole = Role.create(:name => "Admin", :permissions => [allUserPermission,allRolePermission,allGamePermission,allCharacterPermission,allDiscussionSpacePermission,allSiteAnnouncementPermission,allGameAnnouncementPermission,allDiscussionPermission,allCommentPermission,allPageSpacePermission,allPagePermission,allSiteFormPermission,allRegistrationApplicationPermission,allNewsletterPermission,allThemePermission,allTeamspeakPermission])
 adminUser = User.create(:email => "admin@example.com", :password => "password", :roles => [adminRole], :user_profile => adminProfile)
 
 # Sample Discussion Spaces

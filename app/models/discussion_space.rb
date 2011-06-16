@@ -7,7 +7,6 @@ class DiscussionSpace < ActiveRecord::Base
            :only_one_user_profile_space
   
   scope :user_generated, where(:system => false)
-  scope :regular_discussions, where(:system => false | :id ^ nil)
   scope :system_generated, where(:system => true)
   
   def game_name
