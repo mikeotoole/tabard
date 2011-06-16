@@ -17,4 +17,22 @@ class Message < ActiveRecord::Base
     end
   end
   
+  def check_user_show_permissions(user)
+    self.author == user
+  end
+  
+  def check_user_create_permissions(user)
+    true
+  end
+  
+  def check_user_update_permissions(user)
+    false
+  end
+  
+  def check_user_delete_permissions(user)
+    self.recipients.each do |recipient|
+      return true if recipient == user
+    end
+    false
+  end
 end

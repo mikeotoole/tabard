@@ -4,22 +4,28 @@
   - if @messages.size > 0
     %thead
       %tr
+        %th.subject Message Subject
         %th.name To
-        %th.subject Subject
         %th.date Sent
+        %th.edit
     %tbody
       - for message in @messages
         %tr
+          %td= link_to message.subject, message
           %td
             - if message.recipients
               - message.recipients.each do |profile|
-                = profile.name
-          %td= link_to h(message.subject), message_path(message)
+                = link_to profile.name, profile
           %td= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+          %td.edit
+            - if current_user.can_delete(message)
+              = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %tr
-        %td{ :colspan => 3 } No messages.
+        %td{ :colspan => 4 } No messages.
   %tfoot
     %tr
-      %td{ :colspan => 3 }
+      %td{ :colspan => 4 }
+        - if logged_in? and current_user.can_create('Message') or 1
+          = link_to 'New Message', new_sent_path, :class => 'button'

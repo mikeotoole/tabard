@@ -14,7 +14,7 @@
   %table
     %thead
       %tr
-        %th.name Page
+        %th.name Pages
         %th.edit
     %tbody
       - if @page_space.pages.size > 0
@@ -28,9 +28,9 @@
                 = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
       - else
         %tr
-          %td{ :colspan => 3 } This page space has no active pages.
+          %td{ :colspan => 2 } This page space has no active pages.
     %tfoot
       %tr
-        %td{ :colspan => 3 }
+        %td{ :colspan => 2 }
           - if logged_in? and current_user.can_create("PageSpace")
             = link_to 'Create New Page', new_page_space_page_path(@page_space), :class => 'button'
