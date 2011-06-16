@@ -1,0 +1,15 @@
+%h1 Listing system_resources
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+  - @system_resources.each do |system_resource|
+    %tr
+      %td= system_resource.name
+      %td= link_to 'Show', system_resource
+      %td= link_to 'Edit', edit_system_resource_path(system_resource)
+      %td= link_to 'Destroy', system_resource, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New System resource', new_system_resource_path
