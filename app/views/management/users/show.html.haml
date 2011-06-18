@@ -1,0 +1,19 @@
+%p#bcrumb
+  = link_to 'Management', :management
+  %span Users
+
+#page
+  %h1 Users
+  
+  %p#actions
+    - if logged_in? and current_user.can_update(@user)
+      = link_to 'Edit User', edit_user_path(@user), :class => 'edit', :title => 'Edit'
+    - if logged_in? and current_user.can_delete(@user)
+      = link_to 'Delete User', @user, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
+
+%p
+  %b Email:
+  = @user.email
+%div
+  %h3
+    = link_to "User Profile", user_profile_path(@user.user_profile)

@@ -1,45 +1,24 @@
 = form_for [@character.game, @character] do |f|
-  - if @proxy and @gameProfile
-    - if @proxy.errors.any? or @gameProfile.errors.any?
-      #error_explanation
-        %h3
-          = pluralize(@proxy.errors.count + @gameProfile.errors.count + @character.errors.count, "error")
-          prohibited this character from being saved:
-        %ul
-          Character Proxy:
-          - @proxy.errors.full_messages.each do |msg| 
-            %li= msg
-          Game Profile:  
-          - @gameProfile.errors.full_messages.each do |msg|
-            %li= msg
-  
-  .field
-    = f.hidden_field :game_id
-  .field
+  = f.hidden_field :game_id
+  %p.field
     = f.label :name
     - if @character.errors[:name].any?
       = @character.errors[:name]    
-    %br/
     = f.text_field :name
-  .field
+  %p.field
     = f.label :level
-    %br/
     = f.text_field :level
-  .field
+  %p.field
     = f.label :faction
-    %br/
     = f.text_field :faction
-  .field
+  %p.field
     = f.label :race
-    %br/
     = f.text_field :race
-  .field
+  %p.field
     = f.label :server
-    %br/
     = f.text_field :server
-  .field
+  %p.field
     = label_tag "Make Default Character"  
-    %br/
     = check_box_tag :default
-  .actions
+  %p.actions
     = submit_or_cancel(f)
