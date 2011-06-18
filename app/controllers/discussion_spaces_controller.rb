@@ -6,11 +6,11 @@ class DiscussionSpacesController < ApplicationController
   def index
       @discussion_spaces = DiscussionSpace.only_real_ones.order("name ASC")
       @discussion_spaces.delete_if {|discussion_space| (!current_user.can_show(discussion_space))}
-      if !current_user.can_show("DiscussionSpace")
-        render_insufficient_privileges
-      else
+      #if !current_user.can_show("DiscussionSpace")
+      #  render_insufficient_privileges
+      #else
         respond_with(@discussion_spaces)
-      end
+      #end
   end
 
   # GET /discussion_spaces/1

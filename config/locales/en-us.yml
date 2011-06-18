@@ -11,7 +11,23 @@ en-us:
     edit: Edit
     editing: Editing
     terms_of_use: Terms of Use
+    privacy_policy: Privacy Policy
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              too_short: "Your email must be at least 5 characters."
+              invalid: "Your email must be valid."
+            password:
+              too_short: "Your password must be at least 4 characters."
+              blank: "You must provide a password."
+        user_profile:
+          attributes:
+            name:
+              blank: "You must provide a name."
   
   datetime:
     distance_in_words:
