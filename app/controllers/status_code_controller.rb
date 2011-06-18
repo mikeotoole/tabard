@@ -1,5 +1,7 @@
 class StatusCodeController < ApplicationController
-  def 404
+  respond_to :html, :xml
+  def invoke_404
+    true
   end
 
 end

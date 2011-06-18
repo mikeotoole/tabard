@@ -79,6 +79,15 @@ viewCommentPermission = Permission.create(:permissionable => commentResource, :n
 viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewCharacterPermission,viewGeneralDiscussionSpacePermission,viewCommentPermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
 
+#More General Users
+20.times { |n|
+  g_profile = UserProfile.create(:name => "guser_#{n}")
+  g_profile.set_active
+  g_user = User.create(:email => "g#{n}@user.com", :password => "password", :user_profile => g_profile)
+}
+
+
+
 #Registration application site form creation
 defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :registration_application_form => true, :published => true)
 checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => defaultForm)

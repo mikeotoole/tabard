@@ -1,6 +1,6 @@
 Bv::Application.routes.draw do
  
-  get "status_code/404"
+  get "status_code/invoke_404"
 
   resources :sent, :only => [:show, :new, :create]
   match '/sent_messages' => "sent#index"
