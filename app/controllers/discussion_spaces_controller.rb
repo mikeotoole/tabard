@@ -17,10 +17,10 @@ class DiscussionSpacesController < ApplicationController
   # GET /discussion_spaces/1.xml
   def show
     @discussion_space = DiscussionSpace.find(params[:id])
-    if @discussion_space.system
-      render_404
-      return
-    end
+    #if @discussion_space.system
+    #  render_404
+    #  return
+    #end
     if !current_user.can_show(@discussion_space)
       render_insufficient_privileges
     else   

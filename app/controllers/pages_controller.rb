@@ -72,7 +72,7 @@ class PagesController < ApplicationController
     else
       if @page.update_attributes(params[:page])
         add_new_flash_message('Page was successfully updated.')
-        respond_with(@page)
+        respond_with(@page_space, @page)
       else
         respond_to do |format|
           format.html { render :action => "edit" }
