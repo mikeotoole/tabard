@@ -1,6 +1,6 @@
 Bv::Application.routes.draw do
  
-  get "search/index"
+  match "/search" => "search#index"
 
   get "status_code/invoke_404"
 

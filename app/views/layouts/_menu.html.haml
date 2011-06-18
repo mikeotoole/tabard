@@ -53,10 +53,7 @@
       %li.search
         %a.main
           Search
-        %form
-          %input
-          %button{ :type => 'submit' }
-            Search
+        = render :partial => "search/form"
       %li.locale
         %a.main
           Language
