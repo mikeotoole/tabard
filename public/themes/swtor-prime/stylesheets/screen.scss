@@ -482,7 +482,10 @@ label {
     padding: 1em 0 .5em;
   }
   p {
-    padding: 0 0 .5em;
+    padding: 0 0 1em;
+  }
+  dd {
+    padding: 0 0 1em;
   }
   table {
     width: 100%;
@@ -537,7 +540,7 @@ label {
     }
     td.edit,
     th.edit {
-      width: 48px;
+      width: 90px;
       a.activate,
       a.deactivate,
       a.delete,
@@ -567,28 +570,28 @@ label {
         }
         &.activate {
           background-position: -90px -30px;
-          margin: -5px 0 0 -8px;
+          margin: -5px 0 0 -5px;
           &:hover {
             background-position: -90px 0;
           }
         }
         &.deactivate {
           background-position: -120px -30px;
-          margin: -5px 0 0 -8px;
+          margin: -5px 0 0 -5px;
           &:hover {
             background-position: -120px 0;
           }
         }
         &.delete {
           background-position: -30px -30px;
-          margin: -5px 0 0 28px;
+          margin: -5px 0 0 65px;
           &:hover {
             background-position: -30px 0;
           }
         }
         &.edit {
           background-position: 0 -30px;
-          margin: -5px 0 0 -8px;
+          margin: -5px 0 0 30px;
           &:hover {
             background-position: 0 0;
           }

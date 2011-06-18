@@ -1,6 +1,6 @@
 %p#bcrumb
-  = link_to 'Management', :management
-  = link_to 'Site Forms', :management_site_forms
+  = link_to 'Management', management_path
+  = link_to 'Site Forms', management_site_forms_path
   %span= @site_form.name
 
 #page
@@ -61,7 +61,7 @@
     %tfoot
       %tr
         %td{ :colspan => 3 }
-          = form_tag( new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get')
-          = hidden_field_tag(:site_form_id, @site_form.id )
-          = select_tag(:q_type, options_for_select(Question::select_options))
+          = form_tag new_question_path(:format => :js), :remote => true, :class => 'new_question_link', :method => 'get'
+          = hidden_field_tag :site_form_id, @site_form.id
+          = select_tag :q_type, options_for_select(Question::select_options)
           = submit_tag 'Add Question', :class => 'add', :title => 'Add Question'

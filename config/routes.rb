@@ -26,8 +26,9 @@ Bv::Application.routes.draw do
     :text_questions,
     :check_box_questions,
     :combo_box_questions,
-    :answers,
-    :questions
+    :answers
+  
+  resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
   resources :registration_applications do
     member do
@@ -36,12 +37,10 @@ Bv::Application.routes.draw do
     end
   end
 
-  resources :teamspeaks,
-    :recurring_events,
+  resources :recurring_events,
     :game_locations,
     :locations,
-    :events,
-    :team_speaks
+    :events
 
   resources :page_spaces do
     resources :pages
@@ -124,7 +123,7 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :users, :only => [:index, :show, :edit]
+  resources :users, :only => :show
   resource :session
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile

@@ -562,7 +562,9 @@ label {
   #body h3 {
     padding: 1em 0 .5em; }
   #body p {
-    padding: 0 0 .5em; }
+    padding: 0 0 1em; }
+  #body dd {
+    padding: 0 0 1em; }
   #body table {
     width: 100%; }
     #body table tbody td,
@@ -657,7 +659,7 @@ label {
       margin: 0 12px 0 -12px; }
     #body table td.edit,
     #body table th.edit {
-      width: 48px; }
+      width: 90px; }
       #body table td.edit a.activate,
       #body table td.edit a.deactivate,
       #body table td.edit a.delete,
@@ -720,7 +722,7 @@ label {
       #body table td.edit a.delete.activate,
       #body table td.edit a.edit.activate {
         background-position: -90px -30px;
-        margin: -5px 0 0 -8px; }
+        margin: -5px 0 0 -5px; }
         #body table td.edit a.activate.activate:hover,
         #body table td.edit a.deactivate.activate:hover,
         #body table td.edit a.delete.activate:hover,
@@ -731,7 +733,7 @@ label {
       #body table td.edit a.delete.deactivate,
       #body table td.edit a.edit.deactivate {
         background-position: -120px -30px;
-        margin: -5px 0 0 -8px; }
+        margin: -5px 0 0 -5px; }
         #body table td.edit a.activate.deactivate:hover,
         #body table td.edit a.deactivate.deactivate:hover,
         #body table td.edit a.delete.deactivate:hover,
@@ -742,7 +744,7 @@ label {
       #body table td.edit a.delete.delete,
       #body table td.edit a.edit.delete {
         background-position: -30px -30px;
-        margin: -5px 0 0 28px; }
+        margin: -5px 0 0 65px; }
         #body table td.edit a.activate.delete:hover,
         #body table td.edit a.deactivate.delete:hover,
         #body table td.edit a.delete.delete:hover,
@@ -753,7 +755,7 @@ label {
       #body table td.edit a.delete.edit,
       #body table td.edit a.edit.edit {
         background-position: 0 -30px;
-        margin: -5px 0 0 -8px; }
+        margin: -5px 0 0 30px; }
         #body table td.edit a.activate.edit:hover,
         #body table td.edit a.deactivate.edit:hover,
         #body table td.edit a.delete.edit:hover,

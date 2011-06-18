@@ -1,20 +1,16 @@
 = form_for(@combo_box_question, :remote => true) do |f|
-  - if @combo_box_question.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@combo_box_question.errors.count, "error")
-        prohibited this question from being saved:
-      %ul
-        - @combo_box_question.errors.full_messages.each do |msg|
-          %li= msg
-  .field
-    = f.hidden_field :site_form_id
-  .field
+  = f.hidden_field :site_form_id
+  %h2 New Dropdown Question
+  %p.field
     = f.label :content, "Question"
-    %br/
     = f.text_area :content, :rows => 3
-  = f.fields_for :predefined_answers do |builder|
-    = render 'predefined_answer_fields', :f => builder
-  %p= link_to_add_fields "Add Answer", f, :predefined_answers
-  .actions
-    = f.submit
+  %p.field
+    Answers
+  %ul
+    = f.fields_for :predefined_answers do |builder|
+      %li
+        = render 'predefined_answer_fields', :f => builder
+  %p
+    = link_to_add_fields "Add Answer", f, :predefined_answers
+  %p.actions
+    %button{ :type => 'submit' } Add Question

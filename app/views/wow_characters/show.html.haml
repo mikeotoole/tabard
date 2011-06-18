@@ -1,28 +1,28 @@
-%p#notice= notice
-%p
-  %b Game:
-  = render @game if @game
-%p
-  %b Name:
-  = @character.name
-  %br/
-  %b Level:
-  = @character.level
-  %br/
-  %b Faction:
-  = @character.faction
-  %br/
-  %b Race:
-  = @character.race
-  %br/
-  %b Server:
-  = @character.server
-  %br/
-  %b Default:
-  = @character.default
+%p#bcrumb
+  = link_to 'Games', :games
+  = link_to @game.name, @game
+  %span= @character.name
+
+#page
+  %h1= @character.name
   
-= link_to 'User Profile', user_profile_path(UserProfile.find(current_user))
-|
-\#{link_to 'Edit', edit_game_wow_character_path(@game, @character)}
-|
-\#{js_back}
+  %p#actions
+    - if logged_in?
+      - if current_user.can_update(@character)
+        = link_to 'Edit', edit_game_wow_character_path(@game, @character), :class => 'edit', :title => 'Edit Character'
+      - if current_user.can_delete(@character)
+        = link_to 'Delete', @character, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Character'
+
+  %dl
+    %dt Game:
+    %dd= @game.name
+    %dt Level:
+    %dd= @character.level
+    %dt Faction:
+    %dd= @character.faction
+    %dt Race:
+    %dd= @character.race
+    %dt Server:
+    %dd= @character.server
+    %dt Default:
+    %dd= @character.default

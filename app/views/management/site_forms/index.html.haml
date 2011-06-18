@@ -25,7 +25,7 @@
             - else
               None
           %td.edit
-            = link_to 'Edit', edit_management_site_form_path(site_form), :class => 'edit', :title => 'Edit'
+            -#= link_to 'Edit', edit_management_site_form_path(site_form), :class => 'edit', :title => 'Edit'
             = link_to 'Delete', [:management, site_form], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   - else
     %body

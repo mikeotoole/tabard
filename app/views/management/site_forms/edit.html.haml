@@ -1,7 +1,7 @@
 %p#bcrumb
-  = link_to 'Management', :management
-  = link_to 'Site Forms', :management_site_forms
-  = link_to @site_form.name, @site_form
+  = link_to 'Management', management_path
+  = link_to 'Site Forms', management_site_forms_path
+  = link_to @site_form.name, [:management, @site_form]
   %span Edit
 
 %h1 Editing Form

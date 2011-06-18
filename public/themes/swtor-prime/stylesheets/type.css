@@ -59,6 +59,10 @@ blockquote {
   blockquote blockquote {
     font-size: 100%; }
 
+dt {
+  color: #fff;
+  font-weight: bold; }
+
 b,
 strong,
 i,

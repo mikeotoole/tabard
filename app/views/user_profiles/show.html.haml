@@ -7,6 +7,13 @@
 
 #page
   %h1= @profile.name
+  
+  %p#actions
+    - if logged_in?
+      - if current_user.can_update('User') or @profile == current_user
+        = link_to 'Edit', edit_user_profile_path(@profile), :class => 'edit', :title => 'Edit'
+      - if current_user.can_delete('User') or @profile == current_user
+        = link_to 'Delete', @profile, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
     
   %h2 Characters
   #actions

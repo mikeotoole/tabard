@@ -26,8 +26,11 @@
               = link_to 'Activate', activate_management_user_path(user), :class => 'activate', :title => 'Activate'
             - else  
               = link_to 'Deactivate', deactivate_management_user_path(user), :confirm => 'Are you sure? This keep user from logging in. All user information will be kept.', :class => 'deactivate', :title => 'Deactivate'
-            - if current_user.can_delete(user) or true
-              = link_to 'Delete', [:management, user], :confirm => 'Are you sure? This will remove everything about user including characters.', :method => :delete, :class => 'delete', :title => 'Delete'
+            - if logged_in?
+              - if current_user.can_update("User") or user == current_user
+                = link_to 'Edit', edit_management_user_path(user), :class => 'edit', :title => 'Edit'
+              - if current_user.can_delete("User") or user == current_user
+                = link_to 'Delete', [:management, user], :confirm => 'Are you sure? This will remove everything about user including characters.', :method => :delete, :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %tr

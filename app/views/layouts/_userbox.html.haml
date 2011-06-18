@@ -16,5 +16,5 @@
       %li.sent= link_to "Sent", sent_messages_path, { :title => "Sent Items" }
       %li.trash= link_to "Trash", trash_path, { :title => "Trash" }
   %p
-    =link_to 'Account', edit_user_path(current_user), :class => 'button'
+    =link_to 'Account', edit_management_user_path(current_user), :class => 'button'
     =link_to 'Logout', logout_path, :class => 'button'
