@@ -9,6 +9,10 @@ class DiscussionSpace < ActiveRecord::Base
   scope :user_generated, where(:system => false)
   scope :system_generated, where(:system => true)
   
+  def self.only_real_ones
+    self.where{(system == false) | (registration_application_space != true) | (announcement_space != true)}
+  end
+  
   def game_name
     self.game.name if self.game
   end
