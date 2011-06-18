@@ -1,5 +1,6 @@
-%h1 Search#index
+%h1 Search Results
 %p Find me in app/views/search/index.html.haml
+%p Found #{pluralize(@results.size, 'match')} for #{@search_term}
 -if @results.size > 0
   %ol
     -@results.each do |result|
