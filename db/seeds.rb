@@ -80,7 +80,7 @@ viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions 
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
 
 #More General Users
-20.times { |n|
+1.upto(20) { |n|
   g_profile = UserProfile.create(:name => "guser_#{n}")
   g_profile.set_active
   g_user = User.create(:email => "g#{n}@user.com", :password => "password", :user_profile => g_profile)

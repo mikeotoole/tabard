@@ -11,7 +11,23 @@ zombie:
     edit: Edit Brains
     editing: Editing Brains
     terms_of_use: Nnnnnrrrrg Brains!
+    privacy_policy: Privacy Policy Brains!
   hello: "Nnnnnrrrg world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              too_short: "Brains!"
+              invalid: "Brains!"
+            password:
+              too_short: "Brains!"
+              blank: "Brains!"
+        user_profile:
+          attributes:
+            name:
+              blank: "Brains!"
   
   datetime:
     distance_in_words:

@@ -81,7 +81,12 @@ class ApplicationController < ActionController::Base
   helper_method :locales
 
   def set_locale
-    I18n.locale = params[:locale] unless params[:locale].blank?
+    if(I18n.locale != params[:locale])
+      I18n.locale = params[:locale] unless params[:locale].blank?
+      redirect_to :back unless params[:locale].blank?
+    else
+      I18n.locale = params[:locale] unless params[:locale].blank?
+    end
   end
   
   # Returns the currently logged in user or nil if there isn't one 
@@ -111,6 +116,7 @@ class ApplicationController < ActionController::Base
   helper_method :has_announcements?
   
   def access_denied
+    session[:pre_login_url] = request.env["REQUEST_URI"] 
     redirect_to root_path, :alert => "Please log in to continue" and return false 
   end
   

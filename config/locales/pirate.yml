@@ -11,7 +11,23 @@ pirate:
     edit: Edit Yar
     editing: Editing Yar
     terms_of_use: Terms of the Sea
+    privacy_policy: Privacy Policy Yar
   hello: "Ahoy world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              too_short: "Yar! Ye be needing an email of at least 5 characters long."
+              invalid: "Ahoy, your email must be 'alid."
+            password:
+              too_short: "Ahoy, your password must be at least 4 characters. Aye, me parrot concurs."
+              blank: "Aye, you must pro'ide a password. Gar."
+        user_profile:
+          attributes:
+            name:
+              blank: "Arrr, you must pro'ide a name. Aye."
   
   datetime:
     distance_in_words:
