@@ -1,0 +1,9 @@
+%h1 Search Results
+%p Find me in app/views/search/index.html.haml
+%p Found #{pluralize(@results.size, 'match')} for #{@search_term}
+-if @results.size > 0
+  %ol
+    -@results.each do |result|
+      %li=result.to_s
+-else
+  %h2 NO RESULTS FOUND!

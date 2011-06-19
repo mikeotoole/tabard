@@ -1,5 +1,7 @@
 Bv::Application.routes.draw do
  
+  match "/search" => "search#index"
+
   get "status_code/invoke_404"
 
   resources :sent, :only => [:show, :new, :create]
