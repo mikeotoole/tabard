@@ -1,5 +1,5 @@
 %h1
-  Sent: #{h(@message.subject)}
+  Sent: #{@message.subject}
 %p
   %strong To:
   - if @message.recipients
@@ -8,4 +8,5 @@
 %p
   %strong Sent:
   = @message.created_at.to_s(:long)
-%pre= h @message.body
+  
+%pre= @message.body

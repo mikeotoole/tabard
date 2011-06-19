@@ -45,6 +45,60 @@ $(document).ready(function() {
   //announcements
   $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
   $('#announcements .dismiss').bind('click', function(){ $(this).parent('li').slideUp(300); });
+  
+  //messaging
+  $('#recipients .users li').each(function(){
+    $(this).append('<a>Remove</a>');
+    $(this).find('a').click(function(){
+      $(this)
+        .parent()
+        .removeClass('show')
+        .find('input')
+        .prop('checked',false);
+    });
+  });
+  $('#recipients input').bind('keyup change', function(){
+    text = $(this).val();
+    if(text != $(this).data('text')) {
+      $(this).data('text', text);
+      $('#recipients .suggest').remove();
+      if(text) {
+        pattern = new RegExp(text,'i');
+        names = new Array();
+        matches = new Array();
+        $('#recipients li').each(function(){
+          if(!$(this).hasClass('show')) {
+            names.push($(this).attr('title'));
+          }
+        });
+        for(n=0; n<names.length; n++) {
+          if(names[n].match(pattern)) {
+            matches.push(names[n]);
+            if(matches.length >= 10) {
+              break;
+            }
+          }
+        }
+        if(matches.length > 0) {
+          $('#recipients').append('<ul class="suggest"></ul>');
+          for(m=0; m<matches.length; m++) {
+            $('#recipients .suggest').append('<li>'+matches[m]+'</li>');
+          }
+          $('#recipients .suggest li').click(function(){
+            $('#recipients .users li[title="'+$(this).html()+'"]')
+              .addClass('show')
+              .find('input')
+              .attr('checked',true);
+            $('#recipients input')
+              .val('')
+              .data('text', '')
+              .focus();
+            $('#recipients .suggest').remove();
+          });
+        }
+      }
+    }
+  });
 	
 });
 

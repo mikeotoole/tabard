@@ -279,6 +279,15 @@ table {
 #new_comment .actions input {
   color: #fff !important; }
 
+#recipients ul.users li {
+  color: #fff;
+  font-size: .9em; }
+#recipients ul.suggest {
+  color: #000; }
+  #recipients ul.suggest li {
+    font-size: .9em;
+    font-weight: bold; }
+
 #footer a {
   color: #666;
   text-decoration: none; }

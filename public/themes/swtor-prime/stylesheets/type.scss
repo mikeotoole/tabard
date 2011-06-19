@@ -356,6 +356,22 @@ table {
   }
 }
 
+#recipients {
+  ul.users {
+    li {
+      color: #fff;
+      font-size: .9em;
+    }
+  }
+  ul.suggest {
+    color: #000;
+    li {
+      font-size: .9em;
+      font-weight: bold;
+    }
+  }
+}
+
 #footer {
   a {
     color: #666;

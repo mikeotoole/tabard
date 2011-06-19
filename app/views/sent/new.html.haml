@@ -1,11 +1,13 @@
 %h1 New Message To
 - form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
-  %ul.recipientchecklist
-    - for user in UserProfile.active_profiles
-      %li
-        = check_box_tag "message[to][]", user.id, @message.to.include?(user.id)
-        =h user.name
-  %br/
+  #recipients
+    %ul.users
+      - for user in UserProfile.active_profiles
+        %li{ :title => user.name }
+          = check_box_tag "message[to][]", user.id, @message.to.include?(user.id)
+          = user.name
+    %p
+      %input{ :type => 'text' }
   %p.field
     = f.label 'Subject'
     = f.text_field :subject
@@ -13,4 +15,4 @@
     = f.label 'Body'
     = f.text_area :body
   %p.field
-    = submit_tag "Send"
+    %button{ :type => 'submit' } Send
