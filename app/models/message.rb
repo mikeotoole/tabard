@@ -5,6 +5,9 @@ class Message < ActiveRecord::Base
   
   before_create :prepare_copies
   
+  validates_presence_of :subject
+  validates_presence_of :body
+  
   attr_accessor  :to # array of people to send to
   attr_accessible :subject, :body, :to, :author
   

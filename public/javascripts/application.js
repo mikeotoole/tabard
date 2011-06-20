@@ -90,7 +90,6 @@ $(document).ready(function() {
               .find('input')
               .attr('checked',true);
             $('#recipients input')
-              .val('')
               .data('text', '')
               .focus();
             $('#recipients .suggest').remove();
