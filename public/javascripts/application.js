@@ -54,7 +54,7 @@ $(document).ready(function() {
         .parent()
         .removeClass('show')
         .find('input')
-        .prop('checked',false);
+        .removeAttr('checked');
     });
   });
   $('#recipients input').bind('keyup change', function(){
