@@ -1,11 +1,2 @@
 = form_for(@registration_answer) do |f|
-  - if @registration_answer.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@registration_answer.errors.count, "error")
-        prohibited this registration_answer from being saved:
-      %ul
-        - @registration_answer.errors.full_messages.each do |msg|
-          %li= msg
-  .actions
-    = f.submit
+  = submit_or_cancel(f)

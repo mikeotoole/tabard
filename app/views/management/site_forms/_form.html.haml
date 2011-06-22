@@ -13,13 +13,11 @@
     = f.check_box :published
   %p.field
     = f.label "Send Submission Notifications To" 
-    #recipientchecklist
-      - for profile in UserProfile.active_profiles
-        = check_box_tag 'notifications[]', profile.id , @site_form.profile_notifications.include?(profile)
-        =h profile.name
+  #recipientchecklist
+    - for profile in UserProfile.active_profiles
+      = check_box_tag 'notifications[]', profile.id , @site_form.profile_notifications.include?(profile)
+      = profile.name
   %p.field
     = #select_tag(:q_type, options_for_select(Question::select_options))
     = #link_to_add_question "Add Question", f, :questions, :q_type
-     
-  .actions
-    = submit_or_cancel(f)
+  = submit_or_cancel(f)

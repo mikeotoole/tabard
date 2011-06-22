@@ -79,8 +79,7 @@ textarea {
   box-sizing: border-box;
   height: 28px;
   line-height: 28px;
-  padding: 0 7px;
-  width: 100%; }
+  padding: 0 7px; }
   input[type=text]:focus, input[type=text]:hover,
   input[type=password]:focus,
   input[type=password]:hover,
@@ -88,6 +87,9 @@ textarea {
   textarea:hover {
     background-color: #bababa;
     background-position: 0 -30px; }
+
+input[type=text] {
+  width: 100%; }
 
 textarea {
   background-image: none;
@@ -101,6 +103,9 @@ textarea {
 
 label {
   display: block; }
+
+p.submit {
+  padding-top: 2em !important; }
 
 #announcements {
   margin: -5px 0 15px; }
@@ -511,7 +516,8 @@ label {
             line-height: 24px;
             padding: 0 7px;
             position: absolute;
-            right: 108px; }
+            right: 108px;
+            width: auto; }
             #menu ul li.search form input:focus {
               background: #333; }
           #menu ul li.search form button {

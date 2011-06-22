@@ -87,12 +87,14 @@ textarea {
   height: 28px;
   line-height: 28px;
   padding: 0 7px;
-  width: 100%;
   &:focus,
   &:hover {
     background-color: #bababa;
     background-position: 0 -30px;
   }
+}
+input[type=text] {
+  width: 100%;
 }
 textarea {
   background-image: none;
@@ -103,6 +105,9 @@ textarea {
 }
 label {
   display: block;
+}
+p.submit {
+  padding-top: 2em !important;
 }
 
 #announcements {
@@ -426,6 +431,7 @@ label {
             padding: 0 7px;
             position: absolute;
             right: 108px;
+            width: auto;
             &:focus {
               background: #333;
             }

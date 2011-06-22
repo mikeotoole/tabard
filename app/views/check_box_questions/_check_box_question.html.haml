@@ -4,6 +4,5 @@
     %br/
   %ul
     - for panswer in check_box_question.predefined_answers
-      = check_box_tag("answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]",panswer.content,actual_submission.contains_predefined_answer(panswer) != nil)
-      = label_tag "answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]", panswer.content, :class => "check_box_label"
-        
+      %li.checkbox
+        = label_tag "answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]", check_box_tag("answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]",panswer.content,actual_submission.contains_predefined_answer(panswer) != nil) + ' ' + panswer.content

@@ -1,15 +1,5 @@
 = form_for(@question) do |f|
-  - if @question.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@question.errors.count, "error")
-        prohibited this question from being saved:
-      %ul
-        - @question.errors.full_messages.each do |msg|
-          %li= msg
-  .field
+  %p.field
     = f.label :content
-    %br/
     = f.text_area :content
-  .actions
-    = f.submit
+  = submit_or_cancel(f)

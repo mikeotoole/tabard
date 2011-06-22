@@ -5,5 +5,4 @@
   %p.field
     = f.label :game_id
     = f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select an optional game", :include_blank => true}, :class =>"game")
-  %p.actions
-    = submit_or_cancel(f)
+  = submit_or_cancel(f)

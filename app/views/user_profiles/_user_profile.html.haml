@@ -1,6 +1,0 @@
-= div_for user_profile do
-  %h3
-    = link_to user_profile.name, user_profile
-    %span.actions
-      = link_to( 'Edit', edit_user_profile_path(user_profile))
-      = link_to( 'Delete', user_profile, :confirm => 'Are you sure?', :method => :delete)

@@ -1,6 +1,5 @@
 = form_for [@character.game, @character] do |f|
-  %p.field
-    = f.hidden_field :game_id
+  = f.hidden_field :game_id
   %p.field
     = f.label :name
     = f.text_field :name
@@ -10,5 +9,4 @@
   %p.field
     = label_tag "Make Default Character"
     = check_box_tag :default
-  %p.actions
-    = submit_or_cancel(f)
+  = submit_or_cancel(f)

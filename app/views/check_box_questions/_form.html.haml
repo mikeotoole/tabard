@@ -1,19 +1,8 @@
 = form_for(@check_box_question) do |f|
-  - if @check_box_question.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@check_box_question.errors.count, "error")
-        prohibited this check_box_question from being saved:
-      %ul
-        - @check_box_question.errors.full_messages.each do |msg|
-          %li= msg
-  .fields
-    %p
-      = f.label :content, "Question"
-      %br/
-      = f.text_area :content, :rows => 3
-    - f.fields_for :predefined_answers do |builder|
-      = render 'predefined_answer_fields', :f => builder
-    %p= link_to_add_fields "Add Answer", f, :predefined_answers
-  .actions
-    = submit_or_cancel(f)
+  %p.field
+    = f.label :content, "Question"
+    = f.text_area :content, :rows => 3
+  - f.fields_for :predefined_answers do |builder|
+    = render 'predefined_answer_fields', :f => builder
+  %p= link_to_add_fields "Add Answer", f, :predefined_answers
+  = submit_or_cancel(f)

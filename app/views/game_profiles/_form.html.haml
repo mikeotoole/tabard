@@ -1,15 +1,5 @@
 = form_for(@profile) do |f|
-  - if @profile.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@profile.errors.count, "error")
-        prohibited this profile from being saved:
-      %ul
-        - @profile.errors.full_messages.each do |msg|
-          %li= msg
-  .field
+  %p.field
     = f.label :name
-    %br/
     = f.text_field :name
-  .actions
-    = submit_or_cancel(f)
+  = submit_or_cancel(f)

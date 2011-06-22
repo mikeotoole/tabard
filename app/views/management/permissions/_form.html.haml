@@ -1,27 +1,17 @@
 = form_for [:management,@role,@permission] do |f|
-  - if @permission.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@permission.errors.count, "error")
-        prohibited this permission from being saved:
-      %ul
-        - @permission.errors.full_messages.each do |msg|
-          %li= msg
-  .field
-    %h4 Resource
-    = collection_select(:permission, :permissionable_id, @permissionables, :id, :name)
-    = collection_select(:permission, :permissionable_type, @permissionables, :class, :name)
-    %p
-      = f.label "Create Permission"
-      = f.check_box :create_p
-    %p
-      = f.label "Show Permission"
-      = f.check_box :show_p
-    %p
-      = f.label "Update Permission"
-      = f.check_box :update_p
-    %p
-      = f.label "Delete Permission"
-      = f.check_box :delete_p
-  .actions
-    = submit_or_cancel(f)
+  %h2 Resource
+  = collection_select(:permission, :permissionable_id, @permissionables, :id, :name)
+  = collection_select(:permission, :permissionable_type, @permissionables, :class, :name)
+  %p.field
+    = f.label "Create Permission"
+    = f.check_box :create_p
+  %p.field
+    = f.label "Show Permission"
+    = f.check_box :show_p
+  %p.field
+    = f.label "Update Permission"
+    = f.check_box :update_p
+  %p.field
+    = f.label "Delete Permission"
+    = f.check_box :delete_p
+  = submit_or_cancel(f)

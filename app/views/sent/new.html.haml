@@ -1,13 +1,5 @@
 %h1 New Message To
 - form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
-  - if @message.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@message.errors.count, "error")
-        prohibited this message from being saved:
-      %ul
-        - @message.errors.full_messages.each do |msg|
-          %li= msg
   #recipients
     %ul.users
       - for user in UserProfile.active_profiles

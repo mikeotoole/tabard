@@ -1,23 +1,11 @@
 = form_for(@answer) do |f|
-  - if @answer.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@answer.errors.count, "error")
-        prohibited this answer from being saved:
-      %ul
-        - @answer.errors.full_messages.each do |msg|
-          %li= msg
-  .field
+  %p.field
     = f.label :question_id
-    %br/
     = f.text_field :question_id
-  .field
+  %p.field
     = f.label :registration_application_id
-    %br/
     = f.text_field :registration_application_id
-  .field
+  %p.field
     = f.label :content
-    %br/
     = f.text_area :content
-  .actions
-    = f.submit
+  = submit_or_cancel(f)

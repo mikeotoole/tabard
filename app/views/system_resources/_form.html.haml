@@ -1,15 +1,5 @@
 = form_for(@system_resource) do |f|
-  - if @system_resource.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@system_resource.errors.count, "error")
-        prohibited this system_resource from being saved:
-      %ul
-        - @system_resource.errors.full_messages.each do |msg|
-          %li= msg
-  .field
+  %p.field
     = f.label :name
-    %br/
     = f.text_field :name
-  .actions
-    = f.submit
+  = submit_or_cancel(f)

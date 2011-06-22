@@ -1,47 +1,33 @@
 = form_for [:management, @role] do |f|
-  - if @role.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@role.errors.count, "error")
-        prohibited this role from being saved:
-      %ul
-        - @role.errors.full_messages.each do |msg|
-          %li= msg
-  .field
+  %p.field
     = f.label :name
-    %br/
     = f.text_field :name
-  .field
+  %p.field
     = f.label :default_role
-    %br/
     = f.check_box :default_role
-  .field
+  %p.field
     = f.label "Users"
-    %br/
     - for user in @users
       = check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user)
       = label_tag dom_id(user), user.name, :class => "check_box_label"
-  .field
-    Permissions
-    %br/
-    %table
+  %h2= Permissions
+  %table        
+    %tr
+      %th Resource
+      %th Show
+      %th Create
+      %th Update
+      %th Delete
+    = f.fields_for :permissions, @role.permissions do |p|
+      = p.hidden_field :permissionable_id
+      = p.hidden_field :permissionable_type
+      = p.hidden_field :name
       %tr
-        %th Resource
-        %th Show
-        %th Create
-        %th Update
-        %th Delete
-      = f.fields_for :permissions, @role.permissions do |p|
-        = p.hidden_field :permissionable_id
-        = p.hidden_field :permissionable_type
-        = p.hidden_field :name
-        %tr
-          %td
-            = p.object.permissionable_name
-          %td= p.check_box(:show_p)
-          %td= p.check_box(:create_p)
-          %td= p.check_box(:update_p)
-          %td= p.check_box(:delete_p)
+        %td
+          = p.object.permissionable_name
+        %td= p.check_box(:show_p)
+        %td= p.check_box(:create_p)
+        %td= p.check_box(:update_p)
+        %td= p.check_box(:delete_p)
   =link_to "New Premission", new_management_role_permission_path(@role)
-  .actions
-    = submit_or_cancel(f)
+  = submit_or_cancel(f)

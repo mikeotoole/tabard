@@ -1,19 +1,10 @@
 = form_for(@combo_box_question) do |f|
-  - if @combo_box_question.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@combo_box_question.errors.count, "error")
-        prohibited this combo_box_question from being saved:
-      %ul
-        - @combo_box_question.errors.full_messages.each do |msg|
-          %li= msg
-  .fields
-    %p
-      = f.label :content, "Question"
-      %br/
-      = f.text_area :content, :rows => 3
-    - f.fields_for :predefined_answers do |builder|
-      = render 'predefined_answer_fields', :f => builder
-    %p= link_to_add_fields "Add Answer", f, :predefined_answers
-  .actions
+  %p.field
+    = f.label :content, "Question"
+    = f.text_area :content, :rows => 3
+  - f.fields_for :predefined_answers do |builder|
+    = render 'predefined_answer_fields', :f => builder
+  %p
+    = link_to_add_fields "Add Answer", f, :predefined_answers
+  %p.actions
     = submit_or_cancel(f)
