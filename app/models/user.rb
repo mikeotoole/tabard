@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_many :roles_users
   has_many :roles, :through => :roles_users
   
-  before_save :encrypt_new_password
+  before_save :encrypt_new_password, :update_lowercase_email
   
   after_create :assign_default_role
   
@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   end
   
   def self.authenticate(email, password) 
-    user = find_by_email(email)
+    user = find_by_lowercase_email(email.downcase)
     return user if user && user.authenticated?(password)
   end
   
@@ -219,6 +219,11 @@ class User < ActiveRecord::Base
     def password_required? 
       hashed_password.blank? || password.present?
     end
+    
+    def update_lowercase_email
+      self.lowercase_email = self.email.downcase
+    end
+    
     def encrypt(string) 
       Digest::SHA1.hexdigest(string)
     end
