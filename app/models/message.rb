@@ -7,6 +7,7 @@ class Message < ActiveRecord::Base
   
   validates_presence_of :subject
   validates_presence_of :body
+  validates_presence_of :to
   
   attr_accessor  :to # array of people to send to
   attr_accessible :subject, :body, :to, :author

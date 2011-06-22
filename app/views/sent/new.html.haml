@@ -11,8 +11,8 @@
   #recipients
     %ul.users
       - for user in UserProfile.active_profiles
-        %li{ :title => user.name }
-          = check_box_tag "message[to][]", user.id, @message.to.include?(user.id)
+        %li{ :title => user.name , :class => @message.to.include?(user.id.to_s) && "show"}
+          = check_box_tag "message[to][]", user.id, @message.to.include?(user.id.to_s)
           = user.name
     %p
       %input{ :type => 'text' }
