@@ -14,8 +14,10 @@ class SessionsController < ApplicationController
         end       
         return
       end
-      
+
+      cookies.permanent.signed[:remember_token] = user.id if params[:remember]
       session[:user_id] = user.id
+      
       if user.user_profile == nil
         @profile_type = "UserProfile"
         redirect_to new_profile_path, :notice => (
@@ -37,6 +39,7 @@ class SessionsController < ApplicationController
   
   def destroy 
     reset_session 
+    cookies.delete(:remember_token)
     redirect_to root_path, :notice => "You successfully logged out"
   end
 end

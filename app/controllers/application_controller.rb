@@ -91,8 +91,14 @@ class ApplicationController < ActionController::Base
   
   # Returns the currently logged in user or nil if there isn't one 
   def current_user
+    #
+    #return unless session[:user_id]
+    #@current_user ||= User.find_by_id(session[:user_id])
+    #cookies!
+    session[:user_id] = cookies.signed[:remember_token] if not session[:user_id] and cookies.signed[:remember_token] 
     return unless session[:user_id]
-    @current_user ||= User.find_by_id(session[:user_id]) 
+    @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
+    #@current_user ||= User.find_by_id(cookies.signed[:remember_token]) if cookies.signed[:remember_token]
   end 
   helper_method :current_user
   
