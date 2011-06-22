@@ -33,7 +33,8 @@ class DonationsController < ApplicationController
 
     respond_to do |format|
       if @donation.save
-        format.html { redirect_to(@donation, :notice => 'Donation was successfully created.') }
+        add_new_flash_message('Donation was successfully created.')
+        format.html { redirect_to(@donation) }
         format.xml  { render :xml => @donation, :status => :created, :location => @donation }
       else
         format.html { render :action => "new" }
@@ -49,7 +50,8 @@ class DonationsController < ApplicationController
 
     respond_to do |format|
       if @donation.update_attributes(params[:donation])
-        format.html { redirect_to(@donation, :notice => 'Donation was successfully updated.') }
+        add_new_flash_message('Donation was successfully updated.')
+        format.html { redirect_to(@donation) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

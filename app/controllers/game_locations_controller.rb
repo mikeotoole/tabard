@@ -44,7 +44,8 @@ class GameLocationsController < ApplicationController
 
     respond_to do |format|
       if @game_location.save
-        format.html { redirect_to(@game_location, :notice => 'Game location was successfully created.') }
+        add_new_flash_message('Game location was successfully created.')
+        format.html { redirect_to(@game_location) }
         format.xml  { render :xml => @game_location, :status => :created, :location => @game_location }
       else
         format.html { render :action => "new" }
@@ -60,7 +61,8 @@ class GameLocationsController < ApplicationController
 
     respond_to do |format|
       if @game_location.update_attributes(params[:game_location])
-        format.html { redirect_to(@game_location, :notice => 'Game location was successfully updated.') }
+        add_new_flash_message('Game location was successfully updated.')
+        format.html { redirect_to(@game_location) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

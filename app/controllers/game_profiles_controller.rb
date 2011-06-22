@@ -16,7 +16,7 @@ class GameProfilesController < ProfilesController
   # GET /profiles/new
   # GET /profiles/new.xml
   def new
-    flash.now[:alert] = "Please create a game profile."
+    add_new_flash_message("Please create a game profile.","alert")
     @profile = GameProfile.new
     @profile.type_helper = "GameProfile"
     @profile.user = current_user

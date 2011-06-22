@@ -11,7 +11,7 @@
     %tbody
       - for message in @messages
         %tr
-          %td= link_to message.subject, message
+          %td= link_to message.subject, sent_path(message)
           %td
             - if message.recipients
               - message.recipients.each do |profile|

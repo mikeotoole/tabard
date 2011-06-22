@@ -20,11 +20,13 @@ class BaseCharactersController < ApplicationController
             end
             return
           else
-            redirect_to(:back, :alert => 'Game not found.')
+            add_new_flash_message('Game not found.',"alert")
+            redirect_to(:back)
             return
         end
       else
-        redirect_to(:back, :alert => 'Please select a game.')
+        add_new_flash_message('Please select a game.',"alert")
+        redirect_to(:back)
       end  
   end
 end
