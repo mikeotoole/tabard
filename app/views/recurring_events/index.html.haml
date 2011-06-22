@@ -1,0 +1,13 @@
+%h1 Listing recurring_events
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @recurring_events.each do |recurring_event|
+    %tr
+      %td= link_to 'Show', recurring_event
+      %td= link_to 'Edit', edit_recurring_event_path(recurring_event)
+      %td= link_to 'Destroy', recurring_event, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Recurring event', new_recurring_event_path
