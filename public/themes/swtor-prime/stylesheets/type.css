@@ -262,8 +262,16 @@ table {
       color: #fff; }
   #menu ul li:hover ul .current a {
     color: #fff; }
+  #menu .search input {
+    color: #fff !important; }
   #menu .search button {
     color: #000 !important; }
+
+#page #author cite,
+#page #author time {
+  font-size: .9em;
+  font-style: italic;
+  text-align: right; }
 
 .comments span.author a {
   color: #5ba7b4;

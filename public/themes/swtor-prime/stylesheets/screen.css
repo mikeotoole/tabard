@@ -945,7 +945,9 @@ p.submit {
     top: 0; }
     #page #actions a.edit,
     #page #actions a.delete,
-    #page #actions a.show {
+    #page #actions a.lock,
+    #page #actions a.show,
+    #page #actions a.unlock {
       background: url(../images/icons-16.png) no-repeat #333333;
       -moz-border-radius-topleft: 4px;
       -moz-border-radius-topright: 4px;
@@ -971,32 +973,117 @@ p.submit {
       width: 30px; }
       #page #actions a.edit:hover,
       #page #actions a.delete:hover,
-      #page #actions a.show:hover {
+      #page #actions a.lock:hover,
+      #page #actions a.show:hover,
+      #page #actions a.unlock:hover {
         background-color: #3fa8c2; }
       #page #actions a.edit.edit,
       #page #actions a.delete.edit,
-      #page #actions a.show.edit {
+      #page #actions a.lock.edit,
+      #page #actions a.show.edit,
+      #page #actions a.unlock.edit {
         background-position: 0 -30px; }
         #page #actions a.edit.edit:hover,
         #page #actions a.delete.edit:hover,
-        #page #actions a.show.edit:hover {
+        #page #actions a.lock.edit:hover,
+        #page #actions a.show.edit:hover,
+        #page #actions a.unlock.edit:hover {
           background-position: 0 0; }
       #page #actions a.edit.delete,
       #page #actions a.delete.delete,
-      #page #actions a.show.delete {
+      #page #actions a.lock.delete,
+      #page #actions a.show.delete,
+      #page #actions a.unlock.delete {
         background-position: -30px -30px; }
         #page #actions a.edit.delete:hover,
         #page #actions a.delete.delete:hover,
-        #page #actions a.show.delete:hover {
+        #page #actions a.lock.delete:hover,
+        #page #actions a.show.delete:hover,
+        #page #actions a.unlock.delete:hover {
           background-position: -30px 0; }
+      #page #actions a.edit.lock,
+      #page #actions a.delete.lock,
+      #page #actions a.lock.lock,
+      #page #actions a.show.lock,
+      #page #actions a.unlock.lock {
+        background-position: -180px -30px; }
+        #page #actions a.edit.lock:hover,
+        #page #actions a.delete.lock:hover,
+        #page #actions a.lock.lock:hover,
+        #page #actions a.show.lock:hover,
+        #page #actions a.unlock.lock:hover {
+          background-position: -180px 0; }
       #page #actions a.edit.show,
       #page #actions a.delete.show,
-      #page #actions a.show.show {
+      #page #actions a.lock.show,
+      #page #actions a.show.show,
+      #page #actions a.unlock.show {
         background-position: -150px -30px; }
         #page #actions a.edit.show:hover,
         #page #actions a.delete.show:hover,
-        #page #actions a.show.show:hover {
+        #page #actions a.lock.show:hover,
+        #page #actions a.show.show:hover,
+        #page #actions a.unlock.show:hover {
           background-position: -150px 0; }
+      #page #actions a.edit.unlock,
+      #page #actions a.delete.unlock,
+      #page #actions a.lock.unlock,
+      #page #actions a.show.unlock,
+      #page #actions a.unlock.unlock {
+        background-position: -210px -30px; }
+        #page #actions a.edit.unlock:hover,
+        #page #actions a.delete.unlock:hover,
+        #page #actions a.lock.unlock:hover,
+        #page #actions a.show.unlock:hover,
+        #page #actions a.unlock.unlock:hover {
+          background-position: -210px 0; }
+  #page #body {
+    min-height: 100px; }
+  #page #author {
+    background: #2c2c2c;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -o-border-radius-topleft: 4px;
+    -o-border-radius-topright: 4px;
+    -o-border-radius-bottomright: 4px;
+    -o-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: inline-block;
+    float: right;
+    height: 69px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 35px;
+    width: 84px; }
+    #page #author:hover {
+      width: 320px;
+      -moz-transition: width 0.3s linear;
+      -o-transition: width 0.3s linear;
+      -webkit-transition: width 0.3s linear;
+      transition: width 0.3s linear; }
+    #page #author img {
+      position: absolute;
+      right: 5px;
+      top: 5px; }
+    #page #author cite,
+    #page #author time {
+      display: block;
+      position: absolute;
+      right: 95px; }
+    #page #author cite {
+      top: 10px; }
+    #page #author time {
+      top: 25px; }
 
 .comments ol li {
   position: relative; }
@@ -1031,14 +1118,29 @@ p.submit {
       position: relative;
       z-index: 1; }
     .comments ol li span.actions {
-      top: 10px;
-      right: 20px;
       padding: 2px 0 0;
       position: absolute;
-      right: 20px;
+      right: 10px;
+      top: 10px;
       z-index: 2; }
       .comments ol li span.actions a {
         border-bottom: 1px solid #2e3233;
+        -moz-border-radius-topleft: 2px;
+        -moz-border-radius-topright: 2px;
+        -moz-border-radius-bottomright: 2px;
+        -moz-border-radius-bottomleft: 2px;
+        -o-border-radius-topleft: 2px;
+        -o-border-radius-topright: 2px;
+        -o-border-radius-bottomright: 2px;
+        -o-border-radius-bottomleft: 2px;
+        -webkit-border-top-left-radius: 2px;
+        -webkit-border-top-right-radius: 2px;
+        -webkit-border-bottom-right-radius: 2px;
+        -webkit-border-bottom-left-radius: 2px;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
         float: left;
         padding: 0 5px;
         margin: 0 2px 0 0;

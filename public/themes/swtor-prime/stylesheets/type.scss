@@ -325,8 +325,24 @@ table {
       }
     }
   }
-  .search button {
-    color: #000 !important;
+  .search {
+    input {
+      color: #fff !important;
+    }
+    button {
+      color: #000 !important;
+    }
+  }
+}
+
+#page {
+  #author {
+    cite,
+    time {
+      font-size: .9em;
+      font-style: italic;
+      text-align: right;
+    }
   }
 }
 

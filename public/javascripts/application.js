@@ -57,7 +57,7 @@ $(document).ready(function() {
         .removeAttr('checked');
     });
   });
-  $('#recipients input').bind('keyup change', function(){
+  $('#recipients input[type=text]').bind('keyup change', function(){
     text = $(this).val();
     if(text != $(this).data('text')) {
       $(this).data('text', text);
@@ -89,14 +89,18 @@ $(document).ready(function() {
               .addClass('show')
               .find('input')
               .attr('checked',true);
-            $('#recipients input')
+            $('#recipients input[type=text]')
               .data('text', '')
+              .val('')
               .focus();
             $('#recipients .suggest').remove();
           });
         }
       }
     }
+  });
+  $('#recipients').parents('form').submit(function(){
+    
   });
 	
 });

@@ -725,7 +725,9 @@ p.submit {
     top: 0;
     a.edit,
     a.delete,
-    a.show {
+    a.lock,
+    a.show,
+    a.unlock {
       background: url(../images/icons-16.png) no-repeat #333;
       @include border_radius(4);
       display: inline-block;
@@ -749,12 +751,60 @@ p.submit {
           background-position: -30px 0;
         }
       }
+      &.lock {
+        background-position: -180px -30px;
+        &:hover {
+          background-position: -180px 0;
+        }
+      }
       &.show {
         background-position: -150px -30px;
         &:hover {
           background-position: -150px 0;
         }
       }
+      &.unlock {
+        background-position: -210px -30px;
+        &:hover {
+          background-position: -210px 0;
+        }
+      }
+    }
+  }
+  #body {
+    min-height: 100px;
+  }
+  #author {
+    background: #2c2c2c;
+    @include border_radius(4);
+    display: inline-block;
+    float: right;
+    height: 69px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 35px;
+    width: 84px;
+    &:hover {
+      width: 320px;
+      @include transition(width .3s linear);
+    }
+    img {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+    cite,
+    time {
+      display: block;
+      position: absolute;
+      right: 95px;
+    }
+    cite {
+      top: 10px;
+    }
+    time {
+      top: 25px;
     }
   }
 }
@@ -781,14 +831,14 @@ p.submit {
           z-index: 1;
         }
         &.actions {
-          top: 10px;
-          right: 20px;
           padding: 2px 0 0;
           position: absolute;
-          right: 20px;
+          right: 10px;
+          top: 10px;
           z-index: 2;
           a {
             border-bottom: 1px solid #2e3233;
+            @include border_radius(2);
             float: left;
             padding: 0 5px;
             margin: 0 2px 0 0;
