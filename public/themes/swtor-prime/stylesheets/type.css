@@ -273,6 +273,15 @@ table {
   font-style: italic;
   text-align: right; }
 
+#results dt {
+  color: #666;
+  font-weight: normal; }
+  #results dt:hover {
+    color: #ccc; }
+  #results dt.active {
+    color: #fff;
+    font-weight: bold; }
+
 .comments span.author a {
   color: #5ba7b4;
   font-family: 'SansationBold', serif;

@@ -346,6 +346,20 @@ table {
   }
 }
 
+#results {
+  dt {
+    color: #666;
+    font-weight: normal;
+    &:hover {
+      color: #ccc;
+    }
+    &.active {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
 .comments {
   span {
     &.author a {

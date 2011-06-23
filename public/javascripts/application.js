@@ -46,6 +46,12 @@ $(document).ready(function() {
   $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
   $('#announcements .dismiss').bind('click', function(){ $(this).parent('li').slideUp(300); });
   
+  //search
+  $('#results dt').click(function(){
+    $('#results .active').removeClass('active');
+    $('#results .' + $(this).attr('class')).addClass('active');
+  });
+  
   //messaging
   $('#recipients .users li').each(function(){
     $(this).append('<a>Remove</a>');
