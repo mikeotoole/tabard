@@ -12,14 +12,17 @@ class ActiveProfilesController < ApplicationController
     
       if profile
         active_profile_name = profile.name
-        redirect_to root_path, :notice => "Profile <em>#{active_profile_name}</em> activated."
+        add_new_flash_message("Profile <em>#{active_profile_name}</em> activated.")
+        redirect_to root_path
         return
       else
-        redirect_to root_path, :alert => "Error setting active profile"
+        add_new_flash_message("Error setting active profile","alert")
+        redirect_to root_path
         return
       end
     else  
-      redirect_to root_path, :alert => "Error setting active profile"
+      add_new_flash_message("Error setting active profile","alert")
+      redirect_to root_path
       return
     end  
   end

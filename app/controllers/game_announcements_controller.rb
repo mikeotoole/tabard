@@ -73,7 +73,7 @@ class GameAnnouncementsController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       if @game_announcement.update_attributes(params[:game_announcement])
-        flash[:notice] = 'Game announcement was successfully updated.'
+        add_new_flash_message('Game announcement was successfully updated.')
         respond_with(@game_announcement)
       else
         respond_to do |format|

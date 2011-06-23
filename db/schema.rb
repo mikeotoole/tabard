@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402222448) do
+ActiveRecord::Schema.define(:version => 20110622233627) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(:version => 20110402222448) do
     t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "lowercase_email"
   end
 
   create_table "wow_characters", :force => true do |t|

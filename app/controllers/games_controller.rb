@@ -54,7 +54,8 @@ class GamesController < ApplicationController
   
       respond_to do |format|
         if @game.save
-          format.html { redirect_to(games_path, :notice => 'Game was successfully created.') }
+          add_new_flash_message('Game was successfully created.')
+          format.html { redirect_to(games_path) }
           format.xml  { render :xml => @game, :status => :created, :location => @game }
         else
           format.html { render :action => "new" }
@@ -74,7 +75,8 @@ class GamesController < ApplicationController
   
       respond_to do |format|
         if @game.update_attributes(params[:game])
-          format.html { redirect_to(games_path, :notice => 'Game was successfully updated.') }
+          add_new_flash_message('Game was successfully updated.')
+          format.html { redirect_to(games_path) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }

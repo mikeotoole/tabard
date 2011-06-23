@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
       render :nothing => true, :status => :forbidden
     else
       if @comment.save
-        flash[:notice] = 'Comment was successfully created.'
+        add_new_flash_message('Comment was successfully created.')
         #redirect_to(:back)
         respond_with(@comment)
       else
@@ -77,7 +77,7 @@ class CommentsController < ApplicationController
       @comment.has_been_edited = true
       respond_to do |format|
         if @comment.update_attributes(params[:comment])
-          flash[:notice] = 'Comment was successfully updated.'
+          add_new_flash_message('Comment was successfully updated.')
           redirect_to url_for(@comment.original_comment_item), :action => :show
           return
         else
@@ -97,12 +97,11 @@ class CommentsController < ApplicationController
     else
       @comment.has_been_deleted = true;
       if @comment.save
-        logger.debug("OMG!!!")
-        flash[:notice] = 'Comment was successfully deleted.'
+        add_new_flash_message('Comment was successfully deleted.')
         redirect_to url_for(@comment.original_comment_item), :action => :show
         return
       else
-        flash[:notice] = 'Comment was unable to be deleted, internal rails error.'
+        add_new_flash_message('Comment was unable to be deleted, internal rails error.')
         redirect_to url_for(@comment.original_comment_item), :action => :show
         return 
       end
@@ -114,9 +113,9 @@ class CommentsController < ApplicationController
     if @comment.can_user_lock(current_user)
       @comment.has_been_locked = true
       if @comment.save 
-        flash[:notice] = "Comment was successfully locked."
+        add_new_flash_message("Comment was successfully locked.")
       else
-        flash[:alert] = "Comment was not locked, internal rails error."
+        add_new_flash_message("Comment was not locked, internal rails error.")
       end
       redirect_to :back
       return
@@ -129,9 +128,9 @@ class CommentsController < ApplicationController
     if @comment.can_user_lock(current_user)
       @comment.has_been_locked = false
       if @comment.save 
-        flash[:notice] = "Comment was successfully unlocked."
+        add_new_flash_message("Comment was successfully unlocked.")
       else
-        flash[:alert] = "Comment was not unlocked, internal rails error."
+        add_new_flash_message("Comment was not unlocked, internal rails error.")
       end
       redirect_to :back
       return
