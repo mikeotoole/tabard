@@ -335,6 +335,12 @@ table {
   }
 }
 
+#usercheckboxes {
+  label:hover {
+    color: #000;
+  }
+}
+
 #page {
   #author {
     cite,
@@ -360,7 +366,7 @@ table {
   }
 }
 
-.comments {
+#comments {
   span {
     &.author a {
       color: #5ba7b4;

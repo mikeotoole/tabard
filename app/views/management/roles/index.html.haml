@@ -1,5 +1,13 @@
-%h1 Listing roles
-- @roles.each do |role|
-  = render role
-%br/
-= link_to 'New Role', new_management_role_path
+%p#bcrumb
+  = link_to 'Management', management_path
+  %span Roles
+
+%h1 Roles
+
+- if @roles.size > 0
+  %ul
+    - @roles.each do |role|
+      %li= link_to role.name, edit_management_role_path(role)
+
+%p
+  = link_to 'New Role', new_management_role_path, :class => 'button'

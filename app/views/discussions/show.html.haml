@@ -28,11 +28,11 @@
         = link_to @discussion.user_profile.name, @discussion.user_profile
     %time= distance_of_time_in_words(@discussion.created_at, Time.now) + ' ago'
   
-  #body= @discussion.body
+  #discussionbody= @discussion.body
   
   %h2 Comments
   
-  .comments
+  #comments
     -if @discussion.comments.size > 0
       %ol
         - @discussion.comments.each do  |comment|

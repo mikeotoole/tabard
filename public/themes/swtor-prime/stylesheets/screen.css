@@ -944,6 +944,39 @@ p.submit {
     #body .add:hover {
       background-color: #3fa8c2 !important;
       background-position: -60px 0 !important; }
+  #body #usercheckboxes {
+    padding: 0 0 1em; }
+    #body #usercheckboxes li {
+      display: inline;
+      list-style: none; }
+      #body #usercheckboxes li label {
+        background: #333;
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-topright: 3px;
+        -moz-border-radius-bottomright: 3px;
+        -moz-border-radius-bottomleft: 3px;
+        -o-border-radius-topleft: 3px;
+        -o-border-radius-topright: 3px;
+        -o-border-radius-bottomright: 3px;
+        -o-border-radius-bottomleft: 3px;
+        -webkit-border-top-left-radius: 3px;
+        -webkit-border-top-right-radius: 3px;
+        -webkit-border-bottom-right-radius: 3px;
+        -webkit-border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        display: inline-block;
+        margin: 5px 0 0;
+        padding: 2px 5px;
+        width: 225px; }
+        #body #usercheckboxes li label input {
+          display: inline; }
+        #body #usercheckboxes li label label {
+          display: inline; }
+        #body #usercheckboxes li label:hover {
+          background: #fff; }
 
 #page {
   position: relative; }
@@ -1045,7 +1078,7 @@ p.submit {
         #page #actions a.show.unlock:hover,
         #page #actions a.unlock.unlock:hover {
           background-position: -210px 0; }
-  #page #body {
+  #page #discussionbody {
     min-height: 100px; }
   #page #author {
     background: #2c2c2c;
@@ -1171,78 +1204,82 @@ p.submit {
         #results dd ol li h3 {
           padding: 0; }
 
-.comments ol li {
-  position: relative; }
-  .comments ol li span {
-    display: block; }
-    .comments ol li span.author {
-      left: 105px;
+#comments ol {
+  padding: 0; }
+  #comments ol li {
+    list-style: none;
+    position: relative; }
+    #comments ol li span {
+      display: block; }
+      #comments ol li span.author {
+        left: 105px;
+        position: absolute;
+        top: 15px;
+        z-index: 2; }
+      #comments ol li span.body {
+        background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-topright: 3px;
+        -moz-border-radius-bottomright: 3px;
+        -moz-border-radius-bottomleft: 3px;
+        -o-border-radius-topleft: 3px;
+        -o-border-radius-topright: 3px;
+        -o-border-radius-bottomright: 3px;
+        -o-border-radius-bottomleft: 3px;
+        -webkit-border-top-left-radius: 3px;
+        -webkit-border-top-right-radius: 3px;
+        -webkit-border-bottom-right-radius: 3px;
+        -webkit-border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        margin: 0 0 2px;
+        min-height: 30px;
+        padding: 45px 20px 20px 105px;
+        position: relative;
+        z-index: 1; }
+      #comments ol li span.actions {
+        padding: 2px 0 0;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 2; }
+        #comments ol li span.actions a {
+          border-bottom: 1px solid #2e3233;
+          -moz-border-radius-topleft: 2px;
+          -moz-border-radius-topright: 2px;
+          -moz-border-radius-bottomright: 2px;
+          -moz-border-radius-bottomleft: 2px;
+          -o-border-radius-topleft: 2px;
+          -o-border-radius-topright: 2px;
+          -o-border-radius-bottomright: 2px;
+          -o-border-radius-bottomleft: 2px;
+          -webkit-border-top-left-radius: 2px;
+          -webkit-border-top-right-radius: 2px;
+          -webkit-border-bottom-right-radius: 2px;
+          -webkit-border-bottom-left-radius: 2px;
+          border-top-left-radius: 2px;
+          border-top-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+          border-bottom-left-radius: 2px;
+          float: left;
+          padding: 0 5px;
+          margin: 0 2px 0 0;
+          text-decoration: none; }
+          #comments ol li span.actions a:focus, #comments ol li span.actions a:hover {
+            background: #5ba7b4;
+            border-bottom: 0; }
+    #comments ol li img {
+      border: 1px solid #000;
+      left: 10px;
       position: absolute;
-      top: 15px;
-      z-index: 2; }
-    .comments ol li span.body {
-      background: url(../images/comment-bg.png) 0 0 repeat-x #252829;
-      -moz-border-radius-topleft: 3px;
-      -moz-border-radius-topright: 3px;
-      -moz-border-radius-bottomright: 3px;
-      -moz-border-radius-bottomleft: 3px;
-      -o-border-radius-topleft: 3px;
-      -o-border-radius-topright: 3px;
-      -o-border-radius-bottomright: 3px;
-      -o-border-radius-bottomleft: 3px;
-      -webkit-border-top-left-radius: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px;
-      margin: 0 0 2px;
-      min-height: 30px;
-      padding: 45px 20px 20px 105px;
-      position: relative;
-      z-index: 1; }
-    .comments ol li span.actions {
-      padding: 2px 0 0;
-      position: absolute;
-      right: 10px;
       top: 10px;
+      z-index: 3; }
+    #comments ol li ol {
+      margin: 0 0 0 30px;
       z-index: 2; }
-      .comments ol li span.actions a {
-        border-bottom: 1px solid #2e3233;
-        -moz-border-radius-topleft: 2px;
-        -moz-border-radius-topright: 2px;
-        -moz-border-radius-bottomright: 2px;
-        -moz-border-radius-bottomleft: 2px;
-        -o-border-radius-topleft: 2px;
-        -o-border-radius-topright: 2px;
-        -o-border-radius-bottomright: 2px;
-        -o-border-radius-bottomleft: 2px;
-        -webkit-border-top-left-radius: 2px;
-        -webkit-border-top-right-radius: 2px;
-        -webkit-border-bottom-right-radius: 2px;
-        -webkit-border-bottom-left-radius: 2px;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
-        float: left;
-        padding: 0 5px;
-        margin: 0 2px 0 0;
-        text-decoration: none; }
-        .comments ol li span.actions a:focus, .comments ol li span.actions a:hover {
-          background: #5ba7b4; }
-  .comments ol li img {
-    border: 1px solid #000;
-    left: 10px;
-    position: absolute;
-    top: 10px;
-    z-index: 3; }
-  .comments ol li ol {
-    margin: 0 0 0 30px;
-    z-index: 2; }
-.comments #new_comment {
+#comments #new_comment {
   margin: 0 0 2px 30px; }
 
 #new_comment {
