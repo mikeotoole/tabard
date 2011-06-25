@@ -17,9 +17,10 @@ class Management::RolesController < ApplicationController
   def show
     if !current_user.can_show("Role") 
       render :nothing => true, :status => :forbidden
-    else 
-      @role = Role.find(params[:id])
-      respond_with(@role)
+    else
+      redirect_to :controller => 'role', :action => 'edit', :id => params[:id]
+      #@role = Role.find(params[:id])
+      #respond_with(@role)
     end
   end
 
@@ -60,7 +61,8 @@ class Management::RolesController < ApplicationController
       if @role.save
         flash[:notice] = 'Role was successfully created.'
       end
-      respond_with([:management, @role])
+      redirect_to :controller => 'role', :action => 'edit', :id => @role.id
+      #respond_with([:management, @role])
     end
   end
 
