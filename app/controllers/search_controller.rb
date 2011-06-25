@@ -28,8 +28,8 @@ class SearchController < ApplicationController
     end
     
     @discussion_space_results = Array.new
-    #TODO - filter discussion spaces (like was done for the menu)
-    DiscussionSpace.where{(name =~ user_query)}.each do |result|
+    # - filter discussion spaces (like was done for the menu) -Fixed JW
+    DiscussionSpace.only_real_ones.where{(name =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @discussion_space_results.push({
           :path => result,
@@ -54,7 +54,7 @@ class SearchController < ApplicationController
     Comment.where{(body =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @comment_results.push({
-          :path => '#', #TODO discussion, discussion space, or whatever resource the comment is associated to
+          :path => result.original_comment_item, #TODO discussion, discussion space, or whatever resource the comment is associated to
           :name => 'Comment by "' + (result.charater_posted? ? result.character.name : result.user_profile.name) + '"',
           :body => result.body
         })
