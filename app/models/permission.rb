@@ -5,6 +5,16 @@ class Permission < ActiveRecord::Base
   
   before_create :check_name_and_create
   
+  def magic_polymorphic_helper
+    permissionable.id.to_s + "|" + permissionable.class.to_s if permissionable
+  end
+  
+  def magic_polymorphic_helper=(magic_helper)
+    return unless not permissionable
+    self.permissionable_id = magic_helper.split('|',2)[0]
+    self.permissionable_type = magic_helper.split('|',2)[1]
+  end
+  
   def check_name_and_create
     self.name = self.permissionable_name unless self.name
   end
