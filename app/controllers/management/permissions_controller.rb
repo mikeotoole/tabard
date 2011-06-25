@@ -70,17 +70,17 @@ class Management::PermissionsController < ApplicationController
     def get_avalible_permissionables
       @permissionables = Array.new() 
       for resource in SystemResource.all
-        @permissionables << resource
+        @permissionables << [resource.name, resource.id.to_s + "|" + resource.class.to_s]
       end
       for discussionS in DiscussionSpace.all
-        @permissionables << discussionS
+        @permissionables << [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]
       end
       for pageS in PageSpace.all
-        @permissionables << pageS
+        @permissionables << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
       end
       logger.debug(@role.permissions)
       @role.permissions.each { |role_permission|
-        @permissionables.delete_if{|permissionable| (permissionable.id == role_permission.permissionable_id) and (permissionable.class.to_s == role_permission.permissionable_type)}
+        @permissionables.delete_if{|permissionable| (permissionable[1].to_s == role_permission.magic_polymorphic_helper)}
       }
     end
 end
