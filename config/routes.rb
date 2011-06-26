@@ -92,7 +92,7 @@ Bv::Application.routes.draw do
         get :deactivate
       end
     end
-    resources :roles, :except => :show do
+    resources :roles do
       resources :permissions
     end
     resources :newsletters,

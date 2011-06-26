@@ -1,6 +1,8 @@
 %p#bcrumb
   = link_to 'Management', management_path
-  = link_to 'Permissions', management_roles_permissions_path
+  = link_to 'Roles', management_roles_path
+  = link_to @role.name, [:management, @role]
+  = link_to 'Permissions', management_role_permissions_path(@role)
   %span New
 
 %h1 New permission

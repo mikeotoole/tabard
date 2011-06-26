@@ -18,7 +18,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_show("Role") 
       render :nothing => true, :status => :forbidden
     else
-      redirect_to :controller => 'role', :action => 'edit', :id => params[:id]
+      redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]
       #@role = Role.find(params[:id])
       #respond_with(@role)
     end
@@ -59,9 +59,9 @@ class Management::RolesController < ApplicationController
       @role = Role.new(params[:role])
   
       if @role.save
-        flash[:notice] = 'Role was successfully created.'
+        add_new_flash_message('Role was successfully created.')
       end
-      redirect_to :controller => 'role', :action => 'edit', :id => @role.id
+      redirect_to :controller => 'management/roles', :action => 'edit', :id => @role.id
       #respond_with([:management, @role])
     end
   end
@@ -74,7 +74,7 @@ class Management::RolesController < ApplicationController
     else 
       @role = Role.find(params[:id])
       if @role.update_attributes(params[:role])
-        flash[:notice] = 'Role was successfully updated.'
+        add_new_flash_message('Role was successfully updated')
       end
       respond_with([:management, @role])
     end

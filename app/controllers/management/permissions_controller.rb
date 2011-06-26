@@ -33,7 +33,7 @@ class Management::PermissionsController < ApplicationController
   def create
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
-      flash[:notice] = 'Permission was succesfully created.'
+      add_new_flash_message('Permission was succesfully created.')
       redirect_to([:management,@role])
     else
       respond_with(@permission)
@@ -45,7 +45,7 @@ class Management::PermissionsController < ApplicationController
   def update
     @permission = @role.permissions.find(params[:id])
     if @permission.update_attributes(params[:permission])
-      flash[:notice] = 'Permission was successfully updated.'
+      add_new_flash_message('Permission was successfully updated.')
       redirect_to([:management,@role])
     else
       respond_with(@permission)
