@@ -13,7 +13,7 @@ class Management::DiscussionSpacesController < ApplicationController
   def new
     @discussion_space = DiscussionSpace.new
     if !current_user.can_create(@discussion_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@discussion_space)
     end
@@ -23,7 +23,7 @@ class Management::DiscussionSpacesController < ApplicationController
   def edit
     @discussion_space = DiscussionSpace.find(params[:id])
     if !current_user.can_update(@discussion_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
     respond_with(@discussion_space)
   end
@@ -35,10 +35,10 @@ class Management::DiscussionSpacesController < ApplicationController
     @discussion_space.system = false
     @discussion_space.user_profile = current_user.user_profile
     if !current_user.can_create(@discussion_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @discussion_space.save
-        flash[:notice] = 'Discussion space was successfully created.'
+        add_new_flash_message('Discussion space was successfully created.')
         respond_with(@discussion_space)
       else
         respond_to do |format|
@@ -54,10 +54,10 @@ class Management::DiscussionSpacesController < ApplicationController
   def update
     @discussion_space = DiscussionSpace.find(params[:id])
     if !current_user.can_update(@discussion_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @discussion_space.update_attributes(params[:discussion_space])
-        flash[:notice] = 'Discussion space was successfully updated.'
+        add_new_flash_message('Discussion space was successfully updated.')
         respond_with(@discussion_space)
       else
         respond_to do |format|
@@ -73,9 +73,11 @@ class Management::DiscussionSpacesController < ApplicationController
   def destroy
     @discussion_space = DiscussionSpace.find(params[:id])
     if !current_user.can_delete(@discussion_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
-      @discussion_space.destroy
+      if @discussion_space.destroy
+        add_new_flash_message('Discussion space was successfully deleted.')
+      end
       respond_with(@discussion_space)
     end
   end

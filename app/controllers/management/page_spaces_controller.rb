@@ -22,7 +22,7 @@ class Management::PageSpacesController < ApplicationController
   def new
     @page_space = PageSpace.new
     if !current_user.can_create("PageSpace")
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@discussion_space)
     end
@@ -32,7 +32,7 @@ class Management::PageSpacesController < ApplicationController
   def edit
     @page_space = PageSpace.find(params[:id])
     if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
   end
 
@@ -40,12 +40,12 @@ class Management::PageSpacesController < ApplicationController
   # POST /page_spaces.xml
   def create
     if !current_user.can_create("PageSpace")
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @page_space = PageSpace.new(params[:page_space])
   
       if @page_space.save
-        flash[:notice] = 'Page space was successfully created.'
+        add_new_flash_message('Page space was successfully created.')
         respond_with(@page_space)
       else 
         respond_to do |format|
@@ -61,11 +61,11 @@ class Management::PageSpacesController < ApplicationController
   def update
     @page_space = PageSpace.find(params[:id])
     if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       
       if @page_space.update_attributes(params[:page_space])
-        flash[:notice] = 'Page space was successfully updated.'
+        add_new_flash_message('Page space was successfully updated.')
         respond_with(@page_space)
       else
         respond_to do |format|
@@ -81,9 +81,11 @@ class Management::PageSpacesController < ApplicationController
   def destroy
     @page_space = PageSpace.find(params[:id])
     if !current_user.can_delete("PageSpace") and !current_user.can_delete(@page_space)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
-      @page_space.destroy
+      if @page_space.destroy
+        add_new_flash_message('Page space was successfully deleted.')
+      end
       respond_with(@page_space)
     end
   end
