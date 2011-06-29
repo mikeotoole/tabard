@@ -15,10 +15,10 @@
       %thead
         %tr
           %th Resource
-          %th Show
-          %th Create
-          %th Update
-          %th Delete
+          %th.view View
+          %th.create Create
+          %th.edit Edit
+          %th.delete Delete
       %tbody
         = f.fields_for :permissions, @role.permissions do |p|
           = p.hidden_field :permissionable_id
@@ -26,10 +26,10 @@
           = p.hidden_field :name
           %tr
             %td= p.object.permissionable_name
-            %td= p.check_box(:show_p)
-            %td= p.check_box(:create_p)
-            %td= p.check_box(:update_p)
-            %td= p.check_box(:delete_p)
+            %td.view= p.check_box(:show_p)
+            %td.create= p.check_box(:create_p)
+            %td.update= p.check_box(:update_p)
+            %td.delete= p.check_box(:delete_p)
       %tfoot
         %tr
           %td{ :colspan => 5 }

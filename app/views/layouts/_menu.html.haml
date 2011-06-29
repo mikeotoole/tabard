@@ -6,8 +6,9 @@
         = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
         = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
         %p.remember
-          = check_box_tag('remember')
-          = label_tag 'remember', 'Remember me'
+          %label
+            = check_box_tag('remember')
+            Remember Me
         = submit_tag 'Sign in'
         %p.apply
           %span= 'Want to join?'
@@ -37,6 +38,9 @@
           %ul
             - dynamic_page_spaces.each do |page_space| 
               %li= link_to page_space.name, page_space
+            - if logged_in? and current_user.can_create('PageSpace')
+              %li.new
+                = link_to 'New', new_page_space_path
       - if logged_in?
         %li
           = link_to 'Discussions', :discussion_spaces, { :class => 'main' }
@@ -44,6 +48,9 @@
             %ul
               - dynamic_discussions.each do |discussion_space| 
                 %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
+              - if logged_in? and current_user.can_create('DiscussionSpace')
+                %li.new
+                  = link_to 'New', new_discussion_space_path
       - if logged_in? and @management_items.size > 0
         %li
           = link_to 'Management', :management, { :class => 'main' }

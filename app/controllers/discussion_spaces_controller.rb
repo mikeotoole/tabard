@@ -47,6 +47,7 @@ class DiscussionSpacesController < ApplicationController
     if !current_user.can_create(@discussion_space)
       render_insufficient_privileges
     else
+      @option_hash = { 'Games' => Game.where("is_active = ?", true).collect{ |game| [game.name, game.id] } }
       respond_with(@discussion_space)
     end
   end

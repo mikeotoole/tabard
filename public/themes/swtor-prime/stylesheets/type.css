@@ -254,7 +254,7 @@ table {
   #menu ul li:hover a {
     color: #fff; }
   #menu ul li:hover ul a {
-    color: #666;
+    color: #999;
     font-family: arial, sans-serif;
     font-size: 0.7em;
     letter-spacing: 0.1em; }
@@ -262,6 +262,11 @@ table {
       color: #fff; }
   #menu ul li:hover ul .current a {
     color: #fff; }
+  #menu ul li:hover ul .new a {
+    color: #444;
+    font-style: italic !important; }
+    #menu ul li:hover ul .new a:hover {
+      color: #fff; }
   #menu .search input {
     color: #fff !important; }
   #menu .search button {

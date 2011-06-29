@@ -1,18 +1,21 @@
 = form_for [:management,@role,@permission] do |f|
-  %h2 Resource
-  = f.select(:magic_polymorphic_helper, @permissionables)
-  -#= collection_select(:permission, :permissionable_id, @permissionables, :id, :name)
-  -#= collection_select(:permission, :permissionable_type, @permissionables, :class, :name)
   %p.field
-    = f.label "Create Permission"
-    = f.check_box :create_p
+    = f.label 'Resource'
+    = f.select(:magic_polymorphic_helper, @permissionables)
   %p.field
-    = f.label "Show Permission"
-    = f.check_box :show_p
+    %label
+      = f.check_box :create_p
+      Create
   %p.field
-    = f.label "Update Permission"
-    = f.check_box :update_p
+    %label
+      = f.check_box :show_p
+      View
   %p.field
-    = f.label "Delete Permission"
-    = f.check_box :delete_p
+    %label
+      = f.check_box :update_p
+      Edit
+  %p.field
+    %label
+      = f.check_box :delete_p
+      Delete
   = submit_or_cancel(f)
