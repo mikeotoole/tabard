@@ -1,8 +1,9 @@
 = form_for [:management,@role,@permission] do |f|
   %h2 Resource
-  = f.select(:magic_polymorphic_helper, @permissionables)
-  -#= collection_select(:permission, :permissionable_id, @permissionables, :id, :name)
-  -#= collection_select(:permission, :permissionable_type, @permissionables, :class, :name)
+  -#grouped_options_for_select(@pageOptions) if @pageOptions
+  -#grouped_options_for_select(@discussionOptions) if @discussionOptions
+  -#options_for_select(@permissionables)
+  =f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
   %p.field
     = f.label "Create Permission"
     = f.check_box :create_p

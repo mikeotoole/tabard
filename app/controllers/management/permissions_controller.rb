@@ -70,13 +70,16 @@ class Management::PermissionsController < ApplicationController
     def get_avalible_permissionables
       @permissionables = Array.new() 
       for resource in SystemResource.all
-        @permissionables << [resource.name, resource.id.to_s + "|" + resource.class.to_s]
-      end
-      for discussionS in DiscussionSpace.all
-        @permissionables << [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]
-      end
-      for pageS in PageSpace.all
-        @permissionables << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
+        case resource.name
+        when "DiscussionSpace"
+          @discussionHeader = [["All "+resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @discussionOptions = { "Specific Discussion Space" => DiscussionSpace.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
+        when "PageSpace"
+          @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @pageOptions = { "Specific Page Space" => PageSpace.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
+        else
+          @permissionables << [resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
+        end
       end
       logger.debug(@role.permissions)
       @role.permissions.each { |role_permission|
