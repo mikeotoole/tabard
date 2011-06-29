@@ -81,7 +81,9 @@ class PageSpacesController < ApplicationController
     if !current_user.can_delete(@page_space)
       render_insufficient_privileges
     else 
-      @page_space.destroy
+      if @page_space.destroy
+        add_new_flash_message('Page space was successfully deleted.')
+      end
       respond_with(@page_space)
     end
   end

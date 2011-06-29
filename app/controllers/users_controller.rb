@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     if !current_user.can_show("User") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @users = User.all
   
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     if !current_user.can_show("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
       @acknowledgment_of_announcements = @user.unacknowledged_announcements
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     if !current_user.can_update("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
     end

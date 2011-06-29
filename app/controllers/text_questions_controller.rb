@@ -73,9 +73,10 @@ class TextQuestionsController < ApplicationController
   
       respond_to do |format|
         if @text_question.update_attributes(params[:text_question])
-          format.html { redirect_to([:management, @form], :notice => 'Question was successfully updated.') }
+          add_new_flash_message('Question was successfully updated.')
+          format.html { redirect_to([:management, @form]) }
           format.xml  { head :ok }
-          format.js { redirect_to([:management, @form], :notice => 'Question was successfully updated.') }
+          format.js { redirect_to([:management, @form]) }
         else
           format.html { render :action => "edit" }
           format.xml  { render :xml => @text_question.errors, :status => :unprocessable_entity }

@@ -26,7 +26,7 @@ class UserProfilesController < ProfilesController
   # GET /user_profiles/new
   # GET /user_profiles/new.xml
   def new
-    flash.now[:alert] = "Please create a user profile to finish creating your account."
+    add_new_flash_message("Please create a user profile to finish creating your account.","alert")
     @profile = UserProfile.new
     @profile.type = "UserProfile"
     @profile.user = current_user
@@ -54,7 +54,8 @@ class UserProfilesController < ProfilesController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to(@profile, :notice => 'Profile was successfully created.') }
+        add_new_flash_message('Profile was successfully created.')
+        format.html { redirect_to(@profile) }
         format.xml  { render :xml => @profile, :status => :created, :location => @profile }
       else
         format.html { render :action => "new" }
@@ -70,7 +71,8 @@ class UserProfilesController < ProfilesController
 
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
-        format.html { redirect_to(@profile, :notice => 'Profile was successfully updated.') }
+        add_new_flash_message('Profile was successfully updated.')
+        format.html { redirect_to(@profile) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -83,7 +85,9 @@ class UserProfilesController < ProfilesController
   # DELETE /user_profiles/1.xml
   def destroy
     @profile = Profile.find(params[:id])
-    @profile.destroy
+    if @profile.destroy
+      add_new_flash_message('Profile was successfully deleted.')
+    end
 
     respond_to do |format|
       format.html { redirect_to(profiles_url) }
