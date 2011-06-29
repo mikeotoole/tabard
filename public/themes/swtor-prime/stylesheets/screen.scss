@@ -742,8 +742,8 @@ p.submit {
         input {
           display: inline;
         }
-        label {
-          display: inline;
+        &.checked {
+          background: #32ab43;
         }
         &:hover {
           background: #fff;

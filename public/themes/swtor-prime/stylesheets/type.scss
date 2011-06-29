@@ -336,8 +336,11 @@ table {
 }
 
 #usercheckboxes {
-  label:hover {
-    color: #000;
+  label {
+    &:hover,
+    &.checked {
+      color: #000;
+    }
   }
 }
 

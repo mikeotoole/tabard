@@ -973,8 +973,8 @@ p.submit {
         width: 225px; }
         #body #usercheckboxes li label input {
           display: inline; }
-        #body #usercheckboxes li label label {
-          display: inline; }
+        #body #usercheckboxes li label.checked {
+          background: #32ab43; }
         #body #usercheckboxes li label:hover {
           background: #fff; }
 

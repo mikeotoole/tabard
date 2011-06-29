@@ -267,7 +267,7 @@ table {
   #menu .search button {
     color: #000 !important; }
 
-#usercheckboxes label:hover {
+#usercheckboxes label:hover, #usercheckboxes label.checked {
   color: #000; }
 
 #page #author cite,
