@@ -11,4 +11,4 @@
     - if logged_in? and current_user.can_delete(@page)
       = link_to 'Delete', [@page.page_space,@page], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   %p
-    = @page.body
+    = sanitize @page.body, :tags => %w(a abbr address b blockquote br cite code dd del details dfn div dl dt em h2 h3 hr i img ins li ol p pre q small span strong sub summary sup table tbody td tfoot th thead time tr ul)

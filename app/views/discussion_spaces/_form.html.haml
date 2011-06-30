@@ -3,6 +3,6 @@
     = f.label :name
     = f.text_field :name
   %p.field
-    = f.label :game_id
-    = f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select an optional game", :include_blank => true}, :class =>"game")
-  = submit_or_cancel(f)
+    = f.label :game_id, 'For'
+    = f.select(:game_id, grouped_options_for_select(@option_hash), :include_blank => 'General Discussion', :class =>"game")
+  = submit_or_cancel(f, 'Create')

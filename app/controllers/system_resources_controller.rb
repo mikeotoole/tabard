@@ -1,13 +1,11 @@
 class SystemResourcesController < ApplicationController
+  respond_to :html, :xml
   # GET /system_resources
   # GET /system_resources.xml
   def index
     @system_resources = SystemResource.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @system_resources }
-    end
+    respond_with(@system_resource)
   end
 
   # GET /system_resources/1
@@ -15,10 +13,7 @@ class SystemResourcesController < ApplicationController
   def show
     @system_resource = SystemResource.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @system_resource }
-    end
+    respond_with(@system_resource)
   end
 
   # GET /system_resources/new
@@ -26,10 +21,7 @@ class SystemResourcesController < ApplicationController
   def new
     @system_resource = SystemResource.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @system_resource }
-    end
+    respond_with(@system_resource)
   end
 
   # GET /system_resources/1/edit
@@ -51,7 +43,8 @@ class SystemResourcesController < ApplicationController
             role.permissions << Permission.new(:permissionable => @system_resource, :name => @system_resource.name, :show_p => false, :create_p => false, :update_p => false, :delete_p => false)
           end
         end
-        format.html { redirect_to(@system_resource, :notice => 'System resource was successfully created.') }
+        add_new_flash_message('System resource was successfully created.') 
+        format.html { redirect_to(@system_resource) }
         format.xml  { render :xml => @system_resource, :status => :created, :location => @system_resource }
       else
         format.html { render :action => "new" }
@@ -67,7 +60,8 @@ class SystemResourcesController < ApplicationController
 
     respond_to do |format|
       if @system_resource.update_attributes(params[:system_resource])
-        format.html { redirect_to(@system_resource, :notice => 'System resource was successfully updated.') }
+        add_new_flash_message('System resource was successfully updated.') 
+        format.html { redirect_to(@system_resource) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -80,7 +74,9 @@ class SystemResourcesController < ApplicationController
   # DELETE /system_resources/1.xml
   def destroy
     @system_resource = SystemResource.find(params[:id])
-    @system_resource.destroy
+    if @system_resource.destroy
+      add_new_flash_message('System resource was successfully deleted.') 
+    end
 
     respond_to do |format|
       format.html { redirect_to(system_resources_url) }

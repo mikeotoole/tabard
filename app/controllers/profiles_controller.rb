@@ -37,11 +37,11 @@ class ProfilesController < ApplicationController
   # GET /profiles/new.xml
   def new
     if @profile_type == "UserProfile" || current_user.user_profile == nil || @profile_type == nil
-      flash.now[:alert] = "Please create a user profile to finish creating your account."
+      add_new_flash_message("Please create a user profile to finish creating your account.",'alert')
       @profile = UserProfile.new
       @profile.type = "UserProfile"
     else
-      flash.now[:alert] = "Please create a game profile."
+      add_new_flash_message("Please create a game profile.",'alert')
       @profile = GameProfile.new
       @profile.type = "GameProfile"
     end
@@ -70,7 +70,8 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to(@profile, :notice => 'Profile was successfully created.') }
+        add_new_flash_message('Profile was successfully created.')
+        format.html { redirect_to(@profile) }
         format.xml  { render :xml => @profile, :status => :created, :location => @profile }
       else
         format.html { render :action => "new" }
@@ -86,7 +87,8 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
-        format.html { redirect_to(@profile, :notice => 'Profile was successfully updated.') }
+        add_new_flash_message('Profile was successfully updated.')
+        format.html { redirect_to(@profile) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -99,7 +101,9 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1.xml
   def destroy
     @profile = Profile.find(params[:id])
-    @profile.destroy
+    if @profile.destroy
+      add_new_flash_message('Profile was successfully deleted.')
+    end
 
     respond_to do |format|
       format.html { redirect_to(profiles_url) }

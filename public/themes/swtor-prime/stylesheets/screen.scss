@@ -727,6 +727,30 @@ p.submit {
       background-position: -60px 0 !important;
     }
   }
+  #usercheckboxes {
+    padding: 0 0 1em;
+    li {
+      display: inline;
+      list-style: none;
+      label {
+        background: #333;
+        @include border_radius(3);
+        display: inline-block;
+        margin: 5px 0 0;
+        padding: 2px 5px;
+        width: 225px;
+        input {
+          display: inline;
+        }
+        &.checked {
+          background: #32ab43;
+        }
+        &:hover {
+          background: #fff;
+        }
+      }
+    }
+  }
 }
 
 #page {
@@ -783,7 +807,7 @@ p.submit {
       }
     }
   }
-  #body {
+  #discussionbody {
     min-height: 100px;
   }
   #author {
@@ -901,9 +925,11 @@ p.submit {
   }
 }
 
-.comments {
+#comments {
   ol {
+    padding: 0;
     li {
+      list-style: none;
       position: relative;
       span {
         display: block;
@@ -938,6 +964,7 @@ p.submit {
             &:focus,
             &:hover {
               background: #5ba7b4;
+              border-bottom: 0;
             }
           }
         }

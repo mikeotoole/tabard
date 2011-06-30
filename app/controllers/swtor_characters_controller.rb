@@ -6,7 +6,7 @@ class SwtorCharactersController < ApplicationController
   def edit
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
-        render :nothing => true, :status => :forbidden
+        render_insufficient_privileges
     end
   end
   
@@ -15,7 +15,7 @@ class SwtorCharactersController < ApplicationController
   def show
       @character = SwtorCharacter.find_by_id(params[:id])
       if !current_user.can_show(@character)
-        render :nothing => true, :status => :forbidden
+        render_insufficient_privileges
       else
         @game = Game.find_by_id(@character.game_id) if @character
     
@@ -42,14 +42,15 @@ class SwtorCharactersController < ApplicationController
   def create
     @character = SwtorCharacter.new(params[:swtor_character])
     if !current_user.can_create(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       profile = UserProfile.find_by_user_id(current_user.id)
       profile.build_character(@character, params[:default])
   
       respond_to do |format|
-        if profile.save         
-          format.html { redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
+        if profile.save        
+          add_new_flash_message('Character was successfully created.') 
+          format.html { redirect_to([@character.game, @character]) }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
           format.html { render :action => "new" }
@@ -64,7 +65,7 @@ class SwtorCharactersController < ApplicationController
   def update
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @game = Game.find_by_id(@character.game_id) if @character
       
@@ -75,7 +76,7 @@ class SwtorCharactersController < ApplicationController
       end
   
       if @character.update_attributes(params[:swtor_character])
-        flash[:notice] = 'Character was successfully updated.'
+        add_new_flash_message('Character was successfully updated.')
         respond_with(@game, @character)
       else
         respond_to do |format|
@@ -91,12 +92,12 @@ class SwtorCharactersController < ApplicationController
   def destroy
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_delete(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @character.destroy if @character
-      
+      add_new_flash_message('Character was successfully deleted.') 
       respond_to do |format|
-        format.html { redirect_to user_profile_path(UserProfile.find(current_user)), :notice => 'Character deleted' }
+        format.html { redirect_to user_profile_path(UserProfile.find(current_user)) }
         format.xml  { head :ok }
       end
     end

@@ -30,7 +30,7 @@ class PagesController < ApplicationController
   def new
     @page = page_helper.new
     if !current_user.can_create(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@page)
     end
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
   def edit
     @page = page_helper.find(params[:id])
     if !current_user.can_update("Page") and !current_user.can_update(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
   end
 
@@ -49,7 +49,7 @@ class PagesController < ApplicationController
   def create
     @page = page_helper.new(params[:page])
     if !current_user.can_create(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @page.save
         add_new_flash_message('Page was successfully created.')
@@ -68,7 +68,7 @@ class PagesController < ApplicationController
   def update
     @page = page_helper.find(params[:id])
     if !current_user.can_update("Page") and !current_user.can_update(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @page.update_attributes(params[:page])
         add_new_flash_message('Page was successfully updated.')
@@ -87,9 +87,11 @@ class PagesController < ApplicationController
   def destroy
     @page = page_helper.find(params[:id])
     if !current_user.can_delete("Page") and !current_user.can_delete(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
-      @page.destroy
+      if @page.destroy
+        add_new_flash_message('Page was successfully deleted.')
+      end
       respond_with(@page)
     end
   end

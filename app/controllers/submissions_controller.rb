@@ -6,7 +6,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions.xml
   def index
     if !current_user.can_show("SiteForm") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @site_form = SiteForm.find_by_id(params[:site_form_id])
       @submissions = @site_form.submissions
@@ -53,7 +53,9 @@ class SubmissionsController < ApplicationController
                           :body => "You have a new submission to view. \n<a href=" + site_form_submission_url(@submission.site_form, @submission) + ">Submission</a>\n\nThis is an automatically generated message sent because you are on the notification list for this form.\nReplies will not be seen.")
         end
         
-        format.html { redirect_to([@submission.site_form, @submission], :notice => 'Submission was successfully created.') }
+        add_new_flash_message('Submission was successfully created.')
+        
+        format.html { redirect_to([@submission.site_form, @submission]) }
         format.xml  { render :xml => @submission, :status => :created, :location => @submission }
       else
         format.html { render :action => "new" }

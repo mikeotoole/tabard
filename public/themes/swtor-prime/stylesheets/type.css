@@ -254,7 +254,7 @@ table {
   #menu ul li:hover a {
     color: #fff; }
   #menu ul li:hover ul a {
-    color: #666;
+    color: #999;
     font-family: arial, sans-serif;
     font-size: 0.7em;
     letter-spacing: 0.1em; }
@@ -262,10 +262,18 @@ table {
       color: #fff; }
   #menu ul li:hover ul .current a {
     color: #fff; }
+  #menu ul li:hover ul .new a {
+    color: #444;
+    font-style: italic !important; }
+    #menu ul li:hover ul .new a:hover {
+      color: #fff; }
   #menu .search input {
     color: #fff !important; }
   #menu .search button {
     color: #000 !important; }
+
+#usercheckboxes label:hover, #usercheckboxes label.checked {
+  color: #000; }
 
 #page #author cite,
 #page #author time {
@@ -282,15 +290,15 @@ table {
     color: #fff;
     font-weight: bold; }
 
-.comments span.author a {
+#comments span.author a {
   color: #5ba7b4;
   font-family: 'SansationBold', serif;
   font-size: 1.2em;
   text-decoration: none; }
-.comments span.actions a {
+#comments span.actions a {
   color: #666;
   font-size: 0.8em; }
-  .comments span.actions a:focus, .comments span.actions a:hover {
+  #comments span.actions a:focus, #comments span.actions a:hover {
     color: #000; }
 
 #new_comment .actions input {

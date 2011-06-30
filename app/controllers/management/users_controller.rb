@@ -4,7 +4,7 @@ class Management::UsersController < ApplicationController
   # GET /management/users.xml
   def index
     if !current_user.can_show("User") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @users = User.all
   
@@ -46,7 +46,7 @@ class Management::UsersController < ApplicationController
   # GET /management/users/1/edit
   def edit
     if !current_user.can_update("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
     end
@@ -61,7 +61,8 @@ class Management::UsersController < ApplicationController
       if @user.save
         @user.user_profile.set_active
         @user.user_profile.save
-        format.html { redirect_to(management_users_path, :notice => 'User was successfully created.') }
+        add_new_flash_message('User was successfully created.')
+        format.html { redirect_to(management_users_path) }
         format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else
         format.html { render :action => "new" }
@@ -74,13 +75,14 @@ class Management::UsersController < ApplicationController
   # PUT /management/users/1.xml
   def update
     if !current_user.can_update("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
     end
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(management_users_path, :notice => 'User was successfully updated.') }
+        add_new_flash_message('User was successfully updated.')
+        format.html { redirect_to(management_users_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -93,7 +95,7 @@ class Management::UsersController < ApplicationController
   # DELETE /management/users/1.xml
   def destroy
     if !current_user.can_delete("User") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
       @user.destroy
@@ -107,17 +109,19 @@ class Management::UsersController < ApplicationController
   
   def activate
     if !current_user.can_update("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
       @user.user_profile.set_active
       
       respond_to do |format|
         if @user.user_profile.save
-          format.html { redirect_to(management_users_path, :notice => 'User was successfully activated.') }
+          add_new_flash_message('User was successfully activated.')
+          format.html { redirect_to(management_users_path) }
           format.xml  { head :ok }
         else
-          format.html { redirect_to(management_users_path, :alert => 'Error making active.') }
+          add_new_flash_message('Error making active.')
+          format.html { redirect_to(management_users_path) }
           format.xml  { render :xml => @user.user_profile.errors, :status => :unprocessable_entity }
         end
       end
@@ -126,17 +130,19 @@ class Management::UsersController < ApplicationController
   
   def deactivate
     if !current_user.can_update("User") and User.find(params[:id]) != current_user
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @user = User.find(params[:id])
       @user.user_profile.set_inactive
       
       respond_to do |format|
         if @user.user_profile.save
-          format.html { redirect_to(management_users_path, :notice => 'User was successfully deactivated.') }
+          add_new_flash_message('User was successfully deactivated.')
+          format.html { redirect_to(management_users_path) }
           format.xml  { head :ok }
         else
-          format.html { redirect_to(management_users_path, :alert => 'Error making inactive.') }
+          add_new_flash_message('Error making inactive.',"alert")
+          format.html { redirect_to(management_users_path) }
           format.xml  { render :xml => @user.user_profile.errors, :status => :unprocessable_entity }
         end
       end

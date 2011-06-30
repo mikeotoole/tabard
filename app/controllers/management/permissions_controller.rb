@@ -33,7 +33,7 @@ class Management::PermissionsController < ApplicationController
   def create
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
-      flash[:notice] = 'Permission was succesfully created.'
+      add_new_flash_message('Permission was succesfully created.')
       redirect_to([:management,@role])
     else
       respond_with(@permission)
@@ -45,7 +45,7 @@ class Management::PermissionsController < ApplicationController
   def update
     @permission = @role.permissions.find(params[:id])
     if @permission.update_attributes(params[:permission])
-      flash[:notice] = 'Permission was successfully updated.'
+      add_new_flash_message('Permission was successfully updated.')
       redirect_to([:management,@role])
     else
       respond_with(@permission)
@@ -70,17 +70,20 @@ class Management::PermissionsController < ApplicationController
     def get_avalible_permissionables
       @permissionables = Array.new() 
       for resource in SystemResource.all
-        @permissionables << resource
-      end
-      for discussionS in DiscussionSpace.all
-        @permissionables << discussionS
-      end
-      for pageS in PageSpace.all
-        @permissionables << pageS
+        case resource.name
+        when "DiscussionSpace"
+          @discussionHeader = [["All "+resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @discussionOptions = { "Specific Discussion Space" => DiscussionSpace.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
+        when "PageSpace"
+          @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @pageOptions = { "Specific Page Space" => PageSpace.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
+        else
+          @permissionables << [resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
+        end
       end
       logger.debug(@role.permissions)
       @role.permissions.each { |role_permission|
-        @permissionables.delete_if{|permissionable| (permissionable.id == role_permission.permissionable_id) and (permissionable.class.to_s == role_permission.permissionable_type)}
+        @permissionables.delete_if{|permissionable| (permissionable[1].to_s == role_permission.magic_polymorphic_helper)}
       }
     end
 end

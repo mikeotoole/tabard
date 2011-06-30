@@ -5,7 +5,7 @@ class RolesController < ApplicationController
   # GET /roles.xml
   def index
     if !current_user.can_show("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @roles = Role.all
       respond_with(@roles)
@@ -16,7 +16,7 @@ class RolesController < ApplicationController
   # GET /roles/1.xml
   def show
     if !current_user.can_show("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.find(params[:id])
       respond_with(@role)

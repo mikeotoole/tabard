@@ -309,7 +309,7 @@ table {
         }
         ul {
           a {
-            color: #666;
+            color: #999;
             font-family: arial, sans-serif;
             font-size: 0.7em;
             letter-spacing: 0.1em;
@@ -321,6 +321,13 @@ table {
           .current a {
             color: #fff;
           }
+          .new a {
+            color: #444;
+            font-style: italic !important;
+            &:hover {
+              color: #fff;
+            }
+          }
         }
       }
     }
@@ -331,6 +338,15 @@ table {
     }
     button {
       color: #000 !important;
+    }
+  }
+}
+
+#usercheckboxes {
+  label {
+    &:hover,
+    &.checked {
+      color: #000;
     }
   }
 }
@@ -360,7 +376,7 @@ table {
   }
 }
 
-.comments {
+#comments {
   span {
     &.author a {
       color: #5ba7b4;
