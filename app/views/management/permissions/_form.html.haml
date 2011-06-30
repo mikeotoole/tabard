@@ -1,10 +1,7 @@
 = form_for [:management,@role,@permission] do |f|
   %p.field
-    %label Resource
-      = f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
-  %p.field
-    = f.label 'Resource'
-    = f.select(:magic_polymorphic_helper, @permissionables)
+    = f.label :magic_polymorphic_helper, "Resource"
+    = f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
   %p.field
     %label
       = f.check_box :create_p
