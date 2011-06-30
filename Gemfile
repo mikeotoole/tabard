@@ -10,6 +10,7 @@ gem 'sqlite3'
 
 #Deployment Gems
 gem 'capistrano'
+gem 'heroku'
 
 #Syntax Gems
 gem 'haml'
