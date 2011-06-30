@@ -1,13 +1,11 @@
 class LocationsController < ApplicationController
+  respond_to :html, :xml 
   # GET /locations
   # GET /locations.xml
   def index
     @locations = Location.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @locations }
-    end
+    respond_with(@locations)
   end
 
   # GET /locations/1
@@ -15,10 +13,7 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @location }
-    end
+    respond_with(@location)
   end
 
   # GET /locations/new
@@ -26,10 +21,7 @@ class LocationsController < ApplicationController
   def new
     @location = Location.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @location }
-    end
+    respond_with(@location)
   end
 
   # GET /locations/1/edit
@@ -44,7 +36,8 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to(@location, :notice => 'Location was successfully created.') }
+        add_new_flash_message('Location was successfully created.')
+        format.html { redirect_to(@location) }
         format.xml  { render :xml => @location, :status => :created, :location => @location }
       else
         format.html { render :action => "new" }
@@ -60,7 +53,8 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to(@location, :notice => 'Location was successfully updated.') }
+        add_new_flash_message('Location was successfully updated.')
+        format.html { redirect_to(@location) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,7 +67,9 @@ class LocationsController < ApplicationController
   # DELETE /locations/1.xml
   def destroy
     @location = Location.find(params[:id])
-    @location.destroy
+    if(@location.destroy)
+      add_new_flash_message('Location was successfully deleted.')
+    end
 
     respond_to do |format|
       format.html { redirect_to(locations_url) }

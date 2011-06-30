@@ -1,2 +1,0 @@
-class RecurringEvent < Event
-end

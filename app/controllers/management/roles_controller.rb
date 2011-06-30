@@ -5,7 +5,7 @@ class Management::RolesController < ApplicationController
   # GET /management/roles.xml
   def index
     if !current_user.can_show("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @roles = Role.all
       respond_with(@roles)
@@ -16,7 +16,7 @@ class Management::RolesController < ApplicationController
   # GET /management/roles/1.xml
   def show
     if !current_user.can_show("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]
       #@role = Role.find(params[:id])
@@ -28,7 +28,7 @@ class Management::RolesController < ApplicationController
   # GET /management/roles/new.xml
   def new
     if !current_user.can_create("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.new
       @users = User.all
@@ -43,7 +43,7 @@ class Management::RolesController < ApplicationController
   # GET /management/roles/1/edit
   def edit
     if !current_user.can_update("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.find(params[:id])
       @users = User.all
@@ -54,7 +54,7 @@ class Management::RolesController < ApplicationController
   # POST /management/roles.xml
   def create
     if !current_user.can_create("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.new(params[:role])
   
@@ -70,7 +70,7 @@ class Management::RolesController < ApplicationController
   # PUT /management/roles/1.xml
   def update
     if !current_user.can_update("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.find(params[:id])
       if @role.update_attributes(params[:role])
@@ -84,11 +84,11 @@ class Management::RolesController < ApplicationController
   # DELETE /management/roles/1.xml
   def destroy
     if !current_user.can_delete("Role") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @role = Role.find(params[:id])
       if @role.destroy
-        flash[:notice] = 'Role was succesfully deleted.'
+        add_new_flash_message('Role was successfully deleted.')
         redirect_to(:back)
       end
     end

@@ -22,7 +22,7 @@ class Management::PagesController < ApplicationController
   def new
     @page = Page.new
     if !current_user.can_create("Page")
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@page)
     end
@@ -32,7 +32,7 @@ class Management::PagesController < ApplicationController
   def edit
     @page = Page.find(params[:id])
     if !current_user.can_update("Page") and !current_user.can_update(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
   end
 
@@ -40,12 +40,12 @@ class Management::PagesController < ApplicationController
   # POST /pages.xml
   def create
     if !current_user.can_create("Page")
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @page = Page.new(params[:page])
       
       if @page.save
-        flash[:notice] = 'Page was successfully created.'
+        add_new_flash_message('Page was successfully created.')
         respond_with(@page)
       else 
         respond_to do |format|
@@ -61,10 +61,10 @@ class Management::PagesController < ApplicationController
   def update
     @page = Page.find(params[:id])
     if !current_user.can_update("Page") and !current_user.can_update(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @page.update_attributes(params[:page])
-        flash[:notice] = 'Page was successfully updated.'
+        add_new_flash_message('Page was successfully updated.')
         respond_with(@page)
       else
         respond_to do |format|
@@ -80,9 +80,11 @@ class Management::PagesController < ApplicationController
   def destroy
     @page = Page.find(params[:id])
     if !current_user.can_delete("Page") and !current_user.can_delete(@page)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
-      @page.destroy
+      if @page.destroy
+        add_new_flash_message('Page was successfully deleted.')
+      end
       respond_with(@page)
     end
   end

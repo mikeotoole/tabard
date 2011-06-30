@@ -1,23 +1,18 @@
 class Management::SiteFormsController < ApplicationController
-    before_filter :authenticate
+  respond_to :html, :xml
+  before_filter :authenticate
   # GET /management/site_forms
   # GET /management/site_forms.xml
   def index
       @site_form = SiteForm.all
   
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @site_form }
-      end
+      respond_with(@site_form)
   end
   
   def show
     @site_form = SiteForm.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @site_form }
-    end
+    respond_with(@site_form)
   end
 
   # GET /management/site_forms/new
@@ -25,15 +20,13 @@ class Management::SiteFormsController < ApplicationController
   def new
     @site_form = SiteForm.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @site_form }
-    end
+    respond_with(@site_form)
   end
 
   # GET /management/site_forms/1/edit
   def edit
       @site_form = SiteForm.find(params[:id])
+      repsond_with(@site_form)
   end
 
   # POST /management/site_forms
@@ -49,7 +42,9 @@ class Management::SiteFormsController < ApplicationController
           Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id)
         end
         
-        format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully created.') }
+        add_new_flash_message('Form was successfully created.')
+        
+        format.html { redirect_to(management_site_form_path(@site_form)) }
         format.xml  { render :xml => @site_form, :status => :created }
       else
         format.html { render :action => "new" }
@@ -73,7 +68,9 @@ class Management::SiteFormsController < ApplicationController
           Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id) unless @site_form.profile_notifications.include?(profile_id)
         end       
         
-        format.html { redirect_to(management_site_form_path(@site_form), :notice => 'Form was successfully updated.') }
+        add_new_flash_message('Form was successfully updated.')
+        
+        format.html { redirect_to(management_site_form_path(@site_form)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -94,8 +91,9 @@ class Management::SiteFormsController < ApplicationController
           format.xml  { head :ok }
         end
       else
+        add_new_flash_message('The registration application form can not be deleted.',"alert")
         respond_to do |format|
-          format.html { redirect_to(management_site_forms_path, :alert => 'The registration application form can not be deleted.') }
+          format.html { redirect_to(management_site_forms_path) }
           format.xml  { head :ok }
         end
       end

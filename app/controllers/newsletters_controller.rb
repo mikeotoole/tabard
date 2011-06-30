@@ -1,13 +1,11 @@
 class NewslettersController < ApplicationController
+  respond_to :html, :xml 
   # GET /newsletters
   # GET /newsletters.xml
   def index
     @newsletters = Newsletter.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @newsletters }
-    end
+    respond_with(@newsletters)
   end
 
   # GET /newsletters/1
@@ -15,10 +13,7 @@ class NewslettersController < ApplicationController
   def show
     @newsletter = Newsletter.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @newsletter }
-    end
+    respond_with(@newsletter)
   end
 
   # GET /newsletters/new
@@ -26,10 +21,7 @@ class NewslettersController < ApplicationController
   def new
     @newsletter = Newsletter.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @newsletter }
-    end
+    respond_with(@newsletter)
   end
 
   # GET /newsletters/1/edit
@@ -44,7 +36,8 @@ class NewslettersController < ApplicationController
 
     respond_to do |format|
       if @newsletter.save
-        format.html { redirect_to(@newsletter, :notice => 'Newsletter was successfully created.') }
+        add_new_flash_message('Newsletter was successfully created.')
+        format.html { redirect_to(@newsletter) }
         format.xml  { render :xml => @newsletter, :status => :created, :location => @newsletter }
       else
         format.html { render :action => "new" }
@@ -60,7 +53,8 @@ class NewslettersController < ApplicationController
 
     respond_to do |format|
       if @newsletter.update_attributes(params[:newsletter])
-        format.html { redirect_to(@newsletter, :notice => 'Newsletter was successfully updated.') }
+        add_new_flash_message('Newsletter was successfully updated.')
+        format.html { redirect_to(@newsletter) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,7 +67,9 @@ class NewslettersController < ApplicationController
   # DELETE /newsletters/1.xml
   def destroy
     @newsletter = Newsletter.find(params[:id])
-    @newsletter.destroy
+    if @newsletter.destroy
+      add_new_flash_message('Newsletter was successfully deleted.')
+    end
 
     respond_to do |format|
       format.html { redirect_to(newsletters_url) }

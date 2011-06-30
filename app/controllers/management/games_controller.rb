@@ -7,7 +7,7 @@ class Management::GamesController < ApplicationController
   # GET /management/games.xml
   def index
     if !current_user.can_show("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @games = Game.all
       respond_with(@games)
@@ -18,7 +18,7 @@ class Management::GamesController < ApplicationController
   # GET /management/games/new.xml
   def new
     if !current_user.can_create("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @game = Game.new
       respond_with(@game)
@@ -28,7 +28,7 @@ class Management::GamesController < ApplicationController
   # GET /management/games/1/edit
   def edit
     if !current_user.can_update("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @game = Game.find(params[:id])
     end
@@ -38,13 +38,14 @@ class Management::GamesController < ApplicationController
   # POST /management/games.xml
   def create
     if !current_user.can_create("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @game = Game.new(params[:game])
   
       respond_to do |format|
         if @game.save
-          format.html { redirect_to(management_games_path, :notice => 'Game was successfully created.') }
+          add_new_flash_message('Game was successfully created.')
+          format.html { redirect_to(management_games_path) }
           format.xml  { render :xml => @game, :status => :created, :location => @game }
         else
           format.html { render :action => "new" }
@@ -58,13 +59,14 @@ class Management::GamesController < ApplicationController
   # PUT /management/games/1.xml
   def update
     if !current_user.can_update("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @game = Game.find(params[:id])
   
       respond_to do |format|
         if @game.update_attributes(params[:game])
-          format.html { redirect_to(management_games_path, :notice => 'Game was successfully updated.') }
+          add_new_flash_message('Game was successfully updated.')
+          format.html { redirect_to(management_games_path) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }
@@ -78,10 +80,12 @@ class Management::GamesController < ApplicationController
   # DELETE /management/games/1.xml
   def destroy
     if !current_user.can_delete("Game") 
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else 
       @game = Game.find(params[:id])
-      @game.destroy
+      if @game.destroy
+        add_new_flash_message('Game was successfully deleted.')
+      end
   
       respond_to do |format|
         format.html { redirect_to(management_games_path) }

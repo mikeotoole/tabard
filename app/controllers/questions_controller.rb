@@ -59,7 +59,8 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        format.html { redirect_to([:management, @form], :notice => 'Question was successfully updated.') }
+        add_new_flash_message('Question was successfully updated.')
+        format.html { redirect_to([:management, @form]) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

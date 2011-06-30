@@ -14,7 +14,7 @@ class SiteAnnouncementsController < ApplicationController
   def show
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_show(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @acknowledgments = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:announcement_id => @site_announcement.id})
       respond_with(@site_announcement)
@@ -26,7 +26,7 @@ class SiteAnnouncementsController < ApplicationController
   def new
     @site_announcement = SiteAnnouncement.new
     if !current_user.can_create(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@site_announcement)
     end 
@@ -36,7 +36,7 @@ class SiteAnnouncementsController < ApplicationController
   def edit
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_update(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
     respond_with(@site_announcement)
   end
@@ -46,7 +46,7 @@ class SiteAnnouncementsController < ApplicationController
   def create
     @site_announcement = SiteAnnouncement.new(params[:site_announcement])
     if !current_user.can_create(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @site_announcement.save
         respond_with(@site_announcement)
@@ -64,10 +64,10 @@ class SiteAnnouncementsController < ApplicationController
   def update
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_update(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @site_announcement.update_attributes(params[:site_announcement])
-        flash[:notice] = 'Site announcement was successfully updated.'
+        add_new_flash_message('Site announcement was successfully updated.')
         respond_with(@site_announcement)
       else
         respond_to do |format|
@@ -83,7 +83,7 @@ class SiteAnnouncementsController < ApplicationController
   def destroy
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_delete(@site_announcement)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @site_announcement.destroy
       respond_with(@site_announcement)

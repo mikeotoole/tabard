@@ -99,7 +99,8 @@ class RegistrationApplicationsController < ApplicationController
 
     respond_to do |format|
       if @registration_application.update_attributes(params[:registration_application])
-        format.html { redirect_to(@registration_application, :notice => 'Registration application was successfully updated.') }
+        add_new_flash_message('Registration application was successfully updated.')
+        format.html { redirect_to(@registration_application) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -148,7 +149,7 @@ class RegistrationApplicationsController < ApplicationController
   # DELETE /registration_applications/1.xml
   def destroy
     @registration_application = RegistrationApplication.find(params[:id])
-    if(@registration_application.destroy) 
+    if @registration_application.destroy
       add_new_flash_message('Registration application was successfully deleted.')
     end  
     

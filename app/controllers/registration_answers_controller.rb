@@ -44,7 +44,8 @@ class RegistrationAnswersController < ApplicationController
 
     respond_to do |format|
       if @registration_answer.save
-        format.html { redirect_to(@registration_answer, :notice => 'Registration answer was successfully created.') }
+        add_new_flash_message('Registration answer was successfully created.')
+        format.html { redirect_to(@registration_answer) }
         format.xml  { render :xml => @registration_answer, :status => :created, :location => @registration_answer }
       else
         format.html { render :action => "new" }
@@ -60,7 +61,8 @@ class RegistrationAnswersController < ApplicationController
 
     respond_to do |format|
       if @registration_answer.update_attributes(params[:registration_answer])
-        format.html { redirect_to(@registration_answer, :notice => 'Registration answer was successfully updated.') }
+        add_new_flash_message('Registration answer was successfully updated.')
+        format.html { redirect_to(@registration_answer) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,7 +75,9 @@ class RegistrationAnswersController < ApplicationController
   # DELETE /registration_answers/1.xml
   def destroy
     @registration_answer = RegistrationAnswer.find(params[:id])
-    @registration_answer.destroy
+    if @registration_answer.destroy
+      add_new_flash_message('Registration answer was successfully deleted.')
+    end
 
     respond_to do |format|
       format.html { redirect_to(registration_answers_url) }

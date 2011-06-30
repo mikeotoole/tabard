@@ -6,7 +6,7 @@ class WowCharactersController < ApplicationController
   def edit
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
-        render :nothing => true, :status => :forbidden
+        render_insufficient_privileges
     end
   end
   
@@ -15,7 +15,7 @@ class WowCharactersController < ApplicationController
   def show
       @character = WowCharacter.find_by_id(params[:id])
       if !current_user.can_show(@character)
-        render :nothing => true, :status => :forbidden
+        render_insufficient_privileges
       else
         @game = Game.find_by_id(@character.game_id) if @character
     
@@ -42,7 +42,7 @@ class WowCharactersController < ApplicationController
   def create
     @character = WowCharacter.new(params[:wow_character])
     if !current_user.can_create(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       
       profile = UserProfile.find_by_user_id(current_user.id)
@@ -50,7 +50,8 @@ class WowCharactersController < ApplicationController
   
       respond_to do |format|
         if profile.save
-          format.html { redirect_to [@character.game, @character], :notice => 'Character was successfully created.' }#redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
+          add_new_flash_message('Character was successfully created.')
+          format.html { redirect_to [@character.game, @character] }#redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
           flash[:notice] = profile.errors.full_messages.join(" | ")
@@ -66,7 +67,7 @@ class WowCharactersController < ApplicationController
   def update
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @game = Game.find_by_id(@character.game_id) if @character
       
@@ -77,7 +78,7 @@ class WowCharactersController < ApplicationController
       end
   
       if @character.update_attributes(params[:wow_character])
-        flash[:notice] = 'Character was successfully updated.'
+        add_new_flash_message('Character was successfully updated.')
         respond_with(@game, @character)
       else
         respond_to do |format|
@@ -93,12 +94,14 @@ class WowCharactersController < ApplicationController
   def destroy
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_delete(@character)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @character.destroy if @character
       
+      add_new_flash_message('Character was successfully deleted.')
+      
       respond_to do |format|
-        format.html { redirect_to user_profile_path(UserProfile.find_by_id(current_user)), :notice => 'Character deleted' }
+        format.html { redirect_to user_profile_path(UserProfile.find_by_id(current_user)) }
         format.xml  { head :ok }
       end
     end

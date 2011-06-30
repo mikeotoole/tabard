@@ -8,9 +8,11 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:email], params[:password])
       if !user.user_profile.is_active
         if user.user_profile.is_applicant
-          redirect_to root_path, :alert => "Your application has not been approved yet."
+          add_new_flash_message("Your application has not been approved yet.","alert")
+          redirect_to root_path
         else
-          redirect_to root_path, :alert => "You are not authorized to access the site."
+          add_new_flash_message("You are not authorized to access the site.","alert")
+          redirect_to root_path
         end       
         return
       end
@@ -20,26 +22,28 @@ class SessionsController < ApplicationController
       
       if user.user_profile == nil
         @profile_type = "UserProfile"
-        redirect_to new_profile_path, :notice => (
-          "Logged in as <em>#{user.name}</em>." +
+        add_new_flash_message("Logged in as <em>#{user.name}</em>." +
           " Please create a <a href=\"#{new_profile_path}\">new profile</a>" +
-          " to finish setting up your account."
-        )
+          " to finish setting up your account.")
+        redirect_to new_profile_path
       else
-        if session[:pre_login_url] 
-          redirect_to session[:pre_login_url], :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
+        add_new_flash_message("Welcome back, <em>#{user.user_profile.name}</em>.")
+        if session[:pre_login_url]  
+          redirect_to session[:pre_login_url]
         else
-          redirect_to root_path, :notice => "Welcome back, <em>#{user.user_profile.name}</em>."
+          redirect_to root_path
         end        
       end 
     else
-      redirect_to root_path, :alert => "Invalid email/password combination."
+      add_new_flash_message("Invalid email/password combination.")
+      redirect_to root_path
     end
   end
   
   def destroy 
     reset_session 
     cookies.delete(:remember_token)
-    redirect_to root_path, :notice => "You successfully logged out"
+    add_new_flash_message("You successfully logged out")
+    redirect_to root_path
   end
 end
