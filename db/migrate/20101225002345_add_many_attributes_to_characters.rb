@@ -5,7 +5,7 @@ class AddManyAttributesToCharacters < ActiveRecord::Migration
     add_column :characters, :klass, :string
     add_column :characters, :server, :string
     add_column :characters, :extra, :string
-    add_column :characters, :rank, :intager
+    add_column :characters, :rank, :integer
   end
 
   def self.down

@@ -1,6 +1,6 @@
 class AddGameIdToPageSpaces < ActiveRecord::Migration
   def self.up
-    add_column :page_spaces, :game_id, :intager
+    add_column :page_spaces, :game_id, :integer
   end
 
   def self.down
