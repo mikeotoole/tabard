@@ -35,5 +35,5 @@
     %tfoot
       %tr
         %td{ :colspan => 3 }
-          - if logged_in? and current_user.can_create("discussionSpace")
+          - if logged_in? and current_user.can_create("DiscussionSpace")
             = link_to 'Create a discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button'
