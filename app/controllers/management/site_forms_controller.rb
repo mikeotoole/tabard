@@ -26,7 +26,7 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/1/edit
   def edit
       @site_form = SiteForm.find(params[:id])
-      repsond_with(@site_form)
+      respond_with(@site_form)
   end
 
   # POST /management/site_forms
