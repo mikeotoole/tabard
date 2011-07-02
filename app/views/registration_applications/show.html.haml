@@ -6,4 +6,4 @@
 
 = button_to 'Reject Application', reject_registration_application_path(@registration_application) if @registration_application.status != 4
 
-= render :partial => "management/discussion_spaces/registration_application_space", :locals => {:discussion => @registration_application.discussion}
+- #render :partial => "management/discussion_spaces/registration_application_space", :locals => {:discussion => @registration_application.discussion}
