@@ -759,9 +759,11 @@ p.submit {
     right: 0;
     position: absolute;
     top: 0;
+    a.accept,
     a.edit,
     a.delete,
     a.lock,
+    a.reject,
     a.show,
     a.unlock {
       background: url(../images/icons-16.png) no-repeat #333;
@@ -774,6 +776,12 @@ p.submit {
       width: 30px;
       &:hover {
         background-color: #3fa8c2;
+      }
+      &.accept {
+        background-position: -90px -30px;
+        &:hover {
+          background-position: -90px 0;
+        }
       }
       &.edit {
         background-position: 0 -30px;
@@ -791,6 +799,12 @@ p.submit {
         background-position: -180px -30px;
         &:hover {
           background-position: -180px 0;
+        }
+      }
+      &.reject {
+        background-position: -120px -30px;
+        &:hover {
+          background-position: -120px 0;
         }
       }
       &.show {

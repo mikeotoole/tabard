@@ -17,5 +17,8 @@ gem 'haml'
 gem 'sass'
 gem 'squeel'
 
-#Misc Gems
+#New Relic
+gem 'newrelic_rpm'
+
+#Tiny MCE
 gem 'tiny_mce'

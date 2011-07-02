@@ -984,9 +984,11 @@ p.submit {
     right: 0;
     position: absolute;
     top: 0; }
+    #page #actions a.accept,
     #page #actions a.edit,
     #page #actions a.delete,
     #page #actions a.lock,
+    #page #actions a.reject,
     #page #actions a.show,
     #page #actions a.unlock {
       background: url(../images/icons-16.png) no-repeat #333333;
@@ -1012,69 +1014,123 @@ p.submit {
       padding: 0;
       text-indent: -500em;
       width: 30px; }
+      #page #actions a.accept:hover,
       #page #actions a.edit:hover,
       #page #actions a.delete:hover,
       #page #actions a.lock:hover,
+      #page #actions a.reject:hover,
       #page #actions a.show:hover,
       #page #actions a.unlock:hover {
         background-color: #3fa8c2; }
+      #page #actions a.accept.accept,
+      #page #actions a.edit.accept,
+      #page #actions a.delete.accept,
+      #page #actions a.lock.accept,
+      #page #actions a.reject.accept,
+      #page #actions a.show.accept,
+      #page #actions a.unlock.accept {
+        background-position: -90px -30px; }
+        #page #actions a.accept.accept:hover,
+        #page #actions a.edit.accept:hover,
+        #page #actions a.delete.accept:hover,
+        #page #actions a.lock.accept:hover,
+        #page #actions a.reject.accept:hover,
+        #page #actions a.show.accept:hover,
+        #page #actions a.unlock.accept:hover {
+          background-position: -90px 0; }
+      #page #actions a.accept.edit,
       #page #actions a.edit.edit,
       #page #actions a.delete.edit,
       #page #actions a.lock.edit,
+      #page #actions a.reject.edit,
       #page #actions a.show.edit,
       #page #actions a.unlock.edit {
         background-position: 0 -30px; }
+        #page #actions a.accept.edit:hover,
         #page #actions a.edit.edit:hover,
         #page #actions a.delete.edit:hover,
         #page #actions a.lock.edit:hover,
+        #page #actions a.reject.edit:hover,
         #page #actions a.show.edit:hover,
         #page #actions a.unlock.edit:hover {
           background-position: 0 0; }
+      #page #actions a.accept.delete,
       #page #actions a.edit.delete,
       #page #actions a.delete.delete,
       #page #actions a.lock.delete,
+      #page #actions a.reject.delete,
       #page #actions a.show.delete,
       #page #actions a.unlock.delete {
         background-position: -30px -30px; }
+        #page #actions a.accept.delete:hover,
         #page #actions a.edit.delete:hover,
         #page #actions a.delete.delete:hover,
         #page #actions a.lock.delete:hover,
+        #page #actions a.reject.delete:hover,
         #page #actions a.show.delete:hover,
         #page #actions a.unlock.delete:hover {
           background-position: -30px 0; }
+      #page #actions a.accept.lock,
       #page #actions a.edit.lock,
       #page #actions a.delete.lock,
       #page #actions a.lock.lock,
+      #page #actions a.reject.lock,
       #page #actions a.show.lock,
       #page #actions a.unlock.lock {
         background-position: -180px -30px; }
+        #page #actions a.accept.lock:hover,
         #page #actions a.edit.lock:hover,
         #page #actions a.delete.lock:hover,
         #page #actions a.lock.lock:hover,
+        #page #actions a.reject.lock:hover,
         #page #actions a.show.lock:hover,
         #page #actions a.unlock.lock:hover {
           background-position: -180px 0; }
+      #page #actions a.accept.reject,
+      #page #actions a.edit.reject,
+      #page #actions a.delete.reject,
+      #page #actions a.lock.reject,
+      #page #actions a.reject.reject,
+      #page #actions a.show.reject,
+      #page #actions a.unlock.reject {
+        background-position: -120px -30px; }
+        #page #actions a.accept.reject:hover,
+        #page #actions a.edit.reject:hover,
+        #page #actions a.delete.reject:hover,
+        #page #actions a.lock.reject:hover,
+        #page #actions a.reject.reject:hover,
+        #page #actions a.show.reject:hover,
+        #page #actions a.unlock.reject:hover {
+          background-position: -120px 0; }
+      #page #actions a.accept.show,
       #page #actions a.edit.show,
       #page #actions a.delete.show,
       #page #actions a.lock.show,
+      #page #actions a.reject.show,
       #page #actions a.show.show,
       #page #actions a.unlock.show {
         background-position: -150px -30px; }
+        #page #actions a.accept.show:hover,
         #page #actions a.edit.show:hover,
         #page #actions a.delete.show:hover,
         #page #actions a.lock.show:hover,
+        #page #actions a.reject.show:hover,
         #page #actions a.show.show:hover,
         #page #actions a.unlock.show:hover {
           background-position: -150px 0; }
+      #page #actions a.accept.unlock,
       #page #actions a.edit.unlock,
       #page #actions a.delete.unlock,
       #page #actions a.lock.unlock,
+      #page #actions a.reject.unlock,
       #page #actions a.show.unlock,
       #page #actions a.unlock.unlock {
         background-position: -210px -30px; }
+        #page #actions a.accept.unlock:hover,
         #page #actions a.edit.unlock:hover,
         #page #actions a.delete.unlock:hover,
         #page #actions a.lock.unlock:hover,
+        #page #actions a.reject.unlock:hover,
         #page #actions a.show.unlock:hover,
         #page #actions a.unlock.unlock:hover {
           background-position: -210px 0; }
