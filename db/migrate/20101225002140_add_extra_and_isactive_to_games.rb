@@ -1,9 +1,9 @@
 class AddExtraAndIsactiveToGames < ActiveRecord::Migration
   def self.up
-    add_column :users, :is_active, :boolean
+    add_column :games, :is_active, :boolean
   end
 
   def self.down
-    remove_column :users, :is_active
+    remove_column :games, :is_active
   end
 end

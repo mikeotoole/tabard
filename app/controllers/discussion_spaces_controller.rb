@@ -1,6 +1,7 @@
 class DiscussionSpacesController < ApplicationController
   respond_to :html, :xml
-  before_filter :authenticate
+  before_filter :authenticate, :get_option_hash
+  
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
@@ -47,7 +48,6 @@ class DiscussionSpacesController < ApplicationController
     if !current_user.can_create(@discussion_space)
       render_insufficient_privileges
     else
-      @option_hash = { 'Games' => Game.where("is_active = ?", true).collect{ |game| [game.name, game.id] } }
       respond_with(@discussion_space)
     end
   end
@@ -113,5 +113,9 @@ class DiscussionSpacesController < ApplicationController
       end
       respond_with(@discussion_space)
     end
+  end
+  
+  def get_option_hash
+    @option_hash = { 'Games' => Game.where("is_active = ?", true).collect{ |game| [game.name, game.id] } } 
   end
 end
