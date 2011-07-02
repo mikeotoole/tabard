@@ -32,32 +32,37 @@
         %th.name Notifications Sent To
         %td.text{ :colspan => 2 }
           - if !@site_form.profile_notifications.empty?
-            - @site_form.profile_notifications.each do  |profile|
-              = render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
+            %ul
+              - @site_form.profile_notifications.each do |profile|
+                %li= profile.name
           - else
             Nobody
 
   %h2 Form Questions
   %table#form_questions
-    %thead
-      %tr
-        %th.name Question
-        %th.text Answers
-        %th.edit
-    %tbody
-      - @site_form.questions.each do |question|
+    - if @site_form.questions.size > 0
+      %thead
         %tr
-          %th.name= question.content
-          %td.text
-            - if question.predefined_answers.size > 0
-              %ul
-                - question.predefined_answers.each do |answer|
-                  %li= answer.content
-          %td.edit
-            - if logged_in? and current_user.can_update(question)
-              = link_to 'Edit', edit_question_path(question), :class => 'edit', :title => 'Edit'
-            - if logged_in? and current_user.can_delete(question)
-              = link_to 'Delete', question, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+          %th.name Question
+          %th.text Answers
+          %th.edit
+      %tbody
+        - @site_form.questions.each do |question|
+          %tr
+            %th.name= question.content
+            %td.text
+              - if question.predefined_answers.size > 0
+                %ul
+                  - question.predefined_answers.each do |answer|
+                    %li= answer.content
+            %td.edit
+              - if logged_in? and current_user.can_update(question)
+                = link_to 'Edit', edit_question_path(question), :class => 'edit', :title => 'Edit'
+              - if logged_in? and current_user.can_delete(question)
+                = link_to 'Delete', question, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+    - else
+      %tbody
+        %td{ :colspan => 3 } This form has no questions.
     %tfoot
       %tr
         %td{ :colspan => 3 }
