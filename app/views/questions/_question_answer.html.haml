@@ -1,4 +1,3 @@
-= div_for question_answer do
-  %h3
-    = question_answer.content
-    = render question_answer.answers(submission.id)
+%p
+  %strong= question_answer.content
+  = render question_answer.answers(submission.id)
