@@ -54,7 +54,7 @@ class SearchController < ApplicationController
     Comment.where{(body =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @comment_results.push({
-          :path => result.original_comment_item, #TODO discussion, discussion space, or whatever resource the comment is associated to
+          :path => url_for(result.original_comment_item) + "#comment_"+ result.id.to_s, #TODO discussion, discussion space, or whatever resource the comment is associated to
           :name => 'Comment by "' + (result.charater_posted? ? result.character.name : result.user_profile.name) + '"',
           :body => result.body
         })
