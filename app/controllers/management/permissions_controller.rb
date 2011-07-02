@@ -78,7 +78,7 @@ class Management::PermissionsController < ApplicationController
           @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
           @pageOptions = { "Specific Page Space" => PageSpace.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
         else
-          @permissionables << [resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
+          @permissionables << ["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
         end
       end
       logger.debug(@role.permissions)

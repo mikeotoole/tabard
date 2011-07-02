@@ -33,7 +33,7 @@
         %td.text{ :colspan => 2 }
           - if !@site_form.profile_notifications.empty?
             - @site_form.profile_notifications.each do  |profile|
-              = render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
+              -# render :partial => "user_profiles/profile_simple" , :locals => { :profile => profile }
           - else
             Nobody
 

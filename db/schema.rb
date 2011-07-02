@@ -77,16 +77,6 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.boolean  "has_been_locked"
   end
 
-  create_table "donations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "events", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "folders", :force => true do |t|
     t.integer  "user_profile_id"
     t.integer  "parent_id"
@@ -105,11 +95,6 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.integer  "character_discussion_space_id"
   end
 
-  create_table "locations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "message_copies", :force => true do |t|
     t.integer  "recipient_id"
     t.integer  "message_id"
@@ -123,11 +108,6 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.integer  "author_id"
     t.string   "subject"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "newsletters", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
