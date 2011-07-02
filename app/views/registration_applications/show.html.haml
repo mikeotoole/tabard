@@ -4,7 +4,7 @@
   %span= @registration_application.name
 
 #page
-  %h1 #{@registration_application.name} &mdash; #{@registration_application.status_string}
+  %h1 #{@registration_application.name} - #{@registration_application.status_string}
   
   %p#actions
     - if @registration_application.status != 2
@@ -18,7 +18,7 @@
         = link_to 'Lock Discussion', lock_discussion_path(@registration_application.discussion), :method => :post, :class => 'lock', :title => 'Lock Discussion'
 
   
-  %h2 Answers
+  %h2 Application Answers
   %p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:submission =>  @registration_application}
   
   - if @registration_application.discussion.has_been_locked
