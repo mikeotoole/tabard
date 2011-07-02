@@ -300,6 +300,8 @@ table {
   font-size: 0.8em; }
   #comments span.actions a:focus, #comments span.actions a:hover {
     color: #000; }
+#comments .deleted {
+  color: #444; }
 
 #new_comment .actions input {
   color: #fff !important; }

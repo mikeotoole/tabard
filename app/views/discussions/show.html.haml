@@ -40,6 +40,6 @@
   - if @discussion.has_been_locked
     %h2 This Discussion is Locked!
   - else
-    .reply
+    #reply
       %h2 Leave a Comment
-      %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => @discussion.id, :commentable_type => @discussion.class, :form_target => '#discussion_' + @discussion.id.to_s + ' .reply', :comment_target => '#discussion_' + @discussion.id.to_s + ' .comments'), :remote => true, :class => 'button' if current_user.can_create('Comment')
+      %p= link_to 'New Comment', new_comment_path(:format => :js, :commentable_id => @discussion.id, :commentable_type => @discussion.class, :form_target => '#reply', :comment_target => '#comments'), :remote => true, :class => 'button' if current_user.can_create('Comment')

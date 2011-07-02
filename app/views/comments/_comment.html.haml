@@ -2,7 +2,10 @@
   %img{ :src => '/themes/' << current_theme << '/images/avatar.png', :alt => '', :class => 'avatar' }/
   %span.author= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
   %span.body
-    = comment.has_been_deleted ? "<em>Comment has been deleted.</em>" : comment.body
+    - if comment.has_been_deleted
+      %em.deleted Comment has been deleted
+    - else
+      = comment.body
     - if logged_in?
       %span.actions
         - if current_user.can_special_permissions("Comment","lock") and !comment.has_been_locked
