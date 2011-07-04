@@ -1,24 +1,27 @@
 source 'http://rubygems.org'
 
-#Core Gems
-gem 'rails'
+# Rails Gem
+  gem 'rails'
 
-#Database Gems
-#gem 'pg'
-#gem 'mysql'
-gem 'sqlite3'
+# Global Gems
+  gem 'haml'
+  gem 'sass'
+  gem 'squeel'
+  gem 'tiny_mce'
 
-#Deployment Gems
-gem 'capistrano'
-gem 'heroku'
+# Development Specific Gems
+  group :development do
+    gem 'sqlite3'
+  end
 
-#Syntax Gems
-gem 'haml'
-gem 'sass'
-gem 'squeel'
+# Production Specific Gems
+  group :production do
+    gem 'heroku'
+    gem 'thin'
+    gem 'pg'
+    gem 'newrelic_rpm'
+  end
 
-#New Relic
-gem 'newrelic_rpm'
-
-#Tiny MCE
-gem 'tiny_mce'
+# Test Specific Gems
+  group :test do
+  end
