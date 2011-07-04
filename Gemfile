@@ -17,8 +17,8 @@ source 'http://rubygems.org'
 # Production Specific Gems
   group :production do
     gem 'heroku'
-    gem 'thin'
-    gem 'pg'
+    #gem 'thin'
+    #gem 'pg'
     gem 'newrelic_rpm'
   end
 
