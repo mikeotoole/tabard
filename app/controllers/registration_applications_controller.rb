@@ -78,7 +78,7 @@ class RegistrationApplicationsController < ApplicationController
 
     respond_to do |format|
       if @user.save      
-        add_new_flash_message('Registration application was successfully submitted.')
+        #add_new_flash_message('Registration application was successfully submitted.') Removed for BVR-152
         add_new_flash_message(@registration_application.site_form.thankyou)
         format.html { redirect_to root_path }
         format.xml  { render :xml => @registration_application, :status => :created, :location => @registration_application }
