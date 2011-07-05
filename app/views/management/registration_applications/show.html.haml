@@ -8,9 +8,9 @@
   
   %p#actions
     - if @registration_application.status != 2
-      = link_to 'Accept Application', accept_registration_application_path(@registration_application), :method => :post, :confirm => 'Accept this application?', :class => 'accept', :title => 'Accept Application'
+      = link_to 'Accept Application', accept_management_registration_application_path(@registration_application), :method => :post, :confirm => 'Accept this application?', :class => 'accept', :title => 'Accept Application'
     - if @registration_application.status != 4
-      = link_to 'Reject Application', reject_registration_application_path(@registration_application), :method => :post, :confirm => 'Reject this application?', :class => 'reject', :title => 'Reject Application'
+      = link_to 'Reject Application', reject_management_registration_application_path(@registration_application), :method => :post, :confirm => 'Reject this application?', :class => 'reject', :title => 'Reject Application'
     - if @registration_application.discussion.can_user_lock(current_user)
       - if @registration_application.discussion.has_been_locked
         = link_to 'Unlock Discussion', unlock_discussion_path(@registration_application.discussion), :method => :post, :class => 'unlock', :title => 'Unlock discussion'

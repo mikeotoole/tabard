@@ -188,7 +188,7 @@ class ApplicationController < ActionController::Base
     @management_items = Array.new()
     return true unless logged_in?
     #application
-    @management_items << {:link => registration_applications_path, :title => "Applications"} if current_user.can_manage("RegistrationApplication")
+    @management_items << {:link => management_registration_applications_path, :title => "Applications"} if current_user.can_manage("RegistrationApplication")
     #user
     @management_items << {:link => management_users_path, :title => "Users"} if current_user.can_manage("User")
     #roles
