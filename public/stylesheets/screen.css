@@ -387,6 +387,12 @@ table {
         -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
         -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); }
+      table .actions a.delete:before {
+        background-position: -46px -46px; }
+      table .actions a.forward:before {
+        background-position: -86px -46px; }
+      table .actions a.reply:before {
+        background-position: -86px -46px; }
       table .actions a.undelete:before {
         background-position: -846px -46px; }
 

@@ -14,7 +14,7 @@
   = @message.created_at.to_s(:long)
 %p.from
   %strong From:
-  = h @message.author.name
+  = @message.author.name
 %p.to
   %strong To:
   - if @message.recipients

@@ -251,6 +251,9 @@ table {
       &:hover {
         @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
       }
+      &.delete:before { background-position: -46px -46px; }
+      &.forward:before { background-position: -86px -46px; }
+      &.reply:before { background-position: -86px -46px; }
       &.undelete:before { background-position: -846px -46px; }
     }
   }
