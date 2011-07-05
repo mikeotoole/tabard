@@ -47,9 +47,19 @@ $(document).ready(function() {
   
   //announcements
   $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
-  $('#announcements .dismiss').bind('click', function(){ $(this).parent('li').slideUp(300); });
+  $('#announcements .dismiss').bind('click', function(){
+    $(this).parent('li').slideUp(300, function(){
+      $(this).remove();
+      if(!$('#announcements li').length) {
+        $('#announcements').animate({ marginBottom: 0 }, 100, function() { $(this).remove(); });
+      }
+    });
+  });
   
   //search
+  $('#menu .search input, #menu .search button')
+    .focus(function(){ $(this).parents('li').addClass('focus'); })
+    .blur(function(){ $(this).parents('li').removeClass('focus'); });
   $('#results dt').click(function(){
     $('#results .active').removeClass('active');
     $('#results .' + $(this).attr('class')).addClass('active');

@@ -1,3 +1,7 @@
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  %span Sent
+
 %h1 Sent Messages
 
 %table
@@ -7,17 +11,18 @@
         %th.subject Message Subject
         %th.name To
         %th.date Sent
-        %th.edit
+        %th.actions
     %tbody
-      - for message in @messages
+      - @messages.each do |message|
         %tr
-          %td= link_to message.subject, sent_path(message)
+          %td
+            = link_to message.subject, sent_path(message)
           %td
             - if message.recipients
               - message.recipients.each do |profile|
                 = link_to profile.name, profile
           %td= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
-          %td.edit
+          %td.actions
             - if current_user.can_delete(message)
               = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
   - else

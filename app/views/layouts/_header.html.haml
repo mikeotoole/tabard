@@ -3,7 +3,7 @@
     .title= link_to APP_CONFIG['site_name'], root_path
     .slogan= APP_CONFIG['site_tagline']
     = render :partial => "layouts/userbox" if logged_in?
-          
-= render :partial => "layouts/flash_messages"
-- flash[:messages] = nil
+
 = render :partial => "layouts/menu"
+= image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
+= render :partial => "layouts/flash_messages"

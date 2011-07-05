@@ -1,3 +1,7 @@
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  %span New
+
 %h1 New Message To
 - form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
   #recipients

@@ -9,10 +9,10 @@
           %label
             = check_box_tag('remember')
             Remember Me
-        = submit_tag 'Sign in'
+        %button{ :type => 'submit' } Login
         %p.apply
-          %span= 'Want to join?'
-          = link_to 'Apply now', new_registration_application_path
+          or
+          = link_to 'Sign up', new_registration_application_path
     %ul
       %li
         = link_to 'Info', :page_spaces, { :class => 'main' }
@@ -26,9 +26,13 @@
           %ul
             %li= link_to 'Announcements', announcements_path
             %li= link_to 'Events', :events
-            %li= link_to 'Discussions', :discussion_spaces if current_user.can_show("DiscussionSpace")
+            - if current_user.can_show("DiscussionSpace")
+              %li= link_to 'Discussions', :discussion_spaces
             %li= link_to 'Newsletter', :newsletters
             %li= link_to 'Donations', '#'
+            - if logged_in? and current_user.can_update('RegistrationApplication')
+              %li.new
+                = link_to '+ Applications', registration_applications_path
       -if !logged_in?
         %li
           = link_to 'Events', :events, { :class => 'main' }
@@ -40,7 +44,7 @@
               %li= link_to page_space.name, page_space
             - if logged_in? and current_user.can_create('PageSpace')
               %li.new
-                = link_to 'New', new_page_space_path
+                = link_to '+ New', new_page_space_path
       - if logged_in?
         %li
           = link_to 'Discussions', :discussion_spaces, { :class => 'main' }
@@ -50,10 +54,10 @@
                 %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
               - if logged_in? and current_user.can_create('DiscussionSpace')
                 %li.new
-                  = link_to 'New', new_discussion_space_path
+                  = link_to '+ New', new_discussion_space_path
       - if logged_in? and @management_items.size > 0
         %li
-          = link_to 'Management', :management, { :class => 'main' }
+          = link_to 'Admin', :management, { :class => 'main' }
           %ul
             -@management_items.each do |nav_item|
               %li= link_to nav_item[:title], nav_item[:link]
@@ -61,12 +65,3 @@
         %a.main
           Search
         = render :partial => "search/form"
-      %li.locale
-        %a.main
-          Language
-        %ul
-          - locales.each do |locale|
-            %li{ :class => locale[:locale] + (locale[:is_current] ? ' current' : '') }
-              = link_to({ :locale => locale[:locale] }) do
-                = image_tag '/images/locales/' + locale[:locale] + '.png', :alt => ''
-                = locale[:language]

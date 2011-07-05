@@ -1,12 +1,8 @@
-%h1
-  Sent: #{@message.subject}
-%p
-  %strong To:
-  - if @message.recipients
-    - @message.recipients.each do |profile|
-      = profile.name
-%p
-  %strong Sent:
-  = @message.created_at.to_s(:long)
-  
-%pre= @message.body
+%p#bcrumb
+  = link_to 'Sent Messages', sent_path
+  %span= @message.subject
+
+#page
+  %h1= @message.subject
+
+  = render :partial => 'messages/message', :locals => { :message => @message }

@@ -1,0 +1,26 @@
+%p#actions
+  - unless @message.author == UserProfile.system_profile
+    = button_to "Reply", reply_message_path(@message)
+  - unless @message.author == UserProfile.system_profile
+    = button_to "Reply All", reply_all_message_path(@message)
+  = button_to "Forward", forward_message_path(@message)
+  - if defined? @message.deleted
+    - if @message.deleted
+      = button_to "Undelete", undelete_message_path(@message), :method => "put"
+    - else
+      = button_to "Delete", message_path(@message), :method => "delete", :confirm => 'Are you sure?' 
+%p.received
+  %strong Received:
+  = @message.created_at.to_s(:long)
+%p.from
+  %strong From:
+  = h @message.author.name
+%p.to
+  %strong To:
+  - if @message.recipients
+    %ul
+      - @message.recipients.each do |profile|
+        %li
+          = profile.name
+%p.message
+  = @message.body

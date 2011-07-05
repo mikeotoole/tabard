@@ -1,0 +1,999 @@
+/* User Vars */
+$bg_color_1: rgba(255, 255, 255, 1);
+$bg_color_2: rgba(0, 0, 0, 1);
+$accent_color: rgba(0, 153, 204, 1);
+$border_radius: 10;
+$icon_set: default;
+$announcement_color: rgba(204, 0, 102, 1);
+$alert_color: rgba(200, 193, 0, 1);
+$notice_color: rgba(0, 175, 128, 1);
+
+@mixin bg_gradient($color1, $color2, $pos1: left top, $pos2: left bottom, $type: linear, $extra: '') {
+  background: -moz-linear-gradient(top, $color1, $color2) #{$extra};
+  background: -webkit-gradient($type, $pos1, $pos2, from($color1), to($color2)) #{$extra};
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$color1}, endColorstr=#{$color2})";
+}
+@mixin border_radius($top_left, $top_right: $top_left, $bottom_right: $top_left, $bottom_left: $top_left) {
+  @if $border_radius > 0 { 
+    @if unitless($top_left) { $top_left: 1px * $top_left }
+    @if unitless($top_right) { $top_right: 1px * $top_right }
+    @if unitless($bottom_right) { $bottom_right: 1px * $bottom_right }
+    @if unitless($bottom_left) { $bottom_left: 1px * $bottom_left }
+    $top_left: $top_left * $border_radius;
+    $top_right: $top_right * $border_radius;
+    $bottom_right: $bottom_right * $border_radius;
+    $bottom_left: $bottom_left * $border_radius;
+    -moz-border-radius-topleft: $top_left;
+    -moz-border-radius-topright: $top_right;
+    -moz-border-radius-bottomright: $bottom_right;
+    -moz-border-radius-bottomleft: $bottom_left;
+    -o-border-radius-topleft: $top_left;
+    -o-border-radius-topright: $top_right;
+    -o-border-radius-bottomright: $bottom_right;
+    -o-border-radius-bottomleft: $bottom_left;
+    -webkit-border-top-left-radius: $top_left;
+    -webkit-border-top-right-radius: $top_right;
+    -webkit-border-bottom-right-radius: $bottom_right;
+    -webkit-border-bottom-left-radius: $bottom_left;
+    border-top-left-radius: $top_left;
+    border-top-right-radius: $top_right;
+    border-bottom-right-radius: $bottom_right;
+    border-bottom-left-radius: $bottom_left;
+  }
+}
+@mixin box_shadow($value) {
+  -moz-box-shadow: $value;
+  -webkit-box-shadow: $value;
+  box-shadow: $value;
+}
+@mixin box_sizing($value) {
+  -moz-box-sizing: $value;
+  -webkit-box-sizing: $value;
+  box-sizing: $value;
+}
+@mixin opacity($opacity) {
+  -moz-opacity: $opacity;
+  -webkit-opacity: $opacity;
+  opacity: $opacity;
+  filter: alpha(opacity=($opacity * 100));
+}
+@mixin transition($t1, $t2:'', $t3:'') {
+  @if $t2 == '' {    
+    -moz-transition: $t1;
+    -o-transition: $t1;
+    -webkit-transition: $t1;
+    transition: $t1;
+  }
+  @elseif $t3 == '' {
+    -moz-transition: $t1, $t2;
+    -o-transition: $t1, $t2;
+    -webkit-transition: $t1, $t2;
+    transition: $t1, $t2;
+  }
+  @else {
+    -moz-transition: $t1, $t2, $t3;
+    -o-transition: $t1, $t2, $t3;
+    -webkit-transition: $t1, $t2, $t3;
+    transition: $t1, $t2, $t3;
+  }
+}
+
+
+body {
+  background: $bg_color_1;
+  @include bg_gradient(darken($bg_color_1, 15%), $bg_color_1, 0 0, 0 310, linear, repeat-x $bg_color_1);
+  .container {
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+  }
+}
+
+
+/* Forms */
+button,
+.button,
+input[type='submit'],
+input[type='button'] {
+  @include bg_gradient(darken($accent_color, 5%), lighten($accent_color, 5%));
+  border: 1px solid darken($accent_color, 10%);
+  @include border_radius(1);
+  @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+  @include box_sizing(content-box);
+  display: inline-block;
+  height: 30px;
+  padding: 0 15px;
+  &:focus,
+  &:hover {
+    @include bg_gradient($accent_color, lighten($accent_color, 10%));
+    @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+  }
+}
+input[type='text'],
+input[type='password'] {
+  background: lighten($bg_color_2, 10%);
+  border: 1px solid darken($bg_color_2, 10%);
+  @include border_radius(1);
+  @include box_shadow(0 0 4px rgba(0, 0, 0, .5));
+  @include box_sizing(border-box);
+  height: 30px;
+  padding: 0 10px;
+  width: 100%;
+  &:focus {
+    background: lighten($bg_color_2, 15%);
+    border-color: darken($bg_color_2, 15%);
+    @include box_shadow(0 0 8px rgba(0, 0, 0, .7));
+  }
+}
+textarea {
+  background: lighten($bg_color_2, 10%);
+  border: 1px solid darken($bg_color_2, 10%);
+  @include border_radius(1);
+  @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+  @include box_sizing(border-box);
+  padding: 10px;
+  width: 100%;
+  &:focus {
+    background: lighten($bg_color_2, 15%);
+    border-color: darken($bg_color_2, 15%);
+    @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+  }
+}
+label {
+  display: block;
+}
+
+
+/* Tables */
+table {
+  background: darken($bg_color_1, 10%);
+  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  @include border_radius(1);
+  margin: 0 0 2em;
+  width: 100%;
+  td,
+  th {
+    padding: 10px;
+  }
+  thead {
+    tr {
+      td,
+      th {
+        @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
+      }
+      &:first-child {
+        td,
+        th {
+          &:first-child {
+            @include border_radius(1, 0, 0, 0);
+          }
+          &:last-child {
+            @include border_radius(0, 1, 0, 0);
+          }
+          &:only-child {
+            @include border_radius(1, 1, 0, 0);
+          }
+        }
+      }
+      border-bottom: 1px solid $bg_color_1;
+    }
+  }
+  tbody {
+    background: $bg_color_2;
+    tr {
+      td,
+      th {
+        border-bottom: 1px solid rgba(0, 0, 0, .3);
+        @include bg_gradient(rgba(255, 255, 255, .25), rgba(255, 255, 255, .3));
+      }
+      &:last-child {
+        td,
+        th {
+          border-bottom: 0;
+          &:first-child {
+            @include border_radius(0, 0, 0, 1);
+          }
+          &:last-child {
+            @include border_radius(0, 0, 1, 0);
+          }
+          &:only-child {
+            @include border_radius(0, 0, 1, 1);
+          }
+        }
+      }
+      &:hover {
+        background: rgba($accent_color, .2);
+      }
+    }
+  }
+  tfoot {
+    @include bg_gradient(darken($bg_color_1, 10%), darken($bg_color_1, 20%));
+    tr {
+      &:last-child {
+        td,
+        th {
+          &:first-child {
+            @include border_radius(0, 0, 0, 1);
+          }
+          &:last-child {
+            @include border_radius(0, 0, 1, 0);
+          }
+          &:only-child {
+            @include border_radius(0, 0, 1, 1);
+          }
+        }
+      }
+    }
+  }
+  .actions {
+    padding: 0;
+    a {
+      background: rgba(0, 0, 0, .3);
+      border: 1px solid rgba(255, 255, 255, .2);
+      @include border_radius(1);
+      @include box_sizing(border-box);
+      display: inline-block;
+      height: 30px;
+      margin: 5px 5px 0 0;
+      overflow: hidden;
+      position: relative;
+      text-indent: -500em;
+      width: 30px;
+      &:before {
+        background: url(/images/icons/#{$icon_set}.png) no-repeat;
+        content: '';
+        height: 30px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 30px;
+      }
+      &:hover {
+        @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+      }
+      &.undelete:before { background-position: -846px -46px; }
+    }
+  }
+}
+
+
+/* Header */
+#header {
+  height: 140px;
+  position: relative;
+  .title {
+    left: 0;
+    position: absolute;
+    top: 40px;
+  }
+  .slogan {
+    left: 0;
+    position: absolute;
+    top: 80px;
+  }
+  .userbox {
+    @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    height: 110px;      
+    position: absolute;
+    right: 0;
+    top: 80px;
+    width: 300px;
+    z-index: 4;
+    .name {
+      left: 8px;
+      position: absolute;
+      top: 8px;
+    }
+    .avatar {
+      @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+      @include border_radius(1);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      height: 80px;
+      left: -100px;
+      position: absolute;
+      top: -40px;
+      width: 80px;
+      img {
+        @include border_radius(1);
+        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        left: 5px;
+        position: absolute;
+        height: 70px;
+        top: 5px;
+        width: 70px;
+        z-index: 5;
+      }
+      a {
+        background: $bg_color_2;
+        @include border_radius(1, 0, 0, 1);
+        height: 20px;
+        left: 10px;
+        padding: 0 5px;
+        position: absolute;
+        top: ($border_radius + 5px);
+        width: 50px;
+        z-index: 4;
+      }
+      &:hover {
+        a {
+          left: -50px;
+          @include transition(left .2s ease-in-out);
+          &:hover {
+            background: $accent_color;
+          }
+        }
+      }
+    }
+    .profile {
+      @include border_radius(1);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      height: 30px;
+      margin: 0 5px;
+      position: absolute;
+      right: -5px;
+      top: -40px;
+      width: 300px;
+      z-index: 5;
+      > strong {
+        left: 0;
+        position: absolute;
+        top: -30px;
+      }
+      > a {
+        @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
+        @include border_radius(1);
+        display: block;
+        height: 30px;
+        position: absolute;
+        padding: 0 40px 0 10px;
+        right: 0;
+        top: 0;
+        width: 250px;
+        z-index: 6;
+        &:before {
+          background: url(../images/icons/#{$icon_set}.png) -765px -45px;
+          content: '';
+          height: 30px;
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 30px;
+        }
+      }
+      ul {
+        @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
+        @include border_radius(1);
+        @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
+        @include opacity(0);
+        padding: 30px 0 0;
+        position: absolute;
+        top: -5000em;
+        z-index: 5;
+        li {
+          border-top: 1px solid rgba(0, 0, 0, .2);
+          a {
+            background: transparent;
+            border-top: 1px solid rgba(255, 255, 255, .2);
+            display: block;
+            padding: 5px 15px;
+            position: relative;
+            width: 280px;
+            &:hover {
+              background: rgba(0, 0, 0, .3);
+            }
+          }
+          &:last-child {
+            a {
+              @include border_radius(0, 0, 1, 1);
+            }
+          }
+          &.current {
+            a {
+              background: rgba(255, 255, 255, .2);
+            }
+          }
+          &.new {
+            @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
+            @include border_radius(0, 0, 1, 1);
+          }
+        }
+      }
+      &:hover {
+        @include box_shadow(none);
+        margin: 0;
+        width: 310px;
+        strong {
+          left: 5px;
+        }
+        > a {
+          @include bg_gradient($accent_color, lighten($accent_color, 5%));
+          @include border_radius(1, 1, 0, 0);
+          padding: 0 45px 0 15px;
+          &:before {
+            right: 5px;
+          }
+        }
+        ul {
+          @include opacity(1);
+          top: 0;
+          @include transition(opacity .2s ease-in-out);
+          li {
+            a {
+              padding: 10px 15px;
+              @include transition(padding .2s ease-in-out);
+            }
+          }
+        }
+      }
+    }
+    .credits {
+      left: 8px;
+      position: absolute;
+      top: 8px;
+    }
+    .actions {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      a {
+        border: 0;
+        font-size: 12pt;
+        padding: 0 10px;
+        &.account {
+        }
+      }
+    }
+    #mail {
+      border-top: 1px solid rgba(0, 0, 0, .3);
+      @include bg_gradient(rgba(255, 255, 255, .1), rgba(0, 0, 0, 0));
+      @include border_radius(1);
+      bottom: 10px;
+      left: 0;
+      padding: 8px 4px 0;
+      position: absolute;
+      right: 0;
+      li {
+        @include bg_gradient(rgba(255, 255, 255, .2), rgba(0, 0, 0, 0));
+        border-top: 1px solid rgba(255, 255, 255, .2);
+        @include border_radius(1);
+        float: left;
+        margin: 0 4px;
+        overflow: hidden;
+        position: relative;
+        width: 65px;
+        a {
+          display: block;
+          height: 15px;
+          overflow: hidden;
+          padding: 30px 0 0;
+          position: relative;
+          width: 65px;
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) no-repeat;
+            content: '';
+            height: 30px;
+            left: 13px;
+            position: absolute;
+            top: 0;
+            width: 40px;
+          }
+        }
+        &.inbox a:before { background-position: -440px -45px; }
+        &.compose a:before { background-position: -360px -45px; }
+        &.sent a:before { background-position: -400px -45px; }
+        &.trash a:before { background-position: -320px -45px; }
+        &:hover {
+          @include bg_gradient($accent_color, lighten($accent_color, 10%));
+          @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+        }
+      }
+    }
+  }
+}
+#menu {
+  height: 70px;
+  position: relative;
+  z-index: 3;
+  .container {
+    > ul {
+      @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
+      @include border_radius(1);
+      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+      height: 50px;
+      padding: 0 5px;
+      position: absolute;
+      top: 0;
+      width: 630px;
+      > li {
+        float: left;
+        height: 50px;
+        position: relative;
+        z-index: 4;
+        > a {
+          display: block;
+          margin: 10px 5px;
+          padding: 0 10px;
+          position: relative;
+          z-index: 5;
+        }
+        ul {
+          @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
+          @include border_radius(0, 0, 1, 1);
+          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+          left: 5px;
+          padding: 10px 0 0;
+          @include opacity(0);
+          position: absolute;
+          top: -5000em;
+          li {
+            border-top: 1px solid rgba(0, 0, 0, .2);
+            a {
+              border-top: 1px solid rgba(255, 255, 255, .2);
+              display: block;
+              padding: 5px 60px 5px 10px;
+              white-space: nowrap;
+              &:hover {
+                background: rgba(0, 0, 0, .3);
+              }
+            }
+            &.new {
+              @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
+            }
+            &:last-child {
+              a {
+                @include border_radius(0, 0, 1, 1);
+              }
+            }
+          }
+        }
+        &:hover {
+          > a {
+            @include bg_gradient(darken($accent_color, 5%), lighten($accent_color, 5%));
+            @include border_radius(1);
+            &:not(:only-child) {
+              @include border_radius(1, 1, 0, 0);
+              padding-bottom: 10px;
+            }
+          }
+          ul {
+            @include opacity(1);
+            top: 50px;
+            @include transition(opacity .2s ease-in-out);
+            z-index: 4;
+            a {
+              padding: 10px 60px 10px 10px;
+              @include transition(padding .2s ease-in-out);
+            }
+          }
+        }
+        &.search {
+          overflow: hidden;
+          position: absolute;
+          right: 0;
+          @include transition(width .2s ease-in-out);
+          width: 100px;
+          z-index: 3;
+          a {
+            background: transparent !important;
+            @include opacity(1);
+            position: absolute;
+            right: 5px;
+            @include transition(opacity .2s ease-in-out);
+            z-index: 4;
+          }
+          &:hover,
+          &.focus {
+            width: 300px;
+            z-index: 5;
+            a {
+              @include opacity(0);
+            }
+            form {
+              @include opacity(1);
+            }
+          }
+          form {
+            @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+            @include border_radius(1);
+            @include box_shadow(-10px 0 10px rgba(0, 0, 0, .7));
+            height: 50px;
+            right: 0;
+            @include opacity(0);
+            position: absolute;
+            top: 0;
+            @include transition(opacity .2s linear);
+            width: 280px;
+            z-index: 5;
+            input {
+              background: darken($bg_color_1, 10%);
+              border: 0;
+              @include border_radius(1);
+              bottom: 9px;
+              left: 9px;
+              padding: 0 5px;
+              position: absolute;
+              top: 9px;
+              width: 162px;
+              &:focus {
+                background: $bg_color_1;
+              }
+            }
+            button {
+              border: 0;
+              @include border_radius(1);
+              bottom: 9px;
+              padding: 0;
+              position: absolute;
+              right: 9px;
+              top: 9px;
+              width: 82px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .login {
+    @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    height: 110px;      
+    position: absolute;
+    right: 0;
+    top: -60px;
+    width: 300px;
+    label {
+      display: none;
+    }
+    input[type='text'],
+    input[type='password'] {
+      background: darken($bg_color_1, 10%);
+      @include border_radius(1);
+      bottom: 8px;
+      left: 8px;
+      padding: 0 5px;
+      position: absolute;
+      width: 180px;
+      &:focus {
+        background: $bg_color_1;
+      }
+      &#email {
+        top: 8px;
+      }
+      &#password {
+        top: 42px;
+      }
+    }
+    .remember {
+      label {
+        bottom: 8px;
+        display: block;
+        height: 26px;
+        left: 0;
+        overflow: hidden;
+        padding: 0 0 0 45px;
+        position: absolute;
+        text-indent: -100px;
+        &:before {
+          background: darken($bg_color_1, 10%);
+          border: 1px solid darken($bg_color_2, 10%);
+          @include border_radius(1);
+          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+          content: '';
+          height: 24px;
+          left: 8px;
+          position: absolute;
+          top: 0;
+          width: 24px;
+        }
+        input {
+          width: 90px;
+        }
+        &.checked {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat darken($bg_color_1, 10%);
+          }
+        }
+        &:hover {
+          &:before {
+            background-color: $bg_color_1;
+          }
+        }
+      }
+    }
+    button {
+      border: 0;
+      padding: 0 0 0 10px;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      width: 85px;
+      &:before {
+        background: url(../images/icons/#{$icon_set}.png) -725px -45px no-repeat;
+        content: '';
+        height: 30px;
+        position: absolute;
+        right: 0;
+        width: 30px;
+      }
+    }
+    .apply {
+      position: absolute;
+      right: 8px;
+      top: 42px;
+      width: 92px;
+    }
+  }
+}
+#headerimg {
+  @include border_radius(1);
+  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  margin: 0 0 20px;
+}
+#announcements {
+  padding: 0 0 15px;
+  li {
+    background: $announcement_color;
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    height: 40px;
+    margin: 0 0 5px;
+    padding: 0 65px 0 15px;
+    position: relative;
+    &.alert {
+      background: $alert_color;
+    }
+    &.notice {
+      background: $notice_color;
+    }
+    a.dismiss,
+    button {
+      background: url(../images/icons/#{$icon_set}.png) no-repeat rgba(0, 0, 0, .3);
+      border: 0;
+      border-left: 1px solid rgba(255, 255, 255, .3);
+      @include border_radius(0, 1, 1, 0);
+      @include box_shadow(none);
+      height: 40px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      text-indent: -500em;
+      top: 0;
+      width: 40px;
+      &:hover {
+        background-color: rgba(0, 0, 0, .5);
+        @include box_shadow(-5px 0 10px rgba(255, 255, 255, .3));
+      }
+    }
+    a.dismiss { background-position: -40px -40px; }
+    button { background-position: -240px -40px; }
+  }
+}
+
+
+/* Content */
+#body {
+  position: relative;
+  z-index: 1;  
+  #bcrumb {
+    @include bg_gradient(lighten($bg_color_2, 30%), lighten($bg_color_2, 40%));
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    height: 30px;
+    overflow: hidden;
+    padding: 0;
+    a {
+      background: lighten($bg_color_2, 25%);
+      display: block;
+      float: left;
+      height: 30px;
+      @include opacity(1);
+      padding: 0 10px 0 30px;
+      position: relative;
+      &:after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-bottom: 40px solid transparent;
+        border-left: 20px solid lighten($bg_color_2, 25%);
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        left: 100%;
+        z-index: 2;
+      }
+      &:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-bottom: 40px solid transparent;
+        border-left: 20px solid rgba(255, 255, 255, .3);
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        margin-left: 1px;
+        left: 100%;
+        z-index: 1;
+      }
+      &:hover {
+        background: $accent_color;
+        border-color: transparent;
+        @include opacity(1);
+        &:after {
+          border-left-color: $accent_color;
+        }
+        &:before {
+          visibility: hidden;
+        }
+      }
+      &:first-of-type {
+        padding-left: 15px;
+        @include border_radius(1, 0, 0, 1);
+      }
+      &:nth-child(0) { z-index: 5; }
+      &:nth-child(1) { z-index: 4; }
+      &:nth-child(2) { z-index: 3; }
+      &:nth-child(3) { z-index: 2; }
+      &:nth-child(4) { z-index: 1; }
+    }
+    span {
+      display: block;
+      float: left;
+      height: 30px;
+      @include opacity(.5);
+      padding: 0 0 0 30px;
+    }
+  }
+  h1 {
+    padding: 20px 0 40px;
+  }
+  p {
+    padding: 0 0 2em;
+  }
+}
+
+
+/* Messaging */
+#recipients {
+  position: relative;
+  ul {
+    &.users {
+      li {
+        background: $bg_color_2;
+        @include border_radius(1);
+        display: none;
+        height: 30px;
+        margin: 0 5px 5px 0;
+        overflow: hidden;
+        padding: 0 40px 0 0;
+        position: relative;
+        text-indent: -30px;
+        &.show {
+          display: inline-block;
+        }
+        input {
+          margin: 0 15px 0 0;
+          padding: 0;
+          width: 20px;
+        }
+        a {
+          background: rgba(255, 255, 255, .2);
+          border-left: 1px solid rgba(255, 255, 255, .2);
+          @include border_radius(0, 1, 1, 0);
+          display: block;
+          height: 30px;
+          overflow: hidden;
+          padding: 0;
+          position: absolute;
+          right: 0;
+          text-indent: -500em;
+          top: 0;
+          width: 30px;
+          &:hover {
+            background-color: $accent_color;
+          }
+          &:before {
+            border-left: 1px solid rgba(0, 0, 0, .2);
+            bottom: 0;
+            content: '-';
+            left: 0;
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+            text-align: center;
+            text-indent: 0;
+            top: 0;
+          }
+        }
+      }
+    }
+    &.suggest {
+      background: $accent_color;
+      @include border_radius(0, 0, 1, 1);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      left: 0;
+      position: absolute;
+      margin: (-30px - $border_radius) 0 0;
+      z-index: 2;
+      li {
+        cursor: pointer;
+        padding: 5px 60px 5px 10px;
+        position: relative;
+        border-top: 1px solid rgba(0, 0, 0, .2);
+        white-space: nowrap;
+        &:before {
+          border-top: 1px solid rgba(255, 255, 255, .2);
+          content: '';
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+        &:first-child {
+          border-top: 0;
+          padding: ($border_radius + 5px) 10px 5px;
+          &:before {
+            display: none;
+          }
+        }
+        &:hover {
+          background: rgba(0, 0, 0, .3);
+        }
+      }
+    }
+  }
+  input {
+    position: relative;;
+    z-index: 3;
+  }
+}
+
+
+
+/* Footer */
+#footer {
+  clear: both;
+  padding: 40px 0;
+  .container {
+    @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
+    @include border_radius(1);
+    @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+    .menu {
+      float: left;
+      padding: 20px 0 0 20px;
+      h3 {
+        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        padding: 0 0 20px;
+      }
+      ul {
+        border-top: 1px solid rgba(255, 255, 255, .2);
+        li {
+          border-bottom: 1px solid rgba(255, 255, 255, .2);
+          margin: 4px 0;
+          a {
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            display: block;
+            padding: 4px 50px 4px 0;
+          }
+          &:hover {
+            a {
+              @include bg_gradient(darken($accent_color, 5%), lighten($accent_color, 5%));
+              @include border_radius(1);
+              margin: 0 -8px;
+              padding: 4px 58px 4px 8px;
+            }
+          }
+        }
+      }
+    }
+    .copyright {
+      clear: both;
+      padding: 20px;
+    }
+  }
+}

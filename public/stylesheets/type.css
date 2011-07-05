@@ -1,0 +1,194 @@
+/* User Vars */
+body {
+  font-family: 'DinLight', sans-serif;
+  font-size: 1em;
+  text-align: center; }
+  body .container {
+    text-align: left; }
+
+strong {
+  font-family: 'DinMedium', sans-serif;
+  font-size: 1em; }
+
+/* Forms */
+button,
+.button,
+input[type='submit'],
+input[type='button'] {
+  color: white !important;
+  font-family: 'DinLight', sans-serif;
+  font-size: 14pt;
+  letter-spacing: -1pt;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none !important; }
+
+input[type='text'],
+input[type='password'] {
+  color: white;
+  font-family: 'DinLight', sans-serif;
+  font-size: 14pt;
+  line-height: 30px; }
+
+input[type='text'],
+input[type='password'],
+textarea {
+  color: white;
+  font-family: 'DinLight', sans-serif;
+  font-size: 14pt; }
+
+label {
+  font-family: 'DinMedium', sans-serif;
+  font-size: inherit; }
+
+/* Tables */
+table {
+  color: white; }
+  table th {
+    font-family: 'DinMedium', sans-serif;
+    font-size: inherit; }
+  table .actions {
+    text-align: right; }
+    table .actions a {
+      text-align: left; }
+
+/* Header */
+#header .title {
+  font-family: 'DinBlack', sans-serif;
+  font-size: 30pt;
+  letter-spacing: -2pt; }
+#header .slogan {
+  font-family: 'DinLight', sans-serif;
+  font-size: 14pt; }
+#header .userbox {
+  color: white; }
+  #header .userbox .avatar {
+    font-size: 10pt;
+    line-height: 20px; }
+  #header .userbox .profile {
+    color: white; }
+    #header .userbox .profile strong {
+      color: black;
+      line-height: 30px; }
+    #header .userbox .profile > a {
+      line-height: 30px; }
+    #header .userbox .profile:hover {
+      color: white; }
+      #header .userbox .profile:hover ul a {
+        font-size: 10pt; }
+        #header .userbox .profile:hover ul a:hover {
+          color: white; }
+      #header .userbox .profile:hover ul .current a {
+        font-family: 'DinMedium', sans-serif;
+        font-size: 10pt; }
+  #header .userbox .credits {
+    font-size: 10pt;
+    line-height: 30px; }
+  #header .userbox #mail a {
+    font-size: 10pt;
+    text-align: center; }
+
+#menu .container > ul > li > a {
+  color: white;
+  font-size: 14pt;
+  line-height: 30px; }
+#menu .container > ul > li ul li a {
+  color: white;
+  font-size: 10pt; }
+#menu .container input[type='text'],
+#menu .container input[type='password'] {
+  color: black; }
+#menu .container .login {
+  color: white;
+  font-size: 11pt; }
+  #menu .container .login label {
+    color: #e6e6e6; }
+    #menu .container .login label:hover {
+      color: white; }
+  #menu .container .login .remember {
+    line-height: 26px; }
+  #menu .container .login .apply {
+    color: #e6e6e6;
+    line-height: 30px; }
+    #menu .container .login .apply a {
+      color: #e6e6e6;
+      text-decoration: underline; }
+      #menu .container .login .apply a:hover {
+        color: white; }
+  #menu .container .login button {
+    text-align: left; }
+
+#announcements li {
+  color: white;
+  line-height: 40px; }
+  #announcements li.alert {
+    color: black; }
+  #announcements li.notice {
+    color: white; }
+
+/* Content */
+#body {
+  line-height: 1.3em; }
+  #body button,
+  #body .button,
+  #body input[type='submit'],
+  #body input[type='button'] {
+    text-align: left; }
+  #body #bcrumb {
+    color: white;
+    font-size: 10pt;
+    line-height: 30px; }
+    #body #bcrumb a {
+      color: white;
+      text-decoration: none; }
+      #body #bcrumb a:hover {
+        color: white; }
+    #body #bcrumb span {
+      font-family: 'DinMedium', sans-serif;
+      font-size: 10pt; }
+  #body a {
+    color: #0099cc;
+    text-decoration: underline; }
+    #body a:hover {
+      color: #1ac6ff; }
+  #body table a {
+    color: #00bfff; }
+    #body table a:hover {
+      color: #4dd2ff; }
+  #body h1 {
+    font-family: 'DinBlack', sans-serif;
+    font-size: 25pt;
+    letter-spacing: -1pt; }
+
+/* Messaging */
+#recipients .users li {
+  color: white;
+  font-size: 10pt;
+  line-height: 30px; }
+  #recipients .users li a {
+    text-decoration: none; }
+    #recipients .users li a:hover {
+      color: white; }
+    #recipients .users li a:before {
+      color: white; }
+#recipients .suggest li {
+  color: white;
+  font-size: 10pt; }
+
+/* Footer */
+#footer {
+  color: white; }
+  #footer h3 {
+    color: #1ac6ff;
+    font-family: 'DinLight', sans-serif;
+    font-size: 18pt; }
+  #footer li a {
+    font-size: 10pt; }
+    #footer li a:hover {
+      color: white; }
+  #footer .copyright {
+    font-size: 8pt;
+    line-height: 1.5em;
+    text-align: right; }
+    #footer .copyright a {
+      text-decoration: underline; }

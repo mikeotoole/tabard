@@ -1,3 +1,7 @@
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  %span= @folder.name
+
 %h1= @folder.name
 
 %table
@@ -7,16 +11,24 @@
         %th.subject Message Subject
         %th.name From
         %th.date Received
-        %th.edit
+        %th.actions
     %tbody
       - @messages.each do |message|
         %tr
-          %td.subject= link_to message.subject, message_path(message)
+          %td.subject
+            - if defined? message.deleted and message.deleted
+              = message.subject
+            - else
+              = link_to message.subject, message_path(message)
           %td.name= link_to message.author.name, message.author
           %td.date= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
-          %td.edit
-            - if current_user.can_delete(message)
-              = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
+          %td.actions
+            - if defined? message.deleted and message.deleted
+              - if true #TODO - check user permission to undelete message
+                = link_to 'Restore Message', message_path(message), :method => 'undelete', :confirm => 'Restore this message?', :class => 'undelete', :title => 'Restore message'
+            - else
+              - if current_user.can_delete(message)
+                = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete message'
   - else
     %tbody
       %tr
