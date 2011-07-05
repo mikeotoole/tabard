@@ -14,7 +14,7 @@
     %tbody
       - @registration_applications.each do |registration_application|
         %tr
-          %td= link_to registration_application.name, registration_application
+          %td= link_to registration_application.name, [:management, registration_application]
           %td= registration_application.submission_date
           %td= registration_application.status_string
   - else

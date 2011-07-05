@@ -79,6 +79,10 @@ viewCommentPermission = Permission.create(:permissionable => commentResource, :n
 viewerRole = Role.create(:name => "Viewer", :default_role => true, :permissions => [viewUserPermission,viewRolePermission,viewGamePermission,viewCharacterPermission,viewGeneralDiscussionSpacePermission,viewCommentPermission])
 viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
 
+dMooseProfile = UserProfile.create(:name => "DiabolicalMoose")
+dMooseProfile.set_active
+dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile)
+
 #More General Users
 1.upto(20) { |n|
   g_profile = UserProfile.create(:name => "guser_#{n}")
@@ -110,11 +114,13 @@ TextQuestion.create(:content => "This is a ____ text question.", :site_form => d
 
 # Sample Discussions
 disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
-comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc)
+comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc, :has_been_deleted => true)
 comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
+comment3 = Comment.create(:body => "WTF", :user_profile => dMooseProfile, :commentable => comment1)
 
 disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace, :has_been_locked => true)
 disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
+comment4 = Comment.create(:body => "In before locked", :user_profile => dMooseProfile, :commentable => disc1, :has_been_locked => true)
 
 # Sample Announcements
 GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)

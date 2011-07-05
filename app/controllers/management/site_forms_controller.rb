@@ -40,7 +40,7 @@ class Management::SiteFormsController < ApplicationController
         
         params[:notifications].each do |profile_id|
           Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id)
-        end
+        end if params[:notifications]
         
         add_new_flash_message('Form was successfully created.')
         

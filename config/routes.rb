@@ -30,12 +30,7 @@ Bv::Application.routes.draw do
   
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
-  resources :registration_applications do
-    member do
-      post :accept
-      post :reject
-    end
-  end
+  resources :registration_applications, :only => [:new, :create]
 
   resources :recurring_events,
     :game_locations,
@@ -101,6 +96,13 @@ Bv::Application.routes.draw do
       :themes,
       :teamspeaks,
       :site_forms
+      
+    resources :registration_applications, :except => [:new,:create] do
+      member do
+        post :accept
+        post :reject
+      end
+    end
   end
   
   resources :site_forms do
