@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
     
     subject = @original.subject.sub(/^(Re: )?/, "Re: ")
     body = @original.body.gsub(/^/, "> ")
-    @message = current_user.sent_messages.build(:to => [@original.author.id], :subject => subject, :body => body)
+    @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => body)
     render :template => "sent/new"
   end
   
@@ -27,19 +27,23 @@ class MessagesController < ApplicationController
     subject = @original.subject.sub(/^(Re: )?/, "Re: ")
     body = @original.body.gsub(/^/, "> ")
     recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id] 
-    @message = current_user.sent_messages.build(:to => recipients, :subject => subject, :body => body)
+    @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => body)
     render :template => "sent/new"
   end  
     
   def destroy
     @message = current_user.received_messages.find(params[:id])
-    @message.update_attribute("deleted", true)
+    if @message.update_attribute("deleted", true)
+      add_new_flash_message('Message was moved to your trash.')
+    end
     redirect_to inbox_path
   end
   
   def undelete
     @message = current_user.received_messages.find(params[:id])
-    @message.update_attribute("deleted", false)
+    if @message.update_attribute("deleted", false)
+      add_new_flash_message('Message was restored to your inbox.')
+    end
     redirect_to inbox_path
   end    
     
