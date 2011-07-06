@@ -1,8 +1,7 @@
 %h1 Search Results
 
-%p Found #{pluralize(@results.size, 'match')} for "#{@search_term}"
-
 #search
+  %p Found #{pluralize(@results.size, 'match')} for "#{@search_term}"
   = render :partial => "search/form", :locals => { :search_term => @search_term }
 
 - if @results.size > 0

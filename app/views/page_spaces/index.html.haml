@@ -26,9 +26,10 @@
   - else
     %tbody
       %tr
-        %td{ :colspan => 4 } There are currenty no page spaces.
-  %tfoot
-    %tr
-      %td{ :colspan => 4 }
-        - if logged_in? and current_user.can_create("PageSpace")
+        %td.empty{ :colspan => 4 } There are no topics to display.
+        
+  - if logged_in? and current_user.can_create("PageSpace")
+    %tfoot
+      %tr
+        %td{ :colspan => 4 }
           = link_to 'Create New Topic', new_page_space_path, :class => 'button'

@@ -231,6 +231,28 @@ table {
   h1 {
     @include font(heavy, 25pt, -1pt);
   }
+  h2 {
+    @include font(heavy, 18pt);
+  }
+  h3 {
+    @include font(medium, 16pt);
+  }
+  #editor iframe {
+    font-size: 14pt;
+  }
+  #meta {
+    color: $text_color_2;
+    line-height: 30px;
+    ul {
+      line-height: 20px;
+      a {
+        color: lighten($link_color, 10%);
+        &:hover {
+          color: lighten($link_color, 25%);
+        }
+      }
+    }
+  }
 }
 
 

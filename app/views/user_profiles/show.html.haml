@@ -42,11 +42,11 @@
       - else
         %tbody
           %tr
-            %td{ :colspan => 2 } There are no characters yet.
-      %tfoot
-        %tr
-          %td{ :colspan => 2 }
-            - if logged_in? and current_user.can_create('Character')
+            %td.empty{ :colspan => 2 } There are no characters yet.
+      - if logged_in? and current_user.can_create('Character')
+        %tfoot
+          %tr
+            %td{ :colspan => 2 }
               = form_tag(new_base_character_path, :method => :get) do
                 = collection_select(:game, :game_id, Game.active, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
                 %button{ :type => 'submit', :class => 'add', :title => 'Add Character to Game' } Add Character to Game

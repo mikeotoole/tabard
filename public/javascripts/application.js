@@ -118,9 +118,6 @@ $(document).ready(function() {
       }
     }
   });
-  $('#recipients').parents('form').submit(function(){
-    
-  });
 	
 });
 

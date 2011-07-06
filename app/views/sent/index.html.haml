@@ -9,28 +9,29 @@
     %thead
       %tr
         %th.subject Message Subject
-        %th.name To
+        %th.to To
         %th.date Sent
         %th.actions
     %tbody
       - @messages.each do |message|
         %tr
-          %td
+          %td.subject
             = link_to message.subject, sent_path(message)
-          %td
+          %td.to
             - if message.recipients
-              - message.recipients.each do |profile|
-                = link_to profile.name, profile
-          %td= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+              %ul
+                - message.recipients.each do |profile|
+                  %li= link_to profile.name, profile
+          %td.date
+            = distance_of_time_in_words(message.created_at, Time.now) + ' ago'
           %td.actions
             - if current_user.can_delete(message)
               = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %tr
-        %td{ :colspan => 4 } No messages.
+        %td.empty{ :colspan => 4 } No messages.
   %tfoot
     %tr
       %td{ :colspan => 4 }
-        - if logged_in? and current_user.can_create('Message') or 1
-          = link_to 'New Message', new_sent_path, :class => 'button'
+        = link_to 'New Message', new_sent_path, :class => 'button'

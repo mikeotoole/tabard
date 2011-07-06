@@ -6,8 +6,8 @@
         = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
         = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
         %p.remember
-          %label
-            = check_box_tag('remember')
+          %label.checked
+            = check_box_tag 'remember', 1, true
             Remember Me
         %button{ :type => 'submit' } Login
         %p.apply
@@ -30,9 +30,6 @@
             - if logged_in? and current_user.can_update('RegistrationApplication')
               %li.new
                 = link_to '+ Applications', registration_applications_path
-      -if !logged_in?
-        %li
-          = link_to 'Events', :events, { :class => 'main' }
       %li
         = link_to 'Resources', page_spaces_path, { :class => 'main' }
         - if dynamic_page_spaces

@@ -99,7 +99,7 @@ input[type='button'] {
   border: 1px solid darken($accent_color, 10%);
   @include border_radius(1);
   @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
-  @include box_sizing(content-box);
+  @include box_sizing(border-box);
   display: inline-block;
   height: 30px;
   padding: 0 15px;
@@ -154,6 +154,9 @@ table {
   td,
   th {
     padding: 10px;
+    &.amount {
+      width: 20px;
+    }
   }
   thead {
     tr {
@@ -175,16 +178,16 @@ table {
           }
         }
       }
-      border-bottom: 1px solid $bg_color_1;
+      border-bottom: 1px solid darken($bg_color_1, 30%);
     }
   }
   tbody {
-    background: $bg_color_2;
     tr {
       td,
       th {
-        border-bottom: 1px solid rgba(0, 0, 0, .3);
-        @include bg_gradient(rgba(255, 255, 255, .25), rgba(255, 255, 255, .3));
+        border-bottom: 1px solid darken($bg_color_1, 30%);
+        @include bg_gradient(lighten($bg_color_2, 20%), lighten($bg_color_2, 25%));
+        position: relative;
       }
       &:last-child {
         td,
@@ -199,10 +202,16 @@ table {
           &:only-child {
             @include border_radius(0, 0, 1, 1);
           }
+          &.empty {
+            @include border_radius(1);
+          }
         }
       }
       &:hover {
-        background: rgba($accent_color, .2);
+        td,
+        th {
+          @include bg_gradient(lighten($bg_color_2, 30%), lighten($bg_color_2, 35%));
+        }
       }
     }
   }
@@ -586,7 +595,7 @@ table {
               padding: 0 5px;
               position: absolute;
               top: 9px;
-              width: 162px;
+              width: 172px;
               &:focus {
                 background: $bg_color_1;
               }
@@ -614,7 +623,16 @@ table {
     position: absolute;
     right: 0;
     top: -60px;
-    width: 300px;
+    width: 300px;    
+    &:after {
+      background: url(../images/icons/#{$icon_set}.png) -725px -45px no-repeat;
+      content: '';
+      height: 30px;
+      right: 8px;
+      position: absolute;
+      top: 8px;
+      width: 30px;
+    }
     label {
       display: none;
     }
@@ -626,7 +644,7 @@ table {
       left: 8px;
       padding: 0 5px;
       position: absolute;
-      width: 180px;
+      width: 184px;
       &:focus {
         background: $bg_color_1;
       }
@@ -676,19 +694,13 @@ table {
     }
     button {
       border: 0;
-      padding: 0 0 0 10px;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 0 0 7px !important;
       position: absolute;
       right: 8px;
       top: 8px;
-      width: 85px;
-      &:before {
-        background: url(../images/icons/#{$icon_set}.png) -725px -45px no-repeat;
-        content: '';
-        height: 30px;
-        position: absolute;
-        right: 0;
-        width: 30px;
-      }
+      width: 95px;
     }
     .apply {
       position: absolute;
@@ -873,13 +885,151 @@ table {
   h1 {
     padding: 20px 0 40px;
   }
+  h2 {
+    padding: 0 0 14pt;
+  }
+  h3 {
+    padding: 0 0 14pt;
+  }
   p {
     padding: 0 0 2em;
+  }  
+  #search {
+    height: 30px;
+    p {
+      padding: 0 0 .5em;
+    }
+    input {
+      float: left;
+      width: 840px;
+    }
+    button {
+      float: right;
+      width: 110px;
+    }
+  }
+  #editor {
+    padding: 0 0 2em;
+    table {
+      @include bg_gradient(darken($bg_color_1, 5%), darken($bg_color_1, 10%));
+      tr,
+      td,
+      th {
+        background: transparent;
+        border: 0;
+      }
+      .mceFirst {
+        height: auto;
+        padding: 0;
+        iframe {
+          border: 0;
+          @include border_radius(1);
+          @include box_shadow(0 0 5px rgba(0, 0, 0, .3));
+          margin: 10px;
+          width: 940px !important;
+        }
+      }
+      .mceLast {
+        height: auto;
+        padding: 0;
+        .mceToolbar {
+          height: auto;
+          padding: 0;
+          @include bg_gradient(darken($bg_color_1, 10%), darken($bg_color_1, 5%));
+          table {
+            background: transparent;
+            @include box_shadow(none);
+            display: inline-block;
+            height: auto;
+            padding: 0;
+            .mceButton {
+              background: rgba(255, 255, 255, .5);
+              @include border_radius(1);
+              &:hover {
+                background: rgba(255, 255, 255, .7);
+                border: 1px solid rgba(0, 0, 0, .3);
+                @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+                cursor: pointer;
+                span {
+                  cursor: pointer;
+                }
+              }
+            }
+            .mceButtonActive {
+              background: rgba(255, 255, 255, .9);
+              border: 1px solid rgba(0, 0, 0, .7);
+            }
+          }
+        }
+      }
+    }
+  }
+  #meta {
+    padding: 0 0 2em;
+    &:after {
+      clear: both;
+      content: '';
+      display: block;
+    }
+    dt {
+      @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
+      @include border_radius(1, 0, 0, 1);
+      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+      clear: both;
+      display: block;
+      float: left;
+      margin: 0 0 5px 0;
+      padding: 0 15px;
+      width: 180px;
+    }
+    dd {
+      @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+      @include border_radius(0, 1, 1, 0);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      display: block;
+      float: left;
+      margin: 0 0 5px 0;
+      padding: 0 15px;
+      width: 720px;
+      ul {
+        padding: 5px 0;
+        li {
+          display: inline;
+          &:after {
+            content: ', ';
+          }
+          &:last-child {
+            &:after {
+              content: '';
+              display: none;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 
 /* Messaging */
+#message {
+  @include bg_gradient(darken($bg_color_1, 20%), $bg_color_1, 0 0, 0 60, linear, repeat-x $bg_color_1);
+  @include border_radius(1);
+  margin: -2em 0 0;
+  padding: 2em;
+}
+td.to ul li {
+  display: inline;
+  &:after {
+    content: ', ';
+  }
+  &:last-child {
+    &:after {
+      content: '';
+      display: none;
+    }
+  }
+}
 #recipients {
   position: relative;
   ul {

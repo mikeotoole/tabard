@@ -3,9 +3,8 @@
     = f.label :title
     = f.text_field :title
   %p.field
-    = f.label :featured_page
+    = f.label :featured_page, 'Display in main menu'
     = f.check_box :featured_page
-  %p.field
-    = f.label :body
+  #editor
     = f.text_area :body, :class => "mceEditor"
   = submit_or_cancel(f)

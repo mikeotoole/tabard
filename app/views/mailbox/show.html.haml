@@ -20,25 +20,30 @@
               = message.subject
             - else
               = link_to message.subject, message_path(message)
-          %td.name= link_to message.author.name, message.author
-          %td.date= distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+          %td.name
+            = link_to message.author.name, message.author
+          %td.date
+            = distance_of_time_in_words(message.created_at, Time.now) + ' ago'
           %td.actions
             - if defined? message.deleted and message.deleted
               = link_to 'Restore Message', undelete_message_path(message), :method => :post, :confirm => 'Restore this message?', :class => 'undelete', :title => 'Restore message'
             - else
-              = link_to 'Reply', reply_message_path(message), :method => :post, :class => 'reply', :title => 'Reply to sender'
-              = link_to 'Reply All', reply_all_message_path(message), :method => :post, :class => 'replyall', :title => 'Reply to all'
+              - unless message.author == UserProfile.system_profile
+                = link_to 'Reply', reply_message_path(message), :method => :post, :class => 'reply', :title => 'Reply to sender'
+                - if message.recipients.size > 1
+                  = link_to 'Reply All', reply_all_message_path(message), :method => :post, :class => 'replyall', :title => 'Reply to all'
               = link_to 'Forward', forward_message_path(message), :method => :post, :class => 'forward', :title => 'Forward message'
               = link_to 'Delete Message', message_path(message), :method => 'delete', :confirm => 'Are you sure?', :class => 'trash', :title => 'Delete message'
   - else
     %tbody
       %tr
-        %td{ :colspan => 4 } No messages.
+        %td.empty{ :colspan => 4 } No messages.
   %tfoot
     %tr
       %td{ :colspan => 4 }
         - if @folder.name == 'Trash'
-          
+          -#TODO - empty trash button
+          = link_to 'Empty Trash', 'javascript:alert(\'TODO\');', :method => :post, :class => 'button', :title => 'Delete messages forever'
         - else
           - if logged_in? and current_user.can_create('Message') or 1
             = link_to 'New Message', new_sent_path, :class => 'button'

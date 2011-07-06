@@ -30,7 +30,8 @@
       - else
         %tbody
           %tr
-            %td{ :colspan => 2 } There are no characters yet.
+            %td.empty{ :colspan => 2 } There are no characters yet.
+      - if @profile == current_user.profile
       %tfoot
         %tr
           %td{ :colspan => 2 }

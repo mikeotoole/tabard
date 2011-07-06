@@ -21,9 +21,9 @@
   - else
     %tbody
       %tr
-        %td{ :colspan => 3 } There are no discussion spaces yet.
-  %tfoot
-    %tr
-      %td{ :colspan => 3 }
-        - if logged_in? and current_user.can_create("DiscussionSpace")
+        %td.empty{ :colspan => 3 } There are no discussion spaces yet.
+  - if logged_in? and current_user.can_create("DiscussionSpace")
+    %tfoot
+      %tr
+        %td{ :colspan => 3 }
           = link_to 'New Space', new_discussion_space_path, :class => 'button'

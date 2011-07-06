@@ -159,6 +159,23 @@ table {
     font-family: 'DinBlack', sans-serif;
     font-size: 25pt;
     letter-spacing: -1pt; }
+  #body h2 {
+    font-family: 'DinBlack', sans-serif;
+    font-size: 18pt; }
+  #body h3 {
+    font-family: 'DinMedium', sans-serif;
+    font-size: 16pt; }
+  #body #editor iframe {
+    font-size: 14pt; }
+  #body #meta {
+    color: white;
+    line-height: 30px; }
+    #body #meta ul {
+      line-height: 20px; }
+      #body #meta ul a {
+        color: #00bfff; }
+        #body #meta ul a:hover {
+          color: #4dd2ff; }
 
 /* Messaging */
 #recipients .users li {

@@ -31,11 +31,12 @@
   - else 
     %tbody
       %tr
-        %td{ :colspan => 3 } No profiles.
-  %tfoot
-    %tr
-      %td{ :colspan => 3 }
-        - if logged_in?
+        %td.empty{ :colspan => 3 } No profiles.
+  
+  - if logged_in? and (current_user.can_create('UserProfile') or current_user.can_create('GameProfile'))
+    %tfoot
+      %tr
+        %td{ :colspan => 3 }
           - if current_user.can_create('UserProfile')
             = link_to 'New User Profile', new_user_profile_path, :class => 'button'
           - if current_user.can_create('GameProfile')

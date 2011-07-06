@@ -31,9 +31,9 @@
                 = link_to 'Delete', discussion, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
     - else
       %tr
-        %td{ :colspan => 3 } This discussion space has no active discussions.
-    %tfoot
-      %tr
-        %td{ :colspan => 3 }
-          - if logged_in? and current_user.can_create("DiscussionSpace")
+        %td.empty{ :colspan => 3 } This discussion space has no active discussions.
+    - if logged_in? and current_user.can_create("DiscussionSpace")
+      %tfoot
+        %tr
+          %td{ :colspan => 3 }
             = link_to 'Add New', new_discussion_space_discussion_path(@discussion_space), :class => 'button', :title => 'Add a new discussion page'
