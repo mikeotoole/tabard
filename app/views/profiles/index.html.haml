@@ -6,7 +6,7 @@
       %tr
         %th.name Name
         %th.type Type
-        %th.edit
+        %th.actions
     %tbody
       - if @user_profiles
         - @user_profiles.each do |profile|
@@ -15,7 +15,7 @@
               = link_to profile.name, profile
             %td.type
               = link_to 'User', user_profiles_path
-            %td.edit
+            %td.actions
               = link_to 'Edit', edit_user_profile_path(profile), :class => 'edit', :title => 'Edit'
               = link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
       - if @game_profiles
@@ -25,7 +25,7 @@
               = link_to profile.name, profile
             %td.type
               = link_to 'Game', game_profiles_path
-            %td.edit
+            %td.actions
               = link_to 'Edit', edit_user_profile_path(profile), :class => 'edit', :title => 'Edit'
               = link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   - else 

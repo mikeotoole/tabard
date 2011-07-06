@@ -11,7 +11,7 @@
         %th.amount Comments
         %th.name Title
         %th.text Message
-        %th.edit
+        %th.actions
     %tbody
       - @game_announcements.each do |announcement|
         - if current_user.can_show(announcement)
@@ -19,7 +19,7 @@
             %td.amount= announcement.comments.size > 0 ? announcements.comments.size : 'None'
             %td.name= link_to announcement.name, announcement
             %td.text= announcement.body
-            %td.edit
+            %td.actions
               - if current_user.can_update(announcement)
                 = link_to 'Edit', edit_announcement_path(announcement), :class => 'edit', :title => 'Edit'
               - if current_user.can_delete(announcement)

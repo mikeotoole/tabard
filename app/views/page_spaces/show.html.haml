@@ -15,13 +15,13 @@
     %thead
       %tr
         %th.name Pages
-        %th.edit
+        %th.actions
     %tbody
       - if @page_space.pages.size > 0
         - @page_space.pages.each do |page|
           %tr
             %td.name= link_to page.title, [@page_space,page]
-            %td.edit
+            %td.actions
               - if logged_in? and current_user.can_update(page)
                 = link_to 'Edit', edit_page_space_page_path(@page_space,page), :class => 'edit', :title => 'Edit'
               - if logged_in? and current_user.can_delete(page)

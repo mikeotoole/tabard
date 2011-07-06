@@ -6,14 +6,14 @@
       %tr
         %th.amount Discussions
         %th.name Name
-        %th.edit
+        %th.actions
     %tbody
       - @discussion_spaces.each do |discussion_space|
         - if current_user.can_show(discussion_space)
           %tr
             %td.amount= discussion_space.discussions.size if discussion_space.discussions.size > 0
             %td.name= link_to discussion_space.name, discussion_space
-            %td.edit
+            %td.actions
               - if current_user.can_update(discussion_space)
                 = link_to 'Edit', edit_discussion_space_path(discussion_space), :class => 'edit', :title => 'Edit'
               - if current_user.can_delete(discussion_space)

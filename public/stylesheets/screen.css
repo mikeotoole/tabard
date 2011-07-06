@@ -344,57 +344,6 @@ table {
       border-top-right-radius: 0px;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px; }
-  table .actions {
-    padding: 0; }
-    table .actions a {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      -moz-border-radius-topleft: 10px;
-      -moz-border-radius-topright: 10px;
-      -moz-border-radius-bottomright: 10px;
-      -moz-border-radius-bottomleft: 10px;
-      -o-border-radius-topleft: 10px;
-      -o-border-radius-topright: 10px;
-      -o-border-radius-bottomright: 10px;
-      -o-border-radius-bottomleft: 10px;
-      -webkit-border-top-left-radius: 10px;
-      -webkit-border-top-right-radius: 10px;
-      -webkit-border-bottom-right-radius: 10px;
-      -webkit-border-bottom-left-radius: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      display: inline-block;
-      height: 30px;
-      margin: 5px 5px 0 0;
-      overflow: hidden;
-      position: relative;
-      text-indent: -500em;
-      width: 30px; }
-      table .actions a:before {
-        background: url(/images/icons/default.png) no-repeat;
-        content: '';
-        height: 30px;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 30px; }
-      table .actions a:hover {
-        -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-        -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); }
-      table .actions a.delete:before {
-        background-position: -46px -46px; }
-      table .actions a.forward:before {
-        background-position: -86px -46px; }
-      table .actions a.reply:before {
-        background-position: -86px -46px; }
-      table .actions a.undelete:before {
-        background-position: -846px -46px; }
 
 /* Header */
 #header {
@@ -1437,6 +1386,105 @@ table {
       opacity: 0.5;
       filter: alpha(opacity=50);
       padding: 0 0 0 30px; }
+  #body #actions {
+    background: -moz-linear-gradient(top, #666666, #333333) ;
+    background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666, endColorstr=#333333)";
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -o-border-radius-topleft: 10px;
+    -o-border-radius-topright: 10px;
+    -o-border-radius-bottomright: 10px;
+    -o-border-radius-bottomleft: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 40px; }
+    #body #actions a:first-child {
+      margin-left: 5px; }
+  #body #actions,
+  #body .actions {
+    padding: 0; }
+    #body #actions a,
+    #body .actions a {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      -moz-border-radius-topleft: 10px;
+      -moz-border-radius-topright: 10px;
+      -moz-border-radius-bottomright: 10px;
+      -moz-border-radius-bottomleft: 10px;
+      -o-border-radius-topleft: 10px;
+      -o-border-radius-topright: 10px;
+      -o-border-radius-bottomright: 10px;
+      -o-border-radius-bottomleft: 10px;
+      -webkit-border-top-left-radius: 10px;
+      -webkit-border-top-right-radius: 10px;
+      -webkit-border-bottom-right-radius: 10px;
+      -webkit-border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      display: inline-block;
+      height: 30px;
+      margin: 5px 5px 0 0;
+      overflow: hidden;
+      position: relative;
+      text-indent: -500em;
+      width: 30px; }
+      #body #actions a:before,
+      #body .actions a:before {
+        background: url(/images/icons/default.png) no-repeat;
+        content: '';
+        height: 30px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 30px; }
+      #body #actions a:hover,
+      #body .actions a:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: rgba(255, 255, 255, 0.4);
+        -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); }
+      #body #actions a.delete:before,
+      #body .actions a.delete:before {
+        background-position: -46px -46px; }
+      #body #actions a.edit:before,
+      #body .actions a.edit:before {
+        background-position: -286px -46px; }
+      #body #actions a.forward:before,
+      #body .actions a.forward:before {
+        background-position: -1006px -46px; }
+      #body #actions a.reply:before,
+      #body .actions a.reply:before {
+        background-position: -406px -46px; }
+      #body #actions a.replyall:before,
+      #body .actions a.replyall:before {
+        background-position: -926px -46px; }
+      #body #actions a.trash:before,
+      #body .actions a.trash:before {
+        background-position: -326px -46px; }
+      #body #actions a.undelete:before,
+      #body .actions a.undelete:before {
+        background-position: -846px -46px; }
   #body h1 {
     padding: 20px 0 40px; }
   #body p {

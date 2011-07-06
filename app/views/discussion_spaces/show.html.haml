@@ -17,14 +17,14 @@
         %tr
           %th.amount Comments
           %th.name Discussion
-          %th.edit
+          %th.actions
       %tbody
         - @discussion_space.discussions.each do |discussion|
           %tr
             %td.amount= discussion.comments.size if discussion.comments.size > 0
             %td.name
               = link_to discussion.name, discussion
-            %td.edit
+            %td.actions
               - if current_user.can_update(discussion)
                 = link_to 'Edit', edit_discussion_path(discussion), :class => 'edit', :title => 'Edit'
               - if current_user.can_delete(@discussion_space)

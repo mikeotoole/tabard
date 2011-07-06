@@ -12,7 +12,7 @@
       %tr
         %th.name Field Name
         %th.text Values
-        %th.edit
+        %th.actions
           - if logged_in? and current_user.can_update(@site_form)
             = link_to 'Edit', edit_management_site_form_path(@site_form), :class => 'edit', :title => 'Edit Form'
           - if logged_in? and current_user.can_delete(@site_form)
@@ -45,7 +45,7 @@
         %tr
           %th.name Question
           %th.text Answers
-          %th.edit
+          %th.actions
       %tbody
         - @site_form.questions.each do |question|
           %tr
@@ -55,7 +55,7 @@
                 %ul
                   - question.predefined_answers.each do |answer|
                     %li= answer.content
-            %td.edit
+            %td.actions
               - if logged_in? and current_user.can_update(question)
                 = link_to 'Edit', edit_question_path(question), :class => 'edit', :title => 'Edit'
               - if logged_in? and current_user.can_delete(question)

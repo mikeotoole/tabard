@@ -11,7 +11,7 @@
         %th.name Name
         %th.email Email
         %th.status Status
-        %th.edit
+        %th.actions
     %tbody
       - @users.each do |user|
         %tr
@@ -21,7 +21,7 @@
             = link_to user.email, 'mailto:' + user.email
           %td.status
             = user.status_string
-          %td.edit
+          %td.actions
             - if user.is_inactive
               = link_to 'Activate', activate_management_user_path(user), :class => 'activate', :title => 'Activate'
             - else  

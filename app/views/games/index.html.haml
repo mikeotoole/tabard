@@ -6,7 +6,7 @@
       %tr
         %th.amount Players
         %th.name Name
-        %th
+        %th.actions
     %tbody
       - @games.each do |game|
         %tr
@@ -14,7 +14,7 @@
             = game.characters.size.to_s
           %td.name
             = link_to game.name, game
-          %td.edit
+          %td.actions
             - if logged_in? and current_user.can_update(game)
               = link_to "Edit", edit_game_path(game), :class => 'edit', :title => 'Edit'
             - if logged_in? and current_user.can_delete(game)

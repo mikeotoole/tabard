@@ -7,7 +7,7 @@
         %th.amount Pages
         %th.name Topic
         %th.name Game
-        %th.edit
+        %th.actions
     %tbody
       - @page_spaces.each do |page_space|
         %tr
@@ -18,7 +18,7 @@
           %td.name
             - if page_space.game != nil
               = link_to page_space.game_name, page_space.game
-          %td.edit
+          %td.actions
             - if logged_in? and current_user.can_update(page_space)
               = link_to 'Edit', edit_page_space_path(page_space), :class => 'edit', :title => 'Edit'
             - if logged_in? and current_user.can_delete(page_space)

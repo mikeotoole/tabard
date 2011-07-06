@@ -11,7 +11,7 @@
         %th.name Name
         %th Published
         %th Submissions
-        %th.edit
+        %th.actions
     %tbody
       - @site_form.each do |site_form|
         %tr
@@ -24,7 +24,7 @@
               = link_to site_form.submissions.size, site_form_submissions_path(site_form)
             - else
               None
-          %td.edit
+          %td.actions
             -#= link_to 'Edit', edit_management_site_form_path(site_form), :class => 'edit', :title => 'Edit'
             = link_to 'Delete', [:management, site_form], :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   - else

@@ -8,7 +8,7 @@
         %th.name Title
         %th.type Type
         %th.text Message
-        %th.edit
+        %th.actions
     %tbody
       - if @site_announcements
         - @site_announcements.each do |announcement|
@@ -18,7 +18,7 @@
               %td.name= link_to announcement.name, announcement
               %td.type= link_to 'Site', :site_announcements
               %td.text= announcement.body
-              %td.edit
+              %td.actions
                 - if current_user.can_update(announcement)
                   = link_to 'Edit', edit_site_announcement_path(announcement), :class => 'edit', :title => 'Edit'
                 - if current_user.can_delete(announcement)
@@ -31,7 +31,7 @@
               %td.name= link_to announcement.name, announcement
               %td.type= link_to 'Game', :game_announcements
               %td.text= announcement.body
-              %td.edit
+              %td.actions
                 - if current_user.can_update(announcement)
                   = link_to 'Edit', edit_game_announcement_path(announcement), :class => 'edit', :title => 'Edit'
                 - if current_user.can_delete(announcement)

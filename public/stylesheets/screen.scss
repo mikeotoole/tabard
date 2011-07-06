@@ -225,38 +225,6 @@ table {
       }
     }
   }
-  .actions {
-    padding: 0;
-    a {
-      background: rgba(0, 0, 0, .3);
-      border: 1px solid rgba(255, 255, 255, .2);
-      @include border_radius(1);
-      @include box_sizing(border-box);
-      display: inline-block;
-      height: 30px;
-      margin: 5px 5px 0 0;
-      overflow: hidden;
-      position: relative;
-      text-indent: -500em;
-      width: 30px;
-      &:before {
-        background: url(/images/icons/#{$icon_set}.png) no-repeat;
-        content: '';
-        height: 30px;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 30px;
-      }
-      &:hover {
-        @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
-      }
-      &.delete:before { background-position: -46px -46px; }
-      &.forward:before { background-position: -86px -46px; }
-      &.reply:before { background-position: -86px -46px; }
-      &.undelete:before { background-position: -846px -46px; }
-    }
-  }
 }
 
 
@@ -850,6 +818,56 @@ table {
       height: 30px;
       @include opacity(.5);
       padding: 0 0 0 30px;
+    }
+  }
+  #actions {
+    @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    a:first-child {
+      margin-left: 5px;
+    }
+  }
+  #actions,
+  .actions {
+    padding: 0;
+    a {
+      background: rgba(0, 0, 0, .3);
+      border: 1px solid rgba(255, 255, 255, .2);
+      @include border_radius(1);
+      @include box_sizing(border-box);
+      display: inline-block;
+      height: 30px;
+      margin: 5px 5px 0 0;
+      overflow: hidden;
+      position: relative;
+      text-indent: -500em;
+      width: 30px;
+      &:before {
+        background: url(/images/icons/#{$icon_set}.png) no-repeat;
+        content: '';
+        height: 30px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 30px;
+      }
+      &:hover {
+        background: rgba(0, 0, 0, .5);
+        border-color: rgba(255, 255, 255, .4);
+        @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+      }
+      &.delete:before { background-position: -46px -46px; }
+      &.edit:before { background-position: -286px -46px; }
+      &.forward:before { background-position: -1006px -46px; }
+      &.reply:before { background-position: -406px -46px; }
+      &.replyall:before { background-position: -926px -46px; }
+      &.trash:before { background-position: -326px -46px; }
+      &.undelete:before { background-position: -846px -46px; }
     }
   }
   h1 {
