@@ -5,7 +5,8 @@
   = render :partial => "search/form", :locals => { :search_term => @search_term }
 
 - if @results.size > 0
-  %dl#results
+  %h2 Results
+  %dl#results{ :class => 'tabs' }
     %dt{ :class => 'all active' } All (#{@results.size})
     %dd{ :class => 'all active' }
       %ol

@@ -2,7 +2,7 @@
 $bg_color_1: rgba(255, 255, 255, 1);
 $bg_color_2: rgba(0, 0, 0, 1);
 $accent_color: rgba(0, 153, 204, 1);
-$border_radius: 10;
+$border_radius: 5;
 $icon_set: default;
 $announcement_color: rgba(204, 0, 102, 1);
 $alert_color: rgba(200, 193, 0, 1);
@@ -141,6 +141,136 @@ textarea {
 }
 label {
   display: block;
+}
+#body {
+  ul {
+    .checkbox,
+    .radio {
+      list-style: none !important;
+      label {
+        display: inline-block;
+        height: 20px;
+        overflow: hidden;
+        margin: 0 0 0 -1em;
+        position: relative;
+        padding: 5px 5px 5px 45px;
+        text-indent: -100px;
+        &:before {
+          background: lighten($bg_color_2, 10%);
+          border: 1px solid darken($bg_color_2, 10%);
+          @include border_radius(1);
+          @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
+          content: '';
+          height: 24px;
+          left: 3px;
+          position: absolute;
+          top: 3px;
+          width: 24px;
+        }
+        input {
+          width: 90px;
+        }
+      }
+    }
+    .checkbox {
+      label {
+        &:hover {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
+          }
+        }
+        &.checked {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+          }
+        }
+      }
+    }
+    .radio {
+      label {
+        &:hover {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
+          }
+        }
+        &.checked {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
+          }
+        }
+      }
+    }
+  }
+  .selectbox {
+    @include border_radius(1);
+    position: absolute;
+    z-index: 3;
+    dt {
+      background: lighten($bg_color_2, 20%);
+      @include border_radius(1);
+      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+      height: 30px;
+      padding: 0 40px 0 10px;
+      position: relative;
+      z-index: 5;
+      &:before {
+        background: url(../images/icons/#{$icon_set}.png) -765px -45px;
+        content: '';
+        height: 30px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 30px;
+      }
+    }
+    dl {
+      border-top: 1px solid rgba(0, 0, 0, .2);
+      height: 0;
+      left: -5000em;
+      list-style: none;
+      padding: 0 15px;
+      position: relative;
+      white-space: nowrap;
+      z-index: 4;
+      &:before {
+        border-top: 1px solid rgba(255, 255, 255, .2);
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      &:hover {
+        background: rgba(0, 0, 0, .3);
+      }
+      &:last-child {
+        @include border_radius(0, 0, 1, 1);
+      }
+      &.selected {
+        background: rgba(255, 255, 255, .2);
+      }
+    }
+    &:hover {
+      @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
+      @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
+      dt {
+        @include bg_gradient($accent_color, lighten($accent_color, 5%));
+        @include border_radius(1, 1, 0, 0);
+        @include box_shadow(none);
+        padding: 0 45px 0 15px;
+        &:before {
+          right: 5px;
+        }
+      }
+      dl {
+        cursor: pointer;
+        height: auto;
+        left: auto;
+        padding: 5px 15px;
+        @include transition(padding .2s ease-in-out);
+      }
+    }
+  }
 }
 
 
@@ -882,6 +1012,19 @@ table {
       &.undelete:before { background-position: -846px -46px; }
     }
   }
+  h1,
+  h2,
+  h3,
+  p,
+  ol,
+  ul,
+  dl,
+  blockquote,
+  div,
+  br,
+  hr {
+    clear: both;
+  }
   h1 {
     padding: 20px 0 40px;
   }
@@ -893,9 +1036,66 @@ table {
   }
   p {
     padding: 0 0 2em;
-  }  
+  }
+  ol {
+    padding: 0 0 2em 2em;
+    li {
+      list-style: decimal;
+    }
+  }
+  ul {
+    padding: 0 0 2em 2em;
+    li {
+      list-style: square;
+    }
+  }
+  dl.tabs {
+    margin: 0 0 2em;
+    padding: (30px + $border_radius) 0 0;
+    position: relative;
+    > dt {
+      @include bg_gradient(lighten($bg_color_2, 10%), lighten($bg_color_2, 30%));
+      @include border_radius(1, 1, 0, 0);
+      cursor: pointer;
+      height: 30px;
+      padding: 0 0 #{$border_radius}px 10px;
+      position: absolute;
+      top: 0;
+      width: 140px;
+      z-index: 1;
+      &:hover {
+        @include bg_gradient(lighten($accent_color, 10%), darken($accent_color, 10%));
+        z-index: 1;
+      }
+      &.active {
+        background: darken($bg_color_1, 20%);
+        border-top: 1px solid darken($bg_color_1, 40%);
+        z-index: 3;
+      }
+      &:nth-of-type(1) { left: ($border_radius + 5px); }
+      &:nth-of-type(2) { left: ($border_radius + 160px); }
+      &:nth-of-type(3) { left: ($border_radius + 315px); }
+      &:nth-of-type(4) { left: ($border_radius + 470px); }
+      &:nth-of-type(5) { left: ($border_radius + 625px); }
+      &:nth-of-type(6) { left: ($border_radius + 780px); }
+    }
+    > dd {
+      @include bg_gradient(darken($bg_color_1, 20%), darken($bg_color_1, 10%), 0 $border_radius, 0 30, linear, repeat-x darken($bg_color_1, 10%));
+      border-top: 1px solid $bg_color_1;
+      @include border_radius(1);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      display: none;
+      margin: -#{$border_radius}px 0 0;
+      padding: 2em 2em 0;
+      position: relative;
+      z-index: 2;
+      &.active {
+        display: block;
+      }
+    }
+  }
   #search {
-    height: 30px;
+    height: 100px;
     p {
       padding: 0 0 .5em;
     }
@@ -905,7 +1105,30 @@ table {
     }
     button {
       float: right;
+      padding: 0 0 0 5px;
+      position: relative;
       width: 110px;
+      &:before {
+        background: url(/images/icons/#{$icon_set}.png) no-repeat -1045px -45px;
+        content: '';
+        height: 30px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 30px;
+      }
+    }
+  }
+  #results {
+    margin-bottom: 0;
+    ol {
+      padding: 2em 2em 0;
+      li {
+        padding: 0 0 2em;
+        h3 {
+          padding: 0;
+        }
+      }
     }
   }
   #editor {

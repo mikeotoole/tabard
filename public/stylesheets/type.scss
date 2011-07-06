@@ -53,6 +53,21 @@ textarea {
 label {
   @include font(medium, inherit);
 }
+#body {
+  .selectbox {
+    color: $text_color_2;
+    &:hover {
+      color: $text_color_3;
+    }
+    dt {
+      font-size: 14pt;
+      line-height: 30px;
+    }
+    dl {
+      font-size: 10pt;
+    }
+  }
+}
 
 
 /* Tables */
@@ -98,9 +113,6 @@ table {
         ul {
           a {
             font-size: 10pt;
-            &:hover {
-              color: $text_color_2;
-            }
           }
           .current {
             a {
@@ -236,6 +248,15 @@ table {
   }
   h3 {
     @include font(medium, 16pt);
+  }
+  .tabs {
+    dt {
+      color: $text_color_2;
+      line-height: 30px;
+      &.active {
+        color: $text_color_1;
+      }
+    }
   }
   #editor iframe {
     font-size: 14pt;

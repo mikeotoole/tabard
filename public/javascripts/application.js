@@ -24,6 +24,14 @@ $(document).ready(function() {
               } else {
                 $(this).removeClass('checked').parent().removeClass('checked');
               }
+            });
+          $(this).has('input:checked').addClass('checked').find('input:checked').addClass('checked');
+        break;
+        case 'radio':
+          $(field)
+            .bind('change', function() {
+              $('input[name="' + $(this).attr('name') + '"]').removeClass('checked').parent().removeClass('checked');
+              $(this).addClass('checked').parent().addClass('checked');
             })
             .trigger('change');
         break;
@@ -44,6 +52,25 @@ $(document).ready(function() {
       }
     }
   });
+  $('select').each(function(){
+    select_id = $(this).attr('id');
+    selectbox_id = 'selectbox_' + select_id;
+    $(this)
+      .css({ opacity: 0 })
+      .before('<dl id="' + selectbox_id + '" class="selectbox"><dt>' + $(this).find('option:selected').html() + '</dt></dl>')
+      .find('option')
+      .each(function(){
+        s = $(this).attr('selected') == true ? ' class="selected"' : '';
+        $('#' + selectbox_id + ' dt').after('<dl' + s + ' value="' + $(this).val() + '">' + $(this).html() + '</dl>');
+      });
+    $('#' + selectbox_id + ' dl').click(function(){
+      $(this).parent().find('dl').removeClass('selected');
+      $(this)
+        .addClass('selected')
+        .parent().find('dt').html($(this).html());
+      $('#' + select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
+    });
+  });
   
   //announcements
   $('#announcements').find('.notice, .alert').append('<a class="dismiss" title="Dismiss message">Dismiss message</a>');
@@ -60,9 +87,11 @@ $(document).ready(function() {
   $('#menu .search input, #menu .search button')
     .focus(function(){ $(this).parents('li').addClass('focus'); })
     .blur(function(){ $(this).parents('li').removeClass('focus'); });
-  $('#results dt').click(function(){
-    $('#results .active').removeClass('active');
-    $('#results .' + $(this).attr('class')).addClass('active');
+  
+  //tabs
+  $('.tabs dt').click(function(){
+    $(this).parent().find('.active').removeClass('active');
+    $(this).parent().find('.' + $(this).attr('class')).addClass('active');
   });
   
   //messaging

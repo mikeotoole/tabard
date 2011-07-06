@@ -41,6 +41,16 @@ label {
   font-family: 'DinMedium', sans-serif;
   font-size: inherit; }
 
+#body .selectbox {
+  color: white; }
+  #body .selectbox:hover {
+    color: white; }
+  #body .selectbox dt {
+    font-size: 14pt;
+    line-height: 30px; }
+  #body .selectbox dl {
+    font-size: 10pt; }
+
 /* Tables */
 table {
   color: white; }
@@ -76,8 +86,6 @@ table {
       color: white; }
       #header .userbox .profile:hover ul a {
         font-size: 10pt; }
-        #header .userbox .profile:hover ul a:hover {
-          color: white; }
       #header .userbox .profile:hover ul .current a {
         font-family: 'DinMedium', sans-serif;
         font-size: 10pt; }
@@ -165,6 +173,11 @@ table {
   #body h3 {
     font-family: 'DinMedium', sans-serif;
     font-size: 16pt; }
+  #body .tabs dt {
+    color: white;
+    line-height: 30px; }
+    #body .tabs dt.active {
+      color: black; }
   #body #editor iframe {
     font-size: 14pt; }
   #body #meta {

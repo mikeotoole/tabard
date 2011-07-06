@@ -1,5 +1,5 @@
 = div_for text_box_question do
   %h3
     = text_box_question.content
-    %br/
+  %p.field
     = text_area_tag("answer_helper[#{text_box_question.id}][#{(actual_submission.contains_answer_to_question(text_box_question) != nil ? actual_submission.contains_answer_to_question(text_box_question).id : -text_box_question.id)}]",(actual_submission.contains_answer_to_question(text_box_question) != nil ? actual_submission.contains_answer_to_question(text_box_question).content : ""), :rows =>5)

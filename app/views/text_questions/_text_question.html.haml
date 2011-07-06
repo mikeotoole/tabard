@@ -1,5 +1,5 @@
 = div_for text_question do
   %h3
     = text_question.content
-    %br/
+  %p.field
     = text_field_tag("answer_helper[#{text_question.id}][#{(actual_submission.contains_answer_to_question(text_question) != nil ? actual_submission.contains_answer_to_question(text_question).id : -text_question.id)}]",(actual_submission.contains_answer_to_question(text_question) != nil ? actual_submission.contains_answer_to_question(text_question).content : ""))
