@@ -40,7 +40,7 @@ class Comment < ActiveRecord::Base
   end
   
   def number_of_comments
-   temp_total_num_comments = comments.size
+   temp_total_num_comments = 1
    comments.each do |comment|
      temp_total_num_comments += comment.number_of_comments
    end 

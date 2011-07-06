@@ -21,7 +21,7 @@
       %tbody
         - @discussion_space.discussions.each do |discussion|
           %tr
-            %td.amount= discussion.comments.size if discussion.comments.size > 0
+            %td.amount= discussion.number_of_comments if discussion.number_of_comments > 0
             %td.name
               = link_to discussion.name, discussion
             %td.edit

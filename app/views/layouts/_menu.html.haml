@@ -25,10 +25,7 @@
           =link_to 'Members', user_profiles_path
           %ul
             %li= link_to 'Announcements', announcements_path
-            %li= link_to 'Events', :events
             %li= link_to 'Discussions', :discussion_spaces if current_user.can_show("DiscussionSpace")
-            %li= link_to 'Newsletter', :newsletters
-            %li= link_to 'Donations', '#'
       -if !logged_in?
         %li
           = link_to 'Events', :events, { :class => 'main' }

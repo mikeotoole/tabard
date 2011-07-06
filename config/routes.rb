@@ -41,10 +41,6 @@ Bv::Application.routes.draw do
     resources :pages
   end  
 
-  resources :letters,
-    :donations,
-    :newsletters
-
   resources :discussion_spaces do
     resources :discussions, :controller => 'discussion_spaces/discussions', :only => [:new, :create]
   end
@@ -90,11 +86,8 @@ Bv::Application.routes.draw do
     resources :roles do
       resources :permissions
     end
-    resources :newsletters,
-      :page_spaces,
+    resources :page_spaces,
       :discussion_spaces,
-      :themes,
-      :teamspeaks,
       :site_forms
       
     resources :registration_applications, :except => [:new,:create] do
