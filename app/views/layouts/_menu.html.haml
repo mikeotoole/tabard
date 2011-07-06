@@ -25,11 +25,8 @@
           =link_to 'Members', user_profiles_path
           %ul
             %li= link_to 'Announcements', announcements_path
-            %li= link_to 'Events', :events
             - if current_user.can_show("DiscussionSpace")
               %li= link_to 'Discussions', :discussion_spaces
-            %li= link_to 'Newsletter', :newsletters
-            %li= link_to 'Donations', '#'
             - if logged_in? and current_user.can_update('RegistrationApplication')
               %li.new
                 = link_to '+ Applications', registration_applications_path

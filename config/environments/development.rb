@@ -34,6 +34,10 @@ Bv::Application.configure do
     :enable_starttls_auto => true 
   }
   
+  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+    '<span class="error">'.html_safe << html_tag << '</span>'.html_safe
+  end
+  
   #tiny_mce stuffs
   config.gem 'tiny_mce'
   

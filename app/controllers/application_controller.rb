@@ -193,12 +193,6 @@ class ApplicationController < ActionController::Base
     @management_items << {:link => management_users_path, :title => "Users"} if current_user.can_manage("User")
     #roles
     @management_items << {:link => management_roles_path, :title => "Roles"} if current_user.can_manage("Role")
-    #newsletter
-    @management_items << {:link => management_newsletters_path, :title => "Newsletters"} if current_user.can_manage("Newsletter")
-    #themes
-    @management_items << {:link => management_themes_path, :title => "Themes"} if current_user.can_manage("Theme")
-    #teamspeak
-    @management_items << {:link => management_teamspeaks_path, :title => "Teamspeak"} if current_user.can_manage("Teamspeak")
     #forms
     @management_items << {:link => management_site_forms_path, :title => "Forms"} if current_user.can_manage("SiteForm")
   end
