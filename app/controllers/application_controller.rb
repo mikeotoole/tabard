@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   
   # Removes all flash messages
   def clear_flash_messages
-    #flash[:messages] = Array.new
+    flash[:messages] = []
   end  
   
   def add_new_flash_message(message_body, message_class="notice", message_title="")
