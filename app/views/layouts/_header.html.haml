@@ -1,7 +1,7 @@
 #header
   .container
-    .title= link_to APP_CONFIG['site_name'], root_path
-    .slogan= APP_CONFIG['site_tagline']
+    .title= link_to "#{@community.name} #{@community.label}", root_path(:subdomain => @community.subdomain)
+    .slogan= @community.slogan
     = render :partial => "layouts/userbox" if logged_in?
 
 = render :partial => "layouts/menu"

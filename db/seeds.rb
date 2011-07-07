@@ -28,6 +28,7 @@ pageResource = SystemResource.create(:name => "Page")
 
 # Sample Communities
 stonewatch = Community.create(:name => "Stonewatch", :slogan => "We wear pants and eat food.", :label => "Guild", :accepting => true)
+just_another_headshot = Community.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan", :accepting => false)
 
 
 # Admin User

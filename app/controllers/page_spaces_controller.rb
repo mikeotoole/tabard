@@ -1,4 +1,4 @@
-class PageSpacesController < ApplicationController
+class PageSpacesController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   # GET /page_spaces

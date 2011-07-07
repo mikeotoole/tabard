@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class CommentsController < CommunitiesController
   respond_to :html, :xml, :js
   before_filter :authenticate
   # GET /comments

@@ -6,11 +6,10 @@ class Community < ActiveRecord::Base
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan), :message => "%{value} is not currently a supported label" }
-  validates :accepting, :presence => true
   
   before_save :update_subdomain
   
   def update_subdomain
-    self.subdomain = self.name.downcase.gsub!(/\s/, "-")
+    self.subdomain = self.name.downcase.gsub(/\s/, "-")
   end
 end
