@@ -26,6 +26,10 @@ gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
 pageResource = SystemResource.create(:name => "Page")
 
+# Sample Communities
+stonewatch = Community.create(:name => "Stonewatch", :slogan => "We wear pants and eat food.", :label => "Guild", :accepting => true)
+
+
 # Admin User
 adminProfile = UserProfile.create(:name => "Admin")
 adminProfile.set_active

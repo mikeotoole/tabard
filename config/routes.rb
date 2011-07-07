@@ -1,5 +1,5 @@
 Bv::Application.routes.draw do
- 
+  
   match "/search" => "search#index"
 
   get "status_code/invoke_404"
@@ -66,8 +66,6 @@ Bv::Application.routes.draw do
     :game_announcements
   
   match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
-
-  root :to => "home#index"
   
   match '/profiles/newgame' => "profiles#newgame"
   
@@ -128,6 +126,14 @@ Bv::Application.routes.draw do
   resources :swtor_characters, :only => :show
   
   resources :base_characters, :only => :new
+  
+  constraints(Subdomain) do
+    match '/' => "communities#show"
+  end
+  
+  resources :communities
+  
+  root :to => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
