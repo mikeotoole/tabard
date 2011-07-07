@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
         return
       end
 
-      cookies.permanent.signed[:remember_token] = {:value => user.id, :domain => ".vlh.me"} if params[:remember]
+      cookies.permanent.signed[:remember_token] = {:value => user.id, :domain => :all} if params[:remember]
       session[:user_id] = user.id
       
       if user.user_profile == nil
@@ -41,8 +41,8 @@ class SessionsController < ApplicationController
   end
   
   def destroy 
-    reset_session 
-    cookies.delete :remember_token, :domain => ".vlh.me"
+    reset_session
+    cookies.delete :remember_token, :domain => :all
     add_new_flash_message("You successfully logged out")
     redirect_to root_path
   end

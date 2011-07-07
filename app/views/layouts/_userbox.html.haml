@@ -20,4 +20,4 @@
       %li.trash= link_to "Trash", trash_path, { :title => "Trash" }
   %p.actions
     =link_to 'Account', user_profile_path(current_user), :class => 'button account'
-    =link_to 'Logout', logout_path, :class => 'button logout'
+    =link_to 'Logout', logout_url(:subdomain => false), :class => 'button logout'

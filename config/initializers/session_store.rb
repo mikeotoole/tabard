@@ -1,6 +1,8 @@
 # Be sure to restart your server when you modify this file.
 
-Bv::Application.config.session_store :active_record_store, :domain => :all
+Bv::Application.config.session_store :active_record_store, :domain => '.lvh.me'
+
+#Bv::Application.config.session_store :cookie_store, :key => '_bv_session', :domain => :all
 
 
 # Use the database for sessions instead of the cookie-based default,

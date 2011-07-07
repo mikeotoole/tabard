@@ -1,7 +1,7 @@
 #menu
   .container
     -if !logged_in?
-      = form_tag(session_path, :class => 'login') do
+      = form_tag(session_url(:subdomain => false), :class => 'login') do
         = label_tag :email
         = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
         = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
