@@ -6,7 +6,7 @@ jQuery.extend(jQuery.expr[':'], {
 
 $(document).ready(function() {
   
-  //form field enhancements
+  //input field enhancements
   $('label').each(function() {
     if($(this).attr('for')) {
       field = $('#'+$(this).attr('for'));
@@ -52,6 +52,8 @@ $(document).ready(function() {
       }
     }
   });
+  
+  //select field enhancements
   $('select').each(function(){
     select_id = $(this).attr('id');
     selectbox_id = 'selectbox_' + select_id;
@@ -69,7 +71,9 @@ $(document).ready(function() {
         .addClass('selected')
         .parent().find('dt').html($(this).html());
       $('#' + select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
+      $('#' + select_id).width($(this).parent().width());
     });
+    $('#' + select_id).width($('#' + selectbox_id + ' dl[value="' + $('#' + select_id).val() + '"]').width() + 50);
   });
   
   //announcements
