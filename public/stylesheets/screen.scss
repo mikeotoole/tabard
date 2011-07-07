@@ -103,7 +103,7 @@ $notice_text_color: rgba(255, 255, 255, 1);
 body {
   background: $bg_color_1;
   @include bg_gradient(darken($bg_color_1, 15%), $bg_color_1, 0 0, 0 310, linear, repeat-x $bg_color_1);
-  color: #808080;
+  color: $text_color_1;
   @include font(light);
   font-size: 100.01%;
   line-height: 1.3em;
@@ -297,6 +297,7 @@ label {
       @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
       @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
       color: $text_color_3;
+      margin-left: -5px;
       dt {
         @include bg_gradient($accent_color, lighten($accent_color, 5%));
         @include border_radius(1, 1, 0, 0);
@@ -550,7 +551,7 @@ table {
             background: transparent;
             border-top: 1px solid rgba(255, 255, 255, .2);
             display: block;
-            padding: 5px 15px;
+            padding: 0 15px;
             position: relative;
             width: 280px;
             &:hover {
@@ -596,7 +597,7 @@ table {
           li {
             a {
               font-size: 10pt;
-              padding: 10px 15px;
+              padding: 5px 15px;
               @include transition(padding .2s ease-in-out);
             }
             &.current {

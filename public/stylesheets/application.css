@@ -1,10 +1,6 @@
 @import url(reset.css) all;
-@import url(type.css) all;
 @import url(screen.css) screen;
-/*
-@import url(handheld.css) handheld;
-@import url(print.css) print;
-*/
+/* TODO: @import url(print.css) print; */
 
 @font-face {
     font-family: 'DinBlack';

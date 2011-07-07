@@ -40,11 +40,11 @@ $(document).ready(function() {
           $(field)
             .bind('focus', function() {
               value = $(this).val();
-              if($.trim(value)==$.trim(title)) $(this).val('');
+              if($.trim(value)==$.trim(title)) $(this).attr('value','');
             })
             .bind('blur', function() {
               value = $(this).val();
-              if(!$.trim(value)) $(this).val(title);
+              if(!$.trim(value)) $(this).attr('value',title);
             })
             .trigger('focus')
             .trigger('blur');
