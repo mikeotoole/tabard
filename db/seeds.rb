@@ -36,6 +36,11 @@ stonewatch = Community.create(:name => "Stonewatch",
   :label => "Guild", 
   :accepting => true)
 
+justanotherheadshot = Community.create(:name => "Just Another Headshot", 
+  :slogan => "Boom Baby!", 
+  :label => "Clan", 
+  :accepting => false)
+
 adminUser.roles << stonewatch.admin_role
 
 #Sample community activity
@@ -59,11 +64,6 @@ TextQuestion.create(:content => "This is a ____ text question.", :site_form => s
 
 stonewatch.update_attributes(:community_application_form => stonewatchCommunityForm)
 
-
-# Sample Discussion Spaces
-discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile, :community => stonewatch)
-discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile, :community => stonewatch)
-
 # General User
 roboBillyProfile = UserProfile.create(:name => "RoboBilly")
 roboBillyProfile.set_active
@@ -83,6 +83,7 @@ dMooseProfile = UserProfile.create(:name => "DiabolicalMoose")
 dMooseProfile.set_active
 dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile)
 dMooseUser.roles << stonewatch.member_role
+dMooseUser.roles << justanotherheadshot.admin_role
 
 badApplicantProfile = UserProfile.create(:name => "Your Mom")
 badApplicantProfile.set_active
@@ -97,6 +98,10 @@ badApplicantProfile.roles << stonewatch.applicant_role
 }
 
 #Generate some normal activity for stonewatch
+
+# Sample Discussion Spaces
+discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile, :community => stonewatch)
+discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile, :community => stonewatch)
 
 #Sample Discussions
 disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
@@ -113,13 +118,26 @@ comment4 = Comment.create(:body => "In before locked", :user_profile => dMoosePr
 #SiteAnnouncement.create(:name => "Website is up and running!", :body => "This new website is off the hook!")
 
 # Sample Page Space/Pages
-#bossPageSpace = PageSpace.create(:name => "SWTOR Boss Strategies", :game => swtor)
-#sarlaccPage = Page.create(:title => "Sarlacc Pit Strategy", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => bossPageSpace, :featured_page => true)
-#rockLobsterPage = Page.create(:title => "Rock Lobster", :body => "Bring a pot, this boss is super delicious!", :page_space => bossPageSpace)
+bossPageSpace = PageSpace.create(:name => "SWTOR Boss Strategies", :game => swtor, :community => stonewatch)
+sarlaccPage = Page.create(:title => "Sarlacc Pit Strategy", :body => "Don't get eaten! It is really bad. Instead just pew-pew-pew", :page_space => bossPageSpace, :featured_page => true)
+rockLobsterPage = Page.create(:title => "Rock Lobster", :body => "Bring a pot, this boss is super delicious!", :page_space => bossPageSpace)
 
-#guildInformationPageSpace = PageSpace.create(:name => "Guild Information")
-#guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic story]", :page_space => guildInformationPageSpace, :featured_page => true)
-#guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
+guildInformationPageSpace = PageSpace.create(:name => "Guild Information", :community => stonewatch)
+guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic story]", :page_space => guildInformationPageSpace, :featured_page => true)
+guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
+
+#Generate some normal activity for justanotherheadshot
+
+# Sample Discussion Space
+jahGeneral = DiscussionSpace.create(:name => "General", :system => false, :user_profile => dMooseProfile, :community => justanotherheadshot)
+jahHax = DiscussionSpace.create(:name => "Hax Info", :system => false, :user_profile => dMooseProfile, :community => justanotherheadshot)
+
+#Sample Discussions
+haxDisc1 = Discussion.create(:name => "1337 Hax Website", :body => "www.1337hax.com/OMGWTFBBQPWNSAUCE/pewpewpew", :user_profile => dMooseProfile, :discussion_space => jahHax)
+
+# Sample Page Space/Pages
+jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justanotherheadshot)
+Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
 
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)
