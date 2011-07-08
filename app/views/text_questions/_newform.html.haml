@@ -1,8 +1,10 @@
 = form_for(@text_question, :remote => true) do |f|
   = f.hidden_field :site_form_id
-  %h2 Text Question
-  %p.field
+  %h2 Short Answer Question
+  %p{ :class => 'question field' }
     = f.label :content, "Question"
     = f.text_area :content, :rows => 3
-  %p.actions
+  %p
     %button{ :type => 'submit' } Add Question
+    or
+    = link_to 'Cancel', 'javascript:;', :class => 'new_question_cancel'

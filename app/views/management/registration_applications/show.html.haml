@@ -17,7 +17,6 @@
       - else
         = link_to 'Lock Discussion', lock_discussion_path(@registration_application.discussion), :method => :post, :class => 'lock', :title => 'Lock Discussion'
 
-  
   %h2 Application Answers
   %p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:submission =>  @registration_application}
   

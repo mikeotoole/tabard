@@ -63,17 +63,17 @@ $(document).ready(function() {
       .find('option')
       .each(function(){
         s = $(this).attr('selected') == true ? ' class="selected"' : '';
-        $('#' + selectbox_id + ' dt').after('<dl' + s + ' value="' + $(this).val() + '">' + $(this).html() + '</dl>');
+        $('#'+selectbox_id+' dt').after('<dl' + s + ' value="' + $(this).val() + '">' + $(this).html() + '</dl>');
       });
-    $('#' + selectbox_id + ' dl').click(function(){
+    $('#'+selectbox_id + ' dl').click(function(){
       $(this).parent().find('dl').removeClass('selected');
       $(this)
         .addClass('selected')
         .parent().find('dt').html($(this).html());
-      $('#' + select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
-      $('#' + select_id).width($(this).parent().width());
+      $('#'+select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
+      $('#'+select_id).width($(this).parent().width());
     });
-    $('#' + select_id).width($('#' + selectbox_id + ' dl[value="' + $('#' + select_id).val() + '"]').width() + 50);
+    $('#'+select_id).width($('#' + selectbox_id + ' dl[value="' + $('#'+select_id).val() + '"]').width() + 47);
   });
   
   //announcements
@@ -154,13 +154,22 @@ $(document).ready(function() {
 	
 });
 
-function remove_fields(link) {
-  $(link).prev("input[type=hidden]").val("1");
-  $(link).closest(".fields").hide();
+function remove_fields(node, limit, parent, child) {
+  if(limit) {
+    if($(parent).find(child).length > limit) {
+      $(node).remove();
+    } else {
+      alert('You must keep at least ' + limit + '.');
+    }
+  } else {
+    $(node).remove();
+  }
+  return false;
 }
 
-function add_fields(link, association, content) {
+function add_fields(link, association, content, before, after) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
-  $(link).parent().before(content.replace(regexp, new_id));
+  $(link).after(before + content.replace(regexp, new_id) + after);
+  return false;
 }

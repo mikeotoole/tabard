@@ -1,5 +1,5 @@
 /* General Options */
-$border_radius: 5;
+$border_radius: 10;
 $icon_set: default;
 
 /* Background Colors */
@@ -336,12 +336,6 @@ table {
   }
   th {
     @include font(medium, inherit);
-  }
-  .actions {
-    text-align: right;
-    a {
-      text-align: left;
-    }
   }
   thead {
     tr {
@@ -1087,6 +1081,7 @@ table {
   #actions,
   .actions {
     padding: 0;
+    text-align: right;
     a {
       background: rgba(0, 0, 0, .3);
       border: 1px solid rgba(255, 255, 255, .2);
@@ -1097,6 +1092,7 @@ table {
       margin: 5px 5px 0 0;
       overflow: hidden;
       position: relative;
+      text-align: left;
       text-indent: -500em;
       width: 30px;
       &:before {
@@ -1116,6 +1112,7 @@ table {
       &.delete:before { background-position: -46px -46px; }
       &.edit:before { background-position: -286px -46px; }
       &.forward:before { background-position: -1006px -46px; }
+      &.remove:before { background-position: -46px -46px; }
       &.reply:before { background-position: -406px -46px; }
       &.replyall:before { background-position: -926px -46px; }
       &.trash:before { background-position: -326px -46px; }
@@ -1377,6 +1374,75 @@ table {
     }
     ul {
       line-height: 20px;
+    }
+  }
+  .question {
+    padding: 0 0 1em;
+  }
+  .answers {
+    dl {
+      padding: 0 0 20px;
+      position: relative;
+      z-index: 2;
+      dd {
+        background: darken($bg_color_1, 20%);
+        list-style: none;
+        padding: 5px 45px 5px 10px;
+        position: relative;
+        label {
+          display: none;
+        }
+        .actions {
+          position: absolute;
+          right: 0;
+          top: 0;
+          a {
+            background: lighten($bg_color_2, 20%);
+            border: 1px solid $bg_color_2;
+            margin: 10px;
+            &:hover {
+              background: $accent_color;
+            }
+          }
+        }
+        &:first-of-type {
+          @include border_radius(1, 1, 0, 0);
+          padding-top: 10px;
+        }
+        &:last-of-type {
+          @include border_radius(0, 0, 1, 1);
+          padding-bottom: 10px;
+        }
+        &:only-of-type {
+          @include border_radius(1);
+          padding-bottom: 10px;
+          padding-top: 10px;
+        }
+      }
+    }
+    p {
+      background: darken($bg_color_1, 20%);
+      @include border_radius(0, 0, 1, 1);
+      margin: (-$border_radius - 20px) 0 0;
+      padding: #{$border_radius}px 0 0;
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      .button {
+        margin: 15px 10px 10px;
+        padding: 0 50px 0 10px;
+        position: relative;
+        text-align: right;
+        &:before {
+          background: url(../images/icons/#{$icon_set}.png) -5px -45px no-repeat;
+          content: '';
+          height: 30px;
+          right: 0;
+          position: absolute;
+          top: 0;
+          width: 30px;
+        }
+      }
     }
   }
 }
