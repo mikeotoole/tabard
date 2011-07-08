@@ -7,7 +7,7 @@ source 'http://rubygems.org'
   gem 'haml'
   gem 'sass'
   gem 'squeel'
-  gem 'coffee-script'
+  #gem 'coffee-script'
   gem 'tiny_mce'
 
 # Development Specific Gems
