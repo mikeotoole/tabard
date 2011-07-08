@@ -1,1 +1,4 @@
 %h1 Home
+%ul
+  -@communities.each do |community|
+    %li= link_to community.display_name, root_url(:subdomain => community.subdomain)
