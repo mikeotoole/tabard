@@ -3,6 +3,5 @@
   = link_to @character.game.name, @character.game
   %span New Character
 
-%h1 New Star Wars: The Old Republic Character
-
+%h1 New #{@character.game.name} Character
 = render 'form'

@@ -4,7 +4,7 @@
   - if @games.size > 0
     %thead
       %tr
-        %th.amount Players
+        %th.amount Characters
         %th.name Name
         %th.actions
     %tbody
@@ -23,8 +23,3 @@
     %tbody
       %tr
         %td{ :colspan => 3 } There are currently no games.
-  %tfoot
-    %tr
-      %td{ :colspan => 3 }
-        - if logged_in? and current_user.can_create('Game')
-          = link_to 'Add New Game', new_game_path, :class => 'button'

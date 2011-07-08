@@ -8,7 +8,6 @@
   %p.field
     = f.label :body
     = f.text_area :body
-  %p.field
-    = f.label :comments_enabled
-    = f.check_box :comments_enabled
+  %p{ :class => 'field checkbox' }
+    = f.label :comments_enabled, (f.check_box :comments_enabled) + 'Enable comments?'
   = submit_or_cancel(f)

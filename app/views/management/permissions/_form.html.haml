@@ -2,20 +2,21 @@
   %p.field
     = f.label :magic_polymorphic_helper, "Resource"
     = f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
-  %p.field
-    %label
-      = f.check_box :create_p
-      Create
-  %p.field
-    %label
-      = f.check_box :show_p
-      View
-  %p.field
-    %label
-      = f.check_box :update_p
-      Edit
-  %p.field
-    %label
-      = f.check_box :delete_p
-      Delete
+  %ul
+    %li.checkbox{ :checked => true }
+      %label
+        = f.check_box :create_p
+        Create
+    %li.checkbox
+      %label
+        = f.check_box :show_p
+        View
+    %li.checkbox
+      %label
+        = f.check_box :update_p
+        Edit
+    %li.checkbox
+      %label
+        = f.check_box :delete_p
+        Delete
   = submit_or_cancel(f)

@@ -63,17 +63,18 @@ $(document).ready(function() {
       .find('option')
       .each(function(){
         s = $(this).attr('selected') == true ? ' class="selected"' : '';
-        $('#'+selectbox_id+' dt').after('<dl' + s + ' value="' + $(this).val() + '">' + $(this).html() + '</dl>');
+        $('#'+selectbox_id).append('<dd' + s + ' value="' + $(this).val() + '">' + $(this).html() + '</dd>');
       });
-    $('#'+selectbox_id + ' dl').click(function(){
-      $(this).parent().find('dl').removeClass('selected');
+    $('#'+selectbox_id + ' dd[value!=""]').click(function(){
+      $(this).parent().find('dd').removeClass('selected');
       $(this)
         .addClass('selected')
         .parent().find('dt').html($(this).html());
       $('#'+select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
       $('#'+select_id).width($(this).parent().width());
     });
-    $('#'+select_id).width($('#' + selectbox_id + ' dl[value="' + $('#'+select_id).val() + '"]').width() + 47);
+    $('#'+select_id).width($('#' + selectbox_id + ' dd[value="' + $('#'+select_id).val() + '"]').width() + 47);
+    $('#'+selectbox_id+' dd[value=]').hide();
   });
   
   //announcements

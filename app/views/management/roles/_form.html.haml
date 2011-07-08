@@ -6,9 +6,8 @@
   
   - if @role.id #HACK
       
-    %p.field
-      = f.label :default_role, "Set as default?"
-      = f.check_box :default_role
+    %p{ :class => 'field checkbox' }
+      = f.label :default_role, (f.check_box :default_role) + "Set as default?"
       
     %h2 Permissions
     %table

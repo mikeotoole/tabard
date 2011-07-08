@@ -20,3 +20,10 @@
               = link_to 'Edit', character, :class => 'edit', :title => 'Edit'
             - if current_user.can_delete(character)
               = link_to 'Delete', character, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+    - if logged_in?
+      %tfoot
+        %tr
+          %td{ :colspan => 2 }
+            = form_tag(new_base_character_path, :method => :get) do
+              = hidden_field_tag 'game[game_id]', @game.id
+              %button{ :type => 'submit', :class => 'add' } Add Character
