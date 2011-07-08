@@ -4,7 +4,6 @@
     %span.actions
       = link_to( 'Edit', edit_check_box_question_path(check_box_question))
       = link_to( 'Delete', check_box_question, :confirm => 'Are you sure?', :method => :delete)
-    %br/
   %ul
     - for answer in check_box_question.predefined_answers
       %li= answer.content

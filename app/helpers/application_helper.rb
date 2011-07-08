@@ -11,16 +11,16 @@ module ApplicationHelper
     link_to 'Back', 'javascript:history.go(-1);'
   end
   
-  def link_to_remove_fields(name, f)
-    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(this)")
+  def link_to_remove_fields(name, f, target='this', attributes='')
+    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(#{target})", attributes)
   end
   
-  def link_to_add_fields(name, f, association)
+  def link_to_add_fields(name, f, association, destination='this', before='', after='', attributes={})
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+      render association.to_s.singularize + "_fields", :f => builder
     end
-    link_to_function(name, "add_fields(this, '#{association}', '#{escape_javascript(fields)}')")
+    link_to_function(name, "add_fields(#{destination}, '#{association}', '#{escape_javascript(fields)}', '#{before}', '#{after}')", attributes)
   end
   
 end
