@@ -1,3 +1,8 @@
-%h1 Editing Star Wars: The Old Republic Character
+%p#bcrumb
+  = link_to 'Games', games_path
+  = link_to @character.game.name, @character.game
+  = link_to @character.name, @character
+  %span Edit
+
+%h1 Editing #{@character.game.name} Character
 = render 'form'
-= js_back

@@ -1,5 +1,5 @@
 %p#bcrumb
-  = link_to 'Games', :games
+  = link_to 'Games', games_path
   = link_to @game.name, @game
   %span= @character.name
 
@@ -13,7 +13,7 @@
       - if current_user.can_delete(@character)
         = link_to 'Delete', @character, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Character'
 
-  %dl
+  %dl#meta
     %dt Game:
     %dd= @game.name
     %dt Level:
@@ -25,4 +25,5 @@
     %dt Server:
     %dd= @character.server
     %dt Default:
-    %dd= @character.default
+    %dd
+      = (defined? @character.default and @character.default == true) ? 'Yes' : 'No'

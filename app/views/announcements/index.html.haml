@@ -39,10 +39,11 @@
   - else
     %tbody
       %td{ :colspan => 5 } There are no site announcements.
-  %tfoot
-    %tr
-      %td{ :colspan => 5 }
-        - if logged_in? and current_user.can_create('SiteAnnouncement')
-          = link_to 'New Site Announcement', new_site_announcement_path, :class => 'button'
-        - if logged_in? and current_user.can_create('GameAnnouncement')
-          = link_to 'New Game Announcement', new_game_announcement_path, :class => 'button'
+  - if logged_in? and (current_user.can_create('SiteAnnouncement') or current_user.can_create('GameAnnouncement'))
+    %tfoot
+      %tr
+        %td{ :colspan => 5 }
+          - if current_user.can_create('SiteAnnouncement')
+            = link_to 'Site Announcement', new_site_announcement_path, :class => 'button'
+          - if current_user.can_create('GameAnnouncement')
+            = link_to 'Game Announcement', new_game_announcement_path, :class => 'button'
