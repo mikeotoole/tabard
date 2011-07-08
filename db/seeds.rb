@@ -61,31 +61,33 @@ stonewatch.update_attributes(:community_application_form => stonewatchCommunityF
 
 
 # Sample Discussion Spaces
-#discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile)
-#discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile)
+discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile, :community => stonewatch)
+discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile, :community => stonewatch)
 
 # General User
-userProfile = UserProfile.create(:name => "RoboBilly")
-userProfile.set_active
+roboBillyProfile = UserProfile.create(:name => "RoboBilly")
+roboBillyProfile.set_active
 
 blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :level => "10", :game => wow)
 eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10", :game => wow)
 yoda = SwtorCharacter.create(:name => "Yoda", :server => "Obi-Wan", :game => swtor)
 
+roboBillyProfile.build_character(blaggarth)
+roboBillyProfile.build_character(eliand)
+roboBillyProfile.build_character(yoda)
 
-
-wowProfile = GameProfile.create(:name => "Wow profile", :game => wow, :user_profile => userProfile)
-swtorProfile = GameProfile.create(:name => "SWTOR profile", :game => swtor, :user_profile => userProfile)
-
-bcp = CharacterProxy.create(:character => blaggarth, :game_profile => wowProfile)
-ecp = CharacterProxy.create(:character => eliand, :game_profile => wowProfile)
-ycp = CharacterProxy.create(:character => yoda, :game_profile => swtorProfile)
-
-viewUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => userProfile)
+roboBillyUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => roboBillyProfile)
+roboBillyUser.roles << stonewatch.member_role
 
 dMooseProfile = UserProfile.create(:name => "DiabolicalMoose")
 dMooseProfile.set_active
 dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile)
+dMooseUser.roles << stonewatch.member_role
+
+badApplicantProfile = UserProfile.create(:name => "Your Mom")
+badApplicantProfile.set_active
+badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile)
+badApplicantProfile.roles << stonewatch.applicant_role
 
 #More General Users
 1.upto(20) { |n|
@@ -94,17 +96,17 @@ dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "passwor
   g_user = User.create(:email => "g#{n}@user.com", :password => "password", :user_profile => g_profile)
 }
 
-#Generate some normal activity for demonstration purposes
+#Generate some normal activity for stonewatch
 
-# Sample Discussions
-#disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
-#comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => userProfile, :commentable => disc, :has_been_deleted => true)
-#comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
-#comment3 = Comment.create(:body => "WTF", :user_profile => dMooseProfile, :commentable => comment1)
+#Sample Discussions
+disc = Discussion.create(:name => "NO STICKIES!", :body => "There are no stickies!", :user_profile => adminProfile, :discussion_space => discSpace)
+comment1 = Comment.create(:body => "What?! No Stickies!", :user_profile => roboBillyProfile, :commentable => disc, :has_been_deleted => true)
+comment2 = Comment.create(:body => " /facepalm", :user_profile => adminProfile, :commentable => comment1)
+comment3 = Comment.create(:body => "WTF", :user_profile => dMooseProfile, :commentable => comment1)
 
-#disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => userProfile, :discussion_space => discSpace, :has_been_locked => true)
-#disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => adminProfile, :discussion_space => discSpace1)
-#comment4 = Comment.create(:body => "In before locked", :user_profile => dMooseProfile, :commentable => disc1, :has_been_locked => true)
+disc1 = Discussion.create(:name => "OMG?!?!?!??!?!", :body => "They see me trolling...", :user_profile => roboBillyProfile, :discussion_space => discSpace, :has_been_locked => true)
+disc2 = Discussion.create(:name => "Never gonna..", :body => "RICK ROLLED!", :user_profile => roboBillyProfile, :discussion_space => discSpace1)
+comment4 = Comment.create(:body => "In before locked", :user_profile => dMooseProfile, :commentable => disc1, :has_been_locked => true)
 
 # Sample Announcements
 #GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor)
