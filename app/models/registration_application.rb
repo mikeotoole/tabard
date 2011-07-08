@@ -7,6 +7,10 @@ class RegistrationApplication < Submission
     RegistrationApplication.all.delete_if {|application| (!application.user_profile.is_applicant)} 
   end
   
+  def community_name
+    self.site_form.community_name
+  end
+  
   def status_string
     self.user_profile.status_string
   end

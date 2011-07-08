@@ -5,7 +5,13 @@ class SiteForm < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   has_many :profile_notifications, :through => :notifications, :source => :user_profile
   
+  belongs_to :community
+  
   validate :only_one_registration_application_form
+  
+  def community_name
+    self.community.display_name if self.community
+  end
   
   def only_one_registration_application_form
     form = SiteForm.find(:first, :conditions => { :registration_application_form => true })
