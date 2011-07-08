@@ -31,28 +31,34 @@ adminProfile.set_active
 adminUser = User.create(:email => "admin@example.com", :password => "password", :user_profile => adminProfile)
 
 # Sample Communities
-stonewatch = Community.create(:name => "Stonewatch", :slogan => "We wear pants and eat food.", :label => "Guild", :accepting => true)
+stonewatch = Community.create(:name => "Stonewatch", 
+  :slogan => "We wear pants and eat food.", 
+  :label => "Guild", 
+  :accepting => true)
 
 adminUser.roles << stonewatch.admin_role
 
 #Sample community activity
 #Registration application site form creation
-defaultForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :registration_application_form => true, :published => true, :community => stonewatch)
-checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => defaultForm)
+stonewatchCommunityForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :published => true, :community => stonewatch)
+checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => stonewatchCommunityForm)
 PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
 PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
 PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
-comboboxQ = ComboBoxQuestion.create(:content => "Combo boxes are?", :site_form => defaultForm)
+comboboxQ = ComboBoxQuestion.create(:content => "Combo boxes are?", :site_form => stonewatchCommunityForm)
 PredefinedAnswer.create(:content => "Awesome", :question => comboboxQ)
 PredefinedAnswer.create(:content => "Fun", :question => comboboxQ)
 PredefinedAnswer.create(:content => "Silly", :question => comboboxQ)
 PredefinedAnswer.create(:content => "Don't Care", :question => comboboxQ)
-radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :site_form => defaultForm)
+radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :site_form => stonewatchCommunityForm)
 PredefinedAnswer.create(:content => "True", :question => radioQ)
 PredefinedAnswer.create(:content => "False", :question => radioQ)
 PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
-TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => defaultForm)
-TextQuestion.create(:content => "This is a ____ text question.", :site_form => defaultForm)
+TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => stonewatchCommunityForm)
+TextQuestion.create(:content => "This is a ____ text question.", :site_form => stonewatchCommunityForm)
+
+stonewatch.update_attributes(:community_application_form => stonewatchCommunityForm)
+
 
 # Sample Discussion Spaces
 #discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile)

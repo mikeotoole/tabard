@@ -16,6 +16,8 @@ class Community < ActiveRecord::Base
   belongs_to :applicant_role, :class_name => "Role"
   belongs_to :member_role, :class_name => "Role"
   
+  belongs_to :community_application_form, :class_name => "SiteForm"
+  
   before_save :update_subdomain
   
   after_create :setup_admin_role, :setup_applicant_role, :setup_member_role
@@ -24,12 +26,16 @@ class Community < ActiveRecord::Base
     "#{self.name} #{self.label}"
   end
   
+  def admin
+    self.admin_role.users.first #TODO might want to get a better way of doing this.
+  end
+  
   def update_subdomain
     self.subdomain = self.name.downcase.gsub(/\s/, "-")
   end
   
   def setup_admin_role
-    self.admin_role = Role.create(:name => "Admin", 
+    self.update_attributes(:admin_role => Role.create(:name => "Admin", 
       :permissions => SystemResource.all.collect{|resource|
         Permission.create(:permissionable => resource, 
           :name => "Full Access #{resource.name}", 
@@ -41,26 +47,18 @@ class Community < ActiveRecord::Base
         )
       },
       :community => self
-    )
-    self.save
+    ))
   end
   
   def setup_applicant_role
-    self.applicant_role = Role.create(:name => "Applicant",
+    self.update_attributes(:applicant_role => Role.create(:name => "Applicant",
       :community => self
-    )
-    self.save
+    ))
   end
   
   def setup_member_role
-    self.member_role = Role.create(:name => "Applicant",
+    self.update_attributes(:member_role => Role.create(:name => "Applicant",
       :community => self
-    )
-    self.save
-  end
-  
-  #This is a helper to get editable roles.
-  def editable_roles
-    self.roles.delete_if{|role| role == self.admin_role or role == self.applicant_role}
+    ))
   end
 end

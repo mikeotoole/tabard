@@ -7,15 +7,8 @@ class SiteForm < ActiveRecord::Base
   
   belongs_to :community
   
-  validate :only_one_registration_application_form
-  
   def community_name
     self.community.display_name if self.community
-  end
-  
-  def only_one_registration_application_form
-    form = SiteForm.find(:first, :conditions => { :registration_application_form => true })
-    errors.add(:id, "There can be only one!  ...registration application form.") if (form and self.registration_application_form and form.id != self.id)
   end
   
   def self.application_form

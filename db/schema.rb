@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708201745) do
+ActiveRecord::Schema.define(:version => 20110708220537) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20110708201745) do
     t.integer  "admin_role_id"
     t.integer  "applicant_role_id"
     t.integer  "member_role_id"
+    t.integer  "community_application_form_id"
   end
 
   create_table "discussion_spaces", :force => true do |t|
@@ -217,7 +218,6 @@ ActiveRecord::Schema.define(:version => 20110708201745) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "thankyou"
-    t.boolean  "registration_application_form"
     t.boolean  "published"
     t.integer  "community_id"
   end
