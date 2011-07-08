@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708015629) do
+ActiveRecord::Schema.define(:version => 20110708201745) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(:version => 20110708015629) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_role"
     t.integer  "community_id"
   end
 
