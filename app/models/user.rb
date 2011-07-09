@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_new_password, :update_lowercase_email
   
-  after_create :assign_default_role
-  
   accepts_nested_attributes_for :user_profile
   
   def sent_messages
@@ -42,12 +40,8 @@ class User < ActiveRecord::Base
     self.user_profile.folders
   end
   
-  def assign_default_role
-    self.roles << Role.get_default_role unless not(Role.get_default_role) or self.roles.count >= 1
-  end
-  
   def owns(resource)
-    resource.respond_to?('owned_by_user') ? resource.owned_by_user : false
+    resource.respond_to?('owned_by_user') ? resource.owned_by_user(self) : false
   end
   
   def set_active_profile(profile)

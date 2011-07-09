@@ -14,7 +14,7 @@ class ApplicationNotifier < ActionMailer::Base
   
   def accept_notification(registration_application)
     #TODO we will need to add these from some global variable
-    @guild_name = APP_CONFIG['site_name']
+    @community_name = registration_application.community_name
     @applicant = registration_application.name
     
     mail(:to => registration_application.applicant_email, :subject=> "Application Accepted" )
@@ -22,7 +22,7 @@ class ApplicationNotifier < ActionMailer::Base
   
   def reject_notification(registration_application)
     #TODO we will need to add these from some global variable
-    @guild_name = APP_CONFIG['site_name']
+    @community_name = registration_application.community_name
     @applicant = registration_application.name
 
     mail(:to => registration_application.applicant_email, :subject=> "Application Rejected" )

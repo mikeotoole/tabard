@@ -13,6 +13,7 @@ source 'http://rubygems.org'
 # Development Specific Gems
   group :development do
     gem 'sqlite3'
+    gem 'haml-rails' # Haml Generator Gem
   end
 
 # Production Specific Gems

@@ -1,10 +1,10 @@
-class Management::PageSpacesController < ApplicationController
+class Management::PageSpacesController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   # GET /page_spaces
   # GET /page_spaces.xml
   def index
-    @page_spaces = PageSpace.all
+    @page_spaces = @community.page_spaces.all
 
     respond_with(@page_spaces)
   end
@@ -12,7 +12,7 @@ class Management::PageSpacesController < ApplicationController
   # GET /page_spaces/1
   # GET /page_spaces/1.xml
   def show
-    @page_space = PageSpace.find(params[:id])
+    @page_space = @community.page_spaces.find(params[:id])
 
     respond_with(@page_space)
   end
@@ -20,7 +20,7 @@ class Management::PageSpacesController < ApplicationController
   # GET /page_spaces/new
   # GET /page_spaces/new.xml
   def new
-    @page_space = PageSpace.new
+    @page_space = @community.page_spaces.new
     if !current_user.can_create("PageSpace")
       render_insufficient_privileges
     else
@@ -30,7 +30,7 @@ class Management::PageSpacesController < ApplicationController
 
   # GET /page_spaces/1/edit
   def edit
-    @page_space = PageSpace.find(params[:id])
+    @page_space = @community.page_spaces.find(params[:id])
     if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
       render_insufficient_privileges
     end
@@ -42,7 +42,7 @@ class Management::PageSpacesController < ApplicationController
     if !current_user.can_create("PageSpace")
       render_insufficient_privileges
     else
-      @page_space = PageSpace.new(params[:page_space])
+      @page_space = @community.page_spaces.new(params[:page_space])
   
       if @page_space.save
         add_new_flash_message('Page space was successfully created.')
@@ -59,7 +59,7 @@ class Management::PageSpacesController < ApplicationController
   # PUT /page_spaces/1
   # PUT /page_spaces/1.xml
   def update
-    @page_space = PageSpace.find(params[:id])
+    @page_space = @community.page_spaces.find(params[:id])
     if !current_user.can_update("PageSpace") and !current_user.can_update(@page_space)
       render_insufficient_privileges
     else
@@ -79,7 +79,7 @@ class Management::PageSpacesController < ApplicationController
   # DELETE /page_spaces/1
   # DELETE /page_spaces/1.xml
   def destroy
-    @page_space = PageSpace.find(params[:id])
+    @page_space = @community.page_spaces.find(params[:id])
     if !current_user.can_delete("PageSpace") and !current_user.can_delete(@page_space)
       render_insufficient_privileges
     else 

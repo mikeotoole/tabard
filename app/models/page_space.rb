@@ -1,6 +1,7 @@
 class PageSpace < ActiveRecord::Base
   has_many :pages, :dependent => :destroy
   belongs_to :game
+  belongs_to :community
   
   def game_name
     self.game.name if self.game

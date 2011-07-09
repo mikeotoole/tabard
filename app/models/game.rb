@@ -3,6 +3,8 @@ class Game < ActiveRecord::Base
  has_many :game_profiles, :dependent => :destroy
  has_many :discussion_spaces
  has_many :page_spaces
+ has_many :supported_games
+ has_many :communities, :through => :supported_games
  
  validates_presence_of :name
  

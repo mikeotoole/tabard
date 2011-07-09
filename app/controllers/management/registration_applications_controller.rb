@@ -52,11 +52,10 @@ class Management::RegistrationApplicationsController < ApplicationController
       
       add_new_flash_message('Registration application was successfully accepted.')
       add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
-      respond_with(@registration_application)
     else
       flash[:alert] = @registration_application.errors
-      respond_with(@registration_application)
     end
+    render "show"
   end
 
   # POST /registration_applications/1/reject
@@ -70,11 +69,10 @@ class Management::RegistrationApplicationsController < ApplicationController
 
       add_new_flash_message('Registration application was successfully rejected.')
       add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
-      respond_with(@registration_application)
     else
       flash[:alert] = @registration_application.errors
-      respond_with(@registration_application)
     end
+    render "show"
   end
 
   # DELETE /registration_applications/1

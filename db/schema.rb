@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110622233627) do
+ActiveRecord::Schema.define(:version => 20110709163137) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -50,6 +50,20 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.boolean  "has_been_locked"
   end
 
+  create_table "communities", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "slogan"
+    t.string   "label"
+    t.boolean  "accepting"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "admin_role_id"
+    t.integer  "applicant_role_id"
+    t.integer  "member_role_id"
+    t.integer  "community_application_form_id"
+  end
+
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
     t.boolean  "system"
@@ -61,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.boolean  "registration_application_space"
     t.boolean  "user_profile_space"
     t.boolean  "personal_space"
+    t.integer  "community_id"
   end
 
   create_table "discussions", :force => true do |t|
@@ -124,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.datetime "updated_at"
     t.string   "name"
     t.integer  "game_id"
+    t.integer  "community_id"
   end
 
   create_table "pages", :force => true do |t|
@@ -176,7 +192,7 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_role"
+    t.integer  "community_id"
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
@@ -202,8 +218,8 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "thankyou"
-    t.boolean  "registration_application_form"
     t.boolean  "published"
+    t.integer  "community_id"
   end
 
   create_table "submissions", :force => true do |t|
@@ -213,6 +229,13 @@ ActiveRecord::Schema.define(:version => 20110622233627) do
     t.integer  "discussion_id"
     t.integer  "site_form_id"
     t.string   "type"
+  end
+
+  create_table "supported_games", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "swtor_characters", :force => true do |t|

@@ -1,4 +1,4 @@
-class RolesController < ApplicationController
+class RolesController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /roles
@@ -7,7 +7,7 @@ class RolesController < ApplicationController
     if !current_user.can_show("Role") 
       render_insufficient_privileges
     else 
-      @roles = Role.all
+      @roles = @community.roles.all
       respond_with(@roles)
     end
   end
@@ -18,7 +18,7 @@ class RolesController < ApplicationController
     if !current_user.can_show("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.find(params[:id])
+      @role = @community.roles.find(params[:id])
       respond_with(@role)
     end
   end

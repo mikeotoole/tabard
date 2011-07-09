@@ -9,7 +9,13 @@
     = include_tiny_mce_if_needed
   %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
-      = render :partial => "layouts/header"
+      #header
+        .container
+          = render :partial => "layouts/userbox" if logged_in?
+      
+      = render :partial => "layouts/menu"
+      = image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
+      = render :partial => "layouts/flash_messages"
       #body
         .container= yield
       = render :partial => "layouts/footer"

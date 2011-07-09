@@ -5,11 +5,10 @@ class SiteForm < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   has_many :profile_notifications, :through => :notifications, :source => :user_profile
   
-  validate :only_one_registration_application_form
+  belongs_to :community
   
-  def only_one_registration_application_form
-    form = SiteForm.find(:first, :conditions => { :registration_application_form => true })
-    errors.add(:id, "There can be only one!  ...registration application form.") if (form and self.registration_application_form and form.id != self.id)
+  def community_name
+    self.community.display_name if self.community
   end
   
   def self.application_form

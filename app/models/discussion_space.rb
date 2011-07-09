@@ -1,6 +1,7 @@
 class DiscussionSpace < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :game
+  belongs_to :community
   has_many :discussions
   
   validate :only_one_announcement_space, :only_one_registration_application_space, :has_a_user_profile,

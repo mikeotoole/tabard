@@ -1,0 +1,15 @@
+!!! 5
+%html
+  %head
+    %title Brutal Venom
+    -#= stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css'
+    = stylesheet_link_tag '/stylesheets/application.css'
+    = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
+    = csrf_meta_tag
+    = include_tiny_mce_if_needed
+  %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
+    #bg
+      = render :partial => "layouts/header"
+      #body
+        .container= yield
+      = render :partial => "layouts/footer"
