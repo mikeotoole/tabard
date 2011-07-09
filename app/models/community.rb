@@ -9,8 +9,11 @@ class Community < ActiveRecord::Base
   
   has_many :discussion_spaces
   has_many :page_spaces
+  has_many :pages, :through => :page_spaces
   has_many :site_forms
   has_many :roles
+  has_many :supported_games
+  has_many :games, :through => :supported_games
   
   belongs_to :admin_role, :class_name => "Role"
   belongs_to :applicant_role, :class_name => "Role"

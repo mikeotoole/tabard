@@ -1,17 +1,17 @@
-class Management::DiscussionSpacesController < ApplicationController
+class Management::DiscussionSpacesController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /discussion_spaces
   # GET /discussion_spaces.xml
   def index
-      @discussion_spaces = DiscussionSpace.order("system DESC, name ASC")
+      @discussion_spaces = @community.discussion_spaces.order("system DESC, name ASC")
       respond_with(@discussion_spaces)
   end
 
   # GET /discussion_spaces/new
   # GET /discussion_spaces/new.xml
   def new
-    @discussion_space = DiscussionSpace.new
+    @discussion_space = @community.discussion_spaces.new
     if !current_user.can_create(@discussion_space)
       render_insufficient_privileges
     else
@@ -21,7 +21,7 @@ class Management::DiscussionSpacesController < ApplicationController
 
   # GET /discussion_spaces/1/edit
   def edit
-    @discussion_space = DiscussionSpace.find(params[:id])
+    @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_update(@discussion_space)
       render_insufficient_privileges
     end
@@ -31,7 +31,7 @@ class Management::DiscussionSpacesController < ApplicationController
   # POST /discussion_spaces
   # POST /discussion_spaces.xml
   def create
-    @discussion_space = DiscussionSpace.new(params[:discussion_space])
+    @discussion_space = @community.discussion_spaces.new(params[:discussion_space])
     @discussion_space.system = false
     @discussion_space.user_profile = current_user.user_profile
     if !current_user.can_create(@discussion_space)
@@ -52,7 +52,7 @@ class Management::DiscussionSpacesController < ApplicationController
   # PUT /discussion_spaces/1
   # PUT /discussion_spaces/1.xml
   def update
-    @discussion_space = DiscussionSpace.find(params[:id])
+    @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_update(@discussion_space)
       render_insufficient_privileges
     else
@@ -71,7 +71,7 @@ class Management::DiscussionSpacesController < ApplicationController
   # DELETE /discussion_spaces/1
   # DELETE /discussion_spaces/1.xml
   def destroy
-    @discussion_space = DiscussionSpace.find(params[:id])
+    @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_delete(@discussion_space)
       render_insufficient_privileges
     else 

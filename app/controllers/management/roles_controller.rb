@@ -1,4 +1,4 @@
-class Management::RolesController < ApplicationController
+class Management::RolesController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /management/roles
@@ -7,7 +7,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_show("Role") 
       render_insufficient_privileges
     else 
-      @roles = Role.all
+      @roles = @community.roles.all
       respond_with(@roles)
     end
   end
@@ -30,7 +30,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_create("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.new
+      @role = @community.roles.new
       @users = User.all
   
       respond_to do |format|
@@ -45,7 +45,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_update("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.find(params[:id])
+      @role = @community.roles.find(params[:id])
       @users = User.all
     end
   end
@@ -56,7 +56,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_create("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.new(params[:role])
+      @role = @community.roles.new(params[:role])
   
       if @role.save
         add_new_flash_message('Role was successfully created.')
@@ -72,7 +72,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_update("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.find(params[:id])
+      @role = @community.roles.find(params[:id])
       if @role.update_attributes(params[:role])
         add_new_flash_message('Role was successfully updated')
       end
@@ -86,7 +86,7 @@ class Management::RolesController < ApplicationController
     if !current_user.can_delete("Role") 
       render_insufficient_privileges
     else 
-      @role = Role.find(params[:id])
+      @role = @community.roles.find(params[:id])
       if @role.destroy
         add_new_flash_message('Role was successfully deleted.')
         redirect_to(:back)

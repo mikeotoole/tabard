@@ -35,6 +35,8 @@ stonewatch = Community.create(:name => "Stonewatch",
   :slogan => "We wear pants and eat food.", 
   :label => "Guild", 
   :accepting => true)
+stonewatch.games << wow
+stonewatch.games << swtor
 
 justanotherheadshot = Community.create(:name => "Just Another Headshot", 
   :slogan => "Boom Baby!", 

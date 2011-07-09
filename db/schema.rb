@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708220537) do
+ActiveRecord::Schema.define(:version => 20110709163137) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -229,6 +229,13 @@ ActiveRecord::Schema.define(:version => 20110708220537) do
     t.integer  "discussion_id"
     t.integer  "site_form_id"
     t.string   "type"
+  end
+
+  create_table "supported_games", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "swtor_characters", :force => true do |t|

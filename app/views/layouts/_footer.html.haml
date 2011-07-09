@@ -6,7 +6,6 @@
         %ul
           - nav_featured_pages.each do |page| 
             %li= link_to page.title, [page.page_space, page]
-          %li= link_to 'Games', games_path
     .menu
       %h3 Resources
       - if dynamic_page_spaces
@@ -19,10 +18,8 @@
         %h3 Members
         %ul
           %li= link_to 'Announcements', announcements_path
-          %li= link_to 'Events', :events
           - if current_user.can_show("DiscussionSpace")
             %li= link_to 'Discussions', :discussion_spaces
-          %li= link_to 'Donations', '#'
         
     %p.copyright
       = link_to t('general.privacy_policy'), '#'
