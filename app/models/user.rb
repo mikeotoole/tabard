@@ -1,6 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  attr_accessor :password
+  attr_accessor :password, :no_signup_email
   
   validates :email, :uniqueness => true,
                     :length => { :within => 5..50 },
@@ -44,6 +44,15 @@ class User < ActiveRecord::Base
     resource.respond_to?('owned_by_user') ? resource.owned_by_user(self) : false
   end
   
+  def is_a_member_of(community)
+    self.roles.each do |role|
+      if role.is_a_member_of(community)
+        return true
+      end
+    end
+    false
+  end
+  
   def set_active_profile(profile)
     #profile.active = true
     #profile.save
@@ -70,14 +79,6 @@ class User < ActiveRecord::Base
     user_profile != nil ? user_profile.name : email
   end
   
-  def status_string
-    self.user_profile.status_string
-  end
-  
-  def is_inactive
-    self.user_profile.is_inactive
-  end
-  
   def self.authenticate(email, password) 
     user = find_by_lowercase_email(email.downcase)
     return user if user && user.authenticated?(password)
@@ -99,7 +100,6 @@ class User < ActiveRecord::Base
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
     logger.debug("Show permission request for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active 
     if(system_resource_name.respond_to?('check_user_show_permissions'))
       if(system_resource_name.check_user_show_permissions(self))
         return true
@@ -119,8 +119,7 @@ class User < ActiveRecord::Base
   end
   
   def can_create(system_resource_name)
-    logger.debug("Create permission request for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active 
+    logger.debug("Create permission request for user #{self.name} with #{system_resource_name}") 
     if(system_resource_name.respond_to?('check_user_create_permissions'))
       if(system_resource_name.check_user_create_permissions(self))
         return true
@@ -144,8 +143,7 @@ class User < ActiveRecord::Base
   end
   
   def can_update(system_resource_name)
-    logger.debug("Update permission request for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active 
+    logger.debug("Update permission request for user #{self.name} with #{system_resource_name}") 
     if(system_resource_name.respond_to?('check_user_update_permissions'))
       if(system_resource_name.check_user_update_permissions(self))
         return true
@@ -166,7 +164,6 @@ class User < ActiveRecord::Base
   
   def can_delete(system_resource_name)
     logger.debug("Delete permission request for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active
     if(system_resource_name.respond_to?('check_user_delete_permissions'))
       if(system_resource_name.check_user_delete_permissions(self))
         return true
@@ -187,7 +184,6 @@ class User < ActiveRecord::Base
   
   def can_special_permissions(system_resource_name,permission_string)
     logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name}")
-    return false if not self.user_profile.is_active 
     permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
     if !permissionable_id
       return false

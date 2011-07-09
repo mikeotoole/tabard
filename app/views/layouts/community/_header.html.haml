@@ -1,0 +1,9 @@
+#header
+  .container
+    .title= link_to "#{@community.name} #{@community.label}", root_path(:subdomain => @community.subdomain)
+    .slogan= @community.slogan
+    = render :partial => "layouts/userbox" if logged_in?
+
+= render :partial => "layouts/community/menu"
+= image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
+= render :partial => "layouts/flash_messages"
