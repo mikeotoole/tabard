@@ -23,4 +23,8 @@ class CommunitiesController < ApplicationController
   def nav_featured_pages
     @community.pages.featured_pages.alphabetical
   end
+  
+  def nav_discussions
+    @community.discussion_spaces.only_real_ones.delete_if {|discussion_space| (logged_in? and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
+  end
 end
