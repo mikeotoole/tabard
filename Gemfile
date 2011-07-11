@@ -11,7 +11,7 @@ source 'http://rubygems.org'
   gem 'tiny_mce'
   gem 'paperclip'
   gem 'cloudfiles'
-  gem 'paperclip-cloudfiles'
+  gem 'paperclip-cloudfiles', :require => 'paperclip'
 
 # Development Specific Gems
   group :development do
