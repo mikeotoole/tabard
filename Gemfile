@@ -13,6 +13,7 @@ source 'http://rubygems.org'
     gem 'tiny_mce'
   # Image Storage and Manipulation
     gem 'fog'
+    gem 'mini_magick'
     gem 'carrierwave'
 
 # Development Specific Gems
