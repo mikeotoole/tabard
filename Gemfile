@@ -4,14 +4,16 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # Global Gems
-  gem 'haml'
-  gem 'sass'
-  gem 'squeel'
-  #gem 'coffee-script'
-  gem 'tiny_mce'
-  gem 'paperclip'
-  gem 'cloudfiles'
-  gem 'paperclip-cloudfiles', :require => 'paperclip'
+  # Meta Languages
+    gem 'haml'
+    gem 'sass'
+    gem 'squeel'
+    #gem 'coffee-script'
+  # WYSIWYG
+    gem 'tiny_mce'
+  # Image Storage and Manipulation
+    gem 'fog'
+    gem 'carrierwave'
 
 # Development Specific Gems
   group :development do
