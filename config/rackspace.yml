@@ -1,0 +1,8 @@
+development:
+  container: Crumblin-Development
+  username: digitalaugment
+  api_key: b4cb915dbfce8d25deb9d35c5ade15c8
+production:
+  container: Crumblin-Productions
+  username: digitalaugment
+  api_key: b4cb915dbfce8d25deb9d35c5ade15c8

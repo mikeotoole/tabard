@@ -9,6 +9,9 @@ source 'http://rubygems.org'
   gem 'squeel'
   #gem 'coffee-script'
   gem 'tiny_mce'
+  gem 'paperclip'
+  gem 'cloudfiles'
+  gem 'paperclip-cloudfiles'
 
 # Development Specific Gems
   group :development do
