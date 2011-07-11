@@ -14,6 +14,7 @@ class Community < ActiveRecord::Base
   has_many :roles
   has_many :supported_games
   has_many :games, :through => :supported_games
+  has_many :registration_applications, :through => :community_application_form, :source => "submissions"
   
   belongs_to :admin_role, :class_name => "Role"
   belongs_to :applicant_role, :class_name => "Role"
@@ -23,10 +24,14 @@ class Community < ActiveRecord::Base
   
   before_save :update_subdomain
   
-  after_create :setup_admin_role, :setup_applicant_role, :setup_member_role
+  after_create :setup_admin_role, :setup_applicant_role, :setup_member_role, :setup_application_form
   
   def display_name
     "#{self.name} #{self.label}"
+  end
+  
+  def leader_profile
+    self.admin_role.users.first.user_profile
   end
   
   def admin
@@ -63,5 +68,13 @@ class Community < ActiveRecord::Base
     self.update_attributes(:member_role => Role.create(:name => "Applicant",
       :community => self
     ))
+  end
+  
+  def setup_application_form
+    self.update_attributes(:community_application_form => SiteForm.create(:name => "Registration Application Form", 
+      :message => "Please fill out the form to apply for #{self.label}.", 
+      :thankyou => "Thank you for submitting your application.", 
+      :published => true, 
+      :community => self))
   end
 end

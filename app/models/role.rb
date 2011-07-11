@@ -5,6 +5,10 @@ class Role < ActiveRecord::Base
   belongs_to :community
   accepts_nested_attributes_for :permissions
   
+  def is_a_member_of(community)
+    self.community == community
+  end
+  
   def show_permissions
     permissions.where(:show_p => true)
   end

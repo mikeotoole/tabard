@@ -4,11 +4,17 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # Global Gems
-  gem 'haml'
-  gem 'sass'
-  gem 'squeel'
-  #gem 'coffee-script'
-  gem 'tiny_mce'
+  # Meta Languages
+    gem 'haml'
+    gem 'sass'
+    gem 'squeel'
+    #gem 'coffee-script'
+  # WYSIWYG
+    gem 'tiny_mce'
+  # Image Storage and Manipulation
+    gem 'fog'
+    gem 'mini_magick'
+    gem 'carrierwave'
 
 # Development Specific Gems
   group :development do

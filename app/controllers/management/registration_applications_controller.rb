@@ -1,12 +1,12 @@
-class Management::RegistrationApplicationsController < ApplicationController
+class Management::RegistrationApplicationsController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:new, :create]
   
   # GET /registration_applications
   # GET /registration_applications.xml
   def index
-    @registration_applications = RegistrationApplication.all
-    @form = SiteForm.application_form
+    @registration_applications = @community.registration_applications.all
+    @form = @community.community_application_form
 
     respond_with(@registration_applications)
   end
@@ -14,20 +14,20 @@ class Management::RegistrationApplicationsController < ApplicationController
   # GET /registration_applications/1
   # GET /registration_applications/1.xml
   def show
-    @registration_application = RegistrationApplication.find(params[:id])
+    @registration_application = @community.registration_applications.find(params[:id])
 
     respond_with(@registration_application)
   end
   
   # GET /registration_applications/1/edit
   def edit
-    @registration_application = RegistrationApplication.find(params[:id])
+    @registration_application = @community.registration_applications.find(params[:id])
   end
 
   # PUT /registration_applications/1
   # PUT /registration_applications/1.xml
   def update
-    @registration_application = RegistrationApplication.find(params[:id])
+    @registration_application = @community.registration_applications.find(params[:id])
 
     respond_to do |format|
       if @registration_application.update_attributes(params[:registration_application])
@@ -45,9 +45,9 @@ class Management::RegistrationApplicationsController < ApplicationController
   # POST /registration_applications/1/accept.xml
   def accept
     @registration_application = RegistrationApplication.find(params[:id])
-    @registration_application.user_profile.set_active
+    @registration_application.set_accepted
     
-    if @registration_application.user_profile.save
+    if @registration_application.save
       ApplicationNotifier.accept_notification(@registration_application).deliver
       
       add_new_flash_message('Registration application was successfully accepted.')
@@ -62,9 +62,9 @@ class Management::RegistrationApplicationsController < ApplicationController
   # POST /registration_applications/1/reject.xml  
   def reject
     @registration_application = RegistrationApplication.find(params[:id])
-    @registration_application.user_profile.set_rejected
+    @registration_application.set_rejected
     
-    if @registration_application.user_profile.save
+    if @registration_application.save
       ApplicationNotifier.reject_notification(@registration_application).deliver      
 
       add_new_flash_message('Registration application was successfully rejected.')
@@ -78,7 +78,7 @@ class Management::RegistrationApplicationsController < ApplicationController
   # DELETE /registration_applications/1
   # DELETE /registration_applications/1.xml
   def destroy
-    @registration_application = RegistrationApplication.find(params[:id])
+    @registration_application = @community.registration_applications.find(params[:id])
     if @registration_application.destroy
       add_new_flash_message('Registration application was successfully deleted.')
     end  

@@ -3,7 +3,9 @@ class Submission < ActiveRecord::Base
   belongs_to :site_form
   
   has_many :answers, :dependent => :destroy
-  has_many :questions, :through => :answers  
+  has_many :questions, :through => :answers
+  
+  has_one :community, :through => :site_form  
   
   accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true  
   
@@ -58,5 +60,67 @@ class Submission < ActiveRecord::Base
     self.site_form
   end
   
+  def status_string
+    if is_applicant
+      "Applicant"
+    elsif is_accepted
+      "Accepted"
+    elsif is_inactive
+      "Deactivated User"
+    elsif is_rejected
+      "Rejected"  
+    else
+      "Unknown"
+    end
+  end
+  
+  def is_applicant
+    if self.status == 1
+      return true
+    else
+      return false
+    end
+  end
+  
+  def is_accepted
+    if self.status == 2
+      return true
+    else
+      return false  
+    end
+  end
+  
+  def is_inactive
+    if self.status == 3
+      return true
+    else
+      return false  
+    end   
+  end
+  
+  def is_rejected
+    if self.status == 4
+      return true
+    else
+      return false  
+    end   
+  end
+  
+  def set_applicant
+    self.status = 1
+  end
+  
+  def set_accepted
+    self.status = 2
+    self.user_profile.user.roles << self.community.member_role
+  end
+  
+  def set_inactive
+    self.status = 3   
+  end
+  
+  def set_rejected
+    self.status = 4
+  end
 end
 

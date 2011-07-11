@@ -25,7 +25,7 @@ module Bv
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.active_record.observers = :registration_application_observer, :community_observer
+    config.active_record.observers = :registration_application_observer, :community_observer, :user_observer
     
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

@@ -1,49 +1,54 @@
 = form_for(@registration_application) do |f|          
   = f.hidden_field :site_form_id
   %dl.tabs
-    %dt{ :class => 'account active' } Account Details
-    %dd{ :class => 'account active' }
-      %h2 Account Details
-      = fields_for :user do |user|
-        %p.field
-          = user.label :email
-          - if @user.errors[:email].any?
-            = @user.errors[:email]
-          = user.text_field :email
-        %p.field
-          = user.label :password
-          - if @user.errors[:password].any?
-            = @user.errors[:password]
-          = user.password_field :password
-        %p.field
-          = user.label :password_confirmation
-          = user.password_field :password_confirmation
-      = fields_for :user_profile do |profile|
-        %p.field
-          = profile.label :name
-          - if @profile.errors[:name].any?
-            = @profile.errors[:name]
-          = profile.text_field :name, :value => @profile.name
-    %dt.characters Characters
-    %dd.characters
-      %h2 Characters
-      - if @wowCharacters or @swtorCharacters
-        %ul
-          - if @wowCharacters
-            - @wowCharacters.each do |character|
-              %li
-                - @character = character
-                = render(:file => 'wow_characters/_application_form.html.haml', :locals => { :character => @character })
-          - if @swtorCharacters
-            - @swtorCharacters.each do |character|
-              %li
-                - @character = character
-                = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })
-      #newcharacters
-        - if @games
-          %p
-            - @games.each do |game|
-              = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
+    -if not logged_in?
+      %dt{ :class => 'account active' } Account Details
+      %dd{ :class => 'account active' }
+        %h2 Crumblin Account Details
+        = fields_for :user do |user|
+          %p.field
+            = user.label :email
+            - if @user.errors[:email].any?
+              = @user.errors[:email]
+            = user.text_field :email
+          %p.field
+            = user.label :password
+            - if @user.errors[:password].any?
+              = @user.errors[:password]
+            = user.password_field :password
+          %p.field
+            = user.label :password_confirmation
+            = user.password_field :password_confirmation
+        = fields_for :user_profile do |profile|
+          %p.field
+            = profile.label :name
+            - if @profile.errors[:name].any?
+              = @profile.errors[:name]
+            = profile.text_field :name, :value => @profile.name
+      %dt.characters Characters
+      %dd.characters
+        %h2 Characters
+        - if @wowCharacters or @swtorCharacters
+          %ul
+            - if @wowCharacters
+              - @wowCharacters.each do |character|
+                %li
+                  - @character = character
+                  = render(:file => 'wow_characters/_application_form.html.haml', :locals => { :character => @character })
+            - if @swtorCharacters
+              - @swtorCharacters.each do |character|
+                %li
+                  - @character = character
+                  = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })
+        #newcharacters
+          - if @games
+            %p
+              - @games.each do |game|
+                = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
+    -else
+      %dt{ :class => 'account active' } Account Details
+      %dd{ :class => 'account active' }
+        %h2 Your Crumblin Info
     %dt.questions Questionnaire
     %dd.questions
       %h2 Questionnaire

@@ -6,16 +6,6 @@ class SessionsController < ApplicationController
   
   def create  
     if user = User.authenticate(params[:email], params[:password])
-      if !user.user_profile.is_active
-        if user.user_profile.is_applicant
-          add_new_flash_message("Your application has not been approved yet.","alert")
-          redirect_to root_path
-        else
-          add_new_flash_message("You are not authorized to access the site.","alert")
-          redirect_to root_path
-        end       
-        return
-      end
 
       cookies.permanent.signed[:remember_token] = {:value => user.id, :domain => :all} if params[:remember]
       session[:user_id] = user.id

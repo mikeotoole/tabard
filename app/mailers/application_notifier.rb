@@ -1,5 +1,5 @@
 class ApplicationNotifier < ActionMailer::Base
-  default :from => "noreply@example.com"
+  default :from => "noreply@crumblin.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -8,12 +8,19 @@ class ApplicationNotifier < ActionMailer::Base
   #
   def email_applicant(registration_application)
     @thankyou = registration_application.thankyou_message
+    @community_name = registration_application.community_name
 
-    mail(:to => registration_application.applicant_email, :subject=> "Application Received" )
+    mail(:to => registration_application.applicant_email, :subject=> "Application Received for #{@community_name}" )
+  end
+  
+  def email_community_leader(registration_application)
+    @applicant_profile = registration_application.user_profile
+    @leader_profile = registration_application.community.leader_profile
+    @community = registration_application.community
+    mail(:to => registration_application.applicant_email, :subject=> "#{@leader_profile.display_name}, you have a new applicant for #{@community.display_name}" )
   end
   
   def accept_notification(registration_application)
-    #TODO we will need to add these from some global variable
     @community_name = registration_application.community_name
     @applicant = registration_application.name
     
@@ -21,7 +28,6 @@ class ApplicationNotifier < ActionMailer::Base
   end
   
   def reject_notification(registration_application)
-    #TODO we will need to add these from some global variable
     @community_name = registration_application.community_name
     @applicant = registration_application.name
 

@@ -27,27 +27,28 @@ swtor = Game.create(:name => "Star Wars the Old Republic", :type_helper => "Swto
 
 # Admin User
 adminProfile = UserProfile.create(:name => "Admin")
-adminProfile.set_active
-adminUser = User.create(:email => "admin@example.com", :password => "password", :user_profile => adminProfile)
+adminUser = User.create(:email => "admin@example.com", :password => "password", :user_profile => adminProfile, :no_signup_email => true)
 
 # Sample Communities
 stonewatch = Community.create(:name => "Stonewatch", 
   :slogan => "We wear pants and eat food.", 
   :label => "Guild", 
-  :accepting => true)
+  :accepting => true,
+  :email_notice_on_applicant => false)
 stonewatch.games << wow
 stonewatch.games << swtor
 
 justanotherheadshot = Community.create(:name => "Just Another Headshot", 
   :slogan => "Boom Baby!", 
   :label => "Clan", 
-  :accepting => false)
+  :accepting => true,
+  :email_notice_on_applicant => true)
 
 adminUser.roles << stonewatch.admin_role
 
 #Sample community activity
 #Registration application site form creation
-stonewatchCommunityForm = SiteForm.create(:name => "Registration Application Form", :message => "Welcome! Please follow the 3 step applcation process to apply for the guild.", :thankyou => "Thank you for submitting your application.", :published => true, :community => stonewatch)
+stonewatchCommunityForm = stonewatch.community_application_form
 checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => stonewatchCommunityForm)
 PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
 PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
@@ -68,7 +69,6 @@ stonewatch.update_attributes(:community_application_form => stonewatchCommunityF
 
 # General User
 roboBillyProfile = UserProfile.create(:name => "RoboBilly")
-roboBillyProfile.set_active
 
 blaggarth = WowCharacter.create(:name => "Blaggarth", :faction => "Alliance", :race => "Dwarf", :server => "Medivh", :level => "10", :game => wow)
 eliand = WowCharacter.create(:name => "Eliand", :faction => "Alliance", :race => "Night Elf", :server => "Medivh", :level => "10", :game => wow)
@@ -78,25 +78,28 @@ roboBillyProfile.build_character(blaggarth)
 roboBillyProfile.build_character(eliand)
 roboBillyProfile.build_character(yoda)
 
-roboBillyUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => roboBillyProfile)
+roboBillyUser = User.create(:email => "billy@robo.com", :password => "password", :user_profile => roboBillyProfile, :no_signup_email => true)
 roboBillyUser.roles << stonewatch.member_role
 
 dMooseProfile = UserProfile.create(:name => "DiabolicalMoose")
-dMooseProfile.set_active
-dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile)
+dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile, :no_signup_email => true)
 dMooseUser.roles << stonewatch.member_role
-dMooseUser.roles << justanotherheadshot.admin_role
+dMooseUser.roles << justanotherheadshot.member_role
+
+crumbJoe = User.create(:email => "joe@crumblin.com",
+                        :password => "password",
+                        :no_signup_email => true,
+                        :user_profile => UserProfile.create(:name => "J Crumblin")
+                      )
+crumbJoe.roles << justanotherheadshot.admin_role
 
 badApplicantProfile = UserProfile.create(:name => "Your Mom")
-badApplicantProfile.set_active
-badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile)
-badApplicantProfile.roles << stonewatch.applicant_role
+badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile, :no_signup_email => true)
 
 #More General Users
 1.upto(20) { |n|
   g_profile = UserProfile.create(:name => "guser_#{n}")
-  g_profile.set_active
-  g_user = User.create(:email => "g#{n}@user.com", :password => "password", :user_profile => g_profile)
+  g_user = User.create(:email => "g#{n}@user.com", :password => "password", :user_profile => g_profile, :no_signup_email => true)
 }
 
 #Generate some normal activity for stonewatch

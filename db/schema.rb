@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110709163137) do
+ActiveRecord::Schema.define(:version => 20110709231829) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20110709163137) do
     t.integer  "applicant_role_id"
     t.integer  "member_role_id"
     t.integer  "community_application_form_id"
+    t.boolean  "email_notice_on_applicant"
   end
 
   create_table "discussion_spaces", :force => true do |t|
@@ -174,7 +175,6 @@ ActiveRecord::Schema.define(:version => 20110709163137) do
     t.integer  "game_id"
     t.integer  "user_profile_id"
     t.integer  "discussion_id"
-    t.integer  "status"
     t.integer  "personal_discussion_space_id"
     t.integer  "default_character_proxy_id"
     t.boolean  "is_system_profile"
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20110709163137) do
     t.integer  "discussion_id"
     t.integer  "site_form_id"
     t.string   "type"
+    t.integer  "status"
   end
 
   create_table "supported_games", :force => true do |t|

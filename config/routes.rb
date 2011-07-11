@@ -30,7 +30,7 @@ Bv::Application.routes.draw do
   
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
-  resources :registration_applications, :only => [:new, :create]
+  resources :registration_applications, :only => [:new, :create, :show]
 
   resources :recurring_events,
     :game_locations,

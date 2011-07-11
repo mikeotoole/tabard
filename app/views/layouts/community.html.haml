@@ -9,7 +9,7 @@
     = include_tiny_mce_if_needed
   %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
-      = render :partial => "layouts/header"
+      = render :partial => "layouts/community/header"
       #body
         .container= yield
-      = render :partial => "layouts/footer"
+      = render :partial => "layouts/community/footer"
