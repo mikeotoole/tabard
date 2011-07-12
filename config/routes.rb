@@ -4,8 +4,11 @@ Bv::Application.routes.draw do
 
   get "status_code/invoke_404"
 
-  resources :sent, :only => [:show, :new, :create]
-  match '/sent_messages' => "sent#index"
+
+  resources :sent, :only => [:create]
+  match 'mail/sent/:id' => "sent#show", :as => "sent_mail"
+  match 'mail/sent' => "sent#index", :as => "sent_mailbox"
+  match 'mail/compose' => "sent#new", :as => "compose_mail"
   
   resources :messages, :only => [:show, :destroy] do
     member do
@@ -112,6 +115,8 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
+  resources :communities
+  
   resources :users, :only => :show
   resource :session
   
@@ -130,8 +135,6 @@ Bv::Application.routes.draw do
   constraints(Subdomain) do
     match '/' => "communities#show"
   end
-  
-  resources :communities
   
   root :to => "home#index"
 

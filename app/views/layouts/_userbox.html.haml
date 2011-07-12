@@ -15,8 +15,8 @@
   #mail
     %ul
       %li.inbox= link_to "Inbox", inbox_path, { :title => "Inbox" }
-      %li.compose= link_to "New", new_sent_path, { :title => "New Message" }
-      %li.sent= link_to "Sent", sent_messages_path, { :title => "Sent Items" }
+      %li.compose= link_to "New", compose_mail_path, { :title => "New Message" }
+      %li.sent= link_to "Sent", sent_mailbox_path, { :title => "Sent Items" }
       %li.trash= link_to "Trash", trash_path, { :title => "Trash" }
   %p.actions
     =link_to 'Account', user_profile_path(current_user), :class => 'button account'

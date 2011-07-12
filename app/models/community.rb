@@ -38,6 +38,15 @@ class Community < ActiveRecord::Base
     self.admin_role.users.first #TODO might want to get a better way of doing this.
   end
   
+  def all_users
+    users = Array.new
+    users << self.admin_role.users
+    users << self.applicant_role.users
+    users << self.member_role.users
+    users << self.roles.collect {|role| role.users}
+    users.flatten.uniq
+  end
+  
   def update_subdomain
     self.subdomain = self.name.downcase.gsub(/\s/, "-")
   end

@@ -1,10 +1,9 @@
 %p#actions
-  - unless @message.author == UserProfile.system_profile
-    = link_to 'Reply', reply_message_path(@message), :method => :post, :class => 'reply', :title => 'Reply to sender'
-    - if @message.recipients.size > 1
-      = link_to 'Reply All', reply_all_message_path(@message), :method => :post, :class => 'replyall', :title => 'Reply to all'
-    = link_to 'Forward', forward_message_path(@message), :method => :post, :class => 'forward', :title => 'Forward message'
-    = link_to 'Delete Message', message_path(@message), :method => 'delete', :confirm => 'Are you sure?', :class => 'trash', :title => 'Delete message'
+  = link_to 'Reply', reply_message_path(@message), :method => :post, :class => 'reply', :title => 'Reply to sender'
+  - if @message.recipients.size > 1
+    = link_to 'Reply All', reply_all_message_path(@message), :method => :post, :class => 'replyall', :title => 'Reply to all'
+  = link_to 'Forward', forward_message_path(@message), :method => :post, :class => 'forward', :title => 'Forward message'
+  = link_to 'Delete Message', message_path(@message), :method => 'delete', :confirm => 'Are you sure?', :class => 'trash', :title => 'Delete message'
 %dl#meta
   %dt Received
   %dd= @message.created_at.to_s(:long)
@@ -19,7 +18,6 @@
 %pre#message
   = @message.body
 %p
-  - unless @message.author == UserProfile.system_profile
-    = link_to 'Reply', reply_message_path(@message), :method => :post, :class => 'button', :title => 'Reply to sender'
-    - if @message.recipients.size > 1
-      = link_to 'Reply All', reply_all_message_path(@message), :method => :post, :class => 'button', :title => 'Reply to all'
+  = link_to 'Reply', reply_message_path(@message), :method => :post, :class => 'button', :title => 'Reply to sender'
+  - if @message.recipients.size > 1
+    = link_to 'Reply All', reply_all_message_path(@message), :method => :post, :class => 'button', :title => 'Reply to all'

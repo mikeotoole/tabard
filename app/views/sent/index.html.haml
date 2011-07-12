@@ -16,7 +16,7 @@
       - @messages.each do |message|
         %tr
           %td.subject
-            = link_to message.subject, sent_path(message)
+            = link_to message.subject, sent_mail_path(message)
           %td.to
             - if message.recipients
               %ul
@@ -34,4 +34,4 @@
   %tfoot
     %tr
       %td{ :colspan => 4 }
-        = link_to 'New Message', new_sent_path, :class => 'button'
+        = link_to 'New Message', compose_mail_path, :class => 'button'

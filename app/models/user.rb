@@ -79,6 +79,12 @@ class User < ActiveRecord::Base
     user_profile != nil ? user_profile.name : email
   end
   
+  def address_book
+    communities = self.roles.collect{ |role| role.community }.uniq
+    users = communities.collect{|community| community.all_users}.flatten.uniq
+    users.collect{|user| user.user_profile}
+  end
+  
   def self.authenticate(email, password) 
     user = find_by_lowercase_email(email.downcase)
     return user if user && user.authenticated?(password)
