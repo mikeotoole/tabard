@@ -9,19 +9,15 @@ Bv::Application.routes.draw do
   match 'mail/sent/:id' => "sent#show", :as => "sent_mail"
   match 'mail/sent' => "sent#index", :as => "sent_mailbox"
   match 'mail/compose' => "sent#new", :as => "compose_mail"
+  match 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
+  match 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
+  match 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
+  match 'mail/undelete/:id' => "messages#undelete", :as => "mail_undelete"
+  match 'mail/inbox' => "mailbox#index", :as => "inbox"
+  match 'mail/trash' => "mailbox#trash", :as => "trash"
+  match 'mail/inbox/:id' => "messages#show", :as => "mail"
   
-  resources :messages, :only => [:show, :destroy] do
-    member do
-      post :reply
-      post :forward
-      post :reply_all
-      post :undelete
-    end
-  end
-      
-  resource :mailbox, :only => :show
-  match '/inbox' => "mailbox#index"
-  match '/trash' => "mailbox#trash"
+  resources :messages, :only => [:destroy]
 
   resources :registration_answers,
     :text_box_questions,
