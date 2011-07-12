@@ -3,6 +3,8 @@ Bv::Application.routes.draw do
   match "/search" => "search#index"
 
   get "status_code/invoke_404"
+  
+  match "/status_code/404" => "status_code#invoke_404", :as => "four_o_four"
 
   #Messaging
   resources :sent, :only => [:create]
