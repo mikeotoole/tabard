@@ -6,7 +6,7 @@
 - form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
   #recipients
     %ul.users
-      - for user in UserProfile.active_profiles
+      - for user in current_user.address_book
         %li{ :title => user.name , :class => @message.to.include?(user.id.to_s) && "show" }
           = check_box_tag "message[to][]", user.id, @message.to.include?(user.id.to_s)
           = user.name

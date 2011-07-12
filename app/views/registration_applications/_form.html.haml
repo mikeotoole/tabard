@@ -45,12 +45,8 @@
             %p
               - @games.each do |game|
                 = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
-    -else
-      %dt{ :class => 'account active' } Account Details
-      %dd{ :class => 'account active' }
-        %h2 Your Crumblin Info
-    %dt.questions Questionnaire
-    %dd.questions
+    %dt{:class => 'questions active'} Questionnaire
+    %dd{:class => 'questions active'}
       %h2 Questionnaire
       - if @registration_application.site_form != nil
         - @registration_application.site_form.questions.each do |question|

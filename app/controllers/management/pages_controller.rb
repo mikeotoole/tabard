@@ -1,4 +1,4 @@
-class Management::PagesController < ApplicationController
+class Management::PagesController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   # GET /pages

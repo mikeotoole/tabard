@@ -8,6 +8,19 @@ class Question < ActiveRecord::Base
     descendants.map{ |c| c.to_s }.sort
   end
   
+  def self.select_options_human
+    self.select_options.collect{ |opt| 
+      case opt
+      when "TextBoxQuestion"
+        ["Long Answer Question", opt]
+      when "TextQuestion"
+        ["Short Answer Question", opt]
+      else
+        [opt.scan(/[A-Z][a-z0-9]*/).join(" "), opt] 
+      end
+    }
+  end
+  
   def type_helper
     self.type
   end

@@ -1,25 +1,13 @@
 = form_for @community do |f|
-  -if @community.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@community.errors.count, "error")} prohibited this community from being saved:"
-      %ul
-        - @community.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
+  %p.field
     = f.label :name
     = f.text_field :name
-  .field
-    = f.label :subdomain
-    = f.text_field :subdomain
-  .field
+  %p.field
     = f.label :slogan
     = f.text_field :slogan
-  .field
+  %p.field
     = f.label :label
-    = f.text_field :label
-  .field
-    = f.label :accepting
-    = f.check_box :accepting
-  .actions
-    = f.submit 'Save'
+    = f.select(:label, options_for_select(Community::acceptable_labels, @community.label))
+  %p{ :class => 'field checkbox' }
+    = f.label :accepting, (f.check_box :accepting) + 'Accepting new members?'
+  = submit_or_cancel(f)

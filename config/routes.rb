@@ -3,23 +3,41 @@ Bv::Application.routes.draw do
   match "/search" => "search#index"
 
   get "status_code/invoke_404"
-
-  resources :sent, :only => [:show, :new, :create]
-  match '/sent_messages' => "sent#index"
   
-  resources :messages, :only => [:show, :destroy] do
-    member do
-      post :reply
-      post :forward
-      post :reply_all
-      post :undelete
-    end
-  end
-      
-  resource :mailbox, :only => :show
-  match '/inbox' => "mailbox#index"
-  match '/trash' => "mailbox#trash"
+  match "/status_code/404" => "status_code#invoke_404", :as => "four_o_four"
 
+  #Messaging
+  resources :sent, :only => [:create]
+  resources :messages, :only => [:destroy]
+  match 'mail/sent/:id' => "sent#show", :as => "sent_mail"
+  match 'mail/sent' => "sent#index", :as => "sent_mailbox"
+  match 'mail/compose' => "sent#new", :as => "compose_mail"
+  match 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
+  match 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
+  match 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
+  match 'mail/undelete/:id' => "messages#undelete", :as => "mail_undelete"
+  match 'mail/inbox' => "mailbox#index", :as => "inbox"
+  match 'mail/trash' => "mailbox#trash", :as => "trash"
+  match 'mail/inbox/:id' => "messages#show", :as => "mail"
+  
+  #Accounts
+  match "/signup" => "account#new", :as => "signup"
+  match "/account" => "account#show", :as => "account"
+  match "/account/edit" => "account#edit", :as => "edit_account"
+  match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
+
+  #Games
+  match "/game" => "games#index", :as =>"game_index"
+  match "/game/:id" => "games#show", :as => "game"
+  resources :games, :only => [:show, :index] do
+    resources :wow_characters, :except => :index
+    resources :swtor_characters, :except => :index
+    resources :game_announcements, :only => [:new, :create]
+  end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
+  resources :base_characters, :only => :new
+  
   resources :registration_answers,
     :text_box_questions,
     :radio_button_questions,
@@ -31,11 +49,6 @@ Bv::Application.routes.draw do
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
   resources :registration_applications, :only => [:new, :create, :show]
-
-  resources :recurring_events,
-    :game_locations,
-    :locations,
-    :events
 
   resources :page_spaces do
     resources :pages
@@ -112,26 +125,17 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :users, :only => :show
+  resources :communities
+  
   resource :session
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
-  resources :games do
-    resources :wow_characters, :except => :index
-    resources :swtor_characters, :except => :index
-    resources :game_announcements, :only => [:new, :create]
-  end
-  resources :wow_characters, :only => :show
-  resources :swtor_characters, :only => :show
-  
-  resources :base_characters, :only => :new
+  resources :communities
   
   constraints(Subdomain) do
     match '/' => "communities#show"
   end
-  
-  resources :communities
   
   root :to => "home#index"
 

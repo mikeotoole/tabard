@@ -5,7 +5,7 @@ class Community < ActiveRecord::Base
                    :format => { :with => /\A[a-zA-Z0-9 ]+\z/, :message => "Only letters, numbers, and spaces are allowed" }
   validates :slogan, :presence => true
   validates :label, :presence => true,
-                   :inclusion => { :in => %w(Guild Team Clan), :message => "%{value} is not currently a supported label" }
+                   :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
   
   has_many :discussion_spaces
   has_many :page_spaces
@@ -30,12 +30,31 @@ class Community < ActiveRecord::Base
     "#{self.name} #{self.label}"
   end
   
+  def self.acceptable_labels
+    %w(Guild Team Clan Faction Squad)
+  end
+  
   def leader_profile
     self.admin_role.users.first.user_profile
   end
   
   def admin
     self.admin_role.users.first #TODO might want to get a better way of doing this.
+  end
+  
+  def all_users
+    users = Array.new
+    users << self.admin_role.users
+    users << self.applicant_role.users
+    users << self.member_role.users
+    users << self.roles.collect {|role| role.users}
+    users.flatten.uniq
+  end
+  
+  def get_characters_for_game(game)
+    self.all_users.collect{|user| 
+       user.get_characters(game)
+    }.flatten.compact
   end
   
   def update_subdomain
@@ -65,7 +84,16 @@ class Community < ActiveRecord::Base
   end
   
   def setup_member_role
-    self.update_attributes(:member_role => Role.create(:name => "Applicant",
+    self.update_attributes(:member_role => Role.create(:name => "Member",
+    :permissions => SystemResource.all.collect{|resource|
+        Permission.create(:permissionable => resource, 
+          :name => "View Access #{resource.name}", 
+          :show_p => true, 
+          :create_p => false, 
+          :update_p => false, 
+          :delete_p => false
+        )
+      },
       :community => self
     ))
   end
@@ -76,5 +104,21 @@ class Community < ActiveRecord::Base
       :thankyou => "Thank you for submitting your application.", 
       :published => true, 
       :community => self))
+  end
+  
+  def check_user_show_permissions(user)
+    true
+  end
+  
+  def check_user_create_permissions(user)
+    true
+  end
+  
+  def check_user_update_permissions(user)
+    self.admin_role.users.include?(user)
+  end
+  
+  def check_user_delete_permissions(user)
+    self.admin_role.users.include?(user)
   end
 end

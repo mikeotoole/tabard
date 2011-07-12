@@ -40,6 +40,12 @@ class UserProfile < Profile
     self.game_profiles << game_profile
   end
   
+  def get_characters(game)
+    self.game_profiles.collect{|gPro| 
+       gPro.characters if gPro.game.kind_of? game
+    }.flatten.compact
+  end
+  
   def only_one_system_profile
     errors.add(:id, "There can be only one!  ...system profile.") if (UserProfile.where(:is_system_profile => true).exists? and self.is_system_profile)
   end
@@ -107,4 +113,19 @@ class UserProfile < Profile
     self.save
   end
   
+  def check_user_show_permissions(user)
+    user.can_show("User") or self == user.user_profile
+  end
+  
+  def check_user_create_permissions(user)
+    user.can_create("User") or self == user.user_profile
+  end
+  
+  def check_user_update_permissions(user)
+    user.can_update("User") or self == user.user_profile
+  end
+  
+  def check_user_delete_permissions(user)
+    user.can_delete("User") or self == user.user_profile
+  end
 end

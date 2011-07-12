@@ -1,4 +1,4 @@
-class DiscussionSpacesController < CommunitiesController
+class DiscussionSpacesController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :get_option_hash
   

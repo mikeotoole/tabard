@@ -1,30 +1,61 @@
 class CommunitiesController < ApplicationController
-  layout 'community'
-  before_filter :find_community_by_subdomain
+  respond_to :html, :xml
+  before_filter :find_community_by_subdomain, :only => :show
+  before_filter :authenticate, :except => [:show, :index]
   # GET /communities/1
   # GET /communities/1.xml
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @community }
-    end
-  end
-
   
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
     #need to redirect to something if not found
   end
   
-  def nav_page_spaces
-    @community.page_spaces.all.delete_if {|page_space| !page_space.check_user_show_permissions(current_user)}
-  end 
-  
-  def nav_featured_pages
-    @community.pages.featured_pages.alphabetical
+  def show
+    @community = Community.find(params[:id]) if params[:id]
   end
   
-  def nav_discussions
-    @community.discussion_spaces.only_real_ones.delete_if {|discussion_space| (logged_in? and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
+  def index
+    @communities = Community.all
+  end
+  
+  def new
+    @community = Community.new
+    if !current_user.can_create(@discussion_space)
+      render_insufficient_privileges
+    else  
+      respond_with(@community)
+    end
+  end
+  
+  def create
+    @community = Community.new(params[:community])
+    if !current_user.can_create(@discussion_space)
+      render_insufficient_privileges
+    else  
+      if @community.save 
+        add_new_flash_message("#{@community.display_name} has been created!")
+        current_user.roles << @community.admin_role
+      end
+      respond_with(@community) 
+    end
+  end
+  
+  def edit
+    @community = Community.find(params[:id])
+    if !current_user.can_update(@community)
+      render_insufficient_privileges
+    else  
+      respond_with(@community)
+    end
+  end
+  
+  def update
+    @community = Community.find(params[:id])
+    if !current_user.can_update(@community)
+      render_insufficient_privileges
+    else
+      @community.update_attributes(params[:community])
+      respond_with(@community)
+    end
   end
 end

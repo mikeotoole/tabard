@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
           " to finish setting up your account.")
         redirect_to new_profile_path
       else
-        add_new_flash_message("Welcome back, <em>#{user.user_profile.name}</em>.")
+        add_new_flash_message("Welcome back, <em>#{user.name}</em>.")
         if session[:pre_login_url]  
           redirect_to session[:pre_login_url]
         else

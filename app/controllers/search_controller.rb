@@ -1,4 +1,4 @@
-class SearchController < CommunitiesController
+class SearchController < Communities::CommunitiesController
   respond_to :html, :xml
   
   def index

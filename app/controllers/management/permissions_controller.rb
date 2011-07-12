@@ -1,4 +1,4 @@
-class Management::PermissionsController < ApplicationController
+class Management::PermissionsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
   # GET /permissions

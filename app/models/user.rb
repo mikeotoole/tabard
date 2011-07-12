@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
     resource.respond_to?('owned_by_user') ? resource.owned_by_user(self) : false
   end
   
+  def communities
+    self.roles.collect{|role|
+      role.community
+    }.uniq
+  end
+  
   def is_a_member_of(community)
     self.roles.each do |role|
       if role.is_a_member_of(community)
@@ -77,6 +83,20 @@ class User < ActiveRecord::Base
   #TODO should the email never be returned for privacy?
   def name
     user_profile != nil ? user_profile.name : email
+  end
+  
+  def get_characters(game)
+    self.user_profile.get_characters(game)
+  end
+  
+  def characters
+    self.user_profile.characters
+  end
+  
+  def address_book
+    communities = self.roles.collect{ |role| role.community }.uniq
+    users = communities.collect{|community| community.all_users}.flatten.uniq
+    users.collect{|user| user.user_profile}
   end
   
   def self.authenticate(email, password) 
