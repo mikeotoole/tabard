@@ -175,7 +175,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_theme
   
   def render_404
-    redirect_to [request.protocol, request.domain, request.port_string, "/status_code/404"].join 
+    redirect_to [request.protocol, request.domain, request.port_string, "/404"].join 
   end
   helper_method :render_404
   
