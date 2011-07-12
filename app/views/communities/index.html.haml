@@ -7,9 +7,6 @@
     %th Slogan
     %th Label
     %th Accepting
-    %th
-    %th
-    %th
 
   - @communities.each do |community|
     %tr
@@ -18,10 +15,7 @@
       %td= community.slogan
       %td= community.label
       %td= community.accepting
-      %td= link_to 'Show', community
-      %td= link_to 'Edit', edit_community_path(community)
-      %td= link_to 'Destroy', community, :confirm => 'Are you sure?', :method => :delete
-
+      %td= link_to 'Show', root_url(:subdomain => community.subdomain)
 %br
-
-= link_to 'New Community', new_community_path
+-if logged_in?
+  = link_to 'Create a new Community', new_community_path

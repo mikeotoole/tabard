@@ -5,7 +5,7 @@ class Community < ActiveRecord::Base
                    :format => { :with => /\A[a-zA-Z0-9 ]+\z/, :message => "Only letters, numbers, and spaces are allowed" }
   validates :slogan, :presence => true
   validates :label, :presence => true,
-                   :inclusion => { :in => %w(Guild Team Clan), :message => "%{value} is not currently a supported label" }
+                   :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
   
   has_many :discussion_spaces
   has_many :page_spaces
@@ -28,6 +28,10 @@ class Community < ActiveRecord::Base
   
   def display_name
     "#{self.name} #{self.label}"
+  end
+  
+  def self.acceptable_labels
+    %w(Guild Team Clan Faction Squad)
   end
   
   def leader_profile
@@ -74,7 +78,16 @@ class Community < ActiveRecord::Base
   end
   
   def setup_member_role
-    self.update_attributes(:member_role => Role.create(:name => "Applicant",
+    self.update_attributes(:member_role => Role.create(:name => "Member",
+    :permissions => SystemResource.all.collect{|resource|
+        Permission.create(:permissionable => resource, 
+          :name => "View Access #{resource.name}", 
+          :show_p => true, 
+          :create_p => false, 
+          :update_p => false, 
+          :delete_p => false
+        )
+      },
       :community => self
     ))
   end

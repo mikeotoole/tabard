@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
     resource.respond_to?('owned_by_user') ? resource.owned_by_user(self) : false
   end
   
+  def communities
+    self.roles.collect{|role|
+      role.community
+    }.uniq
+  end
+  
   def is_a_member_of(community)
     self.roles.each do |role|
       if role.is_a_member_of(community)

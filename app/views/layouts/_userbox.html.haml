@@ -3,9 +3,16 @@
   %p.avatar
     = image_tag '/images/avatars/default.png', :alt => ''
     = link_to 'Edit', '#'
+  .communites
+    =raw('&laquo; Select a Community &raquo;')
+    %ul.communities
+      - current_user.communities.each do |community|
+        %li{ :class => (@community and @community == community) ? 'current' : '' }
+          = link_to community.display_name, root_url(:subdomain => community.subdomain)
+      %li= link_to "Find a community", root_url(:subdomain => false)
   .profile
     = link_to (profile_active? ? current_profile.name : raw('&laquo; Select a Profile &raquo;')), user_profile_path(current_user), { :class => 'main' }
-    %ul
+    %ul.profiles
       -if profiles
         - profiles.each do |profile|
           %li{ :class => profile[:is_current] ? 'current' : '' }
