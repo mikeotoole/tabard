@@ -1,16 +1,16 @@
-class Management::SiteFormsController < ApplicationController
+class Management::SiteFormsController < CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /management/site_forms
   # GET /management/site_forms.xml
   def index
-      @site_form = SiteForm.all
+      @site_form = @community.site_forms.all
   
       respond_with(@site_form)
   end
   
   def show
-    @site_form = SiteForm.find(params[:id])
+    @site_form = @community.site_forms.find(params[:id])
 
     respond_with(@site_form)
   end
@@ -18,21 +18,21 @@ class Management::SiteFormsController < ApplicationController
   # GET /management/site_forms/new
   # GET /management/site_forms/new.xml
   def new
-    @site_form = SiteForm.new
+    @site_form = @community.site_forms.new
 
     respond_with(@site_form)
   end
 
   # GET /management/site_forms/1/edit
   def edit
-      @site_form = SiteForm.find(params[:id])
+      @site_form = @community.site_forms.find(params[:id])
       respond_with(@site_form)
   end
 
   # POST /management/site_forms
   # POST /management/site_forms.xml
   def create
-    @site_form = SiteForm.new(params[:site_form])
+    @site_form = @community.site_forms.new(params[:site_form])
 
     @site_form.registration_application_form = false
     respond_to do |format|
@@ -56,7 +56,7 @@ class Management::SiteFormsController < ApplicationController
   # PUT /management/site_forms/1
   # PUT /management/site_forms/1.xml
   def update
-      @site_form = SiteForm.find(params[:id])
+      @site_form = @community.site_forms.find(params[:id])
     respond_to do |format|
       if @site_form.update_attributes(params[:site_form])
         
@@ -82,7 +82,7 @@ class Management::SiteFormsController < ApplicationController
   # DELETE /management/site_forms/1
   # DELETE /management/site_forms/1.xml
   def destroy
-      @site_form = SiteForm.find(params[:id])
+      @site_form = @community.site_forms.find(params[:id])
       
       if @site_form.registration_application_form != true
         @site_form.destroy
