@@ -113,7 +113,7 @@ Bv::Application.routes.draw do
   
   resources :communities
   
-  resources :users, :only => :show
+  resources :users, :only => [:show, :new, :create]
   resource :session
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
