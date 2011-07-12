@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items
-  #after_filter :clear_flash_messages
+  after_filter :clear_flash_messages
 
   # Puts all of the notices and alerts into the messages array
   def group_flash_messages

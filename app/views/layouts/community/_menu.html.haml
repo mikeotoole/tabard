@@ -12,9 +12,6 @@
         %button{ :type => 'submit' } Login
         %p.apply
           -if @community.accepting
-            -if @community.community_application_form.nil?
-              %span Is seeking applications, but do not have a form setup yet.
-            -else
               or
               = link_to 'Sign up', new_registration_application_path
           -else

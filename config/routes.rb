@@ -4,8 +4,9 @@ Bv::Application.routes.draw do
 
   get "status_code/invoke_404"
 
-
+  #Messaging
   resources :sent, :only => [:create]
+  resources :messages, :only => [:destroy]
   match 'mail/sent/:id' => "sent#show", :as => "sent_mail"
   match 'mail/sent' => "sent#index", :as => "sent_mailbox"
   match 'mail/compose' => "sent#new", :as => "compose_mail"
@@ -17,7 +18,11 @@ Bv::Application.routes.draw do
   match 'mail/trash' => "mailbox#trash", :as => "trash"
   match 'mail/inbox/:id' => "messages#show", :as => "mail"
   
-  resources :messages, :only => [:destroy]
+  #Accounts
+  match "/signup" => "account#new", :as => "signup"
+  match "/account" => "account#show", :as => "account"
+  match "/account/edit" => "account#edit", :as => "edit_account"
+  match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
 
   resources :registration_answers,
     :text_box_questions,
@@ -113,7 +118,7 @@ Bv::Application.routes.draw do
   
   resources :communities
   
-  resources :users, :only => [:show, :new, :create]
+  #resources :users, :only => [:show, :new, :create]
   resource :session
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile

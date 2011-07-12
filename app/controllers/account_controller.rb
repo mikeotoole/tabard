@@ -1,32 +1,13 @@
-class UsersController < ApplicationController
+class AccountController < ApplicationController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:new, :create, :show]
-  # GET /users/1
-  # GET /users/1.xml
-  def show
-    if !current_user.can_show("User") and User.find(params[:id]) != current_user
-      render_insufficient_privileges
-    else 
-      @user = User.find(params[:id])
-      @acknowledgment_of_announcements = @user.unacknowledged_announcements
-      
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @user }
-      end
-    end
-  end
-  
-  # GET /registration_applications/new
-  # GET /registration_applications/new.xml
+  before_filter :get_all_active_games 
   def new
     @profile = UserProfile.new 
     @user = User.new
-    
-    @games = Game.active
 
-    add_new_flash_message("Please fill this form out to join Crumblin")
-    respond_with(@user)
+    add_new_flash_message("Please fill this form out to create your Crumblin account.")
+    respond_with(@user, @profile, @games)
   end
 
   # POST /registration_applications
@@ -57,9 +38,38 @@ class UsersController < ApplicationController
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
-    else
-      @games = Game.active
     end
-    respond_with(@user)
+    respond_with(@user, @profile, @games)
+  end
+  
+  def edit
+    @user = current_user
+    @profile = current_user.user_profile
+    @wowCharacters = current_user.get_characters(Wow)
+    @swtorCharacters = current_user.get_characters(Swtor)   
+    respond_with(@user, @profile, @games, @wowCharacters, @swtorCharacters)
+  end
+
+  def update
+  end
+
+  def show
+    if not logged_in?
+      redirect_to signup_path
+    else
+      @user = current_user
+      @profile = current_user.user_profile
+      respond_with(@user, @profile, @games)
+    end
+  end
+
+  def destroy
+    @user = current_user
+    @profile = current_user.user_profile
+    respond_with(@user, @profile, @games)
+  end
+
+  def get_all_active_games
+    @games = Game.active
   end
 end

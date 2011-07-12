@@ -40,6 +40,12 @@ class UserProfile < Profile
     self.game_profiles << game_profile
   end
   
+  def get_characters(game)
+    self.game_profiles.collect{|gPro| 
+       gPro.characters if gPro.game.kind_of? game
+    }.flatten.compact
+  end
+  
   def only_one_system_profile
     errors.add(:id, "There can be only one!  ...system profile.") if (UserProfile.where(:is_system_profile => true).exists? and self.is_system_profile)
   end

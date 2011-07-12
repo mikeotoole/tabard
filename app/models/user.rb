@@ -79,6 +79,14 @@ class User < ActiveRecord::Base
     user_profile != nil ? user_profile.name : email
   end
   
+  def get_characters(game)
+    self.user_profile.get_characters(game)
+  end
+  
+  def characters
+    self.user_profile.characters
+  end
+  
   def address_book
     communities = self.roles.collect{ |role| role.community }.uniq
     users = communities.collect{|community| community.all_users}.flatten.uniq

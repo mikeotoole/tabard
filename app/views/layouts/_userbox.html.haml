@@ -19,5 +19,5 @@
       %li.sent= link_to "Sent", sent_mailbox_path, { :title => "Sent Items" }
       %li.trash= link_to "Trash", trash_path, { :title => "Trash" }
   %p.actions
-    =link_to 'Account', user_profile_path(current_user.user_profile), :class => 'button account'
+    =link_to 'Account', account_path, :class => 'button account'
     =link_to 'Logout', logout_url(:subdomain => false), :class => 'button logout'
