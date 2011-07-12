@@ -1,4 +1,4 @@
-class RegistrationApplicationsController < CommunitiesController
+class RegistrationApplicationsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:new, :create, :show]
 

@@ -1,4 +1,4 @@
-class RolesController < CommunitiesController
+class RolesController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /roles

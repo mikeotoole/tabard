@@ -1,4 +1,4 @@
-class Management::ManagementController < ApplicationController
+class Management::ManagementController < Communities::CommunitiesController
   before_filter :authenticate
   
   def index

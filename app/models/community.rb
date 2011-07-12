@@ -51,6 +51,12 @@ class Community < ActiveRecord::Base
     users.flatten.uniq
   end
   
+  def get_characters_for_game(game)
+    self.all_users.collect{|user| 
+       user.get_characters(game)
+    }.flatten.compact
+  end
+  
   def update_subdomain
     self.subdomain = self.name.downcase.gsub(/\s/, "-")
   end
@@ -98,5 +104,21 @@ class Community < ActiveRecord::Base
       :thankyou => "Thank you for submitting your application.", 
       :published => true, 
       :community => self))
+  end
+  
+  def check_user_show_permissions(user)
+    true
+  end
+  
+  def check_user_create_permissions(user)
+    true
+  end
+  
+  def check_user_update_permissions(user)
+    self.admin_role.users.include?(user)
+  end
+  
+  def check_user_delete_permissions(user)
+    self.admin_role.users.include?(user)
   end
 end

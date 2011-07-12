@@ -24,6 +24,18 @@ Bv::Application.routes.draw do
   match "/account/edit" => "account#edit", :as => "edit_account"
   match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
 
+  #Games
+  match "/game" => "games#index", :as =>"game_index"
+  match "/game/:id" => "games#show", :as => "game"
+  resources :games, :only => [:show, :index] do
+    resources :wow_characters, :except => :index
+    resources :swtor_characters, :except => :index
+    resources :game_announcements, :only => [:new, :create]
+  end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
+  resources :base_characters, :only => :new
+  
   resources :registration_answers,
     :text_box_questions,
     :radio_button_questions,
@@ -35,11 +47,6 @@ Bv::Application.routes.draw do
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
   resources :registration_applications, :only => [:new, :create, :show]
-
-  resources :recurring_events,
-    :game_locations,
-    :locations,
-    :events
 
   resources :page_spaces do
     resources :pages
@@ -122,15 +129,7 @@ Bv::Application.routes.draw do
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
-  resources :games do
-    resources :wow_characters, :except => :index
-    resources :swtor_characters, :except => :index
-    resources :game_announcements, :only => [:new, :create]
-  end
-  resources :wow_characters, :only => :show
-  resources :swtor_characters, :only => :show
-  
-  resources :base_characters, :only => :new
+  resources :communities
   
   constraints(Subdomain) do
     match '/' => "communities#show"

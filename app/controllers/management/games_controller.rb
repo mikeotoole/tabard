@@ -1,4 +1,4 @@
-class Management::GamesController < ApplicationController
+class Management::GamesController < Communities::CommunitiesController
   before_filter :authenticate
   respond_to :html, :xml   
    

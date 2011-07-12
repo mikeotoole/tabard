@@ -43,6 +43,7 @@ justanotherheadshot = Community.create(:name => "Just Another Headshot",
   :label => "Clan", 
   :accepting => true,
   :email_notice_on_applicant => true)
+justanotherheadshot.games << swtor
 
 adminUser.roles << stonewatch.admin_role
 
@@ -85,6 +86,7 @@ dMooseProfile = UserProfile.create(:name => "DiabolicalMoose")
 dMooseUser = User.create(:email => "Diabolical@Moose.com", :password => "password", :user_profile => dMooseProfile, :no_signup_email => true)
 dMooseUser.roles << stonewatch.member_role
 dMooseUser.roles << justanotherheadshot.member_role
+dMooseProfile.build_character(SwtorCharacter.create(:name => "DMOOSE", :server => "Obi-Wan", :game => swtor))
 
 crumbJoe = User.create(:email => "joe@crumblin.com",
                         :password => "password",

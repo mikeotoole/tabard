@@ -1,4 +1,4 @@
-class DiscussionsController < CommunitiesController
+class DiscussionsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   

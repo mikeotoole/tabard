@@ -1,21 +1,22 @@
-%h1 Listing communities
+%h1 Crumblin Communities
 
 %table
-  %tr
-    %th Name
-    %th Subdomain
-    %th Slogan
-    %th Label
-    %th Accepting
-
-  - @communities.each do |community|
-    %tr
-      %td= community.name
-      %td= community.subdomain
-      %td= community.slogan
-      %td= community.label
-      %td= community.accepting
-      %td= link_to 'Show', root_url(:subdomain => community.subdomain)
-%br
--if logged_in?
-  = link_to 'Create a new Community', new_community_path
+  - if @communities.size > 0
+    %thead
+      %tr
+        %th Name
+        %th Slogan
+        %th Accepting New Members
+    %tbody
+      - @communities.each do |community|
+        %tr
+          %td= link_to community.display_name, root_url(:subdomain => community.subdomain)
+          %td= community.slogan
+          %td= community.accepting
+  - else
+    %tbody
+      %td{ :colspan => 3 } There are no communities.
+  -if logged_in?
+    %tfoot
+      %td{ :colspan => 3 }
+        = link_to 'Create a new Community', new_community_path, :class => "button"

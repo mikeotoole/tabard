@@ -1,24 +1,24 @@
+%p#bcrumb
+  = link_to 'Games', :games
+  
 %h1 Games
-
+  
 %table
   - if @games.size > 0
     %thead
       %tr
-        %th.amount Characters
         %th.name Name
-        %th.actions
+        %th.amount Characters
+        %th.communities Communities
     %tbody
       - @games.each do |game|
         %tr
+          %td.name
+            = link_to game.name, game_path(game)
           %td.amount
             = game.characters.size.to_s
-          %td.name
-            = link_to game.name, game
-          %td.actions
-            - if logged_in? and current_user.can_update(game)
-              = link_to "Edit", edit_game_path(game), :class => 'edit', :title => 'Edit'
-            - if logged_in? and current_user.can_delete(game)
-              = link_to "Delete", game, :confirm => "Are you sure?", :method => :delete, :class => 'delete', :title => 'Delete'
+          %td.communities
+            = game.communities.size.to_s
   - else
     %tbody
       %tr

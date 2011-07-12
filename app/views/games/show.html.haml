@@ -1,29 +1,19 @@
 %p#bcrumb
-  = link_to 'Games', :games
+  = link_to 'Games', game_index_path
   %span= @game.name
 
 %h1= @game.name
 
-- if @game.characters != nil
+- if @game.communities != nil
   %table
     %thead
       %tr
-        %th.name Characters
-        %th.actions
+        %th.name Communities
+        %th.characters Characters
     %tbody
-      - for character in @game.characters
+      - for community in @game.communities
         %tr
           %td.name
-            = link_to character.name, character
-          %td.actions
-            - if current_user.can_update(character)
-              = link_to 'Edit', character, :class => 'edit', :title => 'Edit'
-            - if current_user.can_delete(character)
-              = link_to 'Delete', character, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-    - if logged_in?
-      %tfoot
-        %tr
-          %td{ :colspan => 2 }
-            = form_tag(new_base_character_path, :method => :get) do
-              = hidden_field_tag 'game[game_id]', @game.id
-              %button{ :type => 'submit', :class => 'add' } Add Character
+            = link_to community.display_name, community
+          %td.characters
+            = community.get_characters_for_game(@game.class).size.to_s

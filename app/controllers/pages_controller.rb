@@ -1,4 +1,4 @@
-class PagesController < CommunitiesController
+class PagesController < Communities::CommunitiesController
   uses_tiny_mce :options => {
                               :theme => 'advanced',
                               :theme_advanced_resizing => true,

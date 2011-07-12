@@ -1,4 +1,4 @@
-class Management::SiteFormsController < CommunitiesController
+class Management::SiteFormsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /management/site_forms

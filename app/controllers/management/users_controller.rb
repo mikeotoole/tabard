@@ -1,4 +1,4 @@
-class Management::UsersController < ApplicationController
+class Management::UsersController < Communities::CommunitiesController
   before_filter :authenticate
   # GET /management/users
   # GET /management/users.xml

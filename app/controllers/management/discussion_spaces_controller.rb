@@ -1,4 +1,4 @@
-class Management::DiscussionSpacesController < CommunitiesController
+class Management::DiscussionSpacesController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
   # GET /discussion_spaces
