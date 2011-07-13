@@ -1,4 +1,4 @@
-- if flash[:messages].size > 0 or (logged_in? and current_user.unacknowledged_announcements.size > 0)
+- if (flash[:messages] and flash[:messages].size > 0) or (logged_in? and current_user.unacknowledged_announcements.size > 0)
   %form#announcements{ :method => 'post', :action => announcement_acknowledgement_path, :remote => true }
     %ul.container
       - if logged_in? and current_user.unacknowledged_announcements
