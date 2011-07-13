@@ -51,12 +51,7 @@ class User < ActiveRecord::Base
   end
   
   def is_a_member_of(community)
-    self.roles.each do |role|
-      if role.is_a_member_of(community)
-        return true
-      end
-    end
-    false
+    self.communties.include?(community)
   end
   
   def set_active_profile(profile)
