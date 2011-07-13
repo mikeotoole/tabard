@@ -1,4 +1,4 @@
-= form_for(account_path) do |f|
+= form_for(account_path, :html => {:multipart => true}) do |f|
   %dl.tabs
     %dt{ :class => 'account active' } Account Details
     %dd{ :class => 'account active' }
@@ -23,6 +23,11 @@
           - if @profile.errors[:name].any?
             = @profile.errors[:name]
           = profile.text_field :name, :value => @profile.name
+        %p.field
+          = f.label :avatar, "Avatar"
+          = f.file_field :avatar
+          = f.label :remote_image_url, "or image URL"
+          = f.text_field :remote_image_url
     %dt.characters Characters
     %dd.characters
       %h2 Characters
