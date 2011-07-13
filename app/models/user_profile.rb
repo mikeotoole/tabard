@@ -1,5 +1,5 @@
 class UserProfile < Profile
-  attr_accessible :avatar
+  attr_accessible :avatar, :name
   
   belongs_to :user
 
