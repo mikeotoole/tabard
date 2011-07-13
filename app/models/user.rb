@@ -80,6 +80,10 @@ class User < ActiveRecord::Base
     user_profile != nil ? user_profile.name : email
   end
   
+  def display_name
+    self.user_profile.display_name if user_profile
+  end
+  
   def get_characters(game)
     self.user_profile.get_characters(game)
   end

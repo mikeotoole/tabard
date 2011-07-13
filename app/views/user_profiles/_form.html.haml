@@ -2,4 +2,9 @@
   %p.field
     = f.label :name
     = f.text_field :name
+  %p.field
+    = f.label :avatar, "Avatar"
+    = f.file_field :avatar
+    = f.label :remote_image_url, "or image URL"
+    = f.text_field :remote_image_url
   = submit_or_cancel(f)
