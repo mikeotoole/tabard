@@ -51,6 +51,10 @@ class AccountController < ApplicationController
   end
 
   def update
+    @user = current_user.update_attributes(params[:user])
+    @profile = current_user.user_profile.update_attributes(params[:user_profile])
+    add_new_flash_message('CHARACTERS ARE BROKEN!.')
+    respond_with(@user, @profile, @games, @wowCharacters, @swtorCharacters)
   end
 
   def show
