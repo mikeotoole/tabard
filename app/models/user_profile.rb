@@ -1,4 +1,6 @@
 class UserProfile < Profile
+  attr_accessible :avatar
+  
   belongs_to :user
 
   has_many :game_profiles, :autosave => true
@@ -18,6 +20,8 @@ class UserProfile < Profile
   before_create :build_inbox
   after_create :create_discussion, :create_personal_space
   
+  #uploaders
+  mount_uploader :avatar, AvatarUploader
   
   # User can only have one user profile
   validates_uniqueness_of :user_id

@@ -134,7 +134,7 @@ Bv::Application.routes.draw do
   resources :communities
   
   constraints(Subdomain) do
-    match '/' => "communities#show"
+
   end
   
   root :to => "home#index"
