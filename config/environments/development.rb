@@ -39,7 +39,7 @@ Bv::Application.configure do
   end
   
   #tiny_mce stuffs
-  config.gem 'tiny_mce'
+  #config.gem 'tiny_mce'
   
   # This will force the models to be loaded so that subclasses can be seen by there parent.
   %w[game wow swtor base_character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
