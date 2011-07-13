@@ -32,7 +32,7 @@
                 = link_to '+ Applications', registration_applications_path
       %li
         = link_to 'Resources', page_spaces_path, { :class => 'main' }
-        - if dynamic_page_spaces
+        - if dynamic_page_spaces and dynamic_page_spaces.size > 0
           %ul
             - dynamic_page_spaces.each do |page_space| 
               %li= link_to page_space.name, page_space
@@ -42,7 +42,7 @@
       - if logged_in?
         %li
           = link_to 'Discussions', :discussion_spaces, { :class => 'main' }
-          - if dynamic_discussions
+          - if dynamic_discussions and dynamic_discussions.size > 0
             %ul
               - dynamic_discussions.each do |discussion_space| 
                 %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
