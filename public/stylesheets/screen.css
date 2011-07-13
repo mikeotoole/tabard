@@ -642,7 +642,8 @@ table {
 /* Header */
 #header {
   height: 150px;
-  position: relative; }
+  position: relative;
+  z-index: 4; }
   #header .title {
     font-family: 'DinBlack', sans-serif;
     font-size: 30pt;
@@ -658,6 +659,150 @@ table {
     line-height: 14pt;
     position: absolute;
     top: 80px; }
+  #header .login {
+    background: -moz-linear-gradient(top, #666666, #333333) ;
+    background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666, endColorstr=#333333)";
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -o-border-radius-topleft: 5px;
+    -o-border-radius-topright: 5px;
+    -o-border-radius-bottomright: 5px;
+    -o-border-radius-bottomleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 11pt;
+    height: 110px;
+    position: absolute;
+    right: 0;
+    top: 90px;
+    width: 300px; }
+    #header .login:after {
+      background: url(../images/icons/default.png) -725px -45px no-repeat;
+      content: '';
+      height: 30px;
+      right: 8px;
+      position: absolute;
+      top: 8px;
+      width: 30px; }
+    #header .login label {
+      display: none; }
+    #header .login input[type='text'],
+    #header .login input[type='password'] {
+      background: #e6e6e6;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      bottom: 8px;
+      color: black;
+      left: 8px;
+      padding: 0 5px;
+      position: absolute;
+      width: 184px; }
+      #header .login input[type='text']:focus,
+      #header .login input[type='password']:focus {
+        background: white; }
+      #header .login input[type='text']#email,
+      #header .login input[type='password']#email {
+        top: 8px; }
+      #header .login input[type='text']#password,
+      #header .login input[type='password']#password {
+        top: 42px; }
+    #header .login .remember {
+      line-height: 26px; }
+      #header .login .remember label {
+        bottom: 8px;
+        color: #e6e6e6;
+        display: block;
+        height: 26px;
+        left: 0;
+        overflow: hidden;
+        padding: 0 0 0 45px;
+        position: absolute;
+        text-indent: -100px; }
+        #header .login .remember label:before {
+          background: #e6e6e6;
+          border: 1px solid black;
+          -moz-border-radius-topleft: 5px;
+          -moz-border-radius-topright: 5px;
+          -moz-border-radius-bottomright: 5px;
+          -moz-border-radius-bottomleft: 5px;
+          -o-border-radius-topleft: 5px;
+          -o-border-radius-topright: 5px;
+          -o-border-radius-bottomright: 5px;
+          -o-border-radius-bottomleft: 5px;
+          -webkit-border-top-left-radius: 5px;
+          -webkit-border-top-right-radius: 5px;
+          -webkit-border-bottom-right-radius: 5px;
+          -webkit-border-bottom-left-radius: 5px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+          -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+          content: '';
+          height: 24px;
+          left: 8px;
+          position: absolute;
+          top: 0;
+          width: 24px; }
+        #header .login .remember label input {
+          width: 90px; }
+        #header .login .remember label.checked:before {
+          background: url(../images/icons/default.png) -248px -8px no-repeat #e6e6e6; }
+        #header .login .remember label:hover {
+          color: white; }
+          #header .login .remember label:hover:before {
+            background-color: white; }
+    #header .login button {
+      border: 0;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 0 0 7px !important;
+      position: absolute;
+      right: 8px;
+      text-align: left;
+      top: 8px;
+      width: 95px; }
+    #header .login .apply {
+      color: #e6e6e6;
+      line-height: 30px;
+      position: absolute;
+      right: 8px;
+      top: 42px;
+      width: 92px; }
+      #header .login .apply a {
+        color: #e6e6e6;
+        text-decoration: underline; }
+        #header .login .apply a:hover {
+          color: white; }
   #header .userbox {
     background: -moz-linear-gradient(top, #666666, #333333) ;
     background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
@@ -1181,150 +1326,6 @@ table {
             right: 9px;
             top: 9px;
             width: 82px; }
-  #menu .login {
-    background: -moz-linear-gradient(top, #666666, #333333) ;
-    background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666, endColorstr=#333333)";
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    -moz-border-radius-bottomright: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    -o-border-radius-topleft: 5px;
-    -o-border-radius-topright: 5px;
-    -o-border-radius-bottomright: 5px;
-    -o-border-radius-bottomleft: 5px;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-    color: white;
-    font-size: 11pt;
-    height: 110px;
-    position: absolute;
-    right: 0;
-    top: -60px;
-    width: 300px; }
-    #menu .login:after {
-      background: url(../images/icons/default.png) -725px -45px no-repeat;
-      content: '';
-      height: 30px;
-      right: 8px;
-      position: absolute;
-      top: 8px;
-      width: 30px; }
-    #menu .login label {
-      display: none; }
-    #menu .login input[type='text'],
-    #menu .login input[type='password'] {
-      background: #e6e6e6;
-      -moz-border-radius-topleft: 5px;
-      -moz-border-radius-topright: 5px;
-      -moz-border-radius-bottomright: 5px;
-      -moz-border-radius-bottomleft: 5px;
-      -o-border-radius-topleft: 5px;
-      -o-border-radius-topright: 5px;
-      -o-border-radius-bottomright: 5px;
-      -o-border-radius-bottomleft: 5px;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -webkit-border-bottom-right-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      border-bottom-left-radius: 5px;
-      bottom: 8px;
-      color: black;
-      left: 8px;
-      padding: 0 5px;
-      position: absolute;
-      width: 184px; }
-      #menu .login input[type='text']:focus,
-      #menu .login input[type='password']:focus {
-        background: white; }
-      #menu .login input[type='text']#email,
-      #menu .login input[type='password']#email {
-        top: 8px; }
-      #menu .login input[type='text']#password,
-      #menu .login input[type='password']#password {
-        top: 42px; }
-    #menu .login .remember {
-      line-height: 26px; }
-      #menu .login .remember label {
-        bottom: 8px;
-        color: #e6e6e6;
-        display: block;
-        height: 26px;
-        left: 0;
-        overflow: hidden;
-        padding: 0 0 0 45px;
-        position: absolute;
-        text-indent: -100px; }
-        #menu .login .remember label:before {
-          background: #e6e6e6;
-          border: 1px solid black;
-          -moz-border-radius-topleft: 5px;
-          -moz-border-radius-topright: 5px;
-          -moz-border-radius-bottomright: 5px;
-          -moz-border-radius-bottomleft: 5px;
-          -o-border-radius-topleft: 5px;
-          -o-border-radius-topright: 5px;
-          -o-border-radius-bottomright: 5px;
-          -o-border-radius-bottomleft: 5px;
-          -webkit-border-top-left-radius: 5px;
-          -webkit-border-top-right-radius: 5px;
-          -webkit-border-bottom-right-radius: 5px;
-          -webkit-border-bottom-left-radius: 5px;
-          border-top-left-radius: 5px;
-          border-top-right-radius: 5px;
-          border-bottom-right-radius: 5px;
-          border-bottom-left-radius: 5px;
-          -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          content: '';
-          height: 24px;
-          left: 8px;
-          position: absolute;
-          top: 0;
-          width: 24px; }
-        #menu .login .remember label input {
-          width: 90px; }
-        #menu .login .remember label.checked:before {
-          background: url(../images/icons/default.png) -248px -8px no-repeat #e6e6e6; }
-        #menu .login .remember label:hover {
-          color: white; }
-          #menu .login .remember label:hover:before {
-            background-color: white; }
-    #menu .login button {
-      border: 0;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 0 0 7px !important;
-      position: absolute;
-      right: 8px;
-      text-align: left;
-      top: 8px;
-      width: 95px; }
-    #menu .login .apply {
-      color: #e6e6e6;
-      line-height: 30px;
-      position: absolute;
-      right: 8px;
-      top: 42px;
-      width: 92px; }
-      #menu .login .apply a {
-        color: #e6e6e6;
-        text-decoration: underline; }
-        #menu .login .apply a:hover {
-          color: white; }
 
 #headerimg {
   -moz-border-radius-topleft: 5px;

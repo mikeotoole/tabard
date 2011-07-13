@@ -1,12 +1,5 @@
 class GamesController < ApplicationController
-  respond_to :html, :xml  
-  
-  # GET /games
-  # GET /games.xml
-  def index
-    @games = Game.active 
-    respond_with(@games)
-  end
+  respond_to :html, :xml
 
   # GET /games/1
   # GET /games/1.xml

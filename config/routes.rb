@@ -27,9 +27,8 @@ Bv::Application.routes.draw do
   match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
 
   #Games
-  match "/game" => "games#index", :as =>"game_index"
   match "/game/:id" => "games#show", :as => "game"
-  resources :games, :only => [:show, :index] do
+  resources :games, :only => :show do
     resources :wow_characters, :except => :index
     resources :swtor_characters, :except => :index
     resources :game_announcements, :only => [:new, :create]
