@@ -20,7 +20,7 @@ class CommunitiesController < ApplicationController
   
   def new
     @community = Community.new
-    if !current_user.can_create(@discussion_space)
+    if !current_user.can_create(@community)
       render_insufficient_privileges
     else  
       respond_with(@community)
@@ -29,7 +29,7 @@ class CommunitiesController < ApplicationController
   
   def create
     @community = Community.new(params[:community])
-    if !current_user.can_create(@discussion_space)
+    if !current_user.can_create(@community)
       render_insufficient_privileges
     else  
       if @community.save 
