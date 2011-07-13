@@ -8,15 +8,35 @@
     = include_tiny_mce_if_needed
   %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
+    
       #header
         .container
           .title= link_to (image_tag '/images/content/crumblin-logo.png', :alt => 'Crumblin: Gaming communities done right'), root_url(:subdomain => false)
-          = render :partial => "layouts/userbox" if logged_in?
-      = render :partial => "layouts/menu"
-      = image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
+          -if logged_in?
+            = render :partial => "layouts/userbox"
+          - else
+            = render :partial => "layouts/loginbox"
+
+      #menu
+        .container
+          %ul
+            %li
+              = link_to 'About', root_path(:subdomain => false)
+            %li
+              = link_to 'Communities', communities_path
+              - if defined? @games and @games.size > 0
+                %ul
+                  - @games.each do |game|
+                    %li
+                      = link_to game.name, game_path(game)
+            %li
+              = link_to 'Signup', signup_path
+      
       = render :partial => "layouts/flash_messages"
+      
       #body
         .container= yield
+        
       #footer
         .container
           %p.copyright

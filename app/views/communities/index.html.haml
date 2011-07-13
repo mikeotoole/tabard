@@ -1,18 +1,26 @@
+%p#bcrumb
+  = link_to 'Crumblin', root_path(:subdomain => false)
+  %span Communities
+
 %h1 Crumblin Communities
 
 %table
   - if @communities.size > 0
     %thead
       %tr
-        %th Name
-        %th Slogan
-        %th Accepting New Members
+        %th.name Name
+        %th.slogan Slogan
+        %th.accepting Applications
     %tbody
       - @communities.each do |community|
         %tr
           %td= link_to community.display_name, root_url(:subdomain => community.subdomain)
           %td= community.slogan
-          %td= community.accepting
+          %td
+            - if community.accepting
+              = link_to 'Apply Now', new_registration_application_url(:subdomain => community.subdomain), :class => 'button'
+            - else
+              Private
   - else
     %tbody
       %td{ :colspan => 3 } There are no communities.

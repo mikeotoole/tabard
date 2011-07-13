@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items
+  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
   after_filter :clear_flash_messages
 
   # Puts all of the notices and alerts into the messages array
@@ -195,6 +195,10 @@ class ApplicationController < ActionController::Base
     @management_items << {:link => management_roles_path, :title => "Roles"} if current_user.can_manage("Role")
     #forms
     @management_items << {:link => management_site_forms_path, :title => "Forms"} if current_user.can_manage("SiteForm")
+  end
+  
+  def collect_games
+    @games = Game.active
   end
   
 end

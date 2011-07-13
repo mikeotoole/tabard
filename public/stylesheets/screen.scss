@@ -445,6 +445,7 @@ table {
 #header {
   height: 150px;
   position: relative;
+  z-index: 4;
   .title {
     @include font(heavy, 30pt, -2pt);
     left: 0;
@@ -458,6 +459,116 @@ table {
     line-height: 14pt;
     position: absolute;
     top: 80px;
+  }
+  .login {
+    @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+    @include border_radius(1);
+    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    color: $text_color_2;
+    font-size: 11pt;
+    height: 110px;      
+    position: absolute;
+    right: 0;
+    top: 90px;
+    width: 300px;
+    &:after {
+      background: url(../images/icons/#{$icon_set}.png) -725px -45px no-repeat;
+      content: '';
+      height: 30px;
+      right: 8px;
+      position: absolute;
+      top: 8px;
+      width: 30px;
+    }
+    label {
+      display: none;
+    }
+    input[type='text'],
+    input[type='password'] {
+      background: darken($bg_color_1, 10%);
+      @include border_radius(1);
+      bottom: 8px;
+      color: $text_color_1;
+      left: 8px;
+      padding: 0 5px;
+      position: absolute;
+      width: 184px;
+      &:focus {
+        background: $bg_color_1;
+      }
+      &#email {
+        top: 8px;
+      }
+      &#password {
+        top: 42px;
+      }
+    }
+    .remember {
+      line-height: 26px;
+      label {
+        bottom: 8px;
+        color: darken($text_color_2, 10%);
+        display: block;
+        height: 26px;
+        left: 0;
+        overflow: hidden;
+        padding: 0 0 0 45px;
+        position: absolute;
+        text-indent: -100px;
+        &:before {
+          background: darken($bg_color_1, 10%);
+          border: 1px solid darken($bg_color_2, 10%);
+          @include border_radius(1);
+          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+          content: '';
+          height: 24px;
+          left: 8px;
+          position: absolute;
+          top: 0;
+          width: 24px;
+        }
+        input {
+          width: 90px;
+        }
+        &.checked {
+          &:before {
+            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat darken($bg_color_1, 10%);
+          }
+        }
+        &:hover {
+          color: $text_color_2;
+          &:before {
+            background-color: $bg_color_1;
+          }
+        }
+      }
+    }
+    button {
+      border: 0;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 0 0 7px !important;
+      position: absolute;
+      right: 8px;
+      text-align: left;
+      top: 8px;
+      width: 95px;
+    }
+    .apply {
+      color: darken($text_color_2, 10%);
+      line-height: 30px;
+      position: absolute;
+      right: 8px;
+      top: 42px;
+      width: 92px;
+      a {
+        color: darken($text_color_2, 10%);
+        text-decoration: underline;
+        &:hover {
+          color: lighten($text_color_2, 10%);
+        }
+      }
+    }
   }
   .userbox {
     @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
@@ -746,116 +857,6 @@ table {
               width: 82px;
             }
           }
-        }
-      }
-    }
-  }
-  .login {
-    @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
-    @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-    color: $text_color_2;
-    font-size: 11pt;
-    height: 110px;      
-    position: absolute;
-    right: 0;
-    top: -60px;
-    width: 300px;    
-    &:after {
-      background: url(../images/icons/#{$icon_set}.png) -725px -45px no-repeat;
-      content: '';
-      height: 30px;
-      right: 8px;
-      position: absolute;
-      top: 8px;
-      width: 30px;
-    }
-    label {
-      display: none;
-    }
-    input[type='text'],
-    input[type='password'] {
-      background: darken($bg_color_1, 10%);
-      @include border_radius(1);
-      bottom: 8px;
-      color: $text_color_1;
-      left: 8px;
-      padding: 0 5px;
-      position: absolute;
-      width: 184px;
-      &:focus {
-        background: $bg_color_1;
-      }
-      &#email {
-        top: 8px;
-      }
-      &#password {
-        top: 42px;
-      }
-    }
-    .remember {
-      line-height: 26px;
-      label {
-        bottom: 8px;
-        color: darken($text_color_2, 10%);
-        display: block;
-        height: 26px;
-        left: 0;
-        overflow: hidden;
-        padding: 0 0 0 45px;
-        position: absolute;
-        text-indent: -100px;
-        &:before {
-          background: darken($bg_color_1, 10%);
-          border: 1px solid darken($bg_color_2, 10%);
-          @include border_radius(1);
-          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-          content: '';
-          height: 24px;
-          left: 8px;
-          position: absolute;
-          top: 0;
-          width: 24px;
-        }
-        input {
-          width: 90px;
-        }
-        &.checked {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat darken($bg_color_1, 10%);
-          }
-        }
-        &:hover {
-          color: $text_color_2;
-          &:before {
-            background-color: $bg_color_1;
-          }
-        }
-      }
-    }
-    button {
-      border: 0;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 0 0 7px !important;
-      position: absolute;
-      right: 8px;
-      text-align: left;
-      top: 8px;
-      width: 95px;
-    }
-    .apply {
-      color: darken($text_color_2, 10%);
-      line-height: 30px;
-      position: absolute;
-      right: 8px;
-      top: 42px;
-      width: 92px;
-      a {
-        color: darken($text_color_2, 10%);
-        text-decoration: underline;
-        &:hover {
-          color: lighten($text_color_2, 10%);
         }
       }
     }

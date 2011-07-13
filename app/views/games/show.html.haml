@@ -1,8 +1,9 @@
 %p#bcrumb
-  = link_to 'Games', game_index_path
+  = link_to 'Crumblin', root_path(:subdomain => false)
+  = link_to 'Communities', communities_path
   %span= @game.name
 
-%h1= @game.name
+%h1 #{@game.name} Communities
 
 - if @game.communities != nil
   %table
