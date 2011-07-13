@@ -15,6 +15,8 @@ class Question < ActiveRecord::Base
         ["Long Answer Question", opt]
       when "TextQuestion"
         ["Short Answer Question", opt]
+      when "ComboBoxQuestion"
+        ["Dropdown Question", opt]
       else
         [opt.scan(/[A-Z][a-z0-9]*/).join(" "), opt] 
       end
