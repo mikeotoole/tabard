@@ -598,6 +598,7 @@ table {
       top: -40px;
       width: 80px;
       img {
+        background: $bg_color_1;
         @include border_radius(1);
         @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
         left: 5px;
