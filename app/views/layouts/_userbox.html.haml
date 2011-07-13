@@ -3,21 +3,21 @@
   %p.avatar
     = image_tag '/images/avatars/default.png', :alt => ''
     = link_to 'Edit', '#'
-  .communites
-    =raw('&laquo; Select a Community &raquo;')
-    %ul.communities
-      - current_user.communities.each do |community|
-        %li{ :class => (@community and @community == community) ? 'current' : '' }
-          = link_to community.display_name, root_url(:subdomain => community.subdomain)
-      %li= link_to "Find a community", root_url(:subdomain => false)
-  .profile
-    = link_to (profile_active? ? current_profile.name : raw('&laquo; Select a Profile &raquo;')), user_profile_path(current_user), { :class => 'main' }
-    %ul.profiles
-      -if profiles
-        - profiles.each do |profile|
-          %li{ :class => profile[:is_current] ? 'current' : '' }
-            = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
-              = profile[:name]
+  %dl#community.selectbox
+    %dt
+      = @community? @community.display_name : raw('&laquo; Select a Community &raquo;')
+    - current_user.communities.each do |community|
+      %dd{ :class => (@community and @community == community) ? 'selected' : '' }
+        = link_to community.display_name, root_url(:subdomain => community.subdomain)
+      %dd.new= link_to "+ Find a community", root_url(:subdomain => false)
+  %dl#profile.selectbox
+    %dt
+      = link_to (profile_active? ? current_profile.name : raw('&laquo; Select a Profile &raquo;')), user_profile_path(current_user), { :class => 'main' }
+    -if profiles
+      - profiles.each do |profile|
+        %dd{ :class => profile[:is_current] ? 'selected' : '' }
+          = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
+            = profile[:name]
   %p.credits 28 Credits
   #mail
     %ul
