@@ -3,23 +3,23 @@ $border_radius: 5;
 $icon_set: default;
 
 /* Background Colors */
+$accent_color: rgba(0, 153, 204, 1);
 $bg_color_1: rgba(255, 255, 255, 1);
 $bg_color_2: rgba(0, 0, 0, 1);
-$accent_color: rgba(0, 153, 204, 1);
 
 /* Messaging Colors */
-$announcement_color: rgba(204, 0, 102, 1);
 $alert_color: rgba(200, 193, 0, 1);
+$announcement_color: rgba(204, 0, 102, 1);
 $notice_color: rgba(0, 175, 128, 1);
 
 /* Text Colors */
+$alert_text_color: rgba(0, 0, 0, 1);
+$announcement_text_color: rgba(255, 255, 255, 1);
+$link_color: rgba(0, 153, 204, 1);
+$notice_text_color: rgba(255, 255, 255, 1);
 $text_color_1: rgba(0, 0, 0, 1);
 $text_color_2: rgba(255, 255, 255, 1);
 $text_color_3: rgba(255, 255, 255, 1);
-$link_color: rgba(0, 153, 204, 1);
-$announcement_text_color: rgba(255, 255, 255, 1);
-$alert_text_color: rgba(0, 0, 0, 1);
-$notice_text_color: rgba(255, 255, 255, 1);
 
 
 @mixin bg_gradient($color1, $color2, $pos1: left top, $pos2: left bottom, $type: linear, $extra: '') {
@@ -181,6 +181,98 @@ label {
   display: block;
   @include font(medium, inherit);
 }
+.selectbox {
+  @include border_radius(1);
+  color: $text_color_2;
+  height: 30px;
+  position: absolute;
+  z-index: 3;
+  dt {
+    background: lighten($bg_color_2, 20%);
+    @include border_radius(1);
+    @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+    font-size: 14pt;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 40px 0 10px;
+    position: relative;
+    z-index: 5;
+    &:before {
+      background: url(../images/icons/#{$icon_set}.png) -765px -45px;
+      content: '';
+      height: 30px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 30px;
+    }
+  }
+  dd {
+    height: 0;
+    a {
+      border-top: 1px solid rgba(0, 0, 0, .2);
+      color: $text_color_3 !important;
+      display: block;
+      font-size: 10pt;
+      height: 0;
+      left: -5000em;
+      list-style: none;
+      padding: 0 15px;
+      position: relative;
+      text-decoration: none !important;
+      white-space: nowrap;
+      z-index: 4;
+      &:before {
+        border-top: 1px solid rgba(255, 255, 255, .2);
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+    &:hover {
+      background: rgba(0, 0, 0, .3);
+    }
+    &:last-child,
+    &:last-child a {
+      @include border_radius(0, 0, 1, 1);
+    }
+    &.new a {
+      @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
+    }
+    &.selected {
+      background: rgba(255, 255, 255, .2);
+    }
+  }
+  &:hover {
+    @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
+    @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
+    color: $text_color_3;
+    height: auto;
+    margin-left: -5px;
+    z-index: 9;
+    dt {
+      @include bg_gradient($accent_color, lighten($accent_color, 5%));
+      @include border_radius(1, 1, 0, 0);
+      @include box_shadow(none);
+      padding: 0 45px 0 15px;
+      &:before {
+        right: 5px;
+      }
+    }
+    dd {
+      height: auto;
+      a {
+        cursor: pointer;
+        height: auto;
+        left: auto;
+        padding: 5px 15px;
+        @include transition(padding .2s ease-in-out);
+      }
+    }
+  }
+}
 #body {
   ul .checkbox,
   ul .radio,
@@ -247,84 +339,6 @@ label {
   p.radio {
     label {
       margin: 0 0 0 -3px !important;
-    }
-  }
-  .selectbox {
-    @include border_radius(1);
-    color: $text_color_2;
-    height: 30px;
-    position: absolute;
-    z-index: 3;
-    dt {
-      background: lighten($bg_color_2, 20%);
-      @include border_radius(1);
-      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
-      font-size: 14pt;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 40px 0 10px;
-      position: relative;
-      z-index: 5;
-      &:before {
-        background: url(../images/icons/#{$icon_set}.png) -765px -45px;
-        content: '';
-        height: 30px;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 30px;
-      }
-    }
-    dd {
-      border-top: 1px solid rgba(0, 0, 0, .2);
-      font-size: 10pt;
-      height: 0;
-      left: -5000em;
-      list-style: none;
-      padding: 0 15px;
-      position: relative;
-      white-space: nowrap;
-      z-index: 4;
-      &:before {
-        border-top: 1px solid rgba(255, 255, 255, .2);
-        content: '';
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-      &:hover {
-        background: rgba(0, 0, 0, .3);
-      }
-      &:last-child {
-        @include border_radius(0, 0, 1, 1);
-      }
-      &.selected {
-        background: rgba(255, 255, 255, .2);
-      }
-    }
-    &:hover {
-      @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
-      @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
-      color: $text_color_3;
-      height: auto;
-      margin-left: -5px;
-      dt {
-        @include bg_gradient($accent_color, lighten($accent_color, 5%));
-        @include border_radius(1, 1, 0, 0);
-        @include box_shadow(none);
-        padding: 0 45px 0 15px;
-        &:before {
-          right: 5px;
-        }
-      }
-      dd {
-        cursor: pointer;
-        height: auto;
-        left: auto;
-        padding: 5px 15px;
-        @include transition(padding .2s ease-in-out);
-      }
     }
   }
 }
@@ -429,7 +443,7 @@ table {
 
 /* Header */
 #header {
-  height: 140px;
+  height: 150px;
   position: relative;
   .title {
     @include font(heavy, 30pt, -2pt);
@@ -453,7 +467,7 @@ table {
     height: 110px;      
     position: absolute;
     right: 0;
-    top: 80px;
+    top: 90px;
     width: 300px;
     z-index: 4;
     .name {
@@ -503,117 +517,19 @@ table {
         }
       }
     }
-    .profile {
-      @include border_radius(1);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-      color: $text_color_2;
-      height: 30px;
-      margin: 0 5px;
-      position: absolute;
-      right: -5px;
+    #community {
+      left: -100px;
+      top: -80px;
+      width: 400px;
+      &:hover {
+        width: 410px;
+      }
+    }
+    #profile {
       top: -40px;
       width: 300px;
-      z-index: 5;
-      > strong {
-        color: $text_color_1;
-        left: 0;    
-        line-height: 30px;
-        position: absolute;
-        top: -30px;
-      }
-      > a {
-        @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
-        @include border_radius(1);
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        position: absolute;
-        padding: 0 40px 0 10px;
-        right: 0;
-        top: 0;
-        width: 250px;
-        z-index: 6;
-        &:before {
-          background: url(../images/icons/#{$icon_set}.png) -765px -45px;
-          content: '';
-          height: 30px;
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 30px;
-        }
-      }
-      ul {
-        @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
-        @include border_radius(1);
-        @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
-        @include opacity(0);
-        padding: 30px 0 0;
-        position: absolute;
-        top: -5000em;
-        z-index: 5;
-        li {
-          border-top: 1px solid rgba(0, 0, 0, .2);
-          a {
-            background: transparent;
-            border-top: 1px solid rgba(255, 255, 255, .2);
-            display: block;
-            padding: 0 15px;
-            position: relative;
-            width: 280px;
-            &:hover {
-              background: rgba(0, 0, 0, .3);
-            }
-          }
-          &:last-child {
-            a {
-              @include border_radius(0, 0, 1, 1);
-            }
-          }
-          &.current {
-            a {
-              background: rgba(255, 255, 255, .2);
-            }
-          }
-          &.new {
-            @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
-            @include border_radius(0, 0, 1, 1);
-          }
-        }
-      }
       &:hover {
-        @include box_shadow(none);
-        color: $text_color_3;
-        margin: 0;
         width: 310px;
-        strong {
-          left: 5px;
-        }
-        > a {
-          @include bg_gradient($accent_color, lighten($accent_color, 5%));
-          @include border_radius(1, 1, 0, 0);
-          padding: 0 45px 0 15px;
-          &:before {
-            right: 5px;
-          }
-        }
-        ul {
-          @include opacity(1);
-          top: 0;
-          @include transition(opacity .2s ease-in-out);
-          li {
-            a {
-              font-size: 10pt;
-              padding: 5px 15px;
-              @include transition(padding .2s ease-in-out);
-            }
-            &.current {
-              a {
-                @include font(medium, 10pt);
-              }
-            }
-          }
-        }
       }
     }
     .credits {
