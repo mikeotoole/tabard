@@ -1,15 +1,51 @@
 !!! 5
 %html
   %head
-    %title Brutal Venom
-    -#= stylesheet_link_tag '/themes/' << current_theme << '/stylesheets/master.css'
+    %title= @community.display_name
     = stylesheet_link_tag '/stylesheets/application.css'
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
     = include_tiny_mce_if_needed
   %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
-      = render :partial => "layouts/community/header"
+      #header
+        .container
+          .title= link_to "#{@community.name} #{@community.label}", root_path(:subdomain => @community.subdomain)
+          .slogan= @community.slogan
+          = render :partial => "layouts/userbox" if logged_in?
+      = render :partial => "layouts/menu"
+      = image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
+      = render :partial => "layouts/flash_messages"
       #body
         .container= yield
-      = render :partial => "layouts/community/footer"
+      #footer
+        .container
+          - if nav_featured_pages
+            .menu
+              %h3 Brutal Venom
+              %ul
+                - nav_featured_pages.each do |page| 
+                  %li= link_to page.title, [page.page_space, page]
+          .menu
+            %h3 Resources
+            - if dynamic_page_spaces
+              %ul
+                - dynamic_page_spaces.each do |page_space| 
+                  %li= link_to page_space.name, page_space
+          
+          -if logged_in?
+            .menu
+              %h3 Members
+              %ul
+                %li= link_to 'Announcements', announcements_path
+                - if current_user.can_show("DiscussionSpace")
+                  %li= link_to 'Discussions', :discussion_spaces
+              
+          %p.copyright
+            = link_to t('general.privacy_policy'), '#'
+            &nbsp;|&nbsp;
+            = link_to t('general.terms_of_use'), '#'
+            &nbsp;|&nbsp;
+            = link_to "Crumblin", root_url(:subdomain => false)
+            %br/
+            &copy; Copyright DigitalAugment Inc, 2010.

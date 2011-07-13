@@ -79,17 +79,17 @@ $text_color_3: rgba(255, 255, 255, 1);
   filter: alpha(opacity=($opacity * 100));
 }
 @mixin transition($t1, $t2:'', $t3:'') {
-  @if $t2 == '' {    
-    -moz-transition: $t1;
-    -o-transition: $t1;
-    -webkit-transition: $t1;
-    transition: $t1;
-  }
-  @elseif $t3 == '' {
+  @if $t3 == '' {
     -moz-transition: $t1, $t2;
     -o-transition: $t1, $t2;
     -webkit-transition: $t1, $t2;
     transition: $t1, $t2;
+  }
+  @elseif $t2 == '' {    
+    -moz-transition: $t1;
+    -o-transition: $t1;
+    -webkit-transition: $t1;
+    transition: $t1;
   }
   @else {
     -moz-transition: $t1, $t2, $t3;
@@ -102,7 +102,7 @@ $text_color_3: rgba(255, 255, 255, 1);
 
 body {
   background: $bg_color_1;
-  @include bg_gradient(darken($bg_color_1, 15%), $bg_color_1, 0 0, 0 310, linear, repeat-x $bg_color_1);
+  @include bg_gradient(darken($bg_color_1, 15%), $bg_color_1, 0 0, 0 310, linear, repeat-x fixed $bg_color_1);
   color: $text_color_1;
   @include font(light);
   font-size: 100.01%;

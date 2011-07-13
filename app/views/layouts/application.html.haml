@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head
-    %title Brutal Venom
+    %title Crumblin: Gaming communities done right
     = stylesheet_link_tag '/stylesheets/application.css'
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
@@ -10,11 +10,20 @@
     #bg
       #header
         .container
+          .title= link_to (image_tag '/images/content/crumblin-logo.png', :alt => 'Crumblin: Gaming communities done right'), root_url(:subdomain => false)
           = render :partial => "layouts/userbox" if logged_in?
-      
       = render :partial => "layouts/menu"
       = image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
       = render :partial => "layouts/flash_messages"
       #body
         .container= yield
-      = render :partial => "layouts/footer"
+      #footer
+        .container
+          %p.copyright
+            = link_to t('general.privacy_policy'), '#'
+            &nbsp;|&nbsp;
+            = link_to t('general.terms_of_use'), '#'
+            &nbsp;|&nbsp;
+            = link_to "Crumblin", root_url(:subdomain => false)
+            %br/
+            &copy; Copyright DigitalAugment Inc, 2010.
