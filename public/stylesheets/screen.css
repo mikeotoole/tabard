@@ -917,10 +917,10 @@ table {
         padding: 0 5px;
         position: absolute;
         top: 10px;
-        width: 50px;
+        width: 35px;
         z-index: 4; }
       #header .userbox .avatar:hover a {
-        left: -50px;
+        left: -35px;
         -moz-transition: left 0.2s ease-in-out, "";
         -o-transition: left 0.2s ease-in-out, "";
         -webkit-transition: left 0.2s ease-in-out, "";

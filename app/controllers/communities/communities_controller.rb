@@ -3,6 +3,7 @@ class Communities::CommunitiesController < CommunitiesController
   before_filter :find_community_by_subdomain
   # GET /communities/1
   # GET /communities/1.xml
+  
   def show
     respond_to do |format|
       format.html # show.html.erb
