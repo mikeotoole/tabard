@@ -1,6 +1,19 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
+  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games, :select_layout
+  layout :select_layout
+  
+  private
+    # Select the correct layout based on subdomain
+    def select_layout
+      @community = Community.find_by_subdomain(request.subdomain.downcase)
+      if @community
+        'community'
+      else
+        'application'
+      end
+    end
+  
   #The super active model helpers
   def grab_all_errors_from_model(model)
     return unless model or model.respond_to?('errors')

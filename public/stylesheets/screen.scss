@@ -79,23 +79,23 @@ $text_color_3: rgba(255, 255, 255, 1);
   filter: alpha(opacity=($opacity * 100));
 }
 @mixin transition($t1, $t2:'', $t3:'') {
-  @if $t3 == '' {
+  @if $t3 != '' {
+    -moz-transition: $t1, $t2, $t3;
+    -o-transition: $t1, $t2, $t3;
+    -webkit-transition: $t1, $t2, $t3;
+    transition: $t1, $t2, $t3;
+  }
+  @elseif $t2 != '' {    
     -moz-transition: $t1, $t2;
     -o-transition: $t1, $t2;
     -webkit-transition: $t1, $t2;
     transition: $t1, $t2;
   }
-  @elseif $t2 == '' {    
+  @else {
     -moz-transition: $t1;
     -o-transition: $t1;
     -webkit-transition: $t1;
     transition: $t1;
-  }
-  @else {
-    -moz-transition: $t1, $t2, $t3;
-    -o-transition: $t1, $t2, $t3;
-    -webkit-transition: $t1, $t2, $t3;
-    transition: $t1, $t2, $t3;
   }
 }
 
@@ -616,6 +616,7 @@ table {
         padding: 0 5px;
         position: absolute;
         top: ($border_radius + 5px);
+        @include transition(left .2s ease-in-out);
         width: 35px;
         z-index: 4;
       }
@@ -758,7 +759,7 @@ table {
               color: $text_color_3;
               display: block;
               font-size: 10pt;
-              padding: 5px 60px 5px 10px;
+              padding: 0 60px 0 10px;
               white-space: nowrap;
               &:hover {
                 background: rgba(0, 0, 0, .3);
