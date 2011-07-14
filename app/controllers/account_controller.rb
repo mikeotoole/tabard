@@ -12,8 +12,6 @@ class AccountController < ApplicationController
   # POST /registration_applications
   # POST /registration_applications.xml
   def create
-    add_new_flash_message("Herp Derp!")
-    logger.debug("OMG CREATE")
     @user = User.new(params[:user])
     @profile = @user.build_user_profile(params[:user_profile])
     
@@ -34,7 +32,7 @@ class AccountController < ApplicationController
         @profile.build_character(newSwtor)
       end
     end
-
+    @user.no_signup_email = true
     if @user.save 
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
@@ -55,11 +53,11 @@ class AccountController < ApplicationController
   end
 
   def update
-    if @profile = current_user.user_profile.update_attributes(params[:user_profile]) and @user = current_user.update_attributes(params[:user])
+    @profile = current_user.user_profile
+    @user = current_user
+    if @profile.update_attributes(params[:user_profile]) and @user.update_attributes(params[:user])
       add_new_flash_message("Woot")
     end
-    add_new_flash_message(params.to_s)
-    add_new_flash_message('CHARACTERS ARE BROKEN!.', "alert")
     render :show
   end
 

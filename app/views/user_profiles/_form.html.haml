@@ -5,7 +5,9 @@
     = f.text_field :name
   %p.field
     = f.label :avatar, "Avatar"
+    = image_tag(@profile.avatar_url) if @profile.avatar?
     = f.file_field :avatar
+    = f.hidden_field :avatar_cache
     = f.label :remote_avatar_url, "or image URL"
     = f.text_field :remote_avatar_url
   = submit_or_cancel(f)

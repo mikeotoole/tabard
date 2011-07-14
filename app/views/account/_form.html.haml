@@ -28,8 +28,8 @@
           = image_tag(@profile.avatar_url) if @profile.avatar?
           = profile.file_field :avatar
           = profile.hidden_field :avatar_cache
-          = profile.label :remote_image_url, "or image URL"
-          = profile.text_field :remote_image_url
+          = profile.label :remote_avatar_url, "or image URL"
+          = profile.text_field :remote_avatar_url
     %dt.characters Characters
     %dd.characters
       %h2 Characters

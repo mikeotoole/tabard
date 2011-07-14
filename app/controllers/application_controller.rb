@@ -1,10 +1,14 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
-<<<<<<< HEAD
-  #after_filter :clear_flash_messages
-=======
->>>>>>> 624b7ca06bc9701757f27ed84f245b4c028a2028
+  #The super active model helpers
+  def grab_all_errors_from_model(model)
+    return unless model or model.respond_to?('errors')
+    logger.debug("Errors! #{model.errors.to_s}")
+    model.errors.full_messages.each { |message|
+      add_new_flash_message(message,'error')
+    }
+  end
 
   # Puts all of the notices and alerts into the messages array
   def group_flash_messages

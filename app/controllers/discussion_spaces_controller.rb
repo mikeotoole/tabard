@@ -37,6 +37,7 @@ class DiscussionSpacesController < Communities::CommunitiesController
       #  @form = SiteForm.application_form
       #  render :partial => 'discussion_spaces/registration_application_space'  
       #end 
+      grab_all_errors_from_model(@discussion_space)
       respond_with(@discussion_space)
     end
   end
