@@ -21,7 +21,7 @@
         .container
           %ul
             %li
-              = link_to 'About', root_path(:subdomain => false)
+              = link_to 'Crumblin', root_path(:subdomain => false)
             %li
               = link_to 'Communities', communities_path
               - if defined? @games and @games.size > 0
@@ -29,8 +29,12 @@
                   - @games.each do |game|
                     %li
                       = link_to game.name, game_path(game)
-            %li
-              = link_to 'Signup', signup_path
+                  - if logged_in?
+                    %li.new
+                      = link_to '+ Create a new community', new_community_path
+            - if !logged_in?
+              %li
+                = link_to 'Signup', signup_path
       
       = render :partial => "layouts/flash_messages"
       
