@@ -7,7 +7,6 @@ class AccountController < ApplicationController
     @user = User.new
 
     add_new_flash_message("Please fill this form out to create your Crumblin account.")
-    respond_with(@user, @profile, @games)
   end
 
   # POST /registration_applications
@@ -33,13 +32,15 @@ class AccountController < ApplicationController
         @profile.build_character(newSwtor)
       end
     end
-
+    @user.no_signup_email = true
     if @user.save 
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
+      render :show
+    else
+      render :new
     end
-    respond_with(@user, @profile, @games)
   end
   
   def edit
@@ -47,14 +48,17 @@ class AccountController < ApplicationController
     @profile = current_user.user_profile
     @wowCharacters = current_user.get_characters(Wow)
     @swtorCharacters = current_user.get_characters(Swtor)   
-    respond_with(@user, @profile, @games, @wowCharacters, @swtorCharacters)
+    add_new_flash_message('CHARACTERS ARE BROKEN?.')
+
   end
 
   def update
-    @user = current_user.update_attributes(params[:user])
-    @profile = current_user.user_profile.update_attributes(params[:user_profile])
-    add_new_flash_message('CHARACTERS ARE BROKEN!.')
-    respond_with(@user, @profile, @games, @wowCharacters, @swtorCharacters)
+    @profile = current_user.user_profile
+    @user = current_user
+    if @profile.update_attributes(params[:user_profile]) and @user.update_attributes(params[:user])
+      add_new_flash_message("Woot")
+    end
+    render :show
   end
 
   def show
@@ -63,14 +67,12 @@ class AccountController < ApplicationController
     else
       @user = current_user
       @profile = current_user.user_profile
-      respond_with(@user, @profile, @games)
     end
   end
 
   def destroy
     @user = current_user
     @profile = current_user.user_profile
-    respond_with(@user, @profile, @games)
   end
 
   def get_all_active_games

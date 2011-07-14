@@ -1,5 +1,5 @@
 class UserProfile < Profile
-  attr_accessible :avatar, :remote_image_url, :name
+  attr_accessible :avatar, :remote_avatar_url, :avatar_cache, :name
   
   belongs_to :user
 
