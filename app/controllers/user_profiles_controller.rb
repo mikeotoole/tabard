@@ -1,26 +1,21 @@
 class UserProfilesController < ProfilesController
+  respond_to :html, :xml  
   before_filter :authenticate  
     
   # GET /user_profiles
   # GET /user_profiles.xml
   def index
-    @profiles = Profile.find(:all, :conditions => { :type => 'UserProfile' })
+    @profiles = UserProfile.find(:all, :conditions => { :type => 'UserProfile' })
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @profiles }
-    end
+    respond_with(@profile)
   end    
 
   # GET /user_profiles/1
   # GET /user_profiles/1.xml
   def show
-    @profile = Profile.find(params[:id])
+    @profile = UserProfile.find(params[:id])
     
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @profile }
-      end
+    respond_with(@profile)
   end
 
   # GET /user_profiles/new
@@ -28,71 +23,54 @@ class UserProfilesController < ProfilesController
   def new
     add_new_flash_message("Please create a user profile to finish creating your account.","alert")
     @profile = UserProfile.new
-    @profile.type = "UserProfile"
     @profile.user = current_user
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @profile }
-    end
+    respond_with(@profile)
   end
   
   # GET /user_profiles/1/edit
   def edit
-    @profile = Profile.find(params[:id])
+    @profile = UserProfile.find(params[:id])
+    respond_with(@profile)
   end
 
   # POST /user_profiles
   # POST /user_profiles.xml
   def create
-    if @profile == nil
-      logger.debug "profile was nil"
       @profile = UserProfile.new(params[:profile])
       @profile.user = current_user
+      
+    if @profile.save
+      add_new_flash_message('Profile was successfully created.')
     else
-      @profile.update_attributes(params[:profile])
+      #ERROR
     end
-
-    respond_to do |format|
-      if @profile.save
-        add_new_flash_message('Profile was successfully created.')
-        format.html { redirect_to(@profile) }
-        format.xml  { render :xml => @profile, :status => :created, :location => @profile }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @profile.errors, :status => :unprocessable_entity }
-      end
-    end
+    respond_with(@profile)
   end
 
   # PUT /user_profiles/1
   # PUT /user_profiles/1.xml
   def update
-    @profile = Profile.find(params[:id])
+    @profile = UserProfile.find(params[:id])
 
-    respond_to do |format|
-      if @profile.update_attributes(params[:profile])
-        add_new_flash_message('Profile was successfully updated.')
-        format.html { redirect_to(@profile) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @profile.errors, :status => :unprocessable_entity }
-      end
+    if @profile.update_attributes(params[:profile])
+      add_new_flash_message('Profile was successfully updated.')
+      add_new_flash_message("#{@profile.errors.to_s} !!!!!!")
+      add_new_flash_message("#{@profile.avatar_url.to_s} !!!!!!")
+    else
+      #error
     end
+    render :show
   end
 
   # DELETE /user_profiles/1
   # DELETE /user_profiles/1.xml
   def destroy
-    @profile = Profile.find(params[:id])
+    @profile = UserProfile.find(params[:id])
     if @profile.destroy
       add_new_flash_message('Profile was successfully deleted.')
     end
 
-    respond_to do |format|
-      format.html { redirect_to(profiles_url) }
-      format.xml  { head :ok }
-    end
+    respond_with(@profile)
   end  
   
 end

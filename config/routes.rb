@@ -21,9 +21,11 @@ Bv::Application.routes.draw do
   match 'mail/inbox/:id' => "messages#show", :as => "mail"
   
   #Accounts
-  match "/signup" => "account#new", :as => "signup"
-  match "/account" => "account#show", :as => "account"
-  match "/account/edit" => "account#edit", :as => "edit_account"
+  match "/signup" => "account#new", :as => "signup", :via => :get
+  match "/signup" => "account#create", :as => "signup", :via => :post
+  match "/account" => "account#show", :as => "account", :via => :get
+  match "/account/edit" => "account#edit", :as => "edit_account", :via => :get
+  match "/account/edit" => "account#update", :as => "edit_account", :via => :put
   match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
 
   #Games
