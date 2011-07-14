@@ -23,4 +23,9 @@ module ApplicationHelper
     link_to_function(name, "add_fields(#{destination}, '#{association}', '#{escape_javascript(fields)}', '#{before}', '#{after}')", attributes)
   end
   
+  # Removes all flash messages
+  def clear_flash_messages
+    flash[:messages] = nil
+  end 
+  
 end

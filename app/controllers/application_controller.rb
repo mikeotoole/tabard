@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
-  after_filter :clear_flash_messages
 
   # Puts all of the notices and alerts into the messages array
   def group_flash_messages
@@ -15,11 +14,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Removes all flash messages
-  def clear_flash_messages
-    flash[:messages] = []
-  end  
-  
+  # Adds a new message to the flash messsages array
   def add_new_flash_message(message_body, message_class="notice", message_title="")
     flash[:messages] = Array.new unless flash[:messages] 
     flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
