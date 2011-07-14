@@ -14,7 +14,7 @@
     %tbody
       - @communities.each do |community|
         %tr
-          %td= link_to community.display_name, root_url(:subdomain => community.subdomain)
+          %td= link_to community.display_name, community_url(community, :subdomain => community.subdomain)
           %td= community.slogan
           %td
             - if community.accepting
