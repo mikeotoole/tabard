@@ -23,8 +23,10 @@
               Private
   - else
     %tbody
-      %td{ :colspan => 3 } There are no communities.
+      %tr
+        %td.empty{ :colspan => 3 } There are no communities.
   -if logged_in?
     %tfoot
-      %td{ :colspan => 3 }
-        = link_to 'Create a new Community', new_community_path, :class => "button"
+      %tr
+        %td{ :colspan => 3 }
+          = link_to 'Create a new Community', new_community_path, :class => "button"

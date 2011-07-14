@@ -32,6 +32,9 @@
                   - if logged_in?
                     %li.new
                       = link_to '+ Create a new community', new_community_path
+            - if logged_in? and @announcements and @announcements.size > 0
+              %li
+                = link_to 'Announcements', announcements_path
             - if !logged_in?
               %li
                 = link_to 'Signup', signup_path
@@ -39,7 +42,8 @@
       = render :partial => "layouts/flash_messages"
       
       #body
-        .container= yield
+        .container
+          = yield
         
       #footer
         .container

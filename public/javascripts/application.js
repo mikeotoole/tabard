@@ -36,15 +36,16 @@ $(document).ready(function() {
             .trigger('change');
         break;
         case 'text':
-          title = $(field).attr('title');
           $(field)
+            .data('default', $.trim($(field).attr('title')))
+            .removeAttr('title')
             .bind('focus', function() {
               value = $(this).val();
-              if($.trim(value)==$.trim(title)) $(this).attr('value','');
+              if($.trim(value)==$(this).data('default')) $(this).attr('value','');
             })
             .bind('blur', function() {
               value = $(this).val();
-              if(!$.trim(value)) $(this).attr('value',title);
+              if($.trim(value)=='') $(this).attr('value',$(this).data('default'));
             })
             .trigger('focus')
             .trigger('blur');
@@ -59,7 +60,7 @@ $(document).ready(function() {
     selectbox_id = 'selectbox_' + select_id;
     $(this)
       .css({ opacity: 0 })
-      .before('<dl id="' + selectbox_id + '" class="selectbox"><dt>' + $(this).find('option:selected').html() + '</dt></dl>')
+      .before('<dl id="' + selectbox_id + '" class="selectbox"><dt' + (($(this).val()=='') ? ' class="unselected"' : '') + '>' + (($(this).val()=='') ? '&mdash;' : $(this).find('option:selected').html()) + '</dt></dl>')
       .find('option')
       .each(function(){
         s = $(this).attr('selected') == true ? ' class="selected"' : '';
@@ -69,7 +70,7 @@ $(document).ready(function() {
       $(this).parent().find('dd').removeClass('selected');
       $(this)
         .addClass('selected')
-        .parent().find('dt').html($(this).find('a').html());
+        .parent().find('dt').removeClass('unselected').html($(this).find('a').html());
       $('#'+select_id + ' option[value="' + $(this).attr('value') + '"]').attr('selected', 'selected');
       $('#'+select_id).width($(this).parent().width());
     });

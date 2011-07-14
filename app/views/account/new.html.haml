@@ -3,7 +3,6 @@
   %span Signup
 
 %h1 New Account
-=@user.errors.to_s
-=@profile.errors.to_s
+
 = form_tag(signup_path, :method => :post, :html => {:multipart => true}) do |f|
   = render :partial => 'form', :locals => {:f => f}

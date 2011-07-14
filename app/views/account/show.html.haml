@@ -1,3 +1,10 @@
 %p#bcrumb
-  = link_to 'Account', account_path
-%h1= "#{current_user.name}" 
+  = link_to 'Crumblin', root_url(:subdomain => false)
+  %span My Account
+
+#page
+  %p#actions
+    - if logged_in? and current_user.can_update(@account)
+      = link_to 'Edit account details', edit_account_path(@account), :class => 'edit', :title => 'Edit account details'
+  
+  %h1= "#{current_user.name}"

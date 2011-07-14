@@ -1,5 +1,4 @@
 class Communities::CommunitiesController < CommunitiesController
-  layout 'community'
   before_filter :find_community_by_subdomain
   # GET /communities/1
   # GET /communities/1.xml

@@ -48,8 +48,7 @@ class AccountController < ApplicationController
     @profile = current_user.user_profile
     @wowCharacters = current_user.get_characters(Wow)
     @swtorCharacters = current_user.get_characters(Swtor)   
-    add_new_flash_message('CHARACTERS ARE BROKEN?.')
-
+    add_new_flash_message('Characters are broken?')
   end
 
   def update
