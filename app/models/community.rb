@@ -51,6 +51,21 @@ class Community < ActiveRecord::Base
     users.flatten.uniq
   end
   
+  def recent_discussion_spaces(number_of_discussion_spaces=10)
+  end
+  def recent_page_spaces(number_of_page_spaces=10)
+  end
+  def recent_discussions(number_of_discussions=10)
+  end
+  def recent_pages(number_of_pages=10)
+  end
+  def recent_comments(number_of_comments=10) 
+  end
+  def recent_members(number_of_members=10)
+    member_role_id = self.member_role.id
+    User.joins{roles_users.user}.where{roles_users.role_id == member_role_id}.order{roles_users.created_at.desc}.limit(number_of_members)
+  end
+  
   def get_characters_for_game(game)
     self.all_users.collect{|user| 
        user.get_characters(game)
@@ -59,6 +74,18 @@ class Community < ActiveRecord::Base
   
   def update_subdomain
     self.subdomain = self.name.downcase.gsub(/\s/, "-")
+  end
+  
+  def assign_admin_role(user)
+    return if self.admin_role.users.size > 1
+    user.roles << self.member_role if not user.roles.include?(self.member_role)
+    user.roles << self.admin_role
+  end
+  
+  def upgrade_applicant_to_member(user)
+    return unless user.roles.includes?(self.applicant_role)
+    user.roles.delete(self.applicant_role)
+    user.roles << self.member_role
   end
   
   def setup_admin_role

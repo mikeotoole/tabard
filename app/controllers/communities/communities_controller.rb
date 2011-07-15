@@ -1,9 +1,8 @@
 class Communities::CommunitiesController < CommunitiesController
   layout 'community'
-  before_filter :find_community_by_subdomain
+  before_filter :find_community_by_subdomain, :get_recent_community_items
   # GET /communities/1
   # GET /communities/1.xml
-  
   def show
     respond_to do |format|
       format.html # show.html.erb
@@ -21,5 +20,9 @@ class Communities::CommunitiesController < CommunitiesController
   
   def nav_discussions
     @community.discussion_spaces.only_real_ones.delete_if {|discussion_space| (logged_in? and !current_user.can_show(discussion_space)) or !discussion_space.list_in_navigation}   
+  end
+  
+  def get_recent_community_items
+    @recent_comments = 
   end
 end
