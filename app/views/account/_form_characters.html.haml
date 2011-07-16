@@ -1,5 +1,5 @@
 - if @wowCharacters or @swtorCharacters
-  %ul
+  %ul#characters
     - if @wowCharacters
       - @wowCharacters.each do |character|
         %li
@@ -10,8 +10,8 @@
         %li
           - @character = character
           = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })
-#newcharacters
-  - if @games
-    %p
-      - @games.each do |game|
-        = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
+
+- if @games
+  %p
+    - @games.each do |game|
+      = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
