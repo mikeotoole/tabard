@@ -4,10 +4,7 @@ userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
 registrationApplicationResource = SystemResource.create(:name => "RegistrationApplication")
-newsletterResource = SystemResource.create(:name => "Newsletter")
-themeResource = SystemResource.create(:name => "Theme")
 
-gameResource = SystemResource.create(:name => "Game")
 characterResource = SystemResource.create(:name => "Character")
 
 commentResource = SystemResource.create(:name => "Comment")
@@ -45,7 +42,7 @@ justanotherheadshot = Community.create(:name => "Just Another Headshot",
   :email_notice_on_applicant => true)
 justanotherheadshot.games << swtor
 
-adminUser.roles << stonewatch.admin_role
+stonewatch.assign_admin_role(adminUser)
 
 #Sample community activity
 #Registration application site form creation
@@ -93,7 +90,7 @@ crumbJoe = User.create(:email => "joe@crumblin.com",
                         :no_signup_email => true,
                         :user_profile => UserProfile.create(:name => "J Crumblin")
                       )
-crumbJoe.roles << justanotherheadshot.admin_role
+justanotherheadshot.assign_admin_role(crumbJoe)
 
 badApplicantProfile = UserProfile.create(:name => "Your Mom")
 badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile, :no_signup_email => true)
