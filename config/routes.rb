@@ -23,9 +23,9 @@ Bv::Application.routes.draw do
   #Accounts
   match "/signup" => "account#new", :as => "signup", :via => :get
   match "/signup" => "account#create", :as => "signup", :via => :post
-  match "/account" => "account#show", :as => "account", :via => :get
-  match "/account/edit" => "account#edit", :as => "edit_account", :via => :get
-  match "/account/edit" => "account#update", :as => "edit_account", :via => :put
+  match "/account" => "account#show", :as => "account"
+  match "/account/#settings" => "account#show", :as => "account_settings"
+  match "/account/update" => "account#update", :as => "edit_account", :via => :put
   match "/account/deactivate" => "account#destroy", :as => "deactivate_account"
 
   #Games

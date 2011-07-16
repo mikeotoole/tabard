@@ -5,16 +5,34 @@
 
 %h1 #{@game.name} Communities
 
-- if @game.communities != nil
-  %table
+%table
+  - if @game.communities.size > 0
     %thead
       %tr
-        %th.name Communities
-        %th.characters Characters
+        %th.amount Size
+        %th.name Community
+        %th.slogan Slogan
+        %th.accepting Applications
     %tbody
       - for community in @game.communities
         %tr
+          %td.amount
+            = community.get_characters_for_game(@game.class).size.to_s
           %td.name
             = link_to community.display_name, community
-          %td.characters
-            = community.get_characters_for_game(@game.class).size.to_s
+          %td.slogan
+            = community.slogan
+          %td
+            - if community.accepting
+              = link_to 'Apply Now', new_registration_application_url(:subdomain => community.subdomain), :class => 'button'
+            - else
+              Private
+  - else
+    %tbody
+      %tr
+        %td.empty{ :colspan => 4 } This game has no communities.
+  -if logged_in?
+    %tfoot
+      %tr
+        %td{ :colspan => 4 }
+          = link_to 'Create a new Community', new_community_path, :class => "button"

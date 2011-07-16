@@ -4,15 +4,23 @@
     = image_tag current_user.user_profile.avatar_url.to_s, :alt => ''
     = link_to 'Edit', edit_account_path
   %dl#community.selectbox
-    %dt
-      = @community ? @community.display_name : raw('My Communities &raquo;')
+    - if @community
+      %dt= @community.display_name
+    - else
+      %dt.unselected My Communities:
+    - if @community
+      %dd
+        = link_to 'Crumbin Home Page', root_url(:subdomain => false)
     - current_user.communities.each do |community|
       %dd{ :class => (@community and @community == community) ? 'selected' : '' }
         = link_to community.display_name, root_url(:subdomain => community.subdomain)
       %dd.new= link_to "+ Find a community", root_url(:subdomain => false)
   %dl#profile.selectbox
-    %dt
-      = link_to (profile_active? ? current_profile.name : raw('My Profiles &raquo;')), user_profile_path(current_user), { :class => 'main' }
+    - if profile_active?
+      %dt
+        = link_to current_profile.name, user_profile_path(current_user)
+    - else
+      %dt.unselected My Profiles:
     -if profiles
       - profiles.each do |profile|
         %dd{ :class => profile[:is_current] ? 'selected' : '' }

@@ -203,6 +203,7 @@ label {
     font-size: 14pt;
     height: 30px;
     line-height: 30px;
+    min-width: 100px;
     padding: 0 40px 0 10px;
     position: relative;
     z-index: 5; }
@@ -214,6 +215,8 @@ label {
       right: 0;
       top: 0;
       width: 30px; }
+    .selectbox dt.unselected {
+      font-size: 10pt; }
   .selectbox dd {
     height: 0; }
     .selectbox dd a {

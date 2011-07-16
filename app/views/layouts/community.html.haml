@@ -2,6 +2,7 @@
 %html
   %head
     %title= @community.display_name
+    %link{ :rel => 'icon', :type => 'image/x-icon', :href => '/images/favicon.gif' }
     = stylesheet_link_tag '/stylesheets/application.css'
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
@@ -74,7 +75,8 @@
       = render :partial => "layouts/flash_messages"
       
       #body
-        .container= yield
+        .container
+          = yield
         
       #footer
         .container

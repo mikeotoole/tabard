@@ -2,6 +2,7 @@
 %html
   %head
     %title Crumblin: Gaming communities done right
+    %link{ :rel => 'icon', :type => 'image/x-icon', :href => '/images/favicon.gif' }
     = stylesheet_link_tag '/stylesheets/application.css'
     = javascript_include_tag 'jquery-1.5.min.js', 'rails', 'application'
     = csrf_meta_tag
@@ -32,6 +33,9 @@
                   - if logged_in?
                     %li.new
                       = link_to '+ Create a new community', new_community_path
+            - if logged_in? and @announcements and @announcements.size > 0
+              %li
+                = link_to 'Announcements', announcements_path
             - if !logged_in?
               %li
                 = link_to 'Signup', signup_path
@@ -39,7 +43,8 @@
       = render :partial => "layouts/flash_messages"
       
       #body
-        .container= yield
+        .container
+          = yield
         
       #footer
         .container

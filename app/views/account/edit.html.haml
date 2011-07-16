@@ -1,9 +1,0 @@
-%p#bcrumb
-  = link_to 'Account', account_path
-  %span Edit
-
-%h1 Editing Profile Account
-=@user.errors.to_s
-=@profile.errors.to_s
-= form_tag(edit_account_path, :method => "put", :html => {:multipart => true}) do |f|
-  = render :partial => 'form', :locals => {:f => f}
