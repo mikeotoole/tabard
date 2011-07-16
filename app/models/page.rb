@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
   belongs_to :page_space
+  has_one :community, :through => :discussion_space
   
   scope :featured_pages, :conditions => {:featured_page => true}
   scope :alphabetical, order("title ASC")

@@ -5,9 +5,10 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   belongs_to :character_proxy
   belongs_to :user_profile
+  belongs_to :community
   has_many :comments, :as => :commentable
   
-  before_create :use_default_character
+  before_create :use_default_character, :get_community_id_from_source
   
   def character_proxy_id
     self.character_proxy.id
@@ -20,6 +21,16 @@ class Comment < ActiveRecord::Base
           self.character_proxy_id = game_profile.default_character_proxy_id
         end
       end
+    end
+  end
+  
+  def get_community_id_from_source
+    return if self.community
+    if self.commentable.respond_to?('community') 
+      self.community = self.commentable.community
+    end
+    if self.original_comment_item.respond_to?('community') 
+      self.community = self.original_comment_item.community
     end
   end
   
@@ -58,7 +69,7 @@ class Comment < ActiveRecord::Base
   
   def original_comment_item
   	(commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
-  end
+  end 
   
   def replys_locked?
     self.has_been_locked or !self.original_comment_item.comments_enabled? or (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)

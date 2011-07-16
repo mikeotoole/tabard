@@ -95,8 +95,8 @@ crumbJoe = User.create(:email => "joe@crumblin.com",
                       )
 justanotherheadshot.assign_admin_role(crumbJoe)
 
-badApplicantProfile = UserProfile.create(:name => "Your Mom")
-badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile, :no_signup_email => true)
+#badApplicantProfile = UserProfile.create(:name => "Your Mom")
+#badApplicantProfile = User.create(:email => "Your@Mom.com", :password => "password", :user_profile => badApplicantProfile, :no_signup_email => true)
 
 #More General Users
 1.upto(20) { |n|
@@ -141,7 +141,7 @@ jahHax = DiscussionSpace.create(:name => "Hax Info", :system => false, :user_pro
 
 #Sample Discussions
 haxDisc1 = Discussion.create(:name => "1337 Hax Website", :body => "www.1337hax.com/OMGWTFBBQPWNSAUCE/pewpewpew", :user_profile => dMooseProfile, :discussion_space => jahHax)
-
+haxComment1 = Comment.create(:body => "No Viruses!", :user_profile => crumbJoe.user_profile, :commentable => haxDisc1)
 # Sample Page Space/Pages
 jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justanotherheadshot)
 Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
