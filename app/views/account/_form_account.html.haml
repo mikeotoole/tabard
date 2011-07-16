@@ -8,6 +8,8 @@
       = image_tag(@profile.avatar_url) if @profile.avatar?
       = profile.file_field :avatar
       = profile.hidden_field :avatar_cache
+    %p{ :class => 'checkbox field' }
+      = profile.label :remove_avatar, (profile.check_box :remove_avatar) + ' Remove Avatar'
 
 = fields_for :user do |user|
   .medium
