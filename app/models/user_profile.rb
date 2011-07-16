@@ -1,5 +1,13 @@
+require 'file_size_validator'
 class UserProfile < Profile
-  attr_accessible :avatar, :remote_avatar_url, :avatar_cache, :name
+  attr_accessible :avatar, :avatar_cache, :remove_avatar
+  attr_accessible :name
+  
+  validates :avatar, 
+      :if => :avatar?, 
+      :file_size => { 
+        :maximum => 1.megabytes.to_i 
+      }
   
   belongs_to :user
 
