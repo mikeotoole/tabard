@@ -1,3 +1,5 @@
+var hash = window.location.hash.slice(1);
+
 jQuery.extend(jQuery.expr[':'], {
   focus: function(element) { 
     return element == document.activeElement; 
@@ -5,6 +7,19 @@ jQuery.extend(jQuery.expr[':'], {
 });
 
 $(document).ready(function() {
+
+  $(window).bind('hashchange', function(){
+    hash = window.location.hash.slice(1);
+    if(hash != '' && hash != '#') {
+      if(hash && $('.tabs .'+hash).length) {
+        $('.tabs .active').removeClass('active');
+        $('.tabs .' + hash).addClass('active');
+      }
+      window.location.hash = '';
+    }
+    return false;
+  })
+  .trigger('hashchange');
   
   //input field enhancements
   $('label').each(function() {

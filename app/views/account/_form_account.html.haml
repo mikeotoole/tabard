@@ -1,0 +1,27 @@
+= fields_for :user do |user|
+  %p.field
+    = user.label :email
+    - if @user.errors[:email].any?
+      = @user.errors[:email]
+    = user.text_field :email
+  %p.field
+    = user.label :password
+    - if @user.errors[:password].any?
+      = @user.errors[:password]
+    = user.password_field :password
+  %p.field
+    = user.label :password_confirmation
+    = user.password_field :password_confirmation
+= fields_for :user_profile do |profile|
+  %p.field
+    = profile.label :name
+    - if @profile.errors[:name].any?
+      = @profile.errors[:name]
+    = profile.text_field :name, :value => @profile.name
+  %p.field
+    = profile.label :avatar, "Avatar"
+    = image_tag(@profile.avatar_url) if @profile.avatar?
+    = profile.file_field :avatar
+    = profile.hidden_field :avatar_cache
+    = profile.label :remote_avatar_url, "or image URL"
+    = profile.text_field :remote_avatar_url
