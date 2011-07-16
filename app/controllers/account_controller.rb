@@ -66,6 +66,8 @@ class AccountController < ApplicationController
     else
       @user = current_user
       @profile = current_user.user_profile
+      @wowCharacters = current_user.get_characters(Wow)
+      @swtorCharacters = current_user.get_characters(Swtor)   
     end
   end
 

@@ -278,6 +278,39 @@ label {
   }
 }
 #body {
+  form {
+    .half {
+      width: 49%;
+      &:nth-child(even) {
+        float: right;
+      }
+      &:nth-child(odd) {
+        clear: right;
+      }
+    }
+    .medium {
+      width: 400px;
+      .half {
+        width: 195px;
+      }
+    }
+    .small {
+      width: 200px;
+      .half {
+        width: 95px;
+      }
+    }
+  }
+  p.field {
+    padding: 0 0 1em;
+    span {
+      display: inline-block;
+    }
+  }
+  p.submit {
+    clear: both;
+    padding: 1em 0 2em;
+  }
   ul .checkbox,
   ul .radio,
   p.checkbox,
@@ -1164,6 +1197,13 @@ table {
       z-index: 2;
       &.active {
         display: block;
+      }
+      &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        visibility: hidden;
       }
     }
   }

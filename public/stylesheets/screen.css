@@ -313,6 +313,27 @@ label {
         -webkit-transition: padding 0.2s ease-in-out;
         transition: padding 0.2s ease-in-out; }
 
+#body form .half {
+  width: 49%; }
+  #body form .half:nth-child(even) {
+    float: right; }
+  #body form .half:nth-child(odd) {
+    clear: right; }
+#body form .medium {
+  width: 400px; }
+  #body form .medium .half {
+    width: 195px; }
+#body form .small {
+  width: 200px; }
+  #body form .small .half {
+    width: 95px; }
+#body p.field {
+  padding: 0 0 1em; }
+  #body p.field span {
+    display: inline-block; }
+#body p.submit {
+  clear: both;
+  padding: 1em 0 2em; }
 #body ul .checkbox.checkbox, #body ul .checkbox.radio,
 #body ul .radio.checkbox,
 #body ul .radio.radio,
@@ -1804,6 +1825,12 @@ table {
       z-index: 2; }
       #body dl.tabs > dd.active {
         display: block; }
+      #body dl.tabs > dd:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        visibility: hidden; }
   #body #search {
     height: 100px; }
     #body #search p {

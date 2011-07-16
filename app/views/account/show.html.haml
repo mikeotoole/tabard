@@ -16,7 +16,27 @@
     
     %dt.communities My Communities
     %dd.communities
-      
+      %table
+        - if current_user.communities.size > 0
+          %thead
+            %tr
+              %th.name Name
+              %th.slogan Slogan
+              %th.size Members
+          %tbody
+            - current_user.communities.each do |community|
+              %tr
+                %td= link_to community.display_name, root_url(:subdomain => community.subdomain)
+                %td= community.slogan
+                %td= community.all_users.size
+        - else
+          %tbody
+            %tr
+              %td.empty{ :colspan => 3 } You are not a member of any communities.
+      %p
+        = link_to 'Find a Community', communities_path, :class => "button"
+        or
+        = link_to 'Create a New Community', new_community_path
     
     %dt.characters My Characters
     %dd.characters
@@ -27,4 +47,4 @@
     %dd{ :class => 'settings' + (params[:tab] == 'settings' ? ' active' : '') }
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|
         = render :partial => 'form_account', :locals => {:f => f}
-        %p= submit_tag('Save Changes')
+        %p.submit= submit_tag('Save Changes')
