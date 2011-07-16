@@ -1,10 +1,7 @@
 .userbox
   %p.name
   %p.avatar
-    -if not current_user.user_profile.avatar.blank?
-      = image_tag current_user.user_profile.avatar_url.to_s, :alt => ''
-    -else
-      = image_tag "http://robohash.org/#{current_user.display_name}.png", :alt => 'Default Avatar'
+    = image_tag current_user.user_profile.avatar_url.to_s, :alt => ''
     = link_to 'Edit', edit_account_path
   %dl#community.selectbox
     - if @community
