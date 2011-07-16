@@ -3,6 +3,7 @@ class Discussion < ActiveRecord::Base
   belongs_to :character_proxy
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
+  has_one :community, :through => :discussion_space
   
   before_create :use_default_character
   

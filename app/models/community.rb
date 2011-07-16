@@ -52,15 +52,32 @@ class Community < ActiveRecord::Base
   end
   
   def recent_discussion_spaces(number_of_discussion_spaces=10)
+    cID = self.id
+    DiscussionSpace.where{community_id == cID}.order{created_at.desc}.limit(number_of_discussion_spaces)
   end
+  
   def recent_page_spaces(number_of_page_spaces=10)
+    cID = self.id
+    PageSpace.where{community_id == cID}.order{created_at.desc}.limit(number_of_page_spaces)
   end
+  
   def recent_discussions(number_of_discussions=10)
+    cID = self.id
+    my_disc_spaces = DiscussionSpace.where{community_id == cID}
+    Discussion.where{discussion_space_id.in(my_disc_spaces.select{id})}.order{created_at.desc}.limit(number_of_discussions)
   end
+  
   def recent_pages(number_of_pages=10)
+    cID = self.id
+    my_page_spaces = PageSpace.where{community_id == cID}
+    Page.where{page_space_id.in(my_page_spaces.select{id})}.order{created_at.desc}.limit(number_of_pages)
   end
-  def recent_comments(number_of_comments=10) 
+  
+  def recent_comments(number_of_comments=10)
+    cID = self.id
+    Comment.where{community_id == cID}.order{created_at.desc}.limit(number_of_comments) 
   end
+  
   def recent_members(number_of_members=10)
     member_role_id = self.member_role.id
     User.joins{roles_users.user}.where{roles_users.role_id == member_role_id}.order{roles_users.created_at.desc}.limit(number_of_members)
