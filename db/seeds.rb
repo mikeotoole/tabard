@@ -4,10 +4,7 @@ userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
 registrationApplicationResource = SystemResource.create(:name => "RegistrationApplication")
-newsletterResource = SystemResource.create(:name => "Newsletter")
-themeResource = SystemResource.create(:name => "Theme")
 
-gameResource = SystemResource.create(:name => "Game")
 characterResource = SystemResource.create(:name => "Character")
 
 commentResource = SystemResource.create(:name => "Comment")
