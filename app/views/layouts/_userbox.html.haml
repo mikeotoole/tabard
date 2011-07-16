@@ -1,7 +1,7 @@
 .userbox
   %p.name
   %p.avatar
-    = image_tag current_user.user_profile.avatar_url, :alt => ''
+    = image_tag current_user.user_profile.avatar_url(:standard), :alt => ''
     = link_to 'Edit', edit_account_path
   %dl#community.selectbox
     - if @community

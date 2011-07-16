@@ -30,6 +30,20 @@ class UserProfile < Profile
   
   #uploaders
   mount_uploader :avatar, AvatarUploader
+  #uploader helper
+  def remove_avatar!
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+    end
+  end
+  def remove_previously_stored_avatar
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+      @previous_model_for_avatar = nil
+    end
+  end
   
   # User can only have one user profile
   validates_uniqueness_of :user_id

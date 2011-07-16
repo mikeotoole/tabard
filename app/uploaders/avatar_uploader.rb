@@ -1,5 +1,5 @@
 # encoding: utf-8
-
+require 'carrierwave/processing/mini_magick'
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
@@ -19,9 +19,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
     "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
   end
   
-  #gif jpg png
-  
-  #process => []
+  #process :resize_to_fill => [700, 700]
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
@@ -34,12 +32,16 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :scale => [50, 50]
   # end
+  
+  version :standard do
+    process :resize_to_fill => [70,70]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
