@@ -1,12 +1,3 @@
 = form_for [@character.game, @character] do |f|
-  = f.hidden_field :game_id
-  %p.field
-    = f.label :name
-    = f.text_field :name
-  %p.field
-    = f.label :server
-    = f.text_field :server
-  %p.field
-    = label_tag "Make Default Character"
-    = check_box_tag :default
+  = render 'form_fields'
   = submit_or_cancel(f)

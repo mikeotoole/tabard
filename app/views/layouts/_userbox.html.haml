@@ -2,7 +2,7 @@
   %p.name
   %p.avatar
     = image_tag current_user.user_profile.avatar_url, :alt => ''
-    = link_to 'Edit', edit_account_path
+    = link_to 'Edit', account_settings_path
   %dl#community.selectbox
     - if @community
       %dt= @community.display_name

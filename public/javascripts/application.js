@@ -15,7 +15,7 @@ $(document).ready(function() {
         $('.tabs .active').removeClass('active');
         $('.tabs .' + hash).addClass('active');
       }
-      window.location.hash = '';
+      //window.location.hash = '';
     }
     return false;
   })
