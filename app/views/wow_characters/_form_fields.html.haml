@@ -1,0 +1,18 @@
+= f.hidden_field :game_id
+%p.field
+  = f.label :name  
+  = f.text_field :name
+%p.field
+  = f.label :level
+  = f.text_field :level
+%p.field
+  = f.label :faction
+  = f.text_field :faction
+%p.field
+  = f.label :race
+  = f.text_field :race
+%p.field
+  = f.label :server
+  = f.text_field :server
+%p{ :class => 'field checkbox' }
+  = label_tag :default, (check_box_tag :default, 1, @character.default) + "Make Default Character"
