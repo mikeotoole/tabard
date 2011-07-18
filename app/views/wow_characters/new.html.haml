@@ -1,7 +1,8 @@
 %p#bcrumb
-  = link_to 'Games', games_path
-  = link_to @character.game.name, @character.game
-  %span New Character
+  = link_to 'Crumblin', root_url(:subdomain => false)
+  = link_to 'My Account', account_path
+  = link_to 'Characters', account_characters_path
+  %span New #{@character.game.name} Character
 
 %h1 New #{@character.game.name} Character
 

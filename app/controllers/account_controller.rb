@@ -66,6 +66,10 @@ class AccountController < ApplicationController
     else
       @user = current_user
       @profile = current_user.user_profile
+      @characterCount = 0
+      current_user.user_profile.game_profiles.each do |game_profile|
+        @characterCount += game_profile.character_proxies.size
+      end
       @wowCharacters = current_user.get_characters(Wow)
       @swtorCharacters = current_user.get_characters(Swtor)   
     end

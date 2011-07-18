@@ -51,7 +51,7 @@ class WowCharactersController < ApplicationController
       respond_to do |format|
         if profile.save
           add_new_flash_message('Character was successfully created.')
-          format.html { redirect_to [@character.game, @character] }#redirect_to([@character.game, @character], :notice => 'Character was successfully created.') }
+          format.html { redirect_to account_characters_path, :notice => 'Character was successfully created.' }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
           flash[:notice] = profile.errors.full_messages.join(" | ")

@@ -1,4 +1,13 @@
 = f.hidden_field :game_id
+%p{ :class => 'field avatar' }
+  %span.avatar
+    = image_tag @character.avatar_url(:standard), :alt => ''
+  %span.field
+    = f.file_field :avatar
+    = f.hidden_field :avatar_cache
+  - if @character.id
+    %span.checkbox
+      = f.label :remove_avatar, (f.check_box :remove_avatar) + ' Remove Avatar'
 %p.field
   = f.label :name  
   = f.text_field :name
@@ -15,4 +24,4 @@
   = f.label :server
   = f.text_field :server
 %p{ :class => 'field checkbox' }
-  = label_tag :default, (check_box_tag :default, 1, @character.default) + "Make Default Character"
+  = label_tag :default, (check_box_tag :default, 1, (@character.id ? @character.default : false)) + "Make default character"

@@ -23,10 +23,10 @@ $(document).ready(function() {
   
   //input field enhancements
   $('label').each(function() {
-    if($(this).attr('for')) {
+    if($(this).find('input[type!="hidden"]')) {
+      field = $(this).find('input[type!="hidden"]');
+    } else if ($(this).attr('for')) {
       field = $('#'+$(this).attr('for'));
-    } else {
-      field = $(this).find('input'); 
     }
     if(field) {
       fieldType = $(field).attr('type');
@@ -37,7 +37,12 @@ $(document).ready(function() {
               if($(this).filter(':checked').length) {
                 $(this).addClass('checked').parent().addClass('checked');
               } else {
-                $(this).removeClass('checked').parent().removeClass('checked');
+                $(this)
+                  .removeClass('checked')
+                  .parent()
+                  .removeClass('checked')
+                  .addClass('unchecked')
+                  .mouseout(function(){ $(this).removeClass('unchecked'); });
               }
             });
           $(this).has('input:checked').addClass('checked').find('input:checked').addClass('checked');

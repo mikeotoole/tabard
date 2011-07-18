@@ -135,6 +135,7 @@ input[type='button'] {
   padding: 0 15px;
   text-align: center;
   text-decoration: none !important;
+  text-transform: capitalize;
   &:focus,
   &:hover {
     @include bg_gradient($accent_color, lighten($accent_color, 10%));
@@ -197,6 +198,7 @@ label {
     min-width: 100px;
     padding: 0 40px 0 10px;
     position: relative;
+    white-space: nowrap;
     z-index: 5;
     &:before {
       background: url(../images/icons/#{$icon_set}.png) -765px -45px;
@@ -277,6 +279,18 @@ label {
     }
   }
 }
+#newcharacter {
+  position: absolute;
+  right: 2em;
+  top: 2em;
+  .selectbox {
+    left: auto;
+    right: 0;
+    &:hover {
+      margin: 0 -5px 0 0;
+    }
+  }
+}
 #body {
   form {
     .half {
@@ -311,69 +325,92 @@ label {
     clear: both;
     padding: 1em 0 2em;
   }
+  p.avatar {
+    span {
+      clear: both;
+      display: block !important;
+      padding-bottom: .5em !important;
+      &.avatar {
+        @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+        @include border_radius(1);
+        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        color: $text_color_2;
+        float: left;
+        height: 80px;
+        margin: 0 0 1em;
+        padding-bottom: 0 !important;
+        position: relative;
+        width: 80px;
+        img {
+          background: $bg_color_1;
+          @include border_radius(1);
+          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+          height: 70px;
+          margin: 5px;
+          width: 70px;
+        }
+      }
+    }
+  }
   ul .checkbox,
   ul .radio,
   p.checkbox,
-  p.radio {
-    &.checkbox,
-    &.radio {
-      list-style: none !important;
-      label {
-        display: inline-block;
-        height: 20px;
-        overflow: hidden;
-        margin: 0 0 0 -1em;
-        position: relative;
-        padding: 5px 5px 5px 45px;
-        text-indent: -100px;
-        &:before {
-          background: lighten($bg_color_2, 10%);
-          border: 1px solid darken($bg_color_2, 10%);
-          @include border_radius(1);
-          @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
-          content: '';
-          height: 24px;
-          left: 3px;
-          position: absolute;
-          top: 3px;
-          width: 24px;
-        }
-        input {
-          width: 90px;
-        }
+  p.radio,
+  p.field .checkbox,
+  p.field .radio {
+    list-style: none !important;
+    label {
+      display: inline-block;
+      height: 20px;
+      overflow: hidden;
+      margin: 0 0 0 -1em;
+      position: relative;
+      padding: 5px 5px 5px 45px;
+      text-indent: -100px;
+      &:before {
+        background: lighten($bg_color_2, 10%);
+        border: 1px solid darken($bg_color_2, 10%);
+        @include border_radius(1);
+        @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
+        content: '';
+        height: 24px;
+        left: 3px;
+        position: absolute;
+        top: 3px;
+        width: 24px;
+      }
+      input {
+        width: 90px;
       }
     }
     &.checkbox {
       label {
-        &:hover {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
-          }
+        &:hover:before {
+          background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
         }
-        &.checked {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
-          }
+        &.checked:before {
+          background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+        }
+        &.unchecked:before {
+          background: lighten($bg_color_2, 10%);
         }
       }
     }
     &.radio {
       label {
-        &:hover {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
-          }
+        &:hover:before {
+          background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
         }
-        &.checked {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
-          }
+        &.checked:before {
+          background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
         }
       }
     }
   }
   p.checkbox,
-  p.radio {
+  p.radio,
+  p.field .checkbox,
+  p.field .radio {
     label {
       margin: 0 0 0 -3px !important;
     }

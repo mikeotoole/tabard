@@ -1,4 +1,10 @@
-- if @wowCharacters or @swtorCharacters
+%p
+  You have
+  %strong= @characterCount
+  character profiles.
+  
+- if @characterCount > 0
+  
   %ul#characters
     - if @wowCharacters
       - @wowCharacters.each do |character|
@@ -12,8 +18,14 @@
           - @character = character
           = fields_for :swtor_character, @character, :index => Time.now.to_f.to_s do |f|
             = render :file => 'swtor_characters/_form_fields.html.haml', :locals => { :f => f }
-
-- if @games
   %p
-    - @games.each do |game|
-      = link_to "New #{game.type} Character", new_base_character_path(:format => :js, :game => {:game_id => game.id}), :remote => true, :class => 'button'
+    %button{ :type => 'submit' }
+      Save all characters
+  
+- if @games
+  #newcharacter
+    %dl.selectbox
+      %dt Add a new character for&hellip;
+      - @games.each do |game|
+        %dd
+          = link_to game.name, new_base_character_path(:game => {:game_id => game.id})

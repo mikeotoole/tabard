@@ -59,7 +59,8 @@ input[type='button'] {
   line-height: 30px;
   padding: 0 15px;
   text-align: center;
-  text-decoration: none !important; }
+  text-decoration: none !important;
+  text-transform: capitalize; }
   button:focus, button:hover,
   .button:focus,
   .button:hover,
@@ -206,6 +207,7 @@ label {
     min-width: 100px;
     padding: 0 40px 0 10px;
     position: relative;
+    white-space: nowrap;
     z-index: 5; }
     .selectbox dt:before {
       background: url(../images/icons/default.png) -765px -45px;
@@ -313,6 +315,16 @@ label {
         -webkit-transition: padding 0.2s ease-in-out;
         transition: padding 0.2s ease-in-out; }
 
+#newcharacter {
+  position: absolute;
+  right: 2em;
+  top: 2em; }
+  #newcharacter .selectbox {
+    left: auto;
+    right: 0; }
+    #newcharacter .selectbox:hover {
+      margin: 0 -5px 0 0; }
+
 #body form .half {
   width: 49%; }
   #body form .half:nth-child(even) {
@@ -334,21 +346,77 @@ label {
 #body p.submit {
   clear: both;
   padding: 1em 0 2em; }
-#body ul .checkbox.checkbox, #body ul .checkbox.radio,
-#body ul .radio.checkbox,
-#body ul .radio.radio,
-#body p.checkbox.checkbox,
-#body p.checkbox.radio,
-#body p.radio.checkbox,
-#body p.radio.radio {
+#body p.avatar span {
+  clear: both;
+  display: block !important;
+  padding-bottom: .5em !important; }
+  #body p.avatar span.avatar {
+    background: -moz-linear-gradient(top, #666666, #333333) ;
+    background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666, endColorstr=#333333)";
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -o-border-radius-topleft: 5px;
+    -o-border-radius-topright: 5px;
+    -o-border-radius-bottomright: 5px;
+    -o-border-radius-bottomleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    color: white;
+    float: left;
+    height: 80px;
+    margin: 0 0 1em;
+    padding-bottom: 0 !important;
+    position: relative;
+    width: 80px; }
+    #body p.avatar span.avatar img {
+      background: white;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      -o-border-radius-topleft: 5px;
+      -o-border-radius-topright: 5px;
+      -o-border-radius-bottomright: 5px;
+      -o-border-radius-bottomleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      height: 70px;
+      margin: 5px;
+      width: 70px; }
+#body ul .checkbox,
+#body ul .radio,
+#body p.checkbox,
+#body p.radio,
+#body p.field .checkbox,
+#body p.field .radio {
   list-style: none !important; }
-  #body ul .checkbox.checkbox label, #body ul .checkbox.radio label,
-  #body ul .radio.checkbox label,
-  #body ul .radio.radio label,
-  #body p.checkbox.checkbox label,
-  #body p.checkbox.radio label,
-  #body p.radio.checkbox label,
-  #body p.radio.radio label {
+  #body ul .checkbox label,
+  #body ul .radio label,
+  #body p.checkbox label,
+  #body p.radio label,
+  #body p.field .checkbox label,
+  #body p.field .radio label {
     display: inline-block;
     height: 20px;
     overflow: hidden;
@@ -356,13 +424,12 @@ label {
     position: relative;
     padding: 5px 5px 5px 45px;
     text-indent: -100px; }
-    #body ul .checkbox.checkbox label:before, #body ul .checkbox.radio label:before,
-    #body ul .radio.checkbox label:before,
-    #body ul .radio.radio label:before,
-    #body p.checkbox.checkbox label:before,
-    #body p.checkbox.radio label:before,
-    #body p.radio.checkbox label:before,
-    #body p.radio.radio label:before {
+    #body ul .checkbox label:before,
+    #body ul .radio label:before,
+    #body p.checkbox label:before,
+    #body p.radio label:before,
+    #body p.field .checkbox label:before,
+    #body p.field .radio label:before {
       background: #1a1a1a;
       border: 1px solid black;
       -moz-border-radius-topleft: 5px;
@@ -390,36 +457,52 @@ label {
       position: absolute;
       top: 3px;
       width: 24px; }
-    #body ul .checkbox.checkbox label input, #body ul .checkbox.radio label input,
-    #body ul .radio.checkbox label input,
-    #body ul .radio.radio label input,
-    #body p.checkbox.checkbox label input,
-    #body p.checkbox.radio label input,
-    #body p.radio.checkbox label input,
-    #body p.radio.radio label input {
+    #body ul .checkbox label input,
+    #body ul .radio label input,
+    #body p.checkbox label input,
+    #body p.radio label input,
+    #body p.field .checkbox label input,
+    #body p.field .radio label input {
       width: 90px; }
-#body ul .checkbox.checkbox label:hover:before,
-#body ul .radio.checkbox label:hover:before,
-#body p.checkbox.checkbox label:hover:before,
-#body p.radio.checkbox label:hover:before {
-  background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
-#body ul .checkbox.checkbox label.checked:before,
-#body ul .radio.checkbox label.checked:before,
-#body p.checkbox.checkbox label.checked:before,
-#body p.radio.checkbox label.checked:before {
-  background: url(../images/icons/default.png) -248px -8px no-repeat white; }
-#body ul .checkbox.radio label:hover:before,
-#body ul .radio.radio label:hover:before,
-#body p.checkbox.radio label:hover:before,
-#body p.radio.radio label:hover:before {
-  background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
-#body ul .checkbox.radio label.checked:before,
-#body ul .radio.radio label.checked:before,
-#body p.checkbox.radio label.checked:before,
-#body p.radio.radio label.checked:before {
-  background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
+  #body ul .checkbox.checkbox label:hover:before,
+  #body ul .radio.checkbox label:hover:before,
+  #body p.checkbox.checkbox label:hover:before,
+  #body p.radio.checkbox label:hover:before,
+  #body p.field .checkbox.checkbox label:hover:before,
+  #body p.field .radio.checkbox label:hover:before {
+    background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
+  #body ul .checkbox.checkbox label.checked:before,
+  #body ul .radio.checkbox label.checked:before,
+  #body p.checkbox.checkbox label.checked:before,
+  #body p.radio.checkbox label.checked:before,
+  #body p.field .checkbox.checkbox label.checked:before,
+  #body p.field .radio.checkbox label.checked:before {
+    background: url(../images/icons/default.png) -248px -8px no-repeat white; }
+  #body ul .checkbox.checkbox label.unchecked:before,
+  #body ul .radio.checkbox label.unchecked:before,
+  #body p.checkbox.checkbox label.unchecked:before,
+  #body p.radio.checkbox label.unchecked:before,
+  #body p.field .checkbox.checkbox label.unchecked:before,
+  #body p.field .radio.checkbox label.unchecked:before {
+    background: #1a1a1a; }
+  #body ul .checkbox.radio label:hover:before,
+  #body ul .radio.radio label:hover:before,
+  #body p.checkbox.radio label:hover:before,
+  #body p.radio.radio label:hover:before,
+  #body p.field .checkbox.radio label:hover:before,
+  #body p.field .radio.radio label:hover:before {
+    background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
+  #body ul .checkbox.radio label.checked:before,
+  #body ul .radio.radio label.checked:before,
+  #body p.checkbox.radio label.checked:before,
+  #body p.radio.radio label.checked:before,
+  #body p.field .checkbox.radio label.checked:before,
+  #body p.field .radio.radio label.checked:before {
+    background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
 #body p.checkbox label,
-#body p.radio label {
+#body p.radio label,
+#body p.field .checkbox label,
+#body p.field .radio label {
   margin: 0 0 0 -3px !important; }
 
 /* Tables */
