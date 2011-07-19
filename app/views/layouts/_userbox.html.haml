@@ -1,10 +1,7 @@
 .userbox
   %p.name
   %p.avatar
-    -if profile_active?
-      = image_tag current_profile.avatar_url(:standard), :alt => ''
-    -else
-      = image_tag current_user.user_profile.avatar_url(:standard), :alt => ''
+    = get_avatar(:standard)
     = link_to 'Edit', account_settings_path
   %dl#community.selectbox
     - if @community

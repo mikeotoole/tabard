@@ -19,7 +19,7 @@
         = link_to 'Delete', @discussion, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete discussion'
 
   %p#author
-    %img{ :src => '/themes/' << current_theme << '/images/avatar.png', :alt => '', :class => 'avatar' }/
+    = get_avatar(:standard, @discussion.user_profile)
     %cite
       Posted by
       - if @discussion.charater_posted?
