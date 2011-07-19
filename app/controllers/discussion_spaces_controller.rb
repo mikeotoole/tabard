@@ -37,7 +37,6 @@ class DiscussionSpacesController < Communities::CommunitiesController
       #  @form = SiteForm.application_form
       #  render :partial => 'discussion_spaces/registration_application_space'  
       #end 
-      grab_all_errors_from_model(@discussion_space)
       respond_with(@discussion_space)
     end
   end
@@ -75,6 +74,7 @@ class DiscussionSpacesController < Communities::CommunitiesController
         add_new_flash_message('Discussion space was successfully created.')
         respond_with(@discussion_space)
       else
+        grab_all_errors_from_model(@discussion_space)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }
@@ -94,6 +94,7 @@ class DiscussionSpacesController < Communities::CommunitiesController
         add_new_flash_message('Discussion space was successfully updated.')
         respond_with(@discussion_space)
       else
+        grab_all_errors_from_model(@discussion_space)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @discussion_space.errors, :status => :unprocessable_entity }

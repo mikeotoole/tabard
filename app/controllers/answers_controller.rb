@@ -48,6 +48,7 @@ class AnswersController < ApplicationController
         format.html { redirect_to(@answer) }
         format.xml  { render :xml => @answer, :status => :created, :location => @answer }
       else
+        grab_all_errors_from_model(@answer)
         format.html { render :action => "new" }
         format.xml  { render :xml => @answer.errors, :status => :unprocessable_entity }
       end
@@ -65,6 +66,7 @@ class AnswersController < ApplicationController
         format.html { redirect_to(@answer) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@answer)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @answer.errors, :status => :unprocessable_entity }
       end

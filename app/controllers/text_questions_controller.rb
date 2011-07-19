@@ -49,6 +49,7 @@ class TextQuestionsController < ApplicationController
       if @text_question.save
         respond_with(@text_question)
       else
+        grab_all_errors_from_model(@text_question)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @text_question.errors, :status => :unprocessable_entity }
@@ -78,6 +79,7 @@ class TextQuestionsController < ApplicationController
           format.xml  { head :ok }
           format.js { redirect_to([:management, @form]) }
         else
+          grab_all_errors_from_model(@text_question)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @text_question.errors, :status => :unprocessable_entity }
         end

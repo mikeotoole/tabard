@@ -32,6 +32,7 @@ class DiscussionsController < Communities::CommunitiesController
         add_new_flash_message('Discussion was successfully updated.')
         respond_with(@discussion)
       else
+        grab_all_errors_from_model(@discussion)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }

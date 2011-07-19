@@ -35,6 +35,7 @@ class Management::RegistrationApplicationsController < Communities::CommunitiesC
         format.html { redirect_to(@registration_application) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@registration_application)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @registration_application.errors, :status => :unprocessable_entity }
       end

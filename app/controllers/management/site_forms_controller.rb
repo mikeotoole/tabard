@@ -47,6 +47,7 @@ class Management::SiteFormsController < Communities::CommunitiesController
         format.html { redirect_to(management_site_form_path(@site_form)) }
         format.xml  { render :xml => @site_form, :status => :created }
       else
+        grab_all_errors_from_model(@site_form)
         format.html { render :action => "new" }
         format.xml  { render :xml => @site_form.errors, :status => :unprocessable_entity }
       end
@@ -73,6 +74,7 @@ class Management::SiteFormsController < Communities::CommunitiesController
         format.html { redirect_to(management_site_form_path(@site_form)) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@site_form)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @site_form.errors, :status => :unprocessable_entity }
       end

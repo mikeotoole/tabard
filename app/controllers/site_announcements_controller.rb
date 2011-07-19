@@ -51,6 +51,7 @@ class SiteAnnouncementsController < ApplicationController
       if @site_announcement.save
         respond_with(@site_announcement)
       else
+        grab_all_errors_from_model(@site_announcement)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @site_announcement.errors, :status => :unprocessable_entity }
@@ -70,6 +71,7 @@ class SiteAnnouncementsController < ApplicationController
         add_new_flash_message('Site announcement was successfully updated.')
         respond_with(@site_announcement)
       else
+        grab_all_errors_from_model(@site_announcement)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @site_announcement.errors, :status => :unprocessable_entity }

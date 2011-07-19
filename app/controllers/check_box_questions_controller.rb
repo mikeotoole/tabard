@@ -49,6 +49,7 @@ class CheckBoxQuestionsController < ApplicationController
       if @check_box_question.save
         respond_with(@check_box_question)
       else
+        grab_all_errors_from_model(@check_box_question)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @check_box_question.errors, :status => :unprocessable_entity }
@@ -79,6 +80,7 @@ class CheckBoxQuestionsController < ApplicationController
           format.xml  { head :ok }
           format.js { redirect_to([:management, @form]) }
         else
+          grab_all_errors_from_model(@check_box_question)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @check_box_question.errors, :status => :unprocessable_entity }
         end

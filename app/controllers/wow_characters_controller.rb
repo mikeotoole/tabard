@@ -54,6 +54,7 @@ class WowCharactersController < ApplicationController
           format.html { redirect_to account_characters_path, :notice => 'Character was successfully created.' }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
+          grab_all_errors_from_model(profile)
           flash[:notice] = profile.errors.full_messages.join(" | ")
           format.html { render :action => "new" }
           format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
@@ -81,6 +82,7 @@ class WowCharactersController < ApplicationController
         add_new_flash_message('Character was successfully updated.')
         respond_with(@game, @character)
       else
+        grab_all_errors_from_model(@character)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }

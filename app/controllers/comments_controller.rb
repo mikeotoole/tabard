@@ -58,6 +58,7 @@ class CommentsController < CommunitiesController
         #redirect_to(:back)
         respond_with(@comment)
       else
+        grab_all_errors_from_model(@comment)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
@@ -81,6 +82,7 @@ class CommentsController < CommunitiesController
           redirect_to url_for(@comment.original_comment_item), :action => :show
           return
         else
+          grab_all_errors_from_model(@comment)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
         end

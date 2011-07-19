@@ -27,6 +27,7 @@ class DiscussionSpaces::DiscussionsController < Communities::CommunitiesControll
         add_new_flash_message('Discussion was successfully created.')
         respond_with(@discussion)
       else
+        grab_all_errors_from_model(@discussion)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }

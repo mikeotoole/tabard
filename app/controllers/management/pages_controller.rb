@@ -48,6 +48,7 @@ class Management::PagesController < Communities::CommunitiesController
         add_new_flash_message('Page was successfully created.')
         respond_with(@page)
       else 
+        grab_all_errors_from_model(@page)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
@@ -67,6 +68,7 @@ class Management::PagesController < Communities::CommunitiesController
         add_new_flash_message('Page was successfully updated.')
         respond_with(@page)
       else
+        grab_all_errors_from_model(@page)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }

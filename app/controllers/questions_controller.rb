@@ -39,6 +39,7 @@ class QuestionsController < ApplicationController
         format.html { redirect_to(:back) }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
       else
+        grab_all_errors_from_model(@question)
         format.html { render :action => "new" }
         format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
       end
@@ -63,6 +64,7 @@ class QuestionsController < ApplicationController
         format.html { redirect_to([:management, @form]) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@question)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
       end

@@ -48,6 +48,7 @@ class Management::PageSpacesController < Communities::CommunitiesController
         add_new_flash_message('Page space was successfully created.')
         respond_with(@page_space)
       else 
+        grab_all_errors_from_model(@page_space)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @page_space.errors, :status => :unprocessable_entity }
@@ -68,6 +69,7 @@ class Management::PageSpacesController < Communities::CommunitiesController
         add_new_flash_message('Page space was successfully updated.')
         respond_with(@page_space)
       else
+        grab_all_errors_from_model(@page_space)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @page_space.errors, :status => :unprocessable_entity }

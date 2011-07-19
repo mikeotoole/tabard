@@ -53,6 +53,7 @@ class SwtorCharactersController < ApplicationController
           format.html { redirect_to([@character.game, @character]) }
           format.xml  { render :xml => @character, :status => :created, :location => @character }
         else
+          grab_all_errors_from_model(profile)
           format.html { render :action => "new" }
           format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
         end
@@ -79,6 +80,7 @@ class SwtorCharactersController < ApplicationController
         add_new_flash_message('Character was successfully updated.')
         respond_with(@game, @character)
       else
+        grab_all_errors_from_model(@character)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }

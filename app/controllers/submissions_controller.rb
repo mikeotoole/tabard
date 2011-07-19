@@ -58,6 +58,7 @@ class SubmissionsController < ApplicationController
         format.html { redirect_to([@submission.site_form, @submission]) }
         format.xml  { render :xml => @submission, :status => :created, :location => @submission }
       else
+        grab_all_errors_from_model(@submission)
         format.html { render :action => "new" }
         format.xml  { render :xml => @submission.errors, :status => :unprocessable_entity }
       end

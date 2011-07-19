@@ -61,6 +61,7 @@ class Management::RolesController < Communities::CommunitiesController
       if @role.save
         add_new_flash_message('Role was successfully created.')
       end
+      grab_all_errors_from_model(@role)
       redirect_to :controller => 'management/roles', :action => 'edit', :id => @role.id
       #respond_with([:management, @role])
     end
@@ -76,6 +77,7 @@ class Management::RolesController < Communities::CommunitiesController
       if @role.update_attributes(params[:role])
         add_new_flash_message('Role was successfully updated')
       end
+      grab_all_errors_from_model(@role)
       respond_with([:management, @role])
     end
   end

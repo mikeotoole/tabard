@@ -47,6 +47,7 @@ class ComboBoxQuestionsController < ApplicationController
       if @combo_box_question.save
         respond_with(@combo_box_question)
       else
+        grab_all_errors_from_model(@combo_box_question)
         respond_to do |format|
          format.html { render :action => "new" }
          format.xml  { render :xml => @combo_box_question.errors, :status => :unprocessable_entity }
@@ -77,6 +78,7 @@ class ComboBoxQuestionsController < ApplicationController
           format.xml  { head :ok }
           format.js { redirect_to([:management, @form]) }
         else
+          grab_all_errors_from_model(@combo_box_question)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @combo_box_question.errors, :status => :unprocessable_entity }
         end

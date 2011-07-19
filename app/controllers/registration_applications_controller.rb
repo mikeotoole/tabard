@@ -64,6 +64,9 @@ class RegistrationApplicationsController < Communities::CommunitiesController
         add_new_flash_message(@registration_application.site_form.thankyou)
         @registration_application.user_profile.user.roles << @registration_application.applicant_role
       else
+        grab_all_errors_from_model(@user)
+        grab_all_errors_from_model(@profile)
+        grab_all_errors_from_model(@registration_application)
         @games = Game.active
       end
       respond_with(@registration_application)

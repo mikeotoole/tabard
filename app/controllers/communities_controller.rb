@@ -36,6 +36,7 @@ class CommunitiesController < ApplicationController
         add_new_flash_message("#{@community.display_name} has been created!")
         current_user.roles << @community.admin_role
       end
+      grab_all_errors_from_model(@community)
       respond_with(@community) 
     end
   end
@@ -55,6 +56,7 @@ class CommunitiesController < ApplicationController
       render_insufficient_privileges
     else
       @community.update_attributes(params[:community])
+      grab_all_errors_from_model(@community)
       respond_with(@community)
     end
   end

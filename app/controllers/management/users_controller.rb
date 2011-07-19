@@ -65,6 +65,7 @@ class Management::UsersController < Communities::CommunitiesController
         format.html { redirect_to(management_users_path) }
         format.xml  { render :xml => @user, :status => :created, :location => login_path }
       else
+        grab_all_errors_from_model(@user)
         format.html { render :action => "new" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
@@ -85,6 +86,7 @@ class Management::UsersController < Communities::CommunitiesController
         format.html { redirect_to(management_users_path) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@user)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end

@@ -32,7 +32,8 @@ class SentController < ApplicationController
         @message.errors.each{|attr,msg| errors << {:attr => attr, :msg => msg}}
         @message = current_user.sent_messages.build(:to => [-1])
         errors.each{ |error| @message.errors.add(error[:attr],error[:msg]) }
-      end 
+      end
+      grab_all_errors_from_model(@message) 
       render :action => "new"
     end
   end

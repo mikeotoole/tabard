@@ -36,6 +36,7 @@ class Management::PermissionsController < Communities::CommunitiesController
       add_new_flash_message('Permission was succesfully created.')
       redirect_to([:management,@role])
     else
+      grab_all_errors_from_model(@permission)
       respond_with(@permission)
     end
   end
@@ -48,6 +49,7 @@ class Management::PermissionsController < Communities::CommunitiesController
       add_new_flash_message('Permission was successfully updated.')
       redirect_to([:management,@role])
     else
+      grab_all_errors_from_model(@permission)
       respond_with(@permission)
     end
   end

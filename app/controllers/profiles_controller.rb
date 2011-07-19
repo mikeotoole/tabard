@@ -74,6 +74,7 @@ class ProfilesController < ApplicationController
         format.html { redirect_to(@profile) }
         format.xml  { render :xml => @profile, :status => :created, :location => @profile }
       else
+        grab_all_errors_from_model(@profile)
         format.html { render :action => "new" }
         format.xml  { render :xml => @profile.errors, :status => :unprocessable_entity }
       end
@@ -91,6 +92,7 @@ class ProfilesController < ApplicationController
         format.html { redirect_to(@profile) }
         format.xml  { head :ok }
       else
+        grab_all_errors_from_model(@profile)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @profile.errors, :status => :unprocessable_entity }
       end

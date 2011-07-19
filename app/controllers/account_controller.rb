@@ -32,13 +32,14 @@ class AccountController < ApplicationController
         @profile.build_character(newSwtor)
       end
     end
-    @user.no_signup_email = true
+    @user.no_signup_email = true # TODO remove in production
     if @user.save 
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
       render :show
     else
+      grab_all_errors_from_model(@user)
       render :new
     end
   end
@@ -57,6 +58,7 @@ class AccountController < ApplicationController
     if @profile.update_attributes(params[:user_profile]) and @user.update_attributes(params[:user])
       add_new_flash_message("Woot")
     end
+    grab_all_errors_from_model(@profile)
     redirect_to account_settings_path
   end
 

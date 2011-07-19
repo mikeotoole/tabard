@@ -42,7 +42,7 @@ class UserProfilesController < ProfilesController
     if @profile.save
       add_new_flash_message('Profile was successfully created.')
     else
-      #ERROR
+      grab_all_errors_from_model(@profile)
     end
     respond_with(@profile)
   end
@@ -57,7 +57,7 @@ class UserProfilesController < ProfilesController
       add_new_flash_message("#{@profile.errors.to_s} !!!!!!")
       add_new_flash_message("#{@profile.avatar_url.to_s} !!!!!!")
     else
-      #error
+      grab_all_errors_from_model(@profile)
     end
     render :show
   end

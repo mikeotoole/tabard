@@ -48,6 +48,7 @@ class Management::GamesController < Communities::CommunitiesController
           format.html { redirect_to(management_games_path) }
           format.xml  { render :xml => @game, :status => :created, :location => @game }
         else
+          grab_all_errors_from_model(@game)
           format.html { render :action => "new" }
           format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
         end
@@ -69,6 +70,7 @@ class Management::GamesController < Communities::CommunitiesController
           format.html { redirect_to(management_games_path) }
           format.xml  { head :ok }
         else
+          grab_all_errors_from_model(@game)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
         end

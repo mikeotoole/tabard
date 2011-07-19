@@ -57,6 +57,7 @@ class GameAnnouncementsController < ApplicationController
       if @game_announcement.save
         respond_with(@game_announcement)
       else
+        grab_all_errors_from_model(@game_announcement)
         respond_to do |format|
           format.html { render :action => "new" }
           format.xml  { render :xml => @game_announcement.errors, :status => :unprocessable_entity }
@@ -76,6 +77,7 @@ class GameAnnouncementsController < ApplicationController
         add_new_flash_message('Game announcement was successfully updated.')
         respond_with(@game_announcement)
       else
+        grab_all_errors_from_model(@game_announcement)
         respond_to do |format|
           format.html { render :action => "edit" }
           format.xml  { render :xml => @game_announcement.errors, :status => :unprocessable_entity }
