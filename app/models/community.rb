@@ -2,7 +2,8 @@ class Community < ActiveRecord::Base
   validates :name, :uniqueness => { :case_sensitive => false }, 
                    :presence => true,
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
-                   :format => { :with => /\A[a-zA-Z0-9 ]+\z/, :message => "Only letters, numbers, and spaces are allowed" }
+                   :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
+                   :community_name => true
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
@@ -90,8 +91,11 @@ class Community < ActiveRecord::Base
     }.flatten.compact
   end
   
+  def self.convert_to_subdomain(name)
+    name.downcase.gsub(/[\s\-]/,"")
+  end
   def update_subdomain
-    self.subdomain = self.name.downcase.gsub(/\s/, "-")
+    self.subdomain = Community.convert_to_subdomain(name)
   end
   
   def assign_admin_role(user)
