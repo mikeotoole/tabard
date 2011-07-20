@@ -1,4 +1,4 @@
-class DiscussionSpaces::DiscussionsController < Communities::CommunitiesController
+class Subdomains::DiscussionSpaces::DiscussionsController < SubdomainsController
   respond_to :html, :xml
   before_filter :get_discussion_space_from_id, :authenticate
 

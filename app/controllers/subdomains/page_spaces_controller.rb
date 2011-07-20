@@ -1,4 +1,4 @@
-class PageSpacesController < Communities::CommunitiesController
+class Subdomains::PageSpacesController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   def index

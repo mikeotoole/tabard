@@ -27,7 +27,8 @@ class Community < ActiveRecord::Base
   after_create :setup_admin_role, :setup_applicant_role, :setup_member_role, :setup_application_form
   
   def display_name
-    "#{self.name} #{self.label}"
+    # "#{self.name} #{self.label}"
+    self.name
   end
   
   def self.acceptable_labels

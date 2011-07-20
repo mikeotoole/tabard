@@ -10,11 +10,11 @@
       %dt.unselected My Communities:
     - if @community
       %dd
-        = link_to 'Crumbin Home Page', root_url(:subdomain => false)
+        = link_to 'Crumbin', root_url(:subdomain => false)
     - current_user.communities.each do |community|
       %dd{ :class => (@community and @community == community) ? 'selected' : '' }
         = link_to community.display_name, root_url(:subdomain => community.subdomain)
-      %dd.new= link_to "+ Find a community", root_url(:subdomain => false)
+    %dd.new= link_to "+ Find a community", root_url(:subdomain => false)
   %dl#profile.selectbox
     - if profile_active?
       %dt

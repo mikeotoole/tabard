@@ -12,7 +12,7 @@
     
       #header
         .container
-          .title= link_to "#{@community.name} #{@community.label}", root_path(:subdomain => @community.subdomain)
+          .title= link_to @community.display_name, root_path(:subdomain => @community.subdomain)
           .slogan= @community.slogan
           -if logged_in?
             = render :partial => "layouts/userbox"
@@ -77,12 +77,12 @@
       #body
         .container
           = yield
-        
+      
       #footer
         .container
           - if nav_featured_pages
             .menu
-              %h3 Brutal Venom
+              %h3= @community.display_name
               %ul
                 - nav_featured_pages.each do |page| 
                   %li= link_to page.title, [page.page_space, page]

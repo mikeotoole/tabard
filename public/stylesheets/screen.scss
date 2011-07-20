@@ -1617,12 +1617,15 @@ table {
     @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
     .menu {
       float: left;
-      padding: 20px 0 0 20px;
+      max-width: 215px;
+      margin: 0 0 0 20px;
+      padding: 18pt 0 0;
       h3 {
         border-bottom: 1px solid rgba(0, 0, 0, .2);
         color: lighten($link_color, 15%);
         @include font(light, 18pt);
-        padding: 0 0 20px;
+        height: 36pt;
+        padding: 0;
       }
       ul {
         border-top: 1px solid rgba(255, 255, 255, .2);
