@@ -28,6 +28,18 @@ module ApplicationHelper
     link_to_function(name, "add_fields(#{destination}, '#{association}', '#{escape_javascript(fields)}', '#{before}', '#{after}')", attributes)
   end
   
+  def get_avatar(size_format, profile = nil)
+    if profile
+      image_tag profile.avatar_url(size_format), :alt => ''
+    else
+      if profile_active?
+        image_tag current_profile.avatar_url(size_format), :alt => ''
+      else
+        image_tag current_user.user_profile.avatar_url(size_format), :alt => ''
+      end
+    end
+  end
+  
   # Removes all flash messages
   def clear_flash_messages
     flash[:messages] = nil

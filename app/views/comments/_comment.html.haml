@@ -1,5 +1,5 @@
 %li{ :id => 'comment_' << comment.id.to_s, :class => comment.html_classes.join(' ') }
-  %img{ :src => '/themes/' << current_theme << '/images/avatar.png', :alt => '', :class => 'avatar' }/
+  = get_avatar(:standard, comment.user_profile)
   %span.author= ((comment.charater_posted?) ? link_to(comment.characters_name ,comment.character) : link_to(comment.users_name, comment.user_profile))
   %span.body
     - if comment.has_been_deleted
