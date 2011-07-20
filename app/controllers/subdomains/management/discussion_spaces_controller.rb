@@ -1,4 +1,4 @@
-class Management::DiscussionSpacesController < Communities::CommunitiesController
+class Subdomains::Management::DiscussionSpacesController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate
 

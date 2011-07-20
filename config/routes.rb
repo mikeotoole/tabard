@@ -48,13 +48,7 @@ Bv::Application.routes.draw do
   
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
-  resources :registration_applications, :only => [:new, :create, :show]
-
-  resources :page_spaces do
-    resources :pages
-  end  
-  
-  resources :system_resources # TODO Deprecate this
+  resources :registration_applications, :only => [:new, :create, :show]  
   
   resources :announcements,
     :site_announcements,
@@ -83,53 +77,54 @@ Bv::Application.routes.draw do
     resources :acknowledgment_of_announcements
   end
   
-  resources :communities
-  
   resource :session
   
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
   
-  resources :communities
+  resources :communities, :except => :show
   
   constraints(Subdomain) do
-    match 'management' => "management/management#index"
-
-    namespace "management" do
-      resources :users, :only => [:index, :destroy]
+    match "/" => "subdomains#index"
+    scope :module => "subdomains" do
+      namespace "management" do
+        resources :users, :only => [:index, :destroy]
       
-      resources :roles do
-        resources :permissions
-      end
-      resources :page_spaces,
-        :discussion_spaces,
-        :site_forms
+        resources :roles do
+          resources :permissions
+        end
+        resources :page_spaces,
+          :discussion_spaces,
+          :site_forms
 
-      resources :registration_applications, :except => [:new,:create] do
-        member do
-          post :accept
-          post :reject
+        resources :registration_applications, :except => [:new,:create] do
+          member do
+            post :accept
+            post :reject
+          end
         end
       end
-    end
-    
-    resources :discussion_spaces do
-      resources :discussions, :controller => 'discussion_spaces/discussions', :only => [:new, :create]
-    end
+      resources :comments do
+        member do
+          post :lock
+          post :unlock
+        end
+      end
+      
+      resources :discussion_spaces do
+        resources :discussions, :controller => 'subdomains/discussion_spaces/discussions', :only => [:new, :create]
+      end
 
-    resources :discussions, :except => [:index, :new, :create] do
-      member do
-        post :lock
-        post :unlock
+      resources :discussions, :except => [:index, :new, :create] do
+        member do
+          post :lock
+          post :unlock
+        end
+      end
+      
+      resources :page_spaces do
+        resources :pages
       end
     end
-
-    resources :comments do
-      member do
-        post :lock
-        post :unlock
-      end
-    end
-    match "/" => "communities/communities#index"
   end
   
   root :to => "home#index"

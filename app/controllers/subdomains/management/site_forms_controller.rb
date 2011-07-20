@@ -1,5 +1,5 @@
 # TODO This controller needs permission checking - JW
-class Management::SiteFormsController < Communities::CommunitiesController
+class Subdomains::Management::SiteFormsController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate
 

@@ -13,7 +13,8 @@ class DiscussionSpaces::DiscussionsController < Communities::CommunitiesControll
   end
 
   def create
-    @discussion = @discussion_space.discussions.new(params[:discussion])
+    @discussion = Discussion.new(params[:discussion])
+    @discussion.discussion_space = @discussion_space
     if !current_user.can_create(@discussion)
       render_insufficient_privileges
     else

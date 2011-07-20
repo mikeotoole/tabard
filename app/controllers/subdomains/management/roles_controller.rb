@@ -1,4 +1,4 @@
-class Management::RolesController < Communities::CommunitiesController
+class Subdomains::Management::RolesController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate
 

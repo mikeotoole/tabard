@@ -1,4 +1,4 @@
-class Management::ManagementController < Communities::CommunitiesController
+class Subdomains::Management::ManagementController < SubdomainsController
   before_filter :authenticate
   
   def index

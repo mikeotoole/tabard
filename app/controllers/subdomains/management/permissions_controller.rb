@@ -1,5 +1,5 @@
 # TODO Add permission protection for this controller - JW
-class Management::PermissionsController < Communities::CommunitiesController
+class Subdomains::Management::PermissionsController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
 

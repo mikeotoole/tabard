@@ -1,4 +1,4 @@
-class Management::RegistrationApplicationsController < Communities::CommunitiesController
+class Subdomains::Management::RegistrationApplicationsController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:new, :create]
 

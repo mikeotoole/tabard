@@ -1,5 +1,5 @@
 # TODO This controller needs permissions -JW
-class Management::UsersController < Communities::CommunitiesController
+class Subdomains::Management::UsersController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate
 

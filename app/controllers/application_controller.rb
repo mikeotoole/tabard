@@ -18,12 +18,10 @@ class ApplicationController < ActionController::Base
 
   def remember_current_page
     session[:current_page] = request.path_info
-    logger.debug("AFTER"+session.to_s)
   end  
   
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.path_info
-    logger.debug("BEFORE"+session.to_s)
   end
   
   #The super active model helpers
