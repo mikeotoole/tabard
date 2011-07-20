@@ -2,10 +2,6 @@ Bv::Application.routes.draw do
   
   match "/search" => "search#index"
 
-  get "status_code/invoke_404"
-  
-  match "/404" => "status_code#invoke_404", :as => "four_o_four"
-
   #Messaging
   resources :sent, :only => [:create]
   resources :messages, :only => [:destroy]
@@ -57,26 +53,8 @@ Bv::Application.routes.draw do
   resources :page_spaces do
     resources :pages
   end  
-
-  resources :discussion_spaces do
-    resources :discussions, :controller => 'discussion_spaces/discussions', :only => [:new, :create]
-  end
   
-  resources :discussions, :except => [:index, :new, :create] do
-    member do
-      post :lock
-      post :unlock
-    end
-  end
-
-  resources :comments do
-    member do
-      post :lock
-      post :unlock
-    end
-  end
-  
-  resources :system_resources
+  resources :system_resources # TODO Deprecate this
   
   resources :announcements,
     :site_announcements,
@@ -88,30 +66,6 @@ Bv::Application.routes.draw do
   
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
-  
-  match 'management' => "management/management#index"
-  
-  namespace "management" do
-    resources :users, :except => :show do
-      member do
-        get :activate
-        get :deactivate
-      end
-    end
-    resources :roles do
-      resources :permissions
-    end
-    resources :page_spaces,
-      :discussion_spaces,
-      :site_forms
-      
-    resources :registration_applications, :except => [:new,:create] do
-      member do
-        post :accept
-        post :reject
-      end
-    end
-  end
   
   resources :site_forms do
     resources :submissions, :only => [:index, :show, :new, :create]
@@ -138,10 +92,50 @@ Bv::Application.routes.draw do
   resources :communities
   
   constraints(Subdomain) do
+    match 'management' => "management/management#index"
 
+    namespace "management" do
+      resources :users, :only => [:index, :destroy]
+      
+      resources :roles do
+        resources :permissions
+      end
+      resources :page_spaces,
+        :discussion_spaces,
+        :site_forms
+
+      resources :registration_applications, :except => [:new,:create] do
+        member do
+          post :accept
+          post :reject
+        end
+      end
+    end
+    
+    resources :discussion_spaces do
+      resources :discussions, :controller => 'discussion_spaces/discussions', :only => [:new, :create]
+    end
+
+    resources :discussions, :except => [:index, :new, :create] do
+      member do
+        post :lock
+        post :unlock
+      end
+    end
+
+    resources :comments do
+      member do
+        post :lock
+        post :unlock
+      end
+    end
+    match "/" => "communities/communities#index"
   end
   
   root :to => "home#index"
+  
+  match "/404" => "status_code#invoke_404", :as => "status_404"
+  match "*path" => "status_code#invoke_404"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,76 +1,42 @@
 class AnswersController < ApplicationController
-  # GET /answers
-  # GET /answers.xml
+  respond_to :html, :xml
+  
   def index
     @answers = Answer.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @answers }
-    end
+    respond_with(@answers)
   end
 
-  # GET /answers/1
-  # GET /answers/1.xml
   def show
     @answer = Answer.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @answer }
-    end
+    respond_with(@answer)
   end
 
-  # GET /answers/new
-  # GET /answers/new.xml
   def new
     @answer = Answer.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @answer }
-    end
+    respond_with(@answer)
   end
 
-  # GET /answers/1/edit
   def edit
     @answer = Answer.find(params[:id])
   end
 
-  # POST /answers
-  # POST /answers.xml
   def create
     @answer = Answer.new(params[:answer])
-
-    respond_to do |format|
-      if @answer.save
-        add_new_flash_message('Answer was successfully created.')
-        format.html { redirect_to(@answer) }
-        format.xml  { render :xml => @answer, :status => :created, :location => @answer }
-      else
-        grab_all_errors_from_model(@answer)
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @answer.errors, :status => :unprocessable_entity }
-      end
+    if @answer.save
+      add_new_flash_message('Answer was successfully created.')
     end
+    grab_all_errors_from_model(@answer)
+    respond_with(@answer)
   end
 
-  # PUT /answers/1
-  # PUT /answers/1.xml
   def update
     @answer = Answer.find(params[:id])
-
-    respond_to do |format|
-      if @answer.update_attributes(params[:answer])
-        add_new_flash_message('Answer was successfully updated.')
-        format.html { redirect_to(@answer) }
-        format.xml  { head :ok }
-      else
-        grab_all_errors_from_model(@answer)
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @answer.errors, :status => :unprocessable_entity }
-      end
+    if @answer.update_attributes(params[:answer])
+      add_new_flash_message('Answer was successfully updated.')
     end
+    grab_all_errors_from_model(@answer)
+    respond_with(@answer)
   end
 
   # DELETE /answers/1
@@ -78,10 +44,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
     @answer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(answers_url) }
-      format.xml  { head :ok }
-    end
+    grab_all_errors_from_model(@answer)
+    respond_with(@answer)
   end
 end

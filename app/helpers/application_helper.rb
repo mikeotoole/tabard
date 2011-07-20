@@ -4,11 +4,16 @@ module ApplicationHelper
   # Accepts two arguments: Form object and the cancel link name  
   #TODO If there are errors in the form and the user just presses cancel it redirects to the blank form. Any way to make this work better?
   def submit_or_cancel(form, text_button='Submit', text_back='Cancel')
-    raw("<p class='submit'><button type='submit'>") + text_button + raw("</button>") + ' or ' + link_to(text_back, 'javascript:history.go(-1);', :class => 'cancel') + raw('</p>')
+    text_button = 'Submit' if text_button.blank?
+    raw("<p class='submit'><button type='submit'>") + text_button + raw("</button>") + (
+      (session[:last_page] != request.path_info) ? 
+      raw(' or ' + link_to(text_back, session[:last_page], :class => 'cancel' )) : 
+      ("")
+      ) + raw('</p>')
   end
   
   def js_back
-    link_to 'Back', 'javascript:history.go(-1);'
+    link_to_if defined?session[:last_page], 'Back', session[:last_page]
   end
   
   def link_to_remove_fields(name, f, target='this', attributes='')

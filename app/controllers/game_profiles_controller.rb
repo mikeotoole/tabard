@@ -1,29 +1,20 @@
 class GameProfilesController < ProfilesController
+  respond_to :html, :xml
   before_filter :authenticate  
-    
-  # GET /profiles/1
-  # GET /profiles/1.xml
+
   def show
     @profile = Profile.find(params[:id])
     @game = Game.file(@profile.game_id)
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @profile }
-    end
+    respond_with(@game, @profile)
   end
 
-  # GET /profiles/new
-  # GET /profiles/new.xml
   def new
     add_new_flash_message("Please create a game profile.","alert")
     @profile = GameProfile.new
     @profile.type_helper = "GameProfile"
     @profile.user = current_user
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @profile }
-    end
+    respond_with(@profile)
   end
 
 end

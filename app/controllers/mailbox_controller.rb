@@ -4,8 +4,6 @@ class MailboxController < ApplicationController
   
   def index
     @folder = current_user.inbox
-
-    show
     render :action => 'show'
   end
 

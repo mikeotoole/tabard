@@ -1,31 +1,25 @@
 class CommentsController < CommunitiesController
   respond_to :html, :xml, :js
   before_filter :authenticate
-  # GET /comments
-  # GET /comments.xml
+
   def index
     @comments = Comment.all
-
     respond_with(@comments)
   end
 
-  # GET /comments/1
-  # GET /comments/1.xml
   def show
     @comment = Comment.find(params[:id])
     if !current_user.can_show(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       respond_with(@comment)
     end
   end
 
-  # GET /comments/new
-  # GET /comments/new.xml
   def new
     @comment = Comment.new
     if !current_user.can_create(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @comment.user_profile = current_user.user_profile
       @comment.character_proxy_id = current_character.character_proxy.id if character_active?
@@ -37,21 +31,18 @@ class CommentsController < CommunitiesController
     end
   end
 
-  # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
     if !current_user.can_update(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     end
     respond_with(@comment)
   end
 
-  # POST /comments
-  # POST /comments.xml
   def create
     @comment = Comment.new(params[:comment])
     if !current_user.can_create(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       if @comment.save
         add_new_flash_message('Comment was successfully created.')
@@ -68,34 +59,27 @@ class CommentsController < CommunitiesController
     end
   end
 
-  # PUT /comments/1
-  # PUT /comments/1.xml
   def update
     @comment = Comment.find(params[:id])
     if !current_user.can_update(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @comment.has_been_edited = true
-      respond_to do |format|
-        if @comment.update_attributes(params[:comment])
-          add_new_flash_message('Comment was successfully updated.')
-          redirect_to url_for(@comment.original_comment_item), :action => :show
-          return
-        else
-          grab_all_errors_from_model(@comment)
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-        end
+      if @comment.update_attributes(params[:comment])
+        add_new_flash_message('Comment was successfully updated.')
+        redirect_to url_for(@comment.original_comment_item), :action => :show
+        return
+      else
+        grab_all_errors_from_model(@comment)
+        respond_with(@comment)
       end
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.xml
   def destroy
     @comment = Comment.find(params[:id])
     if !current_user.can_delete(@comment)
-      render :nothing => true, :status => :forbidden
+      render_insufficient_privileges
     else
       @comment.has_been_deleted = true;
       if @comment.save
@@ -112,7 +96,9 @@ class CommentsController < CommunitiesController
   
   def lock
     @comment = Comment.find_by_id(params[:id])
-    if @comment.can_user_lock(current_user)
+    if !@comment.can_user_lock(current_user)
+      render_insufficient_privileges
+    else
       @comment.has_been_locked = true
       if @comment.save 
         add_new_flash_message("Comment was successfully locked.")
@@ -122,12 +108,13 @@ class CommentsController < CommunitiesController
       redirect_to :back
       return
     end
-    render :nothing => true, :status => :forbidden
   end
   
   def unlock
     @comment = Comment.find_by_id(params[:id])
-    if @comment.can_user_lock(current_user)
+    if !@comment.can_user_lock(current_user)
+      render_insufficient_privileges
+    else
       @comment.has_been_locked = false
       if @comment.save 
         add_new_flash_message("Comment was successfully unlocked.")
@@ -137,6 +124,5 @@ class CommentsController < CommunitiesController
       redirect_to :back
       return
     end
-    render :nothing => true, :status => :forbidden
   end
 end

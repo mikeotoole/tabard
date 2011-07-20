@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games, :select_layout
+  after_filter :remember_current_page
+  before_filter :remember_last_page
   layout :select_layout
   
   private
@@ -13,14 +15,25 @@ class ApplicationController < ActionController::Base
         'application'
       end
     end
+
+  def remember_current_page
+    session[:current_page] = request.path_info
+    logger.debug("AFTER"+session.to_s)
+  end  
+  
+  def remember_last_page
+    session[:last_page] = session[:current_page] unless session[:current_page] == request.path_info
+    logger.debug("BEFORE"+session.to_s)
+  end
   
   #The super active model helpers
   def grab_all_errors_from_model(model)
     return unless model or model.respond_to?('errors')
-    logger.debug("Errors! #{model.errors.to_s}")
-    model.errors.full_messages.each { |message|
-      add_new_flash_message(message,'error')
-    }
+    #logger.debug("Errors! #{model.errors.to_s}")
+    #model.errors.full_messages.each { |message|
+    #  add_new_flash_message(message,'error')
+    #}
+    add_new_flash_message("Please check the fields and try again.","error","#{pluralize(model.errors.count,"error")}") unless model.errors.blank?
   end
 
   # Puts all of the notices and alerts into the messages array

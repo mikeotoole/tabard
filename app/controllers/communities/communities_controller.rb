@@ -1,13 +1,10 @@
 class Communities::CommunitiesController < CommunitiesController
+  respond_to :html, :xml
+  layout "community"
   before_filter :find_community_by_subdomain
-  # GET /communities/1
-  # GET /communities/1.xml
   
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @community }
-    end
+  def index
+    respond_with(@community)
   end
   
   def nav_page_spaces

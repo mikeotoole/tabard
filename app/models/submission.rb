@@ -111,6 +111,7 @@ class Submission < ActiveRecord::Base
   end
   
   def set_accepted
+    # TODO Ensure that this can happen only once - JW
     self.status = 2
     self.user_profile.user.roles << self.community.member_role
   end
@@ -120,6 +121,7 @@ class Submission < ActiveRecord::Base
   end
   
   def set_rejected
+    # TODO Ensure that this can happen only once - JW
     self.status = 4
   end
 end

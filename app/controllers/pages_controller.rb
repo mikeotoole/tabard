@@ -9,24 +9,17 @@ class PagesController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:index, :show]
   before_filter :grab_page_space_from_page_space_id
-  # GET /pages
-  # GET /pages.xml
+
   def index
     @pages = page_helper.all
-
     respond_with(@pages)
   end
 
-  # GET /pages/1
-  # GET /pages/1.xml
   def show
     @page = page_helper.find(params[:id])
-
     respond_with(@page)
   end
 
-  # GET /pages/new
-  # GET /pages/new.xml
   def new
     @page = page_helper.new
     if !current_user.can_create(@page)
@@ -36,16 +29,14 @@ class PagesController < Communities::CommunitiesController
     end
   end
 
-  # GET /pages/1/edit
   def edit
     @page = page_helper.find(params[:id])
     if !current_user.can_update("Page") and !current_user.can_update(@page)
       render_insufficient_privileges
     end
+    repsond_with(@page)
   end
 
-  # POST /pages
-  # POST /pages.xml
   def create
     @page = page_helper.new(params[:page])
     if !current_user.can_create(@page)
@@ -54,46 +45,35 @@ class PagesController < Communities::CommunitiesController
       if @page.save
         add_new_flash_message('Page was successfully created.')
         respond_with([@page_space,@page])
-      else 
-        grab_all_errors_from_model(@page)
-        respond_to do |format|
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
-        end
-      end
+        return
+      end 
+      grab_all_errors_from_model(@page)
+      repsond_with(@page)
     end
   end
 
-  # PUT /pages/1
-  # PUT /pages/1.xml
   def update
     @page = page_helper.find(params[:id])
-    if !current_user.can_update("Page") and !current_user.can_update(@page)
+    if !current_user.can_update(@page)
       render_insufficient_privileges
     else
       if @page.update_attributes(params[:page])
         add_new_flash_message('Page was successfully updated.')
-        respond_with(@page_space, @page)
-      else
-        grab_all_errors_from_model(@page)
-        respond_to do |format|
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
-        end
       end
+      grab_all_errors_from_model(@page)
+      respond_with([@page_space, @page])
     end
   end
 
-  # DELETE /pages/1
-  # DELETE /pages/1.xml
   def destroy
     @page = page_helper.find(params[:id])
-    if !current_user.can_delete("Page") and !current_user.can_delete(@page)
+    if !current_user.can_delete(@page)
       render_insufficient_privileges
     else
       if @page.destroy
         add_new_flash_message('Page was successfully deleted.')
       end
+      grab_all_errors_from_model(@page)
       respond_with(@page)
     end
   end

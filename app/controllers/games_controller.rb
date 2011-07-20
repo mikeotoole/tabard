@@ -1,8 +1,6 @@
 class GamesController < ApplicationController
   respond_to :html, :xml
 
-  # GET /games/1
-  # GET /games/1.xml
   def show
     @game = Game.active.find(params[:id])
     respond_with(@game)

@@ -1,3 +1,0 @@
-module SiteFormsHelper
-  
-end

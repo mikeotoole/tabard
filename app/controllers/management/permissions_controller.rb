@@ -1,35 +1,28 @@
+# TODO Add permission protection for this controller - JW
 class Management::PermissionsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
-  # GET /permissions
-  # GET /permissions.xml
+
   def index
     @permissions = @role.permissions.all
     respond_with(@permissions)
   end
 
-  # GET /permissions/1
-  # GET /permissions/1.xml
   def show
     @permission = @role.permissions.find(params[:id])
     respond_with(@permission)
   end
 
-  # GET /permissions/new
-  # GET /permissions/new.xml
   def new
     @permission = @role.permissions.new
     respond_with(@permission)
   end
 
-  # GET /permissions/1/edit
   def edit
     @permission = @role.permissions.find(params[:id])
     respond_with(@permission)
   end
 
-  # POST /permissions
-  # POST /permissions.xml
   def create
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
@@ -41,8 +34,6 @@ class Management::PermissionsController < Communities::CommunitiesController
     end
   end
 
-  # PUT /permissions/1
-  # PUT /permissions/1.xml
   def update
     @permission = @role.permissions.find(params[:id])
     if @permission.update_attributes(params[:permission])
@@ -54,13 +45,14 @@ class Management::PermissionsController < Communities::CommunitiesController
     end
   end
 
-  # DELETE /permissions/1
-  # DELETE /permissions/1.xml
   def destroy
     @permission = @role.permissions.find(params[:id])
     if @permission.destroy
       flash[:notice] = 'Permission was succesfully deleted.'
       redirect_to(:back)
+    else
+      grab_all_errors_from_model(@permission)
+      respond_with(@permission)
     end
   end
   
@@ -83,7 +75,7 @@ class Management::PermissionsController < Communities::CommunitiesController
           @permissionables << ["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
         end
       end
-      logger.debug(@role.permissions)
+      #logger.debug(@role.permissions)
       @role.permissions.each { |role_permission|
         @permissionables.delete_if{|permissionable| (permissionable[1].to_s == role_permission.magic_polymorphic_helper)}
       }

@@ -37,11 +37,9 @@ class AccountController < ApplicationController
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
-      render :show
-    else
-      grab_all_errors_from_model(@user)
-      render :new
     end
+    grab_all_errors_from_model(@user)
+    respond_with([@user,@profile])
   end
   
   def edit

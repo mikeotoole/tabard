@@ -2,12 +2,11 @@ class CommunitiesController < ApplicationController
   respond_to :html, :xml
   before_filter :find_community_by_subdomain, :only => :show
   before_filter :authenticate, :except => [:show, :index]
-  # GET /communities/1
-  # GET /communities/1.xml
   
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
-    #need to redirect to something if not found
+    logger.debug("Unable to find #{request.subdomain.downcase} => #{root_url(:subdomain => false)}") unless @community
+    redirect_to [request.protocol, request.domain, request.port_string].join, :alert => "That community does not exist" and return false unless @community
   end
   
   def show
@@ -34,7 +33,7 @@ class CommunitiesController < ApplicationController
     else  
       if @community.save 
         add_new_flash_message("#{@community.display_name} has been created!")
-        current_user.roles << @community.admin_role
+        @community.assign_admin_role(current_user)
       end
       grab_all_errors_from_model(@community)
       respond_with(@community) 

@@ -1,9 +1,7 @@
 class DiscussionsController < Communities::CommunitiesController
   respond_to :html, :xml
   before_filter :authenticate
-  
-  # GET /discussions/1
-  # GET /discussions/1.xml
+
   def show
     @discussion = Discussion.find(params[:id])
     if !current_user.can_show(@discussion)
@@ -13,7 +11,6 @@ class DiscussionsController < Communities::CommunitiesController
     end
   end
 
-  # GET /discussions/1/edit
   def edit
     @discussion = Discussion.find(params[:id])
     if !current_user.can_update(@discussion)
@@ -21,8 +18,6 @@ class DiscussionsController < Communities::CommunitiesController
     end
   end
 
-  # PUT /discussions/1
-  # PUT /discussions/1.xml
   def update
     @discussion = Discussion.find(params[:id])
     if !current_user.can_update(@discussion)
@@ -30,25 +25,19 @@ class DiscussionsController < Communities::CommunitiesController
     else
       if @discussion.update_attributes(params[:discussion])
         add_new_flash_message('Discussion was successfully updated.')
-        respond_with(@discussion)
-      else
-        grab_all_errors_from_model(@discussion)
-        respond_to do |format|
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @discussion.errors, :status => :unprocessable_entity }
-        end
       end
+      grab_all_errors_from_model(@discussion)
+      respond_with(@discussion)
     end
   end
 
-  # DELETE /discussions/1
-  # DELETE /discussions/1.xml
   def destroy
     @discussion = Discussion.find(params[:id])
     if !current_user.can_delete(@discussion)
       render_insufficient_privileges
     else 
       @discussion.destroy
+      grab_all_errors_from_model(@discussion)
       respond_with(@discussion)
     end
   end

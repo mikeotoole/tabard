@@ -5,4 +5,4 @@
   %p.field
     = f.label :game_id, 'For'
     = f.select(:game_id, grouped_options_for_select(@option_hash), :include_blank => 'General Discussion', :class =>"game")
-  = submit_or_cancel(f, 'Create')
+  = submit_or_cancel(f, ((defined? button_text) ? button_text : nil))
