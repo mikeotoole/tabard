@@ -2,8 +2,8 @@ class Community < ActiveRecord::Base
   validates :name, :uniqueness => { :case_sensitive => false }, 
                    :presence => true,
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
-                   :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
-                   :community_name => true
+                   :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
+  validates :name, :community_name => true, :on => :create
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
