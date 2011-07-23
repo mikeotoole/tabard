@@ -1,6 +1,6 @@
 class MailboxController < ApplicationController
   before_filter :authenticate  
-  respond_to :html, :xml  
+  respond_to :html
   
   def index
     @folder = current_user.inbox

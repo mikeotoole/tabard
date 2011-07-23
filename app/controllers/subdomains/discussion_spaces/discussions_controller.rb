@@ -1,5 +1,5 @@
 class DiscussionSpaces::DiscussionsController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :get_discussion_space_from_id, :authenticate
 
   def new

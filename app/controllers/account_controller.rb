@@ -1,5 +1,5 @@
 class AccountController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate, :except => [:new, :create, :show]
   before_filter :get_all_active_games 
   def new

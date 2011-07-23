@@ -1,5 +1,5 @@
 class CommentsController < CommunitiesController
-  respond_to :html, :xml, :js
+  respond_to :html, :js
   before_filter :authenticate
 
   def index

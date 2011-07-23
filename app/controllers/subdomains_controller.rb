@@ -1,5 +1,5 @@
 class SubdomainsController < CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   layout "community"
   before_filter :find_community_by_subdomain
   

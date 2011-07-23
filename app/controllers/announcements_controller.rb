@@ -1,5 +1,5 @@
 class AnnouncementsController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate
   
   # GET /announcements

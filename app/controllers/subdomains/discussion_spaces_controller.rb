@@ -1,5 +1,5 @@
 class DiscussionSpacesController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate, :get_option_hash
 
   def index

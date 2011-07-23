@@ -1,5 +1,5 @@
 class DiscussionsController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate
 
   def show
