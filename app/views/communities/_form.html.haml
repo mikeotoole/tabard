@@ -1,7 +1,9 @@
 = form_for @community do |f|
-  %p.field
-    = f.label :name
-    = f.text_field :name
+  = complete_text_field(@community, f, :name)
+  -#
+    %p.field
+      = f.label :name
+      = f.text_field :name
   %p.field
     = f.label :slogan
     = f.text_field :slogan

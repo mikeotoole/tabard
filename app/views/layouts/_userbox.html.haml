@@ -4,7 +4,7 @@
     = get_avatar(:standard)
     = link_to 'Edit', account_settings_path
   %dl#community.selectbox
-    - if @community
+    - if @community and @community.id?
       %dt= @community.display_name
     - else
       %dt.unselected My Communities:
@@ -14,7 +14,7 @@
     - current_user.communities.each do |community|
       %dd{ :class => (@community and @community == community) ? 'selected' : '' }
         = link_to community.display_name, root_url(:subdomain => community.subdomain)
-    %dd.new= link_to "+ Find a community", root_url(:subdomain => false)
+    %dd.new= link_to "+ Find a community", communities_url(:subdomain => false)
   %dl#profile.selectbox
     - if profile_active?
       %dt

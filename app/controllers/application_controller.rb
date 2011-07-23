@@ -1,20 +1,19 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games, :select_layout
+  before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
   after_filter :remember_current_page
   before_filter :remember_last_page
-  layout :select_layout
   
   private
-    # Select the correct layout based on subdomain
-    def select_layout
-      @community = Community.find_by_subdomain(request.subdomain.downcase)
-      if @community
-        'community'
-      else
-        'application'
-      end
-    end
+  
+  def help
+    Helper.instance
+  end
+
+  class Helper
+    include Singleton
+    include ActionView::Helpers::TextHelper
+  end
 
   def remember_current_page
     session[:current_page] = request.path_info
@@ -31,7 +30,7 @@ class ApplicationController < ActionController::Base
     #model.errors.full_messages.each { |message|
     #  add_new_flash_message(message,'error')
     #}
-    add_new_flash_message("Please check the fields and try again.","error","#{pluralize(model.errors.count,"error")}") unless model.errors.blank?
+    add_new_flash_message("Please check the fields and try again.","error","#{help.pluralize(model.errors.count,"error")}") unless model.errors.blank?
   end
 
   # Puts all of the notices and alerts into the messages array

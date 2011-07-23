@@ -4,6 +4,7 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # Global Gems
+  gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic', :branch => 'master'
   # Meta Languages
     gem 'haml'
     gem 'sass'

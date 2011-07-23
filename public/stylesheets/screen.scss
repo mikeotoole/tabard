@@ -1,5 +1,5 @@
 /* General Options */
-$border_radius: 5;
+$border_radius: 0;
 $icon_set: default;
 
 /* Background Colors */
@@ -319,6 +319,10 @@ label {
     padding: 0 0 1em;
     span {
       display: inline-block;
+      &.error {
+        border: 1px solid $accent_color;
+        display: block;
+      }
     }
   }
   p.submit {
@@ -352,6 +356,7 @@ label {
       }
     }
   }
+  .boolean,
   ul .checkbox,
   ul .radio,
   p.checkbox,
@@ -383,6 +388,7 @@ label {
         width: 90px;
       }
     }
+    &.boolean,
     &.checkbox {
       label {
         &:hover:before {

@@ -5,7 +5,7 @@ class CommunitiesController < ApplicationController
   
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
-    logger.debug("Unable to find #{request.subdomain.downcase} => #{root_url(:subdomain => false)}") unless @community
+    #logger.debug("Unable to find #{request.subdomain.downcase} => #{root_url(:subdomain => false)}") unless @community
     redirect_to [request.protocol, request.domain, request.port_string].join, :alert => "That community does not exist" and return false unless @community
   end
   
@@ -21,7 +21,12 @@ class CommunitiesController < ApplicationController
     @community = Community.new
     if !current_user.can_create(@community)
       render_insufficient_privileges
-    else  
+    else
+      @community.errors.add(:name, 'Fart face poop 1')
+      @community.errors.add(:slogan, 'Fart face poop 2a')
+      @community.errors.add(:slogan, 'Fart face poop 2b')
+      @community.errors.add(:label, 'Fart face poop 3')
+      @community.errors.add(:accepting, 'Fart face poop 4')
       respond_with(@community)
     end
   end

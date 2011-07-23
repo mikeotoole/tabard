@@ -1,25 +1,14 @@
-= fields_for :user_profile do |profile|
-  .medium
-    %p.field
-      = profile.label :name
-      = profile.text_field :name, :value => @profile.name
-    %p.field
-      = profile.label :avatar, "Avatar"
-      = image_tag(@profile.avatar_url) if @profile.avatar?
-      = profile.file_field :avatar
-      = profile.hidden_field :avatar_cache
-    %p{ :class => 'checkbox field' }
-      = profile.label :remove_avatar, (profile.check_box :remove_avatar) + ' Remove Avatar'
+-#= fields_for :user_profile do |profile|
+= semantic_form_for :user_profile do |profile|
+  = profile.inputs do
+    = profile.input :name
+    = image_tag(@profile.avatar_url) if @profile.avatar?
+    = profile.input :avatar, :as => 'file'
+    -#= profile.hidden :avatar_cache
+    = profile.input :remove_avatar, :as => 'boolean'
 
-= fields_for :user do |user|
-  .medium
-    %p.field
-      = user.label :email
-      = user.text_field :email
-    %p.field
-      %span.half
-        = user.label :password
-        = user.password_field :password
-      %span.half
-        = user.label :password_confirmation
-        = user.password_field :password_confirmation
+= semantic_form_for :user do |user|
+  = user.inputs do
+    = user.input :email
+    = user.input :password, :as => 'password'
+    = user.input :password_confirmation, :as => 'password'

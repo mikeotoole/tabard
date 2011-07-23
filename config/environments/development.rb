@@ -34,10 +34,6 @@ Bv::Application.configure do
     :enable_starttls_auto => true 
   }
   
-  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-    '<span class="error">'.html_safe << html_tag << '</span>'.html_safe
-  end
-  
   # This will force the models to be loaded so that subclasses can be seen by there parent.
   #%w[game wow swtor base_character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
   #  require_dependency File.join("app","models","#{c}.rb")
