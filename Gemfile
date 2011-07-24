@@ -10,7 +10,7 @@ source 'http://rubygems.org'
     gem 'squeel'
     #gem 'coffee-script'
   # Form Handling
-    gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic', :branch => 'master'
+    gem 'simple_form'
     gem 'client_side_validations'
   # WYSIWYG
     gem 'tiny_mce'

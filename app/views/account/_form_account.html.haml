@@ -1,12 +1,12 @@
-= semantic_fields_for @profile do |profile|
+= simple_fields_for @profile do |profile|
   = hidden_field_tag 'user_profile_avatar_cache', @profile.avatar_cache
-  = profile.inputs do
-    = profile.input :name, :wrapper_html => { :class => 'medium' }
-    = profile.input :avatar, :as => 'file', :hint => (image_tag @profile.avatar_url if @profile.avatar?)
-    = profile.input :remove_avatar, :as => 'boolean' if @profile.avatar?
-
-= semantic_fields_for @user do |user|
-  = user.inputs do
-    = user.input :email, :wrapper_html => { :class => 'medium' }
-    = user.input :password, :as => 'password', :wrapper_html => { :class => 'short' }
-    = user.input :password_confirmation, :as => 'password', :title => 'Confirm password', :wrapper_html => { :class => 'short' }
+  %fieldset
+    %ol
+      = profile.input :name
+      = profile.input :avatar, :as => 'file', :hint => (image_tag @profile.avatar_url if @profile.avatar?)
+      = profile.input :remove_avatar, :as => 'boolean' if @profile.avatar?
+      = simple_fields_for @user do |user|
+        = user.input :email
+        = user.input :password, :as => 'password'
+        = user.input :password_confirmation, :as => 'password', :title => 'Confirm password'
+        

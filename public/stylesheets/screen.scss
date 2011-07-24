@@ -298,38 +298,34 @@ label {
       padding: 0;
       li {
         list-style: none;
-        padding: 0 0 1em;
-        span {
-          display: inline-block;
-          &.error {
-            border: 1px solid $accent_color;
-            display: block;
-          }
-        }
-        .inline-hints {
-          padding: 1em 0 0;
-          img {
-            display: block;
-          }
-        }
-        &.short {
-          width: 250px;
-        }
-        &.medium {
-          width: 500px;
-        }
       }
+    }
+    .hint {
+      img {
+        display: block;
+        padding: .5em 0 0;
+      }
+    }
+    .input {
+      padding: 0 0 1em;
     }
     .boolean,
     .radio {
-      list-style: none !important;
-      label {
+      position: relative;
+      input {
+        height: 1px;
+        position: absolute;
+        margin: 5px;
+        width: 1px;
+        z-index: 1;
+      }
+      input + label {
         display: inline-block;
         height: 20px;
-        overflow: hidden;
+        line-height: 24px;
+        padding: 0 10px .5em 34px;
         position: relative;
-        padding: 5px 5px 5px 45px;
-        text-indent: -100px;
+        z-index: 2;
         &:before {
           background: lighten($bg_color_2, 10%);
           border: 1px solid darken($bg_color_2, 10%);
@@ -337,70 +333,66 @@ label {
           @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
           content: '';
           height: 24px;
-          left: 3px;
+          left: 0;
           position: absolute;
-          top: 3px;
+          top: 0;
           width: 24px;
         }
-        input {
-          width: 90px;
-        }
       }
-      &.boolean {
-        label {
-          &:hover:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
-          }
-          &.checked:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
-          }
-          &.unchecked:before {
-            background: lighten($bg_color_2, 10%);
-          }
-        }
+    }
+    .boolean {
+      input + label:hover:before {
+        background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
       }
-      &.radio {
-        label {
-          &:hover:before {
-            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
-          }
-          &.checked:before {
-            background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
-          }
-        }
+      input:checked + label:before {
+        background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+      }
+    }
+    .radio {
+      input + label:hover:before {
+        background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
+      }
+      input:checked + label:before {
+        background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
+      }
+      span label {
+        @include font(light);
+      }
+    }
+  }
+  .avatar {
+    position: relative;
+    &:after {
+      content: ' ';
+      clear: both;
+      display: block;
+      height: 0;
+      visibility: hidden;
+    }
+    p {
+      @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
+      @include border_radius(1);
+      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      color: $text_color_2;
+      float: left;
+      height: 80px;
+      margin: 0 0 1em;
+      padding-bottom: 0 !important;
+      position: relative;
+      width: 80px;
+      img {
+        background: $bg_color_1;
+        @include border_radius(1);
+        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        height: 70px;
+        margin: 5px;
+        width: 70px;
       }
     }
   }
   p.submit {
     clear: both;
     padding: 1em 0 2em;
-  }
-  p.avatar {
-    span {
-      clear: both;
-      display: block !important;
-      padding-bottom: .5em !important;
-      &.avatar {
-        @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
-        @include border_radius(1);
-        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-        color: $text_color_2;
-        float: left;
-        height: 80px;
-        margin: 0 0 1em;
-        padding-bottom: 0 !important;
-        position: relative;
-        width: 80px;
-        img {
-          background: $bg_color_1;
-          @include border_radius(1);
-          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-          height: 70px;
-          margin: 5px;
-          width: 70px;
-        }
-      }
-    }
   }
 }
 
@@ -1230,6 +1222,17 @@ table {
         height: 0;
         visibility: hidden;
       }
+      &.settings {
+        input {
+          &[type="email"],
+          &[type="text"] {
+            width: 480px;
+          }
+          &[type="password"] {
+            width: 240px;
+          }
+        }
+      }
     }
   }
   #search {
@@ -1579,7 +1582,7 @@ table {
     display: table;
     margin: 0 -10px;
     padding: 0 0 1.5em;
-    li {
+    fieldset {
       @include bg_gradient(lighten($bg_color_1, 10%), darken($bg_color_1, 10%));
       @include border_radius(1);
       @include box_shadow(0 0 5px rgba(0, 0, 0, .3));
@@ -1588,6 +1591,11 @@ table {
       padding: 10px 10px 0;
       vertical-align: top;
       width: 265px;
+      input {
+        &[name*="level"] {
+          width: 60px;
+        }
+      }
     }
   }
 }

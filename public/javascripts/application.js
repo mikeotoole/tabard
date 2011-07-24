@@ -31,22 +31,6 @@ $(document).ready(function() {
     if(field) {
       fieldType = $(field).attr('type');
       switch(fieldType) {
-        case 'checkbox':
-          $(field)
-            .bind('change', function() {
-              if($(this).filter(':checked').length) {
-                $(this).addClass('checked').parent().addClass('checked');
-              } else {
-                $(this)
-                  .removeClass('checked')
-                  .parent()
-                  .removeClass('checked')
-                  .addClass('unchecked')
-                  .mouseout(function(){ $(this).removeClass('unchecked'); });
-              }
-            });
-          $(this).has('input:checked').addClass('checked').find('input:checked').addClass('checked');
-        break;
         case 'radio':
           $(field)
             .bind('change', function() {

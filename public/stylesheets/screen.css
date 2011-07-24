@@ -217,34 +217,32 @@ label {
 #body fieldset ol {
   padding: 0; }
   #body fieldset ol li {
-    list-style: none;
-    padding: 0 0 1em; }
-    #body fieldset ol li span {
-      display: inline-block; }
-      #body fieldset ol li span.error {
-        border: 1px solid #0099cc;
-        display: block; }
-    #body fieldset ol li .inline-hints {
-      padding: 1em 0 0; }
-      #body fieldset ol li .inline-hints img {
-        display: block; }
-    #body fieldset ol li.short {
-      width: 250px; }
-    #body fieldset ol li.medium {
-      width: 500px; }
+    list-style: none; }
+#body fieldset .hint img {
+  display: block;
+  padding: .5em 0 0; }
+#body fieldset .input {
+  padding: 0 0 1em; }
 #body fieldset .boolean,
 #body fieldset .radio {
-  list-style: none !important; }
-  #body fieldset .boolean label,
-  #body fieldset .radio label {
+  position: relative; }
+  #body fieldset .boolean input,
+  #body fieldset .radio input {
+    height: 1px;
+    position: absolute;
+    margin: 5px;
+    width: 1px;
+    z-index: 1; }
+  #body fieldset .boolean input + label,
+  #body fieldset .radio input + label {
     display: inline-block;
     height: 20px;
-    overflow: hidden;
+    line-height: 24px;
+    padding: 0 10px .5em 34px;
     position: relative;
-    padding: 5px 5px 5px 45px;
-    text-indent: -100px; }
-    #body fieldset .boolean label:before,
-    #body fieldset .radio label:before {
+    z-index: 2; }
+    #body fieldset .boolean input + label:before,
+    #body fieldset .radio input + label:before {
       background: #1a1a1a;
       border: 1px solid black;
       -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
@@ -252,36 +250,30 @@ label {
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
       content: '';
       height: 24px;
-      left: 3px;
+      left: 0;
       position: absolute;
-      top: 3px;
+      top: 0;
       width: 24px; }
-    #body fieldset .boolean label input,
-    #body fieldset .radio label input {
-      width: 90px; }
-  #body fieldset .boolean.boolean label:hover:before,
-  #body fieldset .radio.boolean label:hover:before {
-    background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
-  #body fieldset .boolean.boolean label.checked:before,
-  #body fieldset .radio.boolean label.checked:before {
-    background: url(../images/icons/default.png) -248px -8px no-repeat white; }
-  #body fieldset .boolean.boolean label.unchecked:before,
-  #body fieldset .radio.boolean label.unchecked:before {
-    background: #1a1a1a; }
-  #body fieldset .boolean.radio label:hover:before,
-  #body fieldset .radio.radio label:hover:before {
-    background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
-  #body fieldset .boolean.radio label.checked:before,
-  #body fieldset .radio.radio label.checked:before {
-    background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
-#body p.submit {
-  clear: both;
-  padding: 1em 0 2em; }
-#body p.avatar span {
-  clear: both;
-  display: block !important;
-  padding-bottom: .5em !important; }
-  #body p.avatar span.avatar {
+#body fieldset .boolean input + label:hover:before {
+  background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
+#body fieldset .boolean input:checked + label:before {
+  background: url(../images/icons/default.png) -248px -8px no-repeat white; }
+#body fieldset .radio input + label:hover:before {
+  background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
+#body fieldset .radio input:checked + label:before {
+  background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
+#body fieldset .radio span label {
+  font-family: 'DinLight', sans-serif;
+  font-size: 1em; }
+#body .avatar {
+  position: relative; }
+  #body .avatar:after {
+    content: ' ';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden; }
+  #body .avatar p {
     background: -moz-linear-gradient(top, #666666, #333333) ;
     background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)) ;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666, endColorstr=#333333)";
@@ -295,7 +287,7 @@ label {
     padding-bottom: 0 !important;
     position: relative;
     width: 80px; }
-    #body p.avatar span.avatar img {
+    #body .avatar p img {
       background: white;
       -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
       -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
@@ -303,6 +295,9 @@ label {
       height: 70px;
       margin: 5px;
       width: 70px; }
+#body p.submit {
+  clear: both;
+  padding: 1em 0 2em; }
 
 /* Tables */
 table {
@@ -1106,6 +1101,10 @@ table {
         display: block;
         height: 0;
         visibility: hidden; }
+      #body dl.tabs > dd.settings input[type="email"], #body dl.tabs > dd.settings input[type="text"] {
+        width: 480px; }
+      #body dl.tabs > dd.settings input[type="password"] {
+        width: 240px; }
   #body #search {
     height: 100px; }
     #body #search p {
@@ -1385,7 +1384,7 @@ table {
     display: table;
     margin: 0 -10px;
     padding: 0 0 1.5em; }
-    #body #characters li {
+    #body #characters fieldset {
       background: -moz-linear-gradient(top, white, #e6e6e6) ;
       background: -webkit-gradient(linear, left top, left bottom, from(white), to(#e6e6e6)) ;
       -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=white, endColorstr=#e6e6e6)";
@@ -1397,6 +1396,8 @@ table {
       padding: 10px 10px 0;
       vertical-align: top;
       width: 265px; }
+      #body #characters fieldset input[name*="level"] {
+        width: 60px; }
 
 /* Footer */
 #footer {

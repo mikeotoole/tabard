@@ -1,10 +1,14 @@
 = f.hidden_field :game_id
-= f.inputs do
-  = f.input :avatar, :as => 'file', :hint => (image_tag @character.avatar_url(:standard) if @character.avatar?)
-  = f.input :remove_avatar, :as => 'boolean' if @character.avatar
-  = f.input :name
-  = f.input :level, :as => 'string', :wrapper_html => { :class => 'short' }
-  = f.input :faction
-  = f.input :race
-  = f.input :server
-  = f.input :default, :as => 'boolean', :title => 'Make default character'
+%fieldset
+  %ol
+    = f.input :avatar, :as => 'file'
+    - if @character.avatar?
+      %li.avatar
+        %p= image_tag @character.avatar_url(:standard)
+    = f.input :remove_avatar, :as => 'boolean' if @character.avatar
+    = f.input :name
+    = f.input :level, :as => 'string', :wrapper_html => { :class => 'short' }
+    = f.input :faction
+    = f.input :race
+    = f.input :server
+    = f.input :default, :as => 'boolean', :title => 'Make default character'

@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   after_filter :remember_current_page
   before_filter :remember_last_page
   
+  SimpleForm.wrapper_tag = :li
+  
   private
   
   def help
