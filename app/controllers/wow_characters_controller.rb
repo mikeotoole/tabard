@@ -1,30 +1,24 @@
 class WowCharactersController < ApplicationController
   before_filter :authenticate, :except => [:new]
-  respond_to :html, :xml, :js
-  
-  # GET /game/game_id/wow_characters/1/edit
+  respond_to :html, :js
+
   def edit
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
         render_insufficient_privileges
     end
   end
-  
-  # GET /game/game_id/wow_characters/1
-  # GET /game/game_id/wow_characters/1.xml
+
   def show
       @character = WowCharacter.find_by_id(params[:id])
       if !current_user.can_show(@character)
         render_insufficient_privileges
       else
-        @game = Game.find_by_id(@character.game_id) if @character
-    
+        @game = Game.find_by_id(@character.game_id) if @character    
         respond_with(@character)
       end
   end
-  
-  # GET /game/game_id/wow_characters/new
-  # GET /game/game_id/wow_characters/new.xml
+
   def new
       @character = WowCharacter.new
       #TODO fix this
@@ -37,8 +31,6 @@ class WowCharactersController < ApplicationController
       # end
   end
 
-  # POST /game/game_id/wow_characters
-  # POST /game/game_id/wow_characters.xml
   def create
     @character = WowCharacter.new(params[:wow_character])
     if !current_user.can_create(@character)
@@ -63,8 +55,6 @@ class WowCharactersController < ApplicationController
     end
   end
 
-  # PUT /game/game_id/wow_characters/1
-  # PUT /game/game_id/wow_characters/1.xml
   def update
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
@@ -91,8 +81,6 @@ class WowCharactersController < ApplicationController
     end
   end
 
-  # DELETE /game/game_id/wow_characters/1
-  # DELETE /game/game_id/wow_characters/1.xml
   def destroy
     @character = WowCharacter.find_by_id(params[:id])
     if !current_user.can_delete(@character)

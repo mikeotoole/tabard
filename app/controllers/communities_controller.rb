@@ -1,5 +1,5 @@
 class CommunitiesController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :find_community_by_subdomain, :only => :show
   before_filter :authenticate, :except => [:show, :index]
   

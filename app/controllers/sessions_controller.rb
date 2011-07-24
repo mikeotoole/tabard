@@ -1,8 +1,4 @@
-class SessionsController < ApplicationController
-  def new
-    #should make sure this is in the same domain...
-    #session[:pre_login_url] = request.env["REQUEST_URI"] 
-  end  
+class SessionsController < ApplicationController  
   
   def create  
     if user = User.authenticate(params[:email], params[:password])

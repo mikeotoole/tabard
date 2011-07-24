@@ -1,30 +1,24 @@
 class SwtorCharactersController < ApplicationController
   before_filter :authenticate, :except => [:new]
-  respond_to :html, :xml, :js
-    
-  # GET /game/game_id/swtor_characters/1/edit
+  respond_to :html, :js
+
   def edit
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
         render_insufficient_privileges
     end
   end
-  
-  # GET /game/game_id/swtor_characters/1
-  # GET /game/game_id/swtor_characters/1.xml
+
   def show
       @character = SwtorCharacter.find_by_id(params[:id])
       if !current_user.can_show(@character)
         render_insufficient_privileges
       else
-        @game = Game.find_by_id(@character.game_id) if @character
-    
+        @game = Game.find_by_id(@character.game_id) if @character    
         respond_with(@character)
       end
   end
-  
-  # GET /game/game_id/swtor_characters/new
-  # GET /game/game_id/swtor_characters/new.xml
+
   def new
       @character = SwtorCharacter.new
       #TODO fix this
@@ -37,8 +31,6 @@ class SwtorCharactersController < ApplicationController
       # end
   end
 
-  # POST /game/game_id/swtor_characters
-  # POST /game/game_id/swtor_characters.xml
   def create
     @character = SwtorCharacter.new(params[:swtor_character])
     if !current_user.can_create(@character)
@@ -61,8 +53,6 @@ class SwtorCharactersController < ApplicationController
     end
   end
 
-  # PUT /game/game_id/swtor_characters/1
-  # PUT /game/game_id/swtor_characters/1.xml
   def update
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_update(@character)
@@ -89,8 +79,6 @@ class SwtorCharactersController < ApplicationController
     end
   end
 
-  # DELETE /game/game_id/swtor_characters/1
-  # DELETE /game/game_id/swtor_characters/1.xml
   def destroy
     @character = SwtorCharacter.find_by_id(params[:id])
     if !current_user.can_delete(@character)

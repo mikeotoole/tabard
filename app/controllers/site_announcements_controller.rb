@@ -1,16 +1,12 @@
 class SiteAnnouncementsController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate
-  
-  # GET /site_announcements
-  # GET /site_announcements.xml
+
   def index
     @site_announcements = SiteAnnouncement.all
     respond_with(@site_announcements)
   end
 
-  # GET /site_announcements/1
-  # GET /site_announcements/1.xml
   def show
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_show(@site_announcement)
@@ -21,8 +17,6 @@ class SiteAnnouncementsController < ApplicationController
     end
   end
 
-  # GET /site_announcements/new
-  # GET /site_announcements/new.xml
   def new
     @site_announcement = SiteAnnouncement.new
     if !current_user.can_create(@site_announcement)
@@ -32,7 +26,6 @@ class SiteAnnouncementsController < ApplicationController
     end 
   end
 
-  # GET /site_announcements/1/edit
   def edit
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_update(@site_announcement)
@@ -41,27 +34,19 @@ class SiteAnnouncementsController < ApplicationController
     respond_with(@site_announcement)
   end
 
-  # POST /site_announcements
-  # POST /site_announcements.xml
   def create
     @site_announcement = SiteAnnouncement.new(params[:site_announcement])
     if !current_user.can_create(@site_announcement)
       render_insufficient_privileges
     else
       if @site_announcement.save
-        respond_with(@site_announcement)
-      else
-        grab_all_errors_from_model(@site_announcement)
-        respond_to do |format|
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @site_announcement.errors, :status => :unprocessable_entity }
-        end
+        add_new_flash_message("Site Announement created.")
       end
+      grab_all_errors_from_model(@site_announcement)
+      respond_with(@site_announcement)
     end
   end
 
-  # PUT /site_announcements/1
-  # PUT /site_announcements/1.xml
   def update
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_update(@site_announcement)
@@ -69,19 +54,12 @@ class SiteAnnouncementsController < ApplicationController
     else
       if @site_announcement.update_attributes(params[:site_announcement])
         add_new_flash_message('Site announcement was successfully updated.')
-        respond_with(@site_announcement)
-      else
-        grab_all_errors_from_model(@site_announcement)
-        respond_to do |format|
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @site_announcement.errors, :status => :unprocessable_entity }
-        end
       end
+      grab_all_errors_from_model(@site_announcement)
+      respond_with(@site_announcement)
     end
   end
 
-  # DELETE /site_announcements/1
-  # DELETE /site_announcements/1.xml
   def destroy
     @site_announcement = SiteAnnouncement.find(params[:id])
     if !current_user.can_delete(@site_announcement)

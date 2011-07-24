@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   
   def index
     @answers = Answer.all

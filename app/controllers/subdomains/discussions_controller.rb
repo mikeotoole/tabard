@@ -1,5 +1,5 @@
-class Subdomains::DiscussionsController < SubdomainsController
-  respond_to :html, :xml
+class DiscussionsController < Communities::CommunitiesController
+  respond_to :html
   before_filter :authenticate
 
   def show

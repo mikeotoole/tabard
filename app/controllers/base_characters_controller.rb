@@ -1,6 +1,6 @@
 class BaseCharactersController < ApplicationController
   before_filter :authenticate, :except => [:new]
-  respond_to :html, :xml, :js
+  respond_to :html, :js
   
   # GET /base_characters/new
   def new

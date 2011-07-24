@@ -1,9 +1,7 @@
 class RegistrationApplicationsController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate, :except => [:new, :create, :show]
 
-  # GET /registration_applications/new
-  # GET /registration_applications/new.xml
   def new
     @registration_application = RegistrationApplication.new
     @profile = UserProfile.new 
@@ -18,8 +16,6 @@ class RegistrationApplicationsController < Communities::CommunitiesController
     respond_with(@registration_application)
   end
 
-  # POST /registration_applications
-  # POST /registration_applications.xml
   def create
     if logged_in?
       @user = current_user

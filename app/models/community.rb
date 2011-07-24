@@ -1,4 +1,5 @@
 class Community < ActiveRecord::Base
+  include SmartLoggerHelper
   validates :name, :uniqueness => { :case_sensitive => false }, 
                    :presence => true,
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
@@ -24,6 +25,8 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :class_name => "SiteForm"
   
   before_save :update_subdomain
+  
+  after_validation :log_errors, :if => Proc.new {|m| m.errors}
   
   after_create :setup_admin_role, :setup_applicant_role, :setup_member_role, :setup_application_form
   

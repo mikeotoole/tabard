@@ -1,25 +1,17 @@
 class TextQuestionsController < ApplicationController
-  respond_to :html, :xml, :js
+  respond_to :html, :js
   before_filter :authenticate, :except => [:index, :show]
-  
-  # GET /text_questions
-  # GET /text_questions.xml
+
   def index
     @text_questions = TextQuestion.all
-
     respond_with(@text_questions)
   end
 
-  # GET /text_questions/1
-  # GET /text_questions/1.xml
   def show
     @text_question = TextQuestion.find(params[:id])
-
     respond_with(@text_question)
   end
 
-  # GET /text_questions/new
-  # GET /text_questions/new.xml
   def new
     @text_question = TextQuestion.new
     if !current_user.can_create(@text_question)
@@ -29,7 +21,6 @@ class TextQuestionsController < ApplicationController
     end
   end
 
-  # GET /text_questions/1/edit
   def edit
     @text_question = TextQuestion.find(params[:id])
     if !current_user.can_update(@text_question)
@@ -39,8 +30,6 @@ class TextQuestionsController < ApplicationController
     end
   end
 
-  # POST /text_questions
-  # POST /text_questions.xml
   def create
     @text_question = TextQuestion.new(params[:text_question])
     if !current_user.can_create(@text_question)
@@ -58,8 +47,6 @@ class TextQuestionsController < ApplicationController
     end
   end
 
-  # PUT /text_questions/1
-  # PUT /text_questions/1.xml
   def update
     @old_text_question = TextQuestion.find(params[:id])
     if !current_user.can_update(@old_text_question)
@@ -87,8 +74,6 @@ class TextQuestionsController < ApplicationController
     end
   end
 
-  # DELETE /text_questions/1
-  # DELETE /text_questions/1.xml
   def destroy
     @text_question = TextQuestion.find(params[:id])
     if !current_user.can_delete(@text_question)

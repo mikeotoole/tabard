@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate  
 
   def index

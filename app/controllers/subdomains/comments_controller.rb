@@ -1,5 +1,5 @@
-class Subdomains::CommentsController < SubdomainsController
-  respond_to :html, :xml, :js
+class CommentsController < CommunitiesController
+  respond_to :html, :js
   before_filter :authenticate
 
   def index

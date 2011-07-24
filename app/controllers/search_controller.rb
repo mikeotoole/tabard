@@ -1,5 +1,5 @@
 class SearchController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   
   def index
     @search_term = params[:query]

@@ -1,5 +1,5 @@
 class CheckBoxQuestionsController < ApplicationController
-  respond_to :html, :xml, :js
+  respond_to :html, :js
   before_filter :authenticate, :except => [:index, :show]
   
   def index

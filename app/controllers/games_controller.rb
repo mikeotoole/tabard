@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
 
   def show
     @game = Game.active.find(params[:id])

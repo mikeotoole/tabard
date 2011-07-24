@@ -1,5 +1,5 @@
 class GameAnnouncementsController < ApplicationController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate, :grab_game_from_game_id
 
   def index

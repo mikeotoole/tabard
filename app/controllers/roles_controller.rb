@@ -1,8 +1,7 @@
 class RolesController < Communities::CommunitiesController
-  respond_to :html, :xml
+  respond_to :html
   before_filter :authenticate
-  # GET /roles
-  # GET /roles.xml
+
   def index
     if !current_user.can_show("Role") 
       render_insufficient_privileges
@@ -12,8 +11,6 @@ class RolesController < Communities::CommunitiesController
     end
   end
 
-  # GET /roles/1
-  # GET /roles/1.xml
   def show
     if !current_user.can_show("Role") 
       render_insufficient_privileges
