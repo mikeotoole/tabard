@@ -10,13 +10,13 @@
       - @wowCharacters.each do |character|
         %li
           - @character = character
-          = fields_for :wow_character, @character, :index => Time.now.to_f.to_s do |f|
+          = semantic_fields_for :wow_character, @character, :index => Time.now.to_f.to_s do |f|
             = render :file => 'wow_characters/_form_fields.html.haml', :locals => { :f => f }
     - if @swtorCharacters
       - @swtorCharacters.each do |character|
         %li
           - @character = character
-          = fields_for :swtor_character, @character, :index => Time.now.to_f.to_s do |f|
+          = semantic_fields_for :swtor_character, @character, :index => Time.now.to_f.to_s do |f|
             = render :file => 'swtor_characters/_form_fields.html.haml', :locals => { :f => f }
   %p
     %button{ :type => 'submit' }

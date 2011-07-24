@@ -4,12 +4,14 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # Global Gems
-  gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic', :branch => 'master'
   # Meta Languages
     gem 'haml'
     gem 'sass'
     gem 'squeel'
     #gem 'coffee-script'
+  # Form Handling
+    gem 'formtastic', :git => 'http://github.com/justinfrench/formtastic', :branch => 'master'
+    gem 'client_side_validations'
   # WYSIWYG
     gem 'tiny_mce'
   # Image Storage and Manipulation

@@ -1,11 +1,12 @@
 class AccountController < ApplicationController
   respond_to :html, :xml
   before_filter :authenticate, :except => [:new, :create, :show]
-  before_filter :get_all_active_games 
+  before_filter :get_all_active_games, :count_characters
+  
   def new
     @profile = UserProfile.new 
     @user = User.new
-
+    
     add_new_flash_message("Please fill this form out to create your Crumblin account.")
   end
 
@@ -34,12 +35,13 @@ class AccountController < ApplicationController
     end
     @user.no_signup_email = true # TODO remove in production
     if @user.save 
-      add_new_flash_message('You have successfully created your new Crumblin user.')
-      add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
+      add_new_flash_message("Your account has been created, <em>#{@user.name}</em>. Welcome to Crumblin!")
       session[:user_id] = @user.id
+      redirect_to account_path 
+    else
+      grab_all_errors_from_model(@user)
+      render :new
     end
-    grab_all_errors_from_model(@user)
-    respond_with([@user,@profile])
   end
   
   def edit
@@ -66,10 +68,6 @@ class AccountController < ApplicationController
     else
       @user = current_user
       @profile = current_user.user_profile
-      @characterCount = 0
-      current_user.user_profile.game_profiles.each do |game_profile|
-        @characterCount += game_profile.character_proxies.size
-      end
       @wowCharacters = current_user.get_characters(Wow)
       @swtorCharacters = current_user.get_characters(Swtor)   
     end
@@ -82,5 +80,13 @@ class AccountController < ApplicationController
 
   def get_all_active_games
     @games = Game.active
+  end
+  
+  def count_characters  
+    @characterCount = 0
+    return unless logged_in?
+    current_user.user_profile.game_profiles.each do |game_profile|
+      @characterCount += game_profile.character_proxies.size
+    end
   end
 end
