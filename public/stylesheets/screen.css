@@ -113,6 +113,51 @@ label {
   font-family: 'DinMedium', sans-serif;
   font-size: inherit; }
 
+.boolean,
+.radio {
+  position: relative; }
+  .boolean input,
+  .radio input {
+    height: 1px;
+    position: absolute;
+    margin: 5px;
+    width: 1px;
+    z-index: 1; }
+  .boolean input + label,
+  .radio input + label {
+    display: inline-block;
+    height: 20px;
+    line-height: 24px;
+    padding: 0 10px .5em 34px;
+    position: relative;
+    z-index: 2; }
+    .boolean input + label:before,
+    .radio input + label:before {
+      background: #1a1a1a;
+      border: 1px solid black;
+      -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+      -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+      content: '';
+      height: 24px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 24px; }
+
+.boolean input + label:hover:before {
+  background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
+.boolean input:checked + label:before {
+  background: url(../images/icons/default.png) -248px -8px no-repeat white; }
+
+.radio input + label:hover:before {
+  background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
+.radio input:checked + label:before {
+  background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
+.radio span label {
+  font-family: 'DinLight', sans-serif;
+  font-size: 1em; }
+
 .selectbox {
   color: white;
   height: 30px;
@@ -223,48 +268,6 @@ label {
   padding: .5em 0 0; }
 #body fieldset .input {
   padding: 0 0 1em; }
-#body fieldset .boolean,
-#body fieldset .radio {
-  position: relative; }
-  #body fieldset .boolean input,
-  #body fieldset .radio input {
-    height: 1px;
-    position: absolute;
-    margin: 5px;
-    width: 1px;
-    z-index: 1; }
-  #body fieldset .boolean input + label,
-  #body fieldset .radio input + label {
-    display: inline-block;
-    height: 20px;
-    line-height: 24px;
-    padding: 0 10px .5em 34px;
-    position: relative;
-    z-index: 2; }
-    #body fieldset .boolean input + label:before,
-    #body fieldset .radio input + label:before {
-      background: #1a1a1a;
-      border: 1px solid black;
-      -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-      -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-      content: '';
-      height: 24px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 24px; }
-#body fieldset .boolean input + label:hover:before {
-  background: url(../images/icons/default.png) -248px -8px no-repeat #0099cc; }
-#body fieldset .boolean input:checked + label:before {
-  background: url(../images/icons/default.png) -248px -8px no-repeat white; }
-#body fieldset .radio input + label:hover:before {
-  background: url(../images/icons/default.png) -1088px -8px no-repeat #0099cc; }
-#body fieldset .radio input:checked + label:before {
-  background: url(../images/icons/default.png) -1088px -8px no-repeat white; }
-#body fieldset .radio span label {
-  font-family: 'DinLight', sans-serif;
-  font-size: 1em; }
 #body .avatar {
   position: relative; }
   #body .avatar:after {
@@ -411,37 +414,19 @@ table {
       #header .login input[type='email']#password {
         top: 42px; }
     #header .login .remember {
-      line-height: 26px; }
+      bottom: 12px;
+      left: 8px;
+      position: absolute; }
       #header .login .remember label {
-        bottom: 8px;
-        color: #e6e6e6;
-        display: block;
-        height: 26px;
-        left: 0;
-        overflow: hidden;
-        padding: 0 0 0 45px;
-        position: absolute;
-        text-indent: -100px; }
+        display: inline;
+        font-family: 'DinLight', sans-serif;
+        font-size: 1em; }
         #header .login .remember label:before {
-          background: #e6e6e6;
-          border: 1px solid black;
-          -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-          content: '';
-          height: 24px;
-          left: 8px;
-          position: absolute;
-          top: 0;
-          width: 24px; }
-        #header .login .remember label input {
-          width: 90px; }
-        #header .login .remember label.checked:before {
-          background: url(../images/icons/default.png) -248px -8px no-repeat #e6e6e6; }
-        #header .login .remember label:hover {
-          color: white; }
-          #header .login .remember label:hover:before {
-            background-color: white; }
+          background: #e6e6e6; }
+      #header .login .remember input + label:hover:before {
+        background: url(../images/icons/default.png) -248px -8px no-repeat white; }
+      #header .login .remember input:checked + label:before {
+        background: url(../images/icons/default.png) -248px -48px no-repeat #0099cc; }
     #header .login button {
       border: 0;
       height: 30px;

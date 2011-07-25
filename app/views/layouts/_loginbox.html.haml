@@ -1,12 +1,12 @@
 = form_tag(session_url(:subdomain => false), :class => 'login') do
-  = label_tag :email
-  = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
-  = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
-  %p.remember
-    %label.checked
-      = check_box_tag 'remember', 1, true
-      Remember Me
-  %button{ :type => 'submit' } Login
-  %p.apply
-    or
-    = link_to 'Sign up', signup_path
+  %fieldset
+    = label_tag :email
+    = text_field_tag(:email, '', {:title => 'Email address', :spellcheck => false})
+    = password_field_tag(:password, '', {:title => 'Password', :spellcheck => false})
+    %p{ :class => 'remember boolean' }
+      = check_box_tag :remember
+      = label_tag :remember, 'Remember me'
+    %button{ :type => 'submit' } Login
+    %p.apply
+      or
+      = link_to 'Sign up', signup_path

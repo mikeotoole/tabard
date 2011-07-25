@@ -183,6 +183,56 @@ label {
   display: block;
   @include font(medium, inherit);
 }
+.boolean,
+.radio {
+  position: relative;
+  input {
+    height: 1px;
+    position: absolute;
+    margin: 5px;
+    width: 1px;
+    z-index: 1;
+  }
+  input + label {
+    display: inline-block;
+    height: 20px;
+    line-height: 24px;
+    padding: 0 10px .5em 34px;
+    position: relative;
+    z-index: 2;
+    &:before {
+      background: lighten($bg_color_2, 10%);
+      border: 1px solid darken($bg_color_2, 10%);
+      @include border_radius(1);
+      @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
+      content: '';
+      height: 24px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 24px;
+    }
+  }
+}
+.boolean {
+  input + label:hover:before {
+    background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
+  }
+  input:checked + label:before {
+    background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+  }
+}
+.radio {
+  input + label:hover:before {
+    background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
+  }
+  input:checked + label:before {
+    background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
+  }
+  span label {
+    @include font(light);
+  }
+}
 .selectbox {
   @include border_radius(1);
   color: $text_color_2;
@@ -308,56 +358,6 @@ label {
     }
     .input {
       padding: 0 0 1em;
-    }
-    .boolean,
-    .radio {
-      position: relative;
-      input {
-        height: 1px;
-        position: absolute;
-        margin: 5px;
-        width: 1px;
-        z-index: 1;
-      }
-      input + label {
-        display: inline-block;
-        height: 20px;
-        line-height: 24px;
-        padding: 0 10px .5em 34px;
-        position: relative;
-        z-index: 2;
-        &:before {
-          background: lighten($bg_color_2, 10%);
-          border: 1px solid darken($bg_color_2, 10%);
-          @include border_radius(1);
-          @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
-          content: '';
-          height: 24px;
-          left: 0;
-          position: absolute;
-          top: 0;
-          width: 24px;
-        }
-      }
-    }
-    .boolean {
-      input + label:hover:before {
-        background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
-      }
-      input:checked + label:before {
-        background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
-      }
-    }
-    .radio {
-      input + label:hover:before {
-        background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
-      }
-      input:checked + label:before {
-        background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
-      }
-      span label {
-        @include font(light);
-      }
     }
   }
   .avatar {
@@ -558,43 +558,21 @@ table {
       }
     }
     .remember {
-      line-height: 26px;
+      bottom: 12px;
+      left: 8px;
+      position: absolute;
       label {
-        bottom: 8px;
-        color: darken($text_color_2, 10%);
-        display: block;
-        height: 26px;
-        left: 0;
-        overflow: hidden;
-        padding: 0 0 0 45px;
-        position: absolute;
-        text-indent: -100px;
+        display: inline;
+        @include font(light);
         &:before {
           background: darken($bg_color_1, 10%);
-          border: 1px solid darken($bg_color_2, 10%);
-          @include border_radius(1);
-          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
-          content: '';
-          height: 24px;
-          left: 8px;
-          position: absolute;
-          top: 0;
-          width: 24px;
         }
-        input {
-          width: 90px;
-        }
-        &.checked {
-          &:before {
-            background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat darken($bg_color_1, 10%);
-          }
-        }
-        &:hover {
-          color: $text_color_2;
-          &:before {
-            background-color: $bg_color_1;
-          }
-        }
+      }
+      input + label:hover:before {
+        background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+      }
+      input:checked + label:before {
+        background: url(../images/icons/#{$icon_set}.png) -248px -48px no-repeat $accent_color;
       }
     }
     button {

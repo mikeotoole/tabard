@@ -21,40 +21,30 @@ $(document).ready(function() {
   })
   .trigger('hashchange');
   
-  //input field enhancements
+  //text field enhancements
   $('label').each(function() {
-    if($(this).find('input[type!="hidden"]')) {
-      field = $(this).find('input[type!="hidden"]');
-    } else if ($(this).attr('for')) {
+    if ($(this).attr('for')) {
       field = $('#'+$(this).attr('for'));
+    } else if($(this).find('input')) {
+      field = $(this).find('input');
+    } else {
+      field = false;
     }
-    if(field) {
-      fieldType = $(field).attr('type');
-      switch(fieldType) {
-        case 'radio':
-          $(field)
-            .bind('change', function() {
-              $('input[name="' + $(this).attr('name') + '"]').removeClass('checked').parent().removeClass('checked');
-              $(this).addClass('checked').parent().addClass('checked');
-            })
-            .trigger('change');
-        break;
-        case 'text':
-          $(field)
-            .data('default', $.trim($(field).attr('title')))
-            .removeAttr('title')
-            .bind('focus', function() {
-              value = $(this).val();
-              if($.trim(value)==$(this).data('default')) $(this).attr('value','');
-            })
-            .bind('blur', function() {
-              value = $(this).val();
-              if($.trim(value)=='') $(this).attr('value',$(this).data('default'));
-            })
-            .trigger('focus')
-            .trigger('blur');
-        break;
-      }
+    fieldType = $(field).attr('type');
+    if(fieldType.match(/text|email/i)) {
+      $(field)
+        .data('default', $.trim($(field).attr('title')))
+        .removeAttr('title')
+        .bind('focus', function() {
+          value = $(this).val();
+          if($.trim(value)==$(this).data('default')) $(this).attr('value','');
+        })
+        .bind('blur', function() {
+          value = $(this).val();
+          if($.trim(value)=='') $(this).attr('value',$(this).data('default'));
+        })
+        .trigger('focus')
+        .trigger('blur');
     }
   });
   
