@@ -86,6 +86,7 @@ Bv::Application.routes.draw do
   constraints(Subdomain) do
     match "/" => "subdomains#index"
     scope :module => "subdomains" do
+      match "management" => "management#index", :as => :management
       namespace "management" do
         resources :users, :only => [:index, :destroy]
       

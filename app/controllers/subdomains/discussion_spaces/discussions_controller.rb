@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 class Subdomains::DiscussionSpaces::DiscussionsController < SubdomainsController
-  respond_to :html, :xml
-=======
-class DiscussionSpaces::DiscussionsController < Communities::CommunitiesController
   respond_to :html
->>>>>>> e6e1371956e54e538383bd0c1beebbc1233109d8
   before_filter :get_discussion_space_from_id, :authenticate
 
   def new
