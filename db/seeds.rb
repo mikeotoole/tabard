@@ -10,13 +10,11 @@ characterResource = SystemResource.create(:name => "Character")
 commentResource = SystemResource.create(:name => "Comment")
 
 discussionSpaceResource = SystemResource.create(:name => "DiscussionSpace")
-discussionResource = SystemResource.create(:name => "Discussion")
 
 siteAnnouncementResource = SystemResource.create(:name => "SiteAnnouncement")
 gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
-pageResource = SystemResource.create(:name => "Page")
 
 # Sample Games
 wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
