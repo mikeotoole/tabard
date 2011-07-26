@@ -25,7 +25,6 @@ class Subdomains::PageSpacesController < SubdomainsController
     if !current_user.can_update(@page_space)
       render_insufficient_privileges
     end
-    repsond_with(@page_space)
   end
 
   def create

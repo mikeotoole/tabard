@@ -25,15 +25,45 @@ class Permission < ActiveRecord::Base
   
   def permission_level
     if self.delete_p
-      permission_level = 'delete_p'
+      return 'delete_p'
     elsif self.create_p
-      permission_level = 'create_p'
+      return 'create_p'
     elsif self.update_p
-      permission_level = 'update_p'
+      return 'update_p'
     elsif self.show_p
-      permission_level = 'show_p'
+      return 'show_p'
     else
-      permission_level = ''
+      return ''
+    end
+  end
+  
+  def permission_level=(value)
+    case value
+      when 'delete_p'
+        self.update_p = true
+        self.create_p = true
+        self.delete_p = true
+        self.show_p = true
+      when 'create_p'    
+        self.delete_p = false
+        self.update_p = true
+        self.create_p = true
+        self.show_p = true
+      when 'update_p'
+        self.delete_p = false
+        self.update_p = true
+        self.create_p = false
+        self.show_p = true
+      when 'show_p'
+        self.delete_p = false
+        self.update_p = false
+        self.create_p = false
+        self.show_p = true
+      else
+        self.delete_p = false
+        self.update_p = false
+        self.create_p = false
+        self.show_p = false
     end
   end
   
@@ -50,5 +80,21 @@ class Permission < ActiveRecord::Base
   
   def system_resource_permission
     permissionable.is_a? SystemResource
+  end
+  
+  def check_user_show_permissions(user)
+    user.can_show(self.role)
+  end
+  
+  def check_user_create_permissions(user)
+    user.can_create(self.role)
+  end
+  
+  def check_user_update_permissions(user)
+    user.can_update(self.role)
+  end
+  
+  def check_user_delete_permissions(user)
+    user.can_delete(self.role)
   end
 end

@@ -229,26 +229,4 @@ class ApplicationController < ActionController::Base
   def collect_games
     @games = Game.active
   end
-  
-  def parse_permission_level(params)
-    params[:show_p] = 1
-    params[:update_p] = 0
-    params[:create_p] = 0
-    params[:delete_p] = 0
-    case params[:permission_level]
-    when 'delete_p'
-      params[:update_p] = 1
-      params[:create_p] = 1
-      params[:delete_p] = 1
-    when 'create_p'    
-      params[:update_p] = 1
-      params[:create_p] = 1
-    when 'update_p'
-      params[:update_p] = 1
-    end
-    params.delete('permission_level')
-    params
-  end
-  helper_method :parse_permission_level
-  
 end

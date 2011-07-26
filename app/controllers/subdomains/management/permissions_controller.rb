@@ -14,7 +14,6 @@ class Subdomains::Management::PermissionsController < SubdomainsController
   end
 
   def create
-    params[:permission] = parse_permission_level(params[:permission])
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
       add_new_flash_message('Permission was succesfully created.')
@@ -58,10 +57,10 @@ class Subdomains::Management::PermissionsController < SubdomainsController
         case resource.name
         when "DiscussionSpace"
           @discussionHeader = [["All "+resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
-          @discussionOptions = { "Specific Discussion Space" => DiscussionSpace.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
+          @discussionOptions = { "Specific Discussion Space" => @community.discussion_spaces.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
         when "PageSpace"
           @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
-          @pageOptions = { "Specific Page Space" => PageSpace.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
+          @pageOptions = { "Specific Page Space" => @community.page_spaces.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
         else
           @permissionables << ["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
         end

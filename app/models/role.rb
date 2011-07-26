@@ -1,4 +1,5 @@
 class Role < ActiveRecord::Base
+  attr_accessible :name, :permissions
   has_many :roles_users
   has_many :users, :through => :roles_users
   has_many :permissions, :dependent => :destroy
@@ -58,5 +59,21 @@ class Role < ActiveRecord::Base
   
   def delete_system_resources
     delete_permissions.keep_if {|p| p.system_resource_permission}
+  end
+  
+  def check_user_show_permissions(user)
+    user.can_show("Role")
+  end
+  
+  def check_user_create_permissions(user)
+    user.can_create("Role") and (self.community.admin_role != self and self.community.applicant_role != self)
+  end
+  
+  def check_user_update_permissions(user)
+    user.can_update("Role") and (self.community.admin_role != self)
+  end
+  
+  def check_user_delete_permissions(user)
+    user.can_delete("Role") and (self.community.admin_role != self and self.community.applicant_role != self and self.community.member_role != self)
   end
 end
