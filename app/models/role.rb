@@ -76,4 +76,8 @@ class Role < ActiveRecord::Base
   def check_user_delete_permissions(user)
     user.can_delete("Role") and (self.community.admin_role != self and self.community.applicant_role != self and self.community.member_role != self)
   end
+  
+  def can_update_users
+    (self.community.member_role != self) and (self.community.applicant_role != self) and (self.community.admin_role != self)
+  end
 end
