@@ -27,9 +27,9 @@ class SessionsController < ApplicationController
   end
   
   def destroy 
+    add_new_flash_message("You successfully logged out") if logged_in?
     reset_session
     cookies.delete :remember_token, :domain => :all
-    add_new_flash_message("You successfully logged out")
     redirect_to root_path
   end
 end

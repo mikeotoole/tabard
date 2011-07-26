@@ -46,5 +46,5 @@
     %dt{ :class => 'settings' + (params[:tab] == 'settings' ? ' active' : '') } Account Settings
     %dd{ :class => 'settings' + (params[:tab] == 'settings' ? ' active' : '') }
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|
-        = render :partial => 'form_account', :locals => {:f => f}
+        = render :partial => 'form_account'
         %p.submit= submit_tag('Save Changes')

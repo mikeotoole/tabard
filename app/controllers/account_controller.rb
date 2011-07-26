@@ -1,12 +1,11 @@
 class AccountController < ApplicationController
   respond_to :html
   before_filter :authenticate, :except => [:new, :create, :show]
-  before_filter :get_all_active_games, :count_characters
-  
+  before_filter :get_all_active_games, :get_all_characters
   def new
     @profile = UserProfile.new 
     @user = User.new
-    
+
     add_new_flash_message("Please fill this form out to create your Crumblin account.")
   end
 
@@ -16,28 +15,29 @@ class AccountController < ApplicationController
     @user = User.new(params[:user])
     @profile = @user.build_user_profile(params[:user_profile])
     
-    if params[:wow_character]
-      @wowCharacters = Array.new
-      params[:wow_character].each do |character|
-        newWow = WowCharacter.new(character.last)
-        @wowCharacters << newWow
-        @profile.build_character(newWow)
-      end
-    end
-    
-    if params[:swtor_character]
-      @swtorCharacters = Array.new
-      params[:swtor_character].each do |character|
-        newSwtor = SwtorCharacter.new(character.last)
-        @swtorCharacters << newSwtor
-        @profile.build_character(newSwtor)
-      end
-    end
+    #if params[:wow_character]
+    #  @wowCharacters = Array.new
+    #  params[:wow_character].each do |character|
+    #    newWow = WowCharacter.new(character.last)
+    #    @wowCharacters << newWow
+    #    @profile.build_character(newWow)
+    #  end
+    #end
+    #
+    #if params[:swtor_character]
+    #  @swtorCharacters = Array.new
+    #  params[:swtor_character].each do |character|
+    #    newSwtor = SwtorCharacter.new(character.last)
+    #    @swtorCharacters << newSwtor
+    #    @profile.build_character(newSwtor)
+    #  end
+    #end
     @user.no_signup_email = true # TODO remove in production
     if @user.save 
-      add_new_flash_message("Your account has been created, <em>#{@user.name}</em>. Welcome to Crumblin!")
+      add_new_flash_message('You have successfully created your new Crumblin user.')
+      add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
-      redirect_to account_path 
+      render :show
     else
       grab_all_errors_from_model(@user)
       render :new
@@ -67,9 +67,7 @@ class AccountController < ApplicationController
       redirect_to signup_path
     else
       @user = current_user
-      @profile = current_user.user_profile
-      @wowCharacters = current_user.get_characters(Wow)
-      @swtorCharacters = current_user.get_characters(Swtor)   
+      @profile = current_user.user_profile   
     end
   end
 
@@ -82,11 +80,14 @@ class AccountController < ApplicationController
     @games = Game.active
   end
   
-  def count_characters  
+  def get_all_characters
     @characterCount = 0
-    return unless logged_in?
-    current_user.user_profile.game_profiles.each do |game_profile|
-      @characterCount += game_profile.character_proxies.size
+    if logged_in?
+      current_user.user_profile.game_profiles.each do |game_profile|
+        @characterCount += game_profile.character_proxies.size
+      end
+      @wowCharacters = current_user.get_characters(Wow)
+      @swtorCharacters = current_user.get_characters(Swtor)
     end
   end
 end
