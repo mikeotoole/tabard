@@ -58,7 +58,10 @@ class Subdomains::Management::RolesController < SubdomainsController
   def update
     if !current_user.can_update("Role") 
       render_insufficient_privileges
-    else 
+    else
+      params[:role][:permissions_attributes].each do |key,perms|
+        params[:role][:permissions_attributes][key] = parse_permission_level(perms)
+      end
       @role = @community.roles.find(params[:id])
       if @role.update_attributes(params[:role])
         add_new_flash_message('Role was successfully updated')

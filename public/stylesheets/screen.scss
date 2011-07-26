@@ -1,5 +1,5 @@
 /* General Options */
-$border_radius: 0;
+$border_radius: 5;
 $icon_set: default;
 
 /* Background Colors */
@@ -216,21 +216,95 @@ label {
 }
 .boolean {
   input + label:hover:before {
-    background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $accent_color;
+    background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
   }
   input:checked + label:before {
-    background: url(../images/icons/#{$icon_set}.png) -248px -8px no-repeat $bg_color_1;
+    background: url(../images/icons/#{$icon_set}.png) -248px -48px no-repeat $accent_color;
   }
 }
 .radio {
   input + label:hover:before {
-    background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $accent_color;
+    background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
   }
   input:checked + label:before {
-    background: url(../images/icons/#{$icon_set}.png) -1088px -8px no-repeat $bg_color_1;
+    background: url(../images/icons/#{$icon_set}.png) -1088px -48px no-repeat $accent_color;
   }
   span label {
     @include font(light);
+  }
+}
+.slider {
+  background: $bg_color_2;
+  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  @include border_radius(1);
+  @include box_sizing(border-box);
+  height: 30px;
+  line-height: 28px;
+  margin: 0 0 1em;
+  position: relative;
+  label {
+    background: transparent;
+    @include border_radius(1);
+    bottom: 1px;
+    @include box_sizing(border-box);
+    color: $text_color_3;
+    @include font(light);
+    height: auto !important;
+    left: 1px;
+    overflow: hidden;
+    padding: 0 !important;
+    position: absolute !important;
+    text-align: center;
+    top: 1px;
+    &:before {
+      display: none;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, .2);
+    }
+  }
+  input {
+    float: left;
+    height: 1px;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    width: 1px;
+    z-index: -1;
+  }
+  input:checked + label {
+    background: $accent_color;
+    @include transition(background .2s ease-in-out);
+  }
+  span {
+    &:nth-of-type(1) label {
+      width: 25%;
+      z-index: 5;
+    }
+    &:nth-of-type(2) label {
+      text-indent: 25%;
+      width: 50%;
+      z-index: 4;
+    }
+    &:nth-of-type(3) label {
+      text-indent: 50%;
+      width: 75%;
+      z-index: 3;
+    }
+    &:nth-of-type(4) label {
+      right: 1px;
+      text-indent: 75%;
+      z-index: 2;
+    }
+  }
+}
+table .slider {
+  border: 1px solid $bg_color_1;
+  margin: -5px;
+  label {
+    overflow: hidden;
+    text-align: left;
+    text-indent: -1000em !important;
   }
 }
 .selectbox {
@@ -343,6 +417,14 @@ label {
   }
 }
 #body {
+  form {
+    .short {
+      width: 150px;
+    }
+    .medium {
+      width: 400px;
+    }
+  }
   fieldset {
     ol {
       padding: 0;
@@ -363,7 +445,7 @@ label {
   .avatar {
     position: relative;
     &:after {
-      content: ' ';
+      content: '.';
       clear: both;
       display: block;
       height: 0;
@@ -421,7 +503,7 @@ table {
       th {
         @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
       }
-      &:first-child {
+      &:first-of-type {
         td,
         th {
           &:first-child {
@@ -446,7 +528,7 @@ table {
         @include bg_gradient(lighten($bg_color_2, 20%), lighten($bg_color_2, 25%));
         position: relative;
       }
-      &:last-child {
+      &:last-of-type {
         td,
         th {
           border-bottom: 0;
@@ -475,7 +557,7 @@ table {
   tfoot {
     @include bg_gradient(darken($bg_color_1, 10%), darken($bg_color_1, 20%));
     tr {
-      &:last-child {
+      &:last-of-type {
         td,
         th {
           &:first-child {
@@ -1572,6 +1654,52 @@ table {
       input {
         &[name*="level"] {
           width: 60px;
+        }
+      }
+    }
+  }
+  
+  
+  /* Permissions */
+  .permresource {
+    width: 750px;
+  }
+  #usercheckboxes {
+    ol {
+      padding: 0 0 1em;
+      &:after {
+        content: '.';
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+      }
+      li {
+        float: left;
+        margin: 0 5px 5px 0;
+        width: 225px;
+        label {
+          background: darken($bg_color_1, 10%);
+          @include border_radius(1);
+          display: block;
+          height: 36px;
+          line-height: 36px;
+          overflow: hidden;
+          padding: 0 10px 0 39px;
+          &:before {
+            left: 5px;
+            top: 5px;
+          }
+          &:hover {
+            background: darken($bg_color_1, 15%);
+          }
+        }
+        input:checked + label {
+          background: $accent_color;
+          color: $text_color_3;
+          &:before {
+            background-color: $bg_color_2;
+          }
         }
       }
     }

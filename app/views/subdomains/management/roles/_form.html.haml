@@ -1,42 +1,49 @@
-= form_for [:management, @role] do |f|
+= simple_form_for [:management, @role] do |f|
 
-  %p.field
-    = f.label :name
-    = f.text_field :name
+  = f.input :name, :wrapper_tag => :p
   
   - if @role.id #HACK
       
     %h2 Permissions
+    
     %table
-      %thead
-        %tr
-          %th Resource
-          %th.view View
-          %th.create Create
-          %th.edit Edit
-          %th.delete Delete
-      %tbody
-        = f.fields_for :permissions, @role.permissions do |p|
-          = p.hidden_field :permissionable_id
-          = p.hidden_field :permissionable_type
-          = p.hidden_field :name
+      - if @role.permissions.size > 0
+        %thead
           %tr
-            %td= p.object.permissionable_name
-            %td.view= p.check_box(:show_p)
-            %td.create= p.check_box(:create_p)
-            %td.update= p.check_box(:update_p)
-            %td.delete= p.check_box(:delete_p)
+            %th.permresource Resource
+            %th View
+            %th Edit
+            %th Add
+            %th Delete
+        %tbody
+          - testing = true
+          = f.simple_fields_for :permissions, @role.permissions do |p|
+            = p.input :permissionable_id, :as => 'hidden'
+            = p.input :permissionable_type, :as => 'hidden'
+            = p.input :name, :as => 'hidden'
+            %tr
+              %td
+                = p.object.permissionable_name
+              %td{ :colspan => 4 }
+                %fieldset.slider
+                  = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last
+      -else
+        %tbody
+          %tr
+            %td.empty{ :colspan => 5 } This role has no permissions.
       %tfoot
         %tr
           %td{ :colspan => 5 }
-            = link_to "New Permission", new_management_role_permission_path(@role), :class => 'button'
+            = link_to "Add Permission", new_management_role_permission_path(@role), :class => 'button'
     
     %h2 Users
     - if @users.size > 0
-      %ul#usercheckboxes
-        - for user in @users
-          %li
-            = label_tag dom_id(user), (check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user)) + ' ' + user.name, :class => "check_box_label"
+      %fieldset#usercheckboxes
+        %ol
+          - for user in @users
+            %li.boolean
+              = check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user)
+              = label_tag dom_id(user), user.name, :class => "check_box_label"
     - else
       %p No users
 

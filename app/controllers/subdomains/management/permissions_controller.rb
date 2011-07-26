@@ -3,16 +3,6 @@ class Subdomains::Management::PermissionsController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
 
-  def index
-    @permissions = @role.permissions.all
-    respond_with(@permissions)
-  end
-
-  def show
-    @permission = @role.permissions.find(params[:id])
-    respond_with(@permission)
-  end
-
   def new
     @permission = @role.permissions.new
     respond_with(@permission)
@@ -24,6 +14,7 @@ class Subdomains::Management::PermissionsController < SubdomainsController
   end
 
   def create
+    params[:permission] = parse_permission_level(params[:permission])
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
       add_new_flash_message('Permission was succesfully created.')
