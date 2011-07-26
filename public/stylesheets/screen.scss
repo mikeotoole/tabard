@@ -430,6 +430,7 @@ table .slider {
       padding: 0;
       li {
         list-style: none;
+        padding: 0 0 1em;
       }
     }
     .hint {
@@ -1608,7 +1609,7 @@ table {
         @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
         left: 0;
         position: absolute;
-        margin: (-30px - $border_radius) 0 0;
+        margin: -#{$border_radius}px 0 0;
         z-index: 2;
         li {
           color: $text_color_3;
@@ -1639,9 +1640,13 @@ table {
         }
       }
     }
-    input {
-      position: relative;;
-      z-index: 3;
+    p {
+      margin: 1em 0 0;
+      padding: 0;
+      input {
+        position: relative;
+        z-index: 3;
+      }
     }
   }
   

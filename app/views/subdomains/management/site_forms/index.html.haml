@@ -30,8 +30,9 @@
   - else
     %body
       %tr
-        %td{ :colspan =>4 } There are no forms.
-  %tfoot
-    %tr
-      %td{ :colspan => 4 }
-        = link_to 'New Form', new_management_site_form_path, :class => 'button'
+        %td.empty{ :colspan =>4 } There are no forms.
+  -# TODO - Featured iced temporarily
+    %tfoot
+      %tr
+        %td{ :colspan => 4 }
+          = link_to 'New Form', new_management_site_form_path, :class => 'button'

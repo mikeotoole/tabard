@@ -3,20 +3,18 @@
   %span New
 
 %h1 New Message To
-- form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
-  #recipients
-    %ul.users
-      - for user in current_user.address_book
-        %li{ :title => user.name , :class => @message.to.include?(user.id.to_s) && "show" }
-          = check_box_tag "message[to][]", user.id, @message.to.include?(user.id.to_s)
-          = user.name
-    %p
-      %input{ :type => 'text' }
-  %p.field
-    = f.label 'Subject'
-    = f.text_field :subject
-  %p.field
-    = f.label 'Body'
-    = f.text_area :body
+- simple_form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
+  %fieldset
+    %ol
+      %li#recipients
+        %ul.users
+          - current_user.address_book.each do |user|
+            %li{ :title => user.name , :class => @message.to.include?(user.id.to_s) && "show" }
+              = check_box_tag "message[to][]", user.id, @message.to.include?(user.id.to_s)
+              = user.name
+        %p.medium
+          %input{ :type => 'text' }
+      = f.input :subject, :wrapper_class => 'medium'
+      = f.input :body, :as => :text
   %p.field
     %button{ :type => 'submit' } Send

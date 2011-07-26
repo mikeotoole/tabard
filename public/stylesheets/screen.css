@@ -497,7 +497,8 @@ table .slider {
 #body fieldset ol {
   padding: 0; }
   #body fieldset ol li {
-    list-style: none; }
+    list-style: none;
+    padding: 0 0 1em; }
 #body fieldset .hint img {
   display: block;
   padding: .5em 0 0; }
@@ -2401,7 +2402,7 @@ table {
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
         left: 0;
         position: absolute;
-        margin: -35px 0 0;
+        margin: -5px 0 0;
         z-index: 2; }
         #body #recipients ul.suggest li {
           color: white;
@@ -2425,9 +2426,12 @@ table {
               display: none; }
           #body #recipients ul.suggest li:hover {
             background: rgba(0, 0, 0, 0.3); }
-    #body #recipients input {
-      position: relative;
-      z-index: 3; }
+    #body #recipients p {
+      margin: 1em 0 0;
+      padding: 0; }
+      #body #recipients p input {
+        position: relative;
+        z-index: 3; }
   #body #characters {
     display: table;
     margin: 0 -10px;
