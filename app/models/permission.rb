@@ -87,14 +87,14 @@ class Permission < ActiveRecord::Base
   end
   
   def check_user_create_permissions(user)
-    user.can_create(self.role)
+    user.can_create(self.role) and not self.role.is_admin_role?
   end
   
   def check_user_update_permissions(user)
-    user.can_update(self.role)
+    user.can_update(self.role) and not self.role.is_admin_role?
   end
   
   def check_user_delete_permissions(user)
-    user.can_delete(self.role)
+    user.can_delete("Role") and not self.role.is_admin_role?
   end
 end
