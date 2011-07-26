@@ -2,8 +2,10 @@
   = link_to 'Management', management_path
   = link_to 'Roles', management_roles_path
   = link_to @role.name, [:management, @role]
-  = link_to 'Permissions', management_role_permissions_path(@role)
-  %span New
+  %span New Permission
 
 %h1 New permission
-= render 'form'
+- if params[:permission]
+  %pre=YAML::dump(params[:permission])
+- else
+  = render 'form'

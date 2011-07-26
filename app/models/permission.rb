@@ -23,6 +23,20 @@ class Permission < ActiveRecord::Base
     role != nil ? role.name : ""
   end
   
+  def permission_level
+    if self.delete_p
+      permission_level = 'delete_p'
+    elsif self.create_p
+      permission_level = 'create_p'
+    elsif self.update_p
+      permission_level = 'update_p'
+    elsif self.show_p
+      permission_level = 'show_p'
+    else
+      permission_level = ''
+    end
+  end
+  
   def permissionable_name
     if permissionable.is_a?(SystemResource)
       return permissionable.name
