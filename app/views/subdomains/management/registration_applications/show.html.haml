@@ -1,6 +1,6 @@
 %p#bcrumb
   = link_to 'Management', management_path
-  = link_to 'Member Applications', registration_applications_path
+  = link_to 'Member Applications', management_registration_applications_path
   %span= @registration_application.name
 
 #page
@@ -25,7 +25,7 @@
   - else
     %h2 Comments
     #comments
-      - if @registration_application.discussion.comments.size > 0
+      - if false and @registration_application.discussion.comments.size > 0
         %ol
           - @registration_application.discussion.comments.each do |comment|
             = render comment

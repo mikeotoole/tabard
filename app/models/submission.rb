@@ -113,7 +113,6 @@ class Submission < ActiveRecord::Base
   def set_accepted
     # TODO Ensure that this can happen only once - JW
     self.status = 2
-    self.user_profile.user.roles << self.community.member_role
   end
   
   def set_inactive

@@ -26,8 +26,6 @@ class RegistrationApplicationsController < Communities::CommunitiesController
     end
     @registration_application = @profile.build_registration_application(params[:registration_application])
     
-    @registration_application.set_applicant
-    
     if params[:wow_character]
       @wowCharacters = Array.new
       params[:wow_character].each do |character|
@@ -58,7 +56,6 @@ class RegistrationApplicationsController < Communities::CommunitiesController
       if @user.save and @profile.save and @registration_application.save   
         #add_new_flash_message('Registration application was successfully submitted.') Removed for BVR-152
         add_new_flash_message(@registration_application.site_form.thankyou)
-        @registration_application.user_profile.user.roles << @registration_application.applicant_role
       else
         grab_all_errors_from_model(@user)
         grab_all_errors_from_model(@profile)
