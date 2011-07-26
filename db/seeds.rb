@@ -1,11 +1,13 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-userResource = SystemResource.create(:name => "User")
+#Registration applications to Stonewatch
+#Custom role for stonewatch
+#userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
 registrationApplicationResource = SystemResource.create(:name => "RegistrationApplication")
 
-characterResource = SystemResource.create(:name => "Character")
+#characterResource = SystemResource.create(:name => "Character")
 
 commentResource = SystemResource.create(:name => "Comment")
 
