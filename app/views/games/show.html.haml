@@ -19,7 +19,7 @@
           %td.amount
             = community.get_characters_for_game(@game.class).size.to_s
           %td.name
-            = link_to community.display_name, community
+            = link_to community.display_name, root_url(:subdomain => community.subdomain)
           %td.slogan
             = community.slogan
           %td

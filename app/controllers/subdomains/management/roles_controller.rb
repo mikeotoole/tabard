@@ -1,7 +1,8 @@
 class Subdomains::Management::RolesController < SubdomainsController
   respond_to :html, :xml
-  before_filter :authenticate
-  before_filter :collect_community_users
+  before_filter :authenticate, :collect_community_users
+  before_filter :get_role_by_id, :only => [:edit, :udpate, :destroy]
+  before_filter :sort_permissions, :only => [:edit, :update]
 
   def index
     if !current_user.can_show("Role") 
@@ -33,8 +34,7 @@ class Subdomains::Management::RolesController < SubdomainsController
   end
 
   def edit
-    @role = @community.roles.find(params[:id])
-    if !current_user.can_update(@role) 
+    if !current_user.can_update(@role)
       render_insufficient_privileges
     else
       respond_with([:management,@role])
@@ -55,7 +55,6 @@ class Subdomains::Management::RolesController < SubdomainsController
   end
 
   def update
-    @role = @community.roles.find(params[:id])
     if !current_user.can_update(@role) 
       render_insufficient_privileges
     else
@@ -70,7 +69,6 @@ class Subdomains::Management::RolesController < SubdomainsController
   # DELETE /management/roles/1
   # DELETE /management/roles/1.xml
   def destroy
-    @role = @community.roles.find(params[:id])
     if !current_user.can_delete(@role) 
       render_insufficient_privileges
     else 
@@ -81,7 +79,17 @@ class Subdomains::Management::RolesController < SubdomainsController
     end
   end
   
-  def collect_community_users
-    @users = @community.all_users
-  end
+  private
+  
+    def collect_community_users
+      @users = @community.all_users
+    end
+    
+    def get_role_by_id
+      @role = @community.roles.find(params[:id])
+    end
+  
+    def sort_permissions
+      
+    end
 end

@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
   
   def is_a_member_of(community)
-    self.communties.include?(community)
+    self.communities.include?(community)
   end
   
   def set_active_profile(profile)

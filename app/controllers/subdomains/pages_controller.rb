@@ -34,7 +34,6 @@ class Subdomains::PagesController < SubdomainsController
     if !current_user.can_update("Page") and !current_user.can_update(@page)
       render_insufficient_privileges
     end
-    repsond_with(@page)
   end
 
   def create

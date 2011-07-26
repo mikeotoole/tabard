@@ -24,7 +24,7 @@
             %li
               = link_to 'Crumblin', root_path(:subdomain => false)
             %li
-              = link_to 'Communities', communities_path
+              = link_to 'Game Communities', communities_path
               - if defined? @games and @games.size > 0
                 %ul
                   - @games.each do |game|
