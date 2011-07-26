@@ -60,7 +60,14 @@ class Subdomains::Management::PermissionsController < SubdomainsController
           @discussionOptions = { "Specific Discussion Space" => @community.discussion_spaces.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
         when "PageSpace"
           @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
-          @pageOptions = { "Specific Page Space" => @community.page_spaces.all.collect{|pageS| [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]}}
+          pArray = Array.new
+          @community.page_spaces.all.each do |pageS| 
+            pArray << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
+            pageS.pages.each do |page|
+              pArray << ["-#{page.title}", page.id.to_s + "|" + page.class.to_s]
+            end
+          end
+          @pageOptions = { "Specific Page Space" => pArray}
         else
           @permissionables << ["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
         end

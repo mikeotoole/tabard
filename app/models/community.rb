@@ -144,7 +144,8 @@ class Community < ActiveRecord::Base
           :create_p => false, 
           :update_p => false, 
           :delete_p => false
-        )
+        ) 
+        #Remove Registration application
       },
       :community => self
     ))
