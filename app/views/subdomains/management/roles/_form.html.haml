@@ -10,40 +10,45 @@
       - if @role.permissions.size > 0
         %thead
           %tr
+            %th.actions
             %th.permresource Resource
             %th View
             %th Edit
             %th Add
             %th Delete
         %tbody
-          - testing = true
-          = f.simple_fields_for :permissions, @role.permissions do |p|
-            = p.input :permissionable_id, :as => 'hidden'
-            = p.input :permissionable_type, :as => 'hidden'
-            = p.input :name, :as => 'hidden'
-            %tr
-              %td
-                = p.object.permissionable_name
-              %td{ :colspan => 4 }
-                %fieldset.slider
-                  = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last
+          - @role.permissions.each do |permission|
+            = f.simple_fields_for :permissions, permission do |p|
+              = p.input :permissionable_id, :as => 'hidden'
+              = p.input :permissionable_type, :as => 'hidden'
+              = p.input :name, :as => 'hidden'
+              %tr
+                %td.actions
+                  - if current_user.can_delete(permission)
+                    = link_to 'Remove Permission', management_role_permission_path(@role, permission), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :title => 'Remove this permission'
+                %td
+                  = p.object.permissionable_name
+                %td{ :colspan => 4 }
+                  %fieldset.slider
+                    = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last
       -else
         %tbody
           %tr
-            %td.empty{ :colspan => 5 } This role has no permissions.
+            %td.empty{ :colspan => 6 } This role has no permissions.
       %tfoot
         %tr
-          %td{ :colspan => 5 }
+          %td{ :colspan => 6 }
             = link_to "Add Permission", new_management_role_permission_path(@role), :class => 'button'
     
-    %h2 Users
-    - if @users.size > 0
-      %fieldset#usercheckboxes
-        %ol
-          - for user in @users
-            %li.boolean
-              = check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user)
-              = label_tag dom_id(user), user.name, :class => "check_box_label"
+    - if @role.can_update_users
+      %h2 Users
+      - if @users.size > 0
+        %fieldset#usercheckboxes
+          %ol
+            - for user in @users
+              %li.boolean
+                = check_box_tag 'role[user_ids][]', user.id, @role.user_ids.include?(user.id), :id => dom_id(user)
+                = label_tag dom_id(user), user.name, :class => "check_box_label"
     - else
       %p No users
 

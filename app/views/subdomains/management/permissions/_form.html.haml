@@ -2,7 +2,6 @@
   %p= f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
   -#= f.input :magic_polymorphic_helper, :wrapper_tag => :p, :label => raw("Start typing what you want to assign permissions to&hellip;")
   = f.label :permission_level
-  -#= f.input :permission_level, :as => 'radio', :wrapper_tag => :fieldset, :wrapper_class => 'slider medium', :label => false, :collection => [:show_p, :update_p, :create_p, :delete_p]
   %fieldset{ :class => 'slider medium' }
     = f.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last
   = submit_or_cancel(f)

@@ -1810,6 +1810,12 @@ table {
       #body #actions a.undelete:before,
       #body .actions a.undelete:before {
         background-position: -846px -46px; }
+  #body td.actions:first-child,
+  #body th.actions:first-child {
+    padding-right: 10px; }
+    #body td.actions:first-child a,
+    #body th.actions:first-child a {
+      margin: 5px 0 0 5px; }
   #body h1,
   #body h2,
   #body h3,

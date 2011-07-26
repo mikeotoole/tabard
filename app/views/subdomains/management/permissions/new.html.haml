@@ -5,7 +5,5 @@
   %span New Permission
 
 %h1 New permission
-- if params[:permission]
-  %pre=YAML::dump(params[:permission])
-- else
-  = render 'form'
+
+= render 'form'

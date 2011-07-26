@@ -1168,6 +1168,15 @@ table {
       &.undelete:before { background-position: -846px -46px; }
     }
   }
+  td,
+  th {
+    &.actions:first-child {
+      padding-right: 10px;
+      a {
+        margin: 5px 0 0 5px;
+      }
+    }
+  }
   h1,
   h2,
   h3,
