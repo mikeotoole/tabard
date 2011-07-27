@@ -2,6 +2,7 @@ class Submission < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :site_form
   
+  has_many :comments, :as => :commentable
   has_many :answers, :dependent => :destroy
   has_many :questions, :through => :answers
   

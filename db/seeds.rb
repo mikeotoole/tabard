@@ -112,7 +112,7 @@ gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile,
     Answer.create(:question => textQ, :content => "Blank")
     ])
 gu1App.set_accepted
-Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App.discussion)
+Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App)
 #Application for g_user2 reject
 g2_user = User.find_by_email("g2@user.com")
 gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile, 
@@ -124,8 +124,8 @@ gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile,
     Answer.create(:question => textQ, :content => "DERP!")
     ])
 Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile, 
-  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App.discussion))
-Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App.discussion)
+  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App))
+Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App)
 gu2App.set_rejected
 #Application for g_user3 pending
 g3_user = User.find_by_email("g3@user.com")
@@ -137,7 +137,7 @@ gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile,
     Answer.create(:question => textBoxQ, :content => "They make me feel funny..."),
     Answer.create(:question => textQ, :content => "Herp")
     ])
-Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyProfile, :commentable => gu3App.discussion)
+Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyProfile, :commentable => gu3App)
 
 
 # Sample Discussion Spaces

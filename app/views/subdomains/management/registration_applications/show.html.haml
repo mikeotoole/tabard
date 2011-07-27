@@ -25,7 +25,7 @@
   - else
     %h2 Comments
     #comments
-      - if false and @registration_application.discussion.comments.size > 0
+      - if @registration_application.discussion.comments.size > 0
         %ol
           - @registration_application.discussion.comments.each do |comment|
             = render comment

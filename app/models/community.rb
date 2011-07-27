@@ -10,6 +10,7 @@ class Community < ActiveRecord::Base
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
   
   has_many :discussion_spaces
+  has_many :discussions, :through => :discussion_spaces
   has_many :page_spaces
   has_many :pages, :through => :page_spaces
   has_many :site_forms
@@ -17,6 +18,7 @@ class Community < ActiveRecord::Base
   has_many :supported_games
   has_many :games, :through => :supported_games
   has_many :registration_applications, :through => :community_application_form, :source => "submissions"
+  has_many :comments
   
   belongs_to :admin_role, :class_name => "Role"
   belongs_to :applicant_role, :class_name => "Role"

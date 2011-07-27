@@ -4,14 +4,14 @@ class DiscussionSpace < ActiveRecord::Base
   belongs_to :community
   has_many :discussions
   
-  validate :only_one_announcement_space, :only_one_registration_application_space, :has_a_user_profile,
+  validate :only_one_announcement_space, :has_a_user_profile,
            :only_one_user_profile_space
   
   scope :user_generated, where(:system => false)
   scope :system_generated, where(:system => true)
   
   def self.only_real_ones
-    self.where{(system == false) | (registration_application_space != true) | (announcement_space != true)}
+    self.where{(system == false) | (announcement_space != true)}
   end
   
   def game_name
@@ -24,18 +24,6 @@ class DiscussionSpace < ActiveRecord::Base
   
   def self.site_announcement_space
     DiscussionSpace.where(:announcement_space => true, :game_id => nil)
-  end
-  
-  def self.registration_application_space
-    if DiscussionSpace.where(:registration_application_space => true).exists?
-      return DiscussionSpace.where(:registration_application_space => true).first
-    else
-      return DiscussionSpace.create(:name => "Registration Applications", :system => true, :registration_application_space => true)
-    end 
-  end
-  
-  def only_one_registration_application_space
-    errors.add(:id, "There can be only one!  ...registration applicaiton space.") if (DiscussionSpace.where(:registration_application_space => true).exists? and self.registration_application_space)
   end
   
   def has_a_user_profile
