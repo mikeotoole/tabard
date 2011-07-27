@@ -1,7 +1,4 @@
 Bv::Application.routes.draw do
-  
-  match "/search" => "search#index"
-
   #Messaging
   resources :sent, :only => [:create]
   resources :messages, :only => [:destroy]
@@ -86,7 +83,7 @@ Bv::Application.routes.draw do
   constraints(Subdomain) do
     match "/" => "subdomains#index"
     scope :module => "subdomains" do
-      
+      match "/search" => "search#index", :as => 'search'
       match '/management' => 'management#index', :as => 'management'
       namespace "management" do
         resources :users, :only => [:index, :destroy]

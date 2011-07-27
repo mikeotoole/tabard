@@ -1,4 +1,4 @@
-class SearchController < Communities::CommunitiesController
+class Subdomains::SearchController < SubdomainsController
   respond_to :html
   
   def index
@@ -6,7 +6,7 @@ class SearchController < Communities::CommunitiesController
     user_query = "%#{@search_term}%"
     
     @page_space_results = Array.new
-    PageSpace.where{(name =~ user_query)}.each do |result|
+    @community.page_spaces.where{(name =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @page_space_results.push({
           :path => result,
@@ -17,7 +17,7 @@ class SearchController < Communities::CommunitiesController
     end
     
     @page_results = Array.new
-    Page.where{(title =~ user_query) | (body =~ user_query)}.each do |result|
+    @community.pages.where{(title =~ user_query) | (body =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @page_results.push({
           :path => [result.page_space,result],
@@ -29,7 +29,7 @@ class SearchController < Communities::CommunitiesController
     
     @discussion_space_results = Array.new
     # - filter discussion spaces (like was done for the menu) -Fixed JW
-    DiscussionSpace.only_real_ones.where{(name =~ user_query)}.each do |result|
+    @community.discussion_spaces.only_real_ones.where{(name =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @discussion_space_results.push({
           :path => result,
@@ -40,7 +40,7 @@ class SearchController < Communities::CommunitiesController
     end
     
     @discussion_results = Array.new
-    Discussion.where{(name =~ user_query) | (body =~ user_query)}.each do |result|
+    @community.discussions.where{(name =~ user_query) | (body =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @discussion_results.push({
           :path => result,
@@ -51,7 +51,7 @@ class SearchController < Communities::CommunitiesController
     end
     
     @comment_results = Array.new
-    Comment.where{(body =~ user_query)}.each do |result|
+    @community.comments.where{(body =~ user_query)}.each do |result|
       if true #TODO current_user.can_show(result)
         @comment_results.push({
           :path => url_for(result.original_comment_item) + "#comment_"+ result.id.to_s, #TODO discussion, discussion space, or whatever resource the comment is associated to

@@ -1,7 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #Registration applications to Stonewatch
-#Custom role for stonewatch
 #userResource = SystemResource.create(:name => "User")
 roleResource = SystemResource.create(:name => "Role")
 siteFormResource = SystemResource.create(:name => "SiteForm")
@@ -60,8 +59,8 @@ radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :s
 PredefinedAnswer.create(:content => "True", :question => radioQ)
 PredefinedAnswer.create(:content => "False", :question => radioQ)
 PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
-TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => stonewatchCommunityForm)
-TextQuestion.create(:content => "This is a ____ text question.", :site_form => stonewatchCommunityForm)
+textBoxQ = TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => stonewatchCommunityForm)
+textQ = TextQuestion.create(:content => "This is a ____ text question.", :site_form => stonewatchCommunityForm)
 
 stonewatch.update_attributes(:community_application_form => stonewatchCommunityForm)
 
@@ -102,9 +101,59 @@ justanotherheadshot.assign_admin_role(crumbJoe)
 }
 
 #Generate some normal activity for stonewatch
+#Application for g_user1 accept
+g1_user = User.find_by_email("g1@user.com")
+gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile, 
+  :site_form => stonewatch.community_application_form,
+  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+    Answer.create(:question => comboboxQ, :content => "Silly"),
+    Answer.create(:question => radioQ, :content => "True"),
+    Answer.create(:question => textBoxQ, :content => "They make me feel alright"),
+    Answer.create(:question => textQ, :content => "Blank")
+    ])
+gu1App.set_accepted
+Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App)
+#Application for g_user2 reject
+g2_user = User.find_by_email("g2@user.com")
+gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile, 
+  :site_form => stonewatch.community_application_form,
+  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+    Answer.create(:question => comboboxQ, :content => "Silly"),
+    Answer.create(:question => radioQ, :content => "True"),
+    Answer.create(:question => textBoxQ, :content => "TROLOLOLOLOLOL"),
+    Answer.create(:question => textQ, :content => "DERP!")
+    ])
+Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile, 
+  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App))
+Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App)
+gu2App.set_rejected
+#Application for g_user3 pending
+g3_user = User.find_by_email("g3@user.com")
+gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile, 
+  :site_form => stonewatch.community_application_form,
+  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+    Answer.create(:question => comboboxQ, :content => "Silly"),
+    Answer.create(:question => radioQ, :content => "True"),
+    Answer.create(:question => textBoxQ, :content => "They make me feel funny..."),
+    Answer.create(:question => textQ, :content => "Herp")
+    ])
+Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyProfile, :commentable => gu3App)
+
 
 # Sample Discussion Spaces
 discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile, :community => stonewatch)
+stonewatch_officer_role = Role.create(:community => stonewatch,
+  :name => "Officer",
+  :permission => Permission.create(:permissionable => discSpace,
+      :show_p => true,
+      :create_p => true,
+      :update_p => true,
+      :delete_p => true
+    )
+  )
+stonewatch.roles << stonewatch_officer_role
+roboBillyUser.roles << stonewatch_officer_role
+
 discSpace1 = DiscussionSpace.create(:name => "Off Topic", :system => false, :user_profile => adminProfile, :community => stonewatch)
 
 #Sample Discussions
