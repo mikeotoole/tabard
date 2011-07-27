@@ -30,7 +30,7 @@ $(document).ready(function() {
       field = false;
     }
     fieldType = $(field).attr('type');
-    if(fieldType.match(/text|email/i)) {
+    if(fieldType && fieldType.match(/text|email/i)) {
       $(field)
         .data('default', $.trim($(field).attr('title')))
         .removeAttr('title')
@@ -57,7 +57,9 @@ $(document).ready(function() {
       .find('option')
       .each(function(){
         s = $(this).attr('selected') == true ? ' class="selected"' : '';
-        $('#'+selectbox_id).append('<dd' + s + ' value="' + $(this).val() + '"><a>' + $(this).html() + '</a></dd>');
+        indent = $(this).parents('optgroup').length ? '&mdash;' : '';
+        html = indent + $(this).html().replace(/\-\-/, '&mdash;');
+        $('#'+selectbox_id).append('<dd' + s + ' value="' + $(this).val() + '"><a>' + html + '</a></dd>');
       });
     $('#'+selectbox_id + ' dd[value!=""]').click(function(){
       $(this).parent().find('dd').removeClass('selected');

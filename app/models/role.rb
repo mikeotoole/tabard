@@ -1,5 +1,5 @@
 class Role < ActiveRecord::Base
-  attr_accessible :name, :permissions, :roles_users, :users, :permissions, :community
+  attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions, :community
   has_many :roles_users
   has_many :users, :through => :roles_users
   has_many :permissions, :dependent => :destroy
@@ -19,6 +19,12 @@ class Role < ActiveRecord::Base
   end
   
   def is_member_role?
+    self.community.member_role == self
+  end
+  
+  def is_system_role?
+    self.community.admin_role == self or
+    self.community.applicant_role == self or
     self.community.member_role == self
   end
   

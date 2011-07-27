@@ -4,10 +4,55 @@
 
 %h1 Roles
 
-- if @roles.size > 0
-  %ul
-    - @roles.each do |role|
-      %li= link_to role.name, edit_management_role_path(role)
+%table
+  %thead
+    %tr
+      %th.rolename System
+      %th.roleusers Members
+  %tbody
+    - @system_roles.each do |set|
+      %tr
+        %td
+          = link_to set[:role].name.pluralize, edit_management_role_path(set[:role]), :class => 'button'
+        %td.roleusers
+          - if set[:role].description
+            %p
+              = set[:role].description
+          - if set[:users]
+            - set[:users].each do |user|
+              = link_to user.display_name, user.user_profile
+          - else
+            This role has no members.
 
-%p
-  = link_to 'New Role', new_management_role_path, :class => 'button'
+%table
+  %thead
+    %tr
+      %th.rolename Custom
+      %th.roleusers Members
+      %th.actions &nbsp;
+  - if @custom_roles.size > 0
+    %tbody
+      - @custom_roles.each do |set|
+        %tr
+          %td{ :rowspan => 2 }
+            = link_to set[:role].name.pluralize, edit_management_role_path(set[:role]), :class => 'button'
+          %td.roleusers
+            - if set[:role].description
+              %p
+                = set[:role].description
+            - if set[:users]
+              - set[:users].each do |user|
+                = link_to user.display_name, user.user_profile
+            - else
+              This role has no members.
+          %td.actions
+            - if current_user.can_delete(set[:role])
+              = link_to 'Delete role', management_role_path(set[:role]), :method => 'delete', :confirm => 'Are you sure?', :title => 'Delete this role', :class => 'delete'
+  - else
+    %tbody
+      %tr
+        %td{ :colspan => 3 } There are no custom roles for this #{@community.label}.
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        = link_to 'New custom role', new_management_role_path, :class => 'button icon add', :title => 'Create a new role and assign users'

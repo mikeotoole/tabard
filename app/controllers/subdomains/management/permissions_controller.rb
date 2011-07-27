@@ -64,7 +64,7 @@ class Subdomains::Management::PermissionsController < SubdomainsController
           @community.page_spaces.all.each do |pageS| 
             pArray << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
             pageS.pages.each do |page|
-              pArray << ["-#{page.title}", page.id.to_s + "|" + page.class.to_s]
+              pArray << ["-- #{page.title}", page.id.to_s + "|" + page.class.to_s]
             end
           end
           @pageOptions = { "Specific Page Space" => pArray}

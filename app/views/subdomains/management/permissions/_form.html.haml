@@ -1,4 +1,9 @@
 = simple_form_for [:management, @role, @permission] do |f|
+  -#
+    %ul
+      - @permissionables.each do |resource|
+        %li
+          %pre=YAML::dump(resource)
   %p= f.select(:magic_polymorphic_helper, options_for_select(@permissionables) + options_for_select(@discussionHeader) + grouped_options_for_select(@discussionOptions)+ options_for_select(@pageHeader) + grouped_options_for_select(@pageOptions))
   -#= f.input :magic_polymorphic_helper, :wrapper_tag => :p, :label => raw("Start typing what you want to assign permissions to&hellip;")
   = f.label :permission_level

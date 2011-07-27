@@ -44,7 +44,7 @@
         %tbody
           %tr
             %td.empty{ :colspan => 2 } There are no characters yet.
-      - if logged_in?
+      - if logged_in? and @profile == current_user.user_profile
         %tfoot
           %tr
             %td{ :colspan => 2 }

@@ -58,9 +58,11 @@ input[type='button'] {
   height: 30px;
   line-height: 30px;
   padding: 0 15px;
+  position: relative;
   text-align: center;
   text-decoration: none !important;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  white-space: nowrap; }
   button:focus, button:hover,
   .button:focus,
   .button:hover,
@@ -74,6 +76,31 @@ input[type='button'] {
     -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); }
+  button.icon,
+  .button.icon,
+  input[type='submit'].icon,
+  input[type='button'].icon {
+    padding-left: 35px; }
+    button.icon:before,
+    .button.icon:before,
+    input[type='submit'].icon:before,
+    input[type='button'].icon:before {
+      content: '';
+      height: 30px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 30px; }
+    button.icon.add:before,
+    .button.icon.add:before,
+    input[type='submit'].icon.add:before,
+    input[type='button'].icon.add:before {
+      background: url(../images/icons/default.png) -5px -45px no-repeat; }
+    button.icon.check:before,
+    .button.icon.check:before,
+    input[type='submit'].icon.check:before,
+    input[type='button'].icon.check:before {
+      background: url(../images/icons/default.png) -245px -45px no-repeat; }
 
 input[type='text'],
 input[type='password'],
@@ -2469,6 +2496,7 @@ table {
   #body .permresource {
     width: 750px; }
   #body #usercheckboxes ol {
+    margin: 0 -4px 0 0;
     padding: 0 0 1em; }
     #body #usercheckboxes ol:after {
       content: '.';
@@ -2478,8 +2506,9 @@ table {
       visibility: hidden; }
     #body #usercheckboxes ol li {
       float: left;
-      margin: 0 5px 5px 0;
-      width: 225px; }
+      margin: 0 4px 4px 0;
+      padding: 0;
+      width: 237px; }
       #body #usercheckboxes ol li label {
         background: #e6e6e6;
         -moz-border-radius-topleft: 5px;
@@ -2513,6 +2542,40 @@ table {
         color: white; }
         #body #usercheckboxes ol li input:checked + label:before {
           background-color: black; }
+  #body .rolename {
+    width: 200px; }
+  #body .roleusers p {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 0 .5em;
+    padding: 0 0 .5em; }
+  #body .roleusers a {
+    background: rgba(255, 255, 255, 0.15);
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -o-border-radius-topleft: 5px;
+    -o-border-radius-topright: 5px;
+    -o-border-radius-bottomright: 5px;
+    -o-border-radius-bottomleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+    display: block;
+    float: left;
+    font-size: 10pt;
+    margin: 0 4px 4px 0;
+    padding: 2px 4px;
+    text-decoration: none; }
+    #body .roleusers a:hover {
+      background: #0099cc;
+      color: white; }
 
 /* Footer */
 #footer {

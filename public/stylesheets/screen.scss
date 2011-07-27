@@ -125,7 +125,7 @@ input[type='button'] {
   @include bg_gradient(darken($accent_color, 5%), lighten($accent_color, 5%));
   border: 1px solid darken($accent_color, 10%);
   @include border_radius(1);
-  @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+  @include box_shadow(0 0 5px rgba($bg_color_2, .5));
   @include box_sizing(border-box);
   color: $text_color_3 !important;
   display: inline-block;
@@ -133,13 +133,32 @@ input[type='button'] {
   height: 30px;
   line-height: 30px;
   padding: 0 15px;
+  position: relative;
   text-align: center;
   text-decoration: none !important;
   text-transform: capitalize;
+  white-space: nowrap;
   &:focus,
   &:hover {
     @include bg_gradient($accent_color, lighten($accent_color, 10%));
-    @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 15px rgba($bg_color_2, .7));
+  }
+  &.icon {
+    padding-left: 35px;
+    &:before {
+      content: '';
+      height: 30px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 30px;
+    }
+    &.add:before {
+      background: url(../images/icons/#{$icon_set}.png) -5px -45px no-repeat;
+    }
+    &.check:before {
+      background: url(../images/icons/#{$icon_set}.png) -245px -45px no-repeat;
+    }
   }
 }
 input[type='text'],
@@ -148,7 +167,7 @@ input[type='email'] {
   background: lighten($bg_color_2, 10%);
   border: 1px solid darken($bg_color_2, 10%);
   @include border_radius(1);
-  @include box_shadow(0 0 4px rgba(0, 0, 0, .5));
+  @include box_shadow(0 0 4px rgba($bg_color_2, .5));
   @include box_sizing(border-box);
   color: $text_color_2;
   @include font(light, 14pt);
@@ -159,14 +178,14 @@ input[type='email'] {
   &:focus {
     background: lighten($bg_color_2, 15%);
     border-color: darken($bg_color_2, 15%);
-    @include box_shadow(0 0 8px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 8px rgba($bg_color_2, .7));
   }
 }
 textarea {
   background: lighten($bg_color_2, 10%);
   border: 1px solid darken($bg_color_2, 10%);
   @include border_radius(1);
-  @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+  @include box_shadow(0 0 5px rgba($bg_color_2, .5));
   @include box_sizing(border-box);
   color: $text_color_2;
   @include font(light, 14pt);
@@ -176,7 +195,7 @@ textarea {
   &:focus {
     background: lighten($bg_color_2, 15%);
     border-color: darken($bg_color_2, 15%);
-    @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 15px rgba($bg_color_2, .7));
   }
 }
 label {
@@ -204,7 +223,7 @@ label {
       background: lighten($bg_color_2, 10%);
       border: 1px solid darken($bg_color_2, 10%);
       @include border_radius(1);
-      @include box_shadow(0 0 3px rgba(0, 0, 0, .7));
+      @include box_shadow(0 0 3px rgba($bg_color_2, .7));
       content: '';
       height: 24px;
       left: 0;
@@ -235,7 +254,7 @@ label {
 }
 .slider {
   background: $bg_color_2;
-  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  @include box_shadow(0 0 5px rgba($bg_color_2, .7));
   @include border_radius(1);
   @include box_sizing(border-box);
   height: 30px;
@@ -260,7 +279,7 @@ label {
       display: none;
     }
     &:hover {
-      background: rgba(255, 255, 255, .2);
+      background: rgba($bg_color_1, .2);
     }
   }
   input {
@@ -316,7 +335,7 @@ table .slider {
   dt {
     background: lighten($bg_color_2, 20%);
     @include border_radius(1);
-    @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0px 0px 5px rgba($bg_color_2, .7));
     font-size: 14pt;
     height: 30px;
     line-height: 30px;
@@ -341,7 +360,7 @@ table .slider {
   dd {
     height: 0;
     a {
-      border-top: 1px solid rgba(0, 0, 0, .2);
+      border-top: 1px solid rgba($bg_color_2, .2);
       color: $text_color_3 !important;
       display: block;
       font-size: 10pt;
@@ -354,7 +373,7 @@ table .slider {
       white-space: nowrap;
       z-index: 4;
       &:before {
-        border-top: 1px solid rgba(255, 255, 255, .2);
+        border-top: 1px solid rgba($bg_color_1, .2);
         content: '';
         left: 0;
         position: absolute;
@@ -363,22 +382,22 @@ table .slider {
       }
     }
     &:hover {
-      background: rgba(0, 0, 0, .3);
+      background: rgba($bg_color_2, .3);
     }
     &:last-child,
     &:last-child a {
       @include border_radius(0, 0, 1, 1);
     }
     &.new a {
-      @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
+      @include bg_gradient(rgba($bg_color_2, .1), rgba($bg_color_2, .4));
     }
     &.selected {
-      background: rgba(255, 255, 255, .2);
+      background: rgba($bg_color_1, .2);
     }
   }
   &:hover {
     @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
-    @include box_shadow(0px 0px 15px rgba(0, 0, 0, .7));
+    @include box_shadow(0px 0px 15px rgba($bg_color_2, .7));
     color: $text_color_3;
     height: auto;
     margin-left: -5px;
@@ -455,7 +474,7 @@ table .slider {
     p {
       @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
       @include border_radius(1);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0 0 5px rgba($bg_color_2, .7));
       color: $text_color_2;
       float: left;
       height: 80px;
@@ -466,7 +485,7 @@ table .slider {
       img {
         background: $bg_color_1;
         @include border_radius(1);
-        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        @include box_shadow(0 0 5px rgba($bg_color_2, .7));
         height: 70px;
         margin: 5px;
         width: 70px;
@@ -483,7 +502,7 @@ table .slider {
 /* Tables */
 table {
   background: darken($bg_color_1, 10%);
-  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  @include box_shadow(0 0 5px rgba($bg_color_2, .7));
   @include border_radius(1);
   color: $text_color_2;
   margin: 0 0 2em;
@@ -599,7 +618,7 @@ table {
   .login {
     @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
     @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
     color: $text_color_2;
     font-size: 11pt;
     height: 110px;      
@@ -688,7 +707,7 @@ table {
   .userbox {
     @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
     @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
     color: $text_color_2;
     height: 110px;      
     position: absolute;
@@ -704,7 +723,7 @@ table {
     .avatar {
       @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
       @include border_radius(1);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0 0 5px rgba($bg_color_2, .7));
       font-size: 10pt;
       height: 80px;
       left: -100px;
@@ -715,7 +734,7 @@ table {
       img {
         background: $bg_color_1;
         @include border_radius(1);
-        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        @include box_shadow(0 0 5px rgba($bg_color_2, .7));
         left: 5px;
         position: absolute;
         height: 70px;
@@ -780,8 +799,8 @@ table {
       }
     }
     #mail {
-      border-top: 1px solid rgba(0, 0, 0, .3);
-      @include bg_gradient(rgba(255, 255, 255, .1), rgba(0, 0, 0, 0));
+      border-top: 1px solid rgba($bg_color_2, .3);
+      @include bg_gradient(rgba($bg_color_1, .1), rgba($bg_color_2, 0));
       @include border_radius(1);
       bottom: 8px;
       left: 0;
@@ -789,8 +808,8 @@ table {
       position: absolute;
       right: 0;
       li {
-        @include bg_gradient(rgba(255, 255, 255, .2), rgba(0, 0, 0, 0));
-        border-top: 1px solid rgba(255, 255, 255, .2);
+        @include bg_gradient(rgba($bg_color_1, .2), rgba($bg_color_2, 0));
+        border-top: 1px solid rgba($bg_color_1, .2);
         @include border_radius(1);
         float: left;
         margin: 0 4px;
@@ -823,7 +842,7 @@ table {
         &.trash a:before { background-position: -320px -45px; }
         &:hover {
           @include bg_gradient($accent_color, lighten($accent_color, 10%));
-          @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+          @include box_shadow(0 0 15px rgba($bg_color_2, .7));
         }
       }
     }
@@ -837,7 +856,7 @@ table {
     > ul {
       @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
       @include border_radius(1);
-      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0px 0px 5px rgba($bg_color_2, .7));
       height: 50px;
       padding: 0 5px;
       position: absolute;
@@ -861,27 +880,27 @@ table {
         ul {
           @include bg_gradient(lighten($accent_color, 5%), darken($accent_color, 5%));
           @include border_radius(0, 0, 1, 1);
-          @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+          @include box_shadow(0 0 5px rgba($bg_color_2, .7));
           left: 5px;
           padding: 10px 0 0;
           @include opacity(0);
           position: absolute;
           top: -5000em;
           li {
-            border-top: 1px solid rgba(0, 0, 0, .2);
+            border-top: 1px solid rgba($bg_color_2, .2);
             a {
-              border-top: 1px solid rgba(255, 255, 255, .2);
+              border-top: 1px solid rgba($bg_color_1, .2);
               color: $text_color_3;
               display: block;
               font-size: 10pt;
               padding: 0 60px 0 10px;
               white-space: nowrap;
               &:hover {
-                background: rgba(0, 0, 0, .3);
+                background: rgba($bg_color_2, .3);
               }
             }
             &.new {
-              @include bg_gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .4));
+              @include bg_gradient(rgba($bg_color_2, .1), rgba($bg_color_2, .4));
             }
             &:last-child {
               a {
@@ -939,7 +958,7 @@ table {
           form {
             @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
             @include border_radius(1);
-            @include box_shadow(-10px 0 10px rgba(0, 0, 0, .7));
+            @include box_shadow(-10px 0 10px rgba($bg_color_2, .7));
             height: 50px;
             right: 0;
             @include opacity(0);
@@ -981,7 +1000,7 @@ table {
 }
 #headerimg {
   @include border_radius(1);
-  @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+  @include box_shadow(0 0 5px rgba($bg_color_2, .7));
   margin: 0 0 20px;
 }
 #announcements {
@@ -989,7 +1008,7 @@ table {
   li {
     background: $announcement_color;
     @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
     color: $announcement_text_color;
     height: 40px;
     line-height: 40px;
@@ -1006,9 +1025,9 @@ table {
     }
     a.dismiss,
     button {
-      background: url(../images/icons/#{$icon_set}.png) no-repeat rgba(0, 0, 0, .3);
+      background: url(../images/icons/#{$icon_set}.png) no-repeat rgba($bg_color_2, .3);
       border: 0;
-      border-left: 1px solid rgba(255, 255, 255, .3);
+      border-left: 1px solid rgba($bg_color_1, .3);
       @include border_radius(0, 1, 1, 0);
       @include box_shadow(none);
       height: 40px;
@@ -1020,8 +1039,8 @@ table {
       top: 0;
       width: 40px;
       &:hover {
-        background-color: rgba(0, 0, 0, .5);
-        @include box_shadow(-5px 0 10px rgba(255, 255, 255, .3));
+        background-color: rgba($bg_color_2, .5);
+        @include box_shadow(-5px 0 10px rgba($bg_color_1, .3));
       }
     }
     a.dismiss { background-position: -40px -40px; }
@@ -1038,7 +1057,7 @@ table {
   #bcrumb {
     @include bg_gradient(lighten($bg_color_2, 30%), lighten($bg_color_2, 40%));
     @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
     color: $text_color_2;
     font-size: 10pt;
     height: 30px;
@@ -1074,7 +1093,7 @@ table {
         width: 0;
         height: 0;
         border-bottom: 40px solid transparent;
-        border-left: 20px solid rgba(255, 255, 255, .3);
+        border-left: 20px solid rgba($bg_color_1, .3);
         position: absolute;
         top: 50%;
         margin-top: -20px;
@@ -1117,7 +1136,7 @@ table {
   #actions {
     @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
     @include border_radius(1);
-    @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
     height: 40px;
     position: absolute;
     right: 0;
@@ -1131,8 +1150,8 @@ table {
     padding: 0;
     text-align: right;
     a {
-      background: rgba(0, 0, 0, .3);
-      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba($bg_color_2, .3);
+      border: 1px solid rgba($bg_color_1, .2);
       @include border_radius(1);
       @include box_sizing(border-box);
       display: inline-block;
@@ -1153,9 +1172,9 @@ table {
         width: 30px;
       }
       &:hover {
-        background: rgba(0, 0, 0, .5);
-        border-color: rgba(255, 255, 255, .4);
-        @include box_shadow(0 0 15px rgba(0, 0, 0, .7));
+        background: rgba($bg_color_2, .5);
+        border-color: rgba($bg_color_1, .4);
+        @include box_shadow(0 0 15px rgba($bg_color_2, .7));
       }
       &.activate:before { background-position: -606px -46px; }
       &.deactivate:before { background-position: -646px -46px; }
@@ -1276,7 +1295,7 @@ table {
       @include bg_gradient(darken($bg_color_1, 20%), darken($bg_color_1, 10%), 0 $border_radius, 0 30, linear, repeat-x darken($bg_color_1, 10%));
       border-top: 1px solid $bg_color_1;
       @include border_radius(1);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0 0 5px rgba($bg_color_2, .7));
       display: none;
       margin: -#{$border_radius}px 0 0;
       padding: 2em 2em 0;
@@ -1358,7 +1377,7 @@ table {
         iframe {
           border: 0;
           @include border_radius(1);
-          @include box_shadow(0 0 5px rgba(0, 0, 0, .3));
+          @include box_shadow(0 0 5px rgba($bg_color_2, .3));
           margin: 10px;
           width: 940px !important;
         }
@@ -1377,12 +1396,12 @@ table {
             height: auto;
             padding: 0;
             .mceButton {
-              background: rgba(255, 255, 255, .5);
+              background: rgba($bg_color_1, .5);
               @include border_radius(1);
               &:hover {
-                background: rgba(255, 255, 255, .7);
-                border: 1px solid rgba(0, 0, 0, .3);
-                @include box_shadow(0 0 5px rgba(0, 0, 0, .5));
+                background: rgba($bg_color_1, .7);
+                border: 1px solid rgba($bg_color_2, .3);
+                @include box_shadow(0 0 5px rgba($bg_color_2, .5));
                 cursor: pointer;
                 span {
                   cursor: pointer;
@@ -1390,8 +1409,8 @@ table {
               }
             }
             .mceButtonActive {
-              background: rgba(255, 255, 255, .9);
-              border: 1px solid rgba(0, 0, 0, .7);
+              background: rgba($bg_color_1, .9);
+              border: 1px solid rgba($bg_color_2, .7);
             }
           }
         }
@@ -1416,7 +1435,7 @@ table {
     dt {
       @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
       @include border_radius(1, 0, 0, 1);
-      @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0px 0px 5px rgba($bg_color_2, .7));
       clear: both;
       display: block;
       float: left;
@@ -1427,7 +1446,7 @@ table {
     dd {
       @include bg_gradient(lighten($bg_color_2, 40%), lighten($bg_color_2, 20%));
       @include border_radius(0, 1, 1, 0);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+      @include box_shadow(0 0 5px rgba($bg_color_2, .7));
       display: block;
       float: left;
       margin: 0 0 5px 0;
@@ -1570,8 +1589,8 @@ table {
             width: 20px;
           }
           a {
-            background: rgba(255, 255, 255, .2);
-            border-left: 1px solid rgba(255, 255, 255, .2);
+            background: rgba($bg_color_1, .2);
+            border-left: 1px solid rgba($bg_color_1, .2);
             @include border_radius(0, 1, 1, 0);
             display: block;
             height: 30px;
@@ -1588,7 +1607,7 @@ table {
               color: $text_color_3;
             }
             &:before {
-              border-left: 1px solid rgba(0, 0, 0, .2);
+              border-left: 1px solid rgba($bg_color_2, .2);
               bottom: 0;
               color: $text_color_2;
               content: '-';
@@ -1606,7 +1625,7 @@ table {
       &.suggest {
         background: $accent_color;
         @include border_radius(0, 0, 1, 1);
-        @include box_shadow(0 0 5px rgba(0, 0, 0, .7));
+        @include box_shadow(0 0 5px rgba($bg_color_2, .7));
         left: 0;
         position: absolute;
         margin: -#{$border_radius}px 0 0;
@@ -1617,10 +1636,10 @@ table {
           font-size: 10pt;
           padding: 5px 60px 5px 10px;
           position: relative;
-          border-top: 1px solid rgba(0, 0, 0, .2);
+          border-top: 1px solid rgba($bg_color_2, .2);
           white-space: nowrap;
           &:before {
-            border-top: 1px solid rgba(255, 255, 255, .2);
+            border-top: 1px solid rgba($bg_color_1, .2);
             content: '';
             left: 0;
             position: absolute;
@@ -1635,7 +1654,7 @@ table {
             }
           }
           &:hover {
-            background: rgba(0, 0, 0, .3);
+            background: rgba($bg_color_2, .3);
           }
         }
       }
@@ -1659,7 +1678,7 @@ table {
     fieldset {
       @include bg_gradient(lighten($bg_color_1, 10%), darken($bg_color_1, 10%));
       @include border_radius(1);
-      @include box_shadow(0 0 5px rgba(0, 0, 0, .3));
+      @include box_shadow(0 0 5px rgba($bg_color_2, .3));
       display: inline-block;
       margin: 0 10px 1em;
       padding: 10px 10px 0;
@@ -1680,6 +1699,7 @@ table {
   }
   #usercheckboxes {
     ol {
+      margin: 0 -4px 0 0;
       padding: 0 0 1em;
       &:after {
         content: '.';
@@ -1690,8 +1710,9 @@ table {
       }
       li {
         float: left;
-        margin: 0 5px 5px 0;
-        width: 225px;
+        margin: 0 4px 4px 0;
+        padding: 0;
+        width: 237px;
         label {
           background: darken($bg_color_1, 10%);
           @include border_radius(1);
@@ -1718,6 +1739,31 @@ table {
       }
     }
   }
+  .rolename {
+    width: 200px;
+  }
+  .roleusers {
+    p {
+      border-bottom: 1px solid rgba($bg_color_1, .2);
+      margin: 0 0 .5em;
+      padding: 0 0 .5em;
+    }
+    a {
+      background: rgba($bg_color_1, .15);
+      @include border_radius(1);
+      color: $text_color_2;
+      display: block;
+      float: left;
+      font-size: 10pt;
+      margin: 0 4px 4px 0;
+      padding: 2px 4px;
+      text-decoration: none;
+      &:hover {
+        background: $accent_color;
+        color: $text_color_3;
+      }
+    }
+  }
 }
 
 
@@ -1730,26 +1776,26 @@ table {
   .container {
     @include bg_gradient(lighten($bg_color_2, 20%), $bg_color_2);
     @include border_radius(1);
-    @include box_shadow(0px 0px 5px rgba(0, 0, 0, .7));
+    @include box_shadow(0px 0px 5px rgba($bg_color_2, .7));
     .menu {
       float: left;
       max-width: 215px;
       margin: 0 0 0 20px;
       padding: 18pt 0 0;
       h3 {
-        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        border-bottom: 1px solid rgba($bg_color_2, .2);
         color: lighten($link_color, 15%);
         @include font(light, 18pt);
         height: 36pt;
         padding: 0;
       }
       ul {
-        border-top: 1px solid rgba(255, 255, 255, .2);
+        border-top: 1px solid rgba($bg_color_1, .2);
         li {
-          border-bottom: 1px solid rgba(255, 255, 255, .2);
+          border-bottom: 1px solid rgba($bg_color_1, .2);
           margin: 4px 0;
           a {
-            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            border-bottom: 1px solid rgba($bg_color_2, .2);
             display: block;
             font-size: 10pt;
             padding: 4px 50px 4px 0;

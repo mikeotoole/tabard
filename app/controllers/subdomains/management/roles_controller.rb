@@ -9,6 +9,15 @@ class Subdomains::Management::RolesController < SubdomainsController
       render_insufficient_privileges
     else 
       @roles = @community.roles.all.delete_if{|role| not current_user.can_update(role)}
+      @system_roles = []
+      @custom_roles = []
+      @roles.each do |role|
+        if role.is_system_role?
+          @system_roles.push(:role => role, :users => User.all.delete_if{|user| not user.roles.include?(role)})
+        else
+          @custom_roles.push(:role => role, :users => User.all.delete_if{|user| not user.roles.include?(role)})
+        end
+      end
       respond_with([:management, @roles])
     end
   end
@@ -90,6 +99,8 @@ class Subdomains::Management::RolesController < SubdomainsController
     end
   
     def sort_permissions
-      
+      @permissions_global
+      @permissions_pages
+      @permissions_discussions
     end
 end

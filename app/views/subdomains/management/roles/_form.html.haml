@@ -1,6 +1,9 @@
 = simple_form_for [:management, @role] do |f|
 
-  = f.input :name, :wrapper_tag => :p
+  %fieldset
+    %ol
+      = f.input :name
+      = f.input :description, :as => 'text', :input_html => { :rows => 3 }
   
   - if @role.id #HACK
       
@@ -38,7 +41,7 @@
       %tfoot
         %tr
           %td{ :colspan => 6 }
-            = link_to "Add Permission", new_management_role_permission_path(@role), :confirm => 'Any changes will be lost of you leave this page. Continue?', :class => 'button'
+            = link_to "Add Permission", new_management_role_permission_path(@role), :confirm => 'Any changes will be lost of you leave this page. Continue?', :class => 'button icon add'
     
     - if @role.can_update_users
       %h2 Users
@@ -53,4 +56,4 @@
         %p No users
 
   %p
-    %button{ :type => 'submit' } Save Changes
+    %button{ :type => 'submit', :class => 'icon check' } Save Changes
