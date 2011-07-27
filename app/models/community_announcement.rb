@@ -1,0 +1,2 @@
+class GameAnnouncement < Announcement
+end

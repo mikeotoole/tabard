@@ -1,8 +1,9 @@
 class SiteAnnouncement < Announcement
   has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
-    
+  
+  after_create :create_acknowledgments
   def create_acknowledgments
-    @userprofiles = UserProfile.active_profiles
+    @userprofiles = UserProfile.all
     
     for profile in @userprofiles     
       AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => profile.id, :acknowledged => false)
@@ -14,14 +15,14 @@ class SiteAnnouncement < Announcement
   end
   
   def check_user_create_permissions(user)
-    user.can_create("SiteAnnouncement")
+    false
   end
   
   def check_user_update_permissions(user)
-    user.can_update("SiteAnnouncement")
+    false
   end
   
   def check_user_delete_permissions(user)
-    user.can_delete("SiteAnnouncement")
+    false
   end
 end

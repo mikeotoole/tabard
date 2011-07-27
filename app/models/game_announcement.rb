@@ -3,6 +3,7 @@ class GameAnnouncement < Announcement
   belongs_to :discussion_space
   has_many :GameProfiles, :through => :AcknowledgmentOfAnnouncement
   
+  after_create :create_acknowledgments
   def create_acknowledgments
     @userprofiles = UserProfile.active_profiles
     @game = Game.find(:first, :conditions => {:id => self.game_id})
