@@ -144,7 +144,7 @@ Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyP
 discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_profile => adminProfile, :community => stonewatch)
 stonewatch_officer_role = Role.create(:community => stonewatch,
   :name => "Officer",
-  :description => "Special priveleges for guild officers.",
+  :description => "Special privileges for guild officers.",
   :permission => Permission.create(:permissionable => discSpace,
       :show_p => true,
       :create_p => true,

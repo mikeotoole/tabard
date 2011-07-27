@@ -118,42 +118,48 @@ class User < ActiveRecord::Base
   
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
-    logger.debug("Show permission request for user #{self.name} with #{system_resource_name}")
     if(system_resource_name.respond_to?('check_user_show_permissions'))
       if(system_resource_name.check_user_show_permissions(self))
+        logger.debug("Show permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
     end
     self.roles.each do |role|
       if(role.show_permissionables.include?(system_resource_name))
+        logger.debug("Show permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
       role.show_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
+          logger.debug("Show permission request for user #{self.name} with #{system_resource_name} | Pass")
           return true
         end
       end
     end
+    logger.debug("Show permission request for user #{self.name} with #{system_resource_name} | Fail")
     false
   end
   
   def can_create(system_resource_name)
-    logger.debug("Create permission request for user #{self.name} with #{system_resource_name}") 
     if(system_resource_name.respond_to?('check_user_create_permissions'))
       if(system_resource_name.check_user_create_permissions(self))
+        logger.debug("Create permission request for user #{self.name} with #{system_resource_name} | Pass") 
         return true
       end
     end
     self.roles.each do |role|
       if(role.create_permissionables.include?(system_resource_name))
+        logger.debug("Create permission request for user #{self.name} with #{system_resource_name} | Pass") 
         return true
       end
       role.create_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
+          logger.debug("Create permission request for user #{self.name} with #{system_resource_name} | Pass") 
           return true
         end
       end
     end
+    logger.debug("Create permission request for user #{self.name} with #{system_resource_name} | Fail") 
     false
   end
   
@@ -161,50 +167,56 @@ class User < ActiveRecord::Base
   	self.can_create(system_resource_name) or self.can_update(system_resource_name) or self.can_delete(system_resource_name)
   end
   
-  def can_update(system_resource_name)
-    logger.debug("Update permission request for user #{self.name} with #{system_resource_name}") 
+  def can_update(system_resource_name) 
     if(system_resource_name.respond_to?('check_user_update_permissions'))
       if(system_resource_name.check_user_update_permissions(self))
+        logger.debug("Update permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
     end
     self.roles.each do |role|
       if(role.update_permissionables.include?(system_resource_name))
+        logger.debug("Update permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
       role.update_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
+          logger.debug("Update permission request for user #{self.name} with #{system_resource_name} | Pass")
           return true
         end
       end
     end
+    logger.debug("Update permission request for user #{self.name} with #{system_resource_name} | Fail")
     false
   end
   
   def can_delete(system_resource_name)
-    logger.debug("Delete permission request for user #{self.name} with #{system_resource_name}")
     if(system_resource_name.respond_to?('check_user_delete_permissions'))
       if(system_resource_name.check_user_delete_permissions(self))
+        logger.debug("Delete permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
     end 
     self.roles.each do |role|
       if(role.delete_permissionables.include?(system_resource_name))
+        logger.debug("Delete permission request for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
       role.delete_system_resources.each do |s_resource|
         if(s_resource.permissionable_name == system_resource_name)
+          logger.debug("Delete permission request for user #{self.name} with #{system_resource_name} | Pass")
           return true
         end
       end
     end
+    logger.debug("Delete permission request for user #{self.name} with #{system_resource_name} | Fail")
     false
   end
   
   def can_special_permissions(system_resource_name,permission_string)
-    logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name}")
     permissionable_id = SystemResource.where(:name => system_resource_name).first.id if SystemResource.where(:name => system_resource_name).exists?
     if !permissionable_id
+      logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name} | Fail")
       return false
     end
     corrected_permission = "%"<<permission_string<<"%"
@@ -213,9 +225,11 @@ class User < ActiveRecord::Base
         corrected_permission, 
         permissionable_id).exists?
       )
+        logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name} | Pass")
         return true
       end
     end
+    logger.debug("Special permission request (#{permission_string}) for user #{self.name} with #{system_resource_name} | Fail")
     false
   end
   
