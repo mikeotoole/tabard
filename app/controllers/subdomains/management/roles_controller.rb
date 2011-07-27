@@ -1,7 +1,7 @@
 class Subdomains::Management::RolesController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :collect_community_users
-  before_filter :get_role_by_id, :only => [:edit, :udpate, :destroy]
+  before_filter :get_role_by_id, :only => [:edit, :update, :destroy]
   before_filter :sort_permissions, :only => [:edit, :update]
 
   def index

@@ -127,15 +127,13 @@ class Community < ActiveRecord::Base
           :access => (resource.name == "Discussion" or resource.name == "Comment" ? "lock" : nil)
         )
       },
-      :community => self,
-      :description => "This role is the admin role for the community."
+      :community => self
     ))
   end
   
   def setup_applicant_role
     self.update_attributes(:applicant_role => Role.create(:name => "Applicant",
-      :community => self,
-      :description => "This role is the applicant role for the community."
+      :community => self
     ))
   end
   
@@ -151,8 +149,7 @@ class Community < ActiveRecord::Base
         ) 
         #Remove Registration application
       },
-      :community => self,
-      :description => "This role is the member role for the community. Every member has this role."
+      :community => self
     ))
   end
   
