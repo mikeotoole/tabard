@@ -12,7 +12,7 @@ commentResource = SystemResource.create(:name => "Comment")
 
 discussionSpaceResource = SystemResource.create(:name => "DiscussionSpace")
 
-siteAnnouncementResource = SystemResource.create(:name => "SiteAnnouncement")
+communityAnnouncementResource = SystemResource.create(:name => "CommunityAnnouncement")
 gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
@@ -192,6 +192,10 @@ haxComment1 = Comment.create(:body => "No Viruses!", :user_profile => crumbJoe.u
 # Sample Page Space/Pages
 jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justanotherheadshot)
 Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
+
+#Site Announcement
+SiteAnnouncement.create(:name => "We are live!",
+                        :body => "Crumblin is live now!")
 
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)
