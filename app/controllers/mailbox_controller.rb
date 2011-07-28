@@ -4,6 +4,7 @@ class MailboxController < ApplicationController
   
   def index
     @folder = current_user.inbox
+    @messages = @folder.messages.delete_if {|message| message.deleted == true}
     render :action => 'show'
   end
 
