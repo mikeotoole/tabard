@@ -49,7 +49,8 @@ Bv::Application.routes.draw do
   
   resources :announcements,
     :site_announcements,
-    :game_announcements
+    :game_announcements,
+    :community_announcements
   
   match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
   

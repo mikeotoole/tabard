@@ -2,13 +2,13 @@
   %form#announcements{ :method => 'post', :action => announcement_acknowledgement_path, :remote => true }
     %ul.container
       - if logged_in? and current_user.unacknowledged_announcements
-        - current_user.unacknowledged_announcements.each do |announcement|
-          %li{ :class => 'announcement_' << announcement.id.to_s }
-            = link_to(announcement.path, { :class => 'msg', :title => 'Read the full announcement and comments.' }) do
-              %strong= announcement.title
+        - current_user.unacknowledged_announcements.each do |a_o_a|
+          %li{ :class => 'announcement_' << a_o_a.id.to_s }
+            = link_to(a_o_a.announcement, { :class => 'msg', :title => 'Read the full announcement and comments.' }) do
+              %strong= a_o_a.announcement.name
               &mdash;
-              = announcement.snippet
-            %button{ :type => 'submit', :name => 'id', :value => announcement.id, :title => 'Mark as seen.' } Mark as seen
+              = a_o_a.snippet
+            %button{ :type => 'submit', :name => 'id', :value => a_o_a.id, :title => 'Mark as seen.' } Mark as seen
       - if flash[:messages]
         - flash[:messages].each do |message|
           %li{ :class => message[:class] }

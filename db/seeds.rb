@@ -180,6 +180,12 @@ guildInformationPageSpace = PageSpace.create(:name => "Guild Information", :comm
 guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic story]", :page_space => guildInformationPageSpace, :featured_page => true)
 guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
 
+#Game Discussions
+GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor, :community => stonewatch)
+#Community Discussions
+CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch)
+
+
 #Generate some normal activity for justanotherheadshot
 
 # Sample Discussion Space
@@ -194,8 +200,8 @@ jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justano
 Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
 
 #Site Announcement
-SiteAnnouncement.create(:name => "We are live!",
-                        :body => "Crumblin is live now!")
+SiteAnnouncement.create(:name => "RC1!",
+                        :body => "Crumblin is almost ready for RC1!")
 
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)

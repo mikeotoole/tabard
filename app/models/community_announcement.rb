@@ -1,11 +1,11 @@
 class CommunityAnnouncement < Announcement
-  has_many :user_profiles, :through => :AcknowledgmentOfAnnouncement
+  has_many :user_profiles, :through => :acknowledgment_of_announcements
   has_one :community
   
   after_create :create_acknowledgments
   def create_acknowledgments
     self.community.all_users.each do |user| 
-      AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => user.user_profile.profile.id, :acknowledged => false)
+      AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => user.user_profile.id, :acknowledged => false)
     end
   end
   

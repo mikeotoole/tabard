@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727232120) do
+ActiveRecord::Schema.define(:version => 20110727231627) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(:version => 20110727232120) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "acknowledged"
+  end
+
+  create_table "announcements", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
+    t.integer  "user_profile_id"
+    t.integer  "game_id"
+    t.integer  "community_id"
+    t.string   "type"
+    t.boolean  "comments_enabled", :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "answers", :force => true do |t|
@@ -108,7 +120,6 @@ ActiveRecord::Schema.define(:version => 20110727232120) do
     t.integer  "game_id"
     t.boolean  "comments_enabled",    :default => true
     t.boolean  "has_been_locked"
-    t.integer  "community_id"
   end
 
   create_table "donations", :force => true do |t|
