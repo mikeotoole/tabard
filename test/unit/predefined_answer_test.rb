@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Management::DiscussionSpacesControllerTest < ActionController::TestCase
+class PredefinedAnswerTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

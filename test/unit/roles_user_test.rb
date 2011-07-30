@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Management::PageSpacesControllerTest < ActionController::TestCase
+class RolesUserTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
