@@ -1,7 +1,13 @@
 class SiteAnnouncement < Announcement
-  has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
+  attr_accessible :name, :body, :user_profiles, :community
+  
+  has_many :user_profiles, :through => :acknowledgment_of_announcements
   
   after_create :create_acknowledgments
+  
+  validate :name, :presence => true
+  validate :body, :presence => true
+  
   def create_acknowledgments
     @userprofiles = UserProfile.all
     

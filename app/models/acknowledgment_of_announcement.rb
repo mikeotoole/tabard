@@ -1,6 +1,6 @@
 class AcknowledgmentOfAnnouncement < ActiveRecord::Base
-  belongs_to :Announcement
-  belongs_to :Profile
+  belongs_to :announcement
+  belongs_to :profile
   
   def author_name
     @profile = Profile.find_by_id(self.profile_id)
@@ -8,21 +8,19 @@ class AcknowledgmentOfAnnouncement < ActiveRecord::Base
   end
   
   def path
-    Announcement.find_by_id(self.announcement_id)
+    self.annoncement
   end
   
   def title
-    @announcement = Announcement.find_by_id(self.announcement_id)
-    @announcement.name
+    self.announcement.name
   end
   
   def body
-    @announcement = Announcement.find_by_id(self.announcement_id)
-    @announcement.body
+    self.announcement.body
   end
   
   def snippet(n=30)
-    Announcement.find_by_id(self.announcement_id).snippet(n)
+    self.announcement.snippet(n)
   end
   
 end

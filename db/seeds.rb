@@ -12,7 +12,7 @@ commentResource = SystemResource.create(:name => "Comment")
 
 discussionSpaceResource = SystemResource.create(:name => "DiscussionSpace")
 
-siteAnnouncementResource = SystemResource.create(:name => "SiteAnnouncement")
+communityAnnouncementResource = SystemResource.create(:name => "CommunityAnnouncement")
 gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
@@ -180,6 +180,12 @@ guildInformationPageSpace = PageSpace.create(:name => "Guild Information", :comm
 guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic story]", :page_space => guildInformationPageSpace, :featured_page => true)
 guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
 
+#Game announcement
+GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor, :community => stonewatch, :user_profile => adminProfile)
+#Community announcement
+CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch, :user_profile => adminProfile)
+
+
 #Generate some normal activity for justanotherheadshot
 
 # Sample Discussion Space
@@ -192,6 +198,16 @@ haxComment1 = Comment.create(:body => "No Viruses!", :user_profile => crumbJoe.u
 # Sample Page Space/Pages
 jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justanotherheadshot)
 Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
+
+#Community Discussions
+CommunityAnnouncement.create(:name => "Possible alliance n00bs", :body => "We are looking at forming an alliance with Stonewatch.", :community => justanotherheadshot, :user_profile => crumbJoe.user_profile)
+
+
+
+
+#Site Announcement
+SiteAnnouncement.create(:name => "RC1!",
+                        :body => "Crumblin is almost ready for RC1!")
 
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)

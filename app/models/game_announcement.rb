@@ -1,17 +1,27 @@
-class GameAnnouncement < Announcement
+class GameAnnouncement < CommunityAnnouncement
+  attr_accessible :name, :body, :user_profile, :game_profiles, :community, :game
   belongs_to :game
-  belongs_to :discussion_space
-  has_many :GameProfiles, :through => :AcknowledgmentOfAnnouncement
+  has_many :game_profiles, :through => :acknowledgment_of_announcements
+  belongs_to :user_profile
   
   after_create :create_acknowledgments
+  
+  validate :name, :presence => true
+  validate :body, :presence => true
+  validate :user_profile, :presence => true
+  validate :community, :presence => true
+  validate :game, :presence => true
+  
   def create_acknowledgments
-    @userprofiles = UserProfile.active_profiles
-    @game = Game.find(:first, :conditions => {:id => self.game_id})
-      
-    for profile in @userprofiles
-      @gameprofile = profile.game_profiles.find(:first, :conditions => {:game_id => @game.id})
-        if @gameprofile != nil
-          AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => @gameprofile.id, :acknowledged => false)
+    user_profiles = Array.new
+    self.community.all_users.each do |user| 
+      user_profiles << user.user_profile
+    end
+    
+    for profile in user_profiles
+      game_profile = profile.game_profiles.find(:first, :conditions => {:game_id => self.game.id})
+        if game_profile != nil
+          AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => game_profile.id, :acknowledged => false)
         end
     end
   end
