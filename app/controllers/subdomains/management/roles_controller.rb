@@ -71,7 +71,7 @@ class Subdomains::Management::RolesController < SubdomainsController
         add_new_flash_message('Role was successfully updated')
       end
       grab_all_errors_from_model(@role)
-      respond_with([:management, @role])
+      render :edit
     end
   end
 

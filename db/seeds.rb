@@ -145,12 +145,12 @@ discSpace = DiscussionSpace.create(:name => "General", :system => false, :user_p
 stonewatch_officer_role = Role.create(:community => stonewatch,
   :name => "Officer",
   :description => "Special privileges for guild officers.",
-  :permission => Permission.create(:permissionable => discSpace,
+  :permissions => [Permission.create(:permissionable => discSpace,
       :show_p => true,
       :create_p => true,
       :update_p => true,
-      :delete_p => false
-    )
+      :delete_p => true
+    )]
   )
 stonewatch.roles << stonewatch_officer_role
 roboBillyUser.roles << stonewatch_officer_role

@@ -19,6 +19,8 @@ class Community < ActiveRecord::Base
   has_many :games, :through => :supported_games
   has_many :registration_applications, :through => :community_application_form, :source => "submissions"
   has_many :comments
+  has_many :community_announcements
+  has_many :game_announcements
   
   belongs_to :admin_role, :class_name => "Role"
   belongs_to :applicant_role, :class_name => "Role"
@@ -127,12 +129,14 @@ class Community < ActiveRecord::Base
           :access => (resource.name == "Discussion" or resource.name == "Comment" ? "lock" : nil)
         )
       },
+      :description => "",
       :community => self
     ))
   end
   
   def setup_applicant_role
     self.update_attributes(:applicant_role => Role.create(:name => "Applicant",
+      :description => "",
       :community => self
     ))
   end
@@ -149,6 +153,7 @@ class Community < ActiveRecord::Base
         ) 
         #Remove Registration application
       },
+      :description => "",
       :community => self
     ))
   end

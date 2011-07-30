@@ -2,7 +2,7 @@ class CommunityAnnouncement < Announcement
   attr_accessible :name, :body, :user_profile, :user_profiles, :community
   
   has_many :user_profiles, :through => :acknowledgment_of_announcements
-  has_one :community
+  belongs_to :community
   belongs_to :user_profile
   
   after_create :create_acknowledgments
