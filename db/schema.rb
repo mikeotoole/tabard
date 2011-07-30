@@ -49,22 +49,6 @@ ActiveRecord::Schema.define(:version => 20110727231627) do
     t.datetime "updated_at"
   end
 
-  create_table "characters", :force => true do |t|
-    t.integer  "game_id"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
-    t.string   "faction"
-    t.string   "race"
-    t.string   "klass"
-    t.string   "server"
-    t.string   "extra"
-    t.integer  "rank"
-    t.integer  "game_profile_id"
-    t.integer  "discussion_id"
-  end
-
   create_table "comments", :force => true do |t|
     t.text     "body"
     t.integer  "character_proxy_id"
@@ -122,16 +106,6 @@ ActiveRecord::Schema.define(:version => 20110727231627) do
     t.boolean  "has_been_locked"
   end
 
-  create_table "donations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "events", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "folders", :force => true do |t|
     t.integer  "user_profile_id"
     t.integer  "parent_id"
@@ -148,16 +122,6 @@ ActiveRecord::Schema.define(:version => 20110727231627) do
     t.boolean  "is_active"
     t.integer  "announcement_space_id"
     t.integer  "character_discussion_space_id"
-  end
-
-  create_table "letters", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "locations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "message_copies", :force => true do |t|
@@ -307,11 +271,6 @@ ActiveRecord::Schema.define(:version => 20110727231627) do
 
   create_table "system_resources", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "teamspeaks", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
