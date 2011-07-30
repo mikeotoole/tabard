@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include UrlHelper
   helper :all # include all helpers, all the time
   before_filter :set_locale, :group_flash_messages, :collect_management_navigation_items, :collect_games
   after_filter :remember_current_page

@@ -47,11 +47,6 @@ Bv::Application.routes.draw do
 
   resources :registration_applications, :only => [:new, :create, :show]  
   
-  resources :announcements,
-    :site_announcements,
-    :game_announcements,
-    :community_announcements
-  
   match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
   
   match '/profiles/newgame' => "profiles#newgame"
@@ -124,8 +119,16 @@ Bv::Application.routes.draw do
       resources :page_spaces do
         resources :pages
       end
+      resources :game_announcements
+      resources :community_announcements
     end
   end
+  
+  #Announcement Helpers
+  resources :announcements,
+            :site_announcements
+  resources :game_announcements, :controller => "announcements", :type => "GameAnnouncement", :only => :show
+  resources :community_announcements, :controller => "announcements", :type => "CommunityAnnouncement", :only => :show
   
   root :to => "home#index"
   

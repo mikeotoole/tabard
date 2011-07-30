@@ -116,6 +116,14 @@ class User < ActiveRecord::Base
       @acknowledgment_of_announcements
   end
   
+  def announcements
+    @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
+    @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
+    @profiles << @userprofile
+    @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+    @acknowledgment_of_announcements
+  end
+  
   #need to add clause for if the user owns the resource
   def can_show(system_resource_name)
     if(system_resource_name.respond_to?('check_user_show_permissions'))

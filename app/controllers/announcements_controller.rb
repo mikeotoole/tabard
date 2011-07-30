@@ -2,13 +2,19 @@ class AnnouncementsController < ApplicationController
   respond_to :html
   before_filter :authenticate
   
-  # GET /announcements
-  # GET /announcements.xml
   def index
-    @announcements = Announcement.all
-    @site_announcements = Announcement.find(:all, :conditions => { :type => 'SiteAnnouncement' })
-    @game_announcements = Announcement.find(:all, :conditions => { :type => 'GameAnnouncement' })
-    
-    respond_with(@announcements, @site_announcements, @game_announcements)
+    @announcements = current_user.announcements
+  end
+  
+  def show
+    @announcement = Announcement.find_by_id(params[:id])
+    case params[:type]
+      when "GameAnnouncement"
+        redirect_to(game_announcement_url(:subdomain => @announcement.community.subdomain))
+      when "CommunityAnnouncement"
+        redirect_to(community_announcement_url(:subdomain => @announcement.community.subdomain))
+      else
+        render :show
+    end
   end
 end
