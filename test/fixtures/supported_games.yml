@@ -1,9 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  community_id: 1
-  game_id: 1
-
-two:
-  community_id: 1
-  game_id: 1

@@ -1,11 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  game_profile_id: 
-  character_id: 
-  character_type: MyString
-
-two:
-  game_profile_id: 
-  character_id: 
-  character_type: MyString
