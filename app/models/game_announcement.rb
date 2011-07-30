@@ -1,8 +1,17 @@
 class GameAnnouncement < CommunityAnnouncement
+  attr_accessible :name, :body, :user_profile, :game_profiles, :community, :game
   belongs_to :game
-  has_many :GameProfiles, :through => :acknowledgment_of_announcements
+  has_many :game_profiles, :through => :acknowledgment_of_announcements
+  belongs_to :user_profile
   
   after_create :create_acknowledgments
+  
+  validate :name, :presence => true
+  validate :body, :presence => true
+  validate :user_profile, :presence => true
+  validate :community, :presence => true
+  validate :game, :presence => true
+  
   def create_acknowledgments
     user_profiles = Array.new
     self.community.all_users.each do |user| 
