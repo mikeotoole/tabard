@@ -1,11 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  title: MyString
-  body: MyText
-  game_id: 1
-
-two:
-  title: MyString
-  body: MyText
-  game_id: 1

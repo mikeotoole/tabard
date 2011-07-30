@@ -1,15 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
-  body: MyText
-  discussion_space_id: 1
-  character_id: 1
-  user_profile_id: 1
-
-two:
-  name: MyString
-  body: MyText
-  discussion_space_id: 1
-  character_id: 1
-  user_profile_id: 1

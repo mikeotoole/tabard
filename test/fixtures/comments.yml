@@ -1,15 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  body: MyText
-  character_id: 1
-  user_profile: 1
-  commentable_id: 1
-  commentable_type: MyString
-
-two:
-  body: MyText
-  character_id: 1
-  user_profile: 1
-  commentable_id: 1
-  commentable_type: MyString

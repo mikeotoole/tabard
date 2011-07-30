@@ -1,11 +1,2 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  user_profile_id: 1
-  parent_id: 1
-  name: MyString
-
-two:
-  user_profile_id: 1
-  parent_id: 1
-  name: MyString
