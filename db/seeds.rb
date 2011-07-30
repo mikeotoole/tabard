@@ -149,7 +149,7 @@ stonewatch_officer_role = Role.create(:community => stonewatch,
       :show_p => true,
       :create_p => true,
       :update_p => true,
-      :delete_p => true
+      :delete_p => false
     )
   )
 stonewatch.roles << stonewatch_officer_role

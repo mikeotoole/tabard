@@ -1,6 +1,6 @@
 # TODO Add permission protection for this controller - JW
 class Subdomains::Management::PermissionsController < SubdomainsController
-  respond_to :html, :xml
+  respond_to :js, :html
   before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
 
   def new

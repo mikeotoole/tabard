@@ -148,6 +148,40 @@ $(document).ready(function() {
       }
     }
   });
+  
+  $('.suggest')
+    .hide()
+    .siblings('input[type=text]')
+    .bind('keyup', function(){
+      pattern = new RegExp($(this).val().replace(/\s/, ''), 'i');
+      $(this)
+        .siblings('.suggest')
+        .show()
+        .find('li')
+        .each(function() {
+          $(this).hide();
+          if($(this).html().replace(/\s/, '').match(pattern)) {
+            $(this).stop().show();
+          } else {
+            $(this).hide(200);
+          }
+        });
+    });
+  $('.suggest li').bind('click', function() {
+    container = $(this).parent().parent();
+    $(this).parent()
+      .hide()
+      .siblings('input[type=hidden]')
+      .attr('value', $(this).attr('data'))
+      .siblings('input[type=text]')
+      .attr('value', '');
+    if(!container.find('.matches').length) {
+      container.prepend('<ul class="matches"></ul>');
+    }
+    container
+      .find('.matches')
+      .append('<li>' + $(this).html() + '</li>');
+  });
 	
 });
 

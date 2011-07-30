@@ -1542,6 +1542,46 @@ table {
     }
   }
   
+  /* Suggest Dropdown */  
+  .suggest {
+    background: $accent_color;
+    @include border_radius(0, 0, 1, 1);
+    @include box_shadow(0 0 5px rgba($bg_color_2, .7));
+    left: 0;
+    padding: 0;
+    position: absolute;
+    margin: -#{$border_radius}px 0 0;
+    z-index: 2;
+    li {
+      color: $text_color_3;
+      cursor: pointer;
+      font-size: 10pt;
+      list-style: none;
+      padding: 5px 60px 5px 10px;
+      position: relative;
+      border-top: 1px solid rgba($bg_color_2, .2);
+      white-space: nowrap;
+      &:before {
+        border-top: 1px solid rgba($bg_color_1, .2);
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      &:first-child {
+        border-top: 0;
+        padding: ($border_radius + 5px) 10px 5px;
+        &:before {
+          display: none;
+        }
+      }
+      &:hover {
+        background: rgba($bg_color_2, .3);
+      }
+    }
+  }
+  
 
   /* Messaging */
   #message {
@@ -1619,42 +1659,6 @@ table {
               text-indent: 0;
               top: 0;
             }
-          }
-        }
-      }
-      &.suggest {
-        background: $accent_color;
-        @include border_radius(0, 0, 1, 1);
-        @include box_shadow(0 0 5px rgba($bg_color_2, .7));
-        left: 0;
-        position: absolute;
-        margin: -#{$border_radius}px 0 0;
-        z-index: 2;
-        li {
-          color: $text_color_3;
-          cursor: pointer;
-          font-size: 10pt;
-          padding: 5px 60px 5px 10px;
-          position: relative;
-          border-top: 1px solid rgba($bg_color_2, .2);
-          white-space: nowrap;
-          &:before {
-            border-top: 1px solid rgba($bg_color_1, .2);
-            content: '';
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-          }
-          &:first-child {
-            border-top: 0;
-            padding: ($border_radius + 5px) 10px 5px;
-            &:before {
-              display: none;
-            }
-          }
-          &:hover {
-            background: rgba($bg_color_2, .3);
           }
         }
       }
@@ -1763,6 +1767,16 @@ table {
         background: $accent_color;
         color: $text_color_3;
       }
+    }
+  }
+  #permresource {
+    position: relative;
+    z-index: 6;
+    input {
+      z-index: 3;
+    }
+    ul {
+      display: none;
     }
   }
 }
