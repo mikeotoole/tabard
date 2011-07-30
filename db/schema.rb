@@ -141,11 +141,6 @@ ActiveRecord::Schema.define(:version => 20110727231627) do
     t.datetime "updated_at"
   end
 
-  create_table "newsletters", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "notifications", :force => true do |t|
     t.integer  "site_form_id"
     t.integer  "user_profile_id"
