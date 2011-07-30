@@ -1,5 +1,5 @@
 class SiteAnnouncement < Announcement
-  has_many :UserProfiles, :through => :AcknowledgmentOfAnnouncement
+  has_many :UserProfiles, :through => :acknowledgment_of_announcements
   
   after_create :create_acknowledgments
   def create_acknowledgments

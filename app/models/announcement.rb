@@ -1,5 +1,5 @@
-class Announcement < Discussion
-  has_many :AcknowledgmentOfAnnouncements, :dependent => :destroy
+class Announcement < ActiveRecord::Base
+  has_many :acknowledgment_of_announcements, :dependent => :destroy
   
   after_create :create_acknowledgments
   
