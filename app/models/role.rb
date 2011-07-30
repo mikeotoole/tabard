@@ -1,10 +1,25 @@
 class Role < ActiveRecord::Base
-  attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions, :community
+  attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions_attributes, :community
   has_many :roles_users
   has_many :users, :through => :roles_users
   has_many :permissions, :dependent => :destroy
   belongs_to :community
   accepts_nested_attributes_for :permissions
+  
+  validate :name, :presence => true
+  validate :ensure_system_role_rules
+  
+  def ensure_system_role_rules
+    return true unless self.is_system_role? and not self.new_record?
+    if self.name_changed? 
+      self.errors[:name] << "You can't change the name for a system role."
+      self.name = self.name_was
+    end
+    if self.description_changed?
+      self.errors[:description] << "You can't change the description for a system role."
+      self.description = self.description_was
+    end
+  end
   
   def is_a_member_of(community)
     self.community == community
