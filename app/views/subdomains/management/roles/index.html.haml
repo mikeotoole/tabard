@@ -15,7 +15,7 @@
         %th
           = link_to set[:role].name.pluralize, edit_management_role_path(set[:role]), :class => 'button'
         %td.roleusers
-          - if set[:role].description
+          - if set[:role].description.length > 0
             %dfn
               = set[:role].description
           %p

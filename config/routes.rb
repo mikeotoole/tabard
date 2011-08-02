@@ -85,7 +85,7 @@ Bv::Application.routes.draw do
         resources :users, :only => [:index, :destroy]
       
         resources :roles do
-          resources :permissions, :only => [:new, :create, :update, :destroy]
+          resources :permissions, :only => [:new, :create, :update, :delete, :destroy]
         end
         resources :page_spaces,
           :discussion_spaces,

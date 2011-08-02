@@ -2,10 +2,10 @@ class AccountController < ApplicationController
   respond_to :html
   before_filter :authenticate, :except => [:new, :create, :show]
   before_filter :get_all_active_games, :get_all_characters
+  
   def new
     @profile = UserProfile.new 
     @user = User.new
-
     add_new_flash_message("Please fill this form out to create your Crumblin account.")
   end
 

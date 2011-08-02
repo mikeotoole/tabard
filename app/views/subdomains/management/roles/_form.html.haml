@@ -7,29 +7,27 @@
         = f.input :description, :as => 'text', :input_html => { :rows => 3 }
   
   - if @role.id #HACK
-  
-    %pre= #YAML::dump(@role.permissions)
       
     %h2 Permissions
     
     %table
-      - if @role.permissions.size > 0
-        %thead
-          %tr
-            %th.actions
-            %th.permresource Resource
-            %th View
-            %th Edit
-            %th Add
-            %th Delete
-        %tbody
+      %thead
+        %tr
+          %th.actions
+          %th.permresource Resource
+          %th View
+          %th Edit
+          %th Add
+          %th Delete
+      %tbody
+        - if @role.permissions.size > 0
           - @role.permissions.each do |permission|
-            = f.simple_fields_for :permissions, permission do |p|
-              = render :partial => 'subdomains/management/permissions/form_fields', :locals => { :f => f, :p => p, :permission => permission }
-      -else
-        %tbody
-          %tr
-            %td.empty{ :colspan => 6 } This role has no permissions.
+            - @permission = permission
+            = render :partial => 'subdomains/management/permissions/form_fields', :locals => { :f => f }
+        -else
+          %tr.temp
+            %td &nbsp;
+            %td{ :colspan => 5 } This role has no permissions.
       %tfoot
         %tr
           %td{ :colspan => 6 }

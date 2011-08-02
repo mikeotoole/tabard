@@ -2,7 +2,8 @@ class Subdomains::Management::RolesController < SubdomainsController
   respond_to :html, :xml
   before_filter :authenticate, :collect_community_users
   before_filter :get_role_by_id, :only => [:edit, :update, :destroy]
-  before_filter :sort_permissions, :only => [:edit, :update]
+  before_filter :sort_permissions, :only => :edit
+  before_filter :rehash_permissions, :only => :update
 
   def index
     if !current_user.can_show("Role") 
@@ -23,14 +24,7 @@ class Subdomains::Management::RolesController < SubdomainsController
   end
 
   def show
-    # TODO This is really messy and needs cleaning - JW
-    if !current_user.can_show("Role") 
-      render_insufficient_privileges
-    else
-      redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]
-      #@role = Role.find(params[:id])
-      #respond_with(@role)
-    end
+    redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]
   end
 
   def new
@@ -71,7 +65,7 @@ class Subdomains::Management::RolesController < SubdomainsController
         add_new_flash_message('Role was successfully updated')
       end
       grab_all_errors_from_model(@role)
-      render :edit
+      redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]
     end
   end
 
@@ -102,5 +96,25 @@ class Subdomains::Management::RolesController < SubdomainsController
       @permissions_global
       @permissions_pages
       @permissions_discussions
+    end
+    
+    def rehash_permissions
+      counter = 0
+      permissions_attributes = {}
+      params[:role][:permissions_attributes].each do |group|
+        group.each do |item|
+          if item.is_a? Hash
+            item.each do |permission|
+              permission.each do |subitem|
+                if subitem.is_a? Hash
+                  permissions_attributes[counter.to_s] = subitem
+                  counter += 1
+                end
+              end
+            end
+          end
+        end
+      end
+      params[:role][:permissions_attributes] = permissions_attributes
     end
 end
