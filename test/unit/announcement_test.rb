@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class AnnouncementTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "Add a New Announcement" do
+    announcement = Announcement.new
+    announcement.name = "Test Announcement"
+    announcement.body = "This is a Test Announcement"
+    
+    assert announcement.save
   end
 end
