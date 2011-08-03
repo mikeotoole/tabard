@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
       @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
       @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
       @profiles << @userprofile
-      @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+      #@acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
       @acknowledgment_of_announcements
   end
   
