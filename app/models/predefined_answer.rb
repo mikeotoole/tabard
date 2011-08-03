@@ -1,5 +1,5 @@
 class PredefinedAnswer < Answer
-  belongs_to :question
+  belongs_to :question, :submission 
 end
 
 # == Schema Information

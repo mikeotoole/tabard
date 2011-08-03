@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
-  attr_accessible :title, :body, :featured_page, :page_space
+  #attr_accessible :title, :body, :featured_page, :page_space
+  
   belongs_to :page_space
   has_one :community, :through => :discussion_space
   

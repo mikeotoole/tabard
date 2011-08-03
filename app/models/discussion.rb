@@ -1,6 +1,6 @@
 class Discussion < ActiveRecord::Base
-  attr_accessible :name, :body, :comments_enabled, :has_been_locked
-  attr_accessible :user_profile, :character_proxy, :discussion_space, :comments, :game
+  #attr_accessible :name, :body, :comments_enabled, :has_been_locked
+  #attr_accessible :user_profile, :character_proxy, :discussion_space, :comments, :game
   
   belongs_to :user_profile
   belongs_to :character_proxy

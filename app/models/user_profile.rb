@@ -1,7 +1,7 @@
 require 'file_size_validator'
 class UserProfile < Profile
-  attr_accessible :avatar, :avatar_cache, :remove_avatar
-  attr_accessible :name
+  #attr_accessible :avatar, :avatar_cache, :remove_avatar
+  #attr_accessible :name
   
   validates :avatar, 
       :if => :avatar?, 

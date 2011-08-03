@@ -1,6 +1,6 @@
 class Message < ActiveRecord::Base
   attr_accessor  :to # array of people to send to
-  attr_accessible :subject, :body, :to, :author
+  #attr_accessible :subject, :body, :to, :author
   
   belongs_to :author, :class_name => "UserProfile"
   has_many :message_copies

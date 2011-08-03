@@ -1,5 +1,6 @@
 class SystemResource < ActiveRecord::Base
-  attr_accessible :name, :permissions
+  #attr_accessible :name, :permissions
+  
   has_many :permissions, :as => :permissionable
 end
 

@@ -1,6 +1,6 @@
 class DiscussionSpace < ActiveRecord::Base
-  attr_accessible :name, :system, :announcement_space, :registration_application_space, :user_profile_space,
-    :community, :game, :user_profile, :discussions
+  #attr_accessible :name, :system, :announcement_space, :registration_application_space, :user_profile_space,
+  #  :community, :game, :user_profile, :discussions
   
   belongs_to :user_profile
   belongs_to :game

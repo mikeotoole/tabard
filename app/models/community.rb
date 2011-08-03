@@ -6,7 +6,7 @@
   This class represents a community.
 =end
 class Community < ActiveRecord::Base
-  attr_accessible :name, :slogan, :label, :accepting, :email_notice_on_applicant
+  #attr_accessible :name, :slogan, :label, :accepting, :email_notice_on_applicant
   
   validates :name, :uniqueness => { :case_sensitive => false }, 
                    :presence => true,

@@ -8,8 +8,8 @@
 class Comment < ActiveRecord::Base
   attr_accessor :form_target
   attr_accessor :comment_target
-  attr_accessible :commentable, :character_proxy, :user_profile, :community, :comments
-  attr_accessible :has_been_deleted, :has_been_edited, :has_been_locked
+  #attr_accessible :commentable, :character_proxy, :user_profile, :community, :comments
+  #attr_accessible :has_been_deleted, :has_been_edited, :has_been_locked
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :character_proxy

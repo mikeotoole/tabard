@@ -1,5 +1,5 @@
 class SiteAnnouncement < Announcement
-  attr_accessible :name, :body, :user_profiles, :community
+  #attr_accessible :name, :body, :user_profiles, :community
   
   has_many :user_profiles, :through => :acknowledgment_of_announcements
   

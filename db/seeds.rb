@@ -46,21 +46,21 @@ stonewatch.assign_admin_role(adminUser)
 #Sample community activity
 #Registration application site form creation
 stonewatchCommunityForm = stonewatch.community_application_form
-checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => stonewatchCommunityForm)
-PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
-PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
-PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
-comboboxQ = ComboBoxQuestion.create(:content => "Combo boxes are?", :site_form => stonewatchCommunityForm)
-PredefinedAnswer.create(:content => "Awesome", :question => comboboxQ)
-PredefinedAnswer.create(:content => "Fun", :question => comboboxQ)
-PredefinedAnswer.create(:content => "Silly", :question => comboboxQ)
-PredefinedAnswer.create(:content => "Don't Care", :question => comboboxQ)
-radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :site_form => stonewatchCommunityForm)
-PredefinedAnswer.create(:content => "True", :question => radioQ)
-PredefinedAnswer.create(:content => "False", :question => radioQ)
-PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
-textBoxQ = TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => stonewatchCommunityForm)
-textQ = TextQuestion.create(:content => "This is a ____ text question.", :site_form => stonewatchCommunityForm)
+#checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => stonewatchCommunityForm)
+#PredefinedAnswer.create(:content => "Happy", :question => checkboxQ)
+#PredefinedAnswer.create(:content => "Sad", :question => checkboxQ)
+#PredefinedAnswer.create(:content => "WTF?!", :question => checkboxQ)
+#comboboxQ = ComboBoxQuestion.create(:content => "Combo boxes are?", :site_form => stonewatchCommunityForm)
+#PredefinedAnswer.create(:content => "Awesome", :question => comboboxQ)
+#PredefinedAnswer.create(:content => "Fun", :question => comboboxQ)
+#PredefinedAnswer.create(:content => "Silly", :question => comboboxQ)
+#PredefinedAnswer.create(:content => "Don't Care", :question => comboboxQ)
+#radioQ = RadioButtonQuestion.create(:content => "Radio buttons are awesome.", :site_form => stonewatchCommunityForm)
+#PredefinedAnswer.create(:content => "True", :question => radioQ)
+#PredefinedAnswer.create(:content => "False", :question => radioQ)
+#PredefinedAnswer.create(:content => "Don't Care", :question => radioQ)
+#textBoxQ = TextBoxQuestion.create(:content => "Describe in 100 words or less how text boxes make you feel.", :site_form => stonewatchCommunityForm)
+#textQ = TextQuestion.create(:content => "This is a ____ text question.", :site_form => stonewatchCommunityForm)
 
 stonewatch.update_attributes(:community_application_form => stonewatchCommunityForm)
 
@@ -102,42 +102,42 @@ justanotherheadshot.assign_admin_role(crumbJoe)
 
 #Generate some normal activity for stonewatch
 #Application for g_user1 accept
-g1_user = User.find_by_email("g1@user.com")
-gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile, 
-  :site_form => stonewatch.community_application_form,
-  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
-    Answer.create(:question => comboboxQ, :content => "Silly"),
-    Answer.create(:question => radioQ, :content => "True"),
-    Answer.create(:question => textBoxQ, :content => "They make me feel alright"),
-    Answer.create(:question => textQ, :content => "Blank")
-    ])
-gu1App.set_accepted
-Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App)
-#Application for g_user2 reject
-g2_user = User.find_by_email("g2@user.com")
-gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile, 
-  :site_form => stonewatch.community_application_form,
-  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
-    Answer.create(:question => comboboxQ, :content => "Silly"),
-    Answer.create(:question => radioQ, :content => "True"),
-    Answer.create(:question => textBoxQ, :content => "TROLOLOLOLOLOL"),
-    Answer.create(:question => textQ, :content => "DERP!")
-    ])
-Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile, 
-  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App))
-Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App)
-gu2App.set_rejected
-#Application for g_user3 pending
-g3_user = User.find_by_email("g3@user.com")
-gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile, 
-  :site_form => stonewatch.community_application_form,
-  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
-    Answer.create(:question => comboboxQ, :content => "Silly"),
-    Answer.create(:question => radioQ, :content => "True"),
-    Answer.create(:question => textBoxQ, :content => "They make me feel funny..."),
-    Answer.create(:question => textQ, :content => "Herp")
-    ])
-Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyProfile, :commentable => gu3App)
+#g1_user = User.find_by_email("g1@user.com")
+#gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile, 
+#  :site_form => stonewatch.community_application_form,
+#  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+#    Answer.create(:question => comboboxQ, :content => "Silly"),
+#    Answer.create(:question => radioQ, :content => "True"),
+#    Answer.create(:question => textBoxQ, :content => "They make me feel alright"),
+#    Answer.create(:question => textQ, :content => "Blank")
+#    ])
+#gu1App.set_accepted
+#Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App)
+##Application for g_user2 reject
+#g2_user = User.find_by_email("g2@user.com")
+#gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile, 
+#  :site_form => stonewatch.community_application_form,
+#  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+#    Answer.create(:question => comboboxQ, :content => "Silly"),
+#    Answer.create(:question => radioQ, :content => "True"),
+#    Answer.create(:question => textBoxQ, :content => "TROLOLOLOLOLOL"),
+#    Answer.create(:question => textQ, :content => "DERP!")
+#    ])
+#Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile, 
+#  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App))
+#Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App)
+#gu2App.set_rejected
+##Application for g_user3 pending
+#g3_user = User.find_by_email("g3@user.com")
+#gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile, 
+#  :site_form => stonewatch.community_application_form,
+#  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
+#    Answer.create(:question => comboboxQ, :content => "Silly"),
+#    Answer.create(:question => radioQ, :content => "True"),
+#    Answer.create(:question => textBoxQ, :content => "They make me feel funny..."),
+#    Answer.create(:question => textQ, :content => "Herp")
+#    ])
+#Comment.create(:body => "He is my bro. Invite him!", :user_profile => roboBillyProfile, :commentable => gu3App)
 
 
 # Sample Discussion Spaces
@@ -181,9 +181,9 @@ guildCharterPage = Page.create(:title => "Guild Charter", :body => "[Insert epic
 guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!", :page_space => guildInformationPageSpace, :featured_page => true)
 
 #Game announcement
-GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor, :community => stonewatch, :user_profile => adminProfile)
+#GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor, :community => stonewatch, :user_profile => adminProfile)
 #Community announcement
-CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch, :user_profile => adminProfile)
+#CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch, :user_profile => adminProfile)
 
 
 #Generate some normal activity for justanotherheadshot
@@ -200,15 +200,15 @@ jahInfoPage = PageSpace.create(:name => "JAH Information", :community => justano
 Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => jahInfoPage, :featured_page => true)
 
 #Community Discussions
-CommunityAnnouncement.create(:name => "Possible alliance n00bs", :body => "We are looking at forming an alliance with Stonewatch.", :community => justanotherheadshot, :user_profile => crumbJoe.user_profile)
+#CommunityAnnouncement.create(:name => "Possible alliance n00bs", :body => "We are looking at forming an alliance with Stonewatch.", :community => justanotherheadshot, :user_profile => crumbJoe.user_profile)
 
 
 
 
 #Site Announcement
-SiteAnnouncement.create(:name => "RC1!",
-                        :body => "Crumblin is almost ready for RC1!")
-
+#SiteAnnouncement.create(:name => "RC1!",
+#                        :body => "Crumblin is almost ready for RC1!")
+#
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)
 #checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => testForm)

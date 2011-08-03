@@ -1,9 +1,12 @@
 class Role < ActiveRecord::Base
-  attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions_attributes, :community
+  #attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions_attributes, :community
+  
   has_many :roles_users
   has_many :users, :through => :roles_users
   has_many :permissions, :dependent => :destroy
+  
   belongs_to :community
+  
   accepts_nested_attributes_for :permissions
   
   validate :name, :presence => true

@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
-  attr_accessible :name, :is_active, :announcement_space_id, :character_discussion_space
-  attr_accessible :game_announcements, :game_profiles, :discussion_spaces, :page_spaces, :supported_games
-  attr_accessible :type_helper
+  #attr_accessible :name, :is_active, :announcement_space_id, :character_discussion_space
+  #attr_accessible :game_announcements, :game_profiles, :discussion_spaces, :page_spaces, :supported_games
+  #attr_accessible :type_helper
   
  has_many :game_announcements
  has_many :game_profiles, :dependent => :destroy

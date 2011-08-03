@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  attr_accessible :content, :site_form
+  #attr_accessible :content, :site_form
   
   has_many :predefined_answers, :dependent => :destroy 
   belongs_to :site_form

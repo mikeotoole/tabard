@@ -1,5 +1,6 @@
 class PageSpace < ActiveRecord::Base
-  attr_accessible :name, :game, :community, :pages
+  #attr_accessible :name, :game, :community, :pages
+  
   has_many :pages, :dependent => :destroy
   belongs_to :game
   belongs_to :community

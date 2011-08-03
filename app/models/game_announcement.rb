@@ -1,5 +1,6 @@
 class GameAnnouncement < CommunityAnnouncement
-  attr_accessible :name, :body, :user_profile, :game_profiles, :community, :game
+  #attr_accessible :name, :body, :user_profile, :game_profiles, :community, :game
+  
   belongs_to :game
   has_many :game_profiles, :through => :acknowledgment_of_announcements
   belongs_to :user_profile

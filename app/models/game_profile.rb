@@ -1,5 +1,5 @@
 class GameProfile < Profile
-  attr_accessible :name, :game, :character_proxies, :user_profile, :default_character_proxy
+  #attr_accessible :name, :game, :character_proxies, :user_profile, :default_character_proxy
   
   has_many :character_proxies, :dependent => :destroy, :autosave => true
   belongs_to :game

@@ -6,7 +6,7 @@
   This class represents a community announcement.
 =end
 class CommunityAnnouncement < Announcement
-  attr_accessible :name, :body
+  #attr_accessible :name, :body
   
   validate :name, :presence => true
   validate :body, :presence => true

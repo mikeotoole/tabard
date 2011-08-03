@@ -1,5 +1,6 @@
 class RolesUser < ActiveRecord::Base
-  attr_accessible :user, :role
+  #attr_accessible :user, :role
+  
   belongs_to :user
   belongs_to :role
 end

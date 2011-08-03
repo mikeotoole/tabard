@@ -1,7 +1,7 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   attr_accessor :password, :no_signup_email
-  attr_accessible :email, :password, :user_profile, :no_signup_email
+  #attr_accessible :email, :password, :user_profile, :no_signup_email
   
   validates :email, :uniqueness => true,
                     :length => { :within => 5..50 },
@@ -114,15 +114,15 @@ class User < ActiveRecord::Base
       @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
       @profiles << @userprofile
       #@acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
-      @acknowledgment_of_announcements
+      @acknowledgment_of_announcements = Array.new
   end
   
   def announcements
     @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
     @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
     @profiles << @userprofile
-    @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
-    @acknowledgment_of_announcements
+    #@acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+    @acknowledgment_of_announcements = Array.new
   end
   
   #need to add clause for if the user owns the resource

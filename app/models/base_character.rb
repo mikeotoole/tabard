@@ -7,7 +7,7 @@
 =end
 class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
-  attr_accessible :game, :discussion
+  #attr_accessible :game, :discussion
   
   belongs_to :game 
   belongs_to :discussion

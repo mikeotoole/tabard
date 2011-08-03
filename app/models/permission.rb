@@ -1,5 +1,6 @@
 class Permission < ActiveRecord::Base
-  attr_accessible :name, :role, :permissionable, :access, :show_p, :create_p, :update_p, :delete_p, :permission_level
+  #attr_accessible :name, :role, :permissionable, :access, :show_p, :create_p, :update_p, :delete_p, :permission_level
+  
   belongs_to :role
   belongs_to :permissionable, :polymorphic => true
   scope :extra_special_permissions, :conditions => ["access <> ''"]

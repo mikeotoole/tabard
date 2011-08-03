@@ -1,5 +1,6 @@
 class SupportedGame < ActiveRecord::Base
-  attr_accessible :community, :game
+  #attr_accessible :community, :game
+  
   belongs_to :community
   belongs_to :game
 end

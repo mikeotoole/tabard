@@ -1,6 +1,6 @@
 class WowCharacter < BaseCharacter
-  attr_accessible :avatar, :avatar_cache
-  attr_accessible :name, :faction, :race, :level, :server, :game, :discussion
+  attr_accessor :avatar, :avatar_cache
+  #attr_accessible :name, :faction, :race, :level, :server, :game, :discussion
   
   belongs_to :wow, :foreign_key => :game_id
   

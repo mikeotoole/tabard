@@ -6,7 +6,7 @@
   This class represents an announcement.
 =end
 class Announcement < ActiveRecord::Base
-  attr_accessible :name, :body, :comments_enabled
+  #attr_accessible :name, :body, :comments_enabled
 
   belongs_to :user_profile  
   has_many :acknowledgment_of_announcements, :dependent => :destroy

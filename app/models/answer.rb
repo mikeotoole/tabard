@@ -6,7 +6,7 @@
   This class represents an answer.
 =end
 class Answer < ActiveRecord::Base
-  attr_accessible :question, :content
+  #attr_accessible :question, :content, :submission
   
   belongs_to :question, :submission 
   

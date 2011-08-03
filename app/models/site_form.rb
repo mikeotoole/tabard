@@ -1,5 +1,5 @@
 class SiteForm < ActiveRecord::Base
-  attr_accessible :message, :name, :thank_you, :published, :community, :questions, :submissions
+  #attr_accessible :message, :name, :thank_you, :published, :community, :questions, :submissions
   
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy

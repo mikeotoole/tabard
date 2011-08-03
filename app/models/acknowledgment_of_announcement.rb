@@ -6,7 +6,7 @@
   This class represents an acknowledgement of an announcement. It connects profiles with announcements.
 =end
 class AcknowledgmentOfAnnouncement < ActiveRecord::Base  
-  attr_accessible :acknowledged
+  #attr_accessible :acknowledged
   
   belongs_to :announcement, :profile
   

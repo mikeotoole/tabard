@@ -1,5 +1,6 @@
 class Submission < ActiveRecord::Base
-  attr_accessible :user_profile, :comments, :site_form, :status, :answers
+  #attr_accessible :user_profile, :comments, :site_form, :status, :answers
+  
   belongs_to :user_profile
   belongs_to :site_form
   
