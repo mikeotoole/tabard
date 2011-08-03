@@ -8,7 +8,8 @@
 class Answer < ActiveRecord::Base
   #attr_accessible :question, :content, :submission
   
-  belongs_to :question, :submission 
+  belongs_to :question
+  belongs_to :submission 
   
   def qHelp
     self.question.id if question

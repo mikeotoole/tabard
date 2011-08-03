@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a registration application observer.
+=end
 class RegistrationApplicationObserver < ActiveRecord::Observer
   def after_create(registration_application)
     #logger.debug(registration_application.to_s)

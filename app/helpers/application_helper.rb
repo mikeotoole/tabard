@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This helper module is for the main application.
+=end
 module ApplicationHelper
   
   # Creates a submit button with the given name with a cancel link 

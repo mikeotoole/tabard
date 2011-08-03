@@ -6,7 +6,6 @@
   This class represents a predefined answer.
 =end
 class PredefinedAnswer < Answer
-  belongs_to :question, :submission 
 end
 
 # == Schema Information

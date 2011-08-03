@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling discussion spaces within the scope of subdomains (communities).
+=end
 class Subdomains::DiscussionSpacesController < SubdomainsController
   respond_to :html
   before_filter :authenticate, :get_option_hash

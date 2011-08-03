@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a roles_user. This is an item that allows for a many to many relationship between roles and users.
+=end
 class RolesUser < ActiveRecord::Base
   #attr_accessible :user, :role
   

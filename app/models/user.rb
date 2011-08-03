@@ -1,4 +1,11 @@
 require 'digest/sha1'
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a user.
+=end
 class User < ActiveRecord::Base
   attr_accessor :password, :no_signup_email
   #attr_accessible :email, :password, :user_profile, :no_signup_email

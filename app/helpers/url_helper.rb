@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This helper module is for improving urls for use with subdomains
+=end
 module UrlHelper
   def with_subdomain(subdomain)
     subdomain = (subdomain || "")

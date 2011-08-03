@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class is a file size validator.
+=end
 class FileSizeValidator < ActiveModel::EachValidator
   MESSAGES  = { :is => :wrong_size, :minimum => :size_too_small, :maximum => :size_too_big }.freeze
   CHECKS    = { :is => :==, :minimum => :>=, :maximum => :<= }.freeze

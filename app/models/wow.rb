@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents the World of Warcraft game.
+=end
 class Wow < Game
   has_many :wow_characters, :foreign_key => :game_id, :dependent => :destroy
   

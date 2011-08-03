@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is for Star Wars the Old Republic characters.
+=end
 class SwtorCharactersController < ApplicationController
   before_filter :authenticate, :except => [:new]
   respond_to :html, :js

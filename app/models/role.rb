@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a role.
+=end
 class Role < ActiveRecord::Base
   #attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions_attributes, :community
   

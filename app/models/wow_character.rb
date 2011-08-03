@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a World of Warcraft character.
+=end
 class WowCharacter < BaseCharacter
   attr_accessor :avatar, :avatar_cache
   #attr_accessible :name, :faction, :race, :level, :server, :game, :discussion

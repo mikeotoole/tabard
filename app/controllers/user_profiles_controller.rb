@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is for user profiles.
+=end
 class UserProfilesController < ProfilesController
   respond_to :html 
   before_filter :authenticate  

@@ -1,5 +1,12 @@
 # encoding: utf-8
 require 'carrierwave/processing/mini_magick'
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This uploader is for handling the uploading of avatar using carrier wave.
+=end
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 

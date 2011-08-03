@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents the Star Wars the Old Republic game.
+=end
 class Swtor < Game
    has_many :swtor_characters, :foreign_key => :game_id, :dependent => :destroy
    

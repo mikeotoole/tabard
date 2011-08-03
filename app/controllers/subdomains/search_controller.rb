@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling searching within the scope of subdomains (communities).
+=end
 class Subdomains::SearchController < SubdomainsController
   respond_to :html
   

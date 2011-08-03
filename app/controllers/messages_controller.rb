@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is for messages.
+=end
 class MessagesController < ApplicationController
   def show
     @message = current_user.received_messages.find(params[:id])

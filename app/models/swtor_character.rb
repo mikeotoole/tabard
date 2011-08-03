@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a Star Wars the Old Republic character.
+=end
 class SwtorCharacter < BaseCharacter
   attr_accessor :avatar, :avatar_cache
   #attr_accessible :name, :server, :game, :discussion

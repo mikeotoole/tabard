@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is for the main application.
+=end
 class ApplicationController < ActionController::Base
   include UrlHelper
   helper :all # include all helpers, all the time
@@ -13,7 +20,14 @@ class ApplicationController < ActionController::Base
   def help
     Helper.instance
   end
+  
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
 
+  This is a helper class for using the text helper inside of the controller.
+=end
   class Helper
     include Singleton
     include ActionView::Helpers::TextHelper

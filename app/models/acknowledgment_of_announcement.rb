@@ -8,7 +8,8 @@
 class AcknowledgmentOfAnnouncement < ActiveRecord::Base  
   #attr_accessible :acknowledged
   
-  belongs_to :announcement, :profile
+  belongs_to :announcement
+  belongs_to :profile
   
 =begin
   This method fetches the correct display name of the announcement author.

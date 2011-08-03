@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a site form.
+=end
 class SiteForm < ActiveRecord::Base
   #attr_accessible :message, :name, :thank_you, :published, :community, :questions, :submissions
   

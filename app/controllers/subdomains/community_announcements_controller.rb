@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling community announcements within the scope of subdomains (communities).
+=end
 class Subdomains::CommunityAnnouncementsController < SubdomainsController
   respond_to :html
   before_filter :authenticate, :grab_game_from_game_id

@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a site wide announcement.
+=end
 class SiteAnnouncement < Announcement
   #attr_accessible :name, :body, :user_profiles, :community
   

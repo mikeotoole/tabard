@@ -1,5 +1,12 @@
-# TODO Add permission protection for this controller - JW
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling permissions within the scope of managment of subdomains (communities).
+=end
 class Subdomains::Management::PermissionsController < SubdomainsController
+  # TODO Add permission protection for this controller - JW
   respond_to :js, :html
   before_filter :authenticate, :get_role_from_id
   before_filter :get_avalible_permissionables, :only => :new

@@ -1,4 +1,11 @@
 require 'file_size_validator'
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a user profile.
+=end
 class UserProfile < Profile
   #attr_accessible :avatar, :avatar_cache, :remove_avatar
   #attr_accessible :name

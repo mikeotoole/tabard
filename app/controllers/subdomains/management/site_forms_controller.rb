@@ -1,5 +1,12 @@
-# TODO This controller needs permission checking - JW
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling site forms within the scope of managment of subdomains (communities).
+=end
 class Subdomains::Management::SiteFormsController < SubdomainsController
+  # TODO This controller needs permission checking - JW
   respond_to :html, :xml
   before_filter :authenticate
 

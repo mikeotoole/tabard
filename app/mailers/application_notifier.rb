@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This notifier is for emailing based around applicants.
+=end
 class ApplicationNotifier < ActionMailer::Base
   default :from => "noreply@crumblin.com"
 

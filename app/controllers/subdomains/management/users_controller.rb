@@ -1,5 +1,12 @@
-# TODO This controller needs permissions -JW
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This controller is handling users within the scope of managment of subdomains (communities).
+=end
 class Subdomains::Management::UsersController < SubdomainsController
+  # TODO This controller needs permissions -JW
   respond_to :html, :xml
   before_filter :authenticate
 
