@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a discussion.
+=end
 class Discussion < ActiveRecord::Base
   #attr_accessible :name, :body, :comments_enabled, :has_been_locked
   #attr_accessible :user_profile, :character_proxy, :discussion_space, :comments, :game

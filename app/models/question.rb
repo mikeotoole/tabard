@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a question.
+=end
 class Question < ActiveRecord::Base
   #attr_accessible :content, :site_form
   

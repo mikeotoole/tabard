@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a game profile.
+=end
 class GameProfile < Profile
   #attr_accessible :name, :game, :character_proxies, :user_profile, :default_character_proxy
   

@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a permission.
+=end
 class Permission < ActiveRecord::Base
   #attr_accessible :name, :role, :permissionable, :access, :show_p, :create_p, :update_p, :delete_p, :permission_level
   

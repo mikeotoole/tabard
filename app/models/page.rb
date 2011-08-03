@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a page.
+=end
 class Page < ActiveRecord::Base
   #attr_accessible :title, :body, :featured_page, :page_space
   

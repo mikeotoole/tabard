@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a discussion space.
+=end
 class DiscussionSpace < ActiveRecord::Base
   #attr_accessible :name, :system, :announcement_space, :registration_application_space, :user_profile_space,
   #  :community, :game, :user_profile, :discussions

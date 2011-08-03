@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a message.
+=end
 class Message < ActiveRecord::Base
   attr_accessor  :to # array of people to send to
   #attr_accessible :subject, :body, :to, :author

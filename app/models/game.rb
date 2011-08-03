@@ -1,3 +1,10 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Proprietary Closed Source
+  
+  This class represents a game.
+=end
 class Game < ActiveRecord::Base
   #attr_accessible :name, :is_active, :announcement_space_id, :character_discussion_space
   #attr_accessible :game_announcements, :game_profiles, :discussion_spaces, :page_spaces, :supported_games

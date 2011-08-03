@@ -1,7 +1,7 @@
 =begin
-  Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
+  Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-  License::   Don't Steal Me Bro!
+  License::   Proprietary Closed Source
   
   This class represents an answer.
 =end
