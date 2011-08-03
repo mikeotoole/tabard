@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  attr_accessible :content, :site_form
+  
   has_many :predefined_answers, :dependent => :destroy 
   belongs_to :site_form
   
@@ -52,3 +54,16 @@ class Question < ActiveRecord::Base
   end
   
 end
+
+# == Schema Information
+#
+# Table name: questions
+#
+#  id           :integer         not null, primary key
+#  content      :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  site_form_id :integer
+#  type         :string(255)
+#
+

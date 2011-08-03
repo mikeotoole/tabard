@@ -29,11 +29,13 @@ GEM
       activesupport (= 3.0.9)
     activesupport (3.0.9)
     addressable (2.2.6)
+    annotate (2.4.0)
     arel (2.0.10)
     builder (2.1.2)
     carrierwave (0.5.6)
       activesupport (~> 3.0)
     client_side_validations (3.1.0)
+    colored (1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     excon (0.6.5)
@@ -89,6 +91,14 @@ GEM
       activesupport (= 3.0.9)
       bundler (~> 1.0)
       railties (= 3.0.9)
+    rails_best_practices (0.10.1)
+      activesupport
+      colored
+      erubis
+      haml
+      i18n
+      ruby-progressbar
+      ruby_parser
     railties (3.0.9)
       actionpack (= 3.0.9)
       activesupport (= 3.0.9)
@@ -100,7 +110,11 @@ GEM
     rest-client (1.6.3)
       mime-types (>= 1.16)
     ruby-hmac (0.4.0)
+    ruby-progressbar (0.0.10)
+    ruby_parser (2.0.6)
+      sexp_processor (~> 3.0)
     sass (3.1.5)
+    sexp_processor (3.0.5)
     simple_form (1.4.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -120,6 +134,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate
   carrierwave
   client_side_validations
   fog
@@ -129,6 +144,7 @@ DEPENDENCIES
   mini_magick
   newrelic_rpm
   rails
+  rails_best_practices
   sass
   simple_form
   sqlite3

@@ -1,5 +1,13 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Don't Steal Me Bro!
+  
+  This class represents an Base Character that all others are extended from.
+=end
 class BaseCharacter < ActiveRecord::Base
   self.abstract_class = true  
+  attr_accessible :game, :discussion
   
   belongs_to :game 
   belongs_to :discussion

@@ -1,4 +1,5 @@
 class Permission < ActiveRecord::Base
+  attr_accessible :name, :role, :permissionable, :access, :show_p, :create_p, :update_p, :delete_p, :permission_level
   belongs_to :role
   belongs_to :permissionable, :polymorphic => true
   scope :extra_special_permissions, :conditions => ["access <> ''"]
@@ -98,3 +99,22 @@ class Permission < ActiveRecord::Base
     user.can_delete("Role") and not self.role.is_admin_role?
   end
 end
+
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id                  :integer         not null, primary key
+#  name                :string(255)
+#  role_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  permissionable_id   :integer
+#  permissionable_type :string(255)
+#  access              :string(255)
+#  show_p              :boolean
+#  create_p            :boolean
+#  update_p            :boolean
+#  delete_p            :boolean
+#
+

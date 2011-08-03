@@ -114,3 +114,16 @@ class Role < ActiveRecord::Base
     not self.is_admin_role? and not self.is_applicant_role? and not self.is_member_role?
   end
 end
+
+# == Schema Information
+#
+# Table name: roles
+#
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  community_id :integer
+#  description  :string(255)
+#
+

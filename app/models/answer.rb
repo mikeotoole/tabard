@@ -1,6 +1,14 @@
+=begin
+  Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
+  Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+  License::   Don't Steal Me Bro!
+  
+  This class represents an answer.
+=end
 class Answer < ActiveRecord::Base
-  belongs_to :question
-  belongs_to :submission 
+  attr_accessible :question, :content
+  
+  belongs_to :question, :submission 
   
   def qHelp
     self.question.id if question
@@ -15,3 +23,17 @@ class Answer < ActiveRecord::Base
   end
   
 end
+
+# == Schema Information
+#
+# Table name: answers
+#
+#  id            :integer         not null, primary key
+#  question_id   :integer
+#  content       :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#  type          :string(255)
+#  submission_id :integer
+#
+

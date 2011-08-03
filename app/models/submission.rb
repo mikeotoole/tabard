@@ -1,4 +1,5 @@
 class Submission < ActiveRecord::Base
+  attr_accessible :user_profile, :comments, :site_form, :status, :answers
   belongs_to :user_profile
   belongs_to :site_form
   
@@ -125,4 +126,18 @@ class Submission < ActiveRecord::Base
     self.status = 4
   end
 end
+
+
+# == Schema Information
+#
+# Table name: submissions
+#
+#  id              :integer         not null, primary key
+#  user_profile_id :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  site_form_id    :integer
+#  type            :string(255)
+#  status          :integer
+#
 

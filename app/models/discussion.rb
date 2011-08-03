@@ -1,7 +1,11 @@
 class Discussion < ActiveRecord::Base
+  attr_accessible :name, :body, :comments_enabled, :has_been_locked
+  attr_accessible :user_profile, :character_proxy, :discussion_space, :comments, :game
+  
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
+  belongs_to :game
   has_many :comments, :as => :commentable
   has_one :community, :through => :discussion_space
   
@@ -80,3 +84,22 @@ class Discussion < ActiveRecord::Base
     user.can_special_permissions("Discussion","lock")
   end
 end
+
+# == Schema Information
+#
+# Table name: discussions
+#
+#  id                  :integer         not null, primary key
+#  name                :string(255)
+#  body                :text
+#  discussion_space_id :integer
+#  character_proxy_id  :integer
+#  user_profile_id     :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  type                :string(255)
+#  game_id             :integer
+#  comments_enabled    :boolean         default(TRUE)
+#  has_been_locked     :boolean
+#
+

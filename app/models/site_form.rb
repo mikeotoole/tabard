@@ -1,9 +1,8 @@
 class SiteForm < ActiveRecord::Base
+  attr_accessible :message, :name, :thank_you, :published, :community, :questions, :submissions
+  
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
-  
-  has_many :notifications, :dependent => :destroy
-  has_many :profile_notifications, :through => :notifications, :source => :user_profile
   
   belongs_to :community
   
@@ -36,3 +35,18 @@ class SiteForm < ActiveRecord::Base
     user.can_delete("SiteForm")
   end
 end
+
+# == Schema Information
+#
+# Table name: site_forms
+#
+#  id           :integer         not null, primary key
+#  message      :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  name         :string(255)
+#  thankyou     :string(255)
+#  published    :boolean
+#  community_id :integer
+#
+

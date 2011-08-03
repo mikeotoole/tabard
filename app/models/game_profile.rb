@@ -1,5 +1,5 @@
 class GameProfile < Profile
-  attr_accessible :name, :game
+  attr_accessible :name, :game, :character_proxies, :user_profile, :default_character_proxy
   
   has_many :character_proxies, :dependent => :destroy, :autosave => true
   belongs_to :game
@@ -21,8 +21,12 @@ class GameProfile < Profile
     characters
   end
   
-  def displayname
+  def display_name
     self.default_character ? self.default_character.name : self.game.name.to_s + "Default Name"
+  end
+  
+  def displayname
+    self.display_name
   end
   
   def default_character
@@ -45,3 +49,23 @@ class GameProfile < Profile
   end
   
 end
+
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                           :integer         not null, primary key
+#  name                         :string(255)
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  type                         :string(255)
+#  user_id                      :integer
+#  game_id                      :integer
+#  user_profile_id              :integer
+#  discussion_id                :integer
+#  personal_discussion_space_id :integer
+#  default_character_proxy_id   :integer
+#  is_system_profile            :boolean
+#  avatar                       :string(255)
+#
+

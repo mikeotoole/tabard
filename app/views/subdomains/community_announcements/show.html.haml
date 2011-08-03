@@ -11,3 +11,7 @@
     = link_to 'Delete', @community_announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   
   %p#announcement= @community_announcement.body
+  -if @community_announcement.acknowledgment_of_announcements.size > 0
+    %ul
+      - @community_announcement.acknowledgment_of_announcements.each do |acknowledgment_of_announcement|
+        %li="#{acknowledgment_of_announcement.profile_name} has #{(acknowledgment_of_announcement.acknowledged ? "" : "not ")}accepted the announcement."

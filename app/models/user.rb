@@ -1,6 +1,7 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   attr_accessor :password, :no_signup_email
+  attr_accessible :email, :password, :user_profile, :no_signup_email
   
   validates :email, :uniqueness => true,
                     :length => { :within => 5..50 },
@@ -259,3 +260,16 @@ class User < ActiveRecord::Base
       Digest::SHA1.hexdigest(string)
     end
 end
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer         not null, primary key
+#  email           :string(255)
+#  hashed_password :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  lowercase_email :string(255)
+#
+

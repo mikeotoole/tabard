@@ -1,4 +1,7 @@
 class Message < ActiveRecord::Base
+  attr_accessor  :to # array of people to send to
+  attr_accessible :subject, :body, :to, :author
+  
   belongs_to :author, :class_name => "UserProfile"
   has_many :message_copies
   has_many :recipients, :through => :message_copies
@@ -8,9 +11,6 @@ class Message < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
   validates_presence_of :to
-  
-  attr_accessor  :to # array of people to send to
-  attr_accessible :subject, :body, :to, :author
   
   def prepare_copies
     return if to.blank?
@@ -40,3 +40,16 @@ class Message < ActiveRecord::Base
     false
   end
 end
+
+# == Schema Information
+#
+# Table name: messages
+#
+#  id         :integer         not null, primary key
+#  author_id  :integer
+#  subject    :string(255)
+#  body       :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+

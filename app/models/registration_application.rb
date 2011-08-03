@@ -33,3 +33,17 @@ class RegistrationApplication < Submission
   end
   
 end
+
+# == Schema Information
+#
+# Table name: submissions
+#
+#  id              :integer         not null, primary key
+#  user_profile_id :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  site_form_id    :integer
+#  type            :string(255)
+#  status          :integer
+#
+

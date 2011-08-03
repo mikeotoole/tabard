@@ -32,3 +32,20 @@ class SiteAnnouncement < Announcement
     false
   end
 end
+
+# == Schema Information
+#
+# Table name: announcements
+#
+#  id               :integer         not null, primary key
+#  name             :string(255)
+#  body             :text
+#  user_profile_id  :integer
+#  game_id          :integer
+#  community_id     :integer
+#  type             :string(255)
+#  comments_enabled :boolean         default(TRUE)
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+

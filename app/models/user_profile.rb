@@ -21,9 +21,6 @@ class UserProfile < Profile
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id"
   has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
   has_many :folders
-  
-  has_many :notifications
-  has_many :site_form_notifications, :through => :notification, :source => :site_form
 
   before_create :build_inbox
   after_create :create_discussion, :create_personal_space
@@ -155,3 +152,23 @@ class UserProfile < Profile
     user.can_delete("User") or self == user.user_profile
   end
 end
+
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                           :integer         not null, primary key
+#  name                         :string(255)
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  type                         :string(255)
+#  user_id                      :integer
+#  game_id                      :integer
+#  user_profile_id              :integer
+#  discussion_id                :integer
+#  personal_discussion_space_id :integer
+#  default_character_proxy_id   :integer
+#  is_system_profile            :boolean
+#  avatar                       :string(255)
+#
+

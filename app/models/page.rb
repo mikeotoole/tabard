@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  attr_accessible :title, :body, :featured_page, :page_space
   belongs_to :page_space
   has_one :community, :through => :discussion_space
   
@@ -29,3 +30,17 @@ class Page < ActiveRecord::Base
     user.can_delete(self.page_space) or user.can_delete("Page")
   end
 end
+
+# == Schema Information
+#
+# Table name: pages
+#
+#  id            :integer         not null, primary key
+#  created_at    :datetime
+#  updated_at    :datetime
+#  title         :string(255)
+#  body          :text
+#  page_space_id :integer
+#  featured_page :boolean
+#
+

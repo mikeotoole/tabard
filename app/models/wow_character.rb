@@ -32,3 +32,21 @@ class WowCharacter < BaseCharacter
   end  
   
 end
+
+# == Schema Information
+#
+# Table name: wow_characters
+#
+#  id            :integer         not null, primary key
+#  name          :string(255)
+#  faction       :string(255)
+#  race          :string(255)
+#  level         :integer
+#  server        :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  game_id       :integer
+#  discussion_id :integer
+#  avatar        :string(255)
+#
+

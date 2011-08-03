@@ -1,4 +1,7 @@
 class DiscussionSpace < ActiveRecord::Base
+  attr_accessible :name, :system, :announcement_space, :registration_application_space, :user_profile_space,
+    :community, :game, :user_profile, :discussions
+  
   belongs_to :user_profile
   belongs_to :game
   belongs_to :community
@@ -73,3 +76,22 @@ class DiscussionSpace < ActiveRecord::Base
     user.can_delete("DiscussionSpace") and not self.system
   end
 end
+
+# == Schema Information
+#
+# Table name: discussion_spaces
+#
+#  id                             :integer         not null, primary key
+#  name                           :string(255)
+#  system                         :boolean
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  user_profile_id                :integer
+#  game_id                        :integer
+#  announcement_space             :boolean
+#  registration_application_space :boolean
+#  user_profile_space             :boolean
+#  personal_space                 :boolean
+#  community_id                   :integer
+#
+

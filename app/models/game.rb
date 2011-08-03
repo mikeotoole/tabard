@@ -1,4 +1,8 @@
 class Game < ActiveRecord::Base
+  attr_accessible :name, :is_active, :announcement_space_id, :character_discussion_space
+  attr_accessible :game_announcements, :game_profiles, :discussion_spaces, :page_spaces, :supported_games
+  attr_accessible :type_helper
+  
  has_many :game_announcements
  has_many :game_profiles, :dependent => :destroy
  has_many :discussion_spaces
@@ -79,3 +83,18 @@ class Game < ActiveRecord::Base
     user.can_delete("Game")
   end
 end
+
+# == Schema Information
+#
+# Table name: games
+#
+#  id                            :integer         not null, primary key
+#  name                          :string(255)
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  type                          :string(255)
+#  is_active                     :boolean
+#  announcement_space_id         :integer
+#  character_discussion_space_id :integer
+#
+

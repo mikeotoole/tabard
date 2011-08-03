@@ -18,8 +18,8 @@ gameAnnouncementResource = SystemResource.create(:name => "GameAnnouncement")
 pageSpaceResource = SystemResource.create(:name => "PageSpace")
 
 # Sample Games
-wow = Game.create(:name => "World of Warcraft", :type_helper => "Wow", :is_active => true)
-swtor = Game.create(:name => "Star Wars the Old Republic", :type_helper => "Swtor", :is_active => true)
+wow = Wow.create(:name => "World of Warcraft", :is_active => true)
+swtor = Swtor.create(:name => "Star Wars the Old Republic", :is_active => true)
 
 # Admin User
 adminProfile = UserProfile.create(:name => "Admin")
