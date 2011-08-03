@@ -7,15 +7,15 @@
 %table
   %thead
     %tr
-      %th.rolename System
+      %th.rolename System Roles
       %th.roleusers Users
   %tbody
     - @system_roles.each do |set|
       %tr
-        %td
+        %th
           = link_to set[:role].name.pluralize, edit_management_role_path(set[:role]), :class => 'button'
         %td.roleusers
-          - if set[:role].description
+          - if set[:role].description.length > 0
             %dfn
               = set[:role].description
           %p
@@ -28,7 +28,7 @@
 %table
   %thead
     %tr
-      %th.rolename Custom
+      %th.rolename Custom Roles
       %th.roleusers Description &amp; Users
       %th.actions &nbsp;
   - if @custom_roles.size > 0
@@ -57,4 +57,4 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        = link_to 'New custom role', new_management_role_path, :class => 'button icon add', :title => 'Create a new role and assign users'
+        = link_to 'New custom role', new_management_role_path, :class => 'button icon add primary', :title => 'Create a new role and assign users'

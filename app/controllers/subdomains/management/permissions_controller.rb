@@ -1,7 +1,8 @@
 # TODO Add permission protection for this controller - JW
 class Subdomains::Management::PermissionsController < SubdomainsController
-  respond_to :html, :xml
-  before_filter :authenticate, :get_role_from_id, :get_avalible_permissionables
+  respond_to :js, :html
+  before_filter :authenticate, :get_role_from_id
+  before_filter :get_avalible_permissionables, :only => :new
 
   def new
     @permission = @role.permissions.new
@@ -13,11 +14,16 @@ class Subdomains::Management::PermissionsController < SubdomainsController
     respond_with(@permission)
   end
 
+  def delete
+    @permission = @role.permissions.find(params[:id])
+    respond_with(@permission)
+  end
+
   def create
     @permission = @role.permissions.new(params[:permission])
     if @permission.save
       add_new_flash_message('Permission was succesfully created.')
-      redirect_to([:management,@role])
+      respond_with([:management,@role])
     else
       grab_all_errors_from_model(@permission)
       respond_with(@permission)
@@ -39,7 +45,10 @@ class Subdomains::Management::PermissionsController < SubdomainsController
     @permission = @role.permissions.find(params[:id])
     if @permission.destroy
       flash[:notice] = 'Permission was succesfully deleted.'
-      redirect_to(:back)
+      respond_to do |format|
+        format.html { redirect_to(:back) }
+        format.js { render 'delete' }
+      end
     else
       grab_all_errors_from_model(@permission)
       respond_with(@permission)
@@ -56,10 +65,10 @@ class Subdomains::Management::PermissionsController < SubdomainsController
       for resource in SystemResource.all
         case resource.name
         when "DiscussionSpace"
-          @discussionHeader = [["All "+resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @discussionHeader = [[resource.id.to_s + "|" + resource.class.to_s, "All "+resource.name.pluralize]]
           @discussionOptions = { "Specific Discussion Space" => @community.discussion_spaces.all.collect{|discussionS| [discussionS.name, discussionS.id.to_s + "|" + discussionS.class.to_s]}}
         when "PageSpace"
-          @pageHeader  = [["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]]
+          @pageHeader  = [[resource.id.to_s + "|" + resource.class.to_s, "All "+ resource.name.pluralize]]
           pArray = Array.new
           @community.page_spaces.all.each do |pageS| 
             pArray << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
@@ -69,7 +78,7 @@ class Subdomains::Management::PermissionsController < SubdomainsController
           end
           @pageOptions = { "Specific Page Space" => pArray}
         else
-          @permissionables << ["All "+ resource.name.pluralize, resource.id.to_s + "|" + resource.class.to_s]
+          @permissionables << [resource.id.to_s + "|" + resource.class.to_s, "All "+ resource.name.pluralize]
         end
       end
       #logger.debug(@role.permissions)

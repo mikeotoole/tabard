@@ -1,47 +1,37 @@
 = simple_form_for [:management, @role] do |f|
 
-  %fieldset
-    %ol
-      = f.input :name
-      = f.input :description, :as => 'text', :input_html => { :rows => 3 }
+  - if !@role.is_system_role?
+    %fieldset
+      %ol
+        = f.input :name
+        = f.input :description, :as => 'text', :input_html => { :rows => 3 }
   
   - if @role.id #HACK
       
     %h2 Permissions
     
     %table
-      - if @role.permissions.size > 0
-        %thead
-          %tr
-            %th.actions
-            %th.permresource Resource
-            %th View
-            %th Edit
-            %th Add
-            %th Delete
-        %tbody
+      %thead
+        %tr
+          %th.actions
+          %th.permresource Resource
+          %th View
+          %th Edit
+          %th Add
+          %th Delete
+      %tbody
+        - if @role.permissions.size > 0
           - @role.permissions.each do |permission|
-            = f.simple_fields_for :permissions, permission do |p|
-              = p.input :permissionable_id, :as => 'hidden'
-              = p.input :permissionable_type, :as => 'hidden'
-              = p.input :name, :as => 'hidden'
-              %tr
-                %td.actions
-                  - if current_user.can_delete(permission)
-                    = link_to 'Remove Permission', management_role_permission_path(@role, permission), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :title => 'Remove this permission'
-                %td
-                  = p.object.permissionable_name
-                %td{ :colspan => 4 }
-                  %fieldset.slider
-                    = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last
-      -else
-        %tbody
-          %tr
-            %td.empty{ :colspan => 6 } This role has no permissions.
+            - @permission = permission
+            = render :partial => 'subdomains/management/permissions/form_fields', :locals => { :f => f }
+        -else
+          %tr.temp
+            %td &nbsp;
+            %td{ :colspan => 5 } This role has no permissions.
       %tfoot
         %tr
           %td{ :colspan => 6 }
-            = link_to "Add Permission", new_management_role_permission_path(@role), :confirm => 'Any changes will be lost of you leave this page. Continue?', :class => 'button icon add'
+            = link_to "Add Permission", new_management_role_permission_path(@role, :format => :js), :remote => true, :class => 'button icon add'
     
     - if @role.can_update_users
       %h2 Users

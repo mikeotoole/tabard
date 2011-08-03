@@ -55,16 +55,11 @@ class Permission < ActiveRecord::Base
         self.update_p = true
         self.create_p = false
         self.show_p = true
-      when 'show_p'
-        self.delete_p = false
-        self.update_p = false
-        self.create_p = false
-        self.show_p = true
       else
         self.delete_p = false
         self.update_p = false
         self.create_p = false
-        self.show_p = false
+        self.show_p = true
     end
   end
   

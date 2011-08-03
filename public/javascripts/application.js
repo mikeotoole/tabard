@@ -11,7 +11,7 @@ $(document).ready(function() {
   $(window).bind('hashchange', function(){
     hash = window.location.hash.slice(1);
     if(hash != '' && hash != '#') {
-      if(hash && $('.tabs .'+hash).length) {
+      if(hash && $('.tabs .'+hash).size) {
         $('.tabs .active').removeClass('active');
         $('.tabs .' + hash).addClass('active');
       }
@@ -57,7 +57,7 @@ $(document).ready(function() {
       .find('option')
       .each(function(){
         s = $(this).attr('selected') == true ? ' class="selected"' : '';
-        indent = $(this).parents('optgroup').length ? '&mdash;' : '';
+        indent = $(this).parents('optgroup').size ? '&mdash;' : '';
         html = indent + $(this).html().replace(/\-\-/, '&mdash;');
         $('#'+selectbox_id).append('<dd' + s + ' value="' + $(this).val() + '"><a>' + html + '</a></dd>');
       });
@@ -78,7 +78,7 @@ $(document).ready(function() {
   $('#announcements .dismiss').bind('click', function(){
     $(this).parent('li').slideUp(300, function(){
       $(this).remove();
-      if(!$('#announcements li').length) {
+      if(!$('#announcements li').size) {
         $('#announcements').animate({ marginBottom: 0 }, 100, function() { $(this).remove(); });
       }
     });
@@ -106,7 +106,7 @@ $(document).ready(function() {
         .removeAttr('checked');
     });
   });
-  $('#recipients input[type=text]').bind('keyup change', function(){
+  $('#recipients input[type="text"]').bind('keyup change', function(){
     text = $(this).val();
     if(text != $(this).data('text')) {
       $(this).data('text', text);
@@ -120,17 +120,17 @@ $(document).ready(function() {
             names.push($(this).attr('title'));
           }
         });
-        for(n=0; n<names.length; n++) {
+        for(n=0; n < names.size; n++) {
           if(names[n].match(pattern)) {
             matches.push(names[n]);
-            if(matches.length >= 10) {
+            if(matches.size >= 10) {
               break;
             }
           }
         }
-        if(matches.length > 0) {
+        if(matches.size) {
           $('#recipients').append('<ul class="suggest"></ul>');
-          for(m=0; m<matches.length; m++) {
+          for(m=0; m < matches.size; m++) {
             $('#recipients .suggest').append('<li>'+matches[m]+'</li>');
           }
           $('#recipients .suggest li').click(function(){
@@ -138,7 +138,7 @@ $(document).ready(function() {
               .addClass('show')
               .find('input')
               .attr('checked',true);
-            $('#recipients input[type=text]')
+            $('#recipients input[type="text"]')
               .data('text', '')
               .val('')
               .focus();
@@ -148,12 +148,68 @@ $(document).ready(function() {
       }
     }
   });
+  
+  $('.suggest input[type="text"]').live('change keyup focus', suggest_input);
+  $('.suggest .suggestions label').live('click', suggest_select);
 	
 });
 
+function suggest_input() {
+  test = $(this).val().replace(/\s/, '');
+  pattern = new RegExp(test, 'i');
+  $(this)
+    .siblings('.suggestions')
+    .find('li')
+    .removeClass('show first');
+  if($(this).filter(':focus').size) {
+    $(this)
+      .siblings('.suggestions')
+      .find('label')
+      .each(function() {
+        item = $(this).html().replace(/\s/, '');
+        if(test && item.match(pattern)) {
+          $(this).parents('li').addClass('show');
+        } else {
+          $(this).parents('li').removeClass('show');
+        }
+      });
+    matches = $(this).siblings('.suggestions').find('li.show:not(:has(input:checked))');
+    if(matches.size) {
+      $(matches[0]).addClass('first');
+      $(matches[4]).nextAll().removeClass('show'); //only show the first 5
+      return false;
+    }
+  }
+  $(this).siblings('.suggestions').find('li').removeClass('show');
+}
+
+function suggest_select() {
+  container = $(this).parents('.suggest');
+  //single match (radio)
+  if(container.find('.suggestions input[type="radio"]').size) {
+    container
+      .find('input[type="text"]')
+      .attr('value', $(this).html());
+  //multiple matches
+  } else if(container.find('.suggestions input[type="checkbox"]').size) {
+    container
+      .find('input[type="text"]')
+      .attr('value', '');
+    if(!container.find('.matches').size) {
+      container.prepend('<ul class="matches"></ul>');
+    }
+    container
+      .find('.matches')
+      .append('<li>' + $(this).html() + '</li>');
+  }
+  container
+    .find('.suggestions li')
+    .removeClass('show');
+}
+
 function remove_fields(node, limit, parent, child) {
   if(limit) {
-    if($(parent).find(child).length > limit) {
+    if($(parent).find(child).size > limit) {
       $(node).remove();
     } else {
       alert('You must keep at least ' + limit + '.');

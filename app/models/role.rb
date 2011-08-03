@@ -58,6 +58,7 @@ class Role < ActiveRecord::Base
   def delete_permissions
     permissions.where(:delete_p => true)
   end
+  
   def show_permissionables
     permissions.where(:show_p => true).collect {|a| a.permissionable}
   end
