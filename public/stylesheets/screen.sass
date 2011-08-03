@@ -41,22 +41,28 @@ $text_color_3: rgba(255, 255, 255, 1)
     $top_right: $top_right * $border_radius
     $bottom_right: $bottom_right * $border_radius
     $bottom_left: $bottom_left * $border_radius
-    -moz-border-radius-topleft: $top_left
-    -moz-border-radius-topright: $top_right
-    -moz-border-radius-bottomright: $bottom_right
-    -moz-border-radius-bottomleft: $bottom_left
-    -o-border-radius-topleft: $top_left
-    -o-border-radius-topright: $top_right
-    -o-border-radius-bottomright: $bottom_right
-    -o-border-radius-bottomleft: $bottom_left
-    -webkit-border-top-left-radius: $top_left
-    -webkit-border-top-right-radius: $top_right
-    -webkit-border-bottom-right-radius: $bottom_right
-    -webkit-border-bottom-left-radius: $bottom_left
-    border-top-left-radius: $top_left
-    border-top-right-radius: $top_right
-    border-bottom-right-radius: $bottom_right
-    border-bottom-left-radius: $bottom_left
+    @if $top_right == $top_left and $bottom_right == $top_left and $bottom_left == $top_left
+      -moz-border-radius: $top_left
+      -o-border-radius: $top_left
+      -webkit-border-radius: $top_left
+      border-radius: $top_left
+    @else
+      -moz-border-radius-topleft: $top_left
+      -moz-border-radius-topright: $top_right
+      -moz-border-radius-bottomright: $bottom_right
+      -moz-border-radius-bottomleft: $bottom_left
+      -o-border-radius-topleft: $top_left
+      -o-border-radius-topright: $top_right
+      -o-border-radius-bottomright: $bottom_right
+      -o-border-radius-bottomleft: $bottom_left
+      -webkit-border-top-left-radius: $top_left
+      -webkit-border-top-right-radius: $top_right
+      -webkit-border-bottom-right-radius: $bottom_right
+      -webkit-border-bottom-left-radius: $bottom_left
+      border-top-left-radius: $top_left
+      border-top-right-radius: $top_right
+      border-bottom-right-radius: $bottom_right
+      border-bottom-left-radius: $bottom_left
 
 =box_shadow($value)
   -moz-box-shadow: $value
@@ -414,8 +420,10 @@ table .slider
 #body
   form
     .short
+      position: relative
       width: 150px
     .medium
+      position: relative
       width: 400px
   fieldset
     ol
@@ -1037,6 +1045,8 @@ table
         background-position: -606px -46px
       &.cancel:before
         background-position: -1126px -46px
+      &.dash:before
+        background-position: -86px -46px
       &.deactivate:before
         background-position: -646px -46px
       &.delete:before
@@ -1045,6 +1055,8 @@ table
         background-position: -286px -46px
       &.forward:before
         background-position: -1006px -46px
+      &.lock:before
+        background-position: -1206px -46px
       &.remove:before
         background-position: -46px -46px
       &.reply:before
@@ -1055,6 +1067,8 @@ table
         background-position: -326px -46px
       &.undelete:before
         background-position: -846px -46px
+      &.unlock:before
+        background-position: -1166px -46px
   td,
   th
     &.actions:first-child
@@ -1340,21 +1354,24 @@ table
   
   .suggest
     position: relative
+    margin: 0 0 1em
+    
+    &.active
+      input[type='text']
+        z-index: 6
+      .suggestions
+        z-index: 5
     
     input[type='text']
       border-color: $bg_color_1
       margin: -5px 0 0
       position: relative
       z-index: 4
-      &:focus
-        z-index: 6
-        ~ .suggestions
-          z-index: 5
     
     // Suggestions Dropdown
     .suggestions
       background: $accent_color
-      +border_radius(0, 0, 1, 1)
+      +border_radius(1)
       +box_shadow(0 0 5px rgba($bg_color_2, 0.7))
       left: 0
       margin: -#{$border_radius}px 0 0
@@ -1364,14 +1381,15 @@ table
       right: 0
       z-index: 3
       li
-        display: none
-        label        
+        left: -1000px
+        position: absolute
+        label
+          border-top: 1px solid rgba($bg_color_2, 0.2)
           color: $text_color_3
           cursor: pointer
           font-size: 10pt
           list-style: none
           padding: 5px 60px 5px 10px
-          border-top: 1px solid rgba($bg_color_2, 0.2)
           white-space: nowrap
           &:before
             border-top: 1px solid rgba($bg_color_1, 0.2)
@@ -1389,70 +1407,75 @@ table
             padding: $border_radius + 5px 10px 5px
             &:before
               display: none
-          &:last-of-type label
-          +border_radius(0, 0, 1, 1)
+        &.last,
+        &:last-of-type
+          label
+            +border_radius(0, 0, 1, 1)
         &.show
-          display: inline
+          left: auto
+          position: static
         input
           position: absolute
-          top: -200px
-          width: 50px
-          &:checked ~ label
-            display: none
+          top: -1000px
   
     // Matched Suggested Items
     .matches
+      padding: 0 0 1em
       position: relative
-      ul
-        padding: 0
-        li
+      li
+        display: inline
+        label
           background: $bg_color_2
           +border_radius(1)
           color: $text_color_2
-          display: none
+          display: inline-block
           font-size: 10pt
           height: 30px
           line-height: 30px
           margin: 0 5px 5px 0
-          overflow: hidden
-          padding: 0 40px 0 0
+          padding: 0 38px 0 7px
           position: relative
-          text-indent: -30px
-          &.show
-            display: inline-block
-          input
-            margin: 0 15px 0 0
-            padding: 0
-            width: 20px
-          a
-            background: rgba($bg_color_1, 0.2)
-            border-left: 1px solid rgba($bg_color_1, 0.2)
+          vertical-align: top
+          &:after
+            background: url(/images/icons/#{$icon_set}.png) -85px -45px no-repeat rgba($bg_color_1, 0.7)
+            border-left: 1px solid $bg_color_1
             +border_radius(0, 1, 1, 0)
+            content: ''
             display: block
             height: 30px
+            +opacity(.5)
             overflow: hidden
             padding: 0
             position: absolute
             right: 0
-            text-decoration: none
-            text-indent: -500em
+            text-align: center
             top: 0
             width: 30px
-            &:hover
-              background-color: $accent_color
-              color: $text_color_3
+          &:before
+            background-color: $accent_color
+            +border_radius(1)
+            bottom: 0
+            content: ''
+            left: 0
+            +opacity(0)
+            position: absolute
+            right: 0
+            top: 0
+            +transition(opacity .4s linear)
+          &:hover
+            background-color: darken($accent_color, 5%)
+            color: $text_color_3
+            &:after
+              background-color: lighten($accent_color, 5%)
+              +opacity(1)
+              +transition(opacity .1s linear)
             &:before
-              border-left: 1px solid rgba($bg_color_2, 0.2)
-              bottom: 0
-              color: $text_color_2
-              content: '-'
-              left: 0
-              position: absolute
-              right: 0
-              font-weight: bold
-              text-align: center
-              text-indent: 0
-              top: 0
+              +opacity(.5)
+              +transition(opacity .2s linear)
+              
+  td
+    .suggest
+      margin: 0
   
   // Messaging
   #message
@@ -1474,6 +1497,7 @@ table
       input
         position: relative
         z-index: 3
+        
   // Game Character Cards
   #characters
     display: table
@@ -1491,10 +1515,13 @@ table
       input
         &[name*="level"]
           width: 60px
+          
   // Permissions
   .permresource
     width: 750px
   #usercheckboxes
+    border-bottom: 1px solid rgba($bg_color_2, .15)
+    margin: 0 0 1em
     ol
       margin: 0 -4px 0 0
       padding: 0 0 1em
