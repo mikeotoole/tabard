@@ -1,2 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+TestUser1:
+  id: 1
+  name: Test User
+  created_at: 0
+  updated_at: 0
+  type: UserProfile
+  user_id:
+  game_id:
+  user_profile_id:
+  personal_discussion_space_id:
+  default_character_proxy_id:
+  is_system_profile:
+  avatar:
