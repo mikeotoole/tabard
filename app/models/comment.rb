@@ -142,7 +142,7 @@ class Comment < ActiveRecord::Base
   This method defines how show permissions are determined for this comment.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can show this comment, otherwise false.
+  [Returns] True if the provided user can show this comment, otherwise false.
 =end
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
@@ -154,7 +154,7 @@ class Comment < ActiveRecord::Base
   This method defines how create permissions are determined for this comment.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can create this comment, otherwise false.
+  [Returns] True if the provided user can create this comment, otherwise false.
 =end
   def check_user_create_permissions(user)
     if self.commentable.respond_to?('has_been_locked') and self.commentable.has_been_locked
@@ -170,7 +170,7 @@ class Comment < ActiveRecord::Base
   This method defines how update permissions are determined for this comment.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can update this comment, otherwise false.
+  [Returns] True if the provided user can update this comment, otherwise false.
 =end
   def check_user_update_permissions(user)
   	if self.has_been_locked or self.replys_locked?
@@ -186,7 +186,7 @@ class Comment < ActiveRecord::Base
   This method defines how delete permissions are determined for this comment.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can delete this comment, otherwise false.
+  [Returns] True if the provided user can delete this comment, otherwise false.
 =end
   def check_user_delete_permissions(user)
     if self.has_been_locked or self.replys_locked? or self.has_been_deleted
@@ -202,7 +202,7 @@ class Comment < ActiveRecord::Base
   This method defines how lock permissions are determined for this comment.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can lock this comment, otherwise false.
+  [Returns] True if the provided user can lock this comment, otherwise false.
 =end
   def can_user_lock(user)
     user.can_special_permissions("Comment","lock")

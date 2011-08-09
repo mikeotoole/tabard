@@ -18,6 +18,12 @@ class Discussion < ActiveRecord::Base
   
   before_create :use_default_character
   
+=begin
+  _before_create_
+
+  This method attempts to use the default character if this discussion is in a game discussion space.
+  [Returns] False if the operation could not be preformed, otherwise true.
+=end
   def use_default_character
     return unless self.user_profile and self.respond_to?('game') and self.discussion_space and self.discussion_space.game
     self.user_profile.game_profiles.each do |game_profile|
@@ -26,23 +32,46 @@ class Discussion < ActiveRecord::Base
       end
     end
   end
-  
+
+=begin
+  This method gets display name of the user profile if the user profile was used to post.
+  [Returns] A string that contains the display_name of the user profile if the user profile exists, otherwise nil.
+=end  
   def users_name
-    user_profile.displayname if user_profile
+    return user_profile.display_name if user_profile
+    nil
   end
-  
+
+=begin
+  This method gets character related to this discussion if a character was used to post.
+  [Returns] The character that posted if it exists, otherwise nil.
+=end  
   def character
-    character_proxy.character if character_proxy
+    return character_proxy.character if character_proxy
+    nil
   end
   
+=begin
+  This method gets the display name of the character related to this discussion if a character was used to post.
+  [Returns] The diplay name of the character that posted if it exists, otherwise nil.
+=end  
   def characters_name
-    character.name if character_proxy
+    return character.display_name if self.charater_posted?
+    nil
   end
   
+=begin
+  This method determines if a character created this discussion.
+  [Returns] True if a character created this discussion, otherwise nil.
+=end
   def charater_posted?
     character != nil
   end
-  
+
+=begin
+  This method determines how many comments have been made regarding this discussion.
+  [Returns] An integer that contains how many comments have been made for this discussion, including comments on a comment (recursivly).
+=end  
   def number_of_comments
    temp_total_num_comments = 0
    comments.each do |comment|
@@ -50,21 +79,39 @@ class Discussion < ActiveRecord::Base
    end 
    temp_total_num_comments
   end
-  
+
+=begin
+  This method defines how show permissions are determined for this discussion.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this discussion, otherwise false.
+=end  
   def check_user_show_permissions(user)
     if user.user_profile == self.user_profile
       return true
     end
     user.can_show(DiscussionSpace.find(self.discussion_space.id)) or user.can_show("Discussion")
   end
-  
+
+=begin
+  This method defines how create permissions are determined for this discussion.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this discussion, otherwise false.
+=end  
   def check_user_create_permissions(user)
     if(self.discussion_space)
       return user.can_create(DiscussionSpace.find(self.discussion_space.id))
     end
     user.can_create("Discussion")
   end
-  
+ 
+=begin
+  This method defines how update permissions are determined for this discussion.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this discussion, otherwise false.
+=end 
   def check_user_update_permissions(user)
     if has_been_locked 
       return false
@@ -74,7 +121,13 @@ class Discussion < ActiveRecord::Base
     end
     user.can_update(DiscussionSpace.find(self.discussion_space.id)) or user.can_update("Discussion")
   end
-  
+
+=begin
+  This method defines how delete permissions are determined for this discussion.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can delete this discussion, otherwise false.
+=end 
   def check_user_delete_permissions(user)
     if has_been_locked 
       return false
@@ -86,6 +139,12 @@ class Discussion < ActiveRecord::Base
     user.can_delete(DiscussionSpace.find(self.discussion_space.id)) or user.can_delete("Discussion")
   end
   
+=begin
+  This method defines how locking permissions are determined for this discussion.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can lock this discussion, otherwise false.
+=end
   def can_user_lock(user)
     return true if user and user.user_profile == self.discussion_space.user_profile
     user.can_special_permissions("Discussion","lock")

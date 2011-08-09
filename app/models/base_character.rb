@@ -24,6 +24,10 @@ class BaseCharacter < ActiveRecord::Base
   def character_id
     self.id
   end
+  
+  def display_name
+    ""
+  end
  
   def create_discussion
     return if self.discussion

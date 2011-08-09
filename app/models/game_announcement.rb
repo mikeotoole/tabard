@@ -20,6 +20,12 @@ class GameAnnouncement < CommunityAnnouncement
   validate :community, :presence => true
   validate :game, :presence => true
   
+=begin
+  _after_create_
+  
+  This method creates all of the acknowledgments for this announcement.
+  [Returns] False if the operation could not be preformed, otherwise true.
+=end
   def create_acknowledgments
     user_profiles = Array.new
     self.community.all_users.each do |user| 
@@ -33,11 +39,13 @@ class GameAnnouncement < CommunityAnnouncement
         end
     end
   end
-  
-  def assign_to_discussion_space
-    self.discussion_space = self.game.announcement_space
-  end
-  
+
+=begin
+  This method defines how show permissions are determined for this game announcement.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this game announcement, otherwise false.
+=end
   def check_user_show_permissions(user)
     user.all_game_profiles.each do |gameprofile|
       if game.id == gameprofile.game_id
@@ -47,14 +55,32 @@ class GameAnnouncement < CommunityAnnouncement
     user.can_show("GameAnnouncement") or user.can_show("SiteAnnouncement") 
   end
   
+=begin
+  This method defines how create permissions are determined for this game announcement.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this game announcement, otherwise false.
+=end
   def check_user_create_permissions(user)
     user.can_create("GameAnnouncement") or user.can_create("SiteAnnouncement")
   end
   
+=begin
+  This method defines how update permissions are determined for this game announcement.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this game announcement, otherwise false.
+=end
   def check_user_update_permissions(user)
     user.can_update("GameAnnouncement") or user.can_update("SiteAnnouncement")
   end
   
+=begin
+  This method defines how delete permissions are determined for this game announcement.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this game announcement, otherwise false.
+=end
   def check_user_delete_permissions(user)
     user.can_delete("GameAnnouncement") or user.can_delete("SiteAnnouncement")
   end

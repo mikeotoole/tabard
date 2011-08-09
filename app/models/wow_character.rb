@@ -30,6 +30,10 @@ class WowCharacter < BaseCharacter
     end
   end
   
+  def display_name
+    self.name
+  end
+  
   def game
     self.wow
   end

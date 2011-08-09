@@ -23,6 +23,7 @@ class Game < ActiveRecord::Base
  
  scope :active, :conditions => {:is_active => true}
  
+# TODO This needs to be evaluated
  def create_game_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Announcements",
                                              :system => true,
@@ -32,6 +33,7 @@ class Game < ActiveRecord::Base
    self.save
  end
  
+# TODO This needs to be evaluated
  def create_character_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Characters",
                                              :system => true,
@@ -40,10 +42,12 @@ class Game < ActiveRecord::Base
    self.save
  end
  
+# TODO This needs to be evaluated
  def announcement_space
    DiscussionSpace.find_by_id(self.announcement_space_id)
  end
  
+# TODO This needs to be evaluated
  def character_discussion_space
    DiscussionSpace.find_by_id(self.character_discussion_space_id)
  end
@@ -74,20 +78,44 @@ class Game < ActiveRecord::Base
     self.type = type
   end
 
+=begin
+  This method defines how show permissions are determined for this game.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this game, otherwise false.
+=end
   def check_user_show_permissions(user)
-    user.can_show("Game")
+    true
   end
   
+=begin
+  This method defines how create permissions are determined for this game.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this game, otherwise false.
+=end
   def check_user_create_permissions(user)
-    user.can_create("Game")
+    false
   end
   
+=begin
+  This method defines how update permissions are determined for this game.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this game, otherwise false.
+=end
   def check_user_update_permissions(user)
-    user.can_update("Game")
+    false
   end
   
+=begin
+  This method defines how delete permissions are determined for this game.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can delete this game, otherwise false.
+=end
   def check_user_delete_permissions(user)
-    user.can_delete("Game")
+    false
   end
 end
 

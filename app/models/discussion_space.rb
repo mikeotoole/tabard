@@ -24,6 +24,10 @@ class DiscussionSpace < ActiveRecord::Base
     self.where{(system == false) | (announcement_space != true)}
   end
   
+=begin
+  This method gets the name of the game this discussion space belongs to.
+  [Returns] The game that this discussion space belongs to, otherwise nil.
+=end
   def game_name
     self.game.name if self.game
   end
@@ -44,6 +48,7 @@ class DiscussionSpace < ActiveRecord::Base
     errors.add(:id, "There can be only one!  ...user profile space.") if (DiscussionSpace.where(:user_profile_space => true).exists? and self.user_profile_space)
   end
   
+# TODO This needs to be evaluated
   def self.user_profile_space
     if DiscussionSpace.where(:user_profile_space => true).exists?
       return DiscussionSpace.where(:user_profile_space => true).first
@@ -52,14 +57,26 @@ class DiscussionSpace < ActiveRecord::Base
     end 
   end
   
+=begin
+  This method gets the user profile name of the creator of this discussion space
+  [Returns] The display name of the user profile that created this discussion space, otherwise nil.
+=end
   def user_profile_name
-    user_profile.displayname if user_profile
+    return user_profile.display_name if user_profile
+    nil
   end
   
+# TODO This needs to be evaluated
   def list_in_navigation
     !self.personal_space
   end
-  
+
+=begin
+  This method defines how show permissions are determined for this discussion space.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this discussion space, otherwise false.
+=end  
   def check_user_show_permissions(user)
     return true if user_profile_space and user
     return true if self.game and self.game.character_discussion_space_id = self.id and user
@@ -67,17 +84,35 @@ class DiscussionSpace < ActiveRecord::Base
     return self.announcement_space if self.announcement_space and user
     user.can_show("DiscussionSpace") if user 
   end
-  
+
+=begin
+  This method defines how create permissions are determined for this discussion space.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this discussion space, otherwise false.
+=end  
   def check_user_create_permissions(user)
     return true if user and user.user_profile == self.user_profile
     user.can_create("DiscussionSpace")
   end
   
+=begin
+  This method defines how update permissions are determined for this discussion space.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this discussion space, otherwise false.
+=end
   def check_user_update_permissions(user)
     return true if user and user.user_profile == self.user_profile
     user.can_update("DiscussionSpace") and not self.system
   end
   
+=begin
+  This method defines how delete permissions are determined for this discussion space.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can delete this discussion space, otherwise false.
+=end
   def check_user_delete_permissions(user)
     return true if user and user.user_profile == self.user_profile
     user.can_delete("DiscussionSpace") and not self.system

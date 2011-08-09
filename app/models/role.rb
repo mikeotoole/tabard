@@ -105,18 +105,42 @@ class Role < ActiveRecord::Base
     delete_permissions.keep_if {|p| p.system_resource_permission}
   end
   
+=begin
+  This method defines how show permissions are determined for this role.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this role, otherwise false.
+=end
   def check_user_show_permissions(user)
     user.can_show("Role")
   end
   
+=begin
+  This method defines how create permissions are determined for this role.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this role, otherwise false.
+=end
   def check_user_create_permissions(user)
     user.can_create("Role") and not self.is_admin_role? and not self.is_applicant_role?
   end
   
+=begin
+  This method defines how update permissions are determined for this role.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this role, otherwise false.
+=end
   def check_user_update_permissions(user)
     user.can_update("Role") and not self.is_admin_role?
   end
   
+=begin
+  This method defines how delete permissions are determined for this role.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can delete this role, otherwise false.
+=end
   def check_user_delete_permissions(user)
     user.can_delete("Role") and not self.is_admin_role? and not self.is_applicant_role? and not self.is_member_role?
   end

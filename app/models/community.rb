@@ -285,7 +285,7 @@ class Community < ActiveRecord::Base
   This method defines how show permissions are determined for this community.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can show this community, otherwise false.
+  [Returns] True if the provided user can show this community, otherwise false.
 =end  
   def check_user_show_permissions(user)
     true
@@ -295,7 +295,7 @@ class Community < ActiveRecord::Base
   This method defines how create permissions are determined for this community.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can create this community, otherwise false.
+  [Returns] True if the provided user can create this community, otherwise false.
 =end  
   def check_user_create_permissions(user)
     true
@@ -305,7 +305,7 @@ class Community < ActiveRecord::Base
   This method defines how update permissions are determined for this community.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can update this community, otherwise false.
+  [Returns] True if the provided user can update this community, otherwise false.
 =end  
   def check_user_update_permissions(user)
     self.admin_role.users.include?(user)
@@ -315,7 +315,7 @@ class Community < ActiveRecord::Base
   This method defines how delete permissions are determined for this community.
   [Args]
     * +user+ -> The user who you would like to check.
-  [Returns] True the provided user can show this community, otherwise false.
+  [Returns] True if the provided user can show this community, otherwise false.
 =end  
   def check_user_delete_permissions(user)
     self.admin_role.users.include?(user)

@@ -24,14 +24,28 @@ class Permission < ActiveRecord::Base
     self.permissionable_type = magic_helper.split('|',2)[1]
   end
   
+=begin
+  _before_create_
+  
+  This method ensures that this permission always has a name.
+  [Returns] True if the operation succeeded, otherwise false.
+=end
   def check_name_and_create
     self.name = self.permissionable_name unless self.name
   end
   
+=begin
+  This method gets the name of the role this permission is belongs to.
+  [Returns] A string that contains the name of the role this permission belongs to, if possible, otherwise it returns an empty string.
+=end
   def role_name
     role != nil ? role.name : ""
   end
   
+=begin
+  This method gets permission level of this permission.
+  [Returns] A string that contains permission level of this permission, if possible, otherwise it returns an empty string.
+=end
   def permission_level
     if self.delete_p
       return 'delete_p'
@@ -82,22 +96,50 @@ class Permission < ActiveRecord::Base
     "unknown"
   end
   
+=begin
+  This method determines if this is a permission on a system resource.
+  [Returns] True if permissionable item for this permission is a system resource, otherwise false.
+=end
   def system_resource_permission
     permissionable.is_a? SystemResource
   end
   
+=begin
+  This method defines how show permissions are determined for this permission.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can show this permission, otherwise false.
+=end
   def check_user_show_permissions(user)
     user.can_show(self.role)
   end
   
+=begin
+  This method defines how create permissions are determined for this permission.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can create this permission, otherwise false.
+=end
   def check_user_create_permissions(user)
     user.can_create(self.role) and not self.role.is_admin_role?
   end
   
+=begin
+  This method defines how update permissions are determined for this permission.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can update this permission, otherwise false.
+=end
   def check_user_update_permissions(user)
     user.can_update(self.role) and not self.role.is_admin_role?
   end
   
+=begin
+  This method defines how delete permissions are determined for this permission.
+  [Args]
+    * +user+ -> The user who you would like to check.
+  [Returns] True if the provided user can delete this permission, otherwise false.
+=end
   def check_user_delete_permissions(user)
     user.can_delete("Role") and not self.role.is_admin_role?
   end
