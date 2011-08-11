@@ -119,6 +119,10 @@ class UserProfile < Profile
     self.name
   end
   
+  def user_email
+    self.user.email
+  end
+  
   def description
     "Account Profile"
   end  

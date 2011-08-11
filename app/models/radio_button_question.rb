@@ -7,6 +7,10 @@
 =end
 class RadioButtonQuestion < Question
   
+=begin
+  This method gets a path helper for a radio button question
+  [Returns] The path helper for this radio button question.
+=end
   def path_helper
      'radio_button_questions'
   end

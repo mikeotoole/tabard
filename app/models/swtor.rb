@@ -6,8 +6,12 @@
   This class represents the Star Wars the Old Republic game.
 =end
 class Swtor < Game
-   has_many :swtor_characters, :foreign_key => :game_id, :dependent => :destroy
+  has_many :swtor_characters, :foreign_key => :game_id, :dependent => :destroy
    
+=begin
+  This method gets all of the SWTOR characters.
+  [Returns] An array that contains all of the SWTOR characters.
+=end
   def characters
     self.swtor_characters
   end

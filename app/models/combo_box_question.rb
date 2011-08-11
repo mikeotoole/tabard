@@ -7,6 +7,10 @@
 =end
 class ComboBoxQuestion < Question
   
+=begin
+  This method gets a path helper for a combo box question
+  [Returns] The path helper for this combo box question.
+=end
   def path_helper
      'combo_box_questions'
   end

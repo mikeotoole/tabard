@@ -18,7 +18,8 @@ class Submission < ActiveRecord::Base
   has_one :community, :through => :site_form  
   
   accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true  
-  
+
+
   def contains_predefined_answer(panswer)
     self.answers.each do |answer|
       if answer.question_id == panswer.question_id and answer.content == panswer.content
@@ -46,30 +47,58 @@ class Submission < ActiveRecord::Base
     nil
   end
   
+=begin
+  This method gets the name of the user who submitted this submission.
+  [Returns] A string that contains the name of the user who submitted this submission.
+=end
   def name
     self.user_profile.name if self.user_profile
   end
   
+=begin
+  This method gets the thankyou message of the site form that this submission belongs to.
+  [Returns] A string that contains the thankyou message of the site form that this submission belongs to.
+=end
   def thankyou_message
     self.site_form.thankyou
   end
   
+=begin
+  This method gets the date that this submission was created.
+  [Returns] A date that contains the creation date of this submission.
+=end
   def submission_date
     self.created_at
   end
   
+=begin
+  This method gets all of the answers for this submission.
+  [Returns] An array that contains all answers for this submission.
+=end
   def all_answers
     self.answers
   end
   
+=begin
+  This method gets all of the unique questions that were answered by this submission.
+  [Returns] A unique array of questions.
+=end
   def all_questions
     self.answers.collect { |answer|answer.question }.uniq
   end
   
+=begin
+  This method gets the form that this submission belongs to.
+  [Returns] The site form that this submission belongs to.
+=end
   def form
     self.site_form
   end
   
+=begin
+  This method gets the status of the submission as a human readable string.
+  [Returns] A string that contains the human readable status of this submission.
+=end
   def status_string
     if is_applicant
       "Applicant"
@@ -84,6 +113,10 @@ class Submission < ActiveRecord::Base
     end
   end
   
+=begin
+  This method determines if the status of this submission is applicant.
+  [Returns] True if the status of this submission is applicant, otherwise false.
+=end
   def is_applicant
     if self.status == 1
       return true
@@ -92,6 +125,10 @@ class Submission < ActiveRecord::Base
     end
   end
   
+=begin
+  This method determines if the status of this submission is accepted.
+  [Returns] True if the status of this submission is accepted, otherwise false.
+=end
   def is_accepted
     if self.status == 2
       return true
@@ -100,6 +137,10 @@ class Submission < ActiveRecord::Base
     end
   end
   
+=begin
+  This method determines if the status of this submission is inactive.
+  [Returns] True if the status of this submission is inactive, otherwise false.
+=end
   def is_inactive
     if self.status == 3
       return true
@@ -108,6 +149,10 @@ class Submission < ActiveRecord::Base
     end   
   end
   
+=begin
+  This method determines if the status of this submission is rejected.
+  [Returns] True if the status of this submission is rejected, otherwise false.
+=end
   def is_rejected
     if self.status == 4
       return true
@@ -116,22 +161,36 @@ class Submission < ActiveRecord::Base
     end   
   end
   
+=begin
+  This method sets the status of this submission to applicant.
+  [Returns] True if the operation is successful, otherwise false.
+=end
   def set_applicant
-    self.status = 1
+    self.update_attributes(:status => 1)
   end
   
+=begin
+  This method sets the status of this submission to accepted. This can only happen if the current status is applicant.
+  [Returns] True if the operation is successful, otherwise false.
+=end
   def set_accepted
-    # TODO Ensure that this can happen only once - JW
-    self.status = 2
+    self.update_attributes(:status => 2) if self.status == 1
   end
   
+=begin
+  This method sets the status of this submission to inactive.
+  [Returns] True if the operation is successful, otherwise false.
+=end
   def set_inactive
-    self.status = 3   
+    self.update_attributes(:status => 3)
   end
   
+=begin
+  This method sets the status of this submission to rejected. This can only happen if the current status is applicant.
+  [Returns] True if the operation is successful, otherwise false.
+=end
   def set_rejected
-    # TODO Ensure that this can happen only once - JW
-    self.status = 4
+    self.update_attributes(:status => 4) if self.status == 1
   end
 end
 

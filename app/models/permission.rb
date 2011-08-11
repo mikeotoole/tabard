@@ -14,10 +14,20 @@ class Permission < ActiveRecord::Base
   
   before_create :check_name_and_create
   
+=begin
+  This method gets the magic polymorphic helper.
+  [Returns] A string that contains the permissionable id + | + the permissionable class.
+=end
   def magic_polymorphic_helper
     permissionable.id.to_s + "|" + permissionable.class.to_s if permissionable
   end
-  
+
+=begin
+  This method sets the magic polymorphic helper.
+  [Args]
+    * +magic_helper+ -> A string that contains the helper you would like to use.
+  [Returns] True if the operation succeeded, otherwise false.
+=end
   def magic_polymorphic_helper=(magic_helper)
     return unless not permissionable
     self.permissionable_id = magic_helper.split('|',2)[0]
@@ -60,6 +70,12 @@ class Permission < ActiveRecord::Base
     end
   end
   
+=begin
+  This method sets permission level of this permission.
+  [Args]
+    * +value+ -> A string that contains the permission level you would like to use.
+  [Returns] True if the operation succeeded, otherwise false.
+=end
   def permission_level=(value)
     case value
       when 'delete_p'
@@ -85,6 +101,10 @@ class Permission < ActiveRecord::Base
     end
   end
   
+=begin
+  This method gets the name of the item this permission is for.
+  [Returns] A string that contains the name of the item that this permission is for, otherwise a string that contains "unknown".
+=end
   def permissionable_name
     if permissionable.is_a?(SystemResource)
       return permissionable.name

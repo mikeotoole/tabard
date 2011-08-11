@@ -7,7 +7,17 @@ require 'digest/sha1'
   This class represents a user.
 =end
 class User < ActiveRecord::Base
-  attr_accessor :password, :no_signup_email
+  
+=begin
+  This attribute is for the user's un-encrypted password.
+=end
+  attr_accessor :password
+  
+=begin
+  This attribute is a boolean that will prevent a signup email from being sent out if it is set to true.
+=end
+  attr_accessor :no_signup_email
+  
   #attr_accessible :email, :password, :user_profile, :no_signup_email
   
   validates :email, :uniqueness => true,

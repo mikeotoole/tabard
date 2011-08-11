@@ -11,18 +11,17 @@ class SiteForm < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
   
+  scope :published, :conditions => {:published => true, :registration_application_form => false}
+  
   belongs_to :community
   
+=begin
+  This method gets the name of the community that this form belongs to.
+  [Returns] A string that contains the display name of the community that this form belongs to, otherwise it contains the empty string.
+=end
   def community_name
-    self.community.display_name if self.community
-  end
-  
-  def self.application_form
-    SiteForm.find(:first, :conditions => { :registration_application_form => true })
-  end
-  
-  def self.published
-    SiteForm.find(:all, :conditions => { :published => true, :registration_application_form => false })
+    return self.community.display_name if self.community
+    ""
   end
   
 =begin

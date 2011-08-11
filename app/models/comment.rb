@@ -6,7 +6,15 @@
   This class represents a comment.
 =end
 class Comment < ActiveRecord::Base
+  
+=begin
+  This attribute is for javascript to let a comment know what dom element is the target for the comment form after a comment has been submitted.
+=end
   attr_accessor :form_target
+  
+=begin
+  This attribute is for javascript to let a comment know what dom element is the target for the comment when it created.
+=end
   attr_accessor :comment_target
   #attr_accessible :commentable, :character_proxy, :user_profile, :community, :comments
   #attr_accessible :has_been_deleted, :has_been_edited, :has_been_locked

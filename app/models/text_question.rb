@@ -7,6 +7,10 @@
 =end
 class TextQuestion < Question
   
+=begin
+  This method gets a path helper for a text question
+  [Returns] The path helper for this text question.
+=end
   def path_helper
      'text_questions'
   end

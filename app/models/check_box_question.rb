@@ -7,6 +7,10 @@
 =end
 class CheckBoxQuestion < Question
   
+=begin
+  This method gets a path helper for a check box question
+  [Returns] The path helper for this check box question.
+=end
   def path_helper
      'check_box_questions'
   end

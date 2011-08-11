@@ -12,6 +12,14 @@ class FileSizeValidator < ActiveModel::EachValidator
   DEFAULT_TOKENIZER = lambda { |value| value.split(//) }
   RESERVED_OPTIONS  = [:minimum, :maximum, :within, :is, :tokenizer, :too_short, :too_long]
 
+=begin
+  This method initalizes this validator.
+  [Args]
+    * +options+ -> The options that are used for this validator.
+  [Returns] True is the operation succeeded without errors, otherwise false.
+  [Raises] 
+    * +ArgumentError+ -> if the Range is not specified as a range.
+=end
   def initialize(options)
     if range = (options.delete(:in) || options.delete(:within))
       raise ArgumentError, ":in and :within must be a Range" unless range.is_a?(Range)
@@ -22,6 +30,12 @@ class FileSizeValidator < ActiveModel::EachValidator
     super
   end
 
+=begin
+  This method validates that the proper parameters has been specified for the validator.
+  [Returns] True is the operation succeeded without errors, otherwise false.
+  [Raises] 
+    * +ArgumentError+ -> if the range is unspecified, or uses a number other than a nonnegative Integer.
+=end
   def check_validity!
     keys = CHECKS.keys & options.keys
 
@@ -38,6 +52,14 @@ class FileSizeValidator < ActiveModel::EachValidator
     end
   end
 
+=begin
+  This method validates a carrierwave uploader, ensuring that the file it is uploading is within a specified size.
+  [Args]
+    * +object+ -> The object this is to be validated.
+    * +attribute+ -> The attribute that is to be validated.
+    * +value+ -> The value that is to be validated.
+  [Returns] True is the operation succeeded without errors, otherwise false.
+=end
   def validate_each(record, attribute, value)
     raise(ArgumentError, "A CarrierWave::Uploader::Base object was expected") unless value.kind_of? CarrierWave::Uploader::Base
     
@@ -61,10 +83,17 @@ class FileSizeValidator < ActiveModel::EachValidator
     end
   end
   
+=begin
+  This method gets an instance of an ActionView number helper.
+  [Returns] An instance of an ActionView number helper.
+=end
   def help
     Helper.instance
   end
 
+=begin
+  This is an inner class for getting access to ActionView's number helper.
+=end
   class Helper
     include Singleton
     include ActionView::Helpers::NumberHelper

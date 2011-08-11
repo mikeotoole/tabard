@@ -6,6 +6,10 @@
   This class represents a message.
 =end
 class Message < ActiveRecord::Base
+  
+=begin
+  This attribute is an array of recipient (user_profile) ids.
+=end  
   attr_accessor  :to # array of people to send to
   #attr_accessible :subject, :body, :to, :author
   

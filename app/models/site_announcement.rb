@@ -15,6 +15,12 @@ class SiteAnnouncement < Announcement
   validate :name, :presence => true
   validate :body, :presence => true
   
+=begin
+  _after_create_
+  
+  This method creates all of the acknowledgments for an announcement after is has been created.
+  [Returns] True if the provided user can show this site announcement, otherwise false.
+=end
   def create_acknowledgments
     @userprofiles = UserProfile.all
     

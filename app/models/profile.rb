@@ -14,18 +14,36 @@ class Profile < ActiveRecord::Base
   
   validates_presence_of :name
   
+=begin
+  This method gets the select options for profiles, based on subclasses.
+  [Returns] An alphabetised array of subclasses as strings.
+=end
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
   
+=begin
+  This method gets the display name of this profile.
+  [Returns] A string that contains the name of this profile.
+=end
   def display_name
     self.name
   end
   
+=begin
+  This method gets the type.
+  [Returns] The type of profile.
+=end
   def type_helper
     self.type
   end
   
+=begin
+  This method sets the type.
+  [Args]
+    * +type+ -> A string that has the type to use.
+  [Returns] True if the operation succeeded, otherwise false.
+=end
   def type_helper=(type)
     self.type = type
   end

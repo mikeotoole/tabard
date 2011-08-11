@@ -13,10 +13,18 @@ class Question < ActiveRecord::Base
   
   accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
   
+=begin
+  This method gets the select options for profiles, based on subclasses.
+  [Returns] An alphabetised array of subclasses as strings.
+=end
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
   
+=begin
+  This method gets the select options for profiles, based on subclasses with human readable names.
+  [Returns] An alphabetised hash in the form [human readable name , subclass as strings].
+=end
   def self.select_options_human
     self.select_options.collect{ |opt| 
       case opt
@@ -32,14 +40,30 @@ class Question < ActiveRecord::Base
     }
   end
   
+=begin
+  This method gets the type.
+  [Returns] The type of question.
+=end
   def type_helper
     self.type
   end
   
+=begin
+  This method sets the type.
+  [Args]
+    * +type+ -> A string that has the type to use.
+  [Returns] True if the operation succeeded, otherwise false.
+=end
   def type_helper=(type)
     self.type = type
   end
   
+=begin
+  This method gets the answers for this question from a given submission.
+  [Args]
+    * +submission_id+ -> An integer that contains the submission id.
+  [Returns] True if the operation succeeded, otherwise false.
+=end  
   def answers(submission_id)
     Answer.where(:submission_id => submission_id, :question_id => self.id)
   end
