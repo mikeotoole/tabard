@@ -38,76 +38,136 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :user_profile
   
+=begin
+  This method gets the user's sent messages.
+  [Returns] An array that contains the user's sent messages through its user profile.
+=end
   def sent_messages
     self.user_profile.sent_messages
   end
   
+=begin
+  This method gets the user's received messages.
+  [Returns] An array that contains the user's received messages through its user profile.
+=end
   def received_messages
     self.user_profile.received_messages
   end
   
+=begin
+  This method gets the user's deleted recieved messages.
+  [Returns] An array that contains the user's deleted recieved messages through its user profile.
+=end
   def deleted_received_messages
     self.user_profile.deleted_received_messages
   end
   
+=begin
+  This method gets the user's inbox.
+  [Returns] The user's inbox folder through its user profile.
+=end
   def inbox
     self.user_profile.inbox
   end
   
+=begin
+  This method gets the user's folders.
+  [Returns] The user's folders through its user profile.
+=end
   def folders
     self.user_profile.folders
   end
   
+=begin
+  This method checks to see if a user owns the object passed to it.
+  [Args]
+    * +resource+ -> The resource you would like to check for ownership.
+  [Returns] True if the object passed to it responds true to "owned_by_user(self)", otherwise false.
+=end
   def owns(resource)
     resource.respond_to?('owned_by_user') ? resource.owned_by_user(self) : false
   end
   
+=begin
+  This method gets the user's communities.
+  [Returns] An array that contains the user's unique communities.
+=end
   def communities
     self.roles.collect{|role|
       role.community
     }.uniq
   end
   
+=begin
+  This method checks to see if a user is a member of a community.
+  [Args]
+    * +community+ -> The community you would like to check.
+  [Returns] True if the user has a role belonging to the community passed to it, otherwise false.
+=end
   def is_a_member_of(community)
     self.communities.include?(community)
   end
   
+=begin
+  This method sets the active profile. *NOT USED*
+  [Args]
+    * +profile+ -> The profile to use.
+=end
   def set_active_profile(profile)
     #profile.active = true
     #profile.save
   end
   
+=begin
+  This method gets an array of possible active profile options.
+  [Returns] An array that user profile + all of their characters.
+=end
   def active_profile_helper_collection
     (Array.new() << (user_profile)).concat(characters)
   end
   
+=begin
+  This method gets the user's characters.
+  [Returns] The user's characters through its user profile.
+=end
   def characters
     self.user_profile.characters
   end
- 
+
+=begin
+  This method gets the user's game profiles.
+  [Returns] The user's game profiles through its user profile.
+=end
   def all_game_profiles
-    self.user_profile.game_profiles if user_profile
+    self.user_profile.game_profiles
   end
   
+=begin
+  This method gets the user's user profile id.
+  [Returns] An integer that contains the user's user profile id.
+=end
   def user_profile_id
-    user_profile.id
+    self.user_profile.id
   end
   
-  #TODO should the email never be returned for privacy?
+=begin
+  This method gets the name of the user if possible.
+  [Returns] A string that contains the user's user profile name, if possible, otherwise "Anon".
+=end
   def name
-    user_profile != nil ? user_profile.name : email
+    user_profile != nil ? user_profile.name : "Anon"
   end
   
+=begin
+  This method gets the display name of the user.
+  [Returns] A string that contains the user's user profile's display name.
+=end
   def display_name
     self.user_profile.display_name if user_profile
   end
   
   def get_characters(game)
     self.user_profile.get_characters(game)
-  end
-  
-  def characters
-    self.user_profile.characters
   end
   
   def address_book
@@ -260,19 +320,39 @@ class User < ActiveRecord::Base
   end
   
   protected 
+=begin
+  _before_filter_
+
+  This method automaticly encrypts the user's password, if the unencrypted password is not blank.
+=end
     def encrypt_new_password
       return if password.blank?
       self.hashed_password = encrypt(password) 
     end
   
+=begin
+  This method determines if the password is required. It is used to determine if password needs to be validated.
+  [Returns] True if the hashed password is blank or if password is present, otherwise false.
+=end
     def password_required? 
       hashed_password.blank? || password.present?
     end
     
+=begin
+  _before_filter_
+
+  This method automaticly lowercases the user's email.
+=end
     def update_lowercase_email
       self.lowercase_email = self.email.downcase
     end
     
+=begin
+  This method encrypts the string passed to it.
+  [Args]
+    * +string+ -> The string you would like to encrypt.
+  [Returns] A string that contains the encypted version of the string passed to this method.
+=end
     def encrypt(string) 
       Digest::SHA1.hexdigest(string)
     end

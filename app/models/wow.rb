@@ -8,6 +8,10 @@
 class Wow < Game
   has_many :wow_characters, :foreign_key => :game_id, :dependent => :destroy
   
+=begin
+  This method gets all of the WOW characters.
+  [Returns] An array that contains all of the WOW characters.
+=end
   def characters
     self.wow_characters
   end
