@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Game</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./app/models/game_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/models/game.rb">app/models/game.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">ActiveRecord::Base</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-inherited">::inherited</a></li>
+          
+          <li><a href="#method-c-select_options">::select_options</a></li>
+          
+          <li><a href="#method-i-announcement_space">#announcement_space</a></li>
+          
+          <li><a href="#method-i-character_discussion_space">#character_discussion_space</a></li>
+          
+          <li><a href="#method-i-check_user_create_permissions">#check_user_create_permissions</a></li>
+          
+          <li><a href="#method-i-check_user_delete_permissions">#check_user_delete_permissions</a></li>
+          
+          <li><a href="#method-i-check_user_show_permissions">#check_user_show_permissions</a></li>
+          
+          <li><a href="#method-i-check_user_update_permissions">#check_user_update_permissions</a></li>
+          
+          <li><a href="#method-i-create_character_discussion_space">#create_character_discussion_space</a></li>
+          
+          <li><a href="#method-i-create_game_discussion_space">#create_game_discussion_space</a></li>
+          
+          <li><a href="#method-i-model_name">#model_name</a></li>
+          
+          <li><a href="#method-i-type_helper">#type_helper</a></li>
+          
+          <li><a href="#method-i-type_helper-3D">#type_helper=</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Subdomains.html">Subdomains</a></li>
+        
+          <li><a href="./Subdomains/CommentsController.html">Subdomains::CommentsController</a></li>
+        
+          <li><a href="./Subdomains/CommunityAnnouncementsController.html">Subdomains::CommunityAnnouncementsController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionSpacesController.html">Subdomains::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionsController.html">Subdomains::DiscussionsController</a></li>
+        
+          <li><a href="./Subdomains/Management.html">Subdomains::Management</a></li>
+        
+          <li><a href="./Subdomains/Management/DiscussionSpacesController.html">Subdomains::Management::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PageSpacesController.html">Subdomains::Management::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PagesController.html">Subdomains::Management::PagesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PermissionsController.html">Subdomains::Management::PermissionsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RegistrationApplicationsController.html">Subdomains::Management::RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RolesController.html">Subdomains::Management::RolesController</a></li>
+        
+          <li><a href="./Subdomains/Management/SiteFormsController.html">Subdomains::Management::SiteFormsController</a></li>
+        
+          <li><a href="./Subdomains/Management/UsersController.html">Subdomains::Management::UsersController</a></li>
+        
+          <li><a href="./Subdomains/ManagementController.html">Subdomains::ManagementController</a></li>
+        
+          <li><a href="./Subdomains/PageSpacesController.html">Subdomains::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/PagesController.html">Subdomains::PagesController</a></li>
+        
+          <li><a href="./Subdomains/SearchController.html">Subdomains::SearchController</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationController/Helper.html">ApplicationController::Helper</a></li>
+        
+          <li><a href="./FileSizeValidator.html">FileSizeValidator</a></li>
+        
+          <li><a href="./FileSizeValidator/Helper.html">FileSizeValidator::Helper</a></li>
+        
+          <li><a href="./AccountController.html">AccountController</a></li>
+        
+          <li><a href="./AcknowledgmentOfAnnouncement.html">AcknowledgmentOfAnnouncement</a></li>
+        
+          <li><a href="./ActiveProfilesController.html">ActiveProfilesController</a></li>
+        
+          <li><a href="./Announcement.html">Announcement</a></li>
+        
+          <li><a href="./AnnouncementAcknowledgementController.html">AnnouncementAcknowledgementController</a></li>
+        
+          <li><a href="./AnnouncementsController.html">AnnouncementsController</a></li>
+        
+          <li><a href="./Answer.html">Answer</a></li>
+        
+          <li><a href="./AnswersController.html">AnswersController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ApplicationNotifier.html">ApplicationNotifier</a></li>
+        
+          <li><a href="./AvatarUploader.html">AvatarUploader</a></li>
+        
+          <li><a href="./BaseCharacter.html">BaseCharacter</a></li>
+        
+          <li><a href="./BaseCharactersController.html">BaseCharactersController</a></li>
+        
+          <li><a href="./BaseCharactersHelper.html">BaseCharactersHelper</a></li>
+        
+          <li><a href="./CharacterProxy.html">CharacterProxy</a></li>
+        
+          <li><a href="./CheckBoxQuestion.html">CheckBoxQuestion</a></li>
+        
+          <li><a href="./CheckBoxQuestionsController.html">CheckBoxQuestionsController</a></li>
+        
+          <li><a href="./ComboBoxQuestion.html">ComboBoxQuestion</a></li>
+        
+          <li><a href="./ComboBoxQuestionsController.html">ComboBoxQuestionsController</a></li>
+        
+          <li><a href="./Comment.html">Comment</a></li>
+        
+          <li><a href="./CommunitiesController.html">CommunitiesController</a></li>
+        
+          <li><a href="./Community.html">Community</a></li>
+        
+          <li><a href="./CommunityAnnouncement.html">CommunityAnnouncement</a></li>
+        
+          <li><a href="./CommunityNameValidator.html">CommunityNameValidator</a></li>
+        
+          <li><a href="./CommunityObserver.html">CommunityObserver</a></li>
+        
+          <li><a href="./Discussion.html">Discussion</a></li>
+        
+          <li><a href="./DiscussionSpace.html">DiscussionSpace</a></li>
+        
+          <li><a href="./DiscussionsController.html">DiscussionsController</a></li>
+        
+          <li><a href="./Folder.html">Folder</a></li>
+        
+          <li><a href="./Game.html">Game</a></li>
+        
+          <li><a href="./GameAnnouncement.html">GameAnnouncement</a></li>
+        
+          <li><a href="./GameAnnouncementsController.html">GameAnnouncementsController</a></li>
+        
+          <li><a href="./GameProfile.html">GameProfile</a></li>
+        
+          <li><a href="./GameProfilesController.html">GameProfilesController</a></li>
+        
+          <li><a href="./GamesController.html">GamesController</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./MailboxController.html">MailboxController</a></li>
+        
+          <li><a href="./Message.html">Message</a></li>
+        
+          <li><a href="./MessageCopy.html">MessageCopy</a></li>
+        
+          <li><a href="./MessagesController.html">MessagesController</a></li>
+        
+          <li><a href="./Page.html">Page</a></li>
+        
+          <li><a href="./PageSpace.html">PageSpace</a></li>
+        
+          <li><a href="./Permission.html">Permission</a></li>
+        
+          <li><a href="./PredefinedAnswer.html">PredefinedAnswer</a></li>
+        
+          <li><a href="./Profile.html">Profile</a></li>
+        
+          <li><a href="./ProfilesController.html">ProfilesController</a></li>
+        
+          <li><a href="./Question.html">Question</a></li>
+        
+          <li><a href="./QuestionsController.html">QuestionsController</a></li>
+        
+          <li><a href="./RadioButtonQuestion.html">RadioButtonQuestion</a></li>
+        
+          <li><a href="./RadioButtonQuestionsController.html">RadioButtonQuestionsController</a></li>
+        
+          <li><a href="./RegistrationAnswersController.html">RegistrationAnswersController</a></li>
+        
+          <li><a href="./RegistrationApplication.html">RegistrationApplication</a></li>
+        
+          <li><a href="./RegistrationApplicationObserver.html">RegistrationApplicationObserver</a></li>
+        
+          <li><a href="./RegistrationApplicationsController.html">RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Role.html">Role</a></li>
+        
+          <li><a href="./RolesUser.html">RolesUser</a></li>
+        
+          <li><a href="./SentController.html">SentController</a></li>
+        
+          <li><a href="./SessionsController.html">SessionsController</a></li>
+        
+          <li><a href="./SiteAnnouncement.html">SiteAnnouncement</a></li>
+        
+          <li><a href="./SiteAnnouncementsController.html">SiteAnnouncementsController</a></li>
+        
+          <li><a href="./SiteForm.html">SiteForm</a></li>
+        
+          <li><a href="./SiteFormsController.html">SiteFormsController</a></li>
+        
+          <li><a href="./SmartLoggerHelper.html">SmartLoggerHelper</a></li>
+        
+          <li><a href="./StatusCodeController.html">StatusCodeController</a></li>
+        
+          <li><a href="./Subdomain.html">Subdomain</a></li>
+        
+          <li><a href="./SubdomainsController.html">SubdomainsController</a></li>
+        
+          <li><a href="./Submission.html">Submission</a></li>
+        
+          <li><a href="./SubmissionsController.html">SubmissionsController</a></li>
+        
+          <li><a href="./SupportedGame.html">SupportedGame</a></li>
+        
+          <li><a href="./Swtor.html">Swtor</a></li>
+        
+          <li><a href="./SwtorCharacter.html">SwtorCharacter</a></li>
+        
+          <li><a href="./SwtorCharactersController.html">SwtorCharactersController</a></li>
+        
+          <li><a href="./SystemResource.html">SystemResource</a></li>
+        
+          <li><a href="./TextBoxQuestion.html">TextBoxQuestion</a></li>
+        
+          <li><a href="./TextBoxQuestionsController.html">TextBoxQuestionsController</a></li>
+        
+          <li><a href="./TextQuestion.html">TextQuestion</a></li>
+        
+          <li><a href="./TextQuestionsController.html">TextQuestionsController</a></li>
+        
+          <li><a href="./UrlHelper.html">UrlHelper</a></li>
+        
+          <li><a href="./User.html">User</a></li>
+        
+          <li><a href="./UserMailer.html">UserMailer</a></li>
+        
+          <li><a href="./UserObserver.html">UserObserver</a></li>
+        
+          <li><a href="./UserProfile.html">UserProfile</a></li>
+        
+          <li><a href="./UserProfilesController.html">UserProfilesController</a></li>
+        
+          <li><a href="./Wow.html">Wow</a></li>
+        
+          <li><a href="./WowCharacter.html">WowCharacter</a></li>
+        
+          <li><a href="./WowCharactersController.html">WowCharactersController</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Game</h1>
+
+    <div id="description" class="description">
+      <table class="rdoc-list"><tr><td class="rdoc-term"><p>Author</p></td>
+<td>
+<p>DigitalAugment Inc. (<a
+href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
+</td></tr><tr><td class="rdoc-term"><p>Copyright</p></td>
+<td>
+<p>Copyright © 2011 DigitalAugment Inc.</p>
+</td></tr><tr><td class="rdoc-term"><p>License</p></td>
+<td>
+<p>Proprietary Closed Source</p>
+</td></tr></table>
+
+<p>This class represents a game.</p>
+
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="inherited-method" class="method-detail ">
+          <a name="method-c-inherited"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inherited</span><span
+              class="method-args">(child)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Lets the subclasses use the parents routes.</p>
+            
+
+            
+            <div class="method-source-code" id="inherited-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inherited</span>(<span class="ruby-identifier">child</span>)
+  <span class="ruby-identifier">child</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">model_name</span>
+      <span class="ruby-constant">Game</span>.<span class="ruby-identifier">model_name</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inherited-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inherited-method -->
+
+      
+        <div id="select_options-method" class="method-detail ">
+          <a name="method-c-select_options"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">select_options</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Used to offer a dynamically generated list of subclass to choose from.</p>
+            
+
+            
+            <div class="method-source-code" id="select_options-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_options</span>
+  <span class="ruby-identifier">descendants</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_s</span> }.<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- select_options-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- select_options-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="announcement_space-method" class="method-detail ">
+          <a name="method-i-announcement_space"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">announcement_space</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>TODO This needs to be evaluated</p>
+            
+
+            
+            <div class="method-source-code" id="announcement_space-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">announcement_space</span>
+  <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement_space_id</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- announcement_space-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- announcement_space-method -->
+
+      
+        <div id="character_discussion_space-method" class="method-detail ">
+          <a name="method-i-character_discussion_space"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">character_discussion_space</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>TODO This needs to be evaluated</p>
+            
+
+            
+            <div class="method-source-code" id="character_discussion_space-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">character_discussion_space</span>
+  <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">character_discussion_space_id</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- character_discussion_space-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- character_discussion_space-method -->
+
+      
+        <div id="check_user_create_permissions-method" class="method-detail ">
+          <a name="method-i-check_user_create_permissions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">check_user_create_permissions</span><span
+              class="method-args">(user)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method defines how create permissions are determined for this game.</p>
+<dl class="rdoc-list"><dt>Args</dt>
+<dd><ul><li>
+<p><tt>user</tt> -&gt; The user who you would like to check.</p>
+</li></ul>
+</dd><dt>Returns</dt>
+<dd>
+<p>True if the provided user can create this game, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="check_user_create_permissions-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_create_permissions</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- check_user_create_permissions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- check_user_create_permissions-method -->
+
+      
+        <div id="check_user_delete_permissions-method" class="method-detail ">
+          <a name="method-i-check_user_delete_permissions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">check_user_delete_permissions</span><span
+              class="method-args">(user)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method defines how delete permissions are determined for this game.</p>
+<dl class="rdoc-list"><dt>Args</dt>
+<dd><ul><li>
+<p><tt>user</tt> -&gt; The user who you would like to check.</p>
+</li></ul>
+</dd><dt>Returns</dt>
+<dd>
+<p>True if the provided user can delete this game, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="check_user_delete_permissions-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_delete_permissions</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- check_user_delete_permissions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- check_user_delete_permissions-method -->
+
+      
+        <div id="check_user_show_permissions-method" class="method-detail ">
+          <a name="method-i-check_user_show_permissions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">check_user_show_permissions</span><span
+              class="method-args">(user)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method defines how show permissions are determined for this game.</p>
+<dl class="rdoc-list"><dt>Args</dt>
+<dd><ul><li>
+<p><tt>user</tt> -&gt; The user who you would like to check.</p>
+</li></ul>
+</dd><dt>Returns</dt>
+<dd>
+<p>True if the provided user can show this game, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="check_user_show_permissions-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_show_permissions</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- check_user_show_permissions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- check_user_show_permissions-method -->
+
+      
+        <div id="check_user_update_permissions-method" class="method-detail ">
+          <a name="method-i-check_user_update_permissions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">check_user_update_permissions</span><span
+              class="method-args">(user)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method defines how update permissions are determined for this game.</p>
+<dl class="rdoc-list"><dt>Args</dt>
+<dd><ul><li>
+<p><tt>user</tt> -&gt; The user who you would like to check.</p>
+</li></ul>
+</dd><dt>Returns</dt>
+<dd>
+<p>True if the provided user can update this game, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="check_user_update_permissions-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 107</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_update_permissions</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- check_user_update_permissions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- check_user_update_permissions-method -->
+
+      
+        <div id="create_character_discussion_space-method" class="method-detail ">
+          <a name="method-i-create_character_discussion_space"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">create_character_discussion_space</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>TODO This needs to be evaluated</p>
+            
+
+            
+            <div class="method-source-code" id="create_character_discussion_space-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create_character_discussion_space</span>
+  <span class="ruby-identifier">discussion_space</span> = <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">create</span>( <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; Characters&quot;</span>,
+                                            <span class="ruby-value">:system</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+                                            <span class="ruby-value">:game</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">character_discussion_space_id</span> = <span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">save</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- create_character_discussion_space-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- create_character_discussion_space-method -->
+
+      
+        <div id="create_game_discussion_space-method" class="method-detail ">
+          <a name="method-i-create_game_discussion_space"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">create_game_discussion_space</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>TODO This needs to be evaluated</p>
+            
+
+            
+            <div class="method-source-code" id="create_game_discussion_space-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create_game_discussion_space</span>
+  <span class="ruby-identifier">discussion_space</span> = <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">create</span>( <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; Announcements&quot;</span>,
+                                            <span class="ruby-value">:system</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+                                            <span class="ruby-value">:game</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>,
+                                            <span class="ruby-value">:announcement_space</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement_space_id</span> = <span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">save</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- create_game_discussion_space-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- create_game_discussion_space-method -->
+
+      
+        <div id="model_name-method" class="method-detail ">
+          <a name="method-i-model_name"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">model_name</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="model_name-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">model_name</span>
+  <span class="ruby-constant">Game</span>.<span class="ruby-identifier">model_name</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- model_name-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- model_name-method -->
+
+      
+        <div id="type_helper-method" class="method-detail ">
+          <a name="method-i-type_helper"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">type_helper</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="type_helper-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type_helper</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- type_helper-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- type_helper-method -->
+
+      
+        <div id="type_helper-3D-method" class="method-detail ">
+          <a name="method-i-type_helper-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">type_helper=</span><span
+              class="method-args">(type)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="type_helper-3D-source">
+<pre>
+<span class="ruby-comment"># File app/models/game.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type_helper=</span>(<span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type</span> = <span class="ruby-identifier">type</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- type_helper-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- type_helper-3D-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

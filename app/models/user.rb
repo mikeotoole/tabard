@@ -166,26 +166,52 @@ class User < ActiveRecord::Base
     self.user_profile.display_name if user_profile
   end
   
+=begin
+  This method gets all of the user's characters that belong to the specified game.
+  [Args]
+    * +game+ -> The game you would like to use.
+  [Returns] An array of characters for this user for the specified game.
+=end
   def get_characters(game)
     self.user_profile.get_characters(game)
   end
   
+=begin
+  This method gets all of the users that this user can message.
+  [Returns] An array of users that this user can message.
+=end  
   def address_book
     communities = self.roles.collect{ |role| role.community }.uniq
     users = communities.collect{|community| community.all_users}.flatten.uniq
     users.collect{|user| user.user_profile}
   end
   
+=begin
+  This method attempts to return the user that corresponds to the provided credentials.
+  [Args]
+    * +email+ -> The email of the user.
+    * +password+ -> The password of the user.
+  [Returns] An array of characters for this user for the specified game.
+=end
   def self.authenticate(email, password) 
     user = find_by_lowercase_email(email.downcase)
     return user if user && user.authenticated?(password)
   end
   
+=begin
+  This method attempts to authenticate this user with the given password.
+  [Args]
+    * +password+ -> The password you would like to use.
+  [Returns] True is the password provided is correct, otherwise false.
+=end
   def authenticated?(password) 
     self.hashed_password == encrypt(password)
   end
   
-  # Returns a collection of the currently logged in users unacknowledged announcements or nil if empty.
+=begin
+  This method attempts get all of this users unacknowledged acknowledgement_of_announcements.
+  [Returns] An array that contains all of the this users acknowledgement_of_announcements that have not been acknowleged.
+=end
   def unacknowledged_announcements
       @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
       @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
@@ -194,15 +220,12 @@ class User < ActiveRecord::Base
       @acknowledgment_of_announcements = Array.new
   end
   
-  def announcements
-    @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
-    @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
-    @profiles << @userprofile
-    #@acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
-    @acknowledgment_of_announcements = Array.new
-  end
-  
-  #need to add clause for if the user owns the resource
+=begin
+  This method determines if the user can show the resource passed to it.
+  [Args]
+    * +system_resource_name+ -> A string that contains the name of the resource type, or the resource itself (must implement check_user_show_permissions(user)).
+  [Returns] True is the user can show the resource, otherwise false.
+=end
   def can_show(system_resource_name)
     if(system_resource_name.respond_to?('check_user_show_permissions'))
       if(system_resource_name.check_user_show_permissions(self))
@@ -226,6 +249,12 @@ class User < ActiveRecord::Base
     false
   end
   
+=begin
+  This method determines if the user can create the resource passed to it.
+  [Args]
+    * +system_resource_name+ -> A string that contains the name of the resource type, or the resource itself (must implement check_user_create_permissions(user)).
+  [Returns] True is the user can create the resource, otherwise false.
+=end
   def can_create(system_resource_name)
     if(system_resource_name.respond_to?('check_user_create_permissions'))
       if(system_resource_name.check_user_create_permissions(self))
@@ -248,11 +277,23 @@ class User < ActiveRecord::Base
     logger.debug("Create permission request for user #{self.name} with #{system_resource_name.to_s} | Fail") 
     false
   end
-  
+ 
+=begin
+  This method determines if the user can manage the resource passed to it.
+  [Args]
+    * +system_resource_name+ -> A string that contains the name of the resource type, or the resource itself.
+  [Returns] True is the user can create or update or delete the resource, otherwise false.
+=end 
   def can_manage(system_resource_name)
   	self.can_create(system_resource_name) or self.can_update(system_resource_name) or self.can_delete(system_resource_name)
   end
   
+=begin
+  This method determines if the user can update the resource passed to it.
+  [Args]
+    * +system_resource_name+ -> A string that contains the name of the resource type, or the resource itself (must implement check_user_update_permissions(user)).
+  [Returns] True is the user can update the resource, otherwise false.
+=end
   def can_update(system_resource_name) 
     if(system_resource_name.respond_to?('check_user_update_permissions'))
       if(system_resource_name.check_user_update_permissions(self))
@@ -276,6 +317,12 @@ class User < ActiveRecord::Base
     false
   end
   
+=begin
+  This method determines if the user can delete the resource passed to it.
+  [Args]
+    * +system_resource_name+ -> A string that contains the name of the resource type, or the resource itself (must implement check_user_delete_permissions(user)).
+  [Returns] True is the user can delete the resource, otherwise false.
+=end
   def can_delete(system_resource_name)
     if(system_resource_name.respond_to?('check_user_delete_permissions'))
       if(system_resource_name.check_user_delete_permissions(self))

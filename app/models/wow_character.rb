@@ -16,6 +16,12 @@ class WowCharacter < BaseCharacter
   This attribute is the avatar cache for this WOW character. It is used by the AvatarUploader.
 =end
   attr_accessor :avatar_cache
+  
+=begin
+  This attribute is the avatar removal for this WOW character. It is used by the AvatarUploader.
+=end
+  attr_accessor :remove_avatar
+  
   #attr_accessible :name, :faction, :race, :level, :server, :game, :discussion
   
   belongs_to :wow, :foreign_key => :game_id

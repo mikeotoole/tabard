@@ -1,0 +1,1230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: ApplicationController</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./app/controllers/application_controller_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/controllers/application_controller.rb">app/controllers/application_controller.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">ActionController::Base</p>
+        
+      </div>
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">CLASS</span> <a href="ApplicationController/Helper.html">ApplicationController::Helper</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-i-access_denied">#access_denied</a></li>
+          
+          <li><a href="#method-i-authenticate">#authenticate</a></li>
+          
+          <li><a href="#method-i-character_active-3F">#character_active?</a></li>
+          
+          <li><a href="#method-i-collect_games">#collect_games</a></li>
+          
+          <li><a href="#method-i-collect_management_navigation_items">#collect_management_navigation_items</a></li>
+          
+          <li><a href="#method-i-current_character">#current_character</a></li>
+          
+          <li><a href="#method-i-current_profile">#current_profile</a></li>
+          
+          <li><a href="#method-i-current_theme">#current_theme</a></li>
+          
+          <li><a href="#method-i-current_user">#current_user</a></li>
+          
+          <li><a href="#method-i-dynamic_discussions">#dynamic_discussions</a></li>
+          
+          <li><a href="#method-i-dynamic_page_spaces">#dynamic_page_spaces</a></li>
+          
+          <li><a href="#method-i-has_announcements-3F">#has_announcements?</a></li>
+          
+          <li><a href="#method-i-locales">#locales</a></li>
+          
+          <li><a href="#method-i-logged_in-3F">#logged_in?</a></li>
+          
+          <li><a href="#method-i-nav_discussions">#nav_discussions</a></li>
+          
+          <li><a href="#method-i-nav_featured_pages">#nav_featured_pages</a></li>
+          
+          <li><a href="#method-i-nav_page_spaces">#nav_page_spaces</a></li>
+          
+          <li><a href="#method-i-profile_active-3F">#profile_active?</a></li>
+          
+          <li><a href="#method-i-profiles">#profiles</a></li>
+          
+          <li><a href="#method-i-render_404">#render_404</a></li>
+          
+          <li><a href="#method-i-render_insufficient_privileges">#render_insufficient_privileges</a></li>
+          
+          <li><a href="#method-i-set_locale">#set_locale</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Included Modules -->
+      <div id="includes-section" class="section">
+        <h3 class="section-header">Included Modules</h3>
+        <ul class="link-list">
+        
+        
+          <li><a class="include" href="UrlHelper.html">UrlHelper</a></li>
+        
+        
+        </ul>
+      </div>
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Subdomains.html">Subdomains</a></li>
+        
+          <li><a href="./Subdomains/CommentsController.html">Subdomains::CommentsController</a></li>
+        
+          <li><a href="./Subdomains/CommunityAnnouncementsController.html">Subdomains::CommunityAnnouncementsController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionSpacesController.html">Subdomains::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionsController.html">Subdomains::DiscussionsController</a></li>
+        
+          <li><a href="./Subdomains/Management.html">Subdomains::Management</a></li>
+        
+          <li><a href="./Subdomains/Management/DiscussionSpacesController.html">Subdomains::Management::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PageSpacesController.html">Subdomains::Management::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PagesController.html">Subdomains::Management::PagesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PermissionsController.html">Subdomains::Management::PermissionsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RegistrationApplicationsController.html">Subdomains::Management::RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RolesController.html">Subdomains::Management::RolesController</a></li>
+        
+          <li><a href="./Subdomains/Management/SiteFormsController.html">Subdomains::Management::SiteFormsController</a></li>
+        
+          <li><a href="./Subdomains/Management/UsersController.html">Subdomains::Management::UsersController</a></li>
+        
+          <li><a href="./Subdomains/ManagementController.html">Subdomains::ManagementController</a></li>
+        
+          <li><a href="./Subdomains/PageSpacesController.html">Subdomains::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/PagesController.html">Subdomains::PagesController</a></li>
+        
+          <li><a href="./Subdomains/SearchController.html">Subdomains::SearchController</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationController/Helper.html">ApplicationController::Helper</a></li>
+        
+          <li><a href="./FileSizeValidator.html">FileSizeValidator</a></li>
+        
+          <li><a href="./FileSizeValidator/Helper.html">FileSizeValidator::Helper</a></li>
+        
+          <li><a href="./AccountController.html">AccountController</a></li>
+        
+          <li><a href="./AcknowledgmentOfAnnouncement.html">AcknowledgmentOfAnnouncement</a></li>
+        
+          <li><a href="./ActiveProfilesController.html">ActiveProfilesController</a></li>
+        
+          <li><a href="./Announcement.html">Announcement</a></li>
+        
+          <li><a href="./AnnouncementAcknowledgementController.html">AnnouncementAcknowledgementController</a></li>
+        
+          <li><a href="./AnnouncementsController.html">AnnouncementsController</a></li>
+        
+          <li><a href="./Answer.html">Answer</a></li>
+        
+          <li><a href="./AnswersController.html">AnswersController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ApplicationNotifier.html">ApplicationNotifier</a></li>
+        
+          <li><a href="./AvatarUploader.html">AvatarUploader</a></li>
+        
+          <li><a href="./BaseCharacter.html">BaseCharacter</a></li>
+        
+          <li><a href="./BaseCharactersController.html">BaseCharactersController</a></li>
+        
+          <li><a href="./BaseCharactersHelper.html">BaseCharactersHelper</a></li>
+        
+          <li><a href="./CharacterProxy.html">CharacterProxy</a></li>
+        
+          <li><a href="./CheckBoxQuestion.html">CheckBoxQuestion</a></li>
+        
+          <li><a href="./CheckBoxQuestionsController.html">CheckBoxQuestionsController</a></li>
+        
+          <li><a href="./ComboBoxQuestion.html">ComboBoxQuestion</a></li>
+        
+          <li><a href="./ComboBoxQuestionsController.html">ComboBoxQuestionsController</a></li>
+        
+          <li><a href="./Comment.html">Comment</a></li>
+        
+          <li><a href="./CommunitiesController.html">CommunitiesController</a></li>
+        
+          <li><a href="./Community.html">Community</a></li>
+        
+          <li><a href="./CommunityAnnouncement.html">CommunityAnnouncement</a></li>
+        
+          <li><a href="./CommunityNameValidator.html">CommunityNameValidator</a></li>
+        
+          <li><a href="./CommunityObserver.html">CommunityObserver</a></li>
+        
+          <li><a href="./Discussion.html">Discussion</a></li>
+        
+          <li><a href="./DiscussionSpace.html">DiscussionSpace</a></li>
+        
+          <li><a href="./DiscussionsController.html">DiscussionsController</a></li>
+        
+          <li><a href="./Folder.html">Folder</a></li>
+        
+          <li><a href="./Game.html">Game</a></li>
+        
+          <li><a href="./GameAnnouncement.html">GameAnnouncement</a></li>
+        
+          <li><a href="./GameAnnouncementsController.html">GameAnnouncementsController</a></li>
+        
+          <li><a href="./GameProfile.html">GameProfile</a></li>
+        
+          <li><a href="./GameProfilesController.html">GameProfilesController</a></li>
+        
+          <li><a href="./GamesController.html">GamesController</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./MailboxController.html">MailboxController</a></li>
+        
+          <li><a href="./Message.html">Message</a></li>
+        
+          <li><a href="./MessageCopy.html">MessageCopy</a></li>
+        
+          <li><a href="./MessagesController.html">MessagesController</a></li>
+        
+          <li><a href="./Page.html">Page</a></li>
+        
+          <li><a href="./PageSpace.html">PageSpace</a></li>
+        
+          <li><a href="./Permission.html">Permission</a></li>
+        
+          <li><a href="./PredefinedAnswer.html">PredefinedAnswer</a></li>
+        
+          <li><a href="./Profile.html">Profile</a></li>
+        
+          <li><a href="./ProfilesController.html">ProfilesController</a></li>
+        
+          <li><a href="./Question.html">Question</a></li>
+        
+          <li><a href="./QuestionsController.html">QuestionsController</a></li>
+        
+          <li><a href="./RadioButtonQuestion.html">RadioButtonQuestion</a></li>
+        
+          <li><a href="./RadioButtonQuestionsController.html">RadioButtonQuestionsController</a></li>
+        
+          <li><a href="./RegistrationAnswersController.html">RegistrationAnswersController</a></li>
+        
+          <li><a href="./RegistrationApplication.html">RegistrationApplication</a></li>
+        
+          <li><a href="./RegistrationApplicationObserver.html">RegistrationApplicationObserver</a></li>
+        
+          <li><a href="./RegistrationApplicationsController.html">RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Role.html">Role</a></li>
+        
+          <li><a href="./RolesUser.html">RolesUser</a></li>
+        
+          <li><a href="./SentController.html">SentController</a></li>
+        
+          <li><a href="./SessionsController.html">SessionsController</a></li>
+        
+          <li><a href="./SiteAnnouncement.html">SiteAnnouncement</a></li>
+        
+          <li><a href="./SiteAnnouncementsController.html">SiteAnnouncementsController</a></li>
+        
+          <li><a href="./SiteForm.html">SiteForm</a></li>
+        
+          <li><a href="./SiteFormsController.html">SiteFormsController</a></li>
+        
+          <li><a href="./SmartLoggerHelper.html">SmartLoggerHelper</a></li>
+        
+          <li><a href="./StatusCodeController.html">StatusCodeController</a></li>
+        
+          <li><a href="./Subdomain.html">Subdomain</a></li>
+        
+          <li><a href="./SubdomainsController.html">SubdomainsController</a></li>
+        
+          <li><a href="./Submission.html">Submission</a></li>
+        
+          <li><a href="./SubmissionsController.html">SubmissionsController</a></li>
+        
+          <li><a href="./SupportedGame.html">SupportedGame</a></li>
+        
+          <li><a href="./Swtor.html">Swtor</a></li>
+        
+          <li><a href="./SwtorCharacter.html">SwtorCharacter</a></li>
+        
+          <li><a href="./SwtorCharactersController.html">SwtorCharactersController</a></li>
+        
+          <li><a href="./SystemResource.html">SystemResource</a></li>
+        
+          <li><a href="./TextBoxQuestion.html">TextBoxQuestion</a></li>
+        
+          <li><a href="./TextBoxQuestionsController.html">TextBoxQuestionsController</a></li>
+        
+          <li><a href="./TextQuestion.html">TextQuestion</a></li>
+        
+          <li><a href="./TextQuestionsController.html">TextQuestionsController</a></li>
+        
+          <li><a href="./UrlHelper.html">UrlHelper</a></li>
+        
+          <li><a href="./User.html">User</a></li>
+        
+          <li><a href="./UserMailer.html">UserMailer</a></li>
+        
+          <li><a href="./UserObserver.html">UserObserver</a></li>
+        
+          <li><a href="./UserProfile.html">UserProfile</a></li>
+        
+          <li><a href="./UserProfilesController.html">UserProfilesController</a></li>
+        
+          <li><a href="./Wow.html">Wow</a></li>
+        
+          <li><a href="./WowCharacter.html">WowCharacter</a></li>
+        
+          <li><a href="./WowCharactersController.html">WowCharactersController</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">ApplicationController</h1>
+
+    <div id="description" class="description">
+      <table class="rdoc-list"><tr><td class="rdoc-term"><p>Author</p></td>
+<td>
+<p>DigitalAugment Inc. (<a
+href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
+</td></tr><tr><td class="rdoc-term"><p>Copyright</p></td>
+<td>
+<p>Copyright © 2011 DigitalAugment Inc.</p>
+</td></tr><tr><td class="rdoc-term"><p>License</p></td>
+<td>
+<p>Proprietary Closed Source</p>
+</td></tr></table>
+
+<p>This controller is for the main application.</p>
+
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="protected-instance-method-details" class="method-section section">
+        <h3 class="section-header">Protected Instance Methods</h3>
+
+      
+        <div id="access_denied-method" class="method-detail ">
+          <a name="method-i-access_denied"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">access_denied</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="access_denied-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">access_denied</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>] = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-string">&quot;REQUEST_URI&quot;</span>] 
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_path</span>, <span class="ruby-value">:alert</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please log in to continue&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> 
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- access_denied-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- access_denied-method -->
+
+      
+        <div id="authenticate-method" class="method-detail ">
+          <a name="method-i-authenticate"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">authenticate</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Filter method to enforce a login requirement  Apply as a before_filter on
+any controller you want to protect</p>
+            
+
+            
+            <div class="method-source-code" id="authenticate-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 152</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticate</span>
+  <span class="ruby-identifier">logged_in?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">access_denied</span> 
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- authenticate-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- authenticate-method -->
+
+      
+        <div id="character_active-3F-method" class="method-detail ">
+          <a name="method-i-character_active-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">character_active?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="character_active-3F-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">character_active?</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Character$/</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- character_active-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- character_active-3F-method -->
+
+      
+        <div id="collect_games-method" class="method-detail ">
+          <a name="method-i-collect_games"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">collect_games</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="collect_games-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 244</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">collect_games</span>
+  <span class="ruby-ivar">@games</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">active</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- collect_games-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- collect_games-method -->
+
+      
+        <div id="collect_management_navigation_items-method" class="method-detail ">
+          <a name="method-i-collect_management_navigation_items"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">collect_management_navigation_items</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="collect_management_navigation_items-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 231</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">collect_management_navigation_items</span>
+  <span class="ruby-ivar">@management_items</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>()
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">logged_in?</span>
+  <span class="ruby-comment">#application</span>
+  <span class="ruby-ivar">@management_items</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:link</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">management_registration_applications_path</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Applications&quot;</span>} <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_manage</span>(<span class="ruby-string">&quot;RegistrationApplication&quot;</span>)
+  <span class="ruby-comment">#user</span>
+  <span class="ruby-ivar">@management_items</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:link</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">management_users_path</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Users&quot;</span>} <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_manage</span>(<span class="ruby-string">&quot;User&quot;</span>)
+  <span class="ruby-comment">#roles</span>
+  <span class="ruby-ivar">@management_items</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:link</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">management_roles_path</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Roles&quot;</span>} <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_manage</span>(<span class="ruby-string">&quot;Role&quot;</span>)
+  <span class="ruby-comment">#forms</span>
+  <span class="ruby-ivar">@management_items</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:link</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">management_site_forms_path</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Forms&quot;</span>} <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_manage</span>(<span class="ruby-string">&quot;SiteForm&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- collect_management_navigation_items-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- collect_management_navigation_items-method -->
+
+      
+        <div id="current_character-method" class="method-detail ">
+          <a name="method-i-current_character"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_character</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="current_character-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_character</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">character_active?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
+    <span class="ruby-ivar">@current_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>])
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- current_character-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_character-method -->
+
+      
+        <div id="current_profile-method" class="method-detail ">
+          <a name="method-i-current_profile"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_profile</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the currently active_profile or nil if there isn’t one.</p>
+            
+
+            
+            <div class="method-source-code" id="current_profile-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_profile</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">profile_active?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
+    <span class="ruby-ivar">@current_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>])
+  <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- current_profile-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_profile-method -->
+
+      
+        <div id="current_theme-method" class="method-detail ">
+          <a name="method-i-current_theme"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_theme</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the currently active theme folder name</p>
+            
+
+            
+            <div class="method-source-code" id="current_theme-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 216</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_theme</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@theme</span> = <span class="ruby-string">'swtor-prime'</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- current_theme-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_theme-method -->
+
+      
+        <div id="current_user-method" class="method-detail ">
+          <a name="method-i-current_user"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_user</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the currently logged in user or nil if there isn’t one</p>
+            
+
+            
+            <div class="method-source-code" id="current_user-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_user</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment">#return unless session[:user_id]</span>
+  <span class="ruby-comment">#@current_user ||= User.find_by_id(session[:user_id])</span>
+  <span class="ruby-comment">#cookies!</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] <span class="ruby-keyword">and</span> <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] 
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
+  <span class="ruby-ivar">@current_user</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]) <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
+  <span class="ruby-comment">#@current_user ||= User.find_by_id(cookies.signed[:remember_token]) if cookies.signed[:remember_token]</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- current_user-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_user-method -->
+
+      
+        <div id="dynamic_discussions-method" class="method-detail ">
+          <a name="method-i-dynamic_discussions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dynamic_discussions</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Varibles for navigation</p>
+            
+
+            
+            <div class="method-source-code" id="dynamic_discussions-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dynamic_discussions</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Character$/</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
+      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>]) 
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@character_profile</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">nav_discussions</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@character_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">game_id</span>)}
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">nav_discussions</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- dynamic_discussions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dynamic_discussions-method -->
+
+      
+        <div id="dynamic_page_spaces-method" class="method-detail ">
+          <a name="method-i-dynamic_page_spaces"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dynamic_page_spaces</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="dynamic_page_spaces-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dynamic_page_spaces</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Character$/</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
+      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>]) 
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@character_profile</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">nav_page_spaces</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">page_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">page_space</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@character_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">page_space</span>.<span class="ruby-identifier">game_id</span>)}
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">nav_page_spaces</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- dynamic_page_spaces-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dynamic_page_spaces-method -->
+
+      
+        <div id="has_announcements-3F-method" class="method-detail ">
+          <a name="method-i-has_announcements-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">has_announcements?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Lets the view know if there are announcements to be displayed</p>
+            
+
+            
+            <div class="method-source-code" id="has_announcements-3F-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">has_announcements?</span>
+  <span class="ruby-identifier">logged_in?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">unacknowledged_announcements</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- has_announcements-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- has_announcements-3F-method -->
+
+      
+        <div id="locales-method" class="method-detail ">
+          <a name="method-i-locales"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">locales</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="locales-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">locales</span>
+  <span class="ruby-identifier">locales</span> = [
+    { <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'en-us'</span>, <span class="ruby-value">:language</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'American English'</span> },
+    { <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'pirate'</span>, <span class="ruby-value">:language</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Pirate'</span> },
+    { <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'zombie'</span>, <span class="ruby-value">:language</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Zombie'</span> }]
+  <span class="ruby-identifier">locales</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">locale</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">locale</span>[<span class="ruby-value">:is_current</span>] = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">locale</span>[<span class="ruby-value">:locale</span>] <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span> 
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- locales-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- locales-method -->
+
+      
+        <div id="logged_in-3F-method" class="method-detail ">
+          <a name="method-i-logged_in-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">logged_in?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Predicate method to test for a logged in user</p>
+            
+
+            
+            <div class="method-source-code" id="logged_in-3F-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">logged_in?</span>
+  <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">User</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- logged_in-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- logged_in-3F-method -->
+
+      
+        <div id="nav_discussions-method" class="method-detail ">
+          <a name="method-i-nav_discussions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">nav_discussions</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This is used by dynamic_discussions. Use the <a
+href="ApplicationController.html#method-i-dynamic_discussions">dynamic_discussions</a>
+method for the collection of discussion spaces.</p>
+            
+
+            
+            <div class="method-source-code" id="nav_discussions-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 188</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nav_discussions</span>
+  <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">logged_in?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-identifier">discussion_space</span>)) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">list_in_navigation</span>}   
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- nav_discussions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- nav_discussions-method -->
+
+      
+        <div id="nav_featured_pages-method" class="method-detail ">
+          <a name="method-i-nav_featured_pages"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">nav_featured_pages</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="nav_featured_pages-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nav_featured_pages</span>
+  <span class="ruby-constant">Page</span>.<span class="ruby-identifier">featured_pages</span>.<span class="ruby-identifier">alphabetical</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- nav_featured_pages-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- nav_featured_pages-method -->
+
+      
+        <div id="nav_page_spaces-method" class="method-detail ">
+          <a name="method-i-nav_page_spaces"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">nav_page_spaces</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="nav_page_spaces-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nav_page_spaces</span>
+  <span class="ruby-constant">PageSpace</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">page_space</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">page_space</span>.<span class="ruby-identifier">check_user_show_permissions</span>(<span class="ruby-identifier">current_user</span>)}
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- nav_page_spaces-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- nav_page_spaces-method -->
+
+      
+        <div id="profile_active-3F-method" class="method-detail ">
+          <a name="method-i-profile_active-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">profile_active?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Predicate method to test for an active profile.</p>
+            
+
+            
+            <div class="method-source-code" id="profile_active-3F-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">profile_active?</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/UserProfile/</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">character_active?</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- profile_active-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- profile_active-3F-method -->
+
+      
+        <div id="profiles-method" class="method-detail ">
+          <a name="method-i-profiles"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">profiles</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns an Array with the users profile and characters info.</p>
+            
+
+            
+            <div class="method-source-code" id="profiles-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">profiles</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>
+    <span class="ruby-identifier">profile_collection</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">active_profile_helper_collection</span>
+    <span class="ruby-identifier">profiles</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>  
+    <span class="ruby-identifier">profile_collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">profile</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">profiles</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:is_current</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">profile</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@current_profile</span>), <span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">class</span> }       
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">profiles</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- profiles-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- profiles-method -->
+
+      
+        <div id="render_404-method" class="method-detail ">
+          <a name="method-i-render_404"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">render_404</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="render_404-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 221</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">render_404</span>
+  <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">request</span>.<span class="ruby-identifier">protocol</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">domain</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">port_string</span>, <span class="ruby-string">&quot;/404&quot;</span>].<span class="ruby-identifier">join</span> 
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- render_404-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- render_404-method -->
+
+      
+        <div id="render_insufficient_privileges-method" class="method-detail ">
+          <a name="method-i-render_insufficient_privileges"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">render_insufficient_privileges</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="render_insufficient_privileges-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">render_insufficient_privileges</span>
+  <span class="ruby-identifier">render_404</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- render_insufficient_privileges-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- render_insufficient_privileges-method -->
+
+      
+        <div id="set_locale-method" class="method-detail ">
+          <a name="method-i-set_locale"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">set_locale</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="set_locale-source">
+<pre>
+<span class="ruby-comment"># File app/controllers/application_controller.rb, line 127</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_locale</span>
+  <span class="ruby-keyword">if</span>(<span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>])
+    <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:back</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- set_locale-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- set_locale-method -->
+
+      
+      </div><!-- protected-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

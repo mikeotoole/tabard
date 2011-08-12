@@ -7,7 +7,21 @@ require 'file_size_validator'
   This class represents a user profile.
 =end
 class UserProfile < Profile
-  #attr_accessible :avatar, :avatar_cache, :remove_avatar
+
+=begin
+  This attribute is the avatar for this user profile. It maps to the AvatarUploader.
+=end
+  attr_accessor :avatar 
+  
+=begin
+  This attribute is the avatar cache for this user profile. It is used by the AvatarUploader.
+=end
+  attr_accessor :avatar_cache
+  
+=begin
+  This attribute is the avatar removal for this user profile. It is used by the AvatarUploader.
+=end
+  attr_accessor :remove_avatar
   #attr_accessible :name
   
   validates :avatar, 
@@ -34,13 +48,20 @@ class UserProfile < Profile
   
   #uploaders
   mount_uploader :avatar, AvatarUploader
-  #uploader helper
+
+=begin
+  This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+=end
   def remove_avatar!
     begin
       super
     rescue Fog::Storage::Rackspace::NotFound
     end
   end
+
+=begin
+  This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+=end
   def remove_previously_stored_avatar
     begin
       super
@@ -55,7 +76,6 @@ class UserProfile < Profile
   
   #This will add a new character, creating the game profile if needed.
   def build_character(character, is_default = false) 
-    
     self.game_profiles.each do |game_profile|
       if game_profile.game_id == character.game_id       
         proxy = game_profile.character_proxies.build(:character => character)
@@ -70,6 +90,12 @@ class UserProfile < Profile
     self.game_profiles << game_profile
   end
   
+=begin
+  This method gets all of the user's characters that belong to the specified game.
+  [Args]
+    * +game+ -> The game you would like to use.
+  [Returns] An array of characters for this user for the specified game.
+=end
   def get_characters(game)
     self.game_profiles.collect{|gPro| 
        gPro.characters if gPro.game.kind_of? game
@@ -88,10 +114,19 @@ class UserProfile < Profile
     end
   end
   
+=begin
+  This method gets the user's inbox folder.
+  [Returns] A folder contains the user folder.
+=end
   def inbox
     folders.find_by_name("Inbox")
   end
 
+=begin
+  _before_create_
+  
+  This method builds the user's inbox folder.
+=end
   def build_inbox
     folders.build(:name => "Inbox")
   end
@@ -100,7 +135,10 @@ class UserProfile < Profile
     self.received_messages.delete_if {|message| message.deleted == false or message.deleted == nil}
   end
   
-  #TODO Can this be implemented better?
+=begin
+  This method gets all of the characters associated with this user profile.
+  [Returns] An array that contains all of the characters associated with this user profile.
+=end
   def characters
      characters = Array.new()
      for game_profile in self.game_profiles
@@ -115,14 +153,26 @@ class UserProfile < Profile
     self.display_name # TODO This needs to be depricated because it is bad namming of a method.
   end
   
+=begin
+  This method gets the display name for this user profile.
+  [Returns] A string that contains the user profile's name, if possible.
+=end
   def display_name
     self.name
   end
   
+=begin
+  This method gets the user profile email.
+  [Returns] A string that contains email of the user profile's user, if possible.
+=end
   def user_email
-    self.user.email
+    self.user.email if self.user
   end
   
+=begin
+  This method gets the description of this user profile.
+  [Returns] A string that contains "Account Profile".
+=end
   def description
     "Account Profile"
   end  

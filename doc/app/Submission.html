@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Submission</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./app/models/submission_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="app/models/submission.rb">app/models/submission.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">ActiveRecord::Base</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-i-all_answers">#all_answers</a></li>
+          
+          <li><a href="#method-i-all_questions">#all_questions</a></li>
+          
+          <li><a href="#method-i-contains_answer_to_question">#contains_answer_to_question</a></li>
+          
+          <li><a href="#method-i-contains_predefined_answer">#contains_predefined_answer</a></li>
+          
+          <li><a href="#method-i-contains_predefined_answer_from_collection">#contains_predefined_answer_from_collection</a></li>
+          
+          <li><a href="#method-i-form">#form</a></li>
+          
+          <li><a href="#method-i-is_accepted">#is_accepted</a></li>
+          
+          <li><a href="#method-i-is_applicant">#is_applicant</a></li>
+          
+          <li><a href="#method-i-is_inactive">#is_inactive</a></li>
+          
+          <li><a href="#method-i-is_rejected">#is_rejected</a></li>
+          
+          <li><a href="#method-i-name">#name</a></li>
+          
+          <li><a href="#method-i-set_accepted">#set_accepted</a></li>
+          
+          <li><a href="#method-i-set_applicant">#set_applicant</a></li>
+          
+          <li><a href="#method-i-set_inactive">#set_inactive</a></li>
+          
+          <li><a href="#method-i-set_rejected">#set_rejected</a></li>
+          
+          <li><a href="#method-i-status_string">#status_string</a></li>
+          
+          <li><a href="#method-i-submission_date">#submission_date</a></li>
+          
+          <li><a href="#method-i-thankyou_message">#thankyou_message</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Subdomains.html">Subdomains</a></li>
+        
+          <li><a href="./Subdomains/CommentsController.html">Subdomains::CommentsController</a></li>
+        
+          <li><a href="./Subdomains/CommunityAnnouncementsController.html">Subdomains::CommunityAnnouncementsController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionSpacesController.html">Subdomains::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/DiscussionsController.html">Subdomains::DiscussionsController</a></li>
+        
+          <li><a href="./Subdomains/Management.html">Subdomains::Management</a></li>
+        
+          <li><a href="./Subdomains/Management/DiscussionSpacesController.html">Subdomains::Management::DiscussionSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PageSpacesController.html">Subdomains::Management::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PagesController.html">Subdomains::Management::PagesController</a></li>
+        
+          <li><a href="./Subdomains/Management/PermissionsController.html">Subdomains::Management::PermissionsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RegistrationApplicationsController.html">Subdomains::Management::RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Subdomains/Management/RolesController.html">Subdomains::Management::RolesController</a></li>
+        
+          <li><a href="./Subdomains/Management/SiteFormsController.html">Subdomains::Management::SiteFormsController</a></li>
+        
+          <li><a href="./Subdomains/Management/UsersController.html">Subdomains::Management::UsersController</a></li>
+        
+          <li><a href="./Subdomains/ManagementController.html">Subdomains::ManagementController</a></li>
+        
+          <li><a href="./Subdomains/PageSpacesController.html">Subdomains::PageSpacesController</a></li>
+        
+          <li><a href="./Subdomains/PagesController.html">Subdomains::PagesController</a></li>
+        
+          <li><a href="./Subdomains/SearchController.html">Subdomains::SearchController</a></li>
+        
+          <li><a href="./ApplicationController.html">ApplicationController</a></li>
+        
+          <li><a href="./ApplicationController/Helper.html">ApplicationController::Helper</a></li>
+        
+          <li><a href="./FileSizeValidator.html">FileSizeValidator</a></li>
+        
+          <li><a href="./FileSizeValidator/Helper.html">FileSizeValidator::Helper</a></li>
+        
+          <li><a href="./AccountController.html">AccountController</a></li>
+        
+          <li><a href="./AcknowledgmentOfAnnouncement.html">AcknowledgmentOfAnnouncement</a></li>
+        
+          <li><a href="./ActiveProfilesController.html">ActiveProfilesController</a></li>
+        
+          <li><a href="./Announcement.html">Announcement</a></li>
+        
+          <li><a href="./AnnouncementAcknowledgementController.html">AnnouncementAcknowledgementController</a></li>
+        
+          <li><a href="./AnnouncementsController.html">AnnouncementsController</a></li>
+        
+          <li><a href="./Answer.html">Answer</a></li>
+        
+          <li><a href="./AnswersController.html">AnswersController</a></li>
+        
+          <li><a href="./ApplicationHelper.html">ApplicationHelper</a></li>
+        
+          <li><a href="./ApplicationNotifier.html">ApplicationNotifier</a></li>
+        
+          <li><a href="./AvatarUploader.html">AvatarUploader</a></li>
+        
+          <li><a href="./BaseCharacter.html">BaseCharacter</a></li>
+        
+          <li><a href="./BaseCharactersController.html">BaseCharactersController</a></li>
+        
+          <li><a href="./BaseCharactersHelper.html">BaseCharactersHelper</a></li>
+        
+          <li><a href="./CharacterProxy.html">CharacterProxy</a></li>
+        
+          <li><a href="./CheckBoxQuestion.html">CheckBoxQuestion</a></li>
+        
+          <li><a href="./CheckBoxQuestionsController.html">CheckBoxQuestionsController</a></li>
+        
+          <li><a href="./ComboBoxQuestion.html">ComboBoxQuestion</a></li>
+        
+          <li><a href="./ComboBoxQuestionsController.html">ComboBoxQuestionsController</a></li>
+        
+          <li><a href="./Comment.html">Comment</a></li>
+        
+          <li><a href="./CommunitiesController.html">CommunitiesController</a></li>
+        
+          <li><a href="./Community.html">Community</a></li>
+        
+          <li><a href="./CommunityAnnouncement.html">CommunityAnnouncement</a></li>
+        
+          <li><a href="./CommunityNameValidator.html">CommunityNameValidator</a></li>
+        
+          <li><a href="./CommunityObserver.html">CommunityObserver</a></li>
+        
+          <li><a href="./Discussion.html">Discussion</a></li>
+        
+          <li><a href="./DiscussionSpace.html">DiscussionSpace</a></li>
+        
+          <li><a href="./DiscussionsController.html">DiscussionsController</a></li>
+        
+          <li><a href="./Folder.html">Folder</a></li>
+        
+          <li><a href="./Game.html">Game</a></li>
+        
+          <li><a href="./GameAnnouncement.html">GameAnnouncement</a></li>
+        
+          <li><a href="./GameAnnouncementsController.html">GameAnnouncementsController</a></li>
+        
+          <li><a href="./GameProfile.html">GameProfile</a></li>
+        
+          <li><a href="./GameProfilesController.html">GameProfilesController</a></li>
+        
+          <li><a href="./GamesController.html">GamesController</a></li>
+        
+          <li><a href="./HomeController.html">HomeController</a></li>
+        
+          <li><a href="./MailboxController.html">MailboxController</a></li>
+        
+          <li><a href="./Message.html">Message</a></li>
+        
+          <li><a href="./MessageCopy.html">MessageCopy</a></li>
+        
+          <li><a href="./MessagesController.html">MessagesController</a></li>
+        
+          <li><a href="./Page.html">Page</a></li>
+        
+          <li><a href="./PageSpace.html">PageSpace</a></li>
+        
+          <li><a href="./Permission.html">Permission</a></li>
+        
+          <li><a href="./PredefinedAnswer.html">PredefinedAnswer</a></li>
+        
+          <li><a href="./Profile.html">Profile</a></li>
+        
+          <li><a href="./ProfilesController.html">ProfilesController</a></li>
+        
+          <li><a href="./Question.html">Question</a></li>
+        
+          <li><a href="./QuestionsController.html">QuestionsController</a></li>
+        
+          <li><a href="./RadioButtonQuestion.html">RadioButtonQuestion</a></li>
+        
+          <li><a href="./RadioButtonQuestionsController.html">RadioButtonQuestionsController</a></li>
+        
+          <li><a href="./RegistrationAnswersController.html">RegistrationAnswersController</a></li>
+        
+          <li><a href="./RegistrationApplication.html">RegistrationApplication</a></li>
+        
+          <li><a href="./RegistrationApplicationObserver.html">RegistrationApplicationObserver</a></li>
+        
+          <li><a href="./RegistrationApplicationsController.html">RegistrationApplicationsController</a></li>
+        
+          <li><a href="./Role.html">Role</a></li>
+        
+          <li><a href="./RolesUser.html">RolesUser</a></li>
+        
+          <li><a href="./SentController.html">SentController</a></li>
+        
+          <li><a href="./SessionsController.html">SessionsController</a></li>
+        
+          <li><a href="./SiteAnnouncement.html">SiteAnnouncement</a></li>
+        
+          <li><a href="./SiteAnnouncementsController.html">SiteAnnouncementsController</a></li>
+        
+          <li><a href="./SiteForm.html">SiteForm</a></li>
+        
+          <li><a href="./SiteFormsController.html">SiteFormsController</a></li>
+        
+          <li><a href="./SmartLoggerHelper.html">SmartLoggerHelper</a></li>
+        
+          <li><a href="./StatusCodeController.html">StatusCodeController</a></li>
+        
+          <li><a href="./Subdomain.html">Subdomain</a></li>
+        
+          <li><a href="./SubdomainsController.html">SubdomainsController</a></li>
+        
+          <li><a href="./Submission.html">Submission</a></li>
+        
+          <li><a href="./SubmissionsController.html">SubmissionsController</a></li>
+        
+          <li><a href="./SupportedGame.html">SupportedGame</a></li>
+        
+          <li><a href="./Swtor.html">Swtor</a></li>
+        
+          <li><a href="./SwtorCharacter.html">SwtorCharacter</a></li>
+        
+          <li><a href="./SwtorCharactersController.html">SwtorCharactersController</a></li>
+        
+          <li><a href="./SystemResource.html">SystemResource</a></li>
+        
+          <li><a href="./TextBoxQuestion.html">TextBoxQuestion</a></li>
+        
+          <li><a href="./TextBoxQuestionsController.html">TextBoxQuestionsController</a></li>
+        
+          <li><a href="./TextQuestion.html">TextQuestion</a></li>
+        
+          <li><a href="./TextQuestionsController.html">TextQuestionsController</a></li>
+        
+          <li><a href="./UrlHelper.html">UrlHelper</a></li>
+        
+          <li><a href="./User.html">User</a></li>
+        
+          <li><a href="./UserMailer.html">UserMailer</a></li>
+        
+          <li><a href="./UserObserver.html">UserObserver</a></li>
+        
+          <li><a href="./UserProfile.html">UserProfile</a></li>
+        
+          <li><a href="./UserProfilesController.html">UserProfilesController</a></li>
+        
+          <li><a href="./Wow.html">Wow</a></li>
+        
+          <li><a href="./WowCharacter.html">WowCharacter</a></li>
+        
+          <li><a href="./WowCharactersController.html">WowCharactersController</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Submission</h1>
+
+    <div id="description" class="description">
+      <table class="rdoc-list"><tr><td class="rdoc-term"><p>Author</p></td>
+<td>
+<p>DigitalAugment Inc. (<a
+href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
+</td></tr><tr><td class="rdoc-term"><p>Copyright</p></td>
+<td>
+<p>Copyright © 2011 DigitalAugment Inc.</p>
+</td></tr><tr><td class="rdoc-term"><p>License</p></td>
+<td>
+<p>Proprietary Closed Source</p>
+</td></tr></table>
+
+<p>This class represents a submission to a site form.</p>
+
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="all_answers-method" class="method-detail ">
+          <a name="method-i-all_answers"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">all_answers</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets all of the answers for this submission.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>An array that contains all answers for this submission.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="all_answers-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_answers</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">answers</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- all_answers-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- all_answers-method -->
+
+      
+        <div id="all_questions-method" class="method-detail ">
+          <a name="method-i-all_questions"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">all_questions</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets all of the unique questions that were answered by this
+submission.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>A unique array of questions.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="all_questions-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">all_questions</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">answer</span><span class="ruby-operator">|</span><span class="ruby-identifier">answer</span>.<span class="ruby-identifier">question</span> }.<span class="ruby-identifier">uniq</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- all_questions-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- all_questions-method -->
+
+      
+        <div id="contains_answer_to_question-method" class="method-detail ">
+          <a name="method-i-contains_answer_to_question"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">contains_answer_to_question</span><span
+              class="method-args">(question)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="contains_answer_to_question-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">contains_answer_to_question</span>(<span class="ruby-identifier">question</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">answer</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">question_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">question</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">id</span> = <span class="ruby-operator">-</span><span class="ruby-identifier">answer</span>.<span class="ruby-identifier">question_id</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">answer</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- contains_answer_to_question-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- contains_answer_to_question-method -->
+
+      
+        <div id="contains_predefined_answer-method" class="method-detail ">
+          <a name="method-i-contains_predefined_answer"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">contains_predefined_answer</span><span
+              class="method-args">(panswer)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="contains_predefined_answer-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">contains_predefined_answer</span>(<span class="ruby-identifier">panswer</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">answer</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">question_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">panswer</span>.<span class="ruby-identifier">question_id</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">content</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">panswer</span>.<span class="ruby-identifier">content</span>
+      <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">id</span> = <span class="ruby-operator">-</span><span class="ruby-identifier">answer</span>.<span class="ruby-identifier">question_id</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">answer</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- contains_predefined_answer-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- contains_predefined_answer-method -->
+
+      
+        <div id="contains_predefined_answer_from_collection-method" class="method-detail ">
+          <a name="method-i-contains_predefined_answer_from_collection"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">contains_predefined_answer_from_collection</span><span
+              class="method-args">(panswer_collection)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="contains_predefined_answer_from_collection-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">contains_predefined_answer_from_collection</span>(<span class="ruby-identifier">panswer_collection</span>)
+  <span class="ruby-identifier">panswer_collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">panswer</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">contains_predefined_answer</span>(<span class="ruby-identifier">panswer</span>) <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">contains_predefined_answer</span>(<span class="ruby-identifier">panswer</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- contains_predefined_answer_from_collection-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- contains_predefined_answer_from_collection-method -->
+
+      
+        <div id="form-method" class="method-detail ">
+          <a name="method-i-form"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">form</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets the form that this submission belongs to.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>The site form that this submission belongs to.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="form-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">form</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">site_form</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- form-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- form-method -->
+
+      
+        <div id="is_accepted-method" class="method-detail ">
+          <a name="method-i-is_accepted"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_accepted</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method determines if the status of this submission is accepted.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the status of this submission is accepted, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="is_accepted-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_accepted</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_accepted-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_accepted-method -->
+
+      
+        <div id="is_applicant-method" class="method-detail ">
+          <a name="method-i-is_applicant"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_applicant</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method determines if the status of this submission is applicant.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the status of this submission is applicant, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="is_applicant-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_applicant</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_applicant-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_applicant-method -->
+
+      
+        <div id="is_inactive-method" class="method-detail ">
+          <a name="method-i-is_inactive"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_inactive</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method determines if the status of this submission is inactive.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the status of this submission is inactive, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="is_inactive-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_inactive</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  
+  <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_inactive-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_inactive-method -->
+
+      
+        <div id="is_rejected-method" class="method-detail ">
+          <a name="method-i-is_rejected"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">is_rejected</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method determines if the status of this submission is rejected.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the status of this submission is rejected, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="is_rejected-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_rejected</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  
+  <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- is_rejected-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- is_rejected-method -->
+
+      
+        <div id="name-method" class="method-detail ">
+          <a name="method-i-name"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">name</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets the name of the user who submitted this submission.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>A string that contains the name of the user who submitted this submission.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="name-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_profile</span>.<span class="ruby-identifier">name</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_profile</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- name-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- name-method -->
+
+      
+        <div id="set_accepted-method" class="method-detail ">
+          <a name="method-i-set_accepted"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">set_accepted</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method sets the status of this submission to accepted. This can only
+happen if the current status is applicant.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the operation is successful, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="set_accepted-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_accepted</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>) <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- set_accepted-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- set_accepted-method -->
+
+      
+        <div id="set_applicant-method" class="method-detail ">
+          <a name="method-i-set_applicant"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">set_applicant</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method sets the status of this submission to applicant.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the operation is successful, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="set_applicant-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_applicant</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- set_applicant-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- set_applicant-method -->
+
+      
+        <div id="set_inactive-method" class="method-detail ">
+          <a name="method-i-set_inactive"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">set_inactive</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method sets the status of this submission to inactive.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the operation is successful, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="set_inactive-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_inactive</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- set_inactive-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- set_inactive-method -->
+
+      
+        <div id="set_rejected-method" class="method-detail ">
+          <a name="method-i-set_rejected"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">set_rejected</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method sets the status of this submission to rejected. This can only
+happen if the current status is applicant.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>True if the operation is successful, otherwise false.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="set_rejected-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">set_rejected</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">4</span>) <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- set_rejected-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- set_rejected-method -->
+
+      
+        <div id="status_string-method" class="method-detail ">
+          <a name="method-i-status_string"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">status_string</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets the status of the submission as a human readable string.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>A string that contains the human readable status of this submission.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="status_string-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status_string</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_applicant</span>
+    <span class="ruby-string">&quot;Applicant&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_accepted</span>
+    <span class="ruby-string">&quot;Accepted&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_inactive</span>
+    <span class="ruby-string">&quot;Deactivated User&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_rejected</span>
+    <span class="ruby-string">&quot;Rejected&quot;</span>  
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;Unknown&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- status_string-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- status_string-method -->
+
+      
+        <div id="submission_date-method" class="method-detail ">
+          <a name="method-i-submission_date"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">submission_date</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets the date that this submission was created.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>A date that contains the creation date of this submission.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="submission_date-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">submission_date</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">created_at</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- submission_date-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- submission_date-method -->
+
+      
+        <div id="thankyou_message-method" class="method-detail ">
+          <a name="method-i-thankyou_message"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">thankyou_message</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>This method gets the thankyou message of the site form that this submission
+belongs to.</p>
+<dl class="rdoc-list"><dt>Returns</dt>
+<dd>
+<p>A string that contains the thankyou message of the site form that this
+submission belongs to.</p>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="thankyou_message-source">
+<pre>
+<span class="ruby-comment"># File app/models/submission.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">thankyou_message</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">site_form</span>.<span class="ruby-identifier">thankyou</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- thankyou_message-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- thankyou_message-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
