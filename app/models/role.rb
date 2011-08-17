@@ -52,7 +52,7 @@ class Role < ActiveRecord::Base
     * +SystemUserPermissionAssociactionLocked+ -> if this role is an admin 
 =end
   def ensure_system_role_association_rules(permission)
-    return true unless self.is_admin_role? and not self.new_record?
+    return true unless (self.is_admin_role? or self.is_applicant_role?) and not self.new_record?
     self.errors[:permissions] << "You can't change the permissions for admin role."
     raise SystemUserPermissionAssociactionLocked
   end

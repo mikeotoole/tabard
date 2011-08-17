@@ -135,7 +135,7 @@ class Comment < ActiveRecord::Base
   [Returns] The original comment item.
 =end
   def original_comment_item
-  	(commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
+    (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
   end 
 
 =begin
@@ -181,9 +181,9 @@ class Comment < ActiveRecord::Base
   [Returns] True if the provided user can update this comment, otherwise false.
 =end
   def check_user_update_permissions(user)
-  	if self.has_been_locked or self.replys_locked?
-  		return false
-  	end
+    if self.has_been_locked or self.replys_locked?
+      return false
+    end
     if user.user_profile == self.user_profile
       return true
     end

@@ -285,7 +285,7 @@ class User < ActiveRecord::Base
   [Returns] True is the user can create or update or delete the resource, otherwise false.
 =end 
   def can_manage(system_resource_name)
-  	self.can_create(system_resource_name) or self.can_update(system_resource_name) or self.can_delete(system_resource_name)
+    self.can_create(system_resource_name) or self.can_update(system_resource_name) or self.can_delete(system_resource_name)
   end
   
 =begin

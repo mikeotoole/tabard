@@ -51,7 +51,7 @@ class Permission < ActiveRecord::Base
   [Returns] True if the is permission is valid, otherwise false.
 =end
   def ensure_system_role_association_rules
-    return true unless not self.new_record? and self.role and self.role.is_admin_role? 
+    return true unless not self.new_record? and self.role and self.role.is_admin_role? and self.role.is_applicant_role?
     self.errors[:base] << "You can't change the permissions for admin role."
   end
   
