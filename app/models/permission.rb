@@ -14,6 +14,8 @@ class Permission < ActiveRecord::Base
   
   before_create :check_name_and_create
   
+  validate :ensure_system_role_association_rules
+  
 =begin
   This method gets the magic polymorphic helper.
   [Returns] A string that contains the permissionable id + | + the permissionable class.
@@ -42,6 +44,15 @@ class Permission < ActiveRecord::Base
 =end
   def check_name_and_create
     self.name = self.permissionable_name unless self.name
+  end
+  
+=begin
+  This method ensures that this permission is not changing the admin system role.
+  [Returns] True if the is permission is valid, otherwise false.
+=end
+  def ensure_system_role_association_rules
+    return true unless not self.new_record? and self.role and self.role.is_admin_role? 
+    self.errors[:base] << "You can't change the permissions for admin role."
   end
   
 =begin

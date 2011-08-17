@@ -158,6 +158,10 @@
         
           <li><a href="../../FileSizeValidator/Helper.html">FileSizeValidator::Helper</a></li>
         
+          <li><a href="../../Role.html">Role</a></li>
+        
+          <li><a href="../../Role/SystemUserPermissionAssociactionLocked.html">Role::SystemUserPermissionAssociactionLocked</a></li>
+        
           <li><a href="../../AccountController.html">AccountController</a></li>
         
           <li><a href="../../AcknowledgmentOfAnnouncement.html">AcknowledgmentOfAnnouncement</a></li>
@@ -265,8 +269,6 @@
           <li><a href="../../RegistrationApplicationObserver.html">RegistrationApplicationObserver</a></li>
         
           <li><a href="../../RegistrationApplicationsController.html">RegistrationApplicationsController</a></li>
-        
-          <li><a href="../../Role.html">Role</a></li>
         
           <li><a href="../../RolesUser.html">RolesUser</a></li>
         
@@ -436,7 +438,7 @@ subdomains (communities).</p>
             
             <div class="method-source-code" id="destroy-source">
 <pre>
-<span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 81</span>
+<span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-ivar">@role</span>) 
     <span class="ruby-identifier">render_insufficient_privileges</span>
@@ -636,8 +638,11 @@ subdomains (communities).</p>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_update</span>(<span class="ruby-ivar">@role</span>) 
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@role</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:role</span>])
-      <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Role was successfully updated'</span>)
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@role</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:role</span>])
+        <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Role was successfully updated'</span>)
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Role</span><span class="ruby-operator">::</span><span class="ruby-constant">SystemUserPermissionAssociactionLocked</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">grab_all_errors_from_model</span>(<span class="ruby-ivar">@role</span>)
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'management/roles'</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'edit'</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]

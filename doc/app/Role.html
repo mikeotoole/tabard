@@ -58,6 +58,16 @@
       
 
       
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">CLASS</span> <a href="Role/SystemUserPermissionAssociactionLocked.html">Role::SystemUserPermissionAssociactionLocked</a></li>
+          
+        </ul>
+      </div>
+      
 
       
       <!-- Method Quickref -->
@@ -86,6 +96,8 @@
           <li><a href="#method-i-delete_permissions">#delete_permissions</a></li>
           
           <li><a href="#method-i-delete_system_resources">#delete_system_resources</a></li>
+          
+          <li><a href="#method-i-ensure_system_role_association_rules">#ensure_system_role_association_rules</a></li>
           
           <li><a href="#method-i-ensure_system_role_rules">#ensure_system_role_rules</a></li>
           
@@ -191,6 +203,10 @@
           <li><a href="./FileSizeValidator.html">FileSizeValidator</a></li>
         
           <li><a href="./FileSizeValidator/Helper.html">FileSizeValidator::Helper</a></li>
+        
+          <li><a href="./Role.html">Role</a></li>
+        
+          <li><a href="./Role/SystemUserPermissionAssociactionLocked.html">Role::SystemUserPermissionAssociactionLocked</a></li>
         
           <li><a href="./AccountController.html">AccountController</a></li>
         
@@ -299,8 +315,6 @@
           <li><a href="./RegistrationApplicationObserver.html">RegistrationApplicationObserver</a></li>
         
           <li><a href="./RegistrationApplicationsController.html">RegistrationApplicationsController</a></li>
-        
-          <li><a href="./Role.html">Role</a></li>
         
           <li><a href="./RolesUser.html">RolesUser</a></li>
         
@@ -427,7 +441,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             
             <div class="method-source-code" id="can_update_users-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 226</span>
+<span class="ruby-comment"># File app/models/role.rb, line 248</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_update_users</span>
   <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_applicant_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_member_role?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -468,7 +482,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             
             <div class="method-source-code" id="check_user_create_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 202</span>
+<span class="ruby-comment"># File app/models/role.rb, line 224</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_create_permissions</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_create</span>(<span class="ruby-string">&quot;Role&quot;</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_applicant_role?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -509,7 +523,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             
             <div class="method-source-code" id="check_user_delete_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 222</span>
+<span class="ruby-comment"># File app/models/role.rb, line 244</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_delete_permissions</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-string">&quot;Role&quot;</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_applicant_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_member_role?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -550,7 +564,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             
             <div class="method-source-code" id="check_user_show_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 192</span>
+<span class="ruby-comment"># File app/models/role.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_show_permissions</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;Role&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -591,7 +605,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             
             <div class="method-source-code" id="check_user_update_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 212</span>
+<span class="ruby-comment"># File app/models/role.rb, line 234</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_update_permissions</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_update</span>(<span class="ruby-string">&quot;Role&quot;</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -630,7 +644,7 @@ create permissions.</p>
             
             <div class="method-source-code" id="create_permissionables-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 126</span>
+<span class="ruby-comment"># File app/models/role.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_permissionables</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:create_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">permissionable</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -667,7 +681,7 @@ create permissions.</p>
             
             <div class="method-source-code" id="create_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 94</span>
+<span class="ruby-comment"># File app/models/role.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_permissions</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:create_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -705,7 +719,7 @@ permissions.</p>
             
             <div class="method-source-code" id="create_system_resources-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 166</span>
+<span class="ruby-comment"># File app/models/role.rb, line 188</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_system_resources</span>
   <span class="ruby-identifier">create_permissions</span>.<span class="ruby-identifier">keep_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">system_resource_permission</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -744,7 +758,7 @@ delete permissions.</p>
             
             <div class="method-source-code" id="delete_permissionables-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 142</span>
+<span class="ruby-comment"># File app/models/role.rb, line 164</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_permissionables</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:delete_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">permissionable</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -781,7 +795,7 @@ delete permissions.</p>
             
             <div class="method-source-code" id="delete_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 110</span>
+<span class="ruby-comment"># File app/models/role.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_permissions</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:delete_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -819,7 +833,7 @@ permissions.</p>
             
             <div class="method-source-code" id="delete_system_resources-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 182</span>
+<span class="ruby-comment"># File app/models/role.rb, line 204</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_system_resources</span>
   <span class="ruby-identifier">delete_permissions</span>.<span class="ruby-identifier">keep_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">system_resource_permission</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -831,6 +845,53 @@ permissions.</p>
 
           
         </div><!-- delete_system_resources-method -->
+
+      
+        <div id="ensure_system_role_association_rules-method" class="method-detail ">
+          <a name="method-i-ensure_system_role_association_rules"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">ensure_system_role_association_rules</span><span
+              class="method-args">(permission)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p><em>before_add_permissions</em></p>
+
+<p><em>before_remove_permissions</em></p>
+
+<p>This method ensures that system roles permissions can’t be added or
+removed.</p>
+<dl class="rdoc-list"><dt>Raises</dt>
+<dd><ul><li>
+<p><tt><a
+href="Role/SystemUserPermissionAssociactionLocked.html">SystemUserPermissionAssociactionLocked</a></tt>
+-&gt; if this role is an admin</p>
+</li></ul>
+</dd></dl>
+            
+
+            
+            <div class="method-source-code" id="ensure_system_role_association_rules-source">
+<pre>
+<span class="ruby-comment"># File app/models/role.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ensure_system_role_association_rules</span>(<span class="ruby-identifier">permission</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_record?</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:permissions</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;You can't change the permissions for admin role.&quot;</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemUserPermissionAssociactionLocked</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- ensure_system_role_association_rules-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- ensure_system_role_association_rules-method -->
 
       
         <div id="ensure_system_role_rules-method" class="method-detail ">
@@ -856,7 +917,7 @@ permissions.</p>
             
             <div class="method-source-code" id="ensure_system_role_rules-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 26</span>
+<span class="ruby-comment"># File app/models/role.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ensure_system_role_rules</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_system_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_record?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name_changed?</span> 
@@ -905,7 +966,7 @@ permissions.</p>
             
             <div class="method-source-code" id="is_a_member_of-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 44</span>
+<span class="ruby-comment"># File app/models/role.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_a_member_of</span>(<span class="ruby-identifier">community</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">community</span>
 <span class="ruby-keyword">end</span></pre>
@@ -942,9 +1003,9 @@ permissions.</p>
             
             <div class="method-source-code" id="is_admin_role-3F-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 52</span>
+<span class="ruby-comment"># File app/models/role.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_admin_role?</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">admin_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">admin_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- is_admin_role-3F-source -->
             
@@ -980,9 +1041,9 @@ community.</p>
             
             <div class="method-source-code" id="is_applicant_role-3F-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 60</span>
+<span class="ruby-comment"># File app/models/role.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_applicant_role?</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">applicant_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">applicant_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- is_applicant_role-3F-source -->
             
@@ -1017,9 +1078,9 @@ community.</p>
             
             <div class="method-source-code" id="is_member_role-3F-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 68</span>
+<span class="ruby-comment"># File app/models/role.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_member_role?</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">member_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">member_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- is_member_role-3F-source -->
             
@@ -1054,7 +1115,7 @@ community.</p>
             
             <div class="method-source-code" id="is_system_role-3F-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 76</span>
+<span class="ruby-comment"># File app/models/role.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_system_role?</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">admin_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">or</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">applicant_role</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">or</span>
@@ -1095,7 +1156,7 @@ permissions.</p>
             
             <div class="method-source-code" id="show_permissionables-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 118</span>
+<span class="ruby-comment"># File app/models/role.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_permissionables</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:show_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">permissionable</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -1132,7 +1193,7 @@ permissions.</p>
             
             <div class="method-source-code" id="show_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 86</span>
+<span class="ruby-comment"># File app/models/role.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_permissions</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:show_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1170,7 +1231,7 @@ permissions.</p>
             
             <div class="method-source-code" id="show_system_resources-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 158</span>
+<span class="ruby-comment"># File app/models/role.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_system_resources</span>
   <span class="ruby-identifier">show_permissions</span>.<span class="ruby-identifier">keep_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">system_resource_permission</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -1209,7 +1270,7 @@ special permissions.</p>
             
             <div class="method-source-code" id="special_permissionables-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 150</span>
+<span class="ruby-comment"># File app/models/role.rb, line 172</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">special_permissionables</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">extra_special_permissions</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1248,7 +1309,7 @@ update permissions.</p>
             
             <div class="method-source-code" id="update_permissionables-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 134</span>
+<span class="ruby-comment"># File app/models/role.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_permissionables</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:update_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">permissionable</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -1285,7 +1346,7 @@ update permissions.</p>
             
             <div class="method-source-code" id="update_permissions-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 102</span>
+<span class="ruby-comment"># File app/models/role.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_permissions</span>
   <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:update_p</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1323,7 +1384,7 @@ permissions.</p>
             
             <div class="method-source-code" id="update_system_resources-source">
 <pre>
-<span class="ruby-comment"># File app/models/role.rb, line 174</span>
+<span class="ruby-comment"># File app/models/role.rb, line 196</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_system_resources</span>
   <span class="ruby-identifier">update_permissions</span>.<span class="ruby-identifier">keep_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">system_resource_permission</span>}
 <span class="ruby-keyword">end</span></pre>

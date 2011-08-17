@@ -43,8 +43,8 @@
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|
         = render :partial => 'form_characters', :locals => {:f => f}
     
-    %dt{ :class => 'settings' + (params[:tab] == 'settings' ? ' active' : '') } Account Settings
-    %dd{ :class => 'settings' + (params[:tab] == 'settings' ? ' active' : '') }
+    %dt{ :class => 'settings' + (params[:tab] == 'settings' or @settings_tabs_active ? ' active' : '') } Account Settings
+    %dd{ :class => 'settings' + (params[:tab] == 'settings' or @settings_tabs_active ? ' active' : '') }
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|
         = render :partial => 'form_account'
         %p.submit= submit_tag('Save Changes')

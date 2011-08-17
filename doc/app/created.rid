@@ -1,6 +1,6 @@
-Fri, 12 Aug 2011 12:22:29 -0700
+Wed, 17 Aug 2011 13:35:46 -0700
 doc/README_FOR_APP	Sat, 23 Jul 2011 13:31:34 -0700
-app/controllers/account_controller.rb	Wed, 03 Aug 2011 14:39:09 -0700
+app/controllers/account_controller.rb	Tue, 16 Aug 2011 16:19:26 -0700
 app/controllers/active_profiles_controller.rb	Wed, 03 Aug 2011 14:39:30 -0700
 app/controllers/announcement_acknowledgement_controller.rb	Wed, 03 Aug 2011 14:41:37 -0700
 app/controllers/announcements_controller.rb	Wed, 03 Aug 2011 14:43:11 -0700
@@ -36,7 +36,7 @@ app/controllers/subdomains/management/page_spaces_controller.rb	Wed, 03 Aug 2011
 app/controllers/subdomains/management/pages_controller.rb	Wed, 03 Aug 2011 14:56:49 -0700
 app/controllers/subdomains/management/permissions_controller.rb	Wed, 03 Aug 2011 14:57:10 -0700
 app/controllers/subdomains/management/registration_applications_controller.rb	Wed, 03 Aug 2011 14:57:33 -0700
-app/controllers/subdomains/management/roles_controller.rb	Wed, 03 Aug 2011 14:57:42 -0700
+app/controllers/subdomains/management/roles_controller.rb	Tue, 16 Aug 2011 15:08:44 -0700
 app/controllers/subdomains/management/site_forms_controller.rb	Wed, 03 Aug 2011 14:58:05 -0700
 app/controllers/subdomains/management/users_controller.rb	Wed, 03 Aug 2011 14:58:24 -0700
 app/controllers/subdomains/management_controller.rb	Wed, 03 Aug 2011 14:55:23 -0700
@@ -77,14 +77,14 @@ app/models/message.rb	Wed, 10 Aug 2011 15:46:29 -0700
 app/models/message_copy.rb	Mon, 08 Aug 2011 18:57:32 -0700
 app/models/page.rb	Wed, 10 Aug 2011 15:14:58 -0700
 app/models/page_space.rb	Mon, 08 Aug 2011 19:03:09 -0700
-app/models/permission.rb	Wed, 10 Aug 2011 13:16:30 -0700
+app/models/permission.rb	Tue, 16 Aug 2011 16:15:33 -0700
 app/models/predefined_answer.rb	Wed, 03 Aug 2011 14:27:38 -0700
 app/models/profile.rb	Wed, 10 Aug 2011 13:20:59 -0700
 app/models/question.rb	Wed, 10 Aug 2011 13:48:01 -0700
 app/models/radio_button_question.rb	Wed, 10 Aug 2011 14:30:10 -0700
 app/models/registration_application.rb	Wed, 10 Aug 2011 14:47:23 -0700
 app/models/registration_application_observer.rb	Wed, 10 Aug 2011 14:51:48 -0700
-app/models/role.rb	Wed, 10 Aug 2011 15:10:18 -0700
+app/models/role.rb	Tue, 16 Aug 2011 16:14:16 -0700
 app/models/roles_user.rb	Wed, 03 Aug 2011 14:31:34 -0700
 app/models/site_announcement.rb	Wed, 10 Aug 2011 15:12:09 -0700
 app/models/site_form.rb	Wed, 10 Aug 2011 15:15:41 -0700
@@ -97,7 +97,7 @@ app/models/text_box_question.rb	Wed, 10 Aug 2011 14:30:07 -0700
 app/models/text_question.rb	Wed, 10 Aug 2011 14:30:03 -0700
 app/models/user.rb	Fri, 12 Aug 2011 12:13:15 -0700
 app/models/user_observer.rb	Thu, 11 Aug 2011 22:28:14 -0700
-app/models/user_profile.rb	Fri, 12 Aug 2011 12:22:21 -0700
+app/models/user_profile.rb	Tue, 16 Aug 2011 15:58:42 -0700
 app/models/wow.rb	Thu, 11 Aug 2011 22:28:48 -0700
 app/models/wow_character.rb	Fri, 12 Aug 2011 10:51:03 -0700
 app/uploaders/avatar_uploader.rb	Wed, 03 Aug 2011 14:59:43 -0700

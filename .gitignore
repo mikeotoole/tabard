@@ -10,3 +10,5 @@ Icon?
 *.orig
 
 .sass-cache
+
+rails_best_practices_output.html

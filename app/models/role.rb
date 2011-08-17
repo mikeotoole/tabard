@@ -6,11 +6,18 @@
   This class represents a role.
 =end
 class Role < ActiveRecord::Base
+  
+=begin
+  This class is an exception class that is raised if permissions are added or removed from a admin or applicant role.
+=end
+  class SystemUserPermissionAssociactionLocked < StandardError; end
   #attr_accessible :name, :description, :permissions, :roles_users, :users, :permissions_attributes, :community
   
   has_many :roles_users
   has_many :users, :through => :roles_users
-  has_many :permissions, :dependent => :destroy
+  has_many :permissions, :dependent => :destroy, 
+    :before_add    => :ensure_system_role_association_rules,
+    :before_remove => :ensure_system_role_association_rules
   
   belongs_to :community
   
@@ -36,6 +43,21 @@ class Role < ActiveRecord::Base
   end
   
 =begin
+  _before_add_permissions_
+  
+  _before_remove_permissions_
+  
+  This method ensures that system roles permissions can't be added or removed.
+  [Raises] 
+    * +SystemUserPermissionAssociactionLocked+ -> if this role is an admin 
+=end
+  def ensure_system_role_association_rules(permission)
+    return true unless self.is_admin_role? and not self.new_record?
+    self.errors[:permissions] << "You can't change the permissions for admin role."
+    raise SystemUserPermissionAssociactionLocked
+  end
+  
+=begin
   This method determines if this role is a part of the given community.
   [Args]
     * +community+ -> The community to use.
@@ -50,7 +72,7 @@ class Role < ActiveRecord::Base
   [Returns] True is this role is the admin role, otherwise false.
 =end
   def is_admin_role?
-    self.community.admin_role == self
+    self.community.admin_role == self if self.community
   end
   
 =begin
@@ -58,7 +80,7 @@ class Role < ActiveRecord::Base
   [Returns] True is this role is the applicant role, otherwise false.
 =end
   def is_applicant_role?
-    self.community.applicant_role == self
+    self.community.applicant_role == self if self.community
   end
   
 =begin
@@ -66,7 +88,7 @@ class Role < ActiveRecord::Base
   [Returns] True is this role is the member role, otherwise false.
 =end
   def is_member_role?
-    self.community.member_role == self
+    self.community.member_role == self if self.community
   end
   
 =begin

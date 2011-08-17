@@ -63,10 +63,11 @@ class AccountController < ApplicationController
     @profile = current_user.user_profile
     @user = current_user
     if @profile.update_attributes(params[:user_profile]) and @user.update_attributes(params[:user])
-      add_new_flash_message("Woot")
+      add_new_flash_message("Account successfully updated")
     end
     grab_all_errors_from_model(@profile)
-    redirect_to account_settings_path
+    @settings_tabs_active = true
+    render :show
   end
 
   def show

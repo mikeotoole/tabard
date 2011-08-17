@@ -20,7 +20,10 @@
           %td= community.all_users.size
           %td
             - if community.accepting
-              = link_to 'Apply Now', new_registration_application_url(:subdomain => community.subdomain), :class => 'button'
+              - if !logged_in? or !current_user.is_a_member_of(community)
+                = link_to 'Apply Now', new_registration_application_url(:subdomain => community.subdomain), :class => 'button'
+              - else
+                Currently a Member
             - else
               Private
   - else

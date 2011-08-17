@@ -68,8 +68,11 @@ class Subdomains::Management::RolesController < SubdomainsController
     if !current_user.can_update(@role) 
       render_insufficient_privileges
     else
-      if @role.update_attributes(params[:role])
-        add_new_flash_message('Role was successfully updated')
+      begin
+        if @role.update_attributes(params[:role])
+          add_new_flash_message('Role was successfully updated')
+        end
+        rescue Role::SystemUserPermissionAssociactionLocked
       end
       grab_all_errors_from_model(@role)
       redirect_to :controller => 'management/roles', :action => 'edit', :id => params[:id]

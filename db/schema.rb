@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110730224906) do
+ActiveRecord::Schema.define(:version => 20110817201333) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.datetime "updated_at"
     t.boolean  "acknowledged"
   end
+
+  add_index "acknowledgment_of_announcements", ["announcement_id"], :name => "index_acknowledgment_of_announcements_on_announcement_id"
+  add_index "acknowledgment_of_announcements", ["profile_id"], :name => "index_acknowledgment_of_announcements_on_profile_id"
 
   create_table "announcements", :force => true do |t|
     t.string   "name"
@@ -32,6 +35,10 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.datetime "updated_at"
   end
 
+  add_index "announcements", ["community_id"], :name => "index_announcements_on_community_id"
+  add_index "announcements", ["game_id"], :name => "index_announcements_on_game_id"
+  add_index "announcements", ["user_profile_id"], :name => "index_announcements_on_user_profile_id"
+
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
     t.text     "content"
@@ -41,6 +48,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "submission_id"
   end
 
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+  add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
+
   create_table "character_proxies", :force => true do |t|
     t.integer  "game_profile_id"
     t.integer  "character_id"
@@ -48,6 +58,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "character_proxies", ["character_id", "character_type"], :name => "index_character_proxies_on_character_id_and_character_type"
+  add_index "character_proxies", ["game_profile_id"], :name => "index_character_proxies_on_game_profile_id"
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -62,6 +75,11 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "has_been_locked"
     t.integer  "community_id"
   end
+
+  add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
+  add_index "comments", ["community_id"], :name => "index_comments_on_community_id"
+  add_index "comments", ["user_profile_id"], :name => "index_comments_on_user_profile_id"
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -78,6 +96,11 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "email_notice_on_applicant"
   end
 
+  add_index "communities", ["admin_role_id"], :name => "index_communities_on_admin_role_id"
+  add_index "communities", ["applicant_role_id"], :name => "index_communities_on_applicant_role_id"
+  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
+  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
     t.boolean  "system"
@@ -91,6 +114,10 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "personal_space"
     t.integer  "community_id"
   end
+
+  add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
+  add_index "discussion_spaces", ["game_id"], :name => "index_discussion_spaces_on_game_id"
+  add_index "discussion_spaces", ["user_profile_id"], :name => "index_discussion_spaces_on_user_profile_id"
 
   create_table "discussions", :force => true do |t|
     t.string   "name"
@@ -106,6 +133,11 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "has_been_locked"
   end
 
+  add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
+  add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
+  add_index "discussions", ["game_id"], :name => "index_discussions_on_game_id"
+  add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
+
   create_table "folders", :force => true do |t|
     t.integer  "user_profile_id"
     t.integer  "parent_id"
@@ -113,6 +145,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "folders", ["parent_id"], :name => "index_folders_on_parent_id"
+  add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -124,6 +159,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "character_discussion_space_id"
   end
 
+  add_index "games", ["announcement_space_id"], :name => "index_games_on_announcement_space_id"
+  add_index "games", ["character_discussion_space_id"], :name => "index_games_on_character_discussion_space_id"
+
   create_table "message_copies", :force => true do |t|
     t.integer  "recipient_id"
     t.integer  "message_id"
@@ -133,6 +171,10 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "deleted"
   end
 
+  add_index "message_copies", ["folder_id"], :name => "index_message_copies_on_folder_id"
+  add_index "message_copies", ["message_id"], :name => "index_message_copies_on_message_id"
+  add_index "message_copies", ["recipient_id"], :name => "index_message_copies_on_recipient_id"
+
   create_table "messages", :force => true do |t|
     t.integer  "author_id"
     t.string   "subject"
@@ -140,6 +182,8 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
 
   create_table "page_spaces", :force => true do |t|
     t.datetime "created_at"
@@ -149,6 +193,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "community_id"
   end
 
+  add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
+  add_index "page_spaces", ["game_id"], :name => "index_page_spaces_on_game_id"
+
   create_table "pages", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -157,6 +204,8 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "page_space_id"
     t.boolean  "featured_page"
   end
+
+  add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
 
   create_table "permissions", :force => true do |t|
     t.string   "name"
@@ -171,6 +220,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.boolean  "update_p"
     t.boolean  "delete_p"
   end
+
+  add_index "permissions", ["permissionable_id", "permissionable_type"], :name => "index_permissions_on_permissionable_id_and_permissionable_type"
+  add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
 
   create_table "profiles", :force => true do |t|
     t.string   "name"
@@ -187,6 +239,13 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.string   "avatar"
   end
 
+  add_index "profiles", ["default_character_proxy_id"], :name => "index_profiles_on_default_character_proxy_id"
+  add_index "profiles", ["discussion_id"], :name => "index_profiles_on_discussion_id"
+  add_index "profiles", ["game_id"], :name => "index_profiles_on_game_id"
+  add_index "profiles", ["personal_discussion_space_id"], :name => "index_profiles_on_personal_discussion_space_id"
+  add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
+  add_index "profiles", ["user_profile_id"], :name => "index_profiles_on_user_profile_id"
+
   create_table "questions", :force => true do |t|
     t.text     "content"
     t.datetime "created_at"
@@ -194,6 +253,8 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "site_form_id"
     t.string   "type"
   end
+
+  add_index "questions", ["site_form_id"], :name => "index_questions_on_site_form_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -203,12 +264,17 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.string   "description"
   end
 
+  add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
+
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer  "role_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
+  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -230,6 +296,8 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "community_id"
   end
 
+  add_index "site_forms", ["community_id"], :name => "index_site_forms_on_community_id"
+
   create_table "submissions", :force => true do |t|
     t.integer  "user_profile_id"
     t.datetime "created_at"
@@ -239,12 +307,18 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "status"
   end
 
+  add_index "submissions", ["site_form_id"], :name => "index_submissions_on_site_form_id"
+  add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
+
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
+  add_index "supported_games", ["game_id"], :name => "index_supported_games_on_game_id"
 
   create_table "swtor_characters", :force => true do |t|
     t.string   "name"
@@ -255,6 +329,9 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "discussion_id"
     t.string   "avatar"
   end
+
+  add_index "swtor_characters", ["discussion_id"], :name => "index_swtor_characters_on_discussion_id"
+  add_index "swtor_characters", ["game_id"], :name => "index_swtor_characters_on_game_id"
 
   create_table "system_resources", :force => true do |t|
     t.string   "name"
@@ -282,5 +359,8 @@ ActiveRecord::Schema.define(:version => 20110730224906) do
     t.integer  "discussion_id"
     t.string   "avatar"
   end
+
+  add_index "wow_characters", ["discussion_id"], :name => "index_wow_characters_on_discussion_id"
+  add_index "wow_characters", ["game_id"], :name => "index_wow_characters_on_game_id"
 
 end
