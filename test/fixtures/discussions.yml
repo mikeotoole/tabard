@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 
+
 # == Schema Information
 #
 # Table name: discussions
@@ -16,6 +17,6 @@
 #  type                :string(255)
 #  game_id             :integer
 #  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean
+#  has_been_locked     :boolean         default(FALSE)
 #
 

@@ -10,14 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817201333) do
+ActiveRecord::Schema.define(:version => 20110820181631) do
 
   create_table "acknowledgment_of_announcements", :force => true do |t|
     t.integer  "announcement_id"
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "acknowledged"
+    t.boolean  "acknowledged",    :default => false
   end
 
   add_index "acknowledgment_of_announcements", ["announcement_id"], :name => "index_acknowledgment_of_announcements_on_announcement_id"
@@ -70,9 +70,9 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.string   "commentable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_been_deleted"
-    t.boolean  "has_been_edited"
-    t.boolean  "has_been_locked"
+    t.boolean  "has_been_deleted",   :default => false
+    t.boolean  "has_been_edited",    :default => false
+    t.boolean  "has_been_locked",    :default => false
     t.integer  "community_id"
   end
 
@@ -86,14 +86,14 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.string   "subdomain"
     t.string   "slogan"
     t.string   "label"
-    t.boolean  "accepting"
+    t.boolean  "accepting",                     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "admin_role_id"
     t.integer  "applicant_role_id"
     t.integer  "member_role_id"
     t.integer  "community_application_form_id"
-    t.boolean  "email_notice_on_applicant"
+    t.boolean  "email_notice_on_applicant",     :default => true
   end
 
   add_index "communities", ["admin_role_id"], :name => "index_communities_on_admin_role_id"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.string   "type"
     t.integer  "game_id"
     t.boolean  "comments_enabled",    :default => true
-    t.boolean  "has_been_locked"
+    t.boolean  "has_been_locked",     :default => false
   end
 
   add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
-    t.boolean  "is_active"
+    t.boolean  "is_active",                     :default => true
     t.integer  "announcement_space_id"
     t.integer  "character_discussion_space_id"
   end
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.integer  "folder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",      :default => false
   end
 
   add_index "message_copies", ["folder_id"], :name => "index_message_copies_on_folder_id"
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.string   "title"
     t.text     "body"
     t.integer  "page_space_id"
-    t.boolean  "featured_page"
+    t.boolean  "featured_page", :default => false
   end
 
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
@@ -215,10 +215,10 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.integer  "permissionable_id"
     t.string   "permissionable_type"
     t.string   "access"
-    t.boolean  "show_p"
-    t.boolean  "create_p"
-    t.boolean  "update_p"
-    t.boolean  "delete_p"
+    t.boolean  "show_p",              :default => true
+    t.boolean  "create_p",            :default => false
+    t.boolean  "update_p",            :default => false
+    t.boolean  "delete_p",            :default => false
   end
 
   add_index "permissions", ["permissionable_id", "permissionable_type"], :name => "index_permissions_on_permissionable_id_and_permissionable_type"
@@ -292,7 +292,7 @@ ActiveRecord::Schema.define(:version => 20110817201333) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "thankyou"
-    t.boolean  "published"
+    t.boolean  "published",    :default => false
     t.integer  "community_id"
   end
 

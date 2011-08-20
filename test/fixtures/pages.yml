@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 
+
 # == Schema Information
 #
 # Table name: pages
@@ -11,6 +12,6 @@
 #  title         :string(255)
 #  body          :text
 #  page_space_id :integer
-#  featured_page :boolean
+#  featured_page :boolean         default(FALSE)
 #
 

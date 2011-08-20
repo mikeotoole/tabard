@@ -17,6 +17,7 @@ class Swtor < Game
   end
 end
 
+
 # == Schema Information
 #
 # Table name: games
@@ -26,7 +27,7 @@ end
 #  created_at                    :datetime
 #  updated_at                    :datetime
 #  type                          :string(255)
-#  is_active                     :boolean
+#  is_active                     :boolean         default(TRUE)
 #  announcement_space_id         :integer
 #  character_discussion_space_id :integer
 #

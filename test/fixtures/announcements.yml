@@ -1,5 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
+new_raids:
+  name: We have new rails now!
+  body: Tuesdays at 8 PST we will be raiding!
+  type: Community
 
 # == Schema Information
 #

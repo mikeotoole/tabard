@@ -69,6 +69,7 @@ class Page < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: pages
@@ -79,6 +80,6 @@ end
 #  title         :string(255)
 #  body          :text
 #  page_space_id :integer
-#  featured_page :boolean
+#  featured_page :boolean         default(FALSE)
 #
 

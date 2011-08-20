@@ -176,6 +176,7 @@ class Permission < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: permissions
@@ -188,9 +189,9 @@ end
 #  permissionable_id   :integer
 #  permissionable_type :string(255)
 #  access              :string(255)
-#  show_p              :boolean
-#  create_p            :boolean
-#  update_p            :boolean
-#  delete_p            :boolean
+#  show_p              :boolean         default(TRUE)
+#  create_p            :boolean         default(FALSE)
+#  update_p            :boolean         default(FALSE)
+#  delete_p            :boolean         default(FALSE)
 #
 

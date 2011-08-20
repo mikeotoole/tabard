@@ -66,6 +66,7 @@ class SiteForm < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: site_forms
@@ -76,7 +77,7 @@ end
 #  updated_at   :datetime
 #  name         :string(255)
 #  thankyou     :string(255)
-#  published    :boolean
+#  published    :boolean         default(FALSE)
 #  community_id :integer
 #
 

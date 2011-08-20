@@ -68,6 +68,7 @@ class AcknowledgmentOfAnnouncement < ActiveRecord::Base
   
 end
 
+
 # == Schema Information
 #
 # Table name: acknowledgment_of_announcements
@@ -77,6 +78,6 @@ end
 #  profile_id      :integer
 #  created_at      :datetime
 #  updated_at      :datetime
-#  acknowledged    :boolean
+#  acknowledged    :boolean         default(FALSE)
 #
 

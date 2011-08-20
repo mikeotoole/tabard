@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 
+
 # == Schema Information
 #
 # Table name: games
@@ -10,7 +11,7 @@
 #  created_at                    :datetime
 #  updated_at                    :datetime
 #  type                          :string(255)
-#  is_active                     :boolean
+#  is_active                     :boolean         default(TRUE)
 #  announcement_space_id         :integer
 #  character_discussion_space_id :integer
 #

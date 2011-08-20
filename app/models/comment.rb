@@ -223,6 +223,7 @@ class Comment < ActiveRecord::Base
   
 end
 
+
 # == Schema Information
 #
 # Table name: comments
@@ -235,9 +236,9 @@ end
 #  commentable_type   :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  has_been_deleted   :boolean
-#  has_been_edited    :boolean
-#  has_been_locked    :boolean
+#  has_been_deleted   :boolean         default(FALSE)
+#  has_been_edited    :boolean         default(FALSE)
+#  has_been_locked    :boolean         default(FALSE)
 #  community_id       :integer
 #
 

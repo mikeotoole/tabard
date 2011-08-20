@@ -51,6 +51,7 @@ class MessageCopy < ActiveRecord::Base
     self.recipient == user
   end
 end
+
 # == Schema Information
 #
 # Table name: message_copies
@@ -61,6 +62,6 @@ end
 #  folder_id    :integer
 #  created_at   :datetime
 #  updated_at   :datetime
-#  deleted      :boolean
+#  deleted      :boolean         default(FALSE)
 #
 

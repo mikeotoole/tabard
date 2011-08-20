@@ -151,6 +151,7 @@ class Discussion < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: discussions
@@ -166,6 +167,6 @@ end
 #  type                :string(255)
 #  game_id             :integer
 #  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean
+#  has_been_locked     :boolean         default(FALSE)
 #
 
