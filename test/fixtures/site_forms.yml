@@ -1,2 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: site_forms
+#
+#  id           :integer         not null, primary key
+#  message      :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  name         :string(255)
+#  thankyou     :string(255)
+#  published    :boolean
+#  community_id :integer
+#
+

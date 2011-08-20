@@ -1,2 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: roles
+#
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  community_id :integer
+#  description  :string(255)
+#
+

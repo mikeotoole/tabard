@@ -1,2 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: folders
+#
+#  id              :integer         not null, primary key
+#  user_profile_id :integer
+#  parent_id       :integer
+#  name            :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+

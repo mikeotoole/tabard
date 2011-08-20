@@ -1,2 +1,16 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: message_copies
+#
+#  id           :integer         not null, primary key
+#  recipient_id :integer
+#  message_id   :integer
+#  folder_id    :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  deleted      :boolean
+#
+

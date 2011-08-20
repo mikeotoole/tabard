@@ -6,10 +6,15 @@
   This class represents an acknowledgement of an announcement. It connects profiles with announcements.
 =end
 class AcknowledgmentOfAnnouncement < ActiveRecord::Base  
-  #attr_accessible :acknowledged
+  #Accessors
   
+  #Associations
   belongs_to :announcement
   belongs_to :profile
+  
+  #Validators
+  validates :announcement_id, :presence => true
+  validates :profile_id, :presence => true
   
 =begin
   This method fetches the correct display name of the announcement author.

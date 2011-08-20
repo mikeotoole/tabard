@@ -1,2 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: messages
+#
+#  id         :integer         not null, primary key
+#  author_id  :integer
+#  subject    :string(255)
+#  body       :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+

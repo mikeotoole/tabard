@@ -1,2 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: discussion_spaces
+#
+#  id                             :integer         not null, primary key
+#  name                           :string(255)
+#  system                         :boolean
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  user_profile_id                :integer
+#  game_id                        :integer
+#  announcement_space             :boolean
+#  registration_application_space :boolean
+#  user_profile_space             :boolean
+#  personal_space                 :boolean
+#  community_id                   :integer
+#
+

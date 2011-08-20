@@ -13,3 +13,22 @@ TestUser1:
   default_character_proxy_id:
   is_system_profile:
   avatar:
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                           :integer         not null, primary key
+#  name                         :string(255)
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  type                         :string(255)
+#  user_id                      :integer
+#  game_id                      :integer
+#  user_profile_id              :integer
+#  discussion_id                :integer
+#  personal_discussion_space_id :integer
+#  default_character_proxy_id   :integer
+#  is_system_profile            :boolean
+#  avatar                       :string(255)
+#
+

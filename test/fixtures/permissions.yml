@@ -1,2 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id                  :integer         not null, primary key
+#  name                :string(255)
+#  role_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  permissionable_id   :integer
+#  permissionable_type :string(255)
+#  access              :string(255)
+#  show_p              :boolean
+#  create_p            :boolean
+#  update_p            :boolean
+#  delete_p            :boolean
+#
+
