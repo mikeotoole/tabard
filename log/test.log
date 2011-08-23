@@ -1939,3 +1939,120 @@ Label NotInclusionGuild is not currently a supported label
   [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
 Community!
  Label NotInclusionGuild is not currently a supported label
+  [1m[36mAREL (0.3ms)[0m  [1mINSERT INTO "announcements" ("name", "body", "user_profile_id", "game_id", "community_id", "type", "comments_enabled", "created_at", "updated_at") VALUES ('Test Announcement', 'This is a Test Announcement', NULL, NULL, NULL, NULL, 't', '2011-07-30 22:18:09.938563', '2011-07-30 22:18:09.938563')[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "communities" ("name", "subdomain", "slogan", "label", "accepting", "created_at", "updated_at", "admin_role_id", "applicant_role_id", "member_role_id", "community_application_form_id", "email_notice_on_applicant") VALUES ('Test Community', 'testcommunity', 'We are a Test Community', 'Guild', 't', '2011-07-30 22:18:10.002393', '2011-07-30 22:18:10.002393', NULL, NULL, NULL, NULL, 'f')
+  [1m[36mSystemResource Load (0.0ms)[0m  [1mSELECT "system_resources".* FROM "system_resources"[0m
+  [1m[35mAREL (0.1ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Admin', '2011-07-30 22:18:10.014829', '2011-07-30 22:18:10.014829', 1, '')
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.0ms)[0m  UPDATE "communities" SET "name" = 'Test Community', "slogan" = 'We are a Test Community', "label" = 'Guild', "accepting" = 't', "email_notice_on_applicant" = 'f', "subdomain" = 'testcommunity', "created_at" = '2011-07-30 22:18:10.002393', "updated_at" = '2011-07-30 22:18:10.002393', "admin_role_id" = 1 WHERE "communities"."id" = 1
+  [1m[36mAREL (0.0ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Applicant', '2011-07-30 22:18:10.021511', '2011-07-30 22:18:10.021511', 1, '')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1
+Community!
+ 
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE "communities" SET "applicant_role_id" = 2, "updated_at" = '2011-07-30 22:18:10.024108' WHERE "communities"."id" = 1[0m
+  [1m[35mSystemResource Load (0.0ms)[0m  SELECT "system_resources".* FROM "system_resources"
+  [1m[36mAREL (0.0ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Member', '2011-07-30 22:18:10.025018', '2011-07-30 22:18:10.025018', 1, '')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1
+Community!
+ 
+  [1m[36mAREL (0.1ms)[0m  [1mUPDATE "communities" SET "member_role_id" = 3, "updated_at" = '2011-07-30 22:18:10.027583' WHERE "communities"."id" = 1[0m
+  [1m[35mAREL (0.1ms)[0m  INSERT INTO "site_forms" ("message", "created_at", "updated_at", "name", "thankyou", "published", "community_id") VALUES ('Please fill out the form to apply for Guild.', '2011-07-30 22:18:10.034820', '2011-07-30 22:18:10.034820', 'Registration Application Form', 'Thank you for submitting your application.', 't', 1)
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.0ms)[0m  UPDATE "communities" SET "community_application_form_id" = 1, "updated_at" = '2011-07-30 22:18:10.070603' WHERE "communities"."id" = 1
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1
+Community!
+ Label can't be blank
+Label  is not currently a supported label
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE ("communities"."name" IS NULL) LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ Slogan can't be blank
+Label NotInclusionGuild is not currently a supported label
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ Label NotInclusionGuild is not currently a supported label
+  Processing by AccountController#create as HTML
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "users" WHERE ("users"."email" IS NULL) LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "profiles" WHERE "profiles"."type" = 'UserProfile' AND ("profiles"."user_id" IS NULL) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "profiles" WHERE "profiles"."type" = 'UserProfile' AND "profiles"."is_system_profile" = 't' LIMIT 1[0m
+Rendered account/_form_account.html.haml (52.9ms)
+Rendered layouts/_loginbox.html.haml (2.5ms)
+  [1m[35mSQL (0.1ms)[0m  SELECT COUNT(*) FROM "games" WHERE "games"."is_active" = 't'
+Rendered layouts/_flash_messages.html.haml (2.9ms)
+Rendered account/new.html.haml within layouts/application (72.3ms)
+Completed 200 OK in 231ms (Views: 75.0ms | ActiveRecord: 1.1ms)
+  Processing by AccountController#destroy as HTML
+Redirected to http://test.host/
+Completed 302 Found in 1ms
+  Processing by AccountController#new as HTML
+Rendered account/_form_account.html.haml (41.4ms)
+Rendered layouts/_loginbox.html.haml (0.7ms)
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT COUNT(*) FROM "games" WHERE "games"."is_active" = 't'[0m
+Rendered layouts/_flash_messages.html.haml (0.3ms)
+Completed 200 OK in 47ms (Views: 46.3ms | ActiveRecord: 0.1ms)
+  Processing by AccountController#show as HTML
+Redirected to http://test.host/signup
+Completed 302 Found in 1ms
+  Processing by AccountController#update as HTML
+Redirected to http://test.host/
+Completed 302 Found in 1ms
+  Processing by SentController#index as HTML
+Redirected to http://test.host/
+Completed 302 Found in 1ms
+  Processing by SentController#new as HTML
+Redirected to http://test.host/
+Completed 302 Found in 1ms
+  [1m[36mAREL (0.4ms)[0m  [1mINSERT INTO "announcements" ("name", "body", "user_profile_id", "game_id", "community_id", "type", "comments_enabled", "created_at", "updated_at") VALUES ('Test Announcement', 'This is a Test Announcement', NULL, NULL, NULL, NULL, 't', '2011-07-30 22:18:42.915432', '2011-07-30 22:18:42.915432')[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.2ms)[0m  INSERT INTO "communities" ("name", "subdomain", "slogan", "label", "accepting", "created_at", "updated_at", "admin_role_id", "applicant_role_id", "member_role_id", "community_application_form_id", "email_notice_on_applicant") VALUES ('Test Community', 'testcommunity', 'We are a Test Community', 'Guild', 't', '2011-07-30 22:18:42.984182', '2011-07-30 22:18:42.984182', NULL, NULL, NULL, NULL, 'f')
+  [1m[36mSystemResource Load (0.0ms)[0m  [1mSELECT "system_resources".* FROM "system_resources"[0m
+  [1m[35mAREL (0.1ms)[0m  INSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Admin', '2011-07-30 22:18:42.995948', '2011-07-30 22:18:42.995948', 1, '')
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.0ms)[0m  UPDATE "communities" SET "name" = 'Test Community', "slogan" = 'We are a Test Community', "label" = 'Guild', "accepting" = 't', "email_notice_on_applicant" = 'f', "subdomain" = 'testcommunity', "created_at" = '2011-07-30 22:18:42.984182', "updated_at" = '2011-07-30 22:18:42.984182', "admin_role_id" = 1 WHERE "communities"."id" = 1
+  [1m[36mAREL (0.0ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Applicant', '2011-07-30 22:18:43.002400', '2011-07-30 22:18:43.002400', 1, '')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1
+Community!
+ 
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE "communities" SET "applicant_role_id" = 2, "updated_at" = '2011-07-30 22:18:43.005045' WHERE "communities"."id" = 1[0m
+  [1m[35mSystemResource Load (0.0ms)[0m  SELECT "system_resources".* FROM "system_resources"
+  [1m[36mAREL (0.1ms)[0m  [1mINSERT INTO "roles" ("name", "created_at", "updated_at", "community_id", "description") VALUES ('Member', '2011-07-30 22:18:43.006056', '2011-07-30 22:18:43.006056', 1, '')[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1
+Community!
+ 
+  [1m[36mAREL (0.0ms)[0m  [1mUPDATE "communities" SET "member_role_id" = 3, "updated_at" = '2011-07-30 22:18:43.008689' WHERE "communities"."id" = 1[0m
+  [1m[35mAREL (0.1ms)[0m  INSERT INTO "site_forms" ("message", "created_at", "updated_at", "name", "thankyou", "published", "community_id") VALUES ('Please fill out the form to apply for Guild.', '2011-07-30 22:18:43.015969', '2011-07-30 22:18:43.015969', 'Registration Application Form', 'Thank you for submitting your application.', 't', 1)
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) AND ("communities".id <> 1) LIMIT 1[0m
+Community!
+ 
+  [1m[35mAREL (0.0ms)[0m  UPDATE "communities" SET "community_application_form_id" = 1, "updated_at" = '2011-07-30 22:18:43.051669' WHERE "communities"."id" = 1
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  SELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1
+Community!
+ Label can't be blank
+Label  is not currently a supported label
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT 1 FROM "communities" WHERE ("communities"."name" IS NULL) LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ Slogan can't be blank
+Label NotInclusionGuild is not currently a supported label
+  [1m[35mSQL (0.1ms)[0m  SELECT 1 FROM "communities" WHERE (LOWER("communities"."name") = LOWER('Test Community')) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mSELECT 1 FROM "communities" WHERE "communities"."subdomain" = 'testcommunity' LIMIT 1[0m
+Community!
+ Label NotInclusionGuild is not currently a supported label
