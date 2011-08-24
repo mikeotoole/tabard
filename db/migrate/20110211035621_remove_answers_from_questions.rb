@@ -4,6 +4,6 @@ class RemoveAnswersFromQuestions < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :questions, :answers, :string    
+    add_column :questions, :answers, :string
   end
 end

@@ -407,6 +407,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -880,7 +882,7 @@ href="Role/SystemUserPermissionAssociactionLocked.html">SystemUserPermissionAsso
 <pre>
 <span class="ruby-comment"># File app/models/role.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ensure_system_role_association_rules</span>(<span class="ruby-identifier">permission</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_record?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_admin_role?</span> <span class="ruby-keyword">or</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_applicant_role?</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_record?</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:permissions</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;You can't change the permissions for admin role.&quot;</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemUserPermissionAssociactionLocked</span>
 <span class="ruby-keyword">end</span></pre>
@@ -920,7 +922,7 @@ href="Role/SystemUserPermissionAssociactionLocked.html">SystemUserPermissionAsso
 <span class="ruby-comment"># File app/models/role.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ensure_system_role_rules</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_system_role?</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_record?</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name_changed?</span> 
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name_changed?</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;You can't change the name for a system role.&quot;</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name_was</span>
   <span class="ruby-keyword">end</span>

@@ -350,6 +350,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -388,7 +390,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@search_term</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:query</span>]
   <span class="ruby-identifier">user_query</span> = <span class="ruby-node">&quot;%#{@search_term}%&quot;</span>
-  
+
   <span class="ruby-ivar">@page_space_results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">page_spaces</span>.<span class="ruby-identifier">where</span>{(<span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>)}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span> <span class="ruby-comment">#TODO current_user.can_show(result)</span>
@@ -399,7 +401,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       })
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-ivar">@page_results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">pages</span>.<span class="ruby-identifier">where</span>{(<span class="ruby-identifier">title</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>) <span class="ruby-operator">|</span> (<span class="ruby-identifier">body</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>)}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span> <span class="ruby-comment">#TODO current_user.can_show(result)</span>
@@ -410,7 +412,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       })
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-ivar">@discussion_space_results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-comment"># - filter discussion spaces (like was done for the menu) -Fixed JW</span>
   <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">discussion_spaces</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">where</span>{(<span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>)}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
@@ -422,7 +424,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       })
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-ivar">@discussion_results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">discussions</span>.<span class="ruby-identifier">where</span>{(<span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>) <span class="ruby-operator">|</span> (<span class="ruby-identifier">body</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>)}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span> <span class="ruby-comment">#TODO current_user.can_show(result)</span>
@@ -433,7 +435,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       })
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-ivar">@comment_results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">where</span>{(<span class="ruby-identifier">body</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">user_query</span>)}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span> <span class="ruby-comment">#TODO current_user.can_show(result)</span>
@@ -444,14 +446,14 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       })
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-ivar">@results</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@results</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@page_space_results</span>
   <span class="ruby-ivar">@results</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@page_results</span>
   <span class="ruby-ivar">@results</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@discussion_space_results</span>
   <span class="ruby-ivar">@results</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@discussion_results</span>
   <span class="ruby-ivar">@results</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@comment_results</span>
-  
+
   <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@results</span>, <span class="ruby-ivar">@page_space_results</span>, <span class="ruby-ivar">@page_results</span>, <span class="ruby-ivar">@discussion_space_results</span>, <span class="ruby-ivar">@discussion_results</span>, <span class="ruby-ivar">@comment_results</span>)
 <span class="ruby-keyword">end</span></pre>
             </div><!-- index-source -->

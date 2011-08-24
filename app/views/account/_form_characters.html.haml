@@ -2,9 +2,9 @@
   You have
   %strong= @characterCount
   character profiles.
-  
+
 - if @characterCount > 0
-  
+
   #characters
     - if @wowCharacters
       - @wowCharacters.each do |character|
@@ -19,7 +19,7 @@
   %p
     %button{ :type => 'submit' }
       Save all characters
-  
+
 - if @games
   #newcharacter
     %dl.selectbox

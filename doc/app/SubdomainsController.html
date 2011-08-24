@@ -355,6 +355,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -424,7 +426,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains_controller.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">nav_discussions</span>
-  <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">discussion_spaces</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">logged_in?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-identifier">discussion_space</span>)) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">list_in_navigation</span>}   
+  <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">discussion_spaces</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">logged_in?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-identifier">discussion_space</span>)) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">list_in_navigation</span>}
 <span class="ruby-keyword">end</span></pre>
             </div><!-- nav_discussions-source -->
             

@@ -365,6 +365,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -592,7 +594,7 @@ uploading is within a specified size.</p>
 <span class="ruby-comment"># File lib/file_size_validator.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_each</span>(<span class="ruby-identifier">record</span>, <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;A CarrierWave::Uploader::Base object was expected&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">CarrierWave</span><span class="ruby-operator">::</span><span class="ruby-constant">Uploader</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
-  
+
   <span class="ruby-identifier">value</span> = (<span class="ruby-identifier">options</span>[<span class="ruby-value">:tokenizer</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_TOKENIZER</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>)
 
   <span class="ruby-constant">CHECKS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">validity_check</span><span class="ruby-operator">|</span>

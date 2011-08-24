@@ -4,13 +4,13 @@
 
 #page
   %h1= @discussion_space.name
-  
+
   %p#actions
     - if logged_in? and current_user.can_update(@discussion_space)
       = link_to 'Edit', edit_discussion_space_path(@discussion_space), :class => 'edit', :title => 'Edit'
     - if logged_in? and current_user.can_delete(@discussion_space)
       = link_to 'Delete', @discussion_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  
+
   %table
     - if @discussion_space.discussions.size > 0
       %thead

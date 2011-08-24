@@ -362,6 +362,8 @@ subdomains (communities).</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -400,10 +402,10 @@ subdomains (communities).</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@site_form</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">site_forms</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:site_form</span>])
   <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">registration_application_form</span> = <span class="ruby-keyword">false</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">save</span>    
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">save</span>
     <span class="ruby-identifier">params</span>[<span class="ruby-value">:notifications</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">profile_id</span><span class="ruby-operator">|</span>
       <span class="ruby-constant">Notification</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:user_profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile_id</span>, <span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">id</span>)
-    <span class="ruby-keyword">end</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:notifications</span>]  
+    <span class="ruby-keyword">end</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:notifications</span>]
     <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Form was successfully created.'</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">grab_all_errors_from_model</span>(<span class="ruby-ivar">@site_form</span>)
@@ -441,7 +443,7 @@ subdomains (communities).</p>
 <span class="ruby-comment"># File app/controllers/subdomains/management/site_forms_controller.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@site_form</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">site_forms</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  
+
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">registration_application_form</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">true</span>
     <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">destroy</span>
     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
@@ -521,7 +523,7 @@ subdomains (communities).</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/site_forms_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
-    <span class="ruby-ivar">@site_form</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">site_forms</span>.<span class="ruby-identifier">all</span>  
+    <span class="ruby-ivar">@site_form</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">site_forms</span>.<span class="ruby-identifier">all</span>
     <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@site_form</span>)
 <span class="ruby-keyword">end</span></pre>
             </div><!-- index-source -->
@@ -630,7 +632,7 @@ subdomains (communities).</p>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">params</span>[<span class="ruby-value">:notifications</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">profile_id</span><span class="ruby-operator">|</span>
       <span class="ruby-constant">Notification</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:user_profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile_id</span>, <span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">id</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@site_form</span>.<span class="ruby-identifier">profile_notifications</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">profile_id</span>)
-    <span class="ruby-keyword">end</span>       
+    <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Form was successfully updated.'</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">grab_all_errors_from_model</span>(<span class="ruby-ivar">@site_form</span>)

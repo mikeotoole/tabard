@@ -4,13 +4,13 @@
 
 #page
   %h1= @page_space.name
-  
+
   %p#actions
     - if logged_in? and current_user.can_update(@page_space)
       = link_to 'Edit', edit_page_space_path(@page_space), :class => 'edit', :title => 'Edit'
     - if logged_in? and current_user.can_delete(@page_space)
       = link_to 'Delete', @page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  
+
   %table
     - if @page_space.pages.size > 0
       %thead

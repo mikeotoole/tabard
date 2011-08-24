@@ -5,7 +5,7 @@
 
 #page
   %h1= @discussion.name
-  
+
   - if logged_in?
     %p#actions
       - if @discussion.can_user_lock(current_user)
@@ -27,11 +27,11 @@
       - else
         = link_to @discussion.user_profile.name, @discussion.user_profile
     %time= distance_of_time_in_words(@discussion.created_at, Time.now) + ' ago'
-  
+
   #discussionbody= @discussion.body
-  
+
   %h2 Comments
-  
+
   #comments
     -if @discussion.comments.size > 0
       %ol

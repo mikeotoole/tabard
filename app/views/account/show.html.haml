@@ -6,14 +6,14 @@
   %p#actions
     - if logged_in? and current_user.can_update(@account)
       = link_to 'Edit account details', edit_account_path(@account), :class => 'edit', :title => 'Edit account details'
-  
+
   %h1= "#{current_user.name}"
-  
+
   %dl.tabs
-  
+
     %dt{ :class => 'active activity' } Activity Stream
     %dd{ :class => 'active activity' }
-    
+
     %dt.communities My Communities
     %dd.communities
       %table
@@ -37,12 +37,12 @@
         = link_to 'Find a Community', communities_path, :class => "button"
         or
         = link_to 'Create a New Community', new_community_path
-    
+
     %dt.characters My Characters
     %dd.characters
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|
         = render :partial => 'form_characters', :locals => {:f => f}
-    
+
     %dt{ :class => 'settings' + (params[:tab] == 'settings' or @settings_tabs_active ? ' active' : '') } Account Settings
     %dd{ :class => 'settings' + (params[:tab] == 'settings' or @settings_tabs_active ? ' active' : '') }
       = form_tag(edit_account_path, :method => "put", :multipart => true) do |f|

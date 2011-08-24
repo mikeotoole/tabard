@@ -359,6 +359,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -433,7 +435,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-comment"># File app/controllers/messages_controller.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">forward</span>
   <span class="ruby-ivar">@original</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">received_messages</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  
+
   <span class="ruby-identifier">subject</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(Fwd: )?/</span>, <span class="ruby-string">&quot;Fwd: &quot;</span>)
   <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-string">&quot;&gt; &quot;</span>)
   <span class="ruby-ivar">@message</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">sent_messages</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">-1</span>], <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">subject</span>, <span class="ruby-value">:body</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>)
@@ -471,7 +473,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-comment"># File app/controllers/messages_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reply</span>
   <span class="ruby-ivar">@original</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">received_messages</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  
+
   <span class="ruby-identifier">subject</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(Re: )?/</span>, <span class="ruby-string">&quot;Re: &quot;</span>)
   <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-string">&quot;&gt; &quot;</span>)
   <span class="ruby-ivar">@message</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">sent_messages</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-ivar">@original</span>.<span class="ruby-identifier">author</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>], <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">subject</span>, <span class="ruby-value">:body</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>)
@@ -509,10 +511,10 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-comment"># File app/controllers/messages_controller.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reply_all</span>
   <span class="ruby-ivar">@original</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">received_messages</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  
+
   <span class="ruby-identifier">subject</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(Re: )?/</span>, <span class="ruby-string">&quot;Re: &quot;</span>)
   <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-string">&quot;&gt; &quot;</span>)
-  <span class="ruby-identifier">recipients</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">recipients</span>.<span class="ruby-identifier">map</span>(&amp;<span class="ruby-value">:id</span>) <span class="ruby-operator">-</span> [<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">id</span>] <span class="ruby-operator">+</span> [<span class="ruby-ivar">@original</span>.<span class="ruby-identifier">author</span>.<span class="ruby-identifier">id</span>] 
+  <span class="ruby-identifier">recipients</span> = <span class="ruby-ivar">@original</span>.<span class="ruby-identifier">recipients</span>.<span class="ruby-identifier">map</span>(&amp;<span class="ruby-value">:id</span>) <span class="ruby-operator">-</span> [<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">id</span>] <span class="ruby-operator">+</span> [<span class="ruby-ivar">@original</span>.<span class="ruby-identifier">author</span>.<span class="ruby-identifier">id</span>]
   <span class="ruby-ivar">@message</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">sent_messages</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">recipients</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">to_s</span>}, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">subject</span>, <span class="ruby-value">:body</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>)
   <span class="ruby-identifier">render</span> <span class="ruby-value">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;sent/new&quot;</span>
 <span class="ruby-keyword">end</span></pre>

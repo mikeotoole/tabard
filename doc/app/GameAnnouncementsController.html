@@ -352,6 +352,8 @@ subdomains (communities).</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -429,7 +431,7 @@ subdomains (communities).</p>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@game_announcement</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
       <span class="ruby-ivar">@game</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@game_announcement</span>.<span class="ruby-identifier">game_id</span>)
     <span class="ruby-keyword">end</span>
-    
+
     <span class="ruby-ivar">@acknowledgments</span> = <span class="ruby-constant">AcknowledgmentOfAnnouncement</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:announcement_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@game_announcement</span>.<span class="ruby-identifier">id</span>})
     <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@game_announcement</span>)
   <span class="ruby-keyword">end</span>

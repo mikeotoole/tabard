@@ -7,11 +7,11 @@
 
 #page
   %h1= @profile.name
-    
+
   %h2 Characters
   #actions
     = link_to 'Edit User Profile', edit_profile_path(@profile), :class => 'edit', :title => 'Edit'
-  
+
   - if @profile.characters != nil
     %table
       - if @profile.characters.size > 0

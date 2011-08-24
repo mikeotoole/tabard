@@ -369,6 +369,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -617,7 +619,7 @@ discussion.</p>
 <pre>
 <span class="ruby-comment"># File app/models/discussion.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_delete_permissions</span>(<span class="ruby-identifier">user</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_been_locked</span> 
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_been_locked</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_profile</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_profile</span>
@@ -711,7 +713,7 @@ discussion.</p>
 <pre>
 <span class="ruby-comment"># File app/models/discussion.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_update_permissions</span>(<span class="ruby-identifier">user</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_been_locked</span> 
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_been_locked</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_profile</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_profile</span>
@@ -759,7 +761,7 @@ discussion, including comments on a comment (recursivly).</p>
  <span class="ruby-identifier">temp_total_num_comments</span> = <span class="ruby-value">0</span>
  <span class="ruby-identifier">comments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">comment</span><span class="ruby-operator">|</span>
    <span class="ruby-identifier">temp_total_num_comments</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">number_of_comments</span>
- <span class="ruby-keyword">end</span> 
+ <span class="ruby-keyword">end</span>
  <span class="ruby-identifier">temp_total_num_comments</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- number_of_comments-source -->

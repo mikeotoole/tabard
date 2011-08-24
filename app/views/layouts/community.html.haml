@@ -9,7 +9,7 @@
     = include_tiny_mce_if_needed
   %body{ :class => (logged_in? ? 'logged_in' : 'logged_out') + " #{params[:controller]}_view" }
     #bg
-    
+
       #header
         .container
           .title= link_to @community.display_name, root_path(:subdomain => @community.subdomain)
@@ -18,7 +18,7 @@
             = render :partial => "layouts/userbox"
           - else
             = render :partial => "layouts/loginbox"
-          
+
       #menu
         .container
           %ul
@@ -29,7 +29,7 @@
               = link_to @community.label, root_url(:subdomain => @community.subdomain), { :class => 'main' }
               - if nav_featured_pages.size > 0 or !logged_in? or !current_user.is_a_member_of(@community)
                 %ul
-                  - nav_featured_pages.each do |page| 
+                  - nav_featured_pages.each do |page|
                     %li= link_to page.title, [page.page_space, page]
                   - if logged_in?
                     - if !current_user.is_a_member_of(@community)
@@ -40,7 +40,7 @@
               = link_to 'Topics', page_spaces_path, { :class => 'main' }
               - if dynamic_page_spaces and dynamic_page_spaces.size > 0
                 %ul
-                  - dynamic_page_spaces.each do |page_space| 
+                  - dynamic_page_spaces.each do |page_space|
                     %li= link_to page_space.name, page_space
                   - if logged_in? and current_user.can_create('PageSpace')
                     %li.new
@@ -50,7 +50,7 @@
                 = link_to 'Discussions', :discussion_spaces, { :class => 'main' }
                 - if dynamic_discussions and dynamic_discussions.size > 0
                   %ul
-                    - dynamic_discussions.each do |discussion_space| 
+                    - dynamic_discussions.each do |discussion_space|
                       %li= link_to '(' + discussion_space.discussions.size.to_s + ') ' + discussion_space.name, discussion_space
                     - if logged_in? and current_user.can_create('DiscussionSpace')
                       %li.new
@@ -70,30 +70,30 @@
               %a.main
                 Search
               = render :partial => "subdomains/search/form"
-              
+
       = image_tag '/images/content/header.jpg', :alt => '', :id => 'headerimg'
-      
+
       = render :partial => "layouts/flash_messages"
-      
+
       #body
         .container
           = yield
-      
+
       #footer
         .container
           - if nav_featured_pages
             .menu
               %h3= @community.display_name
               %ul
-                - nav_featured_pages.each do |page| 
+                - nav_featured_pages.each do |page|
                   %li= link_to page.title, [page.page_space, page]
           .menu
             %h3 Resources
             - if dynamic_page_spaces
               %ul
-                - dynamic_page_spaces.each do |page_space| 
+                - dynamic_page_spaces.each do |page_space|
                   %li= link_to page_space.name, page_space
-          
+
           -if logged_in?
             .menu
               %h3 Members
@@ -101,7 +101,7 @@
                 %li= link_to 'Announcements', announcements_path
                 - if current_user.can_show("DiscussionSpace")
                   %li= link_to 'Discussions', :discussion_spaces
-              
+
           %p.copyright
             = link_to t('general.privacy_policy'), '#'
             &nbsp;|&nbsp;

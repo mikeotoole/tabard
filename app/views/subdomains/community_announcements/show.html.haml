@@ -9,7 +9,7 @@
   %span#actions
     = link_to 'Edit', edit_community_announcement_path(@community_announcement), :class => 'edit', :title => 'Edit'
     = link_to 'Delete', @community_announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  
+
   %p#announcement= @community_announcement.body
   -if @community_announcement.acknowledgment_of_announcements.size > 0
     %ul

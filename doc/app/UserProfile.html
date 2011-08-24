@@ -387,6 +387,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -526,15 +528,15 @@ the <a href="AvatarUploader.html">AvatarUploader</a>.</p>
             <div class="method-source-code" id="build_character-source">
 <pre>
 <span class="ruby-comment"># File app/models/user_profile.rb, line 78</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_character</span>(<span class="ruby-identifier">character</span>, <span class="ruby-identifier">is_default</span> = <span class="ruby-keyword">false</span>) 
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_character</span>(<span class="ruby-identifier">character</span>, <span class="ruby-identifier">is_default</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">game_profiles</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">game_profile</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">game_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">character</span>.<span class="ruby-identifier">game_id</span>       
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">game_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">character</span>.<span class="ruby-identifier">game_id</span>
       <span class="ruby-identifier">proxy</span> = <span class="ruby-identifier">game_profile</span>.<span class="ruby-identifier">character_proxies</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">:character</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">character</span>)
       <span class="ruby-identifier">game_profile</span>.<span class="ruby-identifier">default_character_proxy</span> = <span class="ruby-identifier">proxy</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_default</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">proxy</span>
       <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-comment"># create new game profile</span>
   <span class="ruby-identifier">game_profile</span> = <span class="ruby-constant">GameProfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:game</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">character</span>.<span class="ruby-identifier">game</span>, <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{self.name} #{character.game.name} Profile&quot;</span>, <span class="ruby-value">:user_profile</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>)
   <span class="ruby-identifier">game_profile</span>.<span class="ruby-identifier">character_proxies</span>.<span class="ruby-identifier">build</span>(<span class="ruby-value">:character</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">character</span>)
@@ -1045,7 +1047,7 @@ game.</p>
 <pre>
 <span class="ruby-comment"># File app/models/user_profile.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_characters</span>(<span class="ruby-identifier">game</span>)
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">game_profiles</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">gPro</span><span class="ruby-operator">|</span> 
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">game_profiles</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">gPro</span><span class="ruby-operator">|</span>
      <span class="ruby-identifier">gPro</span>.<span class="ruby-identifier">characters</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">gPro</span>.<span class="ruby-identifier">game</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-identifier">game</span>
   }.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
 <span class="ruby-keyword">end</span></pre>

@@ -24,7 +24,7 @@
           %td.actions
             - if user.is_inactive
               = link_to 'Activate', activate_management_user_path(user), :class => 'activate', :title => 'Activate'
-            - else  
+            - else
               = link_to 'Deactivate', deactivate_management_user_path(user), :confirm => 'Are you sure? This keep user from logging in. All user information will be kept.', :class => 'deactivate', :title => 'Deactivate'
             - if logged_in?
               - if current_user.can_update("User") or user == current_user

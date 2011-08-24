@@ -351,6 +351,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -556,7 +558,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 
           <div class="method-description">
             
-            <pre>Creates a submit button with the given name with a cancel link 
+            <pre>Creates a submit button with the given name with a cancel link
 Accepts two arguments: Form object and the cancel link name</pre>
 
 <p>TODO If there are errors in the form and the user just presses cancel it
@@ -570,8 +572,8 @@ redirects to the blank form. Any way to make this work better?</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">submit_or_cancel</span>(<span class="ruby-identifier">form</span>, <span class="ruby-identifier">text_button</span>=<span class="ruby-string">'Submit'</span>, <span class="ruby-identifier">text_back</span>=<span class="ruby-string">'Cancel'</span>)
   <span class="ruby-identifier">text_button</span> = <span class="ruby-string">'Submit'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">text_button</span>.<span class="ruby-identifier">blank?</span>
   <span class="ruby-identifier">raw</span>(<span class="ruby-string">&quot;&lt;p class='submit'&gt;&lt;button type='submit'&gt;&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">text_button</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">raw</span>(<span class="ruby-string">&quot;&lt;/button&gt;&quot;</span>) <span class="ruby-operator">+</span> (
-    (<span class="ruby-identifier">session</span>[<span class="ruby-value">:last_page</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path_info</span>) <span class="ruby-operator">?</span> 
-    <span class="ruby-identifier">raw</span>(<span class="ruby-string">' or '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">link_to</span>(<span class="ruby-identifier">text_back</span>, <span class="ruby-identifier">session</span>[<span class="ruby-value">:last_page</span>], <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'cancel'</span> )) <span class="ruby-operator">:</span> 
+    (<span class="ruby-identifier">session</span>[<span class="ruby-value">:last_page</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path_info</span>) <span class="ruby-operator">?</span>
+    <span class="ruby-identifier">raw</span>(<span class="ruby-string">' or '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">link_to</span>(<span class="ruby-identifier">text_back</span>, <span class="ruby-identifier">session</span>[<span class="ruby-value">:last_page</span>], <span class="ruby-value">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'cancel'</span> )) <span class="ruby-operator">:</span>
     (<span class="ruby-string">&quot;&quot;</span>)
     ) <span class="ruby-operator">+</span> <span class="ruby-identifier">raw</span>(<span class="ruby-string">'&lt;/p&gt;'</span>)
 <span class="ruby-keyword">end</span></pre>

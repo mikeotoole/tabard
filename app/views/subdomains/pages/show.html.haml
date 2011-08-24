@@ -2,7 +2,7 @@
   = link_to 'Topics', page_spaces_path
   = link_to @page.page_space.name, @page.page_space
   %span= @page.title
-  
+
 #page{ :class => (@page.featured_page ? 'featured' : '') }
   %h1= @page.title
   %p#actions

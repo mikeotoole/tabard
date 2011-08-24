@@ -5,11 +5,11 @@
       %ol
         = f.input :name
         = f.input :description, :as => 'text', :input_html => { :rows => 3 }
-  
+
   - if @role.id #HACK
-      
+
     %h2 Permissions
-    
+
     %table
       %thead
         %tr
@@ -32,7 +32,7 @@
         %tr
           %td{ :colspan => 6 }
             = link_to "Add Permission", new_management_role_permission_path(@role, :format => :js), :remote => true, :class => 'button icon add'
-    
+
     - if @role.can_update_users
       %h2 Users
       - if @users.size > 0

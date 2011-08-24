@@ -413,6 +413,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -449,8 +451,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/application_controller.rb, line 168</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">access_denied</span>
-  <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>] = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-string">&quot;REQUEST_URI&quot;</span>] 
-  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_path</span>, <span class="ruby-value">:alert</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please log in to continue&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> 
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>] = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-string">&quot;REQUEST_URI&quot;</span>]
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_path</span>, <span class="ruby-value">:alert</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please log in to continue&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- access_denied-source -->
             
@@ -475,7 +477,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 
           <div class="method-description">
             
-            <p>Filter method to enforce a login requirement  Apply as a before_filter on
+            <p>Filter method to enforce a login requirement Apply as a before_filter on
 any controller you want to protect</p>
             
 
@@ -484,7 +486,7 @@ any controller you want to protect</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/application_controller.rb, line 152</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticate</span>
-  <span class="ruby-identifier">logged_in?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">access_denied</span> 
+  <span class="ruby-identifier">logged_in?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">access_denied</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- authenticate-source -->
             
@@ -664,7 +666,7 @@ any controller you want to protect</p>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">profile_active?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
     <span class="ruby-ivar">@current_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>])
-  <span class="ruby-keyword">end</span>   
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- current_profile-source -->
             
@@ -734,7 +736,7 @@ any controller you want to protect</p>
   <span class="ruby-comment">#return unless session[:user_id]</span>
   <span class="ruby-comment">#@current_user ||= User.find_by_id(session[:user_id])</span>
   <span class="ruby-comment">#cookies!</span>
-  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] <span class="ruby-keyword">and</span> <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] 
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] <span class="ruby-keyword">and</span> <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>]
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
   <span class="ruby-ivar">@current_user</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]) <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
   <span class="ruby-comment">#@current_user ||= User.find_by_id(cookies.signed[:remember_token]) if cookies.signed[:remember_token]</span>
@@ -772,7 +774,7 @@ any controller you want to protect</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dynamic_discussions</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Character$/</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
-      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>]) 
+      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>])
       <span class="ruby-keyword">if</span> <span class="ruby-ivar">@character_profile</span>
         <span class="ruby-keyword">return</span> <span class="ruby-identifier">nav_discussions</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@character_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">game_id</span>)}
       <span class="ruby-keyword">end</span>
@@ -813,7 +815,7 @@ any controller you want to protect</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dynamic_page_spaces</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Character$/</span>
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>
-      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>]) 
+      <span class="ruby-ivar">@character_profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_type</span>].<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:profile_id</span>])
       <span class="ruby-keyword">if</span> <span class="ruby-ivar">@character_profile</span>
         <span class="ruby-keyword">return</span> <span class="ruby-identifier">nav_page_spaces</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">page_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">page_space</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@character_profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">page_space</span>.<span class="ruby-identifier">game_id</span>)}
       <span class="ruby-keyword">end</span>
@@ -891,7 +893,7 @@ any controller you want to protect</p>
     { <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'zombie'</span>, <span class="ruby-value">:language</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Zombie'</span> }]
   <span class="ruby-identifier">locales</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">locale</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">locale</span>[<span class="ruby-value">:is_current</span>] = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">locale</span>[<span class="ruby-value">:locale</span>] <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
-  <span class="ruby-keyword">end</span> 
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- locales-source -->
             
@@ -959,7 +961,7 @@ method for the collection of discussion spaces.</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/application_controller.rb, line 188</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">nav_discussions</span>
-  <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">logged_in?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-identifier">discussion_space</span>)) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">list_in_navigation</span>}   
+  <span class="ruby-constant">DiscussionSpace</span>.<span class="ruby-identifier">only_real_ones</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">discussion_space</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">logged_in?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-identifier">discussion_space</span>)) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">discussion_space</span>.<span class="ruby-identifier">list_in_navigation</span>}
 <span class="ruby-keyword">end</span></pre>
             </div><!-- nav_discussions-source -->
             
@@ -1093,9 +1095,9 @@ method for the collection of discussion spaces.</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">profiles</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>
     <span class="ruby-identifier">profile_collection</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">active_profile_helper_collection</span>
-    <span class="ruby-identifier">profiles</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>  
-    <span class="ruby-identifier">profile_collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">profile</span><span class="ruby-operator">|</span> 
-      <span class="ruby-identifier">profiles</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:is_current</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">profile</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@current_profile</span>), <span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">class</span> }       
+    <span class="ruby-identifier">profiles</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">profile_collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">profile</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">profiles</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:is_current</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">profile</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@current_profile</span>), <span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">class</span> }
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">profiles</span>
   <span class="ruby-keyword">end</span>
@@ -1131,7 +1133,7 @@ method for the collection of discussion spaces.</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/application_controller.rb, line 221</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_404</span>
-  <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">request</span>.<span class="ruby-identifier">protocol</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">domain</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">port_string</span>, <span class="ruby-string">&quot;/404&quot;</span>].<span class="ruby-identifier">join</span> 
+  <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">request</span>.<span class="ruby-identifier">protocol</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">domain</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">port_string</span>, <span class="ruby-string">&quot;/404&quot;</span>].<span class="ruby-identifier">join</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- render_404-source -->
             

@@ -381,6 +381,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -798,9 +800,9 @@ comment, if possible.</p>
 <pre>
 <span class="ruby-comment"># File app/models/comment.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user_update_permissions</span>(<span class="ruby-identifier">user</span>)
-      <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">has_been_locked</span> <span class="ruby-keyword">or</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">replys_locked?</span>
-              <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
-      <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">has_been_locked</span> <span class="ruby-keyword">or</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">replys_locked?</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_profile</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_profile</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
   <span class="ruby-keyword">end</span>
@@ -879,10 +881,10 @@ attached to, if possible.</p>
 <span class="ruby-comment"># File app/models/comment.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_community_id_from_source</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'community'</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'community'</span>)
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">community</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">original_comment_item</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'community'</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">original_comment_item</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'community'</span>)
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">original_comment_item</span>.<span class="ruby-identifier">community</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -969,7 +971,7 @@ itself.</p>
  <span class="ruby-identifier">temp_total_num_comments</span> = <span class="ruby-value">1</span>
  <span class="ruby-identifier">comments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">comment</span><span class="ruby-operator">|</span>
    <span class="ruby-identifier">temp_total_num_comments</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">number_of_comments</span>
- <span class="ruby-keyword">end</span> 
+ <span class="ruby-keyword">end</span>
  <span class="ruby-identifier">temp_total_num_comments</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- number_of_comments-source -->
@@ -1008,7 +1010,7 @@ climbing the comment tree if needed.</p>
 <pre>
 <span class="ruby-comment"># File app/models/comment.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">original_comment_item</span>
-      (<span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'original_comment_item'</span>)) <span class="ruby-operator">?</span> <span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">original_comment_item</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">commentable</span>
+  (<span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">'original_comment_item'</span>)) <span class="ruby-operator">?</span> <span class="ruby-identifier">commentable</span>.<span class="ruby-identifier">original_comment_item</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">commentable</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- original_comment_item-source -->
             

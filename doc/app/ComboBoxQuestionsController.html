@@ -361,6 +361,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -442,7 +444,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@combo_box_question</span>.<span class="ruby-identifier">site_form_id</span>)
-    
+
     <span class="ruby-ivar">@combo_box_question</span>.<span class="ruby-identifier">site_form_id</span> = <span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@combo_box_question</span>.<span class="ruby-identifier">save</span>
     <span class="ruby-identifier">grab_all_errors_from_model</span>(<span class="ruby-ivar">@combo_box_question</span>)
@@ -627,10 +629,10 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">site_form_id</span>)
-    
+
     <span class="ruby-ivar">@combo_box_question</span> = <span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">clone</span>
-    <span class="ruby-ivar">@combo_box_question</span>.<span class="ruby-identifier">predefined_answers</span> = <span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">predefined_answers</span> 
-    
+    <span class="ruby-ivar">@combo_box_question</span>.<span class="ruby-identifier">predefined_answers</span> = <span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">predefined_answers</span>
+
     <span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">site_form_id</span> = <span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@old_combo_box_question</span>.<span class="ruby-identifier">save</span>
 

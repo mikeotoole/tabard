@@ -4,6 +4,6 @@ class AddDiscussionIdToSubmissions < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :submissions, :discussion_id   
+    remove_column :submissions, :discussion_id
   end
 end

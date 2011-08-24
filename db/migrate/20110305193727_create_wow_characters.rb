@@ -8,7 +8,7 @@ class CreateWowCharacters < ActiveRecord::Migration
       t.string :class
       t.integer :level
       t.string :server
-        
+
       t.timestamps
     end
   end

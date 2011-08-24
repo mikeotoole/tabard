@@ -5,7 +5,7 @@
 
 #page
   %h1 #{@registration_application.name} - #{@registration_application.status_string}
-  
+
   %p#actions
     - if @registration_application.status != 2
       = link_to 'Accept Application', accept_management_registration_application_path(@registration_application), :method => :post, :confirm => 'Accept this application?', :class => 'accept', :title => 'Accept Application'
@@ -19,7 +19,7 @@
 
   %h2 Application Answers
   %p= render :partial => "questions/question_answer", :collection => @registration_application.all_questions, :locals => {:submission =>  @registration_application}
-  
+
   - if @registration_application.discussion.has_been_locked
     %h2 Closed for comment
   - else

@@ -366,6 +366,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -463,7 +465,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Comment was unable to be deleted, internal rails error.'</span>)
       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">original_comment_item</span>), <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:show</span>
-      <span class="ruby-keyword">return</span> 
+      <span class="ruby-keyword">return</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -574,7 +576,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">has_been_locked</span> = <span class="ruby-keyword">true</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">save</span> 
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">save</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;Comment was successfully locked.&quot;</span>)
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;Comment was not locked, internal rails error.&quot;</span>)
@@ -701,7 +703,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">has_been_locked</span> = <span class="ruby-keyword">false</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">save</span> 
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">save</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;Comment was successfully unlocked.&quot;</span>)
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;Comment was not unlocked, internal rails error.&quot;</span>)

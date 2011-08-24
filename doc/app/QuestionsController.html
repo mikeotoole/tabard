@@ -357,6 +357,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -510,8 +512,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             <div class="method-source-code" id="new-source">
 <pre>
 <span class="ruby-comment"># File app/controllers/questions_controller.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>      
-  <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:site_form_id</span>])     
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:site_form_id</span>])
   <span class="ruby-ivar">@question</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:q_type</span>]
     <span class="ruby-keyword">when</span> <span class="ruby-string">'CheckBoxQuestion'</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@check_box_question</span> = <span class="ruby-constant">CheckBoxQuestion</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@form</span>.<span class="ruby-identifier">id</span>)
       <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> { <span class="ruby-ivar">@check_box_question</span>.<span class="ruby-identifier">predefined_answers</span>.<span class="ruby-identifier">build</span> }
@@ -523,7 +525,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> { <span class="ruby-ivar">@radio_button_question</span>.<span class="ruby-identifier">predefined_answers</span>.<span class="ruby-identifier">build</span> }
       <span class="ruby-ivar">@radio_button_question</span>
     <span class="ruby-keyword">when</span> <span class="ruby-string">'TextBoxQuestion'</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@text_box_question</span> = <span class="ruby-constant">TextBoxQuestion</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@form</span>.<span class="ruby-identifier">id</span>)
-    <span class="ruby-keyword">when</span> <span class="ruby-string">'TextQuestion'</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@text_question</span> = <span class="ruby-constant">TextQuestion</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@form</span>.<span class="ruby-identifier">id</span>) 
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'TextQuestion'</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@text_question</span> = <span class="ruby-constant">TextQuestion</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:site_form_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@form</span>.<span class="ruby-identifier">id</span>)
     <span class="ruby-keyword">else</span> <span class="ruby-constant">Question</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@question</span>)
@@ -560,7 +562,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-comment"># File app/controllers/questions_controller.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-ivar">@old_question</span> = <span class="ruby-constant">Question</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@old_question</span>.<span class="ruby-identifier">site_form_id</span>)    
+  <span class="ruby-ivar">@form</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@old_question</span>.<span class="ruby-identifier">site_form_id</span>)
   <span class="ruby-ivar">@question</span> = <span class="ruby-ivar">@old_question</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-ivar">@question</span>.<span class="ruby-identifier">save</span>
   <span class="ruby-ivar">@old_question</span>.<span class="ruby-identifier">site_form_id</span> = <span class="ruby-keyword">nil</span>

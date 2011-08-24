@@ -361,6 +361,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -515,7 +517,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@profiles</span> = <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">all</span>
   <span class="ruby-ivar">@user_profiles</span> = <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'UserProfile'</span> })
-  <span class="ruby-ivar">@game_profiles</span> = <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'GameProfile'</span> })    
+  <span class="ruby-ivar">@game_profiles</span> = <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'GameProfile'</span> })
   <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@profiles</span>, <span class="ruby-ivar">@site_profiles</span>, <span class="ruby-ivar">@game_profiles</span>)
 <span class="ruby-keyword">end</span></pre>
             </div><!-- index-source -->
@@ -596,7 +598,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@profile</span>.<span class="ruby-identifier">game_id</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@game</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@profile</span>.<span class="ruby-identifier">game_id</span>)
   <span class="ruby-keyword">end</span>
-  
+
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@profile</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;GameProfile&quot;</span>
     <span class="ruby-identifier">respond_with</span>(<span class="ruby-ivar">@profile</span>) <span class="ruby-comment"># TODO Verify that this is correct.</span>
   <span class="ruby-keyword">else</span>

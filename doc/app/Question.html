@@ -365,6 +365,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -444,7 +446,7 @@ strings].</p>
 <pre>
 <span class="ruby-comment"># File app/models/question.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_options_human</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_options</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span> 
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_options</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">opt</span>
     <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;TextBoxQuestion&quot;</span>
       [<span class="ruby-string">&quot;Long Answer Question&quot;</span>, <span class="ruby-identifier">opt</span>]
@@ -453,7 +455,7 @@ strings].</p>
     <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;ComboBoxQuestion&quot;</span>
       [<span class="ruby-string">&quot;Dropdown Question&quot;</span>, <span class="ruby-identifier">opt</span>]
     <span class="ruby-keyword">else</span>
-      [<span class="ruby-identifier">opt</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/[A-Z][a-z0-9]*/</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>), <span class="ruby-identifier">opt</span>] 
+      [<span class="ruby-identifier">opt</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/[A-Z][a-z0-9]*/</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>), <span class="ruby-identifier">opt</span>]
     <span class="ruby-keyword">end</span>
   }
 <span class="ruby-keyword">end</span></pre>

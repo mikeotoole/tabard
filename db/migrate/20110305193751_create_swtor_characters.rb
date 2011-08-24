@@ -4,7 +4,7 @@ class CreateSwtorCharacters < ActiveRecord::Migration
       t.integer :game_id
       t.string :name
       t.string :server
-        
+
       t.timestamps
     end
   end

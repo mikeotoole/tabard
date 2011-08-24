@@ -355,6 +355,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -393,7 +395,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">accept_notification</span>(<span class="ruby-identifier">registration_application</span>)
   <span class="ruby-ivar">@community_name</span> = <span class="ruby-identifier">registration_application</span>.<span class="ruby-identifier">community_name</span>
   <span class="ruby-ivar">@applicant</span> = <span class="ruby-identifier">registration_application</span>.<span class="ruby-identifier">name</span>
-  
+
   <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">registration_application</span>.<span class="ruby-identifier">applicant_email</span>, <span class="ruby-value">:subject=</span><span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Application Accepted&quot;</span> )
 <span class="ruby-keyword">end</span></pre>
             </div><!-- accept_notification-source -->

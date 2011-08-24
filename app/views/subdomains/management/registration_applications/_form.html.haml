@@ -1,5 +1,5 @@
-= form_for(@registration_application) do |f|          
-  = f.hidden_field :site_form_id            
+= form_for(@registration_application) do |f|
+  = f.hidden_field :site_form_id
   = fields_for :user do |user|
     %p.field
       = user.label :email
@@ -30,7 +30,7 @@
       - @swtorCharacters.each do |character|
         %li
           - @character = character
-          = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })     
+          = render(:file => 'swtor_characters/_application_form.html.haml', :locals => { :character => @character })
   #newcharacters
     %ul
       - if @games

@@ -362,6 +362,8 @@ subdomains (communities).</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -399,9 +401,9 @@ subdomains (communities).</p>
 <span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@role</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:role</span>])
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_create</span>(<span class="ruby-ivar">@role</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_create</span>(<span class="ruby-ivar">@role</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
-  <span class="ruby-keyword">else</span> 
+  <span class="ruby-keyword">else</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@role</span>.<span class="ruby-identifier">save</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Role was successfully created.'</span>)
     <span class="ruby-keyword">end</span>
@@ -440,9 +442,9 @@ subdomains (communities).</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-ivar">@role</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-ivar">@role</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
-  <span class="ruby-keyword">else</span> 
+  <span class="ruby-keyword">else</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@role</span>.<span class="ruby-identifier">destroy</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">'Role was successfully deleted.'</span>)
       <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:back</span>)
@@ -517,9 +519,9 @@ subdomains (communities).</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;Role&quot;</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;Role&quot;</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
-  <span class="ruby-keyword">else</span> 
+  <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@roles</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">delete_if</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">role</span><span class="ruby-operator">|</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_update</span>(<span class="ruby-identifier">role</span>)}
     <span class="ruby-ivar">@system_roles</span> = []
     <span class="ruby-ivar">@custom_roles</span> = []
@@ -565,7 +567,7 @@ subdomains (communities).</p>
 <span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@role</span> = <span class="ruby-ivar">@community</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_create</span>(<span class="ruby-ivar">@role</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_create</span>(<span class="ruby-ivar">@role</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">respond_with</span>([<span class="ruby-value">:management</span>,<span class="ruby-ivar">@role</span>])
@@ -635,7 +637,7 @@ subdomains (communities).</p>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/roles_controller.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_update</span>(<span class="ruby-ivar">@role</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_update</span>(<span class="ruby-ivar">@role</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-keyword">begin</span>

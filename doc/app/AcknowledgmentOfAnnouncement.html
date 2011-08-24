@@ -73,8 +73,6 @@
           
           <li><a href="#method-i-profile_name">#profile_name</a></li>
           
-          <li><a href="#method-i-snippet">#snippet</a></li>
-          
           <li><a href="#method-i-title">#title</a></li>
           
         </ul>
@@ -360,6 +358,8 @@ profiles with announcements.</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -398,7 +398,7 @@ profiles with announcements.</p>
             
             <div class="method-source-code" id="author_name-source">
 <pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 18</span>
+<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">author_name</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement</span>.<span class="ruby-identifier">author_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -435,7 +435,7 @@ profiles with announcements.</p>
             
             <div class="method-source-code" id="body-source">
 <pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 50</span>
+<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">body</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement</span>.<span class="ruby-identifier">body</span>
 <span class="ruby-keyword">end</span></pre>
@@ -472,7 +472,7 @@ profiles with announcements.</p>
             
             <div class="method-source-code" id="path-source">
 <pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 34</span>
+<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">annoncement</span>
 <span class="ruby-keyword">end</span></pre>
@@ -510,7 +510,7 @@ acknowledgment announcement.</p>
             
             <div class="method-source-code" id="profile_name-source">
 <pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 26</span>
+<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">profile_name</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">profile</span>.<span class="ruby-identifier">display_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -522,48 +522,6 @@ acknowledgment announcement.</p>
 
           
         </div><!-- profile_name-method -->
-
-      
-        <div id="snippet-method" class="method-detail ">
-          <a name="method-i-snippet"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">snippet</span><span
-              class="method-args">(n=30)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            <p>This method gets a snippet of the body for this acknowledgment.</p>
-<dl class="rdoc-list"><dt>Args</dt>
-<dd><ul><li>
-<p><tt>n</tt> -&gt; The number of words to include in the snippet. This
-defaults to 30.</p>
-</li></ul>
-</dd><dt>Returns</dt>
-<dd>
-<p>The snippet from the announcement for this acknowledgment.</p>
-</dd></dl>
-            
-
-            
-            <div class="method-source-code" id="snippet-source">
-<pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 60</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">snippet</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">30</span>)
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement</span>.<span class="ruby-identifier">snippet</span>(<span class="ruby-identifier">n</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- snippet-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- snippet-method -->
 
       
         <div id="title-method" class="method-detail ">
@@ -589,7 +547,7 @@ defaults to 30.</p>
             
             <div class="method-source-code" id="title-source">
 <pre>
-<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 42</span>
+<span class="ruby-comment"># File app/models/acknowledgment_of_announcement.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">title</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">announcement</span>.<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>

@@ -351,6 +351,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -386,12 +388,12 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             <div class="method-source-code" id="create-source">
 <pre>
 <span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 10</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>  
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:password</span>])
 
     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">permanent</span>.<span class="ruby-identifier">signed</span>[<span class="ruby-value">:remember_token</span>] = {<span class="ruby-value">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:domain</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:all</span>} <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:remember</span>]
     <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>
-    
+
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_profile</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
       <span class="ruby-ivar">@profile_type</span> = <span class="ruby-string">&quot;UserProfile&quot;</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-node">&quot;Logged in as &lt;em&gt;#{user.name}&lt;/em&gt;.&quot;</span> <span class="ruby-operator">+</span>
@@ -400,12 +402,12 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">new_profile_path</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-node">&quot;Welcome back, &lt;em&gt;#{user.name}&lt;/em&gt;.&quot;</span>)
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>]  
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>]
         <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:pre_login_url</span>]
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_path</span>
-      <span class="ruby-keyword">end</span>        
-    <span class="ruby-keyword">end</span> 
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;Invalid email/password combination.&quot;</span>)
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_path</span>
@@ -441,7 +443,7 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
             <div class="method-source-code" id="destroy-source">
 <pre>
 <span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 36</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span> 
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">add_new_flash_message</span>(<span class="ruby-string">&quot;You successfully logged out&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">logged_in?</span>
   <span class="ruby-identifier">reset_session</span>
   <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-value">:remember_token</span>, <span class="ruby-value">:domain</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:all</span>

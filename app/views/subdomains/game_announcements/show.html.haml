@@ -9,11 +9,11 @@
   %span#actions
     = link_to 'Edit', edit_game_announcement_path(@game_announcement), :class => 'edit', :title => 'Edit'
     = link_to 'Delete', @game_announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  
+
   %p#announcement= @game_announcement.body
 
   -if @game_announcement.acknowledgment_of_announcements.size > 0
     %ul
       - @game_announcement.acknowledgment_of_announcements.each do |acknowledgment_of_announcement|
         %li="#{acknowledgment_of_announcement.profile_name} has #{(acknowledgment_of_announcement.acknowledged ? "" : "not ")}accepted the announcement."
-    
+

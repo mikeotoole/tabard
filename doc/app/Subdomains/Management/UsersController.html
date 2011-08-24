@@ -352,6 +352,8 @@ subdomains (communities).</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -384,7 +386,7 @@ subdomains (communities).</p>
 
 <pre>if !current_user.can_show(&quot;User&quot;) and User.find(params[:id]) != current_user
   render :nothing =&gt; true, :status =&gt; :forbidden
-else 
+else
   @user = User.find(params[:id])
   @announcements = Announcement.all
 
@@ -402,9 +404,9 @@ end</pre>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/users_controller.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-string">&quot;User&quot;</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_delete</span>(<span class="ruby-string">&quot;User&quot;</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
-  <span class="ruby-keyword">else</span> 
+  <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
     <span class="ruby-comment">#@user.destroy # TODO Remove from communit</span>
   <span class="ruby-keyword">end</span>
@@ -440,9 +442,9 @@ end</pre>
 <pre>
 <span class="ruby-comment"># File app/controllers/subdomains/management/users_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;User&quot;</span>) 
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;User&quot;</span>)
     <span class="ruby-identifier">render_insufficient_privileges</span>
-  <span class="ruby-keyword">else</span> 
+  <span class="ruby-keyword">else</span>
     <span class="ruby-ivar">@users</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">all</span>
     <span class="ruby-identifier">respond_with</span>([<span class="ruby-value">:management</span>, <span class="ruby-ivar">@users</span>])
   <span class="ruby-keyword">end</span>

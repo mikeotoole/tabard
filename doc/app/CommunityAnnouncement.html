@@ -357,6 +357,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -571,7 +573,7 @@ false.</p>
 <pre>
 <span class="ruby-comment"># File app/models/community_announcement.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_acknowledgments</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">all_users</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span> 
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">community</span>.<span class="ruby-identifier">all_users</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">AcknowledgmentOfAnnouncement</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:announcement_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_profile</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:acknowledged</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

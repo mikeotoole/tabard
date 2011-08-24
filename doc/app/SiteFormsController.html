@@ -349,6 +349,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -387,9 +389,9 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
     <span class="ruby-ivar">@site_forms</span> = <span class="ruby-constant">SiteForm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:registration_application_form</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>})
     <span class="ruby-ivar">@site_forms</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">site_form</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">site_form</span>.<span class="ruby-identifier">check_user_show_permissions</span>(<span class="ruby-identifier">current_user</span>)}
-    
-    <span class="ruby-ivar">@show</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;SiteForm&quot;</span>) 
-    
+
+    <span class="ruby-ivar">@show</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">can_show</span>(<span class="ruby-string">&quot;SiteForm&quot;</span>)
+
     <span class="ruby-identifier">respond_with</span> <span class="ruby-ivar">@site_forms</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- index-source -->

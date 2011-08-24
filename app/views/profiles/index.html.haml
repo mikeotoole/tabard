@@ -28,11 +28,11 @@
             %td.actions
               = link_to 'Edit', edit_user_profile_path(profile), :class => 'edit', :title => 'Edit'
               = link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-  - else 
+  - else
     %tbody
       %tr
         %td.empty{ :colspan => 3 } No profiles.
-  
+
   - if logged_in? and (current_user.can_create('UserProfile') or current_user.can_create('GameProfile'))
     %tfoot
       %tr

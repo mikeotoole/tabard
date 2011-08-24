@@ -12,21 +12,21 @@
       %ol
         - @results.each do |result|
           %li= render :partial => 'subdomains/search/result', :locals => { :result => result }
-          
+
     %dt.topics Topics (#{@page_space_results.size})
     %dd.topics
       - if @page_space_results.size > 0
         %ol
           - @page_space_results.each do |result|
             %li= render :partial => 'subdomains/search/result', :locals => { :result => result }
-            
+
     %dt.pages Pages (#{@page_results.size})
     %dd.pages
       - if @page_results.size > 0
         %ol
           - @page_results.each do |result|
             %li= render :partial => 'subdomains/search/result', :locals => { :result => result }
-            
+
     %dt.discussions Discussions (#{@discussion_space_results.size})
     %dd.discussions
       - if @discussion_space_results.size + @discussion_results.size > 0
@@ -35,7 +35,7 @@
             %li= render :partial => 'subdomains/search/result', :locals => { :result => result }
           - @discussion_results.each do |result|
             %li= render :partial => 'subdomains/search/result', :locals => { :result => result }
-            
+
     %dt.comments Comments (#{@comment_results.size})
     %dd.comments
       - if @comment_results.size > 0

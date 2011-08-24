@@ -349,6 +349,8 @@ href="mailto:info@digitalaugment.com">info@digitalaugment.com</a>)</p>
     </div><!-- description -->
 
     
+    
+    
     <div id="5Buntitled-5D" class="documentation-section">
       
 
@@ -398,10 +400,10 @@ the community name attribute.</p>
             <div class="method-source-code" id="validate_each-source">
 <pre>
 <span class="ruby-comment"># File lib/community_name_validator.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_each</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">value</span>)  
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_each</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">::</span><span class="ruby-constant">Community</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:subdomain</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">::</span><span class="ruby-constant">Community</span>.<span class="ruby-identifier">convert_to_subdomain</span>(<span class="ruby-identifier">value</span>)).<span class="ruby-identifier">exists?</span>
-    <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-value">:community_name</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>))  
-  <span class="ruby-keyword">end</span>  
+    <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-value">:community_name</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>))
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- validate_each-source -->
             

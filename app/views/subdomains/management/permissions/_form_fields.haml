@@ -14,7 +14,7 @@
           %input{ :type => 'text' }
           %ul.suggestions
             = p.collection_radio :magic_polymorphic_helper, @permissionables, :first, :last, :item_wrapper_tag => :li
-            
+
     %td{ :colspan => 4 }
       %fieldset.slider
         = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last, :checked => 'show_p'
