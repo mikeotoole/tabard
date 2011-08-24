@@ -193,7 +193,7 @@ Bv::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 23 Aug 2011 15:08
+# Generated on 24 Aug 2011 15:15
 #
 #                                          message DELETE /messages/:id(.:format)                                                            {:action=>"destroy", :controller=>"messages"}
 #                                        sent_mail        /mail/sent/:id(.:format)                                                           {:controller=>"sent", :action=>"show"}

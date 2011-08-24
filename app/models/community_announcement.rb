@@ -49,7 +49,7 @@ class CommunityAnnouncement < Announcement
   [Returns] True the provided user can create this community announcement, otherwise false.
 =end
   def check_user_create_permissions(user)
-    false
+    user.can_create("CommunityAnnouncement") or user.can_create("SiteAnnouncement")
   end
 
 =begin
@@ -59,7 +59,7 @@ class CommunityAnnouncement < Announcement
   [Returns] True the provided user can update this community announcement, otherwise false.
 =end
   def check_user_update_permissions(user)
-    false
+    user.can_create("CommunityAnnouncement") or user.can_create("SiteAnnouncement")
   end
 
 =begin
@@ -69,7 +69,7 @@ class CommunityAnnouncement < Announcement
   [Returns] True the provided user can delete this community announcement, otherwise false.
 =end
   def check_user_delete_permissions(user)
-    false
+    user.can_create("CommunityAnnouncement") or user.can_create("SiteAnnouncement")
   end
 end
 # == Schema Information

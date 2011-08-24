@@ -28,11 +28,12 @@ class User < ActiveRecord::Base
                     :presence => true,
                     :if => :password_required?
 
+  # Associations
   has_one :user_profile, :autosave => true
   has_many :game_profiles, :through => :user_profile
-
   has_many :roles_users
   has_many :roles, :through => :roles_users
+  has_many :announcements, :through => :user_profile
 
   before_save :encrypt_new_password, :update_lowercase_email
 
@@ -216,8 +217,8 @@ class User < ActiveRecord::Base
       @userprofile = UserProfile.find(:first, :conditions => {:user_id => self.id})
       @profiles = GameProfile.find(:all, :conditions => {:user_profile_id => @userprofile.id})
       @profiles << @userprofile
-      #@acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
-      @acknowledgment_of_announcements = Array.new
+      @acknowledgment_of_announcements = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:acknowledged => false, :profile_id => @profiles})
+      #@acknowledgment_of_announcements = Array.new
   end
 
 =begin

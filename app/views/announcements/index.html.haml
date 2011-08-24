@@ -10,40 +10,30 @@
         %th.text Message
         %th.actions
     %tbody
-      - if @site_announcements
-        - @site_announcements.each do |announcement|
-          - if current_user.can_show(announcement)
-            %tr
-              %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
-              %td.name= link_to announcement.name, announcement
-              %td.type= link_to 'Site', :site_announcements
-              %td.text= announcement.body
-              %td.actions
-                - if current_user.can_update(announcement)
-                  = link_to 'Edit', edit_site_announcement_path(announcement), :class => 'edit', :title => 'Edit'
-                - if current_user.can_delete(announcement)
-                  = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
-      - if @game_announcements
-        - @game_announcements.each do |announcement|
-          - if current_user.can_show(announcement)
-            %tr
-              %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
-              %td.name= link_to announcement.name, announcement
-              %td.type= link_to 'Game', :game_announcements
-              %td.text= announcement.body
-              %td.actions
-                - if current_user.can_update(announcement)
-                  = link_to 'Edit', edit_game_announcement_path(announcement), :class => 'edit', :title => 'Edit'
-                - if current_user.can_delete(announcement)
-                  = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - @announcements.each do |announcement|
+        - if current_user.can_show(announcement)
+          %tr
+            %td.amount= announcement.comments.size > 0 ? announcement.comments.size : 'None'
+            %td.name= link_to announcement.name, announcement
+            -case announcement.class
+              -when GameAnnouncement
+                %td.type= link_to 'Game', :game_announcements
+              -when CommunityAnnouncement
+                %td.type= link_to 'Community', :community_announcements
+            %td.text= announcement.body
+            %td.actions
+              - if current_user.can_update(announcement)
+                = link_to 'Edit', edit_site_announcement_path(announcement), :class => 'edit', :title => 'Edit'
+              - if current_user.can_delete(announcement)
+                = link_to 'Delete', announcement, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
   - else
     %tbody
       %td.empty{ :colspan => 5 } There are no announcements.
-  - if logged_in? and (current_user.can_create('SiteAnnouncement') or current_user.can_create('GameAnnouncement'))
+  - if logged_in? and (current_user.can_create('CommunityAnnouncement') or current_user.can_create('GameAnnouncement'))
     %tfoot
       %tr
         %td{ :colspan => 5 }
-          - if current_user.can_create('SiteAnnouncement')
-            = link_to 'New Site Announcement', new_site_announcement_path, :class => 'button'
+          - if current_user.can_create('CommunityAnnouncement')
+            = link_to 'New Community Announcement', new_site_announcement_path, :class => 'button'
           - if current_user.can_create('GameAnnouncement')
             = link_to 'New Game Announcement', new_game_announcement_path, :class => 'button'

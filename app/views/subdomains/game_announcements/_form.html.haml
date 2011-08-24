@@ -4,7 +4,7 @@
     = f.text_field :name
   %p.field
     = f.label :game_id
-    = f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
+    = f.collection_select(:game_id, @avaliable_games, :id, :name, options ={:prompt => "Select a game"}, :class =>"game")
   %p.field
     = f.label :body
     = f.text_area :body

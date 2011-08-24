@@ -183,7 +183,7 @@ guildRulesPage = Page.create(:title => "Guild Rules", :body => "IF YOU DON'T KNO
 #Game announcement
 #GameAnnouncement.create(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR", :game => swtor, :community => stonewatch, :user_profile => adminProfile)
 #Community announcement
-#CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch, :user_profile => adminProfile)
+CommunityAnnouncement.create(:name => "Possible alliance", :body => "We are looking at forming an alliance with JAH.", :community => stonewatch, :user_profile => adminProfile)
 
 
 #Generate some normal activity for justanotherheadshot
@@ -206,9 +206,8 @@ Page.create(:title => "Da Rules", :body => "OMG COME GET SOME!", :page_space => 
 
 
 #Site Announcement
-#SiteAnnouncement.create(:name => "RC1!",
-#                        :body => "Crumblin is almost ready for RC1!")
-#
+SiteAnnouncement.create(:name => "RC1!", :body => "Crumblin is almost ready for RC1!")
+
 #Test site form creation
 #testForm = SiteForm.create(:name => "Test Form", :message => "This is a test form for testing submissions.", :thankyou => "Thank you for submitting this form.", :registration_application_form => false, :published => true)
 #checkboxQ = CheckBoxQuestion.create(:content => "A check box makes me feel.", :site_form => testForm)

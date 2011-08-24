@@ -10,6 +10,7 @@ class Announcement < ActiveRecord::Base
 
   belongs_to :user_profile
   has_many :acknowledgment_of_announcements, :dependent => :destroy
+  has_many :comments, :as => :commentable
 
   after_create :create_acknowledgments
 

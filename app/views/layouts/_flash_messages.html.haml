@@ -7,7 +7,7 @@
             = link_to(a_o_a.announcement, { :class => 'msg', :title => 'Read the full announcement and comments.' }) do
               %strong= a_o_a.announcement.name
               &mdash;
-              = a_o_a.snippet
+              = truncate(a_o_a.body, :separator => ' ')
             %button{ :type => 'submit', :name => 'id', :value => a_o_a.id, :title => 'Mark as seen.' } Mark as seen
       - if flash[:messages]
         - flash[:messages].each do |message|

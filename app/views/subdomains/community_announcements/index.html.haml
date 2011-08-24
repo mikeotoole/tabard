@@ -1,11 +1,11 @@
 %p#bcrumb
   = link_to 'Announcements', :announcements
-  %span Game Announcements
+  %span Community Announcements
 
-%h1 Game Announcements
+%h1 Community Announcements
 
 %table
-  - if @game_announcements.size > 0
+  - if @community_announcements.size > 0
     %thead
       %tr
         %th.amount Comments
@@ -13,7 +13,7 @@
         %th.text Message
         %th.actions
     %tbody
-      - @game_announcements.each do |announcement|
+      - @community_announcements.each do |announcement|
         - if current_user.can_show(announcement)
           %tr
             %td.amount= announcement.comments.size > 0 ? announcements.comments.size : 'None'
@@ -27,9 +27,9 @@
   - else
     %tbody
       %tr
-        %td{ :colspan => 4 } There are no game announcements.
+        %td{ :colspan => 4 } There are no community announcements.
   %tfoot
     %tr
       %td{ :colspan => 4 }
-        - if logged_in? and current_user.can_create('GameAnnouncement')
-          = link_to 'New Announcement', new_game_announcement_path, :class => 'button'
+        - if logged_in? and current_user.can_create('CommunityAnnouncement')
+          = link_to 'New Announcement', new_community_announcement_path, :class => 'button'

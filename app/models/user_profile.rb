@@ -43,6 +43,8 @@ class UserProfile < Profile
   has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
   has_many :folders
 
+  has_many :announcements
+
   before_create :build_inbox
   after_create :create_discussion, :create_personal_space
 
