@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling registraton applications within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::RegistrationApplicationsController < SubdomainsController
@@ -39,7 +39,7 @@ class Subdomains::Management::RegistrationApplicationsController < SubdomainsCon
     @registration_application.set_accepted
     # TODO Add permission checking - JW
     if @registration_application.save
-      ApplicationNotifier.accept_notification(@registration_application).deliver  
+      ApplicationNotifier.accept_notification(@registration_application).deliver
       add_new_flash_message('Registration application was successfully accepted.')
       add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
     end
@@ -52,7 +52,7 @@ class Subdomains::Management::RegistrationApplicationsController < SubdomainsCon
     @registration_application.set_rejected
     # TODO Add permission checking - JW
     if @registration_application.save
-      ApplicationNotifier.reject_notification(@registration_application).deliver      
+      ApplicationNotifier.reject_notification(@registration_application).deliver
       add_new_flash_message('Registration application was successfully rejected.')
       add_new_flash_message("#{@registration_application.name} has been sent an email updating them on the decision.")
     end

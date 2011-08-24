@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for registration applications.
 =end
 class RegistrationApplicationsController < SubdomainsController
@@ -11,12 +11,12 @@ class RegistrationApplicationsController < SubdomainsController
 
   def new
     @registration_application = RegistrationApplication.new
-    @profile = UserProfile.new 
+    @profile = UserProfile.new
     @user = User.new
-    
+
     @registration_application.site_form = @community.community_application_form
     #@registration_application.answers.build if @registration_application.answers.count == 0
-    
+
     @games = @community.games.active
 
     add_new_flash_message(@registration_application.site_form.message)
@@ -29,10 +29,10 @@ class RegistrationApplicationsController < SubdomainsController
       @profile = current_user.user_profile
     else
       @user = User.new(params[:user])
-      @profile = @user.build_user_profile(params[:user_profile])        
+      @profile = @user.build_user_profile(params[:user_profile])
     end
     @registration_application = @profile.build_registration_application(params[:registration_application])
-    
+
     if params[:wow_character]
       @wowCharacters = Array.new
       params[:wow_character].each do |character|
@@ -41,7 +41,7 @@ class RegistrationApplicationsController < SubdomainsController
         @profile.build_character(newWow)
       end
     end
-    
+
     if params[:swtor_character]
       @swtorCharacters = Array.new
       params[:swtor_character].each do |character|
@@ -56,11 +56,11 @@ class RegistrationApplicationsController < SubdomainsController
       params[:answer_helper].each do |question_id, question|
         question.each do |answer_id, answer|
           @registration_application.answers << Answer.new(:question_id => question_id, :content => answer)
-        end  
+        end
       end
     end
 
-      if @user.save and @profile.save and @registration_application.save   
+      if @user.save and @profile.save and @registration_application.save
         #add_new_flash_message('Registration application was successfully submitted.') Removed for BVR-152
         add_new_flash_message(@registration_application.site_form.thankyou)
       else

@@ -2,13 +2,13 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a community.
 =end
 class Community < ActiveRecord::Base
   #attr_accessible :name, :slogan, :label, :accepting, :email_notice_on_applicant
-  
-  validates :name, :uniqueness => { :case_sensitive => false }, 
+
+  validates :name, :uniqueness => { :case_sensitive => false },
                    :presence => true,
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
@@ -16,12 +16,12 @@ class Community < ActiveRecord::Base
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
-  
+
   belongs_to :admin_role, :class_name => "Role"
   belongs_to :applicant_role, :class_name => "Role"
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :class_name => "SiteForm"
-  
+
   has_many :discussion_spaces
   has_many :discussions, :through => :discussion_spaces
   has_many :page_spaces
@@ -34,7 +34,7 @@ class Community < ActiveRecord::Base
   has_many :comments
   has_many :community_announcements
   has_many :game_announcements
-  
+
   before_save :update_subdomain
   after_create :setup_admin_role, :setup_applicant_role, :setup_member_role, :setup_application_form
 
@@ -54,15 +54,15 @@ class Community < ActiveRecord::Base
   def self.acceptable_labels
     %w(Guild Team Clan Faction Squad)
   end
-  
+
 =begin
   This method gets the user profile of the admin for this community.
   [Returns] The user_profile of the user who has the admin role for this community.
-=end  
+=end
   def leader_profile
     self.admin.user_profile
   end
-  
+
 =begin
   This method gets the admin of this community.
   [Returns] The user who is the admin of this community.
@@ -70,7 +70,7 @@ class Community < ActiveRecord::Base
   def admin
     self.admin_role.users.first #TODO might want to get a better way of doing this.
   end
-  
+
 =begin
   This method gets all users for this community.
   [Returns] An array that contains all of the users in this community.
@@ -83,7 +83,7 @@ class Community < ActiveRecord::Base
     users << self.roles.collect {|role| role.users}
     users.flatten.uniq
   end
-  
+
 =begin
   This method gets the recent discussion spaces for this community.
   [Args]
@@ -94,7 +94,7 @@ class Community < ActiveRecord::Base
     cID = self.id
     DiscussionSpace.where{community_id == cID}.order{created_at.desc}.limit(number_of_discussion_spaces)
   end
-  
+
 =begin
   This method gets the recent page spaces for this community.
   [Args]
@@ -105,7 +105,7 @@ class Community < ActiveRecord::Base
     cID = self.id
     PageSpace.where{community_id == cID}.order{created_at.desc}.limit(number_of_page_spaces)
   end
-  
+
 =begin
   This method gets the recent discussions for this community.
   [Args]
@@ -117,7 +117,7 @@ class Community < ActiveRecord::Base
     my_disc_spaces = DiscussionSpace.where{community_id == cID}
     Discussion.where{discussion_space_id.in(my_disc_spaces.select{id})}.order{created_at.desc}.limit(number_of_discussions)
   end
-  
+
 =begin
   This method gets the recent pages for this community.
   [Args]
@@ -129,7 +129,7 @@ class Community < ActiveRecord::Base
     my_page_spaces = PageSpace.where{community_id == cID}
     Page.where{page_space_id.in(my_page_spaces.select{id})}.order{created_at.desc}.limit(number_of_pages)
   end
-  
+
 =begin
   This method gets the recent comments for this community.
   [Args]
@@ -138,9 +138,9 @@ class Community < ActiveRecord::Base
 =end
   def recent_comments(number_of_comments=10)
     cID = self.id
-    Comment.where{community_id == cID}.order{created_at.desc}.limit(number_of_comments) 
+    Comment.where{community_id == cID}.order{created_at.desc}.limit(number_of_comments)
   end
-  
+
 =begin
   This method gets the recent members for this community.
   [Args]
@@ -151,7 +151,7 @@ class Community < ActiveRecord::Base
     member_role_id = self.member_role.id
     User.joins{roles_users.user}.where{roles_users.role_id == member_role_id}.order{roles_users.created_at.desc}.limit(number_of_members)
   end
-  
+
 =begin
   This method gets all of the characters from all of the users this community, scoped by the specified game.
   [Args]
@@ -159,7 +159,7 @@ class Community < ActiveRecord::Base
   [Returns] An array that contains all the character who are part of the specified game.
 =end
   def get_characters_for_game(game)
-    self.all_users.collect{|user| 
+    self.all_users.collect{|user|
        user.get_characters(game)
     }.flatten.compact
   end
@@ -169,21 +169,21 @@ class Community < ActiveRecord::Base
   [Args]
     * +name+ -> The string to convert using the subdomain transformation.
   [Returns] A string who is downcased and has spaces and dashes removed.
-=end  
+=end
   def self.convert_to_subdomain(name)
     name.downcase.gsub(/[\s\-]/,"")
   end
-  
+
 =begin
   _before_save_
-  
-  This method automatically updates this community's subdomain from this community's name. 
+
+  This method automatically updates this community's subdomain from this community's name.
   [Returns] False if an error occured, otherwise true.
 =end
   def update_subdomain
     self.subdomain = Community.convert_to_subdomain(name)
   end
-  
+
 =begin
   This method assigns this community's admin role to the specified user.
   [Args]
@@ -195,7 +195,7 @@ class Community < ActiveRecord::Base
     user.roles << self.member_role if not user.roles.include?(self.member_role)
     user.roles << self.admin_role
   end
-  
+
 =begin
   This method upgrades the specified user to .
   [Args]
@@ -207,22 +207,22 @@ class Community < ActiveRecord::Base
     user.roles.delete(self.applicant_role)
     user.roles << self.member_role
   end
-  
+
 =begin
   _after_create_
-  
+
   This method sets up the admin role for this community.
   [Returns] False if there was an error, otherwise true.
 =end
   def setup_admin_role
-    self.update_attributes(:admin_role => Role.create(:name => "Admin", 
+    self.update_attributes(:admin_role => Role.create(:name => "Admin",
       :permissions => SystemResource.all.collect{|resource|
-        Permission.create(:permissionable => resource, 
-          :name => "Full Access #{resource.name}", 
-          :show_p => true, 
-          :create_p => true, 
-          :update_p => true, 
-          :delete_p => true, 
+        Permission.create(:permissionable => resource,
+          :name => "Full Access #{resource.name}",
+          :show_p => true,
+          :create_p => true,
+          :update_p => true,
+          :delete_p => true,
           :access => (resource.name == "Discussion" or resource.name == "Comment" ? "lock" : nil)
         )
       },
@@ -236,7 +236,7 @@ class Community < ActiveRecord::Base
 
   This method sets up the default applicant role for this community.
   [Returns] False if there was an error, otherwise true.
-=end  
+=end
   def setup_applicant_role
     self.update_attributes(:applicant_role => Role.create(:name => "Applicant",
       :description => "",
@@ -249,17 +249,17 @@ class Community < ActiveRecord::Base
 
   This method sets up the default member role for this community.
   [Returns] False if there was an error, otherwise true.
-=end  
+=end
   def setup_member_role
     self.update_attributes(:member_role => Role.create(:name => "Member",
     :permissions => SystemResource.all.collect{|resource|
-        Permission.create(:permissionable => resource, 
-          :name => "View Access #{resource.name}", 
-          :show_p => true, 
-          :create_p => false, 
-          :update_p => false, 
+        Permission.create(:permissionable => resource,
+          :name => "View Access #{resource.name}",
+          :show_p => true,
+          :create_p => false,
+          :update_p => false,
           :delete_p => false
-        ) 
+        )
         #Remove Registration application
       },
       :description => "",
@@ -272,12 +272,12 @@ class Community < ActiveRecord::Base
 
   This method sets up the default applicant form for this community.
   [Returns] False if there was an error, otherwise true.
-=end  
+=end
   def setup_application_form
-    self.update_attributes(:community_application_form => SiteForm.create(:name => "Registration Application Form", 
-      :message => "Please fill out the form to apply for #{self.label}.", 
-      :thankyou => "Thank you for submitting your application.", 
-      :published => true, 
+    self.update_attributes(:community_application_form => SiteForm.create(:name => "Registration Application Form",
+      :message => "Please fill out the form to apply for #{self.label}.",
+      :thankyou => "Thank you for submitting your application.",
+      :published => true,
       :community => self))
   end
 
@@ -286,7 +286,7 @@ class Community < ActiveRecord::Base
   [Args]
     * +user+ -> The user who you would like to check.
   [Returns] True if the provided user can show this community, otherwise false.
-=end  
+=end
   def check_user_show_permissions(user)
     true
   end
@@ -296,7 +296,7 @@ class Community < ActiveRecord::Base
   [Args]
     * +user+ -> The user who you would like to check.
   [Returns] True if the provided user can create this community, otherwise false.
-=end  
+=end
   def check_user_create_permissions(user)
     true
   end
@@ -306,7 +306,7 @@ class Community < ActiveRecord::Base
   [Args]
     * +user+ -> The user who you would like to check.
   [Returns] True if the provided user can update this community, otherwise false.
-=end  
+=end
   def check_user_update_permissions(user)
     self.admin_role.users.include?(user)
   end
@@ -316,7 +316,7 @@ class Community < ActiveRecord::Base
   [Args]
     * +user+ -> The user who you would like to check.
   [Returns] True if the provided user can show this community, otherwise false.
-=end  
+=end
   def check_user_delete_permissions(user)
     self.admin_role.users.include?(user)
   end

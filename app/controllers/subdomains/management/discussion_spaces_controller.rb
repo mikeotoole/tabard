@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling discussion spaces within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::DiscussionSpacesController < SubdomainsController
@@ -53,7 +53,7 @@ class Subdomains::Management::DiscussionSpacesController < SubdomainsController
     else
       if @discussion_space.update_attributes(params[:discussion_space])
         add_new_flash_message('Discussion space was successfully updated.')
-        
+
       end
       grab_all_errors_from_model(@discussion_space)
       respond_with(@discussion_space)
@@ -64,7 +64,7 @@ class Subdomains::Management::DiscussionSpacesController < SubdomainsController
     @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_delete(@discussion_space)
       render_insufficient_privileges
-    else 
+    else
       if @discussion_space.destroy
         add_new_flash_message('Discussion space was successfully deleted.')
       end

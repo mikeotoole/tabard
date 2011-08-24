@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class is a file size validator.
 =end
 class FileSizeValidator < ActiveModel::EachValidator
@@ -17,7 +17,7 @@ class FileSizeValidator < ActiveModel::EachValidator
   [Args]
     * +options+ -> The options that are used for this validator.
   [Returns] True is the operation succeeded without errors, otherwise false.
-  [Raises] 
+  [Raises]
     * +ArgumentError+ -> if the Range is not specified as a range.
 =end
   def initialize(options)
@@ -33,7 +33,7 @@ class FileSizeValidator < ActiveModel::EachValidator
 =begin
   This method validates that the proper parameters has been specified for the validator.
   [Returns] True is the operation succeeded without errors, otherwise false.
-  [Raises] 
+  [Raises]
     * +ArgumentError+ -> if the range is unspecified, or uses a number other than a nonnegative Integer.
 =end
   def check_validity!
@@ -62,7 +62,7 @@ class FileSizeValidator < ActiveModel::EachValidator
 =end
   def validate_each(record, attribute, value)
     raise(ArgumentError, "A CarrierWave::Uploader::Base object was expected") unless value.kind_of? CarrierWave::Uploader::Base
-    
+
     value = (options[:tokenizer] || DEFAULT_TOKENIZER).call(value) if value.kind_of?(String)
 
     CHECKS.each do |key, validity_check|
@@ -82,7 +82,7 @@ class FileSizeValidator < ActiveModel::EachValidator
       record.errors.add(attribute, MESSAGES[key], errors_options)
     end
   end
-  
+
 =begin
   This method gets an instance of an ActionView number helper.
   [Returns] An instance of an ActionView number helper.

@@ -2,36 +2,36 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a game announcement.
 =end
 class GameAnnouncement < CommunityAnnouncement
   #attr_accessible :name, :body, :user_profile, :game_profiles, :community, :game
-  
+
   belongs_to :game
   has_many :game_profiles, :through => :acknowledgment_of_announcements
   belongs_to :user_profile
-  
+
   after_create :create_acknowledgments
-  
+
   validate :name, :presence => true
   validate :body, :presence => true
   validate :user_profile, :presence => true
   validate :community, :presence => true
   validate :game, :presence => true
-  
+
 =begin
   _after_create_
-  
+
   This method creates all of the acknowledgments for this announcement.
   [Returns] False if the operation could not be preformed, otherwise true.
 =end
   def create_acknowledgments
     user_profiles = Array.new
-    self.community.all_users.each do |user| 
+    self.community.all_users.each do |user|
       user_profiles << user.user_profile
     end
-    
+
     for profile in user_profiles
       game_profile = profile.game_profiles.find(:first, :conditions => {:game_id => self.game.id})
         if game_profile != nil
@@ -52,9 +52,9 @@ class GameAnnouncement < CommunityAnnouncement
         return true
       end
     end
-    user.can_show("GameAnnouncement") or user.can_show("SiteAnnouncement") 
+    user.can_show("GameAnnouncement") or user.can_show("SiteAnnouncement")
   end
-  
+
 =begin
   This method defines how create permissions are determined for this game announcement.
   [Args]
@@ -64,7 +64,7 @@ class GameAnnouncement < CommunityAnnouncement
   def check_user_create_permissions(user)
     user.can_create("GameAnnouncement") or user.can_create("SiteAnnouncement")
   end
-  
+
 =begin
   This method defines how update permissions are determined for this game announcement.
   [Args]
@@ -74,7 +74,7 @@ class GameAnnouncement < CommunityAnnouncement
   def check_user_update_permissions(user)
     user.can_update("GameAnnouncement") or user.can_update("SiteAnnouncement")
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this game announcement.
   [Args]

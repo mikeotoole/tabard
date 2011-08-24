@@ -4,7 +4,7 @@ require 'carrierwave/processing/mini_magick'
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This uploader is for handling the uploading of avatar using carrier wave.
 =end
 class AvatarUploader < CarrierWave::Uploader::Base
@@ -30,7 +30,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
       "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
     end
   end
-  
+
   #process :resize_to_fill => [700, 700]
 
   # Process files as they are uploaded:
@@ -44,7 +44,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :scale => [50, 50]
   # end
-  
+
   version :standard do
     process :resize_to_fill => [70,70]
   end

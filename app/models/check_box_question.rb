@@ -2,11 +2,11 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a check box question.
 =end
 class CheckBoxQuestion < Question
-  
+
 =begin
   This method gets a path helper for a check box question
   [Returns] The path helper for this check box question.
@@ -14,7 +14,7 @@ class CheckBoxQuestion < Question
   def path_helper
      'check_box_questions'
   end
-  
+
 end
 
 # == Schema Information

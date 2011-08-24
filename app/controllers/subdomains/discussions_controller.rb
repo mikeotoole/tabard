@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling discussions within the scope of subdomains (communities).
 =end
 class Subdomains::DiscussionsController < SubdomainsController
@@ -42,18 +42,18 @@ class Subdomains::DiscussionsController < SubdomainsController
     @discussion = Discussion.find(params[:id])
     if !current_user.can_delete(@discussion)
       render_insufficient_privileges
-    else 
+    else
       @discussion.destroy
       grab_all_errors_from_model(@discussion)
       respond_with(@discussion)
     end
   end
-  
+
   def lock
     @discussion = Discussion.find_by_id(params[:id])
     if @discussion.can_user_lock(current_user)
       @discussion.has_been_locked = true
-      if @discussion.save 
+      if @discussion.save
         add_new_flash_message("Discussion was successfully locked.")
       else
         add_new_flash_message("Discussion was not locked, internal rails error.", 'alert')
@@ -63,12 +63,12 @@ class Subdomains::DiscussionsController < SubdomainsController
     end
     render_insufficient_privileges
   end
-  
+
   def unlock
     @discussion = Discussion.find_by_id(params[:id])
     if @discussion.can_user_lock(current_user)
       @discussion.has_been_locked = false
-      if @discussion.save 
+      if @discussion.save
         add_new_flash_message("Discussion was successfully unlocked.")
       else
         add_new_flash_message("Discussion was not unlocked, internal rails error.", 'alert')

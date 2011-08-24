@@ -2,17 +2,17 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for profiles.
 =end
 class ProfilesController < ApplicationController
   respond_to :html
-  before_filter :authenticate  
+  before_filter :authenticate
 
   def index
     @profiles = Profile.all
     @user_profiles = Profile.find(:all, :conditions => { :type => 'UserProfile' })
-    @game_profiles = Profile.find(:all, :conditions => { :type => 'GameProfile' })    
+    @game_profiles = Profile.find(:all, :conditions => { :type => 'GameProfile' })
     respond_with(@profiles, @site_profiles, @game_profiles)
   end
 
@@ -21,7 +21,7 @@ class ProfilesController < ApplicationController
     if @profile.game_id != nil
       @game = Game.find(@profile.game_id)
     end
-    
+
     if @profile.type == "GameProfile"
       respond_with(@profile) # TODO Verify that this is correct.
     else

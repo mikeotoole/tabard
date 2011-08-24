@@ -12,7 +12,7 @@ Bv::Application.routes.draw do
   match 'mail/inbox' => "mailbox#index", :as => "inbox"
   match 'mail/trash' => "mailbox#trash", :as => "trash"
   match 'mail/inbox/:id' => "messages#show", :as => "mail"
-  
+
   #Accounts
   match "/signup" => "account#new", :as => "signup", :via => :get
   match "/signup" => "account#create", :as => "signup", :via => :post
@@ -34,7 +34,7 @@ Bv::Application.routes.draw do
   resources :wow_characters, :only => :show
   resources :swtor_characters, :only => :show
   resources :base_characters, :only => :new
-  
+
   resources :registration_answers,
     :text_box_questions,
     :radio_button_questions,
@@ -42,40 +42,40 @@ Bv::Application.routes.draw do
     :check_box_questions,
     :combo_box_questions,
     :answers
-  
+
   resources :questions, :only => [ :new, :edit, :udpate, :destroy ]
 
-  resources :registration_applications, :only => [:new, :create, :show]  
-  
+  resources :registration_applications, :only => [:new, :create, :show]
+
   match 'announcement/acknowledge' => 'announcement_acknowledgement#new', :as => 'announcement_acknowledgement'
-  
+
   match '/profiles/newgame' => "profiles#newgame"
-  
+
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
-  
+
   resources :site_forms do
     resources :submissions, :only => [:index, :show, :new, :create]
   end
-  
+
   resources :profiles do
     resources :acknowledgment_of_announcements
   end
-  
+
   resources :game_profiles do
     resources :acknowledgment_of_announcements
   end
-  
+
   resources :user_profiles do
     resources :acknowledgment_of_announcements
   end
-  
+
   resource :session
-  
+
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
-  
+
   resources :communities, :except => :show
-  
+
   constraints(Subdomain) do
     match "/" => "subdomains#index"
     scope :module => "subdomains" do
@@ -83,7 +83,7 @@ Bv::Application.routes.draw do
       match '/management' => 'management#index', :as => 'management'
       namespace "management" do
         resources :users, :only => [:index, :destroy]
-      
+
         resources :roles do
           resources :permissions, :only => [:new, :create, :update, :delete, :destroy]
         end
@@ -104,7 +104,7 @@ Bv::Application.routes.draw do
           post :unlock
         end
       end
-      
+
       resources :discussion_spaces do
         resources :discussions, :controller => 'subdomains/discussion_spaces/discussions', :only => [:new, :create]
       end
@@ -115,7 +115,7 @@ Bv::Application.routes.draw do
           post :unlock
         end
       end
-      
+
       resources :page_spaces do
         resources :pages
       end
@@ -123,15 +123,15 @@ Bv::Application.routes.draw do
       resources :community_announcements
     end
   end
-  
+
   #Announcement Helpers
   resources :announcements,
             :site_announcements
   resources :game_announcements, :controller => "announcements", :type => "GameAnnouncement", :only => :show
   resources :community_announcements, :controller => "announcements", :type => "CommunityAnnouncement", :only => :show
-  
+
   root :to => "home#index"
-  
+
   match "/404" => "status_code#invoke_404", :as => "status_404"
   match "*path" => "status_code#invoke_404"
 
@@ -193,7 +193,7 @@ Bv::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 20 Aug 2011 11:54
+# Generated on 23 Aug 2011 15:08
 #
 #                                          message DELETE /messages/:id(.:format)                                                            {:action=>"destroy", :controller=>"messages"}
 #                                        sent_mail        /mail/sent/:id(.:format)                                                           {:controller=>"sent", :action=>"show"}

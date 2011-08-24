@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling permissions within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::PermissionsController < SubdomainsController
@@ -61,14 +61,14 @@ class Subdomains::Management::PermissionsController < SubdomainsController
       respond_with(@permission)
     end
   end
-  
+
   private
     def get_role_from_id
       @role = Role.find_by_id(params['role_id'])
     end
-    
+
     def get_avalible_permissionables
-      @permissionables = Array.new() 
+      @permissionables = Array.new()
       for resource in SystemResource.all
         case resource.name
         when "DiscussionSpace"
@@ -77,7 +77,7 @@ class Subdomains::Management::PermissionsController < SubdomainsController
         when "PageSpace"
           @pageHeader  = [[resource.id.to_s + "|" + resource.class.to_s, "All "+ resource.name.pluralize]]
           pArray = Array.new
-          @community.page_spaces.all.each do |pageS| 
+          @community.page_spaces.all.each do |pageS|
             pArray << [pageS.name, pageS.id.to_s + "|" + pageS.class.to_s]
             pageS.pages.each do |page|
               pArray << ["-- #{page.title}", page.id.to_s + "|" + page.class.to_s]

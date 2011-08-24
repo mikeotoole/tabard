@@ -1,6 +1,6 @@
-class AddSessionsTable < ActiveRecord::Migration
-  def self.up
-    create_table :sessions do |t|
+[?1l>[?12l[?25h[?1049lVim: Caught deadly signal SEGV
+Vim: Finished.
+[55;1Hssions do |t|
       t.string :session_id, :null => false
       t.text :data
       t.timestamps

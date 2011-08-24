@@ -2,12 +2,12 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a registration application.
 =end
 class RegistrationApplication < Submission
   after_create :set_applicant
-  
+
 =begin
   This method gets name of the community that this registration application belongs to.
   [Returns] A string that contains the name of the community this registration application belongs to.
@@ -15,7 +15,7 @@ class RegistrationApplication < Submission
   def community_name
     self.site_form.community_name
   end
-  
+
 =begin
   This method gets the email of the user this registration application belongs to.
   [Returns] A string that contains the email of the user this registration application belongs to.
@@ -23,7 +23,7 @@ class RegistrationApplication < Submission
   def applicant_email
     self.user_profile.user_email
   end
-  
+
 =begin
   This method sets this registration application to an applicant status.
   [Returns] True is successful, otherwise false.
@@ -31,7 +31,7 @@ class RegistrationApplication < Submission
   def set_applicant
     self.update_attribute(:status, 1)
   end
-  
+
 =begin
   This method sets this registration application to an accepted status.
   [Returns] True is successful, otherwise false.
@@ -41,7 +41,7 @@ class RegistrationApplication < Submission
     self.user_profile.user.roles.delete(self.community.applicant_role)
     self.user_profile.user.roles << self.community.member_role
   end
-  
+
 =begin
   This method sets this registration application to an rejected status.
   [Returns] True is successful, otherwise false.
@@ -50,7 +50,7 @@ class RegistrationApplication < Submission
     self.update_attribute(:status, 4)
     self.user_profile.user.roles.delete(self.community.applicant_role)
   end
-  
+
 =begin
   This method gets the applicant role of the community this registration application belongs to.
   [Returns] The applicant role of the community that this registration application belongs to.
@@ -58,7 +58,7 @@ class RegistrationApplication < Submission
   def applicant_role
     self.community.applicant_role
   end
-  
+
 end
 
 # == Schema Information

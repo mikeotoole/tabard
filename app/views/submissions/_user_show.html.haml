@@ -4,5 +4,5 @@
   %b Username:
   = @submission.name
   %p= render :partial => "questions/question_answer", :collection => @submission.all_questions, :locals => {:submission =>  @submission}
-  
+
   = link_to "Forms", site_forms_path

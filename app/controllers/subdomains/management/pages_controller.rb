@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling pages within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::PagesController < SubdomainsController

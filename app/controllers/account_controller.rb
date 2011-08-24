@@ -2,16 +2,16 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for accounts.
 =end
 class AccountController < ApplicationController
   respond_to :html
   before_filter :authenticate, :except => [:new, :create, :show]
   before_filter :get_all_active_games, :get_all_characters
-  
+
   def new
-    @profile = UserProfile.new 
+    @profile = UserProfile.new
     @user = User.new
     add_new_flash_message("Please fill this form out to create your Crumblin account.")
   end
@@ -21,7 +21,7 @@ class AccountController < ApplicationController
   def create
     @user = User.new(params[:user])
     @profile = @user.build_user_profile(params[:user_profile])
-    
+
     #if params[:wow_character]
     #  @wowCharacters = Array.new
     #  params[:wow_character].each do |character|
@@ -40,7 +40,7 @@ class AccountController < ApplicationController
     #  end
     #end
     @user.no_signup_email = true # TODO remove in production
-    if @user.save 
+    if @user.save
       add_new_flash_message('You have successfully created your new Crumblin user.')
       add_new_flash_message("Welcome, <em>#{@user.name}</em>.")
       session[:user_id] = @user.id
@@ -50,12 +50,12 @@ class AccountController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
     @user = current_user
     @profile = current_user.user_profile
     @wowCharacters = current_user.get_characters(Wow)
-    @swtorCharacters = current_user.get_characters(Swtor)   
+    @swtorCharacters = current_user.get_characters(Swtor)
     add_new_flash_message('Characters are broken?')
   end
 
@@ -75,7 +75,7 @@ class AccountController < ApplicationController
       redirect_to signup_path
     else
       @user = current_user
-      @profile = current_user.user_profile   
+      @profile = current_user.user_profile
     end
   end
 
@@ -87,7 +87,7 @@ class AccountController < ApplicationController
   def get_all_active_games
     @games = Game.active
   end
-  
+
   def get_all_characters
     @characterCount = 0
     if logged_in?

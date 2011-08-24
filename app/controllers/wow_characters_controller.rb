@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for World of Warcraft characters.
 =end
 class WowCharactersController < ApplicationController
@@ -21,7 +21,7 @@ class WowCharactersController < ApplicationController
       if !current_user.can_show(@character)
         render_insufficient_privileges
       else
-        @game = Game.find_by_id(@character.game_id) if @character    
+        @game = Game.find_by_id(@character.game_id) if @character
         respond_with(@character)
       end
   end
@@ -33,7 +33,7 @@ class WowCharactersController < ApplicationController
       #   render :nothing => true, :status => :forbidden
       # else
         @character.game_id = params[:game_id]
-  
+
         respond_with(@character)
       # end
   end
@@ -43,10 +43,10 @@ class WowCharactersController < ApplicationController
     if !current_user.can_create(@character)
       render_insufficient_privileges
     else
-      
+
       profile = UserProfile.find_by_user_id(current_user.id)
       profile.build_character(@character, params[:default])
-  
+
       respond_to do |format|
         if profile.save
           add_new_flash_message('Character was successfully created.')
@@ -68,13 +68,13 @@ class WowCharactersController < ApplicationController
       render_insufficient_privileges
     else
       @game = Game.find_by_id(@character.game_id) if @character
-      
+
       if params[:default]
         @gameProfile = CharacterProxy.character_game_profile(@character)
         @gameProfile.default_character_proxy_id = @character.character_proxy_id if @gameProfile
         @gameProfile.save if @gameProfile
       end
-  
+
       if @character.update_attributes(params[:wow_character])
         add_new_flash_message('Character was successfully updated.')
         respond_with(@game, @character)
@@ -94,9 +94,9 @@ class WowCharactersController < ApplicationController
       render_insufficient_privileges
     else
       @character.destroy if @character
-      
+
       add_new_flash_message('Character was successfully deleted.')
-      
+
       respond_to do |format|
         format.html { redirect_to user_profile_path(UserProfile.find_by_id(current_user)) }
         format.xml  { head :ok }

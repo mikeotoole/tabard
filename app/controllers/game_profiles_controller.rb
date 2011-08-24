@@ -2,12 +2,12 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for game profiles.
 =end
 class GameProfilesController < ProfilesController
   respond_to :html
-  before_filter :authenticate  
+  before_filter :authenticate
 
   def show
     @profile = Profile.find(params[:id])

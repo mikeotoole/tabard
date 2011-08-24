@@ -2,19 +2,19 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a Character Proxy.
 =end
 class CharacterProxy < ActiveRecord::Base
-  
+
   belongs_to :game_profile
   belongs_to :character, :polymorphic => true, :autosave => true
-  
+
   #TODO validate game_profile. Because of our creation design does this need to happen? If so it will need to be an after_create. -MO
   validates_presence_of :character
-  
+
   after_create :default_gp_checker
-  
+
 =begin
   This method gets all characters, regardless of their game.
   [Returns] An array that contains all characters.
@@ -22,7 +22,7 @@ class CharacterProxy < ActiveRecord::Base
   def self.all_characters
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end
-  
+
 =begin
   This method gets the game profile for a character.
   [Args]
@@ -34,15 +34,15 @@ class CharacterProxy < ActiveRecord::Base
     profile = proxy.game_profile if proxy
     profile
   end
-  
+
 =begin
   This method gets the active_profile_id for this character proxy.
   [Returns] The id of this character_proxy's game_profile.
-=end  
+=end
   def active_profile_id
     self.game_profile.id
   end
-  
+
 =begin
   _after_create_
 

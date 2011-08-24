@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling discussion spaces within the scope of subdomains (communities).
 =end
 class Subdomains::DiscussionSpacesController < SubdomainsController
@@ -23,7 +23,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_show(@discussion_space)
       render_insufficient_privileges
-    else   
+    else
       # Site Announcement Space
       #if(@discussion_space.system and @discussion_space.announcement_space and @discussion_space.game == nil)
       #  render :partial => 'discussion_spaces/site_announcement_space'
@@ -34,8 +34,8 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
       #elsif(@discussion_space.system and @discussion_space.registration_application_space != nil)
       #  @registration_applications = RegistrationApplication.all_new
       #  @form = SiteForm.application_form
-      #  render :partial => 'discussion_spaces/registration_application_space'  
-      #end 
+      #  render :partial => 'discussion_spaces/registration_application_space'
+      #end
       respond_with(@discussion_space)
     end
   end
@@ -89,15 +89,15 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     @discussion_space = @community.discussion_spaces.find(params[:id])
     if !current_user.can_delete(@discussion_space)
       render_insufficient_privileges
-    else 
+    else
       if @discussion_space.destroy
         add_new_flash_message('Discussion space was successfully deleted.')
       end
       respond_with(@discussion_space)
     end
   end
-  
+
   def get_option_hash
-    @option_hash = { 'Games' => Game.where("is_active = ?", true).collect{ |game| [game.name, game.id] } } 
+    @option_hash = { 'Games' => Game.where("is_active = ?", true).collect{ |game| [game.name, game.id] } }
   end
 end

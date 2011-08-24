@@ -2,27 +2,27 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a game.
 =end
 class Game < ActiveRecord::Base
   #attr_accessible :name, :is_active, :announcement_space_id, :character_discussion_space
   #attr_accessible :game_announcements, :game_profiles, :discussion_spaces, :page_spaces, :supported_games
   #attr_accessible :type_helper
-  
+
  has_many :game_announcements
  has_many :game_profiles, :dependent => :destroy
  has_many :discussion_spaces
  has_many :page_spaces
  has_many :supported_games
  has_many :communities, :through => :supported_games
- 
+
  validates_presence_of :name
- 
+
  after_create :create_game_discussion_space, :create_character_discussion_space
- 
+
  scope :active, :conditions => {:is_active => true}
- 
+
 # TODO This needs to be evaluated
  def create_game_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Announcements",
@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
    self.announcement_space_id = discussion_space.id
    self.save
  end
- 
+
 # TODO This needs to be evaluated
  def create_character_discussion_space
    discussion_space = DiscussionSpace.create( :name => self.name+" Characters",
@@ -41,22 +41,22 @@ class Game < ActiveRecord::Base
    self.character_discussion_space_id = discussion_space.id
    self.save
  end
- 
+
 # TODO This needs to be evaluated
  def announcement_space
    DiscussionSpace.find_by_id(self.announcement_space_id)
  end
- 
+
 # TODO This needs to be evaluated
  def character_discussion_space
    DiscussionSpace.find_by_id(self.character_discussion_space_id)
  end
- 
+
   # def self.active
   #   Game.where("is_active = ?", true)
   # end
- 
- # Lets the subclasses use the parents routes. 
+
+ # Lets the subclasses use the parents routes.
   def self.inherited(child)
     child.instance_eval do
       def model_name
@@ -65,8 +65,8 @@ class Game < ActiveRecord::Base
     end
     super
   end
- 
-  # Used to offer a dynamically generated list of subclass to choose from. 
+
+  # Used to offer a dynamically generated list of subclass to choose from.
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
@@ -87,7 +87,7 @@ class Game < ActiveRecord::Base
   def check_user_show_permissions(user)
     true
   end
-  
+
 =begin
   This method defines how create permissions are determined for this game.
   [Args]
@@ -97,7 +97,7 @@ class Game < ActiveRecord::Base
   def check_user_create_permissions(user)
     false
   end
-  
+
 =begin
   This method defines how update permissions are determined for this game.
   [Args]
@@ -107,7 +107,7 @@ class Game < ActiveRecord::Base
   def check_user_update_permissions(user)
     false
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this game.
   [Args]

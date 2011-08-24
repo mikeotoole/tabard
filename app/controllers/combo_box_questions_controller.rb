@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for combo box questions.
 =end
 class ComboBoxQuestionsController < ApplicationController
@@ -52,10 +52,10 @@ class ComboBoxQuestionsController < ApplicationController
       render_insufficient_privileges
     else
       @form = SiteForm.find(@old_combo_box_question.site_form_id)
-      
+
       @combo_box_question = @old_combo_box_question.clone
-      @combo_box_question.predefined_answers = @old_combo_box_question.predefined_answers 
-      
+      @combo_box_question.predefined_answers = @old_combo_box_question.predefined_answers
+
       @old_combo_box_question.site_form_id = nil
       @old_combo_box_question.save
 
@@ -75,7 +75,7 @@ class ComboBoxQuestionsController < ApplicationController
       render_insufficient_privileges
     else
       @form = SiteForm.find(@combo_box_question.site_form_id)
-      
+
       @combo_box_question.site_form_id = nil
       @combo_box_question.save
       grab_all_errors_from_model(@combo_box_question)

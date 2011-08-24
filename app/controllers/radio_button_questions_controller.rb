@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for radio buttons.
 =end
 class RadioButtonQuestionsController < ApplicationController
@@ -52,14 +52,14 @@ class RadioButtonQuestionsController < ApplicationController
     if !current_user.can_update(@old_radio_button_question)
       render_insufficient_privileges
     else
-      @form = SiteForm.find(@old_radio_button_question.site_form_id)  
-      
+      @form = SiteForm.find(@old_radio_button_question.site_form_id)
+
       @radio_button_question = @old_radio_button_question.clone
-      @radio_button_question.predefined_answers = @old_radio_button_question.predefined_answers   
-      
+      @radio_button_question.predefined_answers = @old_radio_button_question.predefined_answers
+
       @old_radio_button_question.site_form_id = nil
       @old_radio_button_question.save
-  
+
       respond_to do |format|
         if @radio_button_question.update_attributes(params[:radio_button_question])
           add_new_flash_message('Question was successfully updated.')
@@ -81,10 +81,10 @@ class RadioButtonQuestionsController < ApplicationController
       render_insufficient_privileges
     else
       @form = SiteForm.find(@radio_button_question.site_form_id)
-      
+
       @radio_button_question.site_form_id = nil
       @radio_button_question.save
-  
+
       respond_to do |format|
         format.html { redirect_to([:management, @form]) }
         format.xml  { head :ok }

@@ -2,12 +2,12 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for acknowledging announcements.
 =end
 class AnnouncementAcknowledgementController < ApplicationController
   include ActionView::Helpers::TagHelper
-  
+
   def new
     @announcement_acknowledgement = AcknowledgmentOfAnnouncement.find_by_id(params[:id])
     if @announcement_acknowledgement != nil
@@ -21,5 +21,5 @@ class AnnouncementAcknowledgementController < ApplicationController
       format.js
     end
   end
-  
+
 end

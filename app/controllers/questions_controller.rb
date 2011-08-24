@@ -2,14 +2,14 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for questions.
 =end
 class QuestionsController < ApplicationController
   respond_to :html, :js
 
-  def new      
-    @form = SiteForm.find_by_id(params[:site_form_id])     
+  def new
+    @form = SiteForm.find_by_id(params[:site_form_id])
     @question = case params[:q_type]
       when 'CheckBoxQuestion' then @check_box_question = CheckBoxQuestion.new(:site_form_id => @form.id)
         3.times { @check_box_question.predefined_answers.build }
@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
         3.times { @radio_button_question.predefined_answers.build }
         @radio_button_question
       when 'TextBoxQuestion' then @text_box_question = TextBoxQuestion.new(:site_form_id => @form.id)
-      when 'TextQuestion' then @text_question = TextQuestion.new(:site_form_id => @form.id) 
+      when 'TextQuestion' then @text_question = TextQuestion.new(:site_form_id => @form.id)
       else Question.new
     end
     respond_with(@question)
@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
 
   def update
     @old_question = Question.find(params[:id])
-    @form = SiteForm.find(@old_question.site_form_id)    
+    @form = SiteForm.find(@old_question.site_form_id)
     @question = @old_question.clone
     @question.save
     @old_question.site_form_id = nil

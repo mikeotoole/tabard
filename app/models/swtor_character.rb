@@ -2,35 +2,35 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a Star Wars the Old Republic character.
 =end
 class SwtorCharacter < BaseCharacter
-  
+
 =begin
   This attribute is the avatar for this SWTOR character. It maps to the AvatarUploader.
 =end
   attr_accessor :avatar
-  
+
 =begin
   This attribute is the avatar cache for this SWTOR character. It is used by the AvatarUploader.
 =end
   attr_accessor :avatar_cache
-  
+
 =begin
   This attribute is the avatar removal for this SWTOR character. It is used by the AvatarUploader.
 =end
   attr_accessor :remove_avatar
-  
+
   #attr_accessible :name, :server, :game, :discussion
-  
+
   belongs_to :swtor, :foreign_key => :game_id
-  
+
   validates_presence_of :swtor
-  
+
   #uploaders
   mount_uploader :avatar, AvatarUploader
-  
+
 =begin
   This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
 =end
@@ -40,7 +40,7 @@ class SwtorCharacter < BaseCharacter
     rescue Fog::Storage::Rackspace::NotFound
     end
   end
-    
+
 =begin
   This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
 =end
@@ -51,7 +51,7 @@ class SwtorCharacter < BaseCharacter
       @previous_model_for_avatar = nil
     end
   end
-  
+
 =begin
   This method gets the display name for the character.
   [Returns] A string that contains the name of this character.
@@ -59,7 +59,7 @@ class SwtorCharacter < BaseCharacter
   def display_name
     self.name
   end
-  
+
 =begin
   This method gets the game for the character.
   [Returns] The SWTOR game.
@@ -67,15 +67,15 @@ class SwtorCharacter < BaseCharacter
   def game
     self.swtor
   end
-  
+
 =begin
   This method gets the description for the character.
   [Returns] A string that contains the description of the character.
 =end
   def description
     "SWTOR Character"
-  end    
-  
+  end
+
 end
 
 # == Schema Information

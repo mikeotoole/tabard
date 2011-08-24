@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling game announcements within the scope of subdomains (communities).
 =end
 class GameAnnouncementsController < SubdomainsController
@@ -22,7 +22,7 @@ class GameAnnouncementsController < SubdomainsController
       if @game_announcement.game_id != nil
         @game = Game.find(@game_announcement.game_id)
       end
-      
+
       @acknowledgments = AcknowledgmentOfAnnouncement.find(:all, :conditions => {:announcement_id => @game_announcement.id})
       respond_with(@game_announcement)
     end
@@ -50,7 +50,7 @@ class GameAnnouncementsController < SubdomainsController
   #  @game_announcement = game_announcement_helper.new(params[:game_announcement])
   #  if !current_user.can_create(@game_announcement)
   #    render_insufficient_privileges
-  #  else 
+  #  else
   #    if @game_announcement.save
   #      respond_with(@game_announcement)
   #    end
@@ -82,13 +82,13 @@ class GameAnnouncementsController < SubdomainsController
   #    respond_with(@game_announcement)
   #  end
   #end
-  
+
   private
   #Nested Resource Helper
   def game_announcement_helper
     @game ? @game.game_announcements : GameAnnouncement
   end
-  
+
   def grab_game_from_game_id
     @game = Game.find_by_id(params[:game_id]) if params[:game_id]
   end

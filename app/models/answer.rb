@@ -2,15 +2,15 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents an answer.
 =end
 class Answer < ActiveRecord::Base
   #attr_accessible :question, :content, :submission
-  
+
   belongs_to :question
-  belongs_to :submission 
-  
+  belongs_to :submission
+
 =begin
   This method is a helper that gets the question id of this answer.
   [Returns] The id of this answers question, if possible, otherwise false.
@@ -19,7 +19,7 @@ class Answer < ActiveRecord::Base
     return self.question.id if question
     nil
   end
-  
+
 =begin
   This method gets the type.
   [Returns] The type of answer.
@@ -27,7 +27,7 @@ class Answer < ActiveRecord::Base
   def type_helper
     self.type
   end
-  
+
 =begin
   This method sets the type.
   [Args]
@@ -37,7 +37,7 @@ class Answer < ActiveRecord::Base
   def type_helper=(type)
     self.type = type
   end
-  
+
 end
 
 # == Schema Information

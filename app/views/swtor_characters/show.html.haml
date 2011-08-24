@@ -5,7 +5,7 @@
 
 #page
   %h1= @character.name
-  
+
   %p#actions
     - if logged_in?
       - if current_user.can_update(@character)

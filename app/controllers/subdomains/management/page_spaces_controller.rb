@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling page spaces within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::PageSpacesController < SubdomainsController
@@ -53,7 +53,7 @@ class Subdomains::Management::PageSpacesController < SubdomainsController
     @page_space = @community.page_spaces.find(params[:id])
     if !current_user.can_update(@page_space)
       render_insufficient_privileges
-    else      
+    else
       if @page_space.update_attributes(params[:page_space])
         add_new_flash_message('Page space was successfully updated.')
       end
@@ -66,7 +66,7 @@ class Subdomains::Management::PageSpacesController < SubdomainsController
     @page_space = @community.page_spaces.find(params[:id])
     if !current_user.can_delete(@page_space)
       render_insufficient_privileges
-    else 
+    else
       if @page_space.destroy
         add_new_flash_message('Page space was successfully deleted.')
       end

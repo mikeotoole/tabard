@@ -2,11 +2,11 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a community observer.
 =end
 class CommunityObserver < ActiveRecord::Observer
-  
+
 =begin
   _after_create_
 

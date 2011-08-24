@@ -2,20 +2,20 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for user profiles.
 =end
 class UserProfilesController < ProfilesController
-  respond_to :html 
-  before_filter :authenticate  
+  respond_to :html
+  before_filter :authenticate
 
   def index
     @profiles = UserProfile.find(:all, :conditions => { :type => 'UserProfile' })
     respond_with(@profile)
-  end    
+  end
 
   def show
-    @profile = UserProfile.find(params[:id])    
+    @profile = UserProfile.find(params[:id])
     respond_with(@profile)
   end
 
@@ -25,7 +25,7 @@ class UserProfilesController < ProfilesController
     @profile.user = current_user
     respond_with(@profile)
   end
-  
+
   def edit
     @profile = UserProfile.find(params[:id])
     respond_with(@profile)
@@ -33,7 +33,7 @@ class UserProfilesController < ProfilesController
 
   def create
     @profile = UserProfile.new(params[:profile])
-    @profile.user = current_user      
+    @profile.user = current_user
     if @profile.save
       add_new_flash_message('Profile was successfully created.')
     end
@@ -59,5 +59,5 @@ class UserProfilesController < ProfilesController
       add_new_flash_message('Profile was successfully deleted.')
     end
     respond_with(@profile)
-  end  
+  end
 end

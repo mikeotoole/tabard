@@ -2,14 +2,14 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a registration application observer.
 =end
 class RegistrationApplicationObserver < ActiveRecord::Observer
-  
+
 =begin
   _after_create_
-  
+
   This method sends out an email to the applicant informing them that is was recieved, and one to the community leader.
   It then grants the applicant the applicant role of the community.
   [Returns] True is successful, otherwise false.

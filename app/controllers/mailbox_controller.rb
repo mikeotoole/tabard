@@ -2,13 +2,13 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for mailbox.
 =end
 class MailboxController < ApplicationController
-  before_filter :authenticate  
+  before_filter :authenticate
   respond_to :html
-  
+
   def index
     @folder = current_user.inbox
     @messages = @folder.messages.delete_if {|message| message.deleted == true}

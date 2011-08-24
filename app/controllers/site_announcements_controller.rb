@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for site announcements.
 =end
 class SiteAnnouncementsController < ApplicationController
@@ -30,7 +30,7 @@ class SiteAnnouncementsController < ApplicationController
       render_insufficient_privileges
     else
       respond_with(@site_announcement)
-    end 
+    end
   end
 
   def edit

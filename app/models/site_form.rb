@@ -2,19 +2,19 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a site form.
 =end
 class SiteForm < ActiveRecord::Base
   #attr_accessible :message, :name, :thank_you, :published, :community, :questions, :submissions
-  
+
   has_many :questions, :dependent => :destroy
   has_many :submissions, :dependent => :destroy
-  
+
   scope :published, :conditions => {:published => true, :registration_application_form => false}
-  
+
   belongs_to :community
-  
+
 =begin
   This method gets the name of the community that this form belongs to.
   [Returns] A string that contains the display name of the community that this form belongs to, otherwise it contains the empty string.
@@ -23,7 +23,7 @@ class SiteForm < ActiveRecord::Base
     return self.community.display_name if self.community
     ""
   end
-  
+
 =begin
   This method defines how show permissions are determined for this site form.
   [Args]
@@ -34,7 +34,7 @@ class SiteForm < ActiveRecord::Base
     return true if self.published
     user.can_show("SiteForm")
   end
-  
+
 =begin
   This method defines how create permissions are determined for this site form.
   [Args]
@@ -44,7 +44,7 @@ class SiteForm < ActiveRecord::Base
   def check_user_create_permissions(user)
     user.can_create("SiteForm")
   end
-  
+
 =begin
   This method defines how update permissions are determined for this site form.
   [Args]
@@ -54,7 +54,7 @@ class SiteForm < ActiveRecord::Base
   def check_user_update_permissions(user)
     user.can_update("SiteForm")
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this site form.
   [Args]

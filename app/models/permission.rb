@@ -2,20 +2,20 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a permission.
 =end
 class Permission < ActiveRecord::Base
   #attr_accessible :name, :role, :permissionable, :access, :show_p, :create_p, :update_p, :delete_p, :permission_level
-  
+
   belongs_to :role
   belongs_to :permissionable, :polymorphic => true
   scope :extra_special_permissions, :conditions => ["access <> ''"]
-  
+
   before_create :check_name_and_create
-  
+
   validate :ensure_system_role_association_rules
-  
+
 =begin
   This method gets the magic polymorphic helper.
   [Returns] A string that contains the permissionable id + | + the permissionable class.
@@ -35,17 +35,17 @@ class Permission < ActiveRecord::Base
     self.permissionable_id = magic_helper.split('|',2)[0]
     self.permissionable_type = magic_helper.split('|',2)[1]
   end
-  
+
 =begin
   _before_create_
-  
+
   This method ensures that this permission always has a name.
   [Returns] True if the operation succeeded, otherwise false.
 =end
   def check_name_and_create
     self.name = self.permissionable_name unless self.name
   end
-  
+
 =begin
   This method ensures that this permission is not changing the admin system role.
   [Returns] True if the is permission is valid, otherwise false.
@@ -54,7 +54,7 @@ class Permission < ActiveRecord::Base
     return true unless not self.new_record? and self.role and self.role.is_admin_role? and self.role.is_applicant_role?
     self.errors[:base] << "You can't change the permissions for admin role."
   end
-  
+
 =begin
   This method gets the name of the role this permission is belongs to.
   [Returns] A string that contains the name of the role this permission belongs to, if possible, otherwise it returns an empty string.
@@ -62,7 +62,7 @@ class Permission < ActiveRecord::Base
   def role_name
     role != nil ? role.name : ""
   end
-  
+
 =begin
   This method gets permission level of this permission.
   [Returns] A string that contains permission level of this permission, if possible, otherwise it returns an empty string.
@@ -80,7 +80,7 @@ class Permission < ActiveRecord::Base
       return ''
     end
   end
-  
+
 =begin
   This method sets permission level of this permission.
   [Args]
@@ -94,7 +94,7 @@ class Permission < ActiveRecord::Base
         self.create_p = true
         self.delete_p = true
         self.show_p = true
-      when 'create_p'    
+      when 'create_p'
         self.delete_p = false
         self.update_p = true
         self.create_p = true
@@ -111,7 +111,7 @@ class Permission < ActiveRecord::Base
         self.show_p = true
     end
   end
-  
+
 =begin
   This method gets the name of the item this permission is for.
   [Returns] A string that contains the name of the item that this permission is for, otherwise a string that contains "unknown".
@@ -119,14 +119,14 @@ class Permission < ActiveRecord::Base
   def permissionable_name
     if permissionable.is_a?(SystemResource)
       return permissionable.name
-    else 
+    else
       if permissionable.respond_to?('name')
         return (permissionable.class.to_s + " | " + permissionable.name.to_s)
       end
     end
     "unknown"
   end
-  
+
 =begin
   This method determines if this is a permission on a system resource.
   [Returns] True if permissionable item for this permission is a system resource, otherwise false.
@@ -134,7 +134,7 @@ class Permission < ActiveRecord::Base
   def system_resource_permission
     permissionable.is_a? SystemResource
   end
-  
+
 =begin
   This method defines how show permissions are determined for this permission.
   [Args]
@@ -144,7 +144,7 @@ class Permission < ActiveRecord::Base
   def check_user_show_permissions(user)
     user.can_show(self.role)
   end
-  
+
 =begin
   This method defines how create permissions are determined for this permission.
   [Args]
@@ -154,7 +154,7 @@ class Permission < ActiveRecord::Base
   def check_user_create_permissions(user)
     user.can_create(self.role) and not self.role.is_admin_role?
   end
-  
+
 =begin
   This method defines how update permissions are determined for this permission.
   [Args]
@@ -164,7 +164,7 @@ class Permission < ActiveRecord::Base
   def check_user_update_permissions(user)
     user.can_update(self.role) and not self.role.is_admin_role?
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this permission.
   [Args]

@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling site forms within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::SiteFormsController < SubdomainsController
@@ -11,10 +11,10 @@ class Subdomains::Management::SiteFormsController < SubdomainsController
   before_filter :authenticate
 
   def index
-      @site_form = @community.site_forms.all  
+      @site_form = @community.site_forms.all
       respond_with(@site_form)
   end
-  
+
   def show
     @site_form = @community.site_forms.find(params[:id])
     respond_with(@site_form)
@@ -33,10 +33,10 @@ class Subdomains::Management::SiteFormsController < SubdomainsController
   def create
     @site_form = @community.site_forms.new(params[:site_form])
     @site_form.registration_application_form = false
-    if @site_form.save    
+    if @site_form.save
       params[:notifications].each do |profile_id|
         Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id)
-      end if params[:notifications]  
+      end if params[:notifications]
       add_new_flash_message('Form was successfully created.')
     end
     grab_all_errors_from_model(@site_form)
@@ -51,7 +51,7 @@ class Subdomains::Management::SiteFormsController < SubdomainsController
       end
       params[:notifications].each do |profile_id|
         Notification.create(:user_profile_id => profile_id, :site_form_id =>  @site_form.id) unless @site_form.profile_notifications.include?(profile_id)
-      end       
+      end
       add_new_flash_message('Form was successfully updated.')
     end
     grab_all_errors_from_model(@site_form)
@@ -60,7 +60,7 @@ class Subdomains::Management::SiteFormsController < SubdomainsController
 
   def destroy
     @site_form = @community.site_forms.find(params[:id])
-    
+
     if @site_form.registration_application_form != true
       @site_form.destroy
       respond_to do |format|
@@ -75,5 +75,5 @@ class Subdomains::Management::SiteFormsController < SubdomainsController
       end
     end
   end
-end  
-  
+end
+

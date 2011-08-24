@@ -7,14 +7,14 @@
 
 #page
   %h1= @profile.name
-  
+
   %p#actions
     - if logged_in?
       - if current_user.can_update(@profile)
         = link_to 'Edit', edit_user_profile_path(@profile), :class => 'edit', :title => 'Edit'
       - if current_user.can_delete(@profile)
         = link_to 'Delete', @profile, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete'
-    
+
   %h2 Characters
   #actions
     - if logged_in?
@@ -22,8 +22,8 @@
         = link_to 'Edit', edit_profile_path(@profile), :class => 'edit', :title => 'Edit Profile'
       - if current_user.can_delete(@profile)
         = link_to 'Delete', @profile, :method => 'delete', :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete Profile'
-    
-  
+
+
   - if @profile.characters != nil
     %table
       - if @profile.characters.size > 0

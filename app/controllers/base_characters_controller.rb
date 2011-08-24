@@ -2,13 +2,13 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is creating characters.
 =end
 class BaseCharactersController < ApplicationController
   before_filter :authenticate, :except => [:new]
   respond_to :html, :js
-  
+
   # GET /base_characters/new
   def new
       @game = Game.find_by_id(params[:game][:game_id])
@@ -34,6 +34,6 @@ class BaseCharactersController < ApplicationController
       else
         add_new_flash_message('Please select a game.',"alert")
         redirect_to(:back)
-      end  
+      end
   end
 end

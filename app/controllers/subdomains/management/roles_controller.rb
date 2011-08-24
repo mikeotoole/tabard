@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling roles within the scope of managment of subdomains (communities).
 =end
 class Subdomains::Management::RolesController < SubdomainsController
@@ -13,9 +13,9 @@ class Subdomains::Management::RolesController < SubdomainsController
   before_filter :rehash_permissions, :only => :update
 
   def index
-    if !current_user.can_show("Role") 
+    if !current_user.can_show("Role")
       render_insufficient_privileges
-    else 
+    else
       @roles = @community.roles.all.delete_if{|role| not current_user.can_update(role)}
       @system_roles = []
       @custom_roles = []
@@ -36,7 +36,7 @@ class Subdomains::Management::RolesController < SubdomainsController
 
   def new
     @role = @community.roles.new
-    if !current_user.can_create(@role) 
+    if !current_user.can_create(@role)
       render_insufficient_privileges
     else
       respond_with([:management,@role])
@@ -53,9 +53,9 @@ class Subdomains::Management::RolesController < SubdomainsController
 
   def create
     @role = @community.roles.new(params[:role])
-    if !current_user.can_create(@role) 
+    if !current_user.can_create(@role)
       render_insufficient_privileges
-    else 
+    else
       if @role.save
         add_new_flash_message('Role was successfully created.')
       end
@@ -65,7 +65,7 @@ class Subdomains::Management::RolesController < SubdomainsController
   end
 
   def update
-    if !current_user.can_update(@role) 
+    if !current_user.can_update(@role)
       render_insufficient_privileges
     else
       begin
@@ -82,32 +82,32 @@ class Subdomains::Management::RolesController < SubdomainsController
   # DELETE /management/roles/1
   # DELETE /management/roles/1.xml
   def destroy
-    if !current_user.can_delete(@role) 
+    if !current_user.can_delete(@role)
       render_insufficient_privileges
-    else 
+    else
       if @role.destroy
         add_new_flash_message('Role was successfully deleted.')
         redirect_to(:back)
       end
     end
   end
-  
+
   private
-  
+
     def collect_community_users
       @users = @community.all_users
     end
-    
+
     def get_role_by_id
       @role = @community.roles.find(params[:id])
     end
-  
+
     def sort_permissions
       @permissions_global
       @permissions_pages
       @permissions_discussions
     end
-    
+
     def rehash_permissions
       counter = 0
       permissions_attributes = {}

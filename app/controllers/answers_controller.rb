@@ -2,12 +2,12 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for answers.
 =end
 class AnswersController < ApplicationController
   respond_to :html
-  
+
   def index
     @answers = Answer.all
     respond_with(@answers)

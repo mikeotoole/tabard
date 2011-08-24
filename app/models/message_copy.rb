@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a message copy.
 =end
 class MessageCopy < ActiveRecord::Base
@@ -10,7 +10,7 @@ class MessageCopy < ActiveRecord::Base
   belongs_to :message
   belongs_to :recipient, :class_name => "UserProfile"
   belongs_to :folder
-  
+
 =begin
   This method defines how show permissions are determined for this message copy.
   [Args]
@@ -20,7 +20,7 @@ class MessageCopy < ActiveRecord::Base
   def check_user_show_permissions(user)
     self.recipient == user
   end
-  
+
 =begin
   This method defines how create permissions are determined for this message copy.
   [Args]
@@ -30,7 +30,7 @@ class MessageCopy < ActiveRecord::Base
   def check_user_create_permissions(user)
     false
   end
-  
+
 =begin
   This method defines how update permissions are determined for this message copy.
   [Args]
@@ -40,7 +40,7 @@ class MessageCopy < ActiveRecord::Base
   def check_user_update_permissions(user)
     false
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this message copy.
   [Args]

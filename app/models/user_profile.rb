@@ -3,7 +3,7 @@ require 'file_size_validator'
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a user profile.
 =end
 class UserProfile < Profile
@@ -11,31 +11,31 @@ class UserProfile < Profile
 =begin
   This attribute is the avatar for this user profile. It maps to the AvatarUploader.
 =end
-  attr_accessor :avatar 
-  
+  attr_accessor :avatar
+
 =begin
   This attribute is the avatar cache for this user profile. It is used by the AvatarUploader.
 =end
   attr_accessor :avatar_cache
-  
+
 =begin
   This attribute is the avatar removal for this user profile. It is used by the AvatarUploader.
 =end
   attr_accessor :remove_avatar
   #attr_accessible :name
-  
-  validates :avatar, 
-      :if => :avatar?, 
-      :file_size => { 
-        :maximum => 1.megabytes.to_i 
+
+  validates :avatar,
+      :if => :avatar?,
+      :file_size => {
+        :maximum => 1.megabytes.to_i
       }
-  
+
   belongs_to :user
 
   has_many :game_profiles, :autosave => true
-  
+
   has_one :registration_application
-  
+
   belongs_to :discussion
   belongs_to :personal_discussion_space, :class_name => "DiscussionSpace"
 
@@ -45,7 +45,7 @@ class UserProfile < Profile
 
   before_create :build_inbox
   after_create :create_discussion, :create_personal_space
-  
+
   #uploaders
   mount_uploader :avatar, AvatarUploader
 
@@ -69,27 +69,27 @@ class UserProfile < Profile
       @previous_model_for_avatar = nil
     end
   end
-  
+
   # User can only have one user profile
   validates_uniqueness_of :user_id
   validate :only_one_system_profile
-  
+
   #This will add a new character, creating the game profile if needed.
-  def build_character(character, is_default = false) 
+  def build_character(character, is_default = false)
     self.game_profiles.each do |game_profile|
-      if game_profile.game_id == character.game_id       
+      if game_profile.game_id == character.game_id
         proxy = game_profile.character_proxies.build(:character => character)
         game_profile.default_character_proxy = proxy if is_default and proxy
         return true
       end
     end
-    
+
     # create new game profile
     game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile", :user_profile => self)
     game_profile.character_proxies.build(:character => character)
     self.game_profiles << game_profile
   end
-  
+
 =begin
   This method gets all of the user's characters that belong to the specified game.
   [Args]
@@ -97,15 +97,15 @@ class UserProfile < Profile
   [Returns] An array of characters for this user for the specified game.
 =end
   def get_characters(game)
-    self.game_profiles.collect{|gPro| 
+    self.game_profiles.collect{|gPro|
        gPro.characters if gPro.game.kind_of? game
     }.flatten.compact
   end
-  
+
   def only_one_system_profile
     errors.add(:id, "There can be only one!  ...system profile.") if (UserProfile.where(:is_system_profile => true).exists? and self.is_system_profile)
   end
-  
+
   def self.system_profile
     if self.where(:is_system_profile => true).exists?
       return self.where(:is_system_profile => true).first
@@ -113,7 +113,7 @@ class UserProfile < Profile
       return self.create(:name => "System", :is_system_profile => true, :status => 0)
     end
   end
-  
+
 =begin
   This method gets the user's inbox folder.
   [Returns] A folder contains the user folder.
@@ -124,17 +124,17 @@ class UserProfile < Profile
 
 =begin
   _before_create_
-  
+
   This method builds the user's inbox folder.
 =end
   def build_inbox
     folders.build(:name => "Inbox")
   end
-  
+
   def deleted_received_messages
     self.received_messages.delete_if {|message| message.deleted == false or message.deleted == nil}
   end
-  
+
 =begin
   This method gets all of the characters associated with this user profile.
   [Returns] An array that contains all of the characters associated with this user profile.
@@ -148,11 +148,11 @@ class UserProfile < Profile
      end
      characters
   end
-  
+
   def displayname
     self.display_name # TODO This needs to be depricated because it is bad namming of a method.
   end
-  
+
 =begin
   This method gets the display name for this user profile.
   [Returns] A string that contains the user profile's name, if possible.
@@ -160,7 +160,7 @@ class UserProfile < Profile
   def display_name
     self.name
   end
-  
+
 =begin
   This method gets the user profile email.
   [Returns] A string that contains email of the user profile's user, if possible.
@@ -168,27 +168,27 @@ class UserProfile < Profile
   def user_email
     self.user.email if self.user
   end
-  
+
 =begin
   This method gets the description of this user profile.
   [Returns] A string that contains "Account Profile".
 =end
   def description
     "Account Profile"
-  end  
-  
+  end
+
   # Used by active profile to see selected item is a user profile
   # def character_id
   #   -1
   # end
-  
+
   def create_discussion
     self.discussion = Discussion.create(:discussion_space => DiscussionSpace.user_profile_space,
                                         :name => self.displayname,
                                         :body => "User Profile Discussion",
                                         :user_profile => self) unless self.is_system_profile
   end
-  
+
   def create_personal_space
     self.personal_discussion_space = DiscussionSpace.create(:name => self.displayname.to_s+" Personal Discussion Space",
                                         :system => true,
@@ -196,7 +196,7 @@ class UserProfile < Profile
                                         :user_profile => self) unless self.is_system_profile
     self.save
   end
-  
+
 =begin
   This method defines how show permissions are determined for this user profile.
   [Args]
@@ -206,7 +206,7 @@ class UserProfile < Profile
   def check_user_show_permissions(user)
     user.can_show("User") or self == user.user_profile
   end
-  
+
 =begin
   This method defines how create permissions are determined for this user profile.
   [Args]
@@ -216,7 +216,7 @@ class UserProfile < Profile
   def check_user_create_permissions(user)
     user.can_create("User") or self == user.user_profile
   end
-  
+
 =begin
   This method defines how update permissions are determined for this user profile.
   [Args]
@@ -226,7 +226,7 @@ class UserProfile < Profile
   def check_user_update_permissions(user)
     user.can_update("User") or self == user.user_profile
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this user profile.
   [Args]

@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling pages within the scope of subdomains (communities).
 =end
 class Subdomains::PagesController < SubdomainsController
@@ -52,7 +52,7 @@ class Subdomains::PagesController < SubdomainsController
         add_new_flash_message('Page was successfully created.')
         respond_with([@page_space,@page])
         return
-      end 
+      end
       grab_all_errors_from_model(@page)
       repsond_with(@page)
     end
@@ -83,21 +83,21 @@ class Subdomains::PagesController < SubdomainsController
       respond_with(@page)
     end
   end
-  
+
   private
   #Nested Resource Helper
   def game_announcement_helper
     @game ? @game.game_announcements : GameAnnouncement
   end
-  
+
   def grab_game_from_game_id
     @game = Game.find_by_id(params[:game_id]) if params[:game_id]
   end
-  
+
   def page_helper
     @page_space ? @page_space.pages : Page
   end
-  
+
   def grab_page_space_from_page_space_id
     @page_space = PageSpace.find_by_id(params[:page_space_id]) if params[:page_space_id]
   end

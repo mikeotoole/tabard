@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling comments within the scope of subdomains (communities).
 =end
 class Subdomains::CommentsController < SubdomainsController
@@ -96,18 +96,18 @@ class Subdomains::CommentsController < SubdomainsController
       else
         add_new_flash_message('Comment was unable to be deleted, internal rails error.')
         redirect_to url_for(@comment.original_comment_item), :action => :show
-        return 
+        return
       end
     end
   end
-  
+
   def lock
     @comment = Comment.find_by_id(params[:id])
     if !@comment.can_user_lock(current_user)
       render_insufficient_privileges
     else
       @comment.has_been_locked = true
-      if @comment.save 
+      if @comment.save
         add_new_flash_message("Comment was successfully locked.")
       else
         add_new_flash_message("Comment was not locked, internal rails error.")
@@ -116,14 +116,14 @@ class Subdomains::CommentsController < SubdomainsController
       return
     end
   end
-  
+
   def unlock
     @comment = Comment.find_by_id(params[:id])
     if !@comment.can_user_lock(current_user)
       render_insufficient_privileges
     else
       @comment.has_been_locked = false
-      if @comment.save 
+      if @comment.save
         add_new_flash_message("Comment was successfully unlocked.")
       else
         add_new_flash_message("Comment was not unlocked, internal rails error.")

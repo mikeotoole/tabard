@@ -2,32 +2,32 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a community announcement.
 =end
 class CommunityAnnouncement < Announcement
   #attr_accessible :name, :body
-  
+
   validate :name, :presence => true
   validate :body, :presence => true
   validate :user_profile, :presence => true
   validate :community, :presence => true
-  
+
   belongs_to :community
   belongs_to :user_profile
-  
+
   has_many :user_profiles, :through => :acknowledgment_of_announcements
-  
+
   after_create :create_acknowledgments
 
 =begin
   _after_create_
-  
+
   This method creates the acknowledgments required for this announcement.
   [Returns] False if the operation could not be preformed, otherwise true.
-=end  
+=end
   def create_acknowledgments
-    self.community.all_users.each do |user| 
+    self.community.all_users.each do |user|
       AcknowledgmentOfAnnouncement.create(:announcement_id => self.id, :profile_id => user.user_profile.id, :acknowledged => false)
     end
   end
@@ -37,11 +37,11 @@ class CommunityAnnouncement < Announcement
   [Args]
     * +user+ -> The user who you would like to check.
   [Returns] True the provided user can show this community announcement, otherwise false.
-=end 
+=end
   def check_user_show_permissions(user)
     true
   end
-  
+
 =begin
   This method defines how create permissions are determined for this community announcement.
   [Args]
@@ -51,7 +51,7 @@ class CommunityAnnouncement < Announcement
   def check_user_create_permissions(user)
     false
   end
-  
+
 =begin
   This method defines how update permissions are determined for this community announcement.
   [Args]

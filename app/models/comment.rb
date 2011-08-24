@@ -2,31 +2,31 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a comment.
 =end
 class Comment < ActiveRecord::Base
-  
+
 =begin
   This attribute is for javascript to let a comment know what dom element is the target for the comment form after a comment has been submitted.
 =end
   attr_accessor :form_target
-  
+
 =begin
   This attribute is for javascript to let a comment know what dom element is the target for the comment when it created.
 =end
   attr_accessor :comment_target
   #attr_accessible :commentable, :character_proxy, :user_profile, :community, :comments
   #attr_accessible :has_been_deleted, :has_been_edited, :has_been_locked
-  
+
   belongs_to :commentable, :polymorphic => true
   belongs_to :character_proxy
   belongs_to :user_profile
   belongs_to :community
   has_many :comments, :as => :commentable
-  
+
   before_create :use_default_character, :get_community_id_from_source
-  
+
 =begin
   This method gets the character_proxy id for the character who made this comment, if possible.
   [Returns] The id of the character_proxy that made the comment, otherwise nil.
@@ -35,10 +35,10 @@ class Comment < ActiveRecord::Base
     return self.character_proxy.id if self.character_proxy
     nil
   end
-  
+
 =begin
   _before_create_
-  
+
   This method will attempt to use the default character for the game that the comment is attached to, if possible.
   This will not happen if the character_proxy is already set.
   [Returns] False if an error was encountered, otherwise true.
@@ -53,7 +53,7 @@ class Comment < ActiveRecord::Base
       end
     end
   end
-  
+
 =begin
   _before_create_
 
@@ -62,10 +62,10 @@ class Comment < ActiveRecord::Base
 =end
   def get_community_id_from_source
     return if self.community
-    if self.commentable.respond_to?('community') 
+    if self.commentable.respond_to?('community')
       self.community = self.commentable.community
     end
-    if self.original_comment_item.respond_to?('community') 
+    if self.original_comment_item.respond_to?('community')
       self.community = self.original_comment_item.community
     end
   end
@@ -73,7 +73,7 @@ class Comment < ActiveRecord::Base
 =begin
   This method gets name of the user who made this comment, if possible.
   [Returns] The name of the user made this comment, otherwise nil.
-=end  
+=end
   def users_name
     return self.user_profile.display_name if self.user_profile
     nil
@@ -96,7 +96,7 @@ class Comment < ActiveRecord::Base
     return self.character_proxy.character if character_proxy
     nil
   end
-  
+
 =begin
   This method checks to see if a character posted this comment
   [Returns] True if a character made this comment, otherwise false.
@@ -104,7 +104,7 @@ class Comment < ActiveRecord::Base
   def charater_posted?
     character_proxy != nil
   end
-  
+
 =begin
   This method returns the total number of comments that this comment has, including itself.
   [Returns] An integer that contains the number of comments this comment has including itself.
@@ -113,7 +113,7 @@ class Comment < ActiveRecord::Base
    temp_total_num_comments = 1
    comments.each do |comment|
      temp_total_num_comments += comment.number_of_comments
-   end 
+   end
    temp_total_num_comments
   end
 
@@ -136,7 +136,7 @@ class Comment < ActiveRecord::Base
 =end
   def original_comment_item
     (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
-  end 
+  end
 
 =begin
   This method checks to see if replys to this comment are allowed.
@@ -145,7 +145,7 @@ class Comment < ActiveRecord::Base
   def replys_locked?
     self.has_been_locked or !self.original_comment_item.comments_enabled? or (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end
-  
+
 =begin
   This method defines how show permissions are determined for this comment.
   [Args]
@@ -157,7 +157,7 @@ class Comment < ActiveRecord::Base
       return true
     end
   end
-  
+
 =begin
   This method defines how create permissions are determined for this comment.
   [Args]
@@ -173,7 +173,7 @@ class Comment < ActiveRecord::Base
     end
     user.can_show(original_comment_item) or user.can_create("Comment")
   end
-  
+
 =begin
   This method defines how update permissions are determined for this comment.
   [Args]
@@ -189,7 +189,7 @@ class Comment < ActiveRecord::Base
     end
     false
   end
-  
+
 =begin
   This method defines how delete permissions are determined for this comment.
   [Args]
@@ -205,7 +205,7 @@ class Comment < ActiveRecord::Base
     end
     user.can_delete(original_comment_item) or user.can_delete("Comment")
   end
-  
+
 =begin
   This method defines how lock permissions are determined for this comment.
   [Args]
@@ -215,12 +215,12 @@ class Comment < ActiveRecord::Base
   def can_user_lock(user)
     user.can_special_permissions("Comment","lock")
   end
-  
+
   # The commentable_type always needs to be of the base class type and not the subclass type.
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
-  
+
 end
 
 

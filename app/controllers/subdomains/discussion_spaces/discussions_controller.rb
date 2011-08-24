@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is handling discussions within the scope of subdomains (communities).
 =end
 class DiscussionsController < SubdomainsController
@@ -31,10 +31,10 @@ class DiscussionsController < SubdomainsController
         add_new_flash_message('Discussion was successfully created.')
       end
       grab_all_errors_from_model(@discussion)
-      respond_with(@discussion)  
+      respond_with(@discussion)
     end
   end
-  
+
   def get_discussion_space_from_id
     @discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
   end

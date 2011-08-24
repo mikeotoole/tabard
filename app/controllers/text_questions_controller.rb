@@ -2,7 +2,7 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for text questions.
 =end
 class TextQuestionsController < ApplicationController
@@ -60,12 +60,12 @@ class TextQuestionsController < ApplicationController
       render_insufficient_privileges
     else
       @form = SiteForm.find(@old_text_question.site_form_id)
-      
+
       @text_question = @old_text_question.clone
-      
+
       @old_text_question.site_form_id = nil
       @old_text_question.save
-  
+
       respond_to do |format|
         if @text_question.update_attributes(params[:text_question])
           add_new_flash_message('Question was successfully updated.')
@@ -86,11 +86,11 @@ class TextQuestionsController < ApplicationController
     if !current_user.can_delete(@text_question)
       render_insufficient_privileges
     else
-      @form = SiteForm.find(@text_question.site_form_id)   
-  
+      @form = SiteForm.find(@text_question.site_form_id)
+
       @text_question.site_form_id = nil
       @text_question.save
-  
+
       respond_to do |format|
         format.html { redirect_to([:management, @form]) }
         format.xml  { head :ok }

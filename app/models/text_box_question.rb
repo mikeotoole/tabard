@@ -2,11 +2,11 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This class represents a text box question.
 =end
 class TextBoxQuestion < Question
-  
+
 =begin
   This method gets a path helper for a text box question
   [Returns] The path helper for this text box question.
@@ -14,7 +14,7 @@ class TextBoxQuestion < Question
   def path_helper
      'text_box_questions'
   end
-  
+
 end
 
 # == Schema Information

@@ -2,11 +2,11 @@
   Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
   Copyright:: Copyright (c) 2011 DigitalAugment Inc.
   License::   Proprietary Closed Source
-  
+
   This controller is for registration answers.
 =end
 class RegistrationAnswersController < ApplicationController
-  respond_to :html  
+  respond_to :html
 
   def index
     @registration_answers = RegistrationAnswer.all
@@ -15,12 +15,12 @@ class RegistrationAnswersController < ApplicationController
 
   def show
     @registration_answer = RegistrationAnswer.find(params[:id])
-    respond_with(@registration_answer)  
+    respond_with(@registration_answer)
   end
 
   def new
     @registration_answer = RegistrationAnswer.new
-    respond_with(@registration_answer)  
+    respond_with(@registration_answer)
   end
 
   def edit

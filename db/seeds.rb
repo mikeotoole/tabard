@@ -26,17 +26,17 @@ adminProfile = UserProfile.create(:name => "Admin")
 adminUser = User.create(:email => "admin@example.com", :password => "password", :user_profile => adminProfile, :no_signup_email => true)
 
 # Sample Communities
-stonewatch = Community.create(:name => "Stonewatch", 
-  :slogan => "We wear pants and eat food.", 
-  :label => "Guild", 
+stonewatch = Community.create(:name => "Stonewatch",
+  :slogan => "We wear pants and eat food.",
+  :label => "Guild",
   :accepting => true,
   :email_notice_on_applicant => false)
 stonewatch.games << wow
 stonewatch.games << swtor
 
-justanotherheadshot = Community.create(:name => "Just Another Headshot", 
-  :slogan => "Boom Baby!", 
-  :label => "Clan", 
+justanotherheadshot = Community.create(:name => "Just Another Headshot",
+  :slogan => "Boom Baby!",
+  :label => "Clan",
   :accepting => true,
   :email_notice_on_applicant => true)
 justanotherheadshot.games << swtor
@@ -103,7 +103,7 @@ justanotherheadshot.assign_admin_role(crumbJoe)
 #Generate some normal activity for stonewatch
 #Application for g_user1 accept
 #g1_user = User.find_by_email("g1@user.com")
-#gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile, 
+#gu1App = RegistrationApplication.create(:user_profile => g1_user.user_profile,
 #  :site_form => stonewatch.community_application_form,
 #  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
 #    Answer.create(:question => comboboxQ, :content => "Silly"),
@@ -115,7 +115,7 @@ justanotherheadshot.assign_admin_role(crumbJoe)
 #Comment.create(:body => "This guy rocks!", :user_profile => roboBillyProfile, :commentable => gu1App)
 ##Application for g_user2 reject
 #g2_user = User.find_by_email("g2@user.com")
-#gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile, 
+#gu2App = RegistrationApplication.create(:user_profile => g2_user.user_profile,
 #  :site_form => stonewatch.community_application_form,
 #  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
 #    Answer.create(:question => comboboxQ, :content => "Silly"),
@@ -123,13 +123,13 @@ justanotherheadshot.assign_admin_role(crumbJoe)
 #    Answer.create(:question => textBoxQ, :content => "TROLOLOLOLOLOL"),
 #    Answer.create(:question => textQ, :content => "DERP!")
 #    ])
-#Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile, 
+#Comment.create(:body => "Screw this guy then", :user_profile => roboBillyProfile,
 #  :commentable => Comment.create(:body => "This guy stands in the flames...", :user_profile => dMooseProfile, :commentable => gu2App))
 #Comment.create(:body => "Agreed. I just rejected him.", :user_profile => adminProfile, :commentable => gu2App)
 #gu2App.set_rejected
 ##Application for g_user3 pending
 #g3_user = User.find_by_email("g3@user.com")
-#gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile, 
+#gu3App = RegistrationApplication.create(:user_profile => g3_user.user_profile,
 #  :site_form => stonewatch.community_application_form,
 #  :answers => [Answer.create(:question => checkboxQ, :content => "Happy"),
 #    Answer.create(:question => comboboxQ, :content => "Silly"),
