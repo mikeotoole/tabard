@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    error:
+      message:
+        taken: "has already been taken"

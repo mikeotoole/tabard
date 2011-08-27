@@ -11,4 +11,6 @@ Icon?
 
 .sass-cache
 
-rails_best_practices_output.html
+doc/reports/
+doc/app/
+doc/dev/

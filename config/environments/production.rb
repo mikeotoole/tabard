@@ -17,6 +17,10 @@ DaBvRails::Application.configure do
 
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
+  
+  # Default mailer url
+  # TODO We need to configure this for production. 
+  # config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # See everything in the log (default is :info)
   # config.log_level = :debug

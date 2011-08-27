@@ -31,6 +31,7 @@ gem 'sqlite3'
 # end
 gem "haml"
 gem "sass"
+gem "devise"
 gem "rails_best_practices", :group => :development
 gem "haml-rails", :group => :development
 gem "squeel"
