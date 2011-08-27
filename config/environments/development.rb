@@ -1,4 +1,4 @@
-Bv::Application.configure do
+DaBvRails::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -15,32 +15,12 @@ Bv::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { :host => "localhost", :port => 3000 }
+  config.action_mailer.raise_delivery_errors = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-
-  #Mail setting for development
-  ActionMailer::Base.smtp_settings = {
-    :address              => "secure.emailsrvr.com",
-    :port                 => 587,
-    :user_name            => "development@digitalaugment.com",
-    :password             => 'fcsC9bvMqAw1GJ',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true
-  }
-
-  # This will force the models to be loaded so that subclasses can be seen by there parent.
-  #%w[game wow swtor base_character wow_character swtor_character profile game_profile user_profile discussion announcement site_announcement game_announcement].each do |c|
-  #  require_dependency File.join("app","models","#{c}.rb")
-  #end
-
-  # This will force the models to be loaded so that subclasses can be seen by there parent.
-  #%w[question check_box_question combo_box_question radio_button_question text_box_question text_question].each do |c|
-  #  require_dependency File.join("app","models","#{c}.rb")
-  #end
 end
+

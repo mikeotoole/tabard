@@ -1,16 +1,5 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
 en:
-  errors:
-    messages:
-      wrong_size: "is the wrong size (should be %{file_size})"
-      size_too_small: "is to small (should be at least %{file_size})"
-      size_too_big: "is to big (should be at most %{file_size})"
-      community_name: "has already been taken"
-  flash:
-    actions:
-      create:
-        notice: "{resource_name} was successfully created"
-      update:
-        notice: "{resource_name} was successfully updated"
-      destroy:
-        notice: "{resource_name} was successfully destroyed"
-        alert: "{resource_name} could not be destroyed"
+  hello: "Hello world"

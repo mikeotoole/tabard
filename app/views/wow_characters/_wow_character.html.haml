@@ -1,6 +1,0 @@
-= div_for wow_character do
-  %h3
-    = link_to wow_character.name, game_wow_character_path(wow_character.game, wow_character)
-    %span.actions
-      = current_user.can_update(wow_character) ? link_to( 'Edit', edit_game_wow_character_path(wow_character.game, wow_character)) : "No Edit Permissions"
-      = current_user.can_delete(wow_character) ? link_to( 'Delete', [wow_character.game, wow_character], :confirm => 'Are you sure?', :method => :delete) : "No Delete Permissions"

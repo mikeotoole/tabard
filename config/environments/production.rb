@@ -1,4 +1,4 @@
-Bv::Application.configure do
+DaBvRails::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -11,9 +11,6 @@ Bv::Application.configure do
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
-
-  #session_store
-  config.session_store :active_record_store, :domain => '.crumblin.com'
 
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'

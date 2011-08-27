@@ -1,4 +1,0 @@
-<%= fields_for @role do |f| %>
-  $('form.role table tbody').append("<%= escape_javascript(render :partial => 'form_fields', :locals => { :f => f }) %>");
-<% end %>
-$('form.role table tbody tr.temp').remove();

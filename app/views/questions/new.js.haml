@@ -1,4 +1,0 @@
-$("#{escape_javascript render(:file => @question.path_helper + '/new.html.haml')}").insertAfter('#form_questions');
-$('.new_question_link').hide();
-$('.new_question').slideDown();
-$('.new_question_cancel').click(function(){ if(confirm('Are you sure?')) { $('.new_question_link').show(); $(this).parents('.new_question').remove(); } });

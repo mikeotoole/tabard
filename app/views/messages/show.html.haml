@@ -1,9 +1,0 @@
-%p#bcrumb
-  = link_to 'Messages', inbox_path
-  = link_to 'Inbox', inbox_path
-  %span= @message.subject
-
-#page
-  %h1= @message.subject
-
-  = render :partial => 'messages/message', :locals => { :message => @message }

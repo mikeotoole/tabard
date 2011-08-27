@@ -1,9 +1,0 @@
-%p#bcrumb
-  = link_to 'Crumblin', root_url(:subdomain => false)
-  %span Signup
-
-%h1 New Account
-
-= form_tag(signup_path, :method => :post, :multipart => true) do |f|
-  = render :partial => 'form_account'
-  = submit_or_cancel(f)

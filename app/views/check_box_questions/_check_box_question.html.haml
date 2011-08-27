@@ -1,7 +1,0 @@
-= div_for check_box_question do
-  %h3
-    = check_box_question.content
-  %ul
-    - for panswer in check_box_question.predefined_answers
-      %li.checkbox
-        = label_tag "answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]", check_box_tag("answer_helper[#{check_box_question.id}][#{(actual_submission.contains_predefined_answer(panswer) != nil ? actual_submission.contains_predefined_answer(panswer).id : -panswer.id)}]",panswer.content,actual_submission.contains_predefined_answer(panswer) != nil) + ' ' + panswer.content

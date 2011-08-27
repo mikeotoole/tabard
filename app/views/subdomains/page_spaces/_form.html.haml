@@ -1,8 +1,0 @@
-= form_for(@page_space) do |f|
-  %p.field
-    = f.label :name
-    = f.text_field :name
-  %p.field
-    = f.label :game_id
-    = f.collection_select(:game_id, Game.where("is_active = ?", true), :id, :name, options ={:prompt => "Select a game", :include_blank => true}, :class =>"game")
-  = submit_or_cancel(f)
