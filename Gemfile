@@ -29,3 +29,7 @@ gem 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+gem "haml"
+gem "sass"
+gem "rails_best_practices", :group => :development
+gem "haml-rails", :group => :development
