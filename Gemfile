@@ -33,3 +33,5 @@ gem "haml"
 gem "sass"
 gem "rails_best_practices", :group => :development
 gem "haml-rails", :group => :development
+gem "squeel"
+gem "annotate", :group => :development
