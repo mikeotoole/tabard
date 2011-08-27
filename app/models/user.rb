@@ -36,8 +36,8 @@ class User < ActiveRecord::Base
       :length => { :within => 8..30 },
       :presence => true,
       :format => {
-        :with => %r{^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$},
-        #:with => %r{^([:digit:]+[:lower:]+.*|[:digit:]+[:upper:]+.*|[:digit:]+[:punct:]+.*)|([:lower:]+[:digit:]+.*|[:lower:]+[:upper:]+.*|[:lower:]+[:punct:]+.*)|([:upper:]+[:digit:]+.*|[:upper:]+[:lower:]+.*|[:upper:]+[:punct:]+.*)|([:punct:]+[:digit:]+.*|[:punct:]+[:lower:]+.*|[:punct:]+[:upper:]+.*)$},
+        #:with => /^(((?=.\d+)(?=.[a-z]+))|((?=.\d+)(?=.[A-Z]+))|((?=.\d+)(?=.[:punct:]+))|((?=.[a-z]+)(?=.[A-Z]+))|((?=.[a-z]+)(?=.[:punct:]+))|((?=.[A-Z]+)(?=.[:punct:]+)))$/,
+        :with => %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
         :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       :if => :password_required?

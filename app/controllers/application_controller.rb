@@ -7,4 +7,9 @@
 ###
 class ApplicationController < ActionController::Base
   protect_from_forgery
+
+  ###
+  # Before Filters
+  ###
+  before_filter :authenticate_user!
 end

@@ -7,6 +7,11 @@
 ###
 class HomeController < ApplicationController
   ###
+  # Before Filters
+  ###
+  before_filter :authenticate_user!, :except => [:index]
+
+  ###
   # This method gets the index for home.
   ###
   def index
