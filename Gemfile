@@ -1,38 +1,46 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+# Rails Gem
+  gem 'rails'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# Global Gems
+  # Meta Languages
+    gem 'haml'
+    gem 'sass'
+    gem 'squeel'
+    #gem 'coffee-script'
 
-gem 'sqlite3'
+  # User Authentication
+    gem 'devise'
 
-# Use unicorn as the web server
-# gem 'unicorn'
+  # Form Handling
+    gem 'simple_form'
+    gem 'client_side_validations'
 
-# Deploy with Capistrano
-# gem 'capistrano'
+  # WYSIWYG
+    gem 'tiny_mce'
 
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
+  # Image Storage and Manipulation
+    gem 'fog'
+    gem 'mini_magick'
+    gem 'carrierwave'
 
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
+# Development Specific Gems
+  group :development do
+    gem 'annotate' # Documentation Helper
+    gem 'rails_best_practices' # Best Practices Gem
+    gem 'sqlite3'
+    gem 'haml-rails' # Haml Generator Gem
+  end
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
-gem "haml"
-gem "sass"
-gem "devise"
-gem "rails_best_practices", :group => :development
-gem "haml-rails", :group => :development
-gem "squeel"
-gem "annotate", :group => :development
+# Production Specific Gems
+  group :production do
+    gem 'heroku'
+    #gem 'thin'
+    #gem 'pg'
+    gem 'newrelic_rpm'
+  end
+
+# Test Specific Gems
+  group :test do
+  end
