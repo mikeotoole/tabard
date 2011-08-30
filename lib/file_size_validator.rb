@@ -6,10 +6,14 @@
 # This class is a file size validator.
 ###
 class FileSizeValidator < ActiveModel::EachValidator
+  
+  # File size validator error messages.
   MESSAGES  = { :is => :wrong_size, :minimum => :size_too_small, :maximum => :size_too_big }.freeze
+  # File size validator checks.
   CHECKS    = { :is => :==, :minimum => :>=, :maximum => :<= }.freeze
-
+  # Tokenizer function.
   DEFAULT_TOKENIZER = lambda { |value| value.split(//) }
+  # Options reserved for use.
   RESERVED_OPTIONS  = [:minimum, :maximum, :within, :is, :tokenizer, :too_short, :too_long]
 
 ###

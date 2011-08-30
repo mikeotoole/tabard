@@ -11,6 +11,13 @@ two:
   first_name: MyString
   last_name: MyString
   avatar: MyString
+  
+billy:
+  user_id: 10
+  first_name: Robo
+  last_name: Billy
+  avatar: MyString
+
 
 # == Schema Information
 #
