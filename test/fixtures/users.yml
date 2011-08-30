@@ -38,5 +38,6 @@ two:
   confirmed_at: <%= 1.hour.ago.to_s(:db) %>
 
 billy:
+  id: 10
   email: billy@robo.com
   confirmed_at: <%= 1.hour.ago.to_s(:db) %>

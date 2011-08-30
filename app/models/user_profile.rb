@@ -9,8 +9,17 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute Accessors
 ###
+  ###
+  # This attribute is the avatar for this user profile. It maps to the AvatarUploader.
+  ###
   attr_accessor :avatar
+  ###
+  # This attribute is the avatar cache for this user profile. It is used by the AvatarUploader.
+  ###
   attr_accessor :avatar_cache
+  ###
+  # This attribute is the avatar removal for this user profile. It is used by the AvatarUploader.
+  ###
   attr_accessor :remove_avatar
 ###
 # Associations
@@ -34,9 +43,11 @@ class UserProfile < ActiveRecord::Base
       :file_size => {
         :maximum => 1.megabytes.to_i
       }
+
 ###
-# Public Methods
+# Protected Methods
 ###
+protected
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
   ###
