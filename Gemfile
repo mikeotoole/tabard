@@ -12,6 +12,9 @@ source 'http://rubygems.org'
 
   # User Authentication
     gem 'devise'
+  # Permissions/AC
+    gem 'sweetloader' # This is required for cantango
+    gem 'cantango'
 
   # Form Handling
     gem 'simple_form'
