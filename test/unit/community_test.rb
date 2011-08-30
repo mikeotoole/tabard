@@ -36,8 +36,8 @@ class CommunityTest < ActiveSupport::TestCase
     assert community.email_notice_on_application, "should email on application by default"
   end
   test "community creation name format and exclusion test" do
-    ok_names = %w{ OMGLOLOLOLOL } # TESTING Valid community names for testing.
-    bad_names = %w{ 1212312&^*&^ } # TESTING Invalid community names for testing.
+    ok_names = %w{ OMGLOLOLOLOL, My\ Community, My-Community, Community1 } # TESTING Valid community names for testing.
+    bad_names = %w{ 1212312&^*&^ #1Community My\ #1\ Community @TopComm } # TESTING Invalid community names for testing.
     excluded_names = %w{ www wwW wWw wWW Www WwW WWw WWW }
     ok_names.each do |name|
       assert new_community(name).valid?, "#{name} should be valid"
@@ -51,8 +51,13 @@ class CommunityTest < ActiveSupport::TestCase
   end
   test "community creation label inclusion" do
     valid_labels = %w{ Guild Team Clan Faction Squad }
-    invlaid_labels = %w{ Herp Derp Zerp }
-    # TODO Write this method.
+    invlaid_labels = %w{ Herp Derp Zerp Guil }
+    valid_labels.each do |label|
+      assert new_community_with_label(label).valid?, "#{label} should be valid"
+    end
+    invlaid_labels.each do |label|
+      assert new_community_with_label(label).invalid?, "#{label} shouldn't' be valid"
+    end
   end
 ###
 # Test Methods
@@ -61,5 +66,10 @@ class CommunityTest < ActiveSupport::TestCase
     Community.new(:name => name,
       :slogan => "We rock!",
       :label => "Guild")
+  end
+    def new_community_with_label(label)
+    Community.new(:name => "My Community",
+      :slogan => "We rock!",
+      :label => label)
   end
 end
