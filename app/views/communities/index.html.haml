@@ -1,0 +1,29 @@
+%h1 Listing communities
+
+%table
+  %tr
+    %th Name
+    %th Slogan
+    %th Label
+    %th Accepting members
+    %th Email notice on application
+    %th Subdomain
+    %th
+    %th
+    %th
+
+  - @communities.each do |community|
+    %tr
+      %td= community.name
+      %td= community.slogan
+      %td= community.label
+      %td= community.accepting_members
+      %td= community.email_notice_on_application
+      %td= community.subdomain
+      %td= link_to 'Show', community
+      %td= link_to 'Edit', edit_community_path(community)
+      %td= link_to 'Destroy', community, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Community', new_community_path

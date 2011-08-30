@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830014853) do
+ActiveRecord::Schema.define(:version => 20110830120715) do
+
+  create_table "communities", :force => true do |t|
+    t.string   "name"
+    t.string   "slogan"
+    t.string   "label"
+    t.boolean  "accepting_members",           :default => true
+    t.boolean  "email_notice_on_application", :default => true
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
