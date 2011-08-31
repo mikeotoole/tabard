@@ -1,5 +1,5 @@
 DaBvRails::Application.routes.draw do
-  resources :communities
+  resources :communities, :except => :destroy
 
   devise_for :users
 

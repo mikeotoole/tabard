@@ -49,6 +49,5 @@ class CommunitiesController < ApplicationController
   def update
     @community = Community.find(params[:id])
   end
-  
-  #TODO Updated routes file
+
 end
