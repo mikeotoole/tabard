@@ -17,22 +17,35 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :confirmable, :lockable
+
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes
+
 ###
 # Associations
 ###
-  has_one :user_profile
+  has_one :user_profile, :inverse_of => :user
+  accepts_nested_attributes_for :user_profile
+
+###
+# Delegates
+###
+  delegate :first_name, :to => :user_profile
+  delegate :last_name, :to => :user_profile
+
 ###
 # Validators
 ###
+  validates_associated :user_profile
+
   validates :email,
       :uniqueness => true,
       :length => { :within => 5..128 },
       :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+
   validates :password,
       :confirmation => true,
       :length => { :within => 8..30 },
@@ -42,10 +55,12 @@ class User < ActiveRecord::Base
         :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       :if => :password_required?
+
 ###
 # Protected Methods
 ###
 protected
+
   ###
   # This method determines if the password is required. It is used to determine if password needs to be validated.
   # [Returns] True if this is a new record or if password is present, otherwise false.
