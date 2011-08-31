@@ -27,12 +27,12 @@ class UserProfile < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user, :inverse_of => :user_profiles
+  belongs_to :user, :inverse_of => :user_profile
 
 ###
 # Delegates
 ###
-  delegates :email, :to => :user
+  delegate :email, :to => :user
 
 ###
 # Uploaders

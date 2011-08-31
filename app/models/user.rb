@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates_associated :user_profile
+  #validates_associated :user_profile
 
   validates :email,
       :uniqueness => true,
