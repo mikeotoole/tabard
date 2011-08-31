@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Rails Gem
-  gem 'rails'
+  gem 'rails', '>= 3.0.0', '< 3.1.0'
 
 # Global Gems
   # Meta Languages
