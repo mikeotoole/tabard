@@ -21,6 +21,8 @@ namespace :reports do
 
   desc "Create a report on best practices"
   task :best_practices  => [:ensure_report_dir] do
+    puts "Cleaning up white space in *.rb files."
+    system "find . -not -path '.rvm' -name \"*.rb\" -type f -print0 | xargs -0 sed -E \"s/[[:space:]]*$//\""
     puts "Verifying against best practices..."
     system "rails_best_practices -f html --with-textmate > /dev/null"
     system "mv rails_best_practices_output.html doc/reports/rails_best_practices_report.html"

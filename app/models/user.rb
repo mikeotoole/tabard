@@ -6,50 +6,68 @@
 # This is the user class.
 ###
 # This class is configured to work with devise to provide us authentication capabilities.
+###
 class User < ActiveRecord::Base
   # TODO We need to configure config/enviroments/production.rb with the mailer info.
-
-  ###
-  # Devise configuration information
-  ###
+###
+# Devise configuration information
+###
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :confirmable, :lockable
 
-  ###
-  # Attribute accessible
-  ###
+###
+# Attribute accessible
+###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes
 
-  ###
-  # Validators
-  ###
+###
+# Associations
+###
+  has_one :user_profile, :inverse_of => :user
+  accepts_nested_attributes_for :user_profile
+
+###
+# Delegates
+###
+  delegate :first_name, :to => :user_profile
+  delegate :last_name, :to => :user_profile
+
+###
+# Validators
+###
+  validates_associated :user_profile
+
   validates :email,
       :uniqueness => true,
       :length => { :within => 5..128 },
       :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+
   validates :password,
       :confirmation => true,
       :length => { :within => 8..30 },
       :presence => true,
       :format => {
-        #:with => /^(((?=.\d+)(?=.[a-z]+))|((?=.\d+)(?=.[A-Z]+))|((?=.\d+)(?=.[:punct:]+))|((?=.[a-z]+)(?=.[A-Z]+))|((?=.[a-z]+)(?=.[:punct:]+))|((?=.[A-Z]+)(?=.[:punct:]+)))$/,
         :with => %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
         :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       :if => :password_required?
 
-  protected
-    ###
-    # This method determines if the password is required. It is used to determine if password needs to be validated.
-    # [Returns] True if this is a new record or if password is present, otherwise false.
-    ###
-    def password_required?
-      self.new_record? || self.password.present?
-    end
+###
+# Protected Methods
+###
+protected
+
+  ###
+  # This method determines if the password is required. It is used to determine if password needs to be validated.
+  # [Returns] True if this is a new record or if password is present, otherwise false.
+  ###
+  def password_required?
+    self.new_record? || self.password.present?
+  end
 end
 
 # == Schema Information
