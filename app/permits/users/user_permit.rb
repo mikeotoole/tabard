@@ -4,7 +4,15 @@ class UserPermit < CanTango::UserPermit
   end
 
 protected
-  def permit_rules
-    can :manage, :all
+  def static_rules
+    can :view, UserProfile
+    can :manage, User do |some_user|
+      some_user.id == user.id
+    end
+    can :manage, UserProfile do |profile|
+      profile.user == user
+    end
+  end
+  def dynamic_rules
   end
 end
