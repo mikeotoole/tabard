@@ -27,10 +27,10 @@ DaBvRails::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+
   # Default mailer url
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  
+
   #Mail setting for development
   ActionMailer::Base.smtp_settings = {
     :address              => "secure.emailsrvr.com",

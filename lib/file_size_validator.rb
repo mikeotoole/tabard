@@ -6,7 +6,7 @@
 # This class is a file size validator.
 ###
 class FileSizeValidator < ActiveModel::EachValidator
-  
+
   # File size validator error messages.
   MESSAGES  = { :is => :wrong_size, :minimum => :size_too_small, :maximum => :size_too_big }.freeze
   # File size validator checks.
