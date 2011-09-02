@@ -1,6 +1,6 @@
 DaBvRails::Application.routes.draw do
   constraints(Subdomain) do
-    match "/" => "subdomains#index"
+    match "/" => "subdomains#index", :as => "subdomain_home"
   end
   
   resources :communities, :except => :destroy
