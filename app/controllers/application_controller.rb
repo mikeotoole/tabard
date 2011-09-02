@@ -22,7 +22,7 @@ protected
   def limit_subdomain_access
     if request.subdomain.present?
       # TODO this error handling could be more sophisticated!
-      redirect_to root_url(:subdomain => false), :alert => "No Subdomain For You!"
+      redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
     end
   end
 end

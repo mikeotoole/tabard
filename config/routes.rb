@@ -1,12 +1,13 @@
 DaBvRails::Application.routes.draw do
-  constraints(Subdomain) do
-    match "/" => "subdomains#index"
-  end
-  
+
   resources :communities, :except => :destroy
 
   devise_for :users
-  
+
+  constraints(Subdomain) do
+    match "/" => "subdomains#index"
+  end
+
   root :to => 'home#index'
 
   # The priority is based upon order of creation:

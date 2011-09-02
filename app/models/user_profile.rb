@@ -27,7 +27,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user, :inverse_of => :user_profiles
+  belongs_to :user, :inverse_of => :user_profile
 
 ###
 # Delegates

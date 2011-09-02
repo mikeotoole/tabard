@@ -22,7 +22,7 @@ class CommunitiesController < ApplicationController
   # GET /communities/1
   # GET /communities/1.xml
   def show
-  	@community = Community.find(params[:id])
+    @community = Community.find(params[:id])
     redirect_to root_url(:subdomain => @community.subdomain)
   end
 

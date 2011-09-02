@@ -1,12 +1,22 @@
 source 'http://rubygems.org'
 
 # Rails Gem
-  gem 'rails', '>= 3.0.0', '< 3.1.0'
+  gem 'rails'
+  
+  # Gems used only for assets and not required
+  # in production environments by default.
+  group :assets do
+    gem 'sass-rails'
+    gem 'coffee-rails'
+    gem 'uglifier'
+  end
+
+  gem 'jquery-rails'
 
 # Global Gems
   # Meta Languages
     gem 'haml'
-    gem 'sass'
+    #gem 'sass'
     gem 'squeel'
     #gem 'coffee-script'
 
