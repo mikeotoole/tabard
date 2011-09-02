@@ -14,7 +14,7 @@ class CommunitiesControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:communities)
   end
-  
+
   test "should get index whilst not authenticated as a user" do
     get :index
     assert_response :success
@@ -41,7 +41,7 @@ class CommunitiesControllerTest < ActionController::TestCase
   test "should create community whilst authenticated as a user" do
     sign_in users(:billy)
     assert_difference('Community.count') do
-      post :create, :community => @community.attributes
+      post :create, :community => @community.attributes # TODO This is already in the database and needs to be changed to something new.
     end
 
     assert_redirected_to community_path(assigns(:community))
@@ -58,23 +58,17 @@ class CommunitiesControllerTest < ActionController::TestCase
   ###
   # Show Tests
   ###
-  test "should show community whilst authenticated as a user" do
-    sign_in users(:billy)
+  test "should redirect to community subdomain home whilst not authenticated as a user" do
     get :show, :id => @community.to_param
-    assert_response :success
+    assert_redirected_to subdomain_home_url(:subdomain => @community.subdomain)
   end
-  
-  test "shouldn't show community whilst not authenticated as a user" do
-    get :show, :id => @community.to_param
-    assert_redirected_to new_user_session_path
-  end
-  
-  test "show should redirect to subdomain" do
+
+  test "show should redirect to subdomain whilst authenticated as a user" do
     sign_in users(:billy)
     get :show, :id => @community.to_param
     assert_redirected_to subdomain_home_url(:subdomain => @community.subdomain)
   end
-  
+
   ###
   # Edit Tests
   ###
@@ -83,7 +77,7 @@ class CommunitiesControllerTest < ActionController::TestCase
     get :edit, :id => @community.to_param
     assert_response :success
   end
-  
+
   test "shouldn't get edit whilst not authenticated as a user" do
     get :edit, :id => @community.to_param
     assert_response new_user_session_path
@@ -97,27 +91,31 @@ class CommunitiesControllerTest < ActionController::TestCase
     put :update, :id => @community.to_param, :community => @community.attributes
     assert_redirected_to community_path(assigns(:community))
   end
-  
+
   test "shouldn't update community whilst not authenticated as a user" do
     put :update, :id => @community.to_param, :community => @community.attributes
     assert_redirected_to new_user_session_path
   end
 
   ###
-  # destroy Tests
+  # destroy Tests # TODO We will want to look at this and decide if it should redirect to a 404 page.
   ###
   test "should not destroy community whilst authenticated as a user" do
     sign_in users(:billy)
-    assert_no_difference('Community.count') do
-      delete :destroy, :id => @community.to_param
+    assert_raises(ActionController::RoutingError) do
+      assert_no_difference('Community.count') do
+        delete :destroy, :id => @community.to_param
+      end
+      assert_response :missing
     end
-    assert_response :missing
   end
-  
+
   test "should not destroy community whilst not authenticated as a user" do
-    assert_no_difference('Community.count') do
-      delete :destroy, :id => @community.to_param
+    assert_raises(ActionController::RoutingError) do
+      assert_no_difference('Community.count') do
+        delete :destroy, :id => @community.to_param
+      end
+      assert_response :missing
     end
-    assert_response :missing
   end
 end

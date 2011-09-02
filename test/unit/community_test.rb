@@ -16,12 +16,12 @@
 require 'test_helper'
 
 class CommunityTest < ActiveSupport::TestCase
-  
+
 ###
 # Fixtures
 ###
   fixtures :communities
-  
+
 ###
 # Validator Tests
 ###
@@ -44,15 +44,15 @@ class CommunityTest < ActiveSupport::TestCase
     ok_names = %w{ OMGLOLOLOLOL My\ Community My-Community Community1 } # TESTING Valid community names for testing.
     bad_names = %w{ 1212312&^*&^ #1Community My\ #1\ Community @TopComm } # TESTING Invalid community names for testing.
     excluded_names = %w{ www wwW wWw wWW Www WwW WWw WWW }
-    
+
     ok_names.each do |name|
       assert new_community(name).valid?, "#{name} should be valid"
     end
-    
+
     bad_names.each do |name|
       assert new_community(name).invalid?, "#{name} should not be valid"
     end
-    
+
     excluded_names.each do |name|
       assert new_community(name).invalid?, "#{name} should not be valid"
     end
@@ -61,27 +61,27 @@ class CommunityTest < ActiveSupport::TestCase
   test "community creation label inclusion" do
     valid_labels = %w{ Guild Team Clan Faction Squad }
     invlaid_labels = %w{ Herp Derp Zerp Guil }
-    
+
     valid_labels.each do |label|
       assert new_community_with_label(label).valid?, "#{label} should be valid"
     end
-    
+
     invlaid_labels.each do |label|
       assert new_community_with_label(label).invalid?, "#{label} shouldn't' be valid"
     end
   end
-  
+
   test "name convertion to subdomain" do
     good_name_subdomain_hash = Hash[ "OMGLOLOLOLOL", "omglolololol", "My Community", "mycommunity", "My-Community", "mycommunity", "Community1", 'community1'] # TESTING Valid community subdomain hash
-    bad_name_subdomain_hash = Hash[ "OMGLOLOLOLOL", "OMGLOLOLOLOL", "My Community", "My Community", "My-Community", "My-Community", "Community1", 'Community1'] # TESTING Invalid community subdomain hash 
-    
+    bad_name_subdomain_hash = Hash[ "OMGLOLOLOLOL", "OMGLOLOLOLOL", "My Community", "My Community", "My-Community", "My-Community", "Community1", 'Community1'] # TESTING Invalid community subdomain hash
+
     good_name_subdomain_hash.each do |key, value|
       c = new_community(key)
       assert c.save, "#{key} should be saved..."
       assert_equal value, c.subdomain, "#{value} should be a valid subdomain for #{key}"
       assert c.delete, "#{key} should be deleted..."
     end
-    
+
     bad_name_subdomain_hash.each  do |key, value|
       c = new_community(key)
       assert c.save, "#{key} should be saved..."
@@ -89,18 +89,18 @@ class CommunityTest < ActiveSupport::TestCase
       assert c.delete, "#{key} should be deleted..."
     end
   end
-  
+
   test "community creation name uniqueness" do
     good_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "MyCommunity", "My-Community", "Community1"] # TESTING Valid community pairs
     bad_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "omglolololol", "My-Community", "My Community"] # TESTING Invalid community pairs
-     
+
     good_name_pairs_hash.each  do |firstName, secondName|
       c = new_community(firstName)
       assert c.save, "#{firstName} should be saved..."
       assert new_community(secondName).valid?, "#{secondName} should be valid"
       assert c.delete, "#{firstName} should be deleted..."
-    end  
-     
+    end
+
     bad_name_pairs_hash.each  do |firstName, secondName|
       c = new_community(firstName)
       assert c.save, "#{firstName} should be saved..."
@@ -108,12 +108,12 @@ class CommunityTest < ActiveSupport::TestCase
       assert c.delete, "#{firstName} should be deleted..."
     end
   end
-  
-  test "community edit name uniqueness" do
+
+  test "community edit name uniqueness" do # TODO Update this test with the information that communities can't have thier name changed.
     startName = "GoodName"
     good_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "MyCommunity", "My-Community", "Community1"] # TESTING Valid community pairs
     bad_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "omglolololol", "My-Community", "My Community"] # TESTING Invalid community pairs
-     
+
     good_name_pairs_hash.each  do |firstName, secondName|
       c1 = new_community(firstName)
       c2 = new_community(startName)
@@ -123,7 +123,7 @@ class CommunityTest < ActiveSupport::TestCase
       assert c1.delete, "#{firstName} should be deleted..."
       assert c2.delete, "#{secondName} should be deleted..."
     end
-     
+
     bad_name_pairs_hash.each  do |firstName, secondName|
       c1 = new_community(firstName)
       c2 = new_community(startName)
@@ -134,7 +134,7 @@ class CommunityTest < ActiveSupport::TestCase
       assert c2.delete, "#{secondName} should be deleted..."
     end
   end
-  
+
 ###
 # Test Methods
 ###

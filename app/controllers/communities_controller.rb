@@ -2,7 +2,7 @@
 # Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
-
+#
 # This controller is for communities.
 ###
 
@@ -40,13 +40,16 @@ class CommunitiesController < ApplicationController
   # POST /communities
   # POST /communities.xml
   def create
-    @community = Community.new(params[:community])
+    @community = Community.create(params[:community])
+    respond_with(@community)
   end
 
   # PUT /communities/1
   # PUT /communities/1.xml
   def update
     @community = Community.find(params[:id])
+    @community.update_attributes(params[:community])
+    respond_with(@community)
   end
 
 end
