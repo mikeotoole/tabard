@@ -7,6 +7,7 @@
 ###
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include UrlHelper
 
 ###
 # Before Filters
@@ -21,7 +22,7 @@ protected
   def limit_subdomain_access
     if request.subdomain.present?
       # TODO this error handling could be more sophisticated!
-      redirect_to root_url(:subdomain => false)
+      redirect_to root_url(:subdomain => false), :alert => "No Subdomain For You!"
     end
   end
 end

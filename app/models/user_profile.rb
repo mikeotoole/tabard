@@ -32,7 +32,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegates :email, :to => :user
+  delegate :email, :to => :user
 
 ###
 # Uploaders

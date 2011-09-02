@@ -9,7 +9,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attribute_accessible :name, :slogan, :label, :accepting_members, :email_notice_on_application
+  attr_accessible :name, :slogan, :label, :accepting_members, :email_notice_on_application
 
 ###
 # Validators
@@ -19,7 +19,7 @@ class Community < ActiveRecord::Base
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
-  validate_on_update :can_not_change_name
+  validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
