@@ -68,7 +68,13 @@ class CommunitiesControllerTest < ActionController::TestCase
     get :show, :id => @community.to_param
     assert_redirected_to new_user_session_path
   end
-
+  
+  test "show should redirect to subdomain" do
+    sign_in users(:billy)
+    get :show, :id => @community.to_param
+    assert_redirected_to subdomain_home_url(:subdomain => @community.subdomain)
+  end
+  
   ###
   # Edit Tests
   ###
