@@ -40,8 +40,9 @@ class CommunitiesControllerTest < ActionController::TestCase
   ###
   test "should create community whilst authenticated as a user" do
     sign_in users(:billy)
+    @community = Community.new(:name => "Test Guild", :slogan => "We rock", :label => "Guild")
     assert_difference('Community.count') do
-      post :create, :community => @community.attributes # TODO This is already in the database and needs to be changed to something new.
+      post :create, :community => @community.attributes
     end
 
     assert_redirected_to community_path(assigns(:community))
@@ -80,7 +81,7 @@ class CommunitiesControllerTest < ActionController::TestCase
 
   test "shouldn't get edit whilst not authenticated as a user" do
     get :edit, :id => @community.to_param
-    assert_response new_user_session_path
+    assert_redirected_to new_user_session_path
   end
 
   ###
