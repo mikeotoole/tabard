@@ -23,7 +23,7 @@ source 'http://rubygems.org'
   # User Authentication
     gem 'devise'
   # Permissions/AC
-    gem 'cantango'
+    gem 'cancan'
 
   # Form Handling
     gem 'simple_form'
