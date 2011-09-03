@@ -6,9 +6,9 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 puts "Creating RoboBilly!"
-robobilly = User.new(:email => "billy@robo.com", :password => "Password")
+robobilly = User.new(:email => "billy@robo.com", :password => "Password",
+    :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy"})
 robobilly.skip_confirmation!
 robobilly.save
-
 puts "Creating JustAnotherHeadshot Clan"
 jahc = Community.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")

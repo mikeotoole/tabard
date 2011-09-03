@@ -67,6 +67,8 @@ class User < ActiveRecord::Base
   def roles_list
     # TODO Add this logic.
   end
+  def role_groups_list
+  end
   ###
   # This method is required by cantango.
   ###

@@ -14,5 +14,6 @@ protected
     end
   end
   def dynamic_rules
+  	can :manage, :all
   end
 end
