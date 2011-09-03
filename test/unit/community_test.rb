@@ -111,7 +111,10 @@ class CommunityTest < ActiveSupport::TestCase
 
   test "community name edit not allowed test" do
 	community = communities(:one)
-  	assert !community.update_attribute(:name, "ChangedName"), "Update attribute name should fail."
+        old_name = community.name
+  	assert !community.update_attributes(:name => "ChangedName"), "Update attribute name should fail."
+        new_name = community.name
+        assert_equal old_name, new_name, "name should not change."
   end
 
 ###

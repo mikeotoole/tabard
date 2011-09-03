@@ -59,7 +59,11 @@ protected
   # This method ensures that the name is not changed.
   ###
   def can_not_change_name
-    errors.add(:name, "can not be changed.") if subdomain != Community.convert_to_subdomain(name)
+    if self.name_changed?
+      self.name = self.name_was
+      self.errors.add(:name, "can not be changed.")
+      return false
+    end
   end
 end
 
