@@ -31,8 +31,8 @@ class UserProfileTest < ActiveSupport::TestCase
   test "User profile should validate avatar" do
     user_profile = user_profiles(:billy)
 
-    goodFilenames = %w{ goodAvatar1.jpg goodAvatar2.jpeg goodAvatar3.png goodAvatar4.gif } # TESTING valid avator files for testing
-    badFilenames = %w{ badAvatar1.jpg badAvatar2.tiff } # TESTING Invalid avator files for testing
+    goodFilenames = %w{ goodAvatar1.jpg goodAvatar2.jpeg goodAvatar3.png goodAvatar4.gif } # TESTING Valid avatar files for testing
+    badFilenames = %w{ badAvatar1.jpg badAvatar2.tiff } # TESTING Invalid avatar files for testing
 
 
     goodFilenames.each do |filename|
