@@ -14,7 +14,7 @@ class Ability
     can :update, UserProfile do |user_profile|
       user.user_profile.id == user_profile.id
     end
-    can :read, Community
+    can [:read,:create], Community
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
