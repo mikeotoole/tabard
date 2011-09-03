@@ -13,22 +13,32 @@ class UserProfile < ActiveRecord::Base
   # This attribute is the avatar for this user profile. It maps to the AvatarUploader.
   ###
   attr_accessor :avatar
+
   ###
   # This attribute is the avatar cache for this user profile. It is used by the AvatarUploader.
   ###
   attr_accessor :avatar_cache
+
   ###
   # This attribute is the avatar removal for this user profile. It is used by the AvatarUploader.
   ###
   attr_accessor :remove_avatar
+
 ###
 # Associations
 ###
-  belongs_to :user
+  belongs_to :user, :inverse_of => :user_profile
+
+###
+# Delegates
+###
+  delegate :email, :to => :user
+
 ###
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
+
 ###
 # Validators
 ###

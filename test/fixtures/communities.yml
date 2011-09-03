@@ -16,17 +16,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  slogan: MyString
-  label: MyString
-  accepting_members: false
-  email_notice_on_application: false
-  subdomain: MyString
-
-two:
-  name: MyString
-  slogan: MyString
-  label: MyString
-  accepting_members: false
-  email_notice_on_application: false
-  subdomain: MyString
+  name: "Kick Ass Community"
+  slogan: "We Rock!"
+  label: "Guild"
+  accepting_members: true
+  email_notice_on_application: true
+  subdomain: "kickasscommunity"

@@ -9,6 +9,8 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
+  attr_accessible :name, :slogan, :label, :accepting_members, :email_notice_on_application
+
 ###
 # Validators
 ###
@@ -17,17 +19,21 @@ class Community < ActiveRecord::Base
                    :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
+  validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
   validates :label, :presence => true,
                    :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
+
 ###
 # Callbacks
 ###
   before_save :update_subdomain
+
 ###
 # Protected Methods
 ###
 protected
+
   ###
   # _before_save_
   #
@@ -37,6 +43,7 @@ protected
   def update_subdomain
     self.subdomain = Community.convert_to_subdomain(name)
   end
+
   ###
   # This method converts the name passed to it into the corrosponding subdomain representation.
   # [Args]
@@ -46,6 +53,13 @@ protected
   def self.convert_to_subdomain(name)
     return false if name.blank?
     name.downcase.gsub(/[\s\-]/,"")
+  end
+
+  ###
+  # This method ensures that the name is not changed.
+  ###
+  def can_not_change_name
+    errors.add(:name, "can not be changed.") if subdomain != Community.convert_to_subdomain(name)
   end
 end
 

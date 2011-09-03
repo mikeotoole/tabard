@@ -10,8 +10,12 @@ Icon?
 *~
 *.orig
 
-.sass-cache
+.sass-cache/
 
 doc/reports/
 doc/app/
 doc/dev/
+
+public/uploads/tmp/
+
+public/assets/
