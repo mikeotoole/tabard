@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :roles
+
   resources :communities
   resources :user_profiles, :only => [:show, :edit, :update]
 

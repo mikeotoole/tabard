@@ -10,9 +10,25 @@ class ApplicationController < ActionController::Base
   include UrlHelper
 
 ###
-# Before Filters
+# Callback Filters
 ###
   before_filter :authenticate_user!, :limit_subdomain_access
+
+  after_filter :remember_current_page
+  before_filter :remember_last_page
+
+###
+# Public Methods
+###
+  # This method rescues from a CanCan Access Denied Exception
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to previous_page, :alert => exception.message
+  end
+
+  #	This method gets the users path to last page, if it is from this site, otherwise it returns the root path.
+  def previous_page
+  	session[:last_page] ? session[:last_page] : root_url
+  end
 
 ###
 # Protected Methods
@@ -21,8 +37,16 @@ protected
 
   def limit_subdomain_access
     if request.subdomain.present?
-      # TODO this error handling could be more sophisticated!
-      redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
+      #redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
     end
+  end
+
+  def remember_current_page
+    session[:current_page] = request.path_info
+  end
+
+  def remember_last_page
+    session[:last_page] = session[:current_page] unless session[:current_page] == request.path_info
   end
 end

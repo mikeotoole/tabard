@@ -11,6 +11,7 @@
 #  subdomain                   :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
+#  admin_profile_id            :integer
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
 ###
   delegate :first_name, :to => :user_profile
   delegate :last_name, :to => :user_profile
+  delegate :owned_communities, :to => :user_profile
 
 ###
 # Validators

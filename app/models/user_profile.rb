@@ -28,6 +28,7 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
+  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
 
 ###
 # Delegates
@@ -53,6 +54,14 @@ class UserProfile < ActiveRecord::Base
       :file_size => {
         :maximum => 1.megabytes.to_i
       }
+
+###
+# Public Methods
+###
+  # This method returns the first name + space + last name
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
 
 ###
 # Protected Methods

@@ -11,6 +11,7 @@
 #  subdomain                   :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
+#  admin_profile_id            :integer
 #
 
 require 'test_helper'

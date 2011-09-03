@@ -18,4 +18,4 @@ d_moose.skip_confirmation!
 d_moose.save
 
 puts "Creating JustAnotherHeadshot Clan"
-jahc = Community.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
+jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")

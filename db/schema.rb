@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830120715) do
+ActiveRecord::Schema.define(:version => 20110903224438) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(:version => 20110830120715) do
     t.boolean  "accepting_members",           :default => true
     t.boolean  "email_notice_on_application", :default => true
     t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "admin_profile_id"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.integer  "community_id"
+    t.string   "name"
+    t.boolean  "system_generated", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

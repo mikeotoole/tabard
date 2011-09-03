@@ -14,15 +14,12 @@
     = f.text_field :slogan
   .field
     = f.label :label
-    = f.text_field :label
+    = collection_select(:community, :label, Community::VALID_LABELS, :to_s, :to_s)
   .field
     = f.label :accepting_members
     = f.check_box :accepting_members
   .field
     = f.label :email_notice_on_application
     = f.check_box :email_notice_on_application
-  .field
-    = f.label :subdomain
-    = f.text_field :subdomain
   .actions
     = f.submit 'Save'

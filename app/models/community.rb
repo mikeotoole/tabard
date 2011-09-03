@@ -7,9 +7,20 @@
 ###
 class Community < ActiveRecord::Base
 ###
+# Constants
+###
+  VALID_LABELS = %w(Guild Team Clan Faction Squad)
+
+###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :label, :accepting_members, :email_notice_on_application
+  attr_accessible :name, :slogan, :label, :accepting_members, :admin_profile, :email_notice_on_application
+
+###
+# Associations
+###
+  has_many :roles
+  belongs_to :admin_profile, :class_name => "UserProfile"
 
 ###
 # Validators
@@ -22,12 +33,16 @@ class Community < ActiveRecord::Base
   validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
   validates :label, :presence => true,
-                   :inclusion => { :in => %w(Guild Team Clan Faction Squad), :message => "%{value} is not currently a supported label" }
+                   :inclusion => { :in => VALID_LABELS, :message => "%{value} is not currently a supported label" }
 
 ###
 # Callbacks
 ###
   before_save :update_subdomain
+
+###
+# Public Methods
+###
 
 ###
 # Protected Methods
@@ -68,6 +83,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -81,5 +97,6 @@ end
 #  subdomain                   :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
+#  admin_profile_id            :integer
 #
 

@@ -42,6 +42,7 @@ class CommunitiesController < ApplicationController
   # POST /communities.xml
   def create
     #@community = Community.create(params[:community])
+    @community.update_attributes(:admin_profile => current_user.user_profile)
     respond_with(@community)
   end
 
