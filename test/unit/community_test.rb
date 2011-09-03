@@ -109,30 +109,9 @@ class CommunityTest < ActiveSupport::TestCase
     end
   end
 
-  test "community edit name uniqueness" do # TODO Update this test with the information that communities can't have thier name changed.
-    startName = "GoodName"
-    good_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "MyCommunity", "My-Community", "Community1"] # TESTING Valid community pairs
-    bad_name_pairs_hash = Hash[ "OMGLOLOLOLOL", "omglolololol", "My-Community", "My Community"] # TESTING Invalid community pairs
-
-    good_name_pairs_hash.each  do |firstName, secondName|
-      c1 = new_community(firstName)
-      c2 = new_community(startName)
-      assert c1.save, "#{firstName} should be saved..."
-      assert c2.save, "#{startName} should be saved..."
-      assert c2.update_attribute(:name, secondName), "#{secondName} should be valid"
-      assert c1.delete, "#{firstName} should be deleted..."
-      assert c2.delete, "#{secondName} should be deleted..."
-    end
-
-    bad_name_pairs_hash.each  do |firstName, secondName|
-      c1 = new_community(firstName)
-      c2 = new_community(startName)
-      assert c1.save, "#{firstName} should be saved..."
-      assert c2.save, "#{startName} should be saved..."
-      assert !c2.update_attribute(:name, secondName), "#{secondName} shouldn't be valid"
-      assert c1.delete, "#{firstName} should be deleted..."
-      assert c2.delete, "#{secondName} should be deleted..."
-    end
+  test "community name edit not allowed test" do
+	community = communities(:one)
+  	assert !community.update_attribute(:name, "ChangedName"), "Update attribute name should fail."
   end
 
 ###
