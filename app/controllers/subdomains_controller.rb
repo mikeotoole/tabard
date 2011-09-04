@@ -17,6 +17,18 @@ class SubdomainsController < ApplicationController
     redirect_to root_url(:subdomain => false), :alert => "That community does not exist" and return false unless @community
   end
 
+###
+# Public Methods
+###
+  ###
+  # This Method is a helper that exposes the current_community
+  ###
+  def current_community
+    @community
+  end
+
+  helper_method :current_community
+
   # Index action
   def index
     render :index

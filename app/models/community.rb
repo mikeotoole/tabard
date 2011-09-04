@@ -40,6 +40,8 @@ class Community < ActiveRecord::Base
 ###
   before_save :update_subdomain
 
+  after_create :set_up_member_role
+
 ###
 # Public Methods
 ###
@@ -79,6 +81,14 @@ protected
       self.errors.add(:name, "can not be changed.")
       return false
     end
+  end
+
+  ###
+  # This method creates the default member role.
+  ###
+  def set_up_member_role
+    self.roles.create(:name => "Member", :system_generated => true)
+    # TODO Setup the permissions.
   end
 end
 

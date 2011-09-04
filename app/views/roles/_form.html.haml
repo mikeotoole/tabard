@@ -7,13 +7,7 @@
           %li= msg
 
   .field
-    = f.label :community_id
-    = f.number_field :community_id
-  .field
     = f.label :name
     = f.text_field :name
-  .field
-    = f.label :system_generated
-    = f.check_box :system_generated
   .actions
     = f.submit 'Save'

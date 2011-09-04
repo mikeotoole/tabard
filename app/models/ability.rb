@@ -15,6 +15,15 @@ class Ability
       user.user_profile.id == user_profile.id
     end
     can [:read,:create], Community
+    can :update, Community do |community|
+      user.user_profile.id == community.admin_profile_id
+    end
+    can :manage, Role do |role|
+      role.community.admin_profile_id == user.user_profile.id
+    end
+    cannot :destroy, Role do |role|
+      role.system_generated
+    end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

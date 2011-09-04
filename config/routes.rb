@@ -1,6 +1,4 @@
 DaBvRails::Application.routes.draw do
-  resources :roles
-
   resources :communities
   resources :user_profiles, :only => [:show, :edit, :update]
 
@@ -8,6 +6,7 @@ DaBvRails::Application.routes.draw do
 
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => 'subdomain_home'
+    resources :roles
   end
 
   root :to => 'home#index'
