@@ -28,14 +28,14 @@ class RolesController < SubdomainsController
   # GET /roles/1.json
   def show
     #@role = Role.find(params[:id])
-    respond_with(@role)
+    #respond_with(@role)
   end
 
   # GET /roles/new
   # GET /roles/new.json
   def new
     #@role = current_community.roles.new
-    respond_with(@role)
+    #respond_with(@role)
   end
 
   # GET /roles/1/edit
@@ -74,11 +74,21 @@ class RolesController < SubdomainsController
     respond_with(@role)
   end
 
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to populate @roles and @role from the current_community.
+  ###
   def load_role
     @roles = current_community.roles
     @role = current_community.roles.find_by_id(params[:id])
   end
 
+  ###
+  # _before_filter
+  #
+  # This before filter attempts to create @role from: roles.create(params[:role]) or roles.new(), for the current community.
+  ###
   def create_role
     if(params[:role])
       @role = current_community.roles.create(params[:role])

@@ -13,6 +13,12 @@ class Role < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :name, :uniqueness => {:scope => :community_id}
+
+###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :prefix => true
+
 end
 
 # == Schema Information

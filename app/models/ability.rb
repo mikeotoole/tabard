@@ -1,6 +1,10 @@
+# This class represents a cancan ability.
 class Ability
   include CanCan::Ability
 
+  ###
+  # This method initalizes the abilites avalible to a user, using CanCan.
+  ###
   def initialize(user)
     user ||= User.new
 
@@ -19,7 +23,7 @@ class Ability
       user.user_profile.id == community.admin_profile_id
     end
     can :manage, Role do |role|
-      role.community.admin_profile_id == user.user_profile.id
+      role.community_admin_profile_id == user.user_profile.id
     end
     cannot :destroy, Role do |role|
       role.system_generated

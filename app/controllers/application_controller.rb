@@ -25,16 +25,15 @@ class ApplicationController < ActionController::Base
     redirect_to previous_page, :alert => exception.message
   end
 
-  #	This method gets the users path to last page, if it is from this site, otherwise it returns the root path.
+  # This method gets the users path to last page, if it is from this site, otherwise it returns the root path.
   def previous_page
-  	session[:last_page] ? session[:last_page] : root_url
+  session[:last_page] ? session[:last_page] : root_url
   end
 
 ###
 # Protected Methods
 ###
 protected
-
   def limit_subdomain_access
     if request.subdomain.present?
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
@@ -42,10 +41,20 @@ protected
     end
   end
 
+  ###
+  # _before_filter_
+  #
+  # This method remembers the current page in the session variable [:current_page]
+  ###
   def remember_current_page
     session[:current_page] = request.path_info
   end
 
+  ###
+  # _after_filter_
+  #
+  # This method remembers the previous crumblin page in the session variable [:last_page]
+  ###
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.path_info
   end

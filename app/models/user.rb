@@ -60,22 +60,6 @@ class User < ActiveRecord::Base
 ###
 # Public Methods
 ###
-  ###
-  # This method is required by Cantango.
-  # [Returns] list of symbol, where each symbol is name of role
-  # example [:admin, :editor]
-  ###
-  def roles_list
-    # TODO Add this logic.
-  end
-  def role_groups_list
-  end
-  ###
-  # This method is required by cantango.
-  ###
-  def self.guest
-    User.new # TODO Set this to something more smarter...
-  end
 ###
 # Protected Methods
 ###
