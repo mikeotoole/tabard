@@ -1,0 +1,31 @@
+%h1 Listing wow_characters
+
+%table
+  %tr
+    %th Name
+    %th Faction
+    %th Race
+    %th Level
+    %th Server
+    %th Game
+    %th Avatar
+    %th
+    %th
+    %th
+
+  - @wow_characters.each do |wow_character|
+    %tr
+      %td= wow_character.name
+      %td= wow_character.faction
+      %td= wow_character.race
+      %td= wow_character.level
+      %td= wow_character.server
+      %td= wow_character.game_id
+      %td= wow_character.avatar
+      %td= link_to 'Show', wow_character
+      %td= link_to 'Edit', edit_wow_character_path(wow_character)
+      %td= link_to 'Destroy', wow_character, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Wow character', new_wow_character_path

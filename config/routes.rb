@@ -1,10 +1,21 @@
 DaBvRails::Application.routes.draw do
 
-  devise_for :users
-
+	# Home
   root :to => 'home#index'
-
   get "home/index"
+
+	# Users
+  devise_for :users
+  
+  # Games
+  match "/game/:id" => "games#show", :as => "game"
+  resources :games, :only => :show do
+    resources :wow_characters, :except => :index
+    resources :swtor_characters, :except => :index
+  end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
+  resources :base_characters, :only => :new
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

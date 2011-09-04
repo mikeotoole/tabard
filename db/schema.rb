@@ -11,7 +11,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830014853) do
+ActiveRecord::Schema.define(:version => 20110904005601) do
+
+  create_table "character_proxies", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "character_id"
+    t.string   "character_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "communities", :force => true do |t|
+    t.string   "name"
+    t.string   "slogan"
+    t.string   "label"
+    t.boolean  "accepting_members",           :default => true
+    t.boolean  "email_notice_on_application", :default => true
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "games", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.boolean  "is_active",  :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "supported_games", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "swtor_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
@@ -49,5 +92,17 @@ ActiveRecord::Schema.define(:version => 20110830014853) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "wow_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "faction"
+    t.string   "race"
+    t.integer  "level"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

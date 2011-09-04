@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @swtor_character.name
+%p
+  %b Server:
+  = @swtor_character.server
+%p
+  %b Game:
+  = @swtor_character.game_id
+%p
+  %b Avatar:
+  = @swtor_character.avatar
+
+= link_to 'Edit', edit_swtor_character_path(@swtor_character)
+\|
+= link_to 'Back', swtor_characters_path
