@@ -6,17 +6,11 @@
 # This helper module is for improving urls for use with subdomains
 ###
 module UrlHelper
-  ####
-  # This method modifys a url_for option to remove subdomain if it false.
-  ###
-  def with_subdomain(subdomain)
-    subdomain = (subdomain || "")
-    subdomain += "." unless subdomain.empty?
-    [subdomain, request.domain].join
-  end
 
   ###
   # This method monkey patches url_for to handle an optional subdomain hash argument.
+  # [Args]
+  #		* +options+ -> Hash of options.
   ###
   def url_for(options = nil)
     if options.kind_of?(Hash) && options.has_key?(:subdomain)
@@ -24,4 +18,21 @@ module UrlHelper
     end
     super
   end
+  
+###
+# Protected Methods
+###  
+protected  
+  
+  ####
+  # This method modifys a url_for option to add subdomain if it exists.
+  # [Args]
+  #		* +subdomain+ -> Subdomain to append.
+  ###
+  def with_subdomain(subdomain)
+    subdomain = (subdomain || "")
+    subdomain += "." unless subdomain.empty?
+    [subdomain, request.domain].join
+  end
+  
 end

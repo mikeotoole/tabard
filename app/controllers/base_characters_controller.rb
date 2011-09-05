@@ -6,14 +6,15 @@
 # This controller is creating characters.
 ###
 class BaseCharactersController < ApplicationController
-  ###
-  # Before Filters
-  ###
-  #TODO why does this exclude new?
-  before_filter :authenticate, :except => [:new]
-  
   respond_to :html, :js
+###
+# Callbacks
+###
+  before_filter :authenticate_user!
 
+###
+# REST Actions
+###
   # GET /base_characters/new(.:format)
   def new
       @game = Game.find_by_id(params[:game][:game_id])

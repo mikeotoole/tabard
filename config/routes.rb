@@ -1,14 +1,5 @@
 DaBvRails::Application.routes.draw do
 
-	# Home
-  root :to => 'home#index'
-  get "home/index"
-  
-	# Subdomains
-  constraints(Subdomain) do
-    match "/" => "subdomains#index", :as => "subdomain_home"
-  end
-
 	# Users
   devise_for :users
   
@@ -24,6 +15,15 @@ DaBvRails::Application.routes.draw do
   resources :wow_characters, :only => :show
   resources :swtor_characters, :only => :show
   resources :base_characters, :only => :new
+  
+	# Subdomains
+  constraints(Subdomain) do
+    match "/" => "subdomains#index", :as => "subdomain_home"
+  end
+  
+  # Home
+  root :to => 'home#index'
+  get "home/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

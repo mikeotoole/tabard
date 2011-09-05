@@ -6,14 +6,15 @@
 # This controller is for games.
 ###
 class GamesController < ApplicationController
-  ###
-  # Before Filters
-  ###
+	respond_to :html
+###
+# Callbacks
+###
   before_filter :authenticate_user!
 
-	#TODO Why is this not in the home/application controller?
-  respond_to :html
-
+###
+# REST Actions
+###
 	###
   # This method gets the game.
   # GET /game/:id(.:format) #TODO Why do we need this too?
@@ -23,5 +24,5 @@ class GamesController < ApplicationController
     @game = Game.active.find(params[:id])
     respond_with(@game)
   end
-  
+
 end

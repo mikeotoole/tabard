@@ -6,11 +6,16 @@
 # This is the application cotroller.
 ###
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+###
+# Includes
+###
   include UrlHelper
 
+	# Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
+  protect_from_forgery
+
 ###
-# Before Filters
+# Callbacks
 ###
   before_filter :authenticate_user!, :limit_subdomain_access
 
@@ -19,6 +24,9 @@ class ApplicationController < ActionController::Base
 ###
 protected
 
+	###
+	# TODO Joe, add description
+	###
   def limit_subdomain_access
     if request.subdomain.present?
       # TODO this error handling could be more sophisticated!
