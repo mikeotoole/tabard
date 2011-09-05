@@ -6,12 +6,10 @@
 # This class represents the Star Wars the Old Republic game.
 ###
 class Swtor < Game
-
 ###
 # Associations
 ###
   has_many :characters, :foreign_key => :game_id, :dependent => :destroy, :class_name => "SwtorCharacters"
-  
 end
 
 # == Schema Information

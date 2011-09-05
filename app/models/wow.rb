@@ -6,12 +6,10 @@
 # This class represents the World of Warcraft game.
 ###
 class Wow < Game
-
 ###
 # Associations
 ###
   has_many :wow_characters, :foreign_key => :game_id, :dependent => :destroy, :class_name => "WowCharacters"
-
 end
 # == Schema Information
 #

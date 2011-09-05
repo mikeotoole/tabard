@@ -57,6 +57,10 @@ class UserProfile < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Instance Methods
+###
 	###
   # This will create a new character proxy for the character and 
   # add it to the user profile.

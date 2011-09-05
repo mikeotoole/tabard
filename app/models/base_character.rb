@@ -8,6 +8,23 @@
 class BaseCharacter < ActiveRecord::Base
 	# This is an abstract_class and therefore has no table.
   self.abstract_class = true
+###
+# Attribute accessors
+###
+	###
+	#  This attribute is the avatar for this SWTOR character. It maps to the AvatarUploader.
+	###
+  attr_accessor :avatar
+
+	###
+	# This attribute is the avatar cache for this SWTOR character. It is used by the AvatarUploader.
+	###
+  attr_accessor :avatar_cache
+
+	###
+	# This attribute is the avatar removal for this SWTOR character. It is used by the AvatarUploader.
+	###
+  attr_accessor :remove_avatar
 
 ###
 # Associations
@@ -20,10 +37,42 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates_presence_of :name, :game
+  validates :name, :presence => true
+  validates :game, :presence => true
 
+###
+# Uploaders
+###
+  mount_uploader :avatar, AvatarUploader #TODO can this be moved to base_character?
 
-	#TODO is this needed?
+	###
+	# This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+	###
+  def remove_avatar! #TODO can this be moved to base_character?
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+    end
+  end
+
+	###
+	# This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+	###
+  def remove_previously_stored_avatar #TODO can this be moved to base_character?
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+      @previous_model_for_avatar = nil
+    end
+  end
+
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
 	###
   # This method returns the id of this character's character proxy.
   # [Returns] An integer that contains the id for this character's character proxy, if possible, otherwise nil.
@@ -33,7 +82,6 @@ class BaseCharacter < ActiveRecord::Base
     nil
   end
 
-	#TODO is this needed?
 	###
   # This method returns the id of this character.
   # [Returns] An integer that contains the id for this character.
@@ -47,13 +95,12 @@ class BaseCharacter < ActiveRecord::Base
   # [Returns] A string that contains the display name for this character.
 	###
   def display_name
-  	#TODO Why does this just return ""? Each character type defines this right.
-    ""
+  	if self.method_defined? :display_name ? self.display_name : ""
   end
 
-	# TODO Are we getting rid of default character?
+	# If the character is the default for its game.
   def default
-    self.character_proxy_id == self.character_proxy.game_profile.default_character_proxy_id
+  	# TODO Mike, Add this to table.
+    self.character_proxy.default_character
   end
-
 end

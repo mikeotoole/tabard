@@ -1,5 +1,11 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents a Game. Only subclasses of this should be created.
+###
 class Game < ActiveRecord::Base
-
 ###
 # Attribute accessible
 ###
@@ -15,15 +21,29 @@ class Game < ActiveRecord::Base
 ###
 # Validators
 ###
-	validates_presence_of :name
+	validates :name, :presence => true
 	
-	#TODO How should this be organized?
+###
+# Scopes
+###
 	scope :active, :conditions => {:is_active => true}
 
+###
+# Public Methods
+###
 
- # Lets the subclasses use the parents routes.
+###
+# Class Methods
+###	
+	###
+ 	# Lets the subclasses use the parents routes.
+ 	# [Args]
+ 	#		* +child+ -> The class to check if subclass.
+ 	# [Returns] If is subclass of Game returns Game as model name.
+ 	###
   def self.inherited(child)
     child.instance_eval do
+    	# Defines the subclasses model name as its base class Game.
       def model_name
         Game.model_name
       end
@@ -31,15 +51,30 @@ class Game < ActiveRecord::Base
     super
   end
 
+	###
   # Used to offer a dynamically generated list of subclass to choose from.
+  # [Returns] Array of strings contaning all Game subclass names.
+  ###
   def self.select_options
     descendants.map{ |c| c.to_s }.sort
   end
 
-	# Used to set and get the game type.
+###
+# Instance Methods
+###
+	###
+	# Get the game type (class name).
+	# [Returns] String with game type (class name).
+	###
   def type_helper
     self.type
   end
+  
+  ###
+  # Sets the game type.
+  # [Args]
+  #		* +type+ String of game type (class name).
+  ###
   def type_helper=(type)
     self.type = type
   end

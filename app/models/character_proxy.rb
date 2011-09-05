@@ -6,12 +6,6 @@
 # This class represents a Character Proxy.
 ###
 class CharacterProxy < ActiveRecord::Base
-
-#TODO Can we have it automaticly create these section tags?
-###
-# Attribute accessible
-###
-
 ###
 # Associations
 ###
@@ -21,13 +15,17 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Validators
 ###
-	validates_presence_of :user_profile, :character
+	validates :user_profile, :presence => true
+	validates :character, :presence => true
+	validate :default_character_exists
 
 ###
-# After Create
+# Public Methods
 ###
-  after_create :default_gp_checker # TODO Are we getting rid of default character?
 
+###
+# Class Methods
+###
 	###
   # This method gets all characters, regardless of their game.
   # [Returns] An array that contains all characters.
@@ -48,21 +46,31 @@ class CharacterProxy < ActiveRecord::Base
     profile
   end
 
+###
+# Instance Methods
+###
 	###
   # This method gets the active_profile_id for this character proxy.
-  # [Returns] The id of this character_proxy's game_profile.
+  # [Returns] The id of this character_proxy's user_profile.
 	###
   def active_profile_id
-    self.game_profile.id	#TODO Do we need this?
+    self.user_profile.id
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Validators
+###
 	###
-  # _after_create_
-	#
-  # This method is an after_create method that adds this character proxy to the default game profile.
+  # This method is an validator method that checks that there is a default for this characters game.
+  # If not it makes this the default.
 	###
-  def default_gp_checker # TODO Are we getting rid of default character?
-    self.game_profile.default_proxy_adder(self) if self.game_profile
+  def default_character_exists
+    # TODO Joe, Add this function.
   end
 end
 

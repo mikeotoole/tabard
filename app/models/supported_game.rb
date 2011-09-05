@@ -6,13 +6,9 @@
 # This class represents an association between a game and a community that participates (supports) it.
 ###
 class SupportedGame < ActiveRecord::Base
-
 ###
-# Attribute accessible
+# Associations
 ###
-#TODO Do we need these?
-  #attr_accessible :community, :game
-
   belongs_to :community
   belongs_to :game
 end
