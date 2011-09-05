@@ -9,6 +9,9 @@ namespace :reports do
   task :docs => [:ensure_report_dir] do
     puts "Generateing documentation coverage report..."
     system "rdoc app lib --coverage-report | tee doc/reports/coverage_report.txt"
+    puts "Checking for incorrect style block comments..."
+    system "grep -lr --exclude=report.rake \"=begin\" . | tee doc/reports/old_style_begins.txt"
+    system "grep -lr --exclude=report.rake \"=end\" . | tee doc/reports/old_style_end.txt"
   end
 
   desc "Create a report on all notes"
