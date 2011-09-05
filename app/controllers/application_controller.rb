@@ -12,9 +12,15 @@ class ApplicationController < ActionController::Base
 ###
 # Callback Filters
 ###
-  before_filter :authenticate_user!, :limit_subdomain_access
+  # This before_filter will requre that a user is authenticated.
+  before_filter :authenticate_user!
 
+  # This before_filter will prevent the actions from taking place in a subdomain.
+  before_filter :limit_subdomain_access
+
+  # This after_filter attempts to remember the current crumblin page.
   after_filter :remember_current_page
+  # This before_filter attempts to remember the last crumblin page.
   before_filter :remember_last_page
 
 ###

@@ -14,13 +14,17 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :label, :accepting_members, :admin_profile, :email_notice_on_application
+  attr_accessible :name, :slogan, :label, :accepting_members, :admin_profile, :member_role, :member_role_id, :email_notice_on_application
 
 ###
 # Associations
 ###
   has_many :roles
+  belongs_to :member_role, :class_name => "Role"
   belongs_to :admin_profile, :class_name => "UserProfile"
+
+  has_many :community_profiles
+  has_many :member_profiles, :through => :community_profiles, :source => :user_profile
 
 ###
 # Validators
@@ -35,16 +39,27 @@ class Community < ActiveRecord::Base
   validates :label, :presence => true,
                    :inclusion => { :in => VALID_LABELS, :message => "%{value} is not currently a supported label" }
 
+  validates :admin_profile, :presence => true
+
 ###
 # Callbacks
 ###
   before_save :update_subdomain
-
-  after_create :set_up_member_role
+  after_create :set_up_member_role, :make_admin_a_member
 
 ###
 # Public Methods
 ###
+  ###
+  # This method promotes a user to a member, doing all of the business logic for you.
+  # [Args]
+  #   * +user_profile+ -> The user profile you would like to promote to a member.
+  # [Returns] A boolean that contains the result of the operation. True if successful, otherwise false.
+  ###
+  def promote_user_profile_to_member(user_profile)
+    # TODO Joe/Mike Ensure that the user is an applicant -JW
+    return user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+  end
 
 ###
 # Protected Methods
@@ -84,13 +99,26 @@ protected
   end
 
   ###
+  # _after_create_
+  #
   # This method creates the default member role.
   ###
   def set_up_member_role
-    self.roles.create(:name => "Member", :system_generated => true)
-    # TODO Setup the permissions.
+    default_member_role = Role.create(:name => "Member", :system_generated => true, :community => self)
+    default_member_role.community.update_attribute(:member_role, default_member_role) # OPTIMIZE Joe, this looks like it could use some optimization. -JW
+
+  end
+
+  ###
+  # _after_create_
+  #
+  # This method makes the admin a member.
+  ###
+  def make_admin_a_member
+    self.promote_user_profile_to_member(self.admin_profile)
   end
 end
+
 
 
 
@@ -108,5 +136,6 @@ end
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #  admin_profile_id            :integer
+#  member_role_id              :integer
 #
 

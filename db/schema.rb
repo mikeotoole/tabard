@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110904191538) do
+ActiveRecord::Schema.define(:version => 20110905184110) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -23,9 +23,31 @@ ActiveRecord::Schema.define(:version => 20110904191538) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "admin_profile_id"
+    t.integer  "member_role_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
+  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+
+  create_table "community_profiles", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "community_profiles", ["community_id"], :name => "index_community_profiles_on_community_id"
+  add_index "community_profiles", ["user_profile_id"], :name => "index_community_profiles_on_user_profile_id"
+
+  create_table "community_profiles_roles", :id => false, :force => true do |t|
+    t.integer  "community_profile_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
+  add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"

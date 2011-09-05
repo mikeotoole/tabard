@@ -99,7 +99,7 @@ class CommunitiesControllerTest < ActionController::TestCase
   end
 
   ###
-  # destroy Tests # TODO We will want to look at this and decide if it should redirect to a 404 page.
+  # destroy Tests # TODO Doug/Joe We will want to look at this and decide if it should redirect to a 404 page. -JW
   ###
   test "should not destroy community whilst authenticated as a user" do
     sign_in users(:billy)

@@ -41,7 +41,7 @@ class RolesController < SubdomainsController
   # GET /roles/1/edit
   def edit
     #@role = Role.find(params[:id])
-    repsond_with(@role)
+    respond_with(@role)
   end
 
   # POST /roles
@@ -49,7 +49,7 @@ class RolesController < SubdomainsController
   def create
     #@role = Role.new(params[:role])
     if @role.save
-      # TODO Success Message
+      # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
     respond_with(@role)
   end
@@ -59,7 +59,7 @@ class RolesController < SubdomainsController
   def update
     #@role = Role.find(params[:id])
     if @role.update_attributes(params[:role])
-      # TODO Sucess Message
+      # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
     respond_with(@role)
   end
@@ -69,7 +69,7 @@ class RolesController < SubdomainsController
   def destroy
     #@role = Role.find(params[:id])
     if @role.destroy
-      # TODO Success Message
+      # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
     respond_with(@role)
   end

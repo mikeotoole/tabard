@@ -25,7 +25,7 @@ class Ability
     can :read, Community
 
     bakedInRules(user) if user.persisted? # This ensures that only an actual user has these permissions.
-    # TODO Add dynamic rules
+    dynamicRules(user) unless user.community_profiles.empty?
 
     # Define abilities for the passed in user here. For example:
     #
@@ -83,6 +83,54 @@ class Ability
     # Permission Rules
     can :manage, Permission do |permission|
       permission.community_admin_profile_id == user.user_profile.id
+    end
+  end
+
+  ###
+  # This method defines the dynamic rules for a user.
+  # [Args]
+  #   * +user+ -> A user to define permissions on. Ensures that they have at least one community_profile.
+  ###
+  def dynamicRules(user)
+    return if user.community_profiles.empty?
+    user.community_profiles.each do |community_profile|
+      community_profile.roles.each do |role|
+        role.permissions.each do |permission|
+          if permission.action?
+            case permission.permission_level
+              when "Delete"
+                decodePermission([:manage], permission.subject_class.constantize, permission.id_of_subject)
+              when "Create"
+                decodePermission([:read, :update, :create], permission.subject_class.constantize, permission.id_of_subject)
+              when "Update"
+                decodePermission([:read, :update], permission.subject_class.constantize, permission.id_of_subject)
+              when "Show"
+                decodePermission([:read], permission.subject_class.constantize, permission.id_of_subject)
+              else
+                # TODO Joe/Bryan Should this be logged?
+            end
+          else
+            decodePermission(permission.action.to_sym, permission.subject_class.constantize, permission.id_of_subject)
+          end
+        end
+      end
+    end
+  end
+
+  ###
+  # This method decodes a permission to a cancan ability.
+  # [Args]
+  #   * +action+ -> This is a CanCan action to apply to the subject class.
+  #   * +subject_class+ -> This is the class to apply the action to.
+  #   * +subject_id+ -> This optional id specifies a specific instance of a subject class to apply the action to.
+  ###
+  def decodePermission(action, subject_class, subject_id = nil)
+    if subject_id.blank?
+      can action, subject_class
+    else
+      can action, subject_class do |subject_class_instance|
+        subject_class_instance.id == subject_id
+      end
     end
   end
 end

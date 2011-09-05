@@ -29,6 +29,7 @@ class UserProfile < ActiveRecord::Base
 ###
   belongs_to :user, :inverse_of => :user_profile
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
+  has_many :community_profiles
 
 ###
 # Delegates
@@ -61,6 +62,16 @@ class UserProfile < ActiveRecord::Base
   # This method returns the first name + space + last name
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
+  def add_new_role(role)
+    correct_community_profile = self.community_profiles.find_by_community_id(role.community_id)
+    if correct_community_profile
+      correct_community_profile.roles << role
+      return true
+    end
+    return false
   end
 
 ###

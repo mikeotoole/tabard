@@ -8,7 +8,7 @@
 # This class is configured to work with devise to provide us authentication capabilities.
 ###
 class User < ActiveRecord::Base
-  # TODO We need to configure config/enviroments/production.rb with the mailer info.
+  # TODO Bryan/Joe We need to configure config/enviroments/production.rb with the mailer info. -JW
 ###
 # Devise configuration information
 ###
@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
   delegate :first_name, :to => :user_profile
   delegate :last_name, :to => :user_profile
   delegate :owned_communities, :to => :user_profile
+  delegate :community_profiles, :to => :user_profile
+  delegate :add_new_role, :to => :user_profile
 
 ###
 # Validators

@@ -6,12 +6,12 @@
 # This model represents a role.
 ###
 class Role < ActiveRecord::Base
-
 ###
 # Associations
 ###
   belongs_to :community
   has_many :permissions
+  has_and_belongs_to_many :community_profiles
 
 ###
 # Validators
