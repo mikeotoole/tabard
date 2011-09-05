@@ -11,11 +11,17 @@ robobilly = User.new(:email => "billy@robo.com", :password => "Password",
 robobilly.skip_confirmation!
 robobilly.save
 
-puts "Createing Diabolical Moose"
+puts "Createing Diabolical Moose!"
 d_moose = User.new(:email => "diabolical@moose.com", :password => "Password",
     :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose"})
 d_moose.skip_confirmation!
 d_moose.save
 
-puts "Creating JustAnotherHeadshot Clan"
+puts "RoboBilly is creating Just Another Headshot Clan..."
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
+
+puts "RoboBilly is creating a n00b role..."
+noob_role = jahc.roles.create(:name => "n00b")
+
+puts "RoboBilly is adding permissions to view roles to n00b role..."
+noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")

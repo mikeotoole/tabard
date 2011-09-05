@@ -1,4 +1,8 @@
 ###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
 # This model represents a role.
 ###
 class Role < ActiveRecord::Base
@@ -7,6 +11,7 @@ class Role < ActiveRecord::Base
 # Associations
 ###
   belongs_to :community
+  has_many :permissions
 
 ###
 # Validators

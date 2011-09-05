@@ -6,7 +6,9 @@ DaBvRails::Application.routes.draw do
 
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => 'subdomain_home'
-    resources :roles
+    resources :roles do
+      resources :permissions
+    end
   end
 
   root :to => 'home#index'

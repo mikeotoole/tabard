@@ -5,12 +5,12 @@
 #
 # This controller is for roles.
 ###
-
 class RolesController < SubdomainsController
   respond_to :html
-  ###
-  # Before Filters
-  ###
+
+###
+# Before Filters
+###
   before_filter :authenticate_user!
   before_filter :load_role, :except => [:new, :create]
   before_filter :create_role, :only => [:new, :create]

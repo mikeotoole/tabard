@@ -60,6 +60,12 @@ class User < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # This method returns a default guest user that is used to handle permissions
+  def self.guest
+    user = User.new
+    user.user_profile.new
+    return user
+  end
 ###
 # Protected Methods
 ###

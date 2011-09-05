@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110904064329) do
+ActiveRecord::Schema.define(:version => 20110904191538) do
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(:version => 20110904064329) do
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "action"
+    t.string   "permission_level"
+    t.string   "subject_class"
+    t.string   "id_of_subject"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
 
   create_table "roles", :force => true do |t|
     t.integer  "community_id"
