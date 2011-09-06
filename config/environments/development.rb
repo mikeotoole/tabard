@@ -31,7 +31,7 @@ DaBvRails::Application.configure do
   # Default mailer url
   config.action_mailer.default_url_options = { :host => 'lvh:3000' }
 
-  #Mail setting for development
+  # Mail setting for development
   ActionMailer::Base.smtp_settings = {
     :address              => "secure.emailsrvr.com",
     :port                 => 587,
