@@ -39,4 +39,17 @@ DaBvRails::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
+  
+  # Default mailer url
+  config.action_mailer.default_url_options = { :host => 'lvh:3000' }
+
+  # Mail setting for development
+  ActionMailer::Base.smtp_settings = {
+    :address              => "secure.emailsrvr.com",
+    :port                 => 587,
+    :user_name            => "development@digitalaugment.com",
+    :password             => 'fcsC9bvMqAw1GJ',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
 end

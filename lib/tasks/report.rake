@@ -31,10 +31,8 @@ namespace :reports do
 
   desc "Create a report on tests"
   task :tests  => [:ensure_report_dir] do
-    puts "Preparing tests..."
-    Rake::Task['db:test:prepare'].execute
     puts "Running tests..."
-    system "rake test | tee doc/reports/test_report.txt"
+    system "rake spec | tee doc/reports/test_report.txt"
   end
 
   task :ensure_report_dir do

@@ -35,6 +35,9 @@ source 'http://rubygems.org'
     gem 'mini_magick'
     gem 'carrierwave'
 
+# Multi-Group Gems
+    gem 'rspec-rails', :group => [:development, :test]
+
 # Development Specific Gems
   group :development do
     gem 'annotate' # Documentation Helper
@@ -53,4 +56,7 @@ source 'http://rubygems.org'
 
 # Test Specific Gems
   group :test do
+    gem 'factory_girl_rails'
+    gem 'capybara'
+    gem 'database_cleaner'
   end
