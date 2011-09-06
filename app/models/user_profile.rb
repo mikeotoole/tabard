@@ -61,12 +61,12 @@ class UserProfile < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-	###
-  # This will create a new character proxy for the character and 
+  ###
+  # This will create a new character proxy for the character and
   # add it to the user profile.
   # [Args]
-  #		* +character+ -> The character to add.
-  #		* +is_default+ -> If the character is the default for its game.
+  #   * +character+ -> The character to add.
+  #   * +is_default+ -> If the character is the default for its game.
   ###
   def build_character(character, is_default = false)
 #     self.game_profiles.each do |game_profile|
@@ -76,24 +76,24 @@ class UserProfile < ActiveRecord::Base
 #         return true
 #       end
 #     end
-# 
+#
 #     # create new game profile
 #     game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile", :user_profile => self)
 #     game_profile.character_proxies.build(:character => character)
 #     self.game_profiles << game_profile
-		# TODO Joe, Update this method for new design.
-		true
+    # TODO Joe, Update this method for new design.
+    true
   end
 
-	###
-	# This will set the character as the default for its game.
-	# The previous default charcter will be unset.
-	# [Args]
-	#		* +character+ -> The chaaracter to set as default.
-	###
-	def set_as_default_character(character)
-		# TODO Joe, Make this work.
-	end
+  ###
+  # This will set the character as the default for its game.
+  # The previous default charcter will be unset.
+  # [Args]
+  #   * +character+ -> The chaaracter to set as default.
+  ###
+  def set_as_default_character(character)
+    # TODO Joe, Make this work.
+  end
 
 ###
 # Protected Methods

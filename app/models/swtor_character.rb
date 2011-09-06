@@ -28,18 +28,18 @@ class SwtorCharacter < BaseCharacter
 ###
 # Instance Methods
 ###
-	###
-	# This method gets the game for the character.
-	# [Returns] The SWTOR game.
-	###
+  ###
+  # This method gets the game for the character.
+  # [Returns] The SWTOR game.
+  ###
   def game
     self.swtor
   end
 
-	###
-	# This method gets the description for the character.
-	# [Returns] A string that contains the description of the character.
-	###
+  ###
+  # This method gets the description for the character.
+  # [Returns] A string that contains the description of the character.
+  ###
   def description
     "SWTOR Character"
   end

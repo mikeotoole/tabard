@@ -6,7 +6,7 @@
 # This controller is for games.
 ###
 class GamesController < ApplicationController
-	respond_to :html
+  respond_to :html
 ###
 # Callbacks
 ###
@@ -15,14 +15,13 @@ class GamesController < ApplicationController
 ###
 # REST Actions
 ###
-	###
+  ###
   # This method gets the game.
-  # GET /game/:id(.:format) #TODO Why do we need this too?
+  # GET /game/:id(.:format)
   # GET /games/:id(.:format)
   ###
   def show
     @game = Game.active.find(params[:id])
     respond_with(@game)
   end
-
 end

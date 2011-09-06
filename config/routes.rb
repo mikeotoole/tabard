@@ -1,11 +1,11 @@
 DaBvRails::Application.routes.draw do
 
-	# Users
+  # Users
   devise_for :users
-  
+
   # Communities
   resources :communities, :except => :destroy
-  
+
   # Games
   match "/game/:id" => "games#show", :as => "game"
   resources :games, :only => :show do
@@ -15,12 +15,12 @@ DaBvRails::Application.routes.draw do
   resources :wow_characters, :only => :show
   resources :swtor_characters, :only => :show
   resources :base_characters, :only => :new
-  
-	# Subdomains
+
+  # Subdomains
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => "subdomain_home"
   end
-  
+
   # Home
   root :to => 'home#index'
   get "home/index"

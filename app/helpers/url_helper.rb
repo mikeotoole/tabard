@@ -10,7 +10,7 @@ module UrlHelper
   ###
   # This method monkey patches url_for to handle an optional subdomain hash argument.
   # [Args]
-  #		* +options+ -> Hash of options.
+  #   * +options+ -> Hash of options.
   ###
   def url_for(options = nil)
     if options.kind_of?(Hash) && options.has_key?(:subdomain)
@@ -18,21 +18,21 @@ module UrlHelper
     end
     super
   end
-  
+
 ###
 # Protected Methods
-###  
-protected  
-  
+###
+protected
+
   ####
   # This method modifys a url_for option to add subdomain if it exists.
   # [Args]
-  #		* +subdomain+ -> Subdomain to append.
+  #   * +subdomain+ -> Subdomain to append.
   ###
   def with_subdomain(subdomain)
     subdomain = (subdomain || "")
     subdomain += "." unless subdomain.empty?
     [subdomain, request.domain].join
   end
-  
+
 end

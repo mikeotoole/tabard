@@ -11,7 +11,7 @@ class SubdomainsController < ApplicationController
 ###
 # REST Actions
 ###
-	###
+  ###
   # Index action
   # If constraints(Subdomain) match
   # GET /
@@ -33,5 +33,4 @@ protected
     redirect_to root_url(:subdomain => false), :alert => "That community does not exist" and return false unless @community
     false
   end
-
 end

@@ -19,7 +19,7 @@ class WowCharacter < BaseCharacter
 ###
 # Validators
 ###
-  validates :wow, :presence = true
+  validates :wow, :presence => true
 
 ###
 # Public Methods
@@ -28,18 +28,18 @@ class WowCharacter < BaseCharacter
 ###
 # Instance Methods
 ###
-	###
-	# This method gets the game for the character.
-	# [Returns] The WOW game.
-	###
+  ###
+  # This method gets the game for the character.
+  # [Returns] The WOW game.
+  ###
   def game
     self.wow
   end
 
-	###
-	# This method gets the description for the character.
-	# [Returns] A string that contains the description of the character.
-	###
+  ###
+  # This method gets the description for the character.
+  # [Returns] A string that contains the description of the character.
+  ###
   def description
     "WoW Character"
   end

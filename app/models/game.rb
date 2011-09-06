@@ -11,22 +11,22 @@ class Game < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :is_active, :type
-  
+
 ###
 # Associations
 ###
- 	has_many :supported_games
-	has_many :communities, :through => :supported_games
+  has_many :supported_games
+  has_many :communities, :through => :supported_games
 
 ###
 # Validators
 ###
-	validates :name, :presence => true
-	
+  validates :name, :presence => true
+
 ###
 # Scopes
 ###
-	scope :active, :conditions => {:is_active => true}
+  scope :active, :conditions => {:is_active => true}
 
 ###
 # Public Methods
@@ -34,16 +34,16 @@ class Game < ActiveRecord::Base
 
 ###
 # Class Methods
-###	
-	###
- 	# Lets the subclasses use the parents routes.
- 	# [Args]
- 	#		* +child+ -> The class to check if subclass.
- 	# [Returns] If is subclass of Game returns Game as model name.
- 	###
+###
+  ###
+  # Lets the subclasses use the parents routes.
+  # [Args]
+  #   * +child+ -> The class to check if subclass.
+  # [Returns] If is subclass of Game returns Game as model name.
+  ###
   def self.inherited(child)
     child.instance_eval do
-    	# Defines the subclasses model name as its base class Game.
+      # Defines the subclasses model name as its base class Game.
       def model_name
         Game.model_name
       end
@@ -51,7 +51,7 @@ class Game < ActiveRecord::Base
     super
   end
 
-	###
+  ###
   # Used to offer a dynamically generated list of subclass to choose from.
   # [Returns] Array of strings contaning all Game subclass names.
   ###
@@ -62,18 +62,18 @@ class Game < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-	###
-	# Get the game type (class name).
-	# [Returns] String with game type (class name).
-	###
+  ###
+  # Get the game type (class name).
+  # [Returns] String with game type (class name).
+  ###
   def type_helper
     self.type
   end
-  
+
   ###
   # Sets the game type.
   # [Args]
-  #		* +type+ String of game type (class name).
+  #   * +type+ String of game type (class name).
   ###
   def type_helper=(type)
     self.type = type

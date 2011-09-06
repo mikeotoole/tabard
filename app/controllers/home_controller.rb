@@ -6,7 +6,7 @@
 # This is the Home controller.
 ###
 class HomeController < ApplicationController
-	respond_to :html
+  respond_to :html
 ###
 # Callbacks
 ###
@@ -22,5 +22,4 @@ class HomeController < ApplicationController
   ###
   def index
   end
-
 end

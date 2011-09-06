@@ -10,51 +10,46 @@ class WowCharactersController < ApplicationController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user! #TODO Joe, is this right?
+  before_filter :find_swtor_character, :only => [:show, :edit, :update, :destroy]
 
 ###
 # REST Actions
 ###
-	# GET /games/:game_id/wow_characters/:id/edit(.:format)
-  def edit
-    @character = WowCharacter.find_by_id(params[:id])
-  end
-
-	###
-	# GET /games/:game_id/wow_characters/:id(.:format)
-	# GET /wow_characters/:id(.:format)
-	###
+  ###
+  # GET /games/:game_id/wow_characters/:id(.:format)
+  # GET /wow_characters/:id(.:format)
+  ###
   def show
-    @character = WowCharacter.find_by_id(params[:id])
-    @game = Game.find_by_id(@character.game_id) if @character
     respond_with(@character)
   end
 
-	# GET /games/:game_id/wow_characters/new(.:format)
+  # GET /games/:game_id/wow_characters/new(.:format)
   def new
     @character = WowCharacter.new
     @character.game_id = params[:game_id]
-		respond_with(@character)
+    respond_with(@character)
   end
 
-	# POST /games/:game_id/wow_characters(.:format)
+  # GET /games/:game_id/wow_characters/:id/edit(.:format)
+  def edit
+  end
+
+  # POST /games/:game_id/wow_characters(.:format)
   def create
     @character = WowCharacter.new(params[:wow_character])
 
     profile = current_user.user_profile
     profile.build_character(@character, params[:default])
 
-		add_new_flash_message('Character was successfully created.') if profile.save
+    add_new_flash_message('Character was successfully created.') if profile.save
     respond_with(@character.game, @character)
   end
 
-	# PUT /games/:game_id/wow_characters/:id(.:format)
+  # PUT /games/:game_id/wow_characters/:id(.:format)
   def update
-    @character = WowCharacter.find_by_id(params[:id])
-    @game = Game.find_by_id(@character.game_id) if @character
-
     if params[:default]
-    	# OPTIMISE Joe, make this better.
+      # OPTIMISE Joe, make this better.
       @character.character_proxy.user_profile.set_as_default_character(@character)
     end
 
@@ -62,12 +57,21 @@ class WowCharactersController < ApplicationController
     respond_with(@game, @character)
   end
 
-	# DELETE /games/:game_id/wow_characters/:id(.:format)
+  # DELETE /games/:game_id/wow_characters/:id(.:format)
   def destroy
-    @character = WowCharacter.find_by_id(params[:id])
-
     if @character
-   		add_new_flash_message('Character was successfully deleted.') if @character.destroy
+      add_new_flash_message('Character was successfully deleted.') if @character.destroy
     end
     respond_with(@character)
+  end
+
+###
+# Protected Methods
+###
+protected
+
+  # Find wow character with given id.
+  def find_wow_character
+    @character = WowCharacter.find_by_id(params[:id])
+  end
 end

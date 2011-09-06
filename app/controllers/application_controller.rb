@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 ###
   include UrlHelper
 
-	# Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
+  # Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
   protect_from_forgery
 
 ###
@@ -24,12 +24,12 @@ class ApplicationController < ActionController::Base
 ###
 protected
 
-	###
-	# TODO Joe, add description
-	###
+  ###
+  # TODO Joe, add description
+  ###
   def limit_subdomain_access
     if request.subdomain.present?
-      # TODO this error handling could be more sophisticated!
+      # OPTIMIZE this error handling could be more sophisticated!
       redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
     end
   end

@@ -10,7 +10,8 @@ class CommunitiesController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!, :except => [:show, :index]
+  prepend_before_filter :authenticate_user!, :except => [:show, :index] #TODO Joe, is this right?
+  before_filter :find_community, :only => [:show, :edit, :update]
 
 ###
 # REST Actions
@@ -22,7 +23,6 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/:id(.:format)
   def show
-    @community = Community.find(params[:id])
     redirect_to root_url(:subdomain => @community.subdomain)
   end
 
@@ -33,7 +33,6 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/:id/edit(.:format)
   def edit
-    @community = Community.find(params[:id])
   end
 
   # POST /communities(.:format)
@@ -44,8 +43,17 @@ class CommunitiesController < ApplicationController
 
   # PUT /communities/:id(.:format)
   def update
-    @community = Community.find(params[:id])
     @community.update_attributes(params[:community])
     respond_with(@community)
+  end
+
+###
+# Protected Methods
+###
+protected
+
+  # Find community with given id.
+  def find_community
+    @community = Community.find(params[:id])
   end
 end
