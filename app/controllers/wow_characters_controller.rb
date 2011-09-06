@@ -10,7 +10,7 @@ class WowCharactersController < ApplicationController
 ###
 # Before Filters
 ###
-  prepend_before_filter :authenticate_user! #TODO Joe, is this right?
+  prepend_before_filter :authenticate_user!
   before_filter :find_swtor_character, :only => [:show, :edit, :update, :destroy]
 
 ###

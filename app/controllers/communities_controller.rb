@@ -10,7 +10,7 @@ class CommunitiesController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :authenticate_user!, :except => [:show, :index] #TODO Joe, is this right?
+  prepend_before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :find_community, :only => [:show, :edit, :update]
 
 ###

@@ -81,18 +81,31 @@ class UserProfile < ActiveRecord::Base
 #     game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile", :user_profile => self)
 #     game_profile.character_proxies.build(:character => character)
 #     self.game_profiles << game_profile
-    # TODO Joe, Update this method for new design.
-    true
+    if self.character_proxies_for_a_game(character.game).empty? and not is_default
+      is_default = true
+    end
+    self.character_proxies.create(:character => character, :default_character => is_default)
   end
 
   ###
   # This will set the character as the default for its game.
   # The previous default charcter will be unset.
   # [Args]
-  #   * +character+ -> The chaaracter to set as default.
+  #   * +character+ -> The character to set as default.
   ###
   def set_as_default_character(character)
-    # TODO Joe, Make this work.
+    correct_target_proxy = self.character_proxies.find_by_character_id_and_character_type(character.id,character.class.to_s)
+  end
+  
+  ###
+  # This method will return all of the character proxies for this user profile who's character matches the specified game.
+  # [Args]
+  #   * +game+ -> The game to scope the proxies by.
+  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
+  ###
+  def character_proxies_for_a_game(game)
+    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
+    self.character_proxies.delete_if { |proxy| (proxy.game != self.game) }
   end
 
 ###

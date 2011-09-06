@@ -20,6 +20,13 @@ class CharacterProxy < ActiveRecord::Base
   validate :default_character_exists
 
 ###
+# Delegates
+###
+  delegate :set_as_default_character, :to => :user_profile
+  delegate :game, :to => character
+  delegate :game_id, :to => character
+  
+###
 # Public Methods
 ###
 
@@ -67,10 +74,15 @@ protected
 ###
   ###
   # This method is an validator method that checks that there is a default for this characters game.
-  # If not it makes this the default.
   ###
   def default_character_exists
-    # TODO Joe, Add this function.
+    current_related_proxies = self.user_profile.character_proxies_for_a_game(self.game).delete_if { |proxy| 
+        (not proxy.default_character) or  
+        (proxy.id == self.id)
+      }
+    if (current_related_proxies.empty? and not self.default_character)
+      self.errors[:default_character] << "need one default character per game"
+    end
   end
 end
 

@@ -69,7 +69,10 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Public Methods
 ###
-
+  # This method will set this character as the default character for the user.
+  def set_as_default
+    self.character_proxy.set_as_default_character(self)
+  end
 ###
 # Instance Methods
 ###

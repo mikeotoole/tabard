@@ -10,7 +10,7 @@ class SwtorCharactersController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :authenticate_user! #TODO Joe, is this right?
+  prepend_before_filter :authenticate_user!
   before_filter :find_swtor_character, :only => [:show, :edit, :update, :destroy]
 
 ###
@@ -49,8 +49,8 @@ class SwtorCharactersController < ApplicationController
   # PUT /games/:game_id/swtor_characters/:id(.:format)
   def update
     if params[:default]
-      # OPTIMISE Joe, make this better. This should be in the model.
-      @character.character_proxy.user_profile.set_as_default_character(@character)
+      @character.set_as_default
+      #@character.character_proxy.user_profile.set_as_default_character(@character)
     end
 
     add_new_flash_message('Character was successfully updated.') if @character.update_attributes(params[:swtor_character])

@@ -25,7 +25,8 @@ class ApplicationController < ActionController::Base
 protected
 
   ###
-  # TODO Joe, add description
+  # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
+  # The allows us to white list controller that inherit from application controller.
   ###
   def limit_subdomain_access
     if request.subdomain.present?
