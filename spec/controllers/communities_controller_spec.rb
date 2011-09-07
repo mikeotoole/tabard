@@ -122,19 +122,25 @@ describe CommunitiesController do
 
   describe "DELETE 'destroy'" do
     #TODO Add 404 redirect for all routing errors
-#     it "should redirect to 404 when authenticated as a user" do
-#       sign_in user
-#       @community = community
+    it "should throw routing error when authenticated as a user" do
+      sign_in user
+      assert_raises(ActionController::RoutingError) do
+        delete 'destroy', :id => community
+        assert_response :missing
+      end
 #       delete 'destroy'
 #       response.code.should == "404"
 #       response.should redirect_to("/404")
-#     end
+    end
 # 
-#     it "should redirect to 404 when not authenticated as a user" do
-#       @community = community
+    it "should throw routing error when not authenticated as a user" do
+      assert_raises(ActionController::RoutingError) do
+        delete 'destroy', :id => community
+        assert_response :missing
+      end
 #       delete 'destroy'
+#       response.code.should == "404"
 #       response.should redirect_to("/404")
-#       end
-#     end
+    end
   end
 end
