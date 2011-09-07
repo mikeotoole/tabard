@@ -21,6 +21,7 @@ FactoryGirl.define do
   factory :user do
     password "BasicTester1"
     password_confirmation "BasicTester1"
+    confirmed_at { 1.day.ago }
     email
   end
   

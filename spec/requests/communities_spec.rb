@@ -1,11 +1,15 @@
 require 'spec_helper'
 
-describe "Communities" do
-  describe "GET /communities" do
-#     it "works! (now write some real specs)" do
-#       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-#       get communities_index_path
-#       response.status.should be(200)
+describe "Communities", :type => :request do
+#   describe "GET /communities" do
+#     it "should be successful when authenticated as a user" do
+#       vist index_user_path
+#       current_path.should eq(index_user_path)
 #     end
-  end
+#     
+#     it "should be successful when not authenticated as a user" do
+#       get communities_path
+#       response.should be(200)
+#     end
+#   end
 end
