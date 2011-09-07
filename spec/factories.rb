@@ -25,7 +25,7 @@ FactoryGirl.define do
   end
   
   # Create a basic user profile.
-  factory :user_profle do
+  factory :user_profile do
     first_name
     last_name
     user
