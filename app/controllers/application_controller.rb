@@ -24,16 +24,32 @@ class ApplicationController < ActionController::Base
   before_filter :remember_last_page
 
 ###
-# Public Methods
+# Status Code Rescues
 ###
   # This method rescues from a CanCan Access Denied Exception
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to previous_page, :alert => exception.message
+    #redirect_to previous_page, :alert => exception.message
+    http_status_code(:forbidden, exception)
   end
 
+  # Returns a HTTP status code, with a nice error page
+  def http_status_code(status, exception)
+    # store the exception so its message can be used in the view
+    @exception = exception
+    
+    # Only add the error page to the status code if the reuqest-format was HTML
+    respond_to do |format|
+      format.html { render "home/index", :status => status }
+      format.any  { head status } # only return the status code
+    end
+  end
+  
+###
+# Public Methods
+###
   # This method gets the users path to last page, if it is from this site, otherwise it returns the root path.
   def previous_page
-  session[:last_page] ? session[:last_page] : root_url
+    session[:last_page] ? session[:last_page] : root_url
   end
 
 ###

@@ -1,5 +1,5 @@
 DaBvRails::Application.routes.draw do
-  resources :communities
+  resources :communities, :except => [:destroy]
   resources :user_profiles, :only => [:show, :edit, :update]
 
   devise_for :users
@@ -12,6 +12,9 @@ DaBvRails::Application.routes.draw do
   end
 
   root :to => 'home#index'
+  
+#   match "/404" => "status_code#invoke_404", :as => "status_404"
+#   match "*path" => "/404"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

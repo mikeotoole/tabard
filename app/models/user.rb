@@ -33,16 +33,16 @@ class User < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :first_name, :to => :user_profile
-  delegate :last_name, :to => :user_profile
-  delegate :owned_communities, :to => :user_profile
-  delegate :community_profiles, :to => :user_profile
-  delegate :add_new_role, :to => :user_profile
+  delegate :first_name, :to => :user_profile, :allow_nil => true
+  delegate :last_name, :to => :user_profile, :allow_nil => true
+  delegate :owned_communities, :to => :user_profile, :allow_nil => true
+  delegate :community_profiles, :to => :user_profile, :allow_nil => true
+  delegate :add_new_role, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
 ###
-  #validates_associated :user_profile
+  validates_associated :user_profile, :unless => Proc.new { |user| user.user_profile.nil? }
 
   validates :email,
       :uniqueness => true,
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   # This method returns a default guest user that is used to handle permissions
   def self.guest
     user = User.new
-    user.user_profile.new
+    user.build_user_profile
     return user
   end
 ###

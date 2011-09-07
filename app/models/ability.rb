@@ -14,7 +14,7 @@ class Ability
   #   * +user+ -> This is the current_user, passed in from devise to CanCan.
   ###
   def initialize(user)
-    user ||= User.new
+    user ||= User.guest
 
   ###
   # Everyone, including guest, Rules
@@ -24,8 +24,9 @@ class Ability
     # Community Rules
     can :read, Community
 
-    bakedInRules(user) if user.persisted? # This ensures that only an actual user has these permissions.
-    dynamicRules(user) unless user.community_profiles.empty?
+    
+    bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
+    dynamicRules(user) unless user.community_profiles.blank?
 
     # Define abilities for the passed in user here. For example:
     #
@@ -104,7 +105,7 @@ class Ability
                 decodePermission([:read, :update, :create], permission.subject_class.constantize, permission.id_of_subject)
               when "Update"
                 decodePermission([:read, :update], permission.subject_class.constantize, permission.id_of_subject)
-              when "Show"
+              when "View"
                 decodePermission([:read], permission.subject_class.constantize, permission.id_of_subject)
               else
                 # TODO Joe/Bryan Should this be logged?
