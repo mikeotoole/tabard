@@ -128,17 +128,15 @@ describe CommunitiesController do
         delete 'destroy', :id => community
         assert_response :missing
       end
-#       delete 'destroy'
 #       response.code.should == "404"
 #       response.should redirect_to("/404")
     end
-# 
+ 
     it "should throw routing error when not authenticated as a user" do
       assert_raises(ActionController::RoutingError) do
         delete 'destroy', :id => community
         assert_response :missing
       end
-#       delete 'destroy'
 #       response.code.should == "404"
 #       response.should redirect_to("/404")
     end
