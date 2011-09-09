@@ -39,6 +39,11 @@ class BaseCharacter < ActiveRecord::Base
 ###
   validates :name, :presence => true
   validates :game, :presence => true
+  validates :avatar,
+      :if => :avatar?,
+      :file_size => {
+        :maximum => 1.megabytes.to_i
+      }
 
 ###
 # Uploaders
@@ -69,13 +74,15 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Instance Methods
+###
   # This method will set this character as the default character for the user.
   def set_as_default
     self.character_proxy.set_as_default_character(self)
   end
-###
-# Instance Methods
-###
+
   ###
   # This method returns the id of this character's character proxy.
   # [Returns] An integer that contains the id for this character's character proxy, if possible, otherwise nil.
@@ -98,7 +105,7 @@ class BaseCharacter < ActiveRecord::Base
   # [Returns] A string that contains the display name for this character.
   ###
   def display_name
-    self.method_defined? :display_name ? self.display_name : ""
+    self.name
   end
 
   # If the character is the default for its game.

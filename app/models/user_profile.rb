@@ -28,6 +28,8 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
+  # The character_proxy that associates this user profile to characters of various types.
+  has_many :character_proxies, :dependent => :destroy, :autosave => true
 
 ###
 # Delegates
@@ -62,6 +64,18 @@ class UserProfile < ActiveRecord::Base
 # Instance Methods
 ###
   ###
+  # This method gets all of the characters attached to this user profile.
+  # [Returns] An array that contains all of the characters attached to this user profile.
+  ###
+  def characters
+    characters = Array.new()
+    for proxy in self.character_proxies
+        characters << proxy.character
+    end
+    characters
+  end
+
+  ###
   # This will create a new character proxy for the character and
   # add it to the user profile.
   # [Args]
@@ -69,19 +83,7 @@ class UserProfile < ActiveRecord::Base
   #   * +is_default+ -> If the character is the default for its game.
   ###
   def build_character(character, is_default = false)
-#     self.game_profiles.each do |game_profile|
-#       if game_profile.game_id == character.game_id
-#         proxy = game_profile.character_proxies.build(:character => character)
-#         game_profile.default_character_proxy = proxy if is_default and proxy
-#         return true
-#       end
-#     end
-#
-#     # create new game profile
-#     game_profile = GameProfile.new(:game => character.game, :name => "#{self.name} #{character.game.name} Profile", :user_profile => self)
-#     game_profile.character_proxies.build(:character => character)
-#     self.game_profiles << game_profile
-    if self.character_proxies_for_a_game(character.game).empty? and not is_default
+    if not is_default and self.character_proxies_for_a_game(character.game).empty?
       is_default = true
     end
     self.character_proxies.create(:character => character, :default_character => is_default)
@@ -96,7 +98,7 @@ class UserProfile < ActiveRecord::Base
   def set_as_default_character(character)
     correct_target_proxy = self.character_proxies.find_by_character_id_and_character_type(character.id,character.class.to_s)
   end
-  
+
   ###
   # This method will return all of the character proxies for this user profile who's character matches the specified game.
   # [Args]

@@ -44,4 +44,7 @@ RSpec.configure do |config|
   # Devise extenstions -JW
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+  
+  # Lets you write create(:factroy_name) instead of Factory.create(:factroy_name)
+  config.include Factory::Syntax::Methods
 end

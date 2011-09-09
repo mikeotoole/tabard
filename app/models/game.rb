@@ -22,6 +22,7 @@ class Game < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
+  validates :type, :presence => true #TODO need to validate type is a subclass of Game.
 
 ###
 # Scopes
