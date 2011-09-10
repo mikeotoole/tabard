@@ -36,9 +36,8 @@ describe User do
     b = create(:billy)
     b.first_name.should eq("Robo")
     b.last_name.should eq("Billy")
-    b.user_profile.character_proxies.size.should eq(6)
-#     CharacterProxy.all.first.user_profile.should be_nil
-    b.user_profile.characters.size.should eq(6)
+    b.user_profile.character_proxies.size.should eq(CharacterProxy.all.count)
+    b.user_profile.characters.size.should eq(b.user_profile.character_proxies.size)
   end
   
   describe "email address" do

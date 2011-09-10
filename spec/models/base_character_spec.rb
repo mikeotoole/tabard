@@ -30,12 +30,6 @@ describe BaseCharacter do
     end
   end
   
-  describe "character_proxy_id" do   
-    it "should be a valid character proxy" do
-      CharacterProxy.find(character.character_proxy_id).should_not be_nil
-    end
-  end
-  
   describe "character_id" do
     it "should be this characters id" do
       WowCharacter.find(character.id).should eq(character)
@@ -53,9 +47,9 @@ describe BaseCharacter do
       character.default.should be_true
     end
     
-    it "should be false on creation when default for game exists" do
+    it "should be false by default on creation when default for game exists" do
       create(:wow_char_profile).default.should be_true
-      character.default.should be_false
+      create(:wow_char_profile).default.should be_false
     end
   end
   
@@ -68,11 +62,14 @@ describe BaseCharacter do
     end
     
     it "should remove previous for game for user" do
-      c1 = create(:wow_char_profile)
-      c1.default.should be_true
+      firstCharacter = create(:wow_char_profile)
+      firstCharacter.default.should be_true
+      firstCharacter_id = firstCharacter.id
       character.default.should be_false
+      character_id = character.id
       character.set_as_default
-      c1.default.should be_false
-    end    
+      WowCharacter.find(character_id).default.should be_true
+      WowCharacter.find(firstCharacter_id).default.should be_false
+    end
   end
 end

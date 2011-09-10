@@ -46,6 +46,11 @@ class BaseCharacter < ActiveRecord::Base
       }
 
 ###
+# Delegates
+###
+  delegate :set_as_default, :to => :character_proxy
+
+###
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
@@ -78,20 +83,6 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-  # This method will set this character as the default character for the user.
-  def set_as_default
-    self.character_proxy.set_as_default_character(self)
-  end
-
-  ###
-  # This method returns the id of this character's character proxy.
-  # [Returns] An integer that contains the id for this character's character proxy, if possible, otherwise nil.
-  ###
-  def character_proxy_id
-    return self.character_proxy.id if self.character_proxy
-    nil
-  end
-
   ###
   # This method returns the id of this character.
   # [Returns] An integer that contains the id for this character.

@@ -7,22 +7,25 @@
 ###
 class CharacterProxy < ActiveRecord::Base
 ###
+# Callbacks
+###
+  before_save :check_one_default_character_exists
+
+###
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :character, :polymorphic => true, :autosave => true
+  belongs_to :character, :polymorphic => true, :dependent => :destroy
 
 ###
 # Validators
 ###
   validates :user_profile, :presence => true
   validates :character, :presence => true
-  validate :default_character_exists
 
 ###
 # Delegates
 ###
-  delegate :set_as_default_character, :to => :user_profile
   delegate :game, :to => :character
   delegate :game_id, :to => :character
 
@@ -56,12 +59,19 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+#   ###
+#   # This method gets the active_profile_id for this character proxy.
+#   # [Returns] The id of this character_proxy's user_profile.
+#   ###
+#   def active_profile_id
+#     self.user_profile.id
+#   end
+
   ###
-  # This method gets the active_profile_id for this character proxy.
-  # [Returns] The id of this character_proxy's user_profile.
+  # Sets this character proxy as default for characters game.
   ###
-  def active_profile_id
-    self.user_profile.id
+  def set_as_default
+    self.update_attributes(:default_character => true) unless self.default_character
   end
 
 ###
@@ -70,24 +80,20 @@ class CharacterProxy < ActiveRecord::Base
 protected
 
 ###
-# Validators
+# Callback Methods
 ###
   ###
-  # This method is an validator method that checks that there is a default for this characters game.
+  # This method is an callback that checks that there is one and only one default for this characters game.
   ###
-  def default_character_exists
-    current_related_proxies = self.user_profile.character_proxies_for_a_game(self.game).delete_if { |proxy|
-        (not proxy.default_character) or
-        (proxy.id == self.id)
-      }
-    if (current_related_proxies.empty? and not self.default_character)
-      # TODO Joe, Should this error or set to default.
-      self.errors[:default_character] << "need one default character per game"
+  def check_one_default_character_exists
+    default_proxy = self.user_profile.default_character_proxy_for_a_game(self.character.game)
+    if default_proxy == nil
+      self.default_character = true
+    elsif self.default_character == true
+      default_proxy.update_attribute(:default_character, false)
     end
   end
 end
-
-
 
 # == Schema Information
 #
@@ -99,6 +105,6 @@ end
 #  character_type    :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  default_character :boolean         default(TRUE)
+#  default_character :boolean         default(FALSE)
 #
 

@@ -1,13 +1,13 @@
 FactoryGirl.define do
   factory :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
-    swtor
+    swtor { DefaultObjects.swtor }
     server "Default SWTOR Server"
   end
   
   factory :wow_character do
     sequence(:name) {|n| "WOW Character #{n}" }
-    wow
+    wow { DefaultObjects.wow }
     server "Default WOW Server"
     faction "Horde"
     race "Goblin"
@@ -24,8 +24,9 @@ FactoryGirl.define do
     after_create { |c| set_character_proxy(c) }
   end
   
-  factory :character_proxy_with_user_profile, :class => CharacterProxy do
+  factory :character_proxy do
     user_profile { DefaultObjects.user_profile }
+    association :character, :factory => :wow_character
   end
   
   factory :character_proxy_with_wow_character, :class => CharacterProxy do
@@ -38,5 +39,5 @@ FactoryGirl.define do
 end
 
 def set_character_proxy(character)
-  character.character_proxy = FactoryGirl.create(:character_proxy_with_user_profile, :character => character)
+  FactoryGirl.create(:character_proxy, :character => character)
 end

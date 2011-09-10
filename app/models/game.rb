@@ -21,8 +21,11 @@ class Game < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name, :presence => true
-  validates :type, :presence => true #TODO need to validate type is a subclass of Game.
+  validates :name,  :presence => true
+  validates :type,  :presence => true,
+                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" } #TODO Joe, Is this a reasonable why to do this?
+
+
 
 ###
 # Scopes

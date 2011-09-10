@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906004853) do
+ActiveRecord::Schema.define(:version => 20110909221054) do
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(:version => 20110906004853) do
     t.string   "character_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_character", :default => true
+    t.boolean  "default_character", :default => false
   end
 
-  add_index "character_proxies", ["character_type", "character_id"], :name => "index_character_proxies_on_character_type_and_character_id"
+  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
   create_table "communities", :force => true do |t|

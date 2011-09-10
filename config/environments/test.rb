@@ -42,4 +42,8 @@ DaBvRails::Application.configure do
 
   # Default mailer url
   config.action_mailer.default_url_options = { :host => 'lvh:3000' }
+
+#   DatabaseCleaner.strategy = :transaction
+#   DatabaseCleaner.clean_with(:truncation)
+#   DatabaseCleaner.clean
 end

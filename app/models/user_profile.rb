@@ -29,7 +29,7 @@ class UserProfile < ActiveRecord::Base
 ###
   belongs_to :user, :inverse_of => :user_profile
   # The character_proxy that associates this user profile to characters of various types.
-  has_many :character_proxies, :dependent => :destroy, :autosave => true
+  has_many :character_proxies, :dependent => :destroy
 
 ###
 # Delegates
@@ -75,29 +75,20 @@ class UserProfile < ActiveRecord::Base
     characters
   end
 
-  ###
-  # This will create a new character proxy for the character and
-  # add it to the user profile.
-  # [Args]
-  #   * +character+ -> The character to add.
-  #   * +is_default+ -> If the character is the default for its game.
-  ###
-  def build_character(character, is_default = false)
-    if not is_default and self.character_proxies_for_a_game(character.game).empty?
-      is_default = true
-    end
-    self.character_proxies.create(:character => character, :default_character => is_default)
-  end
-
-  ###
-  # This will set the character as the default for its game.
-  # The previous default charcter will be unset.
-  # [Args]
-  #   * +character+ -> The character to set as default.
-  ###
-  def set_as_default_character(character)
-    correct_target_proxy = self.character_proxies.find_by_character_id_and_character_type(character.id,character.class.to_s)
-  end
+# TODO Joe, This is not needed right?
+#   ###
+#   # This will create a new character proxy for the character and
+#   # add it to the user profile.
+#   # [Args]
+#   #   * +character+ -> The character to add.
+#   #   * +is_default+ -> If the character is the default for its game.
+#   ###
+#   def build_character(character, is_default = false)
+#     if not is_default and self.character_proxies_for_a_game(character.game).empty?
+#       is_default = true
+#     end
+#     self.character_proxies.create(:character => character, :default_character => is_default)
+#   end
 
   ###
   # This method will return all of the character proxies for this user profile who's character matches the specified game.
@@ -107,10 +98,30 @@ class UserProfile < ActiveRecord::Base
   ###
   def character_proxies_for_a_game(game)
     # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
-    self.character_proxies.delete_if { |proxy| (proxy.game != self.game) }
+    # FIXME Joe, WTF! Associations why you no work!
+    proxies = CharacterProxy.where(:user_profile_id => self.id)
+
+    proxies.delete_if { |proxy| (proxy.game.id != game.id) }
   end
 
-###
+  ###
+  # This method will return all of the character proxies for this user profile who's character matches the specified game.
+  # [Args]
+  #   * +game+ -> The game to scope the proxies by.
+  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
+  ###
+  def default_character_proxy_for_a_game(game)
+    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
+    # FIXME Joe, WTF! Associations why you no work!
+    proxies = CharacterProxy.where(:user_profile_id => self.id)
+
+    proxies.delete_if { |proxy| (proxy.game.id != game.id or not proxy.default_character) }
+    proxies = proxies.compact
+    raise RuntimeError.new("too many default characters exception") if proxies.count > 1
+    proxies.first
+  end
+
+###å
 # Protected Methods
 ###
 protected

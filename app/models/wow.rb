@@ -22,3 +22,16 @@ end
 #  created_at :datetime
 #  updated_at :datetime
 #
+
+# == Schema Information
+#
+# Table name: games
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)
+#  type       :string(255)
+#  is_active  :boolean         default(TRUE)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
