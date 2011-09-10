@@ -23,19 +23,17 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
-  RSpec.configure do |config|
-    config.before(:suite) do
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.clean_with(:truncation)
-    end
-
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
-
-    config.after(:each) do
-      DatabaseCleaner.clean
-    end
+  # Database cleaning
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+  config.after(:each) do
+    DatabaseCleaner.clean
+    DefaultObjects.clean
   end
 
   config.include(MailerMacros)
@@ -44,4 +42,7 @@ RSpec.configure do |config|
   # Devise extenstions -JW
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+  
+  # Lets you write create(:factroy_name) instead of Factory.create(:factroy_name)
+  config.include Factory::Syntax::Methods
 end

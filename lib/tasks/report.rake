@@ -1,6 +1,6 @@
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :tests] do
+  task :all => [:docs, :notes, :best_practices, :tests, :spec] do
     puts "Reports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end
@@ -9,9 +9,9 @@ namespace :reports do
   task :docs => [:ensure_report_dir] do
     puts "Generateing documentation coverage report..."
     system "rdoc app lib --coverage-report | tee doc/reports/coverage_report.txt"
-    puts "Checking for incorrect style block comments..."
-    system "grep -lr --exclude=report.rake \"=begin\" . | tee doc/reports/old_style_begins.txt"
-    system "grep -lr --exclude=report.rake \"=end\" . | tee doc/reports/old_style_end.txt"
+    #puts "Checking for incorrect style block comments..."
+    #system "grep -lr --exclude=report.rake \"=begin\" . | tee doc/reports/old_style_begins.txt"
+    #system "grep -lr --exclude=report.rake \"=end\" . | tee doc/reports/old_style_end.txt"
   end
 
   desc "Create a report on all notes"
@@ -35,7 +35,17 @@ namespace :reports do
     system "rake spec | tee doc/reports/test_report.txt"
   end
 
+  require 'rspec/core/rake_task'
+ 
+  desc "Run all specs with rcov"
+  RSpec::Core::RakeTask.new("spec") do |t|
+    t.rcov = true
+    t.rcov_opts = %w{--rails --include views -Ispec --exclude gems\/,spec\/,features\/,seeds\/}
+    t.spec_opts = ["-c"]
+  end
+
   task :ensure_report_dir do
     mkdir "doc/reports" unless File.exists?("doc/reports")
   end
 end
+

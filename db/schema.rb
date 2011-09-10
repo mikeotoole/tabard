@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110905184110) do
+ActiveRecord::Schema.define(:version => 20110909221054) do
+
+  create_table "character_proxies", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "character_id"
+    t.string   "character_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "default_character", :default => false
+  end
+
+  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
+  add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -49,6 +61,14 @@ ActiveRecord::Schema.define(:version => 20110905184110) do
   add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
   add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
 
+  create_table "games", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.boolean  "is_active",  :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
     t.string   "action"
@@ -70,6 +90,22 @@ ActiveRecord::Schema.define(:version => 20110905184110) do
   end
 
   add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
+
+  create_table "supported_games", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "swtor_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
@@ -107,5 +143,17 @@ ActiveRecord::Schema.define(:version => 20110905184110) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "wow_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "faction"
+    t.string   "race"
+    t.integer  "level"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

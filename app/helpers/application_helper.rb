@@ -1,0 +1,106 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This helper module is for the main application.
+###
+module ApplicationHelper
+  ###
+  # FIXME If there are errors in the form and the user just presses cancel it redirects to the blank form. Any way to make this work better?
+  # Creates a submit button with the given name with a cancel link
+  # Accepts two arguments: Form object and the cancel link name
+  # [Args]
+  #   * +form+ -> The form that will be submit.
+  #   * +text_button+ -> The text for the submit button.
+  #   * +text_back+ ->   The text for the back button.
+  # [Returns] A button to submit form and a link to go back.
+  ###
+  def submit_or_cancel(form, text_button='Submit', text_back='Cancel')
+    text_button = 'Submit' if text_button.blank?
+    raw("<p class='submit'><button type='submit'>") + text_button + raw("</button>") + (
+      (session[:last_page] != request.path_info) ?
+      raw(' or ' + link_to(text_back, session[:last_page], :class => 'cancel' )) :
+      ("")
+      ) + raw('</p>')
+  end
+
+  # Creates a link to go back to previous page.
+  def back_link
+    # FIXME Joe, Add your new back link
+    link_to_if defined?session[:last_page], 'Back', session[:last_page]
+  end
+
+  ###
+  # TODO Doug, Add the Args descriptions.
+  # Creates a link to remove the given fields.
+  # [Args]
+  #   * +name+ -> The name of the link.
+  #   * +f+ ->
+  #   * +target+ ->
+  #   * +attributes+ ->
+  # [Returns] Link to remove fields.
+  ###
+  def link_to_remove_fields(name, f, target='this', attributes='')
+    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(#{target})", attributes)
+  end
+
+  ###
+  # TODO Doug, Add the Args descriptions.
+  # Creates a link to add the given fields.
+  # [Args]
+  #   * +name+ -> The name of the link.
+  #   * +f+ ->
+  #   * +association+ ->
+  #   * +destination+ ->
+  #   * +before+ ->
+  #   * +after+ ->
+  #   * +attributes+ ->
+  # [Returns] Link to add fields.
+  ###
+  def link_to_add_fields(name, f, association, destination='this', before='', after='', attributes={})
+    new_object = f.object.class.reflect_on_association(association).klass.new
+    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+      render association.to_s.singularize + "_fields", :f => builder
+    end
+    link_to_function(name, "add_fields(#{destination}, '#{association}', '#{escape_javascript(fields)}', '#{before}', '#{after}')", attributes)
+  end
+
+  ###
+  # Gets a profiles avatar in the given size format.
+  # [Args]
+  #   * +size_format+ -> The image size.
+  #   * +profile+ -> The profile with an avatar.
+  # [Returns] image_tag for avatar.
+  ###
+  def get_avatar(size_format, profile = nil)
+    if profile
+      image_tag profile.avatar_url(size_format), :alt => ''
+    else
+      if profile_active?
+        image_tag current_profile.avatar_url(size_format), :alt => ''
+      else
+        image_tag current_user.user_profile.avatar_url(size_format), :alt => ''
+      end
+    end
+  end
+
+  ###
+  # TODO Doug, Add the rest of the message_class types.
+  # Adds a new message to the flash messsages array
+  # [Args]
+  #   * +message_body+ -> The body of the message.
+  #   * +message_class+ -> What type of message it is. This can be "alert", "notice", ...
+  #   * +message_title+ -> The title of the message.
+  ###
+  def add_new_flash_message(message_body, message_class="notice", message_title="")
+    flash[:messages] = Array.new unless flash[:messages]
+    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+  end
+
+  # Removes all flash messages
+  def clear_flash_messages
+    flash[:messages] = nil
+  end
+
+end

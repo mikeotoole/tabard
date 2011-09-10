@@ -15,7 +15,7 @@ Icon?
 doc/reports/
 doc/app/
 doc/dev/
-
+coverage/
 public/uploads/tmp/
 
 public/assets/

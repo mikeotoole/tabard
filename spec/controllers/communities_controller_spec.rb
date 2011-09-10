@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CommunitiesController do
-  let(:user) { Factory.create(:user_profile).user }
+  let(:user) { Factory.create(:user) }
   let(:community_att) { Factory.attributes_for(:community, :name => "TestName")}
   let(:community) { Factory.create(:community)}
   let(:admin_user) { community.admin_profile.user }

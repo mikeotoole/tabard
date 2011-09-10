@@ -6,11 +6,11 @@
 # This is the application cotroller.
 ###
 class ApplicationController < ActionController::Base
+  # Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
   protect_from_forgery
-  include UrlHelper
 
 ###
-# Callback Filters
+# Callbacks
 ###
   # This before_filter will requre that a user is authenticated.
   before_filter :authenticate_user!
@@ -56,6 +56,11 @@ class ApplicationController < ActionController::Base
 # Protected Methods
 ###
 protected
+
+  ###
+  # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
+  # The allows us to white list controller that inherit from application controller.
+  ###
   def limit_subdomain_access
     if request.subdomain.present?
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...

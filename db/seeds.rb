@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+if ENV["RAILS_ENV"] != 'test'
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
     :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy"})
@@ -40,3 +41,4 @@ jahc.promote_user_profile_to_member(s_turtle.user_profile)
 
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
+end

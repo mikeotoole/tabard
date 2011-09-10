@@ -1,9 +1,25 @@
 DaBvRails::Application.routes.draw do
-  resources :communities, :except => [:destroy]
+
+  # Users
+  devise_for :users
+	
+  # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update]
 
-  devise_for :users
+  # Communities
+  resources :communities, :except => :destroy
 
+  # Games
+  match "/game/:id" => "games#show", :as => "game"
+  resources :games, :only => :show do
+    resources :wow_characters, :except => :index
+    resources :swtor_characters, :except => :index
+  end
+  resources :wow_characters, :only => :show
+  resources :swtor_characters, :only => :show
+  resources :base_characters, :only => :new
+
+  # Subdomains
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => 'subdomain_home'
     resources :roles do
@@ -11,10 +27,9 @@ DaBvRails::Application.routes.draw do
     end
   end
 
+  # Home
   root :to => 'home#index'
-  
-#   match "/404" => "status_code#invoke_404", :as => "status_404"
-#   match "*path" => "/404"
+  get "home/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe SubdomainsController do
   let(:user) { Factory.create(:user) }
+  let(:community) { Factory.create(:community) }
 
-  # TODO Joe, Are this tests right? When should it redirect to subdomain?
   describe "GET 'index'" do
     it "should redirect to root url when authenticated as a user" do
       sign_in user

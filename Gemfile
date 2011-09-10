@@ -39,6 +39,7 @@ source 'http://rubygems.org'
 
 # Multi-Group Gems
     gem 'rspec-rails', :group => [:development, :test]
+    gem 'rcov', :group => [:development, :test]
 
 # Development Specific Gems
   group :development do
