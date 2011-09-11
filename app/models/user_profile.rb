@@ -28,6 +28,8 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
+  # The character_proxy that associates this user profile to characters of various types.
+  has_many :character_proxies, :dependent => :destroy
 
 ###
 # Delegates
@@ -55,9 +57,60 @@ class UserProfile < ActiveRecord::Base
       }
 
 ###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
+  ###
+  # This method gets all of the characters attached to this user profile.
+  # [Returns] An array that contains all of the characters attached to this user profile.
+  ###
+  def characters
+    characters = Array.new()
+    for proxy in self.character_proxies
+        characters << proxy.character
+    end
+    characters
+  end
+
+  ###
+  # This method will return all of the character proxies for this user profile who's character matches the specified game.
+  # [Args]
+  #   * +game+ -> The game to scope the proxies by.
+  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
+  ###
+  def character_proxies_for_a_game(game)
+    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
+    # FIXME Joe, WTF! Associations why you no work!
+    proxies = CharacterProxy.where(:user_profile_id => self.id)
+
+    proxies.delete_if { |proxy| (proxy.game.id != game.id) }
+  end
+
+  ###
+  # This method will return all of the character proxies for this user profile who's character matches the specified game.
+  # [Args]
+  #   * +game+ -> The game to scope the proxies by.
+  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
+  ###
+  def default_character_proxy_for_a_game(game)
+    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
+    # FIXME Joe, WTF! Associations why you no work!
+    proxies = CharacterProxy.where(:user_profile_id => self.id)
+
+    proxies.delete_if { |proxy| (proxy.game.id != game.id or not proxy.default_character) }
+    proxies = proxies.compact
+    raise RuntimeError.new("too many default characters exception") if proxies.count > 1
+    proxies.first
+  end
+
+###å
 # Protected Methods
 ###
 protected
+
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
   ###

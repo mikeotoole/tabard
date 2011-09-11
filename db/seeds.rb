@@ -5,10 +5,14 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-puts "Creating RoboBilly!"
-robobilly = User.new(:email => "billy@robo.com", :password => "Password")
-robobilly.skip_confirmation!
-robobilly.save
+if ENV["RAILS_ENV"] != 'test'
 
-puts "Creating JustAnotherHeadshot Clan"
-jahc = Community.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
+  puts "Creating RoboBilly!"
+  robobilly = User.new(:email => "billy@robo.com", :password => "Password")
+  robobilly.skip_confirmation!
+  robobilly.save
+
+  puts "Creating JustAnotherHeadshot Clan"
+  jahc = Community.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
+
+end

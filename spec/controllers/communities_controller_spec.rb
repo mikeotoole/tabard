@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe CommunitiesController do
-  let(:user) { Factory.create(:user) }
-  let(:community_att) { Factory.attributes_for(:community, :name => "TestName")}
-  let(:community) { Factory.create(:community)}
+  let(:user) { create(:user) }
+  let(:community_att) { attributes_for(:community, :name => "TestName")}
+  let(:community) { create(:community)}
 
   describe "GET 'index'" do
     it "should be successful when authenticated as a user" do
@@ -42,6 +42,12 @@ describe CommunitiesController do
       get 'new'
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should render communities/new template" do
+      sign_in user
+      get 'new'
+      response.should render_template('communities/new')
+    end
   end
   
   describe "GET 'edit'" do
@@ -54,6 +60,12 @@ describe CommunitiesController do
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => community
       response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should render communities/edit template" do
+      sign_in user
+      get 'edit', :id => community
+      response.should render_template('communities/edit')
     end
   end
   

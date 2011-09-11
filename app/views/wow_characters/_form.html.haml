@@ -1,0 +1,31 @@
+= form_for @wow_character do |f|
+  -if @wow_character.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@wow_character.errors.count, "error")} prohibited this wow_character from being saved:"
+      %ul
+        - @wow_character.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :faction
+    = f.text_field :faction
+  .field
+    = f.label :race
+    = f.text_field :race
+  .field
+    = f.label :level
+    = f.number_field :level
+  .field
+    = f.label :server
+    = f.text_field :server
+  .field
+    = f.label :game_id
+    = f.number_field :game_id
+  .field
+    = f.label :avatar
+    = f.text_field :avatar
+  .actions
+    = f.submit 'Save'

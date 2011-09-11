@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: wow_characters
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)
+#  faction    :string(255)
+#  race       :string(255)
+#  level      :integer
+#  server     :string(255)
+#  game_id    :integer
+#  avatar     :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  faction: MyString
+  race: MyString
+  level: 1
+  server: MyString
+  game_id: 1
+  avatar: MyString
+
+two:
+  name: MyString
+  faction: MyString
+  race: MyString
+  level: 1
+  server: MyString
+  game_id: 1
+  avatar: MyString

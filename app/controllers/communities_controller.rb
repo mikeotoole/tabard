@@ -5,51 +5,55 @@
 #
 # This controller is for communities.
 ###
-
 class CommunitiesController < ApplicationController
   respond_to :html
-  ###
-  # Before Filters
-  ###
-  before_filter :authenticate_user!, :except => [:show, :index]
+###
+# Callbacks
+###
+  prepend_before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :find_community, :only => [:show, :edit, :update]
 
-  # GET /communities
-  # GET /communities.xml
+###
+# REST Actions
+###
+  # GET /communities(.:format)
   def index
     @communities = Community.all
   end
 
-  # GET /communities/1
-  # GET /communities/1.xml
+  # GET /communities/:id(.:format)
   def show
-    @community = Community.find(params[:id])
     redirect_to root_url(:subdomain => @community.subdomain)
   end
 
-  # GET /communities/new
-  # GET /communities/new.xml
+  # GET /communities/new(.:format)
   def new
     @community = Community.new
   end
 
-  # GET /communities/1/edit
+  # GET /communities/:id/edit(.:format)
   def edit
-    @community = Community.find(params[:id])
   end
 
-  # POST /communities
-  # POST /communities.xml
+  # POST /communities(.:format)
   def create
     @community = Community.create(params[:community])
     respond_with(@community)
   end
 
-  # PUT /communities/1
-  # PUT /communities/1.xml
+  # PUT /communities/:id(.:format)
   def update
-    @community = Community.find(params[:id])
     @community.update_attributes(params[:community])
     respond_with(@community)
   end
 
+###
+# Protected Methods
+###
+protected
+
+  # Find community with given id.
+  def find_community
+    @community = Community.find(params[:id])
+  end
 end
