@@ -8,6 +8,7 @@
 module ApplicationHelper
   ###
   # FIXME If there are errors in the form and the user just presses cancel it redirects to the blank form. Any way to make this work better?
+  #           Maybe we can store where it should redirect back to in the session. -MO
   # Creates a submit button with the given name with a cancel link
   # Accepts two arguments: Form object and the cancel link name
   # [Args]

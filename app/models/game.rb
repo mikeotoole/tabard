@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
 ###
   validates :name,  :presence => true
   validates :type,  :presence => true,
-                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" }, #TODO Joe, Is this a reasonable why to do this?
+                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" }, #TODO Joe, is this a reasonable way to do this?
                     :uniqueness => true
 
 ###

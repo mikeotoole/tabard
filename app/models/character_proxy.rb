@@ -9,7 +9,9 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  # There should always be a default character
   before_save :check_one_default_character_exists
+  before_destroy :set_default_character_if_needed
 
 ###
 # Associations
@@ -22,6 +24,8 @@ class CharacterProxy < ActiveRecord::Base
 ###
   validates :user_profile, :presence => true
   validates :character, :presence => true
+  # The only way to unset a character as default is to set another as default.
+  validate :default_character_not_from_true_to_false, :on => :update
 
 ###
 # Delegates
@@ -83,7 +87,7 @@ protected
 # Callback Methods
 ###
   ###
-  # This method is an callback that checks that there is one and only one default for this characters game.
+  # This method is a before_save callback that checks that there is one and only one default for this characters game.
   ###
   def check_one_default_character_exists
     default_proxy = self.user_profile.default_character_proxy_for_a_game(self.character.game)
@@ -91,6 +95,28 @@ protected
       self.default_character = true
     elsif self.default_character == true
       default_proxy.update_attribute(:default_character, false)
+    end
+  end
+
+  ###
+  # This method is a before_destroy callback that checks if another character should be set as default.
+  ###
+  def set_default_character_if_needed
+    if self.default_character
+      proxies = self.user_profile.character_proxies_for_a_game(self.character.game)
+      proxies.delete_if { |proxy| (proxy.id == self.id) }
+      proxies = proxies.compact
+      proxies.first.update_attribute(:default_character, true) if proxies.count > 0
+    end
+  end
+
+  ###
+  # This method is a validator on update. The only way to unset a character as
+  # default is to set another as default. So not update from true to false is allowed.
+  ###
+  def default_character_not_from_true_to_false #TODO Joe, is there a better way to do this?
+    if !self.default_character and CharacterProxy.find(self.id).default_character
+      self.errors.add(:default_character, 'can only be changed by setting another character as default.')
     end
   end
 end

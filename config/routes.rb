@@ -81,7 +81,7 @@ DaBvRails::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 10 Sep 2011 15:10
+# Generated on 10 Sep 2011 20:35
 #
 #             user_session POST   /users/sign_in(.:format)             {:action=>"create", :controller=>"devise/sessions"}
 #     destroy_user_session DELETE /users/sign_out(.:format)            {:action=>"destroy", :controller=>"devise/sessions"}
