@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :is_active, :type
+  attr_accessible :name, :type
 
 ###
 # Associations
@@ -23,14 +23,8 @@ class Game < ActiveRecord::Base
 ###
   validates :name,  :presence => true
   validates :type,  :presence => true,
-                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" } #TODO Joe, Is this a reasonable why to do this?
-
-
-
-###
-# Scopes
-###
-  scope :active, :conditions => {:is_active => true}
+                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" }, #TODO Joe, Is this a reasonable why to do this?
+                    :uniqueness => true
 
 ###
 # Public Methods
@@ -54,36 +48,8 @@ class Game < ActiveRecord::Base
     end
     super
   end
-
-  ###
-  # Used to offer a dynamically generated list of subclass to choose from.
-  # [Returns] Array of strings contaning all Game subclass names.
-  ###
-  def self.select_options
-    descendants.map{ |c| c.to_s }.sort
-  end
-
-###
-# Instance Methods
-###
-  ###
-  # Get the game type (class name).
-  # [Returns] String with game type (class name).
-  ###
-  def type_helper
-    self.type
-  end
-
-  ###
-  # Sets the game type.
-  # [Args]
-  #   * +type+ String of game type (class name).
-  ###
-  def type_helper=(type)
-    self.type = type
-  end
-
 end
+
 
 # == Schema Information
 #
@@ -92,7 +58,6 @@ end
 #  id         :integer         not null, primary key
 #  name       :string(255)
 #  type       :string(255)
-#  is_active  :boolean         default(TRUE)
 #  created_at :datetime
 #  updated_at :datetime
 #

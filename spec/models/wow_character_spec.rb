@@ -34,15 +34,15 @@ describe WowCharacter do
     end
     
     it "should reject non-Wow type game" do
-      build(:wow_character, :game => create(:swtor)).should_not be_valid
+      build(:wow_character, :game => DefaultObjects.swtor).should_not be_valid
       assert_raises(ActiveRecord::AssociationTypeMismatch) do
-        build(:wow_character, :wow => create(:swtor))
+        build(:wow_character, :wow => DefaultObjects.swtor)
       end
     end
     
     it "should accept Wow type game" do
-      build(:wow_character, :game => create(:wow)).should be_valid
-      build(:wow_character, :wow => create(:wow)).should be_valid
+      build(:wow_character, :game => DefaultObjects.wow).should be_valid
+      build(:wow_character, :wow => DefaultObjects.wow).should be_valid
     end
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909221054) do
+ActiveRecord::Schema.define(:version => 20110910214429) do
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.string   "label"
     t.boolean  "accepting_members",           :default => true
     t.boolean  "email_notice_on_application", :default => true
     t.string   "subdomain"
@@ -39,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
-    t.boolean  "is_active",  :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

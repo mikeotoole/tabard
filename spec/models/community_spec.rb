@@ -5,7 +5,6 @@
 #  id                          :integer         not null, primary key
 #  name                        :string(255)
 #  slogan                      :string(255)
-#  label                       :string(255)
 #  accepting_members           :boolean         default(TRUE)
 #  email_notice_on_application :boolean         default(TRUE)
 #  subdomain                   :string(255)
@@ -58,26 +57,6 @@ describe Community do
   describe "slogan" do
     it "should be required" do
       build(:community, :slogan => nil).should_not be_valid
-    end
-  end
-  
-  describe "label" do
-    it "should be required" do
-      build(:community, :label => nil).should_not be_valid
-    end
-    
-    it "should accept valid values" do
-      valid_labels = %w{ Guild Team Clan Faction Squad }
-      valid_labels.each do |label|
-        build(:community, :label => label).should be_valid
-      end
-    end
-
-    it "should reject invalid values" do
-      invlaid_labels = %w{ 1212312&^*&^ #1Community My\ #1\ Community @TopComm }  # TESTING Invalid community labels for testing.
-      invlaid_labels.each do |label|
-        build(:community, :label => label).should_not be_valid
-      end
     end
   end
   

@@ -21,7 +21,7 @@ class GamesController < ApplicationController
   # GET /games/:id(.:format)
   ###
   def show
-    @game = Game.active.find(params[:id])
+    @game = Game.find_by_id(params[:id])
     respond_with(@game)
   end
 end
