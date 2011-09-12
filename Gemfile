@@ -66,4 +66,5 @@ source 'http://rubygems.org'
     gem 'guard-livereload'
     gem 'growl_notify'
     gem 'simplecov', "0.4.2"
+    gem 'ruby-debug19'
   end
