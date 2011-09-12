@@ -75,21 +75,6 @@ class UserProfile < ActiveRecord::Base
     characters
   end
 
-# TODO Joe, This is not needed right?
-#   ###
-#   # This will create a new character proxy for the character and
-#   # add it to the user profile.
-#   # [Args]
-#   #   * +character+ -> The character to add.
-#   #   * +is_default+ -> If the character is the default for its game.
-#   ###
-#   def build_character(character, is_default = false)
-#     if not is_default and self.character_proxies_for_a_game(character.game).empty?
-#       is_default = true
-#     end
-#     self.character_proxies.create(:character => character, :default_character => is_default)
-#   end
-
   ###
   # This method will return all of the character proxies for this user profile who's character matches the specified game.
   # [Args]
@@ -135,8 +120,8 @@ class UserProfile < ActiveRecord::Base
     end
     return false
   end
-  
-  # This method collects all of this user_profile's roles 
+
+  # This method collects all of this user_profile's roles
   def roles
     self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
   end

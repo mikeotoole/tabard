@@ -11,12 +11,10 @@ DaBvRails::Application.routes.draw do
 
   # Games
   match "/game/:id" => "games#show", :as => "game"
-  resources :games, :only => :show do
-    resources :wow_characters, :except => :index
-    resources :swtor_characters, :except => :index
-  end
-  resources :wow_characters, :only => :show
-  resources :swtor_characters, :only => :show
+  resources :games, :only => :show
+
+  resources :wow_characters, :except => :index
+  resources :swtor_characters, :except => :index
   resources :base_characters, :only => :new
 
   # Subdomains
@@ -89,49 +87,47 @@ DaBvRails::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 06 Sep 2011 13:27
+# Generated on 10 Sep 2011 20:35
 #
-#                          POST   /communities(.:format)                         {:action=>"create", :controller=>"communities"}
-#            new_community GET    /communities/new(.:format)                     {:action=>"new", :controller=>"communities"}
-#           edit_community GET    /communities/:id/edit(.:format)                {:action=>"edit", :controller=>"communities"}
-#                community GET    /communities/:id(.:format)                     {:action=>"show", :controller=>"communities"}
-#                          PUT    /communities/:id(.:format)                     {:action=>"update", :controller=>"communities"}
-#                          DELETE /communities/:id(.:format)                     {:action=>"destroy", :controller=>"communities"}
-#        edit_user_profile GET    /user_profiles/:id/edit(.:format)              {:action=>"edit", :controller=>"user_profiles"}
-#             user_profile GET    /user_profiles/:id(.:format)                   {:action=>"show", :controller=>"user_profiles"}
-#                          PUT    /user_profiles/:id(.:format)                   {:action=>"update", :controller=>"user_profiles"}
-#         new_user_session GET    /users/sign_in(.:format)                       {:action=>"new", :controller=>"devise/sessions"}
-#             user_session POST   /users/sign_in(.:format)                       {:action=>"create", :controller=>"devise/sessions"}
-#     destroy_user_session DELETE /users/sign_out(.:format)                      {:action=>"destroy", :controller=>"devise/sessions"}
-#            user_password POST   /users/password(.:format)                      {:action=>"create", :controller=>"devise/passwords"}
-#        new_user_password GET    /users/password/new(.:format)                  {:action=>"new", :controller=>"devise/passwords"}
-#       edit_user_password GET    /users/password/edit(.:format)                 {:action=>"edit", :controller=>"devise/passwords"}
-#                          PUT    /users/password(.:format)                      {:action=>"update", :controller=>"devise/passwords"}
-# cancel_user_registration GET    /users/cancel(.:format)                        {:action=>"cancel", :controller=>"devise/registrations"}
-#        user_registration POST   /users(.:format)                               {:action=>"create", :controller=>"devise/registrations"}
-#    new_user_registration GET    /users/sign_up(.:format)                       {:action=>"new", :controller=>"devise/registrations"}
-#   edit_user_registration GET    /users/edit(.:format)                          {:action=>"edit", :controller=>"devise/registrations"}
-#                          PUT    /users(.:format)                               {:action=>"update", :controller=>"devise/registrations"}
-#                          DELETE /users(.:format)                               {:action=>"destroy", :controller=>"devise/registrations"}
-#        user_confirmation POST   /users/confirmation(.:format)                  {:action=>"create", :controller=>"devise/confirmations"}
-#    new_user_confirmation GET    /users/confirmation/new(.:format)              {:action=>"new", :controller=>"devise/confirmations"}
-#                          GET    /users/confirmation(.:format)                  {:action=>"show", :controller=>"devise/confirmations"}
-#              user_unlock POST   /users/unlock(.:format)                        {:action=>"create", :controller=>"devise/unlocks"}
-#          new_user_unlock GET    /users/unlock/new(.:format)                    {:action=>"new", :controller=>"devise/unlocks"}
-#                          GET    /users/unlock(.:format)                        {:action=>"show", :controller=>"devise/unlocks"}
-#           subdomain_home        /                                              {:controller=>"subdomains", :action=>"index"}
-#         role_permissions GET    /roles/:role_id/permissions(.:format)          {:action=>"index", :controller=>"permissions"}
-#                          POST   /roles/:role_id/permissions(.:format)          {:action=>"create", :controller=>"permissions"}
-#      new_role_permission GET    /roles/:role_id/permissions/new(.:format)      {:action=>"new", :controller=>"permissions"}
-#     edit_role_permission GET    /roles/:role_id/permissions/:id/edit(.:format) {:action=>"edit", :controller=>"permissions"}
-#          role_permission GET    /roles/:role_id/permissions/:id(.:format)      {:action=>"show", :controller=>"permissions"}
-#                          PUT    /roles/:role_id/permissions/:id(.:format)      {:action=>"update", :controller=>"permissions"}
-#                          DELETE /roles/:role_id/permissions/:id(.:format)      {:action=>"destroy", :controller=>"permissions"}
-#                    roles GET    /roles(.:format)                               {:action=>"index", :controller=>"roles"}
-#                          POST   /roles(.:format)                               {:action=>"create", :controller=>"roles"}
-#                 new_role GET    /roles/new(.:format)                           {:action=>"new", :controller=>"roles"}
-#                edit_role GET    /roles/:id/edit(.:format)                      {:action=>"edit", :controller=>"roles"}
-#                     role GET    /roles/:id(.:format)                           {:action=>"show", :controller=>"roles"}
-#                          PUT    /roles/:id(.:format)                           {:action=>"update", :controller=>"roles"}
-#                          DELETE /roles/:id(.:format)                           {:action=>"destroy", :controller=>"roles"}
-#                     root        /                                              {:controller=>"home", :action=>"index"}
+#             user_session POST   /users/sign_in(.:format)             {:action=>"create", :controller=>"devise/sessions"}
+#     destroy_user_session DELETE /users/sign_out(.:format)            {:action=>"destroy", :controller=>"devise/sessions"}
+#            user_password POST   /users/password(.:format)            {:action=>"create", :controller=>"devise/passwords"}
+#        new_user_password GET    /users/password/new(.:format)        {:action=>"new", :controller=>"devise/passwords"}
+#       edit_user_password GET    /users/password/edit(.:format)       {:action=>"edit", :controller=>"devise/passwords"}
+#                          PUT    /users/password(.:format)            {:action=>"update", :controller=>"devise/passwords"}
+# cancel_user_registration GET    /users/cancel(.:format)              {:action=>"cancel", :controller=>"devise/registrations"}
+#        user_registration POST   /users(.:format)                     {:action=>"create", :controller=>"devise/registrations"}
+#    new_user_registration GET    /users/sign_up(.:format)             {:action=>"new", :controller=>"devise/registrations"}
+#   edit_user_registration GET    /users/edit(.:format)                {:action=>"edit", :controller=>"devise/registrations"}
+#                          PUT    /users(.:format)                     {:action=>"update", :controller=>"devise/registrations"}
+#                          DELETE /users(.:format)                     {:action=>"destroy", :controller=>"devise/registrations"}
+#        user_confirmation POST   /users/confirmation(.:format)        {:action=>"create", :controller=>"devise/confirmations"}
+#    new_user_confirmation GET    /users/confirmation/new(.:format)    {:action=>"new", :controller=>"devise/confirmations"}
+#                          GET    /users/confirmation(.:format)        {:action=>"show", :controller=>"devise/confirmations"}
+#              user_unlock POST   /users/unlock(.:format)              {:action=>"create", :controller=>"devise/unlocks"}
+#          new_user_unlock GET    /users/unlock/new(.:format)          {:action=>"new", :controller=>"devise/unlocks"}
+#                          GET    /users/unlock(.:format)              {:action=>"show", :controller=>"devise/unlocks"}
+#              communities GET    /communities(.:format)               {:action=>"index", :controller=>"communities"}
+#                          POST   /communities(.:format)               {:action=>"create", :controller=>"communities"}
+#            new_community GET    /communities/new(.:format)           {:action=>"new", :controller=>"communities"}
+#           edit_community GET    /communities/:id/edit(.:format)      {:action=>"edit", :controller=>"communities"}
+#                community GET    /communities/:id(.:format)           {:action=>"show", :controller=>"communities"}
+#                          PUT    /communities/:id(.:format)           {:action=>"update", :controller=>"communities"}
+#                     game        /game/:id(.:format)                  {:controller=>"games", :action=>"show"}
+#                          GET    /games/:id(.:format)                 {:action=>"show", :controller=>"games"}
+#           wow_characters POST   /wow_characters(.:format)            {:action=>"create", :controller=>"wow_characters"}
+#        new_wow_character GET    /wow_characters/new(.:format)        {:action=>"new", :controller=>"wow_characters"}
+#       edit_wow_character GET    /wow_characters/:id/edit(.:format)   {:action=>"edit", :controller=>"wow_characters"}
+#            wow_character GET    /wow_characters/:id(.:format)        {:action=>"show", :controller=>"wow_characters"}
+#                          PUT    /wow_characters/:id(.:format)        {:action=>"update", :controller=>"wow_characters"}
+#                          DELETE /wow_characters/:id(.:format)        {:action=>"destroy", :controller=>"wow_characters"}
+#         swtor_characters POST   /swtor_characters(.:format)          {:action=>"create", :controller=>"swtor_characters"}
+#      new_swtor_character GET    /swtor_characters/new(.:format)      {:action=>"new", :controller=>"swtor_characters"}
+#     edit_swtor_character GET    /swtor_characters/:id/edit(.:format) {:action=>"edit", :controller=>"swtor_characters"}
+#          swtor_character GET    /swtor_characters/:id(.:format)      {:action=>"show", :controller=>"swtor_characters"}
+#                          PUT    /swtor_characters/:id(.:format)      {:action=>"update", :controller=>"swtor_characters"}
+#                          DELETE /swtor_characters/:id(.:format)      {:action=>"destroy", :controller=>"swtor_characters"}
+#       new_base_character GET    /base_characters/new(.:format)       {:action=>"new", :controller=>"base_characters"}
+#           subdomain_home        /                                    {:controller=>"subdomains", :action=>"index"}
+#                     root        /                                    {:controller=>"home", :action=>"index"}
+#               home_index GET    /home/index(.:format)                {:controller=>"home", :action=>"index"}

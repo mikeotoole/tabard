@@ -53,6 +53,22 @@ class ApplicationController < ActionController::Base
   end
 
 ###
+# Public Methods
+###
+  ###
+  # TODO Doug, Add the remaining of the message_class types.
+  # Adds a new message to the flash messsages array
+  # [Args]
+  #   * +message_body+ -> The body of the message.
+  #   * +message_class+ -> What type of message it is. This can be "alert", "notice", ...
+  #   * +message_title+ -> The title of the message.
+  ###
+  def add_new_flash_message(message_body, message_class="notice", message_title="")
+    flash[:messages] = Array.new unless flash[:messages]
+    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+  end
+
+###
 # Protected Methods
 ###
 protected

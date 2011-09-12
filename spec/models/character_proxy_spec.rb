@@ -34,9 +34,9 @@ describe CharacterProxy do
       firstProxy.default_character.should be_true
       secondProxy.default_character.should be_false
       firstProxy_id = firstProxy.id
-      secondProxy_id = secondProxy
+      secondProxy_id = secondProxy.id
       
-      firstProxy.update_attributes(:default_character => false).should be_false
+      firstProxy.update_attributes(:default_character => false)
       CharacterProxy.find(firstProxy_id).default_character.should be_true
       CharacterProxy.find(secondProxy_id).default_character.should be_false
     end
@@ -53,7 +53,7 @@ describe CharacterProxy do
       CharacterProxy.find(firstProxy_id).default_character.should be_false
       CharacterProxy.find(secondProxy_id).default_character.should be_true
     end
-  end
+   end
   
   it "was default and deleted should set first for game as default" do
       firstProxy = create(:character_proxy)
@@ -64,6 +64,14 @@ describe CharacterProxy do
       
       firstProxy.destroy.should be_true
       CharacterProxy.find(secondProxy_id).default_character.should be_true
+  end
+  
+  it "should delete character when destroyed" do
+    character = create(:wow_char_profile)
+    character.should be_valid
+    character.character_proxy.should be_valid
+    character.character_proxy.destroy.should be_true
+    WowCharacter.exists?(character).should be_false
   end
 
 ###

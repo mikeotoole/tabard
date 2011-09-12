@@ -65,5 +65,5 @@ source 'http://rubygems.org'
     gem 'guard-rspec'
     gem 'guard-livereload'
     gem 'growl_notify'
-    gem 'simplecov', "0.4.2"
+    gem 'simplecov', '0.4.2'
   end

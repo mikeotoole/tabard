@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909221054) do
+ActiveRecord::Schema.define(:version => 20110911022052) do
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.string   "label"
     t.boolean  "accepting_members",           :default => true
     t.boolean  "email_notice_on_application", :default => true
     t.string   "subdomain"
@@ -64,7 +63,6 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
-    t.boolean  "is_active",  :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -98,6 +96,9 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
     t.datetime "updated_at"
   end
 
+  add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
+  add_index "supported_games", ["game_id"], :name => "index_supported_games_on_game_id"
+
   create_table "swtor_characters", :force => true do |t|
     t.string   "name"
     t.string   "server"
@@ -106,6 +107,8 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "swtor_characters", ["game_id"], :name => "index_swtor_characters_on_game_id"
 
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
@@ -155,5 +158,7 @@ ActiveRecord::Schema.define(:version => 20110909221054) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "wow_characters", ["game_id"], :name => "index_wow_characters_on_game_id"
 
 end

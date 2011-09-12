@@ -17,47 +17,47 @@ class SwtorCharactersController < ApplicationController
 # REST Actions
 ###
   ###
-  # GET /games/:game_id/swtor_characters/:id(.:format)
   # GET /swtor_characters/:id(.:format)
   ###
   def show
     respond_with(@character)
   end
 
-  # GET /games/:game_id/swtor_characters/new(.:format)
-  def new
-    @character = SwtorCharacter.new
-    @character.game_id = params[:game_id]
-    respond_with(@character)
-  end
-
-  # GET /games/:game_id/swtor_characters/:id/edit(.:format)
+  # GET /swtor_characters/:id/edit(.:format)
   def edit
   end
 
-  # POST /games/:game_id/swtor_characters(.:format)
-  def create
-    @character = SwtorCharacter.new(params[:swtor_character])
 
-    profile = current_user.user_profile
-    profile.build_character(@character, params[:default])
+  # GET /swtor_characters/new(.:format)
+  def new
+    @character = SwtorCharacter.new
+    @character.game_id = params[:game_id]
 
-    add_new_flash_message('Character was successfully created.') if profile.save
-    respond_with(@character.game, @character)
+    respond_with(@character)
   end
 
-  # PUT /games/:game_id/swtor_characters/:id(.:format)
+  # POST /swtor_characters(.:format)
+  def create
+    @character = SwtorCharacter.create(params[:swtor_character])
+
+    profile = current_user.user_profile
+    proxy = profile.character_proxies.build(:character => @character, :default_character => params[:default])
+
+    add_new_flash_message('Character was successfully created.') if proxy.save
+    respond_with(@character)
+  end
+
+  # PUT /swtor_characters/:id(.:format)
   def update
     if params[:default]
       @character.set_as_default
-      #@character.character_proxy.user_profile.set_as_default_character(@character)
     end
 
     add_new_flash_message('Character was successfully updated.') if @character.update_attributes(params[:swtor_character])
-    respond_with(@character.game, @character)
+    respond_with(@character)
   end
 
-  # DELETE /games/:game_id/swtor_characters/:id(.:format)
+  # DELETE /swtor_characters/:id(.:format)
   def destroy
     if @character
       add_new_flash_message('Character was successfully deleted.') if @character.destroy

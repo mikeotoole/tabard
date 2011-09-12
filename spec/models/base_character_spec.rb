@@ -72,4 +72,13 @@ describe BaseCharacter do
       WowCharacter.find(firstCharacter_id).default.should be_false
     end
   end
+  
+  it "should delete character proxy when destroyed" do
+    character = create(:wow_char_profile)
+    character.should be_valid
+    proxy = character.character_proxy
+    proxy.should be_valid
+    character.destroy.should be_true
+    CharacterProxy.exists?(proxy).should be_false
+  end
 end

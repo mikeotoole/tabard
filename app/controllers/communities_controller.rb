@@ -12,6 +12,7 @@ class CommunitiesController < ApplicationController
   ###
   before_filter :authenticate_user!, :except => [:show, :index]
   load_and_authorize_resource
+  skip_load_and_authorize_resource :only => [:create]
 
 ###
 # REST Actions
@@ -38,8 +39,10 @@ class CommunitiesController < ApplicationController
 
   # POST /communities(.:format)
   def create
-    #@community = Community.create(params[:community])
-    @community.update_attributes(:admin_profile => current_user.user_profile)
+    @community = Community.new(params[:community])
+    @community.admin_profile = current_user.user_profile
+    authorize! :create, @community
+    @community.save
     respond_with(@community)
   end
 

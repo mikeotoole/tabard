@@ -3,9 +3,9 @@ require 'spec_helper'
 describe CommunitiesController do
   let(:billy) { create(:billy) }
   let(:user) { create(:user) }
+  let(:admin_user) { create(:community_admin) }
+  let(:community) { admin_user.user_profile.owned_communities.first }
   let(:community_att) { attributes_for(:community, :name => "TestName")}
-  let(:community) { create(:community) }
-  let(:admin_user) { community.admin_profile.user }
   describe "GET 'index'" do
     it "should be successful when authenticated as a user" do
       sign_in user
@@ -61,6 +61,12 @@ describe CommunitiesController do
       get 'new'
       response.should redirect_to(new_user_session_path)
     end
+
+    it "should render communities/new template" do
+      sign_in billy
+      get 'new'
+      response.should render_template('communities/new')
+    end
   end
 
   describe "GET 'edit'" do
@@ -80,9 +86,15 @@ describe CommunitiesController do
       get 'edit', :id => community
       response.should redirect_to(new_user_session_path)
     end
+
+    it "should render communities/edit template" do
+      sign_in admin_user
+      get 'edit', :id => community
+      response.should render_template('communities/edit')
+    end
   end
 
-  describe "POST 'create' authenticated as a billy" do
+  describe "POST 'create' authenticated as billy" do
     before(:each) do
       sign_in billy
       post 'create', :community => community_att

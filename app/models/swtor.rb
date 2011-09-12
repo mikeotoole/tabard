@@ -12,6 +12,7 @@ class Swtor < Game
   has_many :characters, :foreign_key => :game_id, :dependent => :destroy, :class_name => "SwtorCharacters"
 end
 
+
 # == Schema Information
 #
 # Table name: games
@@ -19,7 +20,6 @@ end
 #  id         :integer         not null, primary key
 #  name       :string(255)
 #  type       :string(255)
-#  is_active  :boolean         default(TRUE)
 #  created_at :datetime
 #  updated_at :datetime
 #

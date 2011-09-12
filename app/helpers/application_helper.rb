@@ -8,6 +8,7 @@
 module ApplicationHelper
   ###
   # FIXME If there are errors in the form and the user just presses cancel it redirects to the blank form. Any way to make this work better?
+  #           Maybe we can store where it should redirect back to in the session. -MO
   # Creates a submit button with the given name with a cancel link
   # Accepts two arguments: Form object and the cancel link name
   # [Args]
@@ -83,19 +84,6 @@ module ApplicationHelper
         image_tag current_user.user_profile.avatar_url(size_format), :alt => ''
       end
     end
-  end
-
-  ###
-  # TODO Doug, Add the rest of the message_class types.
-  # Adds a new message to the flash messsages array
-  # [Args]
-  #   * +message_body+ -> The body of the message.
-  #   * +message_class+ -> What type of message it is. This can be "alert", "notice", ...
-  #   * +message_title+ -> The title of the message.
-  ###
-  def add_new_flash_message(message_body, message_class="notice", message_title="")
-    flash[:messages] = Array.new unless flash[:messages]
-    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
   end
 
   # Removes all flash messages

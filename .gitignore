@@ -11,7 +11,7 @@ Icon?
 *.orig
 
 .sass-cache/
-
+coverage/
 doc/reports/
 doc/app/
 doc/dev/

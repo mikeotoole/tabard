@@ -31,15 +31,15 @@ describe SwtorCharacter do
     end
     
     it "should reject non-Swtor type game" do
-      Factory.build(:swtor_character, :game => Factory.create(:wow)).should_not be_valid
+      Factory.build(:swtor_character, :game => DefaultObjects.wow).should_not be_valid
       assert_raises(ActiveRecord::AssociationTypeMismatch) do
-        Factory.build(:swtor_character, :swtor => Factory.create(:wow))
+        Factory.build(:swtor_character, :swtor => DefaultObjects.wow)
       end
     end
     
     it "should accept Swtor type game" do
-      Factory.build(:swtor_character, :game => Factory.create(:swtor)).should be_valid
-      Factory.build(:swtor_character, :swtor => Factory.create(:swtor)).should be_valid
+      Factory.build(:swtor_character, :game => DefaultObjects.swtor).should be_valid
+      Factory.build(:swtor_character, :swtor => DefaultObjects.swtor).should be_valid
     end
   end
   
