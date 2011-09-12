@@ -29,6 +29,7 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     #@community = Community.new
+    @community.admin_profile = current_user.user_profile
   end
 
   # GET /communities/:id/edit(.:format)

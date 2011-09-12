@@ -6,13 +6,14 @@
 # This model represents a community profile.
 ###
 class CommunityProfile < ActiveRecord::Base
+  include Exceptions
 ###
 # Associations
 ###
   # TODO Joe/Bryan We need to evaluate the eager loading of associations and inverse_of to optimize our memory footprints and speed. -JW
   belongs_to :community
   belongs_to :user_profile
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :roles, :before_add => :ensure_that_community_matches, :before_remove => :ensure_that_member_role_stays
 
 ###
 # Validators
@@ -26,9 +27,17 @@ class CommunityProfile < ActiveRecord::Base
 # Public Methods
 ###
   def has_at_least_the_default_member_role
-    true # TODO Joe Add this complex validator -JW
+    errors.add(:roles, "must not be empty") if self.roles.blank?
+    errors.add(:roles, "must include the member role of the community.") unless self.community and self.roles.include?(self.community.member_role)
   end
 
+  def ensure_that_community_matches(role)
+    raise InvalidCollectionAddition.new("You can't add a role from a different community.") if role and role.community != self.community
+  end
+
+  def ensure_that_member_role_stays(role)
+    raise InvalidCollectionRemoval.new("You can't remove the member role.") if role == self.community.member_role
+  end
 end
 
 

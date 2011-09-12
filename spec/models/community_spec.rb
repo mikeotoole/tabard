@@ -23,6 +23,13 @@ describe Community do
   it "should create a new instance given valid attributes" do
     community.should be_valid
   end
+  
+  #describe "after creation" do
+    #it "should have a default member role" do
+      #community2 = build(:community, :roles => []).should be_valid
+      #community2.member_role.should_not be_nil
+    #end
+  #end
 
   describe "name" do
     it "should be required" do

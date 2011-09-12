@@ -109,4 +109,33 @@ describe UserProfile do
       profile.default_character_proxy_for_a_game(DefaultObjects.swtor).should be_nil
     end
   end
+
+  describe "add_new_role method" do
+    it "should add a valid role" do
+      valid_roles = []
+      billy = create(:billy)
+      billy_community = create(:community, :admin_profile => billy.user_profile)
+      original_role_size = billy.user_profile.roles.size
+      valid_roles << create(:role, :community => billy_community)
+      valid_roles.each do |role|
+        billy.user_profile.add_new_role(role).should be_true
+      end
+      billy.user_profile.roles.size.should eq((original_role_size+valid_roles.size))
+    end
+
+    it "should not add an invalid role" do
+      flunk
+    end
+  end
+
+  describe "roles" do
+    it "should return all of the roles that a user_profile has from all community profiles" do
+      billy = create(:billy)
+      all_roles = Array.new
+      billy.user_profile.community_profiles.each do |community_profile|
+        all_roles.concat(communoty_profile.roles)
+      end
+      billy.user_profile.roles.should eq(all_roles)
+    end
+  end
 end

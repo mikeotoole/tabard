@@ -36,7 +36,7 @@ namespace :reports do
   end
 
   require 'rspec/core/rake_task'
- 
+
   desc "Run all specs with rcov"
   RSpec::Core::RakeTask.new("spec") do |t|
     t.rcov = true
@@ -49,3 +49,12 @@ namespace :reports do
   end
 end
 
+# Update to rake notes
+class SourceAnnotationExtractor
+  alias orig_find find
+  def find(dirs=%w(app lib test))
+    # we added spec dir to rake notes task
+    dirs << "spec"
+    orig_find(dirs)
+  end
+end

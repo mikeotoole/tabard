@@ -30,7 +30,7 @@ class UserProfile < ActiveRecord::Base
   belongs_to :user, :inverse_of => :user_profile
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
   has_many :community_profiles, :dependent => :destroy
-
+  has_many :character_proxies, :dependent => :destroy
 ###
 # Delegates
 ###
@@ -134,6 +134,11 @@ class UserProfile < ActiveRecord::Base
       return true
     end
     return false
+  end
+  
+  # This method collects all of this user_profile's roles 
+  def roles
+    self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
   end
 
 ###

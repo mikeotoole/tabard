@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe CommunitiesController do
-  let(:user) { Factory.create(:user) }
-  let(:community_att) { Factory.attributes_for(:community, :name => "TestName")}
-  let(:community) { Factory.create(:community)}
+  let(:billy) { create(:billy) }
+  let(:user) { create(:user) }
+  let(:community_att) { attributes_for(:community, :name => "TestName")}
+  let(:community) { create(:community) }
   let(:admin_user) { community.admin_profile.user }
   describe "GET 'index'" do
     it "should be successful when authenticated as a user" do
@@ -11,7 +12,7 @@ describe CommunitiesController do
       get 'index'
       response.should be_success
     end
-    
+
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       get 'index'
@@ -30,7 +31,7 @@ describe CommunitiesController do
       get 'show', :id => community
       response.should redirect_to(subdomain_home_url(:subdomain => community.subdomain))
     end
-    
+
     it "show should redirect to subdomain home when authenticated as the community admin" do
       sign_in admin_user
       get 'show', :id => community
@@ -44,18 +45,18 @@ describe CommunitiesController do
   end
 
   describe "GET 'new'" do
-    it "should be successful when authenticated as a user" do
-      sign_in user
+    it "should be successful when authenticated as billy" do
+      sign_in billy
       get 'new'
       response.should be_success
     end
-    
+
     it "should be successful when authenticated as a communtiy admin" do
       sign_in admin_user
       get 'new'
       response.should be_success
     end
-    
+
     it "shouldn't be successful when not authenticated as a user" do
       get 'new'
       response.should redirect_to(new_user_session_path)
@@ -68,7 +69,7 @@ describe CommunitiesController do
       get 'edit', :id => community
       response.response_code.should == 403
     end
-    
+
     it "should be sucess when authenticated as the community admin user" do
       sign_in admin_user
       get 'edit', :id => community
@@ -81,9 +82,9 @@ describe CommunitiesController do
     end
   end
 
-  describe "POST 'create' authenticated as a user" do
+  describe "POST 'create' authenticated as a billy" do
     before(:each) do
-      sign_in user
+      sign_in billy
       post 'create', :community => community_att
     end
 
@@ -117,7 +118,7 @@ describe CommunitiesController do
   describe "PUT 'update' when authenticated as a non admin user" do
     before(:each) do
       @new_slogan = 'My new slogan.'
-      sign_in user
+      sign_in billy
       put 'update', :id => community, :community => { :slogan => @new_slogan }
     end
 
@@ -129,18 +130,18 @@ describe CommunitiesController do
       response.response_code.should == 403
     end
   end
-  
+
   describe "PUT 'update' when authenticated as an admin user" do
     before(:each) do
       @new_slogan = 'My new slogan.'
       sign_in admin_user
       put 'update', :id => community, :community => { :slogan => @new_slogan }
     end
-    
+
     it "should change attributes" do
       assigns[:community].slogan.should == @new_slogan
     end
-    
+
     it "should redirect to new community" do
       response.should redirect_to(community_path(assigns[:community]))
     end

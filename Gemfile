@@ -39,7 +39,6 @@ source 'http://rubygems.org'
 
 # Multi-Group Gems
     gem 'rspec-rails', :group => [:development, :test]
-    gem 'rcov', :group => [:development, :test]
 
 # Development Specific Gems
   group :development do
@@ -66,4 +65,5 @@ source 'http://rubygems.org'
     gem 'guard-rspec'
     gem 'guard-livereload'
     gem 'growl_notify'
+    gem 'simplecov', "0.4.2"
   end
