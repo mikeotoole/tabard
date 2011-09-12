@@ -28,12 +28,6 @@ class SwtorCharactersController < ApplicationController
   def edit
   end
 
-
-  # GET /swtor_characters/new(.:format)
-  def new
-    @swtor_character.game_id = params[:game_id]
-  end
-
   # POST /swtor_characters(.:format)
   def create
     profile = current_user.user_profile

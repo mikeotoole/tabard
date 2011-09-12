@@ -92,13 +92,33 @@ describe SwtorCharactersController do
     end
   
     it "should change attributes" do
-      SwtorCharacter.find(1).name.should == @new_name
+      SwtorCharacter.find(1).name.should eq(@new_name)
     end
     
     it "should redirect to swtor character" do
       response.should redirect_to(swtor_character_path(assigns[:swtor_character]))
     end
   end  
+  
+  describe "PUT 'update' when authenticated as a user" do
+    before(:each) do
+      @characterDefault = Factory.create(:swtor_char_profile)
+      @characterNotDefault = Factory.create(:swtor_char_profile)
+      sign_in @user
+    end
+  
+    it "should update default when set to true" do
+      put 'update', :id => @characterNotDefault, :default => true
+      SwtorCharacter.exists?(2).should be_true
+      SwtorCharacter.find(2).default.should be_true
+    end
+    
+    it "should not update default when set from true to false" do
+      put 'update', :id => @characterDefault, :default => false
+      SwtorCharacter.exists?(1).should be_true
+      SwtorCharacter.find(1).default.should be_true
+    end
+  end
   
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
