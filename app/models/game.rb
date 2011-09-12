@@ -6,7 +6,7 @@
 # This class represents a Game. Only subclasses of this should be created.
 ###
 class Game < ActiveRecord::Base
-
+  # The list of vaild game subclass types.
   VALID_TYPES =  %w(Wow Swtor)
 
 ###
