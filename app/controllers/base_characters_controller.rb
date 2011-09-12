@@ -34,6 +34,7 @@ class BaseCharactersController < ApplicationController
             return
           else
             add_new_flash_message('Game not found.',"alert")
+            logger.error("Character for game #{@game.to_yaml} could not be created. Game not in list.")
             redirect_to(:back)
             return
         end

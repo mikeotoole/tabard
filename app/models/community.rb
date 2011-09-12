@@ -23,6 +23,12 @@ class Community < ActiveRecord::Base
   validates :slogan, :presence => true
 
 ###
+# Associations
+###
+has_many :supported_games
+has_many :games, :through => :supported_games
+
+###
 # Callbacks
 ###
   before_save :update_subdomain

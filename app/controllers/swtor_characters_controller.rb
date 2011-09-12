@@ -27,15 +27,6 @@ class SwtorCharactersController < ApplicationController
   def edit
   end
 
-
-  # GET /swtor_characters/new(.:format)
-  def new
-    @character = SwtorCharacter.new
-    @character.game_id = params[:game_id]
-
-    respond_with(@character)
-  end
-
   # POST /swtor_characters(.:format)
   def create
     @character = SwtorCharacter.create(params[:swtor_character])

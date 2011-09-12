@@ -98,6 +98,26 @@ describe WowCharactersController do
     it "should redirect to wow character" do
       response.should redirect_to(wow_character_path(assigns[:swtor_character]))
     end
+  end
+  
+  describe "PUT 'update' when authenticated as a user" do
+    before(:each) do
+      @characterDefault = Factory.create(:wow_char_profile)
+      @characterNotDefault = Factory.create(:wow_char_profile)
+      sign_in @user
+    end
+  
+    it "should update default when set to true" do
+      put 'update', :id => @characterNotDefault, :default => true
+      WowCharacter.exists?(2).should be_true
+      WowCharacter.find(2).default.should be_true
+    end
+    
+    it "should not update default when set from true to false" do
+      put 'update', :id => @characterDefault, :default => false
+      WowCharacter.exists?(1).should be_true
+      WowCharacter.find(1).default.should be_true
+    end
   end  
   
   describe "PUT 'update' when not authenticated as a user" do

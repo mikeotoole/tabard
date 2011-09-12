@@ -6,6 +6,9 @@
 # This class represents a Game. Only subclasses of this should be created.
 ###
 class Game < ActiveRecord::Base
+
+  VALID_TYPES =  %w(Wow Swtor)
+
 ###
 # Attribute accessible
 ###
@@ -23,7 +26,7 @@ class Game < ActiveRecord::Base
 ###
   validates :name,  :presence => true
   validates :type,  :presence => true,
-                    :inclusion => { :in => %w(Wow Swtor), :message => "%{value} is not currently a supported game" }, #TODO Joe, is this a reasonable way to do this?
+                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported game" }, #TODO Joe, is this a reasonable way to do this?
                     :uniqueness => true
 
 ###

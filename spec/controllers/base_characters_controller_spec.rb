@@ -30,7 +30,7 @@ describe BaseCharactersController do
         response.should redirect_to(new_wow_character_path)
       end
       
-      it "should redirect back when game is unknown" do
+      it "should redirect back when game is nil" do
         sign_in user
         request.env["HTTP_REFERER"] = "/"
         get 'new', :game => {:game_id => nil}

@@ -42,6 +42,12 @@ describe BaseCharacter do
     end
   end
   
+  describe "character_id" do   
+    it "should be the characters id" do
+      character.character_id.should eq(character.id)
+    end
+  end
+  
   describe "default" do
     it "should be true when first character of game type is created" do
       character.default.should be_true

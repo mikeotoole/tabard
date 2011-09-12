@@ -27,14 +27,6 @@ class WowCharactersController < ApplicationController
   def edit
   end
 
-  # GET /wow_characters/new(.:format)
-  def new
-    @character = WowCharacter.new
-    @character.game_id = params[:game_id]
-
-    respond_with(@character)
-  end
-
   # POST /wow_characters(.:format)
   def create
     @character = WowCharacter.create(params[:wow_character])
