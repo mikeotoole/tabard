@@ -10,9 +10,9 @@ class SwtorCharactersController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, :except => :show
   load_and_authorize_resource
-  skip_load_and_authorize_resource, :only => [:update]
+  skip_load_and_authorize_resource :only => :update
 
 ###
 # REST Actions

@@ -78,7 +78,7 @@ class Ability
     end
     
     # Character Rules
-    can [:create], BaseCharacter
+    can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|
       character.user_profile.id == user.user_profile.id
     end
