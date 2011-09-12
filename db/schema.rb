@@ -33,7 +33,32 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "admin_profile_id"
+    t.integer  "member_role_id"
   end
+
+  add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
+  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+
+  create_table "community_profiles", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "community_profiles", ["community_id"], :name => "index_community_profiles_on_community_id"
+  add_index "community_profiles", ["user_profile_id"], :name => "index_community_profiles_on_user_profile_id"
+
+  create_table "community_profiles_roles", :id => false, :force => true do |t|
+    t.integer  "community_profile_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
+  add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -41,6 +66,28 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "action"
+    t.string   "permission_level"
+    t.string   "subject_class"
+    t.string   "id_of_subject"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
+
+  create_table "roles", :force => true do |t|
+    t.integer  "community_id"
+    t.string   "name"
+    t.boolean  "system_generated", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"
