@@ -120,7 +120,7 @@ describe UserProfile do
       valid_roles.each do |role|
         admin.user_profile.add_new_role(role).should be_true
       end
-      puts admin.user_profile.community_profiles.first.roles.to_yaml
+      admin = User.find(admin)
       admin.user_profile.roles.size.should eq((original_role_size+valid_roles.size))
     end
 
