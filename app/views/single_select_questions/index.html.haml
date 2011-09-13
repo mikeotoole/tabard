@@ -1,0 +1,17 @@
+%h1 Listing single_select_questions
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @single_select_questions.each do |single_select_question|
+    %tr
+      %td= link_to 'Show', single_select_question
+      %td= link_to 'Edit', edit_single_select_question_path(single_select_question)
+      %td= link_to 'Destroy', single_select_question, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Single select question', new_single_select_question_path

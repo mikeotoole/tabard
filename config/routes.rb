@@ -1,5 +1,23 @@
 DaBvRails::Application.routes.draw do
 
+  resources :text_questions
+
+  resources :multi_select_questions
+
+  resources :single_select_questions
+
+  resources :predefined_answers
+
+  resources :submissions
+
+  resources :answers
+
+  resources :select_questions
+
+  resources :questions
+
+  resources :custom_forms
+
   # Users
   devise_for :users
 

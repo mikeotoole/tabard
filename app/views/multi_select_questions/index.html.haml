@@ -1,0 +1,17 @@
+%h1 Listing multi_select_questions
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @multi_select_questions.each do |multi_select_question|
+    %tr
+      %td= link_to 'Show', multi_select_question
+      %td= link_to 'Edit', edit_multi_select_question_path(multi_select_question)
+      %td= link_to 'Destroy', multi_select_question, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Multi select question', new_multi_select_question_path
