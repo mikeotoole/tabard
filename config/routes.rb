@@ -13,8 +13,10 @@ DaBvRails::Application.routes.draw do
   match "/game/:id" => "games#show", :as => "game"
   resources :games, :only => :show
 
-  resources :wow_characters, :except => :index
-  resources :swtor_characters, :except => :index
+  match "/wow_characters/new" => "base_characters#new", :as => "new_wow_character"
+  match "/swtor_characters/new" => "base_characters#new", :as => "new_swtor_character"
+  resources :wow_characters, :except => [:index, :new]
+  resources :swtor_characters, :except => [:index, :new]
   resources :base_characters, :only => :new
 
   # Subdomains

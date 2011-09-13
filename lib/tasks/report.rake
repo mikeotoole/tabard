@@ -1,6 +1,6 @@
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :tests, :spec] do
+  task :all => [:docs, :notes, :best_practices, :tests] do
     puts "Reports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end

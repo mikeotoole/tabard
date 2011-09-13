@@ -10,8 +10,9 @@ class SwtorCharactersController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :authenticate_user!
-  before_filter :find_swtor_character, :only => [:show, :edit, :update, :destroy]
+  prepend_before_filter :authenticate_user!, :except => :show
+  load_and_authorize_resource
+  skip_load_and_authorize_resource :only => :update
 
 ###
 # REST Actions
@@ -20,58 +21,36 @@ class SwtorCharactersController < ApplicationController
   # GET /swtor_characters/:id(.:format)
   ###
   def show
-    respond_with(@character)
+    respond_with(@swtor_character)
   end
 
   # GET /swtor_characters/:id/edit(.:format)
   def edit
   end
 
-
-  # GET /swtor_characters/new(.:format)
-  def new
-    @character = SwtorCharacter.new
-    @character.game_id = params[:game_id]
-
-    respond_with(@character)
-  end
-
   # POST /swtor_characters(.:format)
   def create
-    @character = SwtorCharacter.create(params[:swtor_character])
-
     profile = current_user.user_profile
-    proxy = profile.character_proxies.build(:character => @character, :default_character => params[:default])
+    proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:default])
 
     add_new_flash_message('Character was successfully created.') if proxy.save
-    respond_with(@character)
+    respond_with(@swtor_character)
   end
 
   # PUT /swtor_characters/:id(.:format)
   def update
-    if params[:default]
-      @character.set_as_default
-    end
+    @swtor_character = SwtorCharacter.find(params[:id])
+    authorize!(:update, @swtor_character)
 
-    add_new_flash_message('Character was successfully updated.') if @character.update_attributes(params[:swtor_character])
-    respond_with(@character)
+    add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])
+    respond_with(@swtor_character)
   end
 
   # DELETE /swtor_characters/:id(.:format)
   def destroy
-    if @character
-      add_new_flash_message('Character was successfully deleted.') if @character.destroy
+    if @swtor_character
+      add_new_flash_message('Character was successfully deleted.') if @swtor_character.destroy
     end
-    respond_with(@character)
-  end
-
-###
-# Protected Methods
-###
-protected
-
-  # Find swtor character with given id.
-  def find_swtor_character
-    @character = SwtorCharacter.find_by_id(params[:id])
+    respond_with(@swtor_character)
   end
 end

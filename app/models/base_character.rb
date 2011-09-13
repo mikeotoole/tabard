@@ -25,6 +25,11 @@ class BaseCharacter < ActiveRecord::Base
   # This attribute is the avatar removal for this SWTOR character. It is used by the AvatarUploader.
   ###
   attr_accessor :remove_avatar
+  
+  ###
+  # This attribute is used to set the character as the default.
+  ###
+  attr_accessor :default
 
 ###
 # Associations
@@ -48,7 +53,8 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :set_as_default, :to => :character_proxy
+  delegate :set_as_default, :to => :character_proxy, :allow_nil => true
+  delegate :user_profile, :to => :character_proxy, :allow_nil => true
 
 ###
 # Uploaders
@@ -97,6 +103,11 @@ class BaseCharacter < ActiveRecord::Base
   ###
   def display_name
     self.name
+  end
+  
+    
+  def default=(value)
+    self.set_as_default if value
   end
 
   # If the character is the default for its game.

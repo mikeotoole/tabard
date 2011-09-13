@@ -13,9 +13,9 @@ describe GamesController do
       response.should be_success
     end
   
-    it "shouldn't be successful when not authenticated as a user" do
+    it "should be successful when not authenticated as a user" do
       get 'show', :id => @game
-      response.should redirect_to(new_user_session_path)
+      response.should be_success
     end
   end
 end

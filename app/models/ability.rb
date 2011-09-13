@@ -23,6 +23,10 @@ class Ability
     can :read, UserProfile
     # Community Rules
     can :read, Community
+    # Character Rules
+    can :read, BaseCharacter
+    # Game Rules
+    can :read, Game
 
     
     bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
@@ -71,6 +75,12 @@ class Ability
     can :create, Community
     can :update, Community do |community|
       community.admin_profile_id == user.user_profile.id
+    end
+    
+    # Character Rules
+    can :create, BaseCharacter
+    can [:update, :destroy], BaseCharacter do |character|
+      character.user_profile.id == user.user_profile.id
     end
 
     # Role Rules
