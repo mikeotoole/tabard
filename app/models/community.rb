@@ -16,6 +16,7 @@ class Community < ActiveRecord::Base
 ###
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
+  has_many :roles
 ###
 # Validators
 ###

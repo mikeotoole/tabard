@@ -125,7 +125,16 @@ describe UserProfile do
     end
 
     it "should not add an invalid role" do
-      flunk
+      invalid_roles = []
+      admin = create(:community_admin)
+      community = admin.user_profile.community_profiles.first.community
+      original_role_size = admin.user_profile.roles.size
+      invalid_roles << create(:role, :community => create(:community))
+      invalid_roles.each do |role|
+        admin.user_profile.add_new_role(role).should be_false
+      end
+      admin = User.find(admin)
+      admin.user_profile.roles.size.should eq((original_role_size))
     end
   end
 
