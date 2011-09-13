@@ -25,7 +25,7 @@ class BaseCharacter < ActiveRecord::Base
   # This attribute is the avatar removal for this SWTOR character. It is used by the AvatarUploader.
   ###
   attr_accessor :remove_avatar
-  
+
   ###
   # This attribute is used to set the character as the default.
   ###
@@ -104,8 +104,13 @@ class BaseCharacter < ActiveRecord::Base
   def display_name
     self.name
   end
-  
-    
+
+  ###
+  # This method sets this as the default character.
+  # [Args]
+  #   * +value+ -> The boolean value to set.
+  # [Returns] A string that contains the display name for this character.
+  ###
   def default=(value)
     self.set_as_default if value
   end

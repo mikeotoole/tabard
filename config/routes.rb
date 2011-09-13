@@ -2,7 +2,7 @@ DaBvRails::Application.routes.draw do
 
   # Users
   devise_for :users
-	
+
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update]
 

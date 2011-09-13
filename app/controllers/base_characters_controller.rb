@@ -11,7 +11,7 @@ class BaseCharactersController < ApplicationController
 # Callbacks
 ###
   before_filter :authenticate_user!
-  
+
 ###
 # REST Actions
 ###

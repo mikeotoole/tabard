@@ -91,7 +91,7 @@ class RolesController < SubdomainsController
   ###
   def create_role
     if(params[:role])
-      @role = current_community.roles.create(params[:role])
+      @role = current_community.roles.new(params[:role])
     else
       @role = current_community.roles.new
     end

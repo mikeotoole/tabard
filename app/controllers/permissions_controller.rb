@@ -47,6 +47,7 @@ class PermissionsController < ApplicationController
   # POST /permissions.json
   def create
     #@permission = Permission.new(params[:permission])
+    @permission.save
     respond_with(@role,@permission)
   end
 

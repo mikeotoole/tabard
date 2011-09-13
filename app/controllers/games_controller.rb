@@ -10,6 +10,7 @@ class GamesController < ApplicationController
 ###
 # Callbacks
 ###
+  before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource
 
 ###

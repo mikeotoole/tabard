@@ -26,15 +26,26 @@ class CommunityProfile < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # This method ensures that this profile has the default role.
   def has_at_least_the_default_member_role
     errors.add(:roles, "must not be empty") if self.roles.blank?
     errors.add(:roles, "must include the member role of the community.") unless self.community and self.roles.include?(self.community.member_role)
   end
 
+  ###
+  # This method ensures that the community matches when a role is added.
+  # [Args]
+  #   * +role+ -> The role being added to the collection.
+  ###
   def ensure_that_community_matches(role)
     raise InvalidCollectionAddition.new("You can't add a role from a different community.") if role and role.community != self.community
   end
 
+  ###
+  # This method ensures that the community member role is not removed.
+  # [Args]
+  #   * +role+ -> The role being removed from the collection.
+  ###
   def ensure_that_member_role_stays(role)
     raise InvalidCollectionRemoval.new("You can't remove the member role.") if role == self.community.member_role
   end

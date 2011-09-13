@@ -28,7 +28,7 @@ class Ability
     # Game Rules
     can :read, Game
 
-    
+
     bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
     dynamicRules(user) unless user.community_profiles.blank?
 
@@ -76,7 +76,7 @@ class Ability
     can :update, Community do |community|
       community.admin_profile_id == user.user_profile.id
     end
-    
+
     # Character Rules
     can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|
