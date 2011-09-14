@@ -20,138 +20,138 @@ require 'spec_helper'
 
 describe MultiSelectQuestionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # MultiSelectQuestion. As you add validations to MultiSelectQuestion, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all multi_select_questions as @multi_select_questions" do
-      multi_select_question = MultiSelectQuestion.create! valid_attributes
-      get :index
-      assigns(:multi_select_questions).should eq([multi_select_question])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested multi_select_question as @multi_select_question" do
-      multi_select_question = MultiSelectQuestion.create! valid_attributes
-      get :show, :id => multi_select_question.id.to_s
-      assigns(:multi_select_question).should eq(multi_select_question)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new multi_select_question as @multi_select_question" do
-      get :new
-      assigns(:multi_select_question).should be_a_new(MultiSelectQuestion)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested multi_select_question as @multi_select_question" do
-      multi_select_question = MultiSelectQuestion.create! valid_attributes
-      get :edit, :id => multi_select_question.id.to_s
-      assigns(:multi_select_question).should eq(multi_select_question)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new MultiSelectQuestion" do
-        expect {
-          post :create, :multi_select_question => valid_attributes
-        }.to change(MultiSelectQuestion, :count).by(1)
-      end
-
-      it "assigns a newly created multi_select_question as @multi_select_question" do
-        post :create, :multi_select_question => valid_attributes
-        assigns(:multi_select_question).should be_a(MultiSelectQuestion)
-        assigns(:multi_select_question).should be_persisted
-      end
-
-      it "redirects to the created multi_select_question" do
-        post :create, :multi_select_question => valid_attributes
-        response.should redirect_to(MultiSelectQuestion.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved multi_select_question as @multi_select_question" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        MultiSelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :multi_select_question => {}
-        assigns(:multi_select_question).should be_a_new(MultiSelectQuestion)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        MultiSelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :multi_select_question => {}
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested multi_select_question" do
-        multi_select_question = MultiSelectQuestion.create! valid_attributes
-        # Assuming there are no other multi_select_questions in the database, this
-        # specifies that the MultiSelectQuestion created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        MultiSelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => multi_select_question.id, :multi_select_question => {'these' => 'params'}
-      end
-
-      it "assigns the requested multi_select_question as @multi_select_question" do
-        multi_select_question = MultiSelectQuestion.create! valid_attributes
-        put :update, :id => multi_select_question.id, :multi_select_question => valid_attributes
-        assigns(:multi_select_question).should eq(multi_select_question)
-      end
-
-      it "redirects to the multi_select_question" do
-        multi_select_question = MultiSelectQuestion.create! valid_attributes
-        put :update, :id => multi_select_question.id, :multi_select_question => valid_attributes
-        response.should redirect_to(multi_select_question)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the multi_select_question as @multi_select_question" do
-        multi_select_question = MultiSelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        MultiSelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => multi_select_question.id.to_s, :multi_select_question => {}
-        assigns(:multi_select_question).should eq(multi_select_question)
-      end
-
-      it "re-renders the 'edit' template" do
-        multi_select_question = MultiSelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        MultiSelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => multi_select_question.id.to_s, :multi_select_question => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested multi_select_question" do
-      multi_select_question = MultiSelectQuestion.create! valid_attributes
-      expect {
-        delete :destroy, :id => multi_select_question.id.to_s
-      }.to change(MultiSelectQuestion, :count).by(-1)
-    end
-
-    it "redirects to the multi_select_questions list" do
-      multi_select_question = MultiSelectQuestion.create! valid_attributes
-      delete :destroy, :id => multi_select_question.id.to_s
-      response.should redirect_to(multi_select_questions_url)
-    end
-  end
+#   # This should return the minimal set of attributes required to create a valid
+#   # MultiSelectQuestion. As you add validations to MultiSelectQuestion, be sure to
+#   # update the return value of this method accordingly.
+#   def valid_attributes
+#     {}
+#   end
+# 
+#   describe "GET index" do
+#     it "assigns all multi_select_questions as @multi_select_questions" do
+#       multi_select_question = MultiSelectQuestion.create! valid_attributes
+#       get :index
+#       assigns(:multi_select_questions).should eq([multi_select_question])
+#     end
+#   end
+# 
+#   describe "GET show" do
+#     it "assigns the requested multi_select_question as @multi_select_question" do
+#       multi_select_question = MultiSelectQuestion.create! valid_attributes
+#       get :show, :id => multi_select_question.id.to_s
+#       assigns(:multi_select_question).should eq(multi_select_question)
+#     end
+#   end
+# 
+#   describe "GET new" do
+#     it "assigns a new multi_select_question as @multi_select_question" do
+#       get :new
+#       assigns(:multi_select_question).should be_a_new(MultiSelectQuestion)
+#     end
+#   end
+# 
+#   describe "GET edit" do
+#     it "assigns the requested multi_select_question as @multi_select_question" do
+#       multi_select_question = MultiSelectQuestion.create! valid_attributes
+#       get :edit, :id => multi_select_question.id.to_s
+#       assigns(:multi_select_question).should eq(multi_select_question)
+#     end
+#   end
+# 
+#   describe "POST create" do
+#     describe "with valid params" do
+#       it "creates a new MultiSelectQuestion" do
+#         expect {
+#           post :create, :multi_select_question => valid_attributes
+#         }.to change(MultiSelectQuestion, :count).by(1)
+#       end
+# 
+#       it "assigns a newly created multi_select_question as @multi_select_question" do
+#         post :create, :multi_select_question => valid_attributes
+#         assigns(:multi_select_question).should be_a(MultiSelectQuestion)
+#         assigns(:multi_select_question).should be_persisted
+#       end
+# 
+#       it "redirects to the created multi_select_question" do
+#         post :create, :multi_select_question => valid_attributes
+#         response.should redirect_to(MultiSelectQuestion.last)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns a newly created but unsaved multi_select_question as @multi_select_question" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         MultiSelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :multi_select_question => {}
+#         assigns(:multi_select_question).should be_a_new(MultiSelectQuestion)
+#       end
+# 
+#       it "re-renders the 'new' template" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         MultiSelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :multi_select_question => {}
+#         response.should render_template("new")
+#       end
+#     end
+#   end
+# 
+#   describe "PUT update" do
+#     describe "with valid params" do
+#       it "updates the requested multi_select_question" do
+#         multi_select_question = MultiSelectQuestion.create! valid_attributes
+#         # Assuming there are no other multi_select_questions in the database, this
+#         # specifies that the MultiSelectQuestion created on the previous line
+#         # receives the :update_attributes message with whatever params are
+#         # submitted in the request.
+#         MultiSelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+#         put :update, :id => multi_select_question.id, :multi_select_question => {'these' => 'params'}
+#       end
+# 
+#       it "assigns the requested multi_select_question as @multi_select_question" do
+#         multi_select_question = MultiSelectQuestion.create! valid_attributes
+#         put :update, :id => multi_select_question.id, :multi_select_question => valid_attributes
+#         assigns(:multi_select_question).should eq(multi_select_question)
+#       end
+# 
+#       it "redirects to the multi_select_question" do
+#         multi_select_question = MultiSelectQuestion.create! valid_attributes
+#         put :update, :id => multi_select_question.id, :multi_select_question => valid_attributes
+#         response.should redirect_to(multi_select_question)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns the multi_select_question as @multi_select_question" do
+#         multi_select_question = MultiSelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         MultiSelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => multi_select_question.id.to_s, :multi_select_question => {}
+#         assigns(:multi_select_question).should eq(multi_select_question)
+#       end
+# 
+#       it "re-renders the 'edit' template" do
+#         multi_select_question = MultiSelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         MultiSelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => multi_select_question.id.to_s, :multi_select_question => {}
+#         response.should render_template("edit")
+#       end
+#     end
+#   end
+# 
+#   describe "DELETE destroy" do
+#     it "destroys the requested multi_select_question" do
+#       multi_select_question = MultiSelectQuestion.create! valid_attributes
+#       expect {
+#         delete :destroy, :id => multi_select_question.id.to_s
+#       }.to change(MultiSelectQuestion, :count).by(-1)
+#     end
+# 
+#     it "redirects to the multi_select_questions list" do
+#       multi_select_question = MultiSelectQuestion.create! valid_attributes
+#       delete :destroy, :id => multi_select_question.id.to_s
+#       response.should redirect_to(multi_select_questions_url)
+#     end
+#   end
 
 end

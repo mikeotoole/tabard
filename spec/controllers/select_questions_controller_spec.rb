@@ -20,138 +20,138 @@ require 'spec_helper'
 
 describe SelectQuestionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # SelectQuestion. As you add validations to SelectQuestion, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all select_questions as @select_questions" do
-      select_question = SelectQuestion.create! valid_attributes
-      get :index
-      assigns(:select_questions).should eq([select_question])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested select_question as @select_question" do
-      select_question = SelectQuestion.create! valid_attributes
-      get :show, :id => select_question.id.to_s
-      assigns(:select_question).should eq(select_question)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new select_question as @select_question" do
-      get :new
-      assigns(:select_question).should be_a_new(SelectQuestion)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested select_question as @select_question" do
-      select_question = SelectQuestion.create! valid_attributes
-      get :edit, :id => select_question.id.to_s
-      assigns(:select_question).should eq(select_question)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new SelectQuestion" do
-        expect {
-          post :create, :select_question => valid_attributes
-        }.to change(SelectQuestion, :count).by(1)
-      end
-
-      it "assigns a newly created select_question as @select_question" do
-        post :create, :select_question => valid_attributes
-        assigns(:select_question).should be_a(SelectQuestion)
-        assigns(:select_question).should be_persisted
-      end
-
-      it "redirects to the created select_question" do
-        post :create, :select_question => valid_attributes
-        response.should redirect_to(SelectQuestion.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved select_question as @select_question" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :select_question => {}
-        assigns(:select_question).should be_a_new(SelectQuestion)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :select_question => {}
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested select_question" do
-        select_question = SelectQuestion.create! valid_attributes
-        # Assuming there are no other select_questions in the database, this
-        # specifies that the SelectQuestion created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        SelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => select_question.id, :select_question => {'these' => 'params'}
-      end
-
-      it "assigns the requested select_question as @select_question" do
-        select_question = SelectQuestion.create! valid_attributes
-        put :update, :id => select_question.id, :select_question => valid_attributes
-        assigns(:select_question).should eq(select_question)
-      end
-
-      it "redirects to the select_question" do
-        select_question = SelectQuestion.create! valid_attributes
-        put :update, :id => select_question.id, :select_question => valid_attributes
-        response.should redirect_to(select_question)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the select_question as @select_question" do
-        select_question = SelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        SelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => select_question.id.to_s, :select_question => {}
-        assigns(:select_question).should eq(select_question)
-      end
-
-      it "re-renders the 'edit' template" do
-        select_question = SelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        SelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => select_question.id.to_s, :select_question => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested select_question" do
-      select_question = SelectQuestion.create! valid_attributes
-      expect {
-        delete :destroy, :id => select_question.id.to_s
-      }.to change(SelectQuestion, :count).by(-1)
-    end
-
-    it "redirects to the select_questions list" do
-      select_question = SelectQuestion.create! valid_attributes
-      delete :destroy, :id => select_question.id.to_s
-      response.should redirect_to(select_questions_url)
-    end
-  end
+#   # This should return the minimal set of attributes required to create a valid
+#   # SelectQuestion. As you add validations to SelectQuestion, be sure to
+#   # update the return value of this method accordingly.
+#   def valid_attributes
+#     {}
+#   end
+# 
+#   describe "GET index" do
+#     it "assigns all select_questions as @select_questions" do
+#       select_question = SelectQuestion.create! valid_attributes
+#       get :index
+#       assigns(:select_questions).should eq([select_question])
+#     end
+#   end
+# 
+#   describe "GET show" do
+#     it "assigns the requested select_question as @select_question" do
+#       select_question = SelectQuestion.create! valid_attributes
+#       get :show, :id => select_question.id.to_s
+#       assigns(:select_question).should eq(select_question)
+#     end
+#   end
+# 
+#   describe "GET new" do
+#     it "assigns a new select_question as @select_question" do
+#       get :new
+#       assigns(:select_question).should be_a_new(SelectQuestion)
+#     end
+#   end
+# 
+#   describe "GET edit" do
+#     it "assigns the requested select_question as @select_question" do
+#       select_question = SelectQuestion.create! valid_attributes
+#       get :edit, :id => select_question.id.to_s
+#       assigns(:select_question).should eq(select_question)
+#     end
+#   end
+# 
+#   describe "POST create" do
+#     describe "with valid params" do
+#       it "creates a new SelectQuestion" do
+#         expect {
+#           post :create, :select_question => valid_attributes
+#         }.to change(SelectQuestion, :count).by(1)
+#       end
+# 
+#       it "assigns a newly created select_question as @select_question" do
+#         post :create, :select_question => valid_attributes
+#         assigns(:select_question).should be_a(SelectQuestion)
+#         assigns(:select_question).should be_persisted
+#       end
+# 
+#       it "redirects to the created select_question" do
+#         post :create, :select_question => valid_attributes
+#         response.should redirect_to(SelectQuestion.last)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns a newly created but unsaved select_question as @select_question" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :select_question => {}
+#         assigns(:select_question).should be_a_new(SelectQuestion)
+#       end
+# 
+#       it "re-renders the 'new' template" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :select_question => {}
+#         response.should render_template("new")
+#       end
+#     end
+#   end
+# 
+#   describe "PUT update" do
+#     describe "with valid params" do
+#       it "updates the requested select_question" do
+#         select_question = SelectQuestion.create! valid_attributes
+#         # Assuming there are no other select_questions in the database, this
+#         # specifies that the SelectQuestion created on the previous line
+#         # receives the :update_attributes message with whatever params are
+#         # submitted in the request.
+#         SelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+#         put :update, :id => select_question.id, :select_question => {'these' => 'params'}
+#       end
+# 
+#       it "assigns the requested select_question as @select_question" do
+#         select_question = SelectQuestion.create! valid_attributes
+#         put :update, :id => select_question.id, :select_question => valid_attributes
+#         assigns(:select_question).should eq(select_question)
+#       end
+# 
+#       it "redirects to the select_question" do
+#         select_question = SelectQuestion.create! valid_attributes
+#         put :update, :id => select_question.id, :select_question => valid_attributes
+#         response.should redirect_to(select_question)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns the select_question as @select_question" do
+#         select_question = SelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => select_question.id.to_s, :select_question => {}
+#         assigns(:select_question).should eq(select_question)
+#       end
+# 
+#       it "re-renders the 'edit' template" do
+#         select_question = SelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => select_question.id.to_s, :select_question => {}
+#         response.should render_template("edit")
+#       end
+#     end
+#   end
+# 
+#   describe "DELETE destroy" do
+#     it "destroys the requested select_question" do
+#       select_question = SelectQuestion.create! valid_attributes
+#       expect {
+#         delete :destroy, :id => select_question.id.to_s
+#       }.to change(SelectQuestion, :count).by(-1)
+#     end
+# 
+#     it "redirects to the select_questions list" do
+#       select_question = SelectQuestion.create! valid_attributes
+#       delete :destroy, :id => select_question.id.to_s
+#       response.should redirect_to(select_questions_url)
+#     end
+#   end
 
 end

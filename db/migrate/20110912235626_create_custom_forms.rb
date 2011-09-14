@@ -4,6 +4,7 @@ class CreateCustomForms < ActiveRecord::Migration
       t.string :name
       t.text :message
       t.string :thankyou
+      t.boolean :published, :default => false
       t.integer :community_id
 
       t.timestamps

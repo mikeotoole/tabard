@@ -20,138 +20,138 @@ require 'spec_helper'
 
 describe PredefinedAnswersController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # PredefinedAnswer. As you add validations to PredefinedAnswer, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all predefined_answers as @predefined_answers" do
-      predefined_answer = PredefinedAnswer.create! valid_attributes
-      get :index
-      assigns(:predefined_answers).should eq([predefined_answer])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested predefined_answer as @predefined_answer" do
-      predefined_answer = PredefinedAnswer.create! valid_attributes
-      get :show, :id => predefined_answer.id.to_s
-      assigns(:predefined_answer).should eq(predefined_answer)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new predefined_answer as @predefined_answer" do
-      get :new
-      assigns(:predefined_answer).should be_a_new(PredefinedAnswer)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested predefined_answer as @predefined_answer" do
-      predefined_answer = PredefinedAnswer.create! valid_attributes
-      get :edit, :id => predefined_answer.id.to_s
-      assigns(:predefined_answer).should eq(predefined_answer)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new PredefinedAnswer" do
-        expect {
-          post :create, :predefined_answer => valid_attributes
-        }.to change(PredefinedAnswer, :count).by(1)
-      end
-
-      it "assigns a newly created predefined_answer as @predefined_answer" do
-        post :create, :predefined_answer => valid_attributes
-        assigns(:predefined_answer).should be_a(PredefinedAnswer)
-        assigns(:predefined_answer).should be_persisted
-      end
-
-      it "redirects to the created predefined_answer" do
-        post :create, :predefined_answer => valid_attributes
-        response.should redirect_to(PredefinedAnswer.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved predefined_answer as @predefined_answer" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        PredefinedAnswer.any_instance.stub(:save).and_return(false)
-        post :create, :predefined_answer => {}
-        assigns(:predefined_answer).should be_a_new(PredefinedAnswer)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        PredefinedAnswer.any_instance.stub(:save).and_return(false)
-        post :create, :predefined_answer => {}
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested predefined_answer" do
-        predefined_answer = PredefinedAnswer.create! valid_attributes
-        # Assuming there are no other predefined_answers in the database, this
-        # specifies that the PredefinedAnswer created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        PredefinedAnswer.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => predefined_answer.id, :predefined_answer => {'these' => 'params'}
-      end
-
-      it "assigns the requested predefined_answer as @predefined_answer" do
-        predefined_answer = PredefinedAnswer.create! valid_attributes
-        put :update, :id => predefined_answer.id, :predefined_answer => valid_attributes
-        assigns(:predefined_answer).should eq(predefined_answer)
-      end
-
-      it "redirects to the predefined_answer" do
-        predefined_answer = PredefinedAnswer.create! valid_attributes
-        put :update, :id => predefined_answer.id, :predefined_answer => valid_attributes
-        response.should redirect_to(predefined_answer)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the predefined_answer as @predefined_answer" do
-        predefined_answer = PredefinedAnswer.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        PredefinedAnswer.any_instance.stub(:save).and_return(false)
-        put :update, :id => predefined_answer.id.to_s, :predefined_answer => {}
-        assigns(:predefined_answer).should eq(predefined_answer)
-      end
-
-      it "re-renders the 'edit' template" do
-        predefined_answer = PredefinedAnswer.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        PredefinedAnswer.any_instance.stub(:save).and_return(false)
-        put :update, :id => predefined_answer.id.to_s, :predefined_answer => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested predefined_answer" do
-      predefined_answer = PredefinedAnswer.create! valid_attributes
-      expect {
-        delete :destroy, :id => predefined_answer.id.to_s
-      }.to change(PredefinedAnswer, :count).by(-1)
-    end
-
-    it "redirects to the predefined_answers list" do
-      predefined_answer = PredefinedAnswer.create! valid_attributes
-      delete :destroy, :id => predefined_answer.id.to_s
-      response.should redirect_to(predefined_answers_url)
-    end
-  end
+#   # This should return the minimal set of attributes required to create a valid
+#   # PredefinedAnswer. As you add validations to PredefinedAnswer, be sure to
+#   # update the return value of this method accordingly.
+#   def valid_attributes
+#     {}
+#   end
+# 
+#   describe "GET index" do
+#     it "assigns all predefined_answers as @predefined_answers" do
+#       predefined_answer = PredefinedAnswer.create! valid_attributes
+#       get :index
+#       assigns(:predefined_answers).should eq([predefined_answer])
+#     end
+#   end
+# 
+#   describe "GET show" do
+#     it "assigns the requested predefined_answer as @predefined_answer" do
+#       predefined_answer = PredefinedAnswer.create! valid_attributes
+#       get :show, :id => predefined_answer.id.to_s
+#       assigns(:predefined_answer).should eq(predefined_answer)
+#     end
+#   end
+# 
+#   describe "GET new" do
+#     it "assigns a new predefined_answer as @predefined_answer" do
+#       get :new
+#       assigns(:predefined_answer).should be_a_new(PredefinedAnswer)
+#     end
+#   end
+# 
+#   describe "GET edit" do
+#     it "assigns the requested predefined_answer as @predefined_answer" do
+#       predefined_answer = PredefinedAnswer.create! valid_attributes
+#       get :edit, :id => predefined_answer.id.to_s
+#       assigns(:predefined_answer).should eq(predefined_answer)
+#     end
+#   end
+# 
+#   describe "POST create" do
+#     describe "with valid params" do
+#       it "creates a new PredefinedAnswer" do
+#         expect {
+#           post :create, :predefined_answer => valid_attributes
+#         }.to change(PredefinedAnswer, :count).by(1)
+#       end
+# 
+#       it "assigns a newly created predefined_answer as @predefined_answer" do
+#         post :create, :predefined_answer => valid_attributes
+#         assigns(:predefined_answer).should be_a(PredefinedAnswer)
+#         assigns(:predefined_answer).should be_persisted
+#       end
+# 
+#       it "redirects to the created predefined_answer" do
+#         post :create, :predefined_answer => valid_attributes
+#         response.should redirect_to(PredefinedAnswer.last)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns a newly created but unsaved predefined_answer as @predefined_answer" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         PredefinedAnswer.any_instance.stub(:save).and_return(false)
+#         post :create, :predefined_answer => {}
+#         assigns(:predefined_answer).should be_a_new(PredefinedAnswer)
+#       end
+# 
+#       it "re-renders the 'new' template" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         PredefinedAnswer.any_instance.stub(:save).and_return(false)
+#         post :create, :predefined_answer => {}
+#         response.should render_template("new")
+#       end
+#     end
+#   end
+# 
+#   describe "PUT update" do
+#     describe "with valid params" do
+#       it "updates the requested predefined_answer" do
+#         predefined_answer = PredefinedAnswer.create! valid_attributes
+#         # Assuming there are no other predefined_answers in the database, this
+#         # specifies that the PredefinedAnswer created on the previous line
+#         # receives the :update_attributes message with whatever params are
+#         # submitted in the request.
+#         PredefinedAnswer.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+#         put :update, :id => predefined_answer.id, :predefined_answer => {'these' => 'params'}
+#       end
+# 
+#       it "assigns the requested predefined_answer as @predefined_answer" do
+#         predefined_answer = PredefinedAnswer.create! valid_attributes
+#         put :update, :id => predefined_answer.id, :predefined_answer => valid_attributes
+#         assigns(:predefined_answer).should eq(predefined_answer)
+#       end
+# 
+#       it "redirects to the predefined_answer" do
+#         predefined_answer = PredefinedAnswer.create! valid_attributes
+#         put :update, :id => predefined_answer.id, :predefined_answer => valid_attributes
+#         response.should redirect_to(predefined_answer)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns the predefined_answer as @predefined_answer" do
+#         predefined_answer = PredefinedAnswer.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         PredefinedAnswer.any_instance.stub(:save).and_return(false)
+#         put :update, :id => predefined_answer.id.to_s, :predefined_answer => {}
+#         assigns(:predefined_answer).should eq(predefined_answer)
+#       end
+# 
+#       it "re-renders the 'edit' template" do
+#         predefined_answer = PredefinedAnswer.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         PredefinedAnswer.any_instance.stub(:save).and_return(false)
+#         put :update, :id => predefined_answer.id.to_s, :predefined_answer => {}
+#         response.should render_template("edit")
+#       end
+#     end
+#   end
+# 
+#   describe "DELETE destroy" do
+#     it "destroys the requested predefined_answer" do
+#       predefined_answer = PredefinedAnswer.create! valid_attributes
+#       expect {
+#         delete :destroy, :id => predefined_answer.id.to_s
+#       }.to change(PredefinedAnswer, :count).by(-1)
+#     end
+# 
+#     it "redirects to the predefined_answers list" do
+#       predefined_answer = PredefinedAnswer.create! valid_attributes
+#       delete :destroy, :id => predefined_answer.id.to_s
+#       response.should redirect_to(predefined_answers_url)
+#     end
+#   end
 
 end

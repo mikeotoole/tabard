@@ -20,138 +20,138 @@ require 'spec_helper'
 
 describe SingleSelectQuestionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # SingleSelectQuestion. As you add validations to SingleSelectQuestion, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all single_select_questions as @single_select_questions" do
-      single_select_question = SingleSelectQuestion.create! valid_attributes
-      get :index
-      assigns(:single_select_questions).should eq([single_select_question])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested single_select_question as @single_select_question" do
-      single_select_question = SingleSelectQuestion.create! valid_attributes
-      get :show, :id => single_select_question.id.to_s
-      assigns(:single_select_question).should eq(single_select_question)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new single_select_question as @single_select_question" do
-      get :new
-      assigns(:single_select_question).should be_a_new(SingleSelectQuestion)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested single_select_question as @single_select_question" do
-      single_select_question = SingleSelectQuestion.create! valid_attributes
-      get :edit, :id => single_select_question.id.to_s
-      assigns(:single_select_question).should eq(single_select_question)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new SingleSelectQuestion" do
-        expect {
-          post :create, :single_select_question => valid_attributes
-        }.to change(SingleSelectQuestion, :count).by(1)
-      end
-
-      it "assigns a newly created single_select_question as @single_select_question" do
-        post :create, :single_select_question => valid_attributes
-        assigns(:single_select_question).should be_a(SingleSelectQuestion)
-        assigns(:single_select_question).should be_persisted
-      end
-
-      it "redirects to the created single_select_question" do
-        post :create, :single_select_question => valid_attributes
-        response.should redirect_to(SingleSelectQuestion.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved single_select_question as @single_select_question" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SingleSelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :single_select_question => {}
-        assigns(:single_select_question).should be_a_new(SingleSelectQuestion)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SingleSelectQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :single_select_question => {}
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested single_select_question" do
-        single_select_question = SingleSelectQuestion.create! valid_attributes
-        # Assuming there are no other single_select_questions in the database, this
-        # specifies that the SingleSelectQuestion created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        SingleSelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => single_select_question.id, :single_select_question => {'these' => 'params'}
-      end
-
-      it "assigns the requested single_select_question as @single_select_question" do
-        single_select_question = SingleSelectQuestion.create! valid_attributes
-        put :update, :id => single_select_question.id, :single_select_question => valid_attributes
-        assigns(:single_select_question).should eq(single_select_question)
-      end
-
-      it "redirects to the single_select_question" do
-        single_select_question = SingleSelectQuestion.create! valid_attributes
-        put :update, :id => single_select_question.id, :single_select_question => valid_attributes
-        response.should redirect_to(single_select_question)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the single_select_question as @single_select_question" do
-        single_select_question = SingleSelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        SingleSelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => single_select_question.id.to_s, :single_select_question => {}
-        assigns(:single_select_question).should eq(single_select_question)
-      end
-
-      it "re-renders the 'edit' template" do
-        single_select_question = SingleSelectQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        SingleSelectQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => single_select_question.id.to_s, :single_select_question => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested single_select_question" do
-      single_select_question = SingleSelectQuestion.create! valid_attributes
-      expect {
-        delete :destroy, :id => single_select_question.id.to_s
-      }.to change(SingleSelectQuestion, :count).by(-1)
-    end
-
-    it "redirects to the single_select_questions list" do
-      single_select_question = SingleSelectQuestion.create! valid_attributes
-      delete :destroy, :id => single_select_question.id.to_s
-      response.should redirect_to(single_select_questions_url)
-    end
-  end
+#   # This should return the minimal set of attributes required to create a valid
+#   # SingleSelectQuestion. As you add validations to SingleSelectQuestion, be sure to
+#   # update the return value of this method accordingly.
+#   def valid_attributes
+#     {}
+#   end
+# 
+#   describe "GET index" do
+#     it "assigns all single_select_questions as @single_select_questions" do
+#       single_select_question = SingleSelectQuestion.create! valid_attributes
+#       get :index
+#       assigns(:single_select_questions).should eq([single_select_question])
+#     end
+#   end
+# 
+#   describe "GET show" do
+#     it "assigns the requested single_select_question as @single_select_question" do
+#       single_select_question = SingleSelectQuestion.create! valid_attributes
+#       get :show, :id => single_select_question.id.to_s
+#       assigns(:single_select_question).should eq(single_select_question)
+#     end
+#   end
+# 
+#   describe "GET new" do
+#     it "assigns a new single_select_question as @single_select_question" do
+#       get :new
+#       assigns(:single_select_question).should be_a_new(SingleSelectQuestion)
+#     end
+#   end
+# 
+#   describe "GET edit" do
+#     it "assigns the requested single_select_question as @single_select_question" do
+#       single_select_question = SingleSelectQuestion.create! valid_attributes
+#       get :edit, :id => single_select_question.id.to_s
+#       assigns(:single_select_question).should eq(single_select_question)
+#     end
+#   end
+# 
+#   describe "POST create" do
+#     describe "with valid params" do
+#       it "creates a new SingleSelectQuestion" do
+#         expect {
+#           post :create, :single_select_question => valid_attributes
+#         }.to change(SingleSelectQuestion, :count).by(1)
+#       end
+# 
+#       it "assigns a newly created single_select_question as @single_select_question" do
+#         post :create, :single_select_question => valid_attributes
+#         assigns(:single_select_question).should be_a(SingleSelectQuestion)
+#         assigns(:single_select_question).should be_persisted
+#       end
+# 
+#       it "redirects to the created single_select_question" do
+#         post :create, :single_select_question => valid_attributes
+#         response.should redirect_to(SingleSelectQuestion.last)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns a newly created but unsaved single_select_question as @single_select_question" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SingleSelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :single_select_question => {}
+#         assigns(:single_select_question).should be_a_new(SingleSelectQuestion)
+#       end
+# 
+#       it "re-renders the 'new' template" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SingleSelectQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :single_select_question => {}
+#         response.should render_template("new")
+#       end
+#     end
+#   end
+# 
+#   describe "PUT update" do
+#     describe "with valid params" do
+#       it "updates the requested single_select_question" do
+#         single_select_question = SingleSelectQuestion.create! valid_attributes
+#         # Assuming there are no other single_select_questions in the database, this
+#         # specifies that the SingleSelectQuestion created on the previous line
+#         # receives the :update_attributes message with whatever params are
+#         # submitted in the request.
+#         SingleSelectQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+#         put :update, :id => single_select_question.id, :single_select_question => {'these' => 'params'}
+#       end
+# 
+#       it "assigns the requested single_select_question as @single_select_question" do
+#         single_select_question = SingleSelectQuestion.create! valid_attributes
+#         put :update, :id => single_select_question.id, :single_select_question => valid_attributes
+#         assigns(:single_select_question).should eq(single_select_question)
+#       end
+# 
+#       it "redirects to the single_select_question" do
+#         single_select_question = SingleSelectQuestion.create! valid_attributes
+#         put :update, :id => single_select_question.id, :single_select_question => valid_attributes
+#         response.should redirect_to(single_select_question)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns the single_select_question as @single_select_question" do
+#         single_select_question = SingleSelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SingleSelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => single_select_question.id.to_s, :single_select_question => {}
+#         assigns(:single_select_question).should eq(single_select_question)
+#       end
+# 
+#       it "re-renders the 'edit' template" do
+#         single_select_question = SingleSelectQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         SingleSelectQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => single_select_question.id.to_s, :single_select_question => {}
+#         response.should render_template("edit")
+#       end
+#     end
+#   end
+# 
+#   describe "DELETE destroy" do
+#     it "destroys the requested single_select_question" do
+#       single_select_question = SingleSelectQuestion.create! valid_attributes
+#       expect {
+#         delete :destroy, :id => single_select_question.id.to_s
+#       }.to change(SingleSelectQuestion, :count).by(-1)
+#     end
+# 
+#     it "redirects to the single_select_questions list" do
+#       single_select_question = SingleSelectQuestion.create! valid_attributes
+#       delete :destroy, :id => single_select_question.id.to_s
+#       response.should redirect_to(single_select_questions_url)
+#     end
+#   end
 
 end

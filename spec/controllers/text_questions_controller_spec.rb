@@ -20,138 +20,138 @@ require 'spec_helper'
 
 describe TextQuestionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # TextQuestion. As you add validations to TextQuestion, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all text_questions as @text_questions" do
-      text_question = TextQuestion.create! valid_attributes
-      get :index
-      assigns(:text_questions).should eq([text_question])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested text_question as @text_question" do
-      text_question = TextQuestion.create! valid_attributes
-      get :show, :id => text_question.id.to_s
-      assigns(:text_question).should eq(text_question)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new text_question as @text_question" do
-      get :new
-      assigns(:text_question).should be_a_new(TextQuestion)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested text_question as @text_question" do
-      text_question = TextQuestion.create! valid_attributes
-      get :edit, :id => text_question.id.to_s
-      assigns(:text_question).should eq(text_question)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new TextQuestion" do
-        expect {
-          post :create, :text_question => valid_attributes
-        }.to change(TextQuestion, :count).by(1)
-      end
-
-      it "assigns a newly created text_question as @text_question" do
-        post :create, :text_question => valid_attributes
-        assigns(:text_question).should be_a(TextQuestion)
-        assigns(:text_question).should be_persisted
-      end
-
-      it "redirects to the created text_question" do
-        post :create, :text_question => valid_attributes
-        response.should redirect_to(TextQuestion.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved text_question as @text_question" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        TextQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :text_question => {}
-        assigns(:text_question).should be_a_new(TextQuestion)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        TextQuestion.any_instance.stub(:save).and_return(false)
-        post :create, :text_question => {}
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested text_question" do
-        text_question = TextQuestion.create! valid_attributes
-        # Assuming there are no other text_questions in the database, this
-        # specifies that the TextQuestion created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        TextQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => text_question.id, :text_question => {'these' => 'params'}
-      end
-
-      it "assigns the requested text_question as @text_question" do
-        text_question = TextQuestion.create! valid_attributes
-        put :update, :id => text_question.id, :text_question => valid_attributes
-        assigns(:text_question).should eq(text_question)
-      end
-
-      it "redirects to the text_question" do
-        text_question = TextQuestion.create! valid_attributes
-        put :update, :id => text_question.id, :text_question => valid_attributes
-        response.should redirect_to(text_question)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the text_question as @text_question" do
-        text_question = TextQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        TextQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => text_question.id.to_s, :text_question => {}
-        assigns(:text_question).should eq(text_question)
-      end
-
-      it "re-renders the 'edit' template" do
-        text_question = TextQuestion.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        TextQuestion.any_instance.stub(:save).and_return(false)
-        put :update, :id => text_question.id.to_s, :text_question => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested text_question" do
-      text_question = TextQuestion.create! valid_attributes
-      expect {
-        delete :destroy, :id => text_question.id.to_s
-      }.to change(TextQuestion, :count).by(-1)
-    end
-
-    it "redirects to the text_questions list" do
-      text_question = TextQuestion.create! valid_attributes
-      delete :destroy, :id => text_question.id.to_s
-      response.should redirect_to(text_questions_url)
-    end
-  end
+#   # This should return the minimal set of attributes required to create a valid
+#   # TextQuestion. As you add validations to TextQuestion, be sure to
+#   # update the return value of this method accordingly.
+#   def valid_attributes
+#     {}
+#   end
+# 
+#   describe "GET index" do
+#     it "assigns all text_questions as @text_questions" do
+#       text_question = TextQuestion.create! valid_attributes
+#       get :index
+#       assigns(:text_questions).should eq([text_question])
+#     end
+#   end
+# 
+#   describe "GET show" do
+#     it "assigns the requested text_question as @text_question" do
+#       text_question = TextQuestion.create! valid_attributes
+#       get :show, :id => text_question.id.to_s
+#       assigns(:text_question).should eq(text_question)
+#     end
+#   end
+# 
+#   describe "GET new" do
+#     it "assigns a new text_question as @text_question" do
+#       get :new
+#       assigns(:text_question).should be_a_new(TextQuestion)
+#     end
+#   end
+# 
+#   describe "GET edit" do
+#     it "assigns the requested text_question as @text_question" do
+#       text_question = TextQuestion.create! valid_attributes
+#       get :edit, :id => text_question.id.to_s
+#       assigns(:text_question).should eq(text_question)
+#     end
+#   end
+# 
+#   describe "POST create" do
+#     describe "with valid params" do
+#       it "creates a new TextQuestion" do
+#         expect {
+#           post :create, :text_question => valid_attributes
+#         }.to change(TextQuestion, :count).by(1)
+#       end
+# 
+#       it "assigns a newly created text_question as @text_question" do
+#         post :create, :text_question => valid_attributes
+#         assigns(:text_question).should be_a(TextQuestion)
+#         assigns(:text_question).should be_persisted
+#       end
+# 
+#       it "redirects to the created text_question" do
+#         post :create, :text_question => valid_attributes
+#         response.should redirect_to(TextQuestion.last)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns a newly created but unsaved text_question as @text_question" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         TextQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :text_question => {}
+#         assigns(:text_question).should be_a_new(TextQuestion)
+#       end
+# 
+#       it "re-renders the 'new' template" do
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         TextQuestion.any_instance.stub(:save).and_return(false)
+#         post :create, :text_question => {}
+#         response.should render_template("new")
+#       end
+#     end
+#   end
+# 
+#   describe "PUT update" do
+#     describe "with valid params" do
+#       it "updates the requested text_question" do
+#         text_question = TextQuestion.create! valid_attributes
+#         # Assuming there are no other text_questions in the database, this
+#         # specifies that the TextQuestion created on the previous line
+#         # receives the :update_attributes message with whatever params are
+#         # submitted in the request.
+#         TextQuestion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+#         put :update, :id => text_question.id, :text_question => {'these' => 'params'}
+#       end
+# 
+#       it "assigns the requested text_question as @text_question" do
+#         text_question = TextQuestion.create! valid_attributes
+#         put :update, :id => text_question.id, :text_question => valid_attributes
+#         assigns(:text_question).should eq(text_question)
+#       end
+# 
+#       it "redirects to the text_question" do
+#         text_question = TextQuestion.create! valid_attributes
+#         put :update, :id => text_question.id, :text_question => valid_attributes
+#         response.should redirect_to(text_question)
+#       end
+#     end
+# 
+#     describe "with invalid params" do
+#       it "assigns the text_question as @text_question" do
+#         text_question = TextQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         TextQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => text_question.id.to_s, :text_question => {}
+#         assigns(:text_question).should eq(text_question)
+#       end
+# 
+#       it "re-renders the 'edit' template" do
+#         text_question = TextQuestion.create! valid_attributes
+#         # Trigger the behavior that occurs when invalid params are submitted
+#         TextQuestion.any_instance.stub(:save).and_return(false)
+#         put :update, :id => text_question.id.to_s, :text_question => {}
+#         response.should render_template("edit")
+#       end
+#     end
+#   end
+# 
+#   describe "DELETE destroy" do
+#     it "destroys the requested text_question" do
+#       text_question = TextQuestion.create! valid_attributes
+#       expect {
+#         delete :destroy, :id => text_question.id.to_s
+#       }.to change(TextQuestion, :count).by(-1)
+#     end
+# 
+#     it "redirects to the text_questions list" do
+#       text_question = TextQuestion.create! valid_attributes
+#       delete :destroy, :id => text_question.id.to_s
+#       response.should redirect_to(text_questions_url)
+#     end
+#   end
 
 end

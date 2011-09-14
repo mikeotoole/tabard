@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110911022052) do
+ActiveRecord::Schema.define(:version => 20110913223448) do
+
+  create_table "answers", :force => true do |t|
+    t.text     "body"
+    t.integer  "question_id"
+    t.integer  "submission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -60,6 +68,16 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
   add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
   add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
 
+  create_table "custom_forms", :force => true do |t|
+    t.string   "name"
+    t.text     "message"
+    t.string   "thankyou"
+    t.boolean  "published",    :default => false
+    t.integer  "community_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
@@ -79,6 +97,23 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
 
+  create_table "predefined_answers", :force => true do |t|
+    t.text     "body"
+    t.integer  "select_question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.text     "body"
+    t.integer  "custom_form_id"
+    t.string   "type"
+    t.string   "style"
+    t.integer  "predefined_answer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", :force => true do |t|
     t.integer  "community_id"
     t.string   "name"
@@ -88,6 +123,13 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
   end
 
   add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
+
+  create_table "submissions", :force => true do |t|
+    t.integer  "custom_form_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"

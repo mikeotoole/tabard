@@ -7,10 +7,6 @@
 ###
 class GamesController < ApplicationController
   respond_to :html
-###
-# Callbacks
-###
-  before_filter :authenticate_user!
 
 ###
 # REST Actions

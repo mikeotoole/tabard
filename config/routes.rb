@@ -1,23 +1,4 @@
 DaBvRails::Application.routes.draw do
-
-  resources :text_questions
-
-  resources :multi_select_questions
-
-  resources :single_select_questions
-
-  resources :predefined_answers
-
-  resources :submissions
-
-  resources :answers
-
-  resources :select_questions
-
-  resources :questions
-
-  resources :custom_forms
-
   # Users
   devise_for :users
 
@@ -33,6 +14,17 @@ DaBvRails::Application.routes.draw do
   resources :wow_characters, :except => [:index, :new]
   resources :swtor_characters, :except => [:index, :new]
   resources :base_characters, :only => :new
+
+  # Custom Forms
+  resources :custom_forms do
+    resources :questions do
+      resources :predefined_answer
+    end
+  end
+  
+  resources :submissions, :only => [:index, :show, :new, :create, :destroy] do
+    resources :answers
+  end
 
   # Subdomains
   constraints(Subdomain) do
