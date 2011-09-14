@@ -21,6 +21,9 @@ DaBvRails::Application.routes.draw do
   # Users
   devise_for :users
 
+  # User Profiles
+  resources :user_profiles, :only => [:show, :edit, :update]
+
   # Communities
   resources :communities, :except => :destroy
 
@@ -36,7 +39,10 @@ DaBvRails::Application.routes.draw do
 
   # Subdomains
   constraints(Subdomain) do
-    match "/" => "subdomains#index", :as => "subdomain_home"
+    match "/" => "subdomains#index", :as => 'subdomain_home'
+    resources :roles do
+      resources :permissions
+    end
   end
 
   # Home

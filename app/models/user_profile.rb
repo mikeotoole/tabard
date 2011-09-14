@@ -28,9 +28,9 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
-  # The character_proxy that associates this user profile to characters of various types.
+  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
+  has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
-
 ###
 # Delegates
 ###
@@ -106,7 +106,28 @@ class UserProfile < ActiveRecord::Base
     proxies.first
   end
 
-###å
+  # This method returns the first name + space + last name
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
+  # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
+  def add_new_role(role)
+    #debugger
+    correct_community_profile = self.community_profiles.find_by_community_id(role.community_id)
+    if correct_community_profile
+      correct_community_profile.roles << role
+      return true
+    end
+    return false
+  end
+
+  # This method collects all of this user_profile's roles
+  def roles
+    self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
+  end
+
+###
 # Protected Methods
 ###
 protected

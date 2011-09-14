@@ -8,9 +8,6 @@
   %b Slogan:
   = @community.slogan
 %p
-  %b Label:
-  = @community.label
-%p
   %b Accepting members:
   = @community.accepting_members
 %p
@@ -19,4 +16,7 @@
 %p
   %b Subdomain:
   = @community.subdomain
+%p
+  %b Admin Profile:
+  =link_to @community.admin_profile.full_name, @community.admin_profile
 =link_to "HOME", root_url(:subdomain => false)

@@ -7,3 +7,9 @@ en:
     error:
       message:
         taken: "has already been taken"
+    errors:
+      models:
+        community:
+          attributes:
+            name:
+              community_name: "is too similar to an existing community"

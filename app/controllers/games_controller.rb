@@ -10,7 +10,8 @@ class GamesController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
+  load_and_authorize_resource
 
 ###
 # REST Actions
@@ -21,7 +22,5 @@ class GamesController < ApplicationController
   # GET /games/:id(.:format)
   ###
   def show
-    @game = Game.find_by_id(params[:id])
-    respond_with(@game)
   end
 end

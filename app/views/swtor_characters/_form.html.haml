@@ -1,9 +1,9 @@
-= form_for @swtor_character do |f|
-  -if @swtor_character.errors.any?
+= form_for swtor_character do |f|
+  -if swtor_character.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@swtor_character.errors.count, "error")} prohibited this swtor_character from being saved:"
+      %h2= "#{pluralize(swtor_character.errors.count, "error")} prohibited this swtor_character from being saved:"
       %ul
-        - @swtor_character.errors.full_messages.each do |msg|
+        - swtor_character.errors.full_messages.each do |msg|
           %li= msg
 
   .field

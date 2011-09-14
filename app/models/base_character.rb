@@ -26,6 +26,11 @@ class BaseCharacter < ActiveRecord::Base
   ###
   attr_accessor :remove_avatar
 
+  ###
+  # This attribute is used to set the character as the default.
+  ###
+  attr_accessor :default
+
 ###
 # Associations
 ###
@@ -48,7 +53,8 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :set_as_default, :to => :character_proxy
+  delegate :set_as_default, :to => :character_proxy, :allow_nil => true
+  delegate :user_profile, :to => :character_proxy, :allow_nil => true
 
 ###
 # Uploaders
@@ -97,6 +103,16 @@ class BaseCharacter < ActiveRecord::Base
   ###
   def display_name
     self.name
+  end
+
+  ###
+  # This method sets this as the default character.
+  # [Args]
+  #   * +value+ -> The boolean value to set.
+  # [Returns] A string that contains the display name for this character.
+  ###
+  def default=(value)
+    self.set_as_default if value
   end
 
   # If the character is the default for its game.

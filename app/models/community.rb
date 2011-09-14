@@ -12,6 +12,12 @@ class Community < ActiveRecord::Base
   attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application
 
 ###
+# Associations
+###
+  belongs_to :admin_profile, :class_name => "UserProfile"
+  belongs_to :member_role, :class_name => "Role"
+  has_many :roles
+###
 # Validators
 ###
   validates :name, :uniqueness => { :case_sensitive => false },
@@ -21,6 +27,8 @@ class Community < ActiveRecord::Base
   validates :name, :community_name => true, :on => :create
   validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
+
+  validates :admin_profile, :presence => true
 
 ###
 # Associations
@@ -32,6 +40,21 @@ has_many :games, :through => :supported_games
 # Callbacks
 ###
   before_save :update_subdomain
+  after_create :set_up_member_role, :make_admin_a_member
+
+###
+# Public Methods
+###
+  ###
+  # This method promotes a user to a member, doing all of the business logic for you.
+  # [Args]
+  #   * +user_profile+ -> The user profile you would like to promote to a member.
+  # [Returns] A boolean that contains the result of the operation. True if successful, otherwise false.
+  ###
+  def promote_user_profile_to_member(user_profile)
+    # TODO Joe/Mike Ensure that the user is an applicant -JW
+    return user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+  end
 
 ###
 # Protected Methods
@@ -69,8 +92,27 @@ protected
       return false
     end
   end
-end
 
+  ###
+  # _after_create_
+  #
+  # This method creates the default member role.
+  ###
+  def set_up_member_role
+    default_member_role = Role.create(:name => "Member", :system_generated => true, :community => self)
+    default_member_role.community.update_attribute(:member_role, default_member_role) # OPTIMIZE Joe, this looks like it could use some optimization. -JW
+
+  end
+
+  ###
+  # _after_create_
+  #
+  # This method makes the admin a member.
+  ###
+  def make_admin_a_member
+    self.promote_user_profile_to_member(self.admin_profile)
+  end
+end
 
 # == Schema Information
 #
