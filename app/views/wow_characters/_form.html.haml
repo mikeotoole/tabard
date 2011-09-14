@@ -1,9 +1,9 @@
-= form_for @wow_character do |f|
-  -if @wow_character.errors.any?
+= form_for wow_character do |f|
+  -if wow_character.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@wow_character.errors.count, "error")} prohibited this wow_character from being saved:"
+      %h2= "#{pluralize(wow_character.errors.count, "error")} prohibited this wow_character from being saved:"
       %ul
-        - @wow_character.errors.full_messages.each do |msg|
+        - wow_character.errors.full_messages.each do |msg|
           %li= msg
 
   .field

@@ -35,7 +35,26 @@ namespace :reports do
     system "rake spec | tee doc/reports/test_report.txt"
   end
 
+  require 'rspec/core/rake_task'
+
+  desc "Run all specs with rcov"
+  RSpec::Core::RakeTask.new("spec") do |t|
+    t.rcov = true
+    t.rcov_opts = %w{--rails --include views -Ispec --exclude gems\/,spec\/,features\/,seeds\/}
+    t.spec_opts = ["-c"]
+  end
+
   task :ensure_report_dir do
     mkdir "doc/reports" unless File.exists?("doc/reports")
+  end
+end
+
+# Update to rake notes
+class SourceAnnotationExtractor
+  alias orig_find find
+  def find(dirs=%w(app lib test))
+    # we added spec dir to rake notes task
+    dirs << "spec"
+    orig_find(dirs)
   end
 end

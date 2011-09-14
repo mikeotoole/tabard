@@ -13,7 +13,7 @@ describe SubdomainsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(root_url)
     end
   end
 end

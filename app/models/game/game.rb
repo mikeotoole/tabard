@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
 ###
   validates :name,  :presence => true
   validates :type,  :presence => true,
-                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported game" }, #TODO Joe, is this a reasonable way to do this?
+                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported game" },
                     :uniqueness => true
 
 ###

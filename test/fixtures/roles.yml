@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: roles
+#
+#  id               :integer         not null, primary key
+#  community_id     :integer
+#  name             :string(255)
+#  system_generated :boolean         default(FALSE)
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  community_id: 1
+  name: MyString
+  system_generated: false
+
+two:
+  community_id: 1
+  name: MyString
+  system_generated: false

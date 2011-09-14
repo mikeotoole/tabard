@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: community_profiles
+#
+#  id              :integer         not null, primary key
+#  community_id    :integer
+#  user_profile_id :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  community_id: 1
+  user_id: 1
+
+two:
+  community_id: 1
+  user_id: 1

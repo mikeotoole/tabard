@@ -7,18 +7,19 @@
 ###
 class CommunitiesController < ApplicationController
   respond_to :html
-###
-# Callbacks
-###
-  prepend_before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :find_community, :only => [:show, :edit, :update]
+  ###
+  # Before Filters
+  ###
+  before_filter :authenticate_user!, :except => [:show, :index]
+  load_and_authorize_resource
+  skip_load_and_authorize_resource :only => [:create]
 
 ###
 # REST Actions
 ###
   # GET /communities(.:format)
   def index
-    @communities = Community.all
+    #@communities = Community.all
   end
 
   # GET /communities/:id(.:format)
@@ -28,7 +29,8 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/new(.:format)
   def new
-    @community = Community.new
+    #@community = Community.new
+    @community.admin_profile = current_user.user_profile
   end
 
   # GET /communities/:id/edit(.:format)
@@ -37,7 +39,10 @@ class CommunitiesController < ApplicationController
 
   # POST /communities(.:format)
   def create
-    @community = Community.create(params[:community])
+    @community = Community.new(params[:community])
+    @community.admin_profile = current_user.user_profile
+    authorize! :create, @community
+    @community.save
     respond_with(@community)
   end
 
@@ -47,13 +52,4 @@ class CommunitiesController < ApplicationController
     respond_with(@community)
   end
 
-###
-# Protected Methods
-###
-protected
-
-  # Find community with given id.
-  def find_community
-    @community = Community.find(params[:id])
-  end
 end

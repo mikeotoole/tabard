@@ -6,6 +6,7 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
+  before_filter :authenticate_user!, :except => [:index]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -19,6 +20,17 @@ class SubdomainsController < ApplicationController
   def index
     render :index
   end
+###
+# Public Methods
+###
+  ###
+  # This Method is a helper that exposes the current_community
+  ###
+  def current_community
+    @community
+  end
+
+  helper_method :current_community
 
 ###
 # Protected Methods

@@ -1,0 +1,7 @@
+%h1 Editing permission
+
+= render 'form', :role => @role, :permission => @permission
+
+= link_to 'Show', [@role, @permission]
+\|
+= link_to 'Back', role_permissions_path(@role)

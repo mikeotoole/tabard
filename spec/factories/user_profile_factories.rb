@@ -1,6 +1,6 @@
-FactoryGirl.define do 
+FactoryGirl.define do
   # Create a basic user profile.
-  factory :user_profile do
+  factory :user_profile, :aliases => [:admin_profile] do
     sequence(:first_name) {|n| "First Name #{n}"}
     sequence(:last_name) {|n| "Last Name #{n}"}
     user
@@ -15,4 +15,4 @@ FactoryGirl.define do
       end
     end
   end
-end  
+end
