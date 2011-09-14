@@ -1,2 +1,0 @@
-module CustomFormsHelper
-end

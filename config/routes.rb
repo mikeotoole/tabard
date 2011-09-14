@@ -20,12 +20,10 @@ DaBvRails::Application.routes.draw do
 
   # Custom Forms
   resources :custom_forms do
-    resources :questions do
-      resources :predefined_answer
-    end
+    resources :questions
   end
   
-  resources :submissions, :only => [:index, :show, :new, :create, :destroy] do
+  resources :submissions, :except => :update do
     resources :answers
   end
 
