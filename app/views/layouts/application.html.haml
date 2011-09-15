@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %title
+      = (title = yield :title) ? "#{title} - Crumblin" : 'Crumblin'
+    = stylesheet_link_tag "reset", "bar", "main"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+  
+    #bar
+      = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
+      %ul.menu
+        %li
+          = link_to 'Communities', '#'
+          %ul
+            %li= link_to 'Test One', '#'
+            %li= link_to 'Test Two', '#'
+            %li= link_to 'Test Three', '#'
+        %li
+          = link_to 'Explore', '#'
+      = form_tag('#', :method => "get") do |f|
+        - search_term ||= false
+        = text_field_tag 'query', search_term ? search_term : ''
+        = raw("<button type='submit'>Search</button>")
+        
+    #user_nav
+      - if user_signed_in?
+        Signed in as #{current_user.email}. Not you?
+        \#{link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete}
+      - else
+        = link_to "Sign up", new_user_registration_url(:subdomain =>false)
+        or #{link_to "sign in", new_user_session_path}
+        
+    #flash_container
+      %p.notice= notice
+      %p.alert= alert
+      %p= render "layouts/flash_messages"
+      
+    = yield

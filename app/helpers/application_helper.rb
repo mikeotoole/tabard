@@ -91,4 +91,9 @@ module ApplicationHelper
     flash[:messages] = nil
   end
 
+  # Provides a clean way to set the page title within a view.
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
+
 end
