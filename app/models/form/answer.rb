@@ -21,5 +21,19 @@ class Answer < ActiveRecord::Base
 # Validators
 ###
   validates :question, :presence => true
-  validates :submission, :presence => true  
+  validates :submission, :presence => true
+  validates :body, :presence => true
 end
+
+# == Schema Information
+#
+# Table name: answers
+#
+#  id            :integer         not null, primary key
+#  body          :text
+#  question_id   :integer
+#  submission_id :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+

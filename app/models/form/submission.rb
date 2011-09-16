@@ -29,7 +29,6 @@ class Submission < ActiveRecord::Base
 ###
   validates :custom_form, :presence => true
   validates :user_profile, :presence => true
-# TODO Mike, Should this validate that there is an answer to each question?
 
 ###
 # Public Methods
@@ -38,42 +37,6 @@ class Submission < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-  ###
-  # 
-  ###
-  def contains_predefined_answer(panswer)
-    self.answers.each do |answer|
-      if answer.question_id == panswer.question_id and answer.content == panswer.content
-        answer.id = -answer.question_id unless answer.id
-        return answer
-      end
-    end
-    nil
-  end
-
-  ###
-  # 
-  ###
-  def contains_predefined_answer_from_collection(panswer_collection)
-    panswer_collection.each do |panswer|
-      return self.contains_predefined_answer(panswer) if self.contains_predefined_answer(panswer) != nil
-    end
-    nil
-  end
-
-  ###
-  # 
-  ###
-  def contains_answer_to_question(question)
-    self.answers.each do |answer|
-      if answer.question_id == question.id
-        answer.id = -answer.question_id unless answer.id
-        return answer
-      end
-    end
-    nil
-  end
-
   ###
   # This method gets the name of the user who submitted this submission.
   # [Returns] A string that contains the name of the user who submitted this submission.
@@ -84,10 +47,10 @@ class Submission < ActiveRecord::Base
 
   ###
   # This method gets the thankyou message of the site form that this submission belongs to.
-  # [Returns] A string that contains the thankyou message of the site form that this submission belongs to.
+  # [Returns] A string that contains the thankyou message of the custom form that this submission belongs to.
   ###
   def thankyou_message
-    self.site_form.thankyou if self.site_form
+    self.custom_form.thankyou if self.custom_form
   end
 
   ###
@@ -111,15 +74,7 @@ class Submission < ActiveRecord::Base
   # [Returns] A unique array of questions.
   ###
   def all_questions
-    self.answers.collect { |answer|answer.question }.uniq
-  end
-
-  ###
-  # This method gets the form that this submission belongs to.
-  # [Returns] The site form that this submission belongs to.
-  ###
-  def form
-    self.site_form
+    self.answers.collect { |answer| answer.question }.uniq
   end
 end
 

@@ -17,6 +17,16 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
   has_many :roles
+  has_many :supported_games
+  has_many :games, :through => :supported_games
+  has_many :custom_forms, :dependent => :destroy
+
+###
+# Callbacks
+###
+  before_save :update_subdomain
+  after_create :set_up_member_role, :make_admin_a_member
+
 ###
 # Validators
 ###
@@ -29,19 +39,6 @@ class Community < ActiveRecord::Base
   validates :slogan, :presence => true
 
   validates :admin_profile, :presence => true
-
-###
-# Associations
-###
-  has_many :supported_games
-  has_many :games, :through => :supported_games
-  has_many :custom_forms, :dependent => :destroy
-
-###
-# Callbacks
-###
-  before_save :update_subdomain
-  after_create :set_up_member_role, :make_admin_a_member
 
 ###
 # Public Methods

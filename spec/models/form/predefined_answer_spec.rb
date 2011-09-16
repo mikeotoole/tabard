@@ -12,5 +12,17 @@
 require 'spec_helper'
 
 describe PredefinedAnswer do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:predefined_answer) { create(:predefined_answer) }
+
+  it "should create a new instance given valid attributes" do
+    predefined_answer.should be_valid
+  end
+
+  it "should require body" do
+    build(:predefined_answer, :body => nil).should_not be_valid
+  end
+
+  it "should require select_question" do
+    build(:predefined_answer, :select_question => nil).should_not be_valid
+  end
 end

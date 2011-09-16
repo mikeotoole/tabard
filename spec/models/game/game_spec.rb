@@ -22,11 +22,12 @@ describe Game do
     
   describe "type" do
     it "should be set to subclass name" do
-      swtor == "Swtor"
+      swtor.type.should eq("Swtor")
     end
     
     it "shouldn't be editable to nil" do
-      build(:swtor, :type => nil).should_not be_valid
+      swtor.update_attributes(:type => nil).should be_false
+      Game.find(swtor).type.should eq("Swtor")
     end
     
     it "should be editable to valid subclass" do

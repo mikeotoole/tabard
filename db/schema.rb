@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110913223448) do
+ActiveRecord::Schema.define(:version => 20110915225312) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20110913223448) do
 
   create_table "custom_forms", :force => true do |t|
     t.string   "name"
-    t.text     "message"
+    t.text     "instructions"
     t.string   "thankyou"
     t.boolean  "published",    :default => false
     t.integer  "community_id"
@@ -109,9 +109,10 @@ ActiveRecord::Schema.define(:version => 20110913223448) do
     t.integer  "custom_form_id"
     t.string   "type"
     t.string   "style"
-    t.integer  "predefined_answer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "explanation"
+    t.boolean  "required",       :default => false
   end
 
   create_table "roles", :force => true do |t|

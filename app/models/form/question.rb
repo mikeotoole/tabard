@@ -10,12 +10,12 @@ class Question < ActiveRecord::Base
 # Constants
 ###
   # The list of vaild game subclass types.
-  VALID_STYLES =  ""
+  VALID_TYPES =  %w(SingleSelectQuestion MultiSelectQuestion TextQuestion)
 
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :custom_form
+  attr_accessible :body, :style, :custom_form, :answers
 
 ###
 # Associations
@@ -26,10 +26,10 @@ class Question < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :body, :presence => true
-  validates :style, :presence => true, 
-            :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported single select question style"}
-  validates :custom_form, :presence => true
+  validates :body,  :presence => true
+  validates :style, :presence => true
+  validates :type,  :presence => true,
+                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
 
 ###
 # Public Methods
@@ -43,7 +43,7 @@ class Question < ActiveRecord::Base
   # [Returns] An alphabetised array of subclasses as strings.
   ###
   def self.all_select_options
-    descendants.map{ |descendant| descendant.select_options }.flatten(1)
+    descendants.map{ |descendant| descendant.select_options }.flatten(1).compact!
   end
 
   ###
@@ -51,53 +51,43 @@ class Question < ActiveRecord::Base
   # [Returns] An alphabetised array of subclasses as strings.
   ###
   def self.select_options
-    VALID_STYLES.collect { |style| [ style.scan(/_/).capitalize.join(" "), "#{self.class.to_str}|#{style}" ] }
-  end
-
-###
-# Instance Methods
-###
-  ###
-  # This method gets the answers for this question from a given submission.
-  # [Args]
-  #   * +submission_id+ -> An integer that contains the submission id.
-  # [Returns] True if the operation succeeded, otherwise false.
-  ###
-  def answers(submission_id)
-    Answer.where(:submission_id => submission_id, :question_id => self.id)
-  end
-  
-  
-  ###
-  # This method gets the type.
-  # [Returns] The type of question.
-  ###
-  def type_helper
-    self.type
+    self::VALID_STYLES.collect { |style| [ style.gsub(/_/, ' ').split(' ').each{|word| word.capitalize!}.join(' '), "#{self.to_s}|#{style}" ] } if self::VALID_STYLES
   end
 
   ###
-  # This method sets the type.
+  # This method creates a new question of the right type and style. If params is not nil the
+  # question is initalized with the params hash.
   # [Args]
-  #   * +type+ -> A string that has the type to use.
-  # [Returns] True if the operation succeeded, otherwise false.
+  #   * +class_style_string+ -> A string with the class name and style separated by a pipe.
+  #   * +params+ -> A question attributes hash or nil.
+  # [Returns] An intialized question of the right type.
   ###
-  def type_helper=(type)
-    self.type = type
+  def self.new_question(class_style_string, params=nil)
+    begin
+      class_style_array = class_style_string.split('|')
+      @question = class_style_array[0].constantize.new(params)
+      @question.style = class_style_array[1]
+      @question
+    rescue
+      nil
+    end
   end
-end  
-  
+end
+
+
+
 # == Schema Information
 #
 # Table name: questions
 #
-#  id                   :integer         not null, primary key
-#  body                 :text
-#  custom_form_id       :integer
-#  type                 :string(255)
-#  style                :string(255)
-#  predefined_answer_id :integer
-#  created_at           :datetime
-#  updated_at           :datetime
+#  id             :integer         not null, primary key
+#  body           :text
+#  custom_form_id :integer
+#  type           :string(255)
+#  style          :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  explanation    :string(255)
+#  required       :boolean         default(FALSE)
 #
 

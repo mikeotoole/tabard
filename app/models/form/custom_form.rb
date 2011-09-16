@@ -9,14 +9,14 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :message, :thank_you, :published, :community, :questions, :submissions
+  attr_accessible :name, :instructions, :thankyou, :published, :community, :questions, :submissions
 
 ###
 # Associations
 ###
   has_many :questions, :dependent => :destroy
-  accepts_nested_attributes_for :questions, :allow_destroy => true  
-  
+  accepts_nested_attributes_for :questions, :allow_destroy => true
+
   has_many :submissions, :dependent => :destroy
   belongs_to :community
 
@@ -24,8 +24,8 @@ class CustomForm < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :message, :presence => true
-  validates :thank_you, :presence => true
+  validates :instructions, :presence => true
+  validates :thankyou, :presence => true
   validates :community, :presence => true
 
 ###
@@ -44,13 +44,14 @@ class CustomForm < ActiveRecord::Base
     ""
   end
 end
+
 # == Schema Information
 #
 # Table name: custom_forms
 #
 #  id           :integer         not null, primary key
 #  name         :string(255)
-#  message      :text
+#  instructions :text
 #  thankyou     :string(255)
 #  published    :boolean         default(FALSE)
 #  community_id :integer

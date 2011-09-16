@@ -18,36 +18,25 @@ class RolesController < SubdomainsController
   skip_before_filter :limit_subdomain_access
 
   # GET /roles
-  # GET /roles.json
   def index
-    #@roles = @community
     respond_with(@roles)
   end
 
   # GET /roles/1
-  # GET /roles/1.json
   def show
-    #@role = Role.find(params[:id])
-    #respond_with(@role)
   end
 
   # GET /roles/new
-  # GET /roles/new.json
   def new
-    #@role = current_community.roles.new
-    #respond_with(@role)
   end
 
   # GET /roles/1/edit
   def edit
-    #@role = Role.find(params[:id])
     respond_with(@role)
   end
 
   # POST /roles
-  # POST /roles.json
   def create
-    #@role = Role.new(params[:role])
     if @role.save
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
@@ -55,9 +44,7 @@ class RolesController < SubdomainsController
   end
 
   # PUT /roles/1
-  # PUT /roles/1.json
   def update
-    #@role = Role.find(params[:id])
     if @role.update_attributes(params[:role])
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
@@ -65,9 +52,7 @@ class RolesController < SubdomainsController
   end
 
   # DELETE /roles/1
-  # DELETE /roles/1.json
   def destroy
-    #@role = Role.find(params[:id])
     if @role.destroy
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
@@ -87,7 +72,7 @@ class RolesController < SubdomainsController
   ###
   # _before_filter
   #
-  # This before filter attempts to create @role from: roles.create(params[:role]) or roles.new(), for the current community.
+  # This before filter attempts to create @role from: roles.new(params[:role]) or roles.new(), for the current community.
   ###
   def create_role
     if(params[:role])

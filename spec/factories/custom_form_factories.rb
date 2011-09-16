@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :custom_form do
     sequence(:name) {|n| "Custom Form #{n}"}
-    message "Fill out my form"
-    thank_you "Thank You for submitting my form"
+    instructions "Fill out my form"
+    thankyou "Thank You for submitting my form"
     published true
     community { DefaultObjects.community }
   end
@@ -15,15 +15,15 @@ FactoryGirl.define do
     after_create { |form| create_submissions(form) }
   end
 
-  factory :long_answer_queestion, :class => TextQuestion do
-    style "long_answer_queestion"
-    sequence(:body) {|n| "long_answer_queestion #{n}"}
+  factory :long_answer_question, :class => TextQuestion do
+    style "long_answer_question"
+    sequence(:body) {|n| "long_answer_question #{n}"}
     custom_form { DefaultObjects.custom_form }
   end
   
-  factory :short_answer_queestion, :class => TextQuestion do
-    style "short_answer_queestion"
-    sequence(:body) {|n| "short_answer_queestion #{n}"}
+  factory :short_answer_question, :class => TextQuestion do
+    style "short_answer_question"
+    sequence(:body) {|n| "short_answer_question #{n}"}
     custom_form { DefaultObjects.custom_form }
   end
   
@@ -50,7 +50,7 @@ FactoryGirl.define do
   
   factory :predefined_answer do
     sequence(:body) {|n| "predefined_answer #{n}"}
-    question { FactoryGirl.create(:check_box_question) }
+    select_question { FactoryGirl.create(:check_box_question) }
   end
   
   factory :answer do
@@ -66,14 +66,14 @@ FactoryGirl.define do
 
   factory :submission_w_answers, :parent => :submission do
     user_profile { DefaultObjects.user_profile }
-    custom_form { |submission| FactoryGirl.create(:custom_form_w_questions, :submission => submission) }
+    custom_form { |submission| FactoryGirl.create(:custom_form_w_questions) }
     after_create { |submission| create_answers(submission) }
   end
 end
 
 def create_questions(form)
-  FactoryGirl.create(:long_answer_queestion, :custom_form => form)
-  FactoryGirl.create(:short_answer_queestion, :custom_form => form)
+  FactoryGirl.create(:long_answer_question, :custom_form => form)
+  FactoryGirl.create(:short_answer_question, :custom_form => form)
   FactoryGirl.create(:select_box_question, :custom_form => form)
   FactoryGirl.create(:radio_buttons_question, :custom_form => form)
   FactoryGirl.create(:check_box_question, :custom_form => form)
@@ -81,7 +81,7 @@ end
 
 def create_predefined_answers(question)
   3.times do
-    FactoryGirl.create(:predefined_answer, :question => question)
+    FactoryGirl.create(:predefined_answer, :select_question => question)
   end
 end
 
@@ -90,7 +90,7 @@ def create_submissions(form)
 end
 
 def create_answers(submission)
-  submission.questions.each do |question|
+  submission.custom_form.questions.each do |question|
     if question.respond_to?(:predefined_answers)
       FactoryGirl.create(:answer, :body => question.predefined_answers[1].body, :question => question, :submission => submission)
     else
