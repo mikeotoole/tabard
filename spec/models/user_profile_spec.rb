@@ -2,13 +2,15 @@
 #
 # Table name: user_profiles
 #
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  first_name :string(255)
-#  last_name  :string(255)
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer         not null, primary key
+#  user_id      :integer
+#  first_name   :string(255)
+#  last_name    :string(255)
+#  avatar       :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  description  :text
+#  display_name :string(255)
 #
 
 # == Schema Information
@@ -36,12 +38,20 @@ describe UserProfile do
 ###
 # Attribute Tests
 ###
-  it "should require a first name" do
-    Factory.build(:user_profile, :first_name => nil).should_not be_valid
+  it "should not require a first name" do
+    Factory.build(:user_profile, :first_name => nil).should be_valid
   end
 
-  it "should require a last name" do
-    Factory.build(:user_profile, :last_name => nil).should_not be_valid
+  it "should not  require a last name" do
+    Factory.build(:user_profile, :last_name => nil).should be_valid
+  end
+
+  it "should require a display name" do
+    Factory.build(:user_profile, :display_name => nil).should_not be_valid
+  end
+
+  it "should ensure display names are unique" do
+    Factory.build(:user_profile, :display_name => profile.display_name).should_not be_valid
   end
 
   it "should require a user" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110911022052) do
+ActiveRecord::Schema.define(:version => 20110914221527) do
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(:version => 20110911022052) do
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
+    t.string   "display_name"
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"

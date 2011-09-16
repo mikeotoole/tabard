@@ -8,25 +8,25 @@
 if ENV["RAILS_ENV"] != 'test'
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
-    :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy"})
+    :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"})
 robobilly.skip_confirmation!
 robobilly.save
 
 puts "Createing Diabolical Moose!"
 d_moose = User.new(:email => "diabolical@moose.com", :password => "Password",
-    :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose"})
+    :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose", :display_name => "Diabolical Moose"})
 d_moose.skip_confirmation!
 d_moose.save
 
 puts "Creating Snappy Turtle!"
 s_turtle = User.new(:email => "snappy@turtle.com", :password => "Password",
-                   :user_profile_attributes => {:first_name => "Snappy", :last_name => "Turtle"})
+                   :user_profile_attributes => {:first_name => "Snappy", :last_name => "Turtle", :display_name => "Snappy Turtle"})
 s_turtle.skip_confirmation!
 s_turtle.save
 
 puts "Creating Dirty Badger!"
 d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
-                    :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger"})
+                    :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger", :display_name => "Dirty Badger"})
 d_badger.skip_confirmation!
 d_badger.save
 

@@ -1,13 +1,15 @@
 # == Schema Information
 #
-# Table name: games
+# Table name: permissions
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  type       :string(255)
-#  is_active  :boolean         default(TRUE)
-#  created_at :datetime
-#  updated_at :datetime
+#  id               :integer         not null, primary key
+#  role_id          :integer
+#  action           :string(255)
+#  permission_level :string(255)
+#  subject_class    :string(255)
+#  id_of_subject    :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 require 'spec_helper'

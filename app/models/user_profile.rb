@@ -1,7 +1,7 @@
 ###
 # Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Don't Steal Me Bro!
+# License::   Proprietary Closed Source
 #
 # This class represents a user's profile.
 ###
@@ -9,20 +9,8 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute Accessors
 ###
-  ###
-  # This attribute is the avatar for this user profile. It maps to the AvatarUploader.
-  ###
-  attr_accessor :avatar
-
-  ###
-  # This attribute is the avatar cache for this user profile. It is used by the AvatarUploader.
-  ###
-  attr_accessor :avatar_cache
-
-  ###
-  # This attribute is the avatar removal for this user profile. It is used by the AvatarUploader.
-  ###
-  attr_accessor :remove_avatar
+  attr_accessible :first_name, :last_name, :display_name, 
+      :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
 
 ###
 # Associations
@@ -44,10 +32,8 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :first_name,
-      :presence => true
-  validates :last_name,
-      :presence => true
+  validates :display_name,
+      :presence => true, :uniqueness => true
   validates :user,
       :presence => true
   validates :avatar,
@@ -154,16 +140,19 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: user_profiles
 #
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  first_name :string(255)
-#  last_name  :string(255)
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer         not null, primary key
+#  user_id      :integer
+#  first_name   :string(255)
+#  last_name    :string(255)
+#  avatar       :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  description  :text
+#  display_name :string(255)
 #
 

@@ -25,7 +25,8 @@ class UserProfilesController < ApplicationController
 
   # PUT /user_profiles/1
   def update
-
+    @user_profile.update_attributes(params[:user_profile])
+    respond_with(@user_profile)
   end
 
 end
