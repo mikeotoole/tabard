@@ -20,8 +20,12 @@ class ApplicationController < ActionController::Base
 
   # This after_filter attempts to remember the current crumblin page.
   after_filter :remember_current_page
+  
   # This before_filter attempts to remember the last crumblin page.
   before_filter :remember_last_page
+  
+  # This before_filter builds a list of the Crumblin supported games.
+  before_filter :fetch_active_games
 
 ###
 # Status Code Rescues
@@ -36,7 +40,7 @@ class ApplicationController < ActionController::Base
   def http_status_code(status, exception)
     # store the exception so its message can be used in the view
     @exception = exception
-
+    flash[:alert] = @exception.message
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
       format.html { render "home/index", :status => status }
@@ -52,9 +56,6 @@ class ApplicationController < ActionController::Base
     session[:last_page] ? session[:last_page] : root_url
   end
 
-###
-# Public Methods
-###
   ###
   # TODO Doug, Add the remaining of the message_class types.
   # Adds a new message to the flash messsages array
@@ -72,6 +73,17 @@ class ApplicationController < ActionController::Base
 # Protected Methods
 ###
 protected
+
+  # Builds a list of the Crumblin supported games.
+  def fetch_active_games
+    @active_games = Game.all
+  end
+  
+  # This Method is a helper that exposes the active_games
+  def active_games
+    @active_games
+  end
+  helper_method :active_games
 
   ###
   # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.

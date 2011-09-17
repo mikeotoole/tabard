@@ -11,7 +11,9 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
+  before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource
+  skip_authorize_resource :only => :account
 
   # GET /user_profiles/1
   def show
@@ -25,7 +27,14 @@ class UserProfilesController < ApplicationController
 
   # PUT /user_profiles/1
   def update
+    @user_profile.update_attributes(params[:user_profile])
+    respond_with(@user_profile)
+  end
 
+  def account
+    @user_profile = current_user.user_profile
+    authorize! :update, @user_profile
+    render :edit
   end
 
 end

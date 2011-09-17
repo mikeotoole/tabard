@@ -33,6 +33,7 @@ namespace :reports do
   task :tests  => [:ensure_report_dir] do
     puts "Running tests..."
     system "rake spec | tee doc/reports/test_report.txt"
+    system "mv coverage/ doc/reports/test_coverage"
   end
 
   require 'rspec/core/rake_task'

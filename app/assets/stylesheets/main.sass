@@ -1,3 +1,5 @@
+@import mixins
+
 body
   background: image-url('main/bg.png') 0 70px repeat-x #fff
   font-family: DinLight, sans
@@ -12,13 +14,53 @@ body
   text-align: left
   
   a
+    border-bottom: 1px solid #ae7367
     color: #be4124
-    text-decoration: underline
     
     &:hover
-      color: #e62b00
+      border-color: #e83309
+      color: #e83309
   
 #content
   background: image-url('main/block.png') top center no-repeat
-  margin: 25px 0 0
-  min-height: 450px
+  position: relative
+  margin: 55px 0 0
+  min-height: 310px
+  z-index: 1
+  
+#homebox
+  background: image-url('main/homebox.png') top center no-repeat
+  height: 360px
+  left: 0
+  position: absolute
+  right: 0
+  top: -21px
+  z-index: 2
+  
+  ol
+    color: #666
+    left: 50%
+    margin: 0 0 0 -360px
+    position: absolute
+    top: 60px
+    width: 720px
+    
+    li
+      float: left
+      font-size: 13px
+      margin: 0 2px
+      padding: 15px 20px 0 15px
+      text-align: left
+      width: 141px
+    
+      h2
+        color: #1668a3
+        font-family: DinMedium, sans
+        font-size: 18px
+        padding: 0 0 10px
+
+#home
+  background: image-url('main/bg.png') 0 0 repeat-x #fff
+  margin: 263px 0 0
+  min-height: 310px
+  

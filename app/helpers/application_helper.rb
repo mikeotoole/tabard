@@ -109,6 +109,7 @@ module ApplicationHelper
   # [Args]
   #   * +page_title+ -> The page title.
   # [Returns] :title for the yield.
+  ###
   def title(page_title)
     content_for(:title) { page_title << ' - Crumblin' }
   end
