@@ -19,7 +19,6 @@ class CommunitiesController < ApplicationController
 ###
   # GET /communities(.:format)
   def index
-    #@communities = Community.all
   end
 
   # GET /communities/:id(.:format)
@@ -29,7 +28,6 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/new(.:format)
   def new
-    #@community = Community.new
     @community.admin_profile = current_user.user_profile
   end
 

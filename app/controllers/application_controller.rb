@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def http_status_code(status, exception)
     # store the exception so its message can be used in the view
     @exception = exception
-
+    flash[:alert] = @exception.message
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
       format.html { render "home/index", :status => status }
@@ -52,11 +52,8 @@ class ApplicationController < ActionController::Base
     session[:last_page] ? session[:last_page] : root_url
   end
 
-###
-# Public Methods
-###
   ###
-  # TODO Doug, Add the remaining of the message_class types.
+  # TODO Doug, Add the remaining of the message_class types. -MO
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.
