@@ -1,0 +1,25 @@
+%h1 Listing custom_forms
+
+%table
+  %tr
+    %th Name
+    %th Message
+    %th Thankyou
+    %th Community
+    %th
+    %th
+    %th
+
+  - @custom_forms.each do |custom_form|
+    %tr
+      %td= custom_form.name
+      %td= custom_form.message
+      %td= custom_form.thankyou
+      %td= custom_form.community_id
+      %td= link_to 'Show', custom_form
+      %td= link_to 'Edit', edit_custom_form_path(custom_form)
+      %td= link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Custom form', new_custom_form_path
