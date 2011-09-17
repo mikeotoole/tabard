@@ -69,4 +69,26 @@ describe CommunityProfile do
       end
     end
   end
+
+  describe "character_proxies" do
+    it "should be allowed empty" do
+      Factory.build(:community_profile, :character_proxies => Array.new).should be_valid
+    end
+
+    describe "adding" do
+      it "should not allow character_proxies from users other than the one this is attached to" do
+        pending
+        original_character_proxies_count = profile.character_proxies.size
+        invalid_character_proxy
+        lambda{profile.character_proxies << invalid_character_proxy}.should raise_error
+        profile.roles.size.should eq(original_role_count)
+      end
+
+      it "should allow roles from the same community" do
+        new_character_proxy = create(:role, :community => community)
+        profile.new_character_proxy << new_character_proxy
+        profile.new_character_proxy.include?(new_character_proxy).should be_true
+      end
+    end
+  end
 end

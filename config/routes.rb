@@ -1,5 +1,7 @@
 DaBvRails::Application.routes.draw do
 
+  resources :roster_assignments
+
   # Users
   devise_for :users
 

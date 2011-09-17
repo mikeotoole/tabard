@@ -14,6 +14,8 @@ class CommunityProfile < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   has_and_belongs_to_many :roles, :before_add => :ensure_that_community_matches, :before_remove => :ensure_that_member_role_stays
+  has_many :roster_assignments
+  has_many :character_proxies, :through => :roster_assignments
 
 ###
 # Validators

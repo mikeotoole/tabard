@@ -98,6 +98,22 @@ describe Community do
     end
   end
 
+  describe "protected_roster" do
+    it "should be false by default" do
+      community.protected_roster.should be_false
+    end
+    describe "when true" do
+      it "should make roster changes pending" do
+        pending
+      end
+    end
+    describe "when false" do
+      it "should not make roster changes pending" do
+        pending
+      end
+    end
+  end
+
   it "should be accepting members by default" do
     community.accepting_members.should be_true
   end

@@ -18,6 +18,8 @@ class CharacterProxy < ActiveRecord::Base
 ###
   belongs_to :user_profile
   belongs_to :character, :polymorphic => true, :dependent => :destroy
+  has_many :roster_assignments
+  has_many :community_profiles, :through => :roster_assignments
 
 ###
 # Validators
