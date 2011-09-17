@@ -7,13 +7,13 @@
 	<key>ESProjectWindowState</key>
 	<dict>
 		<key>ContentSize</key>
-		<string>{1920, 1122}</string>
+		<string>{1680, 946}</string>
 		<key>ProjectURL</key>
 		<string>file://localhost/Users/mpotoole/digitalAugment%20Inc/Development/git/da-bv-rails/da-bv-rails.esproj/</string>
 		<key>StateType</key>
 		<string>ProjectWindow</string>
 		<key>TopLeftPoint</key>
-		<string>{-1920, 1200}</string>
+		<string>{0, 1028}</string>
 	</dict>
 	<key>com.macrabbit.Espresso.FileManager.DisclosureCollapsed</key>
 	<false/>
@@ -21,8 +21,7 @@
 	<dict>
 		<key>ExpandedURLs</key>
 		<array>
-			<string>file://localhost/Users/mpotoole/digitalAugment%20Inc/Development/git/da-bv-rails/app</string>
-			<string>file://localhost/Users/mpotoole/digitalAugment%20Inc/Development/git/da-bv-rails/spec/controllers</string>
+			<string>file://localhost/Users/mpotoole/digitalAugment%20Inc/Development/git/da-bv-rails/app/controllers</string>
 		</array>
 	</dict>
 	<key>com.macrabbit.Espresso.Publisher.DisclosureCollapsed</key>

@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def http_status_code(status, exception)
     # store the exception so its message can be used in the view
     @exception = exception
-
+    flash[:alert] = @exception.message
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
       format.html { render "home/index", :status => status }

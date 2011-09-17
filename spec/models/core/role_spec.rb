@@ -1,13 +1,13 @@
 # == Schema Information
 #
-# Table name: games
+# Table name: roles
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  type       :string(255)
-#  is_active  :boolean         default(TRUE)
-#  created_at :datetime
-#  updated_at :datetime
+#  id               :integer         not null, primary key
+#  community_id     :integer
+#  name             :string(255)
+#  system_generated :boolean         default(FALSE)
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 require 'spec_helper'

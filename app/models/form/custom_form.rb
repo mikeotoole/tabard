@@ -28,7 +28,7 @@ class CustomForm < ActiveRecord::Base
   validates :thankyou, :presence => true
   validates :community, :presence => true
 
-	delegate :admin_profile_id, :to => :community, :allow_nil => true
+  delegate :admin_profile_id, :to => :community, :allow_nil => true
 
 ###
 # Public Methods

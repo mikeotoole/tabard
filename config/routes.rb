@@ -4,6 +4,8 @@ DaBvRails::Application.routes.draw do
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update]
+  match "/account" => "user_profile#account", :as => "account"
+  match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
 
   # Communities
   resources :communities, :except => :destroy
@@ -22,21 +24,21 @@ DaBvRails::Application.routes.draw do
   # Subdomains
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => 'subdomain_home'
-		scope :module => "subdomains" do
-	
-	    # Roles and Permissions
-	    resources :roles do
-	      resources :permissions
-	    end
-	
-	    # Custom Forms
-	    resources :custom_forms do
-	      resources :questions, :shallow => true
-	      resources :submissions, :shallow => true, :except => [:update, :edit] do
-	        resources :answers, :except => [:update, :edit, :destroy]
-	      end
-	    end
-		end    
+    scope :module => "subdomains" do
+
+      # Roles and Permissions
+      resources :roles do
+        resources :permissions
+      end
+
+      # Custom Forms
+      resources :custom_forms do
+        resources :questions, :shallow => true
+        resources :submissions, :shallow => true, :except => [:update, :edit] do
+          resources :answers, :except => [:update, :edit, :destroy]
+        end
+      end
+    end
   end
 
   # Home
@@ -101,7 +103,7 @@ DaBvRails::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 15 Sep 2011 15:10
+# Generated on 17 Sep 2011 15:33
 #
 #               user_session POST   /users/sign_in(.:format)                                {:action=>"create", :controller=>"devise/sessions"}
 #       destroy_user_session DELETE /users/sign_out(.:format)                               {:action=>"destroy", :controller=>"devise/sessions"}
@@ -124,6 +126,8 @@ end
 #          edit_user_profile GET    /user_profiles/:id/edit(.:format)                       {:action=>"edit", :controller=>"user_profiles"}
 #               user_profile GET    /user_profiles/:id(.:format)                            {:action=>"show", :controller=>"user_profiles"}
 #                            PUT    /user_profiles/:id(.:format)                            {:action=>"update", :controller=>"user_profiles"}
+#                    account        /account(.:format)                                      {:controller=>"user_profile", :action=>"account"}
+#             update_account PUT    /account/update(.:format)                               {:controller=>"user_profile", :action=>"update"}
 #                communities GET    /communities(.:format)                                  {:action=>"index", :controller=>"communities"}
 #                            POST   /communities(.:format)                                  {:action=>"create", :controller=>"communities"}
 #              new_community GET    /communities/new(.:format)                              {:action=>"new", :controller=>"communities"}
@@ -146,42 +150,42 @@ end
 #                            DELETE /swtor_characters/:id(.:format)                         {:action=>"destroy", :controller=>"swtor_characters"}
 #         new_base_character GET    /base_characters/new(.:format)                          {:action=>"new", :controller=>"base_characters"}
 #             subdomain_home        /                                                       {:controller=>"subdomains", :action=>"index"}
-#           role_permissions GET    /roles/:role_id/permissions(.:format)                   {:action=>"index", :controller=>"permissions"}
-#                            POST   /roles/:role_id/permissions(.:format)                   {:action=>"create", :controller=>"permissions"}
-#        new_role_permission GET    /roles/:role_id/permissions/new(.:format)               {:action=>"new", :controller=>"permissions"}
-#       edit_role_permission GET    /roles/:role_id/permissions/:id/edit(.:format)          {:action=>"edit", :controller=>"permissions"}
-#            role_permission GET    /roles/:role_id/permissions/:id(.:format)               {:action=>"show", :controller=>"permissions"}
-#                            PUT    /roles/:role_id/permissions/:id(.:format)               {:action=>"update", :controller=>"permissions"}
-#                            DELETE /roles/:role_id/permissions/:id(.:format)               {:action=>"destroy", :controller=>"permissions"}
-#                      roles GET    /roles(.:format)                                        {:action=>"index", :controller=>"roles"}
-#                            POST   /roles(.:format)                                        {:action=>"create", :controller=>"roles"}
-#                   new_role GET    /roles/new(.:format)                                    {:action=>"new", :controller=>"roles"}
-#                  edit_role GET    /roles/:id/edit(.:format)                               {:action=>"edit", :controller=>"roles"}
-#                       role GET    /roles/:id(.:format)                                    {:action=>"show", :controller=>"roles"}
-#                            PUT    /roles/:id(.:format)                                    {:action=>"update", :controller=>"roles"}
-#                            DELETE /roles/:id(.:format)                                    {:action=>"destroy", :controller=>"roles"}
-#      custom_form_questions GET    /custom_forms/:custom_form_id/questions(.:format)       {:action=>"index", :controller=>"questions"}
-#                            POST   /custom_forms/:custom_form_id/questions(.:format)       {:action=>"create", :controller=>"questions"}
-#   new_custom_form_question GET    /custom_forms/:custom_form_id/questions/new(.:format)   {:action=>"new", :controller=>"questions"}
-#              edit_question GET    /questions/:id/edit(.:format)                           {:action=>"edit", :controller=>"questions"}
-#                   question GET    /questions/:id(.:format)                                {:action=>"show", :controller=>"questions"}
-#                            PUT    /questions/:id(.:format)                                {:action=>"update", :controller=>"questions"}
-#                            DELETE /questions/:id(.:format)                                {:action=>"destroy", :controller=>"questions"}
-#         submission_answers GET    /submissions/:submission_id/answers(.:format)           {:action=>"index", :controller=>"answers"}
-#                            POST   /submissions/:submission_id/answers(.:format)           {:action=>"create", :controller=>"answers"}
-#      new_submission_answer GET    /submissions/:submission_id/answers/new(.:format)       {:action=>"new", :controller=>"answers"}
-#                     answer GET    /answers/:id(.:format)                                  {:action=>"show", :controller=>"answers"}
-#    custom_form_submissions GET    /custom_forms/:custom_form_id/submissions(.:format)     {:action=>"index", :controller=>"submissions"}
-#                            POST   /custom_forms/:custom_form_id/submissions(.:format)     {:action=>"create", :controller=>"submissions"}
-# new_custom_form_submission GET    /custom_forms/:custom_form_id/submissions/new(.:format) {:action=>"new", :controller=>"submissions"}
-#                 submission GET    /submissions/:id(.:format)                              {:action=>"show", :controller=>"submissions"}
-#                            DELETE /submissions/:id(.:format)                              {:action=>"destroy", :controller=>"submissions"}
-#               custom_forms GET    /custom_forms(.:format)                                 {:action=>"index", :controller=>"custom_forms"}
-#                            POST   /custom_forms(.:format)                                 {:action=>"create", :controller=>"custom_forms"}
-#            new_custom_form GET    /custom_forms/new(.:format)                             {:action=>"new", :controller=>"custom_forms"}
-#           edit_custom_form GET    /custom_forms/:id/edit(.:format)                        {:action=>"edit", :controller=>"custom_forms"}
-#                custom_form GET    /custom_forms/:id(.:format)                             {:action=>"show", :controller=>"custom_forms"}
-#                            PUT    /custom_forms/:id(.:format)                             {:action=>"update", :controller=>"custom_forms"}
-#                            DELETE /custom_forms/:id(.:format)                             {:action=>"destroy", :controller=>"custom_forms"}
+#           role_permissions GET    /roles/:role_id/permissions(.:format)                   {:action=>"index", :controller=>"subdomains/permissions"}
+#                            POST   /roles/:role_id/permissions(.:format)                   {:action=>"create", :controller=>"subdomains/permissions"}
+#        new_role_permission GET    /roles/:role_id/permissions/new(.:format)               {:action=>"new", :controller=>"subdomains/permissions"}
+#       edit_role_permission GET    /roles/:role_id/permissions/:id/edit(.:format)          {:action=>"edit", :controller=>"subdomains/permissions"}
+#            role_permission GET    /roles/:role_id/permissions/:id(.:format)               {:action=>"show", :controller=>"subdomains/permissions"}
+#                            PUT    /roles/:role_id/permissions/:id(.:format)               {:action=>"update", :controller=>"subdomains/permissions"}
+#                            DELETE /roles/:role_id/permissions/:id(.:format)               {:action=>"destroy", :controller=>"subdomains/permissions"}
+#                      roles GET    /roles(.:format)                                        {:action=>"index", :controller=>"subdomains/roles"}
+#                            POST   /roles(.:format)                                        {:action=>"create", :controller=>"subdomains/roles"}
+#                   new_role GET    /roles/new(.:format)                                    {:action=>"new", :controller=>"subdomains/roles"}
+#                  edit_role GET    /roles/:id/edit(.:format)                               {:action=>"edit", :controller=>"subdomains/roles"}
+#                       role GET    /roles/:id(.:format)                                    {:action=>"show", :controller=>"subdomains/roles"}
+#                            PUT    /roles/:id(.:format)                                    {:action=>"update", :controller=>"subdomains/roles"}
+#                            DELETE /roles/:id(.:format)                                    {:action=>"destroy", :controller=>"subdomains/roles"}
+#      custom_form_questions GET    /custom_forms/:custom_form_id/questions(.:format)       {:action=>"index", :controller=>"subdomains/questions"}
+#                            POST   /custom_forms/:custom_form_id/questions(.:format)       {:action=>"create", :controller=>"subdomains/questions"}
+#   new_custom_form_question GET    /custom_forms/:custom_form_id/questions/new(.:format)   {:action=>"new", :controller=>"subdomains/questions"}
+#              edit_question GET    /questions/:id/edit(.:format)                           {:action=>"edit", :controller=>"subdomains/questions"}
+#                   question GET    /questions/:id(.:format)                                {:action=>"show", :controller=>"subdomains/questions"}
+#                            PUT    /questions/:id(.:format)                                {:action=>"update", :controller=>"subdomains/questions"}
+#                            DELETE /questions/:id(.:format)                                {:action=>"destroy", :controller=>"subdomains/questions"}
+#         submission_answers GET    /submissions/:submission_id/answers(.:format)           {:action=>"index", :controller=>"subdomains/answers"}
+#                            POST   /submissions/:submission_id/answers(.:format)           {:action=>"create", :controller=>"subdomains/answers"}
+#      new_submission_answer GET    /submissions/:submission_id/answers/new(.:format)       {:action=>"new", :controller=>"subdomains/answers"}
+#                     answer GET    /answers/:id(.:format)                                  {:action=>"show", :controller=>"subdomains/answers"}
+#    custom_form_submissions GET    /custom_forms/:custom_form_id/submissions(.:format)     {:action=>"index", :controller=>"subdomains/submissions"}
+#                            POST   /custom_forms/:custom_form_id/submissions(.:format)     {:action=>"create", :controller=>"subdomains/submissions"}
+# new_custom_form_submission GET    /custom_forms/:custom_form_id/submissions/new(.:format) {:action=>"new", :controller=>"subdomains/submissions"}
+#                 submission GET    /submissions/:id(.:format)                              {:action=>"show", :controller=>"subdomains/submissions"}
+#                            DELETE /submissions/:id(.:format)                              {:action=>"destroy", :controller=>"subdomains/submissions"}
+#               custom_forms GET    /custom_forms(.:format)                                 {:action=>"index", :controller=>"subdomains/custom_forms"}
+#                            POST   /custom_forms(.:format)                                 {:action=>"create", :controller=>"subdomains/custom_forms"}
+#            new_custom_form GET    /custom_forms/new(.:format)                             {:action=>"new", :controller=>"subdomains/custom_forms"}
+#           edit_custom_form GET    /custom_forms/:id/edit(.:format)                        {:action=>"edit", :controller=>"subdomains/custom_forms"}
+#                custom_form GET    /custom_forms/:id(.:format)                             {:action=>"show", :controller=>"subdomains/custom_forms"}
+#                            PUT    /custom_forms/:id(.:format)                             {:action=>"update", :controller=>"subdomains/custom_forms"}
+#                            DELETE /custom_forms/:id(.:format)                             {:action=>"destroy", :controller=>"subdomains/custom_forms"}
 #                       root        /                                                       {:controller=>"home", :action=>"index"}
 #                 home_index GET    /home/index(.:format)                                   {:controller=>"home", :action=>"index"}

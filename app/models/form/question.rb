@@ -72,7 +72,7 @@ class Question < ActiveRecord::Base
       nil
     end
   end
-  
+
 ###
 # Instance Methods
 ###

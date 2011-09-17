@@ -172,6 +172,9 @@ ActiveRecord::Schema.define(:version => 20110917220800) do
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
+    t.string   "display_name"
+    t.boolean  "publicly_viewable", :default => true
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"

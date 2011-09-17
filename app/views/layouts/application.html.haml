@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %title Crumblin
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    #user_nav
+      - if user_signed_in?
+        Signed in as #{current_user.display_name}. Not you?
+        \#{link_to "Edit Account", edit_user_registration_url(:subdomain => false)}
+        \#{link_to "Edit Profile", edit_user_profile_url(current_user.user_profile,:subdomain => false)}
+        \#{link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete}
+      - else
+        = link_to "Sign up", new_user_registration_url(:subdomain =>false)
+        or #{link_to "sign in", new_user_session_path}
+    #flash_container
+      %p.notice= notice
+      %p.alert= alert
+      %p= render "layouts/flash_messages"
+    = yield

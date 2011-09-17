@@ -25,13 +25,13 @@ class Subdomains::AnswersController < ApplicationController
   # GET /answers/:id(.:format)
   def show
     respond_with(@answer)
-	end
+  end
 
   # GET /submissions/:submission_id/answers/new(.:format)
   def new
 #    respond_with(@answer)
   end
-  
+
   # POST /submissions/:submission_id/answers(.:format)
   def create
     @answer.save

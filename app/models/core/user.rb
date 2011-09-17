@@ -1,7 +1,7 @@
 ###
 # Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Don't Steal Me Bro!
+# License::   Proprietary Closed Source
 #
 # This is the user class.
 ###
@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
 ###
   delegate :first_name, :to => :user_profile, :allow_nil => true
   delegate :last_name, :to => :user_profile, :allow_nil => true
+  delegate :display_name, :to => :user_profile, :allow_nil => true
+  delegate :description, :to => :user_profile, :allow_nil => true
   delegate :owned_communities, :to => :user_profile, :allow_nil => true
   delegate :community_profiles, :to => :user_profile, :allow_nil => true
   delegate :add_new_role, :to => :user_profile, :allow_nil => true
