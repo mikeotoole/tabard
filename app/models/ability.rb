@@ -20,7 +20,9 @@ class Ability
   # Everyone, including guest, Rules
   ###
     # UserProfile Rules
-    can :read, UserProfile
+    can :read, UserProfile do |user_profile|
+      user_profile.publicly_viewable
+    end
     # Community Rules
     can :read, Community
     # Character Rules
@@ -67,6 +69,8 @@ class Ability
       some_user.id == user.id
     end
 
+    # UserProfile Rules
+    can :read, UserProfile
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
     end

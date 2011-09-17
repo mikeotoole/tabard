@@ -11,6 +11,7 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
+  before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource
 
   # GET /user_profiles/1

@@ -3,7 +3,9 @@ require 'spec_helper'
 describe UserProfilesController do
   let(:non_owner) { create(:billy) }
   let(:user_profile) { create(:user_profile) }
+  let(:private_user_profile) { create(:user_profile, :publicly_viewable => false) }
   let(:owner) { create(:user, :user_profile => user_profile) }
+  let(:private_owner) { create(:user, :user_profile => private_user_profile) }
 	describe "GET 'index'" do
 		it "should throw routing error when authenticated as a user" do
       sign_in owner
@@ -20,21 +22,41 @@ describe UserProfilesController do
     end
 	end
   describe "GET 'show'" do
-    it "show should be successful when authenticated as the owner" do
-      sign_in owner
-      get 'show', :id => user_profile
-      response.should be_success
-    end
+    describe "user_profile is publicly viewable" do
+      it "show should be successful when authenticated as the owner" do
+        sign_in owner
+        get 'show', :id => user_profile
+        response.should be_success
+      end
 
-    it "show should be successful when authenticated as a non-owner" do
-      sign_in non_owner
-      get 'show', :id => user_profile
-      response.should be_success
-    end
+      it "show should be successful when authenticated as a non-owner" do
+        sign_in non_owner
+        get 'show', :id => user_profile
+        response.should be_success
+      end
 
-    it "should be successful when not authenticated as a user" do
-      get 'show', :id => user_profile
-      response.should be_success
+      it "should be successful when not authenticated as a user when user_profile is publicly viewable" do
+        get 'show', :id => user_profile
+        response.should be_success
+      end
+    end
+    describe "user_profile is not publicly viewable" do
+      it "show should be successful when authenticated as the owner" do
+        sign_in private_owner
+        get 'show', :id => private_user_profile
+        response.should be_success
+      end
+
+      it "show should be successful when authenticated as a non-owner" do
+        sign_in non_owner
+        get 'show', :id => private_user_profile
+        response.should be_success
+      end
+
+      it "should be unauthorized when not authenticated as a user when user_profile is publicly viewable" do
+        get 'show', :id => private_user_profile
+        response.response_code.should == 403
+      end
     end
   end
 
