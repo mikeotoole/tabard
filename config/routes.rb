@@ -4,6 +4,8 @@ DaBvRails::Application.routes.draw do
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update]
+  match "/account" => "user_profile#account", :as => "account"
+  match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
 
   # Communities
   resources :communities, :except => :destroy
