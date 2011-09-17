@@ -4,7 +4,7 @@ FactoryGirl.define do
     instructions "Fill out my form"
     thankyou "Thank You for submitting my form"
     published true
-    community { DefaultObjects.community }
+    community_id { DefaultObjects.community.id }
   end
   
   factory :custom_form_w_questions, :parent => :custom_form do
@@ -18,55 +18,55 @@ FactoryGirl.define do
   factory :long_answer_question, :class => TextQuestion do
     style "long_answer_question"
     sequence(:body) {|n| "long_answer_question #{n}"}
-    custom_form { DefaultObjects.custom_form }
+    custom_form_id { DefaultObjects.custom_form.id }
   end
   
   factory :short_answer_question, :class => TextQuestion do
     style "short_answer_question"
     sequence(:body) {|n| "short_answer_question #{n}"}
-    custom_form { DefaultObjects.custom_form }
+    custom_form_id { DefaultObjects.custom_form.id }
   end
   
   factory :select_box_question, :class => SingleSelectQuestion do
     style "select_box_question"
     sequence(:body) {|n| "select_box_question #{n}"}
-    custom_form { DefaultObjects.custom_form } 
+    custom_form_id { DefaultObjects.custom_form.id } 
     after_create { |question| create_predefined_answers(question) }
   end    
   
   factory :radio_buttons_question, :class => SingleSelectQuestion do
     style "radio_buttons_question"
     sequence(:body) {|n| "radio_buttons_question #{n}"}
-    custom_form { DefaultObjects.custom_form }
+    custom_form_id { DefaultObjects.custom_form.id }
     after_create { |question| create_predefined_answers(question) }
   end 
   
   factory :check_box_question, :class => MultiSelectQuestion do
     style "check_box_question"
     sequence(:body) {|n| "check_box_question #{n}"}
-    custom_form { DefaultObjects.custom_form }
+    custom_form_id { DefaultObjects.custom_form.id }
     after_create { |question| create_predefined_answers(question) }
   end
   
   factory :predefined_answer do
     sequence(:body) {|n| "predefined_answer #{n}"}
-    select_question { FactoryGirl.create(:check_box_question) }
+    select_question_id { FactoryGirl.create(:check_box_question).id }
   end
   
   factory :answer do
     sequence(:body) {|n| "User given answer #{n}"}
     submission
-    question { FactoryGirl.create(:check_box_question) }
+    question_id { FactoryGirl.create(:long_answer_question).id }
   end
 
   factory :submission do
-    user_profile { DefaultObjects.user_profile }
-    custom_form { DefaultObjects.custom_form }
+    user_profile_id { DefaultObjects.user_profile.id }
+    custom_form_id { DefaultObjects.custom_form.id }
   end
 
   factory :submission_w_answers, :parent => :submission do
-    user_profile { DefaultObjects.user_profile }
-    custom_form { |submission| FactoryGirl.create(:custom_form_w_questions) }
+    user_profile_id { DefaultObjects.user_profile.id }
+    custom_form_id { FactoryGirl.create(:custom_form_w_questions).id }
     after_create { |submission| create_answers(submission) }
   end
 end

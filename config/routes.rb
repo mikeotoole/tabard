@@ -22,19 +22,21 @@ DaBvRails::Application.routes.draw do
   # Subdomains
   constraints(Subdomain) do
     match "/" => "subdomains#index", :as => 'subdomain_home'
-
-    # Roles and Permissions
-    resources :roles do
-      resources :permissions
-    end
-
-    # Custom Forms
-    resources :custom_forms do
-      resources :questions, :shallow => true
-      resources :submissions, :shallow => true, :except => [:update, :edit] do
-        resources :answers, :except => [:update, :edit, :destroy]
-      end
-    end
+		scope :module => "subdomains" do
+	
+	    # Roles and Permissions
+	    resources :roles do
+	      resources :permissions
+	    end
+	
+	    # Custom Forms
+	    resources :custom_forms do
+	      resources :questions, :shallow => true
+	      resources :submissions, :shallow => true, :except => [:update, :edit] do
+	        resources :answers, :except => [:update, :edit, :destroy]
+	      end
+	    end
+		end    
   end
 
   # Home

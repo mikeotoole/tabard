@@ -23,26 +23,6 @@ class SelectQuestion < Question
   has_many :predefined_answers, :dependent => :destroy
 
   accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
-
-  # This makes it so the original rails clone method can still be used.
-  alias_method :original_clone, :clone
-
-###
-# Public Methods
-###
-
-###
-# Instance Methods
-###
-  ###
-  # This method overrides the clone method so the predefined answers are set to the clone.
-  # [Returns] A clone of the select question with the predefined answers.
-  ###
-  def clone
-    question = self.original_clone
-    question.predefined_answers = self.predefined_answers
-    question
-  end
 end
 
 

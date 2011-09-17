@@ -5,7 +5,7 @@
 #
 # This controller is for handling submissions.
 ###
-class SubmissionsController < ApplicationController
+class Subdomains::SubmissionsController < ApplicationController
   respond_to :html
 
   ###
@@ -35,7 +35,6 @@ class SubmissionsController < ApplicationController
   # POST /custom_forms/:custom_form_id/submissions(.:format)
   def create
     add_new_flash_message('Form submission was successfully submitted.') if @submission.save
-    grab_all_errors_from_model(@submission)
     respond_with(@submission)
   end
 
@@ -44,7 +43,7 @@ class SubmissionsController < ApplicationController
     if @submission
       add_new_flash_message('Form submission was successfully deleted.') if @submission.destroy
     end
-    respond_with(@submission)
+    respond_with(@submission, :location => custom_form_url(@submission.custom_form))
   end
 
   ###

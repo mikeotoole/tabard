@@ -76,13 +76,7 @@ class Ability
     can :update, Community do |community|
       community.admin_profile_id == user.user_profile.id
     end
-
-    # Character Rules
-    can :create, BaseCharacter
-    can [:update, :destroy], BaseCharacter do |character|
-      character.user_profile.id == user.user_profile.id
-    end
-
+    
     # Role Rules
     can :manage, Role do |role|
       role.community_admin_profile_id == user.user_profile.id
@@ -95,6 +89,39 @@ class Ability
     can :manage, Permission do |permission|
       permission.community_admin_profile_id == user.user_profile.id
     end
+
+    # Character Rules
+    can :create, BaseCharacter
+    can [:update, :destroy], BaseCharacter do |character|
+      character.user_profile.id == user.user_profile.id
+    end
+    
+    # Custom Form Rules
+    can :read, CustomForm
+    can :manage, CustomForm do |form|
+    	form.community.admin_profile_id == user.user_profile.id
+    end
+    
+    # Question Form Rules
+    can :read, Question
+		can :manage, Question do |question|
+			question.custom_form.admin_profile_id == user.user_profile.id
+		end
+		  
+    # Submission Rules
+    can :create, Submission
+    can :manage, Submission do |submission|
+    	submission.custom_form.admin_profile_id == user.user_profile.id or
+    	submission.user_profile_id == user.user_profile.id
+    end
+    
+    # Answer Rules
+    can :create, Answer
+    can :manage, Answer do |answer|
+    	answer.submission.custom_form.admin_profile_id == user.user_profile.id or
+    	answer.submission.user_profile_id == user.user_profile.id
+    end
+    
   end
 
   ###

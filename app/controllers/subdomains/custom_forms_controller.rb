@@ -5,7 +5,7 @@
 #
 # This controller is handling custom forms within communities.
 ###
-class CustomFormsController < SubdomainsController
+class Subdomains::CustomFormsController < SubdomainsController
   respond_to :html
   ###
   # Before Filters
@@ -22,31 +22,29 @@ class CustomFormsController < SubdomainsController
 
   # GET /custom_forms/1
   def show
-    respond_with(@site_form)
+    respond_with(@custom_form)
   end
 
   # GET /custom_forms/new
   def new
-    respond_with(@site_form)
+    respond_with(@custom_form)
   end
 
   # GET /custom_forms/1/edit
   def edit
-    respond_with(@site_form)
+    respond_with(@custom_form)
   end
 
   # POST /custom_forms
   def create
-    add_new_flash_message('Form was successfully created.') if @site_form.save
-    grab_all_errors_from_model(@site_form)
-    respond_with(@site_form)
+    add_new_flash_message('Form was successfully created.') if @custom_form.save
+    respond_with(@custom_form)
   end
 
   # PUT /custom_forms/1
   def update
-    add_new_flash_message('Form was successfully updated.') if @site_form.update_attributes(params[:site_form])
-    grab_all_errors_from_model(@site_form)
-    respond_with(@site_form)
+    add_new_flash_message('Form was successfully updated.') if @custom_form.update_attributes(params[:custom_form])
+    respond_with(@custom_form)
   end
 
   # DELETE /custom_forms/1

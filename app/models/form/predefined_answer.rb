@@ -9,7 +9,7 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :select_question
+  attr_accessible :body, :select_question_id
 
 ###
 # Associations

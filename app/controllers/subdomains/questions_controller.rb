@@ -5,7 +5,7 @@
 #
 # This controller is for questions.
 ###
-class QuestionsController < SubdomainsController
+class Subdomains::QuestionsController < SubdomainsController
   respond_to :html
 
   ###
@@ -41,7 +41,8 @@ class QuestionsController < SubdomainsController
 
   # POST /custom_forms/:custom_form_id/questions(.:format)
   def create
-    respond_with(@question)
+    @question.save
+    respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
 
   # PUT /questions/:id(.:format)
@@ -49,18 +50,19 @@ class QuestionsController < SubdomainsController
     if @question
       if !@question.answers.empty?
         new_question = @question.clone
-        @question.site_form_id = nil
+        @question.custom_form_id = nil
         @question.save
         @question = new_question
       end
       add_new_flash_message('Question was successfully updated.') if @question.update_attributes(params[:question])
     end
-    respond_with(@question)
+    respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
 
   # DELETE /questions/:id(.:format)
   def destroy # TODO Joe, How can we move this logic to the model? -MO
     if @question
+      q_custom_form = @question.custom_form
       if @question.answers.empty?
         add_new_flash_message('Question was successfully deleted.') if @question.destroy
       else
@@ -68,7 +70,7 @@ class QuestionsController < SubdomainsController
         add_new_flash_message('Question was successfully deleted.') if @question.save
       end
     end
-    respond_with(@question)
+    respond_with(@question, :location => custom_form_url(q_custom_form))
   end
 
   ###
@@ -78,6 +80,7 @@ class QuestionsController < SubdomainsController
   ###
   def create_question
     custom_form = CustomForm.find_by_id(params[:custom_form_id])
-    @question = @custom_form.questions.new_question(params[:question_type], params[:question])
+    @question = Question.new_question(params[:question_type], params[:question])
+    custom_form.questions << @question
   end
 end

@@ -5,7 +5,7 @@
 #
 # This controller is for answers.
 ###
-class AnswersController < ApplicationController
+class Subdomains::AnswersController < ApplicationController
   respond_to :html
 
   ###
@@ -25,16 +25,17 @@ class AnswersController < ApplicationController
   # GET /answers/:id(.:format)
   def show
     respond_with(@answer)
-  end
+	end
 
   # GET /submissions/:submission_id/answers/new(.:format)
   def new
-    @answer = Answer.new
+#    respond_with(@answer)
   end
-
+  
   # POST /submissions/:submission_id/answers(.:format)
   def create
-    @answer = Answer.new(params[:answer])
+    @answer.save
+    respond_with(@answer, :location => submission_url(@answer.submission))
   end
 
   ###
@@ -43,7 +44,7 @@ class AnswersController < ApplicationController
   # This before filter attempts to populate @answers from the current submission.
   ###
   def load_answers
-    submission = Submission.find_by_id(:submission_id)
+    submission = Submission.find_by_id(params[:submission_id])
     @answers = submission.answers if submission
   end
 

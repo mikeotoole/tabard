@@ -5,7 +5,7 @@
 #
 # This controller is for roles.
 ###
-class RolesController < SubdomainsController
+class Subdomains::RolesController < SubdomainsController
   respond_to :html
 
 ###

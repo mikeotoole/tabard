@@ -9,7 +9,7 @@ class Submission < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :custom_form, :user_profile, :answers
+  attr_accessible :custom_form_id, :user_profile_id
 
 ###
 # Associations

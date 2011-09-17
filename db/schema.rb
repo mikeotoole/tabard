@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110915225312) do
+ActiveRecord::Schema.define(:version => 20110917220800) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20110915225312) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+  add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -78,6 +81,8 @@ ActiveRecord::Schema.define(:version => 20110915225312) do
     t.datetime "updated_at"
   end
 
+  add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
@@ -104,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20110915225312) do
     t.datetime "updated_at"
   end
 
+  add_index "predefined_answers", ["select_question_id"], :name => "index_predefined_answers_on_select_question_id"
+
   create_table "questions", :force => true do |t|
     t.text     "body"
     t.integer  "custom_form_id"
@@ -114,6 +121,8 @@ ActiveRecord::Schema.define(:version => 20110915225312) do
     t.string   "explanation"
     t.boolean  "required",       :default => false
   end
+
+  add_index "questions", ["custom_form_id"], :name => "index_questions_on_custom_form_id"
 
   create_table "roles", :force => true do |t|
     t.integer  "community_id"
@@ -131,6 +140,9 @@ ActiveRecord::Schema.define(:version => 20110915225312) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
+  add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"

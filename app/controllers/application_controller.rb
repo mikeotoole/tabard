@@ -52,11 +52,8 @@ class ApplicationController < ActionController::Base
     session[:last_page] ? session[:last_page] : root_url
   end
 
-###
-# Public Methods
-###
   ###
-  # TODO Doug, Add the remaining of the message_class types.
+  # TODO Doug, Add the remaining of the message_class types. -MO
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.

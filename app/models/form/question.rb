@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :custom_form, :answers
+  attr_accessible :body, :style, :custom_form_id
 
 ###
 # Associations
@@ -71,6 +71,20 @@ class Question < ActiveRecord::Base
     rescue
       nil
     end
+  end
+  
+###
+# Instance Methods
+###
+  ###
+  # This method overrides the clone method so the predefined answers are set to the clone.
+  # [Returns] A clone of the select question with the predefined answers.
+  ###
+  def clone
+    question_clone = self.type.constantize.new(self.attributes)
+    question_clone.type = self.type
+    question_clone.save
+    question_clone
   end
 end
 
