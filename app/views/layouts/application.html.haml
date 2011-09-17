@@ -1,15 +1,18 @@
 !!!
 %html
+
   %head
     %title= yield_for(:title, 'Crumblin')
     = stylesheet_link_tag "reset", "bar", "main"
     = javascript_include_tag "application", "bar"
     = csrf_meta_tags
+  
   %body
   
     #bar
       = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
       
+      -# TODO Doug, update link locations
       %ul.menu
         %li
           = link_to 'Communities', '#'
@@ -30,18 +33,27 @@
         - search_term ||= false
         = text_field_tag 'query', search_term ? search_term : '', :title => 'Search'
         = raw("<button type='submit'>Search</button>")
+    
+    %h1#pitch
+      %strong
+        Has updating your guild website become a chore?
+      Crumblin simplifies community management.
+      -# TODO Doug, update link location
+      = link_to 'Learn how ›', '#'
+    
+    #content
         
-    #user_nav
-      - if user_signed_in?
-        Signed in as #{current_user.email}. Not you?
-        \#{link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete}
-      - else
-        = link_to "Sign up", new_user_registration_url(:subdomain =>false)
-        or #{link_to "sign in", new_user_session_path}
+      #user_nav
+        - if user_signed_in?
+          Signed in as #{current_user.email}. Not you?
+          \#{link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete}
+        - else
+          = link_to "Sign up", new_user_registration_url(:subdomain =>false)
+          or #{link_to "sign in", new_user_session_path}
+          
+      #flash_container
+        %p.notice= notice
+        %p.alert= alert
+        %p= render "layouts/flash_messages"
         
-    #flash_container
-      %p.notice= notice
-      %p.alert= alert
-      %p= render "layouts/flash_messages"
-      
-    = yield
+      = yield
