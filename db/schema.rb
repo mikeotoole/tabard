@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917220800) do
+ActiveRecord::Schema.define(:version => 20110918001519) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -35,6 +35,25 @@ ActiveRecord::Schema.define(:version => 20110917220800) do
 
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
+
+  create_table "comments", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_profile_id"
+    t.integer  "character_proxy_id"
+    t.integer  "community_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.boolean  "has_been_deleted",   :default => false
+    t.boolean  "has_been_edited",    :default => false
+    t.boolean  "has_been_locked",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
+  add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_id"
+  add_index "comments", ["community_id"], :name => "index_comments_on_community_id"
+  add_index "comments", ["user_profile_id"], :name => "index_comments_on_user_profile_id"
 
   create_table "communities", :force => true do |t|
     t.string   "name"
@@ -82,6 +101,35 @@ ActiveRecord::Schema.define(:version => 20110917220800) do
   end
 
   add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
+
+  create_table "discussion_spaces", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_profile_id"
+    t.integer  "game_id"
+    t.integer  "community_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
+  add_index "discussion_spaces", ["game_id"], :name => "index_discussion_spaces_on_game_id"
+  add_index "discussion_spaces", ["user_profile_id"], :name => "index_discussion_spaces_on_user_profile_id"
+
+  create_table "discussions", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
+    t.integer  "discussion_space_id"
+    t.integer  "character_proxy_id"
+    t.integer  "user_profile_id"
+    t.boolean  "comments_enabled",    :default => true
+    t.boolean  "has_been_locked",     :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
+  add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
+  add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
   create_table "games", :force => true do |t|
     t.string   "name"

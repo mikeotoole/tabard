@@ -31,6 +31,11 @@ class Submission < ActiveRecord::Base
   validates :user_profile, :presence => true
 
 ###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :allow_nil => true
+
+###
 # Public Methods
 ###
 

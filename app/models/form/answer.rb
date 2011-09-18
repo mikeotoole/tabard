@@ -23,6 +23,12 @@ class Answer < ActiveRecord::Base
   validates :question, :presence => true
   validates :submission, :presence => true
   validates :body, :presence => true
+
+###
+# Delegates
+###
+  delegate :user_profile_id, :to => :submission, :allow_nil => true
+
 end
 
 # == Schema Information

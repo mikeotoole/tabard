@@ -1,0 +1,37 @@
+= form_for comment do |f|
+  -if comment.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(comment.errors.count, "error")} prohibited this comment from being saved:"
+      %ul
+        - comment.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :body
+    = f.text_area :body
+  .field
+    = f.label :character_proxy_id
+    = f.number_field :character_proxy_id
+  .field
+    = f.label :user_profile_id
+    = f.number_field :user_profile_id
+  .field
+    = f.label :commentable_id
+    = f.number_field :commentable_id
+  .field
+    = f.label :commentable_type
+    = f.text_field :commentable_type
+  .field
+    = f.label :has_been_deleted
+    = f.check_box :has_been_deleted
+  .field
+    = f.label :has_been_edited
+    = f.check_box :has_been_edited
+  .field
+    = f.label :has_been_locked
+    = f.check_box :has_been_locked
+  .field
+    = f.label :community_id
+    = f.number_field :community_id
+  .actions
+    = f.submit 'Save'

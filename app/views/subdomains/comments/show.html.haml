@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Body:
+  = @comment.body
+%p
+  %b Character proxy:
+  = @comment.character_proxy_id
+%p
+  %b User profile:
+  = @comment.user_profile_id
+%p
+  %b Commentable:
+  = @comment.commentable_id
+%p
+  %b Commentable type:
+  = @comment.commentable_type
+%p
+  %b Has been deleted:
+  = @comment.has_been_deleted
+%p
+  %b Has been edited:
+  = @comment.has_been_edited
+%p
+  %b Has been locked:
+  = @comment.has_been_locked
+%p
+  %b Community:
+  = @comment.community_id
+
+= link_to 'Edit', edit_comment_path(@comment)
+\|
+= link_to 'Back', comments_path

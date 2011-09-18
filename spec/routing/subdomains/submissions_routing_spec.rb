@@ -1,6 +1,6 @@
 # require "spec_helper"
 # 
-# describe SubmissionsController do
+# describe Subdomains::SubmissionsController do
 #   describe "routing" do
 # 
 #     it "routes to #index" do

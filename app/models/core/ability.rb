@@ -115,15 +115,15 @@ class Ability
     # Submission Rules
     can :create, Submission
     can :manage, Submission do |submission|
-      submission.custom_form.admin_profile_id == user.user_profile.id or
+      submission.admin_profile_id == user.user_profile.id or
       submission.user_profile_id == user.user_profile.id
     end
 
     # Answer Rules
     can :create, Answer
     can :manage, Answer do |answer|
-      answer.submission.custom_form.admin_profile_id == user.user_profile.id or
-      answer.submission.user_profile_id == user.user_profile.id
+      answer.submission.admin_profile_id == user.user_profile.id or
+      answer.user_profile_id == user.user_profile.id
     end
 
   end

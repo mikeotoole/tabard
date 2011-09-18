@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @discussion.name
+%p
+  %b Body:
+  = @discussion.body
+%p
+  %b Discussion space:
+  = @discussion.discussion_space_id
+%p
+  %b Character proxy:
+  = @discussion.character_proxy_id
+%p
+  %b User profile:
+  = @discussion.user_profile_id
+%p
+  %b Comments enabled:
+  = @discussion.comments_enabled
+%p
+  %b Has been locked:
+  = @discussion.has_been_locked
+
+= link_to 'Edit', edit_discussion_path(@discussion)
+\|
+= link_to 'Back', discussions_path
