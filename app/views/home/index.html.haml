@@ -1,21 +1,139 @@
+- title 'Home'
 &nbsp;
       
 #homebox
+
   %ol
     %li
+      %em 1
       %h2 Sign up.
       It’s free and takes less time than a flight to Orgrimmar.
     %li
+      %em 2
       %h2 Create.
       Character profiles, communities, pages, applications, private discussions, and a lot more.
     %li
+      %em 3
       %h2 Connect.
-      Join other communties as your character and socialize with your friends.
+      Join communties as your character(s) and socialize with your friends.
     %li
+      %em 4
       %h2 Play.
       Because you actually have time now.
+
+  %form
+  
+    %p.pitch
+      %strong Free for players.
+      -# TODO Doug, link to pricing page once it exists
+      Compare
+      = link_to 'pricing', '#'
+  
+    %h2 Ready to get started?
+    
+    %input{ :type => 'text', :title => 'Guid or clan name' }
+    %button{ :type => 'submit' } Create
+    
+    %p.url
+      %strong
+        http://
+        %kbd guildorclanname
+        \.crumblin.com
+      — Custom domain names coming soon!
+      
+    = image_tag 'main/cyborg.png'
   
 #home
-  - title 'Home'
-  %h1 Home#index
-  %p Find me in app/views/home/index.html.haml
+  
+  .col1
+  
+    %h2
+      %strong Feature Spotlight
+    %ul
+      %li
+        %h3 Character Profiles.
+        Create unique character profiles for your in-game personas. Join communities and post comments as your character, alleviating confusion and preserving your privacy.
+      %li
+        %h3 Member Applications.
+        An automated application process makes tracking and filtering applications a breeze. Moderator discussions happen right on the same page that the application is stored.
+      %li
+        %h3 Announcements.
+        Crumblin's announcement system makes the task of getting information to your members a whole lot easier. Announcents and their acknowledgements are tracked so you immediately know who heard you.
+      %li
+        %h3 Messaging.
+        Messaging is build into Crumblin and your contacts are organized by community. This makes private communication a whole lot easier than sending a DM and helps you communicate between games.
+      %li
+        %h3 User Permissions.
+        Our fine tuned permissions system is customizable per community, allowing you precise control between members, officers, and any other roles you choose to create.
+      %li
+        %h3 Discussions.
+        Forums are a lot of work. We’ve simplified the socilization of your community into manageable discussion pages that tie into a main feed. See what’s going on without checking for new posts in 10 different places.
+      %li
+        -# TODO Doug, link this to the more features page once it's created
+        = link_to 'More features', '#'
+  
+  .col2
+  
+    %h2
+      %strong Recent Activity
+      — see what’s going on in the community
+    %ul
+      %li
+        %cite New Community
+        = link_to 'StoneWatch', '#'
+        — World of Warcraft
+      %li
+        %cite New Community
+        = link_to 'Sith Rebellion', '#'
+        — Star Wars the Old Republic
+      %li
+        %cite New Community
+        = link_to 'Darth Yoda & Friends', '#'
+        — Star Wars the Old Republic
+      %li
+        %cite New Community
+        = link_to 'Nox Aeterna', '#'
+        — EVE Online
+      %li
+        %cite New Community
+        = link_to 'The Pickle Brigade', '#'
+        — Some Game
+      %li
+        Crumblin has
+        %strong 2,938
+        communities with over
+        %strong 90,195 members
+        as of Sept 3, 2011
+  
+    %h2
+      %strong Crumblin Updates
+      — sytem updates, new features, and high fives
+    %ul
+      %li
+        %time Sep 3
+        = link_to 'Lorem ipsum dolor sit amet, consectetur adipiscing', '#'
+        = link_to 'Comment', '#', :class => 'comment', :title => 'Leave a comment.'
+      %li
+        %time Aug 17
+        = link_to 'Vivamus a sodales tortor', '#'
+        = link_to 'Comment', '#', :class => 'comment', :title => 'Leave a comment.'
+      %li
+        %time May 26
+        = link_to 'Nulla dictum dolor ac augue fringilla in tempor erat commodo', '#'
+        = link_to 'Comment', '#', :class => 'comment', :title => 'Leave a comment.'
+      %li
+        %time May 1
+        = link_to 'Phasellus justo lectus, porttitor vitae ultricies a, ullamcorper vitae nis', '#'
+        = link_to 'Comment', '#', :class => 'comment', :title => 'Leave a comment.'
+      %li
+        %time Apr 14
+        = link_to 'Curabitur purus arcu, interdum rutrum interdum vitae', '#'
+        = link_to 'Comment', '#', :class => 'comment', :title => 'Leave a comment.'
+      %li
+        View posts by
+        = link_to('Archive', '#') + ','
+        = link_to('Developer\'s Journal', '#')  + ', or'
+        = link_to 'Release Notes', '#'
+        %span.meta
+          Crumblin is running
+          %strong Beta 1.0.x
