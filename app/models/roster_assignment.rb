@@ -20,3 +20,16 @@ class RosterAssignment < ActiveRecord::Base
   validates :character_proxy, :presence => true
   validates :pending, :presence => true
 end
+
+# == Schema Information
+#
+# Table name: roster_assignments
+#
+#  id                   :integer         not null, primary key
+#  community_profile_id :integer
+#  character_proxy_id   :integer
+#  pending              :boolean         default(TRUE)
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+

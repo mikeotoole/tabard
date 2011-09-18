@@ -11,4 +11,7 @@ FactoryGirl.define do
       profile.update_attribute(:community, nil)
     end
   end
+  factory :community_profile_with_characters, :parent => :community_profile do
+    user_profile { create(:user_profile_with_characters) }
+  end
 end

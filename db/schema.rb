@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917210835) do
+ActiveRecord::Schema.define(:version => 20110917220800) do
+
+  create_table "answers", :force => true do |t|
+    t.text     "body"
+    t.integer  "question_id"
+    t.integer  "submission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+  add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -61,6 +72,18 @@ ActiveRecord::Schema.define(:version => 20110917210835) do
   add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
   add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
 
+  create_table "custom_forms", :force => true do |t|
+    t.string   "name"
+    t.text     "instructions"
+    t.string   "thankyou"
+    t.boolean  "published",    :default => false
+    t.integer  "community_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
@@ -79,6 +102,28 @@ ActiveRecord::Schema.define(:version => 20110917210835) do
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
+
+  create_table "predefined_answers", :force => true do |t|
+    t.text     "body"
+    t.integer  "select_question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "predefined_answers", ["select_question_id"], :name => "index_predefined_answers_on_select_question_id"
+
+  create_table "questions", :force => true do |t|
+    t.text     "body"
+    t.integer  "custom_form_id"
+    t.string   "type"
+    t.string   "style"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "explanation"
+    t.boolean  "required",       :default => false
+  end
+
+  add_index "questions", ["custom_form_id"], :name => "index_questions_on_custom_form_id"
 
   create_table "roles", :force => true do |t|
     t.integer  "community_id"
@@ -100,6 +145,16 @@ ActiveRecord::Schema.define(:version => 20110917210835) do
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
+
+  create_table "submissions", :force => true do |t|
+    t.integer  "custom_form_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
+  add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"
@@ -129,6 +184,9 @@ ActiveRecord::Schema.define(:version => 20110917210835) do
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
+    t.string   "display_name"
+    t.boolean  "publicly_viewable", :default => true
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"
