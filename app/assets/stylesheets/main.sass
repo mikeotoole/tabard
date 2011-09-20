@@ -2,6 +2,7 @@
 
 body
   background: image-url('main/bg.png') 0 70px repeat-x #fff
+  color: #251533
   font-family: DinLight, sans
   min-width: 980px
   
@@ -11,6 +12,7 @@ body
 button,
 .button
   +bg_gradient(#d24723,#792b28)
+  border: 1px solid #eee
   +border_radius(5)
   color: #f8d5bb
   display: inline-block
@@ -22,9 +24,12 @@ button,
   padding: 0 15px
   text-decoration: none
   text-transform: lowercase  
-
+  +transition(box-shadow .2s linear)
+  
+  &:focus,
   &:hover
     +bg_gradient(#e05c2e,#9e3834)
+    +box_shadow(0 0 10px #aaa)
     color: #fff
 
 #pitch
@@ -189,10 +194,15 @@ button,
         color: #333
     
     button
+      border-color: #332344
       float: left
       margin: 0 0 0 5px
       padding: 0
       width: 70px
+      
+      &:focus,
+      &:hover
+        +box_shadow(0 0 10px #000)
     
     .url
       background: image-url('main/icon-link.png') center left no-repeat
@@ -229,6 +239,16 @@ button,
   margin: 263px 0 0
   min-height: 220px
   padding: 90px 0 0
+  
+  &:after
+    background: image-url('bar/shadow.png') top center no-repeat
+    content: ''
+    height: 70px
+    left: 0
+    pointer-events: none
+    position: absolute
+    right: 0
+    top: 340px
   
   h2
     color: #251634
@@ -373,6 +393,7 @@ button,
           color: #be4124
           padding: 0 3px
           text-decoration: underline
+          +transition(background .2s linear, color .2s linear)
           
           &:hover
             background: #be4124
@@ -488,6 +509,7 @@ button,
     color: #be4124
     padding: 0 3px
     text-decoration: underline
+    +transition(background .2s linear, color .2s linear)
     
     &:hover
       background: #be4124
@@ -499,11 +521,56 @@ button,
     color: #367BB1
     font-family: DinMedium, serif
     font-size: 30px
+    letter-spacing: -1px
     line-height: 30px
     padding: 0 0 15px
   
   p
     padding: 15px 0
+    
+  ol
+    padding: 15px 0
+    
+    li
+      counter-increment: li
+      margin: 0 20px
+      position: relative
+      
+      &:before
+        +border_radius(3)
+        content: counter(li)
+        color: #999
+        font-family: DinMedium, sans
+        font-size: 11px
+        height: 15px
+        line-height: 15px
+        left: -40px
+        padding: 0 3px
+        position: absolute
+        text-align: right
+        top: 2px
+        width: 30px
+      
+      &:hover:before
+        background: #eee
+  
+  ul
+    padding: 15px 0
+    
+    li
+      margin: 0 20px
+      position: relative
+      
+      &:before
+        border-bottom: 4px solid transparent
+        border-left: 4px solid #ccc
+        border-top: 4px solid transparent
+        content: ''
+        height: 0
+        left: -10px
+        position: absolute
+        top: 7px
+        width: 0
   
   table
     +border_radius(5)
@@ -562,6 +629,97 @@ button,
         
         &:only-child
           +border_radius(0,0,5,5)
+  
+  label
+    font-family: DinMedium, sans
+  
+  input[type="email"],
+  input[type="text"],
+  input[type="password"]
+    background: #eee
+    +bg_gradient(#ddd,#eee)
+    +border_radius(5)
+    +box_shadow(0 0 3px #ddd)
+    border: 1px solid #fff
+    line-height: 30px
+    padding: 0 10px
+    +transition(box-shadow .2s linear)
+    width: 410px
+    
+    &:focus
+      background: #d7eaf8
+      +box_shadow(0 0 8px #2d7cb4)
+      +bg_gradient(#f2f8fd,#d7eaf8)
+      color: #09558a
+  
+  input[type="checkbox"],
+  input[type="radio"]
+    margin: 5px 0 0 5px
+    position: absolute
+    z-index: 1
+    
+    + label
+      display: block
+      line-height: 24px
+      position: relative
+      text-indent: 34px
+      z-index: 2
+      
+      &:before
+        background: #eee
+        +bg_gradient(#ddd,#eee)
+        border: 1px solid #fff
+        +border_radius(5)
+        +box_shadow(0 0 3px #ddd)
+        content: ''
+        height: 24px
+        left: 0
+        position: absolute
+        top: 0
+        width: 24px
+    
+    &:focus + label
+    
+      &:before
+        background: #d7eaf8
+        +box_shadow(0 0 8px #2d7cb4)
+        +bg_gradient(#f2f8fd,#d7eaf8)
+    
+    &:checked
+
+      + label
+            
+        &:after
+          background: #ddd
+          +bg_gradient(#7a569e,#51346e)
+          border: 1px solid #ddd
+          +border_radius(20)
+          +box_shadow(0 0 9px #999)
+          content: ''
+          height: 14px
+          left: 5px
+          position: absolute
+          top: 5px
+          width: 14px
+          z-index: 2
+      
+      &:focus + label,
+      &:hover + label,
+      + label:hover
+              
+        &:after
+          background: #be4124
+          +bg_gradient(#2d7bb3,#155481)
+  
+  textarea
+  
+  .accountlinks
+    border-left: 1px solid #ccc
+    padding: 20px 30px
+    position: absolute
+    right: 30px
+    top: 60px
+    width: 340px
 
 #footer
   bottom: 0

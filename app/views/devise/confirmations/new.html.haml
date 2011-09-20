@@ -9,5 +9,6 @@
       = f.label :email
       %br/
       = f.email_field :email
-    %p= f.submit "Resend confirmation instructions"
+    %p
+      %button{ :type => 'submit' } Resend instructions
   = render "devise/shared/links"

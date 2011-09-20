@@ -1,0 +1,15 @@
+#bar
+  = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
+  
+  -# if current_user.communties.size > 0
+    %ul.menu
+      %li
+        %span My Communities
+        %ul
+    
+  %p.userbox
+    -#
+      Signed in as #{current_user.email}. Not you?
+      = link_to "Account", edit_user_registration_url(:subdomain => false), :class => 'button'
+      = link_to "Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false), :class => 'button'
+      = link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete, :class => 'button'

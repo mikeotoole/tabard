@@ -8,41 +8,8 @@
     = csrf_meta_tags
   
   %body
-  
-    #bar
-      = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
-      
-      %ul.menu
-        %li
-          = link_to 'Explore', crumblin_intro_url(:subdomain => false)
-          %ul
-            %li= link_to 'Introduction', crumblin_intro_url(:subdomain => false)
-            %li= link_to 'Features', crumblin_features_url(:subdomain => false)
-            %li= link_to 'Pricing', crumblin_pricing_url(:subdomain => false)
-        %li
-          = link_to 'Communities', '#'
-          - if active_games.size > 0
-            %ul
-              - active_games.each do |game|
-                %li= link_to game.name, game_url(game, :subdomain => false)
-      
-      %p
-        = link_to 'Sign in', new_user_session_path
-        or
-        = link_to 'Sign up', new_user_registration_path, :class => 'button'
-      
-      - if user_signed_in?
-        #user_nav
-          Signed in as #{current_user.email}. Not you?
-          \#{link_to "Edit Account", edit_user_registration_url(:subdomain => false)}
-          \#{link_to "Edit Profile", edit_user_profile_url(current_user.user_profile,:subdomain => false)}
-          \#{link_to "Sign out", destroy_user_session_url(:subdomain => false), :method => :delete}
-      - else
-        -# TODO Doug, connect search to this form once search has been added to the project
-        = form_tag('#', :method => "get") do |f|
-          - search_term ||= false
-          = text_field_tag 'query', search_term ? search_term : '', :title => 'Search'
-          = raw("<button type='submit'>Search</button>")
+    
+    = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     
     %h1#pitch
       %strong

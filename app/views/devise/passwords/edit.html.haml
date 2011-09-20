@@ -14,5 +14,6 @@
       = f.label :password_confirmation, "Confirm new password"
       %br/
       = f.password_field :password_confirmation
-    %p= f.submit "Change my password"
+    %p
+      %button{ :type => 'submit' } Change password
   = render "devise/shared/links"

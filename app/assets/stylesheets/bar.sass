@@ -47,7 +47,8 @@
       float: left
       position: relative
       
-      >a
+      >a,
+      >span
         background: #251634
         border: 1px solid #46345a
         +border_radius(5)
@@ -75,6 +76,9 @@
             right: 10px
             top: 13px
             width: 0
+      
+      >span
+        cursor: default
       
       >ul
         background: #2d7cb4
@@ -106,7 +110,8 @@
       
       &:hover
         
-        >a
+        >a,
+        >span
           background: #2d7cb4
           border-color: #4a99d0
           +transition(background .1s linear)
@@ -135,7 +140,7 @@
               padding: 8px 10px
               +transition(padding .1s linear)
   
-  p
+  p.signup
     font-size: 13px
     height: 30px
     line-height: 30px
@@ -154,6 +159,7 @@
     
     .button
       +bg_gradient(#d24723,#792b28)
+      border: 0
       +border_radius(5)
       color: #f8d5bb
       float: right
@@ -170,8 +176,10 @@
       width: 75px
       white-space: nowrap
       
+      &:focus,
       &:hover
         +bg_gradient(#e05c2e,#9e3834)
+        +box_shadow(0 0 10px #000)
         color: #fff
   
   form

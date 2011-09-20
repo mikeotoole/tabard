@@ -25,9 +25,8 @@
   
     %p.pitch
       %strong Free for players.
-      -# TODO Doug, link to pricing page once it exists
       Compare
-      = link_to 'pricing', '#'
+      = link_to 'pricing', crumblin_pricing_url(:subdomain => false)
   
     %h2 Ready to get started?
     
@@ -69,8 +68,7 @@
         %h3 Discussions.
         Forums are a lot of work. We’ve simplified the socilization of your community into manageable discussion pages that tie into a main feed. See what’s going on without checking for new posts in 10 different places.
       %li
-        -# TODO Doug, link this to the more features page once it's created
-        = link_to 'More features', '#'
+        = link_to 'More features', crumblin_features_url(:subdomain => false)
   
   .col2
   
