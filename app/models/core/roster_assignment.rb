@@ -17,6 +17,7 @@ class RosterAssignment < ActiveRecord::Base
 # Validators
 ###
   validates :community_profile, :presence => true
+  #TODO Ensure uniqueness
   validates :character_proxy, :presence => true
   validates :pending, :presence => true
 end

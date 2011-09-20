@@ -99,18 +99,64 @@ describe Community do
   end
 
   describe "protected_roster" do
+
     it "should be false by default" do
       community.protected_roster.should be_false
     end
+
     describe "when true" do
       it "should make roster changes pending" do
         pending
       end
     end
+
     describe "when false" do
       it "should not make roster changes pending" do
         pending
       end
+    end
+  end
+
+  describe "get_current_community_roster" do
+    let(:wow) { DefaultObjects.wow }
+    let(:community_profile) { create(:community_profile_with_characters) }
+    let(:community_profile2) { create(:community_profile_with_characters, :community => community_profile.community )}
+    let(:community) { community_profile2.community }
+
+    it "should return all rostered characters when game is nil" do
+      expected_size = community_profile.approved_character_proxies.size + community_profile2.approved_character_proxies.size
+      community_roster = community.get_current_community_roster
+      community_profile.approved_character_proxies.each do |proxy|
+        community_roster.include?(proxy).should be_true
+      end
+      community_profile.pending_character_proxies.each do |proxy|
+        community_roster.include?(proxy).should be_false
+      end
+      community_profile2.approved_character_proxies.each do |proxy|
+        community_roster.include?(proxy).should be_true
+      end
+      community_profile2.pending_character_proxies.each do |proxy|
+        community_roster.include?(proxy).should be_false
+      end
+      community_roster.size.should eq(expected_size)
+    end
+
+    it "should return only rostered characters that match game whem game is specified" do
+      expected_size = community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size + community_profile2.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size
+      community_roster = community.get_current_community_roster(wow)
+      community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
+        community_roster.include?(proxy).should be_true
+      end
+      community_profile.pending_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
+        community_roster.include?(proxy).should be_false
+      end
+      community_profile2.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
+        community_roster.include?(proxy).should be_true
+      end
+      community_profile2.pending_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
+        community_roster.include?(proxy).should be_false
+      end
+      community_roster.size.should eq(expected_size)
     end
   end
 
