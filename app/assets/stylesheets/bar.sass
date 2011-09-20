@@ -1,13 +1,15 @@
 @import mixins
-@import fonts/din
-@import fonts/malbeck
 
 #bar
   background: image-url('bar/bg.png') top center repeat-x
   color: #a89db4
   font-family: DinLight, sans
   height: 75px
-  position: relative
+  left: 0
+  min-width: 980px
+  position: fixed
+  right: 0
+  top: 0
   z-index: 90
   
   &:after
@@ -132,25 +134,6 @@
             >a
               padding: 8px 10px
               +transition(padding .1s linear)
-    
-  .button
-    +bg_gradient(#d24723,#792b28)
-    +border_radius(5)
-    color: #f8d5bb
-    float: right
-    font-family: Malbeck, serif
-    font-size: 16pt
-    height: 30px
-    line-height: 30px
-    letter-spacing: 1px
-    margin: 0 0 0 5px
-    padding: 0 15px
-    text-decoration: none
-    text-transform: lowercase
-    
-    &:hover
-      +bg_gradient(#e05c2e,#9e3834)
-      color: #fff
   
   p
     font-size: 13px
@@ -168,6 +151,28 @@
       
       &:hover
         color: #f26443
+    
+    .button
+      +bg_gradient(#d24723,#792b28)
+      +border_radius(5)
+      color: #f8d5bb
+      float: right
+      font-family: Malbeck, serif
+      font-size: 16pt
+      height: 30px
+      line-height: 30px
+      letter-spacing: 1px
+      padding: 0
+      margin: 0 0 0 5px
+      text-align: center
+      text-decoration: none
+      text-transform: lowercase
+      width: 75px
+      white-space: nowrap
+      
+      &:hover
+        +bg_gradient(#e05c2e,#9e3834)
+        color: #fff
   
   form
     border-left: 2px solid #554863

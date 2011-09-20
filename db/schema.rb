@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110916154035) do
+ActiveRecord::Schema.define(:version => 20110919220754) do
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20110916154035) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pretty_url"
   end
 
   create_table "permissions", :force => true do |t|

@@ -13,7 +13,7 @@ class Game < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :type
+  attr_accessible :name, :type, :pretty_url
 
 ###
 # Associations
@@ -32,6 +32,10 @@ class Game < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # Let's us access the game from pretty_url instead of id
+  def to_param
+    self.pretty_url
+  end
 
 ###
 # Class Methods
@@ -54,6 +58,7 @@ class Game < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: games
@@ -63,5 +68,6 @@ end
 #  type       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  pretty_url :string(255)
 #
 

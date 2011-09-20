@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     flash[:alert] = @exception.message
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
-      format.html { render "home/index", :status => status }
+      format.html { render "crumblin/index", :status => status }
       format.any  { head status } # only return the status code
     end
   end

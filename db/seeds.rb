@@ -8,8 +8,8 @@
 if ENV["RAILS_ENV"] != 'test'
 
 puts "Adding games!"
-Wow.create(name: 'World of Warcraft')
-Swtor.create(name: 'Star Wars the Old Republic')
+wow = Wow.create(name: 'World of Warcraft', pretty_url: 'world-of-warcraft-guilds')
+swtor = Swtor.create(name: 'Star Wars the Old Republic', pretty_url: 'star-wars-old-republic-guilds')
 
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
@@ -35,8 +35,9 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
-puts "RoboBilly is creating Just Another Headshot Clan..."
-jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
+puts "RoboBilly is creating Just Another Headshot Clan with the game SWTOR!"
+jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
+jahc.games << swtor
 
 puts "RoboBilly is creating a n00b role..."
 noob_role = jahc.roles.create(:name => "n00b")

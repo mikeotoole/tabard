@@ -3,8 +3,8 @@
 
   %head
     %title= yield_for(:title, 'Crumblin')
-    = stylesheet_link_tag "reset", "bar", "main"
-    = javascript_include_tag "application", "bar"
+    = stylesheet_link_tag "application","reset","bar","main"
+    = javascript_include_tag "application","bar"
     = csrf_meta_tags
   
   %body
@@ -14,13 +14,17 @@
       
       %ul.menu
         %li
+          = link_to 'Explore', crumblin_intro_url(:subdomain => false)
+          %ul
+            %li= link_to 'Introduction', crumblin_intro_url(:subdomain => false)
+            %li= link_to 'Features', crumblin_features_url(:subdomain => false)
+            %li= link_to 'Pricing', crumblin_pricing_url(:subdomain => false)
+        %li
           = link_to 'Communities', '#'
           - if active_games.size > 0
             %ul
               - active_games.each do |game|
                 %li= link_to game.name, game_url(game, :subdomain => false)
-        %li
-          = link_to 'Explore', '#'
       
       %p
         = link_to 'Sign in', new_user_session_path
@@ -44,8 +48,7 @@
       %strong
         Has updating your guild website become a chore?
       Crumblin simplifies community management.
-      -# TODO Doug, update link location
-      = link_to 'Learn how ›', '#'
+      = link_to 'Learn how ›', crumblin_intro_url(:subdomain => false)
           
     #flash_container
       %p.notice= notice
@@ -55,3 +58,7 @@
     #content
     
       = yield
+    
+    #footer
+      © DigitalAugment, Inc.
+      = Time.now.year
