@@ -98,10 +98,11 @@
         — Some Game
       %li
         Crumblin has
-        %strong 2,938
-        communities with over
-        %strong 90,195 members
-        as of Sept 3, 2011
+        %strong= pluralize(Community.count, 'community')
+        with over
+        %strong= pluralize(User.count, 'member')
+        as of
+        = l Time.now, :format => :short
   
     %h2
       %strong Crumblin Updates

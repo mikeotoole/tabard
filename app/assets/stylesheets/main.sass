@@ -46,11 +46,11 @@ button,
     text-decoration: underline
     
     &:hover
-      background: #eee
+      background: #367BB1
       border: none
       +border_radius(5)
       +box_shadow(0 0 25px #999)
-      color: #e83309
+      color: #fff
       text-decoration: none
   
 #content
@@ -390,6 +390,7 @@ button,
           width: 50px
         
         a
+          +border_radius(3)
           color: #be4124
           padding: 0 3px
           text-decoration: underline
@@ -397,7 +398,6 @@ button,
           
           &:hover
             background: #be4124
-            +border_radius(3)
             +box_shadow(0 0 15px #ccc)
             color: #fff
             text-decoration: none
@@ -506,6 +506,7 @@ button,
   width: 900px
   
   a:not(.button)
+    +border_radius(3)
     color: #be4124
     padding: 0 3px
     text-decoration: underline
@@ -513,7 +514,6 @@ button,
     
     &:hover
       background: #be4124
-      +border_radius(3)
       color: #fff
       text-decoration: none
   
@@ -641,6 +641,7 @@ button,
     +border_radius(5)
     +box_shadow(0 0 3px #ddd)
     border: 1px solid #fff
+    display: block
     line-height: 30px
     padding: 0 10px
     +transition(box-shadow .2s linear)
