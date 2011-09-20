@@ -59,6 +59,14 @@ class Subdomains::RolesController < SubdomainsController
     respond_with(@role)
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###  
   ###
   # _before_filter_
   #

@@ -1,83 +1,95 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is handling comments within the scope of subdomains (communities).
+###
 class Subdomains::CommentsController < ApplicationController
-  # GET /comments
-  # GET /comments.json
-  def index
-    @comments = Comment.all
+  respond_to :html
+###
+# Before Filters
+###
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+  skip_before_filter :limit_subdomain_access
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @comments }
-    end
-  end
-
+###
+# REST Actions
+###
   # GET /comments/1
-  # GET /comments/1.json
   def show
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @comment }
-    end
   end
 
   # GET /comments/new
-  # GET /comments/new.json
   def new
-    @comment = Comment.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @comment }
-    end
+    @comment.commentable_id = params[:commentable_id]
+    @comment.commentable_type = params[:commentable_type]
+    @comment.form_target = params[:form_target]
+    @comment.comment_target = params[:comment_target]
   end
 
   # GET /comments/1/edit
   def edit
-    @comment = Comment.find(params[:id])
+    respond_with(@comment)
   end
 
   # POST /comments
-  # POST /comments.json
   def create
-    @comment = Comment.new(params[:comment])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render json: @comment, status: :created, location: @comment }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
-    end
+    add_new_flash_message('Comment was successfully created.')  if @comment.save
+    respond_with(@comment) 
   end
 
   # PUT /comments/1
-  # PUT /comments/1.json
   def update
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    @comment.has_been_edited = true
+    if @comment.update_attributes(params[:comment])
+      add_new_flash_message('Comment was successfully updated.')
+      redirect_to url_for(@comment.original_comment_item), :action => :show
+      return
+    else
+      respond_with(@comment)
     end
   end
 
   # DELETE /comments/1
-  # DELETE /comments/1.json
   def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy
+    @comment.has_been_deleted = true;
+    if @comment.save
+      add_new_flash_message('Comment was successfully deleted.')
+      redirect_to url_for(@comment.original_comment_item), :action => :show
+      return
+    else
+      add_new_flash_message('Comment was unable to be deleted.', 'alert')
+      redirect_to url_for(@comment.original_comment_item), :action => :show
+      return
+    end  
+  end
 
-    respond_to do |format|
-      format.html { redirect_to comments_url }
-      format.json { head :ok }
+###
+# Added Actions
+###  
+  # POST /comments/:id/lock(.:format) 
+  def lock
+    @comment.has_been_locked = true
+    if @comment.save
+      add_new_flash_message("Comment was successfully locked.")
+    else
+      add_new_flash_message("Comment was not locked, internal rails error.", 'alert')
     end
+    redirect_to :back
+    return
+  end
+
+  # POST /comments/:id/unlock(.:format)
+  def unlock
+    @comment.has_been_locked = false
+    if @comment.save
+      add_new_flash_message("Comment was successfully unlocked.")
+    else
+      add_new_flash_message("Comment was not unlocked, internal rails error.", 'alert')
+    end
+    redirect_to :back
+    return
   end
 end

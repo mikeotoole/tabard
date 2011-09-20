@@ -81,6 +81,42 @@ protected
     end
   end
 
+###
+# Active Character/Profile
+###
+  # Predicate method to test for an active profile.
+  def profile_active?
+    session[:profile_type] =~ /UserProfile/ || character_active?
+  end
+  helper_method :profile_active?
+
+  # Method to check for active character.
+  def character_active?
+    session[:profile_type] =~ /Character$/
+  end
+  helper_method :character_active?
+
+  # Returns the currently active character or nil if there isn't one.
+  def current_character
+    return unless character_active?
+    if defined? session[:profile_type].constantize
+      @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
+    end
+  end
+  helper_method :current_character
+
+  # Returns the currently active user profile or nil if there isn't one.
+  def current_profile
+    return unless profile_active?
+    if defined? session[:profile_type].constantize
+      @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
+    end
+  end
+  helper_method :current_profile
+
+###
+# Callback Methods
+###
   ###
   # _before_filter_
   #

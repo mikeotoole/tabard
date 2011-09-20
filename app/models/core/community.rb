@@ -20,6 +20,9 @@ class Community < ActiveRecord::Base
   has_many :supported_games
   has_many :games, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
+  has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :discussions, :through => :discussion_spaces
+  has_many :comments
 
 ###
 # Callbacks
@@ -43,6 +46,10 @@ class Community < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Instance Methods
+###
   ###
   # This method promotes a user to a member, doing all of the business logic for you.
   # [Args]
@@ -59,16 +66,9 @@ class Community < ActiveRecord::Base
 ###
 protected
 
-  ###
-  # _before_save_
-  #
-  # This method automatically updates this community's subdomain from this community's name.
-  # [Returns] False if an error occured, otherwise true.
-  ###
-  def update_subdomain
-    self.subdomain = Community.convert_to_subdomain(name)
-  end
-
+###
+# Class Methods
+###
   ###
   # This method converts the name passed to it into the corrosponding subdomain representation.
   # [Args]
@@ -80,6 +80,9 @@ protected
     name.downcase.gsub(/[\s\-]/,"")
   end
 
+###
+# Instance Methods
+###
   ###
   # This method ensures that the name is not changed.
   ###
@@ -90,6 +93,20 @@ protected
       return false
     end
   end
+
+###
+# Callback Methods
+###
+  ###
+  # _before_save_
+  #
+  # This method automatically updates this community's subdomain from this community's name.
+  # [Returns] False if an error occured, otherwise true.
+  ###
+  def update_subdomain
+    self.subdomain = Community.convert_to_subdomain(name)
+  end
+
 
   ###
   # _after_create_

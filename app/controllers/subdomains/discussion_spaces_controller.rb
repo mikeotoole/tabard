@@ -1,83 +1,87 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is handling discussion spaces within the scope of subdomains (communities).
+###
 class Subdomains::DiscussionSpacesController < ApplicationController
-  # GET /discussion_spaces
-  # GET /discussion_spaces.json
-  def index
-    @discussion_spaces = DiscussionSpace.all
+  respond_to :html
+###
+# Before Filters
+###
+  before_filter :authenticate_user!
+  before_filter :load_discussion_space, :except => [:new, :create, :index]
+  before_filter :create_discussion_space, :only => [:new, :create]
+  authorize_resource :except => :index
+  skip_before_filter :limit_subdomain_access
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @discussion_spaces }
-    end
+###
+# REST Actions
+###
+  # GET /discussion_spaces
+  def index
+    @discussion_spaces = current_community.discussion_spaces
+    authorize! :index, @discussion_spaces
   end
 
   # GET /discussion_spaces/1
-  # GET /discussion_spaces/1.json
   def show
-    @discussion_space = DiscussionSpace.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @discussion_space }
-    end
   end
 
   # GET /discussion_spaces/new
-  # GET /discussion_spaces/new.json
   def new
-    @discussion_space = DiscussionSpace.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @discussion_space }
-    end
   end
 
   # GET /discussion_spaces/1/edit
   def edit
-    @discussion_space = DiscussionSpace.find(params[:id])
+    respond_with(@discussion_space)
   end
 
   # POST /discussion_spaces
-  # POST /discussion_spaces.json
   def create
-    @discussion_space = DiscussionSpace.new(params[:discussion_space])
-
-    respond_to do |format|
-      if @discussion_space.save
-        format.html { redirect_to @discussion_space, notice: 'Discussion space was successfully created.' }
-        format.json { render json: @discussion_space, status: :created, location: @discussion_space }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @discussion_space.errors, status: :unprocessable_entity }
-      end
-    end
+    @discussion_space.user_profile = current_user.user_profile
+    add_new_flash_message('Discussion space was successfully created.') if @discussion_space.save
+    respond_with(@discussion_space)
   end
 
   # PUT /discussion_spaces/1
-  # PUT /discussion_spaces/1.json
   def update
-    @discussion_space = DiscussionSpace.find(params[:id])
-
-    respond_to do |format|
-      if @discussion_space.update_attributes(params[:discussion_space])
-        format.html { redirect_to @discussion_space, notice: 'Discussion space was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @discussion_space.errors, status: :unprocessable_entity }
-      end
+    if @discussion_space.update_attributes(params[:discussion_space])
+      add_new_flash_message('Discussion space was successfully updated.')
     end
+    respond_with(@discussion_space)
   end
 
   # DELETE /discussion_spaces/1
-  # DELETE /discussion_spaces/1.json
   def destroy
-    @discussion_space = DiscussionSpace.find(params[:id])
-    @discussion_space.destroy
+    add_new_flash_message('Discussion space was successfully deleted.') if @discussion_space.destroy
+    respond_with(@discussion_space)
+  end
 
-    respond_to do |format|
-      format.html { redirect_to discussion_spaces_url }
-      format.json { head :ok }
-    end
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###  
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to populate @discussion_space from the current_community.
+  ###
+  def load_discussion_space
+    @discussion_space = current_community.discussion_spaces.find_by_id(params[:id]) if current_community
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to create @discussion_space from: discussion_spaces.new(params[:custom_form]), for the current community.
+  ###
+  def create_discussion_space
+    @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
   end
 end

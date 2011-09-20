@@ -11,13 +11,15 @@ class Subdomains::CustomFormsController < SubdomainsController
   # Before Filters
   ###
   before_filter :authenticate_user!
-  before_filter :load_custom_form, :except => [:new, :create]
+  before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
-  authorize_resource
+  authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
   def index
+    @custom_forms = current_community.custom_forms
+    authorize! :index, @custom_forms
   end
 
   # GET /custom_forms/1
@@ -55,26 +57,29 @@ class Subdomains::CustomFormsController < SubdomainsController
     respond_with(@custom_form)
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
   ###
   # _before_filter_
   #
-  # This before filter attempts to populate @custom_forms and @custom_form from the current_community.
+  # This before filter attempts to populate @custom_form from the current_community.
   ###
   def load_custom_form
-    @custom_forms = current_community.custom_forms
-    @custom_form = current_community.custom_forms.find_by_id(params[:id])
+    @custom_form = current_community.custom_forms.find_by_id(params[:id]) if current_community
   end
 
   ###
   # _before_filter_
   #
-  # This before filter attempts to create @custom_form from: custom_forms.new(params[:custom_form]) or custom_forms.new(), for the current community.
+  # This before filter attempts to create @custom_form from: custom_forms.new(params[:custom_form]), for the current community.
   ###
   def create_custom_form
-    if(params[:custom_form])
-      @custom_form = current_community.custom_forms.new(params[:custom_form])
-    else
-      @custom_form = current_community.custom_forms.new
-    end
+    @custom_form = current_community.custom_forms.new(params[:custom_form]) if current_community
   end
 end

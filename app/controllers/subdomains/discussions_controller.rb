@@ -1,83 +1,106 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is handling discussions within the scope of subdomains (communities).
+###
 class Subdomains::DiscussionsController < ApplicationController
-  # GET /discussions
-  # GET /discussions.json
+  respond_to :html
+###
+# Before Filters
+###
+  before_filter :authenticate_user!
+  load_and_authorize_resource :except => [:new, :create, :index]
+  before_filter :create_discussion, :only => [:new, :create]
+  authorize_resource :only => [:new, :create]
+  skip_before_filter :limit_subdomain_access
+
+###
+# REST Actions
+###  
+  # GET /discussion_spaces/:discussion_space_id/discussions(.:format)
   def index
-    @discussions = Discussion.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @discussions }
-    end
+    discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
+    @discussions = discussion_space.discussions if discussion_space
+    authorize! :index, @discussions
   end
 
-  # GET /discussions/1
-  # GET /discussions/1.json
+  # GET /discussions/:id(.:format)
   def show
-    @discussion = Discussion.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @discussion }
-    end
   end
 
-  # GET /discussions/new
-  # GET /discussions/new.json
+  # GET /discussion_spaces/:discussion_space_id/discussions/new(.:format)
   def new
-    @discussion = Discussion.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @discussion }
-    end
   end
 
-  # GET /discussions/1/edit
+  # GET /discussions/:id/edit(.:format)
   def edit
-    @discussion = Discussion.find(params[:id])
+    respond_with(@discussion)
   end
 
-  # POST /discussions
-  # POST /discussions.json
+  # POST /discussion_spaces/:discussion_space_id/discussions(.:format)
   def create
-    @discussion = Discussion.new(params[:discussion])
-
-    respond_to do |format|
-      if @discussion.save
-        format.html { redirect_to @discussion, notice: 'Discussion was successfully created.' }
-        format.json { render json: @discussion, status: :created, location: @discussion }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @discussion.errors, status: :unprocessable_entity }
-      end
-    end
+    add_new_flash_message('Discussion was successfully created.') if @discussion.save
+    respond_with(@discussion)
   end
 
-  # PUT /discussions/1
-  # PUT /discussions/1.json
+  # PUT /discussions/:id(.:format)
   def update
-    @discussion = Discussion.find(params[:id])
-
-    respond_to do |format|
-      if @discussion.update_attributes(params[:discussion])
-        format.html { redirect_to @discussion, notice: 'Discussion was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @discussion.errors, status: :unprocessable_entity }
-      end
+    if @discussion.update_attributes(params[:discussion])
+      add_new_flash_message('Discussion was successfully updated.')
     end
+    respond_with(@discussion)
   end
 
-  # DELETE /discussions/1
-  # DELETE /discussions/1.json
+  # DELETE /discussions/:id(.:format)
   def destroy
-    @discussion = Discussion.find(params[:id])
-    @discussion.destroy
+    add_new_flash_message('Discussion was successfully deleted.') if @discussion.destroy
+    respond_with(@discussion)
+  end
 
-    respond_to do |format|
-      format.html { redirect_to discussions_url }
-      format.json { head :ok }
+###
+# Added Actions
+###  
+  # POST /discussions/:id/lock(.:format)
+  def lock
+    @discussion.has_been_locked = true
+    if @discussion.save
+      add_new_flash_message("Discussion was successfully locked.")
+    else
+      add_new_flash_message("Discussion was not locked, internal rails error.", 'alert')
     end
+    redirect_to :back
+    return
+  end
+
+  # POST /discussions/:id/unlock(.:format)
+  def unlock
+    @discussion.has_been_locked = false
+    if @discussion.save
+      add_new_flash_message("Discussion was successfully unlocked.")
+    else
+      add_new_flash_message("Discussion was not unlocked, internal rails error.", 'alert')
+    end
+    redirect_to :back
+    return
+  end
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to create @discussion from: discussions.new(params[:discussion]), for the discussion space.
+  ###
+  def create_discussion
+    discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
+    @discussion = discussion_space.discussions.new(params[:discussion])
   end
 end

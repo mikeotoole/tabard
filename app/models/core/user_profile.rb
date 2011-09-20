@@ -121,6 +121,15 @@ class UserProfile < ActiveRecord::Base
     self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
   end
 
+  ###
+  # This method checks if the user is a member of the given community.
+  # [Args]
+  #   * +community+ The community to check membership of.
+  # [Returns] True if member of the community false otherwise.
+  def is_member?(community)
+  	self.roles.include?(community.member_role)
+  end
+
 ###
 # Protected Methods
 ###

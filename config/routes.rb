@@ -39,13 +39,24 @@ DaBvRails::Application.routes.draw do
         end
       end
 
-      # Discussion Forms
-      resources :comments
+      # Discussions
+      resources :comments, :except => :index do
+        member do
+          post :lock
+          post :unlock
+        end
+      end
       resources :discussion_spaces do
-        resources :discussions, :shallow => true
+        resources :discussions, :shallow => true do
+          member do
+            post :lock
+            post :unlock
+          end
+        end  
       end
 
     end
+    
   end
 
   # Home

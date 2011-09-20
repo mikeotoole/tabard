@@ -114,18 +114,46 @@ class Ability
 
     # Submission Rules
     can :create, Submission
-    can :manage, Submission do |submission|
+    can [:read, :destroy], Submission do |submission|
       submission.admin_profile_id == user.user_profile.id or
+      submission.user_profile_id == user.user_profile.id
+    end
+    can [:update], Submission do |answer|
       submission.user_profile_id == user.user_profile.id
     end
 
     # Answer Rules
     can :create, Answer
-    can :manage, Answer do |answer|
+    can [:read, :destroy], Answer do |answer|
       answer.submission.admin_profile_id == user.user_profile.id or
       answer.user_profile_id == user.user_profile.id
     end
+    can [:update], Answer do |answer|
+      answer.user_profile_id == user.user_profile.id
+    end
 
+    # Comment and Discussion Rules
+    can [:read, :create], [Comment, Discussion] do |object|
+      user.user_profile.is_member?(object.community)
+    end
+    can [:update], [Comment, Discussion] do |object|
+      (object.user_profile_id == user.user_profile.id) and not object.has_been_locked
+    end
+    can [:destroy], [Comment, Discussion] do |object|
+      object.community.admin_profile_id == user.user_profile.id or
+      ((object.user_profile_id == user.user_profile.id) and not object.has_been_locked)
+    end
+    can [:unlock, :lock], [Comment, Discussion] do |object|
+      object.community.admin_profile_id == user.user_profile.id
+    end
+    
+    # Discussion Space Rules
+    can [:read], DiscussionSpace do |space|
+      user.user_profile.is_member?(space.community)
+    end
+    can [:update, :destroy, :create], DiscussionSpace do |space|
+      space.community.admin_profile_id == user.user_profile.id
+    end
   end
 
   ###
