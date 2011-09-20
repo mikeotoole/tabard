@@ -114,6 +114,7 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -128,5 +129,6 @@ end
 #  updated_at                  :datetime
 #  admin_profile_id            :integer
 #  member_role_id              :integer
+#  protected_roster            :boolean         default(FALSE)
 #
 
