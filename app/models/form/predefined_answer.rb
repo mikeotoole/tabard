@@ -6,21 +6,21 @@
 # This class represents a predefined answer.
 ###
 class PredefinedAnswer < ActiveRecord::Base
-###
-# Attribute accessible
-###
-  attr_accessible :body, :select_question_id
+   ###
+   # Attribute accessible
+   ###
+   attr_accessible :body, :select_question_id
 
-###
-# Associations
-###
-  belongs_to :select_question
+   ###
+   # Associations
+   ###
+   belongs_to :select_question
 
-###
-# Validators
-###
-  validates :body, :presence => true
-  validates :select_question, :presence => true
+   ###
+   # Validators
+   ###
+   validates :body, :presence => true
+   validates :select_question, :presence => true
 end
 
 # == Schema Information

@@ -47,32 +47,35 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # PUT /questions/:id(.:format)
   def update # TODO Joe, How can we move this logic to the model? -MO
-    if @question
-      if !@question.answers.empty?
-        new_question = @question.clone
-        @question.custom_form_id = nil
-        @question.save
-        @question = new_question
-      end
-      add_new_flash_message('Question was successfully updated.') if @question.update_attributes(params[:question])
+    if @question and !@question.answers.empty?
+      new_question = @question.clone
+      @question.custom_form_id = nil
+      @question.save
+      @question = new_question
     end
+    add_new_flash_message('Question was successfully updated.') if @question.update_attributes(params[:question])
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
 
   # DELETE /questions/:id(.:format)
   def destroy # TODO Joe, How can we move this logic to the model? -MO
-    if @question
-      q_custom_form = @question.custom_form
-      if @question.answers.empty?
-        add_new_flash_message('Question was successfully deleted.') if @question.destroy
-      else
-        @question.custom_form_id = nil
-        add_new_flash_message('Question was successfully deleted.') if @question.save
-      end
+    if @question and @question.answers.empty?
+      add_new_flash_message('Question was successfully deleted.') if @question.destroy
+    else
+      @question.custom_form_id = nil
+      add_new_flash_message('Question was successfully deleted.') if @question.save
     end
-    respond_with(@question, :location => custom_form_url(q_custom_form))
+    respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
   ###
   # _before_filter_
   #

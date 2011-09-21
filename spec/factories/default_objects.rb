@@ -5,6 +5,8 @@ class DefaultObjects
   
   def self.user_profile
     @user_profile ||= FactoryGirl.create(:user_profile, :user => FactoryGirl.create(:user))
+    DefaultObjects.community.promote_user_profile_to_member(@user_profile)
+    @user_profile
   end
   
   def self.wow
@@ -35,6 +37,14 @@ class DefaultObjects
     @custom_form ||= FactoryGirl.create(:custom_form)
   end
   
+  def self.discussion_space
+    @discussion_space ||= FactoryGirl.create(:discussion_space)
+  end
+  
+  def self.discussion
+    @discussion ||= FactoryGirl.create(:discussion, :discussion_space_id => DefaultObjects.discussion_space.id)
+  end
+  
   def self.clean
     @user = nil
     @user_profile = nil
@@ -45,5 +55,7 @@ class DefaultObjects
     @community_admin = nil
     @wow_character_proxy = nil
     @swtor_character_proxy = nil
+    @discussion_space = nil
+    @discussion = nil
   end
 end

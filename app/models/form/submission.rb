@@ -7,11 +7,6 @@
 ###
 class Submission < ActiveRecord::Base
 ###
-# Attribute accessible
-###
-  attr_accessible :custom_form_id, :user_profile_id
-
-###
 # Associations
 ###
   belongs_to :custom_form
@@ -29,6 +24,11 @@ class Submission < ActiveRecord::Base
 ###
   validates :custom_form, :presence => true
   validates :user_profile, :presence => true
+
+###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :allow_nil => true
 
 ###
 # Public Methods

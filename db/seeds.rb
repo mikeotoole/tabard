@@ -59,4 +59,49 @@ jahc.promote_user_profile_to_member(d_badger.user_profile)
 
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
+
+puts "Creating SWTOR Game"
+swtor = Game.create(:name => "Star Wars the Old Republic", :type => "Swtor")
+
+puts "Creating WoW Game"
+wow = Game.create(:name => "World of Warcraft", :type => "Wow")
+
+puts "Creating Just Another Headshot Clan General Discussion Space"
+gds = jahc.discussion_spaces.new(:name => "General Discussion Space")
+gds.user_profile = robobilly.user_profile
+gds.save
+
+puts "Creating Just Another Headshot Clan WoW Discussion Space"
+wds = jahc.discussion_spaces.new(:name => "WoW Discussion Space", :game => wow)
+wds.user_profile = robobilly.user_profile
+wds.save
+
+puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
+sds = jahc.discussion_spaces.new(:name => "SWTOR Discussion Space", :game => swtor)
+sds.user_profile = robobilly.user_profile
+sds.save
+
+puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
+gd = gds.discussions.new(:name => "General Discussion Space", :body => "Whats up team?")
+gd.user_profile = robobilly.user_profile
+gd.save
+
+puts "Creating Just Another Headshot Clan WoW Discussion Space Discussion"
+wd = wds.discussions.new(:name => "General WoW Discussion", :body => "YAY lets discuss WoW")
+wd.user_profile = robobilly.user_profile
+wd.save
+
+puts "Creating Just Another Headshot Clan SWTOR Discussion Space Discussion"
+sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss WoW")
+sd.user_profile = robobilly.user_profile
+sd.save
+
+puts "Adding comments to general discussion space discussion"
+comment1 = gd.comments.new(:body => "What's up RoboBilly!")
+comment1.user_profile = d_moose.user_profile
+comment1.save
+comment2 = comment1.comments.new(:body => "What's up Diabolical Moose!")
+comment2.user_profile = s_turtle.user_profile
+comment2.save
+
 end

@@ -1,6 +1,6 @@
 # require "spec_helper"
 # 
-# describe CustomFormsController do
+# describe Subdomains::CustomFormsController do
 #   describe "routing" do
 # 
 #     it "routes to #index" do

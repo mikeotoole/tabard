@@ -1,9 +1,9 @@
-= form_for @answer do |f|
-  -if @answer.errors.any?
+= form_for answer do |f|
+  -if answer.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@answer.errors.count, "error")} prohibited this answer from being saved:"
+      %h2= "#{pluralize(answer.errors.count, "error")} prohibited this answer from being saved:"
       %ul
-        - @answer.errors.full_messages.each do |msg|
+        - answer.errors.full_messages.each do |msg|
           %li= msg
 
   .field

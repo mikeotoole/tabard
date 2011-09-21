@@ -9,7 +9,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :instructions, :thankyou, :published, :community_id
+  attr_accessible :name, :instructions, :thankyou, :published
 
 ###
 # Associations
@@ -28,6 +28,9 @@ class CustomForm < ActiveRecord::Base
   validates :thankyou, :presence => true
   validates :community, :presence => true
 
+###
+# Delegates
+###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
 
 ###

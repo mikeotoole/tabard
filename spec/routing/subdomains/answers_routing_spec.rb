@@ -1,6 +1,6 @@
 # require "spec_helper"
 # 
-# describe AnswersController do
+# describe Subdomains::AnswersController do
 #   describe "routing" do
 # 
 #     it "routes to #index" do
