@@ -12,6 +12,7 @@ class Subdomains::SubmissionsController < ApplicationController
   # Before Filters
   ###
   before_filter :authenticate_user!
+  before_filter :load_custom_form_from_id
   before_filter :load_submissions, :only => [:index]
   before_filter :create_submission, :only => [:new, :create]
   load_and_authorize_resource :except => [:index, :new, :create]
@@ -24,12 +25,12 @@ class Subdomains::SubmissionsController < ApplicationController
 
   # GET /submissions/:id(.:format)
   def show
-    respond_with(@submission)
+
   end
 
   # GET /custom_forms/:custom_form_id/submissions/new(.:format)
   def new
-    respond_with(@submission)
+
   end
 
   # POST /custom_forms/:custom_form_id/submissions(.:format)
@@ -49,11 +50,19 @@ class Subdomains::SubmissionsController < ApplicationController
   ###
   # _before_filter_
   #
+  # This before filter loads the custom form from the id params.
+  ###
+  def load_custom_form_from_id
+    @form = CustomForm.find_by_id(params[:custom_form_id])
+  end
+
+  ###
+  # _before_filter_
+  #
   # This before filter attempts to populate @submissions from the custom form.
   ###
   def load_submissions
-    form = CustomForm.find_by_id(params[:custom_form_id])
-    @submissions = form.submissions if form
+    @submissions = @form.submissions if @form
   end
 
   ###
@@ -62,7 +71,6 @@ class Subdomains::SubmissionsController < ApplicationController
   # This before filter attempts to create @submission from: submissions.new(params[:submission]) or submissions.new(), for the current custom form.
   ###
   def create_submission
-    form = CustomForm.find_by_id(params[:custom_form_id])
-    @submission = form.submissions.new(params[:submission]) if form
+    @submission = @form.submissions.new(params[:submission]) if @form
   end
 end

@@ -24,17 +24,17 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # GET /custom_forms/1
   def show
-    respond_with(@custom_form)
+
   end
 
   # GET /custom_forms/new
   def new
-    respond_with(@custom_form)
+
   end
 
   # GET /custom_forms/1/edit
   def edit
-    respond_with(@custom_form)
+
   end
 
   # POST /custom_forms

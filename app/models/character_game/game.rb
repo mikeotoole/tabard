@@ -57,6 +57,7 @@ class Game < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: games
@@ -66,5 +67,6 @@ end
 #  type       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  pretty_url :string(255)
 #
 
