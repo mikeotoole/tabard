@@ -3,57 +3,57 @@ source 'http://rubygems.org'
 # Rails Gem
   gem 'rails'
 
-  # Gems used only for assets and not required
-  # in production environments by default.
+# Javascript Library
+  gem 'jquery-rails'
+
+# Meta Languages
+  gem 'haml'
+  gem 'squeel'
+
+# User Authentication
+  gem 'devise'
+
+# Permissions/AC
+  gem 'cancan'
+
+# Form Handling
+  gem 'simple_form'
+  gem 'client_side_validations'
+
+# WYSIWYG
+  #gem 'tiny_mce'
+
+# Image Storage and Manipulation
+  gem 'fog'
+  gem 'mini_magick'
+  gem 'carrierwave'
+
+# Production Specific Gems
+  group :production do
+    gem 'heroku'
+    gem 'thin'
+    gem 'pg'
+    gem 'newrelic_rpm'
+  end
+
+# Asset Specific Gems
   group :assets do
     gem 'sass-rails'
     gem 'coffee-rails'
     gem 'uglifier'
   end
 
-  gem 'jquery-rails'
-
-# Global Gems
-  # Meta Languages
-    gem 'haml'
-    #gem 'sass'
-    gem 'squeel'
-    #gem 'coffee-script'
-
-  # User Authentication
-    gem 'devise'
-  # Permissions/AC
-    gem 'cancan'
-
-  # Form Handling
-    gem 'simple_form'
-    gem 'client_side_validations'
-
-  # WYSIWYG
-    #gem 'tiny_mce'
-
-  # Image Storage and Manipulation
-    gem 'fog'
-    gem 'mini_magick'
-    gem 'carrierwave'
-
-# Multi-Group Gems
-    gem 'rspec-rails', :group => [:development, :test]
+# Development and Test Specific Gems
+  group :development, :test do
+    gem 'sqlite3'
+    gem 'rspec-rails'
+  end
 
 # Development Specific Gems
   group :development do
-    gem 'annotate' # Documentation Helper
-    gem 'rails_best_practices' # Best Practices Gem
-    gem 'sqlite3'
-    gem 'haml-rails' # Haml Generator Gem
-  end
-
-# Production Specific Gems
-  group :production do
-    gem 'heroku'
-    #gem 'thin'
-    #gem 'pg'
-    gem 'newrelic_rpm'
+    gem 'annotate'
+    gem 'rails_best_practices'
+    gem 'haml-rails'
   end
 
 # Test Specific Gems
