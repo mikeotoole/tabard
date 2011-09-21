@@ -9,8 +9,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :comments_enabled, :has_been_locked, 
-      :user_profile_id, :character_proxy_id, :discussion_space_id
+  attr_accessible :name, :body, :comments_enabled, :has_been_locked
 
 ###
 # Associations
@@ -20,11 +19,6 @@ class Discussion < ActiveRecord::Base
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
   has_one :community, :through => :discussion_space
-
-###
-# Callbacks
-###
-  before_create :add_user_and_character
 
 ###
 # Validators
@@ -73,35 +67,6 @@ class Discussion < ActiveRecord::Base
      temp_total_num_comments += comment.number_of_comments
    end
    temp_total_num_comments
-  end
-
-  ###
-  # This method defines how locking permissions are determined for this discussion.
-  # [Args]
-  #   * +user+ -> The user who you would like to check.
-  # [Returns] True if the provided user can lock this discussion, otherwise false.
-  ###
-  def can_user_lock(user)
-    return true if user and user.user_profile == self.discussion_space.user_profile
-    user.can_special_permissions("Discussion","lock")
-  end
-  
-###
-# Protected Methods
-###
-protected
-
-###
-# Callback Methods
-###
-  ###
-  # _before_filter_
-  #
-  # This before filter adds the current users user_profile and the current character if it exists.
-  ###  
-  def add_user_and_character
-    self.user_profile = current_user.user_profile
-    self.character_proxy = (character_active? ? current_character.character_proxy : nil)
   end
 end
 

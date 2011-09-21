@@ -5,7 +5,7 @@
 #
 # This controller is handling discussion spaces within the scope of subdomains (communities).
 ###
-class Subdomains::DiscussionSpacesController < ApplicationController
+class Subdomains::DiscussionSpacesController < SubdomainsController
   respond_to :html
 ###
 # Before Filters
@@ -40,7 +40,6 @@ class Subdomains::DiscussionSpacesController < ApplicationController
 
   # POST /discussion_spaces
   def create
-    @discussion_space.user_profile = current_user.user_profile
     add_new_flash_message('Discussion space was successfully created.') if @discussion_space.save
     respond_with(@discussion_space)
   end
@@ -83,5 +82,6 @@ protected
   ###
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
+    @discussion_space.user_profile = current_user.user_profile if @discussion_space
   end
 end

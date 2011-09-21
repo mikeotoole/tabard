@@ -9,8 +9,7 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###  
-  attr_accessible :body, :commentable, :character_proxy_id, :user_profile_id, 
-      :community_id, :has_been_deleted, :has_been_edited, :has_been_locked
+  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked
 
 ###
 # Attribute accessor
@@ -37,7 +36,7 @@ class Comment < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_create :get_community_id_from_source, :add_user_and_character
+  after_initialize :get_community_id_from_source
 
 ###
 # Validators
@@ -117,17 +116,6 @@ class Comment < ActiveRecord::Base
         (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end
 
-  ###
-  # This method defines how lock permissions are determined for this comment.
-  # [Args]
-  #   * +user+ -> The user who you would like to check.
-  # [Returns] True if the provided user can lock this comment, otherwise false.
-  ###
-  def can_user_lock(user)
-    # TODO** Mike/Joe, How should this be implemented? -MO
-#     user.can_special_permissions("Comment","lock")
-  end
-
   # The commentable_type always needs to be of the base class type and not the subclass type.
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
@@ -148,23 +136,13 @@ protected
   # [Returns] False if an error was encountered, otherwise true.
   ###
   def get_community_id_from_source
-    return if self.community
+    return if self.community or not self.commentable_id
     if self.commentable.respond_to?('community')
       self.community = self.commentable.community
     elsif self.original_comment_item.respond_to?('community')
       self.community = self.original_comment_item.community
     end
   end
-  
-  ###
-  # _before_filter_
-  #
-  # This before filter adds the current users user_profile and the current character if it exists.
-  ###  
-  def add_user_and_character
-    self.user_profile = current_user.user_profile
-    self.character_proxy = (character_active? ? current_character.character_proxy : nil)
-  end  
 end
 
 

@@ -19,132 +19,175 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::DiscussionSpacesController do
+  let(:user) { DefaultObjects.user }
+  let(:admin) { DefaultObjects.community_admin }
+  let(:community) { DefaultObjects.community }
+  let(:space) { DefaultObjects.discussion_space }
+  let(:discussion) { DefaultObjects.discussion }
 
-#   describe "GET index" do
-#     it "assigns all discussion_spaces as @discussion_spaces" do
-#       discussion_space = DiscussionSpace.create! valid_attributes
-#       get :index
-#       assigns(:discussion_spaces).should eq([discussion_space])
-#     end
-#   end
-# 
-#   describe "GET show" do
-#     it "assigns the requested discussion_space as @discussion_space" do
-#       discussion_space = DiscussionSpace.create! valid_attributes
-#       get :show, :id => discussion_space.id.to_s
-#       assigns(:discussion_space).should eq(discussion_space)
-#     end
-#   end
-# 
-#   describe "GET new" do
-#     it "assigns a new discussion_space as @discussion_space" do
-#       get :new
-#       assigns(:discussion_space).should be_a_new(DiscussionSpace)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested discussion_space as @discussion_space" do
-#       discussion_space = DiscussionSpace.create! valid_attributes
-#       get :edit, :id => discussion_space.id.to_s
-#       assigns(:discussion_space).should eq(discussion_space)
-#     end
-#   end
-# 
-#   describe "POST create" do
-#     describe "with valid params" do
-#       it "creates a new DiscussionSpace" do
-#         expect {
-#           post :create, :discussion_space => valid_attributes
-#         }.to change(DiscussionSpace, :count).by(1)
-#       end
-# 
-#       it "assigns a newly created discussion_space as @discussion_space" do
-#         post :create, :discussion_space => valid_attributes
-#         assigns(:discussion_space).should be_a(DiscussionSpace)
-#         assigns(:discussion_space).should be_persisted
-#       end
-# 
-#       it "redirects to the created discussion_space" do
-#         post :create, :discussion_space => valid_attributes
-#         response.should redirect_to(DiscussionSpace.last)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns a newly created but unsaved discussion_space as @discussion_space" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         DiscussionSpace.any_instance.stub(:save).and_return(false)
-#         post :create, :discussion_space => {}
-#         assigns(:discussion_space).should be_a_new(DiscussionSpace)
-#       end
-# 
-#       it "re-renders the 'new' template" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         DiscussionSpace.any_instance.stub(:save).and_return(false)
-#         post :create, :discussion_space => {}
-#         response.should render_template("new")
-#       end
-#     end
-#   end
-# 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested discussion_space" do
-#         discussion_space = DiscussionSpace.create! valid_attributes
-#         # Assuming there are no other discussion_spaces in the database, this
-#         # specifies that the DiscussionSpace created on the previous line
-#         # receives the :update_attributes message with whatever params are
-#         # submitted in the request.
-#         DiscussionSpace.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => discussion_space.id, :discussion_space => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested discussion_space as @discussion_space" do
-#         discussion_space = DiscussionSpace.create! valid_attributes
-#         put :update, :id => discussion_space.id, :discussion_space => valid_attributes
-#         assigns(:discussion_space).should eq(discussion_space)
-#       end
-# 
-#       it "redirects to the discussion_space" do
-#         discussion_space = DiscussionSpace.create! valid_attributes
-#         put :update, :id => discussion_space.id, :discussion_space => valid_attributes
-#         response.should redirect_to(discussion_space)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the discussion_space as @discussion_space" do
-#         discussion_space = DiscussionSpace.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         DiscussionSpace.any_instance.stub(:save).and_return(false)
-#         put :update, :id => discussion_space.id.to_s, :discussion_space => {}
-#         assigns(:discussion_space).should eq(discussion_space)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         discussion_space = DiscussionSpace.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         DiscussionSpace.any_instance.stub(:save).and_return(false)
-#         put :update, :id => discussion_space.id.to_s, :discussion_space => {}
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested discussion_space" do
-#       discussion_space = DiscussionSpace.create! valid_attributes
-#       expect {
-#         delete :destroy, :id => discussion_space.id.to_s
-#       }.to change(DiscussionSpace, :count).by(-1)
-#     end
-# 
-#     it "redirects to the discussion_spaces list" do
-#       discussion_space = DiscussionSpace.create! valid_attributes
-#       delete :destroy, :id => discussion_space.id.to_s
-#       response.should redirect_to(discussion_spaces_url)
-#     end
-#   end
+  before(:each) do
+    @request.host = "#{community.subdomain}.example.com"
+  end
+
+  describe "GET index" do
+    it "assigns all discussion_spaces as @discussion_spaces when authenticated as a user" do
+      space
+      sign_in user
+      get :index
+      assigns(:discussion_spaces).should eq([space])
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :index
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET show" do
+    it "assigns the requested discussion_space as @discussion_space when authenticated as a user" do
+      sign_in user
+      get :show, :id => space
+      assigns(:discussion_space).should eq(space)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :show, :id => space
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET new" do
+    it "assigns a new discussion_space as @discussion_space when authenticated as a user" do
+      sign_in admin
+      get :new
+      assigns(:discussion_space).should be_a_new(DiscussionSpace)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :new
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requested discussion_space as @discussion_space when authenticated as a user" do
+      sign_in admin
+      get :edit, :id => space.id.to_s
+      assigns(:discussion_space).should eq(space)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :edit, :id => space.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "POST create when authenticated as a user" do
+    before(:each) {
+      sign_in admin
+    }
+  
+    describe "with valid params" do
+      it "creates a new DiscussionSpace" do
+        expect {
+          post :create, :discussion_space => attributes_for(:discussion_space)
+        }.to change(DiscussionSpace, :count).by(1)
+      end
+
+      it "assigns a newly created discussion_space as @discussion_space" do
+        post :create, :discussion_space => attributes_for(:discussion_space)
+        assigns(:discussion_space).should be_a(DiscussionSpace)
+        assigns(:discussion_space).should be_persisted
+      end
+
+      it "redirects to the created discussion_space" do
+        post :create, :discussion_space => attributes_for(:discussion_space)
+        response.should redirect_to(DiscussionSpace.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved discussion_space as @discussion_space" do
+        post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
+        assigns(:discussion_space).should be_a_new(DiscussionSpace)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
+        response.should render_template("new")
+      end
+    end
+  end
+  
+  describe "POST create when not authenticated as a user" do
+    it "should redirected to new user session path" do
+      post :create, :discussion_space => attributes_for(:discussion_space)
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "PUT update when authenticated as a user" do
+    before(:each) {
+      sign_in admin
+    }
+  
+    describe "with valid params" do
+      it "updates the requested discussion_space" do
+        space
+        DiscussionSpace.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => space.id, :discussion_space => {'these' => 'params'}
+      end
+
+      it "assigns the requested discussion_space as @discussion_space" do
+        put :update, :id => space.id, :discussion_space => {:name => "New Name"}
+        assigns(:discussion_space).should eq(space)
+      end
+
+      it "redirects to the discussion_space" do
+        put :update, :id => space.id, :discussion_space => {:name => "New Name"}
+        response.should redirect_to(space)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns the discussion_space as @discussion_space" do
+        put :update, :id => space.id.to_s, :discussion_space => {:name => nil}
+        assigns(:discussion_space).should eq(space)
+      end
+
+      it "re-renders the 'edit' template" do
+        put :update, :id => space.id.to_s, :discussion_space => {:name => nil}
+        response.should render_template("edit")
+      end
+    end
+  end
+
+  describe "PUT update when not authenticated as a user" do
+    it "should redirected to new user session path" do
+      put :update, :id => space.id, :discussion_space => {:name => "New Name"}
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested discussion_space when authenticated as a user" do
+      space
+      sign_in admin
+      expect {
+        delete :destroy, :id => space.id.to_s
+      }.to change(DiscussionSpace, :count).by(-1)
+    end
+
+    it "redirects to the discussion_spaces list when authenticated as a user" do
+      sign_in admin
+      delete :destroy, :id => space.id.to_s
+      response.should redirect_to(discussion_spaces_url)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      delete :destroy, :id => space.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
 
 end

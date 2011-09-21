@@ -41,6 +41,8 @@ class Subdomains::DiscussionsController < ApplicationController
 
   # POST /discussion_spaces/:discussion_space_id/discussions(.:format)
   def create
+    @discussion.user_profile = current_user.user_profile
+    @discussion.character_proxy = (character_active? ? current_character.character_proxy : nil)
     add_new_flash_message('Discussion was successfully created.') if @discussion.save
     respond_with(@discussion)
   end
@@ -56,7 +58,7 @@ class Subdomains::DiscussionsController < ApplicationController
   # DELETE /discussions/:id(.:format)
   def destroy
     add_new_flash_message('Discussion was successfully deleted.') if @discussion.destroy
-    respond_with(@discussion)
+    respond_with(@discussion, :location => discussion_space_url(@discussion.discussion_space))
   end
 
 ###

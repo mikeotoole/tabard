@@ -56,13 +56,13 @@ describe Subdomains::AnswersController do
       it "creates a new Answer" do
         expect {
           sign_in user
-          post :create, :submission_id => create(:submission).id, :answer => attributes_for(:answer, :submission => nil)
+          post :create, :submission_id => create(:submission).id, :answer => attributes_for(:answer)
         }.to change(Answer, :count).by(1)
       end
 
       it "assigns a newly created answer as @answer" do
         sign_in user
-        post :create, :submission_id => create(:submission).id, :answer => attributes_for(:answer, :body => "Test answer", :submission => nil)
+        post :create, :submission_id => create(:submission).id, :answer => attributes_for(:answer, :body => "Test answer")
         assigns(:answer).should be_a(Answer)
         Answer.last.body.should eq("Test answer")
       end

@@ -9,7 +9,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :community_id, :game_id, :user_profile_id
+  attr_accessible :name, :game_id
 
 ###
 # Associations
@@ -50,7 +50,7 @@ class DiscussionSpace < ActiveRecord::Base
     if self.game
       self.game.name
     else
-      ""
+      ''
     end
   end
 

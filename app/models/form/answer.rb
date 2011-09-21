@@ -9,7 +9,7 @@ class Answer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :question_id, :submission
+  attr_accessible :body, :question_id
 
 ###
 # Associations

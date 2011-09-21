@@ -19,132 +19,249 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::DiscussionsController do
+  let(:user) { DefaultObjects.user }
+  let(:admin) { DefaultObjects.community_admin }
+  let(:community) { DefaultObjects.community }
+  let(:discussion) { DefaultObjects.discussion }
+  let(:space) { DefaultObjects.discussion_space }
 
-#   describe "GET index" do
-#     it "assigns all discussions as @discussions" do
-#       discussion = Discussion.create! valid_attributes
-#       get :index
-#       assigns(:discussions).should eq([discussion])
-#     end
-#   end
-# 
-#   describe "GET show" do
-#     it "assigns the requested discussion as @discussion" do
-#       discussion = Discussion.create! valid_attributes
-#       get :show, :id => discussion.id.to_s
-#       assigns(:discussion).should eq(discussion)
-#     end
-#   end
-# 
-#   describe "GET new" do
-#     it "assigns a new discussion as @discussion" do
-#       get :new
-#       assigns(:discussion).should be_a_new(Discussion)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested discussion as @discussion" do
-#       discussion = Discussion.create! valid_attributes
-#       get :edit, :id => discussion.id.to_s
-#       assigns(:discussion).should eq(discussion)
-#     end
-#   end
-# 
-#   describe "POST create" do
-#     describe "with valid params" do
-#       it "creates a new Discussion" do
-#         expect {
-#           post :create, :discussion => valid_attributes
-#         }.to change(Discussion, :count).by(1)
-#       end
-# 
-#       it "assigns a newly created discussion as @discussion" do
-#         post :create, :discussion => valid_attributes
-#         assigns(:discussion).should be_a(Discussion)
-#         assigns(:discussion).should be_persisted
-#       end
-# 
-#       it "redirects to the created discussion" do
-#         post :create, :discussion => valid_attributes
-#         response.should redirect_to(Discussion.last)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns a newly created but unsaved discussion as @discussion" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Discussion.any_instance.stub(:save).and_return(false)
-#         post :create, :discussion => {}
-#         assigns(:discussion).should be_a_new(Discussion)
-#       end
-# 
-#       it "re-renders the 'new' template" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Discussion.any_instance.stub(:save).and_return(false)
-#         post :create, :discussion => {}
-#         response.should render_template("new")
-#       end
-#     end
-#   end
-# 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested discussion" do
-#         discussion = Discussion.create! valid_attributes
-#         # Assuming there are no other discussions in the database, this
-#         # specifies that the Discussion created on the previous line
-#         # receives the :update_attributes message with whatever params are
-#         # submitted in the request.
-#         Discussion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => discussion.id, :discussion => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested discussion as @discussion" do
-#         discussion = Discussion.create! valid_attributes
-#         put :update, :id => discussion.id, :discussion => valid_attributes
-#         assigns(:discussion).should eq(discussion)
-#       end
-# 
-#       it "redirects to the discussion" do
-#         discussion = Discussion.create! valid_attributes
-#         put :update, :id => discussion.id, :discussion => valid_attributes
-#         response.should redirect_to(discussion)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the discussion as @discussion" do
-#         discussion = Discussion.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Discussion.any_instance.stub(:save).and_return(false)
-#         put :update, :id => discussion.id.to_s, :discussion => {}
-#         assigns(:discussion).should eq(discussion)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         discussion = Discussion.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Discussion.any_instance.stub(:save).and_return(false)
-#         put :update, :id => discussion.id.to_s, :discussion => {}
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested discussion" do
-#       discussion = Discussion.create! valid_attributes
-#       expect {
-#         delete :destroy, :id => discussion.id.to_s
-#       }.to change(Discussion, :count).by(-1)
-#     end
-# 
-#     it "redirects to the discussions list" do
-#       discussion = Discussion.create! valid_attributes
-#       delete :destroy, :id => discussion.id.to_s
-#       response.should redirect_to(discussions_url)
-#     end
-#   end
+  before(:each) do
+    @request.host = "#{community.subdomain}.example.com"
+  end
 
+  describe "GET index" do
+    it "assigns all discussions as @discussions when authenticated as a user" do
+      discussion
+      sign_in user
+      get :index, :discussion_space_id => space.id
+      assigns(:discussions).should eq([discussion])
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :index, :discussion_space_id => space.id
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET show" do
+    it "assigns the requested discussion as @discussion when authenticated as a user" do
+      sign_in user
+      get :show, :id => discussion.id.to_s
+      assigns(:discussion).should eq(discussion)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :show, :id => discussion.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET new" do
+    it "assigns a new discussion as @discussion when authenticated as a user" do
+      sign_in user
+      get :new, :discussion_space_id => space.id
+      assigns(:discussion).should be_a_new(Discussion)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :new, :discussion_space_id => space.id
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requeste discussion as @discussion when authenticated as a user" do
+      sign_in user
+      get :edit, :id => discussion.id.to_s
+      assigns(:discussion).should eq(discussion)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :edit, :id => discussion.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "POST create when authenticated as a user" do
+    before(:each) {
+      sign_in user
+    }
+  
+    describe "with valid params" do
+      it "creates a new Discussion" do
+        space
+        expect {
+          post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+        }.to change(Discussion, :count).by(1)
+      end
+
+      it "assigns a newly created discussion as @discussion" do
+        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+        assigns(:discussion).should be_a(Discussion)
+        assigns(:discussion).should be_persisted
+      end
+
+      it "redirects to the created discussion" do
+        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+        response.should redirect_to(Discussion.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved discussion as @discussion" do
+        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion, :name => nil)
+        assigns(:discussion).should be_a_new(Discussion)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion, :name => nil)
+        response.should render_template("new")
+      end
+    end
+  end
+  
+  describe "POST create when not authenticated as a user" do
+    it "should redirect to new user session path" do
+      post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "PUT update" do
+    before(:each) {
+      sign_in user
+    }
+  
+    describe "with valid params" do
+      it "updates the requested discussion" do
+        discussion
+        # Assuming there are no other discussions in the database, this
+        # specifies that the Discussion created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        Discussion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => discussion.id, :discussion => {'these' => 'params'}
+      end
+
+      it "assigns the requested discussion as @discussion" do
+        put :update, :id => discussion.id, :discussion => {:name => "New name"}
+        assigns(:discussion).should eq(discussion)
+      end
+
+      it "redirects to the discussion" do
+        put :update, :id => discussion.id, :discussion => {:name => "New name"}
+        response.should redirect_to(discussion)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns the discussion as @discussion" do
+        put :update, :id => discussion.id.to_s, :discussion => {:name => nil}
+        assigns(:discussion).should eq(discussion)
+      end
+
+      it "re-renders the 'edit' template" do
+        put :update, :id => discussion.id.to_s, :discussion => {:name => nil}
+        response.should render_template("edit")
+      end
+    end
+  end
+
+  describe "PUT update when not authenticated as a user" do
+    it "should redirect to new user session path" do
+      put :update, :id => discussion.id, :discussion => {:name => "New name"}
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested discussion when authenticated as a user" do
+      discussion
+      sign_in user
+      expect {
+        delete :destroy, :id => discussion.id.to_s
+      }.to change(Discussion, :count).by(-1)
+    end
+
+    it "redirects to the discussions list when authenticated as a user" do
+      sign_in user
+      delete :destroy, :id => discussion.id.to_s
+      response.should redirect_to(discussion.discussion_space)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      delete :destroy, :id => discussion.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "POST lock" do
+    before(:each) {
+      request.env["HTTP_REFERER"] = "/"
+    }
+  
+    it "should lock the discussion when authenticated as community admin" do
+      sign_in admin
+      post :lock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_true
+    end
+    
+    it "should redirect back when authenticated as community admin" do
+      sign_in admin
+      post :lock, :id => discussion.id.to_s
+      response.should redirect_to("/")
+    end
+    
+    it "should not lock the discussion when authenticated as a user" do
+      sign_in user
+      post :lock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_false    
+    end
+    
+    it "should not lock the discussion when not authenticated as a user" do
+      post :lock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_false 
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      post :lock, :id => discussion.id.to_s
+      response.should redirect_to(new_user_session_path) 
+    end
+  end
+  
+  describe "POST unlock" do
+    before(:each) {
+      request.env["HTTP_REFERER"] = "/"
+      discussion.has_been_locked = true
+      discussion.save
+    }
+  
+    it "should unlock the discussion when authenticated as community admin" do
+      sign_in admin
+      post :unlock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_false
+    end
+    
+    it "should redirect back when authenticated as community admin" do
+      sign_in admin
+      post :unlock, :id => discussion.id.to_s
+      response.should redirect_to("/")
+    end
+    
+    it "should not unlock the discussion when authenticated as a user" do
+      sign_in user
+      post :unlock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_true    
+    end
+    
+    it "should not unlock the discussion when not authenticated as a user" do
+      post :unlock, :id => discussion.id.to_s
+      Discussion.find(discussion).has_been_locked.should be_true 
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      post :unlock, :id => discussion.id.to_s
+      response.should redirect_to(new_user_session_path) 
+    end
+  end
 end

@@ -19,132 +19,241 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::CommentsController do
+  let(:user) { DefaultObjects.user }
+  let(:admin) { DefaultObjects.community_admin }
+  let(:community) { DefaultObjects.community }
+  let(:comment) { create(:comment) }
+  let(:discussion) { create(:discussion) }
 
-#   describe "GET index" do
-#     it "assigns all comments as @comments" do
-#       comment = Comment.create! valid_attributes
-#       get :index
-#       assigns(:comments).should eq([comment])
-#     end
-#   end
-# 
-#   describe "GET show" do
-#     it "assigns the requested comment as @comment" do
-#       comment = Comment.create! valid_attributes
-#       get :show, :id => comment.id.to_s
-#       assigns(:comment).should eq(comment)
-#     end
-#   end
-# 
-#   describe "GET new" do
-#     it "assigns a new comment as @comment" do
-#       get :new
-#       assigns(:comment).should be_a_new(Comment)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested comment as @comment" do
-#       comment = Comment.create! valid_attributes
-#       get :edit, :id => comment.id.to_s
-#       assigns(:comment).should eq(comment)
-#     end
-#   end
-# 
-#   describe "POST create" do
-#     describe "with valid params" do
-#       it "creates a new Comment" do
-#         expect {
-#           post :create, :comment => valid_attributes
-#         }.to change(Comment, :count).by(1)
-#       end
-# 
-#       it "assigns a newly created comment as @comment" do
-#         post :create, :comment => valid_attributes
-#         assigns(:comment).should be_a(Comment)
-#         assigns(:comment).should be_persisted
-#       end
-# 
-#       it "redirects to the created comment" do
-#         post :create, :comment => valid_attributes
-#         response.should redirect_to(Comment.last)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns a newly created but unsaved comment as @comment" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Comment.any_instance.stub(:save).and_return(false)
-#         post :create, :comment => {}
-#         assigns(:comment).should be_a_new(Comment)
-#       end
-# 
-#       it "re-renders the 'new' template" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Comment.any_instance.stub(:save).and_return(false)
-#         post :create, :comment => {}
-#         response.should render_template("new")
-#       end
-#     end
-#   end
-# 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested comment" do
-#         comment = Comment.create! valid_attributes
-#         # Assuming there are no other comments in the database, this
-#         # specifies that the Comment created on the previous line
-#         # receives the :update_attributes message with whatever params are
-#         # submitted in the request.
-#         Comment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => comment.id, :comment => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested comment as @comment" do
-#         comment = Comment.create! valid_attributes
-#         put :update, :id => comment.id, :comment => valid_attributes
-#         assigns(:comment).should eq(comment)
-#       end
-# 
-#       it "redirects to the comment" do
-#         comment = Comment.create! valid_attributes
-#         put :update, :id => comment.id, :comment => valid_attributes
-#         response.should redirect_to(comment)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the comment as @comment" do
-#         comment = Comment.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Comment.any_instance.stub(:save).and_return(false)
-#         put :update, :id => comment.id.to_s, :comment => {}
-#         assigns(:comment).should eq(comment)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         comment = Comment.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Comment.any_instance.stub(:save).and_return(false)
-#         put :update, :id => comment.id.to_s, :comment => {}
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested comment" do
-#       comment = Comment.create! valid_attributes
-#       expect {
-#         delete :destroy, :id => comment.id.to_s
-#       }.to change(Comment, :count).by(-1)
-#     end
-# 
-#     it "redirects to the comments list" do
-#       comment = Comment.create! valid_attributes
-#       delete :destroy, :id => comment.id.to_s
-#       response.should redirect_to(comments_url)
-#     end
-#   end
+  before(:each) do
+    @request.host = "#{community.subdomain}.example.com"
+  end
 
+
+  describe "GET show" do
+    it "assigns the requested comment as @comment when authenticated as a user" do
+      sign_in user
+      get :show, :id => comment.id.to_s
+      assigns(:comment).should eq(comment)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :show, :id => comment.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET new" do
+    it "assigns a new comment as @comment when authenticated as a user" do
+      sign_in user   
+      get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
+      assigns(:comment).should be_a_new(Comment)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requested comment as @comment" do
+      sign_in user
+      get :edit, :id => comment.id.to_s
+      assigns(:comment).should eq(comment)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :edit, :id => comment.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "POST create when authenticated as a user" do
+    before(:each) {
+      sign_in user
+    }
+  
+    describe "with valid params" do
+      it "creates a new Comment" do
+        expect {
+          post :create, :comment => attributes_for(:comment)
+        }.to change(Comment, :count).by(1)
+      end
+
+      it "assigns a newly created comment as @comment" do
+        post :create, :comment => attributes_for(:comment)
+        assigns(:comment).should be_a(Comment)
+        assigns(:comment).should be_persisted
+      end
+
+      it "redirects to the created comment" do
+        post :create, :comment => attributes_for(:comment)
+        response.should redirect_to(Comment.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved comment as @comment" do
+        post :create, :comment => {}
+        assigns(:comment).should be_a_new(Comment)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :comment => attributes_for(:comment, :body => nil)
+        response.should render_template("new")
+      end
+    end
+  end
+
+  describe "POST create when not authenticated as a user" do
+    it "should redirected to new user session path" do
+      post :create, :comment => attributes_for(:comment)
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "PUT update when authenticated as a user" do
+    before(:each) {
+      sign_in user
+    }
+  
+    describe "with valid params" do
+      it "updates the requested comment" do
+        comment
+        # Assuming there are no other comments in the database, this
+        # specifies that the Comment created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        Comment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, :id => comment.id, :comment => {'these' => 'params'}
+      end
+
+      it "assigns the requested comment as @comment" do
+        put :update, :id => comment.id, :comment => attributes_for(:comment)
+        assigns(:comment).should eq(comment)
+      end
+
+      it "redirects to the comment" do
+        put :update, :id => comment.id, :comment => attributes_for(:comment)
+        response.should redirect_to(DefaultObjects.discussion)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns the comment as @comment" do
+        put :update, :id => comment.id.to_s, :comment => {:body => nil}
+        assigns(:comment).should eq(comment)
+      end
+
+      it "re-renders the 'edit' template" do
+        put :update, :id => comment.id.to_s, :comment => {:body => nil}
+        response.should render_template("edit")
+      end
+    end
+  end
+  
+  describe "PUT update when not authenticated as a user" do
+    it "should redirect to new user session path" do
+      put :update, :id => comment.id, :comment => attributes_for(:comment)
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "does not destroy the requested comment" do
+      comment
+      sign_in user
+      expect {
+        delete :destroy, :id => comment.id.to_s
+      }.to change(Comment, :count).by(0)
+    end
+
+    it "redirects to the original comment item" do
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      response.should redirect_to(comment.original_comment_item)
+    end
+    
+    it "sets comment has_been_deleted to true" do
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      Comment.find(comment).has_been_deleted.should be_true
+    end
+    
+    it "should redirect to new user session path" do
+      delete :destroy, :id => comment.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+  
+  describe "POST lock" do
+    before(:each) {
+      request.env["HTTP_REFERER"] = "/"
+    }
+  
+    it "should lock the comment when authenticated as community admin" do
+      sign_in admin
+      post :lock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_true
+    end
+    
+    it "should redirect back when authenticated as community admin" do
+      sign_in admin
+      post :lock, :id => comment.id.to_s
+      response.should redirect_to("/")
+    end
+    
+    it "should not lock the comment when authenticated as a user" do
+      sign_in user
+      post :lock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_false    
+    end
+    
+    it "should not lock the comment when not authenticated as a user" do
+      post :lock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_false 
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      post :lock, :id => comment.id.to_s
+      response.should redirect_to(new_user_session_path) 
+    end
+  end
+  
+  describe "POST unlock" do
+    before(:each) {
+      request.env["HTTP_REFERER"] = "/"
+      comment.has_been_locked = true
+      comment.save
+    }
+  
+    it "should unlock the comment when authenticated as community admin" do
+      sign_in admin
+      post :unlock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_false
+    end
+    
+    it "should redirect back when authenticated as community admin" do
+      sign_in admin
+      post :unlock, :id => comment.id.to_s
+      response.should redirect_to("/")
+    end
+    
+    it "should not unlock the comment when authenticated as a user" do
+      sign_in user
+      post :unlock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_true    
+    end
+    
+    it "should not unlock the comment when not authenticated as a user" do
+      post :unlock, :id => comment.id.to_s
+      Comment.find(comment).has_been_locked.should be_true 
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      post :unlock, :id => comment.id.to_s
+      response.should redirect_to(new_user_session_path) 
+    end
+  end
 end

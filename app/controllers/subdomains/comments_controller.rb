@@ -11,7 +11,9 @@ class Subdomains::CommentsController < ApplicationController
 # Before Filters
 ###
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :create_comment_space, :only => [:new, :create]
+  load_and_authorize_resource :except => [:new, :create]
+  authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -23,10 +25,6 @@ class Subdomains::CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment.commentable_id = params[:commentable_id]
-    @comment.commentable_type = params[:commentable_type]
-    @comment.form_target = params[:form_target]
-    @comment.comment_target = params[:comment_target]
   end
 
   # GET /comments/1/edit
@@ -36,7 +34,7 @@ class Subdomains::CommentsController < ApplicationController
 
   # POST /comments
   def create
-    add_new_flash_message('Comment was successfully created.')  if @comment.save
+    add_new_flash_message('Comment was successfully created.') if @comment.save
     respond_with(@comment) 
   end
 
@@ -91,5 +89,26 @@ class Subdomains::CommentsController < ApplicationController
     end
     redirect_to :back
     return
+  end
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###  
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to populate @comment using current user.
+  ###  
+  def create_comment_space
+    @comment = Comment.new(params[:comment])
+    @comment.user_profile = current_user.user_profile
+    @comment.character_proxy = (character_active? ? current_character.character_proxy : nil)
+    @comment.form_target = params[:form_target] if params[:form_target]
+    @comment.comment_target = params[:comment_target] if params[:comment_target]
   end
 end

@@ -127,7 +127,11 @@ class UserProfile < ActiveRecord::Base
   #   * +community+ The community to check membership of.
   # [Returns] True if member of the community false otherwise.
   def is_member?(community)
-  	self.roles.include?(community.member_role)
+    if community
+  	 self.roles.include?(community.member_role)
+  	else
+  	 false
+  	end
   end
 
 ###
