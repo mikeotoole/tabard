@@ -20,6 +20,7 @@ class Community < ActiveRecord::Base
   has_many :supported_games
   has_many :games, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
+  has_many :community_profiles
 
 ###
 # Callbacks
@@ -52,6 +53,27 @@ class Community < ActiveRecord::Base
   def promote_user_profile_to_member(user_profile)
     # TODO Joe/Mike Ensure that the user is an applicant -JW
     return user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+  end
+
+  ###
+  # This method gets the current communtiy roster. An option game may be specified.
+  # [Args]
+  #   * +game+ -> The user profile you would like to promote to a member.
+  # [Returns] An array of character_proxies, optionly filtered by game.
+  ###
+  def get_current_community_roster(game = nil)
+    # TODO Joe Check this for optimization potential.
+    community_roster = Array.new
+    self.community_profiles.each do |profile|
+      if game
+        profile.approved_character_proxies.each do |proxy|
+          community_roster << proxy if proxy.game == game
+        end
+      else
+        community_roster = community_roster + profile.approved_character_proxies
+      end
+    end
+    return community_roster
   end
 
 ###
@@ -112,6 +134,7 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -126,5 +149,6 @@ end
 #  updated_at                  :datetime
 #  admin_profile_id            :integer
 #  member_role_id              :integer
+#  protected_roster            :boolean         default(FALSE)
 #
 

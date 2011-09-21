@@ -18,6 +18,8 @@ class CharacterProxy < ActiveRecord::Base
 ###
   belongs_to :user_profile
   belongs_to :character, :polymorphic => true, :dependent => :destroy
+  has_many :roster_assignments
+  has_many :community_profiles, :through => :roster_assignments
 
 ###
 # Validators
@@ -32,6 +34,7 @@ class CharacterProxy < ActiveRecord::Base
 ###
   delegate :game, :to => :character
   delegate :game_id, :to => :character
+  delegate :name, :to => :character, :allow_nil => true
 
 ###
 # Public Methods

@@ -13,7 +13,13 @@ class CommunityProfile < ActiveRecord::Base
   # TODO Joe/Bryan We need to evaluate the eager loading of associations and inverse_of to optimize our memory footprints and speed. -JW
   belongs_to :community
   belongs_to :user_profile
-  has_and_belongs_to_many :roles, :before_add => :ensure_that_community_matches, :before_remove => :ensure_that_member_role_stays
+  has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
+  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => false}
+  has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
+  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => true}
+  has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
+  has_many :roster_assignments
+  has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
 
 ###
 # Validators
@@ -37,7 +43,17 @@ class CommunityProfile < ActiveRecord::Base
   # [Args]
   #   * +role+ -> The role being added to the collection.
   ###
-  def ensure_that_community_matches(role)
+  def ensure_that_character_proxy_user_matches(character_proxy)
+    raise InvalidCollectionAddition.new("You can't add a character_proxy from a different user.") if character_proxy and character_proxy.user_profile != self.user_profile
+  end
+
+
+  ###
+  # This method ensures that the community matches when a role is added.
+  # [Args]
+  #   * +role+ -> The role being added to the collection.
+  ###
+  def ensure_that_role_community_matches(role)
     raise InvalidCollectionAddition.new("You can't add a role from a different community.") if role and role.community != self.community
   end
 

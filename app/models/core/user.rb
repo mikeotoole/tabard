@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   delegate :community_profiles, :to => :user_profile, :allow_nil => true
   delegate :add_new_role, :to => :user_profile, :allow_nil => true
   delegate :roles, :to => :user_profile, :allow_nil => true
+  delegate :character_proxies, :to => :user_profile, :allow_nil => true
+  delegate :communities, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
