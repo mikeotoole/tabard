@@ -26,7 +26,7 @@ class Discussion < ActiveRecord::Base
   validates :name, :presence => true
   validates :body, :presence => true
   validates :user_profile, :presence => true
-  validates :discussion_space, :presence => true  
+  validates :discussion_space, :presence => true
 
 ###
 # Public Methods

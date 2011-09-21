@@ -21,6 +21,7 @@ require 'spec_helper'
 describe Subdomains::DiscussionsController do
   let(:user) { DefaultObjects.user }
   let(:admin) { DefaultObjects.community_admin }
+  let(:non_member) { create(:user_profile).user }
   let(:community) { DefaultObjects.community }
   let(:discussion) { DefaultObjects.discussion }
   let(:space) { DefaultObjects.discussion_space }
@@ -30,7 +31,7 @@ describe Subdomains::DiscussionsController do
   end
 
   describe "GET index" do
-    it "assigns all discussions as @discussions when authenticated as a user" do
+    it "assigns all discussions as @discussions when authenticated as a member" do
       discussion
       sign_in user
       get :index, :discussion_space_id => space.id
@@ -41,10 +42,16 @@ describe Subdomains::DiscussionsController do
       get :index, :discussion_space_id => space.id
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :index, :discussion_space_id => space.id
+      response.should be_forbidden
+    end    
   end
 
   describe "GET show" do
-    it "assigns the requested discussion as @discussion when authenticated as a user" do
+    it "assigns the requested discussion as @discussion when authenticated as a member" do
       sign_in user
       get :show, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
@@ -54,10 +61,16 @@ describe Subdomains::DiscussionsController do
       get :show, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :show, :id => discussion.id.to_s
+      response.should be_forbidden
+    end   
   end
 
   describe "GET new" do
-    it "assigns a new discussion as @discussion when authenticated as a user" do
+    it "assigns a new discussion as @discussion when authenticated as a member" do
       sign_in user
       get :new, :discussion_space_id => space.id
       assigns(:discussion).should be_a_new(Discussion)
@@ -67,10 +80,16 @@ describe Subdomains::DiscussionsController do
       get :new, :discussion_space_id => space.id
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :new, :discussion_space_id => space.id
+      response.should be_forbidden
+    end 
   end
 
   describe "GET edit" do
-    it "assigns the requeste discussion as @discussion when authenticated as a user" do
+    it "assigns the requeste discussion as @discussion when authenticated as a member" do
       sign_in user
       get :edit, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
@@ -80,9 +99,15 @@ describe Subdomains::DiscussionsController do
       get :edit, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :edit, :id => discussion.id.to_s
+      response.should be_forbidden
+    end
   end
 
-  describe "POST create when authenticated as a user" do
+  describe "POST create when authenticated as a member" do
     before(:each) {
       sign_in user
     }
@@ -120,14 +145,20 @@ describe Subdomains::DiscussionsController do
     end
   end
   
-  describe "POST create when not authenticated as a user" do
-    it "should redirect to new user session path" do
+  describe "POST create" do
+    it "should redirect to new user session path when not authenticated as a user" do
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+      response.should be_forbidden
+    end
   end
 
-  describe "PUT update" do
+  describe "PUT update when authenticated as a member" do
     before(:each) {
       sign_in user
     }
@@ -167,15 +198,21 @@ describe Subdomains::DiscussionsController do
     end
   end
 
-  describe "PUT update when not authenticated as a user" do
-    it "should redirect to new user session path" do
+  describe "PUT update" do
+    it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
       response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      put :update, :id => discussion.id, :discussion => {:name => "New name"}
+      response.should be_forbidden
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested discussion when authenticated as a user" do
+    it "destroys the requested discussion when authenticated as a member" do
       discussion
       sign_in user
       expect {
@@ -183,7 +220,7 @@ describe Subdomains::DiscussionsController do
       }.to change(Discussion, :count).by(-1)
     end
 
-    it "redirects to the discussions list when authenticated as a user" do
+    it "redirects to the discussions list when authenticated as a member" do
       sign_in user
       delete :destroy, :id => discussion.id.to_s
       response.should redirect_to(discussion.discussion_space)
@@ -192,6 +229,12 @@ describe Subdomains::DiscussionsController do
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      delete :destroy, :id => discussion.id.to_s
+      response.should be_forbidden
     end
   end
 
@@ -212,7 +255,7 @@ describe Subdomains::DiscussionsController do
       response.should redirect_to("/")
     end
     
-    it "should not lock the discussion when authenticated as a user" do
+    it "should not lock the discussion when authenticated as a member" do
       sign_in user
       post :lock, :id => discussion.id.to_s
       Discussion.find(discussion).has_been_locked.should be_false    
@@ -226,6 +269,12 @@ describe Subdomains::DiscussionsController do
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_path) 
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :lock, :id => discussion.id.to_s
+      response.should be_forbidden
     end
   end
   
@@ -248,7 +297,7 @@ describe Subdomains::DiscussionsController do
       response.should redirect_to("/")
     end
     
-    it "should not unlock the discussion when authenticated as a user" do
+    it "should not unlock the discussion when authenticated as a member" do
       sign_in user
       post :unlock, :id => discussion.id.to_s
       Discussion.find(discussion).has_been_locked.should be_true    
@@ -262,6 +311,12 @@ describe Subdomains::DiscussionsController do
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_path) 
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :unlock, :id => discussion.id.to_s
+      response.should be_forbidden
     end
   end
 end

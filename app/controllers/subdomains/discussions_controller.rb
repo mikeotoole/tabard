@@ -18,7 +18,7 @@ class Subdomains::DiscussionsController < ApplicationController
 
 ###
 # REST Actions
-###  
+###
   # GET /discussion_spaces/:discussion_space_id/discussions(.:format)
   def index
     discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
@@ -63,7 +63,7 @@ class Subdomains::DiscussionsController < ApplicationController
 
 ###
 # Added Actions
-###  
+###
   # POST /discussions/:id/lock(.:format)
   def lock
     @discussion.has_been_locked = true
@@ -87,7 +87,7 @@ class Subdomains::DiscussionsController < ApplicationController
     redirect_to :back
     return
   end
-  
+
 ###
 # Protected Methods
 ###

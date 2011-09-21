@@ -21,6 +21,7 @@ require 'spec_helper'
 describe Subdomains::CommentsController do
   let(:user) { DefaultObjects.user }
   let(:admin) { DefaultObjects.community_admin }
+  let(:non_member) { create(:user_profile).user }
   let(:community) { DefaultObjects.community }
   let(:comment) { create(:comment) }
   let(:discussion) { create(:discussion) }
@@ -31,7 +32,7 @@ describe Subdomains::CommentsController do
 
 
   describe "GET show" do
-    it "assigns the requested comment as @comment when authenticated as a user" do
+    it "assigns the requested comment as @comment when authenticated as a user with permissions" do
       sign_in user
       get :show, :id => comment.id.to_s
       assigns(:comment).should eq(comment)
@@ -41,10 +42,16 @@ describe Subdomains::CommentsController do
       get :show, :id => comment.id.to_s
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :show, :id => comment.id.to_s
+      response.should be_forbidden
+    end
   end
 
   describe "GET new" do
-    it "assigns a new comment as @comment when authenticated as a user" do
+    it "assigns a new comment as @comment when authenticated as a user with permissions" do
       sign_in user   
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
       assigns(:comment).should be_a_new(Comment)
@@ -54,10 +61,16 @@ describe Subdomains::CommentsController do
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
+      response.should be_forbidden
+    end
   end
 
   describe "GET edit" do
-    it "assigns the requested comment as @comment" do
+    it "assigns the requested comment as @comment when authenticated as a user with permissions" do
       sign_in user
       get :edit, :id => comment.id.to_s
       assigns(:comment).should eq(comment)
@@ -67,9 +80,15 @@ describe Subdomains::CommentsController do
       get :edit, :id => comment.id.to_s
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :edit, :id => comment.id.to_s
+      response.should be_forbidden
+    end
   end
 
-  describe "POST create when authenticated as a user" do
+  describe "POST create when authenticated as a user with permissions" do
     before(:each) {
       sign_in user
     }
@@ -106,14 +125,20 @@ describe Subdomains::CommentsController do
     end
   end
 
-  describe "POST create when not authenticated as a user" do
-    it "should redirected to new user session path" do
+  describe "POST create" do
+    it "should redirected to new user session path when not authenticated as a user" do
       post :create, :comment => attributes_for(:comment)
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :create, :comment => attributes_for(:comment)
+      response.should be_forbidden
+    end
   end
 
-  describe "PUT update when authenticated as a user" do
+  describe "PUT update when authenticated as a user with permissions" do
     before(:each) {
       sign_in user
     }
@@ -153,14 +178,20 @@ describe Subdomains::CommentsController do
     end
   end
   
-  describe "PUT update when not authenticated as a user" do
-    it "should redirect to new user session path" do
+  describe "PUT update" do
+    it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => comment.id, :comment => attributes_for(:comment)
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      put :update, :id => comment.id, :comment => attributes_for(:comment)
+      response.should be_forbidden
+    end
   end
 
-  describe "DELETE destroy" do
+  describe "DELETE destroy when authenticated as a user with permissions" do
     it "does not destroy the requested comment" do
       comment
       sign_in user
@@ -180,10 +211,18 @@ describe Subdomains::CommentsController do
       delete :destroy, :id => comment.id.to_s
       Comment.find(comment).has_been_deleted.should be_true
     end
-    
-    it "should redirect to new user session path" do
+  end
+  
+  describe "DELETE destroy" do
+    it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => comment.id.to_s
       response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      delete :destroy, :id => comment.id.to_s
+      response.should be_forbidden
     end
   end
   
@@ -218,6 +257,12 @@ describe Subdomains::CommentsController do
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => comment.id.to_s
       response.should redirect_to(new_user_session_path) 
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :lock, :id => comment.id.to_s
+      response.should be_forbidden
     end
   end
   
@@ -254,6 +299,12 @@ describe Subdomains::CommentsController do
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => comment.id.to_s
       response.should redirect_to(new_user_session_path) 
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :unlock, :id => comment.id.to_s
+      response.should be_forbidden
     end
   end
 end

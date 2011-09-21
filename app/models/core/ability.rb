@@ -146,7 +146,7 @@ class Ability
     can [:unlock, :lock], [Comment, Discussion] do |object|
       object.community.admin_profile_id == user.user_profile.id
     end
-    
+
     # Discussion Space Rules
     can [:read], DiscussionSpace do |space|
       user.user_profile.is_member?(space.community)

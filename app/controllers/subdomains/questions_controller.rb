@@ -67,7 +67,7 @@ class Subdomains::QuestionsController < SubdomainsController
     end
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
-  
+
 ###
 # Protected Methods
 ###

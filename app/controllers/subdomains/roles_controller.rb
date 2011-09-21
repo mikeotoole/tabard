@@ -66,7 +66,7 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _before_filter_
   #

@@ -52,11 +52,11 @@ DaBvRails::Application.routes.draw do
             post :lock
             post :unlock
           end
-        end  
+        end
       end
 
     end
-    
+
   end
 
   # Home

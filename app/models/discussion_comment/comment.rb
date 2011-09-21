@@ -8,12 +8,12 @@
 class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
-###  
+###
   attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked
 
 ###
 # Attribute accessor
-###  
+###
   ###
   # This attribute is for javascript to let a comment know what dom element is the target for the comment form after a comment has been submitted.
   ###
@@ -44,7 +44,7 @@ class Comment < ActiveRecord::Base
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :community, :presence => true
-  validates :commentable, :presence => true  
+  validates :commentable, :presence => true
 
 ###
 # Public Methods
@@ -111,8 +111,8 @@ class Comment < ActiveRecord::Base
   # [Returns] True if replys are allowed for this comment, otherwise false.
   ###
   def replys_locked?
-    self.has_been_locked or 
-        !self.original_comment_item.comments_enabled? or 
+    self.has_been_locked or
+        !self.original_comment_item.comments_enabled? or
         (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end
 
@@ -120,7 +120,7 @@ class Comment < ActiveRecord::Base
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
-  
+
 ###
 # Protected Methods
 ###

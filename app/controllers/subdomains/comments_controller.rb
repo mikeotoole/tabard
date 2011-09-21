@@ -35,7 +35,7 @@ class Subdomains::CommentsController < ApplicationController
   # POST /comments
   def create
     add_new_flash_message('Comment was successfully created.') if @comment.save
-    respond_with(@comment) 
+    respond_with(@comment)
   end
 
   # PUT /comments/1
@@ -61,13 +61,13 @@ class Subdomains::CommentsController < ApplicationController
       add_new_flash_message('Comment was unable to be deleted.', 'alert')
       redirect_to url_for(@comment.original_comment_item), :action => :show
       return
-    end  
+    end
   end
 
 ###
 # Added Actions
-###  
-  # POST /comments/:id/lock(.:format) 
+###
+  # POST /comments/:id/lock(.:format)
   def lock
     @comment.has_been_locked = true
     if @comment.save
@@ -90,7 +90,7 @@ class Subdomains::CommentsController < ApplicationController
     redirect_to :back
     return
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -98,12 +98,12 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _before_filter_
   #
   # This before filter attempts to populate @comment using current user.
-  ###  
+  ###
   def create_comment_space
     @comment = Comment.new(params[:comment])
     @comment.user_profile = current_user.user_profile
