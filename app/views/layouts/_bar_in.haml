@@ -1,8 +1,8 @@
 #bar
   = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
   
-  - if current_user.communities.size > 0
-    %ul.menu
+  %ul.menu
+    - if current_user.communities.size > 0
       %li
         %span My Communities
         %ul
