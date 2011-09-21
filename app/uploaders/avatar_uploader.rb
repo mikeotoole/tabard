@@ -28,8 +28,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
-    when :standard
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=70x70"
+    when :large
+      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
+    when :small
+      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
+    when :tiny
+      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
+    when :icon
+      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
     else
       "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
     end
@@ -46,8 +52,17 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :scale => [50, 50]
   # end
-  version :standard do
-    process :resize_to_fill => [70,70]
+  version :large do
+    process :resize_to_fill => [240,240]
+  end
+  version :small do
+    process :resize_to_fill => [60,60]
+  end
+  version :tiny do
+    process :resize_to_fill => [40,40]
+  end
+  version :icon do
+    process :resize_to_fill => [20,20]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

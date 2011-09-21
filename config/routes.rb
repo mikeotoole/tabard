@@ -7,6 +7,9 @@ DaBvRails::Application.routes.draw do
   match "/account" => "user_profile#account", :as => "account"
   match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
 
+  # Active profile
+  match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
+
   # Communities
   resources :communities, :except => :destroy
 

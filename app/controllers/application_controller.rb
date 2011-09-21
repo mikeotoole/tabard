@@ -1,7 +1,7 @@
 ###
 # Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Don't Steal Me Bro!
+# License::   Proprietary Closed Source
 #
 # This is the application cotroller.
 ###
@@ -128,6 +128,25 @@ protected
     end
   end
   helper_method :current_profile
+
+  def current_active_profile
+    return nil unless signed_in?
+    character_active? ? current_character : current_user.user_profile
+  end
+  helper_method :current_active_profile
+
+  # Returns an Array with the users profile and characters info.
+  def profiles
+    if signed_in?
+      profile_collection = current_user.active_profile_helper_collection
+      profiles = Array.new
+      profile_collection.each do |profile|
+        profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }
+      end
+      profiles
+    end
+  end
+  helper_method :profiles
 
 ###
 # Callback Methods
