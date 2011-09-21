@@ -4,6 +4,7 @@
   %tr
     %th Name
     %th Slogan
+    %th Roster Count
     %th Accepting members
     %th Email notice on application
     %th Subdomain
@@ -15,6 +16,7 @@
     %tr
       %td= community.name
       %td= community.slogan
+      %td= community.get_current_community_roster.size
       %td= community.accepting_members
       %td= community.email_notice_on_application
       %td= community.subdomain

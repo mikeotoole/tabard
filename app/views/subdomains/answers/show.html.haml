@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Body:
+  = @answer.body
+%p
+  %b Question:
+  = @answer.question_id
+%p
+  %b Type:
+  = @answer.type
+%p
+  %b Submission:
+  = @answer.submission_id
+
+= link_to 'Edit', edit_answer_path(@answer)
+\|
+= link_to 'Back', answers_path

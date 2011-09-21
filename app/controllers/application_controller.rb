@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   end
 
   ###
-  # TODO Doug, Add the remaining of the message_class types.
+  # TODO Doug, Add the remaining of the message_class types. -MO
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.

@@ -7,9 +7,9 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test'
 
-puts "Adding games!"
-wow = Wow.create(name: 'World of Warcraft', pretty_url: 'world-of-warcraft-guilds')
-swtor = Swtor.create(name: 'Star Wars the Old Republic', pretty_url: 'star-wars-old-republic-guilds')
+puts "Creating Games..."
+wow_game = Wow.create(:name => "World of Warcraft")
+swtor_game = Swtor.create(:name => "Starwars the Old Republic")
 
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
@@ -35,7 +35,7 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
-puts "RoboBilly is creating Just Another Headshot Clan with the game SWTOR!"
+puts "RoboBilly is creating Just Another Headshot Guild with the game SWTOR!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
 jahc.games << swtor
 
@@ -44,6 +44,11 @@ noob_role = jahc.roles.create(:name => "n00b")
 
 puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
+
+puts "RoboBilly is getting some characters..."
+3.times do |n|
+  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => "LOLOLOL#{n}", :server => "Herp", :game => swtor_game))
+end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
 

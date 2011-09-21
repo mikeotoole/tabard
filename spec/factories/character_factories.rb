@@ -30,10 +30,12 @@ FactoryGirl.define do
   end
   
   factory :character_proxy_with_wow_character, :class => CharacterProxy do
+    user_profile { DefaultObjects.user_profile }
     association :character, :factory => :wow_character 
   end
   
   factory :character_proxy_with_swtor_character, :class => CharacterProxy do
+    user_profile { DefaultObjects.user_profile }
     association :character, :factory => :swtor_character 
   end
 end

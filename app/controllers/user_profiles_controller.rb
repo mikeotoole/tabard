@@ -31,6 +31,7 @@ class UserProfilesController < ApplicationController
     respond_with(@user_profile)
   end
 
+  # GET /account(.:format)
   def account
     @user_profile = current_user.user_profile
     authorize! :update, @user_profile

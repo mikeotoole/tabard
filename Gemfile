@@ -30,7 +30,7 @@ source 'http://rubygems.org'
     gem 'client_side_validations'
 
   # WYSIWYG
-    gem 'tiny_mce'
+    #gem 'tiny_mce'
 
   # Image Storage and Manipulation
     gem 'fog'
