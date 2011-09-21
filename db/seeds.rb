@@ -8,8 +8,8 @@
 if ENV["RAILS_ENV"] != 'test'
 
 puts "Creating Games..."
-wow_game = Wow.create(:name => "World of Warcraft")
-swtor_game = Swtor.create(:name => "Starwars the Old Republic")
+wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
+swtor_game = Swtor.create(:name => "Starwars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
 
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
