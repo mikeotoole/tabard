@@ -19,6 +19,8 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
+  has_many :communities, :through => :community_profiles
+
 ###
 # Delegates
 ###

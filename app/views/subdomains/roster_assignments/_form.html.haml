@@ -1,0 +1,15 @@
+= form_for roster_assignment do |f|
+  -if roster_assignment.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(roster_assignment.errors.count, "error")} prohibited this roster_assignment from being saved:"
+      %ul
+        - roster_assignment.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :character_proxy_id, "Character Proxy"
+    = collection_select(:roster_assignment, :character_proxy_id, avalible_characters, :id, :name)
+  .field
+    = f.label :pending
+    = f.check_box :pending
+  .actions
+    = f.submit 'Save'

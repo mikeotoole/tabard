@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20110918001519) do
     t.datetime "updated_at"
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
+    t.boolean  "protected_roster",            :default => false
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -181,6 +182,17 @@ ActiveRecord::Schema.define(:version => 20110918001519) do
   end
 
   add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
+
+  create_table "roster_assignments", :force => true do |t|
+    t.integer  "community_profile_id"
+    t.integer  "character_proxy_id"
+    t.boolean  "pending",              :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
+  add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
 
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"

@@ -31,6 +31,9 @@ DaBvRails::Application.routes.draw do
         resources :permissions
       end
 
+      #Roster assignments
+      resources :roster_assignments
+
       # Custom Forms
       resources :custom_forms do
         resources :questions, :shallow => true

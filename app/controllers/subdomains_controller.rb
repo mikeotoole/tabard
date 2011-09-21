@@ -45,4 +45,11 @@ protected
     redirect_to root_url(:subdomain => false), :alert => "That community does not exist" and return false unless @community
     false
   end
+
+  ###
+  # This method will ensure that the current_user is a member of current_community.
+  ###
+  def ensure_current_user_is_member
+    raise CanCan::AccessDenied unless current_user.communities.include?(current_community)
+  end
 end

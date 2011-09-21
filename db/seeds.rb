@@ -6,6 +6,9 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test'
+puts "Creating Games..."
+wow_game = Wow.create(:name => "World of Warcraft")
+swtor_game = Swtor.create(:name => "Starwars the Old Republic")
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
     :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"})
@@ -33,11 +36,19 @@ d_badger.save
 puts "RoboBilly is creating Just Another Headshot Clan..."
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
 
+puts "JAHC is now supporting SWTOR"
+jahc.games << swtor_game
+
 puts "RoboBilly is creating a n00b role..."
 noob_role = jahc.roles.create(:name => "n00b")
 
 puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
+
+puts "RoboBilly is getting some characters..."
+3.times do |n|
+  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => "LOLOLOL#{n}", :server => "Herp", :game => swtor_game))
+end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
 

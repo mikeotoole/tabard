@@ -16,6 +16,14 @@ class DefaultObjects
   def self.swtor
     @swtor ||= FactoryGirl.create(:swtor)
   end
+
+  def self.wow_character_proxy
+    @wow_character_proxy ||= FactoryGirl.create(:character_proxy_with_wow_character)
+  end
+
+  def self.swtor_character_proxy
+    @swtor_character_proxy ||= FactoryGirl.create(:character_proxy_with_swtor_character)
+  end
   
   def self.community
     @community ||= FactoryGirl.create(:community)
@@ -43,8 +51,10 @@ class DefaultObjects
     @wow = nil
     @swtor = nil
     @community = nil
-    @community_admin = nil
     @custom_form = nil
+    @community_admin = nil
+    @wow_character_proxy = nil
+    @swtor_character_proxy = nil
     @discussion_space = nil
     @discussion = nil
   end

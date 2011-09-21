@@ -81,6 +81,12 @@ class Ability
       community.admin_profile_id == user.user_profile.id
     end
 
+    # RosterAssignments
+    can :read, RosterAssignment
+    can :manage, RosterAssignment do |roster_assignment|
+      roster_assignment.community_profile_user_profile.id == user.user_profile.id
+    end
+
     # Role Rules
     can :manage, Role do |role|
       role.community_admin_profile_id == user.user_profile.id
