@@ -26,17 +26,17 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # GET /questions/:id(.:format)
   def show
-    respond_with(@question)
+
   end
 
   # GET /custom_forms/:custom_form_id/questions/new(.:format)
   def new
-    respond_with(@question)
+
   end
 
   # GET /questions/:id/edit(.:format)
   def edit
-    respond_with(@question)
+
   end
 
   # POST /custom_forms/:custom_form_id/questions(.:format)
