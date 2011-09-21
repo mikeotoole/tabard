@@ -20,9 +20,6 @@ describe RosterAssignment do
   end
   
   describe "pending" do
-    it "should be required" do
-      build(:roster_assignment, :pending => nil).should_not be_valid
-    end
     it "should be true by default" do
       build(:roster_assignment).pending.should be_true
     end
@@ -38,5 +35,11 @@ describe RosterAssignment do
   	it "should be required" do
       build(:roster_assignment, :character_proxy => nil).should_not be_valid
     end
+  end
+
+  it "should enforce character non-duplication within a roster" do
+    profile_with_characters = create(:community_profile_with_characters)
+    the_proxy = profile_with_characters.character_proxies.first
+    RosterAssignment.new(:character_proxy => the_proxy, :community_profile => profile_with_characters).should_not be_valid
   end
 end

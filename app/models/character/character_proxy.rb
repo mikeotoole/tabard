@@ -34,6 +34,7 @@ class CharacterProxy < ActiveRecord::Base
 ###
   delegate :game, :to => :character
   delegate :game_id, :to => :character
+  delegate :name, :to => :character, :allow_nil => true
 
 ###
 # Public Methods

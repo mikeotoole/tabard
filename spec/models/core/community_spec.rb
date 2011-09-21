@@ -99,6 +99,8 @@ describe Community do
   end
 
   describe "protected_roster" do
+    let(:community_profile) { create(:community_profile_with_characters, :community => community) }
+    let(:new_proxy) { create(:character_proxy_with_wow_character, :user_profile => community_profile.user_profile)}
 
     it "should be false by default" do
       community.protected_roster.should be_false
@@ -106,13 +108,18 @@ describe Community do
 
     describe "when true" do
       it "should make roster changes pending" do
-        pending
+        community_profile.community.update_attribute(:protected_roster, true)
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :pending => false)
+        ra.pending.should be_true
       end
     end
 
     describe "when false" do
       it "should not make roster changes pending" do
-        pending
+        community_profile.community.update_attribute(:protected_roster, true)
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :pending => true)
+        ra.community_profile.community.protected_roster.should be_true
+        RosterAssignment.find(ra).pending.should be_true
       end
     end
   end

@@ -69,7 +69,7 @@ class Community < ActiveRecord::Base
         profile.approved_character_proxies.each do |proxy|
           community_roster << proxy if proxy.game == game
         end
-      else 
+      else
         community_roster = community_roster + profile.approved_character_proxies
       end
     end

@@ -1,7 +1,4 @@
 DaBvRails::Application.routes.draw do
-
-  resources :roster_assignments
-
   # Users
   devise_for :users
 
@@ -33,6 +30,9 @@ DaBvRails::Application.routes.draw do
       resources :roles do
         resources :permissions
       end
+
+      #Roster assignments
+      resources :roster_assignments
 
       # Custom Forms
       resources :custom_forms do
