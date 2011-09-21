@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ActiveProfileController do
+describe ActiveProfilesController do
 
   describe "GET 'create'" do
     it "should be successful" do
