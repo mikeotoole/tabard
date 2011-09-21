@@ -35,9 +35,9 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
-puts "RoboBilly is creating Just Another Headshot Guild with the game SWTOR!"
+puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
-jahc.games << swtor
+jahc.games << swtor_game
 
 puts "RoboBilly is creating a n00b role..."
 noob_role = jahc.roles.create(:name => "n00b")
