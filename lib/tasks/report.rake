@@ -31,9 +31,9 @@ namespace :reports do
 
   desc "Create a report on tests"
   task :tests  => [:ensure_report_dir] do
-    puts "Running tests..."
+    puts "\nRunning tests..."
     system "rake spec | tee doc/reports/test_report.txt"
-    system "mv coverage/ doc/reports/test_coverage"
+    system "mv coverage doc/reports/test_coverage"
   end
 
   require 'rspec/core/rake_task'
@@ -47,7 +47,7 @@ namespace :reports do
   
   desc "Create class diagrams"
   task :diagrams  => [:ensure_report_dir] do
-    puts "Creating diagrams with railroady..."
+    puts "\nCreating diagrams with railroady..."
     system "rake diagram:models:brief"        # Generates an abbreviated SVG class diagram for all models.
     system "rake diagram:models:complete"     # Generates an SVG class diagram for all models.
     puts "Moving diagrams to reports/diagrams..."
