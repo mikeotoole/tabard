@@ -1,6 +1,6 @@
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :tests] do
+  task :all => [:docs, :notes, :best_practices, :diagrams, :tests] do
     puts "Reports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end
@@ -43,6 +43,16 @@ namespace :reports do
     t.rcov = true
     t.rcov_opts = %w{--rails --include views -Ispec --exclude gems\/,spec\/,features\/,seeds\/}
     t.spec_opts = ["-c"]
+  end
+  
+  desc "Create class diagrams"
+  task :diagrams  => [:ensure_report_dir] do
+    puts "Creating diagrams with railroady..."
+    system "rake diagram:models:brief"        # Generates an abbreviated SVG class diagram for all models.
+    system "rake diagram:models:complete"     # Generates an SVG class diagram for all models.
+    puts "Moving diagrams to reports/diagrams..."
+    mkdir "doc/reports/diagrams" unless File.exists?("doc/reports/diagrams")
+    system "mv doc/*.svg doc/reports/diagrams/"
   end
 
   task :ensure_report_dir do

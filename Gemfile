@@ -46,6 +46,7 @@ source 'http://rubygems.org'
     gem 'rails_best_practices' # Best Practices Gem
     gem 'sqlite3'
     gem 'haml-rails' # Haml Generator Gem
+    gem 'railroady' # Diagram Generator
   end
 
 # Production Specific Gems
