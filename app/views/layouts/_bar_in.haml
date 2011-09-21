@@ -11,14 +11,14 @@
             %li= link_to community.name, community
           %li.add
             = link_to 'Join a community', communities_url(:subdomain => false)
-      %li{ :class => 'icon search' }
-        -# TODO Doug, hook up the link
-        = link_to 'Search', '#'
-      %li
-        %p
-          = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
-          -# TODO Joe - This link doesn't work - DW
-          = link_to "Log out", destroy_user_session_url(:subdomain => false), :method => :delete
+    %li{ :class => 'icon search' }
+      -# TODO Doug, hook up the link
+      = link_to 'Search', '#'
+    %li
+      %p
+        = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
+        -# TODO Joe - This link doesn't work - DW
+        = link_to "Log out", destroy_user_session_url(:subdomain => false), :method => :delete
   
   -# TODO Doug, hook up links
   %ul.characters
