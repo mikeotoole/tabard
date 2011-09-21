@@ -11,7 +11,6 @@ DaBvRails::Application.routes.draw do
   resources :communities, :except => :destroy
 
   # Games
-  match "/game/:id" => "games#show", :as => "game"
   resources :games, :only => :show
 
   # Characters
@@ -62,9 +61,14 @@ DaBvRails::Application.routes.draw do
 
   end
 
-  # Home
-  root :to => 'home#index'
-  get "home/index"
+  # Crumblin Home page
+  root :to => 'crumblin#index'
+  get "crumblin/index"
+  
+  # Crumblin top level pages
+  match "/intro" => "crumblin#intro", :as => 'crumblin_intro'
+  match "/features" => "crumblin#features", :as => 'crumblin_features'
+  match "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

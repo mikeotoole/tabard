@@ -13,9 +13,6 @@
     = f.label :slogan
     = f.text_field :slogan
   .field
-    = f.label :label
-    = collection_select(:community, :label, Community::VALID_LABELS, :to_s, :to_s)
-  .field
     = f.label :accepting_members
     = f.check_box :accepting_members
   .field

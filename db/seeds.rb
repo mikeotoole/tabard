@@ -6,9 +6,11 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test'
+
 puts "Creating Games..."
-wow_game = Wow.create(:name => "World of Warcraft")
-swtor_game = Swtor.create(:name => "Starwars the Old Republic")
+wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
+swtor_game = Swtor.create(:name => "Starwars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
+
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
     :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"})
@@ -33,10 +35,8 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
-puts "RoboBilly is creating Just Another Headshot Clan..."
-jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :label => "Clan")
-
-puts "JAHC is now supporting SWTOR"
+puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
+jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
 jahc.games << swtor_game
 
 puts "RoboBilly is creating a n00b role..."

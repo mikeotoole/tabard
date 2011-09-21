@@ -90,5 +90,28 @@ module ApplicationHelper
   def clear_flash_messages
     flash[:messages] = nil
   end
+  
+  ###
+  # Adds the ability to pass a default value when delivering yeilds in the view.
+  # [Args]
+  #   * +content_sym+ -> The yield value.
+  #   * +default+ -> The default value for the yield.
+  # [Returns] output for yield.
+  ###
+  def yield_for(content_sym, default)
+    output = content_for(content_sym)
+    output = default if output.blank?
+    output
+  end
+
+  ###
+  # Provides a clean way to set the page title within a view and adds the text " - Crumblin".
+  # [Args]
+  #   * +page_title+ -> The page title.
+  # [Returns] :title for the yield.
+  ###
+  def title(page_title)
+    content_for(:title) { "#{page_title} - Crumblin" }
+  end
 
 end

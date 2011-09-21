@@ -1,23 +1,28 @@
-%h2 Sign up
-- resource.build_user_profile unless resource.user_profile
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  %p
-    = f.label :email
-    %br/
-    = f.email_field :email
-  =f.fields_for :user_profile do |up_form|
+- title 'Sign up'
+
+#body
+  %h1 Sign up for Crumblin
+  
+  - resource.build_user_profile unless resource.user_profile
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    = devise_error_messages!
     %p
-      = up_form.label :display_name
+      = f.label :email
       %br/
-      = up_form.text_field :display_name
-  %p
-    = f.label :password
-    %br/
-    = f.password_field :password
-  %p
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation
-  %p= f.submit "Sign up!"
-= render "devise/shared/links"
+      = f.email_field :email
+    =f.fields_for :user_profile do |up_form|
+      %p
+        = up_form.label :display_name
+        %br/
+        = up_form.text_field :display_name
+    %p
+      = f.label :password
+      %br/
+      = f.password_field :password
+    %p
+      = f.label :password_confirmation
+      %br/
+      = f.password_field :password_confirmation
+    %p
+      %button{ :type => 'submit' } Sign up
+  = render "devise/shared/links"

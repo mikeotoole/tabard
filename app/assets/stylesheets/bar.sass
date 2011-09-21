@@ -1,0 +1,359 @@
+@import mixins
+
+#bar
+  background: image-url('bar/bg.png') top center repeat-x
+  color: #a89db4
+  font-family: DinLight, sans
+  height: 75px
+  left: 0
+  min-width: 980px
+  position: fixed
+  right: 0
+  top: 0
+  z-index: 90
+  
+  &:after
+    background: image-url('bar/shadow.png') top center no-repeat
+    content: ''
+    height: 70px
+    left: 0
+    pointer-events: none
+    position: absolute
+    right: 0
+    top: 71px
+  
+  .logo
+    background: image-url('bar/logo.png') 0 50px no-repeat
+    height: 104px
+    left: 50%
+    margin: 0 0 0 -480px
+    position: absolute
+    top: -50px
+    width: 146px
+  
+  >ul
+    height: 30px
+    padding: 5px 0
+    position: absolute
+    text-align: left
+    top: 20px
+    z-index: 91
+    
+    &.menu
+      border-left: 2px solid #554863
+      padding: 5px 0 5px 15px
+      left: 50%
+      margin: 0 0 0 -318px
+      width: 385px
+    
+    &.characters
+      right: 50%
+      margin: 0 -430px 0 0
+      
+      >li
+      
+        >ul
+          +border_radius(5,0,5,5)
+          left: auto
+          right: 0
+    
+    >li
+      float: left
+      position: relative
+      
+      >a,
+      >span
+        background: #251634
+        border: 1px solid #46345a
+        +border_radius(5)
+        color: #fff
+        float: left
+        font-size: 16px
+        display: block
+        height: 30px
+        line-height: 30px
+        margin: 0 0 0 5px
+        padding: 0 10px
+        position: relative
+        z-index: 92
+        
+        &:not(:only-child)
+          padding: 0 30px 0 10px
+      
+          &:after
+            border: 5px solid transparent
+            border-top-color: #fff
+            content: ''
+            height: 0
+            +opacity(.7)
+            position: absolute
+            right: 10px
+            top: 13px
+            width: 0
+      
+      >span
+        cursor: default
+      
+      >ul
+        background: #2d7cb4
+        border: 1px solid #4a99d0
+        +border_radius(0,5,5,5)
+        +box_shadow(0 0 5px rgba(#000, .5))
+        left: 5px
+        margin: -9000em 0 0
+        min-width: 120%
+        +opacity(0)
+        padding: 5px 0 0
+        position: absolute
+        top: 30px
+        z-index: 91
+        
+        >li
+          display: inline
+          
+          >a
+            border-top: 1px solid #186a9e
+            color: #cceaff
+            display: block
+            font-size: 13px
+            padding: 0 10px
+            
+            &:hover
+              background: #4a99d0
+              color: #fff
+          
+          &:last-child
+            
+            a
+              +border_radius(0,0,5,5)
+      
+          &.add
+            
+            >a
+              background: rgba(#000,.1)
+              position: relative
+              text-indent: 10px
+              
+              &:before
+                color: #5eaae1
+                content: '+'
+                left: 0
+                position: absolute
+                top: 7px
+                text-align: right
+                text-indent: 0
+                width: 15px
+            
+              &:hover
+                background: #4a99d0
+                color: #fff
+                
+                &:before
+                  color: #fff
+      
+      &:hover
+        
+        >a,
+        >span
+          background: #2d7cb4
+          border-color: #4a99d0
+          +transition(background .1s linear)
+          z-index: 94
+
+          &:not(:only-child)
+            border-bottom: 0
+            +border_radius(5,5,0,0)
+            padding: 0 30px 7px 10px
+            +transition(background .1s linear, padding .1s linear)
+            
+            &:after
+              +opacity(1)
+              +transition(opacity .2s linear)
+        
+        >ul
+          margin: 0
+          +opacity(1)
+          top: 37px
+          +transition(top .2s ease-in-out, opacity .1s linear)
+          z-index: 93
+          
+          >li
+            
+            >a
+              padding: 8px 10px
+              +transition(padding .1s linear)
+      
+      >p
+        font-size: 13px
+        padding: 0 0 0 5px
+        
+        a
+          color: #a89db4
+          line-height: 30px
+          padding: 0 3px
+          text-decoration: underline
+          
+          &:hover
+            color: #be4124
+      
+      &.icon
+        margin: -5px 0 -5px 5px
+        padding: 5px 0
+        
+        >a
+          background: image-url('bar/icons.png') no-repeat
+          border-color: transparent
+          margin: 0 0 0 5px
+          +opacity(.8)
+          padding: 0
+          text-indent: -500em
+          +transition(opacity .1s linear)
+          width: 30px
+        
+          &[meta]:before
+            background: #BC3F2B
+            +border_radius(3)
+            color: #F6CFC9
+            content: attr(meta)
+            font-family: DinMedium, sans
+            font-size: 12px
+            height: 12px
+            right: 0
+            line-height: 12px
+            padding: 3px
+            position: absolute
+            text-align: right
+            text-indent: 0
+            top: -17px
+          
+          &:hover
+            +opacity(1)
+            
+            &[meta]:before
+              background: #367BB1
+              color: #fff
+      
+      &.search > a
+        background-position: -5px -5px
+        
+      &.gear > a
+        background-position: -45px -5px 
+      
+      &.notice > a
+        background-position: -85px -5px 
+      
+      &.envelope
+        border-right: 2px solid #554863
+        margin-right: 15px
+        
+        > a
+          background-position: -125px -5px
+          margin: 0 15px 0 5px
+  
+  a.avatar
+    background: #261333
+    border: 1px solid #554863
+    +border_radius(5)
+    height: 40px
+    margin: 0 -480px 0 0
+    position: absolute
+    right: 50%
+    top: 15px
+    +transition(border .2s linear, box-shadow .2s linear)
+    width: 40px
+    
+    img
+      height: 40px
+      left: 0
+      position: absolute
+      top: 0
+      width: 40px
+    
+    &:hover
+      border-color: #3679B3
+      +box_shadow(0 0 10px #000)
+  
+  p.signup
+    font-size: 13px
+    height: 30px
+    line-height: 30px
+    position: absolute
+    left: 50%
+    margin: 25px 0 0 110px
+    text-align: right
+    width: 150px
+  
+    a
+      color: #fff
+      text-decoration: underline
+      
+      &:hover
+        color: #f26443
+    
+    .button
+      +bg_gradient(#d24723,#792b28)
+      border-color: #1e102c
+      +border_radius(5)
+      color: #f8d5bb
+      float: right
+      font-family: Malbeck, serif
+      font-size: 16pt
+      height: 30px
+      line-height: 30px
+      letter-spacing: 1px
+      padding: 0
+      margin: 0 0 0 5px
+      text-align: center
+      text-decoration: none
+      text-transform: lowercase
+      width: 75px
+      white-space: nowrap
+      
+      &:focus,
+      &:hover
+        +bg_gradient(#e05c2e,#9e3834)
+        +box_shadow(0 0 10px #000)
+        color: #fff
+  
+  form
+    border-left: 2px solid #554863
+    margin: 0 -480px 0 0
+    padding: 5px 0 5px 20px
+    position: absolute
+    right: 50%
+    top: 20px
+  
+    &:before
+      background-image: image-url('bar/icon-search.png')
+      content: ''
+      height: 20px
+      left: 25px
+      +opacity(.3)
+      position: absolute
+      top: 10px
+      width: 20px
+  
+    input
+      +bg_gradient(#cdcdcd,#fdfdfd)
+      border: 1px solid #46345a
+      +border_radius(5)
+      color: #999
+      height: 30px
+      line-height: 30px
+      padding: 0 10px 0 30px
+      width: 140px
+      
+      &:focus
+        color: #333
+      
+    &:hover
+    
+      &:before
+        +opacity(.6)
+      
+      input
+        color: #333
+    
+    button
+      position: absolute
+      top: -5000em

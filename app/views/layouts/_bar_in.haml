@@ -1,0 +1,43 @@
+#bar
+  = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
+  
+  - if current_user.communities.size > 0
+    %ul.menu
+      %li
+        %span My Communities
+        %ul
+          - current_user.communities.each do |community|
+            -# TODO Joe, make the link better - DW
+            %li= link_to community.name, community
+          %li.add
+            = link_to 'Join a community', communities_url(:subdomain => false)
+      %li{ :class => 'icon search' }
+        -# TODO Doug, hook up the link
+        = link_to 'Search', '#'
+      %li
+        %p
+          = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
+          -# TODO Joe - This link doesn't work - DW
+          = link_to "Log out", destroy_user_session_url(:subdomain => false), :method => :delete
+  
+  -# TODO Doug, hook up links
+  %ul.characters
+    %li{ :class => 'icon gear' }
+      = link_to "Account", edit_user_registration_url(:subdomain => false)
+    %li{ :class => 'icon notice' }
+      -# TODO Doug, hook up the link
+      = link_to "Announcements", '#', :meta => 7
+    %li{ :class => 'icon envelope' }
+      -# TODO Doug, hook up the link
+      = link_to "Messages", '#', :meta => 34
+    %li
+      -# TODO Joe, create a base_character page that lets you select the game - DW
+      = link_to 'My Characters', '#'
+      %ul
+        - current_user.user_profile.characters.each do |character|
+          %li= link_to 'Blaggarth', '#'
+        %li.add
+          = link_to 'Add new character', new_base_character_path
+
+  -# TODO Doug, get the correct link for image avatar size from Joe. Also, this will need to link to the currently active characer edit view.
+  = link_to image_tag(current_user.user_profile.avatar_url + '?&size=40x40'), '#', :class => 'avatar'

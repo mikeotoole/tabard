@@ -23,6 +23,7 @@ describe Subdomains::RolesController do
       get 'index'
       response.should be_success
     end
+    
     it "should render roles/index template when authenticated as a community admin" do
       sign_in admin_user
       get 'index'
@@ -47,6 +48,7 @@ describe Subdomains::RolesController do
       get 'show', :id => role
       response.should be_success
     end
+    
     it "should render roles/show template when authenticated as a community admin" do
       sign_in admin_user
       get 'show', :id => role
@@ -71,6 +73,7 @@ describe Subdomains::RolesController do
       get 'new'
       response.should be_success
     end
+    
     it "should render roles/new template when authenticated as a community admin" do
       sign_in admin_user
       get 'new'
@@ -203,18 +206,21 @@ describe Subdomains::RolesController do
     before(:each) do
       @role = create(:role, :community => community)
     end
+    
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       delete 'destroy', :id => @role
       response.should redirect_to(roles_path)
       Role.exists?(@role).should be_false
     end
+    
     it "should be unauthorized when authenticated as a nonadmin user" do
       sign_in user
       delete 'destroy', :id => @role
       Role.exists?(@role).should be_true
       response.response_code.should == 403
     end
+    
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @role
       Role.exists?(@role).should be_true
