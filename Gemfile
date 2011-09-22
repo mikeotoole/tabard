@@ -48,6 +48,7 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'railroady'
+    gem "parallel_tests"
   end
 
 # Development Specific Gems

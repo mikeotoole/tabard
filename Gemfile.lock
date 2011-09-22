@@ -134,6 +134,9 @@ GEM
     newrelic_rpm (3.1.2)
     nokogiri (1.5.0)
     orm_adapter (0.0.5)
+    parallel (0.5.9)
+    parallel_tests (0.6.2)
+      parallel
     pg (0.11.0)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
@@ -277,6 +280,7 @@ DEPENDENCIES
   jquery-rails
   mini_magick
   newrelic_rpm
+  parallel_tests
   pg
   railroady
   rails

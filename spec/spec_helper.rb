@@ -1,5 +1,12 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+
+if ENV["COVERAGE"] != 'off'
+  SimpleCov.start 'rails' do
+    coverage_dir "doc/reports/test_coverage"
+    command_name "RSpec#{rand(100000)}"
+    merge_timeout 300
+  end
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
