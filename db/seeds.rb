@@ -9,7 +9,7 @@ if ENV["RAILS_ENV"] != 'test'
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
-swtor_game = Swtor.create(:name => "Starwars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
+swtor_game = Swtor.create(:name => "Star Wars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
 
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
@@ -46,8 +46,8 @@ puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
 
 puts "RoboBilly is getting some characters..."
-3.times do |n|
-  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => "LOLOLOL#{n}", :server => "Herp", :game => swtor_game))
+['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|r
+  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
 end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
@@ -60,24 +60,18 @@ jahc.promote_user_profile_to_member(d_badger.user_profile)
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
 
-puts "Creating SWTOR Game"
-swtor = Game.create(:name => "Star Wars the Old Republic", :type => "Swtor")
-
-puts "Creating WoW Game"
-wow = Game.create(:name => "World of Warcraft", :type => "Wow")
-
 puts "Creating Just Another Headshot Clan General Discussion Space"
 gds = jahc.discussion_spaces.new(:name => "General Discussion Space")
 gds.user_profile = robobilly.user_profile
 gds.save
 
 puts "Creating Just Another Headshot Clan WoW Discussion Space"
-wds = jahc.discussion_spaces.new(:name => "WoW Discussion Space", :game => wow)
+wds = jahc.discussion_spaces.new(:name => "WoW Discussion Space", :game => wow_game)
 wds.user_profile = robobilly.user_profile
 wds.save
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-sds = jahc.discussion_spaces.new(:name => "SWTOR Discussion Space", :game => swtor)
+sds = jahc.discussion_spaces.new(:name => "SWTOR Discussion Space", :game => swtor_game)
 sds.user_profile = robobilly.user_profile
 sds.save
 

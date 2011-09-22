@@ -3,29 +3,10 @@
 #body
   %h1 Listing communities
 
-  - if @communities.size > 0 || (can? :create, Community)
-    %table
-      - if @communities.size > 0
-        %thead
-          %tr
-            %th Community
-            %th Members
-            %th.actions
-        %tbody
-          - @communities.each do |community|
-            %tr
-              %td
-                %strong= link_to community.name, community
-                %br/
-                = "\"#{community.slogan}\""
-              %td= community.get_current_community_roster.size
-              %td.actions
-                = community.accepting_members
-                = link_to_if (can? :show, community), 'Show', community
-                = link_to_if (can? :update, community), 'Edit', edit_community_path(community)
-                = link_to_if (can? :destroy, community), 'Destroy', community, :confirm => 'Are you sure?', :method => :delete
-      %tfoot
-        %tr
-          %td{ :colspan => 3 }
-            - if (can? :create, Community)
-              = link_to 'New Community', new_community_path, :class => 'button primary'
+  - if @communities.size > 0
+    = render "communities/communities_table", :communities => @communities
+  -else
+    %p
+      There are no active communities.
+      - if (can? :create, Community)
+        = link_to 'Create a community', new_community_url(:subdomain => false)

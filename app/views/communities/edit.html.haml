@@ -1,7 +1,9 @@
-%h1 Editing community
+- title "Editing Community"
 
-= render 'form', :community => @community
+#body
+  %h1
+    Editing
+    = link_to @community.name, @community
+    Community
 
-= link_to 'Show', @community
-\|
-= link_to 'Back', communities_path
+  = render 'form', :community => @community

@@ -37,7 +37,7 @@
       = link_to 'My Characters', '#'
       %ul
         - current_user.user_profile.characters.each do |character|
-          %li= link_to 'Blaggarth', '#'
+          %li= link_to character.name, '#'
         %li.add
           = link_to 'Add new character', new_base_character_path
 
