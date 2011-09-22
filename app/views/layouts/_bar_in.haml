@@ -20,7 +20,7 @@
       %p
         = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
         -# TODO Joe - This link doesn't work - DW
-        = link_to "Log out", destroy_user_session_url(:subdomain => false), :method => :delete
+        = link_to "Log out", destroy_user_session_url(:subdomain => false)
   
   -# TODO Doug, hook up links
   %ul.characters
