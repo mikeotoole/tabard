@@ -43,8 +43,6 @@ DaBvRails::Application.configure do
   # Default mailer url
   config.action_mailer.default_url_options = { :host => 'lvh:3000' }
 
-  Capybara.server_port = 8888 + ENV['TEST_ENV_NUMBER'].to_i
-
 #   DatabaseCleaner.strategy = :transaction
 #   DatabaseCleaner.clean_with(:truncation)
 #   DatabaseCleaner.clean

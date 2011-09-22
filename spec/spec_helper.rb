@@ -4,7 +4,7 @@ if ENV["COVERAGE"] != 'off'
   SimpleCov.start 'rails' do
     coverage_dir "doc/reports/test_coverage"
     command_name "RSpec#{rand(100000)}"
-    merge_timeout 300
+    merge_timeout 600
   end
 end
 
