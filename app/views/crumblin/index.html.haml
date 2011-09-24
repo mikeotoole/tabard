@@ -1,6 +1,6 @@
 - title 'Home'
 &nbsp;
-      
+
 #homebox
 
   %ol
@@ -22,30 +22,30 @@
       Because you actually have time now.
 
   %form
-  
+
     %p.pitch
       %strong Free for players.
       Compare
       = link_to 'pricing', crumblin_pricing_url(:subdomain => false)
-  
+
     %h2 Ready to get started?
-    
+
     %input{ :type => 'text', :title => 'Guid or clan name' }
     %button{ :type => 'submit' } Create
-    
+
     %p.url
       %strong
         http://
         %ins guildorclanname
         \.crumblin.com
       — Custom domain names coming soon!
-      
+
     = image_tag 'main/cyborg.png'
-  
+
 #home
-  
+
   .col1
-  
+
     %h2
       %strong Feature Spotlight
     %ul
@@ -69,9 +69,9 @@
         Forums are a lot of work. We’ve simplified the socilization of your community into manageable discussion pages that tie into a main feed. See what’s going on without checking for new posts in 10 different places.
       %li
         = link_to 'More features', crumblin_features_url(:subdomain => false)
-  
+
   .col2
-  
+
     %h2
       %strong Recent Activity
       — see what’s going on in the community
@@ -103,7 +103,7 @@
         %strong= pluralize(User.count, 'member')
         as of
         = l Time.now, :format => :short
-  
+
     %h2
       %strong Crumblin Updates
       — sytem updates, new features, and high fives

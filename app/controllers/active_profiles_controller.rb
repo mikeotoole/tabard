@@ -6,19 +6,19 @@
 # This controller is for creating the active profile.
 ###
 class ActiveProfilesController < ApplicationController
-  
+
   before_filter :authenticate_user!
-  
+
+  #This creates the active profile, if possible.
   def create
     if params[:type] =~ /UserProfile|Character$/
       if defined? params[:type].constantize
         profile = params[:type].constantize.find_by_id(params[:id])
-
-        session[:profile_id] = params[:id]
-        session[:profile_type] = params[:type]
       end
 
-      if profile
+      if profile and profile.owned_by_user?(current_user)
+        session[:profile_id] = params[:id]
+        session[:profile_type] = params[:type]
         active_profile_name = profile.name
         add_new_flash_message("Profile <em>#{active_profile_name}</em> activated.")
         redirect_to previous_page

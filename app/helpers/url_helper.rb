@@ -5,7 +5,7 @@
 #
 # This helper module is for improving urls for use with subdomains
 ###
-module UrlHelper  
+module UrlHelper
   ###
   # This is a monkey patch to add subdomain option to the URL helper.
   # [Args]

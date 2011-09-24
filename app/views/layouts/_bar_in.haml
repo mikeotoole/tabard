@@ -1,6 +1,6 @@
 #bar
   = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
-  
+
   %ul.menu
     - if current_user.communities.size > 0
       %li
@@ -21,7 +21,7 @@
         = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
         -# TODO Joe - This link doesn't work - DW
         = link_to "Log out", destroy_user_session_url(:subdomain => false)
-  
+
   -# TODO Doug, hook up links
   %ul.characters
     %li{ :class => 'icon gear' }

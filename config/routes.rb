@@ -8,6 +8,7 @@ DaBvRails::Application.routes.draw do
   match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
 
   # Active profile
+  resource :active_profiles, :only => [:create]
   match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
@@ -67,7 +68,7 @@ DaBvRails::Application.routes.draw do
   # Crumblin Home page
   root :to => 'crumblin#index'
   get "crumblin/index"
-  
+
   # Crumblin top level pages
   match "/intro" => "crumblin#intro", :as => 'crumblin_intro'
   match "/features" => "crumblin#features", :as => 'crumblin_features'

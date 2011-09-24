@@ -90,7 +90,7 @@ module ApplicationHelper
   def clear_flash_messages
     flash[:messages] = nil
   end
-  
+
   ###
   # Adds the ability to pass a default value when delivering yeilds in the view.
   # [Args]

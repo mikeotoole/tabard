@@ -119,4 +119,14 @@ class BaseCharacter < ActiveRecord::Base
   def default
     self.character_proxy.default_character
   end
+
+  ###
+  # This method checks to see if the specified user is the owner of this character.
+  # [Args]
+  #   * +unknown_user+ -> The user to check.
+  # [Returns] True if the specified user is the owner of this character, otherwise false.
+  ###
+  def owned_by_user?(unknown_user)
+    self.user_profile.user == unknown_user
+  end
 end
