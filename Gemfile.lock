@@ -157,7 +157,7 @@ GEM
       activesupport (= 3.1.0)
       bundler (~> 1.0)
       railties (= 3.1.0)
-    rails_best_practices (0.10.1)
+    rails_best_practices (1.0.1)
       activesupport
       colored
       erubis
