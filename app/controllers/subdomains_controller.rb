@@ -3,6 +3,11 @@
 ###
 class SubdomainsController < ApplicationController
 ###
+# Layout
+###
+  layout :community_layout
+
+###
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
@@ -36,6 +41,12 @@ class SubdomainsController < ApplicationController
 # Protected Methods
 ###
 protected
+  ###
+  # This method sets the layout for the controller.
+  ###
+  def community_layout
+    "community" # This can be expanded later with logic.
+  end
 
   ###
   # This method attepts to find a community using the subdomain from the request.
