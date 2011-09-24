@@ -19,6 +19,14 @@ module UrlHelper
     super
   end
 
+  def actual_community_url(some_community)
+    if some_community.respond_to?("subdomain")
+      root_url(:subdomain => some_community.subdomain)
+    else
+      root_url
+    end
+  end
+
 ###
 # Protected Methods
 ###

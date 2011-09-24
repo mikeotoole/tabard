@@ -14,7 +14,7 @@
         - @game.communities.each do |community|
           %tr
             %td
-              = link_to community.name, community
+              = link_to community.name, actual_community_url(community)
             %td
               -# TODO Doug, get the roster size
             %td

@@ -20,7 +20,7 @@
       %td= community.accepting_members
       %td= community.email_notice_on_application
       %td= community.subdomain
-      %td= link_to_if (can? :show, community), 'Show', community
+      %td= link_to_if (can? :show, community), 'Show', actual_community_url(community)
       %td= link_to_if (can? :update, community), 'Edit', edit_community_path(community)
       %td= link_to_if (can? :destroy, community), 'Destroy', community, :confirm => 'Are you sure?', :method => :delete
 
