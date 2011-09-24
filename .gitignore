@@ -19,3 +19,6 @@ coverage/
 public/uploads/tmp/
 
 public/assets/
+
+# Visual Paradigm
+*.vpp~*
