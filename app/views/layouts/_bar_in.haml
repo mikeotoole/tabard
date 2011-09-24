@@ -9,7 +9,7 @@
           - current_user.communities.each do |community|
             -# TODO Joe, make the link better - DW
             %li= link_to community.name, community
-          %li.add
+          %li.extra
             = link_to 'Join a community', communities_url(:subdomain => false)
     - else
       %li= link_to 'Join a community', communities_url(:subdomain => false)
@@ -20,7 +20,7 @@
       %p
         = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
         -# TODO Joe - This link doesn't work - DW
-        = link_to "Log out", destroy_user_session_url(:subdomain => false)
+        = link_to "Logout", destroy_user_session_url(:subdomain => false)
 
   -# TODO Doug, hook up links
   %ul.characters
@@ -37,12 +37,15 @@
       %ul
         -if profiles
           - profiles.each do |profile|
-            -unless profile[:is_current]
+            - unless profile[:is_current]
               %li
                 = image_tag(profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon))
                 = link_to( active_profile_url(:id => profile[:profile_id], :type => profile[:type])) do
                   = profile[:name]
-          %li.add
-            = link_to 'Add new character', new_base_character_path
+          %li.extra
+            - if profiles.size > 1
+              = link_to 'View all characters', user_profile_path(current_user)
+            - else
+              = link_to 'Add new character', new_base_character_path
   -# TODO Doug, get the correct link for image avatar size from Joe. Also, this will need to link to the currently active characer edit view.
   = link_to image_tag(current_active_profile.avatar_url(:tiny)), current_active_profile, :class => 'avatar'

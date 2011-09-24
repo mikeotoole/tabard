@@ -1,4 +1,11 @@
 @import mixins
+@import fonts/din
+@import fonts/malbeck
+@import reset
+@import bar
+
+#bar:before
+  +bg_gradient(#ccc,rgba(#ccc,0))
 
 body
   background: image-url('main/bg.png') 0 70px repeat-x #fff
@@ -799,12 +806,4 @@ button,
     top: 60px
     width: 340px
 
-#footer
-  bottom: 0
-  font-family: DinMedium, sans
-  font-size: 11px
-  left: 0
-  padding: 5px
-  +opacity(.5)
-  position: fixed
-  z-index: 1
+@import footer
