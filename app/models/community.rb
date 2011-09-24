@@ -20,6 +20,7 @@ class Community < ActiveRecord::Base
   has_many :supported_games
   has_many :games, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
+  has_one :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_profiles
   has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
   has_many :discussions, :through => :discussion_spaces
