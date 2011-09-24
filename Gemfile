@@ -47,7 +47,6 @@ source 'http://rubygems.org'
   group :development, :test do
     gem 'sqlite3'
     gem 'rspec-rails'
-    gem 'railroady'
   end
 
 # Development Specific Gems

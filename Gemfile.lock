@@ -148,7 +148,6 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    railroady (1.0.2)
     rails (3.1.0)
       actionmailer (= 3.1.0)
       actionpack (= 3.1.0)
@@ -279,7 +278,6 @@ DEPENDENCIES
   mini_magick
   newrelic_rpm
   pg
-  railroady
   rails
   rails_best_practices
   rb-fsevent
