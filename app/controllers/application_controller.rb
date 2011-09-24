@@ -1,7 +1,7 @@
 ###
 # Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Don't Steal Me Bro!
+# License::   Proprietary Closed Source
 #
 # This is the application cotroller.
 ###
@@ -20,10 +20,10 @@ class ApplicationController < ActionController::Base
 
   # This after_filter attempts to remember the current crumblin page.
   after_filter :remember_current_page
-  
+
   # This before_filter attempts to remember the last crumblin page.
   before_filter :remember_last_page
-  
+
   # This before_filter builds a list of the Crumblin supported games.
   before_filter :fetch_active_games
 
@@ -78,7 +78,7 @@ protected
   def fetch_active_games
     @active_games = Game.all
   end
-  
+
   # This Method is a helper that exposes the active_games
   def active_games
     @active_games
@@ -128,6 +128,26 @@ protected
     end
   end
   helper_method :current_profile
+
+  #This returns the currently active character or the current user's profile.
+  def current_active_profile
+    return nil unless signed_in?
+    character_active? ? current_character : current_user.user_profile
+  end
+  helper_method :current_active_profile
+
+  # Returns an Array with the users profile and characters info.
+  def profiles
+    if signed_in?
+      profile_collection = current_user.active_profile_helper_collection
+      profiles = Array.new
+      profile_collection.each do |profile|
+        profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }
+      end
+      profiles
+    end
+  end
+  helper_method :profiles
 
 ###
 # Callback Methods

@@ -22,15 +22,15 @@ class CrumblinController < ApplicationController
   ###
   def index
   end
-  
+
   # This method gets the Introduction page.
   def intro
   end
-  
+
   # This method gets the Features page.
   def features
   end
-  
+
   # This method gets the Pricing page.
   def pricing
   end

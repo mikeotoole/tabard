@@ -6,9 +6,9 @@
 # This controller is for creating the active profile.
 ###
 class ActiveProfilesController < ApplicationController
-  
+
   before_filter :authenticate_user!
-  
+
   #This creates the active profile, if possible.
   def create
     if params[:type] =~ /UserProfile|Character$/
