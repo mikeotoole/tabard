@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :community_applications
+
   # Users
   devise_for :users
 

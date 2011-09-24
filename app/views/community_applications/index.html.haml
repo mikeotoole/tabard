@@ -1,0 +1,25 @@
+%h1 Listing community_applications
+
+%table
+  %tr
+    %th Community
+    %th User profile
+    %th Submission
+    %th Status
+    %th
+    %th
+    %th
+
+  - @community_applications.each do |community_application|
+    %tr
+      %td= community_application.community_id
+      %td= community_application.user_profile_id
+      %td= community_application.submission_id
+      %td= community_application.status
+      %td= link_to 'Show', community_application
+      %td= link_to 'Edit', edit_community_application_path(community_application)
+      %td= link_to 'Destroy', community_application, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Community application', new_community_application_path

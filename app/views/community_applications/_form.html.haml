@@ -1,0 +1,22 @@
+= form_for @community_application do |f|
+  -if @community_application.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@community_application.errors.count, "error")} prohibited this community_application from being saved:"
+      %ul
+        - @community_application.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :community_id
+    = f.number_field :community_id
+  .field
+    = f.label :user_profile_id
+    = f.number_field :user_profile_id
+  .field
+    = f.label :submission_id
+    = f.number_field :submission_id
+  .field
+    = f.label :status
+    = f.text_field :status
+  .actions
+    = f.submit 'Save'

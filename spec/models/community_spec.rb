@@ -2,17 +2,18 @@
 #
 # Table name: communities
 #
-#  id                          :integer         not null, primary key
-#  name                        :string(255)
-#  slogan                      :string(255)
-#  accepting_members           :boolean         default(TRUE)
-#  email_notice_on_application :boolean         default(TRUE)
-#  subdomain                   :string(255)
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  admin_profile_id            :integer
-#  member_role_id              :integer
-#  protected_roster            :boolean         default(FALSE)
+#  id                            :integer         not null, primary key
+#  name                          :string(255)
+#  slogan                        :string(255)
+#  accepting_members             :boolean         default(TRUE)
+#  email_notice_on_application   :boolean         default(TRUE)
+#  subdomain                     :string(255)
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  admin_profile_id              :integer
+#  member_role_id                :integer
+#  protected_roster              :boolean         default(FALSE)
+#  community_application_form_id :integer
 #
 
 require 'spec_helper'
@@ -24,12 +25,18 @@ describe Community do
     community.should be_valid
   end
 
-  #describe "after creation" do
-    #it "should have a default member role" do
-      #community2 = build(:community, :roles => []).should be_valid
-      #community2.member_role.should_not be_nil
-    #end
-  #end
+  describe "after creation" do
+    it "should have a default member role" do
+      community2 = build(:community, :member_role => nil)
+      community2.save.should be_true
+      community2.member_role.should_not be_nil
+    end
+    it "should have a default application form" do
+      community2 = build(:community, :community_application_form => nil)
+      community2.save.should be_true
+      community2.member_role.should_not be_nil
+    end
+  end
 
   describe "name" do
     it "should be required" do

@@ -16,11 +16,11 @@ class Community < ActiveRecord::Base
 ###
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
+  belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :roles
   has_many :supported_games
   has_many :games, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
-  has_one :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_profiles
   has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
   has_many :discussions, :through => :discussion_spaces
@@ -30,7 +30,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :set_up_member_role, :make_admin_a_member
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form
 
 ###
 # Validators
@@ -136,10 +136,26 @@ protected
   #
   # This method creates the default member role.
   ###
-  def set_up_member_role
-    default_member_role = Role.create(:name => "Member", :system_generated => true, :community => self)
-    default_member_role.community.update_attribute(:member_role, default_member_role) # OPTIMIZE Joe, this looks like it could use some optimization. -JW
+  def setup_member_role
+    mr = self.build_member_role(:name => "Member", :system_generated => true)
+    mr.community = self
+    mr.save
+    self.update_attribute(:member_role, mr)
+  end
 
+  ###
+  # _after_create_
+  #
+  # This method creates the default member role.
+  ###
+  def setup_community_application_form
+    ca = self.build_community_application_form(:name => "Application Form",
+        :instructions => "Fill this out please.",
+        :thankyou => "Thanks!",
+        :published => true)
+    ca.community = self
+    ca.save
+    self.update_attribute(:community_application_form, ca)
   end
 
   ###

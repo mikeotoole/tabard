@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Community:
+  = @community_application.community_id
+%p
+  %b User profile:
+  = @community_application.user_profile_id
+%p
+  %b Submission:
+  = @community_application.submission_id
+%p
+  %b Status:
+  = @community_application.status
+
+= link_to 'Edit', edit_community_application_path(@community_application)
+\|
+= link_to 'Back', community_applications_path
