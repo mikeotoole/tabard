@@ -82,12 +82,12 @@ describe UserProfile do
 
 ###
 # Instance Method Tests
-###   
+###
   it "name should return a string of the users first and last name" do
     billy = create(:billy)
     billy.user_profile.name.should eq("Robo Billy")
   end
- 
+
   it "characters should return all characters" do
     billy = create(:billy)
     billy.user_profile.should_not be_nil
