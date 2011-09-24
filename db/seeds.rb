@@ -46,8 +46,8 @@ puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
 
 puts "RoboBilly is getting some characters..."
-3.times do |n|
-  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => "LOLOLOL#{n}", :server => "Herp", :game => swtor_game))
+%w( Blaggarth Eliand Tikka ).each do |name|
+  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => name, :server => "Herp", :game => swtor_game))
 end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW

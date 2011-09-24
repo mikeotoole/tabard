@@ -5,7 +5,7 @@
 #
 # This helper module is for improving urls for use with subdomains
 ###
-module UrlHelper  
+module UrlHelper
   ###
   # This is a monkey patch to add subdomain option to the URL helper.
   # [Args]
@@ -17,6 +17,19 @@ module UrlHelper
       options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
     end
     super
+  end
+
+  ###
+  # This creates proper links for communities.
+  # [Args]
+  #   * +some_community+ -> Community to make links from.
+  ###
+  def actual_community_url(some_community)
+    if some_community.respond_to?("subdomain")
+      root_url(:subdomain => some_community.subdomain)
+    else
+      root_url
+    end
   end
 
 ###

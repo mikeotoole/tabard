@@ -136,6 +136,24 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+  ###
+  # This method checks to see if the specified user is the owner of this character.
+  # [Args]
+  #   * +unknown_user+ -> The user to check.
+  # [Returns] True if the specified user is the owner of this character, otherwise false.
+  ###
+  def owned_by_user?(unknown_user)
+    self.user == unknown_user
+  end
+
+  ###
+  # This method gets an array of possible active profile options.
+  # [Returns] An array that user profile + all of their characters.
+  ###
+  def active_profile_helper_collection
+    (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
+  end
+
 ###
 # Protected Methods
 ###
