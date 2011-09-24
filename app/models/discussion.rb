@@ -19,6 +19,7 @@ class Discussion < ActiveRecord::Base
   belongs_to :discussion_space
   has_many :comments, :as => :commentable
   has_one :community, :through => :discussion_space
+  has_many :view_logs, :as => :view_loggable
 
 ###
 # Validators
@@ -68,7 +69,20 @@ class Discussion < ActiveRecord::Base
    end
    temp_total_num_comments
   end
+  
+  def update_viewed(user_profile)
+    log = self.view_logs.find_by_user_profile_id(user_profile.id)
+    if log
+      log.touch
+    else
+      log = self.view_logs.new()
+      log.user_profile = user_profile
+      log.view_loggable = self
+      log.save
+    end  
+  end
 end
+
 
 # == Schema Information
 #
@@ -84,5 +98,6 @@ end
 #  has_been_locked     :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  is_archived         :boolean         default(FALSE)
 #
 

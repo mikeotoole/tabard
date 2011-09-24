@@ -80,6 +80,10 @@ describe UserProfile do
     end
   end
 
+  it "should respond to view_logs" do
+    pending
+  end
+
 ###
 # Instance Method Tests
 ###   

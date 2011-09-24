@@ -63,6 +63,7 @@ class DiscussionSpace < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: discussion_spaces
@@ -74,5 +75,6 @@ end
 #  community_id    :integer
 #  created_at      :datetime
 #  updated_at      :datetime
+#  is_announcement :boolean         default(FALSE)
 #
 

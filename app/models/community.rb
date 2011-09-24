@@ -19,9 +19,11 @@ class Community < ActiveRecord::Base
   has_many :roles
   has_many :supported_games
   has_many :games, :through => :supported_games
+  has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
   has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
+  belongs_to :community_announcement_space, :class_name => "DiscussionSpace"
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
 
@@ -29,7 +31,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :set_up_member_role, :make_admin_a_member
+  after_create :set_up_member_role, :make_admin_a_member, :make_community_announcement_space
 
 ###
 # Validators
@@ -148,6 +150,26 @@ protected
   ###
   def make_admin_a_member
     self.promote_user_profile_to_member(self.admin_profile)
+  end
+  
+  ###
+  # _after_create_
+  #
+  # The method creates the community announcement space.
+  ###
+  def make_community_announcement_space
+    if !self.community_announcement_space
+      space = DiscussionSpace.new(:name => "Community Announcements")
+      if space
+        space.community = self
+        space.user_profile = self.admin_profile
+        space.is_announcement = true
+        space.save!
+        self.community_announcement_space = space
+      else
+        logger.error("Could not create community announcement space for community #{self.to_yaml}")
+      end
+    end  
   end
 end
 

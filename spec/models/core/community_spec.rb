@@ -175,5 +175,24 @@ describe Community do
   it "should email on application by default" do
     community.email_notice_on_application.should be_true
   end
+  
+  it "should create a community announcements discussion space on creation" do
+    community.community_announcement_space.should be_a(DiscussionSpace)
+    community.community_announcement_space.is_announcement.should be_true
+  end
+  
+  it "should create a community announcements discussion space with admins user profile" do
+    community.community_announcement_space.user_profile.id.should eq(community.admin_profile.id)
+  end
+  
+  describe "game_announcement_spaces" do
+    it "should return empty array when community has no game" do
+      pending
+    end
+    
+    it "should return announcement space for each game the community has" do
+      pending
+    end
+  end
 end
 

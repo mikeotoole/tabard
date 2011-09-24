@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :view_logs
+
   # Users
   devise_for :users
 
