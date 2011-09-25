@@ -151,7 +151,7 @@ protected
   def make_admin_a_member
     self.promote_user_profile_to_member(self.admin_profile)
   end
-  
+
   ###
   # _after_create_
   #
@@ -170,7 +170,7 @@ protected
       else
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
-    end  
+    end
   end
 end
 

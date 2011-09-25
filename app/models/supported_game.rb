@@ -12,18 +12,18 @@ class SupportedGame < ActiveRecord::Base
   belongs_to :community
   belongs_to :game
   belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
-    
+
 ###
 # Validators
 ###
   validates :community, :presence => true
-  validates :game, :presence => true  
-  
+  validates :game, :presence => true
+
 ###
 # Callbacks
 ###
   after_create :make_game_announcement_space
-  
+
 ###
 # Protected Methods
 ###
@@ -31,7 +31,7 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _after_create_
   #
@@ -50,7 +50,7 @@ protected
       else
         logger.error("Could not create game announcement space for SupportedGame #{self.to_yaml}")
       end
-    end  
+    end
   end
 end
 

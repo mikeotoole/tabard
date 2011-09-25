@@ -70,7 +70,13 @@ class Discussion < ActiveRecord::Base
    end
    temp_total_num_comments
   end
-  
+
+  ###
+  # This will updated the view log for this discussion. If a view log exists for the user profile its modifyed date
+  # will be updated. Otherwise a new view log is created.
+  # [Args]
+  #   * +user_profile+ The profile of the user that viewed the discussion.
+  ###
   def update_viewed(user_profile)
     log = self.view_logs.find_by_user_profile_id(user_profile.id)
     if log
@@ -80,7 +86,7 @@ class Discussion < ActiveRecord::Base
       log.user_profile = user_profile
       log.view_loggable = self
       log.save
-    end  
+    end
   end
 end
 

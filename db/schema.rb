@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
+  add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
 
   create_table "community_profiles", :force => true do |t|
@@ -217,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
   end
 
   add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
+  add_index "supported_games", ["game_announcement_space_id"], :name => "index_supported_games_on_game_announcement_space_id"
   add_index "supported_games", ["game_id"], :name => "index_supported_games_on_game_id"
 
   create_table "swtor_characters", :force => true do |t|
