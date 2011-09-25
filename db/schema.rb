@@ -58,15 +58,15 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.boolean  "accepting_members",            :default => true
-    t.boolean  "email_notice_on_application",  :default => true
+    t.boolean  "accepting_members",               :default => true
+    t.boolean  "email_notice_on_application",     :default => true
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
-    t.boolean  "protected_roster",             :default => false
-    t.integer  "community_announcement_space"
+    t.boolean  "protected_roster",                :default => false
+    t.integer  "community_announcement_space_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -213,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "game_announcement_space"
+    t.integer  "game_announcement_space_id"
   end
 
   add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"

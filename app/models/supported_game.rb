@@ -46,21 +46,24 @@ protected
         space.is_announcement = true
         space.save!
         self.game_announcement_space = space
+        self.save
       else
         logger.error("Could not create game announcement space for SupportedGame #{self.to_yaml}")
       end
     end  
-  end 
+  end
 end
+
 
 # == Schema Information
 #
 # Table name: supported_games
 #
-#  id           :integer         not null, primary key
-#  community_id :integer
-#  game_id      :integer
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                         :integer         not null, primary key
+#  community_id               :integer
+#  game_id                    :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  game_announcement_space_id :integer
 #
 

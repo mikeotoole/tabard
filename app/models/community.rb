@@ -17,13 +17,13 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
   has_many :roles
-  has_many :supported_games
+  has_many :supported_games, :dependent => :destroy
   has_many :games, :through => :supported_games
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
   has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
-  belongs_to :community_announcement_space, :class_name => "DiscussionSpace"
+  belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
 
@@ -166,6 +166,7 @@ protected
         space.is_announcement = true
         space.save!
         self.community_announcement_space = space
+        self.save
       else
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
@@ -174,20 +175,22 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: communities
 #
-#  id                          :integer         not null, primary key
-#  name                        :string(255)
-#  slogan                      :string(255)
-#  accepting_members           :boolean         default(TRUE)
-#  email_notice_on_application :boolean         default(TRUE)
-#  subdomain                   :string(255)
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  admin_profile_id            :integer
-#  member_role_id              :integer
-#  protected_roster            :boolean         default(FALSE)
+#  id                              :integer         not null, primary key
+#  name                            :string(255)
+#  slogan                          :string(255)
+#  accepting_members               :boolean         default(TRUE)
+#  email_notice_on_application     :boolean         default(TRUE)
+#  subdomain                       :string(255)
+#  created_at                      :datetime
+#  updated_at                      :datetime
+#  admin_profile_id                :integer
+#  member_role_id                  :integer
+#  protected_roster                :boolean         default(FALSE)
+#  community_announcement_space_id :integer
 #
 

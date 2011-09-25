@@ -81,7 +81,7 @@ describe UserProfile do
   end
 
   it "should respond to view_logs" do
-    pending
+    profile.should respond_to(:view_logs)
   end
 
 ###

@@ -4,7 +4,7 @@
 #
 #  id           :integer         not null, primary key
 #  name         :string(255)
-#  message      :text
+#  instructions :text
 #  thankyou     :string(255)
 #  published    :boolean         default(FALSE)
 #  community_id :integer
