@@ -17,6 +17,7 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
+  has_many :community_applications
   has_many :roles
   has_many :supported_games
   has_many :games, :through => :supported_games
@@ -56,11 +57,12 @@ class Community < ActiveRecord::Base
   # This method promotes a user to a member, doing all of the business logic for you.
   # [Args]
   #   * +user_profile+ -> The user profile you would like to promote to a member.
-  # [Returns] A boolean that contains the result of the operation. True if successful, otherwise false.
+  # [Returns] The community profile that was created, otherwise nil if it could not be created.
   ###
   def promote_user_profile_to_member(user_profile)
-    # TODO Joe/Mike Ensure that the user is an applicant -JW
-    return user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+    return nil unless (self.community_applications.where{(:user_profile == user_profile)}.exists? or
+        self.admin_profile == user_profile)
+    user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
   end
 
   ###

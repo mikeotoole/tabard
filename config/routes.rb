@@ -1,6 +1,4 @@
 DaBvRails::Application.routes.draw do
-  resources :community_applications
-
   # Users
   devise_for :users
 
@@ -36,8 +34,16 @@ DaBvRails::Application.routes.draw do
         resources :permissions
       end
 
-      #Roster assignments
+      # Roster assignments
       resources :roster_assignments
+
+      # Community applications
+      resources :community_applications do
+        member do
+          post :accept
+          post :reject
+        end
+      end
 
       # Custom Forms
       resources :custom_forms do

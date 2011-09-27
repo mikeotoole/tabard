@@ -20,6 +20,7 @@ class UserProfile < ActiveRecord::Base
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
   has_many :communities, :through => :community_profiles
+  has_many :community_applications
 
 ###
 # Delegates

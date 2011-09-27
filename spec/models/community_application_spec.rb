@@ -16,6 +16,7 @@ require 'spec_helper'
 describe CommunityApplication do
   let(:community_application) { create(:community_application) }
   let(:community) { community_application.community }
+  let(:user_profile) { community_application.user_profile }
 
   it "should create a new instance given valid attributes" do
     community_application.should be_valid
@@ -60,42 +61,80 @@ describe CommunityApplication do
 
     it "should be set to pending automatically" do
       community_application.status.should eq("Pending")
+      community_application.pending?.should be_true
     end
 
     it "should allow the pending status" do
       community_application.status = "Pending"
       community_application.valid?.should be_true
+      community_application.pending?.should be_true
     end
 
     it "should allow the accepted status" do
       community_application.status = "Accepted"
       community_application.valid?.should be_true
+      community_application.accepted?.should be_true
     end
 
     it "should allow the rejected status" do
       community_application.status = "Rejected"
       community_application.valid?.should be_true
+      community_application.rejected?.should be_true
     end
   end
 
   describe "accept_application" do
     before(:each) do
       community_application.user_profile.is_member?(community).should be_false
+      community_application.pending?.should be_true
     end
 
     it "should make the applicant a member of the community" do
-      pending
+      community_application.accept_application.should be_true
+      community_application.user_profile.is_member?(community).should be_true
     end
 
     it "should automaticaly add and approve the characters used for the application" do
-      pending
+      community_application.accept_application.should be_true
+      community_profile = user_profile.community_profiles.where(:community == community).first
+      community_application.character_proxies.each do |proxy|
+        community_profile.approved_character_proxies.include?(proxy).should be_true
+      end
+      community_profile.pending_character_proxies.size.should eq(0)
     end
 
     it "should set the application to the accepted status" do
-      pending
+      community_application.accept_application.should be_true
+      community_application.accepted?.should be_true
+    end
+
+    it "should should not work if the application is not pending" do
+      community_application.accept_application.should be_true
+      community_application.pending?.should be_false
+      community_application.accept_application.should be_false
     end
   end
 
   describe "reject_application" do
+    before(:each) do
+      community_application.user_profile.is_member?(community).should be_false
+      community_application.pending?.should be_true
+    end
+
+    it "should not make the applicant a member of the community" do
+      community_application.reject_application.should be_true
+      community_application.user_profile.is_member?(community).should be_false
+    end
+
+    it "should set the application to the rejected status" do
+      community_application.reject_application.should be_true
+      community_application.rejected?.should be_true
+    end
+
+    it "should should not work if the application is not pending" do
+      community_application.reject_application.should be_true
+      community_application.pending?.should be_false
+      community_application.reject_application.should be_false
+    end
   end
 end

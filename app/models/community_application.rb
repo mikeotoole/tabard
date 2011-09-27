@@ -15,6 +15,12 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   belongs_to :submission
+  has_and_belongs_to_many :character_proxies
+
+###
+# Callbacks
+###
+  before_create :assign_pending_status
 
 ###
 # Validators
@@ -27,10 +33,12 @@ class CommunityApplication < ActiveRecord::Base
                     :on => :update
   validate :community_and_submission_match
   validate :user_profile_and_submission_match
+  validate :user_profile_not_a_member
+
 ###
-# Callbacks
+# Delegates
 ###
-  before_create :assign_pending_status
+  delegate :admin_profile_id, :to => :community, :prefix => true
 
   ###
   # _before_create_
@@ -39,6 +47,43 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def assign_pending_status
     self.status = "Pending"
+  end
+
+  ###
+  # This method accepts this application and does all of the magic to make the applicant a member.
+  # [Returns] True if this action was successful, otherwise false.
+  ###
+  def accept_application
+    return false unless self.pending?
+    self.update_attribute(:status, "Accepted")
+    community_profile = self.community.promote_user_profile_to_member(self.user_profile)
+    self.character_proxies.each do |proxy|
+      community_profile.approved_character_proxies << proxy
+    end
+  end
+
+  ###
+  # This method rejects this application.
+  # [Returns] True if this action was successful, otherwise false.
+  ###
+  def reject_application
+    return false unless self.pending?
+    self.update_attribute(:status, "Rejected")
+  end
+
+  # This method returns true if this application's status is pending, otherwise false
+  def pending?
+    self.status == "Pending"
+  end
+
+  # This method returns true if this application's status is accepted, otherwise false
+  def accepted?
+    self.status == "Accepted"
+  end
+
+  # This method returns true if this application's status is rejected, otherwise false
+  def rejected?
+    self.status == "Rejected"
   end
 
 protected
@@ -51,6 +96,11 @@ protected
   def user_profile_and_submission_match
     return unless submission and user_profile
     errors.add(:base, "The submission does not match this user profile.") unless submission.user_profile == user_profile
+  end
+  # This method ensures that the community application for is the custom form for the submission
+  def user_profile_not_a_member
+    return unless community and user_profile
+    errors.add(:base, "This user_profile is already a member of the community.") if user_profile.is_member?(community)
   end
 end
 

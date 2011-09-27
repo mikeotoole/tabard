@@ -10,7 +10,7 @@ class DefaultObjects
   end
 
   def self.fresh_user_profile
-    @fresh_user_profile ||= FactoryGirl.create(:user_profile, :user => FactoryGirl.create(:user))
+    @fresh_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
   end
   
   def self.wow

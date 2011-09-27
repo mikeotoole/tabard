@@ -160,6 +160,14 @@ class Ability
     can [:update, :destroy, :create], DiscussionSpace do |space|
       space.community.admin_profile_id == user.user_profile.id
     end
+
+    # Community Applications
+    can [:show, :create, :update, :destroy], CommunityApplication do |community_application|
+      community_application.user_profile == user.user_profile
+    end
+    can [:read, :accept, :reject], CommunityApplication do |community_application|
+      community_application.community_admin_profile_id == user.user_profile.id
+    end
   end
 
   ###
