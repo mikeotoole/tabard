@@ -2,14 +2,15 @@
 #
 # Table name: questions
 #
-#  id                   :integer         not null, primary key
-#  body                 :text
-#  custom_form_id       :integer
-#  type                 :string(255)
-#  style                :string(255)
-#  predefined_answer_id :integer
-#  created_at           :datetime
-#  updated_at           :datetime
+#  id             :integer         not null, primary key
+#  body           :text
+#  custom_form_id :integer
+#  type           :string(255)
+#  style          :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  explanation    :string(255)
+#  required       :boolean         default(FALSE)
 #
 
 require 'spec_helper'

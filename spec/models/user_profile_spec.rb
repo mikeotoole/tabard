@@ -80,6 +80,10 @@ describe UserProfile do
     end
   end
 
+  it "should respond to view_logs" do
+    profile.should respond_to(:view_logs)
+  end
+
 ###
 # Instance Method Tests
 ###

@@ -38,6 +38,7 @@ d_badger.save
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
 jahc.games << swtor_game
+jahc.games << wow_game
 
 puts "RoboBilly is creating a n00b role..."
 noob_role = jahc.roles.create(:name => "n00b")
@@ -97,5 +98,16 @@ comment1.save
 comment2 = comment1.comments.new(:body => "What's up Diabolical Moose!")
 comment2.user_profile = s_turtle.user_profile
 comment2.save
+
+puts "Adding announcements for Just Another Headshot Clan"
+announcement1 = jahc.community_announcement_space.discussions.new(:name => "Website is up and running!", :body => "This new website is off the hook!")
+announcement1.user_profile = robobilly.user_profile
+announcement1.save
+announcement2 = jahc.game_announcement_spaces.first.discussions.new(:name => "Star Wars is bad ass!", :body => "Raids are super cool. The new vent channel is open for SWTOR.")
+announcement2.user_profile = robobilly.user_profile
+announcement2.save
+announcement3 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
+announcement3.user_profile = robobilly.user_profile
+announcement3.save
 
 end

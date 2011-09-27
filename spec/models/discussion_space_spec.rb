@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: discussion_spaces
+#
+#  id              :integer         not null, primary key
+#  name            :string(255)
+#  user_profile_id :integer
+#  game_id         :integer
+#  community_id    :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  is_announcement :boolean         default(FALSE)
+#
+
 require 'spec_helper'
 
 describe DiscussionSpace do
@@ -43,4 +57,13 @@ describe DiscussionSpace do
   it "creator_name should return user profile display name" do
     space.creator_name.should eq(DefaultObjects.user_profile.display_name)
   end 
+  
+  it "should respond to is_announcement" do
+    wow_space.should respond_to(:is_announcement)
+  end
+  
+  it "should not allow access to is_announcement flag" do
+    wow_space.update_attributes(:is_announcement => true).should be_true
+    DiscussionSpace.find(wow_space).is_announcement.should be_false
+  end
 end

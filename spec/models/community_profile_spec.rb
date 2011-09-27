@@ -1,14 +1,12 @@
 # == Schema Information
 #
-# Table name: user_profiles
+# Table name: community_profiles
 #
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  first_name :string(255)
-#  last_name  :string(255)
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id              :integer         not null, primary key
+#  community_id    :integer
+#  user_profile_id :integer
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 
 require 'spec_helper'

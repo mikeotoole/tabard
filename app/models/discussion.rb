@@ -17,8 +17,10 @@ class Discussion < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
+  # TODO Should comments be deleted when the discussion is deleted? -MO
   has_many :comments, :as => :commentable
   has_one :community, :through => :discussion_space
+  has_many :view_logs, :as => :view_loggable
 
 ###
 # Validators
@@ -68,7 +70,26 @@ class Discussion < ActiveRecord::Base
    end
    temp_total_num_comments
   end
+
+  ###
+  # This will updated the view log for this discussion. If a view log exists for the user profile its modifyed date
+  # will be updated. Otherwise a new view log is created.
+  # [Args]
+  #   * +user_profile+ The profile of the user that viewed the discussion.
+  ###
+  def update_viewed(user_profile)
+    log = self.view_logs.find_by_user_profile_id(user_profile.id)
+    if log
+      log.touch
+    else
+      log = self.view_logs.new()
+      log.user_profile = user_profile
+      log.view_loggable = self
+      log.save
+    end
+  end
 end
+
 
 # == Schema Information
 #
@@ -84,5 +105,6 @@ end
 #  has_been_locked     :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  is_archived         :boolean         default(FALSE)
 #
 
