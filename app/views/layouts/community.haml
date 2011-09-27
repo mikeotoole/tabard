@@ -10,6 +10,7 @@
   %body
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
+    
     #content
     
       #header
@@ -26,11 +27,11 @@
               %li= link_to 'Herp', '#'
               %li= link_to 'A Derp', '#'
           %li
-            -#TODO Doug - Hookup links
-            = link_to 'Discussions', '#'
-            %ul
-              %li= link_to 'Booty', '#'
-              %li= link_to 'Licious', '#'
+            = link_to 'Discussions', discussion_spaces_path
+            - if @community.discussion_spaces.size
+              %ul
+                - @community.discussion_spaces.each do |space|
+                  %li= link_to space.name, space
           %li
             -#TODO Doug - Hookup link
             = link_to 'Announcements', '#'

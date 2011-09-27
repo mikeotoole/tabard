@@ -126,7 +126,7 @@ body
             width: 0
       
       >ul
-        background: #bea761
+        background: #704323
         border: 1px solid rgba(#000,.2)
         +border_radius(0,5,5,5)
         +box_shadow(0 0 5px rgba(#000,.5))
@@ -141,15 +141,16 @@ body
         >li
         
           >a
-            border-top: 1px solid rgba(#000,.1)
-            color: #480012
+            border-top: 1px solid rgba(#000,.2)
+            color: #dac6b7
             display: block
             font-size: 13px
             padding: 0 10px
             position: relative
             
             &:hover
-              background: rgba(#fff,.3)
+              background: rgba(#000,.1)
+              color: #fff
           
           &:last-child,
           &:last-child >a
@@ -158,9 +159,9 @@ body
       &:hover
         
         >a
-          background: #bea761
+          background: #704323
           border-color: rgba(#000,.2)
-          color: #480012
+          color: #fff
           +transition(color .2s linear)
           
           &:not(:only-child)
@@ -168,7 +169,7 @@ body
             +border_radius(5,5,0,0)
       
             &:after
-              border-top-color: #480012
+              border-top-color: #fff
         
         >ul
           +opacity(1)
@@ -176,7 +177,7 @@ body
           +transition(opacity .2s linear, top .2s linear)
           
           >li a
-            padding: 5px 10px
+            padding: 7px 10px
             +transition(padding .2s linear)
       
       &.current
@@ -195,7 +196,7 @@ body
           padding: 0 40px 0 10px
           
           &:before
-            background: image-url('bar/icons.png') -45px -5px no-repeat
+            background: image-url('application/icons.png') -90px -30px no-repeat
             content: ''
             height: 30px
             position: absolute
@@ -204,7 +205,7 @@ body
             width: 30px
           
           &:hover
-            color: #480012
+            color: #fff
 
 #body
   background: rgba(#fff,.9)

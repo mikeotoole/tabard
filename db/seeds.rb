@@ -61,22 +61,22 @@ puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
 
 puts "Creating Just Another Headshot Clan General Discussion Space"
-gds = jahc.discussion_spaces.new(:name => "General Discussion Space")
+gds = jahc.discussion_spaces.new(:name => "General Chat")
 gds.user_profile = robobilly.user_profile
 gds.save
 
-puts "Creating Just Another Headshot Clan WoW Discussion Space"
-wds = jahc.discussion_spaces.new(:name => "WoW Discussion Space", :game => wow_game)
+puts "Creating Just Another Headshot Clan WoW"
+wds = jahc.discussion_spaces.new(:name => "WoW", :game => wow_game)
 wds.user_profile = robobilly.user_profile
 wds.save
 
-puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-sds = jahc.discussion_spaces.new(:name => "SWTOR Discussion Space", :game => swtor_game)
+puts "Creating Just Another Headshot Clan SWTOR"
+sds = jahc.discussion_spaces.new(:name => "SWTOR", :game => swtor_game)
 sds.user_profile = robobilly.user_profile
 sds.save
 
 puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
-gd = gds.discussions.new(:name => "General Discussion Space", :body => "Whats up team?")
+gd = gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
 gd.user_profile = robobilly.user_profile
 gd.save
 
@@ -86,7 +86,7 @@ wd.user_profile = robobilly.user_profile
 wd.save
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space Discussion"
-sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss WoW")
+sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss SWTOR")
 sd.user_profile = robobilly.user_profile
 sd.save
 
