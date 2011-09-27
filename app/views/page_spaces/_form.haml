@@ -1,0 +1,22 @@
+= form_for @page_space do |f|
+  -if @page_space.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@page_space.errors.count, "error")} prohibited this page_space from being saved:"
+      %ul
+        - @page_space.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :user_profile_id
+    = f.number_field :user_profile_id
+  .field
+    = f.label :game_id
+    = f.number_field :game_id
+  .field
+    = f.label :community_id
+    = f.number_field :community_id
+  .actions
+    = f.submit 'Save'
