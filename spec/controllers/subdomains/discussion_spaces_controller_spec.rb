@@ -25,6 +25,7 @@ describe Subdomains::DiscussionSpacesController do
   let(:community) { DefaultObjects.community }
   let(:space) { DefaultObjects.discussion_space }
   let(:discussion) { DefaultObjects.discussion }
+  let(:anouncment_space) { DefaultObjects.announcement_discussion_space }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
@@ -104,10 +105,16 @@ describe Subdomains::DiscussionSpacesController do
       sign_in non_member
       get :edit, :id => space.id.to_s
       response.should be_forbidden
+    end
+    
+    it "should respond forbidden when is_announcement is true" do
+      sign_in admin
+      get :edit, :id => anouncment_space.id.to_s
+      response.should be_forbidden
     end    
   end
 
-  describe "POST create when authenticated as a member" do
+  describe "POST create when authenticated as admin" do
     before(:each) {
       sign_in admin
     }
@@ -142,6 +149,11 @@ describe Subdomains::DiscussionSpacesController do
         response.should render_template("new")
       end
     end
+    
+    it "should not allow is_announcement to be set to true" do
+      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement => true)
+      assigns(:discussion_space).is_announcement.should eq(false)
+    end
   end
   
   describe "POST create" do
@@ -157,7 +169,7 @@ describe Subdomains::DiscussionSpacesController do
     end    
   end
 
-  describe "PUT update when authenticated as a member" do
+  describe "PUT update when authenticated as owner" do
     before(:each) {
       sign_in admin
     }
@@ -190,6 +202,11 @@ describe Subdomains::DiscussionSpacesController do
         put :update, :id => space.id.to_s, :discussion_space => {:name => nil}
         response.should render_template("edit")
       end
+    end
+    
+    it "should respond forbidden when is_announcement is true" do
+      put :update, :id => anouncment_space.id, :discussion_space => {:name => "New Name"}
+      response.should be_forbidden
     end
   end
 
@@ -231,6 +248,11 @@ describe Subdomains::DiscussionSpacesController do
       delete :destroy, :id => space.id.to_s
       response.should be_forbidden
     end
+    
+    it "should respond forbidden when is_announcement is true" do
+      sign_in admin
+      delete :destroy, :id => anouncment_space.id.to_s
+      response.should be_forbidden
+    end
   end
-
 end

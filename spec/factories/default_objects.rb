@@ -41,6 +41,10 @@ class DefaultObjects
     @discussion_space ||= FactoryGirl.create(:discussion_space)
   end
   
+  def self.announcement_discussion_space
+    @announcement_discussion_space ||= DefaultObjects.community.community_announcement_space
+  end
+  
   def self.discussion
     @discussion ||= FactoryGirl.create(:discussion, :discussion_space_id => DefaultObjects.discussion_space.id)
   end
@@ -57,5 +61,6 @@ class DefaultObjects
     @swtor_character_proxy = nil
     @discussion_space = nil
     @discussion = nil
+    @announcement_discussion_space = nil
   end
 end

@@ -1,6 +1,4 @@
 DaBvRails::Application.routes.draw do
-  resources :view_logs
-
   # Users
   devise_for :users
 
@@ -36,7 +34,7 @@ DaBvRails::Application.routes.draw do
         resources :permissions
       end
 
-      #Roster assignments
+      # Roster assignments
       resources :roster_assignments
 
       # Custom Forms
@@ -62,6 +60,11 @@ DaBvRails::Application.routes.draw do
           end
         end
       end
+      
+      # Pages
+      resources :page_spaces do
+        resources :pages, :shallow => true
+      end    
 
     end
 

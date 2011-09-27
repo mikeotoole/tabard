@@ -152,6 +152,13 @@ class Ability
     can [:unlock, :lock], [Comment, Discussion] do |object|
       object.community.admin_profile_id == user.user_profile.id
     end
+    cannot :create, Discussion do |discussion|
+      if discussion.discussion_space.is_announcement
+        discussion.community.admin_profile_id != user.user_profile.id
+      else
+        false
+      end    
+    end
 
     # Discussion Space Rules
     can [:read], DiscussionSpace do |space|
@@ -160,6 +167,9 @@ class Ability
     can [:update, :destroy, :create], DiscussionSpace do |space|
       space.community.admin_profile_id == user.user_profile.id
     end
+    cannot [:update, :destroy, :create], DiscussionSpace do |space|
+      space.is_announcement == true
+    end  
   end
 
   ###
