@@ -2,7 +2,7 @@ require 'simplecov'
 
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :diagrams, :tests] do
+  task :all => [:docs, :notes, :best_practices, :tests] do
     puts "\nReports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end
@@ -30,7 +30,7 @@ namespace :reports do
     system "rails_best_practices -f html --with-textmate > /dev/null"
     system "mv rails_best_practices_output.html doc/reports/rails_best_practices_report.html"
   end
-  
+
   desc "Create class diagrams"
   task :diagrams  => [:ensure_report_dir] do
     puts "\nCreating diagrams with railroady..."
@@ -40,7 +40,7 @@ namespace :reports do
     mkdir "doc/reports/diagrams" unless File.exists?("doc/reports/diagrams")
     system "mv doc/*.svg doc/reports/diagrams/"
   end
-  
+
   desc "Create a report on tests"
   task :tests  => [:ensure_report_dir] do
     puts "\nRunning tests..."
