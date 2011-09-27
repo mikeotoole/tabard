@@ -8,6 +8,10 @@ class DefaultObjects
     DefaultObjects.community.promote_user_profile_to_member(@user_profile)
     @user_profile
   end
+
+  def self.fresh_user_profile
+    @fresh_user_profile ||= FactoryGirl.create(:user_profile, :user => FactoryGirl.create(:user))
+  end
   
   def self.wow
     @wow ||= FactoryGirl.create(:wow)
@@ -48,6 +52,7 @@ class DefaultObjects
   def self.clean
     @user = nil
     @user_profile = nil
+    @fresh_user_profile = nil
     @wow = nil
     @swtor = nil
     @community = nil

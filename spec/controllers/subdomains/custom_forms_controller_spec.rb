@@ -16,7 +16,7 @@ describe Subdomains::CustomFormsController do
       sign_in user
       custom_form
       get :index
-      assigns(:custom_forms).should eq([custom_form])
+      assigns(:custom_forms).should eq([community.community_application_form, custom_form])
     end
     
     it "should redirected to new user session path when not authenticated as a user" do
@@ -83,7 +83,7 @@ describe Subdomains::CustomFormsController do
       it "redirects to the created custom_form" do
         sign_in admin
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(custom_form_path(1))
+        response.should redirect_to(custom_form_path(2))
       end
       
       it "should redirected to new user session path when not authenticated as a user" do
