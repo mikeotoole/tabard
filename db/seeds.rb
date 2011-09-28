@@ -35,6 +35,12 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
+puts "Creating Kinky Fox!"
+k_fox = User.new(:email => "kinky@fox.com", :password => "Password",
+                   :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
+k_fox.skip_confirmation!
+k_fox.save
+
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
 jahc.games << swtor_game

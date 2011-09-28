@@ -38,9 +38,14 @@
           %li
             -#TODO Doug - Hookup link
             = link_to 'Members', '#'
-          %li.settings
-            -#TODO Doug - Hookup link
-            = link_to 'Community Settings', '#'
+          - if current_user and current_user.communities.include?(@community)
+            %li{ :class => 'special settings' }
+              -#TODO Doug - Hookup link
+              = link_to 'Community Settings', '#'
+          - else
+            %li{ :class => 'special signup' }
+              -#TODO Doug - Hookup link
+              = link_to 'Apply Now', '#'
             
       #body
         = yield

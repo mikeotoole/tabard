@@ -135,7 +135,7 @@ body
         min-width: 120%
         padding: 5px 0 0
         position: absolute
-        top: 20px
+        top: 25px
         z-index: 11
         
         >li
@@ -185,7 +185,7 @@ body
         >a
           background: #26000a
       
-      &.settings
+      &.special
         float: right
         
         >a
@@ -206,6 +206,12 @@ body
           
           &:hover
             color: #fff
+      
+      &.settings >a:before
+        background-position: -90px -30px
+      
+      &.signup >a:before
+        background-position: -120px -30px
 
 #body
   background: rgba(#fff,.9)
