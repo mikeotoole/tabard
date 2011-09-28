@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :body, :presence => true
+  validates :markup, :presence => true
   validates :page_space, :presence => true
   validates :user_profile, :presence => true
   validate :limit_number_of_pages
@@ -100,13 +100,14 @@ protected
 
 end
 
+
 # == Schema Information
 #
 # Table name: pages
 #
 #  id                 :integer         not null, primary key
 #  name               :string(255)
-#  body               :text
+#  markup             :text
 #  character_proxy_id :integer
 #  user_profile_id    :integer
 #  page_space_id      :integer

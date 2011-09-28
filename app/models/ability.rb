@@ -176,10 +176,11 @@ class Ability
       user.user_profile.is_member?(page.community)
     end
     can [:update], Page do |page|
-      (page.user_profile_id == user.user_profile.id)
+      page.user_profile_id == user.user_profile.id
     end
     can [:destroy], Page do |page|
-      (page.community.admin_profile_id or page.user_profile_id) == user.user_profile.id
+      page.community.admin_profile_id == user.user_profile.id or 
+      page.user_profile_id == user.user_profile.id
     end
     
     # Page Space Rules

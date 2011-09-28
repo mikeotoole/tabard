@@ -15,7 +15,7 @@ FactoryGirl.define do
   
   factory :page do
     sequence(:name) {|n| "Page #{n}"}
-    sequence(:markup) {|n| "##Page body #{n}##\n *List:*\n * First Item\n * Second Item"}
+    markup "##H2 Heading##\n *Bold*"
     user_profile_id { DefaultObjects.user_profile.id }
     page_space_id { DefaultObjects.page_space.id }
   end

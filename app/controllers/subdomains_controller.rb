@@ -61,6 +61,8 @@ protected
   # This method will ensure that the current_user is a member of current_community.
   ###
   def ensure_current_user_is_member
-    raise CanCan::AccessDenied unless current_user.communities.include?(current_community)
+    if not current_user or not current_user.communities.include?(current_community)
+      raise CanCan::AccessDenied
+    end   
   end
 end
