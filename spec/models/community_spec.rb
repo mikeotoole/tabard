@@ -13,6 +13,7 @@
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
 #  protected_roster                :boolean         default(FALSE)
+#  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #
 

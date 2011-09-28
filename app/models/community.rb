@@ -22,7 +22,8 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
-  has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
@@ -176,6 +177,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -191,6 +193,7 @@ end
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
 #  protected_roster                :boolean         default(FALSE)
+#  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #
 

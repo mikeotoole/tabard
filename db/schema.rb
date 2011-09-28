@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
+  create_table "character_proxies_community_applications", :id => false, :force => true do |t|
+    t.integer "character_proxy_id"
+    t.integer "community_application_id"
+  end
+
+  add_index "character_proxies_community_applications", ["character_proxy_id"], :name => "habtm_cproxy_app_proxy_id"
+  add_index "character_proxies_community_applications", ["community_application_id"], :name => "habtm_cproxy_app_app_id"
+
   create_table "comments", :force => true do |t|
     t.text     "body"
     t.integer  "user_profile_id"
@@ -66,12 +74,27 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
     t.boolean  "protected_roster",                :default => false
+    t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
+  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+
+  create_table "community_applications", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "user_profile_id"
+    t.integer  "submission_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "community_applications", ["community_id"], :name => "index_community_applications_on_community_id"
+  add_index "community_applications", ["submission_id"], :name => "index_community_applications_on_submission_id"
+  add_index "community_applications", ["user_profile_id"], :name => "index_community_applications_on_user_profile_id"
 
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"
