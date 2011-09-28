@@ -2,7 +2,7 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible
+  attr_accessible :submission_attributes
 ###
 # Constants
 ###

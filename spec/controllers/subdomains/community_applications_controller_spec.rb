@@ -5,22 +5,23 @@ describe Subdomains::CommunityApplicationsController do
   let(:community) { community_application.community }
   let(:applicant_profile) { community_application.user_profile }
   let(:applicant_user) { applicant_profile.user }
+  let(:generic_user) { create(:billy)}
+  let(:additional_community_user_profile) { DefaultObjects.additional_community_user_profile }
+  let(:additional_community_user) { additional_community_user_profile.user }
   let(:community_admin_profile) { community.admin_profile }
   let(:community_admin_user) { community_admin_profile.user }
-  let(:community_application_attr) { attributes_for(:community_application, 
-      :community_id => community.id, 
-      :submission_id => community_application.submission_id,
-      :user_profile_id => community_application.user_profile_id,
-      :character_proxies => []
-      ) }
-  
+  let(:community_application_attr) {{
+    :submission_attributes => {:custom_form_id => DefaultObjects.community.community_application_form.id, 
+    :user_profile_id => DefaultObjects.fresh_user_profile.id}
+    }
+  }
   
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
   end
   
   describe "GET 'index'" do
-    it "should be unauthorized when authenticated as a non admin user" do
+    it "should be unauthorized when authenticated as application owner" do
       sign_in applicant_user
       applicant_user
       get 'index'
@@ -47,7 +48,6 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "GET 'show'" do
     it "should be successful when authenticated as the application owner" do
-      community_application.user_profile.should eq(applicant_user.user_profile)
       sign_in applicant_user
       get 'show', :id => community_application
       response.should be_success
@@ -60,7 +60,9 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should be unauthorized when authenticated as a generic member" do
-      pending
+      sign_in generic_user
+      get 'show', :id => community_application
+      response.response_code.should == 403
     end
     
     it "should render community_applications/show template when authenticated as a community admin" do
@@ -132,7 +134,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should create community application" do
-      CommunityApplication.exists?(community_application_attr).should be_true
+      CommunityApplication.exists?(assigns[:community_application]).should be_true
     end
 
     it "should pass params to community application" do
@@ -145,15 +147,19 @@ describe Subdomains::CommunityApplicationsController do
   end
   
   describe "POST 'create' authenticated as a current member" do
-    pending
+    before(:each) do
+      sign_in additional_community_user
+      post 'create', :community_application => community_application_attr
+    end
+
+    it "should render edit to new community application" do
+      response.should render_template('community_applications/edit')
+    end
   end
 
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       post 'create', :community_application => community_application_attr
-    end
-    it "should not create new record" do
-      CommunityApplication.exists?(community_application_attr).should_not be_true
     end
     it "should redirect to new user session path" do
       response.should redirect_to(new_user_session_path)
@@ -217,8 +223,8 @@ describe Subdomains::CommunityApplicationsController do
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.response_code.should == 403
-      CommunityApplication.exists?(@community_application).should be_true
+      response.should be_success
+      CommunityApplication.exists?(@community_application).should be_false
     end
     
     it "should be unauthorized when authenticated as a community admin" do

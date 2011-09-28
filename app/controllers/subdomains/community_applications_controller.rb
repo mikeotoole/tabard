@@ -14,13 +14,14 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   before_filter :authenticate_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
-  before_filter :ensure_current_user_is_member
+  before_filter :ensure_current_user_is_member, :only => [:index]
   authorize_resource
   skip_before_filter :limit_subdomain_access
   
   # GET /community_applications
   # GET /community_applications.json
   def index
+    authorize! :index, CommunityApplication
     respond_with(@community_applications)
   end
 
