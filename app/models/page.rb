@@ -15,12 +15,14 @@ class Page < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :show_in_navigation
+  attr_accessible :name, :markup, :show_in_navigation
 
 ###
 # Associations
 ###
   belongs_to :page_space
+  belongs_to :user_profile
+  belongs_to :character_proxy
   has_one :community, :through => :page_space
 
   scope :navigation_pages, :conditions => {:show_in_navigation => true}
@@ -42,6 +44,15 @@ class Page < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  ###
+  #
+  ###
+  def body
+    markdown = RDiscount.new(self.markup)
+    html = markdown.to_html
+    Sanitize.clean(html, Sanitize::Config::RELAXED).html_safe
+  end
+
   ###
   # This method gets the poster of this discussion. If character proxy is not nil
   # the character is returned. Otherwise the user profile is returned. These should

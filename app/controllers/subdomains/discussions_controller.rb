@@ -5,12 +5,13 @@
 #
 # This controller is handling discussions within the scope of subdomains (communities).
 ###
-class Subdomains::DiscussionsController < ApplicationController
+class Subdomains::DiscussionsController < SubdomainsController
   respond_to :html
 ###
 # Before Filters
 ###
   before_filter :authenticate_user!
+  before_filter :ensure_current_user_is_member
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_discussion, :only => [:new, :create]
   authorize_resource :only => [:new, :create]

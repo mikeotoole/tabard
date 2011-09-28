@@ -26,6 +26,8 @@ class Community < ActiveRecord::Base
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
+  has_many :page_spaces
+  has_many :pages, :through => :page_spaces
 
 ###
 # Callbacks

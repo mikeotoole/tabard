@@ -4,7 +4,7 @@
 #
 #  id                 :integer         not null, primary key
 #  name               :string(255)
-#  body               :text
+#  markup             :text
 #  character_proxy_id :integer
 #  user_profile_id    :integer
 #  page_space_id      :integer

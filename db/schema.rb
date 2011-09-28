@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(:version => 20110927203012) do
 
   create_table "pages", :force => true do |t|
     t.string   "name"
-    t.text     "body"
+    t.text     "markup"
     t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
     t.integer  "page_space_id"

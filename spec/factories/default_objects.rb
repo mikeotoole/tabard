@@ -49,6 +49,10 @@ class DefaultObjects
     @discussion ||= FactoryGirl.create(:discussion, :discussion_space_id => DefaultObjects.discussion_space.id)
   end
   
+  def self.page_space
+    @page_space ||= FactoryGirl.create(:page_space)
+  end
+  
   def self.clean
     @user = nil
     @user_profile = nil
@@ -62,5 +66,6 @@ class DefaultObjects
     @discussion_space = nil
     @discussion = nil
     @announcement_discussion_space = nil
+    @page_space = nil
   end
 end

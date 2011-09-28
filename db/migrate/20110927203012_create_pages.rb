@@ -2,7 +2,7 @@ class CreatePages < ActiveRecord::Migration
   def change
     create_table :pages do |t|
       t.string :name
-      t.text :body
+      t.text :markup
       t.integer :character_proxy_id
       t.integer :user_profile_id
       t.integer :page_space_id
