@@ -7,7 +7,12 @@ describe Subdomains::CommunityApplicationsController do
   let(:applicant_user) { applicant_profile.user }
   let(:community_admin_profile) { community.admin_profile }
   let(:community_admin_user) { community_admin_profile.user }
-  let(:community_application_attr) { attributes_for(:community_application) }
+  let(:community_application_attr) { attributes_for(:community_application, 
+      :community_id => community.id, 
+      :submission_id => community_application.submission_id,
+      :user_profile_id => community_application.user_profile_id,
+      :character_proxies => []
+      ) }
   
   
   before(:each) do
@@ -42,6 +47,7 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "GET 'show'" do
     it "should be successful when authenticated as the application owner" do
+      community_application.user_profile.should eq(applicant_user.user_profile)
       sign_in applicant_user
       get 'show', :id => community_application
       response.should be_success
@@ -58,7 +64,7 @@ describe Subdomains::CommunityApplicationsController do
     end
     
     it "should render community_applications/show template when authenticated as a community admin" do
-      sign_in community_admin_user
+      sign_in applicant_user
       get 'show', :id => community_application
       response.should render_template('community_applications/show')
     end
@@ -83,7 +89,7 @@ describe Subdomains::CommunityApplicationsController do
     end
     
     it "should render community_applications/new template when authenticated as a community admin" do
-      sign_in community_admin_user
+      sign_in applicant_user
       get 'new'
       response.should render_template('community_applications/new')
     end
@@ -101,14 +107,14 @@ describe Subdomains::CommunityApplicationsController do
       response.should be_success
     end
     
-    it "should be successful when authenticated as the community admin" do
+    it "should be unauthorized when authenticated as the community admin" do
       sign_in community_admin_user
       get 'edit', :id => community_application
-      response.should be_success
+      response.response_code.should == 403
     end
     
     it "should render community_applications/new template when authenticated as a community admin" do
-      sign_in community_admin_user
+      sign_in applicant_user
       get 'edit', :id => community_application
       response.should render_template('community_applications/edit')
     end
@@ -119,7 +125,7 @@ describe Subdomains::CommunityApplicationsController do
     end
   end
 
-  describe "POST 'create' authenticated as community admin" do
+  describe "POST 'create' authenticated as owner" do
     before(:each) do
       sign_in applicant_user
       post 'create', :community_application => community_application_attr
@@ -130,7 +136,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should pass params to community application" do
-      assigns[:community_application].user_profile.should eq(current_user.user_profile)
+      assigns[:community_application].user_profile.should eq(applicant_user.user_profile)
     end
 
     it "should redirect to new community application" do
@@ -158,7 +164,7 @@ describe Subdomains::CommunityApplicationsController do
     before(:each) do
       #@old_character = community_application.charactor_proxies.first
       sign_in applicant_user
-      put 'update', :id => community_applicaiton
+      put 'update', :id => community_application
     end
 
     it "should change attributes" do
@@ -167,7 +173,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(community_applicaiton_path(community_applicaiton))
+      response.should redirect_to(community_application_path(community_application))
     end
   end
 
@@ -175,7 +181,7 @@ describe Subdomains::CommunityApplicationsController do
     before(:each) do
       #@new_name = 'New Name'
       sign_in community_admin_user
-      put 'update', :id => community_applicaiton
+      put 'update', :id => community_application
     end
 
     it "should not change attributes" do
@@ -191,7 +197,7 @@ describe Subdomains::CommunityApplicationsController do
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
       @new_name = 'New Name'
-      put 'update', :id => community_applicaiton
+      put 'update', :id => community_application
     end
 
     it "should redirect to new user session path" do
@@ -208,23 +214,23 @@ describe Subdomains::CommunityApplicationsController do
       @community_application = community_application
     end
     
-    it "should be successful when authenticated as application owner" do
+    it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.should redirect_to(community_applications_path)
-      CommunityApplication.exists?(@community_application).should be_false
+      response.response_code.should == 403
+      CommunityApplication.exists?(@community_application).should be_true
     end
     
     it "should be unauthorized when authenticated as a community admin" do
       sign_in community_admin_user
       delete 'destroy', :id => @community_application
-      Role.exists?(@role).should be_true
       response.response_code.should == 403
+      CommunityApplication.exists?(@community_application).should be_true
     end
     
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
-      Role.exists?(@role).should be_true
+      CommunityApplication.exists?(@community_application).should be_true
       response.should redirect_to(new_user_session_path)
     end
   end

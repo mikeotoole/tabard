@@ -15,6 +15,7 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   belongs_to :submission
+  accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
 
 ###
