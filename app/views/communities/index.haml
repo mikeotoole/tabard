@@ -4,7 +4,7 @@
   %h1 Listing communities
 
   - if @communities.size > 0
-    = render "communities/communities_table", :communities => @communities
+    = render "communities/table", :communities => @communities
   -else
     %p
       There are no active communities.

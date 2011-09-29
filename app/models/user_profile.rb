@@ -57,7 +57,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] A string containing the users first and last name.
   ###
   def name
-    "#{self.first_name} #{self.last_name}"
+    self.display_name
   end
 
   ###

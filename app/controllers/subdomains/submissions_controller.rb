@@ -5,7 +5,7 @@
 #
 # This controller is for handling submissions.
 ###
-class Subdomains::SubmissionsController < ApplicationController
+class Subdomains::SubmissionsController < SubdomainsController
   respond_to :html
 
   ###
