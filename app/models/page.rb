@@ -48,7 +48,7 @@ class Page < ActiveRecord::Base
   #
   ###
   def body
-    markdown = RDiscount.new(self.markup)
+    markdown = RDiscount.new(self.markup, :autolink, :filter_styles, :smart)
     html = markdown.to_html
     Sanitize.clean(html, Sanitize::Config::CUSTOM).html_safe
   end
