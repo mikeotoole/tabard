@@ -20,15 +20,40 @@
     }
 
     // (tags that can be opened/closed) | (tags that stand alone)
-    var basic_tag_whitelist = /^(<\/?(b|blockquote|code|del|dd|dl|dt|em|h1|h2|h3|i|kbd|li|ol|p|pre|s|sup|sub|strong|strike|ul)>|<(br|hr)\s?\/?>)$/i;
+    var basic_tag_whitelist = /^(<\/?(a|abbr|b|bdo|blockquote|br|caption|cite|code|col|colgroup|dd|del|details|dfn|dl|dt|em|figcaption|figure|h2|h3|i|ins|kbd|li|mark|ol|p|pre|q|rp|rt|s|samp|strong|strike|sup|sub|table|tbody|td|tfoot|th|thead|time|tr|u|ul|var|wbr)>|<(br|hr)\s?\/?>)$/i;
+    
     // <a href="url..." optional title>|</a>
-    var a_white = /^(<a\shref="((https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?\s?>|<\/a>)$/i;
-
+    var a_white = /^(<a\shref="((mailto|https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?\s?>|<\/a>)$/i;
+    
+    var blockquote_white = /^(<blockquote\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var col_white = /^(<col\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var colgroup_white = /^(<colgroup\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var del_white = /^(<del\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
     // <img src="url..." optional width  optional height  optional alt  optional title
     var img_white = /^(<img\ssrc="(https?:\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\swidth="\d{1,3}")?(\sheight="\d{1,3}")?(\salt="[^"<>]*")?(\stitle="[^"<>]*")?\s?\/?>)$/i;
+    
+    var ins_white = /^(<ins\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var ol_white = /^(<ol\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var q_white = /^(<q\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var table_white = /^(<table\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var td_white = /^(<td\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var th_white = /^(<th\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var time_white = /^(<time\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
+    
+    var ul_white = /^(<ul\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
 
     function sanitizeTag(tag) {
-        if (tag.match(basic_tag_whitelist) || tag.match(a_white) || tag.match(img_white))
+        if (tag.match(basic_tag_whitelist) || tag.match(a_white) || tag.match(blockquote_white) || tag.match(colgroup_white) || tag.match(del_white) || tag.match(img_white) || tag.match(ins_white) || tag.match(ol_white) || tag.match(q_white) || tag.match(table_white) || tag.match(td_white) || tag.match(th_white) || tag.match(time_white) || tag.match(ul_white))
             return tag;
         else
             return "";
