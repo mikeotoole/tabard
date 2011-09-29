@@ -41,13 +41,13 @@ k_fox = User.new(:email => "kinky@fox.com", :password => "Password",
 k_fox.skip_confirmation!
 k_fox.save
 miss_fox = WowCharacter.create(:name => "Miss Fox",
-	:game => wow_game,
-    :server => "Default WOW Server",
-    :faction => "Horde",
-    :race => "Goblin",
-    :level => 20)
+  :game => wow_game,
+  :server => "Default WOW Server",
+  :faction => "Horde",
+  :race => "Goblin",
+  :level => 20)
 k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
-	:character => miss_fox
+  :character => miss_fox
 )
 
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"

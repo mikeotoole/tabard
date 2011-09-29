@@ -17,7 +17,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   before_filter :ensure_current_user_is_member, :only => [:index]
   authorize_resource
   skip_before_filter :limit_subdomain_access
-  
+
   # GET /community_applications
   # GET /community_applications.json
   def index
@@ -70,11 +70,13 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     respond_with(@community_application)
   end
 
+  # This accepts the specified application.
   def accept
     @community_application.accept_application
     render :show
   end
 
+  # This rejects the specified application.
   def reject
     @community_application.reject_application
     render :show
@@ -105,13 +107,8 @@ protected
   def create_application
     if(params[:community_application])
       params[:community_application][:character_proxy_ids] ||= []
-      @community_application = current_community.community_applications.new(params[:community_application])
-    else
-      @community_application = current_community.community_applications.new
     end
-    @community_application.user_profile = current_user.user_profile
-    @community_application.build_submission unless @community_application.submission
-    @community_application.submission.custom_form = current_community.community_application_form
-    @community_application.submission.user_profile = current_user.user_profile
+    @community_application = current_community.community_applications.new(params[:community_application])
+    @community_application.prep(current_user.user_profile, current_community.community_application_form)
   end
 end

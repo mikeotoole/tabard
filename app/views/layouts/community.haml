@@ -10,9 +10,9 @@
   %body
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
-    
+
     #content
-    
+
       #header
         .title
           %strong= @community.name
@@ -50,8 +50,8 @@
             %li{ :class => 'special signup' }
               -#TODO Doug - Hookup link
               = link_to 'Apply Now', new_community_application_path
-            
+
       #body
         = yield
-        
+
     = render 'layouts/footer'

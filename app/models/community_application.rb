@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents an application to a community.
+###
 class CommunityApplication < ActiveRecord::Base
 ###
 # Attribute accessible
@@ -29,7 +36,7 @@ class CommunityApplication < ActiveRecord::Base
   validates :community,  :presence => true
   validates :user_profile,  :presence => true
   validates :submission,  :presence => true
-  validates :status,  :presence => true, 
+  validates :status,  :presence => true,
                     :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" },
                     :on => :update
   validate :community_and_submission_match
@@ -73,6 +80,10 @@ class CommunityApplication < ActiveRecord::Base
     self.update_attribute(:status, "Rejected")
   end
 
+  ###
+  # This method withdraws this application.
+  # [Returns] True if this action was successful, otherwise false.
+  ###
   def withdraw
     return false unless self.pending?
     self.update_attribute(:status, "Withdrawn")
@@ -96,6 +107,19 @@ class CommunityApplication < ActiveRecord::Base
   # This method returns true if this application's status is rejected, otherwise false
   def rejected?
     self.status == "Rejected"
+  end
+
+  ###
+  # This method preps a new community application, using the user_profile and community_form provided.
+  # [Args]
+  #   * +user_profile+ -> The user profile you would like to use.
+  #   * +custom_form+ -> The custom form you would like to use.
+  ###
+  def prep(user_profile, custom_form)
+    self.user_profile = user_profile
+    self.build_submission unless self.submission
+    self.submission.custom_form = custom_form
+    self.submission.user_profile = user_profile
   end
 
 protected
