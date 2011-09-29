@@ -177,7 +177,7 @@ describe Subdomains::QuestionsController do
     it "redirects to the questions custom form" do
       sign_in admin
       delete :destroy, :id => question.id.to_s
-      response.should redirect_to(custom_form_url(question))
+      response.should redirect_to(custom_form_url(question.custom_form))
     end
   end
 

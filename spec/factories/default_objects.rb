@@ -65,7 +65,7 @@ class DefaultObjects
   end
   
   def self.discussion
-    @discussion ||= FactoryGirl.create(:discussion, :discussion_space_id => DefaultObjects.discussion_space.id)
+    @discussion ||= FactoryGirl.create(:discussion)
   end
   
   def self.clean
