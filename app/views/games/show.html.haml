@@ -4,28 +4,9 @@
   %h1= @game.name
 
   - if @game.communities.size > 0
-    %table
-      %thead
-        %tr
-          %th Community
-          %th Size
-          %th Apply
-      %tbody
-        - @game.communities.each do |community|
-          %tr
-            %td
-              = link_to community.name, actual_community_url(community)
-            %td
-              -# TODO Doug, get the roster size
-            %td
-              -# TODO Doug, connect link
-              = link_to 'Apply', '#', :class => 'icon apply'
-      %tfoot
-        %tr
-          %td{ :colspan => 3 }
-            -# TODO Doug, connect link
-            = link_to 'Create New', '#', :class => 'button primary'
+    = render "communities/communities_table", :communities => @game.communities
   -else
     %p
       This game has no active communities.
-      = link_to 'Create a community', new_community_url(:subdomain => 'false')
+      - if (can? :create, Community)
+        = link_to 'Create a community', new_community_url(:subdomain => false)

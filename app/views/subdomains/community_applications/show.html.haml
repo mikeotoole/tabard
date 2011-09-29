@@ -12,6 +12,16 @@
 %p
   %b Status:
   = @community_application.status
+%p
+  %b Characters
+  - if  @community_application.character_proxies.size > 0
+    %ul
+      - @community_application.character_proxies.each do |proxy|
+        %li = proxy.to_yaml
+- if can? :accept, @community_application and @community_application.pending?
+  = button_to 'Accept Applicant', accept_community_application_path, :method => :post
+- if can? :reject, @community_application and @community_application.pending?
+  = button_to 'Reject Applicant', accept_community_application_path, :method => :post
 
 = link_to 'Edit', edit_community_application_path(@community_application)
 \|

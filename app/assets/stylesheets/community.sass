@@ -1,0 +1,226 @@
+@import mixins
+@import fonts/din
+@import fonts/malbeck
+@import reset
+@import bar
+
+#bar:before
+  border-top: 1px solid #480012
+  +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
+
+html,
+body
+  min-height: 100%
+
+body
+  background: #fff
+  font-family: DinLight, sans
+  min-width: 980px
+  
+  &:before
+    background: #480012
+    content: ''
+    height: 670px
+    left: 0
+    position: absolute
+    right: 0
+    top: 0
+  
+  &:after
+    +bg_gradient(#d9b8c0,#fff)
+    content: ''
+    height: 200px
+    left: 0
+    position: absolute
+    right: 0
+    top: 670px
+  
+  strong
+    font-family: DinMedium, sans
+
+#content
+  background: image-url('community/bg.jpg') center 70px no-repeat
+  min-height: 400px
+  padding: 270px 0 0
+  position: relative
+  
+  &:before
+    background: image-url('community/shadow.png') top center no-repeat
+    content: ''
+    height: 356px
+    left: 0
+    position: absolute
+    right: 0
+    top: 670px
+    z-index: 2
+
+#header
+  height: 200px
+  left: 50%
+  margin: 0 0 0 -480px
+  position: absolute
+  text-align: left
+  top: 70px
+  width: 960px
+  z-index: 10
+  
+  .title
+    color: #fff
+    left: 0
+    position: absolute
+    top: 50px
+    
+    strong
+      display: block
+      font-family: DinMedium, sans
+      font-size: 36px
+      letter-spacing: -2px
+      text-shadow: 3px 3px 3px rgba(#000,.5)
+    
+    cite
+      display: block
+      font-size: 24px
+      letter-spacing: -1px
+      text-shadow: 2px 2px 2px rgba(#000,.5)
+  
+  .menu
+    background: rgba(#480012,.9)
+    +border_radius(5,5,0,0)
+    bottom: 0
+    height: 30px
+    left: 0
+    padding: 15px 5px
+    position: absolute
+    right: 0
+    
+    >li
+      float: left
+      list-style: none
+      position: relative
+      
+      >a
+        border: 1px solid transparent
+        +border_radius(5)
+        color: #bea761
+        display: block
+        font-size: 18px
+        height: 30px
+        line-height: 30px
+        margin: 0 0 0 10px
+        padding: 0 10px
+        position: relative
+        +transition(color .2s linear, background .2s linear)
+        z-index: 12
+            
+        &:not(:only-child)
+          padding: 0 30px 0 10px
+    
+          &:after
+            border: 5px solid transparent
+            border-top-color: #bea761
+            content: ''
+            height: 0
+            position: absolute
+            right: 10px
+            top: 13px
+            width: 0
+      
+      >ul
+        background: #704323
+        border: 1px solid rgba(#000,.2)
+        +border_radius(0,5,5,5)
+        +box_shadow(0 0 5px rgba(#000,.5))
+        left: 10px
+        +opacity(0)
+        min-width: 120%
+        padding: 5px 0 0
+        position: absolute
+        top: 25px
+        z-index: 11
+        
+        >li
+        
+          >a
+            border-top: 1px solid rgba(#000,.2)
+            color: #dac6b7
+            display: block
+            font-size: 13px
+            padding: 0 10px
+            position: relative
+            
+            &:hover
+              background: rgba(#000,.1)
+              color: #fff
+          
+          &:last-child,
+          &:last-child >a
+            +border_radius(0,0,5,5)
+      
+      &:hover
+        
+        >a
+          background: #704323
+          border-color: rgba(#000,.2)
+          color: #fff
+          +transition(color .2s linear)
+          
+          &:not(:only-child)
+            border-bottom: 0
+            +border_radius(5,5,0,0)
+      
+            &:after
+              border-top-color: #fff
+        
+        >ul
+          +opacity(1)
+          top: 30px
+          +transition(opacity .2s linear, top .2s linear)
+          
+          >li a
+            padding: 7px 10px
+            +transition(padding .2s linear)
+      
+      &.current
+        
+        >a
+          background: #26000a
+      
+      &.special
+        float: right
+        
+        >a
+          color: #fff
+          float: right
+          font-size: 14px
+          margin: 0 10px 0 0
+          padding: 0 40px 0 10px
+          
+          &:before
+            background: image-url('application/icons.png') -90px -30px no-repeat
+            content: ''
+            height: 30px
+            position: absolute
+            right: 5px
+            top: 0
+            width: 30px
+          
+          &:hover
+            color: #fff
+      
+      &.settings >a:before
+        background-position: -90px -30px
+      
+      &.signup >a:before
+        background-position: -120px -30px
+
+#body
+  background: rgba(#fff,.9)
+  margin: 5px auto 0
+  min-height: 735px
+  padding: 30px
+  position: relative
+  text-align: left
+  width: 900px
+  z-index: 3
+
+@import footer

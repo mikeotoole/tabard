@@ -12,7 +12,8 @@ describe Subdomains::CommunityApplicationsController do
   let(:community_admin_user) { community_admin_profile.user }
   let(:community_application_attr) {{
     :submission_attributes => {:custom_form_id => DefaultObjects.community.community_application_form.id, 
-    :user_profile_id => DefaultObjects.fresh_user_profile.id}
+    :user_profile_id => DefaultObjects.fresh_user_profile.id},
+    :character_proxy_ids => [DefaultObjects.fresh_user_profile.character_proxies.first.id]
     }
   }
   
@@ -153,7 +154,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should render edit to new community application" do
-      response.should render_template('community_applications/edit')
+      response.should render_template('community_applications/new')
     end
   end
 
@@ -168,14 +169,14 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "PUT 'update' when authenticated as owner" do
     before(:each) do
-      #@old_character = community_application.charactor_proxies.first
+      @application_id = community_application.id
+      @old_character = community_application.character_proxies.first
       sign_in applicant_user
-      put 'update', :id => community_application
+      put 'update', :id => community_application, :community_application => { :character_proxy_ids => [] }
     end
 
     it "should change attributes" do
-      assigns[:community_applicaiton]
-      pending
+      CommunityApplication.find_by_id(@application_id).character_proxy_ids.include?(@old_character.id).should be_false
     end
 
     it "should redirect to role" do
@@ -185,14 +186,14 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "PUT 'update' when authenticated as community admin" do
     before(:each) do
-      #@new_name = 'New Name'
+      @application_id = community_application.id
+      @old_character = community_application.character_proxies.first
       sign_in community_admin_user
-      put 'update', :id => community_application
+      put 'update', :id => community_application, :community_application => { :character_proxy_ids => [] }
     end
 
     it "should not change attributes" do
-      assigns[:community_applicaiton]
-      pending
+      CommunityApplication.find_by_id(@application_id).character_proxy_ids.include?(@old_character.id).should be_true
     end
 
     it "should be unauthorized" do
@@ -223,8 +224,8 @@ describe Subdomains::CommunityApplicationsController do
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.should be_success
-      CommunityApplication.exists?(@community_application).should be_false
+      response.should redirect_to(community_application_path)
+      CommunityApplication.find(@community_application).withdrawn?.should be_true
     end
     
     it "should be unauthorized when authenticated as a community admin" do

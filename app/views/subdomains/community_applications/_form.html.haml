@@ -5,18 +5,16 @@
       %ul
         - @community_application.errors.full_messages.each do |msg|
           %li= msg
-
+  #custom_form
+    = @community_application.custom_form.to_yaml # TODO Doug, Here is where the form would be rendered. See object for more info. -JW
   .field
-    = f.label :community_id
-    = f.number_field :community_id
+    = f.fields_for :submission do |submission_form|
+      .field
+        - # TODO Doug, Here is where the submission fields would go -JW
   .field
-    = f.label :user_profile_id
-    = f.number_field :user_profile_id
-  .field
-    = f.label :submission_id
-    = f.number_field :submission_id
-  .field
-    = f.label :status
-    = f.text_field :status
+    - current_user.character_proxies.each do |proxy|
+      .field
+        = check_box_tag "community_application[character_proxy_ids][]", proxy.id, @community_application.character_proxies.include?(proxy)
+        = proxy.name
   .actions
     = f.submit 'Save'

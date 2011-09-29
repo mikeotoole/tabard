@@ -11,7 +11,7 @@ class DefaultObjects
 
   def self.additional_community_user_profile
     @additional_community_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
-    DefaultObjects.community.promote_user_profile_to_member(@user_profile)
+    DefaultObjects.community.promote_user_profile_to_member(@additional_community_user_profile)
     @additional_community_user_profile
   end
 

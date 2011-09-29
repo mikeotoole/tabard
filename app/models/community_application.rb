@@ -2,12 +2,12 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :submission_attributes
+  attr_accessible :submission_attributes, :character_proxy_ids
 ###
 # Constants
 ###
   # The list of vaild status values.
-  VALID_STATUSES =  %w(Pending Accepted Rejected)
+  VALID_STATUSES =  %w(Pending Accepted Rejected Withdrawn)
 
 ###
 # Associations
@@ -40,6 +40,7 @@ class CommunityApplication < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :custom_form, :to => :submission, :allow_nil => true
 
   ###
   # _before_create_
@@ -72,9 +73,19 @@ class CommunityApplication < ActiveRecord::Base
     self.update_attribute(:status, "Rejected")
   end
 
+  def withdraw
+    return false unless self.pending?
+    self.update_attribute(:status, "Withdrawn")
+  end
+
   # This method returns true if this application's status is pending, otherwise false
   def pending?
     self.status == "Pending"
+  end
+
+  # This method returns true if this application's status is pending, otherwise false
+  def withdrawn?
+    self.status == "Withdrawn"
   end
 
   # This method returns true if this application's status is accepted, otherwise false
