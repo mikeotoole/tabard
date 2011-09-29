@@ -5,7 +5,7 @@
 #
 # This controller is handling discussions within the scope of subdomains (communities).
 ###
-class Subdomains::DiscussionsController < ApplicationController
+class Subdomains::DiscussionsController < SubdomainsController
   respond_to :html
 ###
 # Before Filters

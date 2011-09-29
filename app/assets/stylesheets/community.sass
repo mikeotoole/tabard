@@ -222,5 +222,181 @@ body
   text-align: left
   width: 900px
   z-index: 3
+  
+  a
+    +border_radius(3)
+    color: #580B19
+    padding: 0 3px
+    text-decoration: underline
+    +transition(background .2s linear)
+    
+    &:hover
+      background: #6F2B3D
+      color: #fff
+      text-decoration: none
+  
+  button,
+  .button
+    background: #6F2D3D
+    border: 1px solid #8f364e
+    +border_radius(5)
+    color: #efd9df
+    display: block
+    float: left
+    font: 16px DinMedium, serif
+    height: 30px
+    line-height: 30px
+    padding: 0 15px
+    text-decoration: none
+    +transition(background .2s linear)
+    
+    &:hover
+      background: #8f364e
+      color: #fff
+  
+  h1
+    color: #560716
+    font-family: DinMedium, serif
+    font-size: 30px
+    letter-spacing: -1px
+    line-height: 30px
+    padding: 0 0 15px
+    text-decoration: none
 
+  table
+    +border_radius(5)
+    margin: 0 0 15px
+    
+    td,
+    tr
+    
+      &.r
+        text-align: right
+  
+    thead
+      text-align: left
+    
+      th
+        background: #6F4324
+        +bg_gradient(#83583a,#5e371b)
+        border-bottom: 1px solid #fff
+        font-family: DinMedium, serif
+        color: #fff
+        padding: 10px
+        
+        &:first-child
+          +border_radius(5,0,0,0)
+        
+        &:last-child
+          +border_radius(0,5,0,0)
+        
+        &:only-child
+          +border_radius(5,5,0,0)
+  
+    tbody
+    
+      td
+        background: #eee
+        +bg_gradient(#eee,#ddd)
+        border-bottom: 1px solid #ccc
+        border-top: 1px solid #fff
+        padding: 5px 10px
+        width: 100%
+        
+        &.actions
+          padding: 5px
+          white-space: nowrap
+          
+          div
+            position: relative
+          
+            a
+              background: image-url('application/icons.png') no-repeat #D47B48
+              +border_radius(5)
+              display: block
+              float: left
+              height: 30px
+              overflow: hidden
+              padding: 0
+              margin: 0 0 0 5px
+              text-indent: -500em
+              +transition(background-color .2s linear, box-shadow .2s linear)
+              width: 30px
+              
+              &:hover
+                background: image-url('application/icons.png') no-repeat #570A17
+                +box_shadow(0 0 10px #333)
+              
+                &[meta]
+                
+                  &:before
+                    background: rgba(#6F2B3D,.9)
+                    +border_radius(5)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 13px
+                    height: 30px
+                    line-height: 30px
+                    margin: 0 5px 0 0
+                    padding: 0 10px
+                    position: absolute
+                    right: 100%
+                    text-indent: 0
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 5px solid transparent
+                    border-left: 5px solid rgba(#6F2B3D,.9)
+                    content: ''
+                    height: 0
+                    left: -5px
+                    position: absolute
+                    top: 10px
+                    width: 0
+                    
+              
+              &.apply
+                background-position: 0 -30px
+                
+              &.delete
+                background-position: -30px -30px
+                
+              &.edit
+                background-position: -60px -30px
+    
+    tfoot
+    
+      td
+        background: #BCA964
+        +bg_gradient(#9b8c4a,#cdbf81)
+        border-top: 1px solid #fff
+        color: #570A17
+        padding: 10px
+        position: relative
+        
+        &:before
+          border-top: 1px solid #ccc
+          content: ''
+          left: 0
+          position: absolute
+          right: 0
+          top: 0
+        
+        &:first-child
+          +border_radius(0,0,0,5)
+        
+        &:last-child
+          +border_radius(0,0,5,0)
+        
+        &:only-child
+          +border_radius(0,0,5,5)
+        
+        button,
+        .button
+          border-color: #1e102c
+          
+          &:hover
+            +box_shadow(0 0 10px #000)
+
+@import theme
 @import footer

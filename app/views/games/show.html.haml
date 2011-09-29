@@ -4,7 +4,7 @@
   %h1= @game.name
 
   - if @game.communities.size > 0
-    = render "communities/communities_table", :communities => @game.communities
+    = render "communities/table", :communities => @game.communities
   -else
     %p
       This game has no active communities.

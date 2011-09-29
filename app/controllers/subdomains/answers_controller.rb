@@ -5,7 +5,7 @@
 #
 # This controller is for answers.
 ###
-class Subdomains::AnswersController < ApplicationController
+class Subdomains::AnswersController < SubdomainsController
   respond_to :html
 
   ###
