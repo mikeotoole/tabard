@@ -19,11 +19,14 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications
   has_many :roles
-  has_many :supported_games
+  has_many :supported_games, :dependent => :destroy
   has_many :games, :through => :supported_games
+  has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
-  has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
+  belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
 
@@ -31,7 +34,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space
 
 ###
 # Validators
@@ -168,6 +171,27 @@ protected
   def make_admin_a_member
     self.promote_user_profile_to_member(self.admin_profile)
   end
+
+  ###
+  # _after_create_
+  #
+  # The method creates the community announcement space.
+  ###
+  def make_community_announcement_space
+    if !self.community_announcement_space
+      space = DiscussionSpace.new(:name => "Community Announcements")
+      if space
+        space.community = self
+        space.user_profile = self.admin_profile
+        space.is_announcement = true
+        space.save!
+        self.community_announcement_space = space
+        self.save
+      else
+        logger.error("Could not create community announcement space for community #{self.to_yaml}")
+      end
+    end
+  end
 end
 
 
@@ -175,16 +199,18 @@ end
 #
 # Table name: communities
 #
-#  id                          :integer         not null, primary key
-#  name                        :string(255)
-#  slogan                      :string(255)
-#  accepting_members           :boolean         default(TRUE)
-#  email_notice_on_application :boolean         default(TRUE)
-#  subdomain                   :string(255)
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  admin_profile_id            :integer
-#  member_role_id              :integer
-#  protected_roster            :boolean         default(FALSE)
+#  id                              :integer         not null, primary key
+#  name                            :string(255)
+#  slogan                          :string(255)
+#  accepting_members               :boolean         default(TRUE)
+#  email_notice_on_application     :boolean         default(TRUE)
+#  subdomain                       :string(255)
+#  created_at                      :datetime
+#  updated_at                      :datetime
+#  admin_profile_id                :integer
+#  member_role_id                  :integer
+#  protected_roster                :boolean         default(FALSE)
+#  community_application_form_id   :integer
+#  community_announcement_space_id :integer
 #
 

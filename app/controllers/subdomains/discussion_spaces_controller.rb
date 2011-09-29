@@ -11,6 +11,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 # Before Filters
 ###
   before_filter :authenticate_user!
+  before_filter :ensure_current_user_is_member
   before_filter :load_discussion_space, :except => [:new, :create, :index]
   before_filter :create_discussion_space, :only => [:new, :create]
   authorize_resource :except => :index
@@ -22,7 +23,6 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   # GET /discussion_spaces
   def index
     @discussion_spaces = current_community.discussion_spaces
-    authorize! :index, @discussion_spaces
   end
 
   # GET /discussion_spaces/1

@@ -14,12 +14,14 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   before_filter :authenticate_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
+  before_filter :ensure_current_user_is_member, :only => [:index]
   authorize_resource
   skip_before_filter :limit_subdomain_access
   
   # GET /community_applications
   # GET /community_applications.json
   def index
+    authorize! :index, CommunityApplication
     respond_with(@community_applications)
   end
 
@@ -50,8 +52,11 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # PUT /community_applications/1
   # PUT /community_applications/1.json
   def update
-    if @community_application.update_attributes(params[:community_application])
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+    if params[:community_application]
+      params[:community_application][:character_proxy_ids] ||= []
+      if @community_application.update_attributes(params[:community_application])
+        # TODO Doug/Joe Determine this success message, if applicable. -JW
+      end
     end
     respond_with(@community_application)
   end
@@ -59,7 +64,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # DELETE /community_applications/1
   # DELETE /community_applications/1.json
   def destroy
-    if @community_application.destroy
+    if @community_application.withdraw
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
     respond_with(@community_application)
@@ -99,10 +104,14 @@ protected
   ###
   def create_application
     if(params[:community_application])
+      params[:community_application][:character_proxy_ids] ||= []
       @community_application = current_community.community_applications.new(params[:community_application])
     else
       @community_application = current_community.community_applications.new
     end
     @community_application.user_profile = current_user.user_profile
+    @community_application.build_submission unless @community_application.submission
+    @community_application.submission.custom_form = current_community.community_application_form
+    @community_application.submission.user_profile = current_user.user_profile
   end
 end

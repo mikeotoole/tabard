@@ -2,18 +2,19 @@
 #
 # Table name: communities
 #
-#  id                            :integer         not null, primary key
-#  name                          :string(255)
-#  slogan                        :string(255)
-#  accepting_members             :boolean         default(TRUE)
-#  email_notice_on_application   :boolean         default(TRUE)
-#  subdomain                     :string(255)
-#  created_at                    :datetime
-#  updated_at                    :datetime
-#  admin_profile_id              :integer
-#  member_role_id                :integer
-#  protected_roster              :boolean         default(FALSE)
-#  community_application_form_id :integer
+#  id                              :integer         not null, primary key
+#  name                            :string(255)
+#  slogan                          :string(255)
+#  accepting_members               :boolean         default(TRUE)
+#  email_notice_on_application     :boolean         default(TRUE)
+#  subdomain                       :string(255)
+#  created_at                      :datetime
+#  updated_at                      :datetime
+#  admin_profile_id                :integer
+#  member_role_id                  :integer
+#  protected_roster                :boolean         default(FALSE)
+#  community_application_form_id   :integer
+#  community_announcement_space_id :integer
 #
 
 require 'spec_helper'
@@ -156,7 +157,7 @@ describe Community do
       community_roster.size.should eq(expected_size)
     end
 
-    it "should return only rostered characters that match game whem game is specified" do
+    it "should return only rostered characters that match game when game is specified" do
       expected_size = community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size + community_profile2.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size
       community_roster = community.get_current_community_roster(wow)
       community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
@@ -181,6 +182,39 @@ describe Community do
 
   it "should email on application by default" do
     community.email_notice_on_application.should be_true
+  end
+  
+  it "should create a community announcements discussion space on creation" do
+    community.community_announcement_space.should be_a(DiscussionSpace)
+    community.community_announcement_space.is_announcement.should be_true
+  end
+  
+  it "should create a community announcements discussion space with admins user profile" do
+    community.community_announcement_space.user_profile.id.should eq(community.admin_profile.id)
+  end
+  
+  it "should destroy community announcements discussion space when destroyed" do
+    space = community.community_announcement_space
+    space.should be_a(DiscussionSpace)
+    community.destroy
+    DiscussionSpace.exists?(space).should be_false
+  end
+  
+  describe "game_announcement_spaces" do
+    let(:wow) { DefaultObjects.wow }
+  
+    it "should return empty array when community has no game" do
+      community.games.should be_empty
+      community.game_announcement_spaces.should be_empty
+    end
+    
+    it "should return announcement space for each game the community has" do
+      community.games.should be_empty
+      community.game_announcement_spaces.should be_empty
+      community.games << wow
+      community.games.should eq([wow])
+      community.game_announcement_spaces.count.should eq(1)
+    end
   end
 end
 

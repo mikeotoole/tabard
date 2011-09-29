@@ -9,6 +9,12 @@ class DefaultObjects
     @user_profile
   end
 
+  def self.additional_community_user_profile
+    @additional_community_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
+    DefaultObjects.community.promote_user_profile_to_member(@additional_community_user_profile)
+    @additional_community_user_profile
+  end
+
   def self.fresh_user_profile
     @fresh_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
   end
@@ -52,6 +58,7 @@ class DefaultObjects
   def self.clean
     @user = nil
     @user_profile = nil
+    @additional_community_user_profile = nil
     @fresh_user_profile = nil
     @wow = nil
     @swtor = nil

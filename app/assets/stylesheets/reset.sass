@@ -1,9 +1,9 @@
+@import mixins
+
 *
   background: transparent
   border: 0
-  box-sizing: content-box
-  -moz-box-sizing: content-box
-  -ms-box-sizing: content-box
+  +box_sizing(content-box)
   color: inherit
   cursor: inherit
   font-family: inherit
@@ -17,8 +17,8 @@
   text-indent: 0
   vertical-align: baseline
 
-*:focus
-  outline: 0
+  &:focus
+    outline: 0
 
 html,
 body

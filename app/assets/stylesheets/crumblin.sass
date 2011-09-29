@@ -1,4 +1,11 @@
 @import mixins
+@import fonts/din
+@import fonts/malbeck
+@import reset
+@import bar
+
+#bar:before
+  +bg_gradient(#ccc,rgba(#ccc,0))
 
 body
   background: image-url('main/bg.png') 0 70px repeat-x #fff
@@ -432,7 +439,7 @@ button,
               &:after
                 background-color: #be4124
               
-              &:before
+              &[meta]:before
                 background: rgba(#251634,.8)
                 +border_radius(5)
                 color: #fff
@@ -575,6 +582,12 @@ button,
   table
     +border_radius(5)
     margin: 0 0 15px
+    
+    td,
+    tr
+    
+      &.r
+        text-align: right
   
     thead
       text-align: left
@@ -604,6 +617,67 @@ button,
         border-top: 1px solid #fff
         padding: 5px 10px
         width: 100%
+        
+        &.actions
+          padding: 5px
+          white-space: nowrap
+          
+          div
+            position: relative
+          
+            a
+              background: image-url('application/icons.png') no-repeat #aaa
+              +border_radius(5)
+              display: block
+              float: left
+              height: 30px
+              overflow: hidden
+              padding: 0
+              margin: 0 0 0 5px
+              text-indent: -500em
+              +transition(background-color .2s linear, box-shadow .2s linear)
+              width: 30px
+              
+              &:hover
+                background: image-url('application/icons.png') no-repeat #be4124
+                +box_shadow(0 0 10px #333)
+              
+                &[meta]
+                
+                  &:before
+                    background: rgba(#251634,.8)
+                    +border_radius(5)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 13px
+                    height: 30px
+                    line-height: 30px
+                    margin: 0 5px 0 0
+                    padding: 0 10px
+                    position: absolute
+                    right: 100%
+                    text-indent: 0
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 5px solid transparent
+                    border-left: 5px solid rgba(#251634,.8)
+                    content: ''
+                    height: 0
+                    left: -5px
+                    position: absolute
+                    top: 10px
+                    width: 0
+                    
+              
+              &.apply
+                background-position: 0 -30px
+                
+              &.delete
+                background-position: -30px -30px
+                
+              &.edit
+                background-position: -60px -30px
     
     tfoot
     
@@ -662,13 +736,16 @@ button,
   
   input[type="checkbox"],
   input[type="radio"]
-    margin: 5px 0 0 5px
+    height: 1px
+    margin: 10px 0 0 5px
     position: absolute
+    width: 1px
     z-index: 1
     
     + label
       display: block
       line-height: 24px
+      margin: 0 0 5px
       position: relative
       text-indent: 34px
       z-index: 2
@@ -729,12 +806,4 @@ button,
     top: 60px
     width: 340px
 
-#footer
-  bottom: 0
-  font-family: DinMedium, sans
-  font-size: 11px
-  left: 0
-  padding: 5px
-  +opacity(.5)
-  position: fixed
-  z-index: 1
+@import footer

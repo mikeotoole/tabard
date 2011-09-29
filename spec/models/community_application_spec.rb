@@ -81,6 +81,12 @@ describe CommunityApplication do
       community_application.valid?.should be_true
       community_application.rejected?.should be_true
     end
+
+    it "should allow the withdrawn status" do
+      community_application.status = "Withdrawn"
+      community_application.valid?.should be_true
+      community_application.withdrawn?.should be_true
+    end
   end
 
   describe "accept_application" do
@@ -135,6 +141,30 @@ describe CommunityApplication do
       community_application.reject_application.should be_true
       community_application.pending?.should be_false
       community_application.reject_application.should be_false
+    end
+  end
+
+  describe "withdraw" do
+    before(:each) do
+      community_application.user_profile.is_member?(community).should be_false
+    end
+
+    it "should allow withdrawl if pending" do
+      community_application.pending?.should be_true
+      community_application.withdraw.should be_true
+      community_application.withdrawn?.should be_true
+    end
+
+    it "should not allow withdrawl if accepted" do
+      community_application.accept_application.should be_true
+      community_application.withdraw.should be_false
+      community_application.withdrawn?.should be_false
+    end
+
+    it "should not allow withdrawl if rejected" do
+      community_application.reject_application.should be_true
+      community_application.withdraw.should be_false
+      community_application.withdrawn?.should be_false
     end
   end
 end

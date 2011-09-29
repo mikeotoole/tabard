@@ -9,7 +9,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :game_id
+  attr_accessible :name, :game
 
 ###
 # Associations
@@ -17,7 +17,7 @@ class DiscussionSpace < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :game
   belongs_to :community
-  has_many :discussions
+  has_many :discussions, :dependent => :destroy
 
 ###
 # Validators
@@ -63,6 +63,7 @@ class DiscussionSpace < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: discussion_spaces
@@ -74,5 +75,6 @@ end
 #  community_id    :integer
 #  created_at      :datetime
 #  updated_at      :datetime
+#  is_announcement :boolean         default(FALSE)
 #
 

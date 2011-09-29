@@ -18,7 +18,7 @@
       %td= community_application.status
       %td= link_to 'Show', community_application
       %td= link_to 'Edit', edit_community_application_path(community_application)
-      %td= link_to 'Destroy', community_application, :confirm => 'Are you sure?', :method => :delete
+      %td= button_to 'Destroy', community_application, :confirm => 'Are you sure?', :method => :delete
 
 %br
 

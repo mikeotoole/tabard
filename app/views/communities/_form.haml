@@ -1,0 +1,15 @@
+= form_for community do |f|
+  - if request[:action] == 'new'
+    %p
+      = f.label :name
+      = f.text_field :name
+  %p
+    = f.label :slogan
+    = f.text_field :slogan
+  %p
+    = f.check_box :accepting_members
+    = f.label :accepting_members
+    = f.check_box :email_notice_on_application
+    = f.label :email_notice_on_application
+  %p
+    %button{ :type => 'submit' } Save

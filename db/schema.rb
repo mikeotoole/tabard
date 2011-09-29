@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110924205243) do
+ActiveRecord::Schema.define(:version => 20110924225513) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -66,18 +66,20 @@ ActiveRecord::Schema.define(:version => 20110924205243) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.boolean  "accepting_members",             :default => true
-    t.boolean  "email_notice_on_application",   :default => true
+    t.boolean  "accepting_members",               :default => true
+    t.boolean  "email_notice_on_application",     :default => true
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
-    t.boolean  "protected_roster",              :default => false
+    t.boolean  "protected_roster",                :default => false
     t.integer  "community_application_form_id"
+    t.integer  "community_announcement_space_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
+  add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
 
@@ -133,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20110924205243) do
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_announcement", :default => false
   end
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
@@ -149,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20110924205243) do
     t.boolean  "has_been_locked",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_archived",         :default => false
   end
 
   add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
@@ -233,9 +237,11 @@ ActiveRecord::Schema.define(:version => 20110924205243) do
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_announcement_space_id"
   end
 
   add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
+  add_index "supported_games", ["game_announcement_space_id"], :name => "index_supported_games_on_game_announcement_space_id"
   add_index "supported_games", ["game_id"], :name => "index_supported_games_on_game_id"
 
   create_table "swtor_characters", :force => true do |t|
@@ -288,6 +294,17 @@ ActiveRecord::Schema.define(:version => 20110924205243) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "view_logs", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "view_loggable_id"
+    t.string   "view_loggable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "view_logs", ["user_profile_id"], :name => "index_view_logs_on_user_profile_id"
+  add_index "view_logs", ["view_loggable_type", "view_loggable_id"], :name => "index_view_logs_on_view_loggable_type_and_id"
 
   create_table "wow_characters", :force => true do |t|
     t.string   "name"
