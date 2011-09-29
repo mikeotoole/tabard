@@ -21,11 +21,11 @@ class DefaultObjects
     @additional_community_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
     if not @additional_community_user_profile.is_member?(DefaultObjects.community)
       app = FactoryGirl.create(:community_application,
-        :community => DefaultObjects.community,
-        :user_profile => @additional_community_user_profile,
-        :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
-        :character_proxies => additional_community_user_profile.character_proxies
-      )
+          :community => DefaultObjects.community,
+          :user_profile => @additional_community_user_profile,
+          :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
+          :character_proxies => @additional_community_user_profile.character_proxies
+        )
       app.accept_application
     end
     @additional_community_user_profile
