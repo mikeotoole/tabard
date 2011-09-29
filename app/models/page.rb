@@ -50,7 +50,7 @@ class Page < ActiveRecord::Base
   def body
     markdown = RDiscount.new(self.markup)
     html = markdown.to_html
-    Sanitize.clean(html, Sanitize::Config::RELAXED).html_safe
+    Sanitize.clean(html, Sanitize::Config::CUSTOM).html_safe
   end
 
   ###
