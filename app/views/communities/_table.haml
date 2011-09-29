@@ -1,0 +1,32 @@
+%table
+  %thead
+    %tr
+      %th Community
+      %th.r Members
+      %th.r Characters
+      %th.actions
+  %tbody
+    - communities.each do |community|
+      %tr
+        %td
+          %strong= link_to community.name, community
+          %br/
+          = "\"#{community.slogan}\""
+        %td.r
+          = community.community_profiles.size
+        %td.r
+          = community.get_current_community_roster.size
+        %td.actions
+          %div
+            - if community.accepting_members
+              -# TODO Doug - hook this link up, yo
+              = link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Apply to community', :class => 'apply'
+            - if (can? :update, community)
+              = link_to 'Edit', edit_community_path(community), :meta => 'Edit community', :class => 'edit'
+            - if (can? :destroy, community)
+              = link_to 'Destroy', community, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete community', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 4 }
+        - if (can? :create, Community)
+          = link_to 'New Community', new_community_path, :class => 'button primary'

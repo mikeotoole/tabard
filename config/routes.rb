@@ -37,6 +37,14 @@ DaBvRails::Application.routes.draw do
       # Roster assignments
       resources :roster_assignments
 
+      # Community applications
+      resources :community_applications do
+        member do
+          post :accept
+          post :reject
+        end
+      end
+
       # Custom Forms
       resources :custom_forms do
         resources :questions, :shallow => true

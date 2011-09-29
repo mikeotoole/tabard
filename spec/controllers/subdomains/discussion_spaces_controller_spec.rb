@@ -36,7 +36,7 @@ describe Subdomains::DiscussionSpacesController do
       space
       sign_in user
       get :index
-      assigns(:discussion_spaces).should eq([community.community_announcement_space, space])
+      assigns(:discussion_spaces).should eq([space])
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

@@ -1,0 +1,11 @@
+- if (flash[:messages] and flash[:messages].size > 0)
+  %ul#flash
+    - if flash[:messages]
+      - flash[:messages].each do |message|
+        %li{ :class => message[:class] }
+          %span.msg
+            - if !message[:title].blank?
+              %strong= message[:title]
+              &mdash;
+            = raw(message[:body])
+  - clear_flash_messages

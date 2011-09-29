@@ -9,7 +9,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :game_id
+  attr_accessible :name, :game
 
 ###
 # Associations

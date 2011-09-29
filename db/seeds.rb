@@ -9,7 +9,7 @@ if ENV["RAILS_ENV"] != 'test'
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
-swtor_game = Swtor.create(:name => "Starwars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
+swtor_game = Swtor.create(:name => "Star Wars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
 
 puts "Creating RoboBilly!"
 robobilly = User.new(:email => "billy@robo.com", :password => "Password",
@@ -35,6 +35,21 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
 d_badger.skip_confirmation!
 d_badger.save
 
+puts "Creating Kinky Fox!"
+k_fox = User.new(:email => "kinky@fox.com", :password => "Password",
+                   :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
+k_fox.skip_confirmation!
+k_fox.save
+miss_fox = WowCharacter.create(:name => "Miss Fox",
+  :game => wow_game,
+  :server => "Default WOW Server",
+  :faction => "Horde",
+  :race => "Goblin",
+  :level => 20)
+k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
+  :character => miss_fox
+)
+
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
 jahc.games << swtor_game
@@ -47,8 +62,8 @@ puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
 
 puts "RoboBilly is getting some characters..."
-%w( Blaggarth Eliand Tikka ).each do |name|
-  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => name, :server => "Herp", :game => swtor_game))
+['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
+  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
 end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
@@ -62,22 +77,22 @@ puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
 
 puts "Creating Just Another Headshot Clan General Discussion Space"
-gds = jahc.discussion_spaces.new(:name => "General Discussion Space")
+gds = jahc.discussion_spaces.new(:name => "General Chat")
 gds.user_profile = robobilly.user_profile
 gds.save
 
-puts "Creating Just Another Headshot Clan WoW Discussion Space"
-wds = jahc.discussion_spaces.new(:name => "WoW Discussion Space", :game => wow_game)
+puts "Creating Just Another Headshot Clan WoW"
+wds = jahc.discussion_spaces.new(:name => "WoW", :game => wow_game)
 wds.user_profile = robobilly.user_profile
 wds.save
 
-puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-sds = jahc.discussion_spaces.new(:name => "SWTOR Discussion Space", :game => swtor_game)
+puts "Creating Just Another Headshot Clan SWTOR"
+sds = jahc.discussion_spaces.new(:name => "SWTOR", :game => swtor_game)
 sds.user_profile = robobilly.user_profile
 sds.save
 
 puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
-gd = gds.discussions.new(:name => "General Discussion Space", :body => "Whats up team?")
+gd = gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
 gd.user_profile = robobilly.user_profile
 gd.save
 
@@ -87,7 +102,7 @@ wd.user_profile = robobilly.user_profile
 wd.save
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space Discussion"
-sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss WoW")
+sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss SWTOR")
 sd.user_profile = robobilly.user_profile
 sd.save
 

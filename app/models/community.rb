@@ -16,13 +16,16 @@ class Community < ActiveRecord::Base
 ###
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
+  belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
+  has_many :community_applications
   has_many :roles
   has_many :supported_games, :dependent => :destroy
   has_many :games, :through => :supported_games
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
-  has_many :discussion_spaces # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
@@ -33,7 +36,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :set_up_member_role, :make_admin_a_member, :make_community_announcement_space
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space
 
 ###
 # Validators
@@ -59,11 +62,12 @@ class Community < ActiveRecord::Base
   # This method promotes a user to a member, doing all of the business logic for you.
   # [Args]
   #   * +user_profile+ -> The user profile you would like to promote to a member.
-  # [Returns] A boolean that contains the result of the operation. True if successful, otherwise false.
+  # [Returns] The community profile that was created, otherwise nil if it could not be created.
   ###
   def promote_user_profile_to_member(user_profile)
-    # TODO Joe/Mike Ensure that the user is an applicant -JW
-    return user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+    return nil unless (self.community_applications.where{(:user_profile == user_profile)}.exists? or
+        self.admin_profile == user_profile)
+    user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
   end
 
   ###
@@ -139,10 +143,26 @@ protected
   #
   # This method creates the default member role.
   ###
-  def set_up_member_role
-    default_member_role = Role.create(:name => "Member", :system_generated => true, :community => self)
-    default_member_role.community.update_attribute(:member_role, default_member_role) # OPTIMIZE Joe, this looks like it could use some optimization. -JW
+  def setup_member_role
+    mr = self.build_member_role(:name => "Member", :system_generated => true)
+    mr.community = self
+    mr.save
+    self.update_attribute(:member_role, mr)
+  end
 
+  ###
+  # _after_create_
+  #
+  # This method creates the default member role.
+  ###
+  def setup_community_application_form
+    ca = self.build_community_application_form(:name => "Application Form",
+        :instructions => "Fill this out please.",
+        :thankyou => "Thanks!",
+        :published => true)
+    ca.community = self
+    ca.save
+    self.update_attribute(:community_application_form, ca)
   end
 
   ###
@@ -177,7 +197,6 @@ protected
 end
 
 
-
 # == Schema Information
 #
 # Table name: communities
@@ -193,6 +212,7 @@ end
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
 #  protected_roster                :boolean         default(FALSE)
+#  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #
 

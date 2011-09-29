@@ -1,0 +1,57 @@
+!!!
+%html
+
+  %head
+    %title= yield_for(:title, "#{@community.name} - Crumblin")
+    = stylesheet_link_tag "community"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+
+  %body
+    = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
+    = render 'layouts/flash_messages'
+
+    #content
+
+      #header
+        .title
+          %strong= @community.name
+          %cite= @community.slogan
+        .menu
+          %li
+            = link_to 'Dashboard', actual_community_url(@community)
+          %li
+            -#TODO Doug - Hookup links
+            = link_to 'Topics', '#'
+            %ul
+              %li= link_to 'Herp', '#'
+              %li= link_to 'A Derp', '#'
+          %li
+            = link_to 'Discussions', discussion_spaces_path
+            - if @community.discussion_spaces.size
+              %ul
+                - @community.discussion_spaces.each do |space|
+                  %li= link_to space.name, space
+          %li
+            -#TODO Doug - Hookup link
+            = link_to 'Announcements', '#'
+            - if @community.announcement_spaces.size
+              %ul
+                - @community.announcement_spaces.each do |space|
+                  %li= link_to space.name, space
+          %li
+            -#TODO Doug - Hookup link
+            = link_to 'Members', '#'
+          - if current_user and current_user.communities.include?(@community)
+            %li{ :class => 'special settings' }
+              -#TODO Doug - Hookup link
+              = link_to 'Community Settings', '#'
+          - else
+            %li{ :class => 'special signup' }
+              -#TODO Doug - Hookup link
+              = link_to 'Apply Now', new_community_application_path
+
+      #body
+        = yield
+
+    = render 'layouts/footer'

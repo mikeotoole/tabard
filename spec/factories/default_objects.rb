@@ -5,8 +5,34 @@ class DefaultObjects
   
   def self.user_profile
     @user_profile ||= FactoryGirl.create(:user_profile, :user => FactoryGirl.create(:user))
-    DefaultObjects.community.promote_user_profile_to_member(@user_profile)
+    if not @user_profile.is_member?(DefaultObjects.community)
+      app = FactoryGirl.create(:community_application,
+        :community => DefaultObjects.community,
+        :user_profile => @user_profile,
+        :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @user_profile),
+        :character_proxies => []
+      )
+      app.accept_application
+    end
     @user_profile
+  end
+
+  def self.additional_community_user_profile
+    @additional_community_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
+    if not @additional_community_user_profile.is_member?(DefaultObjects.community)
+      app = FactoryGirl.create(:community_application,
+          :community => DefaultObjects.community,
+          :user_profile => @additional_community_user_profile,
+          :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
+          :character_proxies => @additional_community_user_profile.character_proxies
+        )
+      app.accept_application
+    end
+    @additional_community_user_profile
+  end
+
+  def self.fresh_user_profile
+    @fresh_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
   end
   
   def self.wow
@@ -46,7 +72,7 @@ class DefaultObjects
   end
   
   def self.discussion
-    @discussion ||= FactoryGirl.create(:discussion, :discussion_space_id => DefaultObjects.discussion_space.id)
+    @discussion ||= FactoryGirl.create(:discussion)
   end
   
   def self.page_space
@@ -56,6 +82,8 @@ class DefaultObjects
   def self.clean
     @user = nil
     @user_profile = nil
+    @additional_community_user_profile = nil
+    @fresh_user_profile = nil
     @wow = nil
     @swtor = nil
     @community = nil

@@ -190,6 +190,14 @@ class Ability
     can [:update, :destroy, :create], PageSpace do |space|
       space.community.admin_profile_id == user.user_profile.id
     end
+
+    # Community Applications
+    can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
+      community_application.user_profile.id == user.user_profile.id
+    end
+    can [:read, :accept, :reject], CommunityApplication do |community_application|
+      community_application.community_admin_profile_id == user.user_profile.id
+    end
   end
 
   ###
