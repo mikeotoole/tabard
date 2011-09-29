@@ -87,9 +87,9 @@ describe UserProfile do
 ###
 # Instance Method Tests
 ###
-  it "name should return a string of the users first and last name" do
+  it "name should return a string of the user's display name" do
     billy = create(:billy)
-    billy.user_profile.name.should eq("Robo Billy")
+    billy.user_profile.name.should eq(billy.user_profile.display_name)
   end
 
   it "characters should return all characters" do
