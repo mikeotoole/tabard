@@ -1,19 +1,44 @@
-= form_for @page do |f|
-  -if @page.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
-      %ul
-        - @page.errors.full_messages.each do |msg|
-          %li= msg
+!!!
+%html
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :markup
-    = f.text_area :markup
-  .field
-    = f.label :show_in_navigation
-    = f.check_box :show_in_navigation
-  .actions
-    = f.submit 'Save'
+  %head
+    = javascript_include_tag "Markdown.Converter","Markdown.Sanitizer","Markdown.Editor"
+    = stylesheet_link_tag "markdown"
+    
+  %body
+    = form_for @page do |f|
+      -if @page.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
+          %ul
+            - @page.errors.full_messages.each do |msg|
+              %li= msg
+    
+      .field
+        = f.label :name
+        = f.text_field :name
+      .field
+        = f.label :markup
+        .wmd-panel
+          #wmd-button-bar
+          = f.text_area :markup, :class => "wmd-input", :id => "wmd-input"
+      .field
+        = f.label :show_in_navigation
+        = f.check_box :show_in_navigation
+      .actions
+        = f.submit 'Save'
+    
+    
+    -#  
+      .wmd-panel
+      wmd-button-bar
+      %textarea{ :class => "wmd-input", :id => "wmd-input" }  
+        
+    #wmd-preview{ :class => "wmd-panel" "wmd-preview" }
+    
+    :javascript         
+      (function () {
+          var converter1 = Markdown.getSanitizingConverter();
+          var editor1 = new Markdown.Editor(converter1);
+          editor1.run();
+      })();
