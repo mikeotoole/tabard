@@ -58,8 +58,36 @@ describe Page do
   
   describe "body" do
     it "should return markup converted to html" do
-      page.body.include?('<h2>H2 Heading</h2>').should be_true
-      page.body.include?('<em>Bold</em>').should be_true
+      page.markup = "##H2 Heading#\n *Bold*"
+      page.save.should be_true
+      page.body.should include('<h2>H2 Heading</h2>')
+      page.body.should include('<em>Bold</em>')
+    end
+    
+    it "should not sanitize whitelisted tags" do
+      hash = Sanitize::Config::CUSTOM
+      whitelist = hash[:elements]
+      whitelist.each do |tag|
+        page.markup = "<#{tag}>"
+        page.save.should be_true
+        page.body.should include("<#{tag}>")
+      end
+    end
+    
+    it "should sanitize embedded tags" do
+      page.markup = "<a <script> alert(\"you have been hacked\")</script>>"
+      page.save.should be_true
+      page.body.should_not include("<script>")
+    end 
+     
+    it "should sanitize tags not on the whitelist" do
+      hash = Sanitize::Config::BLACK
+      blacklist = hash[:elements]
+      blacklist.each do |tag|
+        page.markup = "<#{tag}>"
+        page.save.should be_true
+        page.body.should_not include("<#{tag}>")
+      end
     end
   end
   

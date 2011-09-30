@@ -24,18 +24,18 @@ Sanitize::Config::CUSTOM = {
       :elements => %w[
         a abbr address b bdo blockquote br caption cite code col colgroup dd 
         del details dfn dl dt em figcaption figure h2 h3 i img ins kbd li mark
-        ol p pre q rp rt s samp strike strong sub sup table tbody td
-        tfoot th thead time tr u ul var wbr
+        ol p pre q rp rt s samp strong sub sup table tbody td
+        tfoot th thead time tr ul var wbr
       ],
 
       :attributes => {
-        :all         => ['dir', 'lang', 'title'],
+        :all         => ['lang', 'title'],
         'a'          => ['href'],
         'blockquote' => ['cite'],
         'col'        => ['span', 'width'],
         'colgroup'   => ['span', 'width'],
         'del'        => ['cite', 'datetime'],
-        'img'        => ['align', 'alt', 'height', 'src', 'width'],
+        'img'        => ['alt', 'height', 'src', 'width'],
         'ins'        => ['cite', 'datetime'],
         'ol'         => ['start', 'reversed', 'type'],
         'q'          => ['cite'],

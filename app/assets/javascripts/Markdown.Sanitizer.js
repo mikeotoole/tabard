@@ -20,10 +20,10 @@
     }
 
     // (tags that can be opened/closed) | (tags that stand alone)
-    var basic_tag_whitelist = /^(<\/?(a|abbr|b|bdo|blockquote|br|caption|cite|code|col|colgroup|dd|del|details|dfn|dl|dt|em|figcaption|figure|h2|h3|i|ins|kbd|li|mark|ol|p|pre|q|rp|rt|s|samp|strong|strike|sup|sub|table|tbody|td|tfoot|th|thead|time|tr|u|ul|var|wbr)>|<(br|hr)\s?\/?>)$/i;
+    var basic_tag_whitelist = /^(<\/?(a|abbr|b|bdo|blockquote|br|caption|cite|code|col|colgroup|dd|del|details|dfn|dl|dt|em|figcaption|figure|h2|h3|i|ins|kbd|li|mark|ol|p|pre|q|rp|rt|s|samp|strong|sup|sub|table|tbody|td|tfoot|th|thead|time|tr|ul|var|wbr)>|<(br|hr)\s?\/?>)$/i;
     
-    // <a href="url..." optional title>|</a>
-    var a_white = /^(<a\shref="((mailto|https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?\s?>|<\/a>)$/i;
+    // <a href="url..." optional title optional lang>|</a>
+    var a_white = /^(<a\shref="((mailto|https?|ftp):\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?(\slang="[^"<>]+")?\s?>|<\/a>)$/i;
     
     var blockquote_white = /^(<blockquote\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
     
@@ -33,8 +33,8 @@
     
     var del_white = /^(<del\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
     
-    // <img src="url..." optional width  optional height  optional alt  optional title
-    var img_white = /^(<img\ssrc="(https?:\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\swidth="\d{1,3}")?(\sheight="\d{1,3}")?(\salt="[^"<>]*")?(\stitle="[^"<>]*")?\s?\/?>)$/i;
+    // <img src="url..." optional width  optional height  optional alt  optional title optional lang
+    var img_white = /^(<img\ssrc="(https?:\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\swidth="\d{1,3}")?(\sheight="\d{1,3}")?(\salt="[^"<>]*")?(\stitle="[^"<>]*")?(\slang="[^"<>]+")?\s?\/?>)$/i;
     
     var ins_white = /^(<ins\s?[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)\"]*>)$/i;
     
