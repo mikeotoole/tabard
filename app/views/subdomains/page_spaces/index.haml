@@ -1,0 +1,25 @@
+%h1 Listing page_spaces
+
+%table
+  %tr
+    %th Name
+    %th User profile
+    %th Game
+    %th Community
+    %th
+    %th
+    %th
+
+  - @page_spaces.each do |page_space|
+    %tr
+      %td= page_space.name
+      %td= page_space.user_profile_id
+      %td= page_space.game_id
+      %td= page_space.community_id
+      %td= link_to 'Show', page_space
+      %td= link_to 'Edit', edit_page_space_path(page_space)
+      %td= link_to 'Destroy', page_space, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Page space', new_page_space_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110924225513) do
+ActiveRecord::Schema.define(:version => 20110927203012) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -166,6 +166,34 @@ ActiveRecord::Schema.define(:version => 20110924225513) do
     t.datetime "updated_at"
     t.string   "pretty_url"
   end
+
+  create_table "page_spaces", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_profile_id"
+    t.integer  "game_id"
+    t.integer  "community_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
+  add_index "page_spaces", ["game_id"], :name => "index_page_spaces_on_game_id"
+  add_index "page_spaces", ["user_profile_id"], :name => "index_page_spaces_on_user_profile_id"
+
+  create_table "pages", :force => true do |t|
+    t.string   "name"
+    t.text     "markup"
+    t.integer  "character_proxy_id"
+    t.integer  "user_profile_id"
+    t.integer  "page_space_id"
+    t.boolean  "show_in_navigation", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["character_proxy_id"], :name => "index_pages_on_character_proxy_id"
+  add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
+  add_index "pages", ["user_profile_id"], :name => "index_pages_on_user_profile_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"

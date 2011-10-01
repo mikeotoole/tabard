@@ -11,6 +11,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 # Before Filters
 ###
   before_filter :authenticate_user!
+  before_filter :ensure_current_user_is_member
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_discussion, :only => [:new, :create]
   before_filter :find_discussion_space_from_params

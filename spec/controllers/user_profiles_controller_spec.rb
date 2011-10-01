@@ -6,27 +6,42 @@ describe UserProfilesController do
   let(:private_user_profile) { create(:user_profile, :publicly_viewable => false) }
   let(:owner) { create(:user, :user_profile => user_profile) }
   let(:private_owner) { create(:user, :user_profile => private_user_profile) }
+
 	describe "GET 'index'" do
-		it "should throw routing error when authenticated as a user" do
+		it "should show the current user when authenticated as a user" do
       sign_in owner
-      assert_raises(ActionController::RoutingError) do
-        get 'index'
-        assert_response :missing
-      end
+      get 'index'
+      assigns[:user_profile].should eq(owner.user_profile)
+      response.should be_success
+      response.should render_template('user_profiles/show')
     end
-    it "should throw routing error when not authenticated as a user" do
-      assert_raises(ActionController::RoutingError) do
-        get 'index'
-        assert_response :missing
-      end
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'index'
+      response.should redirect_to(new_user_session_path)
     end
 	end
+
+  describe "GET 'account'" do
+    it "should show the current user when authenticated as a user" do
+      sign_in owner
+      get 'account'
+      assigns[:user_profile].should eq(owner.user_profile)
+      response.should be_success
+      response.should render_template('user_profiles/edit')
+    end
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'account'
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
   describe "GET 'show'" do
     describe "user_profile is publicly viewable" do
       it "show should be successful when authenticated as the owner" do
         sign_in owner
         get 'show', :id => user_profile
         response.should be_success
+        response.should render_template('user_profiles/show')
       end
 
       it "show should be successful when authenticated as a non-owner" do
@@ -64,13 +79,13 @@ describe UserProfilesController do
     it "should throw routing error when authenticated as a user" do
       sign_in owner
       assert_raises(ActionController::RoutingError) do
-        get 'index'
+        get 'new'
         assert_response :missing
       end
     end
     it "should throw routing error when not authenticated as a user" do
       assert_raises(ActionController::RoutingError) do
-        get 'index'
+        get 'new'
         assert_response :missing
       end
     end

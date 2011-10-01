@@ -1,0 +1,32 @@
+%p#bcrumb
+  = link_to 'Topics', :page_spaces
+  %span= @page_space.name
+
+#page
+  %h1= @page_space.name
+
+  %p#actions
+    = link_to 'Edit', edit_page_space_path(@page_space), :class => 'edit', :title => 'Edit'
+    = link_to 'Delete', @page_space, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+
+  %table
+    - if @page_space.pages.size > 0
+      %thead
+        %tr
+          %th.name Pages
+          %th.actions
+      %tbody
+        - @page_space.pages.each do |page|
+          %tr
+            %td.name= link_to page.name, page_path(page)
+            %td.actions
+              = link_to 'Edit', edit_page_path(page), :class => 'edit', :title => 'Edit'
+              = link_to 'Delete', '#', :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete'
+      - else
+        %tbody
+          %tr
+            %td.empty{ :colspan => 2 } This topic has no active pages.
+    %tfoot
+      %tr
+        %td{ :colspan => 2 }
+          = link_to 'Create New Page', new_page_space_page_path(@page_space), :class => 'button'
