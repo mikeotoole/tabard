@@ -1,4 +1,10 @@
 DaBvRails::Application.routes.draw do
+  resources :message_copies
+
+  resources :messages
+
+  resources :folders
+
   # Users
   devise_for :users
 

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Message:
+  = @message_copy.message_id
+%p
+  %b Recipient:
+  = @message_copy.recipient_id
+%p
+  %b Folder:
+  = @message_copy.folder_id
+%p
+  %b Deleted:
+  = @message_copy.deleted
+
+= link_to 'Edit', edit_message_copy_path(@message_copy)
+\|
+= link_to 'Back', message_copies_path
