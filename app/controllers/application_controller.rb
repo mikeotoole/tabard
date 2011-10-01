@@ -168,7 +168,7 @@ protected
   # This method remembers the current page in the session variable [:current_page]
   ###
   def remember_current_page
-    session[:current_page] = request.path_info
+    session[:current_page] = request.url
   end
 
   ###
@@ -177,6 +177,6 @@ protected
   # This method remembers the previous crumblin page in the session variable [:last_page]
   ###
   def remember_last_page
-    session[:last_page] = session[:current_page] unless session[:current_page] == request.path_info
+    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 end

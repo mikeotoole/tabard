@@ -3,11 +3,12 @@ DaBvRails::Application.routes.draw do
 
   # Users
   devise_for :users
+  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update]
-  match "/account" => "user_profile#account", :as => "account"
-  match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
+  resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
+  match "/account" => "user_profiles#account", :as => "account"
+  match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
 
   # Active profile
   resource :active_profiles, :only => [:create]
