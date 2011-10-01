@@ -1,10 +1,4 @@
 DaBvRails::Application.routes.draw do
-  resources :message_copies
-
-  resources :messages
-
-  resources :folders
-
   # Users
   devise_for :users
 
@@ -29,6 +23,20 @@ DaBvRails::Application.routes.draw do
   resources :wow_characters, :except => [:index, :new]
   resources :swtor_characters, :except => [:index, :new]
   resources :base_characters, :only => :new
+  
+  # Messaging
+  resources :sent, :only => [:create]
+  match 'mail/sent/:id' => "sent#show", :as => "sent_mail"
+  match 'mail/sent' => "sent#index", :as => "sent_mailbox"
+  match 'mail/compose' => "sent#new", :as => "compose_mail"
+  resources :messages, :only => [:destroy]
+  match 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
+  match 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
+  match 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
+  match 'mail/undelete/:id' => "messages#undelete", :as => "mail_undelete"
+  match 'mail/inbox/:id' => "messages#show", :as => "mail"
+  match 'mail/inbox' => "mailbox#index", :as => "inbox"
+  match 'mail/trash' => "mailbox#trash", :as => "trash"
 
   # Subdomains
   constraints(Subdomain) do

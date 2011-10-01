@@ -36,14 +36,24 @@ class ApplicationController < ActionController::Base
     http_status_code(:forbidden, exception)
   end
 
-  # Returns a HTTP status code, with a nice error page
+  ###
+  # This method will attempt to render a status code according to the arguments that are passed to it.
+  # [Args]
+  #   * +status+ -> This is the status code to use. Rails defines this for us.
+  #   * +exception+ -> This is an exception message to include.
+  ###
   def http_status_code(status, exception)
     # store the exception so its message can be used in the view
     @exception = exception
     flash[:alert] = @exception.message
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
-      format.html { render "crumblin/index", :status => status }
+      case status
+      when :forbidden
+        format.html { render "status_code/forbidden", :status => status }
+      else
+        format.html { render "status_code/index", :status => status }
+      end
       format.any  { head status } # only return the status code
     end
   end
