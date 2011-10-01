@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  get "status_code/forbidden"
+
   resources :view_logs
 
   # Users
