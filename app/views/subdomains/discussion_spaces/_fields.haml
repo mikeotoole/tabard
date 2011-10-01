@@ -1,0 +1,4 @@
+%fieldset
+  %ol
+    = f.input :name, :label => 'Name'
+    = f.input :game_id, :label => 'Game', :collection => collection_with_blank(current_community.games), :as => :radio, :wrapper_html => { :class => 'select' }
