@@ -55,7 +55,7 @@ describe WowCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in @user
-      @game = Wow.new(:name => "My WoW")
+      @game = DefaultObjects.wow
       @game.save
       post 'create', :wow_character => {:name => "My Test Name", :game_id => @game.id}
     end

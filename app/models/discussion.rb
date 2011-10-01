@@ -9,7 +9,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :comments_enabled, :has_been_locked
+  attr_accessible :name, :body, :character_proxy_id, :comments_enabled, :has_been_locked
 
 ###
 # Associations
@@ -29,6 +29,7 @@ class Discussion < ActiveRecord::Base
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
+  validate :character_is_valid_for_user_profile
 
 ###
 # Public Methods
@@ -87,6 +88,14 @@ class Discussion < ActiveRecord::Base
       log.view_loggable = self
       log.save
     end
+  end
+
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def character_is_valid_for_user_profile
+    return unless self.character_proxy
+    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 end
 

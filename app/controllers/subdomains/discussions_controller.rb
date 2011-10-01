@@ -106,7 +106,7 @@ protected
     discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
     @discussion = discussion_space.discussions.new(params[:discussion])
   end
-  
+
   ###
   # _before_filter_
   #
