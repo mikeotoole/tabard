@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927203012) do
+ActiveRecord::Schema.define(:version => 20111001023510) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -159,6 +159,15 @@ ActiveRecord::Schema.define(:version => 20110927203012) do
   add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
   add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
+  create_table "folders", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
@@ -166,6 +175,30 @@ ActiveRecord::Schema.define(:version => 20110927203012) do
     t.datetime "updated_at"
     t.string   "pretty_url"
   end
+
+  create_table "message_copies", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "recipient_id"
+    t.integer  "folder_id"
+    t.boolean  "deleted",      :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_copies", ["folder_id"], :name => "index_message_copies_on_folder_id"
+  add_index "message_copies", ["message_id"], :name => "index_message_copies_on_message_id"
+  add_index "message_copies", ["recipient_id"], :name => "index_message_copies_on_recipient_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "author_id"
+    t.boolean  "system_sent", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
 
   create_table "page_spaces", :force => true do |t|
     t.string   "name"

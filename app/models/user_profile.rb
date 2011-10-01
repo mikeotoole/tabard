@@ -7,7 +7,7 @@
 ###
 class UserProfile < ActiveRecord::Base
 ###
-# Attribute Accessors
+# Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
       :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
@@ -22,11 +22,21 @@ class UserProfile < ActiveRecord::Base
   has_many :communities, :through => :community_profiles
   has_many :community_applications
   has_many :view_logs, :dependent => :destroy
+  has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
+  has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
+  has_many :folders, :dependent => :destroy
+  has_one :inbox
+  has_one :trash
 
 ###
 # Delegates
 ###
   delegate :email, :to => :user
+  
+###
+# Callbacks
+###  
+  before_create :build_mailboxes
 
 ###
 # Uploaders
@@ -36,15 +46,15 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name,
-      :presence => true, :uniqueness => true
-  validates :user,
-      :presence => true
+  validates :display_name, :presence => true, :uniqueness => true
+  validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
         :maximum => 1.megabytes.to_i
       }
+  validates :inbox, :presence => true
+  validates :trash, :presence => true
 
 ###
 # Public Methods
@@ -156,11 +166,24 @@ class UserProfile < ActiveRecord::Base
     (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
   end
 
+=begin
+  This method gets all of the users that this user can message.
+  [Returns] An array of users that this user can message.
+=end
+  def address_book
+    communities = self.roles.collect{ |role| role.community }.uniq
+    users = communities.collect{|community| community.all_users}.flatten.uniq
+    users.collect{|user| user.user_profile}
+  end
+
 ###
 # Protected Methods
 ###
 protected
 
+###
+# Instance Methods
+###
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
   ###
@@ -180,6 +203,19 @@ protected
     rescue Fog::Storage::Rackspace::NotFound
       @previous_model_for_avatar = nil
     end
+  end
+
+###
+# Callback Methods
+###  
+  ###
+  # _before_create_
+  #
+  # This method builds the user's inbox folder.
+  ###
+  def build_mailboxes
+    self.folders << self.inbox.build(:name => "Inbox")
+    self.folders << self.trash.build(:name => "Trash")
   end
 end
 
