@@ -1,6 +1,4 @@
 DaBvRails::Application.routes.draw do
-  get "status_code/forbidden"
-
   resources :view_logs
 
   # Users
@@ -71,6 +69,11 @@ DaBvRails::Application.routes.draw do
             post :unlock
           end
         end
+      end
+
+      # Pages
+      resources :page_spaces do
+        resources :pages, :shallow => true
       end
 
     end

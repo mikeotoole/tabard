@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @page.name
+%p
+  %b Body:
+  = @page.body
+%p
+  %b Character proxy:
+  = @page.character_proxy_id
+%p
+  %b User profile:
+  = @page.user_profile_id
+%p
+  %b Page space:
+  = @page.page_space_id
+%p
+  %b Show in navigation:
+  = @page.show_in_navigation
+
+= link_to 'Edit', edit_page_path(@page)
+\|
+= link_to 'Back', page_space_path(@page.page_space)

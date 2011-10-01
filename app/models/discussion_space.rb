@@ -27,6 +27,11 @@ class DiscussionSpace < ActiveRecord::Base
   validates :community, :presence => true
 
 ###
+# Delegates
+###
+  delegate :name, :to => :game, :prefix => true, :allow_nil => true
+
+###
 # Public Methods
 ###
 
@@ -34,7 +39,7 @@ class DiscussionSpace < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method checks to see if this discussion exists in a game context.
+  # This method checks to see if this discussion sapce exists in a game context.
   # [Returns] True if space has game context. False otherwise.
   ###
   def has_game_context?

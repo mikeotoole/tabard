@@ -3,6 +3,6 @@
 %h1= @discussion_space.name
 
 - if @discussion_space.game
-  %p= @discussion_space.game.name
+  %p= @discussion_space.game_name
 
 = render "subdomains/discussion_spaces/table", :discussion_space => @discussion_space

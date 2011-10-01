@@ -17,8 +17,7 @@ class Discussion < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
-  # TODO Should comments be deleted when the discussion is deleted? -MO
-  has_many :comments, :as => :commentable
+  has_many :comments, :as => :commentable, :dependent => :destroy
   has_one :community, :through => :discussion_space
   has_many :view_logs, :as => :view_loggable
 
@@ -29,6 +28,11 @@ class Discussion < ActiveRecord::Base
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
+
+###
+# Delegates
+###
+  delegate :is_announcement, :to => :discussion_space, :allow_nil => true
 
 ###
 # Public Methods
