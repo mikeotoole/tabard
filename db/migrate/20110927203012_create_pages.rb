@@ -10,7 +10,7 @@ class CreatePages < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :pages, :character_proxy_id
     add_index :pages, :user_profile_id
     add_index :pages, :page_space_id

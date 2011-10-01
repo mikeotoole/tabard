@@ -1,9 +1,9 @@
 %p#bcrumb
   = link_to 'Topics', page_spaces_path
-  = link_to @page.page_space.name, @page.page_space
+  = link_to @page.page_space_name, @page.page_space
   = link_to @page.name, @page
   %span Edit
 
 %h1= 'Editing "' + @page.name + '"'
 
-= render 'form'
+= render 'form', :page => @page

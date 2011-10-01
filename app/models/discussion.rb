@@ -30,6 +30,11 @@ class Discussion < ActiveRecord::Base
   validates :discussion_space, :presence => true
 
 ###
+# Delegates
+###
+  delegate :is_announcement, :to => :discussion_space, :allow_nil => true
+
+###
 # Public Methods
 ###
 

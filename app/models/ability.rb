@@ -153,11 +153,11 @@ class Ability
       object.community.admin_profile_id == user.user_profile.id
     end
     cannot :create, Discussion do |discussion|
-      if discussion.discussion_space.is_announcement
+      if discussion.is_announcement
         discussion.community.admin_profile_id != user.user_profile.id
       else
         false
-      end    
+      end
     end
 
     # Discussion Space Rules
@@ -169,8 +169,8 @@ class Ability
     end
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
       space.is_announcement == true
-    end  
-    
+    end
+
     # Pages Rules
     can [:read, :create], Page do |page|
       user.user_profile.is_member?(page.community)
@@ -179,10 +179,10 @@ class Ability
       page.user_profile_id == user.user_profile.id
     end
     can [:destroy], Page do |page|
-      page.community.admin_profile_id == user.user_profile.id or 
+      page.community.admin_profile_id == user.user_profile.id or
       page.user_profile_id == user.user_profile.id
     end
-    
+
     # Page Space Rules
     can [:read], PageSpace do |space|
       user.user_profile.is_member?(space.community)

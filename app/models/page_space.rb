@@ -60,7 +60,7 @@ class PageSpace < ActiveRecord::Base
   ###
   def creator_name
     user_profile.display_name if user_profile
-  end  
+  end
 end
 
 # == Schema Information

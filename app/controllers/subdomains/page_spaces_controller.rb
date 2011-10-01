@@ -83,5 +83,5 @@ protected
   def create_page_space
     @page_space = current_community.page_spaces.new(params[:page_space]) if current_community
     @page_space.user_profile = current_user.user_profile if @page_space
-  end  
+  end
 end

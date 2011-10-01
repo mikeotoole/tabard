@@ -60,7 +60,7 @@ class Subdomains::PagesController < SubdomainsController
     add_new_flash_message('Page was successfully deleted.') if @page.destroy
     respond_with(@page, :location => page_space_url(@page.page_space))
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -77,5 +77,5 @@ protected
   def create_page
     page_space = PageSpace.find_by_id(params[:page_space_id])
     @page = page_space.pages.new(params[:page])
-  end  
+  end
 end

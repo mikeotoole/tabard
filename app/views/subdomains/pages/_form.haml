@@ -4,16 +4,16 @@
   %head
     = javascript_include_tag "Markdown.Converter","Markdown.Sanitizer","Markdown.Editor"
     = stylesheet_link_tag "markdown"
-    
+
   %body
-    = form_for @page do |f|
-      -if @page.errors.any?
+    = form_for page do |f|
+      -if page.errors.any?
         #error_explanation
-          %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
+          %h2= "#{pluralize(page.errors.count, "error")} prohibited this page from being saved:"
           %ul
-            - @page.errors.full_messages.each do |msg|
+            - page.errors.full_messages.each do |msg|
               %li= msg
-    
+
       .field
         = f.label :name
         = f.text_field :name
@@ -26,17 +26,17 @@
         = f.label :show_in_navigation
         = f.check_box :show_in_navigation
       .actions
-        = f.submit 'Save' 
-        
+        = f.submit 'Save'
+
     #wmd-preview{ :class => "wmd-panel" "wmd-preview" }
-    
-    :javascript         
+
+    :javascript
       (function () {
           var help = function () { alert("Do you need help?"); }
-          
+
           var converter1 = Markdown.getSanitizingConverter();
           var editor1 = new Markdown.Editor(converter1, "", { handler: help });
-          
+
           editor1.hooks.set("insertImageDialog", function (callback) {
             alert("Please click okay to start scanning your brain...");
             setTimeout(function () {
@@ -48,6 +48,6 @@
             }, 2000);
             return true; // tell the editor that we'll take care of getting the image url
           });
-          
+
           editor1.run();
       })();

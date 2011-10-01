@@ -38,6 +38,11 @@ class Page < ActiveRecord::Base
   validate :limit_number_of_pages
 
 ###
+# Delegates
+###
+  delegate :name, :to => :page_space, :prefix => true, :allow_nil => true
+
+###
 # Public Methods
 ###
 
@@ -94,8 +99,8 @@ protected
       errors.add(:show_in_navigation, "The maximum number of navigation pages [#{MAX_NUMBER_OF_NAVIGATION_PAGES}] has been reached. Please unselect one to make room.")
       false
     else
-      true  
-    end            
+      true
+    end
   end
 
 end

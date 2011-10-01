@@ -68,11 +68,11 @@ DaBvRails::Application.routes.draw do
           end
         end
       end
-      
+
       # Pages
       resources :page_spaces do
         resources :pages, :shallow => true
-      end    
+      end
 
     end
 

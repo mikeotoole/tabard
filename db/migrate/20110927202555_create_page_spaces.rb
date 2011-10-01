@@ -8,7 +8,7 @@ class CreatePageSpaces < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :page_spaces, :user_profile_id
     add_index :page_spaces, :game_id
     add_index :page_spaces, :community_id
