@@ -36,6 +36,7 @@ class Page < ActiveRecord::Base
   validates :page_space, :presence => true
   validates :user_profile, :presence => true
   validate :limit_number_of_pages
+  validate :character_is_valid_for_user_profile
 
 ###
 # Delegates
@@ -103,6 +104,13 @@ protected
     end
   end
 
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def character_is_valid_for_user_profile
+    return unless self.character_proxy
+    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+  end
 end
 
 

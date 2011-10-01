@@ -25,6 +25,12 @@ class PageSpace < ActiveRecord::Base
   validates :name, :presence => true
   validates :user_profile, :presence => true
   validates :community, :presence => true
+  validate :game_is_valid_for_community
+
+###
+# Delegates
+###
+  delegate :name, :to => :game, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
@@ -60,6 +66,14 @@ class PageSpace < ActiveRecord::Base
   ###
   def creator_name
     user_profile.display_name if user_profile
+  end
+
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def game_is_valid_for_community
+    return unless self.game
+    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.include?(self.game)
   end
 end
 

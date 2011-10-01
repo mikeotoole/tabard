@@ -92,6 +92,10 @@ class DefaultObjects
   def self.page_space
     @page_space ||= FactoryGirl.create(:page_space)
   end
+
+  def self.general_page_space
+    @general_page_space ||= FactoryGirl.create(:page_space, :name => "General Stuff")
+  end
   
   def self.clean
     @user = nil
@@ -111,5 +115,6 @@ class DefaultObjects
     @discussion = nil
     @announcement_discussion_space = nil
     @page_space = nil
+    @general_page_space = nil
   end
 end

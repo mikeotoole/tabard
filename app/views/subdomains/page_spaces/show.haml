@@ -4,7 +4,7 @@
   %h1
     = link_to "Page Spaces", page_spaces_path
     - if @page_space.game
-      %rt= " — #{@page_space.game.name}"
+      %rt= " — #{@page_space.game_name}"
     —
     %strong= @page_space.name
 

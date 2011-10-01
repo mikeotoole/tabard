@@ -30,11 +30,6 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :game, :prefix => true
-
-###
-# Delegates
-###
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
 
 ###
