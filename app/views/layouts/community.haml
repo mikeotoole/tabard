@@ -43,10 +43,16 @@
           %li
             -#TODO Doug - Hookup link
             = link_to 'Members', '#'
-          - if current_user and current_user.communities.include?(@community)
+          - if current_user and current_user.communities.include?(current_community)
             %li{ :class => 'special settings' }
               -#TODO Doug - Hookup link
-              = link_to 'Community Settings', '#'
+              = link_to 'Manage', '#'
+              %ul
+                %li= link_to 'Community Settings', edit_community_path(current_community)
+                %li= link_to 'Applications', community_applications_url
+                %li= link_to 'Forms', custom_forms_url
+                -#%li= link_to 'Roster', edit_roster_url
+                %li= link_to 'Permissions', roles_url
           - else
             %li{ :class => 'special signup' }
               -#TODO Doug - Hookup link

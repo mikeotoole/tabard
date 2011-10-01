@@ -207,8 +207,16 @@ body
             top: 0
             width: 30px
           
+          &:after
+            display: none
+          
           &:hover
             color: #fff
+        
+        >ul
+          +border-radius(5,0,5,5)
+          left: auto
+          right: 10px
       
       &.settings >a:before
         background-position: -90px -30px
