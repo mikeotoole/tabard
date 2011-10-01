@@ -56,4 +56,13 @@ describe PageSpace do
   it "creator_name should return user profile display name" do
     space.creator_name.should eq(DefaultObjects.user_profile.display_name)
   end
+
+  describe "game_is_valid_for_community" do
+    it "should allow a community supported game" do
+      build(:page_space, :game_id => DefaultObjects.wow.id).should be_valid  
+    end
+    it "should not allow a non-community supported game" do
+      build(:page_space, :game_id => DefaultObjects.swtor.id).should_not be_valid  
+    end
+  end
 end
