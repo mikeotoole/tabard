@@ -4,7 +4,7 @@
   %h1
     = link_to "Discussion Spaces", discussion_spaces_path
     - if @discussion_space.game
-      %rt= " — #{@discussion_space.game.name}"
+      %rt= " — #{@discussion_space.game_name}"
     —
     %strong= @discussion_space.name
 

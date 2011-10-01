@@ -14,6 +14,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_discussion_space, :except => [:new, :create, :index]
   before_filter :create_discussion_space, :only => [:new, :create]
+  before_filter :find_game_from_params, :only => [:create, :update]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
 
@@ -84,5 +85,13 @@ protected
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
     @discussion_space.user_profile = current_user.user_profile if @discussion_space
   end
-  
+
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to set the discussion space variable.
+  ###
+  def find_game_from_params
+    @game = Game.find_by_id(params[:discussion_space][:game_id]) if params[:discussion_space]
+  end
 end

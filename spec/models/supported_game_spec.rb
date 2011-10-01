@@ -13,7 +13,7 @@
 require 'spec_helper'
 
 describe SupportedGame do
-  let(:community) { DefaultObjects.community }
+  let(:community) { create(:community) }
   let(:wow) { DefaultObjects.wow }
 
   it "should create a new instance given valid attributes" do

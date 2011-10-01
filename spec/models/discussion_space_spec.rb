@@ -66,4 +66,13 @@ describe DiscussionSpace do
     wow_space.update_attributes(:is_announcement => true).should be_true
     DiscussionSpace.find(wow_space).is_announcement.should be_false
   end
+
+  describe "game_is_valid_for_community" do
+    it "should allow a community supported game" do
+      build(:discussion_space, :game_id => DefaultObjects.wow.id).should be_valid  
+    end
+    it "should not allow a non-community supported game" do
+      build(:discussion_space, :game_id => DefaultObjects.swtor.id).should_not be_valid  
+    end
+  end
 end
