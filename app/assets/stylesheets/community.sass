@@ -4,6 +4,7 @@
 @import reset
 @import bar
 
+
 #bar:before
   border-top: 1px solid #480012
   +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
@@ -148,6 +149,7 @@ body
             font-size: 13px
             padding: 0 10px
             position: relative
+            white-space: nowrap
             
             &:hover
               background: rgba(#000,.1)
@@ -239,14 +241,24 @@ body
       color: #fff
       text-decoration: none
   
-  h1
+  h1,
+  h2,
+  h3
     color: #560716
     font-family: DinMedium, serif
-    font-size: 30px
     letter-spacing: -1px
     line-height: 30px
     padding: 0 0 15px
     text-decoration: none
+  
+  h1
+    font-size: 30px
+  
+  h2
+    font-size: 24px
+  
+  h3
+    font-size: 18px
     
   nav
   

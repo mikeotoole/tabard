@@ -21,11 +21,11 @@
           %li
             = link_to 'Dashboard', actual_community_url(@community)
           %li
-            -#TODO Doug - Hookup links
-            = link_to 'Topics', '#'
-            %ul
-              %li= link_to 'Herp', '#'
-              %li= link_to 'A Derp', '#'
+            = link_to 'Wiki', page_spaces_path
+            - if @community.page_spaces.size
+              %ul
+                - @community.page_spaces.each do |space|
+                  %li= link_to space.name, space
           %li
             = link_to 'Discussions', discussion_spaces_path
             - if @community.discussion_spaces.size

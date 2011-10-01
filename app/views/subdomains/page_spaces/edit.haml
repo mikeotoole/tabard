@@ -1,7 +1,8 @@
-%h1 Editing page_space
+- title "Editing Page Space | #{@community.name}"
 
-= render 'form', :page_space => @page_page
+%h1 Editing Page Space
 
-= link_to 'Show', @page_space
-\|
-= link_to 'Back', page_spaces_path
+= simple_form_for @page_space do |f|
+  = render 'fields', :f => f
+  %p.submit
+    = f.button :submit, 'Save Changes'

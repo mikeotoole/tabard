@@ -1,0 +1,22 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Author
+      %th.actions
+  %tbody
+    - page_space.pages.each do |page|
+      %tr
+        %td= link_to page.name, page
+        %td= page.poster.name
+        %td.actions
+          %div
+            - if (can? :update, page)
+              = link_to 'Edit', edit_page_path(page), :meta => 'Edit page', :class => 'edit'
+            - if (can? :destroy, page)
+              = link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        - if (can? :create, page_space.pages.new)
+          = link_to 'New Page', new_page_space_page_path(page_space), :class => 'button primary'

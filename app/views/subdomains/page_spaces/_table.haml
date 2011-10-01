@@ -1,0 +1,27 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Pages
+      %th.actions
+  %tbody
+    - page_spaces.each do |space|
+      %tr
+        %td
+          = link_to space.name, space
+          - if space.game
+            %rt= space.game.name
+        %td
+          - if space.pages.size > 0
+            = space.pages.size
+        %td.actions
+          %div
+            - if (can? :update, space)
+              = link_to 'Edit', edit_page_space_path(space), :meta => 'Edit page space', :class => 'edit'
+            - if (can? :destroy, space)
+              = link_to 'Destroy', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page space', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        - if (can? :create, PageSpace)
+          = link_to 'New Space', new_page_space_path, :class => 'button primary'
