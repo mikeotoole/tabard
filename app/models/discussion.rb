@@ -34,6 +34,7 @@ class Discussion < ActiveRecord::Base
 # Delegates
 ###
   delegate :is_announcement, :to => :discussion_space, :allow_nil => true
+  delegate :name, :to => :discussion_space, :prefix => true
 
 ###
 # Public Methods

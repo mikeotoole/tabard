@@ -1,4 +1,4 @@
-- title "#{@discussion.name} | #{@discussion.discussion_space.name} | #{@community.name}"
+- title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
 
 %h1= @discussion.name
 
@@ -13,4 +13,4 @@
 - if @discussion.comments_enabled and !@discussion.has_been_locked
   -# TODO Doug - Make this form work
     = render "subdomains/comments/form"
-  
+
