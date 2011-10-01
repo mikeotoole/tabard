@@ -14,7 +14,6 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_discussion_space, :except => [:new, :create, :index]
   before_filter :create_discussion_space, :only => [:new, :create]
-  before_filter :setup_games_collection, :only => [:new, :edit]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
 
@@ -84,16 +83,6 @@ protected
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
     @discussion_space.user_profile = current_user.user_profile if @discussion_space
-  end
-  
-  ###
-  # _before_filter_
-  #
-  # This before filter attempts to create a collection of games, with a blank first option for use in the form.
-  ###
-  def setup_games_collection
-    @games_collection = [[ 'None', '' ]]
-    @games_collection.concat(current_community.games.map{ |game| [game.name, game.id] })
   end
   
 end

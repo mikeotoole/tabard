@@ -1,7 +1,6 @@
-%h1 Editing discussion
+- title "Editing Discussion | #{@community.name}"
 
-= render 'form'
+%h1 Editing Discussion
 
-= link_to 'Show', @discussion
-\|
-= link_to 'Back', discussions_path
+.full
+  = render 'form', :discussion => @discussion

@@ -1,5 +1,5 @@
-%h1 New discussion
+- title "New Discussion | #{@community.name}"
 
-= render 'form'
+%h1 New Discussion
 
-= link_to 'Back', discussions_path
+= render 'form', :discussion => @discussion

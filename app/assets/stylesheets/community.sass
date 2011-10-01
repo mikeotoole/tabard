@@ -14,6 +14,7 @@ body
 
 body
   background: #fff
+  color: #896243
   font-family: DinLight, sans
   min-width: 980px
   
@@ -292,16 +293,16 @@ body
       margin: 0 0 5px
     
     input[type="email"],
+    input[type="password"],
     input[type="text"],
-    input[type="password"]
+    textarea
       background: #eee
+      color: #66482f
       +bg_gradient(#ddd,#eee)
       +border_radius(5)
       +box_shadow(0 0 3px #ddd)
       border: 1px solid #fff
       display: block
-      line-height: 30px
-      padding: 0 10px
       +transition(box-shadow .2s linear)
       width: 410px
       
@@ -310,6 +311,16 @@ body
         +box_shadow(0 0 8px #560B17)
         +bg_gradient(#FDF3EE,#F2E5E1)
         color: #580B15
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"]
+      line-height: 30px
+      padding: 0 10px
+    
+    textarea
+      height: 240px
+      padding: 10px
     
     input[type="checkbox"],
     input[type="radio"]
@@ -391,7 +402,7 @@ body
         position: absolute
         +transition(box-shadow .2s linear)
         width: 430px
-        z-index: 2
+        z-index: 9
         
         li
           padding: 0
@@ -401,9 +412,9 @@ body
             +bg_gradient(#FDF3EE,#F2E5E1)
             +border_radius(5)
             border-top: 1px solid #ECDDD8
-            color: #580B15
+            color: #66482f
             display: none
-            font-family: DinLight, sans
+            font-family: DinMedium, sans
             height: 30px
             line-height: 30px
             margin: 1px 0 0
@@ -413,10 +424,6 @@ body
             &:before,
             &:after
               display: none
-            
-            &:hover
-              background: #580B15
-              color: #fff
           
           input
             left: -500em
@@ -425,9 +432,9 @@ body
             &:checked + label
               background: transparent
               border-top-color: transparent
-              color: #580B15
+              color: #66482f
               display: block
-              font-family: DinMedium, sans
+              font-family: DinLight, sans
               position: absolute
               top: 0
               width: 420px
@@ -443,8 +450,21 @@ body
           li
           
             label
+              color: #580B15 !important
               display: block
               position: static
+            
+              &:hover
+                background: #580B15
+                color: #fff !important
+  
+  .full
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    textarea
+      width: 880px
   
   
   // TABLES

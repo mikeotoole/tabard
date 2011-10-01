@@ -113,5 +113,21 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { "#{page_title} | Crumblin" }
   end
+  
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to create a collection based on an array of objects.
+  # [Args]
+  #   * +objects+ -> An array of objects.
+  #   * +blank+ -> The string to be used for the blank field.
+  #   * +name_attr+ -> The method invoked to find the name attribute.
+  #   * +id_attr+ -> The method invoked to find the id attribute.
+  # [Returns] an array used for a simple_form collection
+  ###
+  def collection_with_blank(objects, blank="None", name_attr=:name, id_attr=:id)
+    collection = [[ "\u2014 #{blank} \u2014", '' ]]
+    collection.concat(objects.map{ |o| [o.send(name_attr), o.send(id_attr)] })
+  end
 
 end

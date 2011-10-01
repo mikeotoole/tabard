@@ -13,6 +13,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   before_filter :authenticate_user!
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_discussion, :only => [:new, :create]
+  before_filter :find_discussion_space_from_params
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
 
@@ -104,5 +105,14 @@ protected
   def create_discussion
     discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
     @discussion = discussion_space.discussions.new(params[:discussion])
+  end
+  
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to set the discussion space variable.
+  ###
+  def find_discussion_space_from_params
+    @discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id]) if params[:discussion_space_id]
   end
 end
