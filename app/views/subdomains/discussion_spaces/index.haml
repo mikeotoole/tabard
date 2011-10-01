@@ -1,25 +1,5 @@
-%h1 Listing discussion_spaces
+- title "Discussion Spaces | #{@community.name}"
 
-%table
-  %tr
-    %th Name
-    %th User profile
-    %th Game
-    %th Community
-    %th
-    %th
-    %th
+%h1 Discussion Spaces
 
-  - @discussion_spaces.each do |discussion_space|
-    %tr
-      %td= discussion_space.name
-      %td= discussion_space.user_profile_id
-      %td= discussion_space.game_id
-      %td= discussion_space.community_id
-      %td= link_to 'Show', discussion_space
-      %td= link_to 'Edit', edit_discussion_space_path(discussion_space)
-      %td= link_to 'Destroy', discussion_space, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Discussion space', new_discussion_space_path
+= render "table", :discussion_spaces => @discussion_spaces
