@@ -1,0 +1,38 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Author
+      %th Last Reply
+      %th Comments?
+      %th.actions
+  %tbody
+    - discussion_space.discussions.each do |discussion|
+      %tr
+        %td= link_to discussion.name, discussion
+        %td= discussion.poster.name
+        %td
+          - if discussion.comments.size > 0
+            = discussion.comments.last.poster.name
+        %td
+          - if discussion.comments_enabled
+            = discussion.comments.size
+          - else
+            Closed
+        %td.actions
+          %div
+            - if discussion.has_been_locked
+              - if (can? :lock, discussion)
+                -# TODO Doug - if allowed, link to unlock discussion
+            - else
+              - if (can? :unlock, discussion)
+                -# TODO Doug - if allowed, link to lock discussion
+            - if (can? :update, discussion)
+              = link_to 'Edit', edit_discussion_path(discussion), :meta => 'Edit discussion', :class => 'edit'
+            - if (can? :destroy, discussion)
+              = link_to 'Destroy', discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete discussion', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 5 }
+        - if (can? :create, discussion_space.discussions.new)
+          = link_to 'New Discussion', new_discussion_space_discussion_path(discussion_space), :class => 'button primary'

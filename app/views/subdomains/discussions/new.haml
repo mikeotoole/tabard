@@ -2,4 +2,8 @@
 
 %h1 New Discussion
 
-= render 'form', :discussion => @discussion
+.full
+  = simple_form_for [@discussion_space, @discussion] do |f|
+    = render 'form', :f => f
+    %p.submit
+      = f.button :submit, 'Create Discussion'

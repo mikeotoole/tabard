@@ -403,6 +403,17 @@ body
         +transition(box-shadow .2s linear)
         width: 430px
         z-index: 9
+            
+        &:before
+          border: 5px solid transparent
+          border-top-color: #bea761
+          content: ''
+          height: 0
+          position: absolute
+          right: 10px
+          top: 13px
+          width: 0
+          z-index: 10
         
         li
           padding: 0
