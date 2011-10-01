@@ -20,8 +20,9 @@ source 'http://rubygems.org'
   gem 'simple_form'
   gem 'client_side_validations'
 
-# WYSIWYG
-  #gem 'tiny_mce'
+# Markup
+  gem 'rdiscount'
+  gem 'sanitize'
 
 # Image Storage and Manipulation
   gem 'fog'

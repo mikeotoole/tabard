@@ -81,8 +81,16 @@ class DefaultObjects
     @discussion_space ||= FactoryGirl.create(:discussion_space)
   end
   
+  def self.announcement_discussion_space
+    @announcement_discussion_space ||= DefaultObjects.community.community_announcement_space
+  end
+  
   def self.discussion
     @discussion ||= FactoryGirl.create(:discussion)
+  end
+  
+  def self.page_space
+    @page_space ||= FactoryGirl.create(:page_space)
   end
   
   def self.clean
@@ -101,5 +109,7 @@ class DefaultObjects
     @swtor_character_proxy = nil
     @discussion_space = nil
     @discussion = nil
+    @announcement_discussion_space = nil
+    @page_space = nil
   end
 end

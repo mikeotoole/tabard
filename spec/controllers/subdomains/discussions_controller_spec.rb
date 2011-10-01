@@ -19,12 +19,18 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::DiscussionsController do
-  let(:user) { DefaultObjects.user }
+  let(:owner) { DefaultObjects.user }
+  let(:non_owner) { 
+    profile = create(:user_profile)
+    DefaultObjects.community.promote_user_profile_to_member(profile)
+    profile.user
+  }
   let(:admin) { DefaultObjects.community_admin }
   let(:non_member) { create(:user_profile).user }
   let(:community) { DefaultObjects.community }
   let(:discussion) { DefaultObjects.discussion }
   let(:space) { DefaultObjects.discussion_space }
+  let(:anouncment_space) { DefaultObjects.announcement_discussion_space }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
@@ -33,7 +39,7 @@ describe Subdomains::DiscussionsController do
   describe "GET index" do
     it "assigns all discussions as @discussions when authenticated as a member" do
       discussion
-      sign_in user
+      sign_in owner
       get :index, :discussion_space_id => space.id
       assigns(:discussions).should eq([discussion])
     end
@@ -52,7 +58,7 @@ describe Subdomains::DiscussionsController do
 
   describe "GET show" do
     it "assigns the requested discussion as @discussion when authenticated as a member" do
-      sign_in user
+      sign_in owner
       get :show, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
     end
@@ -71,7 +77,7 @@ describe Subdomains::DiscussionsController do
 
   describe "GET new" do
     it "assigns a new discussion as @discussion when authenticated as a member" do
-      sign_in user
+      sign_in owner
       get :new, :discussion_space_id => space.id
       assigns(:discussion).should be_a_new(Discussion)
     end
@@ -85,12 +91,24 @@ describe Subdomains::DiscussionsController do
       sign_in non_member
       get :new, :discussion_space_id => space.id
       response.should be_forbidden
-    end 
+    end
+    
+    it "should respond forbidden when discussion space is announcements space and user is member" do
+      sign_in owner
+      get :new, :discussion_space_id => anouncment_space.id
+      response.should be_forbidden
+    end
+    
+    it "assigns a new discussion as @discussion when discussion space is announcements space and user is community admin" do
+      sign_in admin
+      get :new, :discussion_space_id => anouncment_space.id
+      assigns(:discussion).should be_a_new(Discussion)
+    end
   end
 
   describe "GET edit" do
-    it "assigns the requeste discussion as @discussion when authenticated as a member" do
-      sign_in user
+    it "assigns the requested discussion as @discussion when authenticated as a owner" do
+      sign_in owner
       get :edit, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
     end
@@ -105,11 +123,17 @@ describe Subdomains::DiscussionsController do
       get :edit, :id => discussion.id.to_s
       response.should be_forbidden
     end
+    
+    it "should respond forbidden when not owner" do
+      sign_in non_owner
+      get :edit, :id => discussion.id.to_s
+      response.should be_forbidden
+    end
   end
 
-  describe "POST create when authenticated as a member" do
+  describe "POST create when authenticated as member" do
     before(:each) {
-      sign_in user
+      sign_in owner
     }
   
     describe "with valid params" do
@@ -156,11 +180,25 @@ describe Subdomains::DiscussionsController do
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
       response.should be_forbidden
     end
+    
+    it "should respond forbidden when discussion space is announcements space and user is member" do
+      sign_in owner
+      post :create, :discussion_space_id => anouncment_space.id, :discussion => attributes_for(:discussion)
+      response.should be_forbidden
+    end
+    
+    it "creates a new Discussion when discussion space is announcements space and user is community admin" do
+      sign_in admin
+      anouncment_space
+      expect {
+        post :create, :discussion_space_id => anouncment_space.id, :discussion => attributes_for(:discussion)
+      }.to change(Discussion, :count).by(1)
+    end
   end
 
-  describe "PUT update when authenticated as a member" do
+  describe "PUT update when authenticated as owner" do
     before(:each) {
-      sign_in user
+      sign_in owner
     }
   
     describe "with valid params" do
@@ -209,19 +247,25 @@ describe Subdomains::DiscussionsController do
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
       response.should be_forbidden
     end
+    
+    it "should respond forbidden when a member but not owner" do
+      sign_in non_owner
+      put :update, :id => discussion.id, :discussion => {:name => "New name"}
+      response.should be_forbidden
+    end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested discussion when authenticated as a member" do
+    it "destroys the requested discussion when authenticated as owner" do
       discussion
-      sign_in user
+      sign_in owner
       expect {
         delete :destroy, :id => discussion.id.to_s
       }.to change(Discussion, :count).by(-1)
     end
 
-    it "redirects to the discussions list when authenticated as a member" do
-      sign_in user
+    it "redirects to the discussions list when authenticated as owner" do
+      sign_in owner
       delete :destroy, :id => discussion.id.to_s
       response.should redirect_to(discussion.discussion_space)
     end
@@ -233,6 +277,12 @@ describe Subdomains::DiscussionsController do
     
     it "should respond forbidden when not a member" do
       sign_in non_member
+      delete :destroy, :id => discussion.id.to_s
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member but not owner" do
+      sign_in non_owner
       delete :destroy, :id => discussion.id.to_s
       response.should be_forbidden
     end
@@ -256,7 +306,7 @@ describe Subdomains::DiscussionsController do
     end
     
     it "should not lock the discussion when authenticated as a member" do
-      sign_in user
+      sign_in owner
       post :lock, :id => discussion.id.to_s
       Discussion.find(discussion).has_been_locked.should be_false    
     end
@@ -298,7 +348,7 @@ describe Subdomains::DiscussionsController do
     end
     
     it "should not unlock the discussion when authenticated as a member" do
-      sign_in user
+      sign_in owner
       post :unlock, :id => discussion.id.to_s
       Discussion.find(discussion).has_been_locked.should be_true    
     end

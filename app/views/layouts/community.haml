@@ -37,8 +37,9 @@
             = link_to 'Announcements', '#'
             - if @community.announcement_spaces.size
               %ul
+                -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
-                  %li= link_to space.name, space
+                  %li= link_to (space.game ? space.game.name : space.name), space
           %li
             -#TODO Doug - Hookup link
             = link_to 'Members', '#'

@@ -125,4 +125,24 @@ announcement3 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW
 announcement3.user_profile = robobilly.user_profile
 announcement3.save
 
+puts "Creating Just Another Headshot Clan Guild Info Page Space"
+gips = jahc.page_spaces.new(:name => "Guild Info")
+gips.user_profile = robobilly.user_profile
+gips.save
+
+puts "Creating Just Another Headshot Clan WoW Page Space"
+wps = jahc.page_spaces.new(:name => "WoW Resources", :game => wow_game)
+wps.user_profile = robobilly.user_profile
+wps.save
+
+puts "Creating Just Another Headshot Clan Guild Rules Page"
+g_rules = gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
+g_rules.user_profile = robobilly.user_profile
+g_rules.save
+
+puts "Creating Just Another Headshot WoW Strategies Page"
+wow_strategies = wps.pages.new(:name => "WoW Strategies", :markup => "##WoW Strategies##\n###Sarlacc Pit Strategy###\n* Don't get eaten!\n** It is really bad.\n** Instead just pew-pew-pew")
+wow_strategies.user_profile = s_turtle.user_profile
+wow_strategies.save
+
 end
