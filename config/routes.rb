@@ -5,8 +5,8 @@ DaBvRails::Application.routes.draw do
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
-  get "/account" => "user_profile#account", :as => "account"
-  put "/account/update" => "user_profile#update", :as => "update_account", :via => :put
+  match "/account" => "user_profile#account", :as => "account"
+  match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
 
   # Active profile
   resource :active_profiles, :only => [:create]
