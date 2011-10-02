@@ -41,7 +41,6 @@ class SwtorCharactersController < ApplicationController
   def update
     @swtor_character = SwtorCharacter.find(params[:id])
     authorize!(:update, @swtor_character)
-
     add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])
     respond_with(@swtor_character)
   end

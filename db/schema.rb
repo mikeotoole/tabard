@@ -176,24 +176,24 @@ ActiveRecord::Schema.define(:version => 20111001023510) do
     t.string   "pretty_url"
   end
 
-  create_table "message_copies", :force => true do |t|
+  create_table "message_associations", :force => true do |t|
     t.integer  "message_id"
     t.integer  "recipient_id"
     t.integer  "folder_id"
     t.boolean  "deleted",      :default => false
-    t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "message_copies", ["folder_id"], :name => "index_message_copies_on_folder_id"
-  add_index "message_copies", ["message_id"], :name => "index_message_copies_on_message_id"
-  add_index "message_copies", ["recipient_id"], :name => "index_message_copies_on_recipient_id"
+  add_index "message_associations", ["folder_id"], :name => "index_message_associations_on_folder_id"
+  add_index "message_associations", ["message_id"], :name => "index_message_associations_on_message_id"
+  add_index "message_associations", ["recipient_id"], :name => "index_message_associations_on_recipient_id"
 
   create_table "messages", :force => true do |t|
     t.string   "subject"
     t.text     "body"
     t.integer  "author_id"
-    t.boolean  "system_sent", :default => false
+    t.integer  "number_recipients"
+    t.boolean  "system_sent",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

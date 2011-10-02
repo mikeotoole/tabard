@@ -3,9 +3,14 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This class represents a message copy.
+# This class represents a message association to a mssage, its recipient and the folder it is in.
 ###
-class MessageCopy < ActiveRecord::Base
+class MessageAssociation < ActiveRecord::Base
+###
+# Attribute accessible
+###
+  attr_accessible :deleted, :recipient_id, :folder_id
+  
 ###
 # Associations
 ###
@@ -25,16 +30,18 @@ class MessageCopy < ActiveRecord::Base
   validates :recipient, :presence => true
 end
 
+
+
+
 # == Schema Information
 #
-# Table name: message_copies
+# Table name: message_associations
 #
 #  id           :integer         not null, primary key
 #  message_id   :integer
 #  recipient_id :integer
 #  folder_id    :integer
 #  deleted      :boolean         default(FALSE)
-#  created_at   :datetime
 #  updated_at   :datetime
 #
 

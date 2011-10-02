@@ -14,19 +14,6 @@
 #  publicly_viewable :boolean         default(TRUE)
 #
 
-# == Schema Information
-#
-# Table name: user_profiles
-#
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  first_name :string(255)
-#  last_name  :string(255)
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 require 'spec_helper'
 
 describe UserProfile do
@@ -82,6 +69,26 @@ describe UserProfile do
 
   it "should respond to view_logs" do
     profile.should respond_to(:view_logs)
+  end
+  
+  it "should respond to sent_messages" do
+    profile.should respond_to(:sent_messages)
+  end
+  
+  it "should respond to received_messages" do
+    profile.should respond_to(:received_messages)
+  end
+  
+  it "should respond to folders" do
+    profile.should respond_to(:folders)
+  end
+  
+  it "should respond to inbox" do
+    profile.should respond_to(:inbox)
+  end
+  
+  it "should respond to trash" do
+    profile.should respond_to(:trash)
   end
 
 ###
@@ -171,5 +178,77 @@ describe UserProfile do
       end
       billy.user_profile.roles.should eq(all_roles)
     end
+  end
+  
+  describe "address_book" do
+    it "should return the user profiles of all users in the same communities" do
+      pending
+    end
+    
+    it "should be empty if the user is in no communities" do
+      pending
+    end
+    
+    it "should not contain the users user profile" do
+      pending
+    end
+    
+    it "should not contain duplicate user profiles" do
+      pending
+    end
+  end
+  
+  describe "sent_messages" do
+    it "should return all the users sent messages" do
+      pending
+    end
+    
+    it "should be empty if the user has no sent messages" do
+      pending
+    end
+  end
+  
+  describe "received_messages" do
+    it "should return all the users received messages" do
+      pending
+    end
+    
+    it "should return messages marked as deleted" do
+      pending
+    end
+  end
+  
+  describe "folders" do
+    it "should return all the users folders" do
+      pending
+    end
+    
+    it "should contain the users inbox folder" do
+      pending
+    end
+    
+    it "should contain the users trash folder" do
+      pending
+    end
+  end
+  
+  describe "inbox" do
+    it "should be created with user profile" do
+      pending
+    end  
+  
+    it "should return the users inbox folder" do
+      pending
+    end
+  end
+  
+  describe "trash" do
+    it "should be created with user profile" do
+      pending
+    end
+      
+    it "should return the users trash folder" do
+      pending
+    end  
   end
 end

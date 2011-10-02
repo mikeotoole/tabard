@@ -23,10 +23,8 @@ class UserProfile < ActiveRecord::Base
   has_many :community_applications
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
-  has_many :received_messages, :class_name => "MessageCopy", :foreign_key => "recipient_id"
+  has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
   has_many :folders, :dependent => :destroy
-  has_one :inbox
-  has_one :trash
 
 ###
 # Delegates
@@ -53,8 +51,6 @@ class UserProfile < ActiveRecord::Base
       :file_size => {
         :maximum => 1.megabytes.to_i
       }
-  validates :inbox, :presence => true
-  validates :trash, :presence => true
 
 ###
 # Public Methods
@@ -121,7 +117,6 @@ class UserProfile < ActiveRecord::Base
 
   # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
   def add_new_role(role)
-    #debugger
     correct_community_profile = self.community_profiles.find_by_community_id(role.community_id)
     if correct_community_profile
       correct_community_profile.roles << role
@@ -166,14 +161,29 @@ class UserProfile < ActiveRecord::Base
     (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
   end
 
-=begin
-  This method gets all of the users that this user can message.
-  [Returns] An array of users that this user can message.
-=end
+  ###
+  # This method gets all of the users that this user can message.
+  # [Returns] An array of users that this user can message.
+  ###
   def address_book
-    communities = self.roles.collect{ |role| role.community }.uniq
-    users = communities.collect{|community| community.all_users}.flatten.uniq
+    users = self.communities.collect{|community| community.members_user_profiles}.flatten(1).uniq
     users.collect{|user| user.user_profile}
+  end
+
+  ###
+  # This method gets the user's messages inbox folder.
+  # [Returns] Folder of users inbox
+  ###
+  def inbox
+    folders.find_by_name("Inbox")
+  end
+
+  ###
+  # This method gets the user's messages trash folder.
+  # [Returns] Folder of users trash.
+  ###
+  def trash
+    folders.find_by_name("Trash")
   end
 
 ###
@@ -214,8 +224,8 @@ protected
   # This method builds the user's inbox folder.
   ###
   def build_mailboxes
-    self.folders << self.inbox.build(:name => "Inbox")
-    self.folders << self.trash.build(:name => "Trash")
+    self.folders.build(:name => "Inbox")
+    self.folders.build(:name => "Trash")
   end
 end
 

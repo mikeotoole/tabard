@@ -24,6 +24,7 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
+  has_many :members_user_profiles, :through => :community_profiles, :class_name => "UserProfile"
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy

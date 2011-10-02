@@ -24,7 +24,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   def index
     discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
     @discussions = discussion_space.discussions if discussion_space
-    authorize! :index, @discussions
+    authorize! :read, discussion_space
   end
 
   # GET /discussions/:id(.:format)
