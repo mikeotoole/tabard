@@ -1,5 +1,8 @@
 - title "New Discussion Space | #{@community.name}"
 
-%h1= New Discussion Space
+%h1 New Discussion Space
 
-= render 'form', :discussion_space => @discussion_space
+= simple_form_for @discussion_space do |f|
+  = render 'fields', :f => f
+  %p.submit
+    = f.button :submit, 'Create Discussion Space'

@@ -1,8 +1,11 @@
 - title "#{@discussion_space.name} | #{@community.name}"
 
-%h1= @discussion_space.name
+%nav
+  %h1
+    = link_to "Discussion Spaces", discussion_spaces_path
+    - if @discussion_space.game
+      %rt= " — #{@discussion_space.game_name}"
+    —
+    %strong= @discussion_space.name
 
-- if @discussion_space.game
-  %p= @discussion_space.game_name
-
-= render "subdomains/discussion_spaces/table", :discussion_space => @discussion_space
+= render "subdomains/discussions/table", :discussion_space => @discussion_space

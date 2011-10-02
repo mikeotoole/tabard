@@ -53,6 +53,10 @@ class DefaultObjects
   
   def self.community
     @community ||= FactoryGirl.create(:community)
+    unless @community.games.include?(DefaultObjects.wow)
+      @community.games << DefaultObjects.wow
+    end
+    @community
   end
   
   def self.community_admin
@@ -61,6 +65,16 @@ class DefaultObjects
   
   def self.custom_form
     @custom_form ||= FactoryGirl.create(:custom_form)
+  end
+
+  def self.general_discussion_space
+    @general_discussion_space ||= FactoryGirl.create(:discussion_space, :name => "General Stuff")
+  end
+
+  def self.random_discussion
+    @random_discussion ||= FactoryGirl.create(:discussion, 
+        :discussion_space_id => self.general_discussion_space.id, 
+        :user_profile_id => self.community.admin_profile_id)
   end
   
   def self.discussion_space
@@ -87,6 +101,8 @@ class DefaultObjects
     @wow = nil
     @swtor = nil
     @community = nil
+    @general_discussion_space = nil
+    @random_discussion = nil
     @custom_form = nil
     @community_admin = nil
     @wow_character_proxy = nil

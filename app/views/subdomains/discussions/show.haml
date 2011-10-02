@@ -1,23 +1,16 @@
-%p#notice= notice
+- title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
+
+%h1= @discussion.name
 
 %p
-  %b Name:
-  = @discussion.name
-%p
-  %b Body:
   = @discussion.body
-%p
-  %b Discussion space:
-  = @discussion.discussion_space_id
-%p
-  %b Character proxy:
-  = @discussion.character_proxy_id
-%p
-  %b User profile:
-  = @discussion.user_profile_id
-%p
-  %b Comments enabled:
-  = @discussion.comments_enabled
-%p
-  %b Has been locked:
-  = @discussion.has_been_locked
+
+- if @discussion.comments.size > 0
+  %ol
+    - @discussion.comments do |comment|
+      -# TODO Doug - Hook this up after comments have been done
+      -#= render "subdomains/comments/comment", :comment => comment
+- if @discussion.comments_enabled and !@discussion.has_been_locked
+  -# TODO Doug - Make this form work
+    = render "subdomains/comments/form"
+

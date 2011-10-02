@@ -1,5 +1,9 @@
-%h1 New discussion
+- title "New Discussion | #{@community.name}"
 
-= render 'form', :discussion => @discussion
+%h1 New Discussion
 
-= link_to 'Back', discussions_path
+.full
+  = simple_form_for [@discussion_space, @discussion] do |f|
+    = render 'fields', :f => f
+    %p.submit
+      = f.button :submit, 'Create Discussion'
