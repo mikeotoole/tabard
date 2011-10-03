@@ -14,7 +14,6 @@ class PageSpace < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user_profile
   belongs_to :game
   belongs_to :community
   has_many :pages, :dependent => :destroy
@@ -23,7 +22,6 @@ class PageSpace < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :user_profile, :presence => true
   validates :community, :presence => true
 
 ###
@@ -52,14 +50,6 @@ class PageSpace < ActiveRecord::Base
     else
       ''
     end
-  end
-
-  ###
-  # This method gets the user profile name of the creator of this page space
-  # [Returns] The display name of the user profile that created this discussion space.
-  ###
-  def creator_name
-    user_profile.display_name if user_profile
   end
 end
 

@@ -1,7 +1,6 @@
 FactoryGirl.define do    
   factory :discussion_space do
     sequence(:name) {|n| "Discussion Space #{n}"}
-    user_profile_id { DefaultObjects.user_profile.id }
     community_id { DefaultObjects.community.id }
   end
   

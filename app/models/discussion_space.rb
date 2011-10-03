@@ -14,7 +14,6 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user_profile
   belongs_to :game
   belongs_to :community
   has_many :discussions, :dependent => :destroy
@@ -23,14 +22,8 @@ class DiscussionSpace < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :user_profile, :presence => true
   validates :community, :presence => true
   validate :game_is_valid_for_community
-
-###
-# Delegates
-###
-  delegate :name, :to => :game, :prefix => true
 
 ###
 # Delegates
@@ -63,14 +56,6 @@ class DiscussionSpace < ActiveRecord::Base
     else
       ''
     end
-  end
-
-  ###
-  # This method gets the user profile name of the creator of this discussion space
-  # [Returns] The display name of the user profile that created this discussion space.
-  ###
-  def creator_name
-    user_profile.display_name if user_profile
   end
 
   ###

@@ -184,7 +184,6 @@ protected
       space = DiscussionSpace.new(:name => "Community Announcements")
       if space
         space.community = self
-        space.user_profile = self.admin_profile
         space.is_announcement = true
         space.save!
         self.community_announcement_space = space

@@ -87,7 +87,6 @@ protected
   ###
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
-    @discussion_space.user_profile = current_user.user_profile if @discussion_space
   end
 
   ###
