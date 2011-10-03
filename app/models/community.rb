@@ -24,6 +24,7 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
+  has_many :pending_roster_assignments, :through => :community_profiles
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
@@ -90,6 +91,17 @@ class Community < ActiveRecord::Base
     end
     return community_roster
   end
+
+  ###
+  # This method gets the current communtiy roster. An option game may be specified.
+  # [Args]
+  #   * +game+ -> The user profile you would like to promote to a member.
+  # [Returns] An array of character_proxies, optionly filtered by game.
+  ###
+  #def pending_roster_assignments
+  #  # TODO Joe Check this for optimization potential.
+  #  self.community_profiles.map{|profile| profile.pending_roster_assignments }.flatten(1)
+  #end
 
 ###
 # Protected Methods
