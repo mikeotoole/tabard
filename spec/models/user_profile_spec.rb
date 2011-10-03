@@ -182,11 +182,14 @@ describe UserProfile do
   
   describe "address_book" do
     it "should return the user profiles of all users in the same communities" do
-      pending
+      profile = DefaultObjects.user_profile
+      profileTwo = DefaultObjects.additional_community_user_profile
+      profile.address_book.count.should eq(1)
+      profile.address_book.first.should eq(profileTwo)
     end
     
     it "should be empty if the user is in no communities" do
-      pending
+      profile.address_book.should be_empty
     end
     
     it "should not contain the users user profile" do

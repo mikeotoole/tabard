@@ -166,7 +166,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of users that this user can message.
   ###
   def address_book
-    users = self.communities.collect{|community| community.members_user_profiles}.flatten(1).uniq
+    community_profiles = self.communities.collect{|community| community.community_profiles}.flatten(1)
     users.collect{|user| user.user_profile}
   end
 

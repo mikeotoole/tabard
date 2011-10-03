@@ -12,5 +12,23 @@
 require 'spec_helper'
 
 describe Folder do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:folder) { create(:folder) }
+
+  it "should create a new instance given valid attributes" do
+    folder.should be_valid
+  end
+
+  it "should require name" do
+    build(:folder, :name => nil).should_not be_valid
+  end
+
+  it "should require user profile" do
+    folder.should be_valid
+    folder.user_profile = nil
+    folder.save.should be_false
+  end
+  
+  it "should respond to messages" do
+    folder.should respond_to(:messages)
+  end
 end
