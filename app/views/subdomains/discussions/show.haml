@@ -1,6 +1,12 @@
 - title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
 
-%h1= @discussion.name
+%nav
+  %h1
+    = link_to "Discussion Spaces", discussion_spaces_path
+    - if @discussion.discussion_space.game
+      %rt= " — #{@discussion.discussion_space.game.name}"
+    = link_to @discussion.discussion_space.name, @discussion.discussion_space
+    %strong= @discussion.name
 
 %p
   = @discussion.body

@@ -2,10 +2,18 @@
 
 %nav
   %h1
-    = link_to "Discussion Spaces", discussion_spaces_path
-    - if @discussion_space.game
-      %rt= " — #{@discussion_space.game_name}"
-    —
+    - if @discussion_space.is_announcement
+      Announcement Spaces
+    - else
+      = link_to "Discussion Spaces", discussion_spaces_path
+      - if @discussion_space.game
+        %rt= " — #{@discussion_space.game.name}"
     %strong= @discussion_space.name
 
-= render "subdomains/discussions/table", :discussion_space => @discussion_space
+- if @discussion_space.discussions.size > 0
+  = render "subdomains/discussions/table", :discussion_space => @discussion_space
+
+-else
+  %p This discussion space has no viewable discussions.
+  - if (can? :create, @discussion_space.discussions.new)
+    %p= link_to 'Create a Discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button primary'

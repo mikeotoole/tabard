@@ -1,11 +1,18 @@
-- title "#{@page_space.name} | #{@community.name}"
+- title "#{@page_space.name} | #{current_community.name}"
 
 %nav
   %h1
     = link_to "Page Spaces", page_spaces_path
     - if @page_space.game
-      %rt= " — #{@page_space.game_name}"
-    —
+      %rt= " — #{@page_space.game.name}"
     %strong= @page_space.name
 
-= render "subdomains/pages/table", :page_space => @page_space
+
+
+- if @page_space.pages.size > 0
+  = render "subdomains/pages/table", :page_space => @page_space
+
+-else
+  %p This page space has no viewable pages.
+  - if (can? :create, @page_space.pages.new)
+    %p= link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button primary'

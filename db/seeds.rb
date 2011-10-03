@@ -119,7 +119,7 @@ puts "Creating Just Another Headshot Clan Guild Info Page Space"
 gips = jahc.page_spaces.create(:name => "Guild Info")
 
 puts "Creating Just Another Headshot Clan WoW Page Space"
-wps = jahc.page_spaces.create(:name => "WoW Resources", :game => wow_game)
+wps = jahc.page_spaces.create(:name => "WoW Resources", :game_id => wow_game.id)
 
 puts "Creating Just Another Headshot Clan Guild Rules Page"
 g_rules = gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")

@@ -141,6 +141,8 @@ body
         z-index: 11
         
         >li
+          height: 0
+          padding: 0
         
           >a
             border-top: 1px solid rgba(#000,.2)
@@ -179,9 +181,12 @@ body
           top: 30px
           +transition(opacity .2s linear, top .2s linear)
           
-          >li a
-            padding: 7px 10px
-            +transition(padding .2s linear)
+          >li
+            height: auto
+            
+            >a
+              padding: 7px 10px
+              +transition(padding .2s linear)
       
       &.current
         
@@ -238,7 +243,6 @@ body
   // GENERAL CONTENT
   
   a
-    +border_radius(3)
     color: #580B19
     padding: 0 3px
     text-decoration: underline
@@ -246,6 +250,7 @@ body
     
     &:hover
       background: #6F2B3D
+      +border_radius(3)
       color: #fff
       text-decoration: none
   
@@ -272,10 +277,27 @@ body
   
     h1
       font-family: DinLight, serif
-      font-size: 18px
+      font-size: 16px
       
-      a
+      a,
+      strong
         font-family: DinMedium, serif
+        margin-left: 20px
+        position: relative
+        
+        &:before
+          border-left: 1px solid #560716
+          bottom: 0
+          content: ''
+          left: -10px
+          position: absolute
+          top: 0
+        
+      a:first-child
+        margin-left: 0
+        
+        &:before
+          display: none
   
   p
     padding: 10px 0
