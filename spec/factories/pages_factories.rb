@@ -1,7 +1,6 @@
 FactoryGirl.define do    
   factory :page_space do
     sequence(:name) {|n| "Page Space #{n}"}
-    user_profile_id { DefaultObjects.user_profile.id }
     community_id { DefaultObjects.community.id }
   end
   

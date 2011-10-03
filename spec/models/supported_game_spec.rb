@@ -34,7 +34,6 @@ describe SupportedGame do
     supported_game = community.supported_games.first
     supported_game.game_announcement_space.should be_a(DiscussionSpace)
     supported_game.game_announcement_space.is_announcement.should be_true
-    supported_game.game_announcement_space.user_profile.id.should eq(community.admin_profile.id)
   end
     
   it "should destroy game specific announcement space on destruction" do
