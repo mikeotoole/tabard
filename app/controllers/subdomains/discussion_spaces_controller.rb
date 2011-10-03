@@ -73,7 +73,11 @@ protected
   # This before filter attempts to populate @discussion_space from the current_community.
   ###
   def load_discussion_space
+  	# TODO Joe, Is there a better way to do this? The problem is current_community.discussion_spaces does not include the announcement_spaces. -MO
     @discussion_space = current_community.discussion_spaces.find_by_id(params[:id]) if current_community
+    if !@discussion_space
+    	@discussion_space = current_community.announcement_spaces.find_by_id(params[:id]) if current_community
+    end
   end
 
   ###

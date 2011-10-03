@@ -43,6 +43,7 @@ protected
       if space
         space.community = self.community
         space.user_profile = self.community.admin_profile
+        space.game = self.game
         space.is_announcement = true
         space.save!
         self.game_announcement_space = space
