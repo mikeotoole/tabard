@@ -182,10 +182,11 @@ describe UserProfile do
   
   describe "address_book" do
     it "should return the user profiles of all users in the same communities" do
-      profile = DefaultObjects.user_profile
-      profileTwo = DefaultObjects.additional_community_user_profile
-      profile.address_book.count.should eq(1)
-      profile.address_book.first.should eq(profileTwo)
+      profile
+      new_profile = DefaultObjects.user_profile
+      new_profile.address_book.count.should eq(2)
+      new_profile.address_book.should include(DefaultObjects.community_admin.user_profile)
+      new_profile.address_book.should include(DefaultObjects.community_two.admin_profile)
     end
     
     it "should be empty if the user is in no communities" do
@@ -193,65 +194,89 @@ describe UserProfile do
     end
     
     it "should not contain the users user profile" do
-      pending
+      new_profile = DefaultObjects.user_profile
+      new_profile.address_book.count.should eq(2)
+      new_profile.address_book.should_not include(profile)
     end
     
     it "should not contain duplicate user profiles" do
-      pending
+      profile
+      profile_one = DefaultObjects.user_profile
+      profile_two = DefaultObjects.additional_community_user_profile
+      profile_one.is_member?(DefaultObjects.community)
+      profile_one.is_member?(DefaultObjects.community_two)
+      profile_two.is_member?(DefaultObjects.community)
+      profile_two.is_member?(DefaultObjects.community_two)
+      profile_one.address_book.count.should eq(3)
+      profile_one.address_book.should include(profile_two)
     end
   end
   
   describe "sent_messages" do
     it "should return all the users sent messages" do
-      pending
+      message = create(:message)
+      new_profile = DefaultObjects.user_profile
+      message.author.should eq(new_profile)
+      new_profile.sent_messages.count.should eq(1)
+      new_profile.sent_messages.first.should eq(message)
     end
-    
+
     it "should be empty if the user has no sent messages" do
-      pending
+      profile.sent_messages.should be_empty
     end
   end
   
   describe "received_messages" do
     it "should return all the users received messages" do
-      pending
+      message = create(:message)
+      new_profile = DefaultObjects.additional_community_user_profile
+      message.recipients.first.should eq(new_profile)
+      new_profile.received_messages.count.should eq(1)
+      new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as deleted" do
-      pending
+      create(:message)
+      message = create(:message).message_associations.first
+      message.deleted = true
+      message.save.should be_true
+      new_profile = DefaultObjects.additional_community_user_profile
+      new_profile.received_messages.count.should eq(2)
+      new_profile.received_messages.find(message).deleted.should be_true
     end
   end
   
   describe "folders" do
     it "should return all the users folders" do
-      pending
+      profile.folders.count.should eq(2)
     end
     
     it "should contain the users inbox folder" do
-      pending
+      profile.folders.first.name.should eq("Inbox")
     end
     
     it "should contain the users trash folder" do
-      pending
+      profile.folders.last.name.should eq("Trash")
     end
   end
   
   describe "inbox" do
     it "should be created with user profile" do
-      pending
+      profile.inbox.should be_a(Folder)
     end  
   
     it "should return the users inbox folder" do
-      pending
+      profile.inbox.name.should eq("Inbox")
     end
   end
   
   describe "trash" do
     it "should be created with user profile" do
-      pending
+      profile.trash.should be_a(Folder)
     end
       
     it "should return the users trash folder" do
-      pending
+      profile.trash.name.should eq("Trash")
     end  
   end
 end

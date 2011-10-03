@@ -13,6 +13,15 @@ class DefaultObjects
         :character_proxies => []
       )
       app.accept_application
+      if not @user_profile.is_member?(DefaultObjects.community_two)
+      appTwo = FactoryGirl.create(:community_application,
+          :community => DefaultObjects.community_two,
+          :user_profile => @user_profile,
+          :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @user_profile),
+          :character_proxies => @user_profile.character_proxies
+        )
+      appTwo.accept_application
+    end
     end
     @user_profile
   end
@@ -27,6 +36,15 @@ class DefaultObjects
           :character_proxies => @additional_community_user_profile.character_proxies
         )
       app.accept_application
+    end
+    if not @additional_community_user_profile.is_member?(DefaultObjects.community_two)
+      appTwo = FactoryGirl.create(:community_application,
+          :community => DefaultObjects.community_two,
+          :user_profile => @additional_community_user_profile,
+          :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @additional_community_user_profile),
+          :character_proxies => @additional_community_user_profile.character_proxies
+        )
+      appTwo.accept_application
     end
     @additional_community_user_profile
   end
@@ -59,8 +77,17 @@ class DefaultObjects
     @community
   end
   
+    
   def self.community_admin
     @community_admin ||= DefaultObjects.community.admin_profile.user
+  end
+  
+  def self.community_two
+    @community_two ||= FactoryGirl.create(:community)
+    unless @community_two.games.include?(DefaultObjects.swtor)
+      @community_two.games << DefaultObjects.swtor
+    end
+    @community_two
   end
   
   def self.custom_form
@@ -101,6 +128,7 @@ class DefaultObjects
     @wow = nil
     @swtor = nil
     @community = nil
+    @community_two = nil
     @general_discussion_space = nil
     @random_discussion = nil
     @custom_form = nil
