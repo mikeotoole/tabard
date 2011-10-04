@@ -172,4 +172,35 @@ describe UserProfile do
       billy.user_profile.roles.should eq(all_roles)
     end
   end
+
+  describe "available_character_proxies" do
+    before(:each) do
+      @community_profile = create(:community_profile_with_characters)
+      @member_profile = @community_profile.user_profile
+      @community = @community_profile.community
+    end
+    it "should return all approved character proxies for a community" do
+      expected_proxies = @community_profile.approved_character_proxies
+      not_expected_proxies = [] # TODO Add this.
+      available_proxies = @member_profile.available_character_proxies(@community)
+      expected_proxies.each do |proxy|
+        available_proxies.include?(proxy).should be_true
+      end
+      not_expected_proxies.each do |proxy|
+        available_proxies.include?(proxy).should be_false
+      end
+    end
+    it "should return all approved character proxies for a community and game" do
+      game = DefaultObjects.wow
+      expected_proxies = @community_profile.approved_character_proxies.delete_if{ |proxy| proxy.game != game}
+      not_expected_proxies = @community_profile.approved_character_proxies.delete_if{ |proxy| expected_proxies.include?(proxy) }
+      available_proxies = @member_profile.available_character_proxies(@community, game)
+      expected_proxies.each do |proxy|
+        available_proxies.include?(proxy).should be_true
+      end
+      not_expected_proxies.each do |proxy|
+        available_proxies.include?(proxy).should be_false
+      end
+    end
+  end
 end
