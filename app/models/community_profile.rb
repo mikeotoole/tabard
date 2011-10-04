@@ -30,6 +30,11 @@ class CommunityProfile < ActiveRecord::Base
   validate :has_at_least_the_default_member_role
 
 ###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :prefix => true
+
+###
 # Public Methods
 ###
   # This method ensures that this profile has the default role.

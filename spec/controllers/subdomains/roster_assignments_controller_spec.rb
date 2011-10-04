@@ -193,17 +193,69 @@ describe Subdomains::RosterAssignmentsController do
     it "should be successful when authenticated as an owner" do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
+      RosterAssignment.exists?(@roster_assignment).should be_false
       response.should redirect_to(roster_assignments_path)
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user
       delete 'destroy', :id => @roster_assignment
-      Role.exists?(@roster_assignment).should be_true
+      RosterAssignment.exists?(@roster_assignment).should be_true
       response.response_code.should == 403
     end
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @roster_assignment
-      Role.exists?(@roster_assignment).should be_true
+      RosterAssignment.exists?(@roster_assignment).should be_true
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "PUT 'approve' when authenticated as an owner" do
+    before(:each) do
+      sign_in admin_user
+      roster_assignment.update_attribute(:pending, true)
+      put 'approve', :id => roster_assignment
+    end
+
+    it "become approved" do
+      assigns[:roster_assignment].pending.should be_false
+    end
+
+    it "should redirect to pending path" do
+      response.should redirect_to(pending_roster_assignments_path)
+    end
+  end
+
+  describe "PUT 'reject' when authenticated as an owner" do
+    before(:each) do
+      sign_in admin_user
+      roster_assignment.update_attribute(:pending, true)
+      put 'reject', :id => roster_assignment
+    end
+
+    it "should no longer exist" do
+      RosterAssignment.exists?(roster_assignment).should be_false
+    end
+
+    it "should redirect to pending path" do
+      response.should redirect_to(pending_roster_assignments_path)
+    end
+  end
+
+  describe "GET 'pending'" do
+    it "should be unauthorized when authenticated as a non-member" do
+      sign_in user
+      get 'pending'
+      response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as a member" do
+      sign_in admin_user
+      get 'pending'
+      response.should be_success
+    end
+
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'pending'
       response.should redirect_to(new_user_session_path)
     end
   end
