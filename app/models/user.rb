@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   delegate :character_proxies, :to => :user_profile, :allow_nil => true
   delegate :communities, :to => :user_profile, :allow_nil => true
   delegate :active_profile_helper_collection, :to => :user_profile, :allow_nil => true
+  delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators

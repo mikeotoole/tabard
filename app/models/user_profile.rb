@@ -19,6 +19,7 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
+  has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :community_applications
   has_many :view_logs, :dependent => :destroy
@@ -71,6 +72,18 @@ class UserProfile < ActiveRecord::Base
         characters << proxy.character
     end
     characters
+  end
+
+  ###
+  # This method gets all of the avaliable characters attached to this user profile.
+  # [Returns] An array that contains all of the avalible characters attached to this user profile.
+  ###
+  def available_character_proxies(community, game = nil)
+    available_character_proxies = Array.new
+    community_profile = self.community_profiles.where{:communtiy == community}.first
+    available_character_proxies.concat community_profile.approved_character_proxies if community_profile
+    available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game != game} if game
+    available_character_proxies
   end
 
   ###
