@@ -189,10 +189,6 @@ describe Community do
     community.community_announcement_space.is_announcement.should be_true
   end
   
-  it "should create a community announcements discussion space with admins user profile" do
-    community.community_announcement_space.user_profile.id.should eq(community.admin_profile.id)
-  end
-  
   it "should destroy community announcements discussion space when destroyed" do
     space = community.community_announcement_space
     space.should be_a(DiscussionSpace)

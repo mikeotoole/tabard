@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-if ENV["RAILS_ENV"] != 'test'
+if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
@@ -77,19 +77,13 @@ puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
 
 puts "Creating Just Another Headshot Clan General Discussion Space"
-gds = jahc.discussion_spaces.new(:name => "General Chat")
-gds.user_profile = robobilly.user_profile
-gds.save
+gds = jahc.discussion_spaces.create(:name => "General Chat")
 
-puts "Creating Just Another Headshot Clan WoW"
-wds = jahc.discussion_spaces.new(:name => "WoW", :game => wow_game)
-wds.user_profile = robobilly.user_profile
-wds.save
+puts "Creating Just Another Headshot Clan WoW Discussion Space"
+wds = jahc.discussion_spaces.create(:name => "WoW", :game => wow_game)
 
-puts "Creating Just Another Headshot Clan SWTOR"
-sds = jahc.discussion_spaces.new(:name => "SWTOR", :game => swtor_game)
-sds.user_profile = robobilly.user_profile
-sds.save
+puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
+sds = jahc.discussion_spaces.create(:name => "SWTOR", :game => swtor_game)
 
 puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
 gd = gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
@@ -97,14 +91,10 @@ gd.user_profile = robobilly.user_profile
 gd.save
 
 puts "Creating Just Another Headshot Clan WoW Discussion Space Discussion"
-wd = wds.discussions.new(:name => "General WoW Discussion", :body => "YAY lets discuss WoW")
-wd.user_profile = robobilly.user_profile
-wd.save
+wd = wds.discussions.create(:name => "General WoW Discussion", :body => "YAY lets discuss WoW")
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space Discussion"
-sd = sds.discussions.new(:name => "General SWTOR Discussion", :body => "YAY lets discuss SWTOR")
-sd.user_profile = robobilly.user_profile
-sd.save
+sd = sds.discussions.create(:name => "General SWTOR Discussion", :body => "YAY lets discuss SWTOR")
 
 puts "Adding comments to general discussion space discussion"
 comment1 = gd.comments.new(:body => "What's up RoboBilly!")
@@ -126,14 +116,10 @@ announcement3.user_profile = robobilly.user_profile
 announcement3.save
 
 puts "Creating Just Another Headshot Clan Guild Info Page Space"
-gips = jahc.page_spaces.new(:name => "Guild Info")
-gips.user_profile = robobilly.user_profile
-gips.save
+gips = jahc.page_spaces.create(:name => "Guild Info")
 
 puts "Creating Just Another Headshot Clan WoW Page Space"
-wps = jahc.page_spaces.new(:name => "WoW Resources", :game => wow_game)
-wps.user_profile = robobilly.user_profile
-wps.save
+wps = jahc.page_spaces.create(:name => "WoW Resources", :game => wow_game)
 
 puts "Creating Just Another Headshot Clan Guild Rules Page"
 g_rules = gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
