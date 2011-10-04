@@ -276,15 +276,25 @@ body
   nav
   
     h1
+      background: #ccc
+      +bg_gradient(rgba(#fff,0),#ccc)
+      border-bottom: 1px solid #fff
       font-family: DinLight, serif
       font-size: 16px
+      padding: 5px 30px
+      margin: -30px -30px 30px
+      
+      a
+        font-family: DinMedium, serif
+      
+      strong
+        font-family: DinLight, serif
       
       a,
       strong
-        font-family: DinMedium, serif
         margin-left: 20px
         position: relative
-        
+      
         &:before
           border-left: 1px solid #560716
           bottom: 0
