@@ -1,0 +1,10 @@
+%li{ :class => html_class_names(comment) }
+  -#%pre=YAML::dump(comment)
+  %span.avatar
+    = image_tag comment.poster.avatar_url(:small)
+  %cite
+    = comment.poster.name
+  %time
+    = "#{last_action_word(comment).capitalize} #{time_ago_in_words(comment.updated_at)} ago"
+  %blockquote
+    = comment.body

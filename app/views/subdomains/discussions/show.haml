@@ -8,14 +8,16 @@
     = link_to @discussion.discussion_space.name, @discussion.discussion_space
     %strong= @discussion.name
 
-%p
-  = @discussion.body
+%section.body
+  %p
+    = @discussion.body
 
 - if @discussion.comments.size > 0
-  %ol
-    - @discussion.comments do |comment|
-      -# TODO Doug - Hook this up after comments have been done
-      -#= render "subdomains/comments/comment", :comment => comment
+  %section.comments
+    %ol
+      - @discussion.comments.each do |comment|
+        %pre=YAML::dump(comment)
+        = render "subdomains/comments/comment", :comment => comment
 - if @discussion.comments_enabled and !@discussion.has_been_locked
   -# TODO Doug - Make this form work
     = render "subdomains/comments/form"
