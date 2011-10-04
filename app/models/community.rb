@@ -24,8 +24,8 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false} # TODO Joe, Should this be :dependent => :destroy -MO
-  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true} # TODO Joe, Should this be :dependent => :destroy -MO
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false}, :dependent => :destroy
+  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true}, :dependent => :destroy
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
@@ -184,7 +184,6 @@ protected
       space = DiscussionSpace.new(:name => "Community Announcements")
       if space
         space.community = self
-        space.user_profile = self.admin_profile
         space.is_announcement = true
         space.save!
         self.community_announcement_space = space
