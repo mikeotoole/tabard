@@ -215,9 +215,6 @@ class Ability
     can :manage, MessageAssociation do |message|
       message.recipient_id == user.user_profile.id
     end
-    cannot :destroy, MessageAssociation do |message|
-      true
-    end
   end
 
   ###

@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
   delegate :active_profile_helper_collection, :to => :user_profile, :allow_nil => true
   delegate :inbox, :to => :user_profile, :allow_nil => true
   delegate :trash, :to => :user_profile, :allow_nil => true
+  delegate :address_book, :to => :user_profile, :allow_nil => true
+  delegate :sent_messages, :to => :user_profile, :allow_nil => true
+  delegate :received_messages, :to => :user_profile, :allow_nil => true
+  delegate :folders, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators

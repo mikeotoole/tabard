@@ -19,132 +19,288 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe MessagesController do
+  let(:message) { create(:message) }
+  let(:rec_message) { message.message_associations.first }
+  let(:sender) { DefaultObjects.user }
+  let(:receiver) { DefaultObjects.additional_community_user_profile.user }
 
-#   describe "GET index" do
-#     it "assigns all messages as @messages" do
-#       message = Message.create! valid_attributes
-#       get :index
-#       assigns(:messages).should eq([message])
-#     end
-#   end
-# 
-#   describe "GET show" do
-#     it "assigns the requested message as @message" do
-#       message = Message.create! valid_attributes
-#       get :show, :id => message.id.to_s
-#       assigns(:message).should eq(message)
-#     end
-#   end
-# 
-#   describe "GET new" do
-#     it "assigns a new message as @message" do
-#       get :new
-#       assigns(:message).should be_a_new(Message)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested message as @message" do
-#       message = Message.create! valid_attributes
-#       get :edit, :id => message.id.to_s
-#       assigns(:message).should eq(message)
-#     end
-#   end
-# 
-#   describe "POST create" do
-#     describe "with valid params" do
-#       it "creates a new Message" do
-#         expect {
-#           post :create, :message => valid_attributes
-#         }.to change(Message, :count).by(1)
-#       end
-# 
-#       it "assigns a newly created message as @message" do
-#         post :create, :message => valid_attributes
-#         assigns(:message).should be_a(Message)
-#         assigns(:message).should be_persisted
-#       end
-# 
-#       it "redirects to the created message" do
-#         post :create, :message => valid_attributes
-#         response.should redirect_to(Message.last)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns a newly created but unsaved message as @message" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Message.any_instance.stub(:save).and_return(false)
-#         post :create, :message => {}
-#         assigns(:message).should be_a_new(Message)
-#       end
-# 
-#       it "re-renders the 'new' template" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Message.any_instance.stub(:save).and_return(false)
-#         post :create, :message => {}
-#         response.should render_template("new")
-#       end
-#     end
-#   end
-# 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested message" do
-#         message = Message.create! valid_attributes
-#         # Assuming there are no other messages in the database, this
-#         # specifies that the Message created on the previous line
-#         # receives the :update_attributes message with whatever params are
-#         # submitted in the request.
-#         Message.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => message.id, :message => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested message as @message" do
-#         message = Message.create! valid_attributes
-#         put :update, :id => message.id, :message => valid_attributes
-#         assigns(:message).should eq(message)
-#       end
-# 
-#       it "redirects to the message" do
-#         message = Message.create! valid_attributes
-#         put :update, :id => message.id, :message => valid_attributes
-#         response.should redirect_to(message)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the message as @message" do
-#         message = Message.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Message.any_instance.stub(:save).and_return(false)
-#         put :update, :id => message.id.to_s, :message => {}
-#         assigns(:message).should eq(message)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         message = Message.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         Message.any_instance.stub(:save).and_return(false)
-#         put :update, :id => message.id.to_s, :message => {}
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested message" do
-#       message = Message.create! valid_attributes
-#       expect {
-#         delete :destroy, :id => message.id.to_s
-#       }.to change(Message, :count).by(-1)
-#     end
-# 
-#     it "redirects to the messages list" do
-#       message = Message.create! valid_attributes
-#       delete :destroy, :id => message.id.to_s
-#       response.should redirect_to(messages_url)
-#     end
-#   end
+  describe "GET show" do
+    it "assigns the requested message as @message when authenticated as owner" do
+      sign_in receiver
+      get :show, :id => rec_message
+      assigns(:message).should eq(rec_message)
+    end
+    
+    it "should render the 'show' template when authenticated as owner" do
+      sign_in receiver
+      get :show, :id => rec_message
+      response.should render_template("show")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :show, :id => rec_message
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      lambda { get :show, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+  
+  describe "PUT move when authenticated as owner" do
+    before(:each) {
+      sign_in receiver
+      request.env["HTTP_REFERER"] = "/"
+    }
+  
+    it "moves the requested message" do
+      rec_message
+      MessageAssociation.any_instance.should_receive(:update_attributes).with({:folder => receiver.trash})
+      put :move, :id => rec_message.id, :folder_id => receiver.trash
+    end
 
+    it "assigns the requested message as @message" do
+      put :move, :id => rec_message.id, :folder_id => receiver.trash
+      assigns(:message).should eq(rec_message)
+    end
+
+    it "redirects to the previous_page" do
+      put :move, :id => rec_message.id, :folder_id => receiver.trash
+      response.should redirect_to("/")
+    end
+
+    describe "with invalid folder" do
+      it "assigns the message as @message" do
+        put :move, :id => rec_message.id, :folder_id => 0
+        assigns(:message).should eq(nil)
+      end
+    
+      it "should respond forbidden" do
+        put :move, :id => rec_message.id, :folder_id => 0
+        response.should be_forbidden
+      end
+    end
+    
+    describe "with invalid message" do
+      it "assigns the message as @message" do
+        put :move, :id => 0, :folder_id => receiver.trash
+        assigns(:message).should eq(nil)
+      end
+    
+      it "should respond forbidden" do
+        put :move, :id => 0, :folder_id => receiver.trash
+        response.should be_forbidden
+      end
+    end
+  end
+
+  describe "PUT move" do
+    it "should redirected to new user session path when not authenticated as a user" do
+      put :move, :id => rec_message.id, :folder_id => receiver.trash
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not owner" do
+      sign_in sender
+      put :move, :id => rec_message.id, :folder_id => receiver.trash
+      response.should be_forbidden
+    end 
+  end
+
+  describe "GET reply" do
+    it "assigns the requested message as @original when authenticated as owner" do
+      sign_in receiver
+      get :reply, :id => rec_message
+      assigns(:original).should eq(rec_message)
+    end
+    
+    it "assigns a new message as @message when authenticated as owner" do
+      sign_in receiver
+      get :reply, :id => rec_message
+      assigns(:message).should be_new_record
+    end
+    
+    it "@message author is set to the receiver when authenticated as owner" do
+      sign_in receiver
+      get :reply, :id => rec_message
+      assigns(:message).author.should eq(receiver.user_profile)
+    end
+    
+    it "@message to is set to the author when authenticated as owner" do
+      sign_in receiver
+      get :reply, :id => rec_message
+      assigns(:message).to.should eq(["#{rec_message.author.id}"])
+    end
+    
+    it "should render the 'show' template when authenticated as owner" do
+      sign_in receiver
+      get :reply, :id => rec_message
+      response.should render_template("sent_messages/new")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :reply, :id => rec_message
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      lambda { get :reply, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "GET reply_all" do
+    it "assigns the requested message as @original when authenticated as owner" do
+      sign_in receiver
+      multi_mess = create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => multi_mess
+      assigns(:original).should eq(multi_mess)
+    end
+    
+    it "assigns a new message as @message when authenticated as owner" do
+      sign_in receiver
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      assigns(:message).should be_new_record
+    end
+    
+    it "@message author is set to the receiver when authenticated as owner" do
+      sign_in receiver
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      assigns(:message).author.should eq(receiver.user_profile)
+    end
+    
+    it "@message to is set to the author and all @original recipients when authenticated as owner" do
+      sign_in receiver
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      assigns(:message).to.should eq(["#{DefaultObjects.community_admin.user_profile.id}", "#{rec_message.author.id}"])
+    end
+    
+    it "should render the 'show' template when authenticated as owner" do
+      sign_in receiver
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      response.should render_template("sent_messages/new")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      lambda { get :reply_all, :id => create(:message_with_muti_to).message_associations.first }.should raise_error(ActiveRecord::RecordNotFound)
+    end  
+  end
+
+  describe "GET forward" do
+    it "assigns the requested message as @original when authenticated as owner" do
+      sign_in receiver
+      get :forward, :id => rec_message
+      assigns(:original).should eq(rec_message)
+    end
+    
+    it "assigns a new message as @message when authenticated as owner" do
+      sign_in receiver
+      get :forward, :id => rec_message
+      assigns(:message).should be_new_record
+    end
+    
+    it "@message author is set to the receiver when authenticated as owner" do
+      sign_in receiver
+      get :forward, :id => rec_message
+      assigns(:message).author.should eq(receiver.user_profile)
+    end
+    
+    it "@message to is set to -1 when authenticated as owner" do
+      sign_in receiver
+      get :forward, :id => rec_message
+      assigns(:message).to.should eq([-1])
+    end
+    
+    it "should render the 'show' template when authenticated as owner" do
+      sign_in receiver
+      get :forward, :id => rec_message
+      response.should render_template("sent_messages/new")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :forward, :id => rec_message
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      lambda { get :forward, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end 
+  end
+
+  describe "DELETE destroy" do
+    it "sets the requested message as deleted when authenticated as a owner" do
+      sign_in receiver
+      delete :destroy, :id => rec_message
+      MessageAssociation.find(rec_message).deleted.should be_true
+    end
+    
+    it "sets the requested message folder to nil when authenticated as a owner" do
+      sign_in receiver
+      delete :destroy, :id => rec_message
+      MessageAssociation.find(rec_message).folder.should be_nil
+    end
+    
+    it "does not destroy the requested message when authenticated as a owner" do
+      rec_message
+      sign_in receiver
+      expect {
+        delete :destroy, :id => rec_message
+      }.to change(MessageAssociation, :count).by(0)
+    end    
+
+    it "redirects to the trash folder when authenticated as a owner" do
+      sign_in receiver
+      delete :destroy, :id => rec_message
+      response.should redirect_to(trash_path)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      delete :destroy, :id => rec_message
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      lambda { delete :destroy, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end  
+  
+    it "should set all messages in trash folder as deleted when no message is given and authenticated as a owner" do
+      message_two = create(:message).message_associations.first
+      message_two.folder = receiver.user_profile.trash
+      message_two.save.should be_true
+      rec_message.folder = receiver.user_profile.trash
+      rec_message.save.should be_true
+      sign_in receiver
+      delete :destroy
+      MessageAssociation.find(message_two).deleted.should be_true
+      MessageAssociation.find(rec_message).deleted.should be_true
+    end
+    
+    it "should set all messages in trash folder folder to nil when no message is given and authenticated as a owner" do
+      message_two = create(:message).message_associations.first
+      message_two.folder = receiver.user_profile.trash
+      message_two.save.should be_true
+      rec_message.folder = receiver.user_profile.trash
+      rec_message.save.should be_true
+      sign_in receiver
+      delete :destroy
+      MessageAssociation.find(message_two).folder.should be_nil
+      MessageAssociation.find(rec_message).folder.should be_nil
+    end
+  
+    it "redirects to the inbox folder when no message is given and authenticated as a owner" do
+      sign_in receiver
+      delete :destroy
+      response.should redirect_to(inbox_path)
+    end
+  
+  end
 end

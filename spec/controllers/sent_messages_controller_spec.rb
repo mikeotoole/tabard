@@ -19,132 +19,116 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SentMessagesController do
+  let(:message) { create(:message) }
+  let(:rec_message) { message.message_associations.first }
+  let(:sender) { DefaultObjects.user }
+  let(:receiver) { DefaultObjects.additional_community_user_profile.user }
 
-#   describe "GET index" do
-#     it "assigns all message_copies as @message_copies" do
-#       message_copy = MessageCopy.create! valid_attributes
-#       get :index
-#       assigns(:message_copies).should eq([message_copy])
-#     end
-#   end
-# 
-#   describe "GET show" do
-#     it "assigns the requested message_copy as @message_copy" do
-#       message_copy = MessageCopy.create! valid_attributes
-#       get :show, :id => message_copy.id.to_s
-#       assigns(:message_copy).should eq(message_copy)
-#     end
-#   end
-# 
-#   describe "GET new" do
-#     it "assigns a new message_copy as @message_copy" do
-#       get :new
-#       assigns(:message_copy).should be_a_new(MessageCopy)
-#     end
-#   end
-# 
-#   describe "GET edit" do
-#     it "assigns the requested message_copy as @message_copy" do
-#       message_copy = MessageCopy.create! valid_attributes
-#       get :edit, :id => message_copy.id.to_s
-#       assigns(:message_copy).should eq(message_copy)
-#     end
-#   end
-# 
-#   describe "POST create" do
-#     describe "with valid params" do
-#       it "creates a new MessageCopy" do
-#         expect {
-#           post :create, :message_copy => valid_attributes
-#         }.to change(MessageCopy, :count).by(1)
-#       end
-# 
-#       it "assigns a newly created message_copy as @message_copy" do
-#         post :create, :message_copy => valid_attributes
-#         assigns(:message_copy).should be_a(MessageCopy)
-#         assigns(:message_copy).should be_persisted
-#       end
-# 
-#       it "redirects to the created message_copy" do
-#         post :create, :message_copy => valid_attributes
-#         response.should redirect_to(MessageCopy.last)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns a newly created but unsaved message_copy as @message_copy" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         MessageCopy.any_instance.stub(:save).and_return(false)
-#         post :create, :message_copy => {}
-#         assigns(:message_copy).should be_a_new(MessageCopy)
-#       end
-# 
-#       it "re-renders the 'new' template" do
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         MessageCopy.any_instance.stub(:save).and_return(false)
-#         post :create, :message_copy => {}
-#         response.should render_template("new")
-#       end
-#     end
-#   end
-# 
-#   describe "PUT update" do
-#     describe "with valid params" do
-#       it "updates the requested message_copy" do
-#         message_copy = MessageCopy.create! valid_attributes
-#         # Assuming there are no other message_copies in the database, this
-#         # specifies that the MessageCopy created on the previous line
-#         # receives the :update_attributes message with whatever params are
-#         # submitted in the request.
-#         MessageCopy.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-#         put :update, :id => message_copy.id, :message_copy => {'these' => 'params'}
-#       end
-# 
-#       it "assigns the requested message_copy as @message_copy" do
-#         message_copy = MessageCopy.create! valid_attributes
-#         put :update, :id => message_copy.id, :message_copy => valid_attributes
-#         assigns(:message_copy).should eq(message_copy)
-#       end
-# 
-#       it "redirects to the message_copy" do
-#         message_copy = MessageCopy.create! valid_attributes
-#         put :update, :id => message_copy.id, :message_copy => valid_attributes
-#         response.should redirect_to(message_copy)
-#       end
-#     end
-# 
-#     describe "with invalid params" do
-#       it "assigns the message_copy as @message_copy" do
-#         message_copy = MessageCopy.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         MessageCopy.any_instance.stub(:save).and_return(false)
-#         put :update, :id => message_copy.id.to_s, :message_copy => {}
-#         assigns(:message_copy).should eq(message_copy)
-#       end
-# 
-#       it "re-renders the 'edit' template" do
-#         message_copy = MessageCopy.create! valid_attributes
-#         # Trigger the behavior that occurs when invalid params are submitted
-#         MessageCopy.any_instance.stub(:save).and_return(false)
-#         put :update, :id => message_copy.id.to_s, :message_copy => {}
-#         response.should render_template("edit")
-#       end
-#     end
-#   end
-# 
-#   describe "DELETE destroy" do
-#     it "destroys the requested message_copy" do
-#       message_copy = MessageCopy.create! valid_attributes
-#       expect {
-#         delete :destroy, :id => message_copy.id.to_s
-#       }.to change(MessageCopy, :count).by(-1)
-#     end
-# 
-#     it "redirects to the message_copies list" do
-#       message_copy = MessageCopy.create! valid_attributes
-#       delete :destroy, :id => message_copy.id.to_s
-#       response.should redirect_to(message_copies_url)
-#     end
-#   end
+  describe "GET index" do
+    it "assigns all users sent_messages as @messages when authenticated as a user" do
+      message
+      sign_in sender
+      get :index
+      assigns(:messages).should eq([message])
+    end
+    
+    it "should render the 'index' template when authenticated as a user" do
+      sign_in sender
+      get :index
+      response.should render_template("index")
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :index
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "GET show" do
+    it "assigns the requested message as @message when authenticated as owner" do
+      sign_in sender
+      get :show, :id => message
+      assigns(:message).should eq(message)
+    end
+    
+    it "should render the 'show' template when authenticated as a owner" do
+      sign_in sender
+      get :show, :id => message
+      response.should render_template("show")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :show, :id => message
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in receiver
+      lambda { get :show, :id => message }.should raise_error(ActiveRecord::RecordNotFound)
+    end   
+  end
+
+  describe "GET new" do
+    it "assigns a new message as @message when authenticated as user" do
+      sign_in sender
+      get :new
+      assigns(:message).should be_a_new(Message)
+    end
+    
+    it "should render the 'new' template when authenticated as community admin" do
+      sign_in sender
+      get :new
+      response.should render_template("new")
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :new
+      response.should redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "POST create when authenticated as admin" do
+    before(:each) {
+      sign_in sender
+    }
+  
+    describe "with valid params" do
+      it "creates a new Message" do
+        expect {
+          post :create, :message => attributes_for(:message)
+        }.to change(Message, :count).by(1)
+      end
+
+      it "assigns a newly created message as @message" do
+        post :create, :message => attributes_for(:message)
+        assigns(:message).should be_a(Message)
+        assigns(:message).should be_persisted
+      end
+
+      it "redirects to the users sent_mailbox" do
+        post :create, :message => attributes_for(:message)
+        response.should redirect_to(sent_mailbox_path)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved message as @message" do
+        post :create, :message => attributes_for(:message, :body => nil)
+        assigns(:message).should be_a_new(Message)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :message => attributes_for(:message, :body => nil)
+        response.should render_template("new")
+      end
+    end
+  end
+  
+  describe "POST create" do
+    it "should redirected to new user session path when not authenticated as a user" do
+      post :create, :message => attributes_for(:message)
+      response.should redirect_to(new_user_session_path)
+    end   
+  end
 
 end

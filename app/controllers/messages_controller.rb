@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
     add_new_flash_message('Message was moved to #{folder.name}.') if @message.update_attributes(:folder => folder)
-    redirect_to pervious_page
+    redirect_to previous_page
   end
 
   # GET /mail/reply/:id(.:format)
@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
     body = @original.body.gsub(/^/, "> ")
     @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => body)
     authorize!(:create, @message)
-    render :template => "sent/new"
+    render :template => "sent_messages/new"
   end
 
   # GET /mail/reply-all/:id(.:format)
@@ -49,7 +49,7 @@ class MessagesController < ApplicationController
     recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id]
     @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => body)
     authorize!(:create, @message)
-    render :template => "sent/new"
+    render :template => "sent_messages/new"
   end
 
   # GET /mail/forward/:id(.:format) 
@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
     body = @original.body.gsub(/^/, "> ")
     @message = current_user.sent_messages.build(:to => [-1], :subject => subject, :body => body)
     authorize!(:create, @message)
-    render :template => "sent/new"
+    render :template => "sent_messages/new"
   end
 
   # DELETE /mail/delete/:id(.:format)
@@ -68,12 +68,12 @@ class MessagesController < ApplicationController
     if(params[:id])
       @message = current_user.received_messages.find(params[:id])
       authorize!(:update, @message)
-      add_new_flash_message('Message was deleted.') if @message.update_attributes(:deleted => true, :folder => nil)
+      add_new_flash_message('Message was deleted.') if @message.update_attributes(:deleted => true, :folder_id => nil)
       redirect_to trash_path
     else # If a message is not given all messages will be deleted from the trash.
-      current_user.trash.each do |message|
+      current_user.trash.messages.each do |message|
         authorize!(:update, message)
-        message.update_attributes(:deleted => true, :folder => nil)
+        message.update_attributes(:deleted => true, :folder_id => nil)
       end
       redirect_to inbox_path
     end

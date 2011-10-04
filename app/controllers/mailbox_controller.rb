@@ -15,6 +15,7 @@ class MailboxController < ApplicationController
   # GET /mail/inbox(.:format)
   def inbox
     @folder = current_user.inbox
+    @messages = @folder.messages
     authorize!(:read, @folder)
     render :action => 'show'
   end
@@ -22,12 +23,8 @@ class MailboxController < ApplicationController
   # GET /mail/trash(.:format)
   def trash
     @folder = current_user.trash
+    @messages = @folder.messages
     authorize!(:read, @folder)
     render :action => 'show'
   end
-
-#   def show
-#     @folder ||= current_user.folders.find(params[:id])
-#     @messages = @folder.messages.delete_if {|message| message.deleted == true}
-#   end
 end

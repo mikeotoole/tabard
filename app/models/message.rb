@@ -15,7 +15,7 @@ class Message < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :subject, :body
+  attr_accessible :subject, :body, :to
 
 ###
 # Associations
@@ -54,7 +54,7 @@ protected
     self.number_recipients = 0
     return if to.blank?
     to.each do |recipient|
-      userProfile = UserProfile.find_by_id(recipient.id)
+      userProfile = UserProfile.find_by_id(recipient)
       message_associations.build(:recipient_id => userProfile.id, :folder_id => userProfile.inbox.id)
       self.number_recipients += 1
     end

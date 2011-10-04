@@ -1,15 +1,9 @@
-%p#notice= notice
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  = link_to 'Inbox', inbox_path
+  %span= @message.subject
 
-%p
-  %b Subject:
-  = @message.subject
-%p
-  %b Body:
-  = @message.body
-%p
-  %b Author:
-  = @message.author_id
+#page
+  %h1= @message.subject
 
-= link_to 'Edit', edit_message_path(@message)
-\|
-= link_to 'Back', messages_path
+  = render :partial => 'messages/message', :locals => { :message => @message }

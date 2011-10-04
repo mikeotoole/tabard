@@ -26,10 +26,10 @@ DaBvRails::Application.routes.draw do
   resources :base_characters, :only => :new
   
   # Messaging
-  resources :sent, :only => [:create]
-  get 'mail/sent/:id' => "sent#show", :as => "sent_mail"
-  get 'mail/sent' => "sent#index", :as => "sent_mailbox"
-  get 'mail/compose' => "sent#new", :as => "compose_mail"
+  resources :sent_messages, :only => [:create]
+  get 'mail/sent/:id' => "sent_messages#show", :as => "sent_mail"
+  get 'mail/sent' => "sent_messages#index", :as => "sent_mailbox"
+  get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
   
   get 'mail/inbox/:id' => "messages#show", :as => "mail"
   put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
@@ -37,6 +37,7 @@ DaBvRails::Application.routes.draw do
   get 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
   get 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
   delete 'mail/delete/:id' => "messages#destroy", :as => "mail_delete"
+  delete 'mail/delete' => "messages#destroy", :as => "mail_delete_all"
   
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
