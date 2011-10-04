@@ -31,14 +31,18 @@ class RosterAssignment < ActiveRecord::Base
 ###
   before_create :ensure_proper_pending_status
 
+  # This method approves this roster assignment, if it is pending.
+  # [Returns] True if this was approved, otherwise false.
   def approve
-    return unless self.pending
+    return false unless self.pending
     self.update_attribute(:pending, false)
     # TODO Mike, Send message to owner -JW
   end
 
+  # This method rejects this roster assignment, if it is pending.
+  # [Returns] True if this was rejected, otherwise false.
   def reject
-    return unless self.pending
+    return false unless self.pending
     self.destroy
     # TODO Mike, Send message to owner -JW
   end
