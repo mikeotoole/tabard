@@ -1,6 +1,3 @@
-//= require jquery
-//= require jquery_ujs
-
 $(document).ready ->
   
   # detect comment and leave box open

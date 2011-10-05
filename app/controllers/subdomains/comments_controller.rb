@@ -6,12 +6,12 @@
 # This controller is handling comments within the scope of subdomains (communities).
 ###
 class Subdomains::CommentsController < ApplicationController
-  respond_to :html, :js
+  respond_to :js
 ###
 # Before Filters
 ###
   before_filter :authenticate_user!
-  before_filter :create_comment_space, :only => [:new, :create]
+  before_filter :create_comment, :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
@@ -21,6 +21,7 @@ class Subdomains::CommentsController < ApplicationController
 ###
   # GET /comments/new
   def new
+    render 'new.coffee'
   end
 
   # GET /comments/1/edit
@@ -76,8 +77,6 @@ class Subdomains::CommentsController < ApplicationController
     else
       add_new_flash_message("Comment was not locked, internal rails error.", 'alert')
     end
-    redirect_to :back
-    return
   end
 
   # POST /comments/:id/unlock(.:format)
@@ -88,8 +87,6 @@ class Subdomains::CommentsController < ApplicationController
     else
       add_new_flash_message("Comment was not unlocked, internal rails error.", 'alert')
     end
-    redirect_to :back
-    return
   end
 
 ###
@@ -105,7 +102,7 @@ protected
   #
   # This before filter attempts to populate @comment using current user.
   ###
-  def create_comment_space
+  def create_comment
     @comment = Comment.new(params[:comment])
     
     @comment.user_profile = current_user.user_profile

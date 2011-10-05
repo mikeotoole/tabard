@@ -19,14 +19,14 @@
       - if comment.has_been_deleted
         %em Comment was deleted
       - elsif !comment.has_been_locked
-        = link_to 'Reply to this', new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
+        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
       - else
         %em Comment is locked
     %span.actions
       - if (can? :update, comment)
-        = link_to 'Edit comment', edit_comment_path(comment), :title => 'Edit comment', :class => 'edit'
+        = link_to 'Edit comment', edit_comment_path(comment), :remote => true, :class => 'edit', :title => 'Edit comment'
       - if (can? :destroy, comment)
-        = link_to 'Delete comment', comment, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete comment', :class => 'delete'
+        = link_to 'Delete comment', comment, :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
       - if !comment.has_been_locked and (can? :lock, comment)
         = link_to 'Lock comment', lock_comment_path(comment), :method => :lock, :class => 'lock', :title => 'Lock comment'
       - if comment.has_been_locked and (can? :unlock, comment)
