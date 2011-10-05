@@ -8,15 +8,14 @@
     = link_to @discussion.discussion_space.name, @discussion.discussion_space
     %strong= @discussion.name
 
-%section.body
+%article
   %p
     = @discussion.body
 
 - if @discussion.comments.size > 0
-  %section.comments
+  %aside.comments
     %ol
       - @discussion.comments.each do |comment|
-        %pre=YAML::dump(comment)
         = render "subdomains/comments/comment", :comment => comment
 - if @discussion.comments_enabled and !@discussion.has_been_locked
   -# TODO Doug - Make this form work

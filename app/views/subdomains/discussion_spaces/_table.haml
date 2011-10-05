@@ -19,7 +19,7 @@
             - if (can? :update, space)
               = link_to 'Edit', edit_discussion_space_path(space), :meta => 'Edit discussion space', :class => 'edit'
             - if (can? :destroy, space)
-              = link_to 'Destroy', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete discussion space', :class => 'delete'
+              = link_to 'Delete', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete discussion space', :class => 'delete'
   %tfoot
     %tr
       %td{ :colspan => 3 }

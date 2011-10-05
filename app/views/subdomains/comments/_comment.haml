@@ -1,10 +1,28 @@
 %li{ :class => html_class_names(comment) }
-  -#%pre=YAML::dump(comment)
-  %span.avatar
-    = image_tag comment.poster.avatar_url(:small)
-  %cite
-    = comment.poster.name
-  %time
-    = "#{last_action_word(comment).capitalize} #{time_ago_in_words(comment.updated_at)} ago"
   %blockquote
-    = comment.body
+    %span.avatar
+      = image_tag comment.poster.avatar_url(:small)
+    %span.meta
+      = "#{last_action_word(comment).capitalize} by"
+      = link_to comment.poster.name, comment.user_profile
+      %time= "#{time_ago_in_words(comment.updated_at)} ago"
+    %p
+      = comment.body
+      %br/
+      -#TODO Doug - Hookup link
+      = link_to 'Comment', '#', :class => 'reply'
+    %span.actions
+      - if (can? :update, comment)
+        = link_to 'Edit comment', edit_comment_path(comment), :title => 'Edit comment', :class => 'edit'
+      - if (can? :destroy, comment)
+        = link_to 'Delete comment', comment, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete comment', :class => 'delete'
+      - if !comment.has_been_locked and (can? :lock, comment)
+        -#TODO Doug - Hookup link
+        = link_to 'Lock comment', '#', :class => 'lock', :title => 'Lock comment'
+      - if comment.has_been_locked and (can? :unlock, comment)
+        -#TODO Doug - Hookup link
+        = link_to 'Unlock comment', '#', :class => 'unlock', :title => 'Unlock comment'
+  - if comment.comments.size > 0
+    %ol
+      - comment.comments.each do |reply|
+        = render "subdomains/comments/comment", :comment => reply

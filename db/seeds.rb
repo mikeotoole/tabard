@@ -100,8 +100,15 @@ puts "Adding comments to general discussion space discussion"
 comment1 = gd.comments.new(:body => "What's up RoboBilly!")
 comment1.user_profile = d_moose.user_profile
 comment1.save
-comment2 = comment1.comments.new(:body => "What's up Diabolical Moose!")
-comment2.user_profile = s_turtle.user_profile
+comment1a = comment1.comments.new(:body => "What's up Diabolical Moose!")
+comment1a.user_profile = s_turtle.user_profile
+comment1a.save
+comment1b = comment1.comments.new(:body => "You guys are weird.")
+comment1b.user_profile = d_badger.user_profile
+comment1b.save
+comment2 = gd.comments.new(:body => "Herp a derp.")
+comment2.user_profile = k_fox.user_profile
+comment2.has_been_edited = true
 comment2.save
 
 puts "Adding announcements for Just Another Headshot Clan"
