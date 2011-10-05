@@ -727,12 +727,20 @@ body
         
         .meta
           background: #fff
-          border-bottom: 1px solid #ddd
           color: #999
           font-size: 12px
-          padding: 5px 0 2px 20px
+          padding: 5px 0 0 20px
           position: relative
-          z-index: 2
+          z-index: 3
+          
+          &:before
+            border-bottom: 1px solid #ddd
+            bottom: -3px
+            content: ''
+            left: 20px
+            position: absolute
+            right: 0
+            top: 20px
           
           a
             color: #aa000b
@@ -786,13 +794,24 @@ body
           position: relative
           z-index: 2
         
+        em,
         .reply
-          background: #EBDFC4
-          +border_radius(3)
-          color: #917000
           display: block
           float: left
+          font: 12px DinMedium, sans
+          line-height: 20px
+          padding: 0 5px
           margin: 10px 0 0
+          
+        em
+          background: #eee
+          color: #999
+          font-size: 12px
+          
+        .reply
+          background: #EBDFC4
+          +border_radius(0)
+          color: #917000
           text-decoration: none
           
           &:hover
@@ -815,6 +834,105 @@ body
     
       >ol
         margin: 0 0 0 30px
+    
+    form
+      background: #EBDFC4
+      border-right: 22px solid #EBDFC4
+      margin: 0 15px 0 72px
+      position: relative
+      padding: 5px
+      
+      &:before
+        border-left: 10px solid transparent
+        border-top: 10px solid #EBDFC4
+        content: ''
+        height: 0
+        position: absolute
+        left: -10px
+        top: 10px
+        width: 0
+        z-index: 3
+      
+      .avatar
+        background: #ddd
+        border: 1px solid #eee
+        position: absolute
+        top: 0
+        left: -62px
+        z-index: 1
+        
+        img
+          border: 1px solid #fff
+          display: block
+      
+      textarea
+        background: #fff
+        border: 1px solid #BCA767
+        display: block
+        font-size: 14px
+        height: 21px
+        left: 5px
+        line-height: 20px
+        max-width: 100%
+        padding: 5px 10px
+        margin: 0
+        +transition(height .2s linear, color .2s linear)
+        width: 100%
+      
+      &:hover textarea,
+      textarea:focus,
+      textarea.open
+        color: #333
+        height: 80px
+        
+        ~ button,
+        ~ input,
+        ~ label
+          display: block
+    
+      button
+        +border_radius(0)
+        display: none
+        float: none
+        font: 12px DinMedium, sans
+        height: auto
+        line-height: 20px
+        margin: 5px 0 0
+        padding: 0 5px
+      
+      input
+        bottom: 20px
+        display: none
+        height: 1px
+        margin: 0
+        padding: 0
+        position: absolute
+        right: -5px
+        width: 1px
+        z-index: 0
+        
+        &:checked + label:before
+          background-position: -155px -5px
+      
+      label
+        bottom: 5px
+        display: none
+        font: 12px DinMedium, sans
+        line-height: 20px
+        padding: 0 5px 0 0
+        position: absolute
+        right: 0
+        
+        &:before
+          background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
+          bottom: 0
+          content: ''
+          height: 20px
+          margin: 5px 0 0 -25px
+          position: absolute
+          right: -20px
+          width: 20px
+          z-index: 2
   
   
 @import theme

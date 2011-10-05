@@ -30,25 +30,29 @@ describe Subdomains::CommentsController do
     @request.host = "#{community.subdomain}.example.com"
   end
 
+#TODO Mike - Comments should not be viewable by themselves through a show action.
+# Comments always occur within the commentable thing they are attached to.
+# Double check with us before deleting the test cases I have commented out, below - DW
 
-  describe "GET show" do
-    it "assigns the requested comment as @comment when authenticated as a user with permissions" do
-      sign_in user
-      get :show, :id => comment.id.to_s
-      assigns(:comment).should eq(comment)
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :show, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_path)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :show, :id => comment.id.to_s
-      response.should be_forbidden
-    end
-  end
+#
+#  describe "GET show" do
+#    it "assigns the requested comment as @comment when authenticated as a user with permissions" do
+#      sign_in user
+#      get :show, :id => comment.id.to_s
+#      assigns(:comment).should eq(comment)
+#    end
+#    
+#    it "should redirect to new user session path when not authenticated as a user" do
+#      get :show, :id => comment.id.to_s
+#      response.should redirect_to(new_user_session_path)
+#    end
+#    
+#    it "should respond forbidden when not a member" do
+#      sign_in non_member
+#      get :show, :id => comment.id.to_s
+#      response.should be_forbidden
+#    end
+#  end
 
   describe "GET new" do
     it "assigns a new comment as @comment when authenticated as a user with permissions" do

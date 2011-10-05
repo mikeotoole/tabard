@@ -9,19 +9,19 @@
     %p
       = comment.body
       %br/
-      -#TODO Doug - Hookup link
-      = link_to 'Comment', '#', :class => 'reply'
+      - if !comment.has_been_locked
+        = link_to 'Reply to this', new_comment_path(comment), :class => 'reply'
+      - else
+        %em Comment is locked
     %span.actions
       - if (can? :update, comment)
         = link_to 'Edit comment', edit_comment_path(comment), :title => 'Edit comment', :class => 'edit'
       - if (can? :destroy, comment)
         = link_to 'Delete comment', comment, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete comment', :class => 'delete'
       - if !comment.has_been_locked and (can? :lock, comment)
-        -#TODO Doug - Hookup link
-        = link_to 'Lock comment', '#', :class => 'lock', :title => 'Lock comment'
+        = link_to 'Lock comment', lock_comment_path(comment), :method => :lock, :class => 'lock', :title => 'Lock comment'
       - if comment.has_been_locked and (can? :unlock, comment)
-        -#TODO Doug - Hookup link
-        = link_to 'Unlock comment', '#', :class => 'unlock', :title => 'Unlock comment'
+        = link_to 'Unlock comment', unlock_comment_path(comment), :method => :unlock, :class => 'unlock', :title => 'Unlock comment'
   - if comment.comments.size > 0
     %ol
       - comment.comments.each do |reply|

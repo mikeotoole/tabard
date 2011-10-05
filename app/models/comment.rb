@@ -88,17 +88,6 @@ class Comment < ActiveRecord::Base
   end
 
   ###
-  # This method returns an array of HTML classes that should be be applied to this comment.
-  # [Returns] An array of HTML classes.
-  ###
-  def html_classes
-    html_classes = Array.new()
-    html_classes << 'locked' if has_been_locked
-    html_classes << 'edited' if has_been_edited
-    html_classes
-  end
-
-  ###
   # This method returns the original item that this comment is attached to, climbing the comment tree if needed.
   # [Returns] The original comment item.
   ###

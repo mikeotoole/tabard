@@ -39,7 +39,7 @@
             - unless profile[:is_current]
               %li
                 = image_tag(profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon))
-                = link_to( active_profile_path(:id => profile[:profile_id], :type => profile[:type])) do
+                = link_to(active_profile_path(:id => profile[:profile_id], :type => profile[:type])) do
                   = profile[:name]
           %li.extra
             - if profiles.size > 1
