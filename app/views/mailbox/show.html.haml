@@ -1,0 +1,44 @@
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  %span= @folder.name
+
+%h1= @folder.name
+
+%table
+  - if @messages.size > 0
+    %thead
+      %tr
+        %th.subject Message Subject
+        %th.name From
+        %th.date Received
+        %th.actions
+    %tbody
+      - @messages.each do |message|
+        %tr
+          %td.subject
+            - if defined? message.deleted and message.deleted
+              = message.subject
+            - else
+              = link_to message.subject, mail_path(message)
+          %td.name
+            = link_to message.author.name, message.author
+          %td.date
+            = distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+          %td.actions
+            = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
+            - if message.recipients.size > 1
+              = link_to 'Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all'
+            = link_to 'Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
+            = link_to 'Delete Message', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put, :confirm => 'Are you sure?', :class => 'move', :title => 'Delete message'
+  - else
+    %tbody
+      %tr
+        %td.empty{ :colspan => 4 } No messages.
+  %tfoot
+    %tr
+      %td{ :colspan => 4 }
+        - if @folder.name == 'Trash'
+          -#TODO - empty trash button
+          = link_to 'Empty Trash', mail_delete_all_path, :method => 'delete', :class => 'destroy', :title => 'Delete messages forever'
+        - else
+          = link_to 'New Message', compose_mail_path, :class => 'button'

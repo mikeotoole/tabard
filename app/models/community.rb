@@ -6,6 +6,8 @@
 # This class represents a community.
 ###
 class Community < ActiveRecord::Base
+# TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
+
 ###
 # Attribute accessible
 ###

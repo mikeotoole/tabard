@@ -14,19 +14,6 @@
 #  publicly_viewable :boolean         default(TRUE)
 #
 
-# == Schema Information
-#
-# Table name: user_profiles
-#
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  first_name :string(255)
-#  last_name  :string(255)
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 require 'spec_helper'
 
 describe UserProfile do
@@ -82,6 +69,26 @@ describe UserProfile do
 
   it "should respond to view_logs" do
     profile.should respond_to(:view_logs)
+  end
+  
+  it "should respond to sent_messages" do
+    profile.should respond_to(:sent_messages)
+  end
+  
+  it "should respond to received_messages" do
+    profile.should respond_to(:received_messages)
+  end
+  
+  it "should respond to folders" do
+    profile.should respond_to(:folders)
+  end
+  
+  it "should respond to inbox" do
+    profile.should respond_to(:inbox)
+  end
+  
+  it "should respond to trash" do
+    profile.should respond_to(:trash)
   end
 
 ###
@@ -171,6 +178,108 @@ describe UserProfile do
       end
       billy.user_profile.roles.should eq(all_roles)
     end
+  end
+  
+  describe "address_book" do
+    it "should return the user profiles of all users in the same communities" do
+      profile
+      new_profile = DefaultObjects.user_profile
+      new_profile.address_book.count.should eq(2)
+      new_profile.address_book.should include(DefaultObjects.community_admin.user_profile)
+      new_profile.address_book.should include(DefaultObjects.community_two.admin_profile)
+    end
+    
+    it "should be empty if the user is in no communities" do
+      profile.address_book.should be_empty
+    end
+    
+    it "should not contain the users user profile" do
+      new_profile = DefaultObjects.user_profile
+      new_profile.address_book.count.should eq(2)
+      new_profile.address_book.should_not include(profile)
+    end
+    
+    it "should not contain duplicate user profiles" do
+      profile
+      profile_one = DefaultObjects.user_profile
+      profile_two = DefaultObjects.additional_community_user_profile
+      profile_one.is_member?(DefaultObjects.community)
+      profile_one.is_member?(DefaultObjects.community_two)
+      profile_two.is_member?(DefaultObjects.community)
+      profile_two.is_member?(DefaultObjects.community_two)
+      profile_one.address_book.count.should eq(3)
+      profile_one.address_book.should include(profile_two)
+    end
+  end
+  
+  describe "sent_messages" do
+    it "should return all the users sent messages" do
+      message = create(:message)
+      new_profile = DefaultObjects.user_profile
+      message.author.should eq(new_profile)
+      new_profile.sent_messages.count.should eq(1)
+      new_profile.sent_messages.first.should eq(message)
+    end
+
+    it "should be empty if the user has no sent messages" do
+      profile.sent_messages.should be_empty
+    end
+  end
+  
+  describe "received_messages" do
+    it "should return all the users received messages" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.received_messages.count
+      message = create(:message)
+      message.recipients.first.should eq(new_profile)
+      new_profile.received_messages.count.should eq(startCount + 1)
+      new_profile.received_messages.last.should eq(message.message_associations.first)
+    end
+    
+    it "should return messages marked as deleted" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.received_messages.count
+      create(:message)
+      message = create(:message).message_associations.first
+      message.deleted = true
+      message.save.should be_true
+      new_profile.received_messages.count.should eq(startCount + 2)
+      new_profile.received_messages.find(message).deleted.should be_true
+    end
+  end
+  
+  describe "folders" do
+    it "should return all the users folders" do
+      profile.folders.count.should eq(2)
+    end
+    
+    it "should contain the users inbox folder" do
+      profile.folders.first.name.should eq("Inbox")
+    end
+    
+    it "should contain the users trash folder" do
+      profile.folders.last.name.should eq("Trash")
+    end
+  end
+  
+  describe "inbox" do
+    it "should be created with user profile" do
+      profile.inbox.should be_a(Folder)
+    end  
+  
+    it "should return the users inbox folder" do
+      profile.inbox.name.should eq("Inbox")
+    end
+  end
+  
+  describe "trash" do
+    it "should be created with user profile" do
+      profile.trash.should be_a(Folder)
+    end
+      
+    it "should return the users trash folder" do
+      profile.trash.name.should eq("Trash")
+    end  
   end
 
   describe "available_character_proxies" do

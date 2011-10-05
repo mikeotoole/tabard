@@ -30,6 +30,8 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
+    @swtor_character = SwtorCharacter.create(params[:swtor_character])
+
     profile = current_user.user_profile
     proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:default])
 

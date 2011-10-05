@@ -1,0 +1,33 @@
+%p#bcrumb
+  = link_to 'Messages', inbox_path
+  %span Sent
+
+%h1 Sent Messages
+
+%table
+  - if @messages.size > 0
+    %thead
+      %tr
+        %th.subject Message Subject
+        %th.to To
+        %th.date Sent
+    %tbody
+      - @messages.each do |message|
+        %tr
+          %td.subject
+            = link_to message.subject, sent_mail_path(message)
+          %td.to
+            - if message.recipients
+              %ul
+                - message.recipients.each do |profile|
+                  %li= link_to profile.name, profile
+          %td.date
+            = distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+  - else
+    %tbody
+      %tr
+        %td.empty{ :colspan => 3 } No messages.
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        = link_to 'New Message', compose_mail_path, :class => 'button'

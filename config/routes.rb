@@ -1,18 +1,16 @@
 DaBvRails::Application.routes.draw do
-  resources :view_logs
-
   # Users
   devise_for :users
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
-  match "/account" => "user_profiles#account", :as => "account"
+  get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
 
   # Active profile
   resource :active_profiles, :only => [:create]
-  match 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
+  post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
   resources :communities, :except => :destroy
@@ -21,15 +19,32 @@ DaBvRails::Application.routes.draw do
   resources :games, :only => :show
 
   # Characters
-  match "/wow_characters/new" => "base_characters#new", :as => "new_wow_character"
-  match "/swtor_characters/new" => "base_characters#new", :as => "new_swtor_character"
+  get "/wow_characters/new" => "base_characters#new", :as => "new_wow_character"
+  get "/swtor_characters/new" => "base_characters#new", :as => "new_swtor_character"
   resources :wow_characters, :except => [:index, :new]
   resources :swtor_characters, :except => [:index, :new]
   resources :base_characters, :only => :new
 
+  # Messaging
+  resources :sent_messages, :only => [:create]
+  get 'mail/sent/:id' => "sent_messages#show", :as => "sent_mail"
+  get 'mail/sent' => "sent_messages#index", :as => "sent_mailbox"
+  get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
+
+  get 'mail/inbox/:id' => "messages#show", :as => "mail"
+  put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
+  get 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
+  get 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
+  get 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
+  delete 'mail/delete/:id' => "messages#destroy", :as => "mail_delete"
+  delete 'mail/delete' => "messages#destroy", :as => "mail_delete_all"
+
+  get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
+  get 'mail/trash' => "mailbox#trash", :as => "trash"
+
   # Subdomains
   constraints(Subdomain) do
-    match "/" => "subdomains#index", :as => 'subdomain_home'
+    get "/" => "subdomains#index", :as => 'subdomain_home'
     scope :module => "subdomains" do
 
       # Roles and Permissions
@@ -92,9 +107,9 @@ DaBvRails::Application.routes.draw do
   get "crumblin/index"
 
   # Crumblin top level pages
-  match "/intro" => "crumblin#intro", :as => 'crumblin_intro'
-  match "/features" => "crumblin#features", :as => 'crumblin_features'
-  match "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
+  get "/intro" => "crumblin#intro", :as => 'crumblin_intro'
+  get "/features" => "crumblin#features", :as => 'crumblin_features'
+  get "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

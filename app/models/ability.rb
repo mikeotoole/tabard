@@ -200,6 +200,23 @@ class Ability
     can [:read, :accept, :reject], CommunityApplication do |community_application|
       community_application.community_admin_profile_id == user.user_profile.id
     end
+
+    # Messaging Rules
+    can :manage, Folder do |folder|
+      folder.user_profile_id == user.user_profile.id
+    end
+    cannot :destroy, Folder do |folder|
+      true
+    end
+    can :manage, Message do |message|
+      message.author_id == user.user_profile.id
+    end
+    cannot [:update, :destroy], Message do |message|
+      true
+    end
+    can :manage, MessageAssociation do |message|
+      message.recipient_id == user.user_profile.id
+    end
   end
 
   ###

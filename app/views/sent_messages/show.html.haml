@@ -1,0 +1,7 @@
+%p#bcrumb
+  = link_to 'Sent Messages', sent_mailbox_path
+  %span= @message.subject
+
+#page
+  %h1= @message.subject
+  = render 'messages/message', :locals => { :message => @message }
