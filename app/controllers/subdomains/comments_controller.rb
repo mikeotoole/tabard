@@ -6,7 +6,7 @@
 # This controller is handling comments within the scope of subdomains (communities).
 ###
 class Subdomains::CommentsController < ApplicationController
-  respond_to :html
+  respond_to :html, :js
 ###
 # Before Filters
 ###

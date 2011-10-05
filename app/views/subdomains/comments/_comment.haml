@@ -1,16 +1,25 @@
 %li{ :class => html_class_names(comment) }
   %blockquote
     %span.avatar
-      = image_tag comment.poster.avatar_url(:small)
+      - if comment.has_been_deleted
+        = image_tag asset_path('application/avatar.png')
+      - else
+        = image_tag comment.poster.avatar_url(:small)
     %span.meta
-      = "#{last_action_word(comment).capitalize} by"
-      = link_to comment.poster.name, comment.user_profile
+      - if comment.has_been_deleted
+        = last_action_word(comment).capitalize
+      - else
+        = "#{last_action_word(comment).capitalize} by"
+        = link_to comment.poster.name, comment.user_profile
       %time= "#{time_ago_in_words(comment.updated_at)} ago"
     %p
-      = comment.body
-      %br/
-      - if !comment.has_been_locked
-        = link_to 'Reply to this', new_comment_path(comment), :class => 'reply'
+      - if !comment.has_been_deleted
+        = comment.body
+        %br/
+      - if comment.has_been_deleted
+        %em Comment was deleted
+      - elsif !comment.has_been_locked
+        = link_to 'Reply to this', new_comment_path(:format => :js, :commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
       - else
         %em Comment is locked
     %span.actions

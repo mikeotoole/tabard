@@ -106,6 +106,9 @@ comment1a.save
 comment1b = comment1.comments.new(:body => "You guys are weird.")
 comment1b.user_profile = d_badger.user_profile
 comment1b.save
+comment1b2 = comment1b.comments.new(:body => "No, you are.")
+comment1b2.user_profile = d_moose.user_profile
+comment1b2.save
 comment2 = gd.comments.new(:body => "Herp a derp.")
 comment2.user_profile = k_fox.user_profile
 comment2.has_been_edited = true
