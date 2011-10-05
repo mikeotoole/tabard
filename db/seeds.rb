@@ -131,4 +131,8 @@ wow_strategies = wps.pages.new(:name => "WoW Strategies", :markup => "##WoW Stra
 wow_strategies.user_profile = s_turtle.user_profile
 wow_strategies.save
 
+puts "Creating Example Messages"
+robobilly.sent_messages.create(:subject => "Test Seeded Message From robobilly", :body => "This is a test message created in the seed file.", :to => [d_moose.id, d_badger.id])
+d_moose.sent_messages.create(:subject => "Test Seeded Message From moose", :body => "This is a test message created in the seed file.", :to => [robobilly.id, d_badger.id])
+
 end

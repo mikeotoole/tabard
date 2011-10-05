@@ -69,6 +69,10 @@ class CommunityApplication < ActiveRecord::Base
     self.character_proxies.each do |proxy|
       community_profile.approved_character_proxies << proxy
     end
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Application Accepted", :body => "Your application to #{self.community.name} has been accepted.", :to => [self.user_profile.id])
+    message.system_sent = true
+    message.save
   end
 
   ###
@@ -78,6 +82,10 @@ class CommunityApplication < ActiveRecord::Base
   def reject_application
     return false unless self.pending?
     self.update_attribute(:status, "Rejected")
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Application Rejected", :body => "Your application to #{self.community.name} has been rejected.", :to => [self.user_profile.id])
+    message.system_sent = true
+    message.save
   end
 
   ###

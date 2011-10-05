@@ -7,7 +7,7 @@
 ###
 class UserProfile < ActiveRecord::Base
 ###
-# Attribute Accessors
+# Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
       :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
@@ -23,11 +23,19 @@ class UserProfile < ActiveRecord::Base
   has_many :communities, :through => :community_profiles
   has_many :community_applications
   has_many :view_logs, :dependent => :destroy
+  has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
+  has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
+  has_many :folders, :dependent => :destroy
 
 ###
 # Delegates
 ###
   delegate :email, :to => :user
+
+###
+# Callbacks
+###
+  before_create :build_mailboxes
 
 ###
 # Uploaders
@@ -37,10 +45,8 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name,
-      :presence => true, :uniqueness => true
-  validates :user,
-      :presence => true
+  validates :display_name, :presence => true, :uniqueness => true
+  validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
@@ -124,7 +130,6 @@ class UserProfile < ActiveRecord::Base
 
   # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
   def add_new_role(role)
-    #debugger
     correct_community_profile = self.community_profiles.find_by_community_id(role.community_id)
     if correct_community_profile
       correct_community_profile.roles << role
@@ -169,11 +174,39 @@ class UserProfile < ActiveRecord::Base
     (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
   end
 
+  ###
+  # This method gets all of the users that this user can message.
+  # [Returns] An array of users that this user can message.
+  ###
+  def address_book
+    comm_profiles = self.communities.collect{|community| community.community_profiles}.flatten(1)
+    comm_profiles.collect{|comm_profile| comm_profile.user_profile}.uniq.delete_if{|user_profile| user_profile == self}
+  end
+
+  ###
+  # This method gets the user's messages inbox folder.
+  # [Returns] Folder of users inbox
+  ###
+  def inbox
+    folders.find_by_name("Inbox")
+  end
+
+  ###
+  # This method gets the user's messages trash folder.
+  # [Returns] Folder of users trash.
+  ###
+  def trash
+    folders.find_by_name("Trash")
+  end
+
 ###
 # Protected Methods
 ###
 protected
 
+###
+# Instance Methods
+###
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
   ###
@@ -193,6 +226,19 @@ protected
     rescue Fog::Storage::Rackspace::NotFound
       @previous_model_for_avatar = nil
     end
+  end
+
+###
+# Callback Methods
+###
+  ###
+  # _before_create_
+  #
+  # This method builds the user's inbox folder.
+  ###
+  def build_mailboxes
+    self.folders.build(:name => "Inbox")
+    self.folders.build(:name => "Trash")
   end
 end
 

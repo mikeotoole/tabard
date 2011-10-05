@@ -1,5 +1,5 @@
-require 'spec_helper'
-
+# require 'spec_helper'
+# 
 # describe "Discussions" do
 #   describe "GET /discussions" do
 #     it "works! (now write some real specs)" do
