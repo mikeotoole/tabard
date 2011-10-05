@@ -140,19 +140,19 @@ class Ability
       answer.user_profile_id == user.user_profile.id
     end
 
-    # Comment and Discussion Rules
-    can [:read, :create], [Comment, Discussion] do |object|
-      user.user_profile.is_member?(object.community)
+    # Discussion Rules
+    can [:read, :create], Discussion do |discussion|
+      user.user_profile.is_member?(discussion.community)
     end
-    can [:update], [Comment, Discussion] do |object|
-      (object.user_profile_id == user.user_profile.id) and not object.has_been_locked
+    can [:update], Discussion do |discussion|
+      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
     end
-    can [:destroy], [Comment, Discussion] do |object|
-      object.community.admin_profile_id == user.user_profile.id or
-      ((object.user_profile_id == user.user_profile.id) and not object.has_been_locked)
+    can [:destroy], Discussion do |discussion|
+      discussion.community.admin_profile_id == user.user_profile.id or
+      ((discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked)
     end
-    can [:unlock, :lock], [Comment, Discussion] do |object|
-      object.community.admin_profile_id == user.user_profile.id
+    can [:unlock, :lock], Discussion do |discussion|
+      discussion.community.admin_profile_id == user.user_profile.id
     end
     cannot :create, Discussion do |discussion|
       if discussion.is_announcement
@@ -160,6 +160,21 @@ class Ability
       else
         false
       end
+    end
+    
+    # Comment Rules
+    can [:read, :create], Comment do |comment|
+      user.user_profile.is_member?(comment.community)
+    end
+    can [:update], Comment do |comment|
+      (comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted
+    end
+    can [:destroy], Comment do |comment|
+      (comment.community.admin_profile_id == user.user_profile.id or
+      ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked)) and not comment.has_been_deleted
+    end
+    can [:unlock, :lock], Comment do |comment|
+      (comment.community.admin_profile_id == user.user_profile.id) and not comment.has_been_deleted
     end
 
     # Discussion Space Rules
