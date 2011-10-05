@@ -675,165 +675,193 @@ body
     margin: 30px -30px 0
     padding: 20px
     
-    li
-      border-bottom: 1px solid #fff
+    >ol
     
-      blockquote
-        margin: 0
-        padding: 0 15px 10px 72px
-        position: relative
-        
-        &:before
-          border-bottom: 1px solid #EBDFC4
-          bottom: 15px
-          content: ''
-          left: 92px
-          position: absolute
-          right: 15px
-          z-index: 3
-        
-        .avatar
-          background: #ddd
-          border: 1px solid #eee
-          border-right: 0
-          left: 10px
-          position: absolute
-          top: 10px
-          +transition(box-shadow .2s linear)
+      >li
+        border-bottom: 1px solid #fff
+      
+        blockquote
+          min-height: 88px
+          padding: 0 15px 10px 72px
+          position: relative
           
           &:before
-            background: image-url('application/comment-shadow.png') 0 0 no-repeat
+            border-bottom: 1px solid #EBDFC4
+            bottom: 15px
             content: ''
-            height: 101px
+            left: 92px
             position: absolute
-            right: 0
-            top: -14px
-            width: 18px
+            right: 15px
+            z-index: 3
           
-          &:after
-            border-left: 10px solid transparent
-            border-top: 10px solid #fff
-            content: ''
-            height: 0
-            position: absolute
-            right: 0
-            top: 10px
-            width: 0
-          
-          img
-            border: 1px solid #fff
-            border-right: 0
-            display: block
-        
-        .meta
-          background: #fff
-          color: #999
-          font-size: 12px
-          padding: 5px 0 0 20px
-          position: relative
-          z-index: 3
-          
-          &:before
-            border-bottom: 1px solid #ddd
-            bottom: -3px
-            content: ''
-            left: 20px
-            position: absolute
-            right: 0
-            top: 20px
-          
-          a
-            color: #aa000b
-            font-family: DinMedium, sans
-            text-decoration: none
-            
-            &:hover
-              color: #fff
-        
-        .actions
-          position: absolute
-          right: 15px
-          top: 0
-          z-index: 4
-          
-          a
-            background: image-url('application/icons.png') no-repeat
-            +border_radius(0)
-            display: block
-            height: 20px
-            overflow: hidden
-            +opacity(0)
-            margin: 5px 0 0
-            padding: 0
-            text-indent: -500em
-            +transition(opacity .2s linear)
-            width: 20px
-            
-            &:hover
-              +opacity(1)
-            
-            &.edit
-              background-position: -65px -5px
-            
-            &.delete
-              background-position: -35px -5px
-            
-            &.lock
-              background-position: -185px -5px
-            
-            &.unlock
-              background-position: -155px -5px
-        
-        p
-          background: #fff
-          color: #333
-          font-size: 14px
-          line-height: 20px
-          margin: 0
-          padding: 12px 40px 40px 20px
-          position: relative
-          z-index: 2
-        
-        em,
-        .reply
-          display: block
-          float: left
-          font: 12px DinMedium, sans
-          line-height: 20px
-          padding: 0 5px
-          margin: 10px 0 0
-          
-        em
-          background: #eee
-          color: #999
-          font-size: 12px
-          
-        .reply
-          background: #EBDFC4
-          +border_radius(0)
-          color: #917000
-          text-decoration: none
-          
-          &:hover
-            background: #6F2B3D
-            color: #fff
-        
-        &:hover
-        
           .avatar
-            +box_shadow(0 0 15px rgba(#000,.5))
-            border-color: #999
-        
-          .actions
+            background: #ddd
+            border: 1px solid #eee
+            border-right: 0
+            height: 62px
+            left: 10px
+            position: absolute
+            top: 10px
+            +transition(box-shadow .2s linear)
+            width: 61px
+            
+            &:before
+              background: image-url('application/comment-shadow.png') 0 0 no-repeat
+              content: ''
+              height: 101px
+              position: absolute
+              right: 0
+              top: -14px
+              width: 18px
+            
+            &:after
+              border-left: 10px solid transparent
+              border-top: 10px solid #fff
+              content: ''
+              height: 0
+              position: absolute
+              right: 0
+              top: 10px
+              width: 0
+            
+            img
+              border: 1px solid #fff
+              border-right: 0
+              display: block
           
+          .meta
+            background: #fff
+            color: #999
+            font-size: 12px
+            padding: 5px 0 0 20px
+            position: relative
+            z-index: 3
+            
+            &:before
+              border-bottom: 1px solid #ddd
+              bottom: -3px
+              content: ''
+              left: 20px
+              position: absolute
+              right: 0
+              top: 20px
+            
             a
-              +opacity(.3)
+              color: #aa000b
+              font-family: DinMedium, sans
+              text-decoration: none
+              
+              &:hover
+                color: #fff
+          
+          .actions
+            position: absolute
+            right: 15px
+            top: 0
+            z-index: 4
+            
+            a
+              background: image-url('application/icons.png') no-repeat
+              +border_radius(0)
+              display: block
+              height: 20px
+              overflow: hidden
+              +opacity(0)
+              margin: 5px 0 0
+              padding: 0
+              text-indent: -500em
+              +transition(opacity .2s linear)
+              width: 20px
               
               &:hover
                 +opacity(1)
-    
-      >ol
-        margin: 0 0 0 30px
+              
+              &.edit
+                background-position: -65px -5px
+              
+              &.delete
+                background-position: -35px -5px
+              
+              &.lock
+                background-position: -185px -5px
+              
+              &.unlock
+                background-position: -155px -5px
+          
+          p
+            background: #fff
+            color: #333
+            font-size: 14px
+            line-height: 20px
+            margin: 0
+            padding: 12px 40px 40px 20px
+            position: relative
+            z-index: 2
+          
+          em,
+          .reply
+            display: block
+            float: left
+            font: 12px DinMedium, sans
+            line-height: 20px
+            padding: 0 5px
+            margin: 10px 0 0
+            
+          em
+            background: #eee
+            color: #999
+            font-size: 12px
+            
+          .reply
+            background: #EBDFC4
+            +border_radius(0)
+            color: #917000
+            text-decoration: none
+            
+            &:hover
+              background: #6F2B3D
+              color: #fff
+          
+          &:hover
+          
+            .avatar
+              +box_shadow(0 0 15px rgba(#000,.5))
+              border-color: #999
+          
+            .actions
+            
+              a
+                +opacity(.3)
+                
+                &:hover
+                  +opacity(1)
+        
+        ol
+          margin: 0 0 0 20px
+          
+          .avatar
+            height: 42px
+            margin-left: 20px
+            width: 41px
+            
+            img
+              height: 40px
+              width: 40px
+          
+        &.deleted
+          
+          blockquote
+            
+            &:before
+              bottom: auto
+              top: 50px
+            
+            p
+              padding-top: 0
+        
+            .avatar
+              +box_shadow(none)
+              border-color: #ccc
     
     form
       background: #EBDFC4
