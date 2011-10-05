@@ -1,5 +1,9 @@
-%h1 New page
+- title "New Page | #{@community.name}"
 
-= render 'form', :page => @page
+%h1 New Page
 
-= link_to 'Back', pages_path
+.full
+  = simple_form_for [@page.page_space,@page] do |f|
+    = render 'fields', :page => @page, :f => f
+    %p.submit
+      = f.button :submit, 'Create Page'

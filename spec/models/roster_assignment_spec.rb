@@ -42,4 +42,24 @@ describe RosterAssignment do
     the_proxy = profile_with_characters.character_proxies.first
     RosterAssignment.new(:character_proxy => the_proxy, :community_profile => profile_with_characters).should_not be_valid
   end
+
+  describe "approve" do
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.approve
+    end
+    it "should remove the pending status" do
+      RosterAssignment.find(roster_assignment).pending.should be_false
+    end
+  end
+
+  describe "reject" do
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.reject
+    end
+    it "should remove the roster assignment" do
+      RosterAssignment.exists?(roster_assignment).should be_false
+    end
+  end
 end

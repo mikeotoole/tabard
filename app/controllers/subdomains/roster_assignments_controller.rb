@@ -14,10 +14,12 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :authenticate_user!
   before_filter :ensure_current_user_is_member
   before_filter :get_community_profile
-  before_filter :load_roster_assignment, :except => [:new, :create]
+  before_filter :load_roster_assignment, :except => [:new, :create, :approve, :reject]
+  before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :create]
   before_filter :find_avalible_characters
   authorize_resource
+  skip_authorize_resource :only => :pending
   skip_before_filter :limit_subdomain_access
 
   # GET /roster_assignments
@@ -67,6 +69,24 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     respond_with(@roster_assignment)
   end
 
+  # GET /roster_assignments/pending
+  def pending
+    authorize! :pending, RosterAssignment
+    @roster_assignments = current_community.pending_roster_assignments
+  end
+
+  # PUT /roster_assignments/1/approve
+  def approve
+    @roster_assignment.approve
+    redirect_to(pending_roster_assignments_path)
+  end
+
+  # PUT /roster_assignments/1/reject
+  def reject
+    @roster_assignment.reject
+    redirect_to(pending_roster_assignments_path)
+  end
+
   ###
   # _before_filter_
   #
@@ -86,6 +106,15 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def load_roster_assignment
     @roster_assignments = @community_profile.roster_assignments
     @roster_assignment = @community_profile.roster_assignments.find_by_id(params[:id])
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to populate @roster_assignment for the current_community's pending roster_assignments
+  ###
+  def load_pending_roster_assignment
+    @roster_assignment = current_community.pending_roster_assignments.find_by_id(params[:id])
   end
 
   ###

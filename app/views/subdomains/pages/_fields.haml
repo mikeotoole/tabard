@@ -1,0 +1,35 @@
+= javascript_include_tag "Markdown.Converter","Markdown.Sanitizer","Markdown.Editor"
+= stylesheet_link_tag "markdown"
+
+%fieldset
+  %ol
+    = f.input :name, :label => 'Name'
+    %li
+      .wmd-panel
+        #wmd-button-bar
+        = text_area_tag :markup, page.markup, :class => "wmd-input", :id => "wmd-input"
+    = f.input :show_in_navigation, :title => 'Main page', :type => :boolean
+
+#wmd-preview{ :class => "wmd-panel" "wmd-preview" }
+
+:javascript
+  (function () {
+      var help = function () { alert("Do you need help?"); }
+
+      var converter1 = Markdown.getSanitizingConverter();
+      var editor1 = new Markdown.Editor(converter1, "", { handler: help });
+
+      editor1.hooks.set("insertImageDialog", function (callback) {
+        alert("Please click okay to start scanning your brain...");
+        setTimeout(function () {
+            var prompt = "We have detected that you like cats. Do you want to insert an image of a cat?";
+            if (confirm(prompt))
+                callback("http://icanhascheezburger.files.wordpress.com/2007/06/schrodingers-lolcat1.jpg")
+            else
+                callback(null);
+        }, 2000);
+        return true; // tell the editor that we'll take care of getting the image url
+      });
+
+      editor1.run();
+  })();

@@ -1,0 +1,72 @@
+@import mixins
+
+
+.wmd-button-row
+  background: #ccc
+  +bg_gradient(#eee,#ccc)
+  border: 1px solid #fff
+  +border_radius(5)
+  +box_shadow(0 0 5px rgba(#000,.5))
+  height: 35px
+  margin: 0 0 10px
+  padding: 0
+  position: relative
+  
+  li
+    margin: -3px 10px
+    padding: 0
+
+  .wmd-spacer
+    background: #eee
+    display: inline-block
+    height: 10px
+    list-style: none
+    margin: 5px 0 0 18px
+    position: absolute
+    width: 1px
+
+.wmd-button 
+  cursor: pointer
+  display: inline-block
+  height: 20px
+  list-style: none
+  padding-left: 2px
+  padding-right: 3px
+  position: absolute
+  width: 20px
+
+.wmd-button > span 
+  background: image-url('markdown/icons.png') 0 0 no-repeat
+  display: inline-block
+  height: 20px
+  width: 20px
+
+.wmd-spacer1
+  left: 50px
+
+.wmd-spacer2
+  left: 175px
+
+.wmd-spacer3
+  left: 300px
+
+.wmd-prompt-background
+  background-color: Black
+
+.wmd-prompt-dialog
+  border: 1px solid #999999
+  background-color: #F5F5F5
+
+.wmd-prompt-dialog > div 
+  font-size: 0.8em
+  font-family: arial, helvetica, sans-serif
+
+.wmd-prompt-dialog > form > input[type="text"] 
+  border: 1px solid #999999
+  color: black
+
+.wmd-prompt-dialog > form > input[type="button"]
+  border: 1px solid #888888
+  font-family: trebuchet MS, helvetica, sans-serif
+  font-size: 0.8em
+  font-weight: bold

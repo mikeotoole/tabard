@@ -82,9 +82,11 @@ class Ability
     end
 
     # RosterAssignments
-    can :read, RosterAssignment
-    can :manage, RosterAssignment do |roster_assignment|
+    can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile.id == user.user_profile.id
+    end
+    can :manage, RosterAssignment do |roster_assignment|
+      roster_assignment.community_admin_profile_id == user.user_profile.id
     end
 
     # Role Rules

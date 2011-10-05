@@ -24,11 +24,28 @@ class RosterAssignment < ActiveRecord::Base
 # Delegates
 ###
   delegate :user_profile, :to => :community_profile, :prefix => true
+  delegate :community_admin_profile_id, :to => :community_profile
 
 ###
 # Callbacks
 ###
   before_create :ensure_proper_pending_status
+
+  # This method approves this roster assignment, if it is pending.
+  # [Returns] True if this was approved, otherwise false.
+  def approve
+    return false unless self.pending
+    self.update_attribute(:pending, false)
+    # TODO Mike, Send message to owner -JW
+  end
+
+  # This method rejects this roster assignment, if it is pending.
+  # [Returns] True if this was rejected, otherwise false.
+  def reject
+    return false unless self.pending
+    self.destroy
+    # TODO Mike, Send message to owner -JW
+  end
 
 ###
 # Protected Methods

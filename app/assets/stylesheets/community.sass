@@ -4,6 +4,7 @@
 @import reset
 @import bar
 
+
 #bar:before
   border-top: 1px solid #480012
   +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
@@ -140,6 +141,8 @@ body
         z-index: 11
         
         >li
+          height: 0
+          padding: 0
         
           >a
             border-top: 1px solid rgba(#000,.2)
@@ -148,6 +151,7 @@ body
             font-size: 13px
             padding: 0 10px
             position: relative
+            white-space: nowrap
             
             &:hover
               background: rgba(#000,.1)
@@ -177,9 +181,12 @@ body
           top: 30px
           +transition(opacity .2s linear, top .2s linear)
           
-          >li a
-            padding: 7px 10px
-            +transition(padding .2s linear)
+          >li
+            height: auto
+            
+            >a
+              padding: 7px 10px
+              +transition(padding .2s linear)
       
       &.current
         
@@ -205,8 +212,16 @@ body
             top: 0
             width: 30px
           
+          &:after
+            display: none
+          
           &:hover
             color: #fff
+        
+        >ul
+          +border-radius(5,0,5,5)
+          left: auto
+          right: 10px
       
       &.settings >a:before
         background-position: -90px -30px
@@ -228,7 +243,6 @@ body
   // GENERAL CONTENT
   
   a
-    +border_radius(3)
     color: #580B19
     padding: 0 3px
     text-decoration: underline
@@ -236,26 +250,64 @@ body
     
     &:hover
       background: #6F2B3D
+      +border_radius(3)
       color: #fff
       text-decoration: none
   
-  h1
+  h1,
+  h2,
+  h3
     color: #560716
     font-family: DinMedium, serif
-    font-size: 30px
     letter-spacing: -1px
     line-height: 30px
     padding: 0 0 15px
     text-decoration: none
+  
+  h1
+    font-size: 30px
+  
+  h2
+    font-size: 24px
+  
+  h3
+    font-size: 18px
     
   nav
   
     h1
+      background: #ccc
+      +bg_gradient(rgba(#fff,0),#ccc)
+      border-bottom: 1px solid #fff
       font-family: DinLight, serif
-      font-size: 18px
+      font-size: 16px
+      padding: 5px 30px
+      margin: -30px -30px 30px
       
       a
         font-family: DinMedium, serif
+      
+      strong
+        font-family: DinLight, serif
+      
+      a,
+      strong
+        margin-left: 20px
+        position: relative
+      
+        &:before
+          border-left: 1px solid #560716
+          bottom: 0
+          content: ''
+          left: -10px
+          position: absolute
+          top: 0
+        
+      a:first-child
+        margin-left: 0
+        
+        &:before
+          display: none
   
   p
     padding: 10px 0

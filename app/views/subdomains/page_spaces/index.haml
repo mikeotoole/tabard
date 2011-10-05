@@ -1,24 +1,5 @@
-%h1 Listing page_spaces
+- title "Page Spaces | #{current_community.name}"
 
-%table
-  %tr
-    %th Name
-    %th User profile
-    %th Game
-    %th Community
-    %th
-    %th
-    %th
+%h1 Page Spaces
 
-  - @page_spaces.each do |page_space|
-    %tr
-      %td= page_space.name
-      %td= page_space.game_id
-      %td= page_space.community_id
-      %td= link_to 'Show', page_space
-      %td= link_to 'Edit', edit_page_space_path(page_space)
-      %td= link_to 'Destroy', page_space, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Page space', new_page_space_path
+= render "table", :page_spaces => @page_spaces
