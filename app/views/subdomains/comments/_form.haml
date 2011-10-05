@@ -1,4 +1,4 @@
-= simple_form_for comment do |f|
+= simple_form_for comment, :remote => true do |f|
   = f.input :commentable_id, :type => :hidden, :label => false, :wrapper => false
   = f.input :commentable_type, :type => :hidden, :label => false, :wrapper => false
   -#TODO Doug - Create method for selecting a different profile by clicking/hovering over this avatar
