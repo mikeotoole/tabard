@@ -130,7 +130,6 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
-    t.integer  "user_profile_id"
     t.integer  "game_id"
     t.integer  "community_id"
     t.datetime "created_at"
@@ -140,7 +139,6 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
   add_index "discussion_spaces", ["game_id"], :name => "index_discussion_spaces_on_game_id"
-  add_index "discussion_spaces", ["user_profile_id"], :name => "index_discussion_spaces_on_user_profile_id"
 
   create_table "discussions", :force => true do |t|
     t.string   "name"
@@ -159,6 +157,15 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
   add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
   add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
+  create_table "folders", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
+
   create_table "games", :force => true do |t|
     t.string   "name"
     t.string   "type"
@@ -167,9 +174,32 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
     t.string   "pretty_url"
   end
 
+  create_table "message_associations", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "recipient_id"
+    t.integer  "folder_id"
+    t.boolean  "deleted",      :default => false
+    t.datetime "updated_at"
+  end
+
+  add_index "message_associations", ["folder_id"], :name => "index_message_associations_on_folder_id"
+  add_index "message_associations", ["message_id"], :name => "index_message_associations_on_message_id"
+  add_index "message_associations", ["recipient_id"], :name => "index_message_associations_on_recipient_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "author_id"
+    t.integer  "number_recipients"
+    t.boolean  "system_sent",       :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
+
   create_table "page_spaces", :force => true do |t|
     t.string   "name"
-    t.integer  "user_profile_id"
     t.integer  "game_id"
     t.integer  "community_id"
     t.datetime "created_at"
@@ -178,7 +208,6 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
   add_index "page_spaces", ["game_id"], :name => "index_page_spaces_on_game_id"
-  add_index "page_spaces", ["user_profile_id"], :name => "index_page_spaces_on_user_profile_id"
 
   create_table "pages", :force => true do |t|
     t.string   "name"
