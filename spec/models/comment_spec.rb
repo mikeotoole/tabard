@@ -95,33 +95,6 @@ describe Comment do
     comment.number_of_comments.should eq(3)
   end
   
-  it "html_classes should be empty if comment is not locked or edited" do
-    comment.html_classes.should be_empty
-  end
-  
-  it "html_classes should contain 'edited' if comment is not locked and is edited" do
-    comment.html_classes.should be_empty
-    comment.has_been_edited = true
-    comment.save.should be_true
-    comment.html_classes.include?('edited').should be_true
-  end
-  
-  it "html_classes should contain 'locked' if comment is locked and not edited" do
-    comment.html_classes.should be_empty
-    comment.has_been_locked = true
-    comment.save.should be_true
-    comment.html_classes.include?('locked').should be_true
-  end
-  
-  it "html_classes should contain 'locked' and 'edited' if comment is locked and edited" do
-    comment.html_classes.should be_empty
-    comment.has_been_locked = true
-    comment.has_been_edited = true
-    comment.save.should be_true
-    comment.html_classes.include?('locked').should be_true
-    comment.html_classes.include?('edited').should be_true
-  end
-  
   it "original_comment_item should return 1 if the comment has no replies" do
     leafComment = create(:comment)
     nodeComment = create(:comment)

@@ -19,10 +19,6 @@ class Subdomains::CommentsController < ApplicationController
 ###
 # REST Actions
 ###
-  # GET /comments/1
-  def show
-  end
-
   # GET /comments/new
   def new
   end
@@ -34,8 +30,13 @@ class Subdomains::CommentsController < ApplicationController
 
   # POST /comments
   def create
-    add_new_flash_message('Comment was successfully created.') if @comment.save
-    respond_with(@comment)
+    if @comment.save
+      add_new_flash_message('Comment was successfully created.')
+      redirect_to url_for(@comment.original_comment_item), :action => :show
+      return
+    else
+      respond_with(@comment)
+    end    
   end
 
   # PUT /comments/1
@@ -106,6 +107,7 @@ protected
   ###
   def create_comment_space
     @comment = Comment.new(params[:comment])
+    
     @comment.user_profile = current_user.user_profile
     @comment.character_proxy = (character_active? ? current_character.character_proxy : nil)
     @comment.form_target = params[:form_target] if params[:form_target]
