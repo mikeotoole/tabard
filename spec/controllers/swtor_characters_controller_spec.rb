@@ -56,8 +56,7 @@ describe SwtorCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in @user
-      @game = Swtor.new(:name => "My SWTOR")
-      @game.save
+      @game = DefaultObjects.swtor
       post 'create', :swtor_character => {:name => "My Test Name", :game_id => @game.id}
     end
     
@@ -76,8 +75,7 @@ describe SwtorCharactersController do
   
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
-      @game = Swtor.new(:name => "My SWTOR")
-      @game.save
+      @game = DefaultObjects.swtor
       post 'create', :swtor_character => {:name => "TestName", :game_id => @game.id}
     end
     

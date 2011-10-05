@@ -1,23 +1,22 @@
 %p#actions
-  = link_to 'Reply', mail_reply_path(@message), :method => :post, :class => 'reply', :title => 'Reply to sender'
-  - if @message.recipients.size > 1
-    = link_to('Reply All', mail_reply_all_path(@message), :method => :post, :class => 'replyall', :title => 'Reply to all') if @message.recipients.size > 1
-  = link_to 'Forward', mail_forward_path(@message), :method => :post, :class => 'forward', :title => 'Forward message'
-  = link_to 'Delete Message', message_path(@message), :method => 'delete', :confirm => 'Are you sure?', :class => 'trash', :title => 'Delete message'
+  = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
+  - if message.recipients.size > 1
+    = link_to('Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
+  = link_to 'Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
 %dl#meta
   %dt Received
-  %dd= @message.created_at.to_s(:long)
+  %dd= message.created_at.to_s(:long)
   %dt From:
-  %dd= @message.author.name
+  %dd= message.author.name
   %dt To:
   %dd
     %ul
-      - @message.recipients.each do |profile|
+      - message.recipients.each do |profile|
         %li
-          = link_to profile.name, profile_path(profile)
+          = link_to profile.name, user_profile_path(profile)
 %pre#message
-  = @message.body
+  = message.body
 %p
-  = link_to 'Reply', mail_reply_path(@message), :method => :post, :class => 'button', :title => 'Reply to sender'
-  - if @message.recipients.size > 1
-    = link_to 'Reply All', mail_reply_all_path(@message), :method => :post, :class => 'button', :title => 'Reply to all'
+  = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'button', :title => 'Reply to sender'
+  - if message.recipients.size > 1
+    = link_to 'Reply All', mail_reply_all_path(message), :method => :get, :class => 'button', :title => 'Reply to all'

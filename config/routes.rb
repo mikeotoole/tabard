@@ -5,8 +5,8 @@ DaBvRails::Application.routes.draw do
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
-  match "/account" => "user_profile#account", :as => "account"
-  match "/account/update" => "user_profile#update", :as => "update_account", :via => :put
+  get "/account" => "user_profiles#account", :as => "account"
+  match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
 
   # Active profile
   resource :active_profiles, :only => [:create]
@@ -24,13 +24,13 @@ DaBvRails::Application.routes.draw do
   resources :wow_characters, :except => [:index, :new]
   resources :swtor_characters, :except => [:index, :new]
   resources :base_characters, :only => :new
-  
+
   # Messaging
   resources :sent_messages, :only => [:create]
   get 'mail/sent/:id' => "sent_messages#show", :as => "sent_mail"
   get 'mail/sent' => "sent_messages#index", :as => "sent_mailbox"
   get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
-  
+
   get 'mail/inbox/:id' => "messages#show", :as => "mail"
   put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
   get 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
@@ -38,7 +38,7 @@ DaBvRails::Application.routes.draw do
   get 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
   delete 'mail/delete/:id' => "messages#destroy", :as => "mail_delete"
   delete 'mail/delete' => "messages#destroy", :as => "mail_delete_all"
-  
+
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 

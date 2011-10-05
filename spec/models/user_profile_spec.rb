@@ -228,20 +228,22 @@ describe UserProfile do
   
   describe "received_messages" do
     it "should return all the users received messages" do
-      message = create(:message)
       new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.received_messages.count
+      message = create(:message)
       message.recipients.first.should eq(new_profile)
-      new_profile.received_messages.count.should eq(1)
-      new_profile.received_messages.first.should eq(message.message_associations.first)
+      new_profile.received_messages.count.should eq(startCount + 1)
+      new_profile.received_messages.last.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as deleted" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.received_messages.count
       create(:message)
       message = create(:message).message_associations.first
       message.deleted = true
       message.save.should be_true
-      new_profile = DefaultObjects.additional_community_user_profile
-      new_profile.received_messages.count.should eq(2)
+      new_profile.received_messages.count.should eq(startCount + 2)
       new_profile.received_messages.find(message).deleted.should be_true
     end
   end

@@ -9,7 +9,7 @@ class CreateMessages < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :messages, :author_id
   end
 end

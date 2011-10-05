@@ -94,6 +94,7 @@ describe SentMessagesController do
   
     describe "with valid params" do
       it "creates a new Message" do
+        receiver
         expect {
           post :create, :message => attributes_for(:message)
         }.to change(Message, :count).by(1)

@@ -91,10 +91,10 @@ describe Message do
   
   it "should destroy all message associations when message is deleted" do
     message
-    MessageAssociation.all.count.should eq(1)
-    Message.all.count.should eq(1)
+    countMessageAss = MessageAssociation.all.count
+    countMessage = Message.all.count
     message.destroy
-    MessageAssociation.all.count.should eq(0)
-    Message.all.count.should eq(0)
+    MessageAssociation.all.count.should eq(countMessageAss - 1)
+    Message.all.count.should eq(countMessage - 1)
   end
 end

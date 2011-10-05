@@ -17,7 +17,7 @@ class MailboxController < ApplicationController
     @folder = current_user.inbox
     @messages = @folder.messages
     authorize!(:read, @folder)
-    render :action => 'show'
+    render 'show'
   end
 
   # GET /mail/trash(.:format)
@@ -25,6 +25,6 @@ class MailboxController < ApplicationController
     @folder = current_user.trash
     @messages = @folder.messages
     authorize!(:read, @folder)
-    render :action => 'show'
+    render 'show'
   end
 end

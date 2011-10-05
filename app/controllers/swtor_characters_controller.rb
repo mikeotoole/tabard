@@ -30,6 +30,8 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
+    @swtor_character = SwtorCharacter.create(params[:swtor_character])
+
     profile = current_user.user_profile
     proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:default])
 
@@ -41,6 +43,7 @@ class SwtorCharactersController < ApplicationController
   def update
     @swtor_character = SwtorCharacter.find(params[:id])
     authorize!(:update, @swtor_character)
+
     add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])
     respond_with(@swtor_character)
   end

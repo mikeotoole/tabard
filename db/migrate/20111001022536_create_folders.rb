@@ -6,7 +6,7 @@ class CreateFolders < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :folders, :user_profile_id
   end
 end

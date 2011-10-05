@@ -28,7 +28,7 @@ describe MailboxController do
       message
       sign_in receiver
       get :inbox
-      assigns(:messages).should eq([message.message_associations.first])
+      assigns(:messages).last.should eq(message.message_associations.first)
     end
     
     it "assigns inbox folder as @folder when authenticated as user" do

@@ -11,7 +11,7 @@ class Message < ActiveRecord::Base
 ###
   # This attribute is an array of recipient (user_profile) ids.
   attr_accessor  :to
-  
+
 ###
 # Attribute accessible
 ###

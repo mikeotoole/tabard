@@ -30,10 +30,10 @@ class UserProfile < ActiveRecord::Base
 # Delegates
 ###
   delegate :email, :to => :user
-  
+
 ###
 # Callbacks
-###  
+###
   before_create :build_mailboxes
 
 ###
@@ -217,7 +217,7 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _before_create_
   #

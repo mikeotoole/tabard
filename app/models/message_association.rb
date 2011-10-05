@@ -10,7 +10,7 @@ class MessageAssociation < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :deleted, :recipient_id, :folder_id
-  
+
 ###
 # Associations
 ###
@@ -22,7 +22,7 @@ class MessageAssociation < ActiveRecord::Base
 # Delegates
 ###
   delegate   :author, :created_at, :subject, :body, :recipients, :to => :message
-  
+
 ###
 # Validators
 ###

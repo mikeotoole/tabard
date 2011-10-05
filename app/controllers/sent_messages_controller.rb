@@ -11,7 +11,7 @@ class SentMessagesController < ApplicationController
 # Callbacks
 ###
   before_filter :authenticate_user!
-  
+
   # GET /mail/sent(.:format)
   def index
     @messages = current_user.sent_messages
@@ -46,8 +46,8 @@ class SentMessagesController < ApplicationController
         @message = current_user.sent_messages.build(:to => [-1])
         errors.each{ |error| @message.errors.add(error[:attr],error[:msg]) }
       end
-      render :action => "new"
+      render 'new'
     end
   end
-  
+
 end

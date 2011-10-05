@@ -22,7 +22,7 @@ class Folder < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :user_profile,  :presence => true  
+  validates :user_profile,  :presence => true
 end
 
 # == Schema Information
