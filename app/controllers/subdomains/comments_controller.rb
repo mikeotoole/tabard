@@ -21,7 +21,6 @@ class Subdomains::CommentsController < ApplicationController
 ###
   # GET /comments/new
   def new
-    render 'new.coffee'
   end
 
   # GET /comments/1/edit
@@ -33,11 +32,8 @@ class Subdomains::CommentsController < ApplicationController
   def create
     if @comment.save
       add_new_flash_message('Comment was successfully created.')
-      redirect_to url_for(@comment.original_comment_item), :action => :show
-      return
-    else
-      respond_with(@comment)
-    end    
+    end
+    respond_with(@comment)
   end
 
   # PUT /comments/1

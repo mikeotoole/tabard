@@ -19,7 +19,7 @@
       - if comment.has_been_deleted
         %em Comment was deleted
       - elsif !comment.has_been_locked
-        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
+        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => false, :class => 'reply'
       - else
         %em Comment is locked
     %span.actions
@@ -28,9 +28,9 @@
       - if (can? :destroy, comment)
         = link_to 'Delete comment', comment, :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
       - if !comment.has_been_locked and (can? :lock, comment)
-        = link_to 'Lock comment', lock_comment_path(comment), :method => :lock, :class => 'lock', :title => 'Lock comment'
+        = link_to 'Lock comment', lock_comment_path(comment, :format => :js), :remote => true, :method => :lock, :class => 'lock', :title => 'Lock comment'
       - if comment.has_been_locked and (can? :unlock, comment)
-        = link_to 'Unlock comment', unlock_comment_path(comment), :method => :unlock, :class => 'unlock', :title => 'Unlock comment'
+        = link_to 'Unlock comment', unlock_comment_path(comment, :format => :js), :remote => true, :method => :unlock, :class => 'unlock', :title => 'Unlock comment'
   - if comment.comments.size > 0
     %ol
       - comment.comments.each do |reply|
