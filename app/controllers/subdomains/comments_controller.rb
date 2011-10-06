@@ -7,6 +7,7 @@
 ###
 class Subdomains::CommentsController < ApplicationController
   respond_to :js
+  layout nil
 ###
 # Before Filters
 ###
