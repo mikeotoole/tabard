@@ -32,7 +32,7 @@ class Ability
 
 
     bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
-    dynamicRules(user) unless user.community_profiles.blank?
+    #dynamicRules(user, current_community) unless user.community_profiles.blank?
 
     # Define abilities for the passed in user here. For example:
     #
@@ -82,11 +82,9 @@ class Ability
     end
 
     # RosterAssignments
+    # SEE Dynamic for managing for a community.
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
-      roster_assignment.community_profile_user_profile.id == user.user_profile.id
-    end
-    can :manage, RosterAssignment do |roster_assignment|
-      roster_assignment.community_admin_profile_id == user.user_profile.id
+      roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
 
     # Role Rules
@@ -195,7 +193,7 @@ class Ability
 
     # Community Applications
     can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
-      community_application.user_profile.id == user.user_profile.id
+      community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
     can [:read, :accept, :reject], CommunityApplication do |community_application|
       community_application.community_admin_profile_id == user.user_profile.id
@@ -224,27 +222,30 @@ class Ability
   # [Args]
   #   * +user+ -> A user to define permissions on. Ensures that they have at least one community_profile.
   ###
-  def dynamicRules(user)
-    return if user.community_profiles.empty?
-    user.community_profiles.each do |community_profile|
-      community_profile.roles.each do |role|
-        role.permissions.each do |permission|
-          if permission.action?
-            case permission.permission_level
-              when "Delete"
-                decodePermission([:manage], permission.subject_class.constantize, permission.id_of_subject)
-              when "Create"
-                decodePermission([:read, :update, :create], permission.subject_class.constantize, permission.id_of_subject)
-              when "Update"
-                decodePermission([:read, :update], permission.subject_class.constantize, permission.id_of_subject)
-              when "View"
-                decodePermission([:read], permission.subject_class.constantize, permission.id_of_subject)
-              else
-                # TODO Joe/Bryan Should this be logged?
-            end
-          else
-            decodePermission(permission.action.to_sym, permission.subject_class.constantize, permission.id_of_subject)
+  def dynamicContextRules(user, current_community)
+    # Special admin rules for community owner
+    can :manage, RosterAssignment if current_community and current_community.admin_profile_id == user.user_profile_id
+
+    # Check for rules granted by roles
+    return if user.community_profiles.empty? or not user.community_profiles.where{:community == current_community}.exists?
+    community_profile = user.community_profiles.where{:community == current_community}.first
+    community_profile.roles.each do |role|
+      role.permissions.each do |permission|
+        if permission.action?
+          case permission.permission_level
+            when "Delete"
+              decodePermission([:manage], permission.subject_class.constantize, permission.id_of_subject)
+            when "Create"
+              decodePermission([:read, :update, :create], permission.subject_class.constantize, permission.id_of_subject)
+            when "Update"
+              decodePermission([:read, :update], permission.subject_class.constantize, permission.id_of_subject)
+            when "View"
+              decodePermission([:read], permission.subject_class.constantize, permission.id_of_subject)
+            else
+              # TODO Joe/Bryan Should this be logged?
           end
+        else
+          decodePermission(permission.action.to_sym, permission.subject_class.constantize, permission.id_of_subject)
         end
       end
     end

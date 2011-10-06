@@ -5,7 +5,7 @@
 #
 # This controller is for permissions.
 ###
-class Subdomains::PermissionsController < ApplicationController
+class Subdomains::PermissionsController < SubdomainsController
   respond_to :html
 
 ###

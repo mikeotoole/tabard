@@ -42,16 +42,14 @@
           %li
             -#TODO Doug - Hookup link
             = link_to 'Members', '#'
-          - if current_user and current_user.communities.include?(current_community)
-            %li{ :class => 'special settings' }
-              -#TODO Doug - Hookup link
-              = link_to 'Manage', '#'
-              %ul
-                %li= link_to 'Community Settings', edit_community_path(current_community)
-                %li= link_to 'Applications', community_applications_url
-                %li= link_to 'Roster Assigments', pending_roster_assignments_url
-                %li= link_to 'Forms', custom_forms_url
-                %li= link_to 'Permissions', roles_url
+          - if signed_in? and current_user.communities.include?(current_community)
+            - if management_navigation_items.size > 0
+              %li{ :class => 'special settings' }
+                -#TODO Doug - Hookup link
+                = link_to 'Manage', '#'
+                %ul
+                  - management_navigation_items.each do |item|
+                    %li= link_to item[:title], item[:link]
           - else
             %li{ :class => 'special signup' }
               -#TODO Doug - Hookup link

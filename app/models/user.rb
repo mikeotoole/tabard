@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
 ###
 # Delegates
 ###
+  delegate :id, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :first_name, :to => :user_profile, :allow_nil => true
   delegate :last_name, :to => :user_profile, :allow_nil => true
   delegate :display_name, :to => :user_profile, :allow_nil => true

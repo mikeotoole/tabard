@@ -27,12 +27,16 @@ class ApplicationController < ActionController::Base
   # This before_filter builds a list of the Crumblin supported games.
   before_filter :fetch_active_games
 
+  # This before_filter ensures that a user_profile or character are always active for a signed in user.
+  before_filter :ensure_active_profile
+
 ###
 # Status Code Rescues
 ###
   # This method rescues from a CanCan Access Denied Exception
   rescue_from CanCan::AccessDenied do |exception|
     #redirect_to previous_page, :alert => exception.message
+    # Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
     http_status_code(:forbidden, exception)
   end
 
@@ -142,7 +146,7 @@ protected
   #This returns the currently active character or the current user's profile.
   def current_active_profile
     return nil unless signed_in?
-    character_active? ? current_character : current_user.user_profile
+    character_active? ? current_character : current_profile
   end
   helper_method :current_active_profile
 
@@ -178,5 +182,12 @@ protected
   ###
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
+  end
+
+  def ensure_active_profile
+    if signed_in? and not current_active_profile
+      session[:profile_id] = current_user.user_profile_id
+      session[:profile_type] = "UserProfile"
+    end
   end
 end

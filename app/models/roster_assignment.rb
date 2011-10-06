@@ -23,8 +23,8 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :user_profile, :to => :community_profile, :prefix => true
-  delegate :community_admin_profile_id, :to => :community_profile
+  delegate :user_profile, :to => :community_profile, :prefix => true, :allow_nil => true
+  delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
 
 ###
 # Callbacks

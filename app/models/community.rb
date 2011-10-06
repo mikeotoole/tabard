@@ -11,7 +11,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application
+  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application, :protected_roster
 
 ###
 # Associations

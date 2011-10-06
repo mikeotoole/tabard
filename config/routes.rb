@@ -13,7 +13,7 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
-  resources :communities, :except => :destroy
+  resources :communities, :except => [:destroy, :edit, :update]
 
   # Games
   resources :games, :only => :show
@@ -46,6 +46,11 @@ DaBvRails::Application.routes.draw do
   constraints(Subdomain) do
     get "/" => "subdomains#index", :as => 'subdomain_home'
     scope :module => "subdomains" do
+
+      # Community edit/update
+      get "/community_settings" => "communities#edit", :as => "edit_community_settings"
+      match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
+      resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
       resources :roles do

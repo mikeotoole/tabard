@@ -34,24 +34,31 @@ d_badger = User.new(:email => "dirty@badger.com", :password => "Password",
                     :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger", :display_name => "Dirty Badger"})
 d_badger.skip_confirmation!
 d_badger.save
+d_badger.character_proxies.create(:user_profile => d_badger.user_profile,
+  :character => WowCharacter.create(:name => "Dirty Badger",
+  :game => wow_game,
+  :server => "Default WOW Server",
+  :faction => "Horde",
+  :race => "Orc",
+  :level => 20)
+)
 
 puts "Creating Kinky Fox!"
 k_fox = User.new(:email => "kinky@fox.com", :password => "Password",
                    :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
 k_fox.skip_confirmation!
 k_fox.save
-miss_fox = WowCharacter.create(:name => "Miss Fox",
+k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
+  :character => WowCharacter.create(:name => "Miss Fox",
   :game => wow_game,
   :server => "Default WOW Server",
   :faction => "Horde",
   :race => "Goblin",
   :level => 20)
-k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
-  :character => miss_fox
 )
 
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR!"
-jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
+jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :protected_roster => true)
 jahc.games << swtor_game
 jahc.games << wow_game
 
@@ -68,10 +75,18 @@ end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
 
-puts "Making Diabolical Moose, Snappy Turtle and Dirty Badger members of Just Another Headshot Clan..."
-jahc.promote_user_profile_to_member(d_moose.user_profile)
-jahc.promote_user_profile_to_member(s_turtle.user_profile)
-jahc.promote_user_profile_to_member(d_badger.user_profile)
+puts "Diabolical Moose, Snappy Turtle, Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
+def generate_application_from_user_profile(community, user_profile)
+  app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
+  app.prep(user_profile, community.community_application_form)
+  app.save
+  app
+end
+puts "Accepting Diabolical Moose's, Snappy Turtle's and Dirty Badger's applications"
+generate_application_from_user_profile(jahc,d_moose.user_profile).accept_application
+generate_application_from_user_profile(jahc,s_turtle.user_profile).accept_application
+generate_application_from_user_profile(jahc,d_badger.user_profile).accept_application
+generate_application_from_user_profile(jahc,k_fox.user_profile)
 
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)

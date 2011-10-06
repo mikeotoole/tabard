@@ -10,6 +10,10 @@
   %b System generated:
   = @role.system_generated
 
-= link_to 'Edit', edit_role_path(@role)
-\|
-= link_to 'Back', roles_path
+- if @role.permissions.size > 0
+  %ul
+    - @role.permissions.each do |permission|
+      %li=permission.to_yaml
+
+= link_to 'Edit', edit_role_path(@role) if can? :edit, @role
+= link_to 'Permissions', role_permissions_path(@role)

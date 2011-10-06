@@ -11,6 +11,7 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
+  before_filter :apply_dynamic_permissions
   before_filter :authenticate_user!, :except => [:index]
   skip_before_filter :limit_subdomain_access
 
@@ -37,10 +38,28 @@ class SubdomainsController < ApplicationController
 
   helper_method :current_community
 
+  def management_navigation_items
+    management_items = Array.new()
+    return management_items unless signed_in?
+    #application
+    management_items << {:link => edit_community_settings_path, :title => "Community Settings"} if can_manage(current_community)
+    management_items << {:link => community_applications_path, :title => "Applications"} if can_manage(current_community.community_applications.new())
+    management_items << {:link => pending_roster_assignments_url, :title => "Roster Assigments"} if can_manage(current_community.pending_roster_assignments.new)
+    management_items << {:link => custom_forms_url, :title => "Forms"} if can_manage(current_community.custom_forms.new)
+    management_items << {:link => roles_url, :title => "Permissions"} if can_manage(current_community.roles.new)
+    management_items
+  end
+  helper_method :management_navigation_items
+
 ###
 # Protected Methods
 ###
 protected
+
+
+  def can_manage(resource)
+    (can? :update, resource) or (can? :destroy, resource) or (can? :approve, resource) or (can? :reject, resource)
+  end
   ###
   # This method sets the layout for the controller.
   ###
@@ -55,6 +74,10 @@ protected
     @community = Community.find_by_subdomain(request.subdomain.downcase)
     redirect_to root_url(:subdomain => false), :alert => "That community does not exist" and return false unless @community
     false
+  end
+
+  def apply_dynamic_permissions
+    current_ability.dynamicContextRules(current_user, current_community) if signed_in?
   end
 
   ###
