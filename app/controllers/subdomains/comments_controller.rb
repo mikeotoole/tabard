@@ -6,7 +6,6 @@
 # This controller is handling comments within the scope of subdomains (communities).
 ###
 class Subdomains::CommentsController < ApplicationController
-  respond_to :js
   layout nil
 ###
 # Before Filters
@@ -22,11 +21,13 @@ class Subdomains::CommentsController < ApplicationController
 ###
   # GET /comments/new
   def new
+    respond_with @comment
+    # render :partial => 'form', :locals => { :comment => @comment }
   end
 
   # GET /comments/1/edit
   def edit
-    respond_with(@comment)
+    render :partial => 'form', :locals => { :comment => @comment }
   end
 
   # POST /comments
@@ -36,7 +37,7 @@ class Subdomains::CommentsController < ApplicationController
     else
       add_new_flash_message('Unable to create comment.', 'alert')
     end
-    respond_with(@comment, :layout => false)
+    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # PUT /comments/1
@@ -44,11 +45,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_edited = true
     if @comment.update_attributes(params[:comment])
       add_new_flash_message('Comment was successfully updated.')
-      redirect_to url_for(@comment.original_comment_item), :action => :show
-      return
     else
-      respond_with(@comment)
+      add_new_flash_message('Unable to update comment.', 'alert')
     end
+    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # DELETE /comments/1

@@ -1,4 +1,4 @@
-%li{ :class => html_class_names(comment) }
+%li{ :class => html_class_names(comment), :meta => comment.user_profile.display_name }
   %blockquote
     %span.avatar
       - if comment.has_been_deleted
@@ -19,7 +19,7 @@
       - if comment.has_been_deleted
         %em Comment was deleted
       - elsif !comment.has_been_locked
-        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => false, :class => 'reply'
+        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :class => 'reply'
       - else
         %em Comment is locked
     %span.actions

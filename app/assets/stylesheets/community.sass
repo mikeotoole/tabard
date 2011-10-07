@@ -904,19 +904,38 @@ body
         max-width: 100%
         padding: 5px 10px
         margin: 0
-        +transition(height .2s linear, color .2s linear)
+        +transition(height .2s linear, color .2s linear, opacity .2s linear)
         width: 100%
-      
-      &:hover textarea,
-      textarea:focus,
-      textarea.open
-        color: #333
-        height: 80px
         
-        ~ button,
-        ~ input,
-        ~ label
-          display: block
+        &:focus,
+        &.open
+          color: #333
+          height: 80px
+          
+          ~ button,
+          ~ input,
+          ~ label
+            display: block
+      
+      &.busy
+        
+        textarea
+          height: 21px
+          +opacity(.2)
+        
+        input,
+        label,
+        button
+          display: none !important
+        
+        &:after
+          background: image-url('community/busy.gif') center center no-repeat rgba(#000,.1)
+          bottom: 0
+          content: ''
+          left: 0
+          position: absolute
+          right: -22px
+          top: 0
     
       button
         +border_radius(0)
