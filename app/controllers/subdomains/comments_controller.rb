@@ -33,10 +33,10 @@ class Subdomains::CommentsController < ApplicationController
   def create
     if @comment.save
       add_new_flash_message('Comment was successfully created.')
-      render :partial => 'comment', :locals => { :comment => @comment }
     else
       add_new_flash_message('Unable to create comment.', 'alert')
     end
+    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # PUT /comments/1

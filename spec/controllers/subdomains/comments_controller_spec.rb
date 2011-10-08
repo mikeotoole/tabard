@@ -88,7 +88,7 @@ describe Subdomains::CommentsController do
 
       it "redirects to the created comment" do
         post :create, :comment => attributes_for(:comment)
-        response.should redirect_to(Comment.last.original_comment_item)
+        response.should be_success
       end
     end
 
@@ -100,7 +100,7 @@ describe Subdomains::CommentsController do
 
       it "re-renders the 'new' template" do
         post :create, :comment => attributes_for(:comment, :body => nil)
-        response.should render_template("new")
+        response.should render_template("_comment")
       end
     end
   end
@@ -141,7 +141,7 @@ describe Subdomains::CommentsController do
 
       it "redirects to the comment" do
         put :update, :id => comment.id, :comment => attributes_for(:comment)
-        response.should redirect_to(DefaultObjects.discussion)
+        response.should be_success
       end
     end
 
@@ -153,7 +153,7 @@ describe Subdomains::CommentsController do
 
       it "re-renders the 'edit' template" do
         put :update, :id => comment.id.to_s, :comment => {:body => nil}
-        response.should render_template("edit")
+        response.should render_template("_comment")
       end
     end
   end
@@ -194,14 +194,14 @@ describe Subdomains::CommentsController do
       comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
-      response.should redirect_to(comment.original_comment_item)
+      response.should be_success
     end
     
     it "redirects to the original comment item if comment has no subcomments" do
       comment.comments.should be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
-      response.should redirect_to(comment.original_comment_item)
+      response.should be_success
     end
     
     it "sets comment has_been_deleted to true if comment has subcomments" do
@@ -248,7 +248,7 @@ describe Subdomains::CommentsController do
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :lock, :id => comment.id.to_s
-      response.should redirect_to("/")
+      response.should be_success
     end
     
     it "should not lock the comment when authenticated as a user" do
@@ -290,7 +290,7 @@ describe Subdomains::CommentsController do
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => comment.id.to_s
-      response.should redirect_to("/")
+      response.should be_success
     end
     
     it "should not unlock the comment when authenticated as a user" do
