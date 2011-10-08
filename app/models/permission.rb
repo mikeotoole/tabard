@@ -10,7 +10,7 @@ class Permission < ActiveRecord::Base
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.
-  VALID_SUBJECT_CLASSES = %w( Role CustomForm PageSpace Page DiscussionSpace Discussion Comment Announcement CommunityApplication)
+  VALID_SUBJECT_CLASSES = %w( Role CustomForm PageSpace DiscussionSpace Announcement CommunityApplication )
   # This is a collection of strings that are valid for permission levels.
   VALID_PERMISSION_LEVELS = %w( View Update Create Delete )
 

@@ -27,20 +27,28 @@ describe Permission do
     end
   end
   
-  describe "subject class" do
+  describe "subject_class" do
     it "should have a limited inclusion set" do
-      valid_classes = %w{ Role } # TESTING Valid subject classes for testing.
+      valid_classes = %w{ Role CustomForm PageSpace Page DiscussionSpace Discussion Comment Announcement CommunityApplication } # TESTING Valid subject classes for testing.
       valid_classes.each do |valid_class|
         build(:permission, :subject_class => valid_class).should be_valid
+      end
+      invalid_classes = %w{ Admin User UserProfile Community } # TESTING Invalid subject classes for testing.
+      invalid_classes.each do |invalid_class|
+        build(:permission, :subject_class => invalid_class).should_not be_valid
       end
     end
   end
   
   describe "permission_level" do
     it "should have a limited inclusion set" do
-      invalid_classes = %w{ Admin User UserProfile Community } # TESTING Invalid subject classes for testing.
-      invalid_classes.each do |invalid_class|
-        build(:permission, :subject_class => invalid_class).should_not be_valid
+      valid_levels = %w{ View Update Create Delete } # TESTING Valid subject classes for testing.
+      valid_levels.each do |valid_level|
+        build(:permission, :permission_level => valid_level).should be_valid
+      end
+      invalid_levels = %w{ Make New } # TESTING Invalid subject classes for testing.
+      invalid_levels.each do |invalid_level|
+        build(:permission, :permission_level => invalid_level).should_not be_valid
       end
     end
   end

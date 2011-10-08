@@ -82,7 +82,6 @@ class Ability
     end
 
     # RosterAssignments
-    # SEE Dynamic for managing for a community.
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
@@ -227,11 +226,11 @@ class Ability
     can :manage, RosterAssignment if current_community and current_community.admin_profile_id == user.user_profile_id
 
     # Check for rules granted by roles
-    return if user.community_profiles.empty? or not user.community_profiles.where{:community == current_community}.exists?
-    community_profile = user.community_profiles.where{:community == current_community}.first
+    return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
+    community_profile = user.community_profiles.find_by_community_id(current_community.id)
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
-        if permission.action?
+        if permission.permission_level?
           case permission.permission_level
             when "Delete"
               decodePermission([:manage], permission.subject_class.constantize, permission.id_of_subject)
