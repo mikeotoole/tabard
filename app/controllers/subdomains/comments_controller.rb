@@ -101,11 +101,16 @@ protected
   # This before filter attempts to populate @comment using current user.
   ###
   def create_comment
-    @comment = Comment.new(params[:comment])
+    if params[:comment]
+      @comment = Comment.new(params[:comment]) 
+    else
+      @comment = Comment.new(:commentable_type => params[:commentable_type], :commentable_id => params[:commentable_id]) # HACK Joe talk to Doug about formatiing this better.
+    end
     
     @comment.user_profile = current_user.user_profile
     @comment.character_proxy = (character_active? ? current_character.character_proxy : nil)
     @comment.form_target = params[:form_target] if params[:form_target]
     @comment.comment_target = params[:comment_target] if params[:comment_target]
+    logger.debug @comment.to_yaml
   end
 end
