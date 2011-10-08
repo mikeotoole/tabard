@@ -21,8 +21,7 @@ class Subdomains::CommentsController < ApplicationController
 ###
   # GET /comments/new
   def new
-    respond_with @comment
-    # render :partial => 'form', :locals => { :comment => @comment }
+    render :partial => 'form', :locals => { :comment => @comment }
   end
 
   # GET /comments/1/edit

@@ -19,7 +19,7 @@
       - if comment.has_been_deleted
         %em Comment was deleted
       - elsif !comment.has_been_locked
-        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :class => 'reply'
+        = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
       - else
         %em Comment is locked
     %span.actions
