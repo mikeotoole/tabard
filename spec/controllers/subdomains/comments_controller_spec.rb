@@ -192,21 +192,41 @@ describe Subdomains::CommentsController do
   end
 
   describe "DELETE destroy when authenticated as a user with permissions" do
-    it "does not destroy the requested comment" do
-      comment
+    it "does not destroy the requested comment if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       expect {
         delete :destroy, :id => comment.id.to_s
       }.to change(Comment, :count).by(0)
     end
+    
+    it "does destroy the requested comment if it has no subcomments" do
+      comment.comments.should be_empty
+      sign_in user
+      expect {
+        delete :destroy, :id => comment.id.to_s
+      }.to change(Comment, :count).by(-1)
+    end
 
-    it "redirects to the original comment item" do
+    it "redirects to the original comment item if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
       response.should redirect_to(comment.original_comment_item)
     end
     
-    it "sets comment has_been_deleted to true" do
+    it "redirects to the original comment item if comment has no subcomments" do
+      comment.comments.should be_empty
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      response.should redirect_to(comment.original_comment_item)
+    end
+    
+    it "sets comment has_been_deleted to true if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
       Comment.find(comment).has_been_deleted.should be_true
