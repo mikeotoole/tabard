@@ -148,7 +148,7 @@ class Ability
       (object.user_profile_id == user.user_profile.id) and not object.has_been_locked
     end
     can [:destroy], [Comment, Discussion] do |object|
-      object.community.admin_profile_id == user.user_profile.id or
+      (object.community.admin_profile_id == user.user_profile.id and not object.has_been_locked) or
       ((object.user_profile_id == user.user_profile.id) and not object.has_been_locked)
     end
     can [:unlock, :lock], [Comment, Discussion] do |object|

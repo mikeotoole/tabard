@@ -231,6 +231,14 @@ describe Subdomains::CommentsController do
       delete :destroy, :id => comment.id.to_s
       Comment.find(comment).has_been_deleted.should be_true
     end
+    
+    it "should be forbidden if comment is locked" do
+      comment.has_been_locked = true
+      comment.save.should be_true
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      response.should be_forbidden
+    end
   end
   
   describe "DELETE destroy" do
