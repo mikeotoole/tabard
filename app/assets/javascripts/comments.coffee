@@ -1,62 +1,81 @@
 $(document).ready ->
   
+  # Keeps the comment box open if it has data
   $('.comments textarea')
     .live 'keypress change blur', (e) ->
       if $.trim($(this).val()) == ''
         $(this).removeClass 'open'
       else
         $(this).addClass 'open'
-        
-  $('.comments .reply')
+  
+  # Inserts a new comment form beneath the comment being replied to 
+  $('.comments .reply[data-remote]')
     .data('type', 'html')
-    .live 'ajax:success', (event, data, status, xhr) ->
-      alert(data)
-      # $(this).after(data)
     .live 'ajax:error', (xhr, status, error) ->
-      alert error
-        
-  $('.comments .delete')
+      alert 'Unable to make comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
+      li = $(this).closest('li')
+      bq = li.find('>blockquote')
+      $(this).hide()
+      bq
+        .find('p')
+        .after(data)
+      bq
+        .find('form')
+        .trigger('load')
+        .find('textarea')
+        .focus()
+  
+  # Deletes a comment and updates the DOM
+  $('.comments .delete[data-remote]')
+    .live 'ajax:error', (event, data, status, xhr) ->
       alert 'Unable to delete comment.'
-    .live 'ajax:error', (xhr, status, error) ->
-      blockquote = $(this).closest('li').find('>blockquote')
-      blockquote
-        .addClass('deleted')
+    .live 'ajax:success', (xhr, status, error) ->
+      li = $(this).closest('li')
+      bq = li.find('>blockquote')
+      li.addClass('deleted')
+      bq
         .find('.reply')
         .after('<em>Comment was deleted</em>')
         .remove()
-      blockquote
+      bq
         .find('.avatar img')
         .animate { opacity: 0 }, 2000, () ->
           $(this).remove()
-      blockquote
-        .find('.body')
+      bq
+        .find('.body, .actions')
         .remove()
-        
-  $('.comments .lock')
-    .live 'ajax:success', (event, data, status, xhr) ->
+      bq
+        .find('.meta')
+        .html('<time>Deleted less than a minute ago</time>')
+  
+  # Locks a comment and updates the DOM
+  $('.comments .lock[data-remote]')
+    .live 'ajax:error', (event, data, status, xhr) ->
       alert 'Unable to lock comment.'
-    .live 'ajax:error', (xhr, status, error) ->
+    .live 'ajax:success', (xhr, status, error) ->
       $(this)
         .closest('li')
         .addClass('locked')
-        .find('>blockquote .reply')
+        .find('>blockquote >p .reply')
         .after('<em>Comment is locked</em>')
-        
-  $('.comments .unlock')
-    .live 'ajax:success', (event, data, status, xhr) ->
-      alert 'Unable to unlock comment.'
-    .live 'ajax:error', (xhr, status, error) ->
-      $(this)
-        .closest('li')
-        .removeClass('locked')
-        .find('em')
-        .remove()
   
+  # Unlocks a comment and updates the DOM   
+  $('.comments .unlock[data-remote]')
+    .live 'ajax:error', (event, data, status, xhr) ->
+      alert 'Unable to unlock comment.'
+    .live 'ajax:success', (xhr, status, error) ->
+      li = $(this).closest('li')
+      p = li.find('>blockquote >p')
+      li.removeClass('locked')
+      p.find('em').remove()
+      p.find('.reply').show()
+  
+  # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
-    .data('type', 'html')
     .live 'load', () ->
       $(this)
+        .data('type', 'html')
         .bind 'ajax:beforeSend', () ->
           $(this)
             .addClass('busy')
@@ -71,20 +90,34 @@ $(document).ready ->
             .find('textarea')
             .focus()
         .bind 'ajax:success', (event, data, status, xhr) ->
+          if $(this).parents('li').length
+            is_inline = true
+            container = $(this).closest('li')
+            if !container.find('>ol').length
+              container.append('<ol></ol>')
+          else
+            is_inline = false
+            container = $(this).closest('.comments')
           $(this)
             .removeClass('busy')
             .find('textarea')
             .val('')
             .removeClass('open')
             .removeProp('disabled')
-          $(this)
-            .closest('.comments')
-            .find('ol:first')
+            .find('textarea')
+            .blur()
+          container
+            .find('>ol')
             .append(data)
             .find('li:last')
             .css({ opacity: 0 })
             .animate({ opacity: 1 }, 500)
-          $(this)
-            .find('textarea')
-            .blur()
+            .find('.reply')
+            .data('type', 'html')
+          if is_inline
+            $(this)
+              .closest('li')
+              .find('.reply')
+              .show()
+            $(this).remove()
     .trigger 'load'

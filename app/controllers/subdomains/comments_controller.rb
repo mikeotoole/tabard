@@ -33,10 +33,10 @@ class Subdomains::CommentsController < ApplicationController
   def create
     if @comment.save
       add_new_flash_message('Comment was successfully created.')
+      render :partial => 'comment', :locals => { :comment => @comment }
     else
       add_new_flash_message('Unable to create comment.', 'alert')
     end
-    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # PUT /comments/1
@@ -52,13 +52,13 @@ class Subdomains::CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.has_been_deleted = true;
+    @comment.has_been_deleted = true
     if @comment.save
       add_new_flash_message('Comment was successfully deleted.')
-      true
+      render :json => true
     else
       add_new_flash_message('Comment was unable to be deleted.', 'alert')
-      false
+      render :json => false
     end
   end
 
@@ -70,10 +70,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_locked = true
     if @comment.save
       add_new_flash_message("Comment was successfully locked.")
-      true
+      render :json => true
     else
-      add_new_flash_message("Comment was not locked, internal rails error.", 'alert')
-      false
+      add_new_flash_message("Unable to lock comment.", 'alert')
+      render :json => false
     end
   end
 
@@ -82,10 +82,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_locked = false
     if @comment.save
       add_new_flash_message("Comment was successfully unlocked.")
-      true
+      render :json => true
     else
-      add_new_flash_message("Comment was not unlocked, internal rails error.", 'alert')
-      false
+      add_new_flash_message("Unable to unlock comment.", 'alert')
+      render :json => false
     end
   end
 
