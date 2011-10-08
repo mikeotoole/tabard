@@ -52,8 +52,14 @@ class Subdomains::CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.has_been_deleted = true
-    if @comment.save
+    if @comment.comments.empty?
+      success = @comment.destroy
+    else
+      @comment.has_been_deleted = true;
+      success = @comment.save
+    end
+    
+    if success
       add_new_flash_message('Comment was successfully deleted.')
       render :json => true
     else
