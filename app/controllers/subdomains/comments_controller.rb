@@ -33,10 +33,10 @@ class Subdomains::CommentsController < ApplicationController
   def create
     if @comment.save
       add_new_flash_message('Comment was successfully created.')
-      render :partial => 'comment', :locals => { :comment => @comment }
     else
       add_new_flash_message('Unable to create comment.', 'alert')
     end
+    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # PUT /comments/1
@@ -52,8 +52,14 @@ class Subdomains::CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.has_been_deleted = true
-    if @comment.save
+    if @comment.comments.empty?
+      success = @comment.destroy
+    else
+      @comment.has_been_deleted = true;
+      success = @comment.save
+    end
+    
+    if success
       add_new_flash_message('Comment was successfully deleted.')
       render :json => true
     else
