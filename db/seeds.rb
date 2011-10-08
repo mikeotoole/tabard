@@ -83,10 +83,10 @@ puts "Creating Just Another Headshot Clan General Discussion Space"
 gds = jahc.discussion_spaces.create(:name => "General Chat")
 
 puts "Creating Just Another Headshot Clan WoW Discussion Space"
-wds = jahc.discussion_spaces.create(:name => "WoW", :game => wow_game)
+wds = jahc.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-sds = jahc.discussion_spaces.create(:name => "SWTOR", :game => swtor_game)
+sds = jahc.discussion_spaces.create(:name => "SWTOR", :game_id => swtor_game.id)
 
 puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
 gd = gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")

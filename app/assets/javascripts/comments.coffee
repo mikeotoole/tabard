@@ -36,15 +36,14 @@ $(document).ready ->
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
     .data('type','html')
-    .live 'click', () ->
-      $(this).closest('li').find('>blockquote >form').remove()
     .live 'ajax:error', (xhr, status, error) ->
       alert 'Unable to edit comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
-      p = li.find('>p')
+      p = bq.find('>p')
       li.addClass('editing')
+      bq.find('>form').remove()
       p.after(data)
       p.find('.body').hide()
       bq.find('>form').trigger('load')
