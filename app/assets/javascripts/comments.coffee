@@ -73,6 +73,7 @@ $(document).ready ->
         .closest('li')
         .addClass('locked')
         .find('>blockquote >p .reply[data-remote]')
+        .hide()
         .after('<em>Comment is locked</em>')
   
   # Unlocks a comment and updates the DOM   
@@ -130,7 +131,7 @@ $(document).ready ->
             container
               .find('>ol')
               .append(data)
-              .find('li:last')
+              .find('>li:last')
               .css({ opacity: 0 })
               .animate({ opacity: 1 }, 500)
               .find('a[data-remote]')
@@ -142,5 +143,5 @@ $(document).ready ->
                 .show()
               $(this).remove()
             else
-              $(this).trigger('load')
+              # $(this).trigger('load')
     .trigger 'load'
