@@ -50,7 +50,7 @@ $(document).ready ->
       bq = li.find('>blockquote')
       li.addClass('deleted')
       bq
-        .find('.reply')
+        .find('.reply[data-remote]')
         .after('<em>Comment was deleted</em>')
         .remove()
       bq
@@ -72,7 +72,7 @@ $(document).ready ->
       $(this)
         .closest('li')
         .addClass('locked')
-        .find('>blockquote >p .reply')
+        .find('>blockquote >p .reply[data-remote]')
         .after('<em>Comment is locked</em>')
   
   # Unlocks a comment and updates the DOM   
@@ -84,7 +84,7 @@ $(document).ready ->
       p = li.find('>blockquote >p')
       li.removeClass('locked')
       p.find('em').remove()
-      p.find('.reply').show()
+      p.find('.reply[data-remote]').show()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
@@ -124,7 +124,7 @@ $(document).ready ->
           if container.hasClass('editing')
             container
               .replaceWith(data)
-              .find('.reply')
+              .find('a[data-remote]')
               .data('type', 'html')
           else
             container
@@ -133,12 +133,12 @@ $(document).ready ->
               .find('li:last')
               .css({ opacity: 0 })
               .animate({ opacity: 1 }, 500)
-              .find('.reply')
+              .find('a[data-remote]')
               .data('type', 'html')
             if is_inline
               $(this)
                 .closest('li')
-                .find('.reply')
+                .find('.reply[data-remote]')
                 .show()
               $(this).remove()
             else
