@@ -55,12 +55,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_deleted = true;
     if @comment.save
       add_new_flash_message('Comment was successfully deleted.')
-      redirect_to url_for(@comment.original_comment_item), :action => :show
-      return
+      true
     else
       add_new_flash_message('Comment was unable to be deleted.', 'alert')
-      redirect_to url_for(@comment.original_comment_item), :action => :show
-      return
+      false
     end
   end
 
@@ -72,8 +70,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_locked = true
     if @comment.save
       add_new_flash_message("Comment was successfully locked.")
+      true
     else
       add_new_flash_message("Comment was not locked, internal rails error.", 'alert')
+      false
     end
   end
 
@@ -82,8 +82,10 @@ class Subdomains::CommentsController < ApplicationController
     @comment.has_been_locked = false
     if @comment.save
       add_new_flash_message("Comment was successfully unlocked.")
+      true
     else
       add_new_flash_message("Comment was not unlocked, internal rails error.", 'alert')
+      false
     end
   end
 

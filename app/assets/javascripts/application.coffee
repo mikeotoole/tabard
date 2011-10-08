@@ -14,5 +14,3 @@ $(document).ready ->
       if $.trim($(this).attr 'value') is ''
         $(this).val $(this).data 'default'
     $(this).trigger 'blur'
-  
-  false
