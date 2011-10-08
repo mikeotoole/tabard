@@ -1,0 +1,36 @@
+- if !comment.has_been_deleted or (comment.has_been_deleted and comment.comments.size > 0)
+  %li{ :class => html_class_names(comment), :meta => comment.user_profile.display_name }
+    %blockquote
+      %span.avatar
+        - if !comment.has_been_deleted
+          = image_tag comment.poster.avatar_url(:small)
+      %span.meta
+        - if comment.has_been_deleted
+          = last_action_word(comment).capitalize
+        - else
+          = "#{last_action_word(comment).capitalize} by"
+          = link_to comment.poster.name, comment.user_profile
+        %time= "#{time_ago_in_words(comment.updated_at)} ago"
+      %p
+        - if !comment.has_been_deleted
+          %span.body
+            = comment.body
+          = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, :class => 'reply'
+        - if comment.has_been_deleted
+          %em Comment was deleted
+        - elsif comment.has_been_locked
+          %em Comment is locked
+      %span.actions
+        -# TODO Doug - Talk with joe about permissions issue, below
+        - if true#(can? :update, comment)
+          = link_to 'Edit comment', edit_comment_path(comment), :remote => true, :class => 'edit', :title => 'Edit comment'
+        - if (can? :destroy, comment)
+          = link_to 'Delete comment', comment, :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
+        - if (can? :lock, comment)
+          = link_to 'Lock comment', lock_comment_path(comment), :remote => true, :method => :post, :class => 'lock', :title => 'Lock comment'
+        - if (can? :unlock, comment)
+          = link_to 'Unlock comment', unlock_comment_path(comment), :remote => true, :method => :post, :class => 'unlock', :title => 'Unlock comment'
+    - if comment.comments.size > 0
+      %ol
+        - comment.comments.each do |reply|
+          = render "subdomains/comments/comment", :comment => reply

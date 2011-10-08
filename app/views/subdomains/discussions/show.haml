@@ -1,4 +1,5 @@
 - title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
+= javascript_include_tag "comments"
 
 %nav
   %h1
@@ -8,15 +9,16 @@
     = link_to @discussion.discussion_space.name, @discussion.discussion_space
     %strong= @discussion.name
 
-%p
-  = @discussion.body
+%article
+  %p
+    = @discussion.body
 
-- if @discussion.comments.size > 0
-  %ol
-    - @discussion.comments do |comment|
-      -# TODO Doug - Hook this up after comments have been done
-      -#= render "subdomains/comments/comment", :comment => comment
-- if @discussion.comments_enabled and !@discussion.has_been_locked
-  -# TODO Doug - Make this form work
-    = render "subdomains/comments/form"
-
+- if @discussion.comments.size > 0 or (@discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new))
+  %aside.comments
+    - if @discussion.comments.size > 0
+      %ol
+        - @discussion.comments.each do |comment|
+          = render "subdomains/comments/comment", :comment => comment
+    - if @discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new)
+      %h3 Post a New Comment
+      = render 'subdomains/comments/form', :comment => @discussion.comments.new
