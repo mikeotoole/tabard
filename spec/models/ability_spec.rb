@@ -33,6 +33,10 @@ describe Ability do
       let(:ability) { Ability.new(User.new) }
       pending
     end
+    describe "A basic member" do
+      #
+      pending
+    end
   end
   describe "dynamic rules" do
     before(:each) do
