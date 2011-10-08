@@ -904,6 +904,35 @@ body
             >.avatar
               +box_shadow(none)
               border-color: #ccc
+        
+        &.editing
+          
+          >blockquote
+            
+            >p
+            
+              .reply
+                display: none
+            
+            >.actions
+              display: none
+            
+            >form
+              margin: -40px 0 12px 20px
+              
+              &:before
+                display: none
+        
+              .profile
+                display: none
+              
+              textarea
+                height: 80px
+                
+              button,
+              input,
+              label
+                display: block
       
       form
         margin: -10px 0 12px 82px
@@ -966,7 +995,7 @@ body
       &.busy
         
         textarea
-          height: 21px
+          height: 21px !important
           +opacity(.2)
         
         input,

@@ -26,6 +26,21 @@ $(document).ready ->
         .find('textarea')
         .focus()
   
+  # Inserts the a form into the DOM to edit the current comment
+  $('.comments .edit[data-remote]')
+    .data('type','html')
+    .live 'ajax:error', (xhr, status, error) ->
+      alert 'Unable to edit comment.'
+    .live 'ajax:success', (event, data, status, xhr) ->
+      li = $(this).closest('li')
+      li.addClass('editing')
+      p = li.find('>blockquote >p')
+      p.after(data)
+      p.find('.body').remove()
+      li
+        .find('>blockquote >form')
+        .trigger('load')
+  
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
@@ -106,18 +121,26 @@ $(document).ready ->
             .removeProp('disabled')
             .find('textarea')
             .blur()
-          container
-            .find('>ol')
-            .append(data)
-            .find('li:last')
-            .css({ opacity: 0 })
-            .animate({ opacity: 1 }, 500)
-            .find('.reply')
-            .data('type', 'html')
-          if is_inline
-            $(this)
-              .closest('li')
+          if container.hasClass('editing')
+            container
+              .replaceWith(data)
               .find('.reply')
-              .show()
-            $(this).remove()
+              .data('type', 'html')
+          else
+            container
+              .find('>ol')
+              .append(data)
+              .find('li:last')
+              .css({ opacity: 0 })
+              .animate({ opacity: 1 }, 500)
+              .find('.reply')
+              .data('type', 'html')
+            if is_inline
+              $(this)
+                .closest('li')
+                .find('.reply')
+                .show()
+              $(this).remove()
+            else
+              $(this).trigger('load')
     .trigger 'load'
