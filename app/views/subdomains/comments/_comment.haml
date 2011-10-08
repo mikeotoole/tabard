@@ -22,9 +22,9 @@
           %em Comment is locked
       %span.actions
         -# TODO Doug - Talk with joe about permissions issue, below
-        - if true#(can? :update, comment)
+        - if (can? :update, as_unlocked(comment))
           = link_to 'Edit comment', edit_comment_path(comment), :remote => true, :class => 'edit', :title => 'Edit comment'
-        - if (can? :destroy, comment)
+        - if (can? :destroy, as_unlocked(comment))
           = link_to 'Delete comment', comment, :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
         - if (can? :lock, comment)
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, :method => :post, :class => 'lock', :title => 'Lock comment'

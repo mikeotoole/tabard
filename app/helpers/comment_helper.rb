@@ -36,5 +36,17 @@ module CommentHelper
       'posted'
     end
   end
+  
+  ###
+  # This method allows you to pretend a comment was unlocked for the purpose of evaluating permissions
+  # [Args]
+  #   * +comment+ -> The comment to be proxied
+  # [Returns] a comment object
+  ###
+  def as_unlocked(comment)
+    proxy = comment
+    proxy.has_been_locked = false
+    proxy
+  end
 
 end

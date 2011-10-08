@@ -7,6 +7,13 @@ $(document).ready ->
         $(this).removeClass 'open'
       else
         $(this).addClass 'open'
+    .live 'blur', (e) ->
+      li = $(this).closest('li')
+      if li.length and $.trim($(this).val()) == ''
+        li
+          .find('>blockquote >p').show()
+          .find('.reply[data-remote]').show()
+        $(this).closest('form').remove()
   
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
@@ -17,9 +24,9 @@ $(document).ready ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
       $(this).hide()
-      bq
-        .find('p')
-        .after(data)
+      bq.find('>form').remove()
+      li.removeClass('editing')
+      bq.find('p').after(data)
       bq
         .find('form')
         .trigger('load')
@@ -29,17 +36,18 @@ $(document).ready ->
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
     .data('type','html')
+    .live 'click', () ->
+      $(this).closest('li').find('>blockquote >form').remove()
     .live 'ajax:error', (xhr, status, error) ->
       alert 'Unable to edit comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(this).closest('li')
+      bq = li.find('>blockquote')
+      p = li.find('>p')
       li.addClass('editing')
-      p = li.find('>blockquote >p')
       p.after(data)
-      p.find('.body').remove()
-      li
-        .find('>blockquote >form')
-        .trigger('load')
+      p.find('.body').hide()
+      bq.find('>form').trigger('load')
   
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')

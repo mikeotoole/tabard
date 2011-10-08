@@ -65,6 +65,9 @@ puts "RoboBilly is getting some characters..."
 ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
   robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
 end
+['Eliand','Blaggarth','Drejan'].each do |cname|
+  robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
+end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
 
