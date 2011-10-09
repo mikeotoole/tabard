@@ -681,6 +681,7 @@ body
     
       li
         border-bottom: 1px solid #fff
+        min-width: 500px
       
         blockquote
           min-height: 88px
@@ -734,21 +735,22 @@ body
           
           .meta
             background: #fff
+            border-bottom: 1px solid #ddd
             color: #999
             font-size: 12px
+            line-height: 15px
             overflow: hidden
-            padding: 5px 0 0 20px
+            padding: 5px 0 3px 20px
             position: relative
             z-index: 3
             
             &:before
-              border-bottom: 1px solid #ddd
-              bottom: -3px
+              border-bottom: 2px solid #fff
+              bottom: -1px
               content: ''
-              left: 20px
+              left: 0
               position: absolute
-              right: 0
-              top: 20px
+              width: 20px
             
             a
               color: #aa000b
@@ -757,6 +759,9 @@ body
               
               &:hover
                 color: #fff
+                
+            .expand
+              display: none
           
           .actions
             position: absolute
@@ -933,6 +938,30 @@ body
               input,
               label
                 display: block
+        
+        &.collapsed
+          
+          >blockquote
+            min-height: 0
+            
+            &:before
+              display: none
+          
+            .meta
+              
+              .collapse
+                display: none
+              
+              .expand
+                display: inline
+            
+            .avatar,
+            .actions,
+            p
+              display: none
+          
+          >ol
+            display: none
       
       form
         margin: -10px 0 12px 82px
@@ -1023,14 +1052,14 @@ body
         padding: 0 5px
       
       input
-        bottom: 20px
+        bottom: 14px
         display: none
         height: 1px
         margin: 0
         overflow: hidden
         padding: 0
         position: absolute
-        right: -5px
+        right: -8px
         width: 1px
         z-index: 0
         

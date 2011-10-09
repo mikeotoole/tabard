@@ -1,3 +1,15 @@
+# Setup collapse/expand functionality
+jQuery.fn.collapsable = () ->
+  this
+    .find('.meta')
+    .prepend('<a class="collapse">[ - ]</a><a class="expand">[ + ]</a> ')
+    .find('.collapse')
+    .bind 'click', () ->
+      $(this).closest('li').addClass('collapsed')
+    .siblings('.expand')
+    .bind 'click', () ->
+      $(this).closest('li').removeClass('collapsed')
+
 $(document).ready ->
   
   # Keeps the comment box open if it has data
@@ -25,7 +37,9 @@ $(document).ready ->
       bq = li.find('>blockquote')
       $(this).hide()
       bq.find('>form').remove()
-      li.removeClass('editing')
+      li
+        .removeClass('editing')
+        .collapsable
       bq.find('p').after(data)
       bq
         .find('form')
@@ -116,11 +130,11 @@ $(document).ready ->
           if $(this).parents('li').length
             is_inline = true
             container = $(this).closest('li')
-            if !container.find('>ol').length
-              container.append('<ol></ol>')
           else
             is_inline = false
             container = $(this).closest('.comments')
+          if !container.find('>ol').length
+            container.append('<ol></ol>')
           $(this)
             .removeClass('busy')
             .find('textarea')
@@ -130,10 +144,12 @@ $(document).ready ->
             .find('textarea')
             .blur()
           if container.hasClass('editing')
+            container.before(data)
+            container = container.prev()
             container
-              .replaceWith(data)
               .find('a[data-remote]')
               .data('type', 'html')
+            container.next().remove()
           else
             container
               .find('>ol')
@@ -149,6 +165,13 @@ $(document).ready ->
                 .find('.reply[data-remote]')
                 .show()
               $(this).remove()
-            else
-              # $(this).trigger('load')
+          container
+            .find('>ol >li:last')
+            .collapsable()
+            
     .trigger 'load'
+  
+  $('.comments li').collapsable()
+  $('.comments li').each () ->
+    unless ($(this).parents('li').length + 1) % 3
+      $(this).find('>blockquote >.meta .collapse').trigger('click')

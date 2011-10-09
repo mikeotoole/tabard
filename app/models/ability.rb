@@ -148,7 +148,7 @@ class Ability
       (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
     end
     can [:destroy], Discussion do |discussion|
-      (discussion.community.admin_profile_id == user.user_profile.id and not object.has_been_locked) or
+      (discussion.community.admin_profile_id == user.user_profile.id and not discussion.has_been_locked) or
       ((discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked)
     end
     can [:unlock, :lock], Discussion do |discussion|
@@ -170,7 +170,7 @@ class Ability
       (comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted
     end
     can [:destroy], Comment do |comment|
-      ((comment.community.admin_profile_id == user.user_profile.id and not object.has_been_locked) or
+      ((comment.community.admin_profile_id == user.user_profile.id and not comment.has_been_locked) or
       ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked)) and not comment.has_been_deleted
     end
     can [:unlock, :lock], Comment do |comment|
