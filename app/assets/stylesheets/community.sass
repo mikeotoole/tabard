@@ -682,11 +682,14 @@ body
       li
         border-bottom: 1px solid #fff
         min-width: 500px
+        position: relative
       
         blockquote
+          margin: 0
           min-height: 88px
-          padding: 0 15px 10px 72px
+          padding: 0 15px 10px 92px
           position: relative
+          +transition(margin .2s linear)
           
           &:before
             border-bottom: 1px solid #EBDFC4
@@ -703,17 +706,19 @@ body
             border-right: 0
             height: 62px
             left: 10px
+            +opacity(1)
             position: absolute
             top: 10px
-            +transition(box-shadow .2s linear)
+            +transition(box-shadow .2s linear, opacity 1s linear)
             width: 61px
             
             &:before
               background: image-url('application/comment-shadow.png') 0 0 no-repeat
+              border-right: 20px solid #fff
               content: ''
               height: 101px
               position: absolute
-              right: 0
+              right: -20px
               top: -14px
               width: 18px
             
@@ -740,28 +745,63 @@ body
             font-size: 12px
             line-height: 15px
             overflow: hidden
-            padding: 5px 0 3px 20px
+            padding: 5px 0 3px 0
             position: relative
-            z-index: 3
-            
-            &:before
-              border-bottom: 2px solid #fff
-              bottom: -1px
-              content: ''
-              left: 0
-              position: absolute
-              width: 20px
+            z-index: 4
             
             a
               color: #aa000b
               font-family: DinMedium, sans
+              position: relative
               text-decoration: none
               
               &:hover
                 color: #fff
                 
-            .expand
-              display: none
+                &[meta]
+                
+                  &:before
+                    background: rgba(#6F2B3D,.9)
+                    +border_radius(3)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 12px
+                    height: 15px
+                    left: 0
+                    line-height: 15px
+                    padding: 5px 10px
+                    position: absolute
+                    text-indent: 0
+                    top: -30px
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 5px solid transparent
+                    border-left: 0
+                    border-top: 5px solid rgba(#6F2B3D,.9)
+                    content: ''
+                    height: 0
+                    left: 10px
+                    position: absolute
+                    top: -5px
+                    width: 0
+              
+              &.expand
+                background: #70293D
+                +border_radius(3)
+                color: #fff
+                display: none
+                
+                &:hover
+                  background: #aa000b
+              
+              &.collapse
+                background: #bbb
+                +border_radius(3)
+                color: #fff
+                
+                &:hover
+                  background: #aa000b
           
           .actions
             position: absolute
@@ -799,12 +839,11 @@ body
                 display: none
           
           p
-            background: #fff
             color: #333
             font-size: 14px
             line-height: 20px
             margin: 0
-            padding: 12px 40px 40px 20px
+            padding: 12px 40px 40px 0
             position: relative
             z-index: 2
             
@@ -851,6 +890,10 @@ body
         
         ol
           margin: 0 0 0 20px
+          position: relative
+          
+          >li.collapsed >blockquote
+            margin: 0 0 0 -62px
           
           .avatar
             background-size: 40px 40px
@@ -913,6 +956,8 @@ body
         &.editing
           
           >blockquote
+            margin: 0 0 0 -82px
+            min-height: 0
             
             >p
             
@@ -942,29 +987,36 @@ body
         &.collapsed
           
           >blockquote
+            margin: 0 0 0 -82px
             min-height: 0
             
             &:before
               display: none
-          
+            
             .meta
-              
+            
               .collapse
                 display: none
               
               .expand
                 display: inline
             
-            .avatar,
-            .actions,
-            p
+            .avatar
+              +opacity(0)
+              +transition(none)
+            
+            .meta
+              margin-left: 1px
+              
+            p,
+            .actions
               display: none
           
           >ol
             display: none
       
       form
-        margin: -10px 0 12px 82px
+        margin: -10px 0 12px 62px
     
     form
       background: #EBDFC4

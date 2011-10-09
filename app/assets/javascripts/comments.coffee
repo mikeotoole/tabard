@@ -2,7 +2,7 @@
 jQuery.fn.collapsable = () ->
   this
     .find('.meta')
-    .prepend('<a class="collapse">[ - ]</a><a class="expand">[ + ]</a> ')
+    .prepend('<a class="collapse" title="Hide comments">⇠</a><a class="expand" title="Show comments">☰</a> ')
     .find('.collapse')
     .bind 'click', () ->
       $(this).closest('li').addClass('collapsed')
@@ -90,8 +90,7 @@ $(document).ready ->
     .live 'ajax:error', (event, data, status, xhr) ->
       alert 'Unable to lock comment.'
     .live 'ajax:success', (xhr, status, error) ->
-      $(this)
-        .closest('li')
+      $(this).closest('li')
         .addClass('locked')
         .find('>blockquote >p .reply[data-remote]')
         .hide()
@@ -173,5 +172,5 @@ $(document).ready ->
   
   $('.comments li').collapsable()
   $('.comments li').each () ->
-    unless ($(this).parents('li').length + 1) % 3
+    unless ($(this).parents('li').length + 6) % 5
       $(this).find('>blockquote >.meta .collapse').trigger('click')
