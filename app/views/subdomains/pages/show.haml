@@ -1,11 +1,11 @@
-- title "#{@page.name} | #{@page.page_space.name} | #{current_community.name}"
+- title "#{@page.name} | #{@page.page_space_name} | #{current_community.name}"
 
 %nav
   %h1
     = link_to "Page Spaces", page_spaces_path
     - if @page.page_space.game
-      %rt= " — #{@page.page_space.game.name}"
-    = link_to @page.page_space.name, @page.page_space
+      %rt= " — #{@page.page_space.game_name}"
+    = link_to @page.page_space_name, @page.page_space
     %strong= @page.name
 
 %section
