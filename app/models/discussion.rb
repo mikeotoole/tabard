@@ -98,7 +98,7 @@ class Discussion < ActiveRecord::Base
   end
 
   ###
-  # This method validates that the selected game is valid for the community.
+  # This method validates that the selected character is valid for the community.
   ###
   def character_is_valid_for_user_profile
     return unless self.character_proxy

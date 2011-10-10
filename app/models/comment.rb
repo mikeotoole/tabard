@@ -50,6 +50,7 @@ class Comment < ActiveRecord::Base
   validates :user_profile, :presence => true
   validates :community, :presence => true
   validates :commentable, :presence => true
+  validate :character_is_valid_for_user_profile
 
 ###
 # Public Methods
@@ -113,6 +114,14 @@ class Comment < ActiveRecord::Base
   # The commentable_type always needs to be of the base class type and not the subclass type.
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
+  end
+
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def character_is_valid_for_user_profile
+    return unless self.character_proxy
+    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 
 ###

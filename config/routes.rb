@@ -97,9 +97,7 @@ DaBvRails::Application.routes.draw do
       resources :page_spaces do
         resources :pages, :shallow => true
       end
-
     end
-
   end
 
   # Crumblin Home page
