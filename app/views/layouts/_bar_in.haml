@@ -47,4 +47,4 @@
             - else
               = link_to 'Add new character', new_base_character_path
   -# TODO Doug, get the correct link for image avatar size from Joe. Also, this will need to link to the currently active characer edit view.
-  = link_to image_tag(current_active_profile.avatar_url(:tiny)), current_active_profile, :class => 'avatar'
+  = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

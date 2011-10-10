@@ -27,6 +27,9 @@ class ApplicationController < ActionController::Base
   # This before_filter builds a list of the Crumblin supported games.
   before_filter :fetch_active_games
 
+  # This before_filter ensures that a profile is active.
+  before_filter :ensure_active_profile
+
 ###
 # Status Code Rescues
 ###
@@ -132,19 +135,12 @@ protected
 
   # Returns the currently active user profile or nil if there isn't one.
   def current_profile
-    return unless profile_active?
+    return nil unless profile_active?
     if defined? session[:profile_type].constantize
       @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
     end
   end
   helper_method :current_profile
-
-  #This returns the currently active character or the current user's profile.
-  def current_active_profile
-    return nil unless signed_in?
-    character_active? ? current_character : current_user.user_profile
-  end
-  helper_method :current_active_profile
 
   # Returns an Array with the users profile and characters info.
   def profiles
@@ -196,7 +192,7 @@ protected
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_active_profile
-    if signed_in? and not current_active_profile
+    if signed_in? and not current_profile
       session[:profile_id] = current_user.user_profile_id
       session[:profile_type] = "UserProfile"
     end
