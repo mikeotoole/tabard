@@ -116,7 +116,6 @@ protected
     end
 
     @comment.user_profile = current_user.user_profile
-    @comment.character_proxy = (character_active? ? current_character.character_proxy : nil)
     @comment.form_target = params[:form_target] if params[:form_target]
     @comment.comment_target = params[:comment_target] if params[:comment_target]
     logger.debug @comment.to_yaml
