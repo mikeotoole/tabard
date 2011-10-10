@@ -149,7 +149,7 @@ protected
   # Returns an Array with the users profile and characters info.
   def profiles
     if signed_in?
-      profile_collection = current_user.active_profile_helper_collection
+      profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
       profiles = Array.new
       profile_collection.each do |profile|
         profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }
@@ -158,6 +158,16 @@ protected
     end
   end
   helper_method :profiles
+
+  def current_community
+    nil
+  end
+  helper_method :current_community
+
+  def current_game
+    nil
+  end
+  helper_method :current_game
 
 ###
 # Callback Methods

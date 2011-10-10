@@ -161,7 +161,7 @@ class Ability
         false
       end
     end
-    
+
     # Comment Rules
     can [:read, :create], Comment do |comment|
       user.user_profile.is_member?(comment.community)
@@ -170,11 +170,11 @@ class Ability
       (comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted
     end
     can [:destroy], Comment do |comment|
-      ((comment.community.admin_profile_id == user.user_profile.id and not comment.has_been_locked) or
+      ((comment.community_admin_profile_id == user.user_profile.id and not comment.has_been_locked) or
       ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked)) and not comment.has_been_deleted
     end
     can [:unlock, :lock], Comment do |comment|
-      (comment.community.admin_profile_id == user.user_profile.id) and not comment.has_been_deleted
+      (comment.community_admin_profile_id == user.user_profile.id) and not comment.has_been_deleted
     end
 
     # Discussion Space Rules

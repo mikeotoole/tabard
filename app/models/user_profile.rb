@@ -170,8 +170,12 @@ class UserProfile < ActiveRecord::Base
   # This method gets an array of possible active profile options.
   # [Returns] An array that user profile + all of their characters.
   ###
-  def active_profile_helper_collection
-    (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
+  def active_profile_helper_collection(community, game)
+    if community
+      return (Array.new() << (self)).concat(self.available_character_proxies(community,game).map{|proxy| proxy.character})
+    else
+      return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
+    end
   end
 
   ###

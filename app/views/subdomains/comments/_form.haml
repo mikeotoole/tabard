@@ -4,6 +4,7 @@
   -#TODO Doug - Create method for selecting a different profile by clicking/hovering over this avatar
   %span.profile
     = image_tag current_user.user_profile.avatar_url(:tiny)
+  - #f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(current_users_available_character_proxies, current_user.user_profile.display_name), :as => :radio, :wrapper_html => { :class => 'select' }
   = f.input :body, :label => false, :wrapper => false
   %button{ :type => 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'
   = f.input :has_been_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false

@@ -90,6 +90,11 @@ class Subdomains::DiscussionsController < SubdomainsController
     return
   end
 
+  def current_game
+    @discussion.discussion_space_game
+  end
+  helper_method :current_game
+
 ###
 # Protected Methods
 ###

@@ -62,11 +62,14 @@ puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
 
 puts "RoboBilly is getting some characters..."
+rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
 ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
+  proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
+  rb_cp.approved_character_proxies << proxy
 end
 ['Eliand','Blaggarth','Drejan'].each do |cname|
-  robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
+  proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
+  rb_cp.approved_character_proxies << proxy
 end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW

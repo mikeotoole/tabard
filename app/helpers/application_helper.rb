@@ -130,4 +130,8 @@ module ApplicationHelper
     collection.concat(objects.map{ |o| [o.send(name_attr), o.send(id_attr)] })
   end
 
+  def current_users_available_character_proxies
+    current_user.available_character_proxies(current_community,current_game)
+  end
+
 end

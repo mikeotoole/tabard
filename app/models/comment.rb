@@ -39,6 +39,11 @@ class Comment < ActiveRecord::Base
   after_initialize :get_community_id_from_source
 
 ###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :prefix => true
+
+###
 # Validators
 ###
   validates :body, :presence => true

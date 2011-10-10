@@ -59,6 +59,11 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     respond_with(@discussion_space)
   end
 
+  def current_game
+    @discussion_space ? @discussion_space.game : nil
+  end
+  helper_method :current_game
+
 ###
 # Protected Methods
 ###

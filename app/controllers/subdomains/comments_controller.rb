@@ -58,7 +58,7 @@ class Subdomains::CommentsController < ApplicationController
       @comment.has_been_deleted = true;
       success = @comment.save
     end
-    
+
     if success
       add_new_flash_message('Comment was successfully deleted.')
       render :json => true
@@ -110,11 +110,11 @@ protected
   ###
   def create_comment
     if params[:comment]
-      @comment = Comment.new(params[:comment]) 
+      @comment = Comment.new(params[:comment])
     else
       @comment = Comment.new(:commentable_type => params[:commentable_type], :commentable_id => params[:commentable_id]) # HACK Joe talk to Doug about formatiing this better.
     end
-    
+
     @comment.user_profile = current_user.user_profile
     @comment.character_proxy = (character_active? ? current_character.character_proxy : nil)
     @comment.form_target = params[:form_target] if params[:form_target]

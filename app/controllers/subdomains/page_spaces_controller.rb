@@ -58,6 +58,11 @@ class Subdomains::PageSpacesController < SubdomainsController
     respond_with(@page_space)
   end
 
+  def current_game
+    @page_space.game
+  end
+  helper_method :current_game
+
 ###
 # Protected Methods
 ###

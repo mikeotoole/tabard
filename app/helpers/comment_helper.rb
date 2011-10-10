@@ -37,7 +37,7 @@ module CommentHelper
       'posted'
     end
   end
-  
+
   ###
   # This method allows you to pretend a comment was unlocked for the purpose of evaluating permissions
   # [Args]
@@ -49,5 +49,4 @@ module CommentHelper
     proxy.has_been_locked = false
     proxy
   end
-
 end
