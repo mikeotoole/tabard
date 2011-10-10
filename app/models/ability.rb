@@ -230,21 +230,25 @@ class Ability
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
-        if permission.permission_level?
-          case permission.permission_level
-            when "Delete"
-              decodePermission([:manage], permission.subject_class.constantize, permission.id_of_subject)
-            when "Create"
-              decodePermission([:read, :update, :create], permission.subject_class.constantize, permission.id_of_subject)
-            when "Update"
-              decodePermission([:read, :update], permission.subject_class.constantize, permission.id_of_subject)
-            when "View"
-              decodePermission([:read], permission.subject_class.constantize, permission.id_of_subject)
-            else
-              # TODO Joe/Bryan Should this be logged?
-          end
+        action = Array.new
+        case permission.permission_level
+          when "Delete"
+            action.concat([:read, :update, :create, :destroy])
+          when "Create"
+            action.concat([:read, :update, :create])
+          when "Update"
+            action.concat([:read, :update])
+          when "View"
+            action.concat([:read])
+          else
+            # TODO Joe/Bryan Should this be logged?
+        end
+        action.concat([:lock]) if permission.can_lock
+        action.concat([:accept]) if permission.can_accept
+        if permission.parent_association_for_subject.blank?
+          decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)
         else
-          decodePermission(permission.action.to_sym, permission.subject_class.constantize, permission.id_of_subject)
+          decodeNestedPermission(action, permission.subject_class.constantize, permission.parent_association_for_subject, permission.id_of_parent)
         end
       end
     end
@@ -264,6 +268,20 @@ class Ability
       can action, subject_class do |subject_class_instance|
         subject_class_instance.id == subject_id
       end
+    end
+  end
+
+  ###
+  # This method decodes a permission to a cancan ability.
+  # [Args]
+  #   * +action+ -> This is a CanCan action to apply to the subject class.
+  #   * +subject_class+ -> This is the class to apply the action to.
+  #   * +parent_relation+ -> This is the method to use to find the parent so that the id can be verified.
+  #   * +parent_id+ -> This is the id of the parent.
+  ###
+  def decodeNestedPermission(action, subject_class, parent_relation, parent_id)
+    can action, subject_class do |subject_class_instance|
+      subject_class_instance.send(parent_relation).id == subject_id
     end
   end
 end

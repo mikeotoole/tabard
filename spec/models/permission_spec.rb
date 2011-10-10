@@ -2,14 +2,17 @@
 #
 # Table name: permissions
 #
-#  id               :integer         not null, primary key
-#  role_id          :integer
-#  action           :string(255)
-#  permission_level :string(255)
-#  subject_class    :string(255)
-#  id_of_subject    :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id                             :integer         not null, primary key
+#  role_id                        :integer
+#  permission_level               :string(255)
+#  subject_class                  :string(255)
+#  id_of_subject                  :string(255)
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  can_lock                       :boolean         default(FALSE)
+#  can_accept                     :boolean         default(FALSE)
+#  parent_association_for_subject :string(255)
+#  id_of_parent                   :integer
 #
 
 require 'spec_helper'
@@ -51,21 +54,5 @@ describe Permission do
         build(:permission, :permission_level => invalid_level).should_not be_valid
       end
     end
-  end
-  
-  it "should be valid with an action and no permission" do
-    build(:permission, :action => "manage", :permission_level => "").should be_valid
-  end
-  
-  it "should be valid with a permission and no action" do
-    build(:permission, :action => "", :permission_level => "View").should be_valid
-  end
-  
-  it "should not be valid with no permission and no action" do
-    build(:permission, :action => "", :permission_level => "").should_not be_valid
-  end
-  
-  it "should not be valid with a permission and an action" do
-    build(:permission, :action => "manage", :permission_level => "View").should_not be_valid
   end
 end

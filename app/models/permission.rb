@@ -11,6 +11,7 @@ class Permission < ActiveRecord::Base
 ###
   # This is a collection of strings that are valid for subject classes.
   VALID_SUBJECT_CLASSES = %w( Role CustomForm PageSpace DiscussionSpace Announcement CommunityApplication )
+  VALID_PARENT_ASSOCIATIONS = %w( discussion_space page_space )
   # This is a collection of strings that are valid for permission levels.
   VALID_PERMISSION_LEVELS = %w( View Update Create Delete )
 
@@ -27,12 +28,16 @@ class Permission < ActiveRecord::Base
   validates :subject_class, :presence => true,
       :inclusion => { :in => VALID_SUBJECT_CLASSES, :message => "%{value} is not currently a supported permissionable" }
 
-  validates :permission_level, :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" },
-      :unless => Proc.new { |permission| permission.permission_level.blank? }
+  validates :permission_level, :presence => true, 
+      :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" }
 
+  validates :parent_association_for_subject, :inclusion => { :in => VALID_PARENT_ASSOCIATIONS, :message => "%{value} is not a valid parent."}, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
 
-  validate :action_or_permission_level
-
+  validates :id_of_parent, :presence => true, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
+  validates :parent_association_for_subject, :presence => true, :unless => Proc.new { |permission| permission.id_of_parent.blank?}
+      
+  validate :only_subject_id_if_not_nested
+  
 ###
 # Delegates
 ###
@@ -41,12 +46,14 @@ class Permission < ActiveRecord::Base
 ###
 # Public Methods
 ###
-  def action_or_permission_level
-    if !(action.blank? ^ permission_level.blank?)
-      self.errors[:base] << "Specify an action or permission level, but not both"
-    end
+  def only_subject_id_if_not_nested
+    errors.add(:base, "You can not have both id_of_subject and parent_association_for_subject/id_of_parent") if (not self.id_of_subject.blank?) and ((not self.id_of_parent.blank?) or (not self.parent_association_for_subject.blank?))
   end
 end
+
+
+
+
 
 
 
@@ -54,13 +61,16 @@ end
 #
 # Table name: permissions
 #
-#  id               :integer         not null, primary key
-#  role_id          :integer
-#  action           :string(255)
-#  permission_level :string(255)
-#  subject_class    :string(255)
-#  id_of_subject    :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id                             :integer         not null, primary key
+#  role_id                        :integer
+#  permission_level               :string(255)
+#  subject_class                  :string(255)
+#  id_of_subject                  :string(255)
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  can_lock                       :boolean         default(FALSE)
+#  can_accept                     :boolean         default(FALSE)
+#  parent_association_for_subject :string(255)
+#  id_of_parent                   :integer
 #
 

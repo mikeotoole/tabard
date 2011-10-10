@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111003171533) do
+ActiveRecord::Schema.define(:version => 20111008212727) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -226,12 +226,15 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
-    t.string   "action"
     t.string   "permission_level"
     t.string   "subject_class"
     t.string   "id_of_subject"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "can_lock",                       :default => false
+    t.boolean  "can_accept",                     :default => false
+    t.string   "parent_association_for_subject"
+    t.integer  "id_of_parent"
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
