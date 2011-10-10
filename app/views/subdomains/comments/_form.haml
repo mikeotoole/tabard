@@ -1,10 +1,23 @@
+- unique = Time.now.to_i.to_s
 = simple_form_for comment, :remote => true do |f|
-  = f.input :commentable_id, :as => :hidden
-  = f.input :commentable_type, :as => :hidden
-  -#TODO Doug - Create method for selecting a different profile by clicking/hovering over this avatar
-  %span.profile
-    = image_tag current_user.user_profile.avatar_url(:tiny)
-  - #f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(current_users_available_character_proxies, current_user.user_profile.display_name), :as => :radio, :wrapper_html => { :class => 'select' }
-  = f.input :body, :label => false, :wrapper => false
+  = f.input :commentable_id, :as => :hidden, :input_html => { :id => 'comment_commentable_id_'+unique }
+  = f.input :commentable_type, :as => :hidden, :input_html => { :id => 'comment_commentable_type_'+unique }
+  %ul.profile
+    %li
+      - if current_profile == current_user.user_profile
+        %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '', :checked => 'checked' }
+      - else
+        %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '' }
+      %label{ :for => 'comment_character_proxy_id_0_'+unique }
+        = image_tag current_user.user_profile.avatar_url(:tiny), :title => current_user.user_profile.display_name
+    - available_characters.each do |proxy|
+      %li
+        - if proxy.character == current_profile
+          %input{ :id => 'comment_character_proxy_id_'+proxy.character_id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]',  :value => proxy.id, :checked => 'checked' }
+        - else
+          %input{ :id => 'comment_character_proxy_id_'+proxy.character_id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id }
+        %label{ :for => 'comment_character_proxy_id_'+proxy.character_id.to_s }
+          = image_tag proxy.avatar_url(:tiny), :title => proxy.name
+  = f.input :body, :label => false, :wrapper => false, :input_html => { :id => 'comment_body_'+unique }
   %button{ :type => 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'
-  = f.input :has_been_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false
+  = f.input :has_been_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false, :input_html => { :id => 'comment_has_been_locked_'+unique }
