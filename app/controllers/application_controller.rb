@@ -189,4 +189,16 @@ protected
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
+
+  ###
+  # _before_filter_
+  #
+  # This method ensures that a profile is active, or it will default to the user_profile
+  ###
+  def ensure_active_profile
+    if signed_in? and not current_active_profile
+      session[:profile_id] = current_user.user_profile_id
+      session[:profile_type] = "UserProfile"
+    end
+  end
 end
