@@ -1,5 +1,5 @@
 - unique = Time.now.to_i.to_s
-= simple_form_for comment, :remote => true do |f|
+= simple_form_for comment, :remote => true, :html => { 'data-type' => :text } do |f|
   = f.input :commentable_id, :as => :hidden, :input_html => { :id => 'comment_commentable_id_'+unique }
   = f.input :commentable_type, :as => :hidden, :input_html => { :id => 'comment_commentable_type_'+unique }
   %ul.profile

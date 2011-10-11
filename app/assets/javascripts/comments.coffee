@@ -11,8 +11,6 @@ jQuery.fn.collapsable = ->
       $(this).closest('li').removeClass('collapsed')
 
 $(document).ready ->
-
-  $('.comments a[data-remote]').data('type','html')
   
   # Keeps the comment box open if it has data
   $('.comments textarea')
@@ -32,7 +30,6 @@ $(document).ready ->
   
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
-    .data('type', 'html')
     .live 'ajax:error', (xhr, status, error) ->
       alert 'Unable to make comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
@@ -43,16 +40,15 @@ $(document).ready ->
         .addClass('replying')
         .removeClass('editing')
         .collapsable
-      bq.find('p').after(data)
+      bq.find('p').after(xhr.responseText)
       bq
-        .find('form')
+        .find('>form')
         .trigger('load')
         .find('textarea')
         .focus()
   
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
-    .data('type','html')
     .live 'ajax:error', (xhr, status, error) ->
       alert 'Unable to edit comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
@@ -61,7 +57,7 @@ $(document).ready ->
       p = bq.find('>p')
       li.addClass('editing')
       bq.find('>form').remove()
-      p.after(data)
+      p.after(xhr.responseText)
       bq.find('>form').trigger('load')
   
   # Deletes a comment and updates the DOM
@@ -111,16 +107,10 @@ $(document).ready ->
   $('.comments form[data-remote]')
     .live 'load', ->
       $(this)
-        .data('type','html')
         .bind 'ajax:beforeSend', ->
-          $(this)
-            .addClass('busy')
-            .prop('disabled', true)
+          $(this).addClass('busy')
         .bind 'ajax:error', (xhr, status, error) ->
-          $(this)
-            .removeClass('busy')
-            .find('textarea')
-            .removeProp('disabled')
+          $(this).removeClass('busy')
           alert 'Error: unable to post comment.'
           $(this)
             .find('textarea')
@@ -139,33 +129,23 @@ $(document).ready ->
             .find('textarea')
             .val('')
             .removeClass('open')
-            .removeProp('disabled')
             .blur()
           if container.hasClass('replying')
             container.removeClass('replying')
           if container.hasClass('editing')
-            container.before(data)
+            container.before(xhr.responseText)
             container = container.prev()
-            container
-              .find('a[data-remote]')
-              .data('type', 'html')
             container.next().remove()
           else
             container
               .find('>ol')
-              .append(data)
+              .append(xhr.responseText)
               .find('>li:last')
               .css({ opacity: 0, marginLeft: -20 })
               .animate({ opacity: 1, marginLeft: 0 }, 1000)
-              .find('a[data-remote]')
-              .data('type', 'html')
             if is_inline
               offsetY = container.find('>ol li:last').offset().top
               $(document).scrollTop(offsetY - 150)
-              $(this).remove()
-            else
-              $(this).after($(this).clone())
-              $(this).next().trigger('load')
               $(this).remove()
           container
             .find('>ol >li:last')
