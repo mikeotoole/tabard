@@ -690,6 +690,7 @@ body
           padding: 0 15px 10px 92px
           position: relative
           +transition(margin .2s linear)
+          z-index: 3
           
           &:before
             border-bottom: 1px solid #EBDFC4
@@ -1033,9 +1034,9 @@ body
             .meta
               margin-left: 1px
               
-            p,
-            form,
-            .actions
+            >p,
+            >form,
+            >.actions
               display: none
           
           >ol
@@ -1066,6 +1067,7 @@ body
       .profile
         background: #eee
         margin: 0
+        overflow: hidden
         padding: 0
         position: absolute
         top: 0
@@ -1098,11 +1100,9 @@ body
           input
             display: block
             height: 1px
-            left: 15px
-            +opacity(0)
+            margin: 20px
             overflow: hidden
             position: absolute
-            top: 15px
             width: 1px
             
             &:checked + label
@@ -1113,6 +1113,7 @@ body
           +border_radius(5)
           +box_shadow(0 0 15px rgba(#000,.5))
           left: -72px
+          overflow: visible !important
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)

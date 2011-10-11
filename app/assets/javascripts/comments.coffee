@@ -28,7 +28,6 @@ $(document).ready ->
         bq = $(this).find('>blockquote')
         if $.trim(bq.find('>form textarea').val()) == ''
           $(this).removeClass('editing replying')
-          bq.find('>p').show()
           bq.find('>form').remove()
   
   # Inserts a new comment form beneath the comment being replied to 
@@ -165,7 +164,9 @@ $(document).ready ->
               $(document).scrollTop(offsetY - 150)
               $(this).remove()
             else
-              $(this).trigger('load')
+              $(this).after($(this).clone())
+              $(this).next().trigger('load')
+              $(this).remove()
           container
             .find('>ol >li:last')
             .collapsable()
