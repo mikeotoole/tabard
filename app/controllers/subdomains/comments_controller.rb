@@ -6,8 +6,8 @@
 # This controller is handling comments within the scope of subdomains (communities).
 ###
 class Subdomains::CommentsController < ApplicationController
-  respond_to :js, :html, :text
-  #layout nil
+  layout nil
+  
 ###
 # Before Filters
 ###
@@ -16,6 +16,11 @@ class Subdomains::CommentsController < ApplicationController
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
+  
+###
+# After Filters
+###
+  skip_after_filter :remember_current_page
 
 ###
 # REST Actions

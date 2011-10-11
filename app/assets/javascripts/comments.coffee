@@ -14,12 +14,12 @@ $(document).ready ->
   
   # Keeps the comment box open if it has data
   $('.comments textarea')
-    .live 'keypress change blur', (e) ->
+    .bind 'keypress change blur', (e) ->
       if $.trim($(this).val()) == ''
-        $(this).removeClass 'open'
+        $(this).removeClass('open')
       else
-        $(this).addClass 'open'
-    .live 'focus', (e) ->
+        $(this).addClass('open')
+    .bind 'focus', (e) ->
       li = $(this).closest('li')
       lis = $(this).closest('.comments').find('ol >li').not(li)
       lis.each ->
@@ -112,9 +112,7 @@ $(document).ready ->
         .bind 'ajax:error', (xhr, status, error) ->
           $(this).removeClass('busy')
           alert 'Error: unable to post comment.'
-          $(this)
-            .find('textarea')
-            .focus()
+          $(this).find('textarea').focus()
         .bind 'ajax:success', (event, data, status, xhr) ->
           if $(this).parents('li').length
             is_inline = true
@@ -127,8 +125,8 @@ $(document).ready ->
           $(this)
             .removeClass('busy')
             .find('textarea')
-            .val('')
             .removeClass('open')
+            .val('')
             .blur()
           if container.hasClass('replying')
             container.removeClass('replying')
