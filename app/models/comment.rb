@@ -42,6 +42,9 @@ class Comment < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :created_at, :to => :user_profile, :prefix => true
+
 
 ###
 # Validators
@@ -74,6 +77,18 @@ class Comment < ActiveRecord::Base
   end
 
   ###
+  # This method gets the name of the poster.
+  # [Returns] The name of the character or user_profile.
+  ###
+  def poster_name
+    if self.character_proxy
+      return self.character_proxy.name
+    else
+      return self.user_profile.display_name
+    end
+  end
+
+  ###
   # This method checks to see if a character posted this comment.
   # [Returns] True if a character made this comment, otherwise false.
   ###
@@ -86,9 +101,9 @@ class Comment < ActiveRecord::Base
   # [Returns] An integer that contains the number of comments this comment has including itself.
   ###
   def number_of_comments
-   temp_total_num_comments = 1
+   temp_total_num_comments = 1 unless self.has_been_deleted
    comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments
+     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
    end
    temp_total_num_comments
   end

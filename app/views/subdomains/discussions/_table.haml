@@ -16,7 +16,7 @@
             = discussion.comments.last.poster.name
         %td
           - if discussion.comments_enabled
-            = discussion.comments.size
+            = discussion.number_of_comments
           - else
             Closed
         %td.actions

@@ -163,7 +163,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] True if the specified user is the owner of this character, otherwise false.
   ###
   def owned_by_user?(unknown_user)
-    self.user == unknown_user
+    self.user.id == unknown_user.id
   end
 
   ###

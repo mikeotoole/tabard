@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Subdomains::RolesController do
-  let(:user) { create(:user) }
+  let(:user_profile) { create(:user_profile)}
+  let(:user) { user_profile.user }
   let(:admin_user) { create(:community_admin) }
   let(:community) { admin_user.user_profile.owned_communities.first }
   let(:role) { create(:role, :community => community) }
