@@ -16,6 +16,7 @@ class Subdomains::RolesController < SubdomainsController
   before_filter :create_role, :only => [:new, :create]
   authorize_resource
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_current_user_is_member
 
   # GET /roles
   def index

@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe ActiveProfilesController do
   let(:billy) { create(:billy) }
-  let(:another_person) { create(:billy, :email => "herp@derp.com") }
+  let(:another_profile) { create(:user_profile_with_characters) }
+  let(:another_person) { another_profile.user }
 
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
@@ -37,9 +38,9 @@ describe ActiveProfilesController do
       post 'create', :id => another_person.user_profile.id, :type => another_person.user_profile.class
     end
 
-    it "should not activate user_profile" do
-      session[:profile_type].should be_nil
-      session[:profile_id].should be_nil
+    it "should activate current_user user_profile" do
+      session[:profile_type].should eq "UserProfile"
+      session[:profile_id].should eq billy.user_profile.id
     end
 
     it "should redirect to root path" do
@@ -67,9 +68,9 @@ describe ActiveProfilesController do
       post 'create', :id => @character.id, :type => @character.class
     end
 
-    it "should not activate user_profile" do
-      session[:profile_type].should be_nil
-      session[:profile_id].should be_nil
+    it "should activate current_user user_profile" do
+      session[:profile_type].should eq "UserProfile"
+      session[:profile_id].should eq billy.user_profile.id
     end
 
     it "should redirect to root path" do

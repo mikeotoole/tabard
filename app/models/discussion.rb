@@ -74,7 +74,7 @@ class Discussion < ActiveRecord::Base
   def number_of_comments
    temp_total_num_comments = 0
    comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments
+     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
    end
    temp_total_num_comments
   end

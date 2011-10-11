@@ -9,7 +9,7 @@
           = last_action_word(comment).capitalize
         - else
           = "#{last_action_word(comment).capitalize} by"
-          = link_to comment.poster.name, comment.user_profile, :meta => "#{comment.user_profile.display_name} — Crumblin since " + (l comment.user_profile.created_at, :format => :short)
+          = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since " + (l comment.user_profile_created_at, :format => :short)
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
         - if !comment.has_been_deleted

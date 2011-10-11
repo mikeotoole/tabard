@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe CommunitiesController do
   let(:billy) { create(:billy) }
-  let(:user) { create(:user) }
+  let(:user_profile) { create(:user_profile)}
+  let(:user) { user_profile.user }
   let(:admin_user) { create(:community_admin) }
   let(:community) { admin_user.user_profile.owned_communities.first }
   let(:community_att) { attributes_for(:community, :name => "TestName")}

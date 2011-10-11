@@ -155,16 +155,19 @@ protected
   end
   helper_method :profiles
 
+  # This method returns the current community that is in scope.
   def current_community
     nil
   end
   helper_method :current_community
 
+  # This method returns the current game that is in scope.
   def current_game
     nil
   end
   helper_method :current_game
 
+  # This method activates a profile, given a profile_id and profile_type.
   def activate_profile(profile_id, profile_type)
     session[:profile_id] = profile_id
     session[:profile_type] = profile_type
@@ -198,7 +201,7 @@ protected
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_active_profile_is_valid
-    if signed_in? 
+    if signed_in?
       unless current_profile
         activate_profile(current_user.user_profile_id, "UserProfile")
       end
@@ -212,7 +215,5 @@ protected
         end
       end
     end
-    puts current_profile.to_yaml
-    puts session.to_yaml
   end
 end

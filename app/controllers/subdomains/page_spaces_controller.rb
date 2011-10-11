@@ -59,6 +59,7 @@ class Subdomains::PageSpacesController < SubdomainsController
     respond_with(@page_space)
   end
 
+  # This method returns the current game that is in scope.
   def current_game
     @page_space.game
   end
