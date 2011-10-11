@@ -34,6 +34,7 @@ class CharacterProxy < ActiveRecord::Base
 # Delegates
 ###
   delegate :id, :to => :character, :prefix => true
+  delegate :class, :to => :character, :prefix => true
   delegate :name, :to => :character
   delegate :game, :to => :character
   delegate :game_id, :to => :character

@@ -17,6 +17,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   before_filter :find_discussion_space_from_params
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions

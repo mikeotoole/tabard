@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_active_games
 
   # This before_filter ensures that a profile is active.
-  before_filter :ensure_active_profile
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # Status Code Rescues
@@ -165,6 +165,12 @@ protected
   end
   helper_method :current_game
 
+  def activate_profile(profile_id, profile_type)
+    session[:profile_id] = profile_id
+    session[:profile_type] = profile_type
+    @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
+  end
+
 ###
 # Callback Methods
 ###
@@ -191,10 +197,22 @@ protected
   #
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
-  def ensure_active_profile
-    if signed_in? and not current_profile
-      session[:profile_id] = current_user.user_profile_id
-      session[:profile_type] = "UserProfile"
+  def ensure_active_profile_is_valid
+    if signed_in? 
+      unless current_profile
+        activate_profile(current_user.user_profile_id, "UserProfile")
+      end
+      if character_active? and not current_user.available_character_proxies(current_community,current_game).include?(current_character.character_proxy)
+        default_character_proxy = nil
+        default_character_proxy = current_user.default_character_proxy_for_a_game(current_game) if current_game
+        if current_user.available_character_proxies(current_community,current_game).include?(default_character_proxy)
+          activate_profile(default_character_proxy.character_id, default_character_proxy.character_class.to_s)
+        else
+          activate_profile(current_user.user_profile_id, "UserProfile")
+        end
+      end
     end
+    puts current_profile.to_yaml
+    puts session.to_yaml
   end
 end

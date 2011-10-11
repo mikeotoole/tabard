@@ -16,6 +16,7 @@ class Subdomains::PagesController < SubdomainsController
   before_filter :create_page, :only => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
