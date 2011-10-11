@@ -8,16 +8,16 @@
         %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '', :checked => 'checked' }
       - else
         %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '' }
-      %label{ :for => 'comment_character_proxy_id_0_'+unique }
-        = image_tag current_user.user_profile.avatar_url(:tiny), :title => current_user.user_profile.display_name
+      %label{ :for => 'comment_character_proxy_id_0_'+unique, :meta => current_user.user_profile.display_name }
+        = image_tag current_user.user_profile.avatar_url(:tiny)
     - available_characters.each do |proxy|
       %li
         - if proxy.character == current_profile
-          %input{ :id => 'comment_character_proxy_id_'+proxy.character_id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]',  :value => proxy.id, :checked => 'checked' }
+          %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]',  :value => proxy.id, :checked => 'checked' }
         - else
-          %input{ :id => 'comment_character_proxy_id_'+proxy.character_id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id }
-        %label{ :for => 'comment_character_proxy_id_'+proxy.character_id.to_s }
-          = image_tag proxy.avatar_url(:tiny), :title => proxy.name
+          %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id }
+        %label{ :for => 'comment_character_proxy_id_'+proxy.id.to_s, :meta => proxy.name }
+          = image_tag proxy.avatar_url(:tiny)
   = f.input :body, :label => false, :wrapper => false, :input_html => { :id => 'comment_body_'+unique }
   %button{ :type => 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'
   = f.input :has_been_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false, :input_html => { :id => 'comment_has_been_locked_'+unique }

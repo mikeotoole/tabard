@@ -1,16 +1,18 @@
 # Setup collapse/expand functionality
-jQuery.fn.collapsable = () ->
+jQuery.fn.collapsable = ->
   this
     .find('.meta')
-    .prepend('<a class="collapse" title="Hide comments">⇠</a><a class="expand" title="Show comments">☰</a> ')
+    .prepend('<a class="collapse" title="Hide comments">←</a><a class="expand" title="Show comments">↪</a> ')
     .find('.collapse')
-    .bind 'click', () ->
+    .bind 'click', ->
       $(this).closest('li').addClass('collapsed')
     .siblings('.expand')
-    .bind 'click', () ->
+    .bind 'click', ->
       $(this).closest('li').removeClass('collapsed')
 
 $(document).ready ->
+
+  $('.comments a[data-remote]').data('type','html')
   
   # Keeps the comment box open if it has data
   $('.comments textarea')
@@ -19,13 +21,15 @@ $(document).ready ->
         $(this).removeClass 'open'
       else
         $(this).addClass 'open'
-    .live 'blur', (e) ->
+    .live 'focus', (e) ->
       li = $(this).closest('li')
-      if li.length and $.trim($(this).val()) == ''
-        li
-          .find('>blockquote >p').show()
-          .find('.reply[data-remote]').show()
-        $(this).closest('form').remove()
+      lis = $(this).closest('.comments').find('ol >li').not(li)
+      lis.each ->
+        bq = $(this).find('>blockquote')
+        if $.trim(bq.find('>form textarea').val()) == ''
+          $(this).removeClass('editing replying')
+          bq.find('>p').show()
+          bq.find('>form').remove()
   
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
@@ -35,9 +39,9 @@ $(document).ready ->
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
-      $(this).hide()
       bq.find('>form').remove()
       li
+        .addClass('replying')
         .removeClass('editing')
         .collapsable
       bq.find('p').after(data)
@@ -59,7 +63,6 @@ $(document).ready ->
       li.addClass('editing')
       bq.find('>form').remove()
       p.after(data)
-      p.find('.body').hide()
       bq.find('>form').trigger('load')
   
   # Deletes a comment and updates the DOM
@@ -76,7 +79,7 @@ $(document).ready ->
         .remove()
       bq
         .find('.avatar img')
-        .animate { opacity: 0 }, 2000, () ->
+        .animate { opacity: 0 }, 2000, ->
           $(this).remove()
       bq
         .find('.body, .actions')
@@ -93,7 +96,6 @@ $(document).ready ->
       $(this).closest('li')
         .addClass('locked')
         .find('>blockquote >p .reply[data-remote]')
-        .hide()
         .after('<em>Comment is locked</em>')
   
   # Unlocks a comment and updates the DOM   
@@ -105,14 +107,13 @@ $(document).ready ->
       p = li.find('>blockquote >p')
       li.removeClass('locked')
       p.find('em').remove()
-      p.find('.reply[data-remote]').show()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
-    .live 'load', () ->
+    .live 'load', ->
       $(this)
-        .data('type', 'html')
-        .bind 'ajax:beforeSend', () ->
+        .data('type','html')
+        .bind 'ajax:beforeSend', ->
           $(this)
             .addClass('busy')
             .prop('disabled', true)
@@ -140,8 +141,9 @@ $(document).ready ->
             .val('')
             .removeClass('open')
             .removeProp('disabled')
-            .find('textarea')
             .blur()
+          if container.hasClass('replying')
+            container.removeClass('replying')
           if container.hasClass('editing')
             container.before(data)
             container = container.prev()
@@ -154,23 +156,22 @@ $(document).ready ->
               .find('>ol')
               .append(data)
               .find('>li:last')
-              .css({ opacity: 0 })
-              .animate({ opacity: 1 }, 500)
+              .css({ opacity: 0, marginLeft: -20 })
+              .animate({ opacity: 1, marginLeft: 0 }, 1000)
               .find('a[data-remote]')
               .data('type', 'html')
             if is_inline
-              $(this)
-                .closest('li')
-                .find('.reply[data-remote]')
-                .show()
+              offsetY = container.find('>ol li:last').offset().top
+              $(document).scrollTop(offsetY - 150)
               $(this).remove()
+            else
+              $(this).trigger('load')
           container
             .find('>ol >li:last')
             .collapsable()
-            
     .trigger 'load'
   
   $('.comments li').collapsable()
-  $('.comments li').each () ->
+  $('.comments li').each ->
     unless ($(this).parents('li').length + 6) % 5
       $(this).find('>blockquote >.meta .collapse').trigger('click')

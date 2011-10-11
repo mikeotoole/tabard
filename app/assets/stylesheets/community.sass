@@ -756,6 +756,7 @@ body
               text-decoration: none
               
               &:hover
+                background: #aa000b
                 color: #fff
                 
                 &[meta]
@@ -839,7 +840,7 @@ body
                 display: none
           
           p
-            color: #333
+            color: #000
             font-size: 14px
             line-height: 20px
             margin: 0
@@ -910,6 +911,21 @@ body
               height: 40px
               width: 40px
         
+        &.owned
+        
+          >blockquote
+            
+            >.meta
+            
+              a[meta]
+                background: #70293D
+                +border_radius(3)
+                color: #fff
+                
+                &:hover
+                  background: #aa000b
+                  color: #fff
+        
         &.locked
           
           >blockquote
@@ -953,14 +969,23 @@ body
               +box_shadow(none)
               border-color: #ccc
         
+        &.replying
+          
+          >blockquote
+          
+            >p
+              
+              .reply
+                display: none
+        
         &.editing
           
           >blockquote
-            margin: 0 0 0 -82px
             min-height: 0
             
             >p
             
+              .body,
               .reply
                 display: none
             
@@ -968,7 +993,7 @@ body
               display: none
             
             >form
-              margin: -40px 0 12px 20px
+              margin: -40px 0 12px 0
               
               &:before
                 display: none
@@ -1009,6 +1034,7 @@ body
               margin-left: 1px
               
             p,
+            form,
             .actions
               display: none
           
@@ -1038,11 +1064,13 @@ body
         z-index: 3
       
       .profile
+        background: #eee
         margin: 0
         padding: 0
         position: absolute
         top: 0
         left: -62px
+        +transition(box-shadow .2s linear)
         z-index: 1
         
         li
@@ -1059,37 +1087,86 @@ body
             height: 44px
             position: relative
             width: 44px
+            +transition(background .2s linear)
             z-index: 2
-            
-            &:before
-              display: none
             
             img
               background: #ddd
               border: 1px solid #fff
               margin: 1px
           
-          input[type='radio']
+          input
             display: block
             height: 1px
-            left: 5px
+            left: 15px
+            +opacity(0)
             overflow: hidden
             position: absolute
-            top: 5px
+            top: 15px
             width: 1px
-            z-index: 1
             
             &:checked + label
               display: block
+              +transition(none)
         
         &:hover
+          +border_radius(5)
+          +box_shadow(0 0 15px rgba(#000,.5))
+          left: -72px
+          padding: 10px
+          top: -10px
+          +transition(padding .2s linear, left .2s linear, top .2s linear)
           
           li
             
             label
               display: block
+              margin: 0 0 0 5px
+              
+              &:hover
+                background: #7D3D4F
+                
+                &[meta]
+                
+                  &:before
+                    background: rgba(#6F2B3D,.9)
+                    +border_radius(3)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 12px
+                    height: 15px
+                    left: 0
+                    line-height: 15px
+                    padding: 5px 10px
+                    position: absolute
+                    text-indent: 0
+                    top: -35px
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 10px solid transparent
+                    border-left: 0
+                    border-top: 10px solid rgba(#6F2B3D,.9)
+                    content: ''
+                    height: 0
+                    left: 10px
+                    position: absolute
+                    top: -10px
+                    width: 0
+
+                img
+                  cursor: pointer
+                            
+            input:checked + label
+              background: #AB000B
+              
+              img
+                border-color: #AB000B
           
+          li:first-child
           
+            label
+              margin: 0
       
       textarea
         background: #fff
