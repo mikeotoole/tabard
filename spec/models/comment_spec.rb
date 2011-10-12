@@ -94,6 +94,16 @@ describe Comment do
     comment.comments << nodeComment
     comment.number_of_comments.should eq(3)
   end
+
+  it "number_of_comments should return the total number of comments attached properly with deletions" do
+    comment.number_of_comments.should eq(1)
+    leafComment = create(:comment)
+    nodeComment = create(:comment)
+    nodeComment.comments << leafComment
+    comment.comments << nodeComment
+    nodeComment.update_attribute(:has_been_deleted, true)
+    comment.number_of_comments.should eq(2)
+  end
   
   it "original_comment_item should return 1 if the comment has no replies" do
     leafComment = create(:comment)

@@ -101,9 +101,10 @@ class Comment < ActiveRecord::Base
   # [Returns] An integer that contains the number of comments this comment has including itself.
   ###
   def number_of_comments
+    temp_total_num_comments = 0
    temp_total_num_comments = 1 unless self.has_been_deleted
    comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
+     temp_total_num_comments += comment.number_of_comments
    end
    temp_total_num_comments
   end
