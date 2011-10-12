@@ -17,7 +17,7 @@
       = link_to 'Search', '#'
     %li
       %p
-        = link_to "My Profile", account_url(:subdomain => false)
+        = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
         -# TODO Joe - This link doesn't work - DW
         = link_to "Logout", destroy_user_session_url(:subdomain => false)
 
@@ -39,7 +39,7 @@
             - unless profile[:is_current]
               %li
                 = image_tag(profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon))
-                = link_to( active_profile_path(:id => profile[:profile_id], :type => profile[:type]), :method => :post) do
+                = link_to(active_profile_path(:id => profile[:profile_id], :type => profile[:type]), :method => :post) do
                   = profile[:name]
           %li.extra
             - if profiles.size > 1
@@ -47,4 +47,4 @@
             - else
               = link_to 'Add new character', new_base_character_path
   -# TODO Doug, get the correct link for image avatar size from Joe. Also, this will need to link to the currently active characer edit view.
-  = link_to image_tag(current_active_profile.avatar_url(:tiny)), current_active_profile, :class => 'avatar'
+  = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

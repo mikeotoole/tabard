@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
   # This before_filter builds a list of the Crumblin supported games.
   before_filter :fetch_active_games
 
-  # This before_filter ensures that a user_profile or character are always active for a signed in user.
-  before_filter :ensure_active_profile
+  # This before_filter ensures that a profile is active.
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # Status Code Rescues
@@ -36,7 +36,6 @@ class ApplicationController < ActionController::Base
   # This method rescues from a CanCan Access Denied Exception
   rescue_from CanCan::AccessDenied do |exception|
     #redirect_to previous_page, :alert => exception.message
-    # Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
     http_status_code(:forbidden, exception)
   end
 
@@ -136,24 +135,17 @@ protected
 
   # Returns the currently active user profile or nil if there isn't one.
   def current_profile
-    return unless profile_active?
+    return nil unless profile_active?
     if defined? session[:profile_type].constantize
       @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
     end
   end
   helper_method :current_profile
 
-  #This returns the currently active character or the current user's profile.
-  def current_active_profile
-    return nil unless signed_in?
-    character_active? ? current_character : current_profile
-  end
-  helper_method :current_active_profile
-
   # Returns an Array with the users profile and characters info.
   def profiles
     if signed_in?
-      profile_collection = current_user.active_profile_helper_collection
+      profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
       profiles = Array.new
       profile_collection.each do |profile|
         profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }
@@ -162,6 +154,25 @@ protected
     end
   end
   helper_method :profiles
+
+  # This method returns the current community that is in scope.
+  def current_community
+    nil
+  end
+  helper_method :current_community
+
+  # This method returns the current game that is in scope.
+  def current_game
+    nil
+  end
+  helper_method :current_game
+
+  # This method activates a profile, given a profile_id and profile_type.
+  def activate_profile(profile_id, profile_type)
+    session[:profile_id] = profile_id
+    session[:profile_type] = profile_type
+    @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
+  end
 
 ###
 # Callback Methods
@@ -184,10 +195,25 @@ protected
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 
-  def ensure_active_profile
-    if signed_in? and not current_active_profile
-      session[:profile_id] = current_user.user_profile_id
-      session[:profile_type] = "UserProfile"
+  ###
+  # _before_filter_
+  #
+  # This method ensures that a profile is active, or it will default to the user_profile
+  ###
+  def ensure_active_profile_is_valid
+    if signed_in?
+      unless current_profile
+        activate_profile(current_user.user_profile_id, "UserProfile")
+      end
+      if character_active? and not current_user.available_character_proxies(current_community,current_game).include?(current_character.character_proxy)
+        default_character_proxy = nil
+        default_character_proxy = current_user.default_character_proxy_for_a_game(current_game) if current_game
+        if current_user.available_character_proxies(current_community,current_game).include?(default_character_proxy)
+          activate_profile(default_character_proxy.character_id, default_character_proxy.character_class.to_s)
+        else
+          activate_profile(current_user.user_profile_id, "UserProfile")
+        end
+      end
     end
   end
 end

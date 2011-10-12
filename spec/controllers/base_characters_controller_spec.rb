@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe BaseCharactersController do
-  let(:user_profile) { create(:user_profile) }
+  let(:user_profile) { create(:user_profile)}
   let(:user) { user_profile.user }
   
   describe "GET 'new'" do

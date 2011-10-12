@@ -83,7 +83,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Discussions
-      resources :comments, :except => :index do
+      resources :comments, :except => [:index, :show] do
         member do
           post :lock
           post :unlock
@@ -102,9 +102,7 @@ DaBvRails::Application.routes.draw do
       resources :page_spaces do
         resources :pages, :shallow => true
       end
-
     end
-
   end
 
   # Crumblin Home page

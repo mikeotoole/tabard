@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SubdomainsController do
-  let(:user_profile) { create(:user_profile) }
+  let(:user_profile) { create(:user_profile)}
   let(:user) { user_profile.user }
   let(:community) { Factory.create(:community) }
 

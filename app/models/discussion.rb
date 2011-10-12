@@ -35,6 +35,8 @@ class Discussion < ActiveRecord::Base
 ###
   delegate :is_announcement, :to => :discussion_space, :allow_nil => true
   delegate :name, :to => :discussion_space, :prefix => true
+  delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
+  delegate :game_name, :to => :discussion_space, :allow_nil => true
 
 ###
 # Public Methods
@@ -72,7 +74,7 @@ class Discussion < ActiveRecord::Base
   def number_of_comments
    temp_total_num_comments = 0
    comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments
+     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
    end
    temp_total_num_comments
   end
@@ -96,7 +98,7 @@ class Discussion < ActiveRecord::Base
   end
 
   ###
-  # This method validates that the selected game is valid for the community.
+  # This method validates that the selected character is valid for the community.
   ###
   def character_is_valid_for_user_profile
     return unless self.character_proxy

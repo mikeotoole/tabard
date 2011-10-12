@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe WowCharactersController do
   before(:each) do
-    @user = DefaultObjects.user
     @user_profile = DefaultObjects.user_profile
+    @user = DefaultObjects.user
   end
   
   describe "GET 'show'" do

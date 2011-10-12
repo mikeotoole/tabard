@@ -281,7 +281,7 @@ body
       border-bottom: 1px solid #fff
       font-family: DinLight, serif
       font-size: 16px
-      padding: 5px 30px
+      padding: 5px 25px
       margin: -30px -30px 30px
       
       a
@@ -330,6 +330,7 @@ body
     text-decoration: none
     +transition(background .2s linear)
     
+    &:focus,
     &:hover
       background: #8f364e
       color: #fff
@@ -664,8 +665,601 @@ body
         .button
           border-color: #1e102c
           
+          &:focus,
           &:hover
             +box_shadow(0 0 10px #000)
+
+
+  // Comments
+  .comments
+    background: #fff
+    +border_radius(5)
+    margin: 30px -30px 0
+    padding: 20px
+    
+    ol
+    
+      li
+        border-bottom: 1px solid #fff
+        min-width: 500px
+        position: relative
+      
+        blockquote
+          margin: 0
+          min-height: 88px
+          padding: 0 15px 10px 92px
+          position: relative
+          +transition(margin .2s linear)
+          z-index: 3
+          
+          &:before
+            border-bottom: 1px solid #EBDFC4
+            bottom: 15px
+            content: ''
+            left: 92px
+            position: absolute
+            right: 15px
+            z-index: 3
+          
+          .avatar
+            background: image-url('application/avatar.png') center center no-repeat #5F5F5F
+            border: 1px solid #eee
+            border-right: 0
+            height: 62px
+            left: 10px
+            +opacity(1)
+            position: absolute
+            top: 10px
+            +transition(box-shadow .2s linear, opacity 1s linear)
+            width: 61px
+            
+            &:before
+              background: image-url('application/comment-shadow.png') 0 0 no-repeat
+              border-right: 20px solid #fff
+              content: ''
+              height: 101px
+              position: absolute
+              right: -20px
+              top: -14px
+              width: 18px
+            
+            &:after
+              border-left: 10px solid transparent
+              border-top: 10px solid #fff
+              content: ''
+              height: 0
+              position: absolute
+              right: 0
+              top: 10px
+              width: 0
+            
+            img
+              background: #ddd
+              border: 1px solid #fff
+              border-right: 0
+              display: block
+          
+          .meta
+            background: #fff
+            border-bottom: 1px solid #ddd
+            color: #999
+            font-size: 12px
+            line-height: 15px
+            overflow: hidden
+            padding: 5px 0 3px 0
+            position: relative
+            z-index: 4
+            
+            a
+              color: #aa000b
+              font-family: DinMedium, sans
+              position: relative
+              text-decoration: none
+              
+              &:hover
+                background: #aa000b
+                color: #fff
+                
+                &[meta]
+                
+                  &:before
+                    background: rgba(#6F2B3D,.9)
+                    +border_radius(3)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 12px
+                    height: 15px
+                    left: 0
+                    line-height: 15px
+                    padding: 5px 10px
+                    position: absolute
+                    text-indent: 0
+                    top: -30px
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 5px solid transparent
+                    border-left: 0
+                    border-top: 5px solid rgba(#6F2B3D,.9)
+                    content: ''
+                    height: 0
+                    left: 10px
+                    position: absolute
+                    top: -5px
+                    width: 0
+              
+              &.expand
+                background: #70293D
+                +border_radius(3)
+                color: #fff
+                display: none
+                
+                &:hover
+                  background: #aa000b
+              
+              &.collapse
+                background: #bbb
+                +border_radius(3)
+                color: #fff
+                
+                &:hover
+                  background: #aa000b
+          
+          .actions
+            position: absolute
+            right: 15px
+            top: -5px
+            z-index: 4
+            
+            a
+              background: image-url('application/icons.png') no-repeat
+              +border_radius(0)
+              display: block
+              height: 20px
+              overflow: hidden
+              +opacity(0)
+              margin: 5px 0 0
+              padding: 0
+              text-indent: -500em
+              +transition(opacity .2s linear)
+              width: 20px
+              
+              &:hover
+                +opacity(1)
+              
+              &.edit
+                background-position: -65px -5px
+              
+              &.delete
+                background-position: -35px -5px
+              
+              &.lock
+                background-position: -185px -5px
+              
+              &.unlock
+                background-position: -155px -5px
+                display: none
+          
+          p
+            color: #000
+            font-size: 14px
+            line-height: 20px
+            margin: 0
+            padding: 12px 40px 40px 0
+            position: relative
+            word-wrap: break-word
+            z-index: 2
+            
+            .body
+              display: block
+          
+          em,
+          .reply
+            display: block
+            float: left
+            font: 12px DinMedium, sans
+            line-height: 20px
+            padding: 0 5px
+            margin: 10px 0 0
+            
+          em
+            background: #eee
+            color: #999
+            font-size: 12px
+            
+          .reply
+            background: #EBDFC4
+            +border_radius(0)
+            color: #917000
+            text-decoration: none
+            
+            &:hover
+              background: #6F2B3D
+              color: #fff
+          
+          &:hover
+          
+            .avatar
+              +box_shadow(0 0 15px rgba(#000,.5))
+              border-color: #999
+          
+            .actions
+            
+              a
+                +opacity(.3)
+                
+                &:hover
+                  +opacity(1)
+        
+        ol
+          margin: 0 0 0 20px
+          position: relative
+          
+          >li.collapsed >blockquote
+            margin: 0 0 0 -62px
+          
+          .avatar
+            background-size: 40px 40px
+            height: 42px
+            margin-left: 20px
+            width: 41px
+            
+            &:after
+              border-left-width: 8px
+              border-top-width: 8px
+              top: 8px
+            
+            img
+              height: 40px
+              width: 40px
+        
+        &.owned
+        
+          >blockquote
+            
+            >.meta
+            
+              a[meta]
+                background: #70293D
+                +border_radius(3)
+                color: #fff
+                
+                &:hover
+                  background: #aa000b
+                  color: #fff
+        
+        &.locked
+          
+          >blockquote
+          
+            >p
+              
+              .reply
+                display: none
+            
+            >.actions
+          
+              .edit,
+              .delete,
+              .lock
+                display: none
+              
+              .unlock
+                display: block
+          
+        &.deleted
+          
+          >blockquote
+            
+            &:before
+              bottom: auto
+              top: 62px
+            
+            >p
+            
+              .reply
+                display: none
+          
+            >.actions
+              .edit,
+              .delete,
+              .lock,
+              .unlock
+                display: none
+            
+            >.avatar
+              +box_shadow(none)
+              border-color: #ccc
+        
+        &.replying
+          
+          >blockquote
+          
+            >p
+              
+              .reply
+                display: none
+        
+        &.editing
+          
+          >blockquote
+            min-height: 0
+            
+            >p
+            
+              .body,
+              .reply
+                display: none
+            
+            >.actions
+              display: none
+            
+            >form
+              margin: -40px 0 12px 0
+              
+              &:before
+                display: none
+        
+              .profile
+                display: none
+              
+              textarea
+                height: 80px
+                
+              button,
+              input,
+              label
+                display: block
+        
+        &.collapsed
+          
+          >blockquote
+            margin: 0 0 0 -82px
+            min-height: 0
+            
+            &:before
+              display: none
+            
+            .meta
+            
+              .collapse
+                display: none
+              
+              .expand
+                display: inline
+            
+            .avatar
+              +opacity(0)
+              +transition(none)
+            
+            .meta
+              margin-left: 1px
+              
+            >p,
+            >form,
+            .actions
+              display: none
+          
+          >ol
+            display: none
+      
+      form
+        margin: -10px 0 12px 62px
+    
+    form
+      background: #EBDFC4
+      border-right: 22px solid #EBDFC4
+      margin: 0 15px 0 72px
+      position: relative
+      padding: 5px
+      z-index: 3
+      
+      &:before
+        border-left: 10px solid transparent
+        border-top: 10px solid #EBDFC4
+        content: ''
+        height: 0
+        position: absolute
+        left: -10px
+        top: 10px
+        width: 0
+        z-index: 3
+      
+      .profile
+        background: #eee
+        margin: 0
+        overflow: hidden
+        padding: 0
+        position: absolute
+        top: 0
+        left: -62px
+        +transition(box-shadow .2s linear)
+        z-index: 1
+        
+        li
+          background: none
+          display: inline
+          list-style: none
+          margin: 0
+          padding: 0
+        
+          label
+            background: #eee
+            display: none
+            float: left
+            height: 44px
+            position: relative
+            width: 44px
+            +transition(background .2s linear)
+            z-index: 2
+            
+            img
+              background: #ddd
+              border: 1px solid #fff
+              margin: 1px
+          
+          input
+            display: block
+            height: 1px
+            margin: 20px
+            overflow: hidden
+            position: absolute
+            width: 1px
+            
+            &:checked + label
+              display: block
+              +transition(none)
+        
+        &:hover
+          +border_radius(5)
+          +box_shadow(0 0 15px rgba(#000,.5))
+          left: -72px
+          overflow: visible !important
+          padding: 10px
+          top: -10px
+          +transition(padding .2s linear, left .2s linear, top .2s linear)
+          
+          li
+            
+            label
+              display: block
+              margin: 0 0 0 5px
+              
+              &:hover
+                background: #7D3D4F
+                
+                &[meta]
+                
+                  &:before
+                    background: rgba(#6F2B3D,.9)
+                    +border_radius(3)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 12px
+                    height: 15px
+                    left: 0
+                    line-height: 15px
+                    +opacity(1)
+                    padding: 5px 10px
+                    position: absolute
+                    text-indent: 0
+                    top: -35px
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 10px solid transparent
+                    border-left: 0
+                    border-top: 10px solid rgba(#6F2B3D,.9)
+                    content: ''
+                    height: 0
+                    left: 10px
+                    +opacity(1)
+                    position: absolute
+                    top: -10px
+                    width: 0
+
+                img
+                  cursor: pointer
+                            
+            input:checked + label
+              background: #AB000B
+              
+              img
+                border-color: #AB000B
+          
+          li:first-child
+          
+            label
+              margin: 0
+      
+      textarea
+        background: #fff
+        border: 1px solid #BCA767
+        display: block
+        font-size: 14px
+        height: 21px
+        left: 5px
+        line-height: 20px
+        max-width: 100%
+        padding: 5px 10px
+        margin: 0
+        +transition(height .2s linear, color .2s linear, opacity .2s linear)
+        width: 100%
+        
+        &:focus,
+        &.open
+          color: #333
+          height: 80px
+          
+          ~ button,
+          ~ input,
+          ~ label
+            display: block
+      
+      &.busy
+        
+        textarea
+          height: 21px !important
+          +opacity(.2)
+        
+        button,
+        >label,
+        >input
+          display: none !important
+        
+        &:after
+          background: image-url('community/busy.gif') center center no-repeat rgba(#000,.1)
+          bottom: 0
+          content: ''
+          left: 0
+          position: absolute
+          right: -22px
+          top: 0
+    
+      button
+        +border_radius(0)
+        display: none
+        float: none
+        font: 12px DinMedium, sans
+        height: auto
+        line-height: 20px
+        margin: 5px 0 0
+        padding: 0 5px
+      
+      >input
+        bottom: 14px
+        display: none
+        height: 1px
+        margin: 0
+        overflow: hidden
+        padding: 0
+        position: absolute
+        right: -8px
+        width: 1px
+        z-index: 0
+        
+        &:checked + label:before
+          background-position: -155px -5px
+      
+      >label
+        bottom: 5px
+        display: none
+        font: 12px DinMedium, sans
+        line-height: 20px
+        padding: 0 5px 0 0
+        position: absolute
+        right: 0
+        
+        &:before
+          background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
+          bottom: 0
+          content: ''
+          height: 20px
+          margin: 5px 0 0 -25px
+          position: absolute
+          right: -20px
+          width: 20px
+          z-index: 2
 
 
 @import theme

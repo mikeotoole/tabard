@@ -130,4 +130,12 @@ module ApplicationHelper
     collection.concat(objects.map{ |o| [o.send(name_attr), o.send(id_attr)] })
   end
 
+  ###
+  # Provides a list of character proxies that are within scope of the current action.
+  # [Returns] array of character proxies.
+  ###
+  def available_characters
+    current_user.available_character_proxies(current_community,current_game)
+  end
+
 end

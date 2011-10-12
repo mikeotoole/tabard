@@ -16,6 +16,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   before_filter :create_page_space, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
@@ -57,6 +58,12 @@ class Subdomains::PageSpacesController < SubdomainsController
     add_new_flash_message('Page space was successfully deleted.') if @page_space.destroy
     respond_with(@page_space)
   end
+
+  # This method returns the current game that is in scope.
+  def current_game
+    @page_space.game
+  end
+  helper_method :current_game
 
 ###
 # Protected Methods

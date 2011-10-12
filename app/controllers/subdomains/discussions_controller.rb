@@ -17,6 +17,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   before_filter :find_discussion_space_from_params
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
@@ -89,6 +90,12 @@ class Subdomains::DiscussionsController < SubdomainsController
     redirect_to :back
     return
   end
+
+  # This method returns the current game that is in scope.
+  def current_game
+    @discussion.discussion_space_game
+  end
+  helper_method :current_game
 
 ###
 # Protected Methods

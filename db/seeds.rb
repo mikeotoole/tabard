@@ -69,8 +69,14 @@ puts "RoboBilly is adding permissions to view roles to n00b role..."
 noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
 
 puts "RoboBilly is getting some characters..."
+rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
 ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-  robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
+  proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
+  rb_cp.approved_character_proxies << proxy
+end
+['Eliand','Blaggarth','Drejan'].each do |cname|
+  proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
+  rb_cp.approved_character_proxies << proxy
 end
 
 # TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
@@ -95,10 +101,10 @@ puts "Creating Just Another Headshot Clan General Discussion Space"
 gds = jahc.discussion_spaces.create(:name => "General Chat")
 
 puts "Creating Just Another Headshot Clan WoW Discussion Space"
-wds = jahc.discussion_spaces.create(:name => "WoW", :game => wow_game)
+wds = jahc.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
 
 puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-sds = jahc.discussion_spaces.create(:name => "SWTOR", :game => swtor_game)
+sds = jahc.discussion_spaces.create(:name => "SWTOR", :game_id => swtor_game.id)
 
 puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
 gd = gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
@@ -115,8 +121,18 @@ puts "Adding comments to general discussion space discussion"
 comment1 = gd.comments.new(:body => "What's up RoboBilly!")
 comment1.user_profile = d_moose.user_profile
 comment1.save
-comment2 = comment1.comments.new(:body => "What's up Diabolical Moose!")
-comment2.user_profile = s_turtle.user_profile
+comment1a = comment1.comments.new(:body => "What's up Diabolical Moose!")
+comment1a.user_profile = s_turtle.user_profile
+comment1a.save
+comment1b = comment1.comments.new(:body => "You guys are weird.")
+comment1b.user_profile = d_badger.user_profile
+comment1b.save
+comment1b2 = comment1b.comments.new(:body => "No, you are.")
+comment1b2.user_profile = d_moose.user_profile
+comment1b2.save
+comment2 = gd.comments.new(:body => "Herp a derp.")
+comment2.user_profile = k_fox.user_profile
+comment2.has_been_edited = true
 comment2.save
 
 puts "Adding announcements for Just Another Headshot Clan"

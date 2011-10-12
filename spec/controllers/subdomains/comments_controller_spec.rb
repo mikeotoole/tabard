@@ -30,29 +30,9 @@ describe Subdomains::CommentsController do
     @request.host = "#{community.subdomain}.example.com"
   end
 
-
-  describe "GET show" do
-    it "assigns the requested comment as @comment when authenticated as a user with permissions" do
-      sign_in user
-      get :show, :id => comment.id.to_s
-      assigns(:comment).should eq(comment)
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :show, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_path)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :show, :id => comment.id.to_s
-      response.should be_forbidden
-    end
-  end
-
   describe "GET new" do
     it "assigns a new comment as @comment when authenticated as a user with permissions" do
-      sign_in user   
+      sign_in user
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
       assigns(:comment).should be_a_new(Comment)
     end
@@ -108,7 +88,7 @@ describe Subdomains::CommentsController do
 
       it "redirects to the created comment" do
         post :create, :comment => attributes_for(:comment)
-        response.should redirect_to(Comment.last)
+        response.should be_success
       end
     end
 
@@ -120,7 +100,7 @@ describe Subdomains::CommentsController do
 
       it "re-renders the 'new' template" do
         post :create, :comment => attributes_for(:comment, :body => nil)
-        response.should render_template("new")
+        response.should render_template("_comment")
       end
     end
   end
@@ -161,7 +141,7 @@ describe Subdomains::CommentsController do
 
       it "redirects to the comment" do
         put :update, :id => comment.id, :comment => attributes_for(:comment)
-        response.should redirect_to(DefaultObjects.discussion)
+        response.should be_success
       end
     end
 
@@ -173,7 +153,7 @@ describe Subdomains::CommentsController do
 
       it "re-renders the 'edit' template" do
         put :update, :id => comment.id.to_s, :comment => {:body => nil}
-        response.should render_template("edit")
+        response.should render_template("_comment")
       end
     end
   end
@@ -192,24 +172,52 @@ describe Subdomains::CommentsController do
   end
 
   describe "DELETE destroy when authenticated as a user with permissions" do
-    it "does not destroy the requested comment" do
-      comment
+    it "does not destroy the requested comment if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       expect {
         delete :destroy, :id => comment.id.to_s
       }.to change(Comment, :count).by(0)
     end
+    
+    it "does destroy the requested comment if it has no subcomments" do
+      comment.comments.should be_empty
+      sign_in user
+      expect {
+        delete :destroy, :id => comment.id.to_s
+      }.to change(Comment, :count).by(-1)
+    end
 
-    it "redirects to the original comment item" do
+    it "redirects to the original comment item if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
-      response.should redirect_to(comment.original_comment_item)
+      response.should be_success
     end
     
-    it "sets comment has_been_deleted to true" do
+    it "redirects to the original comment item if comment has no subcomments" do
+      comment.comments.should be_empty
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      response.should be_success
+    end
+    
+    it "sets comment has_been_deleted to true if comment has subcomments" do
+      comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
+      comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
       Comment.find(comment).has_been_deleted.should be_true
+    end
+    
+    it "should be forbidden if comment is locked" do
+      comment.has_been_locked = true
+      comment.save.should be_true
+      sign_in user
+      delete :destroy, :id => comment.id.to_s
+      response.should be_forbidden
     end
   end
   
@@ -240,7 +248,7 @@ describe Subdomains::CommentsController do
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :lock, :id => comment.id.to_s
-      response.should redirect_to("/")
+      response.should be_success
     end
     
     it "should not lock the comment when authenticated as a user" do
@@ -282,7 +290,7 @@ describe Subdomains::CommentsController do
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => comment.id.to_s
-      response.should redirect_to("/")
+      response.should be_success
     end
     
     it "should not unlock the comment when authenticated as a user" do

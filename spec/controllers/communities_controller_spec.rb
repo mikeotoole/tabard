@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CommunitiesController do
   let(:billy) { create(:billy) }
-  let(:user_profile) { create(:user_profile) }
+  let(:user_profile) { create(:user_profile)}
   let(:user) { user_profile.user }
   let(:admin_user) { create(:community_admin) }
   let(:community) { admin_user.user_profile.owned_communities.first }
@@ -71,9 +71,6 @@ describe CommunitiesController do
   end
 
   describe "GET 'edit'" do
-    before(:each) do
-      @request.host = "#{community.subdomain}.example.com"
-    end
     it "should be unauthorized when authenticated as a non admin user" do
       sign_in user
       get 'edit', :id => community
@@ -88,13 +85,13 @@ describe CommunitiesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => community
-      response.should redirect_to(new_user_session_url(:subdomain => community.subdomain))
+      response.should redirect_to(new_user_session_path)
     end
 
     it "should render communities/edit template" do
       sign_in admin_user
       get 'edit', :id => community
-      response.should render_template('subdomains/communities/edit')
+      response.should render_template('communities/edit')
     end
   end
 
@@ -134,7 +131,6 @@ describe CommunitiesController do
   describe "PUT 'update' when authenticated as a non admin user" do
     before(:each) do
       @new_slogan = 'My new slogan.'
-      @request.host = "#{community.subdomain}.example.com"
       sign_in billy
       put 'update', :id => community, :community => { :slogan => @new_slogan }
     end
@@ -151,7 +147,6 @@ describe CommunitiesController do
   describe "PUT 'update' when authenticated as an admin user" do
     before(:each) do
       @new_slogan = 'My new slogan.'
-      @request.host = "#{community.subdomain}.example.com"
       sign_in admin_user
       put 'update', :id => community, :community => { :slogan => @new_slogan }
     end
@@ -168,7 +163,6 @@ describe CommunitiesController do
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
       put 'update', :id => community, :community => { :slogan => "New Slogan" }
-      @request.host = "#{community.subdomain}.example.com"
     end
 
     it "should redirect to new user session path" do

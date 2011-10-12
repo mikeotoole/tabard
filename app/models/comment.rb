@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked
+  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id
 
 ###
 # Attribute accessor
@@ -39,12 +39,21 @@ class Comment < ActiveRecord::Base
   after_initialize :get_community_id_from_source
 
 ###
+# Delegates
+###
+  delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :created_at, :to => :user_profile, :prefix => true
+
+
+###
 # Validators
 ###
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :community, :presence => true
   validates :commentable, :presence => true
+  validate :character_is_valid_for_user_profile
 
 ###
 # Public Methods
@@ -68,6 +77,18 @@ class Comment < ActiveRecord::Base
   end
 
   ###
+  # This method gets the name of the poster.
+  # [Returns] The name of the character or user_profile.
+  ###
+  def poster_name
+    if self.character_proxy
+      return self.character_proxy.name
+    else
+      return self.user_profile.display_name
+    end
+  end
+
+  ###
   # This method checks to see if a character posted this comment.
   # [Returns] True if a character made this comment, otherwise false.
   ###
@@ -80,22 +101,12 @@ class Comment < ActiveRecord::Base
   # [Returns] An integer that contains the number of comments this comment has including itself.
   ###
   def number_of_comments
-   temp_total_num_comments = 1
+    temp_total_num_comments = 0
+   temp_total_num_comments = 1 unless self.has_been_deleted
    comments.each do |comment|
      temp_total_num_comments += comment.number_of_comments
    end
    temp_total_num_comments
-  end
-
-  ###
-  # This method returns an array of HTML classes that should be be applied to this comment.
-  # [Returns] An array of HTML classes.
-  ###
-  def html_classes
-    html_classes = Array.new()
-    html_classes << 'locked' if has_been_locked
-    html_classes << 'edited' if has_been_edited
-    html_classes
   end
 
   ###
@@ -119,6 +130,14 @@ class Comment < ActiveRecord::Base
   # The commentable_type always needs to be of the base class type and not the subclass type.
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
+  end
+
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def character_is_valid_for_user_profile
+    return unless self.character_proxy
+    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 
 ###

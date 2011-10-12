@@ -17,6 +17,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :find_game_from_params, :only => [:create, :update]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
@@ -58,6 +59,12 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     add_new_flash_message('Discussion space was successfully deleted.') if @discussion_space.destroy
     respond_with(@discussion_space)
   end
+
+  # This method returns the current game that is in scope.
+  def current_game
+    @discussion_space ? @discussion_space.game : nil
+  end
+  helper_method :current_game
 
 ###
 # Protected Methods
