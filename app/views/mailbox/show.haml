@@ -3,11 +3,11 @@
 #body
   %h1= @folder.name
   
-  - if @messages.size > 0
+  - if @todays_messages.size > 0
     %dl
-    - if @messages.first.created_at.today?
+    - if @todays_messages.size > 0
       %dt Today
-      - @messages.each do |message|
+      - @todays_messages.each do |message|
         %dd
           %time
             = l message.created_at, :format => :time_12

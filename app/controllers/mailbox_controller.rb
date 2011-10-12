@@ -15,8 +15,9 @@ class MailboxController < ApplicationController
   # GET /mail/inbox(.:format)
   def inbox
     @folder = current_user.inbox
-    @messages = @folder.messages
     authorize!(:read, @folder)
+    @todays_messages = @folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
+    @older_messages = @folder.messages.joins{message}.where{(message.created_at Time.now.beginning_of_day.to_date)}
     render 'show'
   end
 
