@@ -16,6 +16,7 @@ class Subdomains::PermissionsController < SubdomainsController
   before_filter :load_and_authorize_permissions_from_role, :only => [:index]
   load_and_authorize_resource :role, :except => [:index]
   load_and_authorize_resource :permission, :through =>:role, :except => [:index]
+  before_filter :ensure_current_user_is_member
 
   # GET /permissions
   # GET /permissions.json

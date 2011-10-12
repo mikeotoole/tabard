@@ -47,7 +47,8 @@ describe SwtorCharactersController do
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
-      sign_in create(:user)
+      some_user_profile = create(:user_profile)
+      sign_in some_user_profile.user
       get 'edit', :id => @character
       response.should be_forbidden
     end
@@ -127,7 +128,8 @@ describe SwtorCharactersController do
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
     @character = Factory.create(:swtor_char_profile)
-    sign_in create(:user)
+    some_user_profile = create(:user_profile)
+    sign_in some_user_profile.user
     put 'update', :id => @character, :swtor_character => { :name => "My New Name" }
     response.should be_forbidden
   end
@@ -164,7 +166,8 @@ describe SwtorCharactersController do
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
-      sign_in create(:user)
+      some_user_profile = create(:user_profile)
+      sign_in some_user_profile.user
       delete 'destroy', :id => @character
       response.should be_forbidden
     end

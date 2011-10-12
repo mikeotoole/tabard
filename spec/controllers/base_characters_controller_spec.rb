@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe BaseCharactersController do
-  let(:user) { Factory.create(:user) }
+  let(:user_profile) { create(:user_profile) }
+  let(:user) { user_profile.user }
   
   describe "GET 'new'" do
     describe "when not authenticated as a user" do

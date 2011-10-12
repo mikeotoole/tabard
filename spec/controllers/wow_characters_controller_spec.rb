@@ -46,7 +46,8 @@ describe WowCharactersController do
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
-      sign_in create(:user)
+      some_user_profile = create(:user_profile)
+      sign_in some_user_profile.user
       get 'edit', :id => @character
       response.should be_forbidden
     end
@@ -126,7 +127,8 @@ describe WowCharactersController do
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
     @character = Factory.create(:wow_char_profile)
-    sign_in create(:user)
+    some_user_profile = create(:user_profile)
+    sign_in some_user_profile.user
     put 'update', :id => @character, :wow_character => { :name => "My New Name" }
     response.should be_forbidden
   end  
@@ -163,7 +165,8 @@ describe WowCharactersController do
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
-      sign_in create(:user)
+      some_user_profile = create(:user_profile)
+      sign_in some_user_profile.user
       delete 'destroy', :id => @character
       response.should be_forbidden
     end    
