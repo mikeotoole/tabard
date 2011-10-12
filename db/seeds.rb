@@ -148,7 +148,8 @@ wow_strategies.user_profile = s_turtle.user_profile
 wow_strategies.save
 
 puts "Creating Example Messages"
-robobilly.sent_messages.create(:subject => "Test Seeded Message From robobilly", :body => "This is a test message created in the seed file.", :to => [d_moose.id, d_badger.id])
-d_moose.sent_messages.create(:subject => "Test Seeded Message From moose", :body => "This is a test message created in the seed file.", :to => [robobilly.id, d_badger.id])
+robobilly.sent_messages.create(:subject => "Test Seeded Message From robobilly", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id])
+d_moose.sent_messages.create(:subject => "Test Seeded Message From D. Moose", :body => "This is a test message created in the seed file. Pellentesque vestibulum, lorem non tristique pharetra, diam lacus auctor nisl, quis vehicula nunc ipsum et orci. Fusce dignissim luctus augue vitae venenatis. Duis vitae dolor dolor. Vivamus bibendum mattis metus, eget blandit elit volutpat ut. Sed vulputate hendrerit nisl sit amet feugiat.", :to => [robobilly.id, d_badger.id])
+k_fox.sent_messages.create(:subject => "Sexy Seeded Message From Kinky Fox", :body => "Hey, baby.", :to => [robobilly.id, k_fox.id])
 
 end

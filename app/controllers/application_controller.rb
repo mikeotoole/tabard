@@ -29,6 +29,9 @@ class ApplicationController < ActionController::Base
 
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
+  
+  # This before_filter gets the number of unread messages in the inbox
+  before_filter :fetch_total_unread_messages
 
 ###
 # Status Code Rescues
@@ -216,4 +219,14 @@ protected
       end
     end
   end
+
+  ###
+  # _before_filter_
+  #
+  # This method provides a variable that is the total of the current user's unread messages
+  ###
+  def fetch_total_unread_messages
+    @total_unread_messages = current_user.received_messages.size
+  end
+  
 end

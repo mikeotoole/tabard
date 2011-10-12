@@ -18,7 +18,6 @@
     %li
       %p
         = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
-        -# TODO Joe - This link doesn't work - DW
         = link_to "Logout", destroy_user_session_url(:subdomain => false)
 
   -# TODO Doug, hook up links
@@ -29,8 +28,7 @@
       -# TODO Doug, hook up the link
       = link_to "Announcements", '#', :meta => 7
     %li{ :class => 'icon envelope' }
-      -# TODO Doug, hook up the link
-      = link_to "Messages", '#', :meta => 34
+      = link_to "Messages", inbox_url(:subdomain => false), (@total_unread_messages ? { :meta => @total_unread_messages } : {})
     %li
       =(profile_active? ? link_to(current_profile.name, user_profile_path(current_user)) : link_to('My Profiles', '#'))
       %ul

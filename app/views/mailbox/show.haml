@@ -1,0 +1,56 @@
+- title "Inbox | #{current_user.display_name}"
+
+#body
+  %h1= @folder.name
+  
+  - if @messages.size > 0
+    %dl
+    - if @messages.first.created_at.today?
+      %dt Today
+      - @messages.each do |message|
+        %dd
+          %time
+            = l message.created_at, :format => :time_12
+          %h3
+            - if defined? message.deleted and message.deleted
+              = message.subject
+            - else
+              = link_to message.subject, mail_path(message)
+          %span.author
+            = link_to message.author.name, message.author
+          %p
+            = message.body
+      %dt Older
+      
+-#%tbody
+-#  %tr
+-#    %td.subject
+-#      %h3
+-#        - if defined? message.deleted and message.deleted
+-#          = message.subject
+-#        - else
+-#          = link_to message.subject, mail_path(message)
+-#      %p.meta
+-#        From
+-#        = link_to message.author.name, message.author
+-#        = distance_of_time_in_words(message.created_at, Time.now) + ' ago'
+-#    %td.time
+-#      = l message.created_at, :format => :date_short
+-#      = l message.created_at, :format => :time_12
+-#    %td.actions
+-#      = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
+-#      - if message.recipients.size > 1
+-#        = link_to 'Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all'
+-#      = link_to 'Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
+-#      = link_to 'Delete Message', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put, :confirm => 'Are you sure?', :class => 'move', :title => 'Delete message'
+-#  %tbody
+-#    %tr
+-#      %td.empty{ :colspan => 4 } No messages.
+-#%tfoot
+-#  %tr
+-#    %td{ :colspan => 4 }
+-#      - if @folder.name == 'Trash'
+-#        -#TODO - empty trash button
+-#        = link_to 'Empty Trash', mail_delete_all_path, :method => 'delete', :class => 'destroy', :title => 'Delete messages forever'
+-#      - else
+-#        = link_to 'New Message', compose_mail_path, :class => 'button'

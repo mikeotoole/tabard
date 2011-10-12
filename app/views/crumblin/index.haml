@@ -102,7 +102,7 @@
         with over
         %strong= pluralize(User.count, 'member')
         as of
-        = l Time.now, :format => :short
+        = l Time.now, :format => :date_short
 
     %h2
       %strong Crumblin Updates

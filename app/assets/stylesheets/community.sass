@@ -979,6 +979,17 @@ body
               
               .reply
                 display: none
+            
+            >form
+            
+              &.open textarea,
+              textarea:hover
+                height: 80px
+                
+              button,
+              >input,
+              >label
+                display: block
         
         &.editing
           
@@ -1007,8 +1018,8 @@ body
                 height: 80px
                 
               button,
-              input,
-              label
+              >input,
+              >label
                 display: block
         
         &.collapsed
@@ -1118,6 +1129,9 @@ body
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)
+        
+          + textarea
+            height: 80px
           
           li
             
