@@ -1,0 +1,12 @@
+%dd
+  %time
+    = l message.created_at, :format => :time_12
+  %h3
+    - if defined? message.deleted and message.deleted
+      = message.subject
+    - else
+      = link_to message.subject, mail_path(message)
+  %span.author
+    = link_to message.author.name, message.author
+  %p
+    = message.body
