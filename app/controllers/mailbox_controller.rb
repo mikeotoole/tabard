@@ -7,6 +7,7 @@
 ###
 class MailboxController < ApplicationController
   respond_to :html
+  layout 'messaging'
 ###
 # Callbacks
 ###

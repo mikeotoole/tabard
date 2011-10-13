@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   before_filter :remember_last_page
 
   # This before_filter builds a list of the Crumblin supported games.
-  before_filter :fetch_active_games
+  before_filter :fetch_crumblin_games
 
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
 protected
 
   # Builds a list of the Crumblin supported games.
-  def fetch_active_games
+  def fetch_crumblin_games
     @active_games = Game.all
   end
 

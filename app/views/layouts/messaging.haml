@@ -3,14 +3,14 @@
 
   %head
     %title= yield_for(:title, 'Crumblin')
-    = stylesheet_link_tag "crumblin/crumblin"
+    = stylesheet_link_tag "crumblin/crumblin","crumblin/messaging"
     = javascript_include_tag "application"
     = csrf_meta_tags
 
   %body
-    = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
-    = render 'layouts/pitch'
+    = render 'layouts/bar_in'
     = render 'layouts/flash_messages'
-    #content
-      = yield
+    #mailboxes
+      herpa
+    = yield
     = render 'layouts/footer'
