@@ -11,19 +11,31 @@ class MessagesController < ApplicationController
 # Callbacks
 ###
   before_filter :authenticate_user!
+  before_filter :load_message, :only => [:show, :mark_read, :mark_unread]
   before_filter :load_original_message, :only => [:reply, :reply_all, :forward]
   before_filter :setup_subject_and_body, :only => [:reply, :reply_all]
+  authorize_resource :only => [:show, :mark_read, :mark_unread]
 
   # GET /mail/inbox/:id(.:format)
   def show
-    @message = current_user.received_messages.find(params[:id])
-    authorize!(:read, @message)
+    @message.update_attributes(:has_been_read => true)
+  end
+  
+  # POST /mail/mark_read/:id(.:format)
+  def mark_read
+    @message.update_attributes(:has_been_read => true)
+    redirect_to previous_page
+  end
+  
+  # POST /mail/mark_unread/:id(.:format)
+  def mark_unread
+    @message.update_attributes(:has_been_read => false)
+    redirect_to previous_page
   end
 
   # PUT /mail/:id/move/:folder_id(.:format)
   def move
     folder = current_user.folders.find_by_id(params[:folder_id])
-    # TODO Mike, Test what happens when this is nil.
     authorize!(:update, folder)
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
@@ -81,8 +93,17 @@ protected
   #
   # This before filter loads the message from the id params.
   ###
+  def load_message
+    @message = current_user.received_messages.find(params[:id]) if current_user
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This before filter loads the message from the id params.
+  ###
   def load_original_message
-    @original = current_user.received_messages.find(params[:id])
+    @original = current_user.received_messages.find(params[:id]) if current_user
   end
 
   ###

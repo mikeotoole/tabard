@@ -31,6 +31,10 @@ describe MessageAssociation do
     message_association.save.should be_false
   end
   
+  it "should set has_been_read to false by default" do
+    message_association.has_been_read.should be_false
+  end
+  
   it "should not allow mass assignment of message" do
     new_message = create(:message)
     new_message.should be_valid
@@ -75,5 +79,9 @@ describe MessageAssociation do
   
   it "should respond to recipients" do
     message_association.should respond_to(:recipients)
+  end
+  
+  it "should respond to recipients" do
+    message_association.should respond_to(:has_been_read)
   end
 end

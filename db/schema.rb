@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111003171533) do
+ActiveRecord::Schema.define(:version => 20111012220327) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
+    t.integer  "user_profile_id"
     t.integer  "game_id"
     t.integer  "community_id"
     t.datetime "created_at"
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
   add_index "discussion_spaces", ["game_id"], :name => "index_discussion_spaces_on_game_id"
+  add_index "discussion_spaces", ["user_profile_id"], :name => "index_discussion_spaces_on_user_profile_id"
 
   create_table "discussions", :force => true do |t|
     t.string   "name"
@@ -157,6 +159,23 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
   add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
   add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "creator_id"
+    t.integer  "game_id"
+    t.integer  "community_id"
+    t.boolean  "invite_only",  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["community_id"], :name => "index_events_on_community_id"
+  add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
+  add_index "events", ["game_id"], :name => "index_events_on_game_id"
+
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.integer  "user_profile_id"
@@ -174,12 +193,25 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
     t.string   "pretty_url"
   end
 
+  create_table "invites", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "character_proxy_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
+  add_index "invites", ["event_id"], :name => "index_invites_on_event_id"
+  add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
+
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"
     t.integer  "recipient_id"
     t.integer  "folder_id"
-    t.boolean  "deleted",      :default => false
+    t.boolean  "deleted",       :default => false
     t.datetime "updated_at"
+    t.boolean  "has_been_read", :default => false
   end
 
   add_index "message_associations", ["folder_id"], :name => "index_message_associations_on_folder_id"
@@ -198,8 +230,18 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
 
+  create_table "mw3_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "page_spaces", :force => true do |t|
     t.string   "name"
+    t.integer  "user_profile_id"
     t.integer  "game_id"
     t.integer  "community_id"
     t.datetime "created_at"
@@ -208,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
 
   add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
   add_index "page_spaces", ["game_id"], :name => "index_page_spaces_on_game_id"
+  add_index "page_spaces", ["user_profile_id"], :name => "index_page_spaces_on_user_profile_id"
 
   create_table "pages", :force => true do |t|
     t.string   "name"
@@ -223,6 +266,18 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
   add_index "pages", ["character_proxy_id"], :name => "index_pages_on_character_proxy_id"
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
   add_index "pages", ["user_profile_id"], :name => "index_pages_on_user_profile_id"
+
+  create_table "participants", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_profile_id"
+    t.integer  "character_proxy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "participants", ["character_proxy_id"], :name => "index_participants_on_character_proxy_id"
+  add_index "participants", ["event_id"], :name => "index_participants_on_event_id"
+  add_index "participants", ["user_profile_id"], :name => "index_participants_on_user_profile_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"

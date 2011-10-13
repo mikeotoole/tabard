@@ -32,6 +32,8 @@ DaBvRails::Application.routes.draw do
   get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
 
   get 'mail/inbox/:id' => "messages#show", :as => "mail"
+  post 'mail/mark_read/:id' => "messages#mark_read", :as => "mail_mark_read"
+  post 'mail/mark_unread/:id' => "messages#mark_unread", :as => "mail_mark_unread"
   put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
   get 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
   get 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"

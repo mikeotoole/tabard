@@ -226,7 +226,7 @@ protected
   # This method provides a variable that is the total of the current user's unread messages
   ###
   def fetch_total_unread_messages
-    @total_unread_messages = current_user.received_messages.size if signed_in?
+    @total_unread_messages = current_user.unread_messages.size if signed_in?
   end
   
 end

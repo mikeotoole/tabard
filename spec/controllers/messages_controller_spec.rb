@@ -48,6 +48,53 @@ describe MessagesController do
     end
   end
   
+  describe "POST mark_read" do
+    it "assigns the requested message as @message when authenticated as owner" do
+      sign_in receiver
+      request.env["HTTP_REFERER"] = "/"
+      post :mark_read, :id => rec_message
+      assigns(:message).should eq(rec_message)
+    end
+    
+    it "should mark message as read when authenticated as owner" do
+      sign_in receiver
+      request.env["HTTP_REFERER"] = "/"
+      rec_message.has_been_read.should be_false
+      post :mark_read, :id => rec_message
+      assigns(:message).has_been_read.should be_true
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      request.env["HTTP_REFERER"] = "/"
+      lambda { get :show, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+  
+  describe "POST mark_unread" do
+    it "assigns the requested message as @message when authenticated as owner" do
+      sign_in receiver
+      request.env["HTTP_REFERER"] = "/"
+      post :mark_unread, :id => rec_message
+      assigns(:message).should eq(rec_message)
+    end
+    
+    it "should mark message as read when authenticated as owner" do
+      sign_in receiver
+      request.env["HTTP_REFERER"] = "/"
+      rec_message.has_been_read = true
+      rec_message.save.should be_true
+      post :mark_unread, :id => rec_message
+      assigns(:message).has_been_read.should be_false
+    end
+    
+    it "should raise error when authenticated as not the owner" do
+      sign_in sender
+      request.env["HTTP_REFERER"] = "/"
+      lambda { get :show, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+  
   describe "PUT move when authenticated as owner" do
     before(:each) {
       sign_in receiver

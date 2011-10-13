@@ -24,11 +24,15 @@ describe MailboxController do
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
 
   describe "GET inbox" do
-    it "assigns all messages inbox folder as @messages when authenticated as user" do
+    it "assigns todays messages as @todays_messages when authenticated as user" do
       message
       sign_in receiver
       get :inbox
-      assigns(:messages).last.should eq(message.message_associations.first)
+      assigns(:todays_messages).last.should eq(message.message_associations.first)
+    end
+    
+    it "assigns older messages as @older_messages when authenticated as user" do
+      pending "Needs to be implemented"
     end
     
     it "assigns inbox folder as @folder when authenticated as user" do
