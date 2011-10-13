@@ -1,7 +1,7 @@
 - title "Inbox | #{current_user.display_name}"
+= stylesheet_link_tag "crumblin/messages"
 
-#body
-  %h1= @folder.name
+#inbox
   - if @todays_messages.size + @older_messages.size > 0
     %dl
       - if @todays_messages.size > 0
@@ -13,6 +13,8 @@
           %h2 Older
       - @todays_messages.each do |message|
         = render 'row', :message => message
+#message
+  derp
       
 -#%tbody
 -#  %tr

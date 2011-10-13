@@ -7,6 +7,7 @@
 ###
 class MessagesController < ApplicationController
   respond_to :html
+  layout 'messaging'
 ###
 # Callbacks
 ###
