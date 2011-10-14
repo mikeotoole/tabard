@@ -1,4 +1,9 @@
 DaBvRails::Application.routes.draw do
+  
+  # Admin Users
+  ActiveAdmin.routes(self)
+  devise_for :admin_users , ActiveAdmin::Devise.config
+
   # Users
   devise_for :users
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'

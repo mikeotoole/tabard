@@ -29,6 +29,10 @@ source 'http://rubygems.org'
   gem 'mini_magick'
   gem 'carrierwave'
 
+# Admin Portal
+  gem 'activeadmin'
+  gem "meta_search", '>= 1.1.0.pre'
+
 # Production Specific Gems
   group :production do
     gem 'heroku'

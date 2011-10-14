@@ -7,6 +7,11 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 
+
+# Create a default user
+puts "Creating default active admin user"
+AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')
+
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
 swtor_game = Swtor.create(:name => "Star Wars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
