@@ -201,7 +201,7 @@ protected
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_active_profile_is_valid
-    if signed_in?
+    if signed_in? and not current_admin_user
       unless current_profile
         activate_profile(current_user.user_profile_id, "UserProfile")
       end

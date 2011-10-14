@@ -87,7 +87,9 @@ ActiveAdmin.setup do |config|
   # Active Admin resources from here. 
   #
   # config.before_filter :do_something_awesome
-
+  config.skip_before_filter :authenticate_user!
+  config.skip_before_filter :limit_subdomain_access
+  config.skip_before_filter :fetch_active_games
 
   # == Register Stylesheets & Javascripts
   #
