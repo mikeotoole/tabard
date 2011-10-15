@@ -1,5 +1,15 @@
 ActiveAdmin::Dashboards.build do
 
+  # TODO Mike, Should we have a way to get at uploaded images.
+
+  section "Recent Signed In Admin Users" do
+    ul do
+      AdminUser.order("last_sign_in_at desc").limit(5).collect do |admin_user|
+        li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at : 'Never Logged In'}", admin_admin_user_path(admin_user)
+      end  
+    end    
+  end
+
   # Define your dashboard sections here. Each block will be
   # rendered on the dashboard in the context of the view. So just
   # return the content which you would like to display.
