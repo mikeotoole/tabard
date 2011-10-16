@@ -1,14 +1,42 @@
-= form_tag mail_batch_move_path(current_user.trash), :method => :post do
+= form_tag (@folder == current_user.trash ? mail_batch_delete_path : mail_batch_move_path(current_user.trash)), :method => (@folder == current_user.trash ? :delete : :put) do
+
+  #mailbox-menu
+    %dl
+    
+      %dt Mail
+      %dd{ :class => 'inbox' + (@folder == current_user.inbox ? ' current' : '') }
+        = link_to 'Inbox', inbox_path, :meta => 'Message inbox'
+      %dd.compose
+        = link_to 'Compose', compose_mail_path, :meta => 'Create a new message'
+      %dd{ :class => 'sent' + (@messages && @messages == current_user.sent_messages ? ' current' : '') }
+        = link_to 'Sent', sent_mailbox_path
+      %dd{ :class => 'trash' + (@folder == current_user.trash ? ' current' : '') }
+        = link_to 'Trash', trash_path, :meta => 'Trashed Messages'
+        
+      %dt Actions
+      %dd.move
+        = link_to 'Move to folder', '#', :meta => 'Move selected messages.'
+      %dd.delete
+        - if @folder == current_user.trash
+          = button_tag 'Delete forever', :confirm => 'Are you sure?', :meta => 'Delete messages for forever.'
+        - else
+          = button_tag 'Move to trash', :confirm => 'Are you sure?', :meta => 'Move selected messages to the trash.'
+      
   #mailbox
-    - if @todays_messages.size + @older_messages.size > 0
+    = hidden_field_tag 'folder_id', current_user.trash.id
+    - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
       %dl
         - if @todays_messages.size > 0
           %dt Today
           - @todays_messages.each do |message|
-            = render 'row', :message => message
-          %dt Older
+            = render 'mailbox/row', :message => message
+          - if @older_messages.size > 0
+            %dt Older
         - @older_messages.each do |message|
-          = render 'row', :message => message
-    - else
-      %p No messages.
-    = button_tag 'Delete checked', :confirm => 'Are you sure?', :class => 'delete'
+          = render 'mailbox/row', :message => message
+    - elsif @messages && @messages.size > 0
+      %dl
+        - @messages.each do |message|
+          = render 'mailbox/row', :message => message
+    - elsif @folder
+      %p= "#{@folder.name} is empty."

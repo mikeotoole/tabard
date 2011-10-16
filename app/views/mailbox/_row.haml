@@ -1,8 +1,9 @@
-%dd{ :class => (message.deleted? ? 'deleted' : '') }
+%dd{ :class => (message.respond_to?('folder_name') ? message.folder_name.downcase.gsub(/[^a-z0-9]/,'') : '') }
 
-  - if !message.deleted?
+  - if message.respond_to?('deleted') && !message.deleted?
     %p.meta
-      = check_box_tag "ids[#{message.id}]", true
+      = check_box_tag "ids[#{message.id}]", true, false, :id => "message_id_#{message.id}"
+      %label{ :for => "message_id_#{message.id}" }
 
   %time
     = l message.created_at, :format => (message.created_at.today? ? :time_12 : :date_monthday)

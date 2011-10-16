@@ -17,6 +17,7 @@ class MailboxController < ApplicationController
   # GET /mail/inbox(.:format)
   def inbox
     @folder = current_user.inbox
+    authorize!(:read, @folder)
     gather_inbox_data @folder
     render 'show'
   end
@@ -24,8 +25,8 @@ class MailboxController < ApplicationController
   # GET /mail/trash(.:format)
   def trash
     @folder = current_user.trash
-    @messages = @folder.messages
     authorize!(:read, @folder)
+    gather_inbox_data @folder
     render 'show'
   end
 
@@ -34,7 +35,7 @@ class MailboxController < ApplicationController
 ###
 protected
 
-  # This method loads the messages for a given folder
+  # This method loads the messages for a given folder, grouped by today's messages and all older messages
   def gather_inbox_data(folder)
     @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
     @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}

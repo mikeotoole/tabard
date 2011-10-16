@@ -28,39 +28,111 @@ body
   a.avatar
     margin: 0
     right: 15px
-    
-#mailboxes
+
+#mailbox-menu
   background: #444
   +bg_gradient(#555,#333)
   border-right: 1px solid #333
   bottom: 0
+  +box_shadow(0 0 10px rgba(#000,.7))
   left: 0
-  padding: 15px 0
+  padding: 0
   position: fixed
   text-align: center
   top: 70px
-  width: 79px
+  width: 69px
   z-index: 3
   
-  &:hover
-    z-index: 2
-
+  dt
+    border-bottom: 1px solid #000
+    color: #999
+    font: 13px DinLight, sans
+    margin: 0 0 20px
+    padding: 15px 0 5px
+  
+  a,
+  button
+    background: image-url('application/icons.png') no-repeat #333
+    border: 1px solid #333
+    +border_radius(30)
+    +box_shadow(0 0 15px #888)
+    display: block
+    height: 30px
+    +opacity(.7)
+    overflow: hidden
+    margin: 0 auto 10px
+    padding: 0
+    text-decoration: none
+    text-indent: -100em
+    width: 30px
+    +transition(box-shadow .2s linear, border .2s linear)
+    
+    &:hover
+      border: 1px solid #000
+      +box_shadow(0 0 20px #ccc)
+      +opacity(1)
+  
+  dd
+  
+    &.inbox
+    
+      a,
+      button
+        background-position: -270px -30px
+    
+    &.sent
+    
+      a,
+      button
+        background-position: -300px -30px
+    
+    &.trash
+    
+      a,
+      button
+        background-position: -240px -30px
+  
+    &.compose
+    
+      a,
+      button
+        background-position: -120px -30px
+    
+    &.move
+    
+      a,
+      button
+        background-position: -210px -30px
+    
+    &.delete
+    
+      a,
+      button
+        background-position: -30px -30px
+    
+    &.current
+    
+      a,
+      button
+        background-color: #2D7CB4
+        border-color: #5099cc
+        +box_shadow(0 0 20px #ccc)
+        +opacity(1)
+  
 #mailbox
   background: #999
-  bottom: -5px
-  +box_shadow(inset 0 0 5px rgba(#000,.5))
-  left: 80px
+  bottom: 0
+  left: 70px
   overflow: scroll
   overflow-x: hidden
-  padding: 5px 0 8px
+  padding: 12px 0 8px
   position: absolute
   text-align: left
-  top: 65px
+  top: 70px
   width: 320px
-  z-index: 1
   
   >p
-    color: #666
+    color: #444
     font: 14px DinLight, serif
     padding: 15px
   
@@ -118,9 +190,34 @@ body
         z-index: 2
       
       p.meta
-        left: 10px
+        background-color: #bbb
+        +bg_gradient(#aaa,#ccc)
+        border: 1px solid #aaa
+        +border_radius(10)
+        height: 16px
+        left: 5px
         position: absolute
+        text-indent: -100em
         top: 10px
+        width: 16px
+        z-index: 4
+        
+        label
+          background: transparent
+          border: 0
+          +border_radius(10)
+          height: 14px
+          left: 1px
+          position: absolute
+          top: 1px
+          +transition(background .2s linear)
+          width: 14px
+          
+          &:hover
+            background: #A23B30
+        
+        input:checked + label
+          background: #3D2454 !important
       
       p.author
         color: #327BB4
@@ -133,26 +230,18 @@ body
       p.body
         color: #666
         font: 13px DinLight, serif
-      
-      &.deleted
-        padding-left: 10px
-        
-        .avatar
-          left: 10px
         
       &:hover
         +box_shadow(0 0 50px rgba(#000,.5))
         z-index: 3
-  
-  &:hover
-    z-index: 2
 
 #message
   background: #eee
   +bg_gradient(#ccc,#fff)
   border-left: 1px solid #ccc
   bottom: 0
-  left: 400px
+  +box_shadow(0 0 10px rgba(#000,.7))
+  left: 390px
   overflow: scroll
   overflow-x: hidden
   padding: 20px
@@ -161,6 +250,3 @@ body
   text-align: left
   top: 70px
   z-index: 1
-  
-  &:hover
-    z-index: 2
