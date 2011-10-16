@@ -30,6 +30,11 @@ class Message < ActiveRecord::Base
   before_create :prepare_message_associations
 
 ###
+# Delegates
+###
+  delegate :avatar_url, :to => :author, :prefix => true
+
+###
 # Validators
 ###
   validates :subject, :presence => true

@@ -148,10 +148,16 @@ wow_strategies.user_profile = s_turtle.user_profile
 wow_strategies.save
 
 puts "Creating Example Messages"
-robobilly.sent_messages.create(:subject => "Test Seeded Message From robobilly", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id])
-Timecop.freeze(5.days.ago)
-d_moose.sent_messages.create(:subject => "Test Seeded Message From D. Moose", :body => "This is a test message created in the seed file. Pellentesque vestibulum, lorem non tristique pharetra, diam lacus auctor nisl, quis vehicula nunc ipsum et orci. Fusce dignissim luctus augue vitae venenatis. Duis vitae dolor dolor. Vivamus bibendum mattis metus, eget blandit elit volutpat ut. Sed vulputate hendrerit nisl sit amet feugiat.", :to => [robobilly.id, d_badger.id])
+robobilly.sent_messages.create(:subject => "What up Homie?", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id])
+Timecop.freeze(1.days.ago)
+s_turtle.sent_messages.create(:subject => "April O'Neil is so hawt", :body => "Mauris ac felis felis, quis facilisis augue. Aenean at posuere orci. Etiam porttitor pulvinar purus a gravida. Nullam vel ipsum lectus. Nunc condimentum laoreet ultrices. Aliquam tincidunt auctor mauris nec sagittis. Nunc ante ligula, dapibus non gravida eget, varius id nibh. Morbi sed magna tortor, ut venenatis sapien.", :to => [robobilly.id])
 Timecop.return
-k_fox.sent_messages.create(:subject => "Sexy Seeded Message From Kinky Fox", :body => "Hey, baby.", :to => [robobilly.id, k_fox.id])
+Timecop.freeze(2.days.ago)
+d_moose.sent_messages.create(:subject => "I'm a bus!", :body => "Vestibulum in interdum sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ut dictum leo. Sed eget ipsum sem, vitae eleifend ipsum. Integer neque nisl, aliquet a iaculis sed, tempor vel nibh. Pellentesque tristique tristique odio, non vulputate metus porta id.", :to => [robobilly.id])
+Timecop.return
+Timecop.freeze(3.days.ago)
+d_badger.sent_messages.create(:subject => "Mushroom, mushroom!", :body => "Phasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non. Phasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sapien.", :to => [robobilly.id, k_fox.id])
+Timecop.return
+k_fox.sent_messages.create(:subject => "Hey you're cute", :body => "Hey, baby. Donec sed odio quis elit varius lobortis. Proin nec tortor sed justo dictum pellentesque in et enim. Integer lacus turpis, ultricies vel vulputate porttitor, bibendum at mi.", :to => [robobilly.id])
 
 end

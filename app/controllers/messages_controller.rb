@@ -5,7 +5,7 @@
 #
 # This controller is for messages. It handles the users interaction with received messages.
 ###
-class MessagesController < ApplicationController
+class MessagesController < MailboxController
   respond_to :html
   layout 'messaging'
 ###
@@ -19,6 +19,8 @@ class MessagesController < ApplicationController
 
   # GET /mail/inbox/:id(.:format)
   def show
+    authorize!(:read, @message.folder)
+    gather_inbox_data @message.folder
     @message.update_attributes(:has_been_read => true)
   end
   
@@ -40,8 +42,20 @@ class MessagesController < ApplicationController
     authorize!(:update, folder)
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
-    add_new_flash_message('Message was moved to #{folder.name}.') if @message.update_attributes(:folder => folder)
-    redirect_to previous_page
+    add_new_flash_message('Message was moved to #{folder.name}.') if @message.update_attributes(:folder_id => folder.id)
+    redirect_to @message
+  end
+
+  # PUT /mail/:id/batch_move/:folder_id(.:format)
+  def batch_move
+    folder = current_user.folders.find_by_id(params[:folder_id])
+    authorize!(:update, folder)
+    params[:ids].each do |id|
+      @message = current_user.received_messages.find_by_id(id)
+      authorize!(:update, @message)
+      @message.update_attributes(:folder_id => folder.id, :deleted => (folder == current_user.trash ? true : false))
+    end
+    redirect_to inbox_path
   end
 
   # GET /mail/reply/:id(.:format)

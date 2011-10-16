@@ -1,0 +1,14 @@
+= form_tag mail_batch_move_path(current_user.trash), :method => :post do
+  #mailbox
+    - if @todays_messages.size + @older_messages.size > 0
+      %dl
+        - if @todays_messages.size > 0
+          %dt Today
+          - @todays_messages.each do |message|
+            = render 'row', :message => message
+          %dt Older
+        - @older_messages.each do |message|
+          = render 'row', :message => message
+    - else
+      %p No messages.
+    = button_tag 'Delete checked', :confirm => 'Are you sure?', :class => 'delete'

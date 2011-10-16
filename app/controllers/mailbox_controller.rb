@@ -8,6 +8,7 @@
 class MailboxController < ApplicationController
   respond_to :html
   layout 'messaging'
+
 ###
 # Callbacks
 ###
@@ -16,9 +17,7 @@ class MailboxController < ApplicationController
   # GET /mail/inbox(.:format)
   def inbox
     @folder = current_user.inbox
-    authorize!(:read, @folder)
-    @todays_messages = @folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
-    @older_messages = @folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}
+    gather_inbox_data @folder
     render 'show'
   end
 
@@ -29,4 +28,16 @@ class MailboxController < ApplicationController
     authorize!(:read, @folder)
     render 'show'
   end
+
+###
+# Protected Methods
+###
+protected
+
+  # This method loads the messages for a given folder
+  def gather_inbox_data(folder)
+    @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
+    @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}
+  end
+  
 end

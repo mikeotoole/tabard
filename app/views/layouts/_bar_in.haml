@@ -28,7 +28,7 @@
       -# TODO Doug, hook up the link
       = link_to "Announcements", '#', :meta => 7
     %li{ :class => 'icon envelope' }
-      = link_to "Messages", inbox_url(:subdomain => false), (@total_unread_messages ? { :meta => @total_unread_messages } : {})
+      = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
     %li
       =(profile_active? ? link_to(current_profile.name, user_profile_path(current_user)) : link_to('My Profiles', '#'))
       %ul

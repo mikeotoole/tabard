@@ -21,7 +21,8 @@ class MessageAssociation < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate   :author, :created_at, :subject, :body, :recipients, :to => :message
+  delegate   :author, :created_at, :subject, :body, :recipients, :author_avatar_url, :to => :message
+  delegate :name, :to => :folder, :prefix => true
 
 ###
 # Validators
@@ -46,4 +47,3 @@ end
 #  updated_at    :datetime
 #  has_been_read :boolean         default(FALSE)
 #
-

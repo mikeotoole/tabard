@@ -1,12 +1,22 @@
-%dd
+%dd{ :class => (message.deleted? ? 'deleted' : '') }
+
+  - if !message.deleted?
+    %p.meta
+      = check_box_tag "ids[#{message.id}]", true
+
   %time
-    = l message.created_at, :format => :time_12
+    = l message.created_at, :format => (message.created_at.today? ? :time_12 : :date_monthday)
+    
   %h3
-    - if defined? message.deleted and message.deleted
-      = message.subject
-    - else
-      = link_to message.subject, mail_path(message)
-  %span.author
-    = link_to message.author.name, message.author
-  %p
-    = message.body
+    = link_to message.subject, mail_path(message)
+  
+  = image_tag(message.author_avatar_url(:tiny), :class => 'avatar')
+  
+  %p.author
+    %strong= message.author.name
+    to me
+    - if message.recipients.size > 1
+      = " and #{pluralize(message.recipients.size-1,'other')}"
+      
+  %p.body
+    = truncate message.body, :length => 100, :separator => ' '

@@ -1,9 +1,4 @@
-%p#bcrumb
-  = link_to 'Messages', inbox_path
-  = link_to 'Inbox', inbox_path
-  %span= @message.subject
-
-#page
-  %h1= @message.subject
-
-  = render 'messages/message', :locals => { :message => @message }
+- title "#{@message.subject} | {#@message.folder_name} | #{current_user.display_name}"
+= stylesheet_link_tag "crumblin/messages"
+= render "mailbox/mailbox"
+= render "message", :message => @message
