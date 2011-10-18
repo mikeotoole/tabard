@@ -32,7 +32,12 @@ describe MailboxController do
     end
     
     it "assigns older messages as @older_messages when authenticated as user" do
-      pending "Needs to be implemented"
+      message
+      message.created_at = Time.now - 1.week
+      message.save.should be_true      
+      sign_in receiver
+      get :inbox
+      assigns(:older_messages).last.should eq(message.message_associations.first)
     end
     
     it "assigns inbox folder as @folder when authenticated as user" do
@@ -55,7 +60,7 @@ describe MailboxController do
   end
 
   describe "GET trash" do
-    it "assigns all messages in trash folder as @messages when authenticated as user" do
+    it "assigns all todays messages in trash folder as @todays_messages when authenticated as user" do
       message_association = message.message_associations.first
       message_association.should be_a(MessageAssociation)
       message_association.folder = receiver.trash
@@ -63,7 +68,20 @@ describe MailboxController do
       message_association.folder.name.should eq("Trash")
       sign_in receiver
       get :trash
-      assigns(:messages).should eq([message_association])
+      assigns(:todays_messages).should eq([message_association])
+    end
+
+    it "assigns all messages not from today in trash folder as @older_messages when authenticated as user" do
+      message_association = message.message_associations.first
+      message_association.should be_a(MessageAssociation)
+      message_association.folder = receiver.trash
+      message.created_at = Time.now - 1.week
+      message.save.should be_true
+      message_association.save.should be_true
+      message_association.folder.name.should eq("Trash")
+      sign_in receiver
+      get :trash
+      assigns(:older_messages).should eq([message_association])
     end
     
     it "assigns trash folder as @folder when authenticated as user" do

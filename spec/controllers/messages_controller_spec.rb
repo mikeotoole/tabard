@@ -21,6 +21,8 @@ require 'spec_helper'
 describe MessagesController do
   let(:message) { create(:message) }
   let(:rec_message) { message.message_associations.first }
+  let(:rec_message_2) { create(:message).message_associations.first }
+  let(:rec_message_id_array) { [[rec_message.id], [rec_message_2.id]] }
   let(:sender) { DefaultObjects.user }
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
 
@@ -153,6 +155,39 @@ describe MessagesController do
       put :move, :id => rec_message.id, :folder_id => receiver.trash
       response.should be_forbidden
     end 
+  end
+
+  describe "PUT batch_move" do
+    it "moves all requested messages" do
+      sign_in receiver     
+      rec_message.folder.should_not eq(receiver.trash)
+      rec_message_2.folder.should_not eq(receiver.trash)
+      put :batch_move, :ids => rec_message_id_array, :folder_id => receiver.trash
+      MessageAssociation.find(rec_message).folder.should eq(receiver.trash)
+      MessageAssociation.find(rec_message_2).folder.should eq(receiver.trash)
+    end
+
+    it "redirects to the inbox_path" do
+      sign_in receiver
+      put :batch_move, :ids => rec_message_id_array, :folder_id => receiver.trash
+      response.should redirect_to(inbox_path)      
+    end
+
+    describe "with invalid folder" do    
+      it "should respond forbidden" do
+        sign_in receiver
+        put :batch_move, :ids => rec_message_id_array, :folder_id => 0
+        response.should be_forbidden
+      end
+    end
+    
+    describe "with invalid message" do
+      it "should respond forbidden" do
+        sign_in receiver
+        put :batch_move, :ids => [[0]], :folder_id => receiver.trash
+        response.should be_forbidden
+      end
+    end
   end
 
   describe "GET reply" do
@@ -350,4 +385,47 @@ describe MessagesController do
     end
   
   end
+  
+  describe "DELETE batch_destroy" do
+    it "sets all requested messages as deleted when authenticated as a owner" do
+      sign_in receiver
+      delete :batch_destroy, :ids => rec_message_id_array
+      MessageAssociation.find(rec_message).deleted.should be_true
+      MessageAssociation.find(rec_message_2).deleted.should be_true
+    end
+    
+    it "sets all requested messages folders to nil when authenticated as a owner" do
+      sign_in receiver
+      delete :batch_destroy, :ids => rec_message_id_array
+      MessageAssociation.find(rec_message).folder.should be_nil
+      MessageAssociation.find(rec_message_2).folder.should be_nil
+    end
+    
+    it "does not destroy the requested messages when authenticated as a owner" do
+      rec_message
+      rec_message_2
+      sign_in receiver
+      expect {
+        delete :batch_destroy, :ids => rec_message_id_array
+      }.to change(MessageAssociation, :count).by(0)
+    end    
+
+    it "redirects to the trash folder when authenticated as a owner" do
+      sign_in receiver
+      delete :batch_destroy, :ids => rec_message_id_array
+      response.should redirect_to(trash_path)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      delete :batch_destroy, :ids => rec_message_id_array
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should responded forbidden when authenticated as not the owner" do
+      sign_in sender
+      delete :batch_destroy, :ids => rec_message_id_array
+      response.should be_forbidden
+    end 
+  end
+  
 end
