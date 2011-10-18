@@ -11,7 +11,7 @@ class Subdomains::CommunitiesController < SubdomainsController
   # Before Filters
   ###
   before_filter :authenticate_user!
-  authorize_resource
+  load_and_authorize_resource
 
 ###
 # REST Actions

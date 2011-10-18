@@ -15,24 +15,8 @@ class Ability
   ###
   def initialize(user)
     user ||= User.guest
-
-  ###
-  # Everyone, including guest, Rules
-  ###
-    # UserProfile Rules
-    can :read, UserProfile do |user_profile|
-      user_profile.publicly_viewable
-    end
-    # Community Rules
-    can :read, Community
-    # Character Rules
-    can :read, BaseCharacter
-    # Game Rules
-    can :read, Game
-
-
-    bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
-    #dynamicRules(user, current_community) unless user.community_profiles.blank?
+    anonymous_user_rules(user)
+    crumblin_member_rules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
 
     # Define abilities for the passed in user here. For example:
     #
@@ -59,104 +43,78 @@ class Ability
   end
 
   ###
-  # This method defines the baked in rules for a user.
+  # This method defines the rules for an anonymous user.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
-  def bakedInRules(user)
-    # User Rules
-    can :manage, User do |some_user|
-      some_user.id == user.id
-    end
-
-    # UserProfile Rules
-    can :read, UserProfile
-    can :update, UserProfile do |user_profile|
-      user_profile.id == user.user_profile.id
-    end
-
-    # Community Rules
-    can :create, Community
-    can :update, Community do |community|
-      community.admin_profile_id == user.user_profile.id
-    end
-
-    # RosterAssignments
-    can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
-      roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
-    end
-
-    # Role Rules
-    can :manage, Role do |role|
-      role.community_admin_profile_id == user.user_profile.id
-    end
-    cannot :destroy, Role do |role|
-      role.system_generated
-    end
-
-    # Permission Rules
-    can :manage, Permission do |permission|
-      permission.community_admin_profile_id == user.user_profile.id
-    end
-
+  def anonymous_user_rules(user)
     # Character Rules
-    can :create, BaseCharacter
-    can [:update, :destroy], BaseCharacter do |character|
-      character.user_profile.id == user.user_profile.id
+    can :read, BaseCharacter
+    # Community Rules
+    can :read, Community
+    # Game Rules
+    can :read, Game
+    # UserProfile Rules
+    can :read, UserProfile do |user_profile|
+      user_profile.publicly_viewable
     end
-
-    # Custom Form Rules
-    can :read, CustomForm
-    can :manage, CustomForm do |form|
-      form.community.admin_profile_id == user.user_profile.id
-    end
-
-    # Question Form Rules
-    can :read, Question
-    can :manage, Question do |question|
-      question.custom_form.admin_profile_id == user.user_profile.id
-    end
-
-    # Submission Rules
-    can :create, Submission
-    can [:read, :destroy], Submission do |submission|
-      submission.admin_profile_id == user.user_profile.id or
-      submission.user_profile_id == user.user_profile.id
-    end
-    can [:update], Submission do |answer|
-      submission.user_profile_id == user.user_profile.id
-    end
-
+    can :create, User
+  end
+=begin
+  can :manage, Answer
+  can :manage, BaseCharacter
+  can :manage, CharacterProxy
+  can :manage, Comment
+  can :manage, Community
+  can :manage, CommunityApplication
+  can :manage, CommunityProfile
+  can :manage, CustomForm
+  can :manage, Discussion
+  can :manage, DiscussionSpace
+  can :manage, Folder
+  can :manage, Game
+  can :manage, Message
+  can :manage, MessageAssociation
+  can :manage, MultiSelectQuestion
+  can :manage, Page
+  can :manage, PageSpace
+  can :manage, Permission
+  can :manage, PredefinedAnswer
+  can :manage, Question
+  can :manage, Role
+  can :manage, RosterAssignment
+  can :manage, SelectQuestion
+  can :manage, SingleSelectQuestion
+  can :manage, Submission
+  can :manage, SupportedGame
+  can :manage, Swtor
+  can :manage, SwtorCharacter
+  can :manage, TextQuestion
+  can :manage, User
+  can :manage, UserProfile
+  can :manage, ViewLog
+  can :manage, Wow
+  can :manage, WowCharacter
+=end
+  ###
+  # This method defines the rules for a crumblin member.
+  # [Args]
+  #   * +user+ -> A user to define permissions on.
+  ###
+  def crumblin_member_rules(user)
     # Answer Rules
     can :create, Answer
     can [:read, :destroy], Answer do |answer|
-      answer.submission.admin_profile_id == user.user_profile.id or
       answer.user_profile_id == user.user_profile.id
     end
     can [:update], Answer do |answer|
       answer.user_profile_id == user.user_profile.id
     end
 
-    # Discussion Rules
-    can [:read, :create], Discussion do |discussion|
-      user.user_profile.is_member?(discussion.community)
-    end
-    can [:update], Discussion do |discussion|
-      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
-    end
-    can [:destroy], Discussion do |discussion|
-      (discussion.community.admin_profile_id == user.user_profile.id and not discussion.has_been_locked) or
-      ((discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked)
-    end
-    can [:unlock, :lock], Discussion do |discussion|
-      discussion.community.admin_profile_id == user.user_profile.id
-    end
-    cannot :create, Discussion do |discussion|
-      if discussion.is_announcement
-        discussion.community.admin_profile_id != user.user_profile.id
-      else
-        false
-      end
+    # Character Rules
+    can :create, BaseCharacter
+    can [:update, :destroy], BaseCharacter do |character|
+      character.user_profile.id == user.user_profile.id
     end
 
     # Comment Rules
@@ -167,50 +125,34 @@ class Ability
       (comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted
     end
     can [:destroy], Comment do |comment|
-      ((comment.community_admin_profile_id == user.user_profile.id and not comment.has_been_locked) or
-      ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked)) and not comment.has_been_deleted
-    end
-    can [:unlock, :lock], Comment do |comment|
-      (comment.community_admin_profile_id == user.user_profile.id) and not comment.has_been_deleted
+      ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted)
     end
 
-    # Discussion Space Rules
-    can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(space.community)
-    end
-    can [:update, :destroy, :create], DiscussionSpace do |space|
-      space.community.admin_profile_id == user.user_profile.id
-    end
-    cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement == true
-    end
-
-    # Pages Rules
-    can [:read, :create], Page do |page|
-      user.user_profile.is_member?(page.community)
-    end
-    can [:update], Page do |page|
-      page.user_profile_id == user.user_profile.id
-    end
-    can [:destroy], Page do |page|
-      page.community.admin_profile_id == user.user_profile.id or
-      page.user_profile_id == user.user_profile.id
-    end
-
-    # Page Space Rules
-    can [:read], PageSpace do |space|
-      user.user_profile.is_member?(space.community)
-    end
-    can [:update, :destroy, :create], PageSpace do |space|
-      space.community.admin_profile_id == user.user_profile.id
-    end
+    # Community Rules
+    can :create, Community
 
     # Community Applications
     can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
       community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
-    can [:read, :accept, :reject], CommunityApplication do |community_application|
-      community_application.community_admin_profile_id == user.user_profile.id
+
+    # Custom Form Rules
+    can :read, CustomForm
+
+    # Discussion Rules
+    can [:read], Discussion do |discussion|
+      user.user_profile.is_member?(discussion.community) and discussion.is_announcement
+    end
+    can [:update, :destroy], Discussion do |discussion|
+      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
+    end
+
+    # Discussion Space Rules
+    can [:read], DiscussionSpace do |space|
+      user.user_profile.is_member?(space.community) and space.is_announcement == true
+    end
+    cannot [:update, :destroy, :create], DiscussionSpace do |space|
+      space.is_announcement == true
     end
 
     # Messaging Rules
@@ -229,18 +171,86 @@ class Ability
     can :manage, MessageAssociation do |message|
       message.recipient_id == user.user_profile.id
     end
+
+    # Question Form Rules
+    can :read, Question
+
+    # Submission Rules
+    can :create, Submission
+    can [:read, :destroy], Submission do |submission|
+      submission.user_profile_id == user.user_profile.id
+    end
+    can [:update], Submission do |answer|
+      submission.user_profile_id == user.user_profile.id
+    end
+
+    # User Rules
+    can :manage, User do |some_user|
+      some_user.id == user.id
+    end
+
+    # UserProfile Rules
+    can :read, UserProfile
+    can :update, UserProfile do |user_profile|
+      user_profile.id == user.user_profile.id
+    end
+  end
+
+  ###
+  # This method defines the rules for a user who is a community admin.
+  # [Args]
+  #   * +user+ -> A user to define permissions on.
+  ###
+  def community_member_rules(user, current_community)
+    # RosterAssignments
+    can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
+      roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
+    end
+
+    apply_rules_from_roles(user, current_community)
+  end
+
+  ###
+  # This method defines the rules for a user who is a community admin.
+  # [Args]
+  #   * +user+ -> A user to define permissions on.
+  ###
+  def community_admin_rules(user)
+    can [:read], Answer
+    can :manage, RosterAssignment
+    can [:read, :accept, :reject], CommunityApplication
+    can [:manage], Page
+    can [:manage], PageSpace
+    can [:unlock, :lock, :destroy], Comment do |comment|
+      not comment.has_been_deleted
+    end
+    can :manage, DiscussionSpace
+    can :manage, Discussion do |discussion|
+      not discussion.has_been_locked
+    end
+    can :manage, CustomForm
+    can :manage, Role
+    cannot :destroy, Role do |role|
+      role.system_generated
+    end
+    can :manage, Permission
+    can [:read, :destroy], Submission
+    can :manage, Question
+    can :update, Community
   end
 
   ###
   # This method defines the dynamic rules for a user.
   # [Args]
   #   * +user+ -> A user to define permissions on. Ensures that they have at least one community_profile.
+  #   * +current_community+ -> The current community context.
   ###
   def dynamicContextRules(user, current_community)
-    # Special admin rules for community owner
-    can :manage, RosterAssignment if current_community and current_community.admin_profile_id == user.user_profile_id
+    community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
+    community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
+  end
 
-    # Check for rules granted by roles
+  def apply_rules_from_roles(user, current_community)
     return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
     community_profile.roles.each do |role|
@@ -281,7 +291,7 @@ class Ability
       can action, subject_class
     else
       can action, subject_class do |subject_class_instance|
-        subject_class_instance.id == subject_id
+        subject_class_instance.id.to_s == subject_id
       end
     end
   end
