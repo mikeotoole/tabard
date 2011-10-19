@@ -1,17 +1,23 @@
 - title "Compose Mail | #{current_user.display_name}"
-%pre=YAML::dump @message
-#message.compose
-  - simple_form_for :message, :url => {:controller => "sent_messages", :action => "create"} do |f|
-    %fieldset.suggest
-      .medium
-        %input{ :type => 'text' }
-        %ul.suggestions
-          - user_profiles = current_user.address_book.collect {|u| [u.user_id, u.name]}
-          - # TODO Doug, I don't think this is right here. address_book returns a collection of user profiles. name is display name.
-          - # Not sure what line 15 should exactly be -MO
-          = f.collection_check_boxes :to, user_profiles, :first, :last, :item_wrapper_tag => :li
-    %fieldset
-      %ol
-        = f.input :subject, :wrapper_class => 'medium'
-        = f.input :body, :as => :text
-        = f.button :submit
+
+= simple_form_for @message, :url => { :controller => "sent_messages", :action => "create" } do |f|
+  #message.compose
+  
+    %header
+      %fieldset
+        %ul
+          %li
+            = f.input :subject, :wrapper => false
+          %li
+            %label To:
+            %input{ :type => 'text' }
+    
+    %aside.suggestions
+      %ul
+        - user_profiles = current_user.address_book.collect {|u| [u.user_id, u.name]}
+        - # TODO Doug, I don't think this is right here. address_book returns a collection of user profiles. name is display name.
+        - # Not sure what line 15 should exactly be -MO
+        = f.collection_check_boxes :to, user_profiles, :first, :last, :item_wrapper_tag => :li
+    
+    = f.input :body, :as => :text, :label => false, :wrapper_tag => :article
+    %button{ :type => ':submit' } Send

@@ -21,7 +21,8 @@ class MessageAssociation < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate   :author, :created_at, :subject, :body, :recipients, :author_avatar_url, :to => :message
+  delegate :author, :created_at, :subject, :body, :recipients, :author_avatar_url, :to => :message
+  delegate :name, :to => :author, :prefix => true
   delegate :name, :to => :folder, :prefix => true
 
 ###

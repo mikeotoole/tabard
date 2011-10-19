@@ -15,9 +15,11 @@
   
   %p.author
     %strong= message.author.name
-    to me
+    to
+    %strong me
     - if message.recipients.size > 1
-      = " and #{pluralize(message.recipients.size-1,'other')}"
+      and
+      %strong= pluralize(message.recipients.size-1,'other')
       
   %p.body
     = truncate message.body, :length => 100, :separator => ' '

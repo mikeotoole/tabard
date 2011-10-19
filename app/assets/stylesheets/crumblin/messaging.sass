@@ -451,8 +451,107 @@ body
   article
     background: #eee
     +bg_gradient(#ccc,#fff)
+    font: 15px DinLight
+    line-height: 20px
     margin: -10px 0 0
-    padding: 30px 20px 20px
+    min-height: 310px
+    padding: 50px 40px 40px
   
   &.compose
     left: 70px
+    
+    header
+      margin: 0
+    
+      ul
+        background: #eee
+        border-bottom: 1px solid #888
+        +border_radius(0,0,10,10)
+        +box_shadow(0 0 15px #999)
+        padding: 15px 10px 5px
+        
+        li
+          color: #644b83
+          margin-right: 200px
+    
+          label
+            background: #ddd
+            +bg_gradient(#ccc,#eee)
+            border: 1px solid #ccc
+            border-right-color: #eee
+            +border_radius(5,0,0,5)
+            font: 14px DinMedium
+            height: 30px
+            line-height: 30px
+            margin: 0 -90px 0 0
+            padding: 0 10px
+            position: absolute
+            right: 100%
+          
+          input
+            background: #fff
+            border: 1px solid #ccc
+            +border_radius(0,5,5,0)
+            font: 18px DinLight
+            height: 30px
+            line-height: 30px
+            padding: 0 10px
+            margin: 0 0 5px 80px
+            width: 100%
+    
+    article
+      background: #fff
+      +border_radius(10)
+      bottom: 20px
+      +box_shadow(0 0 15px #ccc)
+      left: 20px
+      min-height: 0
+      padding: 10px 10px 10px 20px
+      position: absolute
+      top: 130px
+      right: 20px
+      
+      &:before
+        +bg_gradient(#fff,rgba(#fff,0))
+        +border_radius(10,10,0,0)
+        content: ''
+        height: 20px
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+      
+      &:after
+        +bg_gradient(rgba(#fff,0),#fff)
+        +border_radius(0,0,10,10)
+        border-bottom: 15px solid #fff
+        bottom: -15px
+        content: ''
+        height: 20px
+        left: 0
+        position: absolute
+        right: 0
+      
+      textarea
+        background: transparent
+        +border_radius(10)
+        color: #644B83
+        font: 18px DinLight
+        height: 100%
+        line-height: 25px
+        margin: -10px 0
+        padding: 10px 0
+        width: 100%
+    
+    aside
+      display: none
+    
+    button
+      font-size: 30px
+      height: 67px
+      padding: 0
+      position: absolute
+      right: 20px
+      top: 20px
+      width: 80px
+      z-index: 1

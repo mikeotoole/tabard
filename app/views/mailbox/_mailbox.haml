@@ -4,24 +4,25 @@
     %dl
     
       %dt Mail
-      %dd{ :class => 'inbox' + (@folder == current_user.inbox ? ' current' : '') }
+      %dd{ :class => 'inbox' + (mailbox_view_state == :inbox ? ' current' : '') }
         = link_to 'Inbox', inbox_path, :meta => "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
-      %dd{ :class => 'compose' + (@message && !@message.id ? ' current' : '') }
+      %dd{ :class => 'compose' + (mailbox_view_state == :compose ? ' current' : '') }
         = link_to 'Compose', compose_mail_path, :meta => 'New message'
-      -#HACK Joe - Is there a better way to detect that we are viewing sent messages? -DW
-      %dd{ :class => 'sent' + (!@folder && (!@message || (@message.id && !@message.respond_to?('folder'))) ? ' current' : '') }
+      %dd{ :class => 'sent' + (mailbox_view_state == :sent ? ' current' : '') }
         = link_to 'Sent', sent_mailbox_path, :meta => "Sent messages"
-      %dd{ :class => 'trash' + (@folder == current_user.trash || (@message && @message.respond_to?('folder') && @message.folder == current_user.trash) ? ' current' : '') }
+      %dd{ :class => 'trash' + (mailbox_view_state == :trash ? ' current' : '') }
         = link_to 'Trash', trash_path, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
-        
-      %dt Actions
-      %dd.move
-        = link_to 'Move to folder', '#', :meta => 'Move selected messages.'
-      %dd.delete
-        - if @folder == current_user.trash
-          = button_tag 'Delete forever', :confirm => 'Are you sure?', :meta => 'Delete messages for forever.'
-        - else
-          = button_tag 'Move to trash', :meta => 'Trash selected messages.'
+      
+      - if ![:compose, :sent].include?(mailbox_view_state)
+        %dt Actions
+        %dd.move
+          = link_to 'Move to folder', '#', :meta => 'Move selected messages.'
+        %dd.delete
+          - if @folder == current_user.trash
+            = button_tag 'Delete forever', :confirm => 'Are you sure?', :meta => 'Delete messages for forever.'
+          - else
+            = button_tag 'Move to trash', :meta => 'Trash selected messages.'
+  
   #mailbox
     - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
       %dl

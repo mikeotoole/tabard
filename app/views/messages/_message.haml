@@ -12,9 +12,11 @@
       From:
       = link_to message.author_name, message.author
       on
-      %time= l Time.now, :format => :date_short
+      %time{ :title => (l Time.now, :format => :date_short) }
+        = l Time.now, :format => :date_monthday
       at
-      %time= l Time.now, :format => :time_12
+      %time
+        = l Time.now, :format => :time_12
     
     %h1= message.subject
   
@@ -25,5 +27,5 @@
           = link_to profile.name, user_profile_path(profile)
     
   %article
-    = message.body
-    %pre=YAML::dump message
+    :markdown
+      = message.body

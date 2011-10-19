@@ -19,6 +19,7 @@ class MailboxController < ApplicationController
     @folder = current_user.inbox
     authorize!(:read, @folder)
     gather_inbox_data @folder
+    @mailbox_view_state = :inbox
     render 'show'
   end
 
@@ -27,6 +28,7 @@ class MailboxController < ApplicationController
     @folder = current_user.trash
     authorize!(:read, @folder)
     gather_inbox_data @folder
+    @mailbox_view_state = :trash
     render 'show'
   end
 
@@ -40,5 +42,11 @@ protected
     @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
     @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}
   end
+  
+  # This method will determine a string value for the current view in the mailbox
+  def mailbox_view_state
+    @mailbox_view_state ||= ''
+  end
+  helper_method :mailbox_view_state
   
 end
