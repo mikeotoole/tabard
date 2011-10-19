@@ -105,7 +105,7 @@ describe MessagesController do
   
     it "moves the requested message" do
       rec_message
-      MessageAssociation.any_instance.should_receive(:update_attributes).with({:folder => receiver.trash})
+      MessageAssociation.any_instance.should_receive(:update_attributes).with({:folder_id => receiver.trash.id, :has_been_read => true})
       put :move, :id => rec_message.id, :folder_id => receiver.trash
     end
 
