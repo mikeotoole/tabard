@@ -123,8 +123,9 @@ class Comment < ActiveRecord::Base
   ###
   def replys_locked?
     self.has_been_locked or
-        !self.original_comment_item.comments_enabled? or
-        (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+    (self.commentable.respond_to?('replys_locked?') and self.commentable.replys_locked?) or
+    not self.original_comment_item.comments_enabled? or
+    (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end
 
   # The commentable_type always needs to be of the base class type and not the subclass type.
