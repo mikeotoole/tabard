@@ -13,21 +13,24 @@ body
     +bg_gradient(rgba(#000,.5),rgba(#000,0))
     border-top: 1px solid #46335A
   
+  &:after
+    background-position: -100px 0
+  
   .logo
-    left: 10px
+    left: 15px
     margin: 0
   
   >ul.menu
-    left: 172px
+    left: 177px
     margin: 0
   
   >ul.characters
     margin: 0
-    right: 65px
+    right: 70px
   
   a.avatar
     margin: 0
-    right: 15px
+    right: 20px
 
 #mailbox-menu
   background: #444
@@ -40,15 +43,15 @@ body
   position: fixed
   text-align: center
   top: 70px
-  width: 69px
-  z-index: 3
+  width: 59px
+  z-index: 5
   
   dt
     border-bottom: 1px solid #000
     color: #999
     font: 13px DinLight, sans
     margin: 0 0 20px
-    padding: 15px 0 5px
+    padding: 10px 0 5px
   
   a,
   button
@@ -71,6 +74,38 @@ body
       border: 1px solid #000
       +box_shadow(0 0 20px #ccc)
       +opacity(1)
+      
+      &[meta]
+                
+        &:before
+          background: #A23B31
+          border: 1px solid #CFA893
+          +border_radius(5)
+          +box_shadow(-5px 0 15px rgba(#000,.7))
+          color: #F8D5BB
+          content: attr(meta)
+          font: 13px DinLight
+          height: 30px
+          left: 68px
+          letter-spacing: 0
+          line-height: 30px
+          padding: 0 10px
+          position: absolute
+          text-indent: 0
+          text-transform: none
+          white-space: nowrap
+          z-index: 5
+        
+        &:after
+          border: 5px solid transparent
+          border-right: 5px solid #CFA893
+          content: ''
+          height: 0
+          margin: 10px 0
+          position: absolute
+          right: -9px
+          width: 0
+          z-index: 6
   
   dd
   
@@ -121,8 +156,10 @@ body
   
 #mailbox
   background: #999
+  border-right: 1px solid #fff
   bottom: 0
-  left: 70px
+  +box_shadow(inset -10px 0 10px rgba(#000,.2))
+  left: 60px
   overflow: scroll
   overflow-x: hidden
   padding: 12px 0 8px
@@ -155,6 +192,46 @@ body
       +transition(box-shadow .2s linear)
       z-index: 2
       
+      &.selected
+        +bg_gradient(#dae9f3,#fff)
+      
+      &.open
+        
+        &:before
+          background: #2D7CB4
+          border-left: 2px solid #CDEAFF
+          +border_radius(60,0,0,60)
+          +box_shadow(0 0 15px #666)
+          color: #CDEAFF
+          content: '›'
+          font-size: 30px
+          letter-spacing: 1px
+          line-height: 70px
+          margin: -36px 0 0
+          padding: 0 0 0 5px
+          position: absolute
+          right: -5px
+          text-align: center
+          top: 50%
+          width: 30px
+          z-index: 5
+        
+        &:after
+          bottom: 0
+          content: ''
+          left: 30px
+          position: absolute
+          right: 0
+          top: 0
+          z-index: 4
+        
+        h3,
+        time,
+        .author,
+        .avatar,
+        .body
+          +opacity(.3)
+      
       time
         color: #A03B32
         font: 12px DinMedium, serif
@@ -167,7 +244,7 @@ body
       h3
         color: #3f2656
         font: 17px DinMedium, serif
-        padding: 0 50px 0 50px
+        padding: 0 50px
         
         a:before
           bottom: 0
@@ -230,23 +307,152 @@ body
       p.body
         color: #666
         font: 13px DinLight, serif
+      
+      &.sent
+        padding-left: 10px
+        
+        .avatar
+          left: 10px
         
       &:hover
         +box_shadow(0 0 50px rgba(#000,.5))
         z-index: 3
 
 #message
-  background: #eee
-  +bg_gradient(#ccc,#fff)
-  border-left: 1px solid #ccc
+  background: image-url('main/bg.png') 0 0 repeat-x #fff
+  border-left: 1px solid #fff
   bottom: 0
   +box_shadow(0 0 10px rgba(#000,.7))
-  left: 390px
+  left: 380px
   overflow: scroll
   overflow-x: hidden
-  padding: 20px
   position: fixed
   right: 0
   text-align: left
   top: 70px
-  z-index: 1
+  z-index: 4
+  
+  header
+    padding: 5px 0 0
+    position: relative
+  
+    .actions
+      background: #bbb
+      border: 1px solid #999
+      +border_radius(0,0,0,10)
+      +box_shadow(0 0 5px rgba(#000,.3))
+      border-right: 0
+      border-top: 0
+      padding: 9px 20px 6px 6px
+      position: fixed
+      right: 0
+      top: 70px
+      +transition(padding .1s linear, border .2s linear, box-shadow .2s linear)
+      z-index: 6
+      
+      a
+        +bg_gradient(#d24723,#792b28)
+        border: 1px solid #aaa
+        +border_radius(5)
+        color: #f8d5bb
+        display: inline-block
+        font-size: 13px
+        line-height: 22px
+        padding: 0 7px
+        text-decoration: none
+        +transition(border .2s linear, box-shadow .2s linear)
+        
+        &:hover
+          +bg_gradient(#e05c2e,#9e3834)
+          border-color: #ccc
+          +box_shadow(0 0 10px #aaa)
+          color: #fff
+      
+      &:hover
+        border-color: #666
+        +box_shadow(0 0 20px rgba(#000,.7))
+        padding: 19px 20px 6px 6px
+    
+    h1
+      +bg_gradient(#fff,#eee)
+      border-bottom: 1px solid #fff
+      color: #2B77AD
+      font: 21px DinMedium
+      margin: 0
+      padding: 10px 20px
+      position: relative
+        
+      &:after
+        border-bottom: 1px solid #aaa
+        bottom: 0
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+    
+    h2
+      background: #eee
+      border-bottom: 1px solid #fff
+      color: #644b83
+      font: 13px DinLight
+      margin: 0
+      padding: 7px 20px 7px 17px
+      position: relative
+      
+      &:after
+        border-bottom: 1px solid #aaa
+        bottom: 0
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+      
+      a
+        +border-radius(3)
+        color: #A33C32
+        font: 14px DinMedium
+        padding: 0 3px
+        
+        &:hover
+          background: #A33C32
+          color: #fff
+      
+      time
+        color: #A33C32
+        font: 14px DinMedium
+    
+    dl
+      background: #eee
+      border-bottom: 1px solid #888
+      +border_radius(0,0,10,10)
+      +box_shadow(0 0 15px #999)
+      padding: 7px 20px 7px 17px
+      
+      dt,
+      dd
+        color: #644b83
+        display: inline
+        font: 14px DinLight
+              
+        a
+          +bg_gradient(#ccc,#ddd)
+          border: 1px solid #ccc
+          +border-radius(3)
+          color: #644b83
+          font: 13px DinMedium
+          padding: 1px 4px
+          +transition(background .2s linear)
+          
+          &:hover
+            background: #A33C32
+            border-color: #A33C32
+            color: #fff
+  
+  article
+    background: #eee
+    +bg_gradient(#ccc,#fff)
+    margin: -10px 0 0
+    padding: 30px 20px 20px
+  
+  &.compose
+    left: 70px

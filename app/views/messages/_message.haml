@@ -1,23 +1,29 @@
 #message
-  %p.actions
-    = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
-    - if message.recipients.size > 1
-      = link_to('Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
-    = link_to 'Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
-  %dl.meta
-    %dt Received
-    %dd= message.created_at.to_s(:long)
-    %dt From:
-    %dd= message.author.name
-    %dt To:
-    %dd
-      %ul
-        - message.recipients.each do |profile|
-          %li
-            = link_to profile.name, user_profile_path(profile)
-  %p.body
+
+  %header
+    %p.actions
+      = link_to '✎ Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
+      - if message.recipients.size > 1
+        = link_to('✎ Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
+      = link_to '➔ Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
+      = link_to '✖ Trash ', trash_path(message), :method => :destroy, :class => 'delete', :title => 'Move to trash'
+    
+    %h2
+      From:
+      = link_to message.author_name, message.author
+      on
+      %time= l Time.now, :format => :date_short
+      at
+      %time= l Time.now, :format => :time_12
+    
+    %h1= message.subject
+  
+    %dl
+      %dt To:
+      - message.recipients.each do |profile|
+        %dd
+          = link_to profile.name, user_profile_path(profile)
+    
+  %article
     = message.body
-  %p.actions
-    = link_to 'Reply', mail_reply_path(message), :method => :get, :class => 'button', :title => 'Reply to sender'
-    - if message.recipients.size > 1
-      = link_to 'Reply All', mail_reply_all_path(message), :method => :get, :class => 'button', :title => 'Reply to all'
+    %pre=YAML::dump message

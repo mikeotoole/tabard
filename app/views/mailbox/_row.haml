@@ -1,4 +1,4 @@
-%dd{ :class => (message.respond_to?('folder_name') ? message.folder_name.downcase.gsub(/[^a-z0-9]/,'') : '') }
+%dd{ :class => message_class_names(message) }
 
   - if message.respond_to?('deleted') && !message.deleted?
     %p.meta
@@ -9,7 +9,7 @@
     = l message.created_at, :format => (message.created_at.today? ? :time_12 : :date_monthday)
     
   %h3
-    = link_to message.subject, mail_path(message)
+    = link_to message.subject, (message.respond_to?('folder_name') ? mail_path(message) : sent_mail_path(message))
   
   = image_tag(message.author_avatar_url(:tiny), :class => 'avatar')
   

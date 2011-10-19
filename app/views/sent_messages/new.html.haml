@@ -1,6 +1,6 @@
 - title "Compose Mail | #{current_user.display_name}"
-
-#message
+%pre=YAML::dump @message
+#message.compose
   - simple_form_for :message, :url => {:controller => "sent_messages", :action => "create"} do |f|
     %fieldset.suggest
       .medium

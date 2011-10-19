@@ -4,7 +4,7 @@
   %head
     %title= yield_for(:title, 'Crumblin')
     = stylesheet_link_tag "crumblin/crumblin","crumblin/messaging"
-    = javascript_include_tag "application"
+    = javascript_include_tag "application", "messaging"
     = csrf_meta_tags
 
   %body

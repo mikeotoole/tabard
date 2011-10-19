@@ -32,7 +32,7 @@ class Message < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :avatar_url, :to => :author, :prefix => true
+  delegate :avatar_url, :name, :to => :author, :prefix => true
 
 ###
 # Validators

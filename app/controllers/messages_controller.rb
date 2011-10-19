@@ -50,12 +50,14 @@ class MessagesController < MailboxController
 
   # PUT /mail/:id/batch_move/:folder_id(.:format)
   def batch_move
-    folder = current_user.folders.find_by_id(params[:folder_id])
-    authorize!(:update, folder)
-    params[:ids].each do |id|
-      @message = current_user.received_messages.find_by_id(id[0])
-      authorize!(:update, @message)
-      @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
+    if params[:ids]
+      folder = current_user.folders.find_by_id(params[:folder_id])
+      authorize!(:update, folder)
+      params[:ids].each do |id|
+        @message = current_user.received_messages.find_by_id(id[0])
+        authorize!(:update, @message)
+        @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
+      end
     end
     redirect_to inbox_path
   end
@@ -104,10 +106,12 @@ class MessagesController < MailboxController
 
   # DELETE /mail/batch_delete/:id(.:format)
   def batch_destroy
-    params[:ids].each do |id|
-      @message = current_user.received_messages.find_by_id(id[0])
-      authorize!(:update, @message)
-      @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+    if params[:ids]
+      params[:ids].each do |id|
+        @message = current_user.received_messages.find_by_id(id[0])
+        authorize!(:update, @message)
+        @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+      end
     end
     redirect_to trash_path
   end
