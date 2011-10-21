@@ -83,6 +83,17 @@ class ApplicationController < ActionController::Base
   end
 
 ###
+# Active Admin
+###
+  def current_ability # TODO Mike, Is this the best way to accomplish this?
+    if current_user
+      @current_ability ||= Ability.new(current_user)
+    else
+      @current_ability ||= AdminAbility.new(AdminUser.first) # TODO Mike, Change to current_admin_user
+    end
+  end
+
+###
 # Protected Methods
 ###
 protected

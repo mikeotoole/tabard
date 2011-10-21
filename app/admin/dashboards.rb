@@ -5,7 +5,25 @@ ActiveAdmin::Dashboards.build do
   section "Recent Signed In Admin Users" do
     ul do
       AdminUser.order("last_sign_in_at desc").limit(5).collect do |admin_user|
-        li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at : 'Never Logged In'}", admin_admin_user_path(admin_user)
+        li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
+      end  
+    end    
+  end
+  
+  section "Logged In Users" do
+    ul do      
+      User.order("current_sign_in_at desc").limit(5).collect do |user|
+        if user.current_sign_in_at
+          li link_to "#{user.display_name} - #{user.email} - #{user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
+        end  
+      end  
+    end
+  end
+  
+  section "New Users" do
+    ul do
+      User.order("created_at desc").limit(5).collect do |user|
+        li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
       end  
     end    
   end

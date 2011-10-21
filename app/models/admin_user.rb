@@ -10,6 +10,9 @@ class AdminUser < ActiveRecord::Base
   # TODO Mike, Uncomment this out.
   #after_create { |admin| admin.send_reset_password_instructions }
   
+###
+# Public Methods
+###
   def password_required?
     new_record? ? false : super
   end

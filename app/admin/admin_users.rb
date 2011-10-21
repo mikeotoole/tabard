@@ -1,13 +1,13 @@
 ActiveAdmin.register AdminUser do
   menu :parent => "User", :priority => 11
+  controller.authorize_resource
 
   filter :email
   filter :current_sign_in_at
   filter :current_sign_in_ip
   filter :last_sign_in_at
   filter :last_sign_in_ip
-  filter :created_at  
-  # TODO Mike, Need to remove the edit button in the show screen.
+  filter :created_at
   
   index do
     column :email
@@ -21,7 +21,9 @@ ActiveAdmin.register AdminUser do
       link_to "View", admin_admin_user_path(admin_user)
     end
     column "Destroy" do |admin_user|
-      link_to "Destroy", [:admin, admin_user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
+      if can? :destroy, admin_user
+        link_to "Destroy", [:admin, admin_user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
+      end  
     end
   end
   
