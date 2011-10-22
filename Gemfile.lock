@@ -177,6 +177,9 @@ GEM
     rdiscount (1.6.8)
     rdoc (3.11)
       json (~> 1.4)
+    redis (2.2.2)
+    redis-store (1.0.0.1)
+      redis (~> 2.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.7.0)
@@ -283,6 +286,8 @@ DEPENDENCIES
   rails_best_practices
   rb-fsevent
   rdiscount
+  redis
+  redis-store
   rspec-rails
   ruby-debug19
   sanitize
