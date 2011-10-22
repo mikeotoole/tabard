@@ -13,7 +13,10 @@
 require 'spec_helper'
 require "cancan/matchers"
 
-def anonymous_can_permissions(ability)
+def anonymous_can_permissions(user)
+  before(:each) do
+    @ability = Ability.new(user)
+  end
   describe "BaseCharacter" do
     it "should allow read when public" do
       #@ability.should_not be_able_to(:read, )
@@ -22,8 +25,8 @@ def anonymous_can_permissions(ability)
   end
   describe "Community" do
     it "should allow read" do
-      #@ability.should_not be_able_to(:read, )
-      pending
+      public_community = create(:community)
+      @ability.should be_able_to(:read, public_community)
     end
   end
   describe "Game" do
@@ -113,7 +116,7 @@ describe Ability do
     it "can log in" do
       pending
     end
-    anonymous_can_permissions(@ability)
+    anonymous_can_permissions(@anonymous)
     #In the scope of a community they are treated as a non member, with the exception that they can not apply to a community.
   end
   describe "for a crumblin member" do
