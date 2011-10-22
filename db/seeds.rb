@@ -72,12 +72,18 @@ end
   rb_cp.approved_character_proxies << proxy
 end
 
-# TODO Mike/Joe Make DMoose + STurtle Apply to the community -JW
-
-puts "Making Diabolical Moose, Snappy Turtle and Dirty Badger members of Just Another Headshot Clan..."
-jahc.promote_user_profile_to_member(d_moose.user_profile)
-jahc.promote_user_profile_to_member(s_turtle.user_profile)
-jahc.promote_user_profile_to_member(d_badger.user_profile)
+puts "Diabolical Moose, Snappy Turtle, Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
+def generate_application_from_user_profile(community, user_profile)
+  app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
+  app.prep(user_profile, community.community_application_form)
+  app.save
+  app
+end
+puts "Accepting Diabolical Moose's, Snappy Turtle's and Dirty Badger's applications"
+generate_application_from_user_profile(jahc,d_moose.user_profile).accept_application
+generate_application_from_user_profile(jahc,s_turtle.user_profile).accept_application
+generate_application_from_user_profile(jahc,d_badger.user_profile).accept_application
+generate_application_from_user_profile(jahc,k_fox.user_profile)
 
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)
