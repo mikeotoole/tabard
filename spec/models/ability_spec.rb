@@ -13,6 +13,77 @@
 require 'spec_helper'
 require "cancan/matchers"
 
+def anonymous_can_permissions(ability)
+  describe "BaseCharacter" do
+    it "should allow read when public" do
+      #@ability.should_not be_able_to(:read, )
+      pending
+    end
+  end
+  describe "Community" do
+    it "should allow read" do
+      #@ability.should_not be_able_to(:read, )
+      pending
+    end
+  end
+  describe "Game" do
+    it "should allow read" do
+      #@ability.should_not be_able_to(:read, )
+      pending
+    end
+  end
+end
+
+def crumblin_member_can_permissions(ability)
+
+  anonymous_can_permissions(ability)
+
+  describe "BaseCharacter" do
+    it "should allow creation" do
+      #@ability.should be_able_to(:create, )
+      pending
+    end
+    it "should allow read, update, delete for owned" do
+      #@ability.should be_able_to(:read, )
+      #@ability.should be_able_to(:update, )
+      #@ability.should be_able_to(:delete, )
+      pending
+    end
+  end
+  describe "Community" do
+    it "should allow create" do
+      #@ability.should_not be_able_to(:create, )
+      pending
+    end
+  end
+  describe "CommunityApplication" do
+    it "should allow creation" do
+      #@ability.should be_able_to(:create, )
+      pending
+    end
+    it "should allow read, update, delete for owned" do
+      #@ability.should be_able_to(:read, )
+      #@ability.should be_able_to(:update, )
+      #@ability.should be_able_to(:delete, )
+      pending
+    end
+  end
+  describe "Messages" do
+    it "should allow create" do
+      #@ability.should_not be_able_to(:read, )
+      pending
+    end
+    it "should allow read, delete for owned" do
+      #@ability.should be_able_to(:read, )
+      #@ability.should be_able_to(:update, )
+      #@ability.should be_able_to(:delete, )
+      pending
+    end
+  end
+end
+
+
+
 describe Ability do
   ###
   # Here is a quick example to writing tests for cancan using the magical cancan matcher:
@@ -42,11 +113,13 @@ describe Ability do
     it "can log in" do
       pending
     end
+    anonymous_can_permissions(@ability)
     #In the scope of a community they are treated as a non member, with the exception that they can not apply to a community.
   end
   describe "for a crumblin member" do
     pending
   end
+
   describe "for dynamic rules" do
     before(:each) do
       @community_profile_with_characters = create(:community_profile_with_characters)
@@ -56,6 +129,15 @@ describe Ability do
       @community_admin_user = @community.admin_profile.user
       @different_community = create(:community)
     end
+
+    describe "for a community member" do
+      pending
+    end
+
+    describe "for a community admin" do
+      pending
+    end
+
     describe "should be community specific" do
       before(:each) do
         app = @different_community.community_applications.new(:character_proxies => @user_profile.character_proxies)
@@ -85,13 +167,6 @@ describe Ability do
       end
     end
 
-    describe "for a community member" do
-      pending
-    end
-
-    describe "for a community admin" do
-      pending
-    end
     describe "for role testing" do
       def create_new_permission(subject, permission_level, subject_id = nil, parent = nil, parent_id = nil)
         if subject_id
@@ -107,7 +182,6 @@ describe Ability do
       end
 
       def test_all_basic_role_permission_levels(test_object)
-        describe "#{test_object} basic action test"
         test_simple_role_test(test_object, "View")
         test_simple_role_test(test_object, "Update")
         test_simple_role_test(test_object, "Create")
@@ -115,21 +189,13 @@ describe Ability do
       end
 
       def test_simple_role_test(test_object, permission_level)
-        describe "#{permission_level} level"  do
-          before(:each) do
-            if test_object.id?
-              create_new_permission(test_object.class.to_s, permission_level, test_object.id)
-            else
-              create_new_permission(test_object.class.to_s, permission_level)
-            end
-          end
-          it "should allow read if view level is set in the same community" do
-            test_ability(permission_level, test_object)
-          end
-          it "should not allow read if view level is set in the different community" do
-            test_no_ability(permission_level, test_object)
-          end
+        if test_object.id?
+          create_new_permission(test_object.class.to_s, permission_level, test_object.id)
+        else
+          create_new_permission(test_object.class.to_s, permission_level)
         end
+        test_ability(permission_level, test_object)
+        test_no_ability(permission_level, test_object)
       end
 
       def test_ability(permission_level, item)
@@ -167,10 +233,16 @@ describe Ability do
         ability.should_not be_able_to(:destroy, item)
       end
       describe "comment" do
-        some_new_comment = Comment.new
-        test_all_basic_role_permission_levels(some_new_comment)
+        it "should pass basic tests" do
+          some_new_comment = Comment.new
+          test_all_basic_role_permission_levels(some_new_comment)
+        end
       end
       describe "page spaces" do
+        it "should pass basic tests" do 
+          some_new_page_space = @community.page_spaces.new
+          test_all_basic_role_permission_levels(some_new_page_space)
+        end
         describe "view level"  do
           it "should allow read if view level is set in the same community" do
             create_new_permission("PageSpace", "View")

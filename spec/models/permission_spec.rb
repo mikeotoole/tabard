@@ -32,7 +32,7 @@ describe Permission do
   
   describe "subject_class" do
     it "should have a limited inclusion set" do
-      valid_classes = %w{ Role CustomForm PageSpace Page DiscussionSpace Discussion Comment Announcement CommunityApplication } # TESTING Valid subject classes for testing.
+      valid_classes = %w{ Role CustomForm PageSpace Page DiscussionSpace Discussion Announcement CommunityApplication } # TESTING Valid subject classes for testing.
       valid_classes.each do |valid_class|
         build(:permission, :subject_class => valid_class).should be_valid
       end
