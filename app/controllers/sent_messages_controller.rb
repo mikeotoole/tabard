@@ -15,7 +15,7 @@ class SentMessagesController < MailboxController
 
   # GET /mail/sent(.:format)
   def index
-    @messages = current_user.sent_messages
+    @messages = current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!
     @mailbox_view_state = :sent
     respond_with(@messages)
   end
