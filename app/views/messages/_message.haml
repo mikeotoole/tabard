@@ -2,15 +2,16 @@
 
   %header
     %p.actions
-      = link_to '✎ Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
-      - if message.recipients.size > 1
-        = link_to('✎ Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
+      - if message.recipients.include?(current_user.user_profile)
+        = link_to '✎ Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
+        - if message.recipients.size > 1
+          = link_to('✎ Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
       = link_to '➔ Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
       = link_to '✖ Trash ', trash_path(message), :method => :destroy, :class => 'delete', :title => 'Move to trash'
     
     %h2
       From:
-      = link_to message.author_name, message.author
+      = link_to message.author_name, message.author, :target => '_blank'
       on
       %time{ :title => (l Time.now, :format => :date_short) }
         = l Time.now, :format => :date_monthday
@@ -24,8 +25,8 @@
       %dt To:
       - message.recipients.each do |profile|
         %dd
-          = link_to profile.name, user_profile_path(profile)
+          = link_to profile.name, user_profile_path(profile), :target => '_blank'
     
   %article
     :markdown
-      = message.body
+      #{message.body}

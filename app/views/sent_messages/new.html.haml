@@ -9,15 +9,15 @@
           %li
             = f.input :subject, :wrapper => false
           %li
-            %label To:
-            %input{ :type => 'text' }
+            %label{ :for => 'message_to' } To
+            %input{ :id => 'message_to', :type => 'text' }
+          %li
+            = f.collection_check_boxes :to, current_user.address_book.collect {|u| [u.user_id, u.display_name]}, :first, :last, :item_wrapper_tag => :li
     
     %aside.suggestions
       %ul
-        - user_profiles = current_user.address_book.collect {|u| [u.user_id, u.name]}
-        - # TODO Doug, I don't think this is right here. address_book returns a collection of user profiles. name is display name.
-        - # Not sure what line 15 should exactly be -MO
-        = f.collection_check_boxes :to, user_profiles, :first, :last, :item_wrapper_tag => :li
+        - current_user.address_book.each do |profile|
+          %li= profile.display_name 
     
     = f.input :body, :as => :text, :label => false, :wrapper_tag => :article
     %button{ :type => ':submit' } Send

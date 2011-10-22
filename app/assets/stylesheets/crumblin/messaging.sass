@@ -191,20 +191,40 @@ body
       position: relative
       +transition(box-shadow .2s linear)
       z-index: 2
+        
+      &:before
+        background: #A03B32
+        border: 1px solid #fff
+        +border_radius(10)
+        content: ''
+        height: 8px
+        left: 9px
+        position: absolute
+        top: 36px
+        width: 8px
       
       &.selected
         +bg_gradient(#dae9f3,#fff)
+      
+      &.read
+      
+        &:before
+          display: none
       
       &.open
         
         &:before
           background: #2D7CB4
+          border: 0
           border-left: 2px solid #CDEAFF
           +border_radius(60,0,0,60)
           +box_shadow(0 0 15px #666)
           color: #CDEAFF
           content: '›'
+          display: block
           font-size: 30px
+          height: auto
+          left: auto
           letter-spacing: 1px
           line-height: 70px
           margin: -36px 0 0
@@ -462,42 +482,90 @@ body
     
     header
       margin: 0
-    
-      ul
-        background: #eee
-        border-bottom: 1px solid #888
-        +border_radius(0,0,10,10)
-        +box_shadow(0 0 15px #999)
-        padding: 15px 10px 5px
-        
-        li
-          color: #644b83
-          margin-right: 200px
-    
-          label
-            background: #ddd
-            +bg_gradient(#ccc,#eee)
-            border: 1px solid #ccc
-            border-right-color: #eee
-            +border_radius(5,0,0,5)
-            font: 14px DinMedium
-            height: 30px
-            line-height: 30px
-            margin: 0 -90px 0 0
-            padding: 0 10px
-            position: absolute
-            right: 100%
+      position: relative
+      z-index: 2
+      
+      >fieldset
+      
+        >ul
+          background: #eee
+          border-bottom: 1px solid #888
+          +border_radius(0,0,10,10)
+          +box_shadow(0 0 15px #999)
+          padding: 15px 10px 5px
           
-          input
-            background: #fff
-            border: 1px solid #ccc
-            +border_radius(0,5,5,0)
-            font: 18px DinLight
-            height: 30px
-            line-height: 30px
-            padding: 0 10px
-            margin: 0 0 5px 80px
-            width: 100%
+          >li
+            color: #644b83
+            margin-right: 200px
+      
+            >label
+              background: #ddd
+              +bg_gradient(#ccc,#eee)
+              border: 1px solid #ccc
+              border-right-color: #eee
+              +border_radius(5,0,0,5)
+              font: 14px DinMedium
+              height: 30px
+              line-height: 30px
+              margin: 0 -90px 0 0
+              padding: 0 10px
+              position: absolute
+              right: 100%
+            
+            >input
+              background: #fff
+              border: 1px solid #ccc
+              +border_radius(0,5,5,0)
+              font: 18px DinLight
+              height: 30px
+              line-height: 30px
+              padding: 0 10px
+              margin: 0 0 5px 80px
+              width: 100%
+            
+            ul
+              padding: 0 0 0 80px
+            
+              &:after
+                clear: both
+                content: ' '
+                display: block
+                height: 0
+                visibility: hidden
+            
+              li
+              
+                label
+                  display: none
+                  +bg_gradient(#ccc,#ddd)
+                  border: 1px solid #ccc
+                  +border-radius(3)
+                  color: #644b83
+                  float: left
+                  font: 13px DinMedium
+                  margin: 0 5px 0 0
+                  padding: 1px 4px
+                  
+                  &:after
+                    background: #aaa
+                    +border-radius(3)
+                    color: #fff
+                    content: '\2716'
+                    float: right
+                    margin: 0 -2px 0 6px
+                    padding: 0 3px
+                  
+                  &:hover
+                  
+                    &:after
+                      background: #A33C32
+                
+                input
+                  left: -500em
+                  position: absolute
+                  
+                  &:checked + label
+                    display: block
     
     article
       background: #fff
@@ -540,11 +608,23 @@ body
         height: 100%
         line-height: 25px
         margin: -10px 0
-        padding: 10px 0
+        padding: 15px 0
         width: 100%
     
     aside
-      display: none
+      position: relative
+      z-index: 3
+    
+      ul
+        background: #327BB4
+        left: 90px
+        position: absolute
+        top: 90px
+      
+        li
+          display: none
+          padding: 5px 10px
+        
     
     button
       border-color: #ddd
@@ -557,7 +637,7 @@ body
       right: 20px
       top: 20px
       width: 80px
-      z-index: 1
+      z-index: 3
       
       &:hover,
       &:focus

@@ -13,8 +13,7 @@ class MessagesController < MailboxController
 ###
   before_filter :authenticate_user!
   before_filter :load_message, :only => [:show, :mark_read, :mark_unread]
-  before_filter :load_original_message, :only => [:reply, :reply_all, :forward]
-  before_filter :setup_subject_and_body, :only => [:reply, :reply_all]
+  before_filter :load_original_message, :setup_message_body, :only => [:reply, :reply_all, :forward]
   authorize_resource :only => [:show, :mark_read, :mark_unread]
 
   # GET /mail/inbox/:id(.:format)
@@ -64,7 +63,8 @@ class MessagesController < MailboxController
 
   # GET /mail/reply/:id(.:format)
   def reply
-    @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => @subject, :body => @body)
+    subject = "Re: #{@original.subject}"
+    @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => @body)
     authorize!(:create, @message)
     render 'sent_messages/new'
   end
@@ -72,16 +72,16 @@ class MessagesController < MailboxController
   # GET /mail/reply-all/:id(.:format)
   def reply_all
     recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id]
-    @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => @subject, :body => @body)
+    subject = "Re: #{@original.subject}"
+    @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => @body)
     authorize!(:create, @message)
     render 'sent_messages/new'
   end
 
   # GET /mail/forward/:id(.:format)
   def forward
-    subject = @original.subject.sub(/^(Fwd: )?/, "Fwd: ")
-    body = @original.body.gsub(/^/, "> ")
-    @message = current_user.sent_messages.build(:to => [-1], :subject => subject, :body => body)
+    subject = "Fwd: #{@original.subject.gsub(/^Fwd:\s*/i, '')}"
+    @message = current_user.sent_messages.build(:to => [-1], :subject => subject, :body => @body)
     authorize!(:create, @message)
     render 'sent_messages/new'
   end
@@ -142,11 +142,10 @@ protected
   ###
   # _before_filter_
   #
-  # This before filter prepends the "Re" tag to subject and comments body.
+  # This before filter prepends text to the original message body
   ###
-  def setup_subject_and_body
-    @subject = @original.subject.sub(/^(Re: )?/, "Re: ")
-    @body = @original.body.gsub(/^/, "> ")
+  def setup_message_body
+    @body = "\n\u2014Original Message\u2014\n\n#{@original.body}"
   end
 
 end

@@ -18,6 +18,7 @@ module MailboxHelper
     class_names << message.folder_name.downcase.gsub(/[^a-z0-9]/,'') if message.respond_to?('folder_name')
     class_names << 'open' if message == @message
     class_names << 'sent' if !message.respond_to?('folder_name') && message.author_id == current_user.id
+    class_names << 'read' if message.respond_to?('has_been_read') && message.has_been_read?
     class_names
   end
 
