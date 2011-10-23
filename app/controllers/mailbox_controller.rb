@@ -39,8 +39,8 @@ protected
 
   # This method loads the messages for a given folder, grouped by today's messages and all older messages
   def gather_inbox_data(folder)
-    @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}.sort_by!{|m| m.created_at}.reverse!
-    @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}.sort_by!{|m| m.created_at}.reverse!
+    @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day.to_date)}
+    @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day.to_date)}
   end
   
   # This method will determine a string value for the current view in the mailbox

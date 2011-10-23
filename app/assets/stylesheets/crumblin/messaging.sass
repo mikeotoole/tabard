@@ -476,14 +476,27 @@ body
     margin: -10px 0 0
     min-height: 310px
     padding: 50px 40px 40px
+    
+    p
+      padding: 0 0 1em
+      
+    ul
+      padding: 0 2em 1em
+      
+      li
+        list-style: square
+    
+    ol
+      padding: 0 2em 1em
+      
+      li
+        list-style: decimal
   
   &.compose
     left: 70px
     
     header
       margin: 0
-      position: relative
-      z-index: 2
       
       >fieldset
       
@@ -520,10 +533,13 @@ body
               height: 30px
               line-height: 30px
               padding: 0 10px
+              position: relative
               margin: 0 0 5px 80px
               width: 100%
+              z-index: 4
             
             ul
+              margin: 0 -195px -5px 0
               padding: 0 0 0 80px
             
               &:after
@@ -537,17 +553,18 @@ body
               
                 label
                   display: none
-                  +bg_gradient(#ccc,#ddd)
-                  border: 1px solid #ccc
+                  +bg_gradient(#cddae4,#b1bfcb)
+                  border: 1px solid #bacbd8
                   +border-radius(3)
-                  color: #644b83
+                  color: #3b5a72
                   float: left
                   font: 13px DinMedium
-                  margin: 0 5px 0 0
+                  margin: 0 5px 5px 0
                   padding: 1px 4px
+                  white-space: nowrap
                   
                   &:after
-                    background: #aaa
+                    background: #778a98
                     +border-radius(3)
                     color: #fff
                     content: '\2716'
@@ -612,19 +629,41 @@ body
         width: 100%
     
     aside
-      position: relative
-      z-index: 3
     
       ul
         background: #327BB4
+        +border_radius(0,0,5,5)
         left: 90px
         position: absolute
-        top: 90px
+        right: 108px
+        top: 83px
+        z-index: 3
       
         li
-          display: none
-          padding: 5px 10px
         
+          label
+            border-top: 1px solid #1F699E
+            color: #CCEAFF
+            cursor: pointer
+            display: none
+            font: 13px DinLight, sans
+            padding: 5px 10px
+            
+            &:hover
+              background: #4E98D0
+              color: #fff
+          
+          &.first,
+          &:first-child
+            
+            label
+              padding: 10px 10px 5px
+          
+          &.last,
+          &:last-child
+            
+            label
+              +border_radius(0,0,5,5)
     
     button
       border-color: #ddd

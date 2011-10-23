@@ -28,16 +28,16 @@
       %dl
         - if @todays_messages.size > 0
           %dt Today
-          - @todays_messages.each do |message|
+          - @todays_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
             = render 'mailbox/row', :message => message
           - if @older_messages.size > 0
             %dt Older
-        - @older_messages.each do |message|
+        - @older_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
           = render 'mailbox/row', :message => message
           
     - elsif @messages && @messages.size > 0
       %dl
-        - @messages.each do |message|
+        - @messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
           = render 'mailbox/row', :message => message
           
     - elsif @folder
@@ -45,6 +45,6 @@
       
     - elsif @current_user.sent_messages.size > 0 && (!@message || @message.id)
       %dl
-        - current_user.sent_messages.each do |message|
+        - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
           = render 'mailbox/row', :message => message
     

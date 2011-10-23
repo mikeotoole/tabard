@@ -7,17 +7,18 @@
       %fieldset
         %ul
           %li
-            = f.input :subject, :wrapper => false
+            = f.input :subject, :wrapper => false, :input_html => { :tabindex => 1 }
           %li
             %label{ :for => 'message_to' } To
-            %input{ :id => 'message_to', :type => 'text' }
+            %input{ :id => 'message_to', :type => 'text', :tabindex => 2 }
           %li
             = f.collection_check_boxes :to, current_user.address_book.collect {|u| [u.user_id, u.display_name]}, :first, :last, :item_wrapper_tag => :li
     
     %aside.suggestions
       %ul
         - current_user.address_book.each do |profile|
-          %li= profile.display_name 
+          %li
+            %label{ :for => "message_to_#{profile.id}" }= profile.display_name 
     
-    = f.input :body, :as => :text, :label => false, :wrapper_tag => :article
-    %button{ :type => ':submit' } Send
+    = f.input :body, :as => :text, :label => false, :wrapper_tag => :article, :input_html => { :tabindex => 3 }
+    %button{ :type => ':submit', :tabindex => 4 } Send
