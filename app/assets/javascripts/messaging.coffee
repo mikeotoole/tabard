@@ -1,5 +1,5 @@
 $(document).ready ->
-  
+
   # mailbox checkbox select (for visual enhancement)
   $('#mailbox .meta input[type="checkbox"]')
     .bind 'click change', ->
@@ -12,42 +12,56 @@ $(document).ready ->
   $('#message.compose').each ->
     
     $('#message_to')
-      .bind 'focus blur keyup change', (e)->
+      .bind 'focus blur keyup change', ->
         text = $.trim $(this).val().toLowerCase()
-        if text.length < 1
-          $('aside label').hide()
-        else
+        $('aside ul, aside label').hide()
+        if text.length
+          showcount = 0
           $('aside label').each ->
             id = $(this).attr 'for'
-            display = if !$('#'+id+':checked').length && $(this).html().toLowerCase().match(text) then 'block' else 'none'
-            $(this).css('display', display)
-            $('aside li').removeClass 'first last'
-            visible = $('aside li:has(label:visible)')
-            visible.filter(':first').addClass 'first'
-            visible.filter(':last').addClass 'last'
+            display = 'none'
+            if showcount < 5 && !$('#'+id+':checked').length && $(this).html().toLowerCase().match(text)
+              showcount++
+              display = 'block'
+              $(this).css('display', display)
+          if showcount > 0
+            $('aside ul').show()
+            updateMessageListClasses()
     
     $('aside label')
       .click ->
         $('#message_to').val('').focus()
-        $('aside label').hide()
+        updateMessageListClasses()
+        $('aside ul, aside label').hide()
   
     $('header li input[type="checkbox"]')
       .change ->
         updateMessageHeaderHeight()
     
-    $('#message_body')
+    $('#message_subject, #message_body')
       .bind 'focus keypress', ->
-        updateMessageHeaderHeight()
+        updateMessageListClasses()
+        $('aside ul, aside label').hide()
+    
+    $('mark')
+      .click ->
+        $(this).animate({ opacity: 0}, 200, 'linear')
     
     updateMessageHeaderHeight()
     
   # auto-focus the correct field
   if !$('#message_subject').val()
     $('#message_subject').focus()
-  else if !$('#message_to').val()
+  else if $('aside li:has(label:visible)').length > 0
     $('#message_to').focus()
   else
     $('#message_body').focus()
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })
+
+updateMessageListClasses = ->
+  $('aside li').removeClass 'first last'
+  visible = $('aside li:has(label:visible)')
+  visible.filter(':first').addClass 'first'
+  visible.filter(':last').addClass 'last'

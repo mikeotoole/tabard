@@ -2,12 +2,15 @@
 
   %header
     %p.actions
-      - if message.recipients.include?(current_user.user_profile)
+      - if mailbox_view_state != 'sent'
         = link_to '✎ Reply', mail_reply_path(message), :method => :get, :class => 'reply', :title => 'Reply to sender'
         - if message.recipients.size > 1
           = link_to('✎ Reply All', mail_reply_all_path(message), :method => :get, :class => 'replyall', :title => 'Reply to all') if message.recipients.size > 1
       = link_to '➔ Forward', mail_forward_path(message), :method => :get, :class => 'forward', :title => 'Forward message'
-      = link_to '✖ Trash ', trash_path(message), :method => :destroy, :class => 'delete', :title => 'Move to trash'
+      - if mailbox_view_state == 'trash'
+        = link_to '✖ Delete', mail_delete_path(message), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :title => 'Delete forever'
+      - elsif mailbox_view_state != 'sent'
+        = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put,   :class => 'delete', :title => 'Move to trash'
     
     %h2
       From:

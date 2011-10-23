@@ -16,7 +16,7 @@ class SentMessagesController < MailboxController
   # GET /mail/sent(.:format)
   def index
     @messages = current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!
-    @mailbox_view_state = :sent
+    @mailbox_view_state = 'sent'
     respond_with(@messages)
   end
 
@@ -24,7 +24,7 @@ class SentMessagesController < MailboxController
   def show
     @message = current_user.sent_messages.find(params[:id])
     authorize!(:read, @message)
-    @mailbox_view_state = :sent
+    @mailbox_view_state = 'sent'
     respond_with(@message)
   end
 
@@ -32,7 +32,7 @@ class SentMessagesController < MailboxController
   def new
     @message = current_user.sent_messages.build(:to => [-1])
     authorize!(:create, @message)
-    @mailbox_view_state = :compose
+    @mailbox_view_state = 'compose'
     respond_with(@message)
   end
 

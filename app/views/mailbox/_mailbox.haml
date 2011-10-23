@@ -1,25 +1,27 @@
-= form_tag (@folder == current_user.trash ? mail_batch_delete_path : mail_batch_move_path(current_user.trash)), :method => (@folder == current_user.trash ? :delete : :put) do
+= form_tag (mailbox_view_state == 'trash' ? mail_batch_delete_path : mail_batch_move_path(current_user.trash)), :method => (mailbox_view_state == 'trash' ? :delete : :put) do
 
   #mailbox-menu
     %dl
     
       %dt Mail
-      %dd{ :class => 'inbox' + (mailbox_view_state == :inbox ? ' current' : '') }
+      %dd{ :class => 'inbox' + (mailbox_view_state == 'inbox' ? ' current' : '') }
         = link_to 'Inbox', inbox_path, :meta => "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
-      %dd{ :class => 'compose' + (mailbox_view_state == :compose ? ' current' : '') }
+      %dd{ :class => 'compose' + (mailbox_view_state == 'compose' ? ' current' : '') }
         = link_to 'Compose', compose_mail_path, :meta => 'New message'
-      %dd{ :class => 'sent' + (mailbox_view_state == :sent ? ' current' : '') }
+      %dd{ :class => 'sent' + (mailbox_view_state == 'sent' ? ' current' : '') }
         = link_to 'Sent', sent_mailbox_path, :meta => "Sent messages"
-      %dd{ :class => 'trash' + (mailbox_view_state == :trash ? ' current' : '') }
+      %dd{ :class => 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
         = link_to 'Trash', trash_path, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
       
-      - if ![:compose, :sent].include?(mailbox_view_state)
+      - if !['compose','sent'].include?(mailbox_view_state)
         %dt Actions
-        %dd.move
-          = link_to 'Move to folder', '#', :meta => 'Move selected messages.'
+        -# TODO Doug - I need Joe's help here
+        - if mailbox_view_state == 'trash'
+          %dd.move
+            = link_to 'Move to inbox', '#', :method => :put, :meta => 'Move selected messages to the inbox.'
         %dd.delete
-          - if @folder == current_user.trash
-            = button_tag 'Delete forever', :confirm => 'Are you sure?', :meta => 'Delete messages for forever.'
+          - if mailbox_view_state == 'trash'
+            = button_tag 'Delete forever', :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
           - else
             = button_tag 'Move to trash', :meta => 'Trash selected messages.'
   

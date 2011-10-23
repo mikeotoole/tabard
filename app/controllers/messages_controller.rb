@@ -20,6 +20,7 @@ class MessagesController < MailboxController
   def show
     authorize!(:read, @message.folder)
     gather_inbox_data @message.folder
+    @mailbox_view_state = @message.folder.name.downcase
     @message.update_attributes(:has_been_read => true)
   end
   
@@ -145,7 +146,7 @@ protected
   # This before filter prepends text to the original message body
   ###
   def setup_message_body
-    @body = "\n\u2014Original Message\u2014\n\n#{@original.body}"
+    @body = "\n\n\u2014Original Message\u2014\n\n#{@original.body}"
   end
 
 end

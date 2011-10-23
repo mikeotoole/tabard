@@ -89,6 +89,7 @@ body
           left: 68px
           letter-spacing: 0
           line-height: 30px
+          margin: -1px 0 0
           padding: 0 10px
           position: absolute
           text-indent: 0
@@ -495,6 +496,26 @@ body
   &.compose
     left: 70px
     
+    mark
+      background: #A23B31
+      +border_radius(5)
+      color: #fff
+      cursor: pointer
+      font: 13px DinMedium, sans
+      left: 93px
+      margin: -34px 0 0
+      padding: 5px 10px
+      position: absolute
+      +transition(background .2s linear)
+      z-index: 5
+      
+      &:after
+        content: '\2716'
+        padding: 0 0 0 10px
+      
+      &:hover
+        background: #D24723
+    
     header
       margin: 0
       
@@ -524,6 +545,10 @@ body
               padding: 0 10px
               position: absolute
               right: 100%
+            
+            mark
+              left: 93px
+              margin: -34px 0 0
             
             >input
               background: #fff
@@ -617,6 +642,10 @@ body
         position: absolute
         right: 0
       
+      mark
+        left: 3px
+        top: 37px
+      
       textarea
         background: transparent
         +border_radius(10)
@@ -627,17 +656,35 @@ body
         margin: -10px 0
         padding: 15px 0
         width: 100%
+        
+        &.required
+          
+          + mark
+            +opacity(1)
     
     aside
     
       ul
         background: #327BB4
+        +bg_gradient(#2c70a5,#3e8ac5)
         +border_radius(0,0,5,5)
+        +box_shadow(0 0 15px rgba(#000,.5))
+        display: none
         left: 90px
         position: absolute
         right: 108px
         top: 83px
         z-index: 3
+        
+        &:before
+          +bg_gradient(rgba(#000,.7),rgba(#327BB4,0))
+          content: ''
+          height: 20px
+          left: 0
+          pointer-events: none
+          position: absolute
+          right: 0
+          top: 0
       
         li
         
@@ -657,7 +704,7 @@ body
           &:first-child
             
             label
-              padding: 10px 10px 5px
+              padding: 15px 10px 5px
           
           &.last,
           &:last-child

@@ -19,7 +19,7 @@ class MailboxController < ApplicationController
     @folder = current_user.inbox
     authorize!(:read, @folder)
     gather_inbox_data @folder
-    @mailbox_view_state = :inbox
+    @mailbox_view_state = 'inbox'
     render 'show'
   end
 
@@ -28,7 +28,7 @@ class MailboxController < ApplicationController
     @folder = current_user.trash
     authorize!(:read, @folder)
     gather_inbox_data @folder
-    @mailbox_view_state = :trash
+    @mailbox_view_state = 'trash'
     render 'show'
   end
 
