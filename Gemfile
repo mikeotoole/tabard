@@ -16,6 +16,8 @@ source 'http://rubygems.org'
 # Permissions/AC
   gem 'cancan'
 
+# Caching
+
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
