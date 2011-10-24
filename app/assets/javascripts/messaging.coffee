@@ -56,6 +56,12 @@ $(document).ready ->
     $('#message_to').focus()
   else
     $('#message_body').focus()
+  
+  # no reason to do a batch action if nothing is selected
+  $('#mailbox-menu .action')
+    .click ->
+      if !$('#mailbox input:checked').length
+        return false
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })

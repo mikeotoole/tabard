@@ -17,13 +17,14 @@
         %dt Actions
         -# TODO Doug - I need Joe's help here
         - if mailbox_view_state == 'trash'
-          %dd.move
+          %dd{ :class => 'action move' }
             = link_to 'Move to inbox', '#', :method => :put, :meta => 'Move selected messages to the inbox.'
-        %dd.delete
-          - if mailbox_view_state == 'trash'
+        - if mailbox_view_state == 'trash'
+          %dd{ :class => 'action destroy' }
             = button_tag 'Delete forever', :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
-          - else
-            = button_tag 'Move to trash', :meta => 'Trash selected messages.'
+        - else
+          %dd{ :class => 'action move' }
+            = button_tag 'Move to trash', :meta => 'Move selected messages to the trash.'
   
   #mailbox
     - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)

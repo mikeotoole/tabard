@@ -30,6 +30,7 @@ DaBvRails::Application.routes.draw do
   get 'mail/sent/:id' => "sent_messages#show", :as => "sent_mail"
   get 'mail/sent' => "sent_messages#index", :as => "sent_mailbox"
   get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
+  get 'mail/compose/:id' => "sent_messages#new", :as => "compose_mail_to"
   get 'mail/inbox/:id' => "messages#show", :as => "mail"
   post 'mail/mark_read/:id' => "messages#mark_read", :as => "mail_mark_read"
   post 'mail/mark_unread/:id' => "messages#mark_unread", :as => "mail_mark_unread"

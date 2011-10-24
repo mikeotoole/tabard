@@ -146,6 +146,12 @@ body
       button
         background-position: -30px -30px
     
+    &.destroy
+    
+      a,
+      button
+        background-position: -360px -30px
+    
     &.current
     
       a,
@@ -380,6 +386,7 @@ body
         font-size: 13px
         line-height: 22px
         padding: 0 7px
+        position: relative
         text-decoration: none
         +transition(border .2s linear, box-shadow .2s linear)
         
@@ -388,6 +395,36 @@ body
           border-color: #ccc
           +box_shadow(0 0 10px #aaa)
           color: #fff
+          
+          &[meta]
+              
+            &:before
+              background: #666
+              border: 1px solid #444
+              +border_radius(3)
+              bottom: -35px
+              +box_shadow(0 0 10px rgba(#000,.5))
+              color: #fff
+              content: attr(meta)
+              font: 14px DinLight, sans
+              height: 15px
+              line-height: 15px
+              padding: 4px 8px
+              position: absolute
+              right: 0
+              text-indent: 0
+              white-space: nowrap
+            
+            &:after
+              border: 7px solid transparent
+              border-bottom: 7px solid #444
+              border-right: 0
+              bottom: -10px
+              content: ''
+              height: 0
+              position: absolute
+              right: 10px
+              width: 0
       
       &:hover
         border-color: #666
@@ -438,7 +475,8 @@ body
           background: #A33C32
           color: #fff
       
-      time
+      time,
+      span
         color: #A33C32
         font: 14px DinMedium
     
@@ -455,19 +493,51 @@ body
         display: inline
         font: 14px DinLight
               
-        a
+        a,
+        span
           +bg_gradient(#ccc,#ddd)
           border: 1px solid #ccc
           +border-radius(3)
           color: #644b83
           font: 13px DinMedium
           padding: 1px 4px
+          position: relative
           +transition(background .2s linear)
           
-          &:hover
-            background: #A33C32
-            border-color: #A33C32
-            color: #fff
+        a:hover
+          background: #A33C32
+          border-color: #A33C32
+          color: #fff
+          
+          &[meta]
+              
+            &:before
+              background: #666
+              border: 1px solid #444
+              +border_radius(3)
+              +box_shadow(0 0 10px rgba(#000,.5))
+              color: #fff
+              content: attr(meta)
+              font: 14px DinLight, sans
+              height: 15px
+              left: 0
+              line-height: 15px
+              padding: 4px 8px
+              position: absolute
+              text-indent: 0
+              top: -32px
+              white-space: nowrap
+            
+            &:after
+              border: 5px solid transparent
+              border-left: 0
+              border-top: 5px solid #444
+              content: ''
+              height: 0
+              left: 10px
+              position: absolute
+              top: -7px
+              width: 0
   
   article
     background: #eee

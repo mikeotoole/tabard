@@ -1,0 +1,41 @@
+#mask
+  background: #000
+  bottom: 0
+  left: 0
+  +opacity(.7)
+  position: fixed
+  right: 0
+  top: 0
+  z-index: 100
+
+#modal
+  background: #eee
+  +bg_gradient(#ddd,#fff)
+  border: 1px solid #fff
+  +border_radius(10)
+  +box_shadow(0 0 50px #000)
+  left: 50%
+  position: fixed
+  margin: -100px 0 0 -250px
+  min-height: 148px
+  text-align: left
+  top: 50%
+  width: 498px
+  z-index: 101
+  
+  h1
+    color: #367BB1
+    font: 20px DinMedium, serif
+    margin: 20px 20px 0
+    padding: 0
+  
+  p
+    color: #4B385C
+    font: 16px DinLight, sans
+    margin: 20px 20px 30px
+    padding: 0
+  
+  .actions
+    bottom: 10px
+    position: absolute
+    right: 10px
