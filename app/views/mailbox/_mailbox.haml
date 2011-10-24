@@ -1,4 +1,5 @@
-= form_tag (mailbox_view_state == 'trash' ? mail_batch_delete_path : mail_batch_move_path(current_user.trash)), :method => (mailbox_view_state == 'trash' ? :delete : :put) do
+= form_tag '' do
+  %input{ :name => '_method', :value => '', :type => 'hidden' }
 
   #mailbox-menu
     %dl
@@ -15,16 +16,15 @@
       
       - if !['compose','sent'].include?(mailbox_view_state)
         %dt Actions
-        -# TODO Doug - I need Joe's help here
         - if mailbox_view_state == 'trash'
           %dd{ :class => 'action move' }
-            = link_to 'Move to inbox', '#', :method => :put, :meta => 'Move selected messages to the inbox.'
+            = button_tag 'Move to inbox', :action => mail_batch_move_path(current_user.inbox), :method => :put, :meta => 'Move selected messages to the inbox.'
         - if mailbox_view_state == 'trash'
           %dd{ :class => 'action destroy' }
-            = button_tag 'Delete forever', :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
+            = button_tag 'Delete forever', :action => mail_batch_delete_path, :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
         - else
           %dd{ :class => 'action move' }
-            = button_tag 'Move to trash', :meta => 'Move selected messages to the trash.'
+            = button_tag 'Move to trash', :action => mail_batch_move_path(current_user.trash), :method => :put, :meta => 'Move selected messages to the trash.'
   
   #mailbox
     - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)

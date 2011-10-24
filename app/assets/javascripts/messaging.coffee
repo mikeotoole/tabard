@@ -57,11 +57,17 @@ $(document).ready ->
   else
     $('#message_body').focus()
   
-  # no reason to do a batch action if nothing is selected
-  $('#mailbox-menu .action')
+  # batch actions
+  $('#mailbox-menu .action button')
     .click ->
-      if !$('#mailbox input:checked').length
-        return false
+      if $('#mailbox input:checked').length
+        $(this).closest('form')
+          .prop
+            action: $(this).attr('action')
+          .find('input[name="_method"]')
+            .val $(this).attr('method')
+      else
+        false
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })

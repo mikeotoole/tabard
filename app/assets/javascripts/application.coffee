@@ -20,13 +20,12 @@
         $('#modal').animate { marginTop: 0, opacity: 0 }, 300
         $('#mask').animate { opacity: 0 }, 600, ->
           remove()
+  # confirm box
+  $.confirm = ->
+    alert 'TODO'
 ) jQuery
 
-# confirm box
-
 $(document).ready ->
-  
-  $.alert 'Holy Smokes!', 'Lorem ipsum dolor sit amet.', 'Awesome!'
   
   # text box suggest
   $('form input').each ->
