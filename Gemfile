@@ -17,8 +17,6 @@ source 'http://rubygems.org'
   gem 'cancan'
 
 # Caching
-  gem 'redis'
-  gem 'redis-store'
 
 # Form Handling
   gem 'simple_form'
