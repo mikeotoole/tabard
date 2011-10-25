@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 # Associations
 ###
   has_one :user_profile, :inverse_of => :user
+  has_many :document_acceptances
   accepts_nested_attributes_for :user_profile
 
 ###
@@ -75,6 +76,11 @@ class User < ActiveRecord::Base
       },
       :if => :password_required?
 
+  validates :accepted_current_terms_of_service,
+      :acceptance => {:accept => true}
+  validates :accepted_current_privacy_policy,
+      :acceptance => {:accept => true}
+
 ###
 # Public Methods
 ###
@@ -83,6 +89,22 @@ class User < ActiveRecord::Base
     user = User.new
     user.build_user_profile
     return user
+  end
+  #This method finds the most recent version of the terms of service
+  def current_terms_of_service
+    TermsOfService.first
+  end
+  #This method checks to see if the user has accepted the most recent version of the Terms of Service.
+  def has_accepted_current_terms_of_service?
+    document_acceptances.include?(current_terms_of_service)
+  end
+  #This method finds the most recent version of the terms of service
+  def current_privacy_policy
+    PrivacyPolicy.first
+  end
+  #This method checks to see if the user has accepted the most recent version of the Terms of Service.
+  def has_accepted_current_privacy_policy?
+    document_acceptances.include?(current_privacy_policy)
   end
 ###
 # Protected Methods
@@ -98,28 +120,31 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: users
 #
-#  id                     :integer         not null, primary key
-#  email                  :string(255)     default(""), not null
-#  encrypted_password     :string(128)     default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer         default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  confirmation_token     :string(255)
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  failed_attempts        :integer         default(0)
-#  unlock_token           :string(255)
-#  locked_at              :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
+#  id                                :integer         not null, primary key
+#  email                             :string(255)     default(""), not null
+#  encrypted_password                :string(128)     default(""), not null
+#  reset_password_token              :string(255)
+#  reset_password_sent_at            :datetime
+#  remember_created_at               :datetime
+#  sign_in_count                     :integer         default(0)
+#  current_sign_in_at                :datetime
+#  last_sign_in_at                   :datetime
+#  current_sign_in_ip                :string(255)
+#  last_sign_in_ip                   :string(255)
+#  confirmation_token                :string(255)
+#  confirmed_at                      :datetime
+#  confirmation_sent_at              :datetime
+#  failed_attempts                   :integer         default(0)
+#  unlock_token                      :string(255)
+#  locked_at                         :datetime
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  accepted_current_terms_of_service :boolean         default(FALSE)
+#  accepted_current_privacy_policy   :boolean         default(FALSE)
 #
 

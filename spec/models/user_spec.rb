@@ -2,25 +2,27 @@
 #
 # Table name: users
 #
-#  id                     :integer         not null, primary key
-#  email                  :string(255)     default(""), not null
-#  encrypted_password     :string(128)     default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer         default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  confirmation_token     :string(255)
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  failed_attempts        :integer         default(0)
-#  unlock_token           :string(255)
-#  locked_at              :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
+#  id                                :integer         not null, primary key
+#  email                             :string(255)     default(""), not null
+#  encrypted_password                :string(128)     default(""), not null
+#  reset_password_token              :string(255)
+#  reset_password_sent_at            :datetime
+#  remember_created_at               :datetime
+#  sign_in_count                     :integer         default(0)
+#  current_sign_in_at                :datetime
+#  last_sign_in_at                   :datetime
+#  current_sign_in_ip                :string(255)
+#  last_sign_in_ip                   :string(255)
+#  confirmation_token                :string(255)
+#  confirmed_at                      :datetime
+#  confirmation_sent_at              :datetime
+#  failed_attempts                   :integer         default(0)
+#  unlock_token                      :string(255)
+#  locked_at                         :datetime
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  accepted_current_terms_of_service :boolean         default(FALSE)
+#  accepted_current_privacy_policy   :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -126,6 +128,33 @@ describe User do
 
     it "should be set" do
       @user.encrypted_password.should_not be_blank
+    end
+  end
+
+  describe "current_terms_of_service" do
+    it "returns the highest version of the terms of service" do
+      pending
+    end
+  end
+  describe "has_accepted_current_terms_of_service?" do
+    it "returns true if accepted current terms of service" do
+      pending
+    end
+    it "returns false if not accepted current terms of service" do
+      pending
+    end
+  end
+  describe "current_privacy_policy" do
+    it "returns the highest version of the privacy policy" do
+      pending
+    end
+  end
+  describe "has_accepted_current_privacy_policy?" do
+    it "returns true if accepted current privacy policy" do
+      pending
+    end
+    it "returns false if not accepted current privacy policy" do
+      pending
     end
   end
 end

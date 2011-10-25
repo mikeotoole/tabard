@@ -6,6 +6,10 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
+puts "Creating TOS"
+tos_document = TermsOfService.create(body: "WE OWN YOU!", version: "1")
+puts "Creating PrivacyPolicy"
+privacy_policy_document = PrivacyPolicy.create(body: "WE OWN YOU!", version: "2")
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
