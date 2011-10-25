@@ -21,6 +21,8 @@ class UserProfile < ActiveRecord::Base
   has_many :character_proxies, :dependent => :destroy
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
+  has_many :announcement_spaces, :through => :communities
+  has_many :announcements, :through => :announcement_spaces, :class_name => "Discussion", :source => "discussions"
   has_many :community_applications
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
@@ -177,6 +179,15 @@ class UserProfile < ActiveRecord::Base
     else
       return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
     end
+  end
+
+  def unread_announcements
+    unread = Array.new
+    view_log_items = self.view_logs.collect{|view_log| view_log.view_loggable }
+    self.announcements.each do |announcement|
+      unread << announcement unless view_log_items.include?(announcement)
+    end
+    return unread
   end
 
   ###

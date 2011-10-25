@@ -334,5 +334,9 @@ describe UserProfile do
       end
     end
   end
+
+  describe "unread_announcements" do
+    pending
+  end
   
 end
