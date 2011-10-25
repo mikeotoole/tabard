@@ -39,3 +39,37 @@
     bottom: 10px
     position: absolute
     right: 10px
+    
+    button
+      +bg_gradient(#d24723,#792b28)
+      border: 1px solid #eee
+      +border_radius(5)
+      color: #f8d5bb
+      display: inline-block
+      float: left
+      font-family: Malbeck, serif
+      font-size: 16pt
+      height: 30px
+      line-height: 30px
+      letter-spacing: 1px
+      margin: 0 0 0 5px
+      padding: 0 15px
+      text-decoration: none
+      text-transform: lowercase  
+      +transition(box-shadow .2s linear)
+      
+      &:focus,
+      &:hover
+        +bg_gradient(#e05c2e,#9e3834)
+        +box_shadow(0 0 10px #aaa)
+        color: #fff
+      
+      &.cancel
+        background: #777
+        +bg_gradient(#888,#666)
+        color: #eee
+        
+        &:focus,
+        &:hover
+          +bg_gradient(#999,#777)
+          color: #fff
