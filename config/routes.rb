@@ -36,6 +36,8 @@ DaBvRails::Application.routes.draw do
   post 'mail/mark_unread/:id' => "messages#mark_unread", :as => "mail_mark_unread"
   put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
   put 'mail/batch_move/:folder_id' => "messages#batch_move", :as => "mail_batch_move"
+  put 'mail/batch_mark_read/' => "messages#batch_mark_read", :as => "mail_batch_mark_read"
+  put 'mail/batch_mark_undread/' => "messages#batch_mark_unread", :as => "mail_batch_mark_unread"
   get 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
   get 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
   get 'mail/forward/:id' => "messages#forward", :as => "mail_forward"

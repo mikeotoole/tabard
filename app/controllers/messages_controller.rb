@@ -62,6 +62,30 @@ class MessagesController < MailboxController
     redirect_to inbox_path
   end
 
+  # PUT mail/batch_mark_read/:folder_id
+  def batch_mark_read
+    if params[:ids]
+      params[:ids].each do |id|
+        @message = current_user.received_messages.find_by_id(id[0])
+        authorize!(:update, @message)
+        @message.update_attributes(:has_been_read => true)
+      end
+    end
+    redirect_to inbox_path
+  end
+
+  # PUT mail/batch_mark_unread/:folder_id
+  def batch_mark_unread
+    if params[:ids]
+      params[:ids].each do |id|
+        @message = current_user.received_messages.find_by_id(id[0])
+        authorize!(:update, @message)
+        @message.update_attributes(:has_been_read => false)
+      end
+    end
+    redirect_to inbox_path
+  end
+
   # GET /mail/reply/:id(.:format)
   def reply
     subject = "Re: #{@original.subject}"

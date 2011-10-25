@@ -25,25 +25,25 @@
           %dd{ :class => 'action move' }
             = button_tag 'Move to trash', :action => mail_batch_move_path(current_user.trash), :method => :put, :meta => 'Move selected messages to the trash.'
           %dd{ :class => 'action read' }
-            = button_tag 'Mark as read', :action => '', :method => :post, :meta => 'Mark selected messages as read.'
+            = button_tag 'Mark as read', :action => mail_batch_mark_read_path, :method => :put, :meta => 'Mark selected messages as read.'
           %dd{ :class => 'action unread' }
-            = button_tag 'Mark as unread', :action => '', :method => :post, :meta => 'Mark selected messages as unread.'
+            = button_tag 'Mark as unread', :action => mail_batch_mark_unread_path, :method => :put, :meta => 'Mark selected messages as unread.'
   
   #mailbox
     - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
       %dl
         - if @todays_messages.size > 0
           %dt Today
-          - @todays_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
+          - @todays_messages.each do |message|
             = render 'mailbox/row', :message => message
           - if @older_messages.size > 0
             %dt Older
-        - @older_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
+        - @older_messages.each do |message|
           = render 'mailbox/row', :message => message
           
     - elsif @messages && @messages.size > 0
       %dl
-        - @messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
+        - @messages.each do |message|
           = render 'mailbox/row', :message => message
           
     - elsif @folder

@@ -28,7 +28,7 @@ describe MailboxController do
       message
       sign_in receiver
       get :inbox
-      assigns(:todays_messages).last.should eq(message.message_associations.first)
+      assigns(:todays_messages).first.should eq(message.message_associations.first)
     end
     
     it "assigns older messages as @older_messages when authenticated as user" do

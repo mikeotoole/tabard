@@ -21,7 +21,7 @@ class MessageAssociation < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :author, :created_at, :subject, :body, :recipients, :author_avatar_url, :to => :message
+  delegate :author, :subject, :body, :recipients, :author_avatar_url, :to => :message
   delegate :name, :id, :to => :author, :prefix => true
   delegate :name, :to => :folder, :prefix => true
 
@@ -30,7 +30,11 @@ class MessageAssociation < ActiveRecord::Base
 ###
   validates :message, :presence => true
   validates :recipient, :presence => true
+
+  default_scope :order => "created_at DESC"
 end
+
+
 
 
 
@@ -45,6 +49,8 @@ end
 #  recipient_id  :integer
 #  folder_id     :integer
 #  deleted       :boolean         default(FALSE)
-#  updated_at    :datetime
 #  has_been_read :boolean         default(FALSE)
+#  created_at    :datetime
+#  updated_at    :datetime
 #
+

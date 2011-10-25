@@ -233,7 +233,7 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.received_messages.count.should eq(startCount + 1)
-      new_profile.received_messages.last.should eq(message.message_associations.first)
+      new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as deleted" do
@@ -256,7 +256,7 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.unread_messages.count.should eq(startCount + 1)
-      new_profile.unread_messages.last.should eq(message.message_associations.first)
+      new_profile.unread_messages.first.should eq(message.message_associations.first)
     end
     
     it "should not return unread messages marked as deleted" do

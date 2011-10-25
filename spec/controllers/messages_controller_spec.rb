@@ -190,6 +190,70 @@ describe MessagesController do
     end
   end
 
+  describe "PUT batch_mark_read" do
+    it "marks all requested messages as read" do
+      sign_in receiver     
+      rec_message.folder.should_not eq(receiver.trash)
+      rec_message_2.folder.should_not eq(receiver.trash)
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).update_attribute(:has_been_read, false)
+      end
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).has_been_read.should be_false
+      end
+      put :batch_mark_read, :ids => rec_message_id_array
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).has_been_read.should be_true
+      end
+    end
+
+    it "redirects to the inbox_path" do
+      sign_in receiver
+      put :batch_mark_read, :ids => rec_message_id_array
+      response.should redirect_to(inbox_path)      
+    end
+    
+    describe "with invalid message" do
+      it "should respond forbidden" do
+        sign_in receiver
+        put :batch_mark_read, :ids => [[0]]
+        response.should be_forbidden
+      end
+    end
+  end
+
+  describe "PUT batch_mark_unread" do
+    it "marks all requested messages as unread" do
+      sign_in receiver     
+      rec_message.folder.should_not eq(receiver.trash)
+      rec_message_2.folder.should_not eq(receiver.trash)
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).update_attribute(:has_been_read, true)
+      end
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).has_been_read.should be_true
+      end
+      put :batch_mark_unread, :ids => rec_message_id_array
+      rec_message_id_array.each do |id|
+        MessageAssociation.find_by_id(id).has_been_read.should be_false
+      end
+    end
+
+    it "redirects to the inbox_path" do
+      sign_in receiver
+      put :batch_mark_unread, :ids => rec_message_id_array
+      response.should redirect_to(inbox_path)      
+    end
+    
+    describe "with invalid message" do
+      it "should respond forbidden" do
+        sign_in receiver
+        put :batch_mark_unread, :ids => [[0]]
+        response.should be_forbidden
+      end
+    end
+  end
+
   describe "GET reply" do
     it "assigns the requested message as @original when authenticated as owner" do
       sign_in receiver
@@ -235,32 +299,32 @@ describe MessagesController do
   describe "GET reply_all" do
     it "assigns the requested message as @original when authenticated as owner" do
       sign_in receiver
-      multi_mess = create(:message_with_muti_to).message_associations.first
+      multi_mess = create(:message_with_muti_to).message_associations.last
       get :reply_all, :id => multi_mess
       assigns(:original).should eq(multi_mess)
     end
     
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
       assigns(:message).should be_new_record
     end
     
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
       assigns(:message).author.should eq(receiver.user_profile)
     end
     
     it "@message to is set to the author and all @original recipients when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
       assigns(:message).to.should eq(["#{DefaultObjects.community_admin.user_profile.id}", "#{rec_message.author.id}"])
     end
     
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
       response.should render_template("sent_messages/new")
     end
     
