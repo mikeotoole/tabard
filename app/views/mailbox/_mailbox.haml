@@ -19,12 +19,15 @@
         - if mailbox_view_state == 'trash'
           %dd{ :class => 'action move' }
             = button_tag 'Move to inbox', :action => mail_batch_move_path(current_user.inbox), :method => :put, :meta => 'Move selected messages to the inbox.'
-        - if mailbox_view_state == 'trash'
           %dd{ :class => 'action destroy' }
             = button_tag 'Delete forever', :action => mail_batch_delete_path, :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
         - else
           %dd{ :class => 'action move' }
             = button_tag 'Move to trash', :action => mail_batch_move_path(current_user.trash), :method => :put, :meta => 'Move selected messages to the trash.'
+          %dd{ :class => 'action read' }
+            = button_tag 'Mark as read', :action => '', :method => :post, :meta => 'Mark selected messages as read.'
+          %dd{ :class => 'action unread' }
+            = button_tag 'Mark as unread', :action => '', :method => :post, :meta => 'Mark selected messages as unread.'
   
   #mailbox
     - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
