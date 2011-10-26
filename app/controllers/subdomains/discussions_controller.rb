@@ -31,6 +31,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # GET /discussions/:id(.:format)
   def show
+    @discussion.update_viewed(current_user.user_profile)
   end
 
   # GET /discussion_spaces/:discussion_space_id/discussions/new(.:format)

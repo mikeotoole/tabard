@@ -2,6 +2,25 @@
   %h1 Announcements
   
   - if current_user.announcements.size > 0
-    %ul
-      - current_user.announcements.each do |discussion|
-        %li= link_to discussion.name, discussion
+    %table
+      %thead
+        %tr
+          %th Announcement
+          %th Community
+          %th Date
+      %tbody
+        - current_user.announcements.each do |discussion|
+          %tr{ :class => has_seen?(discussion) ? 'read' : 'unread' }
+            %td
+              %strong= link_to discussion.name, discussion
+              %br/
+              = truncate discussion.body, :length => 100, :separator => ' '
+            %td= link_to discussion.community_name, discussion.community
+            %td
+              %time
+                = l discussion.created_at, :format => :date_short
+              %time
+                = l discussion.created_at, :format => :time_12
+      %tfoot
+        %tr
+          %td{ :colspan => 3 }

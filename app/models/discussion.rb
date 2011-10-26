@@ -37,6 +37,7 @@ class Discussion < ActiveRecord::Base
   delegate :name, :to => :discussion_space, :prefix => true
   delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :discussion_space, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true
 
 ###
 # Public Methods
@@ -80,7 +81,7 @@ class Discussion < ActiveRecord::Base
   end
 
   ###
-  # This will updated the view log for this discussion. If a view log exists for the user profile its modifyed date
+  # This will update the view log for this discussion. If a view log exists for the user profile its modified date
   # will be updated. Otherwise a new view log is created.
   # [Args]
   #   * +user_profile+ The profile of the user that viewed the discussion.

@@ -180,7 +180,11 @@ class UserProfile < ActiveRecord::Base
       return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
     end
   end
-
+  
+  ###
+  # This method gets an array of unviewed announcements.
+  # [Returns] An array of unviewed messages.
+  ###
   def unread_announcements
     unread = Array.new
     view_log_items = self.view_logs.collect{|view_log| view_log.view_loggable }
@@ -191,8 +195,8 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
-  # This method gets all of the users that this user can message.
-  # [Returns] An array of users that this user can message.
+  # This method gets an array of possible active profile options.
+  # [Returns] An array that user profile + all of their characters.
   ###
   def address_book
     comm_profiles = self.communities.collect{|community| community.community_profiles}.flatten(1)

@@ -48,16 +48,16 @@
             - if @todays_messages.size > 0
               %dt Today
               - @todays_messages.each do |message|
-                = render 'mailbox/row', :message => message
+                = render 'messages/row', :message => message
               - if @older_messages.size > 0
                 %dt Older
             - @older_messages.each do |message|
-              = render 'mailbox/row', :message => message
+              = render 'messages/row', :message => message
               
         - elsif @messages && @messages.size > 0
           %dl
             - @messages.each do |message|
-              = render 'mailbox/row', :message => message
+              = render 'messages/row', :message => message
               
         - elsif @folder
           %p= "#{@folder.name} is empty."
@@ -65,7 +65,7 @@
         - elsif @current_user.sent_messages.size > 0 && (!@message || @message.id)
           %dl
             - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
-              = render 'mailbox/row', :message => message
+              = render 'messages/row', :message => message
         
     = yield
     = render 'layouts/footer'

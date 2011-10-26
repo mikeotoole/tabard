@@ -118,19 +118,19 @@ protected
 ###
 # Active Character/Profile
 ###
-  # Predicate method to test for an active profile.
+  # Predicate helper method to test for an active profile.
   def profile_active?
     session[:profile_type] =~ /UserProfile/ || character_active?
   end
   helper_method :profile_active?
 
-  # Method to check for active character.
+  # Helper method to check for active character.
   def character_active?
     session[:profile_type] =~ /Character$/
   end
   helper_method :character_active?
 
-  # Returns the currently active character or nil if there isn't one.
+  # This helper method returns the currently active character or nil if there isn't one.
   def current_character
     return unless character_active?
     if defined? session[:profile_type].constantize
@@ -139,7 +139,7 @@ protected
   end
   helper_method :current_character
 
-  # Returns the currently active user profile or nil if there isn't one.
+  # This helper method eturns the currently active user profile or nil if there isn't one.
   def current_profile
     return nil unless profile_active?
     if defined? session[:profile_type].constantize
@@ -148,7 +148,7 @@ protected
   end
   helper_method :current_profile
 
-  # Returns an Array with the users profile and characters info.
+  # This helper method returns an Array with the users profile and characters info.
   def profiles
     if signed_in?
       profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
@@ -161,13 +161,13 @@ protected
   end
   helper_method :profiles
 
-  # This method returns the current community that is in scope.
+  # This helper method returns the current community that is in scope.
   def current_community
     nil
   end
   helper_method :current_community
 
-  # This method returns the current game that is in scope.
+  # This helper method returns the current game that is in scope.
   def current_game
     nil
   end
@@ -179,6 +179,12 @@ protected
     session[:profile_type] = profile_type
     @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
   end
+  
+  # This helper method checks if a user profile has viewed a view loggable object or not. If no user is specified, current user's user profile will be used.
+  def has_seen?(view_loggable_item, user_profile=current_user.user_profile)
+    user_profile.view_logs.collect{|view_log| view_log.view_loggable }.include?(view_loggable_item)
+  end
+  helper_method :has_seen?
 
 ###
 # Callback Methods
