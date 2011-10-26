@@ -97,6 +97,12 @@ protected
     @active_games
   end
   helper_method :active_games
+  
+  # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
+  def show_pitch?
+    defined?(@pitch) ? @pitch : false
+  end
+  helper_method :show_pitch?
 
   ###
   # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
@@ -177,6 +183,7 @@ protected
 ###
 # Callback Methods
 ###
+  
   ###
   # _before_filter_
   #

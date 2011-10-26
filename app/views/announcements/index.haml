@@ -1,0 +1,7 @@
+#body
+  %h1 Announcements
+  
+  - if current_user.announcements.size > 0
+    %ul
+      - current_user.announcements.each do |discussion|
+        %li= link_to discussion.name, discussion

@@ -21,6 +21,7 @@ class CrumblinController < ApplicationController
   # GET /
   ###
   def index
+    @pitch = true
   end
 
   # This method gets the Introduction page.

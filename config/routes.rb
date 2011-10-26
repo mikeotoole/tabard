@@ -44,9 +44,11 @@ DaBvRails::Application.routes.draw do
   delete 'mail/delete/:id' => "messages#destroy", :as => "mail_delete"
   delete 'mail/delete' => "messages#destroy", :as => "mail_delete_all"
   delete 'mail/batch_delete' => "messages#batch_destroy", :as => "mail_batch_delete"
-
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
+  
+  # Announcements
+  get 'announcements' => "announcements#index", :as => "announcements"
 
   # Subdomains
   constraints(Subdomain) do

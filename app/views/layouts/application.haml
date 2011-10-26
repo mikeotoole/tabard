@@ -9,7 +9,7 @@
 
   %body
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
-    = render 'layouts/pitch'
+    = render 'crumblin/pitch' if show_pitch?
     = render 'layouts/flash_messages'
     #content
       = yield

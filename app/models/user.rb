@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
   delegate :unread_messages, :to => :user_profile, :allow_nil => true
   delegate :received_messages, :to => :user_profile, :allow_nil => true
   delegate :folders, :to => :user_profile, :allow_nil => true
+  delegate :announcements, :to => :user_profile, :allow_nil => true
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
 
