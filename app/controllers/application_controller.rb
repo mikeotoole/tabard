@@ -30,6 +30,9 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
 
+  # This before_filter ensures that a user has accepted legal documents.
+  before_filter :ensure_accepted_most_recent_legal_documents
+
 ###
 # Status Code Rescues
 ###
@@ -216,5 +219,15 @@ protected
       end
     end
   end
-  
+
+  ###
+  # _before_filter_
+  #
+  # This method ensures that a profile is active, or it will default to the user_profile
+  ###
+  def ensure_accepted_most_recent_legal_documents
+    if signed_in?
+      raise
+    end
+  end
 end

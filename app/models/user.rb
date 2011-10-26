@@ -32,6 +32,11 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_profile
 
 ###
+# Callbacks
+###
+  after_save :update_document_acceptance
+
+###
 # Delegates
 ###
   delegate :id, :to => :user_profile, :prefix => true, :allow_nil => true
@@ -90,6 +95,13 @@ class User < ActiveRecord::Base
     user.build_user_profile
     return user
   end
+
+  #This method updates the acceptance of documents
+  def update_document_acceptance
+    self.document_acceptances.create(:user => self, :document => current_terms_of_service) if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
+    self.document_acceptances.create(:user => self, :document => current_privacy_policy) if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+  end
+
   #This method finds the most recent version of the terms of service
   def current_terms_of_service
     TermsOfService.first
@@ -102,7 +114,7 @@ class User < ActiveRecord::Base
   def current_privacy_policy
     PrivacyPolicy.first
   end
-  #This method checks to see if the user has accepted the most recent version of the Terms of Service.
+  #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
     document_acceptances.include?(current_privacy_policy)
   end
