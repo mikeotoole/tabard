@@ -32,9 +32,22 @@ button,
   line-height: 30px
   letter-spacing: 1px
   padding: 0 15px
+  position: relative
   text-decoration: none
   text-transform: lowercase  
   +transition(box-shadow .2s linear)
+  
+  &.read
+    padding-left: 40px
+  
+    &:before
+      background: image-url('application/icons.png') -420px -30px no-repeat
+      content: ''
+      height: 30px
+      left: 0
+      position: absolute
+      top: 0
+      width: 30px
   
   &:focus,
   &:hover
@@ -194,82 +207,107 @@ button,
   
     tbody
     
-      td
-        background: #eee
-        +bg_gradient(#eee,#ddd)
-        border-bottom: 1px solid #ccc
-        border-top: 1px solid #fff
-        padding: 5px 10px
-        width: 100%
+      tr
+      
+        td
+          background: #eee
+          +bg_gradient(#eee,#ddd)
+          border-bottom: 1px solid #ccc
+          border-top: 1px solid #fff
+          padding: 5px 10px
+          width: 100%
+          
+          &.check
+            padding: 5px 30px 5px 5px
+            width: 0
+          
+          &.actions
+            padding: 5px
+            white-space: nowrap
+            
+            div
+              position: relative
+            
+              a
+                background: image-url('application/icons.png') no-repeat #aaa
+                +border_radius(5)
+                display: block
+                float: left
+                height: 30px
+                overflow: hidden
+                padding: 0
+                margin: 0 0 0 5px
+                text-indent: -500em
+                +transition(background-color .2s linear, box-shadow .2s linear)
+                width: 30px
+                
+                &:hover
+                  background: image-url('application/icons.png') no-repeat #be4124
+                  +box_shadow(0 0 10px #333)
+                
+                  &[meta]
+                  
+                    &:before
+                      background: rgba(#251634,.8)
+                      +border_radius(5)
+                      color: #fff
+                      content: attr(meta)
+                      font-size: 13px
+                      height: 30px
+                      line-height: 30px
+                      margin: 0 5px 0 0
+                      padding: 0 10px
+                      position: absolute
+                      right: 100%
+                      text-indent: 0
+                      white-space: nowrap
+                    
+                    &:after
+                      border: 5px solid transparent
+                      border-left: 5px solid rgba(#251634,.8)
+                      content: ''
+                      height: 0
+                      left: -5px
+                      position: absolute
+                      top: 10px
+                      width: 0
+                      
+                
+                &.apply
+                  background-position: 0 -30px
+                  
+                &.delete
+                  background-position: -30px -30px
+                  
+                &.edit
+                  background-position: -60px -30px
+          
+          a
+            white-space: nowrap
+            
+          time
+            display: block
+            font: 12px DinMedium, sans
+            white-space: nowrap
         
-        &.actions
-          padding: 5px
-          white-space: nowrap
-          
-          div
-            position: relative
-          
+        &.read
+        
+          td,
+          th
+            +bg_gradient(#ddd,#ccc)
+            
             a
-              background: image-url('application/icons.png') no-repeat #aaa
-              +border_radius(5)
-              display: block
-              float: left
-              height: 30px
-              overflow: hidden
-              padding: 0
-              margin: 0 0 0 5px
-              text-indent: -500em
-              +transition(background-color .2s linear, box-shadow .2s linear)
-              width: 30px
+              color: #261232
               
               &:hover
-                background: image-url('application/icons.png') no-repeat #be4124
-                +box_shadow(0 0 10px #333)
-              
-                &[meta]
-                
-                  &:before
-                    background: rgba(#251634,.8)
-                    +border_radius(5)
-                    color: #fff
-                    content: attr(meta)
-                    font-size: 13px
-                    height: 30px
-                    line-height: 30px
-                    margin: 0 5px 0 0
-                    padding: 0 10px
-                    position: absolute
-                    right: 100%
-                    text-indent: 0
-                    white-space: nowrap
-                  
-                  &:after
-                    border: 5px solid transparent
-                    border-left: 5px solid rgba(#251634,.8)
-                    content: ''
-                    height: 0
-                    left: -5px
-                    position: absolute
-                    top: 10px
-                    width: 0
-                    
-              
-              &.apply
-                background-position: 0 -30px
-                
-              &.delete
-                background-position: -30px -30px
-                
-              &.edit
-                background-position: -60px -30px
+                background: #BD4028
+                color: #fff
+      
+        &.unread
         
-        a
-          white-space: nowrap
-          
-        time
-          display: block
-          font: 12px DinMedium, sans
-          white-space: nowrap
+          td,
+          th
+            +bg_gradient(#fff,#eee)
     
     tfoot
     

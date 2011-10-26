@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   delegate :folders, :to => :user_profile, :allow_nil => true
   delegate :announcements, :to => :user_profile, :allow_nil => true
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
+  delegate :has_seen?, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
 
 ###

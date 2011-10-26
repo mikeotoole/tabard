@@ -1,26 +1,44 @@
 #body
-  %h1 Announcements
+  %h1 My Announcements
   
   - if current_user.announcements.size > 0
-    %table
-      %thead
-        %tr
-          %th Announcement
-          %th Community
-          %th Date
-      %tbody
-        - current_user.announcements.each do |discussion|
-          %tr{ :class => has_seen?(discussion) ? 'read' : 'unread' }
-            %td
-              %strong= link_to discussion.name, discussion
-              %br/
-              = truncate discussion.body, :length => 100, :separator => ' '
-            %td= link_to discussion.community_name, discussion.community
-            %td
-              %time
-                = l discussion.created_at, :format => :date_short
-              %time
-                = l discussion.created_at, :format => :time_12
-      %tfoot
-        %tr
-          %td{ :colspan => 3 }
+    = form_tag '' do
+      %table
+        %thead
+          %tr
+            %th
+            %th Announcement
+            %th Community
+            %th Date
+        %tbody
+          - current_user.announcements.each do |discussion|
+            - if current_user.has_seen?(discussion)
+              %tr.read
+                %td.check
+                %td
+                  %strong= link_to discussion.name, discussion_url(discussion, :subdomain => discussion.subdomain)
+                %td= link_to discussion.community_name, root_url(:subdomain => discussion.subdomain)
+                %td
+                  %time
+                    = l discussion.created_at, :format => :date_short
+                  %time
+                    = l discussion.created_at, :format => :time_12
+            - else
+              %tr.unread
+                %td.check
+                  = check_box_tag "ids[#{discussion.id}]", true, false, :id => "discussion_id_#{discussion.id}"
+                  %label{ :for => "discussion_id_#{discussion.id}" }
+                %td
+                  %strong= link_to discussion.name, discussion_url(discussion, :subdomain => discussion.subdomain)
+                  %br/
+                  = truncate discussion.body, :length => 100, :separator => ' '
+                %td= link_to discussion.community_name, root_url(:subdomain => discussion.subdomain)
+                %td
+                  %time
+                    = l discussion.created_at, :format => :date_short
+                  %time
+                    = l discussion.created_at, :format => :time_12
+        %tfoot
+          %tr
+            %td{ :colspan => 4 }
+              %button{ :class => 'read' } Mark selected as read

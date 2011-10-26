@@ -158,6 +158,15 @@ class UserProfile < ActiveRecord::Base
      false
     end
   end
+  
+  ###
+  # This method checks if a user profile has viewed a view-loggable object or not. If no user is specified, current user's user profile will be used.
+  # [Args]
+  #   * +view_loggable_item+ -> The view-loggable object to check.
+  # [Returns] True if the specified user is the owner of this character, otherwise false.
+  def has_seen?(view_loggable_item)
+    ViewLog.where{(view_loggable_id == view_loggable_item.id) & (view_loggable_type == view_loggable_item.class.to_s) & (user_profile_id == self.id)}.exists?
+  end
 
   ###
   # This method checks to see if the specified user is the owner of this character.

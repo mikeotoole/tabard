@@ -75,14 +75,23 @@ twom.games << wow_game
 
 puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
 puts "Accepting Sleepy Pidgeon and Apathic Tiger's applications"
-generate_application_from_user_profile(twom,s_pidgeon.user_profile).accept_application
-generate_application_from_user_profile(twom,a_tiger.user_profile).accept_application
+generate_application_from_user_profile(twom, s_pidgeon.user_profile).accept_application
+generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
 
 puts "Creating Two Maidens Guild General Discussion Space"
 twom_gds = twom.discussion_spaces.create(:name => "General Chat")
 
 puts "Creating Two Maidens Guild WoW Discussion Space"
 twom_wds = twom.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
+
+puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
+jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya")
+jkit.games << swtor_game
+
+puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
+puts "Accepting Dirty Badger and Robo Billy's applications"
+generate_application_from_user_profile(jkit, d_badger.user_profile).accept_application
+generate_application_from_user_profile(jkit, robobilly.user_profile).accept_application
 
 puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR and WoW!"
 jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
@@ -108,10 +117,10 @@ end
 
 puts "Diabolical Moose, Snappy Turtle, Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
 puts "Accepting Diabolical Moose's, Snappy Turtle's and Dirty Badger's applications"
-generate_application_from_user_profile(jahc,d_moose.user_profile).accept_application
-generate_application_from_user_profile(jahc,s_turtle.user_profile).accept_application
-generate_application_from_user_profile(jahc,d_badger.user_profile).accept_application
-generate_application_from_user_profile(jahc,k_fox.user_profile)
+generate_application_from_user_profile(jahc, d_moose.user_profile).accept_application
+generate_application_from_user_profile(jahc, s_turtle.user_profile).accept_application
+generate_application_from_user_profile(jahc, d_badger.user_profile).accept_application
+generate_application_from_user_profile(jahc, k_fox.user_profile)
 
 puts "Giving D-Moose the n00b role..."
 d_moose.add_new_role(noob_role)

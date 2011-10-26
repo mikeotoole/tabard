@@ -100,7 +100,7 @@ protected
   
   # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
   def show_pitch?
-    defined?(@pitch) ? @pitch : false
+    !!@pitch
   end
   helper_method :show_pitch?
 
@@ -179,12 +179,6 @@ protected
     session[:profile_type] = profile_type
     @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
   end
-  
-  # This helper method checks if a user profile has viewed a view loggable object or not. If no user is specified, current user's user profile will be used.
-  def has_seen?(view_loggable_item, user_profile=current_user.user_profile)
-    user_profile.view_logs.collect{|view_log| view_log.view_loggable }.include?(view_loggable_item)
-  end
-  helper_method :has_seen?
 
 ###
 # Callback Methods

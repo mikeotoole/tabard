@@ -22,6 +22,7 @@ class CrumblinController < ApplicationController
   ###
   def index
     @pitch = true
+    @recent_activity = Community.order{ created_at.desc }.last(5).collect{|community| {type: 'New Community', name: community.name, link: community_url(community), snippet: community.supported_games.collect{|game| game.name}.join(', ')}}
   end
 
   # This method gets the Introduction page.
