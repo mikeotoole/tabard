@@ -165,7 +165,12 @@ class UserProfile < ActiveRecord::Base
   #   * +view_loggable_item+ -> The view-loggable object to check.
   # [Returns] True if the specified user is the owner of this character, otherwise false.
   def has_seen?(view_loggable_item)
-    ViewLog.where{(view_loggable_id == view_loggable_item.id) & (view_loggable_type == view_loggable_item.class.to_s) & (user_profile_id == self.id)}.exists?
+    user_id = self.id
+    ViewLog.where{(
+      (view_loggable_id.eq view_loggable_item.id) & 
+      (view_loggable_type.eq view_loggable_item.class.to_s) & 
+      (user_profile_id.eq user_id)
+    )}.exists?
   end
 
   ###
@@ -195,12 +200,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of unviewed messages.
   ###
   def unread_announcements
-    unread = Array.new
-    view_log_items = self.view_logs.collect{|view_log| view_log.view_loggable }
-    self.announcements.each do |announcement|
-      unread << announcement unless view_log_items.include?(announcement)
-    end
-    return unread
+    self.announcements.delete_if{|announcement| self.has_seen?(announcement)}
   end
 
   ###

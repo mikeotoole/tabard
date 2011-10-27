@@ -88,6 +88,7 @@ class Discussion < ActiveRecord::Base
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
   def update_viewed(user_profile)
+    logger.debug("Herp derp #{user_profile.to_yaml} for #{self.to_yaml}")
     log = self.view_logs.find_by_user_profile_id(user_profile.id)
     if log
       log.touch
