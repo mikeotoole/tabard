@@ -14,6 +14,9 @@ class AnnouncementsController < ApplicationController
 ###
   # GET /announcements/(.:format)
   def index
+    flash[:alert] = 'Hello world'
+    flash[:messages] = []
+    flash[:messages] << { body: 'You are a potato.', class: 'notice' }
     @discussions = current_user.announcements
   end
 

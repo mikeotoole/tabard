@@ -76,3 +76,15 @@ $(document).ready ->
           element.click()
           $('#modal button.cancel').trigger 'click'
       false
+  
+  # Flash messages
+  $('#flash li')
+    .css({ height: 0, lineHeight: 0 })
+    .append('<a class="dismiss">✕</a>')
+    .animate({ height: 40, lineHeight: 40 + 'px' }, 600)
+    .find('.dismiss')
+    .click ->
+      $(this)
+        .closest('li')
+        .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+          $(this).remove()

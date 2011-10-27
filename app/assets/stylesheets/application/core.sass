@@ -1,3 +1,96 @@
+#flash
+  left: 0
+  margin: -5px 0 20px
+  position: relative
+  right: 0
+  
+  li
+    background: #eee
+    +bg_gradient(#ddd,#fff)
+    border-bottom: 1px solid rgba(#fff,.2)
+    border-left: 1px solid #fff
+    border-right: 1px solid #fff
+    border-top: 0
+    +box_shadow(inset 0 0 5px rgba(#000,.2))
+    font: 16px DinMedium
+    height: 40px
+    line-height: 40px
+    margin: 0 auto
+    overflow: hidden
+    padding: 0 40px
+    position: relative
+    text-align: left
+    +transition(color .2s linear, box-shadow .2s linear)
+    width: 880px
+    z-index: 90
+    
+    &:last-child
+      +border_radius(0,0,5,5)
+      border-bottom: 1px solid #fff
+    
+    &:before
+      background: image-url('application/icons.png') no-repeat
+      content: ''
+      height: 30px
+      left: 5px
+      margin: -15px 0 0
+      +opacity(.9)
+      position: absolute
+      top: 50%
+      width: 30px
+    
+    &.alert
+      +bg_gradient(#d73c31,#A13A32)
+      color: #F6EAE9
+      
+      &:before
+        background-position: -450px -30px
+    
+    &.notice
+      +bg_gradient(#c3a606,#ac9200)
+      color: #F7F6E6
+      
+      &:before
+        background-position: -60px -30px
+    
+    &.announcement
+      +bg_gradient(#74548e,#5f4078)
+      color: #eae1f2
+      
+      &:before
+        background-position: -450px -30px
+    
+    .dismiss
+      background: #fff
+      border: 1px solid rgba(#000,.5)
+      +border_radius(4)
+      +box_shadow(0 0 5px rgba(#000,.2))
+      color: #000
+      font-size: 12px
+      line-height: 12px
+      margin: -11px 0 0
+      padding: 4px 5px
+      position: absolute
+      +opacity(.5)
+      right: 10px
+      top: 50%
+      +transition(opacity .2s linear, box-shadow .2s linear)
+    
+    &:hover
+      +box_shadow(inset 0 0 25px rgba(#fff,.2))
+      color: #fff
+      z-index: 91
+      
+      &:before
+        +opacity(1)
+      
+      .dismiss
+        +opacity(.7)
+      
+        &:hover
+          +box_shadow(0 0 15px rgba(#000,.4))
+          +opacity(.9)
+
 #mask
   background: #000
   bottom: 0

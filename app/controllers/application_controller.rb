@@ -70,11 +70,10 @@ class ApplicationController < ActionController::Base
   end
 
   ###
-  # TODO Doug, Add the remaining of the message_class types. -MO
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.
-  #   * +message_class+ -> What type of message it is. This can be "alert", "notice", ...
+  #   * +message_class+ -> What type of message it is, including but not limited to "alert", "notice", "announcement", etc.
   #   * +message_title+ -> The title of the message.
   ###
   def add_new_flash_message(message_body, message_class="notice", message_title="")
