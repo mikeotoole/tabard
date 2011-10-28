@@ -99,9 +99,15 @@ protected
   
   # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
   def show_pitch?
-    !!@pitch
+    !!@show_pitch
   end
   helper_method :show_pitch?
+  
+  # This helper method lets the applicaiton layout view know whether or not to hide announcements within the flash messages partial.
+  def hide_announcements?
+    !!@hide_announcements
+  end
+  helper_method :hide_announcements?
 
   ###
   # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.

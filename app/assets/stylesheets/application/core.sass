@@ -13,20 +13,16 @@
     border-top: 0
     +box_shadow(inset 0 0 5px rgba(#000,.2))
     font: 16px DinMedium
-    height: 40px
-    line-height: 40px
+    height: 0
+    line-height: 0
     margin: 0 auto
     overflow: hidden
     padding: 0 40px
     position: relative
     text-align: left
     +transition(color .2s linear, box-shadow .2s linear)
-    width: 880px
-    z-index: 90
-    
-    &:last-child
-      +border_radius(0,0,5,5)
-      border-bottom: 1px solid #fff
+    width: 878px
+    z-index: 88
     
     &:before
       background: image-url('application/icons.png') no-repeat
@@ -38,6 +34,24 @@
       position: absolute
       top: 50%
       width: 30px
+    
+    &.busy
+      
+      &:after
+        background: image-url('application/busy.gif') center center no-repeat rgba(#000,.5)
+        bottom: 0
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+    
+    &:last-child
+      +border_radius(0,0,5,5)
+      border-bottom: 1px solid #fff
+      
+      &:after
+        +border_radius(0,0,5,5)
     
     &.alert
       +bg_gradient(#d73c31,#A13A32)
@@ -60,7 +74,8 @@
       &:before
         background-position: -450px -30px
     
-    .dismiss
+    .dismiss,
+    .read
       background: #fff
       border: 1px solid rgba(#000,.5)
       +border_radius(4)
@@ -74,20 +89,44 @@
       +opacity(.5)
       right: 10px
       top: 50%
-      +transition(opacity .2s linear, box-shadow .2s linear)
+      +transition(opacity .2s linear, box-shadow .2s linear, border .2s linear)
+      
+      &:before
+        bottom: -10px
+        content: ''
+        left: -10px
+        position: absolute
+        right: -10px
+        top: -10px
+    
+    .link
+      
+      &:before
+        bottom: 0
+        content: ''
+        display: block
+        left: 0
+        position: absolute
+        right: 40px
+        top: 0
+    
+    .meta
+      font: 13px DinLight, sans
     
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
       color: #fff
-      z-index: 91
+      z-index: 89
       
       &:before
         +opacity(1)
       
-      .dismiss
+      .dismiss,
+      .read
         +opacity(.7)
       
         &:hover
+          border-color: #fff
           +box_shadow(0 0 15px rgba(#000,.4))
           +opacity(.9)
 
@@ -166,3 +205,12 @@
         &:hover
           +bg_gradient(#999,#777)
           color: #fff
+
+body.fluid
+
+  #flash
+    
+    li
+      border-left: 0
+      border-right: 0
+      width: auto

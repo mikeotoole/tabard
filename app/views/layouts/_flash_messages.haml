@@ -1,8 +1,11 @@
 %ul#flash
-  - if defined? current_user.unread_announcements
+  - if !hide_announcements? && defined? current_user.unread_announcements
     - current_user.unread_announcements.each do |discussion|
       %li{ :class => 'announcement' }
-        = truncate discussion.body, :length => 100, :separator => ' '
+        = link_to (truncate discussion.body, :length => 100, :separator => ' '), discussion_url(discussion, :subdomain => discussion.subdomain), :class => 'link'
+        %span.meta= "— #{discussion.community_name}"
+        = link_to '✔', discussion_url(discussion, :subdomain => discussion.subdomain), 'data-type' => :jsonp, :remote => true, :class => 'read'
+        
   - if !!flash[:alert]
     %li.alert
       :markdown
@@ -12,3 +15,5 @@
       %li{ :class => message[:class] }
         :markdown
           #{message[:body]}
+
+-# flash[:alert] = flash[:messages] = nil

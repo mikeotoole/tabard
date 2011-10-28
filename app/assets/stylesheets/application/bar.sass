@@ -11,11 +11,13 @@
   position: fixed
   right: 0
   top: 0
+  z-index: 91
 
   &:before
-    +bg_gradient(#ccc,rgba(#ccc,0))
+    +bg_gradient(rgba(#ccc,.5),rgba(#ccc,0))
+    border-top: 1px solid rgba(#000,.3)
     content: ''
-    height: 7px
+    height: 5px
     left: 0
     pointer-events: none
     position: absolute
@@ -49,7 +51,7 @@
     position: absolute
     text-align: left
     top: 20px
-    z-index: 91
+    z-index: 93
     
     &.menu
       border-left: 2px solid #554863
@@ -388,3 +390,32 @@
     button
       position: absolute
       top: -5000em
+
+body.fluid
+
+  #bar
+    background-position: 0 0
+    min-width: 1px
+  
+    &:before
+      +bg_gradient(rgba(#000,.5),rgba(#000,0))
+      border-top: 1px solid #46335A
+    
+    &:after
+      background-position: -100px 0
+    
+    .logo
+      left: 15px
+      margin: 0
+    
+    >ul.menu
+      left: 177px
+      margin: 0
+    
+    >ul.characters
+      margin: 0
+      right: 70px
+    
+    a.avatar
+      margin: 0
+      right: 20px

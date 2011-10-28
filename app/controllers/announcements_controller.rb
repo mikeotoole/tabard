@@ -17,9 +17,13 @@ class AnnouncementsController < ApplicationController
     flash[:alert] = 'Hello world'
     flash[:messages] = []
     flash[:messages] << { body: 'You are a potato.', class: 'notice' }
-    @discussions = current_user.announcements
+    @hide_announcements = true
   end
-
+  
+###
+# Added Actions
+###
+  # PUT /announcements/batch_mark_as_seen/(.:format)
   def batch_mark_as_seen
   	if params[:ids]
       params[:ids].each do |id|

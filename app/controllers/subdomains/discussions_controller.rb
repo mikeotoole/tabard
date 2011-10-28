@@ -32,6 +32,10 @@ class Subdomains::DiscussionsController < SubdomainsController
   # GET /discussions/:id(.:format)
   def show
     @discussion.update_viewed(current_user.user_profile)
+    respond_to do |format|
+      format.js { render text: "#{params['callback']}({\"result\":#{(current_user.has_seen?(@discussion) ? 'true' : 'false')}})", layout: false }
+      format.html { redirect_to previous_page }
+    end
   end
 
   # GET /discussion_spaces/:discussion_space_id/discussions/new(.:format)
@@ -92,6 +96,9 @@ class Subdomains::DiscussionsController < SubdomainsController
     return
   end
 
+###
+# Public Methods
+###
   # This method returns the current game that is in scope.
   def current_game
     @discussion.discussion_space_game
