@@ -173,24 +173,6 @@ jahc_a2.save
 jahc_a3 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
 jahc_a3.user_profile = robobilly.user_profile
 jahc_a3.save
-jahc_a4 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a4.user_profile = robobilly.user_profile
-jahc_a4.save
-jahc_a5 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a5.user_profile = robobilly.user_profile
-jahc_a5.save
-jahc_a6 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a6.user_profile = robobilly.user_profile
-jahc_a6.save
-jahc_a7 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a7.user_profile = robobilly.user_profile
-jahc_a7.save
-jahc_a8 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a8.user_profile = robobilly.user_profile
-jahc_a8.save
-jahc_a9 = jahc.game_announcement_spaces.last.discussions.new(:name => "WoW is now supported!", :body => "Everyone add your WoW characters.")
-jahc_a9.user_profile = robobilly.user_profile
-jahc_a9.save
 
 puts "Creating Just Another Headshot Clan Guild Info Page Space"
 jahc_gips = jahc.page_spaces.create(:name => "Guild Info")
