@@ -196,11 +196,19 @@ class UserProfile < ActiveRecord::Base
   end
   
   ###
+  # This method gets an array of viewed announcements.
+  # [Returns] An array of viewed messages.
+  ###
+  def read_announcements
+    self.announcements.reject{|announcement| !self.has_seen?(announcement)}
+  end
+  
+  ###
   # This method gets an array of unviewed announcements.
   # [Returns] An array of unviewed messages.
   ###
   def unread_announcements
-    self.announcements.delete_if{|announcement| self.has_seen?(announcement)}
+    self.announcements.reject{|announcement| self.has_seen?(announcement)}
   end
 
   ###

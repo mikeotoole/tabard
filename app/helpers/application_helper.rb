@@ -88,6 +88,7 @@ module ApplicationHelper
 
   # Removes all flash messages
   def clear_flash_messages
+    flash[:alert] = nil
     flash[:messages] = nil
   end
 

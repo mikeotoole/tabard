@@ -214,7 +214,17 @@ button,
           width: 100%
           
           &.check
+            border-right: 1px #ccc solid
             padding: 5px 30px 5px 5px
+            text-align: center
+            width: 0
+            
+            label:before
+              +box_shadow(0 0 10px rgba(#000,.3))
+          
+          &.compact
+            padding: 5px 10px
+            text-align: center
             width: 0
           
           &.actions
@@ -291,6 +301,10 @@ button,
           td,
           th
             +bg_gradient(#ddd,#ccc)
+            border-bottom-color: #bbb
+            
+            &.check
+              border-right-color: #bbb
             
             a
               color: #261232

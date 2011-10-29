@@ -142,6 +142,12 @@ $(document).ready ->
             
       .bind 'ajax:success', (event, data, status, xhr) ->
         if data.result == true
+          $('#bar .notice a').each ->
+            num = $(this).attr('meta') - 1
+            if num > 0
+              $(this).attr 'meta', num
+            else
+              $(this).removeAttr 'meta'
           adjustHeaderByFlash(300,-1)
           $(this)
             .closest('li')

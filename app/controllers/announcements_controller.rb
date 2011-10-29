@@ -14,10 +14,8 @@ class AnnouncementsController < ApplicationController
 ###
   # GET /announcements/(.:format)
   def index
-    flash[:alert] = 'Hello world'
-    flash[:messages] = []
-    flash[:messages] << { body: 'You are a potato.', class: 'notice' }
     @hide_announcements = true
+    @limit_read_amount = 10
   end
   
 ###
