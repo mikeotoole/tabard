@@ -1,5 +1,4 @@
 ActiveAdmin.register Community do
-  #menu :parent => "Community", :priority => 1
   controller.authorize_resource
   
   filter :name
@@ -8,7 +7,6 @@ ActiveAdmin.register Community do
   filter :protected_roster, :as => :select
   filter :accepting_members, :as => :select
   filter :email_notice_on_application, :as => :select
-  filter :admin_profile
   
   index do
     column :name
@@ -23,5 +21,7 @@ ActiveAdmin.register Community do
         link_to "Destroy", [:admin, community], :method => :delete, :confirm => 'Are you sure you want to delete this community?'
       end  
     end
-  end  
+  end
+  
+  # TODO Mike, Add show with community resources like discussion spaces.
 end

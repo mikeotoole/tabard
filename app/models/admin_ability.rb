@@ -18,14 +18,28 @@ class AdminAbility
   #   * +user+ -> A user to define permissions on.
   ###
   def bakedInRules(user)
-    can :manage, :all
-    cannot :update, :all
+    can [:read, :destroy], :all
+    cannot [:update, :create], :all
   
     # AdminUser Rules
-    can :update, AdminUser do |some_user|
-      some_user.id == user.id
+    can :update, AdminUser do |admin_user|
+      admin_user.id == user.id
+    end
+    can :create, AdminUser do |admin_user|
+      true
     end
     
+    # Page Spaces Rules
+    can [:create, :update], PageSpace do |space|
+      true
+    end
+    
+    # Discussion Spaces Rules
+    can [:create, :update], DiscussionSpace do |space|
+      true
+    end
+    
+    # UserProfile Rules
     cannot :destroy, UserProfile do |profile|
       true
     end

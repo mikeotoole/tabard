@@ -9,7 +9,7 @@ ActiveAdmin.register UserProfile do
     user_profile.characters.each do |character|
       div do
         link_to character.name, [:admin, character]
-      end  
+      end
     end
     h3 "Communities:"
     user_profile.communities.each do |community|
@@ -23,6 +23,7 @@ ActiveAdmin.register UserProfile do
         link_to community.name, [:admin, community]
       end  
     end
+    # TODO Mike, Add pages, discussions, and comments.
     active_admin_comments
   end  
 end
