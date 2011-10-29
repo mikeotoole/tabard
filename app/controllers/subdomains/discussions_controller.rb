@@ -33,8 +33,10 @@ class Subdomains::DiscussionsController < SubdomainsController
   def show
     @discussion.update_viewed(current_user.user_profile)
     respond_to do |format|
-      format.js { render text: "#{params['callback']}({\"result\":#{(current_user.has_seen?(@discussion) ? 'true' : 'false')}})", layout: false }
-      format.html { redirect_to previous_page }
+      format.js {
+        announcement = current_user.unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :discussion => current_user.unread_announcements.first }) : ''
+        render text: "#{params['callback']}({\"result\":#{(current_user.has_seen?(@discussion) ? 'true' : 'false')},\"announcement\":#{announcement.to_json}})", layout: false }
+      format.html
     end
   end
 

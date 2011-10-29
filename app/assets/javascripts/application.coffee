@@ -113,47 +113,54 @@ $(document).ready ->
         $('#mailbox, #mailbox-menu, #message, #message header .actions')
           .animate({ top: (amount + 70) + 'px' }, speed)
 
-  $('#flash li').each ->
+  $('#flash li')
+    .live 'load', ->
           
-    $(this).append('<a class="dismiss">✕</a>') unless $(this).find('.read').length
-    $(this)
-      .css({ height: 0, lineHeight: 0 })
-      .animate({ height: 40, lineHeight: 40 + 'px' }, 600)
-    
-    $(this).find('.dismiss')
-      .click ->
-        adjustHeaderByFlash(300,-1)
-        $(this)
-          .closest('li')
-          .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-            $(this).remove()
-            
-    $(this).find('.read')
-    
-      .bind 'ajax:beforeSend', ->
-        $(this).closest('li').addClass('busy')
-        
-      .bind 'ajax:error', (xhr, status, error) ->
-        row = $(this).closest('li')
-        $.alert
-          body: error
-          action: ->
-            row.removeClass('busy')
-            
-      .bind 'ajax:success', (event, data, status, xhr) ->
-        if data.result == true
-          $('#bar .notice a').each ->
-            num = $(this).attr('meta') - 1
-            if num > 0
-              $(this).attr 'meta', num
-            else
-              $(this).removeAttr 'meta'
+      $(this).append('<a class="dismiss">✕</a>') unless $(this).find('.read').length
+      $(this)
+        .css({ height: 0, lineHeight: 0 })
+        .animate({ height: 40, lineHeight: 40 + 'px' }, 600)
+      
+      $(this).find('.dismiss')
+        .click ->
           adjustHeaderByFlash(300,-1)
           $(this)
             .closest('li')
             .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
               $(this).remove()
-        else
-          $(this).closest('li').removeClass('busy')
+              
+      $(this).find('.read')
+      
+        .bind 'ajax:beforeSend', ->
+          $(this).closest('li').addClass('busy')
+          
+        .bind 'ajax:error', (xhr, status, error) ->
+          row = $(this).closest('li')
+          $.alert
+            body: error
+            action: ->
+              row.removeClass('busy')
+              
+        .bind 'ajax:success', (event, data, status, xhr) ->
+          if data.result == true
+            $('#bar .notice a').each ->
+              num = $(this).attr('meta') - 1
+              if num > 0
+                $(this).attr 'meta', num
+              else
+                $(this).removeAttr 'meta'
+            adjustHeaderByFlash(300,-1)
+            $(this)
+              .closest('li')
+              .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+                if data.announcement
+                  $('#flash').prepend data.announcement
+                  $('#flash li:first').trigger 'load'
+                setTimeout adjustHeaderByFlash, 50
+                $(this).remove()
+          else
+            $(this).closest('li').removeClass('busy')
+            
+    .trigger 'load'
             
   adjustHeaderByFlash(600)

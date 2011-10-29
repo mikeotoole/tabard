@@ -100,7 +100,7 @@ describe Subdomains::CommentsController do
 
       it "re-renders the 'new' template" do
         post :create, :comment => attributes_for(:comment, :body => nil)
-        response.should render_template("_comment")
+        response.should equal? ""
       end
     end
   end

@@ -200,6 +200,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of viewed messages.
   ###
   def read_announcements
+    # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
     self.announcements.reject{|announcement| !self.has_seen?(announcement)}
   end
   
@@ -208,6 +209,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of unviewed messages.
   ###
   def unread_announcements
+    # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
     self.announcements.reject{|announcement| self.has_seen?(announcement)}
   end
 

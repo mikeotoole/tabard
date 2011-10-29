@@ -1,11 +1,6 @@
 %ul#flash
-  - if !hide_announcements? && defined? current_user.unread_announcements
-    - current_user.unread_announcements.each do |discussion|
-      %li{ :class => 'announcement' }
-        = link_to (truncate discussion.body, :length => 100, :separator => ' '), discussion_url(discussion, :subdomain => discussion.subdomain), :class => 'link'
-        %span.meta= "— #{discussion.community_name}"
-        = link_to '✔', discussion_url(discussion, :subdomain => discussion.subdomain), 'data-type' => :jsonp, :remote => true, :class => 'read'
-        
+  - if !hide_announcements? && signed_in? && current_user.unread_announcements.size > 0
+    = render 'layouts/flash_message_announcement', :discussion => current_user.unread_announcements.first     
   - if !!flash[:alert]
     %li.alert
       :markdown
