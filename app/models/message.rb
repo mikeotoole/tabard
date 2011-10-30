@@ -44,6 +44,13 @@ class Message < ActiveRecord::Base
   default_scope :order => "created_at DESC"
 
 ###
+# Instance Methods
+###
+  def original_message_id
+    self.id
+  end
+
+###
 # Protected Methods
 ###
 protected

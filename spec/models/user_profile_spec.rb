@@ -335,6 +335,10 @@ describe UserProfile do
     end
   end
 
+  describe "read_announcements" do
+    pending
+  end
+
   describe "unread_announcements" do
     pending
   end
