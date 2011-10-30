@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111014182327) do
+ActiveRecord::Schema.define(:version => 20111029143639) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -190,6 +190,23 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
   add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
   add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "creator_id"
+    t.integer  "game_id"
+    t.integer  "community_id"
+    t.boolean  "invite_only",  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["community_id"], :name => "index_events_on_community_id"
+  add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
+  add_index "events", ["game_id"], :name => "index_events_on_game_id"
+
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.integer  "user_profile_id"
@@ -206,6 +223,18 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
     t.datetime "updated_at"
     t.string   "pretty_url"
   end
+
+  create_table "invites", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "character_proxy_id"
+    t.integer  "user_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
+  add_index "invites", ["event_id"], :name => "index_invites_on_event_id"
+  add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
 
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"
@@ -230,6 +259,15 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
+
+  create_table "mw3_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "server"
+    t.integer  "game_id"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_spaces", :force => true do |t|
     t.string   "name"
@@ -256,6 +294,18 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
   add_index "pages", ["character_proxy_id"], :name => "index_pages_on_character_proxy_id"
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
   add_index "pages", ["user_profile_id"], :name => "index_pages_on_user_profile_id"
+
+  create_table "participants", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_profile_id"
+    t.integer  "character_proxy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "participants", ["character_proxy_id"], :name => "index_participants_on_character_proxy_id"
+  add_index "participants", ["event_id"], :name => "index_participants_on_event_id"
+  add_index "participants", ["user_profile_id"], :name => "index_participants_on_user_profile_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
@@ -360,8 +410,8 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                                 :default => "",   :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -378,6 +428,7 @@ ActiveRecord::Schema.define(:version => 20111014182327) do
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "user_active",                           :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

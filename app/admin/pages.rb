@@ -25,7 +25,7 @@ ActiveAdmin.register Page do
   end
   
   show do
-    attributes_table :name, :markup, :body, :page_space, :user_profile, :poster, :community, :created_at, :updated_at, :show_in_navigation
+    attributes_table :id, :name, :markup, :body, :page_space, :user_profile, :poster, :community, :created_at, :updated_at, :show_in_navigation
     active_admin_comments
   end  
 end

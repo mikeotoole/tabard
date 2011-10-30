@@ -23,7 +23,19 @@ ActiveAdmin.register UserProfile do
         link_to community.name, [:admin, community]
       end  
     end
-    # TODO Mike, Add pages, discussions, and comments.
+    h3 "Owned Pages:"
+    user_profile.pages.each do |page|
+      div do
+        link_to page.name, [:admin, page]
+      end  
+    end
+    h3 "Owned Discussions:"
+    user_profile.discussions.each do |discussion|
+      div do
+        link_to discussion.name, [:admin, discussion]
+      end  
+    end        
+    # TODO Mike, Add comments.
     active_admin_comments
   end  
 end

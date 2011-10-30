@@ -25,7 +25,7 @@ ActiveAdmin.register CustomForm do
   end
   
   show do
-    attributes_table :community, :name, :instructions, :thankyou, :created_at, :updated_at, :published
+    attributes_table :id, :community, :name, :instructions, :thankyou, :created_at, :updated_at, :published
     h3 "Questions:"
     custom_form.questions.each do |question|
       div do

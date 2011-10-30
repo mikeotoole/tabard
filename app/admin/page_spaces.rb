@@ -24,7 +24,7 @@ ActiveAdmin.register PageSpace do
   end
   
   show do
-    attributes_table :community, :name, :game, :created_at, :updated_at
+    attributes_table :id, :community, :name, :game, :created_at, :updated_at
     h3 "Pages:"
     page_space.pages.each do |page|
       div do

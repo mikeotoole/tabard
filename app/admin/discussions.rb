@@ -27,7 +27,7 @@ ActiveAdmin.register Discussion do
   end
   
   show do
-    attributes_table :name, :body, :discussion_space, :user_profile, :poster, :community, :created_at, :updated_at, :comments_enabled, :has_been_locked, :is_archived
+    attributes_table :id, :name, :body, :discussion_space, :user_profile, :poster, :community, :created_at, :updated_at, :comments_enabled, :has_been_locked, :is_archived
     # TODO Mike, Add Comments
     active_admin_comments
   end   

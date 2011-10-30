@@ -21,6 +21,7 @@
 #  locked_at              :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
+#  user_active            :boolean         default(TRUE)
 #
 
 require 'spec_helper'

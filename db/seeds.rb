@@ -184,4 +184,9 @@ longQ.save!
 shortQ = TextQuestion.create(:style => "short_answer_question", :body => "This is a ____ text question.", :explanation => "This is a short answer question")
 shortQ.custom_form = test_form
 shortQ.save!
+
+mike = User.new(:email => "mpotoole@gmail.com", :password => "Password",
+                   :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"})
+mike.skip_confirmation!
+mike.save
 end

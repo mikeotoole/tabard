@@ -2,6 +2,69 @@ ActiveAdmin.register User do
   # TODO Mike, Add scope for locked users.
   menu :parent => "User", :priority => 1  
   controller.authorize_resource
+  
+  action_item :only => :show do
+    if user.user_active and can? :lock, user
+      link_to "Lock User", lock_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to lock this user?'
+    end  
+  end 
+
+  action_item :only => :show do
+    if !user.user_active and can? :unlock, user
+      link_to "Unlock User", unlock_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to unlock this user?'
+    end  
+  end
+
+  action_item :only => :show do
+    if can? :reset_password, user
+      link_to "Reset Password", reset_password_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
+    end  
+  end
+
+  action_item :only => :index do
+    if can? :reset_all_passwords, User.new
+      link_to "Reset All Passwords", reset_all_passwords_admin_users_path, :method => :post, :confirm => 'Are you sure you want to reset ALL user passwords?'
+    end  
+  end
+  
+  member_action :lock, :method => :put do
+    user = User.find(params[:id])
+    user.user_active = false
+    user.save
+    redirect_to :action => :show
+  end
+
+  member_action :unlock, :method => :put do
+    user = User.find(params[:id])
+    user.user_active = true
+    user.save
+    redirect_to :action => :show
+  end
+  
+  member_action :reset_password, :method => :put do
+    user = User.find(params[:id])
+    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+    user.password = random_password
+    user.save
+    Devise::Mailer.reset_password_instructions(user)
+    redirect_to :action => :show
+  end
+  
+  collection_action :reset_all_passwords, :method => :post do
+    begin
+      User.find_each(:conditions => 'user_active == true') do |record|
+        # Assign a random password
+        random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+        record.password = random_password
+        record.save
+        UserMailer.password_reset(record, random_password).deliver  
+      end
+    rescue Exception => e
+      puts "Error: #{e.message}"
+      # TODO Mike, Handle this error.
+    end
+    redirect_to :action => :index, :notice => "All Passwords Reset"
+  end
     
   filter :email
   filter :current_sign_in_at
@@ -12,6 +75,7 @@ ActiveAdmin.register User do
   filter :confirmation_sent_at
   filter :failed_attempts
   filter :created_at
+  filter :user_active
   
   index do
     column :email
@@ -22,9 +86,12 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
+    column :user_active
     column :created_at
     column "View" do |user|
-      link_to "View", admin_user_path(user)
+      if can? :read, user
+        link_to "View", admin_user_path(user)
+      end  
     end
     column "Destroy" do |user|
       if can? :destroy, user
@@ -35,7 +102,7 @@ ActiveAdmin.register User do
   
   show do
     attributes_table :id, :email, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, 
-    :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :confirmation_token, :confirmed_at, :confirmation_sent_at, :failed_attempts, 
+    :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :user_active, :confirmation_token, :confirmed_at, :confirmation_sent_at, :failed_attempts, 
     :unlock_token, :locked_at, :created_at, :updated_at, :user_profile
     active_admin_comments
   end

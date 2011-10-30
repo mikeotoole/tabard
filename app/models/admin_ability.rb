@@ -28,19 +28,33 @@ class AdminAbility
     can :create, AdminUser do |admin_user|
       true
     end
+    can :reset_password, AdminUser do |admin_user|
+      true
+    end
+    can [:reset_all_passwords], AdminUser do |admin_user|
+      true
+    end
     
     # Page Spaces Rules
-    can [:create, :update], PageSpace do |space|
+    can [:create, :update], PageSpace do |page_space|
       true
     end
     
     # Discussion Spaces Rules
-    can [:create, :update], DiscussionSpace do |space|
+    can [:create, :update], DiscussionSpace do |discussion_space|
       true
     end
     
     # UserProfile Rules
     cannot :destroy, UserProfile do |profile|
+      true
+    end
+    
+    # User Rules
+    can [:lock, :unlock, :reset_password], User do |user|
+      true
+    end
+    can [:reset_all_passwords], User do |user|
       true
     end
   end

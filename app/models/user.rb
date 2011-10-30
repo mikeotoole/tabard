@@ -83,6 +83,14 @@ class User < ActiveRecord::Base
     user.build_user_profile
     return user
   end
+  
+  ###
+  # This method determines if the user is active. It is adding to the existing Devise method.
+  # [Returns] True if this is an active user, otherwise false.
+  ###  
+  def active_for_authentication?    	
+    super && self.user_active?
+  end  
 ###
 # Protected Methods
 ###

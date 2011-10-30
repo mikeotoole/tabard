@@ -26,6 +26,9 @@ class UserProfile < ActiveRecord::Base
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
   has_many :folders, :dependent => :destroy
+  has_many :pages
+  has_many :discussions
+  has_many :comments
 
 ###
 # Delegates

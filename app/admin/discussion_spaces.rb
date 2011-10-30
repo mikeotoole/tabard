@@ -26,7 +26,7 @@ ActiveAdmin.register DiscussionSpace do
   end
   
   show do
-    attributes_table :community, :name, :game, :created_at, :updated_at, :is_announcement
+    attributes_table :id, :community, :name, :game, :created_at, :updated_at, :is_announcement
     h3 "Discussions:"
     discussion_space.discussions.each do |discussion|
       div do
