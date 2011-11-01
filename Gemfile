@@ -31,7 +31,6 @@ source 'http://rubygems.org'
 
 # Admin Portal
   gem 'activeadmin'
-  #gem "meta_search", '>= 1.1.0.pre'
 
 # Production Specific Gems
   group :production do

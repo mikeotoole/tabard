@@ -7,14 +7,30 @@ class AdminUser < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
-  # TODO Mike, Uncomment this out.
-  #after_create { |admin| admin.send_reset_password_instructions }
+  after_create :notify_user #:send_reset_password_instructions
   
 ###
 # Public Methods
 ###
   def password_required?
     new_record? ? false : super
+  end
+  
+###
+# Protected Methods
+###
+protected
+  
+  ###
+  # notify user and send password setup instructions.
+  ###
+  def notify_user
+    random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
+    self.password = random_password  
+    self.reset_password_token = AdminUser.reset_password_token
+    self.reset_password_sent_at = Time.now    
+    self.save
+    UserMailer.setup_admin(AdminUser.find(self), random_password).deliver # TODO Mike, Why is AdminUser.find(self) required?
   end
 end
 

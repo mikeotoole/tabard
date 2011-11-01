@@ -18,19 +18,23 @@ ActiveAdmin.register AdminUser do
     admin_user = AdminUser.find(params[:id])
     random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
     admin_user.password = random_password
+    admin_user.reset_password_token = AdminUser.reset_password_token
+    admin_user.reset_password_sent_at = Time.now    
     admin_user.save
-    Devise::Mailer.reset_password_instructions(admin_user)
+    UserMailer.password_reset(admin_user, random_password).deliver 
     redirect_to :action => :show
   end
 
   collection_action :reset_all_passwords, :method => :post do
     begin
-      AdminUser.all do |record|
+      AdminUser.all.each do |record|
         # Assign a random password
         random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
+        record.reset_password_token = AdminUser.reset_password_token
+        record.reset_password_sent_at = Time.now   
         record.save
-        UserMailer.password_reset(record, random_password).deliver  
+        UserMailer.all_password_reset(record, random_password).deliver  
       end
     rescue Exception => e
       puts "Error: #{e.message}"

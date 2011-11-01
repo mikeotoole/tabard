@@ -45,19 +45,23 @@ ActiveAdmin.register User do
     user = User.find(params[:id])
     random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
     user.password = random_password
+    user.reset_password_token = User.reset_password_token
+    user.reset_password_sent_at = Time.now
     user.save
-    Devise::Mailer.reset_password_instructions(user)
+    UserMailer.password_reset(user, random_password).deliver
     redirect_to :action => :show
   end
   
   collection_action :reset_all_passwords, :method => :post do
     begin
-      User.find_each(:conditions => 'user_active == true') do |record|
+      User.find_each(:conditions => ['user_active == ?', true]) do |record|
         # Assign a random password
         random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
+        record.reset_password_token = User.reset_password_token
+        record.reset_password_sent_at = Time.now
         record.save
-        UserMailer.password_reset(record, random_password).deliver  
+        UserMailer.all_password_reset(record, random_password).deliver  
       end
     rescue Exception => e
       puts "Error: #{e.message}"

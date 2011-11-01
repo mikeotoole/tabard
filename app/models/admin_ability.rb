@@ -25,7 +25,7 @@ class AdminAbility
     can :update, AdminUser do |admin_user|
       admin_user.id == user.id
     end
-    can :create, AdminUser do |admin_user|
+    can :create, [AdminUser, 'Admin User'] do |admin_user|
       true
     end
     can :reset_password, AdminUser do |admin_user|
