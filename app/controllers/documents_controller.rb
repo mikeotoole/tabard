@@ -40,8 +40,13 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(params[:document])
-
+    case params[:document][:type]
+    when "TermsOfService"
+      @document = TermsOfService.new(params[:document])
+    else
+      @document = Document.new(params[:document])
+    end
+    puts "Attempting to create #{@document.to_yaml} | #{@document.class.to_s}"
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }

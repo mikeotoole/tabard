@@ -6,7 +6,13 @@
 # This class represents a PrivacyPolicy Document.
 ###
 class PrivacyPolicy < Document
+	after_save :reset_user_acceptance
 
+  def reset_user_acceptance
+    if self == PrivacyPolicy.first
+      User.update_all(:accepted_current_privacy_policy => false)
+    end
+  end
 end
 # == Schema Information
 #

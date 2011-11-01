@@ -1,4 +1,8 @@
 DaBvRails::Application.routes.draw do
+  get "document_acceptance/new"
+
+  get "document_acceptance/create"
+
   resources :documents
 
   # Users

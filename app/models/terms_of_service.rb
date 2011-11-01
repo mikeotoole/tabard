@@ -6,7 +6,13 @@
 # This class represents a TermsOfService Document.
 ###
 class TermsOfService < Document
-  
+  after_save :reset_user_acceptance
+
+  def reset_user_acceptance
+    if self == TermsOfService.first
+      User.update_all(:accepted_current_terms_of_service => false)
+    end
+  end
 end
 # == Schema Information
 #

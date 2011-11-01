@@ -22,7 +22,8 @@ class User < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy
 
 ###
 # Associations

@@ -48,10 +48,12 @@ class ApplicationController < ActionController::Base
   #   * +status+ -> This is the status code to use. Rails defines this for us.
   #   * +exception+ -> This is an exception message to include.
   ###
-  def http_status_code(status, exception)
-    # store the exception so its message can be used in the view
-    @exception = exception
-    flash[:alert] = @exception.message
+  def http_status_code(status, exception = nil)
+    if exception
+      # store the exception so its message can be used in the view
+      @exception = exception
+      flash[:alert] = @exception.message
+    end
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
       case status
@@ -227,7 +229,11 @@ protected
   ###
   def ensure_accepted_most_recent_legal_documents
     if signed_in?
-      raise
+      if not current_user.accepted_current_terms_of_service 
+        http_status_code(:locked)
+      elsif not current_user.accepted_current_privacy_policy
+        http_status_code(:locked)
+      end
     end
   end
 end

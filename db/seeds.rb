@@ -9,7 +9,7 @@ if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 puts "Creating TOS"
 tos_document = TermsOfService.create(body: "WE OWN YOU!", version: "1")
 puts "Creating PrivacyPolicy"
-privacy_policy_document = PrivacyPolicy.create(body: "WE OWN YOU!", version: "2")
+privacy_policy_document = PrivacyPolicy.create(body: "WE OWN YOU!", version: "1")
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
@@ -49,6 +49,7 @@ k_fox = User.new(:accepted_current_terms_of_service => true, :accepted_current_p
     :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
 k_fox.skip_confirmation!
 k_fox.save
+puts k_fox.errors.to_yaml
 miss_fox = WowCharacter.create(:name => "Miss Fox",
   :game => wow_game,
   :server => "Default WOW Server",
