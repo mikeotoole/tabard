@@ -32,7 +32,7 @@ class Message < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :avatar_url, :name, :to => :author, :prefix => true
+  delegate :avatar_url, :name, :to => :author, :prefix => true, :allow_nil => true
 
 ###
 # Validators
@@ -42,6 +42,13 @@ class Message < ActiveRecord::Base
   validates :to,  :presence => true
 
   default_scope :order => "created_at DESC"
+
+###
+# Instance Methods
+###
+  def original_message_id
+    self.id
+  end
 
 ###
 # Protected Methods

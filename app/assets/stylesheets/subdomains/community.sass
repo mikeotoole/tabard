@@ -7,8 +7,18 @@
 
 
 #bar:before
-  border-top: 1px solid #480012
   +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
+
+#flash
+  position: absolute
+  top: 75px
+  
+  li
+    border-left-color: rgba(#fff,.3) 
+    border-right-color: rgba(#fff,.3)
+    
+    &:last-child
+      border-bottom-color: rgba(#fff,.3)
 
 html,
 body
@@ -71,7 +81,7 @@ body
     color: #fff
     left: 0
     position: absolute
-    top: 50px
+    bottom: 90px
     
     strong
       display: block
@@ -232,7 +242,7 @@ body
 
 #body
   background: rgba(#fff,.9)
-  margin: 5px auto 0
+  margin: 0 auto
   min-height: 735px
   padding: 30px
   position: relative
@@ -1223,7 +1233,7 @@ body
           display: none !important
         
         &:after
-          background: image-url('community/busy.gif') center center no-repeat rgba(#000,.1)
+          background: image-url('application/busy.gif') center center no-repeat rgba(#000,.1)
           bottom: 0
           content: ''
           left: 0

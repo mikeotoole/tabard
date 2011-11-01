@@ -75,11 +75,10 @@ class ApplicationController < ActionController::Base
   end
 
   ###
-  # TODO Doug, Add the remaining of the message_class types. -MO
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.
-  #   * +message_class+ -> What type of message it is. This can be "alert", "notice", ...
+  #   * +message_class+ -> What type of message it is, including but not limited to "alert", "notice", "announcement", etc.
   #   * +message_title+ -> The title of the message.
   ###
   def add_new_flash_message(message_body, message_class="notice", message_title="")
@@ -102,6 +101,18 @@ protected
     @active_games
   end
   helper_method :active_games
+  
+  # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
+  def show_pitch?
+    !!@show_pitch
+  end
+  helper_method :show_pitch?
+  
+  # This helper method lets the applicaiton layout view know whether or not to hide announcements within the flash messages partial.
+  def hide_announcements?
+    !!@hide_announcements
+  end
+  helper_method :hide_announcements?
 
   ###
   # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
@@ -117,19 +128,19 @@ protected
 ###
 # Active Character/Profile
 ###
-  # Predicate method to test for an active profile.
+  # Predicate helper method to test for an active profile.
   def profile_active?
     session[:profile_type] =~ /UserProfile/ || character_active?
   end
   helper_method :profile_active?
 
-  # Method to check for active character.
+  # Helper method to check for active character.
   def character_active?
     session[:profile_type] =~ /Character$/
   end
   helper_method :character_active?
 
-  # Returns the currently active character or nil if there isn't one.
+  # This helper method returns the currently active character or nil if there isn't one.
   def current_character
     return unless character_active?
     if defined? session[:profile_type].constantize
@@ -138,7 +149,7 @@ protected
   end
   helper_method :current_character
 
-  # Returns the currently active user profile or nil if there isn't one.
+  # This helper method eturns the currently active user profile or nil if there isn't one.
   def current_profile
     return nil unless profile_active?
     if defined? session[:profile_type].constantize
@@ -147,7 +158,7 @@ protected
   end
   helper_method :current_profile
 
-  # Returns an Array with the users profile and characters info.
+  # This helper method returns an Array with the users profile and characters info.
   def profiles
     if signed_in?
       profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
@@ -160,13 +171,13 @@ protected
   end
   helper_method :profiles
 
-  # This method returns the current community that is in scope.
+  # This helper method returns the current community that is in scope.
   def current_community
     nil
   end
   helper_method :current_community
 
-  # This method returns the current game that is in scope.
+  # This helper method returns the current game that is in scope.
   def current_game
     nil
   end
@@ -182,6 +193,7 @@ protected
 ###
 # Callback Methods
 ###
+  
   ###
   # _before_filter_
   #

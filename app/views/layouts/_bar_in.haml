@@ -20,13 +20,11 @@
         = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
         = link_to "Logout", destroy_user_session_url(:subdomain => false)
 
-  -# TODO Doug, hook up links
   %ul.characters
     %li{ :class => 'icon gear' }
       = link_to "Account", edit_user_registration_url(:subdomain => false)
     %li{ :class => 'icon notice' }
-      -# TODO Doug, hook up the link
-      = link_to "Announcements", '#', :meta => 7
+      = link_to "Announcements", announcements_path, (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
     %li{ :class => 'icon envelope' }
       = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
     %li
@@ -44,5 +42,5 @@
               = link_to 'View all characters', user_profile_path(current_user)
             - else
               = link_to 'Add new character', new_base_character_path
-  -# TODO Doug, get the correct link for image avatar size from Joe. Also, this will need to link to the currently active characer edit view.
+  
   = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

@@ -88,19 +88,27 @@ class MessagesController < MailboxController
 
   # GET /mail/reply/:id(.:format)
   def reply
-    subject = "Re: #{@original.subject}"
-    @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => @body)
-    authorize!(:create, @message)
-    render 'sent_messages/new'
+    if @original.author == current_user.user_profile
+      redirect_to inbox_path
+    else
+      subject = "Re: #{@original.subject}"
+      @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => @body)
+      authorize!(:create, @message)
+      render 'sent_messages/new'
+    end
   end
 
   # GET /mail/reply-all/:id(.:format)
   def reply_all
-    recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id]
-    subject = "Re: #{@original.subject}"
-    @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => @body)
-    authorize!(:create, @message)
-    render 'sent_messages/new'
+    if @original.author == current_user.user_profile
+      redirect_to inbox_path
+    else
+      recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id]
+      subject = "Re: #{@original.subject}"
+      @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => @body)
+      authorize!(:create, @message)
+      render 'sent_messages/new'
+    end
   end
 
   # GET /mail/forward/:id(.:format)
@@ -161,7 +169,10 @@ protected
   # This before filter loads the message from the id params.
   ###
   def load_original_message
-    @original = current_user.received_messages.find(params[:id]) if current_user
+    @original = Message.find(params[:id])
+    return @original if can? :read, @original
+    @original = current_user.received_messages.find_by_message_id(@original.id) if current_user
+    redirect_to inbox_path unless can? :read, @original
   end
 
   ###

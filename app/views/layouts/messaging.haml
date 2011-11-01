@@ -3,13 +3,69 @@
 
   %head
     %title= yield_for(:title, 'Crumblin')
-    = stylesheet_link_tag "crumblin/crumblin","crumblin/messaging"
+    = stylesheet_link_tag "crumblin/crumblin", "crumblin/messaging"
     = javascript_include_tag "application", "messaging"
     = csrf_meta_tags
 
-  %body
+  %body.fluid
     = render "layouts/bar_in"
     = render "layouts/flash_messages"
-    = render "mailbox/mailbox"
+    
+    = form_tag '' do
+      %input{ :name => '_method', :value => '', :type => 'hidden' }
+    
+      #mailbox-menu
+        %dl
+        
+          %dt Mail
+          %dd{ :class => 'inbox' + (mailbox_view_state == 'inbox' ? ' current' : '') }
+            = link_to 'Inbox', inbox_path, :meta => "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
+          %dd{ :class => 'compose' + (mailbox_view_state == 'compose' ? ' current' : '') }
+            = link_to 'Compose', compose_mail_path, :meta => 'New message'
+          %dd{ :class => 'sent' + (mailbox_view_state == 'sent' ? ' current' : '') }
+            = link_to 'Sent', sent_mailbox_path, :meta => "Sent messages"
+          %dd{ :class => 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
+            = link_to 'Trash', trash_path, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
+          
+          - if !['compose','sent'].include?(mailbox_view_state)
+            %dt Actions
+            - if mailbox_view_state == 'trash'
+              %dd{ :class => 'action move' }
+                = button_tag 'Move to inbox', :action => mail_batch_move_path(current_user.inbox), :method => :put, :meta => 'Move selected messages to the inbox.'
+              %dd{ :class => 'action destroy' }
+                = button_tag 'Delete forever', :action => mail_batch_delete_path, :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
+            - else
+              %dd{ :class => 'action move' }
+                = button_tag 'Move to trash', :action => mail_batch_move_path(current_user.trash), :method => :put, :meta => 'Move selected messages to the trash.'
+              %dd{ :class => 'action read' }
+                = button_tag 'Mark as read', :action => mail_batch_mark_read_path, :method => :put, :meta => 'Mark selected messages as read.'
+              %dd{ :class => 'action unread' }
+                = button_tag 'Mark as unread', :action => mail_batch_mark_unread_path, :method => :put, :meta => 'Mark selected messages as unread.'
+      
+      #mailbox
+        - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
+          %dl
+            - if @todays_messages.size > 0
+              %dt Today
+              - @todays_messages.each do |message|
+                = render 'messages/row', :message => message
+              - if @older_messages.size > 0
+                %dt Older
+            - @older_messages.each do |message|
+              = render 'messages/row', :message => message
+              
+        - elsif @messages && @messages.size > 0
+          %dl
+            - @messages.each do |message|
+              = render 'messages/row', :message => message
+              
+        - elsif @folder
+          %p= "#{@folder.name} is empty."
+          
+        - elsif @current_user.sent_messages.size > 0 && (!@message || @message.id)
+          %dl
+            - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
+              = render 'messages/row', :message => message
+        
     = yield
     = render 'layouts/footer'

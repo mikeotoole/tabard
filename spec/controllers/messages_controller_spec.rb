@@ -25,6 +25,7 @@ describe MessagesController do
   let(:rec_message_id_array) { [[rec_message.id], [rec_message_2.id]] }
   let(:sender) { DefaultObjects.user }
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
+  let(:other_user) { create(:user_profile).user }
 
   describe "GET show" do
     it "assigns the requested message as @message when authenticated as owner" do
@@ -257,42 +258,43 @@ describe MessagesController do
   describe "GET reply" do
     it "assigns the requested message as @original when authenticated as owner" do
       sign_in receiver
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       assigns(:original).should eq(rec_message)
     end
     
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       assigns(:message).should be_new_record
     end
     
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
     
     it "@message to is set to the author when authenticated as owner" do
       sign_in receiver
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       assigns(:message).to.should eq(["#{rec_message.author.id}"])
     end
     
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       response.should render_template("sent_messages/new")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :reply, :id => rec_message
+      get :reply, :id => rec_message.message_id
       response.should redirect_to(new_user_session_path)
     end
     
-    it "should raise error when authenticated as not the owner" do
+    it "should redirect to inbox when not authenticated" do
       sign_in sender
-      lambda { get :reply, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+      get :reply, :id => rec_message.message_id
+      response.should redirect_to(inbox_path)
     end
   end
 
@@ -306,78 +308,80 @@ describe MessagesController do
     
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       assigns(:message).should be_new_record
     end
     
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
     
     it "@message to is set to the author and all @original recipients when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       assigns(:message).to.should eq(["#{DefaultObjects.community_admin.user_profile.id}", "#{rec_message.author.id}"])
     end
     
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.last
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       response.should render_template("sent_messages/new")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :reply_all, :id => create(:message_with_muti_to).message_associations.first
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first.message_id
       response.should redirect_to(new_user_session_path)
     end
     
-    it "should raise error when authenticated as not the owner" do
+    it "should redirect to inbox when not authenticated" do
       sign_in sender
-      lambda { get :reply_all, :id => create(:message_with_muti_to).message_associations.first }.should raise_error(ActiveRecord::RecordNotFound)
+      get :reply_all, :id => create(:message_with_muti_to).message_associations.first.message_id
+      response.should redirect_to(inbox_path)
     end  
   end
 
   describe "GET forward" do
     it "assigns the requested message as @original when authenticated as owner" do
       sign_in receiver
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       assigns(:original).should eq(rec_message)
     end
     
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       assigns(:message).should be_new_record
     end
     
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
     
     it "@message to is set to -1 when authenticated as owner" do
       sign_in receiver
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       assigns(:message).to.should eq([-1])
     end
     
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       response.should render_template("sent_messages/new")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :forward, :id => rec_message
+      get :forward, :id => rec_message.message_id
       response.should redirect_to(new_user_session_path)
     end
     
-    it "should raise error when authenticated as not the owner" do
-      sign_in sender
-      lambda { get :forward, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+    it "should redirect to inbox when not authenticated" do
+      sign_in other_user
+      get :forward, :id => rec_message.message_id
+      response.should redirect_to(inbox_path)
     end 
   end
 
