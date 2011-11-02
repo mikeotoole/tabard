@@ -43,7 +43,7 @@ class SubdomainsController < ApplicationController
     return management_items unless signed_in?
     #application
     management_items << {:link => edit_community_settings_path, :title => "Community Settings"} if can_manage(current_community)
-    management_items << {:link => community_applications_path, :title => "Applications"} if can_manage(current_community.community_applications.new())
+    management_items << {:link => community_applications_path, :title => "Applications - #{current_community.pending_applications.size}"} if can_manage(current_community.community_applications.new())
     management_items << {:link => pending_roster_assignments_url, :title => "Roster Assigments"} if can_manage(current_community.pending_roster_assignments.new)
     management_items << {:link => custom_forms_url, :title => "Forms"} if can_manage(current_community.custom_forms.new)
     management_items << {:link => roles_url, :title => "Permissions"} if can_manage(current_community.roles.new)

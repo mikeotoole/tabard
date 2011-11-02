@@ -20,6 +20,7 @@ class Community < ActiveRecord::Base
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications
+  has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :roles
   has_many :supported_games, :dependent => :destroy
   has_many :games, :through => :supported_games
