@@ -29,6 +29,15 @@ class Document < ActiveRecord::Base
     end
     super
   end
+  
+  def title
+    case self.type
+      when 'TermsOfService'
+        'Terms of Service'
+      else
+        self.type.scan(/[A-Z][a-z0-9]*/).join ' '
+    end
+  end
 end
 
 # == Schema Information

@@ -1,7 +1,12 @@
-=form_tag accept_document_create_path do
-  %p
-    =@document.body
-  =label_tag 'accept', 'I accept this agreement.'
-  =check_box_tag 'accept'
-  %p
-    =submit_tag 'Submit'
+- title @document.title
+
+#body
+  %h1= @document.title
+  
+  = simple_form_for accept_document_create_path do |f|
+    #document
+      :markdown
+        #{@document.body}
+      %p.accept
+        = f.input :accept, :as => :boolean, :wrapper => false, :label => 'I accept this agreement.'
+        %button{ :type => :submit } Accept

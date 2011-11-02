@@ -7,6 +7,9 @@ class DocumentAcceptanceController < ApplicationController
     if current_user.accepted_documents.include?(@document)
       redirect_to user_root_path, :notice => "You have already accepted Document"
     end
+    @hide_announcements = true
+    add_new_flash_message('You must accept the updated "Terms of Service" to continue to use Crumblin.', "alert") unless current_user.accepted_current_terms_of_service
+    add_new_flash_message('You must accept the updated "Privacy Policy" to continue to use Crumblin.', "alert") unless current_user.accepted_current_privacy_policy
   end
 
   def create
