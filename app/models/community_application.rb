@@ -29,6 +29,7 @@ class CommunityApplication < ActiveRecord::Base
 # Callbacks
 ###
   before_create :assign_pending_status
+  after_create :message_community_admin
 
 ###
 # Validators
@@ -56,6 +57,20 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def assign_pending_status
     self.status = "Pending"
+  end
+
+  ###
+  # _before_create_
+  #
+  # This method send a message to the community admin, if the community settings specify this.
+  ###
+  def message_community_admin
+    # TODO Doug/Bryan, Determine what message content should be.
+    if self.community.email_notice_on_application
+      message = Message.new(:subject => "Application Submitted for #{self.community.name}", :body => "#{self.user_profile.name} has submitted an application.", :to => [self.community.admin_profile_id])
+      message.system_sent = true
+      message.save
+    end
   end
 
   ###
