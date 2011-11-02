@@ -1,13 +1,12 @@
 class DocumentAcceptanceController < ApplicationController
 
   skip_before_filter :ensure_accepted_most_recent_legal_documents
-  before_filter :find_document, :only => [:new, :create]
+  before_filter :find_document, :hide_all_annoucements, :only => [:new, :create]
 
   def new
     if current_user.accepted_documents.include?(@document)
       redirect_to user_root_path, :notice => "You have already accepted Document"
     end
-    @hide_announcements = true
     add_new_flash_message('You must accept the updated "Terms of Service" to continue to use Crumblin.', "alert") unless current_user.accepted_current_terms_of_service
     add_new_flash_message('You must accept the updated "Privacy Policy" to continue to use Crumblin.', "alert") unless current_user.accepted_current_privacy_policy
   end
@@ -40,5 +39,9 @@ class DocumentAcceptanceController < ApplicationController
   ###
   def find_document
     @document = Document.find_by_id(params[:id])
+  end
+  
+  def hide_all_annoucements
+    @hide_announcements = true
   end
 end
