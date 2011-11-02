@@ -1,11 +1,14 @@
-- if (flash[:messages] and flash[:messages].size > 0)
-  %ul#flash
-    - if flash[:messages]
-      - flash[:messages].each do |message|
-        %li{ :class => message[:class] }
-          %span.msg
-            - if !message[:title].blank?
-              %strong= message[:title]
-              &mdash;
-            = raw(message[:body])
-  - clear_flash_messages
+%ul#flash
+  - if !hide_announcements? && signed_in? && current_user.unread_announcements.size > 0
+    = render 'layouts/flash_message_announcement', :discussion => current_user.unread_announcements.first     
+  - if !!flash[:alert]
+    %li.alert
+      :markdown
+        #{flash[:alert]}
+  - if !!flash[:messages]
+    - flash[:messages].each do |message|
+      %li{ :class => message[:class] }
+        :markdown
+          #{message[:body]}
+
+- clear_flash_messages

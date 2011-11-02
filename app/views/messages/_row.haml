@@ -1,0 +1,26 @@
+%dd{ :class => message_class_names(message) }
+
+  - if message.respond_to?('deleted') && !message.deleted?
+    %p.meta
+      = check_box_tag "ids[#{message.id}]", true, false, :id => "message_id_#{message.id}"
+      %label{ :for => "message_id_#{message.id}" }
+
+  %time
+    = l message.created_at, :format => (message.created_at >= Time.now.beginning_of_day ? :time_12 : :date_monthday)
+    
+  %h3
+    = link_to message.subject, (message.respond_to?('folder_name') ? mail_path(message) : sent_mail_path(message))
+  
+  - if message.system_sent
+  - else
+    = image_tag(message.author_avatar_url(:tiny), :class => 'avatar')
+    %p.author
+      %strong= mailbox_view_state == 'sent' ? 'Me' : message.author_name
+      to
+      %strong= mailbox_view_state == 'sent' ? message.author.name : 'me'
+      - if message.recipients.size > 1
+        and
+        %strong= pluralize(message.recipients.size-1,'other')
+      
+  %p.body
+    = truncate message.body, :length => 100, :separator => ' '

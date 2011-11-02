@@ -233,7 +233,7 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.received_messages.count.should eq(startCount + 1)
-      new_profile.received_messages.last.should eq(message.message_associations.first)
+      new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as deleted" do
@@ -245,6 +245,28 @@ describe UserProfile do
       message.save.should be_true
       new_profile.received_messages.count.should eq(startCount + 2)
       new_profile.received_messages.find(message).deleted.should be_true
+    end
+  end
+  
+    
+  describe "unread_messages" do
+    it "should return all the users unread messages" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.unread_messages.count
+      message = create(:message)
+      message.recipients.first.should eq(new_profile)
+      new_profile.unread_messages.count.should eq(startCount + 1)
+      new_profile.unread_messages.first.should eq(message.message_associations.first)
+    end
+    
+    it "should not return unread messages marked as deleted" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.unread_messages.count
+      message = create(:message)
+      message.message_associations.first.update_attributes(:deleted => true)
+      MessageAssociation.find(message.message_associations.first).deleted.should be_true
+      message.recipients.first.should eq(new_profile)
+      new_profile.unread_messages.count.should eq(startCount)
     end
   end
   
@@ -312,4 +334,13 @@ describe UserProfile do
       end
     end
   end
+
+  describe "read_announcements" do
+    pending
+  end
+
+  describe "unread_announcements" do
+    pending
+  end
+  
 end

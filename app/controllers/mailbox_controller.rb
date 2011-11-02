@@ -7,6 +7,8 @@
 ###
 class MailboxController < ApplicationController
   respond_to :html
+  layout 'messaging'
+
 ###
 # Callbacks
 ###
@@ -15,16 +17,36 @@ class MailboxController < ApplicationController
   # GET /mail/inbox(.:format)
   def inbox
     @folder = current_user.inbox
-    @messages = @folder.messages
     authorize!(:read, @folder)
+    gather_inbox_data @folder
+    @mailbox_view_state = 'inbox'
     render 'show'
   end
 
   # GET /mail/trash(.:format)
   def trash
     @folder = current_user.trash
-    @messages = @folder.messages
     authorize!(:read, @folder)
+    gather_inbox_data @folder
+    @mailbox_view_state = 'trash'
     render 'show'
   end
+
+###
+# Protected Methods
+###
+protected
+
+  # This method loads the messages for a given folder, grouped by today's messages and all older messages
+  def gather_inbox_data(folder)
+    @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day)}
+    @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day)}
+  end
+  
+  # This method will determine a string value for the current view in the mailbox
+  def mailbox_view_state
+    @mailbox_view_state ||= ''
+  end
+  helper_method :mailbox_view_state
+  
 end

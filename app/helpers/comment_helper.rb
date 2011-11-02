@@ -13,7 +13,7 @@ module CommentHelper
   #   * +comment+ -> The comment to be inspected
   # [Returns] an array of strings
   ###
-  def html_class_names(comment)
+  def comment_class_names(comment)
     class_names = Array.new()
     class_names << 'deleted' if comment.has_been_deleted
     class_names << 'locked' if comment.has_been_locked

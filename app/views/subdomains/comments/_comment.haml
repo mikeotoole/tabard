@@ -1,5 +1,5 @@
 - if !comment.has_been_deleted or (comment.has_been_deleted and comment.comments.size > 0)
-  %li{ :class => html_class_names(comment) }
+  %li{ :class => comment_class_names(comment) }
     %blockquote
       %span.avatar
         - if !comment.has_been_deleted

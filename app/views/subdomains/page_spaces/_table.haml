@@ -10,7 +10,7 @@
         %td
           = link_to space.name, space
           - if space.game
-            %rt= space.game.name
+            %em= "— #{space.game.name}"
         %td
           - if space.pages.size > 0
             = space.pages.size

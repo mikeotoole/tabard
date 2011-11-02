@@ -61,7 +61,7 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # This method returns the current game that is in scope.
   def current_game
-    @page_space.game
+    @page_space.game if @page_space
   end
   helper_method :current_game
 

@@ -1,4 +1,5 @@
 - title 'Home'
+= stylesheet_link_tag "crumblin/home"
 &nbsp;
 
 #homebox
@@ -73,38 +74,6 @@
   .col2
 
     %h2
-      %strong Recent Activity
-      — see what’s going on in the community
-    %ul
-      %li
-        %cite New Community
-        = link_to 'StoneWatch', '#'
-        — World of Warcraft
-      %li
-        %cite New Community
-        = link_to 'Sith Rebellion', '#'
-        — Star Wars the Old Republic
-      %li
-        %cite New Community
-        = link_to 'Darth Yoda & Friends', '#'
-        — Star Wars the Old Republic
-      %li
-        %cite New Community
-        = link_to 'Nox Aeterna', '#'
-        — EVE Online
-      %li
-        %cite New Community
-        = link_to 'The Pickle Brigade', '#'
-        — Some Game
-      %li
-        Crumblin has
-        %strong= pluralize(Community.count, 'community')
-        with over
-        %strong= pluralize(User.count, 'member')
-        as of
-        = l Time.now, :format => :short
-
-    %h2
       %strong Crumblin Updates
       — sytem updates, new features, and high fives
     %ul
@@ -136,3 +105,24 @@
         %span.meta
           Crumblin is running
           %strong Beta 1.0.x
+
+    %h2
+      %strong Recent Activity
+      — see what’s going on in the community
+    %ul
+      - if @recent_activity.size > 0
+        - @recent_activity.each do |activity|
+          %li
+            %cite= activity[:type]
+            = link_to activity[:name], activity[:link]
+            = "— #{activity[:snippet]}"
+      - else
+        %li
+          No recent activity.
+      %li
+        Crumblin has
+        %strong= pluralize(Community.count, 'community')
+        with over
+        %strong= pluralize(User.count, 'member')
+        as of
+        = l Time.now, :format => :date_short
