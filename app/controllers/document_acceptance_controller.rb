@@ -4,6 +4,9 @@ class DocumentAcceptanceController < ApplicationController
   before_filter :find_document, :only => [:new, :create]
 
   def new
+    if current_user.accepted_documents.include?(@document)
+      redirect_to user_root_path, :alert => "You have already accepted Document"
+    end
   end
 
   def create

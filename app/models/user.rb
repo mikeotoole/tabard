@@ -104,8 +104,8 @@ class User < ActiveRecord::Base
 
   #This method updates the acceptance of documents
   def update_document_acceptance
-    self.document_acceptances.create(:user => self, :document => current_terms_of_service) if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
-    self.document_acceptances.create(:user => self, :document => current_privacy_policy) if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+    self.accepted_documents << current_terms_of_service if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
+    self.accepted_documents << current_privacy_policy if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
   end
 
   #This method finds the most recent version of the terms of service

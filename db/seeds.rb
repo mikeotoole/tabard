@@ -61,7 +61,6 @@ k_fox = User.new(:accepted_current_terms_of_service => true, :accepted_current_p
     :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
 k_fox.skip_confirmation!
 k_fox.save
-puts k_fox.errors.to_yaml
 miss_fox = WowCharacter.create(:name => "Miss Fox",
   :game => wow_game,
   :server => "Default WOW Server",
