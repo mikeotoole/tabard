@@ -43,6 +43,8 @@ class DocumentsController < ApplicationController
     case params[:document][:type]
     when "TermsOfService"
       @document = TermsOfService.new(params[:document])
+    when "PrivacyPolicy"
+      @document = PrivacyPolicy.new(params[:document])
     else
       @document = Document.new(params[:document])
     end

@@ -23,6 +23,18 @@
       = f.label :password_confirmation
       %br/
       = f.password_field :password_confirmation
+    -unless @user.has_accepted_current_terms_of_service?
+      %p
+        %p
+          =@user.current_terms_of_service.body
+        = f.label :accepted_current_terms_of_service, "Terms of Service"
+        = f.check_box :accepted_current_terms_of_service
+    -unless @user.has_accepted_current_privacy_policy?
+      %p
+        %p
+          =@user.current_privacy_policy.body
+        = f.label :accepted_current_privacy_policy, "Privacy Policy"
+        = f.check_box :accepted_current_privacy_policy
     %p
       %button{ :type => 'submit' } Sign up
   = render "devise/shared/links"

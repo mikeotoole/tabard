@@ -6,7 +6,7 @@ DaBvRails::Application.routes.draw do
   resources :documents
 
   # Users
-  devise_for :users, :controllers => {:registrations => "user_registrations"}
+  devise_for :users
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # User Profiles
