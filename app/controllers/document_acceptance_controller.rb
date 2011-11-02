@@ -5,13 +5,13 @@ class DocumentAcceptanceController < ApplicationController
 
   def new
     if current_user.accepted_documents.include?(@document)
-      redirect_to user_root_path, :alert => "You have already accepted Document"
+      redirect_to user_root_path, :notice => "You have already accepted Document"
     end
   end
 
   def create
     if current_user.accepted_documents.include?(@document)
-      redirect_to user_root_path, :alert => "You have already accepted the document."
+      redirect_to user_root_path, :notice => "You have already accepted the document."
     elsif params[:accept]
       current_user.accepted_documents << @document
       case @document.type
