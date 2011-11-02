@@ -3,10 +3,11 @@
 #body
   %h1= @document.title
   
-  = simple_form_for accept_document_create_path do |f|
+  = form_tag accept_document_create_path do
     #document
       :markdown
         #{@document.body}
       %p.accept
-        = f.input :accept, :as => :boolean, :wrapper => false, :label => 'I accept this agreement.'
+        %input{ :id => "document_#{@document.id}_accept", :name => 'accept', :type => 'checkbox', :value => true }
+        %label{ :for => "document_#{@document.id}_accept" } I accept this agreement
         %button{ :type => :submit } Accept
