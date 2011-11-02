@@ -182,7 +182,6 @@ protected
   def activate_profile(profile_id, profile_type)
     session[:profile_id] = profile_id
     session[:profile_type] = profile_type
-    @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
   end
 
 ###
