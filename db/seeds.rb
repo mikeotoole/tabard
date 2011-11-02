@@ -7,9 +7,9 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 puts "Creating TOS"
-tos_document = TermsOfService.create(body: "WE OWN YOU!", version: "1")
+tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.", version: "1")
 puts "Creating PrivacyPolicy"
-privacy_policy_document = PrivacyPolicy.create(body: "WE OWN YOU!", version: "1")
+privacy_policy_document = PrivacyPolicy.create(body: "Nullam consequat pulvinar velit, eget ultrices tortor semper vel. Suspendisse potenti. Praesent ut nibh in neque malesuada tempus sit amet eget odio. Curabitur volutpat, sem semper vulputate posuere, sem metus ornare elit, ac imperdiet felis urna hendrerit nisi. Maecenas vel ligula vel erat eleifend aliquet vel id ipsum.\n\nNullam convallis iaculis erat et mollis.\n\nSed urna neque, pretium in tempus nec, dapibus in enim. Aenean dapibus ipsum sit amet diam molestie aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque cursus feugiat ipsum vitae volutpat. Aenean laoreet, tortor a consequat convallis, libero dui suscipit tellus, et mollis massa nulla et libero. Vestibulum tincidunt quam nec lorem molestie id euismod urna venenatis. Aliquam erat volutpat.", version: "1")
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
