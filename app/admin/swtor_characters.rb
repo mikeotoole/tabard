@@ -1,5 +1,5 @@
 ActiveAdmin.register SwtorCharacter do
-  menu :parent => "Character"
+  menu :parent => "Character", :if => proc{ can?(:read, SwtorCharacter) }
   controller.authorize_resource
   
   filter :id

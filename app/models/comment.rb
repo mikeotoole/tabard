@@ -110,6 +110,19 @@ class Comment < ActiveRecord::Base
   end
 
   ###
+  # This method gets all comments attacted to this comment. Even comments comments.
+  # [Returns] A collection of comments.
+  ###
+  def all_comments
+  temp_all_comments = Array.new
+  temp_all_comments << self
+   comments.each do |comment|
+     temp_all_comments << comment.all_comments
+   end
+   temp_all_comments.flatten
+  end
+
+  ###
   # This method returns the original item that this comment is attached to, climbing the comment tree if needed.
   # [Returns] The original comment item.
   ###

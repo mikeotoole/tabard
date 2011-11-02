@@ -1,5 +1,12 @@
 ActiveAdmin.register CustomForm do
+  menu :if => proc{ can?(:read, CustomForm) }
   controller.authorize_resource
+
+  member_action :delete_question, :method => :delete do
+    question = Question.find(params[:id])
+    question.destroy
+    redirect_to previous_page
+  end
   
   filter :id
   filter :name
@@ -13,6 +20,9 @@ ActiveAdmin.register CustomForm do
     column :community
     column :name
     column :created_at
+    column "Number Questions" do |custom_form|
+      "#{custom_form.questions.count}"
+    end
     column :published
     column "View" do |custom_form|
       link_to "View", admin_custom_form_path(custom_form)
@@ -26,18 +36,30 @@ ActiveAdmin.register CustomForm do
   
   show do
     attributes_table :id, :community, :name, :instructions, :thankyou, :created_at, :updated_at, :published
-    h3 "Questions:"
-    custom_form.questions.each do |question|
-      div do
-        link_to question.body, admin_question_path(question)
-      end
-      if question.respond_to?(:predefined_answers)
-        question.predefined_answers.each do |predefined_answer|
-          div do
-            li predefined_answer.body
+    div do      
+      panel("Questions") do
+        table_for(custom_form.questions) do
+          column "Name" do |question|
+            link_to question.body, admin_question_path(question)
           end
+          column :type
+          column :style
+          column "Predefined Answers" do |question|
+            if question.respond_to?(:predefined_answers)
+              question.predefined_answers.each do |predefined_answer|
+                div do
+                  li predefined_answer.body
+                end
+              end  
+            end  
+          end
+        column "Destroy" do |question|
+          if can? :destroy, question
+            link_to "Destroy", delete_question_admin_custom_form_path(question), :method => :delete, :confirm => 'Are you sure you want to delete this question?'
+          end  
+        end          
         end
-      end    
+      end
     end
     active_admin_comments
   end    

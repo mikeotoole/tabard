@@ -1,4 +1,4 @@
-# ActiveAdmin.register Comment do
+# ActiveAdmin.register Comment, :as => "CrumblinComments" do
 #   menu :parent => "Discussions"
 #   controller.authorize_resource
 #   
@@ -9,21 +9,31 @@
 #   filter :has_been_edited, :as => :select
 #   filter :has_been_locked, :as => :select
 #   
-#   index do
-#     column :id
-#     column :body
-#     column :user_profile
-#     column :poster
-#     column :created_at       
-#     column "View" do |comment|
-#       link_to "View", admin_comment_path(comment)
+#   member_action :remove_comment, :method => :delete do
+#     comment = Comment.find(params[:id])
+#     if comment.comments.empty?
+#       success = comment.destroy
+#     else
+#       comment.has_been_deleted = true;
+#       success = comment.save
 #     end
-#     column "Destroy" do |comment|
-#       if can? :destroy, comment
-#         link_to "Destroy", [:admin, comment], :method => :delete, :confirm => 'Are you sure you want to delete this comment?'
-#       end  
-#     end
-#   end
+#   end  
+#   
+# #   index do
+# #     column :id
+# #     column :body
+# #     column :user_profile
+# #     column :poster
+# #     column :created_at       
+# # #     column "View" do |comment|
+# # #       link_to "View", admin_crumblin_comment_path(comment)
+# # #     end
+# # #     column "Destroy" do |comment|
+# # #       if can? :destroy, comment
+# # #         link_to "Destroy", [:admin, comment], :method => :delete, :confirm => 'Are you sure you want to delete this comment?'
+# # #       end  
+# # #     end
+# #   end
 #   
 #   show do
 #     attributes_table :name, :body, :commentable, :user_profile, :poster, :community, :created_at, :updated_at, :has_been_deleted, :has_been_edited, :has_been_locked

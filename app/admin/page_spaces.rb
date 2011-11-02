@@ -1,5 +1,5 @@
 ActiveAdmin.register PageSpace do
-  menu :parent => "Pages"
+  menu :parent => "Pages", :if => proc{ can?(:read, PageSpace) }
   controller.authorize_resource
   
   filter :id
@@ -25,11 +25,14 @@ ActiveAdmin.register PageSpace do
   
   show do
     attributes_table :id, :community, :name, :game, :created_at, :updated_at
-    h3 "Pages:"
-    page_space.pages.each do |page|
-      div do
-        link_to page.name, [:admin, page]
-      end  
+    div do      
+      panel("Pages") do
+        table_for(page_space.pages) do
+          column "Name" do |page|
+            link_to page.name, [:admin, page]
+          end
+        end
+      end
     end
     active_admin_comments
   end  

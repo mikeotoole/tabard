@@ -1,5 +1,5 @@
 ActiveAdmin.register Page do
-  menu :parent => "Pages"
+  menu :parent => "Pages", :if => proc{ can?(:read, Page) }
   controller.authorize_resource
   
   filter :id

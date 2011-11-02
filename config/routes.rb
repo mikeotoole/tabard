@@ -5,7 +5,12 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users
+  devise_for :users, :controllers => { :sessions => "sessions" }, :skip => [:sessions] do
+    post 'users/signin' => 'sessions#create', :as => :user_session
+    get 'users/signin' => 'devise/sessions#new', :as => :new_user_session
+    get 'users/signout' => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
+  
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # User Profiles

@@ -1,5 +1,5 @@
 ActiveAdmin.register DiscussionSpace do
-  menu :parent => "Discussions"
+  menu :parent => "Discussions", :if => proc{ can?(:read, DiscussionSpace) }
   controller.authorize_resource
   
   filter :id
@@ -27,11 +27,14 @@ ActiveAdmin.register DiscussionSpace do
   
   show do
     attributes_table :id, :community, :name, :game, :created_at, :updated_at, :is_announcement
-    h3 "Discussions:"
-    discussion_space.discussions.each do |discussion|
-      div do
-        link_to discussion.name, [:admin, discussion]
-      end  
+    div do      
+      panel("Discussions") do
+        table_for(discussion_space.discussions) do
+          column "Name" do |discussion|
+            link_to discussion.name, [:admin, discussion]
+          end
+        end
+      end
     end
     active_admin_comments
   end  

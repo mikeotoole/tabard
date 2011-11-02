@@ -17,45 +17,31 @@ class AdminAbility
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
-  def bakedInRules(user)
-    can [:read, :destroy], :all
-    cannot [:update, :create], :all
-  
-    # AdminUser Rules
-    can :update, AdminUser do |admin_user|
-      admin_user.id == user.id
-    end
-    can :create, [AdminUser, 'Admin User'] do |admin_user|
-      true
-    end
-    can :reset_password, AdminUser do |admin_user|
-      true
-    end
-    can [:reset_all_passwords], AdminUser do |admin_user|
-      true
+  def bakedInRules(user)  
+    # Rules for moderator user.
+    if user.role? :moderator
+      can [:read, :destroy, :lock, :unlock, :reset_password, :reset_all_passwords], User
+      can [:read], UserProfile
+      can [:read, :destroy], Community
+      can [:read, :destroy, :delete_question], CustomForm
+      can [:read, :destroy, :delete_predefined_answer], Question
+      can [:read, :destroy, :create, :update], PageSpace
+      can [:read, :destroy], Page
+      can [:read, :destroy, :create, :update], DiscussionSpace
+      can [:read, :destroy, :remove_comment], Discussion
+      can [:read, :destroy], SwtorCharacter
+      can [:read, :destroy], WowCharacter
     end
     
-    # Page Spaces Rules
-    can [:create, :update], PageSpace do |page_space|
-      true
+    # Rules for admin user. (Inherits rules for moderator).
+    if user.role? :admin
+      
     end
     
-    # Discussion Spaces Rules
-    can [:create, :update], DiscussionSpace do |discussion_space|
-      true
-    end
-    
-    # UserProfile Rules
-    cannot :destroy, UserProfile do |profile|
-      true
-    end
-    
-    # User Rules
-    can [:lock, :unlock, :reset_password], User do |user|
-      true
-    end
-    can [:reset_all_passwords], User do |user|
-      true
+    # Rules for superadmin user. (Inherits rules for admin).
+    if user.role? :superadmin
+      can :create, [AdminUser, 'Admin User']
+      can :manage, [AdminUser]
     end
   end
 end

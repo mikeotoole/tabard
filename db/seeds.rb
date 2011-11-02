@@ -10,8 +10,15 @@ if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 
 # Create a default user
 puts "Creating test active admin users"
-AdminUser.create!(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password')
-AdminUser.create!(:email => 'mike@example.com', :password => 'Password', :password_confirmation => 'Password')
+superadmin = AdminUser.new(:email => 'superadmin@example.com', :password => 'Password', :password_confirmation => 'Password')
+superadmin.role = "superadmin"
+superadmin.save!
+moderator = AdminUser.new(:email => 'moderator@example.com', :password => 'Password', :password_confirmation => 'Password')
+moderator.role = "moderator"
+moderator.save!
+admin = AdminUser.new(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password')
+admin.role = "admin"
+admin.save!
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')

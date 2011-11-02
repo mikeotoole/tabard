@@ -1,6 +1,5 @@
 ActiveAdmin.register User do
-  # TODO Mike, Add scope for locked users.
-  menu :parent => "User", :priority => 1  
+  menu :parent => "User", :priority => 1, :if => proc{ can?(:read, User) } 
   controller.authorize_resource
   
   action_item :only => :show do
@@ -55,7 +54,6 @@ ActiveAdmin.register User do
   collection_action :reset_all_passwords, :method => :post do
     begin
       User.find_each(:conditions => ['user_active == ?', true]) do |record|
-        # Assign a random password
         random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
         record.reset_password_token = User.reset_password_token
@@ -64,8 +62,9 @@ ActiveAdmin.register User do
         UserMailer.all_password_reset(record, random_password).deliver  
       end
     rescue Exception => e
-      puts "Error: #{e.message}"
-      # TODO Mike, Handle this error.
+      logger.error "Error Resetting All Passwords: #{e.message}"
+      redirect_to :action => :index, :notice => "Error resetting all passwords."
+      return
     end
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end

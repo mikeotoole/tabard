@@ -1,5 +1,5 @@
 ActiveAdmin.register WowCharacter do
-  menu :parent => "Character"
+  menu :parent => "Character", :if => proc{ can?(:read, WowCharacter) }
   controller.authorize_resource
   
   filter :id

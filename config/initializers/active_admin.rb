@@ -1,5 +1,4 @@
 ActiveAdmin.setup do |config|
-
   # == Site Title
   #
   # Set the title that is displayed on the main layout
@@ -87,6 +86,7 @@ ActiveAdmin.setup do |config|
   # Active Admin resources from here. 
   #
   # config.before_filter :do_something_awesome
+  config.before_filter :sign_out_current_user
   config.skip_before_filter :authenticate_user!
   config.skip_before_filter :limit_subdomain_access
   config.skip_before_filter :fetch_active_games
@@ -102,4 +102,10 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
+end
+
+def sign_out_current_user
+  if current_user
+    sign_out(current_user) 
+  end
 end

@@ -80,6 +80,18 @@ class Discussion < ActiveRecord::Base
   end
 
   ###
+  # This method all comments in this discussion even comments comments.
+  # [Returns] A collection of comments.
+  ###
+  def all_comments
+  temp_all_comments = Array.new
+   comments.each do |comment|
+     temp_all_comments << comment.all_comments
+   end
+   temp_all_comments.flatten
+  end
+
+  ###
   # This will updated the view log for this discussion. If a view log exists for the user profile its modifyed date
   # will be updated. Otherwise a new view log is created.
   # [Args]

@@ -1,45 +1,53 @@
 ActiveAdmin::Dashboards.build do
 
-  # TODO Mike, Should we have a way to get at uploaded images.
-
-  section "Recent Signed In Admin Users", :priority => 10 do
-    ul do
-      AdminUser.order("last_sign_in_at desc").limit(5).collect do |admin_user|
-        li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
-      end  
-    end    
-  end
-  
-  section "New SWTOR Characters", :priority => 3 do
-    ul do
-      SwtorCharacter.order("created_at desc").limit(5).collect do |character|
-        li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_swtor_character_path(character)
-      end  
-    end    
-  end
-  section "New WoW Characters", :priority => 3 do
-    ul do
-      WowCharacter.order("created_at desc").limit(5).collect do |character|
-        li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_wow_character_path(character)
-      end  
-    end    
-  end  
-  
-  section "Logged In Users", :priority => 2 do
-    ul do      
-      User.order("current_sign_in_at desc").limit(5).collect do |user|
-        if user.current_sign_in_at
-          li link_to "#{user.display_name} - #{user.email} - #{user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
+  section "Recent Signed In Admin Users" do
+    if can?(:read, AdminUser)
+      ul do
+        AdminUser.order("last_sign_in_at desc").limit(5).collect do |admin_user|
+          li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
         end  
       end  
     end
   end
   
+  section "New SWTOR Characters", :priority => 3 do
+    if can?(:read, SwtorCharacter)
+      ul do
+        SwtorCharacter.order("created_at desc").limit(5).collect do |character|
+          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_swtor_character_path(character)
+        end  
+      end    
+    end
+  end
+  section "New WoW Characters", :priority => 3 do
+    if can?(:read, WowCharacter)
+      ul do
+        WowCharacter.order("created_at desc").limit(5).collect do |character|
+          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_wow_character_path(character)
+        end  
+      end
+    end
+  end  
+  
+  section "Logged In Users", :priority => 2 do
+    if can?(:read, User)
+      ul do      
+        User.order("current_sign_in_at desc").limit(5).collect do |user|
+          if user.current_sign_in_at
+            li link_to "#{user.display_name} - #{user.email} - #{user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
+          end  
+        end  
+      end
+    end
+  end
+  
   section "New Users", :priority => 1 do
-    ul do
-      User.order("created_at desc").limit(5).collect do |user|
-        li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
-      end  
+    if can?(:read, User)
+      ul do
+        User.order("created_at desc").limit(5).collect do |user|
+          li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
+        end  
+      end
     end    
   end
 

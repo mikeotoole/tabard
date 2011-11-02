@@ -105,6 +105,7 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: users
@@ -128,5 +129,6 @@ end
 #  locked_at              :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
+#  user_active            :boolean         default(TRUE)
 #
 

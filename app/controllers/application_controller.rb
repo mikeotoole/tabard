@@ -88,8 +88,10 @@ class ApplicationController < ActionController::Base
   def current_ability # TODO Mike, Is this the best way to accomplish this?
     if current_user
       @current_ability ||= Ability.new(current_user)
+    elsif current_admin_user
+      @current_ability ||= AdminAbility.new(current_admin_user)
     else
-      @current_ability ||= AdminAbility.new(AdminUser.first) # TODO Mike, Change to current_admin_user
+      nil  
     end
   end
 

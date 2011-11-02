@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  menu :parent => "User", :priority => 11
+  menu :parent => "User", :priority => 11, :if => proc{ can?(:read, AdminUser) } 
   controller.authorize_resource
 
   action_item :only => :show do
@@ -28,7 +28,6 @@ ActiveAdmin.register AdminUser do
   collection_action :reset_all_passwords, :method => :post do
     begin
       AdminUser.all.each do |record|
-        # Assign a random password
         random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
         record.reset_password_token = AdminUser.reset_password_token
@@ -37,8 +36,9 @@ ActiveAdmin.register AdminUser do
         UserMailer.all_password_reset(record, random_password).deliver  
       end
     rescue Exception => e
-      puts "Error: #{e.message}"
-      # TODO Mike, Handle this error.
+      logger.error "Error Resetting All Passwords: #{e.message}"
+      redirect_to :action => :index, :notice => "Error resetting all passwords."
+      return
     end
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
@@ -52,10 +52,9 @@ ActiveAdmin.register AdminUser do
   
   index do
     column :email
+    column :role
     column :current_sign_in_at
-    column :current_sign_in_ip
     column :last_sign_in_at
-    column :last_sign_in_ip
     column :sign_in_count
     column :created_at
     column "View" do |admin_user|
@@ -71,6 +70,7 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs "Admin Details" do
       f.input :email
+      f.input :role, :as => :select, :collection => AdminUser::ROLES
     end
     f.buttons
   end

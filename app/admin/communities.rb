@@ -1,4 +1,5 @@
 ActiveAdmin.register Community do
+  menu :if => proc{ can?(:read, Community) }
   controller.authorize_resource
   
   filter :name
@@ -26,29 +27,57 @@ ActiveAdmin.register Community do
   show do
     attributes_table :id, :name, :slogan, :accepting_members, :email_notice_on_application, :subdomain, :created_at, 
     :updated_at, :admin_profile, :member_role_id, :protected_roster, :community_application_form_id, :community_announcement_space_id
-    h3 "Discussion Spaces:"
-    community.discussion_spaces.each do |discussion_space|
-      div do
-        link_to discussion_space.name, [:admin, discussion_space]
+    div do      
+      panel("Discussion Spaces") do
+        table_for(community.discussion_spaces) do
+          column "Name" do |discussion_space|
+            link_to discussion_space.name, [:admin, discussion_space]
+          end
+          column "Number Discussions" do |discussion_space|
+            "#{discussion_space.discussions.count}"
+          end
+          column :created_at          
+        end
       end
-    end
-    h3 "Announcement Spaces:"
-    community.announcement_spaces.each do |announcement_space|
-      div do
-        link_to announcement_space.name, [:admin, announcement_space]
-      end  
-    end
-    h3 "Page Spaces:"
-    community.page_spaces.each do |page_space|
-      div do
-        link_to page_space.name, [:admin, page_space]
-      end  
-    end
-    h3 "Custom Forms:"
-    community.custom_forms.each do |custom_form|
-      div do
-        link_to custom_form.name, [:admin, custom_form]
-      end  
+    end 
+    div do      
+      panel("Announcement Spaces") do
+        table_for(community.announcement_spaces) do
+          column "Name" do |announcement_space|
+            link_to announcement_space.name, [:admin, announcement_space]
+          end
+          column "Number Announcements" do |announcement_space|
+            "#{announcement_space.discussions.count}"
+          end
+          column :created_at          
+        end
+      end
+    end    
+    div do      
+      panel("Page Spaces") do
+        table_for(community.page_spaces) do
+          column "Name" do |page_space|
+            link_to page_space.name, [:admin, page_space]
+          end
+          column "Number Pages" do |page_space|
+            "#{page_space.pages.count}"
+          end
+          column :created_at              
+        end
+      end
+    end 
+    div do      
+      panel("Custom Forms") do
+        table_for(community.custom_forms) do
+          column "Name" do |custom_form|
+            link_to custom_form.name, [:admin, custom_form]
+          end
+          column "Number Questions" do |custom_form|
+            "#{custom_form.questions.count}"
+          end
+          column :created_at                  
+        end
+      end
     end
     active_admin_comments
   end  
