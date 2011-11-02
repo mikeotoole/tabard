@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 ###
   has_one :user_profile, :inverse_of => :user
   has_many :document_acceptances
+  has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile
 
 ###
@@ -113,7 +114,7 @@ class User < ActiveRecord::Base
   end
   #This method checks to see if the user has accepted the most recent version of the Terms of Service.
   def has_accepted_current_terms_of_service?
-    document_acceptances.include?(current_terms_of_service)
+    accepted_documents.include?(current_terms_of_service)
   end
   #This method finds the most recent version of the terms of service
   def current_privacy_policy
@@ -121,7 +122,12 @@ class User < ActiveRecord::Base
   end
   #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
-    document_acceptances.include?(current_privacy_policy)
+    accepted_documents.include?(current_privacy_policy)
+  end
+
+  #This method checks to see if the user has accepted the most recent version of all legal documents.
+  def has_accepted_all_documents?
+    has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
 ###
 # Protected Methods

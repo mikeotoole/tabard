@@ -1,2 +1,7 @@
-%h1 DocumentAcceptance#new
-%p Find me in app/views/document_acceptance/new.html.haml
+=form_tag accept_document_create_path do
+  %p
+    =@document.body
+  =label_tag 'accept', 'I accept this agreement.'
+  =check_box_tag 'accept'
+  %p
+    =submit_tag 'Submit'

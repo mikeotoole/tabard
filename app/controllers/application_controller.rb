@@ -241,10 +241,14 @@ protected
   ###
   def ensure_accepted_most_recent_legal_documents
     if signed_in?
-      if not current_user.accepted_current_terms_of_service 
-        http_status_code(:locked)
-      elsif not current_user.accepted_current_privacy_policy
-        http_status_code(:locked)
+      if false
+        if not current_user.accepted_current_terms_of_service
+          redirect_to accept_document_path(current_user.current_terms_of_service), :alert => "You must accept this document to continue to use crumblin."
+        elsif not current_user.accepted_current_privacy_policy
+          redirect_to accept_document_path(current_user.current_privacy_policy), :alert => "You must accept this document to continue to use crumblin."
+        end
+      else
+        redirect_to edit_user_registration_path, :alert => "You must accept all legal documents to continue to use crumblin." unless current_user.has_accepted_all_documents?
       end
     end
   end
