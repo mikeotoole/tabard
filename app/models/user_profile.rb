@@ -88,8 +88,9 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
   ###
   def available_character_proxies(community, game = nil)
+    return self.character_proxies unless community
     available_character_proxies = Array.new
-    community_profile = self.community_profiles.where{:communtiy == community}.first
+    community_profile = self.community_profiles.where{community_id == community.id}.first
     available_character_proxies.concat community_profile.approved_character_proxies if community_profile
     available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game != game} if game
     available_character_proxies

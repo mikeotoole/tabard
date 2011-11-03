@@ -52,15 +52,12 @@ k_fox = User.new(:email => "kinky@fox.com", :password => "Password",
                    :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
 k_fox.skip_confirmation!
 k_fox.save
-miss_fox = WowCharacter.create(:name => "Miss Fox",
+k_fox.user_profile.character_proxies.create(:character =>  WowCharacter.create(:name => "Miss Fox",
   :game => wow_game,
   :server => "Default WOW Server",
   :faction => "Horde",
   :race => "Goblin",
-  :level => 20)
-k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
-  :character => miss_fox
-)
+  :level => 20))
 
 def generate_application_from_user_profile(community, user_profile)
   app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
@@ -72,6 +69,7 @@ end
 puts "Kinky Fox is creating Two Maidens Guild with the game WoW!"
 twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice")
 twom.games << wow_game
+k_fox.community_profiles.where(:community_id => twom.id).first.approved_character_proxies << k_fox.user_profile.character_proxies.first
 
 puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
 puts "Accepting Sleepy Pidgeon and Apathic Tiger's applications"
