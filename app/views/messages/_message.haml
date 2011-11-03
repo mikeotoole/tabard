@@ -1,0 +1,47 @@
+#message
+
+  %header
+    %p.actions
+      - if mailbox_view_state != 'sent'
+        - if current_user.address_book.include?(message.author)
+          = link_to '✎ Reply', mail_reply_path(message.original_message_id), :method => :get, :class => 'reply'
+        - if message.recipients.size > 1
+          = link_to('✎ Reply All', mail_reply_all_path(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
+      = link_to '➔ Forward', mail_forward_path(message.original_message_id), :class => 'forward'
+      - if mailbox_view_state == 'trash'
+        = link_to '✖ Delete', mail_delete_path(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete forever'
+      - elsif mailbox_view_state != 'sent'
+        = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
+    
+    %h2
+      - if message.system_sent
+        %strong Notification:
+      - else
+        From:
+        - if current_user.address_book.include?(message.author)
+          = link_to message.author_name, compose_mail_to_path(message.author_id)
+        - else
+          %span= message.author_name
+        on
+      %time{ :title => (l Time.now, :format => :date_short) }
+        = l Time.now, :format => :date_monthday
+      at
+      %time
+        = l Time.now, :format => :time_12
+    
+    %h1= message.subject
+  
+    %dl
+      %dt To:
+      - message.recipients.each do |profile|
+        %dd
+          - if current_user.user_profile == profile
+            %span Me
+          - elsif current_user.address_book.include?(profile)
+            = link_to "✎ #{profile.name}", compose_mail_to_path(profile.id), :meta => "Send message"
+          - else
+            %span= profile.name
+    
+  %article
+    :markdown
+      #{message.body}

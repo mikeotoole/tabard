@@ -1,13 +1,24 @@
 @import mixins
 @import fonts/din
 @import fonts/malbeck
-@import reset
-@import bar
+@import application/reset
+@import application/core
+@import application/bar
 
 
 #bar:before
-  border-top: 1px solid #480012
   +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
+
+#flash
+  position: absolute
+  top: 75px
+  
+  li
+    border-left-color: rgba(#fff,.3) 
+    border-right-color: rgba(#fff,.3)
+    
+    &:last-child
+      border-bottom-color: rgba(#fff,.3)
 
 html,
 body
@@ -70,7 +81,7 @@ body
     color: #fff
     left: 0
     position: absolute
-    top: 50px
+    bottom: 90px
     
     strong
       display: block
@@ -231,7 +242,7 @@ body
 
 #body
   background: rgba(#fff,.9)
-  margin: 5px auto 0
+  margin: 0 auto
   min-height: 735px
   padding: 30px
   position: relative
@@ -979,6 +990,17 @@ body
               
               .reply
                 display: none
+            
+            >form
+            
+              &.open textarea,
+              textarea:hover
+                height: 80px
+                
+              button,
+              >input,
+              >label
+                display: block
         
         &.editing
           
@@ -1007,8 +1029,8 @@ body
                 height: 80px
                 
               button,
-              input,
-              label
+              >input,
+              >label
                 display: block
         
         &.collapsed
@@ -1118,6 +1140,9 @@ body
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)
+        
+          + textarea
+            height: 80px
           
           li
             
@@ -1208,7 +1233,7 @@ body
           display: none !important
         
         &:after
-          background: image-url('community/busy.gif') center center no-repeat rgba(#000,.1)
+          background: image-url('application/busy.gif') center center no-repeat rgba(#000,.1)
           bottom: 0
           content: ''
           left: 0
@@ -1262,5 +1287,5 @@ body
           z-index: 2
 
 
-@import theme
-@import footer
+@import subdomains/theme
+@import application/footer

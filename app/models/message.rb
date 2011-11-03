@@ -30,11 +30,25 @@ class Message < ActiveRecord::Base
   before_create :prepare_message_associations
 
 ###
+# Delegates
+###
+  delegate :avatar_url, :name, :to => :author, :prefix => true, :allow_nil => true
+
+###
 # Validators
 ###
   validates :subject, :presence => true
   validates :body,  :presence => true
   validates :to,  :presence => true
+
+  default_scope :order => "created_at DESC"
+
+###
+# Instance Methods
+###
+  def original_message_id
+    self.id
+  end
 
 ###
 # Protected Methods
@@ -54,9 +68,11 @@ protected
     self.number_recipients = 0
     return if to.blank?
     to.each do |recipient|
-      userProfile = UserProfile.find_by_id(recipient)
-      message_associations.build(:recipient_id => userProfile.id, :folder_id => userProfile.inbox.id)
-      self.number_recipients += 1
+      if !recipient.blank?
+        userProfile = UserProfile.find_by_id(recipient)
+        message_associations.build(:recipient_id => userProfile.id, :folder_id => userProfile.inbox.id)
+        self.number_recipients += 1
+      end
     end
   end
 end

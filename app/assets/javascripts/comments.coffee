@@ -1,7 +1,7 @@
 # Setup collapse/expand functionality
 jQuery.fn.collapsable = ->
   this
-    .find('.meta')
+    .find('>blockquote >.meta')
     .prepend('<a class="collapse" title="Hide comments">←</a><a class="expand" title="Show comments">↪</a> ')
     .find('.collapse')
     .bind 'click', ->
@@ -14,12 +14,12 @@ $(document).ready ->
   
   # Keeps the comment box open if it has data
   $('.comments textarea')
-    .bind 'keypress change blur', (e) ->
+    .live 'keypress change blur', (e) ->
       if $.trim($(this).val()) == ''
         $(this).removeClass('open')
       else
         $(this).addClass('open')
-    .bind 'focus', (e) ->
+    .live 'focus', (e) ->
       li = $(this).closest('li')
       lis = $(this).closest('.comments').find('ol >li').not(li)
       lis.each ->
@@ -82,6 +82,7 @@ $(document).ready ->
       bq
         .find('.meta')
         .html('<time>Deleted less than a minute ago</time>')
+      li.collapsable()
   
   # Locks a comment and updates the DOM
   $('.comments .lock[data-remote]')
@@ -148,6 +149,9 @@ $(document).ready ->
           container
             .find('>ol >li:last')
             .collapsable()
+      $(this).find('.profile label')
+        .bind 'click', ->
+          $(this).closest('form').find('textarea').focus()
     .trigger 'load'
   
   $('.comments li').collapsable()

@@ -1,0 +1,4 @@
+%li.announcement
+  = link_to (truncate discussion.body, :length => 100, :separator => ' '), discussion_url(discussion, :subdomain => discussion.subdomain), :class => 'link'
+  %span.meta= "— #{discussion.community_name}"
+  = link_to '✔', discussion_url(discussion, :subdomain => discussion.subdomain), 'data-type' => :jsonp, :remote => true, :class => 'read'

@@ -2,12 +2,14 @@
 #
 # Table name: message_associations
 #
-#  id           :integer         not null, primary key
-#  message_id   :integer
-#  recipient_id :integer
-#  folder_id    :integer
-#  deleted      :boolean         default(FALSE)
-#  updated_at   :datetime
+#  id            :integer         not null, primary key
+#  message_id    :integer
+#  recipient_id  :integer
+#  folder_id     :integer
+#  deleted       :boolean         default(FALSE)
+#  has_been_read :boolean         default(FALSE)
+#  created_at    :datetime
+#  updated_at    :datetime
 #
 
 require 'spec_helper'
@@ -29,6 +31,10 @@ describe MessageAssociation do
     message_association.should be_valid
     message_association.recipient = nil
     message_association.save.should be_false
+  end
+  
+  it "should set has_been_read to false by default" do
+    message_association.has_been_read.should be_false
   end
   
   it "should not allow mass assignment of message" do
@@ -75,5 +81,9 @@ describe MessageAssociation do
   
   it "should respond to recipients" do
     message_association.should respond_to(:recipients)
+  end
+  
+  it "should respond to recipients" do
+    message_association.should respond_to(:has_been_read)
   end
 end

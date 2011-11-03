@@ -38,21 +38,16 @@ class Subdomains::CommentsController < ApplicationController
   # POST /comments
   def create
     if @comment.save
-      add_new_flash_message('Comment was successfully created.')
+      render :partial => 'comment', :locals => { :comment => @comment }
     else
-      add_new_flash_message('Unable to create comment.', 'alert')
+      render :text => '', :layout => false
     end
-    render :partial => 'comment', :locals => { :comment => @comment }
   end
 
   # PUT /comments/1
   def update
     @comment.has_been_edited = true
-    if @comment.update_attributes(params[:comment])
-      add_new_flash_message('Comment was successfully updated.')
-    else
-      add_new_flash_message('Unable to update comment.', 'alert')
-    end
+    @comment.update_attributes(params[:comment])
     render :partial => 'comment', :locals => { :comment => @comment }
   end
 
@@ -64,14 +59,7 @@ class Subdomains::CommentsController < ApplicationController
       @comment.has_been_deleted = true;
       success = @comment.save
     end
-
-    if success
-      add_new_flash_message('Comment was successfully deleted.')
-      render :json => true
-    else
-      add_new_flash_message('Comment was unable to be deleted.', 'alert')
-      render :json => false
-    end
+    render :json => success ? true : false
   end
 
 ###
@@ -80,25 +68,13 @@ class Subdomains::CommentsController < ApplicationController
   # POST /comments/:id/lock(.:format)
   def lock
     @comment.has_been_locked = true
-    if @comment.save
-      add_new_flash_message("Comment was successfully locked.")
-      render :json => true
-    else
-      add_new_flash_message("Unable to lock comment.", 'alert')
-      render :json => false
-    end
+    render :json => @comment.save ? true : false
   end
 
   # POST /comments/:id/unlock(.:format)
   def unlock
     @comment.has_been_locked = false
-    if @comment.save
-      add_new_flash_message("Comment was successfully unlocked.")
-      render :json => true
-    else
-      add_new_flash_message("Unable to unlock comment.", 'alert')
-      render :json => false
-    end
+    render :json => @comment.save ? true : false
   end
 
 ###
