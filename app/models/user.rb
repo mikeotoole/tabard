@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
   # [Returns] True if this is an active user, otherwise false.
   ###  
   def active_for_authentication?    	
-    super && self.user_active?
+    super && self.user_active
   end  
 ###
 # Protected Methods
