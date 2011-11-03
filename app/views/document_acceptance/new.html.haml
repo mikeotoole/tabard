@@ -4,10 +4,10 @@
   %h1= @document.title
   
   = form_tag accept_document_create_path do
-    #document
+    .document
       :markdown
         #{@document.body}
       %p.accept
         %input{ :id => "document_#{@document.id}_accept", :name => 'accept', :type => 'checkbox', :value => true }
-        %label{ :for => "document_#{@document.id}_accept" } I accept this agreement
+        %label{ :for => "document_#{@document.id}_accept" } I have read and accept this agreement.
         %button{ :type => :submit } Accept

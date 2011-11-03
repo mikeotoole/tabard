@@ -7,9 +7,9 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 puts "Creating TOS"
-tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.", version: "1")
+tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1")
 puts "Creating PrivacyPolicy"
-privacy_policy_document = PrivacyPolicy.create(body: "Nullam consequat pulvinar velit, eget ultrices tortor semper vel. Suspendisse potenti. Praesent ut nibh in neque malesuada tempus sit amet eget odio. Curabitur volutpat, sem semper vulputate posuere, sem metus ornare elit, ac imperdiet felis urna hendrerit nisi. Maecenas vel ligula vel erat eleifend aliquet vel id ipsum.\n\nNullam convallis iaculis erat et mollis.\n\nSed urna neque, pretium in tempus nec, dapibus in enim. Aenean dapibus ipsum sit amet diam molestie aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque cursus feugiat ipsum vitae volutpat. Aenean laoreet, tortor a consequat convallis, libero dui suscipit tellus, et mollis massa nulla et libero. Vestibulum tincidunt quam nec lorem molestie id euismod urna venenatis. Aliquam erat volutpat.", version: "1")
+privacy_policy_document = PrivacyPolicy.create(body: "Nullam consequat pulvinar velit, eget ultrices tortor semper vel. Suspendisse potenti. Praesent ut nibh in neque malesuada tempus sit amet eget odio. Curabitur volutpat, sem semper vulputate posuere, sem metus ornare elit, ac imperdiet felis urna hendrerit nisi. Maecenas vel ligula vel erat eleifend aliquet vel id ipsum.\n\nNullam convallis iaculis erat et mollis.\n\nSed urna neque, pretium in tempus nec, dapibus in enim. Aenean dapibus ipsum sit amet diam molestie aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque cursus feugiat ipsum vitae volutpat. Aenean laoreet, tortor a consequat convallis, libero dui suscipit tellus, et mollis massa nulla et libero. Vestibulum tincidunt quam nec lorem molestie id euismod urna venenatis. Aliquam erat volutpat.\n\nMauris dapibus, lorem ut lobortis blandit, enim ipsum fermentum neque, aliquet dictum nulla ligula sit amet quam. Fusce non pharetra sapien. Sed tincidunt euismod consequat.", version: "1")
 
 puts "Creating Games..."
 wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
@@ -44,16 +44,36 @@ d_badger.skip_confirmation!
 d_badger.save
 
 puts "Creating Sleepy Pidgeon!"
-s_pidgeon = User.new(:email => "sleepy@pidgeon.com", :password => "Password",
-                    :user_profile_attributes => {:first_name => "Sleepy", :last_name => "Pidgeon", :display_name => "Sleepy Pidgeon"})
+s_pidgeon = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
+    :email => "sleepy@pidgeon.com", :password => "Password",
+    :user_profile_attributes => {:first_name => "Sleepy", :last_name => "Pidgeon", :display_name => "Sleepy Pidgeon"})
 s_pidgeon.skip_confirmation!
 s_pidgeon.save
 
 puts "Creating Apathetic Tiger!"
-a_tiger = User.new(:email => "apathetic@tiger.com", :password => "Password",
-                    :user_profile_attributes => {:first_name => "Apathetic", :last_name => "Tiger", :display_name => "Apathetic Tiger"})
+a_tiger = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
+    :email => "apathetic@tiger.com", :password => "Password",
+    :user_profile_attributes => {:first_name => "Apathetic", :last_name => "Tiger", :display_name => "Apathetic Tiger"})
 a_tiger.skip_confirmation!
 a_tiger.save
+
+puts "Creating Fuzzy Crab!"
+f_crab = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
+    :email => "fuzzy@crab.com", :password => "Password",
+    :user_profile_attributes => {:first_name => "Fuzzy", :last_name => "Crab", :display_name => "Fuzzy Crab"})
+f_crab.skip_confirmation!
+f_crab.save
+
+puts "Creating Sad Panda!"
+s_panda = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
+    :email => "sad@panda.com", :password => "Password",
+    :user_profile_attributes => {:first_name => "Sad", :last_name => "Panda", :display_name => "Sad Panda"})
+s_panda.skip_confirmation!
+s_panda.save
+s_panda.update_attribute(:accepted_current_terms_of_service, false)
+s_panda.update_attribute(:accepted_current_privacy_policy, false)
+DocumentAcceptance.where(:user_id => s_panda.id).destroy_all
+
 
 puts "Creating Kinky Fox!"
 k_fox = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
@@ -83,9 +103,11 @@ twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Ch
 twom.games << wow_game
 
 puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
-puts "Accepting Sleepy Pidgeon and Apathic Tiger's applications"
+puts "Accepting Sleepy Pidgeon, Apathic Tiger, Fuzzy Crab, and Sad Panda's applications"
 generate_application_from_user_profile(twom, s_pidgeon.user_profile).accept_application
 generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
+generate_application_from_user_profile(twom, f_crab.user_profile).accept_application
+generate_application_from_user_profile(twom, s_panda.user_profile).accept_application
 
 puts "Creating Two Maidens Guild General Discussion Space"
 twom_gds = twom.discussion_spaces.create(:name => "General Chat")

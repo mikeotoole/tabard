@@ -24,8 +24,7 @@ class DocumentAcceptanceController < ApplicationController
       end
       redirect_to user_root_path, :notice => "The document has been accepted."
     else
-      flash[:alert] = "You must accept this document to continue using Crumblin."
-      render :new
+      ensure_accepted_most_recent_legal_documents
     end
   end
 

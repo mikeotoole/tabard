@@ -351,6 +351,27 @@ button,
           &:hover
             +box_shadow(0 0 10px #000)
   
+  fieldset
+    
+    ol
+      padding: 0
+      
+      li
+        margin: 15px 0
+        
+        &:before
+          display: none
+        
+        &.field_with_errors
+          
+          mark
+            +border_radius(5)
+            color: #BD4028
+            display: block
+            font: 14px DinMedium, sans
+            padding: 5px
+            width: 100%
+  
   label
     font-family: DinMedium, sans
   
@@ -446,18 +467,45 @@ button,
     top: 60px
     width: 340px
   
-  #document
+  .document
+    background: #eee
+    +bg_gradient(#eee,#fff)
+    border: 1px solid #fff
+    +border_radius(5)
+    +box_shadow(0 0 3px rgba(#000,.2))
+    margin: 0 0 20px
+    
+    p
+      padding: 20px 20px 0
   
-    &.scroll
-      background: #ccc
-      height: 20px
+    .scroll
+      +bg_gradient(#ddd,#fff)
+      +border_radius(5,5,0,0)
+      margin: 0 0 -40px
       overflow: scroll
       overflow-x: hidden
-      padding: 20px
+      padding: 10px 0 30px
   
     .accept
-      border-top: 1px solid #ccc
-      margin: 20px 0 0
+      background: #ccc
+      +bg_gradient(#bbb,#ddd)
+      +border_radius(0,0,5,5)
+      border-top: 1px solid #999
+      height: 26px
+      margin: 40px 0 0
+      padding: 10px
+      position: relative
+      
+      &:before
+        border-bottom: 1px solid #999
+        +bg_gradient(rgba(#eee,0),rgba(#999,.5))
+        content: ''
+        height: 20px
+        left: 0
+        pointer-events: none
+        position: absolute
+        right: 0
+        top: -21px
       
       label,
       button
