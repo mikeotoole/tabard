@@ -1,5 +1,14 @@
 ActiveAdmin::Dashboards.build do
 
+  section "Site Actions", :priority => 1 do
+    if can?(:sign_out_all_users, User)
+      li button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, :method => :post, :confirm => 'Are you sure you want to sign out ALL users?'
+    end 
+    if can?(:toggle_maintenance_mode, SiteActionController)
+      li button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :post, :confirm => 'Are you sure you want to toggle maintenance mode?'
+    end  
+  end
+  
   section "Recent Signed In Admin Users" do
     if can?(:read, AdminUser)
       ul do
@@ -41,7 +50,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
   
-  section "New Users", :priority => 1 do
+  section "New Users", :priority => 2 do
     if can?(:read, User)
       ul do
         User.order("created_at desc").limit(5).collect do |user|

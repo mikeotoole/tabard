@@ -63,11 +63,19 @@ ActiveAdmin.register User do
       end
     rescue Exception => e
       logger.error "Error Resetting All Passwords: #{e.message}"
-      redirect_to :action => :index, :notice => "Error resetting all passwords."
+      redirect_to :action => :index, :alert => "Error resetting all passwords."
       return
     end
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
+ 
+  collection_action :sign_out_all_users, :method => :post do
+    # TODO Mike, Make this work.
+    User.find_each(:conditions => ['user_active == ?', true]) do |user|
+      sign_out(user)
+    end
+    redirect_to previous_page, :notice => "All Users Signed out"
+  end 
     
   filter :email
   filter :current_sign_in_at

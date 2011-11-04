@@ -7,7 +7,7 @@ class AdminUser < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :role
@@ -40,7 +40,7 @@ class AdminUser < ActiveRecord::Base
 # Public Methods
 ###
   def password_required?
-    new_record? ? false : super
+    (new_record? ? false : super) || self.password.present?
   end
   
 ###
@@ -62,6 +62,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: admin_users
@@ -80,5 +81,8 @@ end
 #  created_at             :datetime
 #  updated_at             :datetime
 #  role                   :string(255)
+#  failed_attempts        :integer         default(0)
+#  unlock_token           :string(255)
+#  locked_at              :datetime
 #
 

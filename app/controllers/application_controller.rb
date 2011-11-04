@@ -92,6 +92,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def maintenance_mode?
+    @maintenance_mode ||= true
+  end
+  
+  def stop_maintenance_mode
+    @maintenance_mode = false
+  end
+  
+  def start_maintenance_mode
+    @maintenance_mode = true
+  end
+  
 ###
 # Protected Methods
 ###

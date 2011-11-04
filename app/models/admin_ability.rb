@@ -19,8 +19,8 @@ class AdminAbility
   ###
   def bakedInRules(user)  
     # Rules for moderator user.
-    if user.role? :moderator
-      can [:read, :destroy, :lock, :unlock, :reset_password, :reset_all_passwords], User
+    if user.role? :moderator # TODO Bryan, Review all these rules -MO
+      can [:read, :lock, :unlock, :reset_password], User
       can [:read], UserProfile
       can [:read, :destroy], Community
       can [:read, :destroy, :delete_question], CustomForm
@@ -34,12 +34,13 @@ class AdminAbility
     end
     
     # Rules for admin user. (Inherits rules for moderator).
-    if user.role? :admin
-      
+    if user.role? :admin # TODO Bryan, Review all these rules -MO
+      can [:destroy, :reset_all_passwords, :sign_out_all_users], User
+      can [:toggle_maintenance_mode], SiteActionController
     end
     
     # Rules for superadmin user. (Inherits rules for admin).
-    if user.role? :superadmin
+    if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can :create, [AdminUser, 'Admin User']
       can :manage, [AdminUser]
     end

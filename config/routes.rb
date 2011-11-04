@@ -1,5 +1,4 @@
 DaBvRails::Application.routes.draw do
-  
   # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users , ActiveAdmin::Devise.config
@@ -12,6 +11,9 @@ DaBvRails::Application.routes.draw do
   end
   
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
+
+  # Site Actions
+  post "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
