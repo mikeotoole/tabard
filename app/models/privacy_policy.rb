@@ -8,6 +8,7 @@
 class PrivacyPolicy < Document
 	after_save :reset_user_acceptance
 
+  # Sets a user's acceptance of the Privacy Policy to false
   def reset_user_acceptance
     if self == PrivacyPolicy.first
       User.update_all(:accepted_current_privacy_policy => false)

@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents the assocation between a message and a user of the acceptance of a document.
+###
 class DocumentAcceptance < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :document

@@ -30,6 +30,7 @@ class Document < ActiveRecord::Base
     super
   end
   
+  # Creates a human readable document based on the document type
   def title
     case self.type
       when 'TermsOfService'

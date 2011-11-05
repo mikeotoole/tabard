@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This is the controller for documents. It handles a document's CRUD actions.
+###
 class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
