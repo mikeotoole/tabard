@@ -95,7 +95,11 @@ class User < ActiveRecord::Base
   ###  
   def active_for_authentication?    	
     super && self.user_active
-  end  
+  end
+  
+  def self.force_active_users_to_sign_out
+    User.update_all(:force_logout => true)
+  end
 ###
 # Protected Methods
 ###
@@ -109,6 +113,7 @@ protected
     self.new_record? || self.password.present?
   end
 end
+
 
 
 # == Schema Information
@@ -135,5 +140,6 @@ end
 #  created_at             :datetime
 #  updated_at             :datetime
 #  user_active            :boolean         default(TRUE)
+#  force_logout           :boolean         default(FALSE)
 #
 

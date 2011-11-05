@@ -59,7 +59,7 @@ ActiveAdmin.register User do
         record.reset_password_token = User.reset_password_token
         record.reset_password_sent_at = Time.now
         record.save
-        UserMailer.all_password_reset(record, random_password).deliver  
+        UserMailer.all_password_reset(record, random_password).deliver
       end
     rescue Exception => e
       logger.error "Error Resetting All Passwords: #{e.message}"
@@ -70,10 +70,7 @@ ActiveAdmin.register User do
   end
  
   collection_action :sign_out_all_users, :method => :post do
-    # TODO Mike, Make this work.
-    User.find_each(:conditions => ['user_active == ?', true]) do |user|
-      sign_out(user)
-    end
+    User.force_active_users_to_sign_out
     redirect_to previous_page, :notice => "All Users Signed out"
   end 
     

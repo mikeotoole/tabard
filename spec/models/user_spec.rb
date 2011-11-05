@@ -22,6 +22,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  user_active            :boolean         default(TRUE)
+#  force_logout           :boolean         default(FALSE)
 #
 
 require 'spec_helper'

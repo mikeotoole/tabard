@@ -29,6 +29,8 @@ class ApplicationController < ActionController::Base
 
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
+  
+  before_filter :check_force_logout
 
 ###
 # Status Code Rescues
@@ -91,23 +93,34 @@ class ApplicationController < ActionController::Base
       @current_ability ||= Ability.new(current_user)  
     end
   end
-
+  
+  ###
+  # Used to check for maintenance mode
+  # [Returns] true if 
+  ###
   def maintenance_mode?
-    @maintenance_mode ||= true
-  end
-  
-  def stop_maintenance_mode
-    @maintenance_mode = false
-  end
-  
-  def start_maintenance_mode
-    @maintenance_mode = true
+    ENV['maintenance_mode'] ||= 'ON'
+    if ENV['maintenance_mode'] == 'ON'
+      return true
+    else
+      return false
+    end    
   end
   
 ###
 # Protected Methods
 ###
 protected
+
+  # Sets the maintenance mode value to off
+  def stop_maintenance_mode
+    ENV['maintenance_mode'] = 'OFF'
+  end
+  
+  # Sets the maintenance mode value to on
+  def start_maintenance_mode
+    ENV['maintenance_mode'] = 'ON'
+  end
 
   # Builds a list of the Crumblin supported games.
   def fetch_crumblin_games
@@ -219,6 +232,12 @@ protected
   ###
   def remember_current_page
     session[:current_page] = request.url
+  end
+
+  def check_force_logout
+    if current_user and current_user.force_logout
+      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance."
+    end
   end
 
   ###

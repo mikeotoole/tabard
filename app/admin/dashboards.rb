@@ -1,21 +1,27 @@
 ActiveAdmin::Dashboards.build do
 
-  section "Site Actions", :priority => 1 do
-    if can?(:sign_out_all_users, User)
-      li button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, :method => :post, :confirm => 'Are you sure you want to sign out ALL users?'
-    end 
+  section "Site Actions", :priority => 1 do 
     if can?(:toggle_maintenance_mode, SiteActionController)
-      li button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :post, :confirm => 'Are you sure you want to toggle maintenance mode?'
-    end  
+      strong SiteActionController.new.maintenance_mode? ? "Maintenance Mode is On" : "Maintenance Mode is Off"
+      div do
+        button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :post, :confirm => 'Are you sure you want to toggle maintenance mode?'
+      end
+      div br
+    end
+    if can?(:sign_out_all_users, User)
+      div do
+        button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, :method => :post, :confirm => 'Are you sure you want to sign out ALL users?'
+      end
+    end    
   end
   
   section "Recent Signed In Admin Users" do
     if can?(:read, AdminUser)
       ul do
-        AdminUser.order("last_sign_in_at desc").limit(5).collect do |admin_user|
-          li link_to "#{admin_user.email} - #{admin_user.last_sign_in_at ? admin_user.last_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
+        AdminUser.order("current_sign_in_at desc").limit(5).collect do |admin_user|
+          li link_to "#{admin_user.email} - #{admin_user.current_sign_in_at ? admin_user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
         end  
-      end  
+      end
     end
   end
   
@@ -38,7 +44,7 @@ ActiveAdmin::Dashboards.build do
     end
   end  
   
-  section "Logged In Users", :priority => 2 do
+  section "Recent Signed In Users", :priority => 2 do
     if can?(:read, User)
       ul do      
         User.order("current_sign_in_at desc").limit(5).collect do |user|
