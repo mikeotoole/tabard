@@ -336,11 +336,33 @@ describe UserProfile do
   end
 
   describe "read_announcements" do
-    pending
+    before(:each) do
+      @profile_with_announcements = DefaultObjects.user_profile
+      @profile_with_announcements.announcements.size.should be > 0
+    end
+    it "should only contain read announcements" do
+      @profile_with_announcements.read_announcements.each do |announcement|
+        @profile_with_announcements.has_seen?(announcement).should be_true
+      end
+    end
+    it "should automaticaly get updated when a user reads an announcement" do
+      pending
+    end
   end
 
   describe "unread_announcements" do
-    pending
+    before(:each) do
+      @profile_with_announcements = DefaultObjects.user_profile
+      @profile_with_announcements.announcements.size.should be > 0
+    end
+    it "should only contain unread announcements" do
+      @profile_with_announcements.unread_announcements.each do |announcement|
+        @profile_with_announcements.has_seen?(announcement).should be_false
+      end
+    end
+    it "should automaticaly get updated when a user reads an announcement" do
+      pending
+    end
   end
   
 end

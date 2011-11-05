@@ -173,6 +173,18 @@ class UserProfile < ActiveRecord::Base
     )}.exists?
   end
 
+  def update_viewed(view_loggable_item)
+    log = self.view_logs.find_by_view_loggable_id_and_view_loggable_type(view_loggable_item.id, view_loggable_item.class.to_s)
+    if log
+      log.touch
+    else
+      log = self.view_logs.new()
+      log.user_profile = self
+      log.view_loggable = view_loggable_item
+      log.save
+    end
+  end
+
   ###
   # This method checks to see if the specified user is the owner of this character.
   # [Args]
