@@ -19,7 +19,7 @@
               %td
                 %strong= link_to discussion.name, discussion_url(discussion, :subdomain => discussion.subdomain)
                 %br/
-                = truncate discussion.body, :length => 100, :separator => ' '
+                = truncate discussion.body, :length => 150, :separator => ' '
               %td= link_to discussion.community_name, root_url(:subdomain => discussion.subdomain)
               %td
                 %time

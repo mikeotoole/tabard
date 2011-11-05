@@ -375,6 +375,11 @@ button,
   label
     font-family: DinMedium, sans
   
+  input,
+  textarea
+    position: relative
+    z-index: 2
+  
   input[type="email"],
   input[type="text"],
   input[type="password"]
@@ -458,6 +463,24 @@ button,
           +bg_gradient(#2d7bb3,#155481)
   
   textarea
+      
+  .field_with_errors
+      
+    > input,
+    > textarea
+      border-color: #A43D33
+    
+    > mark.error
+      background: #A43D33
+      +border_radius(0,0,5,5)
+      color: #fff
+      display: block
+      font-family: DinMedium, sans
+      margin: -5px 0 0
+      padding: 10px 10px 5px
+      position: relative
+      width: 412px
+      z-index: 1
   
   .accountlinks
     border-left: 1px solid #ccc
@@ -513,6 +536,14 @@ button,
       
       button
         margin: -3px 0 0 20px
+      
+      mark
+        background: #A43D33
+        +border_radius(5)
+        color: #fff
+        float: right
+        font-family: DinMedium, sans
+        padding: 3px 6px
 
 
 @import application/footer

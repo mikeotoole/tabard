@@ -91,6 +91,11 @@ class ApplicationController < ActionController::Base
 ###
 protected
 
+  # Overrides default responder
+  def self.responder
+    AppResponder
+  end
+
   # Builds a list of the Crumblin supported games.
   def fetch_crumblin_games
     @active_games = Game.all

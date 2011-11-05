@@ -12,6 +12,7 @@
     border-right: 1px solid #fff
     border-top: 0
     +box_shadow(inset 0 0 5px rgba(#000,.2))
+    color: #251634
     font: 16px DinMedium
     height: 0
     line-height: 0
@@ -56,6 +57,13 @@
     &.alert
       +bg_gradient(#d73c31,#A13A32)
       color: #F6EAE9
+      
+      &:before
+        background-position: -450px -30px
+    
+    &.successz
+      +bg_gradient(#2D7CB4,#2D7CB4)
+      color: #CDEAFF
       
       &:before
         background-position: -450px -30px

@@ -6,6 +6,9 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
+
+Timecop.freeze(2.months.ago)
+
 puts "Creating TOS"
 tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1")
 puts "Creating PrivacyPolicy"
@@ -194,7 +197,16 @@ comment2.user_profile = k_fox.user_profile
 comment2.has_been_edited = true
 comment2.save
 
-puts "Adding announcements for Just Another Headshot Clan"
+Timecop.return
+
+puts "Adding an old announcement for Just Another Headshot Clan"
+Timecop.freeze(3.weeks.ago)
+jahc_a_old = jahc.community_announcement_space.discussions.new(:name => "This announcement is derp old", :body => "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.")
+jahc_a_old.user_profile = robobilly.user_profile
+jahc_a_old.save
+Timecop.return
+
+puts "Adding newer announcements for Just Another Headshot Clan"
 jahc_a1 = jahc.community_announcement_space.discussions.new(:name => "Website is up and running!", :body => "This new website is off the hook!")
 jahc_a1.user_profile = robobilly.user_profile
 jahc_a1.save

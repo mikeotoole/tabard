@@ -212,6 +212,14 @@ class UserProfile < ActiveRecord::Base
     # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
     self.announcements.reject{|announcement| self.has_seen?(announcement)}
   end
+  
+  ###
+  # This method gets an array of unviewed announcements within the past two weeks
+  # [Returns] An array of unviewed messages within the past two weeks.
+  ###
+  def recent_unread_announcements
+    self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago}
+  end
 
   ###
   # This method gets an array of possible active profile options.

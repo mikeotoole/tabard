@@ -351,187 +351,210 @@ body
     li
       padding: 10px 0
   
-    label
-      display: block
-      font-family: DinMedium, sans
-      margin: 0 0 5px
-    
-    input[type="email"],
-    input[type="password"],
-    input[type="text"],
-    textarea
-      background: #eee
-      color: #66482f
-      +bg_gradient(#ddd,#eee)
-      +border_radius(5)
-      +box_shadow(0 0 3px #ddd)
-      border: 1px solid #fff
-      display: block
-      +transition(box-shadow .2s linear)
-      width: 410px
-      
-      &:focus
-        background: #ECDDD8
-        +box_shadow(0 0 8px #560B17)
-        +bg_gradient(#FDF3EE,#F2E5E1)
-        color: #580B15
-    
-    input[type="email"],
-    input[type="password"],
-    input[type="text"]
-      line-height: 30px
-      padding: 0 10px
-    
-    textarea
-      height: 240px
-      padding: 10px
-    
-    input[type="checkbox"],
-    input[type="radio"]
-      height: 1px
-      margin: 10px 0 0 5px
-      position: absolute
-      width: 1px
-      z-index: 1
-      
-      + label
+      label
         display: block
-        line-height: 24px
+        font-family: DinMedium, sans
         margin: 0 0 5px
+      
+      input,
+      textarea
         position: relative
-        text-indent: 34px
         z-index: 2
-        
-        &:before
-          background: #eee
-          +bg_gradient(#ddd,#eee)
-          border: 1px solid #fff
-          +border_radius(5)
-          +box_shadow(0 0 3px #ddd)
-          content: ''
-          height: 24px
-          left: 0
-          position: absolute
-          top: 0
-          width: 24px
       
-      &:focus + label
-      
-        &:before
-          background: #d7eaf8
-          +box_shadow(0 0 8px #2d7cb4)
-          +bg_gradient(#f2f8fd,#d7eaf8)
-      
-      &:checked
-  
-        + label
-              
-          &:after
-            background: #ddd
-            +bg_gradient(#7a569e,#51346e)
-            border: 1px solid #ddd
-            +border_radius(20)
-            +box_shadow(0 0 9px #999)
-            content: ''
-            height: 14px
-            left: 5px
-            position: absolute
-            top: 5px
-            width: 14px
-            z-index: 2
-        
-        &:focus + label,
-        &:hover + label,
-        + label:hover
-                
-          &:after
-            background: #be4124
-            +bg_gradient(#2d7bb3,#155481)
-    
-    .select
-      height: 55px
-      position: relative
-    
-      ul
+      input[type="email"],
+      input[type="password"],
+      input[type="text"],
+      textarea
         background: #eee
+        color: #66482f
         +bg_gradient(#ddd,#eee)
         +border_radius(5)
         +box_shadow(0 0 3px #ddd)
         border: 1px solid #fff
         display: block
-        height: 0
-        line-height: 30px
-        overflow: hidden
-        padding: 30px 1px 1px
-        position: absolute
         +transition(box-shadow .2s linear)
-        width: 430px
-        z-index: 9
-            
-        &:before
-          border: 5px solid transparent
-          border-top-color: #bea761
-          content: ''
-          height: 0
-          position: absolute
-          right: 10px
-          top: 13px
-          width: 0
-          z-index: 10
+        width: 410px
         
-        li
-          padding: 0
-          
-          label
-            background: #ECDDD8
-            +bg_gradient(#FDF3EE,#F2E5E1)
-            +border_radius(5)
-            border-top: 1px solid #ECDDD8
-            color: #66482f
-            display: none
-            font-family: DinMedium, sans
-            height: 30px
-            line-height: 30px
-            margin: 1px 0 0
-            padding: 0 5px
-            text-indent: 0
-            
-            &:before,
-            &:after
-              display: none
-          
-          input
-            left: -500em
-            position: absolute
-            
-            &:checked + label
-              background: transparent
-              border-top-color: transparent
-              color: #66482f
-              display: block
-              font-family: DinLight, sans
-              position: absolute
-              top: 0
-              width: 420px
-              z-index: 3
-        
-        &:hover
+        &:focus
           background: #ECDDD8
           +box_shadow(0 0 8px #560B17)
           +bg_gradient(#FDF3EE,#F2E5E1)
           color: #580B15
-          height: auto
+      
+      input[type="email"],
+      input[type="password"],
+      input[type="text"]
+        line-height: 30px
+        padding: 0 10px
+      
+      textarea
+        height: 240px
+        padding: 10px
+      
+      input[type="checkbox"],
+      input[type="radio"]
+        height: 1px
+        margin: 10px 0 0 5px
+        position: absolute
+        width: 1px
         
-          li
+        + label
+          display: block
+          line-height: 24px
+          margin: 0 0 5px
+          position: relative
+          text-indent: 34px
+          z-index: 3
           
-            label
-              color: #580B15 !important
-              display: block
-              position: static
+          &:before
+            background: #eee
+            +bg_gradient(#ddd,#eee)
+            border: 1px solid #fff
+            +border_radius(5)
+            +box_shadow(0 0 3px #ddd)
+            content: ''
+            height: 24px
+            left: 0
+            position: absolute
+            top: 0
+            width: 24px
+        
+        &:focus + label
+        
+          &:before
+            background: #d7eaf8
+            +box_shadow(0 0 8px #2d7cb4)
+            +bg_gradient(#f2f8fd,#d7eaf8)
+        
+        &:checked
+    
+          + label
+                
+            &:after
+              background: #ddd
+              +bg_gradient(#7a569e,#51346e)
+              border: 1px solid #ddd
+              +border_radius(20)
+              +box_shadow(0 0 9px #999)
+              content: ''
+              height: 14px
+              left: 5px
+              position: absolute
+              top: 5px
+              width: 14px
+              z-index: 2
+          
+          &:focus + label,
+          &:hover + label,
+          + label:hover
+                  
+            &:after
+              background: #be4124
+              +bg_gradient(#2d7bb3,#155481)
+      
+      .select
+        height: 55px
+        position: relative
+      
+        ul
+          background: #eee
+          +bg_gradient(#ddd,#eee)
+          +border_radius(5)
+          +box_shadow(0 0 3px #ddd)
+          border: 1px solid #fff
+          display: block
+          height: 0
+          line-height: 30px
+          overflow: hidden
+          padding: 30px 1px 1px
+          position: absolute
+          +transition(box-shadow .2s linear)
+          width: 430px
+          z-index: 9
+              
+          &:before
+            border: 5px solid transparent
+            border-top-color: #bea761
+            content: ''
+            height: 0
+            position: absolute
+            right: 10px
+            top: 13px
+            width: 0
+            z-index: 10
+          
+          li
+            padding: 0
             
-              &:hover
-                background: #580B15
-                color: #fff !important
+            label
+              background: #ECDDD8
+              +bg_gradient(#FDF3EE,#F2E5E1)
+              +border_radius(5)
+              border-top: 1px solid #ECDDD8
+              color: #66482f
+              display: none
+              font-family: DinMedium, sans
+              height: 30px
+              line-height: 30px
+              margin: 1px 0 0
+              padding: 0 5px
+              text-indent: 0
+              
+              &:before,
+              &:after
+                display: none
+            
+            input
+              left: -500em
+              position: absolute
+              
+              &:checked + label
+                background: transparent
+                border-top-color: transparent
+                color: #66482f
+                display: block
+                font-family: DinLight, sans
+                position: absolute
+                top: 0
+                width: 420px
+                z-index: 3
+          
+          &:hover
+            background: #ECDDD8
+            +box_shadow(0 0 8px #560B17)
+            +bg_gradient(#FDF3EE,#F2E5E1)
+            color: #580B15
+            height: auto
+          
+            li
+            
+              label
+                color: #580B15 !important
+                display: block
+                position: static
+              
+                &:hover
+                  background: #580B15
+                  color: #fff !important
+    
+      
+      &.field_with_errors
+        
+        > input,
+        > textarea
+          border-color: #A43D33
+        
+        > mark.error
+          background: #A43D33
+          +border_radius(0,0,5,5)
+          color: #fff
+          display: block
+          font-family: DinMedium, sans
+          margin: -5px 0 0
+          padding: 10px 10px 5px
+          position: relative
+          z-index: 1
+        
   
   .full
     

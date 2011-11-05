@@ -8,10 +8,10 @@
     %fieldset
       %ol
         = f.input :email, :as => :email
-        = simple_fields_for :user_profile do |uf|
-          = uf.input :display_name
-          = uf.input :password
-          = uf.input :password_confirmation
+        = f.simple_fields_for :user_profile do |uf|
+          = uf.input :display_name, :required => false
+        = f.input :password
+        = f.input :password_confirmation
       -unless @user.has_accepted_current_terms_of_service?
         %h2 Terms of Service
         .document
