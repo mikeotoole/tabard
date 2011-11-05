@@ -6,6 +6,7 @@ class SiteActionController < ApplicationController
   skip_before_filter :authenticate_user!
   skip_before_filter :ensure_active_profile_is_valid
   skip_before_filter :fetch_crumblin_games
+  skip_before_filter :check_maintenance_mode
 
 ###
 # Actions
@@ -14,14 +15,14 @@ class SiteActionController < ApplicationController
   def toggle_maintenance_mode
     if can?(:toggle_maintenance_mode, SiteActionController)
       if maintenance_mode?
-        stop_maintenance_mode
+        ENV['maintenance_mode'] = 'OFF'
       else
-        start_maintenance_mode
+        ENV['maintenance_mode'] = 'ON'
       end
       notice = (maintenance_mode? ? "Maintenance Mode On" : "Maintenance Mode Off")
-      redirect_to previous_page, :notice => notice
+      redirect_to admin_dashboard_url, :notice => notice
     else
-      redirect_to previous_page, :alert => "You are not authorized!"
+      redirect_to admin_dashboard_url, :alert => "You are not authorized!"
     end      
   end
 end

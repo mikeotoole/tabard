@@ -71,7 +71,7 @@ ActiveAdmin.register User do
  
   collection_action :sign_out_all_users, :method => :post do
     User.force_active_users_to_sign_out
-    redirect_to previous_page, :notice => "All Users Signed out"
+    redirect_to admin_dashboard_url, :notice => "All Users Signed out"
   end 
     
   filter :email

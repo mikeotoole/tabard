@@ -125,6 +125,7 @@ DaBvRails::Application.routes.draw do
   get "/intro" => "crumblin#intro", :as => 'crumblin_intro'
   get "/features" => "crumblin#features", :as => 'crumblin_features'
   get "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
+  get "/maintenance" => "crumblin#maintenance", :as => 'crumblin_maintenance'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

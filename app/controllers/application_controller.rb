@@ -30,7 +30,11 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
   
+  # This before_filter checks if user needs to be logged out.
   before_filter :check_force_logout
+  
+  # This before_filter checks if system is in maintenance mode.
+  before_filter :check_maintenance_mode
 
 ###
 # Status Code Rescues
@@ -95,8 +99,8 @@ class ApplicationController < ActionController::Base
   end
   
   ###
-  # Used to check for maintenance mode
-  # [Returns] true if 
+  # Used to check for maintenance mode.
+  # [Returns] true if maintenance mode is on, false otherwise.
   ###
   def maintenance_mode?
     ENV['maintenance_mode'] ||= 'ON'
@@ -111,16 +115,6 @@ class ApplicationController < ActionController::Base
 # Protected Methods
 ###
 protected
-
-  # Sets the maintenance mode value to off
-  def stop_maintenance_mode
-    ENV['maintenance_mode'] = 'OFF'
-  end
-  
-  # Sets the maintenance mode value to on
-  def start_maintenance_mode
-    ENV['maintenance_mode'] = 'ON'
-  end
 
   # Builds a list of the Crumblin supported games.
   def fetch_crumblin_games
@@ -234,21 +228,6 @@ protected
     session[:current_page] = request.url
   end
 
-  def check_force_logout
-    if current_user and current_user.force_logout
-      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance."
-    end
-  end
-
-  ###
-  # _after_filter_
-  #
-  # This method remembers the previous crumblin page in the session variable [:last_page]
-  ###
-  def remember_last_page
-    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
-  end
-
   ###
   # _before_filter_
   #
@@ -269,6 +248,39 @@ protected
         end
       end
     end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This looks to see if the user should be forced to logout after an Admin forces all logged in users to logout.
+  ###
+  def check_force_logout
+    if current_user and current_user.force_logout
+      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance."
+    end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This looks to see if the system is in maintenance mode. If so all traffic is redirected to the maintenance page.
+  ###
+  def check_maintenance_mode
+    if maintenance_mode?
+      redirect_to crumblin_maintenance_url
+    else
+      true  
+    end   
+  end
+  
+  ###
+  # _after_filter_
+  #
+  # This method remembers the previous crumblin page in the session variable [:last_page]
+  ###
+  def remember_last_page
+    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
   
 end
