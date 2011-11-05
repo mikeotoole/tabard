@@ -8,6 +8,7 @@
 class TermsOfService < Document
   after_save :reset_user_acceptance
 
+  # Sets a user's acceptance of the Terms of Service to false
   def reset_user_acceptance
     if self == TermsOfService.first
       User.update_all(:accepted_current_terms_of_service => false)

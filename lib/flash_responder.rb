@@ -1,4 +1,13 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This responder groups together and adds functionality to the default flash alert/error/notice/messaging.
+###
 module FlashResponder
+  
+  # Strips the data from flash[:alert], flash[:error], and flash[:notice] and places it within the flash[:messages] array
   def to_html
     unless get? || options.delete(:flash) == false
       namespace = controller.controller_path.split('/')

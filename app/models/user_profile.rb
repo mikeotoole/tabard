@@ -173,6 +173,10 @@ class UserProfile < ActiveRecord::Base
     )}.exists?
   end
 
+  ###
+  # This method logs the viewing of the given loggable item by the current user a the current time.
+  # [Args]
+  #   * +view_loggable_item+ -> The view-loggable object to log as viewed.
   def update_viewed(view_loggable_item)
     log = self.view_logs.find_by_view_loggable_id_and_view_loggable_type(view_loggable_item.id, view_loggable_item.class.to_s)
     if log
