@@ -1,6 +1,5 @@
 DaBvRails::Application.routes.draw do
   get "/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
-
   post "/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   resources :documents
