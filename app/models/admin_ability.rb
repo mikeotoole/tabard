@@ -9,7 +9,7 @@ class AdminAbility
   def initialize(user)
     user ||= AdminUser.new
 
-    bakedInRules(user) if user.persisted?
+    bakedInRules(user) if user.persisted? and user.is_a?(AdminUser)
   end
   
   ###
@@ -20,6 +20,7 @@ class AdminAbility
   def bakedInRules(user)  
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
+      can [:read], ActiveAdmin::Dashboards::DashboardController
       can [:read, :lock, :unlock, :reset_password], User
       can [:read], UserProfile
       can [:read, :destroy], Community

@@ -16,7 +16,7 @@ ActiveAdmin.register User do
 
   action_item :only => :show do
     if can? :reset_password, user
-      link_to "Reset Password", reset_password_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
+      link_to "Reset Password", reset_password_admin_user_path(user), :method => :get, :confirm => 'Are you sure you want to reset user password?'
     end  
   end
 
@@ -40,7 +40,7 @@ ActiveAdmin.register User do
     redirect_to :action => :show
   end
   
-  member_action :reset_password, :method => :put do
+  member_action :reset_password, :method => :get do
     user = User.find(params[:id])
     random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
     user.password = random_password

@@ -93,6 +93,8 @@ ActiveAdmin.setup do |config|
   config.skip_before_filter :fetch_active_games
   
   ActiveAdmin::Devise::SessionsController.skip_before_filter :check_maintenance_mode
+  
+  ActiveAdmin::Dashboards::DashboardController.before_filter :authorize_dashboard_index, :only => :index
 
   # == Register Stylesheets & Javascripts
   #
@@ -111,4 +113,8 @@ def sign_out_current_user
   if current_user
     sign_out(current_user) 
   end
+end
+
+def authorize_dashboard_index
+  authorize! :index, ActiveAdmin::Dashboards::DashboardController
 end
