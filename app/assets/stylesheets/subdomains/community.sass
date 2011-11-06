@@ -941,7 +941,7 @@ body
         
         &.locked
           
-          >blockquote
+          blockquote
           
             >p
               
@@ -949,13 +949,15 @@ body
                 display: none
             
             >.actions
-          
-              .edit,
-              .delete,
-              .lock
+            
+              a
                 display: none
+            
+          >blockquote
+            
+            >.actions
               
-              .unlock
+              >.unlock
                 display: block
           
         &.deleted

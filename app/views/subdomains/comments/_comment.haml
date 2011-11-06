@@ -12,16 +12,15 @@
           = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since " + (l comment.user_profile_created_at, :format => :short)
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
-        - if not comment.has_been_deleted and not comment.replys_locked?
+        - unless comment.has_been_deleted or comment.replies_locked?
           %span.body
             = comment.body
           = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, 'data-type' => :text, :class => 'reply'
         - if comment.has_been_deleted
           %em Comment was deleted
-        - elsif comment.replys_locked?
+        - elsif comment.replies_locked?
           %em Comment is locked
       %span.actions
-        -# TODO Doug - Talk with joe about permissions issue, below
         - if (can? :update, as_unlocked(comment))
           = link_to 'Edit comment', edit_comment_path(comment), :remote => true, 'data-type' => :text, :class => 'edit', :title => 'Edit comment'
         - if (can? :destroy, as_unlocked(comment))

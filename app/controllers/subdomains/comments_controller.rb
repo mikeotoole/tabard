@@ -74,7 +74,11 @@ class Subdomains::CommentsController < ApplicationController
   # POST /comments/:id/unlock(.:format)
   def unlock
     @comment.has_been_locked = false
-    render :json => @comment.save ? true : false
+    if @commenet.save
+      render :partial => 'form', :locals => { :comment => @comment }
+    else
+      render :json => false
+    end
   end
 
 ###

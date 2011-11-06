@@ -118,12 +118,12 @@ class Comment < ActiveRecord::Base
   end
 
   ###
-  # This method checks to see if replys to this comment are allowed.
-  # [Returns] True if replys are allowed for this comment, otherwise false.
+  # This method checks to see if replies to this comment are allowed.
+  # [Returns] True if replies are allowed for this comment, otherwise false.
   ###
-  def replys_locked?
+  def replies_locked?
     self.has_been_locked or
-    (self.commentable.respond_to?('replys_locked?') and self.commentable.replys_locked?) or
+    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
     not self.original_comment_item.comments_enabled? or
     (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
   end

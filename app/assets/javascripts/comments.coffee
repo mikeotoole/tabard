@@ -31,7 +31,7 @@ $(document).ready ->
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      alert 'Unable to make comment.'
+      $.alert { body: 'Unable to make comment.' }
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
@@ -50,7 +50,7 @@ $(document).ready ->
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      alert 'Unable to edit comment.'
+      $.alert { body: 'Unable to edit comment.' }
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
@@ -63,7 +63,7 @@ $(document).ready ->
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
-      alert 'Unable to delete comment.'
+      $.alert { body: 'Unable to delete comment.' }
     .live 'ajax:success', (xhr, status, error) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
@@ -87,7 +87,7 @@ $(document).ready ->
   # Locks a comment and updates the DOM
   $('.comments .lock[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
-      alert 'Unable to lock comment.'
+      $.alert { body: 'Unable to lock comment.' }
     .live 'ajax:success', (xhr, status, error) ->
       $(this).closest('li')
         .addClass('locked')
@@ -97,12 +97,16 @@ $(document).ready ->
   # Unlocks a comment and updates the DOM   
   $('.comments .unlock[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
-      alert 'Unable to unlock comment.'
+      $.alert { body: 'Unable to unlock comment.' }
     .live 'ajax:success', (xhr, status, error) ->
-      li = $(this).closest('li')
-      p = li.find('>blockquote >p')
-      li.removeClass('locked')
-      p.find('em').remove()
+      $.alert { body: xhr.responseText }
+      $(this)
+        .closest('li')
+        .before(xhr.responseText)
+        .prev()
+        .find('form')
+        .trigger 'load'
+      $(this).remove()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
@@ -112,7 +116,7 @@ $(document).ready ->
           $(this).addClass('busy')
         .bind 'ajax:error', (xhr, status, error) ->
           $(this).removeClass('busy')
-          alert 'Error: unable to post comment.'
+          $.alert { body: 'Error: unable to post comment.' }
           $(this).find('textarea').focus()
         .bind 'ajax:success', (event, data, status, xhr) ->
           if $(this).parents('li').length
@@ -154,6 +158,10 @@ $(document).ready ->
           $(this).closest('form').find('textarea').focus()
     .trigger 'load'
   
+  # Collapses children of locked comments
+  $('.comments li.locked >ol >li').addClass 'collapsed'
+  
+  # Collapses every 5th tier of comments
   $('.comments li').collapsable()
   $('.comments li').each ->
     unless ($(this).parents('li').length + 6) % 5
