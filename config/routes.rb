@@ -123,6 +123,8 @@ DaBvRails::Application.routes.draw do
   get "/intro" => "crumblin#intro", :as => 'crumblin_intro'
   get "/features" => "crumblin#features", :as => 'crumblin_features'
   get "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
+  get "/privacy-policy" => "crumblin#privacy_policy", :as => 'crumblin_privacy_policy'
+  get "/terms-of-service" => "crumblin#terms_of_service", :as => 'crumblin_terms_of_service'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

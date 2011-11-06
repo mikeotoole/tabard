@@ -1,15 +1,27 @@
 #footer
   background: #fff
-  +border_radius(3)
+  border: 1px solid #ccc
+  border-bottom: 0
+  border-right: 0
+  +border_radius(5,0,0,0)
   bottom: 0
+  +box_shadow(0 0 10px rgba(#000,.2))
+  color: #666
   font-family: DinMedium, sans
   font-size: 11px
-  left: 0
-  +opacity(0)
-  padding: 5px
+  +opacity(.8)
+  padding: 5px 30px 5px 5px
   position: fixed
+  right: 0
   +transition(opacity .2s linear)
   z-index: 99
   
   &:hover
-    +opacity(.5)
+    margin: 0
+    +opacity(1)
+  
+  a
+    text-decoration: underline
+    
+    &:hover
+      color: #BE4124
