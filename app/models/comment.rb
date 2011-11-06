@@ -12,19 +12,6 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id
 
 ###
-# Attribute accessor
-###
-  ###
-  # This attribute is for javascript to let a comment know what dom element is the target for the comment form after a comment has been submitted.
-  ###
-  attr_accessor :form_target
-
-  ###
-  # This attribute is for javascript to let a comment know what dom element is the target for the comment when it created.
-  ###
-  attr_accessor :comment_target
-
-###
 # Associations
 ###
   belongs_to :user_profile
@@ -44,7 +31,6 @@ class Comment < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
-
 
 ###
 # Validators
