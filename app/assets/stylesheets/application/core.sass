@@ -61,12 +61,15 @@
       &:before
         background-position: -450px -30px
     
-    &.successz
-      +bg_gradient(#2D7CB4,#2D7CB4)
+    &.success
+      +bg_gradient(#4a95ca,#266c9e)
       color: #CDEAFF
       
       &:before
-        background-position: -450px -30px
+        background-position: -480px -30px
+        
+      &:hover
+        color: #fff
     
     &.notice
       +bg_gradient(#c3a606,#ac9200)
@@ -74,6 +77,9 @@
       
       &:before
         background-position: -60px -30px
+        
+      &:hover
+        color: #fff
     
     &.announcement
       +bg_gradient(#74548e,#5f4078)
@@ -81,6 +87,9 @@
       
       &:before
         background-position: -450px -30px
+      
+      &:hover
+        color: #fff
     
     .dismiss,
     .read
@@ -123,7 +132,6 @@
     
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
-      color: #fff
       z-index: 89
       
       &:before
