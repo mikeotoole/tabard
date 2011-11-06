@@ -86,27 +86,28 @@ $(document).ready ->
   
   # Locks a comment and updates the DOM
   $('.comments .lock[data-remote]')
-    .live 'ajax:error', (event, data, status, xhr) ->
+    .live 'ajax:error', (xhr, status, error) ->
       $.alert { body: 'Unable to lock comment.' }
-    .live 'ajax:success', (xhr, status, error) ->
-      $(this).closest('li')
+    .live 'ajax:success', (event, data, status, xhr) ->
+      li = $(this).closest('li')
+      li
         .addClass('locked')
-        .find('>blockquote >p .reply[data-remote]')
+        .find('.reply[data-remote]')
         .after('<em>Comment is locked</em>')
+      li.find('>ol >li').addClass('collapsed')
   
   # Unlocks a comment and updates the DOM   
   $('.comments .unlock[data-remote]')
-    .live 'ajax:error', (event, data, status, xhr) ->
+    .live 'ajax:error', (xhr, status, error) ->
       $.alert { body: 'Unable to unlock comment.' }
-    .live 'ajax:success', (xhr, status, error) ->
-      $.alert { body: xhr.responseText }
-      $(this)
-        .closest('li')
-        .before(xhr.responseText)
-        .prev()
-        .find('form')
-        .trigger 'load'
-      $(this).remove()
+    .live 'ajax:success', (event, data, status, xhr) ->
+      li = $(this).closest('li')
+      li.before(xhr.responseText)
+      li2 = li.prev()
+      li2.collapsable()
+      li2.find('li').collapsable()
+      li2.find('form').trigger 'load'
+      li.remove()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
@@ -152,8 +153,9 @@ $(document).ready ->
               $(this).remove()
           container
             .find('>ol >li:last')
-            .collapsable()
-      $(this).find('.profile label')
+            .collapsable
+      $(this)
+        .find('.profile label')
         .bind 'click', ->
           $(this).closest('form').find('textarea').focus()
     .trigger 'load'
