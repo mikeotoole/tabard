@@ -24,11 +24,20 @@ describe MailboxController do
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
 
   describe "GET inbox" do
-    it "assigns all messages inbox folder as @messages when authenticated as user" do
+    it "assigns todays messages as @todays_messages when authenticated as user" do
       message
       sign_in receiver
       get :inbox
-      assigns(:messages).last.should eq(message.message_associations.first)
+      assigns(:todays_messages).first.should eq(message.message_associations.first)
+    end
+    
+    it "assigns older messages as @older_messages when authenticated as user" do
+      message
+      message.created_at = Time.now - 1.week
+      message.save.should be_true      
+      sign_in receiver
+      get :inbox
+      assigns(:older_messages).last.should eq(message.message_associations.first)
     end
     
     it "assigns inbox folder as @folder when authenticated as user" do
@@ -51,7 +60,7 @@ describe MailboxController do
   end
 
   describe "GET trash" do
-    it "assigns all messages in trash folder as @messages when authenticated as user" do
+    it "assigns all todays messages in trash folder as @todays_messages when authenticated as user" do
       message_association = message.message_associations.first
       message_association.should be_a(MessageAssociation)
       message_association.folder = receiver.trash
@@ -59,7 +68,20 @@ describe MailboxController do
       message_association.folder.name.should eq("Trash")
       sign_in receiver
       get :trash
-      assigns(:messages).should eq([message_association])
+      assigns(:todays_messages).should eq([message_association])
+    end
+
+    it "assigns all messages not from today in trash folder as @older_messages when authenticated as user" do
+      message_association = message.message_associations.first
+      message_association.should be_a(MessageAssociation)
+      message_association.folder = receiver.trash
+      message.created_at = Time.now - 1.week
+      message.save.should be_true
+      message_association.save.should be_true
+      message_association.folder.name.should eq("Trash")
+      sign_in receiver
+      get :trash
+      assigns(:older_messages).should eq([message_association])
     end
     
     it "assigns trash folder as @folder when authenticated as user" do

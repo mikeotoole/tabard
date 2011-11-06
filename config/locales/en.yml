@@ -4,7 +4,10 @@
 en:
   time:
     formats:
-      short: "%b %e, %Y"
+      time_12: "%l:%M%p"
+      time_24: "%H:%M"
+      date_short: "%b %e, %Y"
+      date_monthday: "%b %e"
   hello: "Hello world"
   activerecord:
     error:

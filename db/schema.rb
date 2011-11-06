@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111003171533) do
+ActiveRecord::Schema.define(:version => 20111025040117) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -178,7 +178,9 @@ ActiveRecord::Schema.define(:version => 20111003171533) do
     t.integer  "message_id"
     t.integer  "recipient_id"
     t.integer  "folder_id"
-    t.boolean  "deleted",      :default => false
+    t.boolean  "deleted",       :default => false
+    t.boolean  "has_been_read", :default => false
+    t.datetime "created_at"
     t.datetime "updated_at"
   end
 

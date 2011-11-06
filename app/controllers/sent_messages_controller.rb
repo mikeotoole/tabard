@@ -5,8 +5,9 @@
 #
 # This controller is for sent messages.
 ###
-class SentMessagesController < ApplicationController
+class SentMessagesController < MailboxController
   respond_to :html
+  layout 'messaging'
 ###
 # Callbacks
 ###
@@ -14,7 +15,8 @@ class SentMessagesController < ApplicationController
 
   # GET /mail/sent(.:format)
   def index
-    @messages = current_user.sent_messages
+    @messages = current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!
+    @mailbox_view_state = 'sent'
     respond_with(@messages)
   end
 
@@ -22,13 +24,16 @@ class SentMessagesController < ApplicationController
   def show
     @message = current_user.sent_messages.find(params[:id])
     authorize!(:read, @message)
+    @mailbox_view_state = 'sent'
     respond_with(@message)
   end
 
   # GET /mail/compose(.:format)
   def new
-    @message = current_user.sent_messages.build(:to => [-1])
+    to = [((params[:id] && current_user.address_book.collect{ |p| p.id.to_s }.flatten.include?(params[:id])) ? params[:id] : -1)]
+    @message = current_user.sent_messages.build(:to => to)
     authorize!(:create, @message)
+    @mailbox_view_state = 'compose'
     respond_with(@message)
   end
 

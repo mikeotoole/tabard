@@ -30,7 +30,6 @@ class Permission < ActiveRecord::Base
   validates :permission_level, :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" },
       :unless => Proc.new { |permission| permission.permission_level.blank? }
 
-
   validate :action_or_permission_level
 
 ###

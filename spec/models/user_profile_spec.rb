@@ -233,7 +233,7 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.received_messages.count.should eq(startCount + 1)
-      new_profile.received_messages.last.should eq(message.message_associations.first)
+      new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as deleted" do
@@ -245,6 +245,28 @@ describe UserProfile do
       message.save.should be_true
       new_profile.received_messages.count.should eq(startCount + 2)
       new_profile.received_messages.find(message).deleted.should be_true
+    end
+  end
+  
+    
+  describe "unread_messages" do
+    it "should return all the users unread messages" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.unread_messages.count
+      message = create(:message)
+      message.recipients.first.should eq(new_profile)
+      new_profile.unread_messages.count.should eq(startCount + 1)
+      new_profile.unread_messages.first.should eq(message.message_associations.first)
+    end
+    
+    it "should not return unread messages marked as deleted" do
+      new_profile = DefaultObjects.additional_community_user_profile
+      startCount = new_profile.unread_messages.count
+      message = create(:message)
+      message.message_associations.first.update_attributes(:deleted => true)
+      MessageAssociation.find(message.message_associations.first).deleted.should be_true
+      message.recipients.first.should eq(new_profile)
+      new_profile.unread_messages.count.should eq(startCount)
     end
   end
   
@@ -312,4 +334,47 @@ describe UserProfile do
       end
     end
   end
+
+  describe "read_announcements" do
+    before(:each) do
+      @profile_with_announcements = DefaultObjects.user_profile
+      @profile_with_announcements.announcements.size.should be > 0
+      @profile_with_announcements.unread_announcements.size.should >= 1
+      @unread_announcement = @profile_with_announcements.unread_announcements.first
+    end
+    it "should only contain read announcements" do
+      @profile_with_announcements.read_announcements.each do |announcement|
+        @profile_with_announcements.has_seen?(announcement).should be_true
+      end
+      @profile_with_announcements.read_announcements.include?(@unread_announcement).should be_false
+    end
+    it "should automaticaly get updated when a user reads an announcement" do
+      @profile_with_announcements.update_viewed(@unread_announcement)
+      @profile_with_announcements.has_seen?(@unread_announcement).should be_true
+      @profile_with_announcements.read_announcements.include?(@unread_announcement).should be_true
+      @profile_with_announcements.unread_announcements.include?(@unread_announcement).should be_false
+    end
+  end
+
+  describe "unread_announcements" do
+    before(:each) do
+      @profile_with_announcements = DefaultObjects.user_profile
+      @profile_with_announcements.announcements.size.should be > 0
+    end
+    it "should only contain unread announcements" do
+      @profile_with_announcements.unread_announcements.each do |announcement|
+        @profile_with_announcements.has_seen?(announcement).should be_false
+      end
+    end
+    it "should automaticaly get updated when an announcement is made" do
+      unread_size = @profile_with_announcements.unread_announcements.size
+      announcement = DefaultObjects.community.community_announcement_space.discussions.new(:name => "asdf;ajs;lfjasljf", 
+        :body => "Herp Derp!")
+      announcement.user_profile = DefaultObjects.community.admin_profile
+      announcement.save
+      @profile_with_announcements = UserProfile.find(@profile_with_announcements)
+      @profile_with_announcements.unread_announcements.size.should_not eq(unread_size)
+    end
+  end
+  
 end

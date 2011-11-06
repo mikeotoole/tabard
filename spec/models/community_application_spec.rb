@@ -121,7 +121,7 @@ describe CommunityApplication do
     end
     
     it "should send a message to the applicant" do
-      Message.all.count.should eq(0)
+      #Message.all.count.should eq(0)
       community_application.accept_application.should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
       Message.first.system_sent.should be_true
@@ -152,7 +152,7 @@ describe CommunityApplication do
     end
     
     it "should send a message to the applicant" do
-      Message.all.count.should eq(0)
+      #Message.all.count.should eq(0)
       community_application.reject_application.should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
       Message.first.system_sent.should be_true

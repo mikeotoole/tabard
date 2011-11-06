@@ -229,8 +229,8 @@ class Ability
     cannot [:update, :destroy], Message do |message|
       true
     end
-    can :manage, MessageAssociation do |message|
-      message.recipient_id == user.user_profile.id
+    can :manage, MessageAssociation do |message_association|
+      message_association.recipient_id == user.user_profile.id
     end
   end
 

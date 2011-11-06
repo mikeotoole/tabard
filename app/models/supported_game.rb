@@ -12,6 +12,11 @@ class SupportedGame < ActiveRecord::Base
   belongs_to :community
   belongs_to :game
   belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
+  
+###
+# Delegates
+###
+  delegate :name, :to => :game, :allow_nil => true
 
 ###
 # Validators
