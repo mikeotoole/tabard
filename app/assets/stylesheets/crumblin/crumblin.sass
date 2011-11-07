@@ -351,8 +351,34 @@ button,
           &:hover
             +box_shadow(0 0 10px #000)
   
+  fieldset
+    
+    ol
+      padding: 0
+      
+      li
+        margin: 15px 0
+        
+        &:before
+          display: none
+        
+        &.field_with_errors
+          
+          mark
+            +border_radius(5)
+            color: #BD4028
+            display: block
+            font: 14px DinMedium, sans
+            padding: 5px
+            width: 100%
+  
   label
     font-family: DinMedium, sans
+  
+  input,
+  textarea
+    position: relative
+    z-index: 2
   
   input[type="email"],
   input[type="text"],
@@ -437,6 +463,24 @@ button,
           +bg_gradient(#2d7bb3,#155481)
   
   textarea
+      
+  .field_with_errors
+      
+    > input,
+    > textarea
+      border-color: #A43D33
+    
+    > mark.error
+      background: #A43D33
+      +border_radius(0,0,5,5)
+      color: #fff
+      display: block
+      font-family: DinMedium, sans
+      margin: -5px 0 0
+      padding: 10px 10px 5px
+      position: relative
+      width: 412px
+      z-index: 1
   
   .accountlinks
     border-left: 1px solid #ccc
@@ -445,6 +489,61 @@ button,
     right: 30px
     top: 60px
     width: 340px
+  
+  .document
+    background: #eee
+    +bg_gradient(#eee,#fff)
+    border: 1px solid #fff
+    +border_radius(5)
+    +box_shadow(0 0 3px rgba(#000,.2))
+    margin: 0 0 20px
+    
+    p
+      padding: 20px 20px 0
+  
+    .scroll
+      +bg_gradient(#ddd,#fff)
+      +border_radius(5,5,0,0)
+      margin: 0 0 -40px
+      overflow: scroll
+      overflow-x: hidden
+      padding: 10px 0 30px
+  
+    .accept
+      background: #ccc
+      +bg_gradient(#bbb,#ddd)
+      +border_radius(0,0,5,5)
+      border-top: 1px solid #999
+      height: 26px
+      margin: 40px 0 0
+      padding: 10px
+      position: relative
+      
+      &:before
+        border-bottom: 1px solid #999
+        +bg_gradient(rgba(#eee,0),rgba(#999,.5))
+        content: ''
+        height: 20px
+        left: 0
+        pointer-events: none
+        position: absolute
+        right: 0
+        top: -21px
+      
+      label,
+      button
+        float: left
+      
+      button
+        margin: -3px 0 0 20px
+      
+      mark
+        background: #A43D33
+        +border_radius(5)
+        color: #fff
+        float: right
+        font-family: DinMedium, sans
+        padding: 3px 6px
 
 
 @import application/footer

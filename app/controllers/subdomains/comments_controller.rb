@@ -7,7 +7,7 @@
 ###
 class Subdomains::CommentsController < ApplicationController
   layout nil
-  
+
 ###
 # Before Filters
 ###
@@ -16,7 +16,7 @@ class Subdomains::CommentsController < ApplicationController
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-  
+
 ###
 # After Filters
 ###

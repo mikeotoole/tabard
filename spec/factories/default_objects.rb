@@ -74,6 +74,16 @@ class DefaultObjects
     unless @community.games.include?(DefaultObjects.wow)
       @community.games << DefaultObjects.wow
     end
+    unless @community.community_announcement_space.discussions.size > 0
+      announcement1 = @community.community_announcement_space.discussions.new(:name => "Announcement 1", 
+        :body => "Herp Derp")
+      announcement1.user_profile = @community.admin_profile
+      announcement2 = @community.community_announcement_space.discussions.new(:name => "Announcement 2", 
+        :body => "Herp Derp!")
+      announcement2.user_profile = @community.admin_profile
+      announcement1.save
+      announcement2.save
+    end
     @community
   end
   

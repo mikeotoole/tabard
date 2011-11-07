@@ -2,7 +2,7 @@
 
 = simple_form_for @message, :url => { :controller => "sent_messages", :action => "create" }, :html => { :novalidate => true, :autocomplete => 'off' } do |f|
   #message.compose
-  
+
     %header
       %fieldset
         %ul
@@ -17,12 +17,12 @@
                 %li
                   %input{ :id => "message_to_#{profile.user_id}", :type => 'checkbox', :name => 'message[to][]', :value => profile.user_id, :checked => (@message.to.include?(profile.user_id.to_s) ?  'checked' : false) }
                   %label{ :for => "message_to_#{profile.user_id}" }= profile.display_name
-    
+
     %aside.suggestions
       %ul
         - current_user.address_book.each do |profile|
           %li
-            %label{ :for => "message_to_#{profile.user_id}" }= profile.display_name 
-    
+            %label{ :for => "message_to_#{profile.user_id}" }= profile.display_name
+
     = f.input :body, :as => :text, :label => false, :wrapper_tag => :article, :input_html => { :tabindex => 3 }
     %button{ :type => ':submit', :tabindex => 4 } Send

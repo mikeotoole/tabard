@@ -24,7 +24,7 @@
     %li{ :class => 'icon gear' }
       = link_to "Account", edit_user_registration_url(:subdomain => false)
     %li{ :class => 'icon notice' }
-      = link_to "Announcements", announcements_path, (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
+      = link_to "Announcements", announcements_path, (current_user.recent_unread_announcements.size > 0 ? { :meta => current_user.recent_unread_announcements.size } : {})
     %li{ :class => 'icon envelope' }
       = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
     %li
@@ -42,5 +42,5 @@
               = link_to 'View all characters', user_profile_path(current_user)
             - else
               = link_to 'Add new character', new_base_character_path
-  
+
   = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

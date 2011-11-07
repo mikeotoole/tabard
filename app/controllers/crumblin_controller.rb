@@ -10,7 +10,7 @@ class CrumblinController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!, :except => [:index, :intro, :features, :pricing]
+  before_filter :authenticate_user!, :except => [:index, :intro, :features, :pricing, :privacy_policy, :terms_of_service]
 
 ###
 # REST Actions
@@ -35,5 +35,15 @@ class CrumblinController < ApplicationController
 
   # This method gets the Pricing page.
   def pricing
+  end
+
+  # This method gets the Privacy Policy page.
+  def privacy_policy
+    @document = PrivacyPolicy.first
+  end
+
+  # This method gets the Terms of Service page.
+  def terms_of_service
+    @document = TermsOfService.first
   end
 end
