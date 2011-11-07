@@ -40,6 +40,7 @@ class Comment < ActiveRecord::Base
   validates :community, :presence => true
   validates :commentable, :presence => true
   validate :character_is_valid_for_user_profile
+  validate :replys_enabled
 
 ###
 # Public Methods
@@ -103,15 +104,18 @@ class Comment < ActiveRecord::Base
     (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
   end
 
+  def commentable_has_comments_disabled?
+    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
+    (self.commentable.respond_to?('comment_enabled?') and self.original_comment_item.comments_enabled?) or
+    (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+  end
+
   ###
   # This method checks to see if replies to this comment are allowed.
   # [Returns] True if replies are allowed for this comment, otherwise false.
   ###
   def replies_locked?
-    self.has_been_locked or
-    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
-    not self.original_comment_item.comments_enabled? or
-    (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+    self.has_been_locked or self.commentable_has_comments_disabled?
   end
 
   # The commentable_type always needs to be of the base class type and not the subclass type.
@@ -125,6 +129,14 @@ class Comment < ActiveRecord::Base
   def character_is_valid_for_user_profile
     return unless self.character_proxy
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+  end
+
+  ###
+  # This method validates that what the comment is commenting on allows replys.
+  ###
+  def replys_enabled
+    return unless self.commentable_has_comments_disabled?
+    self.errors.add(:base, "you can't reply to that!")
   end
 
 ###
