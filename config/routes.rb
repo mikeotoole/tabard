@@ -51,7 +51,7 @@ DaBvRails::Application.routes.draw do
   delete 'mail/batch_delete' => "messages#batch_destroy", :as => "mail_batch_delete"
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
-  
+
   # Announcements
   get 'announcements' => "announcements#index", :as => "announcements"
   put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"

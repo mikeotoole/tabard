@@ -6,8 +6,8 @@
 # This class represents the assocation between a message and a user of the acceptance of a document.
 ###
 class DocumentAcceptance < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :document
+  belongs_to :user
+  belongs_to :document
 end
 
 # == Schema Information

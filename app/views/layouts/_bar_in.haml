@@ -42,5 +42,5 @@
               = link_to 'View all characters', user_profile_path(current_user)
             - else
               = link_to 'Add new character', new_base_character_path
-  
+
   = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

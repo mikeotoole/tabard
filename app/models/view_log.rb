@@ -19,17 +19,7 @@ class ViewLog < ActiveRecord::Base
   validates :view_loggable, :presence => true
 end
 
-# == Schema Information
-#
-# Table name: view_logs
-#
-#  id                 :integer         not null, primary key
-#  user_profile_id    :integer
-#  view_loggable_id   :integer
-#  view_loggable_type :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#
+
 # == Schema Information
 #
 # Table name: view_logs

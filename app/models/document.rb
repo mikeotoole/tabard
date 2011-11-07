@@ -29,7 +29,7 @@ class Document < ActiveRecord::Base
     end
     super
   end
-  
+
   # Creates a human readable document based on the document type
   def title
     case self.type

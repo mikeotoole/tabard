@@ -15,5 +15,5 @@ class RegistrationsController < Devise::RegistrationsController
     set_flash_message :notice, :destroyed if is_navigational_format?
     respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
   end
-  
+
 end

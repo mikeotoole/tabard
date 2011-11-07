@@ -6,7 +6,7 @@
 # This class represents a PrivacyPolicy Document.
 ###
 class PrivacyPolicy < Document
-	after_save :reset_user_acceptance
+  after_save :reset_user_acceptance
 
   # Sets a user's acceptance of the Privacy Policy to false
   def reset_user_acceptance

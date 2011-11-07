@@ -133,28 +133,50 @@ describe User do
 
   describe "current_terms_of_service" do
     it "returns the highest version of the terms of service" do
-      pending
+      create(:terms_of_service, :version => "0")
+      @user = create(:user)
+      @user.current_terms_of_service.should eq(TermsOfService.order('version ASC').first)
     end
   end
   describe "has_accepted_current_terms_of_service?" do
-    it "returns true if accepted current terms of service" do
-      pending
+    before(:each) do
+      @user = create(:user)
+      @current_version = create(:terms_of_service, :version => "9")
+      @current_version.should eq @user.current_terms_of_service
     end
     it "returns false if not accepted current terms of service" do
-      pending
+      @user.has_accepted_current_terms_of_service?.should be_false
+      @user.accepted_documents.include?(@current_version).should be_false
+    end
+    it "returns true if accepted current terms of service" do
+      @user.accepted_documents << @current_version
+      @user = User.find(@user)
+      @user.accepted_documents.include?(@current_version).should be_true
+      @user.has_accepted_current_terms_of_service?.should be_true
     end
   end
   describe "current_privacy_policy" do
     it "returns the highest version of the privacy policy" do
-      pending
+      create(:privacy_policy, :version => "0")
+      @user = create(:user)
+      @user.current_privacy_policy.should eq(PrivacyPolicy.order('version ASC').first)
     end
   end
   describe "has_accepted_current_privacy_policy?" do
-    it "returns true if accepted current privacy policy" do
-      pending
+    before(:each) do
+      @user = create(:user)
+      @current_version = create(:privacy_policy, :version => "9")
+      @current_version.should eq @user.current_privacy_policy
     end
     it "returns false if not accepted current privacy policy" do
-      pending
+      @user.has_accepted_current_privacy_policy?.should be_false
+      @user.accepted_documents.include?(@current_version).should be_false
+    end
+    it "returns true if accepted current privacy policy" do
+      @user.accepted_documents << @current_version
+      @user = User.find(@user)
+      @user.accepted_documents.include?(@current_version).should be_true
+      @user.has_accepted_current_privacy_policy?.should be_true
     end
   end
 end

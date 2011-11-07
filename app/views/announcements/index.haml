@@ -1,6 +1,6 @@
 #body
   %h1 My Announcements
-  
+
   - if current_user.announcements.size > 0
     = form_tag announcements_batch_mark_as_seen_path, :method => :put do
       %table

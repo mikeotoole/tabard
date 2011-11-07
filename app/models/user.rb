@@ -145,6 +145,8 @@ protected
 end
 
 
+
+
 # == Schema Information
 #
 # Table name: users

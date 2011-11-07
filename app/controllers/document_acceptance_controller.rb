@@ -48,7 +48,7 @@ class DocumentAcceptanceController < ApplicationController
   def find_document
     @document = Document.find_by_id(params[:id])
   end
-  
+
   ###
   # _before_filter
   #

@@ -42,11 +42,11 @@ protected
     @todays_messages = folder.messages.joins{message}.where{(message.created_at >= Time.now.beginning_of_day)}
     @older_messages = folder.messages.joins{message}.where{(message.created_at < Time.now.beginning_of_day)}
   end
-  
+
   # This method will determine a string value for the current view in the mailbox
   def mailbox_view_state
     @mailbox_view_state ||= ''
   end
   helper_method :mailbox_view_state
-  
+
 end
