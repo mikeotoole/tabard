@@ -366,7 +366,7 @@ body
       input[type="text"],
       textarea
         background: #eee
-        color: #66482f
+        color: #6F2D3D
         +bg_gradient(#ddd,#eee)
         +border_radius(5)
         +box_shadow(0 0 3px #ddd)
@@ -380,6 +380,10 @@ body
           +box_shadow(0 0 8px #560B17)
           +bg_gradient(#FDF3EE,#F2E5E1)
           color: #580B15
+        
+        &[disabled]
+          color: #999
+          +opacity(.5)
       
       input[type="email"],
       input[type="password"],
@@ -537,7 +541,14 @@ body
                   background: #580B15
                   color: #fff !important
     
-      
+      dfn.hint
+        display: block
+        font: 12px DinMedium, sans
+        padding: 5px
+        
+        &:before
+          content: '\2014\00A0'
+        
       &.field_with_errors
         
         > input,

@@ -1,9 +1,5 @@
-- title "Editing Community"
+- title "Community Settings | #{@community.name}"
 
-#body
-  %h1
-    Editing
-    = link_to @community.name, @community
-    Community
+%h1 Community Settings
 
-  = render 'form', :community => @community
+= render 'form', :community => @community
