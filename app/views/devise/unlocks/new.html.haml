@@ -3,12 +3,11 @@
 #body
   %h1 Resend unlock instructions
 
-  = form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
-    = devise_error_messages!
-    %p
-      = f.label :email
-      %br/
-      = f.email_field :email
-    %p
-      %button{ :type => 'submit' } Resend instructions
+  = simple_form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
+    %fieldset
+      %ol
+        = f.input :email
+        %li
+          %button{ :type => 'submit' } Resend instructions
+
   = render "devise/shared/links"

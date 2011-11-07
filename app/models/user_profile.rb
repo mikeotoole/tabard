@@ -158,7 +158,7 @@ class UserProfile < ActiveRecord::Base
      false
     end
   end
-  
+
   ###
   # This method checks if a user profile has viewed a view-loggable object or not. If no user is specified, current user's user profile will be used.
   # [Args]
@@ -167,12 +167,16 @@ class UserProfile < ActiveRecord::Base
   def has_seen?(view_loggable_item)
     user_id = self.id
     ViewLog.where{(
-      (view_loggable_id.eq view_loggable_item.id) & 
-      (view_loggable_type.eq view_loggable_item.class.to_s) & 
+      (view_loggable_id.eq view_loggable_item.id) &
+      (view_loggable_type.eq view_loggable_item.class.to_s) &
       (user_profile_id.eq user_id)
     )}.exists?
   end
 
+  ###
+  # This method logs the viewing of the given loggable item by the current user a the current time.
+  # [Args]
+  #   * +view_loggable_item+ -> The view-loggable object to log as viewed.
   def update_viewed(view_loggable_item)
     log = self.view_logs.find_by_view_loggable_id_and_view_loggable_type(view_loggable_item.id, view_loggable_item.class.to_s)
     if log
@@ -206,7 +210,7 @@ class UserProfile < ActiveRecord::Base
       return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
     end
   end
-  
+
   ###
   # This method gets an array of viewed announcements.
   # [Returns] An array of viewed messages.
@@ -215,7 +219,7 @@ class UserProfile < ActiveRecord::Base
     # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
     self.announcements.reject{|announcement| !self.has_seen?(announcement)}
   end
-  
+
   ###
   # This method gets an array of unviewed announcements.
   # [Returns] An array of unviewed messages.
@@ -223,6 +227,14 @@ class UserProfile < ActiveRecord::Base
   def unread_announcements
     # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
     self.announcements.reject{|announcement| self.has_seen?(announcement)}
+  end
+
+  ###
+  # This method gets an array of unviewed announcements within the past two weeks
+  # [Returns] An array of unviewed messages within the past two weeks.
+  ###
+  def recent_unread_announcements
+    self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago}
   end
 
   ###

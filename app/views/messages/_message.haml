@@ -12,7 +12,7 @@
         = link_to '✖ Delete', mail_delete_path(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete forever'
       - elsif mailbox_view_state != 'sent'
         = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
-    
+
     %h2
       - if message.system_sent
         %strong Notification:
@@ -28,9 +28,9 @@
       at
       %time
         = l Time.now, :format => :time_12
-    
+
     %h1= message.subject
-  
+
     %dl
       %dt To:
       - message.recipients.each do |profile|
@@ -41,7 +41,7 @@
             = link_to "✎ #{profile.name}", compose_mail_to_path(profile.id), :meta => "Send message"
           - else
             %span= profile.name
-    
+
   %article
     :markdown
       #{message.body}

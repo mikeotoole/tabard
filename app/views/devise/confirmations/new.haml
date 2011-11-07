@@ -1,0 +1,13 @@
+- title 'Resend Confirmation'
+
+#body
+  %h1 Resend confirmation instructions
+
+  = simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+    %fieldset
+      %ol
+        = f.input :email, :as => :email
+        %li
+          %button{ :type => 'submit' } Resend instructions
+
+  = render "devise/shared/links"

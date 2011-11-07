@@ -4,25 +4,30 @@
   %h1 Sign up for Crumblin
 
   - resource.build_user_profile unless resource.user_profile
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-    = devise_error_messages!
-    %p
-      = f.label :email
-      %br/
-      = f.email_field :email
-    =f.fields_for :user_profile do |up_form|
+  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    %fieldset
+      %ol
+        = f.input :email, :as => :email
+        = f.simple_fields_for :user_profile do |uf|
+          = uf.input :display_name, :required => false
+        = f.input :password
+        = f.input :password_confirmation
+      -unless @user.has_accepted_current_terms_of_service?
+        %h2 Terms of Service
+        .document
+          .scroll
+            :markdown
+              #{@user.current_terms_of_service.body}
+          %p.accept
+            = f.input :accepted_current_terms_of_service, :as => :boolean, :label => 'I have read and accept the "Terms of Service"', :wrapper => false
+      -unless @user.has_accepted_current_privacy_policy?
+        %h2 Privacy Policy
+        .document
+          .scroll
+            :markdown
+              #{@user.current_privacy_policy.body}
+          %p.accept
+            = f.input :accepted_current_privacy_policy, :as => :boolean, :label => 'I have read and accept the "Terms of Service"', :wrapper => false
       %p
-        = up_form.label :display_name
-        %br/
-        = up_form.text_field :display_name
-    %p
-      = f.label :password
-      %br/
-      = f.password_field :password
-    %p
-      = f.label :password_confirmation
-      %br/
-      = f.password_field :password_confirmation
-    %p
-      %button{ :type => 'submit' } Sign up
+        %button{ :type => 'submit' } Sign up
   = render "devise/shared/links"

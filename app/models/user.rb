@@ -22,13 +22,21 @@ class User < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy
 
 ###
 # Associations
 ###
   has_one :user_profile, :inverse_of => :user
+  has_many :document_acceptances
+  has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile
+
+###
+# Callbacks
+###
+  after_save :update_document_acceptance
 
 ###
 # Delegates
@@ -55,6 +63,7 @@ class User < ActiveRecord::Base
   delegate :announcements, :to => :user_profile, :allow_nil => true
   delegate :read_announcements, :to => :user_profile, :allow_nil => true
   delegate :unread_announcements, :to => :user_profile, :allow_nil => true
+  delegate :recent_unread_announcements, :to => :user_profile, :allow_nill => true
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :has_seen?, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
@@ -79,6 +88,11 @@ class User < ActiveRecord::Base
       },
       :if => :password_required?
 
+  validates :accepted_current_terms_of_service,
+      :acceptance => {:accept => true}
+  validates :accepted_current_privacy_policy,
+      :acceptance => {:accept => true}
+
 ###
 # Public Methods
 ###
@@ -87,6 +101,34 @@ class User < ActiveRecord::Base
     user = User.new
     user.build_user_profile
     return user
+  end
+
+  #This method updates the acceptance of documents
+  def update_document_acceptance
+    self.accepted_documents << current_terms_of_service if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
+    self.accepted_documents << current_privacy_policy if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+  end
+
+  #This method finds the most recent version of the terms of service
+  def current_terms_of_service
+    TermsOfService.first
+  end
+  #This method checks to see if the user has accepted the most recent version of the Terms of Service.
+  def has_accepted_current_terms_of_service?
+    accepted_documents.include?(current_terms_of_service)
+  end
+  #This method finds the most recent version of the terms of service
+  def current_privacy_policy
+    PrivacyPolicy.first
+  end
+  #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
+  def has_accepted_current_privacy_policy?
+    accepted_documents.include?(current_privacy_policy)
+  end
+
+  #This method checks to see if the user has accepted the most recent version of all legal documents.
+  def has_accepted_all_documents?
+    has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
 ###
 # Protected Methods
@@ -102,28 +144,33 @@ protected
   end
 end
 
+
+
+
 # == Schema Information
 #
 # Table name: users
 #
-#  id                     :integer         not null, primary key
-#  email                  :string(255)     default(""), not null
-#  encrypted_password     :string(128)     default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer         default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  confirmation_token     :string(255)
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  failed_attempts        :integer         default(0)
-#  unlock_token           :string(255)
-#  locked_at              :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
+#  id                                :integer         not null, primary key
+#  email                             :string(255)     default(""), not null
+#  encrypted_password                :string(128)     default(""), not null
+#  reset_password_token              :string(255)
+#  reset_password_sent_at            :datetime
+#  remember_created_at               :datetime
+#  sign_in_count                     :integer         default(0)
+#  current_sign_in_at                :datetime
+#  last_sign_in_at                   :datetime
+#  current_sign_in_ip                :string(255)
+#  last_sign_in_ip                   :string(255)
+#  confirmation_token                :string(255)
+#  confirmed_at                      :datetime
+#  confirmation_sent_at              :datetime
+#  failed_attempts                   :integer         default(0)
+#  unlock_token                      :string(255)
+#  locked_at                         :datetime
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  accepted_current_terms_of_service :boolean         default(FALSE)
+#  accepted_current_privacy_policy   :boolean         default(FALSE)
 #
 
