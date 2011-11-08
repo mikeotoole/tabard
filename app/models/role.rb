@@ -13,6 +13,7 @@ class Role < ActiveRecord::Base
   has_many :permissions
   has_and_belongs_to_many :community_profiles
   has_many :user_profiles, :through => :community_profiles
+  accepts_nested_attributes_for :permissions, :allow_destroy => true
 
 ###
 # Validators

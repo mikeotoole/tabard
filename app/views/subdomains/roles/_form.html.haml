@@ -19,7 +19,7 @@
       %tbody
         - if @role.permissions.size > 0
           - @role.permissions.each do |permission|
-            -#= render :partial => 'subdomains/permissions/form_fields', :locals => { :f => f, :permission => permission }
+            = render :partial => 'subdomains/permissions/form_fields', :locals => { :f => f, :permission => permission }
         -else
           %tr.temp
             %td &nbsp;
