@@ -26,6 +26,15 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments.json
   def index
     #@roster_assignments = RosterAssignment.all
+    @member_profiles = current_community.member_profiles
+  end
+
+  # GET /roster_assignments
+  # GET /roster_assignments.json
+  def mine
+    community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
+    @roster_assignments = Array.new
+    @roster_assignments = community_profile.roster_assignments if community_profile
   end
 
   # GET /roster_assignments/1
@@ -104,8 +113,8 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # This before filter attempts to populate @roster_assignments and @roster_assignment for the current_community and current_user.
   ###
   def load_roster_assignment
-    @roster_assignments = @community_profile.roster_assignments
-    @roster_assignment = @community_profile.roster_assignments.find_by_id(params[:id])
+    @roster_assignments = current_community.roster_assignments
+    @roster_assignment = RosterAssignment.find_by_id(params[:id])
   end
 
   ###

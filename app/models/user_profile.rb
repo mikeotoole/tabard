@@ -158,6 +158,18 @@ class UserProfile < ActiveRecord::Base
      false
     end
   end
+  ###
+  # This method determines when this user joined a community
+  # [Args]
+  #   * +community+ The community to check.
+  # [Returns] nil if this user is not a member of the community, otherwise it will return the join date of the user.
+  def joined_community_on(community)
+    if self.is_member?(community)
+      return self.community_profiles.find_by_community_id(community).created_at
+    else
+      return nil
+    end
+  end
 
   ###
   # This method checks if a user profile has viewed a view-loggable object or not. If no user is specified, current user's user profile will be used.

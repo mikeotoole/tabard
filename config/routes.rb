@@ -73,6 +73,7 @@ DaBvRails::Application.routes.draw do
 
       # Roster assignments
       get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"
+      get '/my_roster_assignments' => 'roster_assignments#mine', :as => "my_roster_assignments"
       resources :roster_assignments do
         member do
           put :approve

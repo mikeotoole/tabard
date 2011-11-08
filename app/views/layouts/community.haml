@@ -41,7 +41,7 @@
                   %li= link_to (space.game ? space.game.name : space.name), space
           %li
             -#TODO Doug - Hookup link
-            = link_to 'Members', '#'
+            = link_to 'Members', roster_assignments_path
           - if signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.size > 0
               %li{ :class => 'special settings' }

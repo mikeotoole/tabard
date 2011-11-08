@@ -1,20 +1,4 @@
-%h1 Listing Members
-
-%table
-  %tr
-    %th Name
-    %th Community Member Since
-    %th
-
-  - @member_profiles.each do |member_profile|
-    %tr
-      %td= member_profile.name
-      %td= member_profile.joined_community_on(current_community)
-      %td= link_to 'Show', member_profile
-
-%br
-
-%h1 Listing Characters
+%h1 Listing roster_assignments
 
 %table
   %tr
@@ -35,3 +19,5 @@
       %td= link_to 'Destroy', roster_assignment, :confirm => 'Are you sure?', :method => :delete
 
 %br
+
+= link_to 'New Roster assignment', new_roster_assignment_path

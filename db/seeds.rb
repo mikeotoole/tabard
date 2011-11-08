@@ -31,6 +31,19 @@ Timecop.freeze(2.months.ago)
       :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose", :display_name => "Diabolical Moose"})
   d_moose.skip_confirmation!
   d_moose.save
+  d_moose.character_proxies.create(:user_profile => d_moose.user_profile,
+    :character => WowCharacter.create(:name => "Moose Drool",
+    :game => wow_game,
+    :server => "Default WOW Server",
+    :faction => "Horde",
+    :race => "Orc",
+    :level => 80)
+  )
+  d_moose.character_proxies.create(:user_profile => d_moose.user_profile,
+    :character => SwtorCharacter.create(:name => "Moose Drool",
+    :game => swtor_game,
+    :server => "Alderon")
+  )
   
   puts "Creating Snappy Turtle!"
   s_turtle = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
@@ -122,13 +135,13 @@ Timecop.freeze(2.months.ago)
   jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya")
   jkit.games << swtor_game
   
-  puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
+  puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Jedi Kittens Guild..."
   puts "Accepting Dirty Badger and Robo Billy's applications"
   generate_application_from_user_profile(jkit, d_badger.user_profile).accept_application
   generate_application_from_user_profile(jkit, robobilly.user_profile).accept_application
   
   puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR and WoW!"
-  jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
+  jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :protected_roster => true)
   jahc.games << swtor_game
   jahc.games << wow_game
   
@@ -158,6 +171,14 @@ Timecop.freeze(2.months.ago)
   
   puts "Giving D-Moose the n00b role..."
   d_moose.add_new_role(noob_role)
+
+  puts "Snappy Turtle is creating a character and adding to the JAH roster..."
+  dr_crabs = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Clamps",
+    :game => swtor_game,
+    :server => "Alderon")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_crabs)
   
   puts "Creating Just Another Headshot Clan General Discussion Space"
   jahc_gds = jahc.discussion_spaces.create(:name => "General Chat")
