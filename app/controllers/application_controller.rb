@@ -103,12 +103,7 @@ class ApplicationController < ActionController::Base
   # [Returns] true if maintenance mode is on, false otherwise.
   ###
   def maintenance_mode?
-    ENV['maintenance_mode'] ||= (ENV["RAILS_ENV"] != 'test' and ENV["RAILS_ENV"] != 'development') ? 'ON' : 'OFF'
-    if ENV['maintenance_mode'] == 'ON'
-      return true
-    else
-      return false
-    end    
+    $maintenance_mode ||= (ENV["RAILS_ENV"] != 'test' and ENV["RAILS_ENV"] != 'development')
   end
   
 ###

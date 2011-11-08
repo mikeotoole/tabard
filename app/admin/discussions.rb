@@ -2,7 +2,7 @@ ActiveAdmin.register Discussion do
   menu :parent => "Discussions", :if => proc{ can?(:read, Discussion) }
   controller.authorize_resource
   
-  member_action :remove_comment, :method => :delete do
+  member_action :remove_comment, :method => :put do
     comment = Comment.find(params[:id])
     if comment.comments.empty?
       comment.destroy
@@ -48,7 +48,7 @@ ActiveAdmin.register Discussion do
           column :number_of_comments
           column :has_been_deleted
           column "Destroy" do |comment|
-            link_to "Destroy", remove_comment_admin_discussion_path(comment), :method => :delete, :confirm => 'Are you sure you want to delete this comment?'
+            link_to "Destroy", remove_comment_admin_discussion_path(comment), :method => :put, :confirm => 'Are you sure you want to delete this comment?'
           end
         end
       end

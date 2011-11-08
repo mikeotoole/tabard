@@ -9,7 +9,7 @@ DaBvRails::Application.routes.draw do
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Site Actions
-  post "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
+  put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]

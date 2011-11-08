@@ -2,10 +2,10 @@ ActiveAdmin.register CustomForm do
   menu :if => proc{ can?(:read, CustomForm) }
   controller.authorize_resource
 
-  member_action :delete_question, :method => :delete do
+  member_action :delete_question, :method => :put do
     question = Question.find(params[:id])
     question.destroy
-    redirect_to previous_page
+    redirect_to :action => :show, :id => question.custom_form.id
   end
   
   filter :id
@@ -55,7 +55,7 @@ ActiveAdmin.register CustomForm do
           end
         column "Destroy" do |question|
           if can? :destroy, question
-            link_to "Destroy", delete_question_admin_custom_form_path(question), :method => :delete, :confirm => 'Are you sure you want to delete this question?'
+            link_to "Destroy", delete_question_admin_custom_form_path(question), :method => :put, :confirm => 'Are you sure you want to delete this question?'
           end  
         end          
         end

@@ -2,7 +2,7 @@ ActiveAdmin.register Question do
   menu false
   controller.authorize_resource
 
-  member_action :delete_predefined_answer, :method => :delete do
+  member_action :delete_predefined_answer, :method => :put do
     answer = PredefinedAnswer.find(params[:id])
     answer.destroy
     redirect_to previous_page
@@ -18,7 +18,7 @@ ActiveAdmin.register Question do
             column :created_at
             column "Destroy" do |predefined_answer|
               if can? :destroy, predefined_answer
-                link_to "Destroy", delete_predefined_answer_admin_question_path(predefined_answer), :method => :delete, :confirm => 'Are you sure you want to delete this predefined answer?'
+                link_to "Destroy", delete_predefined_answer_admin_question_path(predefined_answer), :method => :put, :confirm => 'Are you sure you want to delete this predefined answer?'
               end  
             end        
           end

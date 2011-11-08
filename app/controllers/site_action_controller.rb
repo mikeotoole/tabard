@@ -11,13 +11,16 @@ class SiteActionController < ApplicationController
 ###
 # Actions
 ###
+  ###
   # This redirects all traffic to maintenance page.
+  # PUT /toggle_maintenance_mode(.:format)
+  ###
   def toggle_maintenance_mode
     if can?(:toggle_maintenance_mode, SiteActionController)
       if maintenance_mode?
-        ENV['maintenance_mode'] = 'OFF'
+        $maintenance_mode = false
       else
-        ENV['maintenance_mode'] = 'ON'
+        $maintenance_mode = true
       end
       notice = (maintenance_mode? ? "Maintenance Mode On" : "Maintenance Mode Off")
       redirect_to admin_dashboard_url, :notice => notice

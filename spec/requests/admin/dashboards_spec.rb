@@ -38,6 +38,11 @@ describe "ActiveAdmin Dashboard" do
       page.status_code.should == 403
 
       page.should have_content('forbidden')
+    end
+    
+    it "redirects to login page when not logged in" do
+      visit admin_dashboard_url
+      current_path.should == new_admin_user_session_path
     end      
   end
 
