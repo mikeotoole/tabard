@@ -200,6 +200,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -217,5 +218,6 @@ end
 #  protected_roster                :boolean         default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
+#  public_roster                   :boolean         default(TRUE)
 #
 

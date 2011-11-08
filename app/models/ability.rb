@@ -246,8 +246,13 @@ class Ability
   #   * +current_community+ -> The current community context.
   ###
   def dynamicContextRules(user, current_community)
-    community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
-    community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
+    #Community Based Permissions
+    can :index, RosterAssignment if current_community.public_roster
+
+    if user
+      community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
+      community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
+    end
   end
 
   def apply_rules_from_roles(user, current_community)

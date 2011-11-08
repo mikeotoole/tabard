@@ -115,7 +115,7 @@ Timecop.freeze(2.months.ago)
   end
   
   puts "Kinky Fox is creating Two Maidens Guild with the game WoW!"
-  twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice")
+  twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice", :accepting_members => true, :email_notice_on_application => false)
   twom.games << wow_game
   
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
@@ -132,7 +132,7 @@ Timecop.freeze(2.months.ago)
   twom_wds = twom.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
   
   puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
-  jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya")
+  jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya", :public_roster => false)
   jkit.games << swtor_game
   
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Jedi Kittens Guild..."
@@ -149,7 +149,7 @@ Timecop.freeze(2.months.ago)
   noob_role = jahc.roles.create(:name => "n00b")
   
   puts "RoboBilly is adding permissions to view roles to n00b role..."
-  noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
+  noob_role.permissions.create(:subject_class => "Role", :permission_level => "View")
   
   puts "RoboBilly is getting some characters..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
@@ -160,6 +160,9 @@ Timecop.freeze(2.months.ago)
   ['Eliand','Blaggarth','Drejan'].each do |cname|
     proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
     rb_cp.approved_character_proxies << proxy
+  end
+  rb_cp.roster_assignments.each do |ra|
+    ra.approve
   end
   
   puts "Diabolical Moose, Snappy Turtle, Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."

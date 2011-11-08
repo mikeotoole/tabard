@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106010007) do
+ActiveRecord::Schema.define(:version => 20111108201332) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20111106010007) do
     t.boolean  "protected_roster",                :default => false
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
+    t.boolean  "public_roster",                   :default => true
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"

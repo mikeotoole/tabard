@@ -3,7 +3,6 @@
 %table
   %tr
     %th Name
-    %th Message
     %th Thankyou
     %th Community
     %th
@@ -13,7 +12,6 @@
   - @custom_forms.each do |custom_form|
     %tr
       %td= custom_form.name
-      %td= custom_form.message
       %td= custom_form.thankyou
       %td= custom_form.community_id
       %td= link_to 'Show', custom_form

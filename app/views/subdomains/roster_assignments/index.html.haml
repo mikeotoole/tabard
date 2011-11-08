@@ -10,7 +10,7 @@
     %tr
       %td= member_profile.name
       %td= member_profile.joined_community_on(current_community)
-      %td= link_to 'Show', member_profile
+      %td= link_to 'Show', member_profile if can? :show, member_profile
 
 %br
 
@@ -30,8 +30,8 @@
       %td= roster_assignment.community_profile_id
       %td= roster_assignment.character_proxy_id
       %td= roster_assignment.pending
-      %td= link_to 'Show', roster_assignment
-      %td= link_to 'Edit', edit_roster_assignment_path(roster_assignment)
-      %td= link_to 'Destroy', roster_assignment, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Show', roster_assignment if can? :show, roster_assignment
+      %td= link_to 'Edit', edit_roster_assignment_path(roster_assignment) if can? :update, roster_assignment
+      %td= link_to 'Destroy', roster_assignment, :confirm => 'Are you sure?', :method => :delete if can? :destroy, roster_assignment
 
 %br

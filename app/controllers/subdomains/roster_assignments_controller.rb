@@ -11,21 +11,22 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
-  before_filter :ensure_current_user_is_member
-  before_filter :get_community_profile
+  before_filter :authenticate_user!, :except => [:index]
+  before_filter :ensure_current_user_is_member, :except => [:index]
+  before_filter :get_community_profile, :except => [:index]
   before_filter :load_roster_assignment, :except => [:new, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :create]
-  before_filter :find_avalible_characters
+  before_filter :find_avalible_characters, :except => [:index]
   authorize_resource
-  skip_authorize_resource :only => :pending
+  skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
 
   # GET /roster_assignments
   # GET /roster_assignments.json
   def index
     #@roster_assignments = RosterAssignment.all
+    #authorize! :index, RosterAssignment
     @member_profiles = current_community.member_profiles
   end
 

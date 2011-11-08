@@ -78,7 +78,7 @@ protected
   end
 
   def apply_dynamic_permissions
-    current_ability.dynamicContextRules(current_user, current_community) if signed_in?
+    current_ability.dynamicContextRules(current_user, current_community) if signed_in? or current_ability
   end
 
   ###
