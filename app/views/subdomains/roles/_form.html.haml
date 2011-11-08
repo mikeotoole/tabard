@@ -10,17 +10,16 @@
     %table
       %thead
         %tr
-          %th.actions
-          %th.permresource Resource
           %th View
           %th Edit
           %th Add
           %th Delete
+          %th.permresource Permission
+          %th.actions
       %tbody
         - if @role.permissions.size > 0
           - @role.permissions.each do |permission|
-            - @permission = permission
-            = render :partial => 'subdomains/permissions/form_fields', :f => f
+            -#= render :partial => 'subdomains/permissions/form_fields', :locals => { :f => f, :permission => permission }
         -else
           %tr.temp
             %td &nbsp;

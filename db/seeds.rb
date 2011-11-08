@@ -136,7 +136,7 @@ puts "RoboBilly is creating a n00b role..."
 noob_role = jahc.roles.create(:name => "n00b")
 
 puts "RoboBilly is adding permissions to view roles to n00b role..."
-noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
+noob_role.permissions.create(:subject_class => "Role", :permission_level => "View")
 
 puts "RoboBilly is getting some characters..."
 rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first

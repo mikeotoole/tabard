@@ -1,0 +1,20 @@
+= f.simple_fields_for :permissions, permission, :index => Time.now.to_f.to_s do |p|
+  %tr
+    %td.slider{ :colspan => 4 }
+      %fieldset.slider
+        = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last, :checked => 'show_p'
+    %td
+      - if permission.id
+        = p.input :id, :as => 'hidden', :wrapper => false
+        = permission.subject_class
+      - else
+        %fieldset.suggest
+          %input{ :type => 'text' }
+          %ul.suggestions
+            -#= p.collection_radio :magic_polymorphic_helper, @permissionables, :first, :last, :item_wrapper_tag => :li
+    %td.actions
+      %div
+        - if permission.id and (can? :destroy, permission)
+          = link_to 'Remove Permission', role_permission_path(@role, permission), :method => :delete, :remote => true, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Remove this permission'
+        - else
+          = link_to 'Cancel Permission', 'javascript:;', :onclick => 'remove_fields($(this).parents("tr"));', :class => 'cancel', :meta => 'Clear new permission'

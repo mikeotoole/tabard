@@ -45,6 +45,9 @@ class Subdomains::RolesController < SubdomainsController
     params[:role][:community_profile_ids] ||= Array.new
     if @role.update_attributes(params[:role])
       add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'notice'
+      #for params[:role][:permissions].each do |permission|
+      #  Permission.find_by_id(permission[:id]).update_attributes(:permission_level => permission[:permission_level])
+      #end
     end
     respond_with(@role, :location => edit_role_path(@role))
   end

@@ -556,7 +556,69 @@ body
           position: relative
           z-index: 1
         
-  
+    &.slider
+      +bg_gradient(#ddd,#fff)
+      border: 1px solid #aaa
+      +border_radius(5)
+      +box_shadow(0 0 10px rgba(#000,.2))
+      height: 30px
+      overflow: hidden
+      position: relative
+      +transition(box-shadow .2s linear)
+      width: 200px
+      
+      ul
+        padding: 0
+        
+        li
+          padding: 0
+          display: inline
+          
+          label
+            border: 1px solid transparent
+            +border_radius(4)
+            height: 26px
+            margin: 1px
+            overflow: hidden
+            position: absolute
+            text-indent: -500em
+            +transition(background .2s linear)
+            
+            &:before,
+            &:after
+              display: none
+            
+            &:hover
+              background: #8F364E !important
+              border-color: #5d2230
+          
+          &:nth-child(1) label
+            width: 46px
+            z-index: 5
+          
+          &:nth-child(2) label
+            width: 96px
+            z-index: 4
+            
+          &:nth-child(3) label
+            width: 146px
+            z-index: 3
+            
+          &:nth-child(4) label
+            width: 196px
+            z-index: 2
+      
+          input
+            margin: 0 0 0 -500em
+            
+            &:checked + label
+              background: #6F2D3D
+              border-color: #5d2230
+              +box_shadow(0 0 5px rgba(#000,.5))
+      
+      &:hover
+        +box_shadow(0 0 15px rgba(#000,.7))
+      
   .full
     
     input[type="email"],
@@ -577,6 +639,9 @@ body
     
       &.r
         text-align: right
+      
+      &.slider
+        width: 202px
   
     thead
       text-align: left
