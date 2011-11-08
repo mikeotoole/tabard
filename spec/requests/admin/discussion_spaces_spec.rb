@@ -6,6 +6,7 @@ describe "ActiveAdmin DiscussionSpace" do
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
   let(:discussion_space) { DefaultObjects.discussion_space }
+  let(:discussion_space_att) { attributes_for(:discussion_space, :name => "Test Case Name") }
  
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do
@@ -161,6 +162,107 @@ describe "ActiveAdmin DiscussionSpace" do
       visit edit_admin_discussion_space_url(:id => discussion_space.id)
       current_path.should == new_admin_user_session_path
     end    
+  end
+ 
+  describe "#create" do
+    it "creates discussion_space when logged in as superadmin" do
+      pending
+      login_as superadmin
+
+      DefaultObjects.community
+      startCount = DiscussionSpace.all.count
+      
+      page.driver.post("/admin/discussion_spaces", { :discussion_space => discussion_space_att } )
+      #{ :params => { attributes_for(:discussion_space, :name => "Test Case Name") } }
+      DiscussionSpace.all.count.should eql startCount + 1
+      DiscussionSpace.last.name.should eql "Test Case Name"
+    end 
+    
+    it "creates discussion_space when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "creates discussion_space when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not create discussion_space when not logged in" do
+      pending
+    end    
+  end
+
+  describe "#update" do 
+    it "updates discussion_space when logged in as superadmin" do
+      pending
+      login_as superadmin
+    end 
+    
+    it "updates discussion_space when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "updates discussion_space when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not update discussion_space when not logged in" do
+      pending
+    end   
+  end
+
+  describe "#destroy" do
+    it "deletes discussion_space when logged in as superadmin" do
+      login_as superadmin
+
+      page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
+      DiscussionSpace.exists?(discussion_space).should be_false
+    end 
+    
+    it "deletes discussion_space when logged in as admin" do
+      login_as admin
+
+      page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
+      DiscussionSpace.exists?(discussion_space).should be_false
+    end    
+    
+    it "deletes discussion_space when logged in as moderator" do
+      login_as moderator
+
+      page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
+      DiscussionSpace.exists?(discussion_space).should be_false
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+
+      page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
+      DiscussionSpace.exists?(discussion_space).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not delete discussion_space when not logged in" do
+      page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
+      DiscussionSpace.exists?(discussion_space).should be_true
+    end      
   end
 
 end

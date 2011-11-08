@@ -85,82 +85,34 @@ describe "ActiveAdmin UserProfile" do
     end    
   end
   
-  describe "#new" do 
-    it "returns 403 when logged in as superadmin" do
-      login_as superadmin
-
-      visit new_admin_user_profile_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end 
-    
-    it "returns 403 when logged in as admin" do
-      login_as admin
-
-      visit new_admin_user_profile_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as moderator" do
-      login_as moderator
-
-      visit new_admin_user_profile_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-
-      visit new_admin_user_profile_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end
-    
-    it "redirects to login page when not logged in" do
-      visit new_admin_user_profile_url
-      current_path.should == new_admin_user_session_path
+  describe "#new" do
+    it "raises error ActionNotFound" do
+      lambda { visit new_admin_user_profile_url }.should raise_error(AbstractController::ActionNotFound)
     end    
   end
-
-  describe "#edit" do 
-    it "returns 403 when logged in as superadmin" do
-      login_as superadmin
-
-      visit edit_admin_user_profile_url(:id => user_profile.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end 
-    
-    it "returns 403 when logged in as admin" do
-      login_as admin
-
-      visit edit_admin_user_profile_url(:id => user_profile.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as moderator" do
-      login_as moderator
-
-      visit edit_admin_user_profile_url(:id => user_profile.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-
-      visit edit_admin_user_profile_url(:id => user_profile.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+ 
+  describe "#create" do
+    it "raises error ActionNotFound" do
+      lambda { page.driver.post("/admin/user_profiles") }.should raise_error(AbstractController::ActionNotFound)
     end
-    
-    it "redirects to login page when not logged in" do
-      visit edit_admin_user_profile_url(:id => user_profile.id)
-      current_path.should == new_admin_user_session_path
-    end    
+  end 
+
+  describe "#edit" do
+    it "raises error ActionNotFound" do
+      lambda { visit edit_admin_user_profile_url(:id => user_profile.id) }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#update" do 
+    it "raises error ActionNotFound" do
+      lambda { page.driver.put("/admin/user_profiles/#{user_profile.id}") }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#destroy" do 
+    it "raises error ActionNotFound" do
+      lambda { page.driver.delete("/admin/user_profiles/#{user_profile.id}") }.should raise_error(AbstractController::ActionNotFound)
+    end  
   end
 
 end

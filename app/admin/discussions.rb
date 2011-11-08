@@ -2,6 +2,8 @@ ActiveAdmin.register Discussion do
   menu :parent => "Discussions", :if => proc{ can?(:read, Discussion) }
   controller.authorize_resource
   
+  actions :index, :show, :destroy
+  
   member_action :remove_comment, :method => :put do
     comment = Comment.find(params[:id])
     if comment.comments.empty?

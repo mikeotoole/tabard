@@ -2,6 +2,8 @@ ActiveAdmin.register User do
   menu :parent => "User", :priority => 1, :if => proc{ can?(:read, User) } 
   controller.authorize_resource
   
+  actions :index, :show, :destroy
+  
   action_item :only => :show do
     if user.user_active and can? :lock, user
       link_to "Lock User", lock_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to lock this user?'

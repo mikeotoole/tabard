@@ -86,82 +86,65 @@ describe "ActiveAdmin Discussion" do
     end    
   end
   
-  describe "#new" do 
-    it "returns 403 when logged in as superadmin" do
-      login_as superadmin
-
-      visit new_admin_discussion_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end 
-    
-    it "returns 403 when logged in as admin" do
-      login_as admin
-
-      visit new_admin_discussion_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as moderator" do
-      login_as moderator
-
-      visit new_admin_discussion_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-
-      visit new_admin_discussion_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end
-    
-    it "redirects to login page when not logged in" do
-      visit new_admin_discussion_url
-      current_path.should == new_admin_user_session_path
+  describe "#new" do
+    it "raises error ActionNotFound" do
+      lambda { visit new_admin_discussion_url }.should raise_error(AbstractController::ActionNotFound)
     end    
   end
+ 
+  describe "#create" do
+    it "raises error ActionNotFound" do
+      lambda { page.driver.post("/admin/discussions") }.should raise_error(AbstractController::ActionNotFound)
+    end
+  end 
 
-  describe "#edit" do 
-    it "returns 403 when logged in as superadmin" do
+  describe "#edit" do
+    it "raises error ActionNotFound" do
+      lambda { visit visit edit_admin_discussion_url(:id => discussion.id) }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#update" do 
+    it "raises error ActionNotFound" do
+      lambda { page.driver.put("/admin/discussions/#{discussion.id}") }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#destroy" do
+    it "deletes discussion when logged in as superadmin" do
       login_as superadmin
 
-      visit edit_admin_discussion_url(:id => discussion.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/discussions/#{discussion.id}")
+      Discussion.exists?(discussion).should be_false
     end 
     
-    it "returns 403 when logged in as admin" do
+    it "deletes discussion when logged in as admin" do
       login_as admin
 
-      visit edit_admin_discussion_url(:id => discussion.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/discussions/#{discussion.id}")
+      Discussion.exists?(discussion).should be_false
     end    
     
-    it "returns 403 when logged in as moderator" do
+    it "deletes discussion when logged in as moderator" do
       login_as moderator
 
-      visit edit_admin_discussion_url(:id => discussion.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/discussions/#{discussion.id}")
+      Discussion.exists?(discussion).should be_false
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit edit_admin_discussion_url(:id => discussion.id)
-      page.status_code.should == 403
+      page.driver.delete("/admin/discussions/#{discussion.id}")
+      Discussion.exists?(discussion).should be_true
+      page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
-    it "redirects to login page when not logged in" do
-      visit edit_admin_discussion_url(:id => discussion.id)
-      current_path.should == new_admin_user_session_path
-    end    
+    it "does not delete discussion when not logged in" do
+      page.driver.delete("/admin/discussions/#{discussion.id}")
+      Discussion.exists?(discussion).should be_true
+    end      
   end
 
   describe "#remove_comment_admin_discussion" do 

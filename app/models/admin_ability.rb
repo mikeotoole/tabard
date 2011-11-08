@@ -26,9 +26,11 @@ class AdminAbility
       can [:read, :destroy], Community
       can [:read, :destroy, :delete_question], CustomForm
       can [:read, :destroy, :delete_predefined_answer], Question
-      can [:read, :destroy, :create, :update], PageSpace
+      can [:read, :destroy, :update], PageSpace
+      can [:create], [PageSpace, 'Page Space'] # Quoted needed for displaying button in panel.
       can [:read, :destroy], Page
-      can [:read, :destroy, :create, :update], DiscussionSpace
+      can [:read, :destroy, :update], DiscussionSpace
+      can [:create], [DiscussionSpace, 'Discussion Space']
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :destroy], SwtorCharacter
       can [:read, :destroy], WowCharacter

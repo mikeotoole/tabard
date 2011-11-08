@@ -2,6 +2,8 @@ ActiveAdmin.register WowCharacter do
   menu :parent => "Character", :if => proc{ can?(:read, WowCharacter) }
   controller.authorize_resource
   
+  actions :index, :show, :destroy
+  
   filter :id
   filter :name
   filter :faction

@@ -2,6 +2,8 @@ ActiveAdmin.register UserProfile do
   menu false
   controller.authorize_resource 
   
+  actions :index, :show
+  
   show do
     attributes_table :id, :user, :first_name, :last_name, :avatar, :created_at, 
     :updated_at, :description, :display_name, :publicly_viewable, :owned_communities

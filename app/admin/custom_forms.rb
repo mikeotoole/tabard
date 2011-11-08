@@ -2,6 +2,8 @@ ActiveAdmin.register CustomForm do
   menu :if => proc{ can?(:read, CustomForm) }
   controller.authorize_resource
 
+  actions :index, :show, :destroy
+
   member_action :delete_question, :method => :put do
     question = Question.find(params[:id])
     question.destroy

@@ -2,6 +2,8 @@ ActiveAdmin.register Page do
   menu :parent => "Pages", :if => proc{ can?(:read, Page) }
   controller.authorize_resource
   
+  actions :index, :show, :destroy
+  
   filter :id
   filter :name
   filter :markup

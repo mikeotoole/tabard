@@ -86,82 +86,65 @@ describe "ActiveAdmin Question" do
     end    
   end
   
-  describe "#new" do 
-    it "returns 403 when logged in as superadmin" do
-      login_as superadmin
-
-      visit new_admin_question_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end 
-    
-    it "returns 403 when logged in as admin" do
-      login_as admin
-
-      visit new_admin_question_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as moderator" do
-      login_as moderator
-
-      visit new_admin_question_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-
-      visit new_admin_question_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end
-    
-    it "redirects to login page when not logged in" do
-      visit new_admin_question_url
-      current_path.should == new_admin_user_session_path
+  describe "#new" do
+    it "raises error ActionNotFound" do
+      lambda { visit new_admin_question_url }.should raise_error(AbstractController::ActionNotFound)
     end    
   end
+ 
+  describe "#create" do
+    it "raises error ActionNotFound" do
+      lambda { page.driver.post("/admin/questions") }.should raise_error(AbstractController::ActionNotFound)
+    end
+  end 
 
-  describe "#edit" do 
-    it "returns 403 when logged in as superadmin" do
+  describe "#edit" do
+    it "raises error ActionNotFound" do
+      lambda { visit edit_admin_question_url(:id => question.id) }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#update" do 
+    it "raises error ActionNotFound" do
+      lambda { page.driver.put("/admin/questions/#{question.id}") }.should raise_error(AbstractController::ActionNotFound)
+    end  
+  end
+
+  describe "#destroy" do
+    it "deletes question when logged in as superadmin" do
       login_as superadmin
 
-      visit edit_admin_question_url(:id => question.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/questions/#{question.id}")
+      Question.exists?(question).should be_false
     end 
     
-    it "returns 403 when logged in as admin" do
+    it "deletes question when logged in as admin" do
       login_as admin
 
-      visit edit_admin_question_url(:id => question.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/questions/#{question.id}")
+      Question.exists?(question).should be_false
     end    
     
-    it "returns 403 when logged in as moderator" do
+    it "deletes question when logged in as moderator" do
       login_as moderator
 
-      visit edit_admin_question_url(:id => question.id)
-      page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.driver.delete("/admin/questions/#{question.id}")
+      Question.exists?(question).should be_false
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit edit_admin_question_url(:id => question.id)
-      page.status_code.should == 403
+      page.driver.delete("/admin/questions/#{question.id}")
+      Question.exists?(question).should be_true
+      page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
-    it "redirects to login page when not logged in" do
-      visit edit_admin_question_url(:id => question.id)
-      current_path.should == new_admin_user_session_path
-    end    
+    it "does not delete question when not logged in" do
+      page.driver.delete("/admin/questions/#{question.id}")
+      Question.exists?(question).should be_true
+    end      
   end
   
   describe "#delete_predefined_answer_admin_question" do 

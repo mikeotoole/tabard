@@ -2,6 +2,8 @@ ActiveAdmin.register Community do
   menu :if => proc{ can?(:read, Community) }
   controller.authorize_resource
   
+  actions :index, :show, :destroy
+  
   filter :name
   filter :slogan
   filter :created_at

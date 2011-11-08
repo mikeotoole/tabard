@@ -2,6 +2,8 @@ ActiveAdmin.register Question do
   menu false
   controller.authorize_resource
 
+  actions :index, :show, :destroy
+
   member_action :delete_predefined_answer, :method => :put do
     answer = PredefinedAnswer.find(params[:id])
     answer.destroy

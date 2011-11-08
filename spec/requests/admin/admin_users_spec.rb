@@ -162,6 +162,103 @@ describe "ActiveAdmin AdminUser" do
     end        
   end
 
+  describe "#create" do
+    it "creates AdminUser when logged in as superadmin" do
+      pending
+      login_as superadmin
+    end 
+    
+    it "returns 403 when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "returns 403 when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not create AdminUser when not logged in" do
+      pending
+    end    
+  end
+
+  describe "#update" do 
+    it "updates AdminUser when logged in as superadmin" do
+      pending
+      login_as superadmin
+    end 
+    
+    it "returns 403 when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "returns 403 when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not update AdminUser when not logged in" do
+      pending
+    end   
+  end
+
+  describe "#destroy" do
+    it "deletes AdminUser when logged in as superadmin" do
+      login_as superadmin
+
+      page.driver.delete("/admin/admin_users/#{admin.id}")
+      AdminUser.exists?(admin).should be_false
+    end 
+    
+    it "returns 403 when logged in as admin" do
+      login_as admin
+
+      page.driver.delete("/admin/admin_users/#{moderator.id}")
+      AdminUser.exists?(moderator).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end    
+    
+    it "returns 403 when logged in as moderator" do
+      login_as moderator
+
+      page.driver.delete("/admin/admin_users/#{admin.id}")
+      AdminUser.exists?(admin).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+
+      page.driver.delete("/admin/admin_users/#{admin.id}")
+      AdminUser.exists?(admin).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not delete AdminUser when not logged in" do
+      page.driver.delete("/admin/admin_users/#{AdminUser.id}")
+      AdminUser.exists?(AdminUser).should be_true
+    end      
+  end
+
   describe "#reset_password_admin_admin_user" do  
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

@@ -163,4 +163,99 @@ describe "ActiveAdmin PageSpace" do
     end    
   end
 
+  describe "#create" do
+    it "creates page_space when logged in as superadmin" do
+      pending
+      login_as superadmin
+      
+      page.driver.post("/admin/page_spaces", { :page_space => attributes_for(:page_space) } )
+    end 
+    
+    it "creates page_space when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "creates page_space when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not create page_spaces when not logged in" do
+      pending
+    end    
+  end
+
+  describe "#update" do 
+    it "updates page_space when logged in as superadmin" do
+      pending
+      login_as superadmin
+    end 
+    
+    it "updates page_space when logged in as admin" do
+      login_as admin
+      pending
+    end    
+    
+    it "updates page_space when logged in as moderator" do
+      login_as moderator
+      pending
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+      pending
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not update page_space when not logged in" do
+      pending
+    end   
+  end
+
+  describe "#destroy" do
+    it "deletes page_space when logged in as superadmin" do
+      login_as superadmin
+
+      page.driver.delete("/admin/page_spaces/#{page_space.id}")
+      PageSpace.exists?(page_space).should be_false
+    end 
+    
+    it "deletes page_space when logged in as admin" do
+      login_as admin
+
+      page.driver.delete("/admin/page_spaces/#{page_space.id}")
+      PageSpace.exists?(page_space).should be_false
+    end    
+    
+    it "deletes page_space when logged in as moderator" do
+      login_as moderator
+
+      page.driver.delete("/admin/page_spaces/#{page_space.id}")
+      PageSpace.exists?(page_space).should be_false
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+
+      page.driver.delete("/admin/page_spaces/#{page_space.id}")
+      PageSpace.exists?(page_space).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "does not delete page_space when not logged in" do
+      page.driver.delete("/admin/page_spaces/#{page_space.id}")
+      PageSpace.exists?(page_space).should be_true
+    end      
+  end
+
 end
