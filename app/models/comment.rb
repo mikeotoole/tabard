@@ -104,6 +104,10 @@ class Comment < ActiveRecord::Base
     (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
   end
 
+  ###
+  # This method checks to see if comments are disabled for the commentable item.
+  # [Returns] false if what this is commenting on has comments disabled.
+  ###
   def commentable_has_comments_disabled?
     (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
     (self.commentable.respond_to?('comment_enabled?') and self.original_comment_item.comments_enabled?) or
