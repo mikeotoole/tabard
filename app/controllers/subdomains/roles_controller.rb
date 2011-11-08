@@ -23,10 +23,6 @@ class Subdomains::RolesController < SubdomainsController
     respond_with(@roles)
   end
 
-  # GET /roles/1
-  def show
-  end
-
   # GET /roles/new
   def new
   end
@@ -39,17 +35,18 @@ class Subdomains::RolesController < SubdomainsController
   # POST /roles
   def create
     if @role.save
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+      add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'notice'
     end
-    respond_with(@role)
+    respond_with(@role, :location => edit_role_path(@role))
   end
 
   # PUT /roles/1
   def update
+    params[:role][:community_profile_ids] ||= Array.new
     if @role.update_attributes(params[:role])
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+      add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'notice'
     end
-    respond_with(@role)
+    respond_with(@role, :location => edit_role_path(@role))
   end
 
   # DELETE /roles/1

@@ -344,6 +344,7 @@ body
     &:focus,
     &:hover
       background: #8f364e
+      +border_radius(5)
       color: #fff
   
   fieldset
@@ -1308,6 +1309,41 @@ body
           right: -20px
           width: 20px
           z-index: 2
+  
+  // Roles & Permissions
+  #usercheckboxes
+    margin: 0 -5px 0 0
+    
+    li
+      display: inline
+      
+      label
+        background: #ddd
+        +bg_gradient(#ddd,#eee)
+        border: 1px solid #fff
+        +border_radius(5)
+        float: left
+        height: 26px
+        margin: 0 5px 5px 0
+        padding: 5px
+        width: 209px
+        +transition(box-shadow .2s linear)
+        
+        &:before
+          left: 5px
+          top: 5px
+          
+        &:after
+          left: 10px
+          top: 10px
+        
+        &:hover
+          +box_shadow(0 0 10px rgba(#000,.5))
+        
+      input:checked + label
+        background: #fff
+        +bg_gradient(#eee,#fff)
+        +box_shadow(0 0 10px rgba(#000,.3))
 
 
 @import subdomains/theme

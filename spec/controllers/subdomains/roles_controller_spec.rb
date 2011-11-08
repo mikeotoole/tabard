@@ -37,31 +37,6 @@ describe Subdomains::RolesController do
     end
   end
 
-  describe "GET 'show'" do
-    it "should be unauthorized when authenticated as a non admin user" do
-      sign_in user
-      get 'show', :id => role
-      response.response_code.should == 403
-    end
-    
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => role
-      response.should be_success
-    end
-    
-    it "should render roles/show template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => role
-      response.should render_template('roles/show')
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get 'show', :id => role
-      response.should redirect_to(new_user_session_path)
-    end
-  end
-
   describe "GET 'new'" do
     it "should be unauthorized when authenticated as a non admin user" do
       sign_in user
@@ -127,7 +102,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      response.should redirect_to(role_path(assigns[:role]))
+      response.should redirect_to(edit_role_path(assigns[:role]))
     end
   end
   
@@ -168,7 +143,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(role_path(role))
+      response.should redirect_to(edit_role_path(role))
     end
   end
 

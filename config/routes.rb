@@ -62,7 +62,7 @@ DaBvRails::Application.routes.draw do
     scope :module => "subdomains" do
 
       # Roles and Permissions
-      resources :roles do
+      resources :roles, :except => [:show] do
         resources :permissions
       end
 
