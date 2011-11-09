@@ -2,7 +2,7 @@
   %tr.permission
     %td.slider{ :colspan => 4 }
       %fieldset.slider
-        = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last, :checked => 'show_p'
+        = p.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
     %td
       - if permission.id
         = p.input :id, :as => 'hidden', :wrapper => false
@@ -11,7 +11,7 @@
         %fieldset.suggest
           %input{ :type => 'text' }
           %ul.suggestions
-            -#= p.collection_radio :magic_polymorphic_helper, @permissionables, :first, :last, :item_wrapper_tag => :li
+            = p.collection_radio :subject_class, Permission::VALID_SUBJECT_CLASSES, :first, :last, :item_wrapper_tag => :li
     %td.actions
       %div
         - if permission.id and (can? :destroy, permission)
