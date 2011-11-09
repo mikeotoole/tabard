@@ -2,27 +2,27 @@
 #
 # Table name: users
 #
-#  id                     :integer         not null, primary key
-#  email                  :string(255)     default(""), not null
-#  encrypted_password     :string(128)     default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer         default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  confirmation_token     :string(255)
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  failed_attempts        :integer         default(0)
-#  unlock_token           :string(255)
-#  locked_at              :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
-#  user_active            :boolean         default(TRUE)
-#  force_logout           :boolean         default(FALSE)
+#  id                                :integer         not null, primary key
+#  email                             :string(255)     default(""), not null
+#  encrypted_password                :string(128)     default(""), not null
+#  reset_password_token              :string(255)
+#  reset_password_sent_at            :datetime
+#  remember_created_at               :datetime
+#  sign_in_count                     :integer         default(0)
+#  current_sign_in_at                :datetime
+#  last_sign_in_at                   :datetime
+#  current_sign_in_ip                :string(255)
+#  last_sign_in_ip                   :string(255)
+#  confirmation_token                :string(255)
+#  confirmed_at                      :datetime
+#  confirmation_sent_at              :datetime
+#  failed_attempts                   :integer         default(0)
+#  unlock_token                      :string(255)
+#  locked_at                         :datetime
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  accepted_current_terms_of_service :boolean         default(FALSE)
+#  accepted_current_privacy_policy   :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -128,6 +128,55 @@ describe User do
 
     it "should be set" do
       @user.encrypted_password.should_not be_blank
+    end
+  end
+
+  describe "current_terms_of_service" do
+    it "returns the highest version of the terms of service" do
+      create(:terms_of_service, :version => "0")
+      @user = create(:user)
+      @user.current_terms_of_service.should eq(TermsOfService.order('version ASC').first)
+    end
+  end
+  describe "has_accepted_current_terms_of_service?" do
+    before(:each) do
+      @user = create(:user)
+      @current_version = create(:terms_of_service, :version => "9")
+      @current_version.should eq @user.current_terms_of_service
+    end
+    it "returns false if not accepted current terms of service" do
+      @user.has_accepted_current_terms_of_service?.should be_false
+      @user.accepted_documents.include?(@current_version).should be_false
+    end
+    it "returns true if accepted current terms of service" do
+      @user.accepted_documents << @current_version
+      @user = User.find(@user)
+      @user.accepted_documents.include?(@current_version).should be_true
+      @user.has_accepted_current_terms_of_service?.should be_true
+    end
+  end
+  describe "current_privacy_policy" do
+    it "returns the highest version of the privacy policy" do
+      create(:privacy_policy, :version => "0")
+      @user = create(:user)
+      @user.current_privacy_policy.should eq(PrivacyPolicy.order('version ASC').first)
+    end
+  end
+  describe "has_accepted_current_privacy_policy?" do
+    before(:each) do
+      @user = create(:user)
+      @current_version = create(:privacy_policy, :version => "9")
+      @current_version.should eq @user.current_privacy_policy
+    end
+    it "returns false if not accepted current privacy policy" do
+      @user.has_accepted_current_privacy_policy?.should be_false
+      @user.accepted_documents.include?(@current_version).should be_false
+    end
+    it "returns true if accepted current privacy policy" do
+      @user.accepted_documents << @current_version
+      @user = User.find(@user)
+      @user.accepted_documents.include?(@current_version).should be_true
+      @user.has_accepted_current_privacy_policy?.should be_true
     end
   end
 end

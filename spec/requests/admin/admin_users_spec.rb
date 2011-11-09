@@ -164,57 +164,84 @@ describe "ActiveAdmin AdminUser" do
 
   describe "#create" do
     it "creates AdminUser when logged in as superadmin" do
-      pending
       login_as superadmin
+      expect {
+        page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
+      }.to change(AdminUser, :count).by(1)
     end 
     
     it "returns 403 when logged in as admin" do
       login_as admin
-      pending
+      expect {
+        page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
+      }.to change(AdminUser, :count).by(0)
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
       login_as moderator
-      pending
+      expect {
+        page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
+      }.to change(AdminUser, :count).by(0)
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
-      pending
+      expect {
+        page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
+      }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
     it "does not create AdminUser when not logged in" do
-      pending
+      expect {
+        page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
+      }.to change(AdminUser, :count).by(0)
     end    
   end
 
   describe "#update" do 
     it "updates AdminUser when logged in as superadmin" do
-      pending
       login_as superadmin
+      page.driver.put("/admin/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      AdminUser.find(admin).email.should eql "test_case_eamil@example.com"
     end 
     
     it "returns 403 when logged in as admin" do
       login_as admin
-      pending
+      orginal_email = moderator.email
+      page.driver.put("/admin/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      AdminUser.find(moderator).email.should eql orginal_email
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
       login_as moderator
-      pending
+      orginal_email = admin.email
+      page.driver.put("/admin/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      AdminUser.find(admin).email.should eql orginal_email
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
-      pending
+      orginal_email = moderator.email
+      page.driver.put("/admin/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      AdminUser.find(moderator).email.should eql orginal_email
       page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
     it "does not update AdminUser when not logged in" do
-      pending
+      orginal_email = admin.email
+      page.driver.put("/admin/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      AdminUser.find(admin).email.should eql orginal_email
     end   
   end
 
@@ -254,55 +281,51 @@ describe "ActiveAdmin AdminUser" do
     end
     
     it "does not delete AdminUser when not logged in" do
-      page.driver.delete("/admin/admin_users/#{AdminUser.id}")
-      AdminUser.exists?(AdminUser).should be_true
+      page.driver.delete("/admin/admin_users/#{admin.id}")
+      AdminUser.exists?(admin).should be_true
     end      
   end
 
-  describe "#reset_password_admin_admin_user" do  
+  describe "#reset_password_admin_admin_user" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
       
       password = admin.encrypted_password
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
       AdminUser.find(admin).encrypted_password.should_not eql password
-      AdminUser.find(admin).encrypted_password.should_not be_nil
+      AdminUser.find(admin).reset_password_token.should_not be_nil
     end 
     
-    it "returns 403 when logged in as admin" do
+    it "returns 403 when logged in as admin" do   
       login_as admin
 
-      password = moderator.encrypted_password
       page.driver.put("/admin/admin_users/#{moderator.id}/reset_password")
       page.driver.status_code.should eql 403
-      AdminUser.find(admin).encrypted_password.should eql password
       page.should have_content('forbidden')
+      AdminUser.find(moderator).reset_password_token.should be_nil
     end    
     
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      password = admin.encrypted_password
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
-      AdminUser.find(admin).encrypted_password.should eql password
       page.should have_content('forbidden')
+      AdminUser.find(admin).reset_password_token.should be_nil
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      password = admin.encrypted_password
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
-      AdminUser.find(admin).encrypted_password.should eql password
       page.should have_content('forbidden')
+      AdminUser.find(admin).reset_password_token.should be_nil
     end
     
     it "Does not reset_password when not logged in" do
-      password = admin.encrypted_password
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
-      AdminUser.find(admin).encrypted_password.should eql password
+      AdminUser.find(admin).reset_password_token.should be_nil
     end
   end
   

@@ -12,7 +12,7 @@ ActiveAdmin.register AdminUser do
     if can? :reset_all_passwords, AdminUser.new
       link_to "Reset All Passwords", reset_all_passwords_admin_admin_users_path, :method => :post, :confirm => 'Are you sure you want to reset ALL admin user passwords?'
     end  
-  end  
+  end
 
   member_action :reset_password, :method => :put do
     admin_user = AdminUser.find(params[:id])

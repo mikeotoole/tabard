@@ -36,6 +36,9 @@ class ApplicationController < ActionController::Base
   # This before_filter checks if system is in maintenance mode.
   before_filter :check_maintenance_mode
 
+  # This before_filter ensures that a user has accepted legal documents.
+  before_filter :ensure_accepted_most_recent_legal_documents
+
 ###
 # Status Code Rescues
 ###
@@ -51,10 +54,12 @@ class ApplicationController < ActionController::Base
   #   * +status+ -> This is the status code to use. Rails defines this for us.
   #   * +exception+ -> This is an exception message to include.
   ###
-  def http_status_code(status, exception)
-    # store the exception so its message can be used in the view
-    @exception = exception
-    flash[:alert] = @exception.message
+  def http_status_code(status, exception = nil)
+    if exception
+      # store the exception so its message can be used in the view
+      @exception = exception
+      flash[:alert] = @exception.message
+    end
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
       case status
@@ -111,6 +116,11 @@ class ApplicationController < ActionController::Base
 ###
 protected
 
+  # Overrides default responder
+  def self.responder
+    AppResponder
+  end
+
   # Builds a list of the Crumblin supported games.
   def fetch_crumblin_games
     @active_games = Game.all
@@ -121,13 +131,13 @@ protected
     @active_games
   end
   helper_method :active_games
-  
+
   # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
   def show_pitch?
     !!@show_pitch
   end
   helper_method :show_pitch?
-  
+
   # This helper method lets the applicaiton layout view know whether or not to hide announcements within the flash messages partial.
   def hide_announcements?
     !!@hide_announcements
@@ -180,7 +190,7 @@ protected
 
   # This helper method returns an Array with the users profile and characters info.
   def profiles
-    if signed_in?
+    if user_signed_in?
       profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
       profiles = Array.new
       profile_collection.each do |profile|
@@ -213,7 +223,7 @@ protected
 ###
 # Callback Methods
 ###
-  
+
   ###
   # _before_filter_
   #
@@ -229,7 +239,7 @@ protected
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_active_profile_is_valid
-    if signed_in? and not current_admin_user
+    if user_signed_in?
       unless current_profile
         activate_profile(current_user.user_profile_id, "UserProfile")
       end
@@ -269,6 +279,21 @@ protected
     end   
   end
   
+  ###
+  # _before_filter_
+  #
+  # This method ensures that a profile is active, or it will default to the user_profile
+  ###
+  def ensure_accepted_most_recent_legal_documents
+    if user_signed_in?
+      if not current_user.accepted_current_terms_of_service
+        redirect_to accept_document_path(current_user.current_terms_of_service)
+      elsif not current_user.accepted_current_privacy_policy
+        redirect_to accept_document_path(current_user.current_privacy_policy)
+      end
+    end
+  end
+
   ###
   # _after_filter_
   #

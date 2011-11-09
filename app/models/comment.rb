@@ -12,19 +12,6 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id
 
 ###
-# Attribute accessor
-###
-  ###
-  # This attribute is for javascript to let a comment know what dom element is the target for the comment form after a comment has been submitted.
-  ###
-  attr_accessor :form_target
-
-  ###
-  # This attribute is for javascript to let a comment know what dom element is the target for the comment when it created.
-  ###
-  attr_accessor :comment_target
-
-###
 # Associations
 ###
   belongs_to :user_profile
@@ -45,7 +32,6 @@ class Comment < ActiveRecord::Base
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
 
-
 ###
 # Validators
 ###
@@ -54,6 +40,7 @@ class Comment < ActiveRecord::Base
   validates :community, :presence => true
   validates :commentable, :presence => true
   validate :character_is_valid_for_user_profile
+  validate :replys_enabled
 
 ###
 # Public Methods
@@ -131,13 +118,21 @@ class Comment < ActiveRecord::Base
   end
 
   ###
-  # This method checks to see if replys to this comment are allowed.
-  # [Returns] True if replys are allowed for this comment, otherwise false.
+  # This method checks to see if comments are disabled for the commentable item.
+  # [Returns] false if what this is commenting on has comments disabled.
   ###
-  def replys_locked?
-    self.has_been_locked or
-        !self.original_comment_item.comments_enabled? or
-        (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+  def commentable_has_comments_disabled?
+    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
+    (self.commentable.respond_to?('comment_enabled?') and self.original_comment_item.comments_enabled?) or
+    (self.original_comment_item.respond_to?('has_been_locked') and self.original_comment_item.has_been_locked)
+  end
+
+  ###
+  # This method checks to see if replies to this comment are allowed.
+  # [Returns] True if replies are allowed for this comment, otherwise false.
+  ###
+  def replies_locked?
+    self.has_been_locked or self.commentable_has_comments_disabled?
   end
 
   # The commentable_type always needs to be of the base class type and not the subclass type.
@@ -151,6 +146,14 @@ class Comment < ActiveRecord::Base
   def character_is_valid_for_user_profile
     return unless self.character_proxy
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+  end
+
+  ###
+  # This method validates that what the comment is commenting on allows replys.
+  ###
+  def replys_enabled
+    return unless self.commentable_has_comments_disabled?
+    self.errors.add(:base, "you can't reply to that!")
   end
 
 ###

@@ -2,6 +2,8 @@ ActiveAdmin.register PageSpace do
   menu :parent => "Pages", :if => proc{ can?(:read, PageSpace) }
   controller.authorize_resource
   
+  actions :index, :show, :update, :edit, :destroy
+  
   filter :id
   filter :name
   filter :game

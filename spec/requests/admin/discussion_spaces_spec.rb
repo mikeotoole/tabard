@@ -87,41 +87,8 @@ describe "ActiveAdmin DiscussionSpace" do
   end
   
   describe "#new" do 
-    it "returns 200 when logged in as superadmin" do
-      login_as superadmin
-
-      visit new_admin_discussion_space_url
-      page.status_code.should == 200
-      current_url.should == new_admin_discussion_space_url
-    end 
-    
-    it "returns 200 when logged in as admin" do
-      login_as admin
-
-      visit new_admin_discussion_space_url
-      page.status_code.should == 200
-      current_url.should == new_admin_discussion_space_url
-    end    
-    
-    it "returns 200 when logged in as moderator" do
-      login_as moderator
-
-      visit new_admin_discussion_space_url
-      page.status_code.should == 200
-      current_url.should == new_admin_discussion_space_url
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-
-      visit new_admin_discussion_space_url
-      page.status_code.should == 403
-      page.should have_content('forbidden')
-    end
-    
-    it "redirects to login page when not logged in" do
-      visit new_admin_discussion_space_url
-      current_path.should == new_admin_user_session_path
+    it "raises error ActionNotFound" do
+      lambda { visit new_admin_discussion_space_url }.should raise_error(AbstractController::ActionNotFound)
     end    
   end
 
@@ -163,68 +130,46 @@ describe "ActiveAdmin DiscussionSpace" do
       current_path.should == new_admin_user_session_path
     end    
   end
- 
-  describe "#create" do
-    it "creates discussion_space when logged in as superadmin" do
-      pending
-      login_as superadmin
 
-      DefaultObjects.community
-      startCount = DiscussionSpace.all.count
-      
-      page.driver.post("/admin/discussion_spaces", { :discussion_space => discussion_space_att } )
-      #{ :params => { attributes_for(:discussion_space, :name => "Test Case Name") } }
-      DiscussionSpace.all.count.should eql startCount + 1
-      DiscussionSpace.last.name.should eql "Test Case Name"
-    end 
-    
-    it "creates discussion_space when logged in as admin" do
-      login_as admin
-      pending
-    end    
-    
-    it "creates discussion_space when logged in as moderator" do
-      login_as moderator
-      pending
-    end    
-    
-    it "returns 403 when logged in as regular User" do
-      login_as user
-      pending
-      page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+  describe "#create" do
+    it "raises error ActionNotFound" do
+      lambda { page.driver.post("/admin/discussion_spaces") }.should raise_error(AbstractController::ActionNotFound)
     end
-    
-    it "does not create discussion_space when not logged in" do
-      pending
-    end    
   end
 
   describe "#update" do 
     it "updates discussion_space when logged in as superadmin" do
-      pending
       login_as superadmin
+      page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
+      DiscussionSpace.find(discussion_space).name.should eql "test_case_name"
     end 
     
     it "updates discussion_space when logged in as admin" do
       login_as admin
-      pending
+      page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
+      DiscussionSpace.find(discussion_space).name.should eql "test_case_name"
     end    
     
     it "updates discussion_space when logged in as moderator" do
       login_as moderator
-      pending
+      page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
+      DiscussionSpace.find(discussion_space).name.should eql "test_case_name"
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
-      pending
+      
+      original_name = discussion_space.name
+      page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
+      DiscussionSpace.find(discussion_space).name.should eql original_name
       page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
     it "does not update discussion_space when not logged in" do
-      pending
+      original_name = discussion_space.name
+      page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
+      DiscussionSpace.find(discussion_space).name.should eql original_name
     end   
   end
 

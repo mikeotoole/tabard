@@ -37,9 +37,19 @@ class CrumblinController < ApplicationController
   # This method gets the Pricing page.
   def pricing
   end
-  
-   # This method gets the Maintenance page.
+
+  # This method gets the Maintenance page.
   def maintenance # TODO Doug, This page needs content. -MO
     render :layout => false
+  end
+
+  # This method gets the Privacy Policy page.
+  def privacy_policy
+    @document = PrivacyPolicy.first
+  end
+
+  # This method gets the Terms of Service page.
+  def terms_of_service
+    @document = TermsOfService.first
   end
 end

@@ -27,10 +27,8 @@ class AdminAbility
       can [:read, :destroy, :delete_question], CustomForm
       can [:read, :destroy, :delete_predefined_answer], Question
       can [:read, :destroy, :update], PageSpace
-      can [:create], [PageSpace, 'Page Space'] # Quoted needed for displaying button in panel.
       can [:read, :destroy], Page
       can [:read, :destroy, :update], DiscussionSpace
-      can [:create], [DiscussionSpace, 'Discussion Space']
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :destroy], SwtorCharacter
       can [:read, :destroy], WowCharacter
@@ -44,7 +42,7 @@ class AdminAbility
     
     # Rules for superadmin user. (Inherits rules for admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
-      can :create, [AdminUser, 'Admin User']
+      can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
       can :manage, [AdminUser]
     end
   end

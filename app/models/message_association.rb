@@ -39,7 +39,7 @@ class MessageAssociation < ActiveRecord::Base
   def original_message_id
     self.message_id
   end
-  
+
 end
 
 

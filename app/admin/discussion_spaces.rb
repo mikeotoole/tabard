@@ -2,6 +2,8 @@ ActiveAdmin.register DiscussionSpace do
   menu :parent => "Discussions", :if => proc{ can?(:read, DiscussionSpace) }
   controller.authorize_resource
   
+  actions :index, :show, :update, :edit, :destroy
+  
   filter :id
   filter :name
   filter :game

@@ -10,13 +10,13 @@
   %body.fluid
     = render "layouts/bar_in"
     = render "layouts/flash_messages"
-    
+
     = form_tag '' do
       %input{ :name => '_method', :value => '', :type => 'hidden' }
-    
+
       #mailbox-menu
         %dl
-        
+
           %dt Mail
           %dd{ :class => 'inbox' + (mailbox_view_state == 'inbox' ? ' current' : '') }
             = link_to 'Inbox', inbox_path, :meta => "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
@@ -26,7 +26,7 @@
             = link_to 'Sent', sent_mailbox_path, :meta => "Sent messages"
           %dd{ :class => 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
             = link_to 'Trash', trash_path, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
-          
+
           - if !['compose','sent'].include?(mailbox_view_state)
             %dt Actions
             - if mailbox_view_state == 'trash'
@@ -41,7 +41,7 @@
                 = button_tag 'Mark as read', :action => mail_batch_mark_read_path, :method => :put, :meta => 'Mark selected messages as read.'
               %dd{ :class => 'action unread' }
                 = button_tag 'Mark as unread', :action => mail_batch_mark_unread_path, :method => :put, :meta => 'Mark selected messages as unread.'
-      
+
       #mailbox
         - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
           %dl
@@ -53,19 +53,19 @@
                 %dt Older
             - @older_messages.each do |message|
               = render 'messages/row', :message => message
-              
+
         - elsif @messages && @messages.size > 0
           %dl
             - @messages.each do |message|
               = render 'messages/row', :message => message
-              
+
         - elsif @folder
           %p= "#{@folder.name} is empty."
-          
+
         - elsif @current_user.sent_messages.size > 0 && (!@message || @message.id)
           %dl
             - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
               = render 'messages/row', :message => message
-        
+
     = yield
     = render 'layouts/footer'
