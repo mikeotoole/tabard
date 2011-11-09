@@ -1,12 +1,12 @@
 = f.simple_fields_for :permissions, permission do |p|
-  %tr
+  %tr.permission
     %td.slider{ :colspan => 4 }
       %fieldset.slider
         = p.collection_radio :permission_level, [['show_p', 'View'], ['update_p', 'Update'], ['create_p', 'Add'], ['delete_p', 'Delete']], :first, :last, :checked => 'show_p'
     %td
       - if permission.id
         = p.input :id, :as => 'hidden', :wrapper => false
-        = permission.subject_class
+        %h3= permission.subject_class
       - else
         %fieldset.suggest
           %input{ :type => 'text' }
