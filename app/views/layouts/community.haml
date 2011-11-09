@@ -22,14 +22,14 @@
           - if can? :index, PageSpaces
             %li
               = link_to 'Wiki', page_spaces_path
-              - if @community.page_spaces.size
+              - if @community.page_spaces.size > 0
                 %ul
                   - @community.page_spaces.each do |space|
                     %li= link_to space.name, space
           - if can? :index, DiscussionSpaces
             %li
               = link_to 'Discussions', discussion_spaces_path
-              - if @community.discussion_spaces.size
+              - if @community.discussion_spaces.size > 0
                 %ul
                   - @community.discussion_spaces.each do |space|
                     %li= link_to space.name, space
