@@ -1,0 +1,26 @@
+%h1 My Roster Assigments
+%p
+  This page keeps track of which of your characters are members of
+  %strong= current_community.name
+
+%table
+  %thead
+    %tr
+      %th{ :colspan => 2 } Characters
+      %th.actions
+  - if @roster_assignments.size > 0
+    %tbody
+      - @roster_assignments.each do |roster_assignment|
+        %tr{ roster_assignment.pending ? { :class => 'dim' } : {} }
+          %td{ :class => 'avatar cinch' }
+            = image_tag roster_assignment.character_proxy_avatar_url(:small), :class => 'avatar'
+          %td.character
+            %h3= roster_assignment.character_proxy_name
+            = roster_assignment.pending ? 'is pending approval' : 'is a member'
+          %td.actions
+            %div
+              - if can? :delete, roster_assignment
+                = link_to 'Remove', roster_assignment, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => "Remove #{roster_assignment.character_proxy_name} from the roster"
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }= link_to 'Add a character', new_roster_assignment_path, :class => 'button'

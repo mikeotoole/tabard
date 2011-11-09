@@ -580,7 +580,7 @@ body
 
   table
     +border_radius(5)
-    margin: 0 0 15px
+    margin: 15px 0
     
     td,
     tr
@@ -609,76 +609,108 @@ body
           +border_radius(5,5,0,0)
   
     tbody
+      
+      tr
     
-      td
-        background: #eee
-        +bg_gradient(#eee,#ddd)
-        border-bottom: 1px solid #ccc
-        border-top: 1px solid #fff
-        padding: 5px 10px
-        width: 100%
-        
-        &.actions
-          padding: 5px
-          white-space: nowrap
+        td
+          background: #eee
+          +bg_gradient(#eee,#ddd)
+          border-bottom: 1px solid #ccc
+          border-top: 1px solid #fff
+          padding: 5px 10px
+          width: 100%
           
-          div
-            position: relative
-          
-            a
-              background: image-url('application/icons.png') no-repeat #D47B48
-              +border_radius(5)
-              display: block
-              float: left
-              height: 30px
-              overflow: hidden
-              padding: 0
-              margin: 0 0 0 5px
-              text-indent: -500em
-              +transition(background-color .2s linear, box-shadow .2s linear)
-              width: 30px
-              
-              &:hover
-                background: image-url('application/icons.png') no-repeat #570A17
-                +box_shadow(0 0 10px #333)
-              
-                &[meta]
+          &.actions
+            padding: 5px
+            white-space: nowrap
+            
+            div
+              position: relative
+            
+              a
+                background: image-url('application/icons.png') no-repeat #D47B48
+                +border_radius(5)
+                display: block
+                float: left
+                height: 30px
+                overflow: hidden
+                padding: 0
+                margin: 0 0 0 5px
+                text-indent: -500em
+                +transition(background-color .2s linear, box-shadow .2s linear)
+                width: 30px
                 
-                  &:before
-                    background: rgba(#6F2B3D,.9)
-                    +border_radius(5)
-                    color: #fff
-                    content: attr(meta)
-                    font-size: 13px
-                    height: 30px
-                    line-height: 30px
-                    margin: 0 5px 0 0
-                    padding: 0 10px
-                    position: absolute
-                    right: 100%
-                    text-indent: 0
-                    white-space: nowrap
+                &:hover
+                  background: image-url('application/icons.png') no-repeat #570A17
+                  +box_shadow(0 0 10px #333)
+                
+                  &[meta]
                   
-                  &:after
-                    border: 5px solid transparent
-                    border-left: 5px solid rgba(#6F2B3D,.9)
-                    content: ''
-                    height: 0
-                    left: -5px
-                    position: absolute
-                    top: 10px
-                    width: 0
+                    &:before
+                      background: rgba(#6F2B3D,.9)
+                      +border_radius(5)
+                      color: #fff
+                      content: attr(meta)
+                      font-size: 13px
+                      height: 30px
+                      line-height: 30px
+                      margin: 0 5px 0 0
+                      padding: 0 10px
+                      position: absolute
+                      right: 100%
+                      text-indent: 0
+                      white-space: nowrap
                     
+                    &:after
+                      border: 5px solid transparent
+                      border-left: 5px solid rgba(#6F2B3D,.9)
+                      content: ''
+                      height: 0
+                      left: -5px
+                      position: absolute
+                      top: 10px
+                      width: 0
+                      
+                
+                &.apply
+                  background-position: 0 -30px
+                  
+                &.delete
+                  background-position: -30px -30px
+                  
+                &.edit
+                  background-position: -60px -30px
               
-              &.apply
-                background-position: 0 -30px
+                &.approve
+                  background-position: -510px -30px
                 
-              &.delete
-                background-position: -30px -30px
-                
-              &.edit
-                background-position: -60px -30px
-    
+                &.reject
+                  background-position: -540px -30px
+          
+          &.cinch
+            width: 0
+          
+          &.character
+          
+            h3
+              padding: 0
+            
+          &.avatar
+            
+            img
+              background: #ccc
+              border: 1px solid #fff
+              +border_radius(5)
+              +box_shadow(0 0 10px rgba(#000,.2))
+              float: left
+              margin: 5px 0
+        
+        &.dim
+          
+          td
+            border-color: #aaa
+            +bg_gradient(#aaa,#ccc)
+        
     tfoot
     
       td

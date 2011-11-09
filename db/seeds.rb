@@ -175,13 +175,49 @@ Timecop.freeze(2.months.ago)
   puts "Giving D-Moose the n00b role..."
   d_moose.add_new_role(noob_role)
 
-  puts "Snappy Turtle is creating a character and adding to the JAH roster..."
-  dr_crabs = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Clamps",
+  puts "Snappy Turtle is creating some characters and adding them to the JAH roster..."
+  dr_manhattan = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Manhattan",
     :game => swtor_game,
-    :server => "Alderon")
+    :server => "Alderaan")
   )
-  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_crabs)
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_manhattan)
+  dr_hammer = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Hammer",
+    :game => swtor_game,
+    :server => "Endor")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_hammer)
+  dr_horrible = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Horrible",
+    :game => swtor_game,
+    :server => "Hoth")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_horrible)
+  dr_strangelove = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Strangelove",
+    :game => swtor_game,
+    :server => "Korriban")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_strangelove)
+  dr_doom = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Doom",
+    :game => swtor_game,
+    :server => "Coruscant")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_doom)
+  dr_octopus = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr Octopus",
+    :game => swtor_game,
+    :server => "Tatooine")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_octopus)
+  dr_house = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
+    :character => SwtorCharacter.create(:name => "Dr House",
+    :game => swtor_game,
+    :server => "Belsavis")
+  )
+  s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_house)
   
   puts "Creating Just Another Headshot Clan General Discussion Space"
   jahc_gds = jahc.discussion_spaces.create(:name => "General Chat")

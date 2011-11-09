@@ -1,0 +1,26 @@
+%h1 Pending Characters
+
+
+- if @roster_assignments.size > 0
+  %table
+    %thead
+      %tr
+        %th{ :colspan => 2 } Characters
+        %th.actions
+    %tbody
+      - @roster_assignments.each do |roster_assignment|
+        %tr
+          %td{ :class => 'avatar cinch' }
+            = image_tag roster_assignment.character_proxy_avatar_url(:small), :class => 'avatar'
+          %td.character
+            %h3= roster_assignment.character_proxy_name
+            Requested by
+            %strong= roster_assignment.user_profile_display_name
+          %td.actions
+            %div
+              - if can? :approve, roster_assignment
+                = link_to 'Approve', approve_roster_assignment_path(roster_assignment), :method => :put, :class => 'approve', :meta => 'Approve character'
+              - if can? :reject, roster_assignment
+                = link_to 'Reject', reject_roster_assignment_path(roster_assignment), :method => :put, :class => 'reject', :meta => 'Reject character'
+- else
+  %p There are no pending requests.

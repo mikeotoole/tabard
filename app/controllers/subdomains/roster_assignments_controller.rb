@@ -88,12 +88,14 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # PUT /roster_assignments/1/approve
   def approve
     @roster_assignment.approve
+    add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the community roster.", 'success'
     redirect_to(pending_roster_assignments_path)
   end
 
   # PUT /roster_assignments/1/reject
   def reject
     @roster_assignment.reject
+    add_new_flash_message "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster.", 'notice'
     redirect_to(pending_roster_assignments_path)
   end
 
