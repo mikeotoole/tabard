@@ -19,14 +19,14 @@
         .menu
           %li
             = link_to 'Dashboard', actual_community_url(@community)
-          - if can? :index, PageSpaces
+          - if can? :index, PageSpace
             %li
               = link_to 'Wiki', page_spaces_path
               - if @community.page_spaces.size
                 %ul
                   - @community.page_spaces.each do |space|
                     %li= link_to space.name, space
-          - if can? :index, DiscussionSpaces
+          - if can? :index, DiscussionSpace
             %li
               = link_to 'Discussions', discussion_spaces_path
               - if @community.discussion_spaces.size
