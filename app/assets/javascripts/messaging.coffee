@@ -56,18 +56,6 @@ $(document).ready ->
     $('#message_to').focus()
   else
     $('#message_body').focus()
-  
-  # batch actions
-  $('#mailbox-menu .action button')
-    .click ->
-      if $('#mailbox input:checked').length
-        $(this).closest('form')
-          .prop
-            action: $(this).attr('action')
-          .find('input[name="_method"]')
-            .val $(this).attr('method')
-      else
-        false
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })

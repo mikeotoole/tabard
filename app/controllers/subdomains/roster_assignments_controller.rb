@@ -92,10 +92,38 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     redirect_to(pending_roster_assignments_path)
   end
 
+  # PUT /roster_assignments/batch_approve
+  def batch_approve
+    if params[:ids]
+      params[:ids].each do |id|
+        roster_assignment = RosterAssignment.find_by_id(id[0])
+        if can? :update, roster_assignment
+          roster_assignment.approve
+        end
+      end
+      add_new_flash_message "The roster has been updated.", 'success'
+    end
+    redirect_to(pending_roster_assignments_path)
+  end
+
   # PUT /roster_assignments/1/reject
   def reject
     @roster_assignment.reject
     add_new_flash_message "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster.", 'notice'
+    redirect_to(pending_roster_assignments_path)
+  end
+
+  # PUT /roster_assignments/batch_reject
+  def batch_reject
+    if params[:ids]
+      params[:ids].each do |id|
+        roster_assignment = RosterAssignment.find_by_id(id[0])
+        if can? :update, roster_assignment
+          roster_assignment.reject
+        end
+      end
+      add_new_flash_message "The roster has been updated.", 'success'
+    end
     redirect_to(pending_roster_assignments_path)
   end
 
