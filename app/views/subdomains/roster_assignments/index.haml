@@ -35,7 +35,7 @@
                 —
             %td
               %time= l member_profile.joined_community_on(current_community), :format => :date_short
-    - if can? :delete, current_community.roster_assignments.new
+    - if can? :manage, RosterAssignment
       %tfoot
         %tr
           %td{ :colspan => 4, :class => 'batch' }
