@@ -77,6 +77,7 @@ ActiveAdmin.register User do
   end 
     
   filter :email
+  filter :name
   filter :current_sign_in_at
   filter :current_sign_in_ip
   filter :last_sign_in_at
@@ -88,6 +89,9 @@ ActiveAdmin.register User do
   filter :user_active
   
   index do
+    column "View" do |user|
+      link_to "View", admin_user_path(user)  
+    end
     column :email
     column "User Profile" do |user|
       link_to user.display_name, [:admin, user.user_profile]
@@ -98,11 +102,6 @@ ActiveAdmin.register User do
     column :locked_at
     column :user_active
     column :created_at
-    column "View" do |user|
-      if can? :read, user
-        link_to "View", admin_user_path(user)
-      end  
-    end
     column "Destroy" do |user|
       if can? :destroy, user
         link_to "Destroy", [:admin, user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
@@ -110,10 +109,11 @@ ActiveAdmin.register User do
     end
   end
   
-  show do
-    attributes_table :id, :email, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, 
-    :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :user_active, :confirmation_token, :confirmed_at, :confirmation_sent_at, :failed_attempts, 
-    :unlock_token, :locked_at, :created_at, :updated_at, :user_profile
-    active_admin_comments
+  show :title => :email do
+    rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
+    rows.insert(2, :user_profile)
+    attributes_table *rows
+    
+#     active_admin_comments
   end
 end

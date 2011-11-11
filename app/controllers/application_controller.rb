@@ -262,7 +262,7 @@ protected
   ###
   def check_force_logout
     if current_user and current_user.force_logout
-      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance."
+      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance." # TODO Joe, This message does not get pushed to user. -MO
     end
   end
 

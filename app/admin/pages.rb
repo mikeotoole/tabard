@@ -11,14 +11,18 @@ ActiveAdmin.register Page do
   filter :show_in_navigation, :as => :select
   
   index do
-    column :id
-    column :name
-    column :page_space
-    column :poster
-    column :created_at       
     column "View" do |page|
       link_to "View", admin_page_path(page)
     end
+    column :id
+    column :name
+    column "Page Space" do |page|
+      link_to page.page_space.name, [:admin, page.page_space]
+    end
+    column "Poster" do |page|
+      link_to page.poster.name, [:admin, page.poster]
+    end
+    column :created_at       
     column "Destroy" do |page|
       if can? :destroy, page
         link_to "Destroy", [:admin, page], :method => :delete, :confirm => 'Are you sure you want to delete this page?'
@@ -26,8 +30,14 @@ ActiveAdmin.register Page do
     end
   end
   
-  show do
-    attributes_table :id, :name, :markup, :body, :page_space, :user_profile, :poster, :community, :created_at, :updated_at, :show_in_navigation
-    active_admin_comments
+  show :title => proc{ "#{page.poster.name} - #{page.name}" } do
+    rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
+    rows.insert(1, :poster)
+    attributes_table *rows, :community
+
+    div do      
+      page.body  
+    end
+#     active_admin_comments
   end  
 end

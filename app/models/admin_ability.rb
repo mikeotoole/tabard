@@ -23,20 +23,26 @@ class AdminAbility
       can [:read], ActiveAdmin::Dashboards::DashboardController
       can [:read, :lock, :unlock, :reset_password], User
       can [:read], UserProfile
-      can [:read, :destroy], Community
+      can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm
-      can [:read, :destroy, :delete_predefined_answer], Question
+      can [:read, :delete_predefined_answer], Question
       can [:read, :destroy, :update], PageSpace
       can [:read, :destroy], Page
-      can [:read, :destroy, :update], DiscussionSpace
+      can [:read], DiscussionSpace
+      can [:update, :destroy], DiscussionSpace do |space|
+        space.is_announcement != true
+      end
       can [:read, :destroy, :remove_comment], Discussion
-      can [:read, :destroy], SwtorCharacter
-      can [:read, :destroy], WowCharacter
+      can [:read], SwtorCharacter
+      can [:read], WowCharacter
     end
     
     # Rules for admin user. (Inherits rules for moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
       can [:destroy, :reset_all_passwords, :sign_out_all_users], User
+      can [:destroy], SwtorCharacter
+      can [:destroy], WowCharacter
+      can [:destroy], Community
       can [:toggle_maintenance_mode], SiteActionController
     end
     

@@ -22,7 +22,7 @@ class SiteActionController < ApplicationController
       else
         $maintenance_mode = true
       end
-      notice = (maintenance_mode? ? "Maintenance Mode On" : "Maintenance Mode Off")
+      notice = (maintenance_mode? ? "Maintenance Mode ON" : "Maintenance Mode OFF")
       redirect_to admin_dashboard_url, :notice => notice
     else
       redirect_to admin_dashboard_url, :alert => "You are not authorized!"

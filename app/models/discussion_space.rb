@@ -62,9 +62,20 @@ class DiscussionSpace < ActiveRecord::Base
   # This method validates that the selected game is valid for the community.
   ###
   def game_is_valid_for_community
-    return unless self.game
-    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.include?(self.game)
+    if self.game and not self.community.games.include?(self.game)
+      self.errors.add(:game_id, "this game is not part of the community")
+    else
+      return true
+    end  
   end
+  
+  ###
+  # This method determines how many discussions are in this discussion space.
+  # [Returns] An integer that contains how many discussions are in this discussion space.
+  ###
+  def number_of_discussions
+    self.discussions.count
+  end 
 end
 
 

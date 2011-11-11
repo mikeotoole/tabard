@@ -53,6 +53,7 @@ source 'http://rubygems.org'
   group :development, :test do
     gem 'sqlite3'
     gem 'rspec-rails'
+    gem 'factory_girl_rails'
   end
 
 # Development Specific Gems
@@ -65,7 +66,6 @@ source 'http://rubygems.org'
 
 # Test Specific Gems
   group :test do
-    gem 'factory_girl_rails'
     gem 'capybara'
     gem 'database_cleaner'
     gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i

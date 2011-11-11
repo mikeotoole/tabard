@@ -51,20 +51,26 @@ ActiveAdmin.register AdminUser do
   filter :created_at
   
   index do
+    column "View" do |admin_user|
+      link_to "View", admin_admin_user_path(admin_user)
+    end
     column :email
     column :role
     column :current_sign_in_at
     column :last_sign_in_at
     column :sign_in_count
     column :created_at
-    column "View" do |admin_user|
-      link_to "View", admin_admin_user_path(admin_user)
-    end
     column "Destroy" do |admin_user|
       if can? :destroy, admin_user
         link_to "Destroy", [:admin, admin_user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
       end  
     end
+  end
+
+  show :title => :email do
+    rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
+    attributes_table *rows
+#     active_admin_comments
   end
   
   form do |f|

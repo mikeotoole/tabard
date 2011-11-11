@@ -9,13 +9,15 @@ ActiveAdmin.register WowCharacter do
   filter :faction
   filter :race
   filter :level
-  filter :game
   filter :server
   filter :avatar
   filter :created_at
   filter :updated_at
   
   index do
+    column "View" do |character|
+      link_to "View", admin_wow_character_path(character)
+    end
     column :id
     column :name
     column "User Profile" do |character|
@@ -26,9 +28,6 @@ ActiveAdmin.register WowCharacter do
     column :level
     column :server
     column :created_at
-    column "View" do |character|
-      link_to "View", admin_wow_character_path(character)
-    end
     column "Destroy" do |character|
       if can? :destroy, character
         link_to "Destroy", [:admin, character], :method => :delete, :confirm => 'Are you sure you want to delete this character?'
@@ -36,8 +35,8 @@ ActiveAdmin.register WowCharacter do
     end
   end
   
-  show do
-    attributes_table :id, :name, :faction, :race, :level, :game, :server, :avatar, :created_at, :updated_at, :user_profile
-    active_admin_comments
+  show :title => proc{"#{wow_character.user_profile.name} - #{wow_character.name}"} do
+    attributes_table *default_attribute_table_rows, :user_profile
+#     active_admin_comments
   end  
 end

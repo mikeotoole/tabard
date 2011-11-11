@@ -18,17 +18,19 @@ ActiveAdmin.register CustomForm do
   filter :published, :as => :select
   
   index do
+    column "View" do |custom_form|
+      link_to "View", admin_custom_form_path(custom_form)
+    end
     column :id
-    column :community
+    column :community do |custom_form|
+      link_to custom_form.community.name, [:admin, custom_form.community]
+    end
     column :name
     column :created_at
     column "Number Questions" do |custom_form|
       "#{custom_form.questions.count}"
     end
     column :published
-    column "View" do |custom_form|
-      link_to "View", admin_custom_form_path(custom_form)
-    end
     column "Destroy" do |custom_form|
       if can? :destroy, custom_form
         link_to "Destroy", [:admin, custom_form], :method => :delete, :confirm => 'Are you sure you want to delete this custom form?'
@@ -36,14 +38,15 @@ ActiveAdmin.register CustomForm do
     end
   end
   
-  show do
-    attributes_table :id, :community, :name, :instructions, :thankyou, :created_at, :updated_at, :published
+  show :title => proc{ "#{custom_form.community.name} - #{custom_form.name}" } do
+    attributes_table *default_attribute_table_rows
     div do      
       panel("Questions") do
         table_for(custom_form.questions) do
-          column "Name" do |question|
-            link_to question.body, admin_question_path(question)
+          column "View" do |question|
+            link_to "View", admin_question_path(question)
           end
+          column :body
           column :type
           column :style
           column "Predefined Answers" do |question|
@@ -63,6 +66,6 @@ ActiveAdmin.register CustomForm do
         end
       end
     end
-    active_admin_comments
+#     active_admin_comments
   end    
 end

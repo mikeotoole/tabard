@@ -40,7 +40,11 @@ class CrumblinController < ApplicationController
 
   # This method gets the Maintenance page.
   def maintenance # TODO Doug, This page needs content. -MO
-    render :layout => false
+    if maintenance_mode?
+      render :layout => false
+    else
+      redirect_to root_url
+    end    
   end
 
   # This method gets the Privacy Policy page.

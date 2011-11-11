@@ -55,6 +55,16 @@ ActiveAdmin::Dashboards.build do
       end
     end
   end
+
+  section "New Communities", :priority => 2 do
+    if can?(:read, Community)
+      ul do
+        Community.order("created_at desc").limit(5).collect do |community|
+          li link_to "#{community.name} - #{community.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_community_path(community)
+        end  
+      end
+    end    
+  end
   
   section "New Users", :priority => 2 do
     if can?(:read, User)
