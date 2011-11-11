@@ -1,36 +1,42 @@
-%h1 Members
+%h1 Community Members
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Community Member Since
-      %th
-  - if @member_profiles.size > 0
-    %tbody
-      - @member_profiles.each do |member_profile|
-        %tr
-          %td= member_profile.name
-          %td= member_profile.joined_community_on(current_community)
-          %td= link_to 'Show', member_profile if can? :show, member_profile
-
-- if @roster_assignments.size > 0
-  %h1 Characters
+= form_tag '' do
+  %input{ :name => '_method', :value => '', :type => 'hidden' }
   %table
     %thead
       %tr
-        %th Community profile
-        %th Character proxy
-        %th Pending
         %th
-        %th
-        %th
+        %th Member
+        %th Characters in the Community
+        %th Joined
+    - if @member_profiles.size > 0
       %tbody
-        - @roster_assignments.each do |roster_assignment|
+        - @member_profiles.each do |member_profile|
           %tr
-            %td= roster_assignment.community_profile_id
-            %td= roster_assignment.character_proxy_id
-            %td= roster_assignment.pending
-            %td= link_to 'Show', roster_assignment if can? :show, roster_assignment
-            %td= link_to 'Edit', edit_roster_assignment_path(roster_assignment) if can? :update, roster_assignment
-            %td= link_to 'Destroy', roster_assignment, :confirm => 'Are you sure?', :method => :delete if can? :destroy, roster_assignment
+            %td.cinch
+              = image_tag member_profile.avatar_url(:tiny), :class => 'avatar'
+            %td.cinch
+              = link_to member_profile.name, member_profile
+            %td.characters
+              - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
+              - if cp.roster_assignments.delete_if{|ra| ra.pending?}.size > 0
+                %ul
+                  - cp.roster_assignments.each do |ra|
+                    %li
+                      - if can? :delete, ra
+                        %input{ :id => "roster_assignments_#{ra.id}", :name => 'ids[]', :type => 'checkbox', :value => ra.id }
+                        %label{ :for => "roster_assignments_#{ra.id}" }
+                          = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+                          = ra.character_proxy_name
+                      - else
+                        = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+                        = ra.character_proxy_name
+              - else
+                —
+            %td
+              %time= l member_profile.joined_community_on(current_community), :format => :date_short
+    - if can? :delete, current_community.roster_assignments.new
+      %tfoot
+        %tr
+          %td{ :colspan => 4, :class => 'batch' }
+            = button_tag 'Remove selected characters', :action => batch_destroy_roster_assignments_url, :method => :delete, :confirm => 'Are you sure? These characters will be no longer be a part of the community.'

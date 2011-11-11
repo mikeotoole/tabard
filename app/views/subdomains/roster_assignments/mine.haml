@@ -13,7 +13,7 @@
       - @roster_assignments.each do |roster_assignment|
         %tr{ roster_assignment.pending ? { :class => 'dim' } : {} }
           %td{ :class => 'avatar cinch' }
-            = image_tag roster_assignment.character_proxy_avatar_url(:small), :class => 'avatar'
+            = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
           %td.character
             %h3= roster_assignment.character_proxy_name
             = roster_assignment.pending ? 'is pending approval' : 'is a member'

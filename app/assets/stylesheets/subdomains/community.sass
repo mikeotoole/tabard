@@ -139,7 +139,7 @@ body
             width: 0
       
       >ul
-        background: #704323
+        background: #792914
         border: 1px solid rgba(#000,.2)
         +border_radius(0,5,5,5)
         +box_shadow(0 0 5px rgba(#000,.5))
@@ -175,7 +175,7 @@ body
       &:hover
         
         >a
-          background: #704323
+          background: #792914
           border-color: rgba(#000,.2)
           color: #fff
           +transition(color .2s linear)
@@ -254,6 +254,7 @@ body
   // GENERAL CONTENT
   
   a
+    +border_radius(3)
     color: #580B19
     padding: 0 3px
     text-decoration: underline
@@ -261,7 +262,6 @@ body
     
     &:hover
       background: #6F2B3D
-      +border_radius(3)
       color: #fff
       text-decoration: none
   
@@ -287,8 +287,8 @@ body
   nav
   
     h1
-      background: #ccc
-      +bg_gradient(rgba(#fff,0),#ccc)
+      background: #E1D5CD
+      +bg_gradient(rgba(#fff,0),#E1D5CD)
       border-bottom: 1px solid #fff
       font-family: DinLight, serif
       font-size: 16px
@@ -323,15 +323,18 @@ body
   p
     padding: 10px 0
 
+  time
+    font: 12px DinMedium, sans
+    white-space: nowrap
 
   // FORMS
   
   button,
   .button
-    background: #6F2D3D
-    border: 1px solid #8f364e
+    background: #a1391d
+    border: 1px solid #771f07 !important
     +border_radius(5)
-    color: #efd9df
+    color: #e3d5a9  
     display: block
     float: left
     font: 16px DinMedium, serif
@@ -343,7 +346,7 @@ body
     
     &:focus,
     &:hover
-      background: #8f364e
+      background: #cd4723
       color: #fff
       
   input[type="checkbox"],
@@ -362,8 +365,8 @@ body
       z-index: 3
       
       &:before
-        background: #eee
-        +bg_gradient(#ddd,#eee)
+        background: #C7B2A3
+        +bg_gradient(#C7B2A3,#EBDED5)
         border: 1px solid #fff
         +border_radius(5)
         +box_shadow(0 0 3px #ddd)
@@ -386,8 +389,8 @@ body
       + label
             
         &:after
-          background: #ddd
-          +bg_gradient(#7a569e,#51346e)
+          background: #570A17
+          +bg_gradient(#7B3D4C,#570A17)
           border: 1px solid #ddd
           +border_radius(20)
           +box_shadow(0 0 9px #999)
@@ -404,8 +407,8 @@ body
       + label:hover
               
         &:after
-          background: #be4124
-          +bg_gradient(#2d7bb3,#155481)
+          background: #A1391D
+          +bg_gradient(#CD4723,#A1391D)
   
   .select
     height: 55px
@@ -511,9 +514,9 @@ body
       input[type="password"],
       input[type="text"],
       textarea
-        background: #eee
+        background: #C7B2A3
+        +bg_gradient(#C7B2A3,#EBDED5)
         color: #6F2D3D
-        +bg_gradient(#ddd,#eee)
         +border_radius(5)
         +box_shadow(0 0 3px #ddd)
         border: 1px solid #fff
@@ -614,8 +617,8 @@ body
     
         td
           background: #eee
-          +bg_gradient(#eee,#ddd)
-          border-bottom: 1px solid #ccc
+          +bg_gradient(#f7f1ec,#eaddd4)
+          border-bottom: 1px solid #c7b2a3
           border-top: 1px solid #fff
           padding: 5px 10px
           width: 100%
@@ -628,7 +631,7 @@ body
               position: relative
             
               a
-                background: image-url('application/icons.png') no-repeat #D47B48
+                background: image-url('application/icons.png') no-repeat #9C682F
                 +border_radius(5)
                 display: block
                 float: left
@@ -686,8 +689,22 @@ body
                 
                 &.reject
                   background-position: -540px -30px
+            
+          img.avatar
+            background: #C7B2A3
+            border: 1px solid #fff
+            +border_radius(5)
+            +box_shadow(0 0 10px rgba(#000,.2))
+            float: left
+            margin: 0 -5px
+          
+          img.icon
+            border: 0
+            +border_radius(3)
+            +box_shadow(0 0 5px rgba(#000,.2))
           
           &.cinch
+            white-space: nowrap
             width: 0
           
           &.character
@@ -695,6 +712,24 @@ body
             h3
               line-height: 1em
               padding: 5px 0 0
+          
+          &.characters
+            
+            li
+              display: inline-block
+              font: 13px DinLight, sans
+              line-height: 20px
+              padding: 0 0 3px
+              width: 180px
+            
+              img.avatar
+                margin: 0 5px 0 0
+              
+              label
+                text-indent: 0
+              
+                img.avatar
+                  margin: 3px 5px 0 30px
               
           &.check
             border-right: 1px #ccc solid
@@ -704,33 +739,25 @@ body
             
             label:before
               +box_shadow(0 0 10px rgba(#000,.3))
-            
-          img.avatar
-            background: #ccc
-            border: 1px solid #fff
-            +border_radius(5)
-            +box_shadow(0 0 10px rgba(#000,.2))
-            float: left
-            margin: 0 -5px
         
         &.dim
           
           td
-            border-color: #aaa
-            +bg_gradient(#aaa,#ccc)
+            border-color: #aa856a
+            +bg_gradient(#C7B2A3,#EADDD4)
         
     tfoot
     
       td
         background: #BCA964
-        +bg_gradient(#9b8c4a,#cdbf81)
+        +bg_gradient(#b28769,#916749)
         border-top: 1px solid #fff
         color: #570A17
         padding: 10px
         position: relative
         
         &:before
-          border-top: 1px solid #ccc
+          border-top: 1px solid #5E371B
           content: ''
           left: 0
           position: absolute
@@ -788,8 +815,8 @@ body
             z-index: 3
           
           .avatar
-            background: image-url('application/avatar.png') center center no-repeat #5F5F5F
-            border: 1px solid #eee
+            background: image-url('application/avatar.png') center center no-repeat #e1d5cd
+            border: 1px solid #e1d5cd
             border-right: 0
             height: 62px
             left: 10px
@@ -820,7 +847,7 @@ body
               width: 0
             
             img
-              background: #ddd
+              background: #e1d5cd
               border: 1px solid #fff
               border-right: 0
               display: block
@@ -828,7 +855,7 @@ body
           .meta
             background: #fff
             border-bottom: 1px solid #ddd
-            color: #999
+            color: #b59d8b
             font-size: 12px
             line-height: 15px
             overflow: hidden
@@ -884,7 +911,7 @@ body
                   background: #aa000b
               
               &.collapse
-                background: #bbb
+                background: #C7B2A3
                 +border_radius(3)
                 color: #fff
                 
@@ -967,7 +994,7 @@ body
           
             .avatar
               +box_shadow(0 0 15px rgba(#000,.5))
-              border-color: #999
+              border-color: #C7B2A3
           
             .actions
             
@@ -1165,7 +1192,7 @@ body
         z-index: 3
       
       .profile
-        background: #eee
+        background: #C7B2A3
         margin: 0
         overflow: hidden
         padding: 0
@@ -1183,17 +1210,23 @@ body
           padding: 0
         
           label
-            background: #eee
+            background: #E1D5CD
             display: none
             float: left
             height: 44px
+            margin: 0
             position: relative
             width: 44px
+            text-indent: 0
             +transition(background .2s linear)
             z-index: 2
             
+            &:before,
+            &:after
+              display: none
+            
             img
-              background: #ddd
+              background: #E1D5CD
               border: 1px solid #fff
               margin: 1px
           
@@ -1348,21 +1381,29 @@ body
         display: none
         font: 12px DinMedium, sans
         line-height: 20px
+        margin: 0
         padding: 0 5px 0 0
         position: absolute
         right: 0
         
         &:before
           background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
+          border: 0
           bottom: 0
           content: ''
           height: 20px
-          margin: 5px 0 0 -25px
+          left: auto
+          margin: 0 0 0 -25px
           position: absolute
           right: -20px
           width: 20px
           z-index: 2
-
+            
+        &:after
+          display: none
+    
+    #newcomment
+      height: 175px
 
 @import subdomains/theme
 @import application/footer

@@ -79,6 +79,20 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     respond_with(@roster_assignment)
   end
 
+  # DELETE /roster_assignments/batch_remove
+  def batch_destroy
+    if params[:ids]
+      params[:ids].each do |id|
+        roster_assignment = RosterAssignment.find_by_id(id)
+        if can? :delete, roster_assignment
+          roster_assignment.destroy
+        end
+      end
+      add_new_flash_message "The roster has been updated.", 'notice'
+    end
+    redirect_to(roster_assignments_path)
+  end
+
   # GET /roster_assignments/pending
   def pending
     authorize! :pending, RosterAssignment
@@ -96,7 +110,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def batch_approve
     if params[:ids]
       params[:ids].each do |id|
-        roster_assignment = RosterAssignment.find_by_id(id[0])
+        roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
           roster_assignment.approve
         end
@@ -117,7 +131,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def batch_reject
     if params[:ids]
       params[:ids].each do |id|
-        roster_assignment = RosterAssignment.find_by_id(id[0])
+        roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
           roster_assignment.reject
         end

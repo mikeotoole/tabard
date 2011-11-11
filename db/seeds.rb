@@ -7,7 +7,8 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test' # TODO Joe, What is this for? -MO
 
-Timecop.freeze(2.months.ago)
+puts "Time: 2 months ago"
+Timecop.freeze 2.months.ago
 
   puts "Creating TOS"
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1")
@@ -118,18 +119,27 @@ Timecop.freeze(2.months.ago)
   twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice", :accepting_members => true, :email_notice_on_application => false)
   twom.games << wow_game
   
-  puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
-  puts "Accepting Sleepy Pidgeon, Apathic Tiger, Fuzzy Crab, and Sad Panda's applications"
+  puts "Sleepy Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
+  puts "Accepting Sleepy Pidgeon & Apathic Tiger's applications"
   generate_application_from_user_profile(twom, s_pidgeon.user_profile).accept_application
   generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
-  generate_application_from_user_profile(twom, f_crab.user_profile).accept_application
-  generate_application_from_user_profile(twom, s_panda.user_profile).accept_application
   
   puts "Creating Two Maidens Guild General Discussion Space"
   twom_gds = twom.discussion_spaces.create(:name => "General Chat")
   
   puts "Creating Two Maidens Guild WoW Discussion Space"
   twom_wds = twom.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
+
+puts "Time: 1 month ago"
+Timecop.return
+Timecop.freeze 1.months.ago
+
+  puts "Fuzzy Crab and Sad Panda are submitting applications to Two Maidens Guild..."
+  puts "Accepting Fuzzy Crab and Sad Panda's applications..."
+  generate_application_from_user_profile(twom, s_pidgeon.user_profile).accept_application
+  generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
+  generate_application_from_user_profile(twom, f_crab.user_profile).accept_application
+  generate_application_from_user_profile(twom, s_panda.user_profile).accept_application
   
   puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
   jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya", :public_roster => false)
@@ -151,72 +161,50 @@ Timecop.freeze(2.months.ago)
   puts "RoboBilly is adding permissions to view roles to n00b role..."
   noob_role.permissions.create(:subject_class => "Role", :permission_level => "View")
   
-  puts "RoboBilly is getting some characters..."
+  puts "RoboBilly is creating some characters and adding them to the roster..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
-    rb_cp.approved_character_proxies << proxy
+    proxy = robobilly.character_proxies.create(:user_profile => robobilly.user_profile,
+      :character => SwtorCharacter.create(:name => cname, :game => swtor_game, :server => "Alderaan"))
+    ra = robobilly.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => proxy)
+    ra.approve unless cname == 'Chewbacca'
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
-    rb_cp.approved_character_proxies << proxy
-  end
-  rb_cp.roster_assignments.each do |ra|
-    ra.approve
+    proxy = robobilly.character_proxies.create(:user_profile => robobilly.user_profile,
+      :character => WowCharacter.create(:name => cname, :game => wow_game, :server => "Darkspear"))
+    ra = robobilly.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => proxy)
+    ra.approve unless cname == 'Eliand'
   end
   
-  puts "Diabolical Moose, Snappy Turtle, Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
-  puts "Accepting Diabolical Moose's, Snappy Turtle's and Dirty Badger's applications"
+  puts "Diabolical Moose and Snappy Turtle are submitting applications to Just Another Headshot Clan..."
+  puts "Accepting Diabolical Moose's and Snappy Turtle's applications"
   generate_application_from_user_profile(jahc, d_moose.user_profile).accept_application
   generate_application_from_user_profile(jahc, s_turtle.user_profile).accept_application
-  generate_application_from_user_profile(jahc, d_badger.user_profile).accept_application
-  generate_application_from_user_profile(jahc, k_fox.user_profile)
   
   puts "Giving D-Moose the n00b role..."
   d_moose.add_new_role(noob_role)
 
   puts "Snappy Turtle is creating some characters and adding them to the JAH roster..."
   dr_manhattan = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Manhattan",
-    :game => swtor_game,
-    :server => "Alderaan")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Manhattan", :game => swtor_game, :server => "Alderaan"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_manhattan)
   dr_hammer = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Hammer",
-    :game => swtor_game,
-    :server => "Endor")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Hammer", :game => swtor_game, :server => "Endor"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_hammer)
   dr_horrible = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Horrible",
-    :game => swtor_game,
-    :server => "Hoth")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Horrible", :game => swtor_game, :server => "Hoth"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_horrible)
   dr_strangelove = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Strangelove",
-    :game => swtor_game,
-    :server => "Korriban")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Strangelove", :game => swtor_game, :server => "Korriban"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_strangelove)
   dr_doom = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Doom",
-    :game => swtor_game,
-    :server => "Coruscant")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Doom", :game => swtor_game, :server => "Coruscant"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_doom)
   dr_octopus = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr Octopus",
-    :game => swtor_game,
-    :server => "Tatooine")
-  )
+    :character => SwtorCharacter.create(:name => "Dr Octopus", :game => swtor_game, :server => "Tatooine"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_octopus)
   dr_house = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
-    :character => SwtorCharacter.create(:name => "Dr House",
-    :game => swtor_game,
-    :server => "Belsavis")
-  )
+    :character => SwtorCharacter.create(:name => "Dr House", :game => swtor_game, :server => "Belsavis"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_house)
   
   puts "Creating Just Another Headshot Clan General Discussion Space"
@@ -253,17 +241,25 @@ Timecop.freeze(2.months.ago)
   comment1b2.user_profile = d_moose.user_profile
   comment1b2.save
   comment2 = jahc_gd.comments.new(:body => "Herp a derp.")
-  comment2.user_profile = k_fox.user_profile
+  comment2.user_profile = robobilly.user_profile
   comment2.has_been_edited = true
   comment2.save
 
+puts "Time: 3 weeks ago"
 Timecop.return
-
-puts "Adding an old announcement for Just Another Headshot Clan"
 Timecop.freeze(3.weeks.ago)
-jahc_a_old = jahc.community_announcement_space.discussions.new(:name => "This announcement is derp old", :body => "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.")
-jahc_a_old.user_profile = robobilly.user_profile
-jahc_a_old.save
+  
+  puts "Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
+  puts "Accepting Dirty Badger's applications"
+  generate_application_from_user_profile(jahc, d_badger.user_profile).accept_application
+  generate_application_from_user_profile(jahc, k_fox.user_profile)
+
+  puts "Adding an old announcement for Just Another Headshot Clan"
+  jahc_a_old = jahc.community_announcement_space.discussions.new(:name => "This announcement is derp old", :body => "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.")
+  jahc_a_old.user_profile = robobilly.user_profile
+  jahc_a_old.save
+
+puts "Time: now"
 Timecop.return
 
 puts "Adding newer announcements for Just Another Headshot Clan"
@@ -296,21 +292,30 @@ jahc_wow_strategies.save
 puts "Creating Example Messages"
 robobilly.sent_messages.create(:subject => "What up Homies?", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id, k_fox.id])
 
+puts "Time: 3 days ago"
 Timecop.freeze(3.days.ago)
+  puts "Creating some messages..."
   s_turtle.sent_messages.create(:subject => "April O'Neil is so hawt", :body => "Mauris ac felis felis, quis facilisis augue. Aenean at posuere orci. Etiam porttitor pulvinar purus a gravida. Nullam vel ipsum lectus. Nunc condimentum laoreet ultrices. Aliquam tincidunt auctor mauris nec sagittis. Nunc ante ligula, dapibus non gravida eget, varius id nibh. Morbi sed magna tortor, ut venenatis sapien.", :to => [robobilly.id])
   d_moose.sent_messages.create(:subject => "I'm a magical ninja!", :body => "Vestibulum in interdum sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ut dictum leo. Sed eget ipsum sem, vitae eleifend ipsum. Integer neque nisl, aliquet a iaculis sed, tempor vel nibh. Pellentesque tristique tristique odio, non vulputate metus porta id.", :to => [robobilly.id])
-Timecop.return
 
+puts "Time: 2 days ago"
+Timecop.return
 Timecop.freeze(2.days.ago)
+  puts "Creating a message..."
   d_moose.sent_messages.create(:subject => "I'm a bus!", :body => "Vestibulum in interdum sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ut dictum leo. Sed eget ipsum sem, vitae eleifend ipsum. Integer neque nisl, aliquet a iaculis sed, tempor vel nibh. Pellentesque tristique tristique odio, non vulputate metus porta id.", :to => [robobilly.id])
-Timecop.return
 
+puts "Time: 1 day ago"
+Timecop.return
 Timecop.freeze(1.days.ago)
+  puts "Creating some messages..."
   k_fox.sent_messages.create(:subject => "Hey you're cute", :body => "Hey, baby. Donec sed odio quis elit varius lobortis. Proin nec tortor sed justo dictum pellentesque in et enim.\n\nInteger lacus turpis, ultricies vel vulputate porttitor, bibendum at mi.", :to => [robobilly.id])
   s_turtle.sent_messages.create(:subject => "Dudes, let's hang out Friday", :body => "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non.\n\nPhasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sa Who exactly is your father, and where is hiserit iaculis in in porttitor eget, lacinia id risus.", :to => [robobilly.id, d_moose.id, d_badger.id])
   d_moose.sent_messages.create(:subject => "I'm a potato gun!", :body => "Vestibulum in interdum sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ut dictum leo. Sed eget ipsum sem, vitae eleifend ipsum. Integer neque nisl, aliquet a iaculis sed, tempor vel nibh. Pellentesque tristique tristique odio, non vulputate metus porta id.", :to => [robobilly.id])
+
+puts "Time: now"
 Timecop.return
 
+puts "Creating a message..."
 d_badger.sent_messages.create(:subject => "Mushroom, mushroom!", :body => "Phasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non. Phasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sapien.", :to => [robobilly.id, k_fox.id])
 
 end
