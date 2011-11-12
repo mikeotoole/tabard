@@ -168,21 +168,21 @@ protected
       :thankyou => "Your submission has been sent. Thank you!",
       :published => true)
     ca.community = self
-=begin    
+
     q1 = TextQuestion.create(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
       :required => true)
     q1.custom_form = ca
-    q1.save!
+    q1.save
     
-    q2 = TextQuestion.create(
+    q2 = SingleSelectQuestion.create(
       :style => "radio_buttons_question",
       :body => "How often do you play?",
       :required => true)
     q2.custom_form = ca
-    q2.save!
+    q2.save
     PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => q2.id)
     PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => q2.id)
     PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => q2.id)
@@ -195,8 +195,8 @@ protected
       :explanation => "This is a short answer question",
       :required => false)
     q3.custom_form = ca
-    q3.save!
-=end
+    q3.save
+    
     ca.save
   end
 

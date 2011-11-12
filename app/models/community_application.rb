@@ -143,9 +143,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.build_submission unless self.submission
-    self.submission.custom_form = custom_form
-    self.submission.user_profile = user_profile
+    self.submission = Submission.create(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
   end
 
 protected

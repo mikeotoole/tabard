@@ -22,6 +22,11 @@
   = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button'
 
 
+
+%pre=YAML::dump @community_application.submission.answers
+
+
+
 - if @community_application.comments.size > 0 or can? :comment, @community_application
   %aside.comments
     - if @community_application.comments.size > 0

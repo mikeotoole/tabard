@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style
+  attr_accessible :body, :style, :required
 
 ###
 # Associations
