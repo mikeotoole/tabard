@@ -33,34 +33,23 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments
   # GET /roster_assignments.json
   def mine
+    @roster_assignment = RosterAssignment.new
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
     @roster_assignments = Array.new
     @roster_assignments = community_profile.roster_assignments if community_profile
   end
 
-  # GET /roster_assignments/1
-  # GET /roster_assignments/1.json
-  def show
-    #@roster_assignment = RosterAssignment.find(params[:id])
-  end
-
-  # GET /roster_assignments/new
-  # GET /roster_assignments/new.json
-  def new
-    #@roster_assignment = RosterAssignment.new
-  end
-
-  # GET /roster_assignments/1/edit
-  def edit
-    #@roster_assignment = RosterAssignment.find(params[:id])
-  end
-
   # POST /roster_assignments
   # POST /roster_assignments.json
   def create
-    #@roster_assignment = RosterAssignment.new(params[:roster_assignment])
-    @roster_assignment.save
-    respond_with(@roster_assignment)
+    if @roster_assignment.save
+      if @roster_assignment.pending
+        add_new_flash_message "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent.", 'notice'
+      else
+        add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the roster.", 'success'
+      end
+    end
+    redirect_to my_roster_assignments_path
   end
 
   # PUT /roster_assignments/1
@@ -75,8 +64,11 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # DELETE /roster_assignments/1.json
   def destroy
     #@roster_assignment = RosterAssignment.find(params[:id])
-    @roster_assignment.destroy
-    respond_with(@roster_assignment)
+    character_name = @roster_assignment.character_proxy_name
+    if @roster_assignment.destroy
+      add_new_flash_message "#{character_name} has been removed from the roster.", 'notice'
+    end
+    redirect_to my_roster_assignments_path
   end
 
   # DELETE /roster_assignments/batch_remove
@@ -90,7 +82,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       end
       add_new_flash_message "The roster has been updated.", 'notice'
     end
-    redirect_to(roster_assignments_path)
+    redirect_to roster_assignments_path
   end
 
   # GET /roster_assignments/pending
@@ -103,7 +95,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def approve
     @roster_assignment.approve
     add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the community roster.", 'success'
-    redirect_to(pending_roster_assignments_path)
+    redirect_to pending_roster_assignments_path
   end
 
   # PUT /roster_assignments/batch_approve
@@ -117,14 +109,14 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       end
       add_new_flash_message "The roster has been updated.", 'success'
     end
-    redirect_to(pending_roster_assignments_path)
+    redirect_to pending_roster_assignments_path
   end
 
   # PUT /roster_assignments/1/reject
   def reject
     @roster_assignment.reject
     add_new_flash_message "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster.", 'notice'
-    redirect_to(pending_roster_assignments_path)
+    redirect_to pending_roster_assignments_path
   end
 
   # PUT /roster_assignments/batch_reject
@@ -138,7 +130,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       end
       add_new_flash_message "The roster has been updated.", 'success'
     end
-    redirect_to(pending_roster_assignments_path)
+    redirect_to pending_roster_assignments_path
   end
 
   ###

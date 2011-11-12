@@ -6,7 +6,8 @@
 %table
   %thead
     %tr
-      %th{ :colspan => 2 } Characters
+      %th
+      %th My Characters
       %th.actions
   - if @roster_assignments.size > 0
     %tbody
@@ -23,4 +24,10 @@
                 = link_to 'Remove', roster_assignment, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => "Remove #{roster_assignment.character_proxy_name} from the roster"
   %tfoot
     %tr
-      %td{ :colspan => 3 }= link_to 'Add a character', new_roster_assignment_path, :class => 'button'
+      %td
+      %td
+        - if @avalible_characters.size > 0
+          = simple_form_for @roster_assignment, :wrapper => false do |f|
+            .select= f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @avalible_characters.collect{|c| c = [raw(image_tag(c.avatar_url(:icon), :class => 'avatar')) + "#{c.name} — #{c.game_name}", c.id]}
+            %button{ :type => 'submit' } Add character
+      %td

@@ -410,15 +410,21 @@ body
           background: #A1391D
           +bg_gradient(#CD4723,#A1391D)
   
+  div.select
+    height: 33px
+    float: left
+    margin: 0 5px 0 0
+    width: 435px
+  
   .select
     height: 55px
     position: relative
   
     ul
-      background: #eee
-      +bg_gradient(#ddd,#eee)
+      background: #C7B2A3
+      +bg_gradient(#C7B2A3,#EBDED5)
       +border_radius(5)
-      +box_shadow(0 0 3px #ddd)
+      +box_shadow(0 0 3px rgba(#000,.2))
       border: 1px solid #fff
       display: block
       height: 0
@@ -432,7 +438,7 @@ body
           
       &:before
         border: 5px solid transparent
-        border-top-color: #bea761
+        border-top-color: #A23919
         content: ''
         height: 0
         position: absolute
@@ -462,6 +468,14 @@ body
           &:after
             display: none
         
+          .avatar
+            background: #C7B2A3
+            border: 1px solid #fff
+            +border_radius(3)
+            +box_shadow(0 0 5px rgba(#000,.2))
+            float: left
+            margin: 3px 6px 3px 0
+        
         input
           left: -500em
           position: absolute
@@ -476,7 +490,10 @@ body
             top: 0
             width: 420px
             z-index: 3
-      
+            
+            .avatar
+              background: #EADDD4
+
       &:hover
         background: #ECDDD8
         +box_shadow(0 0 8px #560B17)
