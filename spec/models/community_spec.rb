@@ -74,8 +74,8 @@ describe Community do
   end
 
   describe "slogan" do
-    it "should be required" do
-      build(:community, :slogan => nil).should_not be_valid
+    it "should be optional" do
+      build(:community, :slogan => nil).should be_valid
     end
   end
 

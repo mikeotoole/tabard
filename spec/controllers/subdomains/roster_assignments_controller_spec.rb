@@ -31,6 +31,7 @@ describe Subdomains::RosterAssignmentsController do
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
+    community.update_attribute(:public_roster, false)
     @request.host = "#{community.subdomain}.example.com"
   end
   
@@ -49,7 +50,7 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.response_code.should == 403
     end
   end
 

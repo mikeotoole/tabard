@@ -209,12 +209,12 @@ class Ability
   ###
   def community_member_rules(user, current_community)
     # RosterAssignments
+    apply_rules_from_roles(user, current_community)
+
     can :mine, RosterAssignment
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
-
-    apply_rules_from_roles(user, current_community)
   end
 
   ###

@@ -11,7 +11,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application, :protected_roster
+  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application, :protected_roster, :public_roster
 
 ###
 # Associations
@@ -152,6 +152,8 @@ protected
     mr.community = self
     mr.save
     self.update_attribute(:member_role, mr)
+    mr.permissions.create(subject_class: "PageSpace", permission_level: "View")
+    mr.permissions.create(subject_class: "Page", permission_level: "Delete")
   end
 
   ###
