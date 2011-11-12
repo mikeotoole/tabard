@@ -1,5 +1,3 @@
-%p#notice= notice
-
 %p
   %b Community:
   = @community_application.community_id
@@ -19,10 +17,20 @@
       - @community_application.character_proxies.each do |proxy|
         %li = proxy.to_yaml
 - if can? :accept, @community_application and @community_application.pending?
-  = button_to 'Accept Applicant', accept_community_application_path, :method => :post
+  = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button'
 - if can? :reject, @community_application and @community_application.pending?
-  = button_to 'Reject Applicant', accept_community_application_path, :method => :post
+  = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button'
 
-= link_to 'Edit', edit_community_application_path(@community_application)
-\|
-= link_to 'Back', community_applications_path
+
+- if @community_application.comments.size > 0 or can? :comment, @community_application
+  %pre=YAML::dump @community_application.comments
+-#
+  %aside.comments
+    - if @community_application.comments.size > 0
+      %ol
+        - @community_application.comments.each do |comment|
+          = render "subdomains/comments/comment", :comment => comment
+    - if can? :comment, @community_application
+      #newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @community_application.comments.new

@@ -25,19 +25,6 @@ describe Subdomains::CustomFormsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested custom_form as @custom_form when authenticated as a user" do
-      sign_in user
-      get :show, :id => custom_form.id.to_s
-      assigns(:custom_form).should eq(custom_form)
-    end
-    
-    it "should redirected to new user session path when not authenticated as a user" do
-      get :show, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_path)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new custom_form as @custom_form when authenticated as a user" do
       sign_in admin

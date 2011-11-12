@@ -18,7 +18,7 @@ module CommentHelper
     class_names << 'deleted' if comment.has_been_deleted
     class_names << 'locked' if comment.has_been_locked
     class_names << 'edited' if comment.has_been_edited
-    class_names << 'owned' if comment.user_profile.id == current_user.user_profile.id
+    class_names << 'owned' if comment.user_profile_id == current_user.user_profile_id
     class_names
   end
 

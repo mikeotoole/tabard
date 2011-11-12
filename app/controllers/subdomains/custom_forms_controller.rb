@@ -22,31 +22,26 @@ class Subdomains::CustomFormsController < SubdomainsController
     authorize! :index, CustomForm
   end
 
-  # GET /custom_forms/1
-  def show
-
-  end
-
   # GET /custom_forms/new
   def new
-
   end
 
   # GET /custom_forms/1/edit
   def edit
-
   end
 
   # POST /custom_forms
   def create
     add_new_flash_message('Form was successfully created.') if @custom_form.save
-    respond_with(@custom_form)
+    redirect_to edit_custom_form_path(@custom_form)
   end
 
   # PUT /custom_forms/1
   def update
-    add_new_flash_message('Form was successfully updated.') if @custom_form.update_attributes(params[:custom_form])
-    respond_with(@custom_form)
+    if @custom_form.update_attributes(params[:custom_form])
+      add_new_flash_message 'Form was successfully updated.', 'success'
+    end
+    redirect_to edit_custom_form_path(@custom_form)
   end
 
   # DELETE /custom_forms/1
@@ -54,7 +49,7 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form
       add_new_flash_message('Form was successfully deleted.') if @custom_form.destroy
     end
-    respond_with(@custom_form)
+    redirect_to custom_forms_path
   end
 
 ###

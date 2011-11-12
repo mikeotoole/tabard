@@ -135,6 +135,9 @@ class Ability
     can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
       community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
+    can [:comment], CommunityApplication do |community_application|
+      community_application.pending? and can? :create, community_application.comments.new
+    end
 
     # Custom Form Rules
     can :read, CustomForm
@@ -142,6 +145,9 @@ class Ability
     # Discussion Rules
     can [:read], Discussion do |discussion|
       user.user_profile.is_member?(discussion.community) and discussion.is_announcement
+    end
+    can [:comment], Discussion do |discussion|
+      can? :read, discussion and discussion.comments_enabled and !discussion.has_been_locked
     end
     can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked

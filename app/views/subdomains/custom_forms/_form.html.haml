@@ -1,22 +1,8 @@
-= form_for custom_form do |f|
-  -if custom_form.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(custom_form.errors.count, "error")} prohibited this custom_form from being saved:"
-      %ul
-        - custom_form.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :instructions
-    = f.text_area :instructions
-  .field
-    = f.label :thankyou
-    = f.text_field :thankyou
-  .field
-    = f.label :community_id
-    = f.number_field :community_id
-  .actions
-    = f.submit 'Save'
+= simple_form_for custom_form do |f|
+  %fieldset
+    %ol
+      = f.input :name
+      = f.input :instructions
+      = f.input :thankyou, :label => 'Thank you message', :hint => 'This message will be displayed to uses upon submission of the form.'
+      %li
+        %button{ :type => 'submit' }= custom_form.persisted? ? 'Save' : 'Create'

@@ -5,19 +5,17 @@
   %thead
     %tr
       %th Name
-      %th Thankyou
-      %th Community
-      %th
+      %th Instructions
+      %th Submissions
+      %th 
   %tbody
     - @custom_forms.each do |custom_form|
       %tr
-        %td= link_to custom_form.name, custom_form
-        %td= custom_form.thankyou
-        %td= custom_form.community_id
+        %td.cinch= link_to custom_form.name, edit_custom_form_path(custom_form)
+        %td= custom_form.instructions
+        %td= custom_form.submissions.size
         %td.actions
           %div
-            - if can? :update, custom_form
-              = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
             - if can? :delete, custom_form
               = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot

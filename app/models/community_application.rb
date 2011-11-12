@@ -24,6 +24,7 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :submission
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
+  has_many :comments, :as => :commentable, :dependent => :destroy
 
 ###
 # Callbacks
@@ -49,6 +50,7 @@ class CommunityApplication < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :custom_form, :to => :submission, :allow_nil => true
+  delegate :display_name, :to => :user_profile, :prefix => true
 
   ###
   # _before_create_
