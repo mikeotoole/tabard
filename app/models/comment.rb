@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id
+  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id, :community
 
 ###
 # Associations

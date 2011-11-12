@@ -136,7 +136,7 @@ class Ability
       community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
     can [:comment], CommunityApplication do |community_application|
-      community_application.pending? and can? :create, community_application.comments.new
+      community_application.pending? and can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
     end
 
     # Custom Form Rules
@@ -232,6 +232,9 @@ class Ability
       not comment.has_been_deleted
     end
     can :manage, DiscussionSpace
+    cannot [:update, :destroy, :create], DiscussionSpace do |space|
+      space.is_announcement == true
+    end
     can :manage, Discussion do |discussion|
       not discussion.has_been_locked
     end
