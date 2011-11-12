@@ -11,7 +11,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application
+  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application, :protected_roster
 
 ###
 # Associations
@@ -20,12 +20,15 @@ class Community < ActiveRecord::Base
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications
+  has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :roles
   has_many :supported_games, :dependent => :destroy
   has_many :games, :through => :supported_games
   has_many :game_announcement_spaces, :through => :supported_games
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
+  has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
+  has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false}, :dependent => :destroy
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true}, :dependent => :destroy
@@ -50,8 +53,6 @@ class Community < ActiveRecord::Base
                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
   validate :can_not_change_name, :on => :update
-  validates :slogan, :presence => true
-
   validates :admin_profile, :presence => true
 
 ###
@@ -199,6 +200,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -216,5 +218,6 @@ end
 #  protected_roster                :boolean         default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
+#  public_roster                   :boolean         default(TRUE)
 #
 

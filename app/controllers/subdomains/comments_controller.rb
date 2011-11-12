@@ -7,7 +7,7 @@
 ###
 class Subdomains::CommentsController < ApplicationController
   layout nil
-  
+
 ###
 # Before Filters
 ###
@@ -16,7 +16,7 @@ class Subdomains::CommentsController < ApplicationController
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-  
+
 ###
 # After Filters
 ###
@@ -74,7 +74,11 @@ class Subdomains::CommentsController < ApplicationController
   # POST /comments/:id/unlock(.:format)
   def unlock
     @comment.has_been_locked = false
-    render :json => @comment.save ? true : false
+    if @comment.save
+      render :partial => 'comment', :locals => { :comment => @comment }
+    else
+      render :json => false
+    end
   end
 
 ###
@@ -96,10 +100,8 @@ protected
     else
       @comment = Comment.new(:commentable_type => params[:commentable_type], :commentable_id => params[:commentable_id]) # HACK Joe talk to Doug about formatiing this better.
     end
-
     @comment.user_profile = current_user.user_profile
     @comment.form_target = params[:form_target] if params[:form_target]
     @comment.comment_target = params[:comment_target] if params[:comment_target]
-    logger.debug @comment.to_yaml
   end
 end

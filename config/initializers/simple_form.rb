@@ -5,7 +5,7 @@ SimpleForm.setup do |config|
   # config.components = [ :placeholder, :label_input, :hint, :error ]
 
   # Default tag used on hints.
-  config.hint_tag = :rt
+  config.hint_tag = :dfn
 
   # CSS class to add to all hint tags.
   # config.hint_class = :hint
@@ -63,7 +63,7 @@ SimpleForm.setup do |config|
 
   # Tell browsers whether to use default HTML5 validations (novalidate option).
   # Default is enabled.
-  # config.browser_validations = true
+  config.browser_validations = true
 
   # Determines whether HTML5 types (:email, :url, :search, :tel) and attributes
   # (e.g. required) are used or not. True by default.

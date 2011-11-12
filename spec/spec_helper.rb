@@ -41,6 +41,8 @@ RSpec.configure do |config|
   end
   config.before(:each) do
     DatabaseCleaner.start
+    FactoryGirl.create(:privacy_policy)
+    FactoryGirl.create(:terms_of_service)
   end
   config.after(:each) do
     DatabaseCleaner.clean

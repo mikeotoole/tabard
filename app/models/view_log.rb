@@ -19,6 +19,7 @@ class ViewLog < ActiveRecord::Base
   validates :view_loggable, :presence => true
 end
 
+
 # == Schema Information
 #
 # Table name: view_logs
@@ -30,3 +31,4 @@ end
 #  created_at         :datetime
 #  updated_at         :datetime
 #
+

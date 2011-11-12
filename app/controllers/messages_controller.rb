@@ -23,13 +23,13 @@ class MessagesController < MailboxController
     @mailbox_view_state = @message.folder.name.downcase
     @message.update_attributes(:has_been_read => true)
   end
-  
+
   # POST /mail/mark_read/:id(.:format)
   def mark_read
     @message.update_attributes(:has_been_read => true)
     redirect_to previous_page
   end
-  
+
   # POST /mail/mark_unread/:id(.:format)
   def mark_unread
     @message.update_attributes(:has_been_read => false)
@@ -43,7 +43,7 @@ class MessagesController < MailboxController
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
     if @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
-      add_new_flash_message('Message was moved to #{folder.name}.')
+      add_new_flash_message("Message was moved to #{folder.name}.")
     end
     redirect_to previous_page
   end

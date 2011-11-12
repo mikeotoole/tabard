@@ -48,6 +48,10 @@ class CustomForm < ActiveRecord::Base
     return self.community.name if self.community
     ""
   end
+
+  def application_form?
+    self.community.community_application_form == self
+  end
 end
 
 # == Schema Information

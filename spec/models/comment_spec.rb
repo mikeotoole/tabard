@@ -113,14 +113,21 @@ describe Comment do
     leafComment.original_comment_item.should eq(DefaultObjects.discussion)
   end
   
-  it "replys_locked? should return false when has_been_locked is false" do
-    comment.replys_locked?.should be_false
+  it "replies_locked? should return false when has_been_locked is false" do
+    comment.replies_locked?.should be_false
   end 
   
-  it "replys_locked? should return true when has_been_locked is true" do
+  it "replies_locked? should return true when has_been_locked is true" do
     comment.has_been_locked = true
     comment.save
-    comment.replys_locked?.should be_true
+    comment.replies_locked?.should be_true
   end 
+
+  it "should not be allowed to be created if what you are commenting on is locked" do
+    comment.has_been_locked = true
+    comment.save
+    invalid_comment = build(:comment, :commentable_id => comment.id, :commentable_type => comment.class.to_s)
+    invalid_comment.valid?.should be_false
+  end
   
 end

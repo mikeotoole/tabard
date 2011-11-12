@@ -1,25 +1,25 @@
-%h1 Listing custom_forms
+- title "Custom Forms | #{current_community.name}"
+%h1 Custom Forms
 
 %table
-  %tr
-    %th Name
-    %th Message
-    %th Thankyou
-    %th Community
-    %th
-    %th
-    %th
-
-  - @custom_forms.each do |custom_form|
+  %thead
     %tr
-      %td= custom_form.name
-      %td= custom_form.message
-      %td= custom_form.thankyou
-      %td= custom_form.community_id
-      %td= link_to 'Show', custom_form
-      %td= link_to 'Edit', edit_custom_form_path(custom_form)
-      %td= link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Custom form', new_custom_form_path
+      %th Name
+      %th Thankyou
+      %th Community
+      %th
+  %tbody
+    - @custom_forms.each do |custom_form|
+      %tr
+        %td= link_to custom_form.name, custom_form
+        %td= custom_form.thankyou
+        %td= custom_form.community_id
+        %td.actions
+          %div
+            - if can? :update, custom_form
+              = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
+            - if can? :delete, custom_form
+              = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
+  %tfoot
+    %tr
+      %td{ :colspan => 4 }= link_to 'New form', new_custom_form_path, :class => 'button'

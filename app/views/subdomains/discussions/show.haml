@@ -20,5 +20,6 @@
         - @discussion.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
     - if @discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new)
-      %h3 Post a New Comment
-      = render 'subdomains/comments/form', :comment => @discussion.comments.new
+      #newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @discussion.comments.new
