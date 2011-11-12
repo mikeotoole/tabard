@@ -50,6 +50,7 @@ class CommunityApplication < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :custom_form, :to => :submission, :allow_nil => true
+  delegate :name, :to => :custom_form, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
 
   ###
