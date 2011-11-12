@@ -29,9 +29,9 @@ class Comment < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :id, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
-  delegate :id, :to => :user_profile, :prefix => true
 
 ###
 # Validators

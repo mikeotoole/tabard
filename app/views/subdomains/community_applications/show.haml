@@ -23,8 +23,6 @@
 
 
 - if @community_application.comments.size > 0 or can? :comment, @community_application
-  %pre=YAML::dump @community_application.comments
--#
   %aside.comments
     - if @community_application.comments.size > 0
       %ol
