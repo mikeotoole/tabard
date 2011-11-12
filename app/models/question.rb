@@ -32,6 +32,11 @@ class Question < ActiveRecord::Base
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
 
 ###
+# Delegates
+###
+  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
+
+###
 # Public Methods
 ###
 

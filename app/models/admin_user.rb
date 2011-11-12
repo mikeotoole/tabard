@@ -1,18 +1,21 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents an AdminUser used for Admin Panel.
+###
 class AdminUser < ActiveRecord::Base
+  # Array of valid roles.
   ROLES = %w[moderator admin superadmin]
-  def role?(base_role)
-    ROLES.index(base_role.to_s) <= ROLES.index(role)
-  end
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :role
-  
-  after_create :notify_user
 
 ###
 # Validators
@@ -35,29 +38,24 @@ class AdminUser < ActiveRecord::Base
         :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       :if => :password_required?
-  
+
 ###
 # Public Methods
 ###
+
+  ###
+  # This gives roles a hierarchy. e.g. admin has all moderator abilities.
+  ###
+  def role?(base_role)
+    ROLES.index(base_role.to_s) <= ROLES.index(role)
+  end
+
+  ###
+  # This method determines if the password is required. It is used to determine if password needs to be validated.
+  # [Returns] False if this is a new record or calls devises password_required? or true if password is present.
+  ###
   def password_required?
     (new_record? ? false : super) || self.password.present?
-  end
-  
-###
-# Protected Methods
-###
-protected
-  
-  ###
-  # notify user and send password setup instructions.
-  ###
-  def notify_user
-    random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
-    self.password = random_password  
-    self.reset_password_token = AdminUser.reset_password_token
-    self.reset_password_sent_at = Time.now    
-    self.save
-    UserMailer.setup_admin(AdminUser.find(self), random_password).deliver # TODO Mike, Why is AdminUser.find(self) required?
   end
 end
 

@@ -1,33 +1,33 @@
 ActiveAdmin.register User do
-  menu :parent => "User", :priority => 1, :if => proc{ can?(:read, User) } 
+  menu :parent => "User", :priority => 1, :if => proc{ can?(:read, User) }
   controller.authorize_resource
-  
+
   actions :index, :show, :destroy
-  
+
   action_item :only => :show do
     if !user.suspended and can? :suspend, user
       link_to "Suspend User", suspend_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to suspend this user?'
-    end  
-  end 
+    end
+  end
 
   action_item :only => :show do
     if user.suspended and can? :reinstate, user
       link_to "Reinstate User", reinstate_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reinstate this user?'
-    end  
+    end
   end
 
   action_item :only => :show do
     if can? :reset_password, user
       link_to "Reset Password", reset_password_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
-    end  
+    end
   end
 
   action_item :only => :index do
     if can? :reset_all_passwords, User.new
       link_to "Reset All Passwords", reset_all_passwords_admin_users_path, :method => :post, :confirm => 'Are you sure you want to reset ALL user passwords?'
-    end  
+    end
   end
-  
+
   member_action :suspend, :method => :put do
     user = User.find(params[:id])
     user.suspended = true
@@ -41,7 +41,7 @@ ActiveAdmin.register User do
     user.save
     redirect_to :action => :show
   end
-  
+
   member_action :reset_password, :method => :put do
     user = User.find(params[:id])
     random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
@@ -52,7 +52,7 @@ ActiveAdmin.register User do
     UserMailer.password_reset(user, random_password).deliver
     redirect_to :action => :show
   end
-  
+
   collection_action :reset_all_passwords, :method => :post do
     begin
       User.find_each(:conditions => ['suspended == ?', false]) do |record|
@@ -70,12 +70,12 @@ ActiveAdmin.register User do
     end
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
- 
+
   collection_action :sign_out_all_users, :method => :post do
     User.force_active_users_to_sign_out
     redirect_to admin_dashboard_url, :notice => "All Users Signed out"
-  end 
-    
+  end
+
   filter :id
   filter :email
   filter :name
@@ -88,10 +88,10 @@ ActiveAdmin.register User do
   filter :failed_attempts
   filter :created_at
   filter :suspended, :as => :select
-  
+
   index do
     column "View" do |user|
-      link_to "View", admin_user_path(user)  
+      link_to "View", admin_user_path(user)
     end
     column :email
     column "User Profile" do |user|
@@ -106,15 +106,15 @@ ActiveAdmin.register User do
     column "Destroy" do |user|
       if can? :destroy, user
         link_to "Destroy", [:admin, user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
-      end  
+      end
     end
   end
-  
+
   show :title => :email do
     rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
     rows.insert(2, :user_profile)
     attributes_table *rows
-    
+
 #     active_admin_comments
   end
 end

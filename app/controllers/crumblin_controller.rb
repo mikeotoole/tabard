@@ -44,7 +44,7 @@ class CrumblinController < ApplicationController
       render :layout => false
     else
       redirect_to root_url
-    end    
+    end
   end
 
   # This method gets the Privacy Policy page.

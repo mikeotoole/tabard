@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents a cancan ability used for AdminUsers.
+###
 class AdminAbility
   include CanCan::Ability
 
@@ -11,13 +18,13 @@ class AdminAbility
 
     bakedInRules(user) if user.persisted? and user.is_a?(AdminUser)
   end
-  
+
   ###
   # This method defines the baked in rules for a user.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
-  def bakedInRules(user)  
+  def bakedInRules(user)
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
       can [:read], ActiveAdmin::Dashboards::DashboardController
@@ -42,7 +49,7 @@ class AdminAbility
         admin_user == user
       end
     end
-    
+
     # Rules for admin user. (Inherits rules for moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
       can [:destroy, :reset_all_passwords, :sign_out_all_users], User
@@ -51,7 +58,7 @@ class AdminAbility
       can [:destroy], Community
       can [:toggle_maintenance_mode], SiteActionController
     end
-    
+
     # Rules for superadmin user. (Inherits rules for admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.

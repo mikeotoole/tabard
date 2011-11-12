@@ -29,10 +29,10 @@ class ApplicationController < ActionController::Base
 
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
-  
+
   # This before_filter checks if user needs to be logged out.
   before_filter :check_force_logout
-  
+
   # This before_filter checks if system is in maintenance mode.
   before_filter :check_maintenance_mode
 
@@ -99,10 +99,10 @@ class ApplicationController < ActionController::Base
     if current_admin_user
       @current_ability ||= AdminAbility.new(current_admin_user)
     else
-      @current_ability ||= Ability.new(current_user)  
+      @current_ability ||= Ability.new(current_user)
     end
   end
-  
+
   ###
   # Used to check for maintenance mode.
   # [Returns] true if maintenance mode is on, false otherwise.
@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
   def maintenance_mode?
     $maintenance_mode ||= (ENV["RAILS_ENV"] != 'test' and ENV["RAILS_ENV"] != 'development')
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -276,9 +276,9 @@ protected
       redirect_to crumblin_maintenance_url
     else
       true
-    end   
+    end
   end
-  
+
   ###
   # _before_filter_
   #
@@ -302,5 +302,5 @@ protected
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
-  
+
 end

@@ -29,6 +29,7 @@ class DiscussionSpace < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
@@ -63,16 +64,16 @@ class DiscussionSpace < ActiveRecord::Base
   ###
   def game_is_valid_for_community
     return unless self.game
-    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.map{|g| g.id}.include?(self.game.id) 
+    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.map{|g| g.id}.include?(self.game.id)
   end
-  
+
   ###
   # This method determines how many discussions are in this discussion space.
   # [Returns] An integer that contains how many discussions are in this discussion space.
   ###
   def number_of_discussions
     self.discussions.count
-  end 
+  end
 end
 
 

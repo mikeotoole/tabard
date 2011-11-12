@@ -29,6 +29,7 @@ class PageSpace < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods

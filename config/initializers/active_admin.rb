@@ -6,7 +6,7 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Crumblin Administration"
 
-  # Set the link url for the title. For example, to take 
+  # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
   # config.site_title_link = "/"
@@ -14,9 +14,9 @@ ActiveAdmin.setup do |config|
   # == Default Namespace
   #
   # Set the default namespace each administration resource
-  # will be added to. 
+  # will be added to.
   #
-  # eg: 
+  # eg:
   #   config.default_namespace = :hello_world
   #
   # This will create resources in the HelloWorld module and
@@ -30,8 +30,8 @@ ActiveAdmin.setup do |config|
 
   # == User Authentication
   #
-  # Active Admin will automatically call an authentication 
-  # method in a before filter of all controller actions to 
+  # Active Admin will automatically call an authentication
+  # method in a before filter of all controller actions to
   # ensure that there is a currently logged in admin user.
   #
   # This setting changes the method which Active Admin calls
@@ -83,7 +83,7 @@ ActiveAdmin.setup do |config|
   # == Controller Filters
   #
   # You can add before, after and around filters to all of your
-  # Active Admin resources from here. 
+  # Active Admin resources from here.
   #
   # config.before_filter :do_something_awesome
   config.before_filter :sign_out_current_user
@@ -92,9 +92,9 @@ ActiveAdmin.setup do |config|
   config.skip_before_filter :limit_subdomain_access
   config.skip_before_filter :fetch_active_games
   config.skip_before_filter :ensure_accepted_most_recent_legal_documents
-  
+
   ActiveAdmin::Devise::SessionsController.skip_before_filter :check_maintenance_mode
-  
+
   ActiveAdmin::Dashboards::DashboardController.before_filter :authorize_dashboard_index, :only => :index
 
   # == Register Stylesheets & Javascripts
@@ -112,7 +112,7 @@ end
 
 def sign_out_current_user
   if current_user
-    sign_out(current_user) 
+    sign_out(current_user)
   end
 end
 

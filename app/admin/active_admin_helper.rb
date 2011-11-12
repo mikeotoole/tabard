@@ -1,5 +1,14 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This module checks the permissions for displaying action buttons on show and index pages of active admin panels.
+###
 module ActiveAdmin
+  # Overriding ActiveAdmin Resource methods.
   class Resource
+    # New action items module.
     module ActionItems
 
       alias_method :original_add_default_action_items, :add_default_action_items unless method_defined?(:original_add_default_action_items)

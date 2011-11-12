@@ -126,17 +126,17 @@ class User < ActiveRecord::Base
   def current_terms_of_service
     TermsOfService.first
   end
-  
+
   #This method checks to see if the user has accepted the most recent version of the Terms of Service.
   def has_accepted_current_terms_of_service?
     accepted_documents.include?(current_terms_of_service)
   end
-  
+
   #This method finds the most recent version of the terms of service
   def current_privacy_policy
     PrivacyPolicy.first
   end
-  
+
   #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
     accepted_documents.include?(current_privacy_policy)
@@ -150,15 +150,15 @@ class User < ActiveRecord::Base
   ###
   # This method determines if the user is active. It is adding to the existing Devise method.
   # [Returns] True if this is an active user, otherwise false.
-  ###  
-  def active_for_authentication?    	
+  ###
+  def active_for_authentication?
     super and not self.suspended
   end
 
   ###
   # This method overrides the existing Devise method to check it account is suspended.
   # [Returns] :suspended if account is suspended otherwise it returns super's response.
-  ###  
+  ###
   def inactive_message
     self.suspended ? :suspended : super
   end

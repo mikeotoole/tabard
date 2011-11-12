@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is used by the admin portal for site wide actions.
+###
 class SiteActionController < ApplicationController
   respond_to :html
 ###
@@ -11,6 +18,7 @@ class SiteActionController < ApplicationController
 ###
 # Actions
 ###
+
   ###
   # This redirects all traffic to maintenance page.
   # PUT /toggle_maintenance_mode(.:format)
@@ -26,6 +34,6 @@ class SiteActionController < ApplicationController
       redirect_to admin_dashboard_url, :notice => notice
     else
       redirect_to admin_dashboard_url, :alert => "You are not authorized!"
-    end      
+    end
   end
 end
