@@ -111,18 +111,17 @@ Timecop.freeze 2.months.ago
   def generate_application_from_user_profile(community, user_profile)
     app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
     app.prep(user_profile, community.community_application_form)
-    app.submission.custom_form.questions.each do |q|
-      case q.type
-        when 'long_answer_question'
-          app.submission.answers.create(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')!
-        when 'radio_buttons_question'
-          app.submission.answers.create(:question_id => q.id, :body => q.predefined_answers.first.body)
-        else
-          app.submission.answers.create(:question_id => q.id, :body => 'Fuckin derp, motherfucker')
-      end
-    end
-    puts app.submission.answers.to_yaml
     app.save
+    #puts app.errors.to_yaml
+    #app.submission.custom_form.questions.each do |q|
+    #  case q.type
+    #    when 'long_answer_question'
+    #      app.submission.answers.create(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')
+    #    when 'radio_buttons_question'
+    #      app.submission.answers.create(:question_id => q.id, :body => q.predefined_answers.first.body)
+    #  end
+    #end
+    #puts app.submission.answers.to_yaml
     app
   end
   

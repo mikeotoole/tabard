@@ -168,7 +168,7 @@ protected
       :thankyou => "Your submission has been sent. Thank you!",
       :published => true)
     ca.community = self
-    
+=begin    
     q1 = TextQuestion.create(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
@@ -196,7 +196,7 @@ protected
       :required => false)
     q3.custom_form = ca
     q3.save!
-    
+=end
     ca.save
   end
 
