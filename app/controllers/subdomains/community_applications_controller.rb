@@ -22,10 +22,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications.json
   def index
     authorize! :index, CommunityApplication
-    @pending_community_applications == @community_applications.where{status == "Pending"}
-    @other_community_applications == @community_applications.where{status != "Pending"}.order{ status.asc }
-    @community_applications = @community_applications.order{ status.asc }
-    respond_with(@community_applications)
+    @pending_community_applications = @community_applications.where{status == "Pending"}.order{ created_at.desc }
+    @other_community_applications = @community_applications.where{status != "Pending"}.order{ status.asc }.order{ created_at.desc }
+    @community_applications = @community_applications.order{ status.asc }.order{ created_at.desc }
+    respond_with @community_applications
   end
 
   # GET /community_applications/1
@@ -40,7 +40,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # GET /community_applications/1/edit
   def edit
-    respond_with(@community_application)
+    respond_with @community_application
   end
 
   # POST /community_applications
@@ -49,7 +49,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.save
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
-    respond_with(@community_application)
+    respond_with @community_application
   end
 
   # PUT /community_applications/1
@@ -61,7 +61,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
         # TODO Doug/Joe Determine this success message, if applicable. -JW
       end
     end
-    respond_with(@community_application)
+    respond_with @community_application
   end
 
   # DELETE /community_applications/1
@@ -70,7 +70,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.withdraw
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
-    respond_with(@community_application)
+    respond_with @community_application
   end
 
   # This accepts the specified application.
