@@ -203,6 +203,7 @@ class Ability
   ###
   def community_member_rules(user, current_community)
     # RosterAssignments
+    can :mine, RosterAssignment
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
@@ -229,6 +230,9 @@ class Ability
       not discussion.has_been_locked
     end
     can :manage, CustomForm
+    cannot :delete, CustomForm do |form|
+      form.application_form?
+    end
     can :manage, Role
     cannot :destroy, Role do |role|
       role.system_generated
