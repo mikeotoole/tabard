@@ -1,20 +1,33 @@
-= form_for community_application do |f|
-  -if community_application.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(community_application.errors.count, "error")} prohibited this community_application from being saved:"
-      %ul
-        - community_application.errors.full_messages.each do |msg|
-          %li= msg
-  #custom_form
-    = community_application.custom_form.to_yaml # TODO Doug, Here is where the form would be rendered. See object for more info. -JW
-  .field
-    = f.fields_for :submission do |submission_form|
-      .field
-        - # TODO Doug, Here is where the submission fields would go -JW
-  .field
-    - current_user.character_proxies.each do |proxy|
-      .field
-        = check_box_tag "community_application[character_proxy_ids][]", proxy.id, community_application.character_proxies.include?(proxy)
-        = proxy.name
-  .actions
-    = f.submit 'Save'
+= simple_form_for community_application do |f|
+  %fieldset
+    %ol
+    -#
+      = simple_fields_for f.custom_form |cf|
+        = cf.input :instructions
+      -#= simple_fields_for f.submission do |sf|
+  %fieldset
+    = f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [cp.name, cp.id]}
+  %p
+    %button{ :type => 'submit' } Submit
+    
+-#
+  = form_for community_application do |f|
+    -if community_application.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(community_application.errors.count, "error")} prohibited this community_application from being saved:"
+        %ul
+          - community_application.errors.full_messages.each do |msg|
+            %li= msg
+    #custom_form
+      = community_application.custom_form.to_yaml # TODO Doug, Here is where the form would be rendered. See object for more info. -JW
+    .field
+      = f.fields_for :submission do |submission_form|
+        .field
+          - # TODO Doug, Here is where the submission fields would go -JW
+    .field
+      - current_user.character_proxies.each do |proxy|
+        .field
+          = check_box_tag "community_application[character_proxy_ids][]", proxy.id, community_application.character_proxies.include?(proxy)
+          = proxy.name
+    .actions
+      = f.submit 'Save'

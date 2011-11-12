@@ -159,16 +159,45 @@ protected
   ###
   # _after_create_
   #
-  # This method creates the default member role.
+  # This method creates the community application form with some default questions.
   ###
   def setup_community_application_form
-    ca = self.build_community_application_form(:name => "Application Form",
-        :instructions => "Fill this out please.",
-        :thankyou => "Thanks!",
-        :published => true)
+    ca = self.build_community_application_form(
+      :name => "Application Form",
+      :instructions => "Fill this out please.",
+      :thankyou => "Your submission has been sent. Thank you!",
+      :published => true)
     ca.community = self
+    
+    q1 = TextQuestion.create(
+      :style => "long_answer_question",
+      :body => "Why do you want to join?",
+      :explanation => "Let us know why we should game together.",
+      :required => true)
+    q1.custom_form = ca
+    q1.save!
+    
+    q2 = TextQuestion.create(
+      :style => "radio_buttons_question",
+      :body => "How often do you play?",
+      :required => true)
+    q2.custom_form = ca
+    q2.save!
+    PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => q2.id)
+    PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => q2.id)
+    PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => q2.id)
+    PredefinedAnswer.create(:body => "10-20 hours", :select_question_id => q2.id)
+    PredefinedAnswer.create(:body => "20+ hours", :select_question_id => q2.id)
+    
+    q3 = TextQuestion.create(
+      :style => "short_answer_question",
+      :body => "Did someone recommend you?",
+      :explanation => "This is a short answer question",
+      :required => false)
+    q3.custom_form = ca
+    q3.save!
+    
     ca.save
-    self.update_attribute(:community_application_form, ca)
   end
 
   ###
