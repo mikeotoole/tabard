@@ -285,6 +285,101 @@ describe "ActiveAdmin AdminUser" do
       AdminUser.exists?(admin).should be_true
     end      
   end
+  
+  describe "#edit_account" do
+    it "returns 200 when logged in as superadmin" do
+      login_as superadmin
+
+      visit edit_account_admin_admin_users_url
+      page.status_code.should == 200
+      current_url.should == edit_account_admin_admin_users_url
+    end 
+    
+    it "returns 200 when logged in as admin" do
+      login_as admin
+
+      visit edit_account_admin_admin_users_url
+      page.status_code.should == 200
+      current_url.should == edit_account_admin_admin_users_url
+    end    
+    
+    it "returns 200 when logged in as moderator" do
+      login_as moderator
+
+      visit edit_account_admin_admin_users_url
+      page.status_code.should == 200
+      current_url.should == edit_account_admin_admin_users_url
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+
+      visit edit_account_admin_admin_users_url
+      page.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "redirects to login page when not logged in" do
+      visit edit_account_admin_admin_users_url
+      current_path.should == new_admin_user_session_path
+    end 
+  end
+
+  describe "#update_account" do
+    it "changes password and email when logged in as superadmin" do
+      login_as superadmin   
+      
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.status_code.should == 200   
+    end 
+    
+    it "changes password and email when logged in as admin" do
+      login_as admin
+
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.status_code.should == 200
+    end    
+    
+    it "changes password and email when logged in as moderator" do
+      login_as moderator
+
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.status_code.should == 200
+    end    
+    
+    it "returns 403 when logged in as regular User" do
+      login_as user
+
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
+    end
+    
+    it "redirects to login page when not logged in" do
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+
+      page.driver.status_code.should == 302
+    end
+
+    it "redirects back to edit when current_password is wrong" do
+      login_as admin
+  
+      old_email = admin.email
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "WrongPassword", :email => "test-case-email@example.com" } } )
+      page.driver.status_code.should == 200
+      
+      AdminUser.find(admin).email.should eql old_email
+    end
+    
+    it "does not allow changing of role" do
+      login_as moderator
+
+      page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword", :role => "superadmin" } } )
+      page.driver.status_code.should == 200
+      
+      AdminUser.find(moderator).role.should eql "moderator"
+    end
+  end
 
   describe "#reset_password_admin_admin_user" do
     it "returns 200 when logged in as superadmin" do

@@ -124,11 +124,13 @@ describe "ActiveAdmin Community" do
       Community.exists?(community).should be_false
     end    
     
-    it "deletes community when logged in as moderator" do
+    it "returns 403 when logged in as moderator" do
       login_as moderator
 
       page.driver.delete("/admin/communities/#{community.id}")
-      Community.exists?(community).should be_false
+      Community.exists?(community).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do

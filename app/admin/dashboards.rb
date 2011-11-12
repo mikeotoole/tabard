@@ -12,7 +12,13 @@ ActiveAdmin::Dashboards.build do
       div do
         button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, :method => :post, :confirm => 'Are you sure you want to sign out ALL users?'
       end
-    end    
+      div br
+    end
+    if can?(:update_account, current_admin_user)
+      div do
+        button_to "Update My Account", edit_account_admin_admin_users_path, :method => :get
+      end
+    end  
   end
   
   section "Recent Signed In Admin Users" do

@@ -1,6 +1,6 @@
 ActiveAdmin.register AdminUser do
   menu :parent => "User", :priority => 11, :if => proc{ can?(:read, AdminUser) } 
-  controller.authorize_resource
+  controller.authorize_resource :except => [:edit_account, :update_account]
 
   action_item :only => :show do
     if can? :reset_password, admin_user
@@ -24,16 +24,36 @@ ActiveAdmin.register AdminUser do
     UserMailer.password_reset(admin_user, random_password).deliver 
     redirect_to :action => :show
   end
+  
+  collection_action :edit_account, :method => :get do
+    authorize!(:edit_account, current_admin_user)
+    @admin_user = current_admin_user
+  end
+  
+  collection_action :update_account, :method => :put do
+    authorize!(:update_account, current_admin_user)
+    params[:admin_user].delete(:role)
+    if current_admin_user.update_with_password(params[:admin_user])
+      sign_in(current_admin_user, :bypass => true)
+      flash[:notice] = 'Account updated.'
+      redirect_to admin_dashboard_url
+    else
+      @admin_user = current_admin_user
+      render :action => :edit_account
+    end  
+  end
 
   collection_action :reset_all_passwords, :method => :post do
     begin
       AdminUser.all.each do |record|
-        random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
-        record.password = random_password
-        record.reset_password_token = AdminUser.reset_password_token
-        record.reset_password_sent_at = Time.now   
-        record.save
-        UserMailer.all_password_reset(record, random_password).deliver  
+        if record != current_admin_user
+          random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
+          record.password = random_password
+          record.reset_password_token = AdminUser.reset_password_token
+          record.reset_password_sent_at = Time.now   
+          record.save
+          UserMailer.all_password_reset(record, random_password).deliver
+        end    
       end
     rescue Exception => e
       logger.error "Error Resetting All Passwords: #{e.message}"
@@ -43,6 +63,7 @@ ActiveAdmin.register AdminUser do
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
 
+  filter :id
   filter :email
   filter :current_sign_in_at
   filter :current_sign_in_ip

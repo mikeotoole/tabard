@@ -148,91 +148,91 @@ describe "ActiveAdmin User" do
     end      
   end
 
-  describe "#lock_admin_user" do 
+  describe "#suspend" do 
     before(:each) do
-      user.user_active.should be_true
+      user.suspended.should be_false
     end
 
-    it "locks user when logged in as superadmin" do
+    it "suspends user when logged in as superadmin" do
       login_as superadmin
       
-      page.driver.put("/admin/users/#{user.id}/lock")
-      User.find(user).user_active.should be_false
+      page.driver.put("/admin/users/#{user.id}/suspend")
+      User.find(user).suspended.should be_true
     end 
     
-    it "locks user when logged in as admin" do
+    it "suspends user when logged in as admin" do
       login_as admin
 
-      page.driver.put("/admin/users/#{user.id}/lock")
-      User.find(user).user_active.should be_false
+      page.driver.put("/admin/users/#{user.id}/suspend")
+      User.find(user).suspended.should be_true
     end    
     
-    it "locks user when logged in as moderator" do
+    it "suspends user when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/admin/users/#{user.id}/lock")
-      User.find(user).user_active.should be_false
+      page.driver.put("/admin/users/#{user.id}/suspend")
+      User.find(user).suspended.should be_true
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.put("/admin/users/#{user.id}/lock") 
+      page.driver.put("/admin/users/#{user.id}/suspend") 
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).user_active.should be_true
+      User.find(user).suspended.should be_false
     end
     
-    it "does not lock user when not logged in" do
-      page.driver.put("/admin/users/#{user.id}/lock")
-      User.find(user).user_active.should be_true
+    it "does not suspend user when not logged in" do
+      page.driver.put("/admin/users/#{user.id}/suspend")
+      User.find(user).suspended.should be_false
     end
   end  
 
-  describe "#unlock_admin_user" do
+  describe "#reinstate" do
     before(:each) do
-      user.user_active = false
+      user.suspended = true
       user.save!
-      user.user_active.should be_false
+      user.suspended.should be_true
     end
   
-    it "unlocks user when logged in as superadmin" do
+    it "reinstates user when logged in as superadmin" do
       login_as superadmin
       
-      page.driver.put("/admin/users/#{user.id}/unlock")
-      User.find(user).user_active.should be_true
+      page.driver.put("/admin/users/#{user.id}/reinstate")
+      User.find(user).suspended.should be_false
     end 
     
-    it "unlocks user when logged in as admin" do
+    it "reinstates user when logged in as admin" do
       login_as admin
 
-      page.driver.put("/admin/users/#{user.id}/unlock")
-      User.find(user).user_active.should be_true
+      page.driver.put("/admin/users/#{user.id}/reinstate")
+      User.find(user).suspended.should be_false
     end    
     
-    it "unlocks user when logged in as moderator" do
+    it "reinstates user when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/admin/users/#{user.id}/unlock")
-      User.find(user).user_active.should be_true
+      page.driver.put("/admin/users/#{user.id}/reinstate")
+      User.find(user).suspended.should be_false
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user_2
 
-      page.driver.put("/admin/users/#{user.id}/unlock")
+      page.driver.put("/admin/users/#{user.id}/reinstate")
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).user_active.should be_false
+      User.find(user).suspended.should be_true
     end
     
-    it "does not unlock user when not logged in" do
-      page.driver.put("/admin/users/#{user.id}/unlock")
-      User.find(user).user_active.should be_false
+    it "does not reinstate user when not logged in" do
+      page.driver.put("/admin/users/#{user.id}/reinstate")
+      User.find(user).suspended.should be_true
     end
   end
 
-  describe "#reset_password_admin_user" do
+  describe "#reset_password" do
     before(:each) do
       user.reset_password_token.should be_nil
     end
@@ -283,7 +283,7 @@ describe "ActiveAdmin User" do
     end
   end
   
-  describe "#reset_all_passwords_admin_users" do
+  describe "#reset_all_passwords" do
     before(:each) do
       user
       user_2
@@ -340,7 +340,7 @@ describe "ActiveAdmin User" do
     end
   end
   
-  describe "#sign_out_all_users_admin_users" do 
+  describe "#sign_out_all_users" do 
     before(:each) do
       user
       user_2

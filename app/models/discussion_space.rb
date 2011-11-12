@@ -62,11 +62,8 @@ class DiscussionSpace < ActiveRecord::Base
   # This method validates that the selected game is valid for the community.
   ###
   def game_is_valid_for_community
-    if self.game and not self.community.games.include?(self.game)
-      self.errors.add(:game_id, "this game is not part of the community")
-    else
-      return true
-    end  
+    return unless self.game
+    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.map{|g| g.id}.include?(self.game.id) 
   end
   
   ###

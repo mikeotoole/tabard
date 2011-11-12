@@ -21,11 +21,14 @@ class AdminAbility
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
       can [:read], ActiveAdmin::Dashboards::DashboardController
-      can [:read, :lock, :unlock, :reset_password], User
+      can [:read, :suspend, :reinstate, :reset_password], User
       can [:read], UserProfile
       can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm
-      can [:read, :delete_predefined_answer], Question
+      cannot [:destroy], CustomForm do |custom_form|
+        false # custom_form.application_form? # TODO Mike, Fix me.
+      end
+      can [:read, :delete_predefined_answer, :destroy], Question
       can [:read, :destroy, :update], PageSpace
       can [:read, :destroy], Page
       can [:read], DiscussionSpace
@@ -35,6 +38,9 @@ class AdminAbility
       can [:read, :destroy, :remove_comment], Discussion
       can [:read], SwtorCharacter
       can [:read], WowCharacter
+      can [:update_account, :edit_account], AdminUser do |admin_user|
+        admin_user == user
+      end
     end
     
     # Rules for admin user. (Inherits rules for moderator).
@@ -49,7 +55,10 @@ class AdminAbility
     # Rules for superadmin user. (Inherits rules for admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
-      can :manage, [AdminUser]
+      can :manage, AdminUser
+      cannot [:update_account, :edit_account], AdminUser do |admin_user|
+        admin_user != user
+      end
     end
   end
 end

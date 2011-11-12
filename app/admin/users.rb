@@ -5,14 +5,14 @@ ActiveAdmin.register User do
   actions :index, :show, :destroy
   
   action_item :only => :show do
-    if user.user_active and can? :lock, user
-      link_to "Lock User", lock_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to lock this user?'
+    if !user.suspended and can? :suspend, user
+      link_to "Suspend User", suspend_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to suspend this user?'
     end  
   end 
 
   action_item :only => :show do
-    if !user.user_active and can? :unlock, user
-      link_to "Unlock User", unlock_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to unlock this user?'
+    if user.suspended and can? :reinstate, user
+      link_to "Reinstate User", reinstate_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reinstate this user?'
     end  
   end
 
@@ -28,16 +28,16 @@ ActiveAdmin.register User do
     end  
   end
   
-  member_action :lock, :method => :put do
+  member_action :suspend, :method => :put do
     user = User.find(params[:id])
-    user.user_active = false
+    user.suspended = true
     user.save
     redirect_to :action => :show
   end
 
-  member_action :unlock, :method => :put do
+  member_action :reinstate, :method => :put do
     user = User.find(params[:id])
-    user.user_active = true
+    user.suspended = false
     user.save
     redirect_to :action => :show
   end
@@ -55,7 +55,7 @@ ActiveAdmin.register User do
   
   collection_action :reset_all_passwords, :method => :post do
     begin
-      User.find_each(:conditions => ['user_active == ?', true]) do |record|
+      User.find_each(:conditions => ['suspended == ?', false]) do |record|
         random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
         record.reset_password_token = User.reset_password_token
@@ -76,6 +76,7 @@ ActiveAdmin.register User do
     redirect_to admin_dashboard_url, :notice => "All Users Signed out"
   end 
     
+  filter :id
   filter :email
   filter :name
   filter :current_sign_in_at
@@ -86,7 +87,7 @@ ActiveAdmin.register User do
   filter :confirmation_sent_at
   filter :failed_attempts
   filter :created_at
-  filter :user_active
+  filter :suspended, :as => :select
   
   index do
     column "View" do |user|
@@ -100,7 +101,7 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
-    column :user_active
+    column :suspended
     column :created_at
     column "Destroy" do |user|
       if can? :destroy, user

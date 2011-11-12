@@ -5,7 +5,7 @@ describe "ActiveAdmin SwtorCharacter" do
   let(:admin) { create(:admin_user, :role => 'admin') }
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
-  let(:character) { create(:swtor_character) }
+  let(:character) { create(:swtor_char_profile) }
  
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do
@@ -124,11 +124,13 @@ describe "ActiveAdmin SwtorCharacter" do
       SwtorCharacter.exists?(character).should be_false
     end    
     
-    it "deletes character when logged in as moderator" do
+    it "returns 403 when logged in as moderator" do
       login_as moderator
 
       page.driver.delete("/admin/swtor_characters/#{character.id}")
-      SwtorCharacter.exists?(character).should be_false
+      SwtorCharacter.exists?(character).should be_true
+      page.driver.status_code.should == 403
+      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do

@@ -30,7 +30,9 @@ ActiveAdmin.register Discussion do
     column :id
     column :name
     column :discussion_space, :sortable => :discussion_space_id
-    column :poster, :sortable => false
+    column :poster do |discussion|
+      link_to discussion.poster.name, [:admin, discussion.poster]
+    end
     column :number_of_comments, :sortable => false
     column :created_at       
     column "Destroy" do |discussion|
@@ -48,7 +50,9 @@ ActiveAdmin.register Discussion do
       panel("Comments") do
         table_for(discussion.all_comments) do
           column :body
-          column :poster
+          column :poster do |comment|
+            link_to comment.poster.name, [:admin, comment.poster]
+          end
           column :number_of_comments
           column :has_been_deleted
           column "Commentable Body" do |comment|

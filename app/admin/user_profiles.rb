@@ -1,8 +1,42 @@
 ActiveAdmin.register UserProfile do
-  menu false
+  menu :parent => "User", :priority => 2, :if => proc{ can?(:read, UserProfile) }
   controller.authorize_resource 
   
-  actions :show
+  actions :index, :show
+  
+#  id                :integer         not null, primary key
+#  user_id           :integer
+#  first_name        :string(255)
+#  last_name         :string(255)
+#  avatar            :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  description       :text
+#  display_name      :string(255)
+#  publicly_viewable :boolean         default(TRUE)
+    
+  filter :id
+  filter :display_name
+  filter :first_name
+  filter :last_name
+  filter :avatar
+  filter :description
+  filter :publicly_viewable, :as => :select 
+  filter :created_at
+  filter :updated_at
+  
+  index do
+    column "View" do |user_profile|
+      link_to "View", [:admin, user_profile]  
+    end
+    column :display_name
+    column "User" do |user_profile|
+      link_to user_profile.user.email, [:admin, user_profile.user]
+    end
+    column :first_name
+    column :last_name
+    column :created_at
+  end
   
   show :title => :name do
     attributes_table *default_attribute_table_rows
@@ -22,7 +56,9 @@ ActiveAdmin.register UserProfile do
       panel("Comments") do
         table_for(user_profile.comments) do
           column :body
-          column :poster
+          column :poster do |comment|
+            link_to comment.poster.name, [:admin, comment.poster]
+          end
           column :number_of_comments
           column :has_been_deleted          
           column "Commentable Body" do |comment|

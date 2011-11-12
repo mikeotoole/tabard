@@ -62,7 +62,7 @@ class PageSpace < ActiveRecord::Base
   ###
   def game_is_valid_for_community
     return unless self.game
-    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.include?(self.game)
+    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.map{|g| g.id}.include?(self.game.id)
   end
 end
 

@@ -1,5 +1,6 @@
 ActiveAdmin.register CustomForm do
-  menu :if => proc{ can?(:read, CustomForm) }
+  menu :parent => "Custom Forms", :priority => 1, :if => proc{ can?(:read, CustomForm) }
+  controller.load_resource :only => :destroy
   controller.authorize_resource
 
   actions :index, :show, :destroy

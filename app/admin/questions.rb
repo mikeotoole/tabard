@@ -1,5 +1,5 @@
 ActiveAdmin.register Question do
-  menu false
+  menu :parent => "Custom Forms", :priority => 2, :if => proc{ can?(:read, Question) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -15,6 +15,15 @@ ActiveAdmin.register Question do
     answer.destroy
     redirect_to previous_page
   end
+
+  filter :id
+  filter :body
+  filter :type
+  filter :style
+  filter :created_at
+  filter :updated_at
+  filter :explanation
+  filter :required, :as => :select
   
   index do
     column "View" do |question|

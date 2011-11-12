@@ -4,6 +4,7 @@ ActiveAdmin.register Community do
   
   actions :index, :show, :destroy
   
+  filter :id
   filter :name
   filter :slogan
   filter :created_at
