@@ -33,7 +33,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # POST /custom_forms
   def create
     add_new_flash_message('Form was successfully created.') if @custom_form.save
-    redirect_to edit_custom_form_path(@custom_form)
+    respond_with @custom_form
   end
 
   # PUT /custom_forms/1
@@ -41,7 +41,7 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form.update_attributes(params[:custom_form])
       add_new_flash_message 'Form was successfully updated.', 'success'
     end
-    redirect_to edit_custom_form_path(@custom_form)
+    respond_with @custom_form
   end
 
   # DELETE /custom_forms/1
@@ -49,7 +49,7 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form
       add_new_flash_message('Form was successfully deleted.') if @custom_form.destroy
     end
-    redirect_to custom_forms_path
+    respond_with @custom_form
   end
 
 ###
