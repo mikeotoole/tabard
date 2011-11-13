@@ -42,7 +42,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
 
 ###
 # Validators
@@ -152,8 +152,6 @@ protected
     mr.community = self
     mr.save
     self.update_attribute(:member_role, mr)
-    mr.permissions.create(subject_class: "PageSpace", permission_level: "View")
-    mr.permissions.create(subject_class: "Page", permission_level: "Delete")
   end
 
   ###
@@ -227,6 +225,19 @@ protected
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
     end
+  end
+
+  ###
+  # _after_create_
+  #
+  # The method creates a default community discussion space
+  ###
+  def setup_default_community_items
+    self.member_role.permissions.create(subject_class: "PageSpace", permission_level: "View")
+    self.member_role.permissions.create(subject_class: "Page", permission_level: "Delete")
+    community_d_space = self.discussion_spaces.create(name: "Community")
+    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
+    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
   end
 end
 

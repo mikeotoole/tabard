@@ -238,6 +238,7 @@ class Ability
     can :manage, Discussion do |discussion|
       not discussion.has_been_locked
     end
+    can :unlock, Discussion
     can :manage, CustomForm
     cannot :delete, CustomForm do |form|
       form.application_form?
@@ -324,7 +325,7 @@ class Ability
   ###
   def decodeNestedPermission(action, subject_class, parent_relation, parent_id)
     can action, subject_class do |subject_class_instance|
-      subject_class_instance.send(parent_relation).id == subject_id
+      subject_class_instance.send(parent_relation).id == parent_id
     end
   end
 end
