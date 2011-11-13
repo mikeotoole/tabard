@@ -1,33 +1,31 @@
 = simple_form_for community_application do |f|
-  %fieldset
-    %ol
-    -#
-      = simple_fields_for f.custom_form |cf|
-        = cf.input :instructions
-      -#= simple_fields_for f.submission do |sf|
-  %fieldset
+  .characters
+    %h2 Characters
     = f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [cp.name, cp.id]}
+  .instructions
+    %h2 Instructions
+    = community_application.custom_form_instructions
+  .questions
+    = f.simple_fields_for :submission do |sf|
+      %fieldset
+        %ol
+          - community_application.submission_answers.each do |answer|
+            = sf.simple_fields_for answer, :index => answer.question_id do |af|
+              - case answer.question_type
+              - when 'TextQuestion'
+                - case answer.question_style
+                - when 'short_answer_question'
+                  = af.input :body, :as => :string, :label => answer.question_body, :required => answer.question_required
+                - when 'long_answer_question'
+                  = af.input :body, :as => :text, :label => answer.question_body, :required => answer.question_required
+              - when 'SingleSelectQuestion'
+                - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                - case answer.question_style
+                - when 'select_box_question'
+                  %li.select= af.input :body, :as => :radio, :label => false, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
+                - when 'radio_buttons_question'
+                  = af.input :body, :as => :radio, :collection => c, :label => answer.question_body, :required => answer.question_required
+              - when 'MultiSelectQuestion'
+                = af.input :body, :as => :check_boxes, :label => answer.question_body, :required => answer.question_required
   %p
     %button{ :type => 'submit' } Submit
-    
--#
-  = form_for community_application do |f|
-    -if community_application.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(community_application.errors.count, "error")} prohibited this community_application from being saved:"
-        %ul
-          - community_application.errors.full_messages.each do |msg|
-            %li= msg
-    #custom_form
-      = community_application.custom_form.to_yaml # TODO Doug, Here is where the form would be rendered. See object for more info. -JW
-    .field
-      = f.fields_for :submission do |submission_form|
-        .field
-          - # TODO Doug, Here is where the submission fields would go -JW
-    .field
-      - current_user.character_proxies.each do |proxy|
-        .field
-          = check_box_tag "community_application[character_proxy_ids][]", proxy.id, community_application.character_proxies.include?(proxy)
-          = proxy.name
-    .actions
-      = f.submit 'Save'

@@ -28,6 +28,7 @@ class Answer < ActiveRecord::Base
 # Delegates
 ###
   delegate :user_profile_id, :to => :submission, :allow_nil => true
+  delegate :body, :style, :type, :required, :predefined_answers, :to => :question, :prefix => true
 
 end
 

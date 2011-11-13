@@ -4,6 +4,7 @@
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
     = stylesheet_link_tag "subdomains/community"
+    = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
 

@@ -36,18 +36,16 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new
   # GET /community_applications/new.json
   def new
-  end
-
-  # GET /community_applications/1/edit
-  def edit
-    respond_with @community_application
+    @community_application.submission.custom_form.questions.each do |question|
+      @community_application.submission.answers.new(:question_id => question.id, :body => '')
+    end
   end
 
   # POST /community_applications
   # POST /community_applications.json
   def create
     if @community_application.save
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+      add_new_flash_message @community_application.custom_form_thankyou_message, 'success'
     end
     respond_with @community_application
   end

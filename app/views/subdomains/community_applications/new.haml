@@ -1,4 +1,6 @@
 - title "New Application | #{current_community.name}"
+- content_for(:controller_css){ stylesheet_link_tag("subdomains/community_applications") }
+
 %h1= @community_application.custom_form_name
 
 = render 'form', :community_application => @community_application

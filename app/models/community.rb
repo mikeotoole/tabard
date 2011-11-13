@@ -168,34 +168,37 @@ protected
       :thankyou => "Your submission has been sent. Thank you!",
       :published => true)
     ca.community = self
+    
+    # First Question
+    question = SingleSelectQuestion.create(
+      :style => "select_box_question",
+      :body => "How often do you play?",
+      :required => true)
+    question.custom_form = ca
+    question.save
+    PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "10-20 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "20+ hours", :select_question_id => question.id)
 
-    q1 = TextQuestion.create(
+    # Second Question
+    question = TextQuestion.create(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
       :required => true)
-    q1.custom_form = ca
-    q1.save
+    question.custom_form = ca
+    question.save
     
-    q2 = SingleSelectQuestion.create(
-      :style => "radio_buttons_question",
-      :body => "How often do you play?",
-      :required => true)
-    q2.custom_form = ca
-    q2.save
-    PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => q2.id)
-    PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => q2.id)
-    PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => q2.id)
-    PredefinedAnswer.create(:body => "10-20 hours", :select_question_id => q2.id)
-    PredefinedAnswer.create(:body => "20+ hours", :select_question_id => q2.id)
-    
-    q3 = TextQuestion.create(
+    # Third Question
+    question = TextQuestion.create(
       :style => "short_answer_question",
-      :body => "Did someone recommend you?",
+      :body => "How did you hear about us?",
       :explanation => "This is a short answer question",
       :required => false)
-    q3.custom_form = ca
-    q3.save
+    question.custom_form = ca
+    question.save
     
     ca.save
   end
