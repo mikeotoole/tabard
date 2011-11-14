@@ -30,6 +30,12 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
 
+  # This before_filter checks if user needs to be logged out.
+  before_filter :check_force_logout
+
+  # This before_filter checks if system is in maintenance mode.
+  before_filter :check_maintenance_mode
+
   # This before_filter ensures that a user has accepted legal documents.
   before_filter :ensure_accepted_most_recent_legal_documents
 
@@ -84,6 +90,25 @@ class ApplicationController < ActionController::Base
   def add_new_flash_message(message_body, message_class="notice", message_title="")
     flash[:messages] = Array.new unless flash[:messages]
     flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+  end
+
+###
+# Active Admin
+###
+  def current_ability
+    if current_admin_user
+      @current_ability ||= AdminAbility.new(current_admin_user)
+    else
+      @current_ability ||= Ability.new(current_user)
+    end
+  end
+
+  ###
+  # Used to check for maintenance mode.
+  # [Returns] true if maintenance mode is on, false otherwise.
+  ###
+  def maintenance_mode?
+    $maintenance_mode ||= (ENV["RAILS_ENV"] != 'test' and ENV["RAILS_ENV"] != 'development')
   end
 
 ###
@@ -165,7 +190,7 @@ protected
 
   # This helper method returns an Array with the users profile and characters info.
   def profiles
-    if signed_in?
+    if user_signed_in?
       profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
       profiles = Array.new
       profile_collection.each do |profile|
@@ -209,21 +234,12 @@ protected
   end
 
   ###
-  # _after_filter_
-  #
-  # This method remembers the previous crumblin page in the session variable [:last_page]
-  ###
-  def remember_last_page
-    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
-  end
-
-  ###
   # _before_filter_
   #
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_active_profile_is_valid
-    if signed_in?
+    if user_signed_in?
       unless current_profile
         activate_profile(current_user.user_profile_id, "UserProfile")
       end
@@ -242,10 +258,34 @@ protected
   ###
   # _before_filter_
   #
+  # This looks to see if the user should be forced to logout after an Admin forces all logged in users to logout.
+  ###
+  def check_force_logout
+    if current_user and current_user.force_logout
+      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance." # TODO Joe, This message does not get pushed to user. -MO
+    end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This looks to see if the system is in maintenance mode. If so all traffic is redirected to the maintenance page.
+  ###
+  def check_maintenance_mode
+    if maintenance_mode?
+      redirect_to crumblin_maintenance_url
+    else
+      true
+    end
+  end
+
+  ###
+  # _before_filter_
+  #
   # This method ensures that a profile is active, or it will default to the user_profile
   ###
   def ensure_accepted_most_recent_legal_documents
-    if signed_in?
+    if user_signed_in?
       if not current_user.accepted_current_terms_of_service
         redirect_to accept_document_path(current_user.current_terms_of_service)
       elsif not current_user.accepted_current_privacy_policy
@@ -253,4 +293,14 @@ protected
       end
     end
   end
+
+  ###
+  # _after_filter_
+  #
+  # This method remembers the previous crumblin page in the session variable [:last_page]
+  ###
+  def remember_last_page
+    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
+  end
+
 end

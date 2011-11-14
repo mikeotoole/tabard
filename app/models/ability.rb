@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This class represents a cancan ability.
+# This class represents a cancan ability used for Users.
 ###
 class Ability
   include CanCan::Ability
@@ -31,8 +31,8 @@ class Ability
     can :read, Game
 
 
-    bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
-    dynamicRules(user) unless user.community_profiles.blank?
+    bakedInRules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? and user.is_a?(User) # This ensures that only an actual user has these permissions.
+    dynamicRules(user) if user.is_a?(User) and not user.community_profiles.blank?
 
     # Define abilities for the passed in user here. For example:
     #

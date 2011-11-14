@@ -1,5 +1,5 @@
 %ul#flash
-  - if !hide_announcements? && signed_in? && current_user.recent_unread_announcements.size > 0
+  - if !hide_announcements? && user_signed_in? && current_user.recent_unread_announcements.size > 0
     = render 'layouts/flash_message_announcement', :discussion => current_user.recent_unread_announcements.first
   - if !!flash[:alert]
     %li.alert

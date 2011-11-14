@@ -31,6 +31,9 @@ source 'http://rubygems.org'
   gem 'mini_magick'
   gem 'carrierwave'
 
+# Admin Portal
+  gem 'activeadmin'
+
 # Production Specific Gems
   group :production do
     gem 'heroku'
@@ -50,6 +53,7 @@ source 'http://rubygems.org'
   group :development, :test do
     gem 'sqlite3'
     gem 'rspec-rails'
+    gem 'factory_girl_rails'
   end
 
 # Development Specific Gems
@@ -62,7 +66,6 @@ source 'http://rubygems.org'
 
 # Test Specific Gems
   group :test do
-    gem 'factory_girl_rails'
     gem 'capybara'
     gem 'database_cleaner'
     gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i

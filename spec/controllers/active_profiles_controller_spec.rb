@@ -29,7 +29,6 @@ describe ActiveProfilesController do
       session[:profile_type].should eq("UserProfile")
       session[:profile_id].should eq(billy.user_profile.id.to_s)
     end
-
   end
 
   describe "POST 'create' when using anothers profile for user" do
