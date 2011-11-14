@@ -25,10 +25,11 @@
               - when 'MultiSelectQuestion'
                 = af.input :body, :as => :check_boxes, :label => answer.question_body, :required => answer.question_required
   .sidebar
-    .characters
-      %h2 Characters
-      %p Select which of your characters you are applying with:
-      .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
+    - if current_user.character_proxies.size > 0
+      .characters
+        %h2 Characters
+        %p Select which of your characters you are applying with:
+        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       %h2 Instructions
       :markdown
