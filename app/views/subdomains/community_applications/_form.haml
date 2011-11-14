@@ -7,7 +7,8 @@
       %fieldset
         %ol
           - community_application.submission_answers.each do |answer|
-            = sf.simple_fields_for answer, :index => answer.question_id do |af|
+            = sf.simple_fields_for "answers_attributes", :index => answer.question_id do |af|
+              = af.input :question_id, :as => :hidden, :input_html => { :value => answer.question_id }
               - case answer.question_type
               - when 'TextQuestion'
                 - case answer.question_style
