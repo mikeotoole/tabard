@@ -44,8 +44,9 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # POST /community_applications
   # POST /community_applications.json
   def create
+    @community
     if @community_application.save
-      add_new_flash_message @community_application.custom_form_thankyou_message, 'success'
+      add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
     respond_with @community_application
   end
@@ -110,6 +111,8 @@ protected
       params[:community_application][:character_proxy_ids] ||= []
     end
     @community_application = current_community.community_applications.new(params[:community_application])
-    @community_application.prep(current_user.user_profile, current_community.community_application_form)
+    @community_application.user_profile = current_user.user_profile
+    @community_application.submission = Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
+    #@community_application.prep(current_user.user_profile, current_community.community_application_form)
   end
 end
