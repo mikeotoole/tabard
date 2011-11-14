@@ -1,11 +1,8 @@
+= javascript_include_tag "community_application"
+
 = simple_form_for community_application do |f|
-  .characters
-    %h2 Characters
-    = f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [cp.name, cp.id]}
-  .instructions
-    %h2 Instructions
-    = community_application.custom_form_instructions
   .questions
+    %h1= @community_application.custom_form_name
     = f.simple_fields_for :submission do |sf|
       %fieldset
         %ol
@@ -27,5 +24,14 @@
                   = af.input :body, :as => :radio, :collection => c, :label => answer.question_body, :required => answer.question_required
               - when 'MultiSelectQuestion'
                 = af.input :body, :as => :check_boxes, :label => answer.question_body, :required => answer.question_required
-  %p
+  .sidebar
+    .characters
+      %h2 Characters
+      %p Select which of your characters you are applying with:
+      .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
+    .instructions
+      %h2 Instructions
+      :markdown
+        #{community_application.custom_form_instructions}
+  %p.submit
     %button{ :type => 'submit' } Submit

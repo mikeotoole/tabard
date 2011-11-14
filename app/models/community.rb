@@ -162,7 +162,7 @@ protected
   def setup_community_application_form
     ca = self.build_community_application_form(
       :name => "Application Form",
-      :instructions => "Fill this out please.",
+      :instructions => "You want to join us? Awesome! Please answer these short questions, and don't forget to let us know if someone recommended you.",
       :thankyou => "Your submission has been sent. Thank you!",
       :published => true)
     ca.community = self
