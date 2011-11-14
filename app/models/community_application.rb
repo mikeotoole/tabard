@@ -54,7 +54,7 @@ class CommunityApplication < ActiveRecord::Base
   delegate :instructions, :to => :custom_form, :allow_nil => true, :prefix => true
   delegate :thankyou_message, :to => :custom_form, :allow_nil => true, :prefix => true
   delegate :questions, :to => :custom_form, :allow_nil => true, :prefix => true
-  delegate :name, :to => :custom_form, :prefix => true
+  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
   delegate :display_name, :to => :user_profile, :prefix => true
 
   ###
@@ -147,7 +147,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.submission = Submission.new(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
+    self.submission = Submission.create(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
   end
 
 protected
