@@ -6,7 +6,7 @@
 # This controller is for permissions.
 ###
 class Subdomains::PermissionsController < SubdomainsController
-  respond_to :html
+  layout nil
 
 ###
 # Before Filters
@@ -18,30 +18,11 @@ class Subdomains::PermissionsController < SubdomainsController
   load_and_authorize_resource :permission, :through =>:role, :except => [:index]
   before_filter :ensure_current_user_is_member
 
-  # GET /permissions
-  # GET /permissions.json
-  def index
-    #@permissions = Permission.all
-    #respond_with(@role, @permissions)
-  end
-
-  # GET /permissions/1
-  # GET /permissions/1.json
-  def show
-    #@permission = Permission.find(params[:id])
-    #respond_with(@role, @permission)
-  end
-
   # GET /permissions/new
   # GET /permissions/new.json
   def new
-    #@permission = Permission.new
-    #respond_with(@role, @permission)
-  end
-
-  # GET /permissions/1/edit
-  def edit
-    #@permission = Permission.find(params[:id])
+    @permission = Permission.new
+    render :partial => 'subdomains/roles/permission', :locals => { :role => @role, :permission => @permission }
   end
 
   # POST /permissions
