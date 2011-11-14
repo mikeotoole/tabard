@@ -61,6 +61,7 @@ class AdminAbility
 
     # Rules for superadmin user. (Inherits rules for admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
+      can [:read, :create, :view_document], [Document, 'Document']
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser
       cannot [:update_account, :edit_account], AdminUser do |admin_user|

@@ -264,29 +264,29 @@ if ENV["RAILS_ENV"] != 'test'
   test_form = jahc.custom_forms.create(:name => "Test Custom Form", :instructions => "Fill me out!", :thankyou => "YAY!")
   checkboxQ = MultiSelectQuestion.create(:style => "check_box_question", :body => "A check box makes me feel.", :explanation => "This is a checkbox question", :required => true)
   checkboxQ.custom_form = test_form
-  checkboxQ.save!
+  checkboxQ.save
   PredefinedAnswer.create(:body => "Happy", :select_question_id => checkboxQ.id)
   PredefinedAnswer.create(:body => "Sad", :select_question_id => checkboxQ.id)
   PredefinedAnswer.create(:body => "WTF?!", :select_question_id => checkboxQ.id)
   selectboxQ = SingleSelectQuestion.create(:style => "select_box_question", :body => "Select boxes are?", :explanation => "This is a select box question")
   selectboxQ.custom_form = test_form
-  selectboxQ.save!
+  selectboxQ.save
   PredefinedAnswer.create(:body => "Awesome", :select_question_id => selectboxQ.id)
   PredefinedAnswer.create(:body => "Fun", :select_question_id => selectboxQ.id)
   PredefinedAnswer.create(:body => "Silly", :select_question_id => selectboxQ.id)
   PredefinedAnswer.create(:body => "Don't Care", :select_question_id => selectboxQ.id)
   radioQ = SingleSelectQuestion.create(:style => "radio_buttons_question", :body => "Radio buttons are awesome.", :explanation => "This is a radio buttons question")
   radioQ.custom_form = test_form
-  radioQ.save!
+  radioQ.save
   PredefinedAnswer.create(:body => "True", :select_question_id => radioQ.id)
   PredefinedAnswer.create(:body => "False", :select_question_id => radioQ.id)
   PredefinedAnswer.create(:body => "Don't Care", :select_question_id => radioQ.id)
   longQ = TextQuestion.create(:style => "long_answer_question", :body => "Describe in 100 words or less how text boxes make you feel.", :explanation => "This is a long answer question")
   longQ.custom_form = test_form
-  longQ.save!
+  longQ.save
   shortQ = TextQuestion.create(:style => "short_answer_question", :body => "This is a ____ text question.", :explanation => "This is a short answer question")
   shortQ.custom_form = test_form
-  shortQ.save!
+  shortQ.save
 
   mike = User.new(:email => "mpotoole@gmail.com", :password => "Password", :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"})
   mike.skip_confirmation!

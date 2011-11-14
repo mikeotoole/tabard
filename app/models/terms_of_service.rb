@@ -14,6 +14,10 @@ class TermsOfService < Document
       User.update_all(:accepted_current_terms_of_service => false)
     end
   end
+  
+  def current?
+    self == TermsOfService.first
+  end  
 end
 # == Schema Information
 #

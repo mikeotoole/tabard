@@ -14,6 +14,10 @@ class PrivacyPolicy < Document
       User.update_all(:accepted_current_privacy_policy => false)
     end
   end
+  
+  def current?
+    self == PrivacyPolicy.first
+  end
 end
 # == Schema Information
 #

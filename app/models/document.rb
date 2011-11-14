@@ -8,6 +8,7 @@
 class Document < ActiveRecord::Base
   default_scope :order => "version DESC"
   validates :body, :presence => true
+  validates :type, :presence => true
   validates :version, :uniqueness => {:scope => :type}
   has_many :document_acceptances
 
@@ -22,7 +23,7 @@ class Document < ActiveRecord::Base
   ###
   def self.inherited(child)
     child.instance_eval do
-      # Defines the subclasses model name as its base class Game.
+      # Defines the subclasses model name as its base class Document.
       def model_name
         Document.model_name
       end
@@ -39,6 +40,11 @@ class Document < ActiveRecord::Base
         self.type.scan(/[A-Z][a-z0-9]*/).join ' '
     end
   end
+
+  def acceptance_count
+    self.document_acceptances.count
+  end
+  
 end
 
 # == Schema Information
