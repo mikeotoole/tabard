@@ -59,6 +59,19 @@ class Community < ActiveRecord::Base
 # Public Methods
 ###
 
+  ###
+  # This method checks if a given user can apply to the community
+  # [Args]
+  #   * +user+ The user to check
+  # [Returns] True if the community can receive an application from the user, false otherwise
+  def can_receive_application_from?(user)
+    if user
+      self.accepting_members and !user.is_member? self and !user.application_pending? self
+    else
+      true
+    end
+  end
+
 ###
 # Instance Methods
 ###

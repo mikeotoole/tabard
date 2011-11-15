@@ -36,8 +36,16 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new
   # GET /community_applications/new.json
   def new
-    @community_application.submission.custom_form.questions.each do |question|
-      @community_application.submission.answers.new(:question_id => question.id)
+    if current_user.is_member? current_community
+      add_new_flash_message "You are already a member of this community.", 'notice'
+      redirect_to my_roster_assignments_path
+    elsif current_user.application_pending? current_community
+      add_new_flash_message "You have already applied to this community. Your application is pending review.", 'notice'
+      redirect_to root_url(:subdomain => current_community.subdomain)
+    else
+      @community_application.submission.custom_form.questions.each do |question|
+        @community_application.submission.answers.new(:question_id => question.id)
+      end
     end
   end
 
@@ -47,7 +55,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.save
       add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with @community_application, :location => new_community_application_path, :error_behavior => :list
+    respond_with @community_application, :location => root_url(:subdomain => current_community.subdomain), :error_behavior => :list
   end
 
   # PUT /community_applications/1

@@ -57,7 +57,10 @@
                     %li= link_to item[:title], item[:link], (item[:meta] ? { :meta => item[:meta] } : {})
           - else
             %li{ :class => 'special signup' }
-              = link_to 'Apply Now', new_community_application_path
+              - if current_community.can_receive_application_from? current_user
+                = link_to 'Apply Now', new_community_application_path
+              - elsif user_signed_in? and current_user.application_pending? current_community
+                %a Application Pending
 
       #body
         = yield

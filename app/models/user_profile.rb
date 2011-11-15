@@ -164,8 +164,8 @@ class UserProfile < ActiveRecord::Base
   # This method checks if the user has a pending application with the community.
   # [Args]
   #   * +some_community+ The community to check membership of.
-  # [Returns] True if has pending application of the community false otherwise.
-  def pending_application?(community)
+  # [Returns] True if has pending application of the community, false otherwise.
+  def application_pending?(community)
     if community
      self.community_applications.where{(community_id == community.id) & (status == "Pending")}.exists?
     else
