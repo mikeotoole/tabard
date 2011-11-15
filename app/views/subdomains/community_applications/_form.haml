@@ -1,6 +1,6 @@
 = javascript_include_tag "community_application"
 
-= simple_form_for community_application do |f|
+= simple_form_for community_application, :html => {:novalidate => true} do |f|
   .questions
     %h1= @community_application.custom_form_name
     = f.simple_fields_for :submission do |sf|

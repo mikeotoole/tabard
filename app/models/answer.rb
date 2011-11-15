@@ -22,14 +22,13 @@ class Answer < ActiveRecord::Base
 ###
   validates :question, :presence => true
   #validates :submission, :presence => true
-  validates :body, :presence => true
+  validates :body, :presence => true, :if => Proc.new { |answer| answer.question_required }
 
 ###
 # Delegates
 ###
   delegate :user_profile_id, :to => :submission, :allow_nil => true
   delegate :body, :style, :type, :required, :predefined_answers, :to => :question, :prefix => true
-
 end
 
 # == Schema Information

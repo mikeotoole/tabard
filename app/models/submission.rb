@@ -14,10 +14,11 @@ class Submission < ActiveRecord::Base
 
   has_many :answers, :dependent => :destroy
   has_many :questions, :through => :answers
+  has_many :form_questions, :through => :custom_form, :class_name => "Question"
 
   has_one :community, :through => :custom_form
 
-  accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :answers, :allow_destroy => true
 
 ###
 # Validators
