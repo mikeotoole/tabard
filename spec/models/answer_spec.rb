@@ -23,11 +23,14 @@ describe Answer do
     build(:answer, :question => nil).should_not be_valid
   end
 
-  it "should require submission" do
-    build(:answer, :submission => nil).should_not be_valid
+  it "should not submission" do
+    build(:answer, :submission => nil).should be_valid
   end
   
-  it "should require body" do
-    build(:answer, :body => nil).should_not be_valid
+  it "should require body if question is required" do
+    build(:required_answer, :body => nil).should_not be_valid
+  end
+  it "should not require body if question is not required" do
+    build(:answer, :body => nil).should be_valid
   end
 end

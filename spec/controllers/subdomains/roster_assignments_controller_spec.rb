@@ -28,6 +28,8 @@ describe Subdomains::RosterAssignmentsController do
   let(:character_proxy) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
   let(:character_proxy2) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
   let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy)}
+  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2)}
+  let(:roster_assignment_id_array) { [[roster_assignment.id], [roster_assignment2.id]] }
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
@@ -142,7 +144,12 @@ describe Subdomains::RosterAssignmentsController do
   end
   
   describe "PUT 'batch_destroy'" do
-    pending
+    it "should delete all roster assignments when authenticated as admin" do
+      sign_in admin_user
+      delete :batch_destroy, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).should be_nil
+      RosterAssignment.find_by_id(roster_assignment2).should be_nil
+    end
   end
 
   describe "PUT 'approve' when authenticated as an owner" do
@@ -162,7 +169,21 @@ describe Subdomains::RosterAssignmentsController do
   end
   
   describe "PUT 'batch_approve'" do
-    pending
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment2.update_attribute(:pending, true)
+    end
+    it "should mark all roster assignments as approved when authenticated as admin" do
+      sign_in admin_user
+      put :batch_approve, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment2).pending.should be_false
+    end
+    it "should be forbidden when authenticated as member" do
+      sign_in billy
+      put :batch_approve, :ids => roster_assignment_id_array
+      response.should be_forbidden
+    end
   end
 
   describe "PUT 'reject' when authenticated as an owner" do
@@ -182,7 +203,21 @@ describe Subdomains::RosterAssignmentsController do
   end
   
   describe "PUT 'batch_reject'" do
-    pending
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment2.update_attribute(:pending, true)
+    end
+    it "should mark all roster assignments as approved when authenticated as admin" do
+      sign_in admin_user
+      put :batch_reject, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).should be_nil
+      RosterAssignment.find_by_id(roster_assignment2).should be_nil
+    end
+    it "should be forbidden when authenticated as member" do
+      sign_in billy
+      put :batch_reject, :ids => roster_assignment_id_array
+      response.should be_forbidden
+    end
   end
 
   describe "GET 'pending'" do

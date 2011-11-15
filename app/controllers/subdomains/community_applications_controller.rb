@@ -58,18 +58,6 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     respond_with @community_application, :location => root_url(:subdomain => current_community.subdomain), :error_behavior => :list
   end
 
-  # PUT /community_applications/1
-  # PUT /community_applications/1.json
-  def update
-    if params[:community_application]
-      params[:community_application][:character_proxy_ids] ||= []
-      if @community_application.update_attributes(params[:community_application])
-        # TODO Doug/Joe Determine this success message, if applicable. -JW
-      end
-    end
-    respond_with @community_application
-  end
-
   # DELETE /community_applications/1
   # DELETE /community_applications/1.json
   def destroy

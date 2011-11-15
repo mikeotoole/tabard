@@ -269,6 +269,12 @@ class Ability
     end
   end
 
+  ###
+  # This method adds permissions from the roles.
+  # [Args]
+  #   * +user+ -> A user to define permissions on. Ensures that they have at least one community_profile.
+  #   * +current_community+ -> The current community context.
+  ###
   def apply_rules_from_roles(user, current_community)
     return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
@@ -289,7 +295,7 @@ class Ability
         end
         action.concat([:lock]) if permission.can_lock
         action.concat([:accept]) if permission.can_accept
-        if permission.parent_association_for_subject.blank?
+        if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)
         else
           decodeNestedPermission(action, permission.subject_class.constantize, permission.parent_association_for_subject, permission.id_of_parent)

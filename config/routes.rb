@@ -85,7 +85,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Community applications
-      resources :community_applications do
+      resources :community_applications, :except => [:edit, :update] do
         member do
           post :accept
           post :reject

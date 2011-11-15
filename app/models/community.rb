@@ -179,7 +179,7 @@ protected
       :thankyou => "Your submission has been sent. Thank you!",
       :published => true)
     ca.community = self
-    
+
     # First Question
     question = SingleSelectQuestion.create(
       :style => "select_box_question",
@@ -201,7 +201,7 @@ protected
       :required => true)
     question.custom_form = ca
     question.save
-    
+
     # Third Question
     question = TextQuestion.create(
       :style => "short_answer_question",
@@ -210,7 +210,7 @@ protected
       :required => false)
     question.custom_form = ca
     question.save
-    
+
     ca.save
   end
 

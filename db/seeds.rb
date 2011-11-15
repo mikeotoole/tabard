@@ -14,18 +14,18 @@ Timecop.freeze 2.months.ago
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1")
   puts "Creating PrivacyPolicy"
   privacy_policy_document = PrivacyPolicy.create(body: "Nullam consequat pulvinar velit, eget ultrices tortor semper vel. Suspendisse potenti. Praesent ut nibh in neque malesuada tempus sit amet eget odio. Curabitur volutpat, sem semper vulputate posuere, sem metus ornare elit, ac imperdiet felis urna hendrerit nisi. Maecenas vel ligula vel erat eleifend aliquet vel id ipsum.\n\nNullam convallis iaculis erat et mollis.\n\nSed urna neque, pretium in tempus nec, dapibus in enim. Aenean dapibus ipsum sit amet diam molestie aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque cursus feugiat ipsum vitae volutpat. Aenean laoreet, tortor a consequat convallis, libero dui suscipit tellus, et mollis massa nulla et libero. Vestibulum tincidunt quam nec lorem molestie id euismod urna venenatis. Aliquam erat volutpat.\n\nMauris dapibus, lorem ut lobortis blandit, enim ipsum fermentum neque, aliquet dictum nulla ligula sit amet quam. Fusce non pharetra sapien. Sed tincidunt euismod consequat.", version: "1")
-  
+
   puts "Creating Games..."
   wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
   swtor_game = Swtor.create(:name => "Star Wars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
-  
+
   puts "Creating RoboBilly!"
   robobilly = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "billy@robo.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"})
   robobilly.skip_confirmation!
   robobilly.save
-  
+
   puts "Createing Diabolical Moose!"
   d_moose = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "diabolical@moose.com", :password => "Password",
@@ -45,42 +45,42 @@ Timecop.freeze 2.months.ago
     :game => swtor_game,
     :server => "Alderon")
   )
-  
+
   puts "Creating Snappy Turtle!"
   s_turtle = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "snappy@turtle.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Snappy", :last_name => "Turtle", :display_name => "Snappy Turtle"})
   s_turtle.skip_confirmation!
   s_turtle.save
-  
+
   puts "Creating Dirty Badger!"
   d_badger = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "dirty@badger.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger", :display_name => "Dirty Badger"})
   d_badger.skip_confirmation!
   d_badger.save
-  
+
   puts "Creating Sleepy Pidgeon!"
   s_pidgeon = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "sleepy@pidgeon.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Sleepy", :last_name => "Pidgeon", :display_name => "Sleepy Pidgeon"})
   s_pidgeon.skip_confirmation!
   s_pidgeon.save
-  
+
   puts "Creating Apathetic Tiger!"
   a_tiger = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "apathetic@tiger.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Apathetic", :last_name => "Tiger", :display_name => "Apathetic Tiger"})
   a_tiger.skip_confirmation!
   a_tiger.save
-  
+
   puts "Creating Fuzzy Crab!"
   f_crab = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "fuzzy@crab.com", :password => "Password",
       :user_profile_attributes => {:first_name => "Fuzzy", :last_name => "Crab", :display_name => "Fuzzy Crab"})
   f_crab.skip_confirmation!
   f_crab.save
-  
+
   puts "Creating Sad Panda!"
   s_panda = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "sad@panda.com", :password => "Password",
@@ -90,8 +90,8 @@ Timecop.freeze 2.months.ago
   s_panda.update_attribute(:accepted_current_terms_of_service, false)
   s_panda.update_attribute(:accepted_current_privacy_policy, false)
   DocumentAcceptance.where(:user_id => s_panda.id).destroy_all
-  
-  
+
+
   puts "Creating Kinky Fox!"
   k_fox = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "kinky@fox.com", :password => "Password",
@@ -107,7 +107,7 @@ Timecop.freeze 2.months.ago
   k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
     :character => miss_fox
   )
-  
+
   def generate_application_from_user_profile(community, user_profile)
     app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
     app.prep(user_profile, community.community_application_form)
@@ -124,19 +124,19 @@ Timecop.freeze 2.months.ago
     end
     app
   end
-  
+
   puts "Kinky Fox is creating Two Maidens Guild with the game WoW!"
   twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice", :accepting_members => true, :email_notice_on_application => false)
   twom.games << wow_game
-  
+
   puts "Sleepy Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
   puts "Accepting Sleepy Pidgeon & Apathic Tiger's applications"
   generate_application_from_user_profile(twom, s_pidgeon.user_profile).accept_application
   generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
-  
+
   puts "Creating Two Maidens Guild General Discussion Space"
   twom_gds = twom.discussion_spaces.create(:name => "General Chat")
-  
+
   puts "Creating Two Maidens Guild WoW Discussion Space"
   twom_wds = twom.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
 
@@ -150,27 +150,27 @@ Timecop.freeze 1.months.ago
   generate_application_from_user_profile(twom, a_tiger.user_profile).accept_application
   generate_application_from_user_profile(twom, f_crab.user_profile).accept_application
   generate_application_from_user_profile(twom, s_panda.user_profile).accept_application
-  
+
   puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
   jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya", :public_roster => false)
   jkit.games << swtor_game
-  
+
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Jedi Kittens Guild..."
   puts "Accepting Dirty Badger and Robo Billy's applications"
   generate_application_from_user_profile(jkit, d_badger.user_profile).accept_application
   generate_application_from_user_profile(jkit, robobilly.user_profile).accept_application
-  
+
   puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR and WoW!"
   jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!", :protected_roster => true)
   jahc.games << swtor_game
   jahc.games << wow_game
-  
+
   puts "RoboBilly is creating a n00b role..."
   noob_role = jahc.roles.create(:name => "n00b")
-  
+
   puts "RoboBilly is adding permissions to view roles to n00b role..."
   noob_role.permissions.create(:subject_class => "Role", :permission_level => "View")
-  
+
   puts "RoboBilly is creating some characters and adding them to the roster..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
@@ -185,12 +185,12 @@ Timecop.freeze 1.months.ago
     ra = robobilly.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => proxy)
     ra.approve unless cname == 'Eliand'
   end
-  
+
   puts "Diabolical Moose and Snappy Turtle are submitting applications to Just Another Headshot Clan..."
   puts "Accepting Diabolical Moose's and Snappy Turtle's applications"
   generate_application_from_user_profile(jahc, d_moose.user_profile).accept_application
   generate_application_from_user_profile(jahc, s_turtle.user_profile).accept_application
-  
+
   puts "Giving D-Moose the n00b role..."
   d_moose.add_new_role(noob_role)
 
@@ -216,27 +216,27 @@ Timecop.freeze 1.months.ago
   dr_house = s_turtle.character_proxies.create(:user_profile => s_turtle.user_profile,
     :character => SwtorCharacter.create(:name => "Dr House", :game => swtor_game, :server => "Belsavis"))
   s_turtle.community_profiles.find_by_community_id(jahc.id).roster_assignments.create(:character_proxy => dr_house)
-  
+
   puts "Creating Just Another Headshot Clan General Discussion Space"
   jahc_gds = jahc.discussion_spaces.create(:name => "General Chat")
-  
+
   puts "Creating Just Another Headshot Clan WoW Discussion Space"
   jahc_wds = jahc.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
-  
+
   puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
   jahc_sds = jahc.discussion_spaces.create(:name => "SWTOR", :game_id => swtor_game.id)
-  
+
   puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
   jahc_gd = jahc_gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
   jahc_gd.user_profile = robobilly.user_profile
   jahc_gd.save
-  
+
   puts "Creating Just Another Headshot Clan WoW Discussion Space Discussion"
   jahc_wd = jahc_wds.discussions.create(:name => "General WoW Discussion", :body => "YAY lets discuss WoW")
-  
+
   puts "Creating Just Another Headshot Clan SWTOR Discussion Space Discussion"
   jahc_sd = jahc_sds.discussions.create(:name => "General SWTOR Discussion", :body => "YAY lets discuss SWTOR")
-  
+
   puts "Adding comments to general discussion space discussion"
   comment1 = jahc_gd.comments.new(:body => "What's up RoboBilly!")
   comment1.user_profile = d_moose.user_profile
@@ -258,7 +258,7 @@ Timecop.freeze 1.months.ago
 puts "Time: 3 weeks ago"
 Timecop.return
 Timecop.freeze(3.weeks.ago)
-  
+
   puts "Dirty Badger and Kinky Fox are submitting applications to Just Another Headshot Clan..."
   puts "Accepting Dirty Badger's applications"
   generate_application_from_user_profile(jahc, d_badger.user_profile).accept_application

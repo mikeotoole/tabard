@@ -11,6 +11,7 @@ class Permission < ActiveRecord::Base
 ###
   # This is a collection of strings that are valid for subject classes.
   VALID_SUBJECT_CLASSES = %w( Role CustomForm PageSpace Page DiscussionSpace Discussion Announcement CommunityApplication )
+  # This is a collection of strings that are valid for parent associations.
   VALID_PARENT_ASSOCIATIONS = %w( discussion_space page_space )
   # This is a collection of strings that are valid for permission levels.
   VALID_PERMISSION_LEVELS = %w( View Update Create Delete )
@@ -28,16 +29,16 @@ class Permission < ActiveRecord::Base
   validates :subject_class, :presence => true,
       :inclusion => { :in => VALID_SUBJECT_CLASSES, :message => "%{value} is not currently a supported permissionable" }
 
-  validates :permission_level, :presence => true, 
+  validates :permission_level, :presence => true,
       :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" }
 
   validates :parent_association_for_subject, :inclusion => { :in => VALID_PARENT_ASSOCIATIONS, :message => "%{value} is not a valid parent."}, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
 
   validates :id_of_parent, :presence => true, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
   validates :parent_association_for_subject, :presence => true, :unless => Proc.new { |permission| permission.id_of_parent.blank?}
-      
+
   validate :only_subject_id_if_not_nested
-  
+
 ###
 # Delegates
 ###

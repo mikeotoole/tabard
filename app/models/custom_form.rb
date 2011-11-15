@@ -49,6 +49,10 @@ class CustomForm < ActiveRecord::Base
     ""
   end
 
+  ###
+  # This method checks to see if this custom form is an application form for a community.
+  # [Returns] True is this form is the community application form, otherwise false.
+  ###
   def application_form?
     self.community.community_application_form == self
   end

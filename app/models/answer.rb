@@ -28,7 +28,8 @@ class Answer < ActiveRecord::Base
 # Delegates
 ###
   delegate :user_profile_id, :to => :submission, :allow_nil => true
-  delegate :body, :style, :type, :required, :predefined_answers, :to => :question, :prefix => true
+  delegate :required, :to => :question, :prefix => true, :allow_nil => true
+  delegate :body, :style, :type, :predefined_answers, :to => :question, :prefix => true
 end
 
 # == Schema Information

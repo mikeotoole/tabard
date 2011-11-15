@@ -37,6 +37,9 @@ class SubdomainsController < ApplicationController
     @community
   end
 
+  ###
+  # This Method is a helper that exposes the a set of management items for the current community.
+  ###
   helper_method :current_community
 
   def management_navigation_items
@@ -64,7 +67,7 @@ protected
   def can_manage(resource)
     (can? :update, resource) or (can? :destroy, resource) or (can? :approve, resource) or (can? :reject, resource)
   end
-  
+
   ###
   # This method sets the layout for the controller.
   ###
@@ -81,6 +84,9 @@ protected
     false
   end
 
+  ###
+  # This method apply dynamic permissions based on the current community.
+  ###
   def apply_dynamic_permissions
     current_ability.dynamicContextRules(current_user, current_community) if signed_in? or current_ability
   end
