@@ -301,9 +301,11 @@ body
   
   h2
     font-size: 24px
+    padding: 10px 0
   
   h3
     font-size: 18px
+    padding: 10px 0
     
   nav
   
@@ -343,6 +345,16 @@ body
   
   p
     padding: 10px 0
+  
+  dl
+    
+    dt
+      color: #6e4b2f
+      font-family: DinMedium, sans
+      padding: 10px 0 0
+    
+    dd
+      padding: 10px 0
     
   strong
     color: #6e4b2f
@@ -1451,7 +1463,7 @@ body
   
   
   // Community Applications
-  form.community_application
+  .community_application
     margin: -30px 0 0 0
   
     h1,
@@ -1485,7 +1497,8 @@ body
         top: 0
         width: 0
   
-    h1
+    h1,
+    .questions >h2
       width: 525px
       
       &:before
@@ -1494,6 +1507,11 @@ body
     .sidebar
       float: right
       width: 280px
+      
+      .applicant
+        
+        h2:before
+          background-position: -570px -30px
       
       .characters
         
@@ -1524,44 +1542,73 @@ body
             input:checked + label
               display: none
         
-        >label
-          background: #83583A
-          +border_radius(5)
-          color: #fff
-          display: block
+      .characters >label,
+      .characters ul li,
+      .applicant p
+        background: #83583A
+        +border_radius(5)
+        color: #fff
+        display: block
+        min-height: 28px
+        line-height: 28px
+        margin: 0 0 2px
+        padding: 0 20px 0 35px
+        position: relative
+        +transition(background .2s linear)
+          
+        img
+          background: #C7B2A3
+          +border_radius(4)
+          +box_shadow(0 0 5px rgba(#000,.5))
+          left: 4px
+          position: absolute
+          top: 4px
+      
+      .applicant p
+        height: auto
+        font: 14px DinMedium, sans
+        line-height: 48px
+        min-height: 48px
+        padding: 0 8px 0 50px
+      
+      .characters ul
+        padding-bottom: 30px
+        
+        li
+          height: auto
+          min-height: 32px
+          padding: 8px 8px 8px 50px
+          
+          span
+            display: block
+            min-height: 16px
+            line-height: 16px
+        
+            &.name
+              font: 14px DinMedium, sans
+              
+            &.game
+              font: 12px DinLight, sans
+      
+      .characters >label
+      
+        &:before
+          display: none
+        
+        &:after
+          color: #BBA55F
+          content: '\00D7'
+          font-size: 17px
           height: 28px
           line-height: 28px
-          margin: 0 0 2px
-          padding: 0 20px 0 35px
-          position: relative
-          +transition(background .2s linear)
-          
-          &:before
-            display: none
+          position: absolute
+          right: 8px
+        
+        &:hover
+          background: #5F381C
           
           &:after
-            color: #BBA55F
-            content: '\00D7'
-            font-size: 17px
-            height: 28px
-            line-height: 28px
-            position: absolute
-            right: 8px
-            
-          
-          img
-            background: #C7B2A3
-            +border_radius(4)
-            +box_shadow(0 0 5px rgba(#000,.5))
-            left: 4px
-            position: absolute
-            top: 4px
-          
-          &:hover
-            background: #5F381C
-            
-            &:after
-              color: #fff
+            color: #fff
       
       .instructions
         
@@ -1601,6 +1648,19 @@ body
                 
                 input:checked + label
                   width: 560px
+      
+    h2.comments
+      margin: 60px 0 0
+      
+      &:before
+        background-position: -450px -30px
+    
+    aside.comments
+      margin-top: 0
+    
+    #newcomment h3
+      margin-left: 10px
+      margin-right: 10px
     
     .submit
       +bg_gradient(#EBDED5,rgba(#fff,0))
