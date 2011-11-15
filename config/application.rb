@@ -49,7 +49,7 @@ module DaBvRails
 
     # Ignore document check on Devise logout
     config.to_prepare do
-      Devise::SessionsController.skip_before_filter :ensure_accepted_most_recent_legal_documents, :destroy
+      Devise::SessionsController.skip_before_filter :ensure_accepted_most_recent_legal_documents, :destroy, :limit_subdomain_access
     end
   end
 end
