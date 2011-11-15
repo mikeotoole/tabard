@@ -111,6 +111,9 @@ Timecop.freeze 2.months.ago
   def generate_application_from_user_profile(community, user_profile)
     app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
     app.prep(user_profile, community.community_application_form)
+    if user_profile.character_proxies.size > 0
+      app.character_proxies << user_profile.character_proxies.first
+    end
     app.save
     app.submission.custom_form.questions.each do |q|
       if q.required

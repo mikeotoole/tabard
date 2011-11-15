@@ -1,42 +1,43 @@
 - title "Community Application | #{current_community.name}"
+= javascript_include_tag "comments"
 
-%p
-  %b Community:
-  = @community_application.community_id
-%p
-  %b User profile:
-  = @community_application.user_profile_id
-%p
-  %b Submission:
-  = @community_application.submission_id
-%p
-  %b Status:
-  = @community_application.status
-%p
-  %b Characters
-  - if  @community_application.character_proxies.size > 0
-    %ul
-      - @community_application.character_proxies.each do |proxy|
-        %li=YAML::dump proxy
-        
-- if can? :accept, @community_application and @community_application.pending?
-  = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button'
-- if can? :reject, @community_application and @community_application.pending?
-  = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button'
+.community_application
+  .sidebar
+    .applicant
+      %h2 Applicant
+      %p
+        = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
+        = @community_application.user_profile_display_name
+    - if @community_application.character_proxies.size > 0
+      .characters
+        %h2 Characters
+        %ul
+          - @community_application.character_proxies.each do |cp|
+            %li
+              = image_tag cp.avatar_url(:tiny), :class => 'avatar'
+              %span.name= cp.name
+              %span.game= cp.game_name
+  - if @community_application.submission.answers.size > 0
+    .questions
+      %h2 Question Answers
+      %dl
+        - @community_application.submission.answers.each do |answer|
+          %dt= answer.question_body
+          %dd= answer.body
+  %p.submit
+    - if can? :accept, @community_application and @community_application.pending?
+      = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
+    - if can? :reject, @community_application and @community_application.pending?
+      = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you wat to reject #{@community_application.user_profile_display_name}'s application?"
 
-
-
-%pre=YAML::dump @community_application.submission.answers
-
-
-
-- if @community_application.comments.size > 0 or can? :comment, @community_application
-  %aside.comments
-    - if @community_application.comments.size > 0
-      %ol
-        - @community_application.comments.each do |comment|
-          = render "subdomains/comments/comment", :comment => comment
-    - if can? :comment, @community_application
-      #newcomment
-        %h3 Post a New Comment
-        = render 'subdomains/comments/form', :comment => @community_application.comments.new
+  - if @community_application.comments.size > 0 or can? :comment, @community_application
+    %h2.comments Comments
+    %aside.comments
+      - if @community_application.comments.size > 0
+        %ol
+          - @community_application.comments.each do |comment|
+            = render "subdomains/comments/comment", :comment => comment
+      - if can? :comment, @community_application
+        #newcomment
+          %h3= "Post a New Comment — not visible to #{@community_application.user_profile_display_name}"
+          = render 'subdomains/comments/form', :comment => @community_application.comments.new
