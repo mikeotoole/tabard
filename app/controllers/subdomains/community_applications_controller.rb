@@ -37,18 +37,17 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new.json
   def new
     @community_application.submission.custom_form.questions.each do |question|
-      @community_application.submission.answers.new(:question_id => question.id, :body => '')
+      @community_application.submission.answers.new(:question_id => question.id)
     end
   end
 
   # POST /community_applications
   # POST /community_applications.json
   def create
-    @community
     if @community_application.save
       add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with @community_application
+    respond_with @community_application, :location => new_community_application_path, :error_behavior => :list
   end
 
   # PUT /community_applications/1
@@ -112,7 +111,9 @@ protected
     end
     @community_application = current_community.community_applications.new(params[:community_application])
     @community_application.user_profile = current_user.user_profile
-    @community_application.submission = Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
+    @community_application.submission ||= Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
+    @community_application.submission.custom_form = current_community.community_application_form
+    @community_application.submission.user_profile = current_user.user_profile
     #@community_application.prep(current_user.user_profile, current_community.community_application_form)
   end
 end

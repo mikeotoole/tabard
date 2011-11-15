@@ -7,29 +7,34 @@
       %fieldset
         %ol
           - community_application.submission_answers.each do |answer|
-            = sf.simple_fields_for "answers_attributes", :index => answer.question_id do |af|
-              = af.input :question_id, :as => :hidden, :input_html => { :value => answer.question_id }
-              - case answer.question_type
-              - when 'TextQuestion'
-                - case answer.question_style
-                - when 'short_answer_question'
-                  = af.input :body, :as => :string, :label => answer.question_body, :required => answer.question_required
-                - when 'long_answer_question'
-                  = af.input :body, :as => :text, :label => answer.question_body, :required => answer.question_required
-              - when 'SingleSelectQuestion'
-                - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
-                - case answer.question_style
-                - when 'select_box_question'
-                  %li.select= af.input :body, :as => :radio, :label => false, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
-                - when 'radio_buttons_question'
-                  = af.input :body, :as => :radio, :collection => c, :label => answer.question_body, :required => answer.question_required
-              - when 'MultiSelectQuestion'
-                = af.input :body, :as => :check_boxes, :label => answer.question_body, :required => answer.question_required
+            = sf.simple_fields_for :answers, answer do |af|
+              %li
+                = af.input :question_id, :as => :hidden, :wrapper => false
+                - case answer.question_type
+                - when 'TextQuestion'
+                  - case answer.question_style
+                  - when 'short_answer_question'
+                    = af.input :body, :as => :string, :wrapper => false, :label => answer.question_body, :required => answer.question_required
+                  - when 'long_answer_question'
+                    = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_required
+                - when 'SingleSelectQuestion'
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                  - case answer.question_style
+                  - when 'select_box_question'
+                    .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_required
+                  - when 'radio_buttons_question'
+                    = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
+                - when 'MultiSelectQuestion'
+                  = af.input :body, :as => :check_boxes, :wrapper => false, :label => answer.question_body, :required => answer.question_required
   .sidebar
     - if current_user.character_proxies.size > 0
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:
+        - @community_application.character_proxies.each do |cp|
+          %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
+            = image_tag cp.avatar_url(:icon), :class => 'avatar'
+            = cp.name
         .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       %h2 Instructions

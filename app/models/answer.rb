@@ -21,7 +21,7 @@ class Answer < ActiveRecord::Base
 # Validators
 ###
   validates :question, :presence => true
-  validates :submission, :presence => true
+  #validates :submission, :presence => true
   validates :body, :presence => true
 
 ###

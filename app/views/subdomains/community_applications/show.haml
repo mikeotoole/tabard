@@ -17,7 +17,8 @@
   - if  @community_application.character_proxies.size > 0
     %ul
       - @community_application.character_proxies.each do |proxy|
-        %li = proxy.to_yaml
+        %li=YAML::dump proxy
+        
 - if can? :accept, @community_application and @community_application.pending?
   = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button'
 - if can? :reject, @community_application and @community_application.pending?

@@ -1446,7 +1446,7 @@ body
   
   
   // Community Applications
-  #new_community_application
+  form.community_application
     margin: -30px 0 0 0
   
     h1,
@@ -1577,7 +1577,8 @@ body
         
           >li
           
-            >label
+            >label,
+            .select >label
               color: #550A16
               font: 18px DinMedium, serif
             
@@ -1585,11 +1586,16 @@ body
             >textarea
               width: 558px
               
-            &.select ul
-              width: 576px
+            .select
+              float: none
+              margin: 0 0 30px
+              width: auto
               
-              input:checked + label
-                width: 560px
+              ul
+                width: 576px
+                
+                input:checked + label
+                  width: 560px
     
     .submit
       +bg_gradient(#EBDED5,rgba(#fff,0))
