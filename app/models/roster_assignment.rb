@@ -36,7 +36,10 @@ class RosterAssignment < ActiveRecord::Base
   def approve
     return false unless self.pending
     self.update_attribute(:pending, false)
-    # TODO Mike, Send message to owner -JW
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile.id])
+    message.system_sent = true
+    message.save    
   end
 
   # This method rejects this roster assignment, if it is pending.
@@ -44,7 +47,10 @@ class RosterAssignment < ActiveRecord::Base
   def reject
     return false unless self.pending
     self.destroy
-    # TODO Mike, Send message to owner -JW
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile.id])
+    message.system_sent = true
+    message.save
   end
 
 ###

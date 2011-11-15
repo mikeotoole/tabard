@@ -18,10 +18,10 @@ class TermsOfService < Document
 
   ###
   # [Returns] true if this is the current Terms Of Service, false otherwise.
-  ###  
+  ###
   def is_current?
     self.id == TermsOfService.current.id
-  end 
+  end
 end
 
 

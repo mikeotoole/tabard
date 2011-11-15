@@ -27,12 +27,12 @@ class Document < ActiveRecord::Base
 
 ###
 # Associations
-###  
+###
   has_many :document_acceptances
 
 ###
 # Validators
-###  
+###
   validates :body,  :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported document type." }
@@ -91,13 +91,13 @@ protected
       self.errors.add(:type, "This document has been published and can't be changed.")
       return false
     else
-      return true  
+      return true
     end
   end
-  
+
   ###
   # _after_save_
-  #  
+  #
   # Sets a user's acceptance of the Privacy Policy to false
   ###
   def reset_user_acceptance
@@ -105,13 +105,13 @@ protected
       when 'TermsOfService'
         if self.id == TermsOfService.current.id
           User.update_all(:accepted_current_terms_of_service => false)
-        end 
+        end
       when 'PrivacyPolicy'
         if self.id == PrivacyPolicy.current.id
           User.update_all(:accepted_current_privacy_policy => false)
         end
     end
-  end       
+  end
 end
 
 

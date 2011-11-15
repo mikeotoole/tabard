@@ -1,6 +1,9 @@
 ActiveAdmin.register Document do
   menu :if => proc{ can?(:read, Document) }
+  controller.load_resource :only => [:edit, :update]
   controller.authorize_resource
+
+  actions :index, :show, :edit, :update, :create, :new
 
   filter :id
   filter :type, :as => :select, :collection => Document::VALID_TYPES
@@ -30,7 +33,7 @@ ActiveAdmin.register Document do
     column :type
     column :version
     column :published
-    column "Is Current", :is_current?, :sortable => false    
+    column "Is Current", :is_current?, :sortable => false
     column :created_at
   end
 
@@ -39,14 +42,14 @@ ActiveAdmin.register Document do
     link_to "View Formatted", view_document_admin_document_path(document.id)
     #     active_admin_comments
   end
-  
+
   form do |f|
     f.inputs do
       f.input :type, :as => :select, :collection => Document::VALID_TYPES
       f.input :version
       f.input :body
       f.input :published
-    end  
+    end
     f.buttons
   end
 end

@@ -8,7 +8,7 @@
 class PrivacyPolicy < Document
 ###
 # Public Methods
-###  
+###
   ###
   # Gets the current Privacy Policy
   ###
@@ -18,7 +18,7 @@ class PrivacyPolicy < Document
 
   ###
   # [Returns] true if this is the current Privacy Policy, false otherwise.
-  ###   
+  ###
   def is_current?
     self.id == PrivacyPolicy.current.id
   end
