@@ -12,6 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   belongs_to :community_profile
   belongs_to :character_proxy
+  has_one :user_profile, :through => :community_profile
 
 ###
 # Validators

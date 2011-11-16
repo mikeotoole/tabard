@@ -4,9 +4,9 @@
       - if request[:action] == 'new'
         = f.input :name
       = f.input :slogan
-      = f.input :accepting_members, :as => :boolean
-      = f.input :email_notice_on_application, :as => :boolean
-      = f.input :protected_roster, :as => :boolean
-      = f.input :public_roster, :as => :boolean
+      = f.input :accepting_members, :as => :boolean, :label => "Currently accepting new members"
+      = f.input :email_notice_on_application, :as => :boolean, :label => "Receive Notification for new applications"
+      = f.input :protected_roster, :as => :boolean, :label => "Roster changes require approval"
+      = f.input :public_roster, :as => :boolean, :label => "Community roster is viewable to the public"
       %li
         %button{ :type => 'submit' } Save
