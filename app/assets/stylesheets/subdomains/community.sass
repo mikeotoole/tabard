@@ -1543,8 +1543,8 @@ body
               display: none
         
       .characters >label,
-      .characters ul li,
-      .applicant p
+      .characters >ul li,
+      .applicant a
         background: #83583A
         +border_radius(5)
         color: #fff
@@ -1564,51 +1564,57 @@ body
           position: absolute
           top: 4px
       
-      .applicant p
+      .applicant a
         height: auto
         font: 14px DinMedium, sans
         line-height: 48px
         min-height: 48px
         padding: 0 8px 0 50px
-      
-      .characters ul
-        padding-bottom: 30px
-        
-        li
-          height: auto
-          min-height: 32px
-          padding: 8px 8px 8px 50px
-          
-          span
-            display: block
-            min-height: 16px
-            line-height: 16px
-        
-            &.name
-              font: 14px DinMedium, sans
-              
-            &.game
-              font: 12px DinLight, sans
-      
-      .characters >label
-      
-        &:before
-          display: none
-        
-        &:after
-          color: #BBA55F
-          content: '\00D7'
-          font-size: 17px
-          height: 28px
-          line-height: 28px
-          position: absolute
-          right: 8px
+        text-decoration: none
+        +transition(background .2s linear)
         
         &:hover
           background: #5F381C
+      
+      .characters
+      
+        >label
+        
+          &:before
+            display: none
           
           &:after
-            color: #fff
+            color: #BBA55F
+            content: '\00D7'
+            font-size: 17px
+            height: 28px
+            line-height: 28px
+            position: absolute
+            right: 8px
+          
+          &:hover
+            background: #5F381C
+            
+            &:after
+              color: #fff
+        >ul
+          padding-bottom: 30px
+          
+          li
+            height: auto
+            min-height: 32px
+            padding: 8px 8px 8px 50px
+            
+            span
+              display: block
+              min-height: 16px
+              line-height: 16px
+          
+              &.name
+                font: 14px DinMedium, sans
+                
+              &.game
+                font: 12px DinLight, sans
       
       .instructions
         

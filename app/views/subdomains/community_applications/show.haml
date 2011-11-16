@@ -5,7 +5,7 @@
   .sidebar
     .applicant
       %h2 Applicant
-      %p
+      %a{ :href => user_profile_url(@community_application.user_profile, :subdomain => false) }
         = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
         = @community_application.user_profile_display_name
     - if @community_application.character_proxies.size > 0

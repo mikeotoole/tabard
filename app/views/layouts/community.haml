@@ -42,19 +42,19 @@
                 -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
                   %li= link_to (space.game ? space.game.name : space.name), space
-          - if @community.custom_forms.size > 0 and can? :index, CustomForm
+          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.size > 0 and can? :index, CustomForm
             %li
               = link_to 'Forms', custom_forms_path
           - if can? :index, RosterAssignment
             %li
               = link_to 'Members', roster_assignments_path
-          - if signed_in? and current_user.communities.include?(current_community)
+          - if user_signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.size > 0
               %li{ :class => 'special settings' }
                 = link_to 'Manage', '#'
                 %ul
                   - management_navigation_items.each do |item|
-                    %li= link_to item[:title], item[:link], (item[:meta] ? { :meta => item[:meta] } : {})
+                    %li= link_to item[:title], item[:link], (item[:meta] and item[:meta] > 0 ? { :meta => item[:meta] } : {})
           - else
             %li{ :class => 'special signup' }
               - if current_community.can_receive_application_from? current_user
