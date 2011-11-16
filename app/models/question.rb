@@ -37,6 +37,11 @@ class Question < ActiveRecord::Base
   before_save :ensure_type_is_not_changed
 
 ###
+# Delegates
+###
+  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
+
+###
 # Public Methods
 ###
 

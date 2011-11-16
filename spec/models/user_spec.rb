@@ -23,6 +23,8 @@
 #  updated_at                        :datetime
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
+#  force_logout                      :boolean         default(FALSE)
+#  suspended                         :boolean         default(FALSE)
 #
 
 require 'spec_helper'

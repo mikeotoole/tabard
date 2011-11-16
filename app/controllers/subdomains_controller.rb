@@ -1,4 +1,8 @@
 ###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
 # This class is responsible for orquestrating subdomains.
 ###
 class SubdomainsController < ApplicationController
@@ -42,6 +46,9 @@ class SubdomainsController < ApplicationController
   ###
   helper_method :current_community
 
+  ###
+  # This method is a helper that exposes all of the mangement items.
+  ###
   def management_navigation_items
     management_items = Array.new()
     return management_items unless signed_in?

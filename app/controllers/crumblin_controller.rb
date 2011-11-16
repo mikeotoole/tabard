@@ -10,7 +10,8 @@ class CrumblinController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!, :except => [:index, :intro, :features, :pricing, :privacy_policy, :terms_of_service]
+  skip_before_filter :authenticate_user!
+  skip_before_filter :check_maintenance_mode, :only => [:maintenance]
 
 ###
 # REST Actions
@@ -35,6 +36,15 @@ class CrumblinController < ApplicationController
 
   # This method gets the Pricing page.
   def pricing
+  end
+
+  # This method gets the Maintenance page.
+  def maintenance # TODO Doug, This page needs content. -MO
+    if maintenance_mode?
+      render :layout => false
+    else
+      redirect_to root_url
+    end
   end
 
   # This method gets the Privacy Policy page.

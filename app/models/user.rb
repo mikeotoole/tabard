@@ -98,6 +98,11 @@ class User < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Class Methods
+###
+
   # This method returns a default guest user that is used to handle permissions
   def self.guest
     user = User.new
@@ -105,6 +110,14 @@ class User < ActiveRecord::Base
     return user
   end
 
+  # This will set force_logout to true on all users.
+  def self.force_active_users_to_sign_out
+    User.update_all(:force_logout => true)
+  end
+
+###
+# Instance Methods
+###
   #This method updates the acceptance of documents
   def update_document_acceptance
     self.accepted_documents << current_terms_of_service if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
@@ -115,14 +128,17 @@ class User < ActiveRecord::Base
   def current_terms_of_service
     TermsOfService.first
   end
+
   #This method checks to see if the user has accepted the most recent version of the Terms of Service.
   def has_accepted_current_terms_of_service?
     accepted_documents.include?(current_terms_of_service)
   end
+
   #This method finds the most recent version of the terms of service
   def current_privacy_policy
     PrivacyPolicy.first
   end
+
   #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
     accepted_documents.include?(current_privacy_policy)
@@ -132,6 +148,23 @@ class User < ActiveRecord::Base
   def has_accepted_all_documents?
     has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
+
+  ###
+  # This method determines if the user is active. It is adding to the existing Devise method.
+  # [Returns] True if this is an active user, otherwise false.
+  ###
+  def active_for_authentication?
+    super and not self.suspended
+  end
+
+  ###
+  # This method overrides the existing Devise method to check it account is suspended.
+  # [Returns] :suspended if account is suspended otherwise it returns super's response.
+  ###
+  def inactive_message
+    self.suspended ? :suspended : super
+  end
+
 ###
 # Protected Methods
 ###
@@ -173,5 +206,7 @@ end
 #  updated_at                        :datetime
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
+#  force_logout                      :boolean         default(FALSE)
+#  suspended                         :boolean         default(FALSE)
 #
 

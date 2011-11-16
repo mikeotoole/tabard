@@ -1,12 +1,20 @@
 DaBvRails::Application.routes.draw do
+  # Admin Users
+  ActiveAdmin.routes(self)
+  devise_for :admin_users , ActiveAdmin::Devise.config
+
+  # Users
+  devise_for :users, :controllers => {  :sessions => 'sessions', :registrations => 'registrations' }
+  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
+
+  # Site Actions
+  put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
+
+  # Documents
   get "/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
   post "/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   resources :documents
-
-  # Users
-  devise_for :users, :controllers => { :registrations => 'registrations' }
-  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
@@ -131,6 +139,7 @@ DaBvRails::Application.routes.draw do
   get "/intro" => "crumblin#intro", :as => 'crumblin_intro'
   get "/features" => "crumblin#features", :as => 'crumblin_features'
   get "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
+  get "/maintenance" => "crumblin#maintenance", :as => 'crumblin_maintenance'
   get "/privacy-policy" => "crumblin#privacy_policy", :as => 'crumblin_privacy_policy'
   get "/terms-of-service" => "crumblin#terms_of_service", :as => 'crumblin_terms_of_service'
 

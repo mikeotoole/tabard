@@ -32,6 +32,7 @@ class Comment < ActiveRecord::Base
   delegate :id, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
+  delegate :body, :to => :commentable, :prefix => true, :allow_nil => true
 
 ###
 # Validators
@@ -95,6 +96,19 @@ class Comment < ActiveRecord::Base
      temp_total_num_comments += comment.number_of_comments
    end
    temp_total_num_comments
+  end
+
+  ###
+  # This method gets all comments attacted to this comment. Even comments comments.
+  # [Returns] A collection of comments.
+  ###
+  def all_comments
+  temp_all_comments = Array.new
+  temp_all_comments << self
+   comments.each do |comment|
+     temp_all_comments << comment.all_comments
+   end
+   temp_all_comments.flatten
   end
 
   ###

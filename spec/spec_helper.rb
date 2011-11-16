@@ -55,6 +55,9 @@ RSpec.configure do |config|
   # Devise extenstions -JW
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+  
+  # Adds helpers for use in request tests
+  config.include Warden::Test::Helpers
 
   # Lets you write create(:factroy_name) instead of Factory.create(:factroy_name)
   config.include Factory::Syntax::Methods

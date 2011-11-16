@@ -32,6 +32,7 @@ class CustomForm < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
