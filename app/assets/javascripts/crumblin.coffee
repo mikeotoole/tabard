@@ -23,11 +23,11 @@ $(document).ready ->
           .removeAttr('disabled')
           .find('+ label')
           .unbind 'click'
-  $('.document .scroll .accept input[type="checkbox"]:not(:checked)')
+  $('.document:has(.scroll) .accept input[type="checkbox"]:not(:checked)')
     .attr('disabled', true)
     .closest('.accept')
     .css({ opacity: .5 })
-  $('.document .scroll .accept label')
+  $('.document:has(.scroll) .accept label')
     .bind 'click', ->
       if $(this).closest('.accept').find('input:disabled')
         $.alert { body: "Make sure that you read and <b>scroll to the end</b> of each document before accepting the terms." }
