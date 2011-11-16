@@ -213,7 +213,7 @@ class Ability
 
     can :mine, RosterAssignment
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
-      roster_assignment.community_profile_user_profile.id == user.user_profile.id if roster_assignment.community_profile_user_profile
+      roster_assignment.community_profile_user_profile_id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
   end
 

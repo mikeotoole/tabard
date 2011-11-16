@@ -22,8 +22,8 @@ class RosterAssignment < ActiveRecord::Base
 
 ###
 # Delegates
-###
-  delegate :user_profile, :to => :community_profile, :allow_nil => true
+### 
+  delegate :user_profile, :user_profile_id, :to => :community_profile, :prefix => true, :allow_nil => true
   delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
   delegate :name, :avatar_url, :to => :character_proxy, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
