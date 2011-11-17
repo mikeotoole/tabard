@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: documents
+#
+#  id         :integer         not null, primary key
+#  type       :string(255)
+#  body       :text
+#  created_at :datetime
+#  updated_at :datetime
+#  version    :integer
+#  published  :boolean         default(FALSE)
+#
+
 require 'spec_helper'
 
 describe TermsOfService do
