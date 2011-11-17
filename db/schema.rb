@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111112175520) do
+ActiveRecord::Schema.define(:version => 20111114203148) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -208,9 +208,10 @@ ActiveRecord::Schema.define(:version => 20111112175520) do
   create_table "documents", :force => true do |t|
     t.string   "type"
     t.text     "body"
-    t.string   "version"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "version"
+    t.boolean  "published",  :default => false
   end
 
   create_table "folders", :force => true do |t|

@@ -132,19 +132,11 @@ describe User do
       @user.encrypted_password.should_not be_blank
     end
   end
-
-  describe "current_terms_of_service" do
-    it "returns the highest version of the terms of service" do
-      create(:terms_of_service, :version => "0")
-      @user = create(:user)
-      @user.current_terms_of_service.should eq(TermsOfService.order('version ASC').first)
-    end
-  end
   describe "has_accepted_current_terms_of_service?" do
     before(:each) do
       @user = create(:user)
-      @current_version = create(:terms_of_service, :version => "9")
-      @current_version.should eq @user.current_terms_of_service
+      @current_version = create(:terms_of_service)
+      @current_version.should eq TermsOfService.current
     end
     it "returns false if not accepted current terms of service" do
       @user.has_accepted_current_terms_of_service?.should be_false
@@ -157,18 +149,11 @@ describe User do
       @user.has_accepted_current_terms_of_service?.should be_true
     end
   end
-  describe "current_privacy_policy" do
-    it "returns the highest version of the privacy policy" do
-      create(:privacy_policy, :version => "0")
-      @user = create(:user)
-      @user.current_privacy_policy.should eq(PrivacyPolicy.order('version ASC').first)
-    end
-  end
   describe "has_accepted_current_privacy_policy?" do
     before(:each) do
       @user = create(:user)
-      @current_version = create(:privacy_policy, :version => "9")
-      @current_version.should eq @user.current_privacy_policy
+      @current_version = create(:privacy_policy)
+      @current_version.should eq PrivacyPolicy.current
     end
     it "returns false if not accepted current privacy policy" do
       @user.has_accepted_current_privacy_policy?.should be_false

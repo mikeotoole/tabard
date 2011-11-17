@@ -17,7 +17,7 @@
         .document
           .scroll
             :markdown
-              #{@user.current_terms_of_service.body}
+              #{TermsOfService.current.body}
           %p.accept
             = f.input :accepted_current_terms_of_service, :as => :boolean, :label => 'I have read and accept the "Terms of Service"', :wrapper => false
       -unless @user.has_accepted_current_privacy_policy?
@@ -25,7 +25,7 @@
         .document
           .scroll
             :markdown
-              #{@user.current_privacy_policy.body}
+              #{PrivacyPolicy.current.body}
           %p.accept
             = f.input :accepted_current_privacy_policy, :as => :boolean, :label => 'I have read and accept the "Terms of Service"', :wrapper => false
       %p

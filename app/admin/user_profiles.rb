@@ -4,17 +4,6 @@ ActiveAdmin.register UserProfile do
 
   actions :index, :show
 
-#  id                :integer         not null, primary key
-#  user_id           :integer
-#  first_name        :string(255)
-#  last_name         :string(255)
-#  avatar            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  description       :text
-#  display_name      :string(255)
-#  publicly_viewable :boolean         default(TRUE)
-
   filter :id
   filter :display_name
   filter :first_name
@@ -114,14 +103,3 @@ ActiveAdmin.register UserProfile do
 #     active_admin_comments
   end
 end
-
-#  id                :integer         not null, primary key
-#  user_id           :integer
-#  first_name        :string(255)
-#  last_name         :string(255)
-#  avatar            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  description       :text
-#  display_name      :string(255)
-#  publicly_viewable :boolean

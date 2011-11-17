@@ -49,11 +49,11 @@ class CrumblinController < ApplicationController
 
   # This method gets the Privacy Policy page.
   def privacy_policy
-    @document = PrivacyPolicy.first
+    @document = PrivacyPolicy.current
   end
 
   # This method gets the Terms of Service page.
   def terms_of_service
-    @document = TermsOfService.first
+    @document = TermsOfService.current
   end
 end

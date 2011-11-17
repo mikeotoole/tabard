@@ -56,6 +56,6 @@ namespace :doc do
     rdoc.rdoc_files.include('doc/README_FOR_APP')
     rdoc.rdoc_files.include('app/**/*.rb')
     rdoc.rdoc_files.include('lib/**/*.rb')
-  } 
+  }
   Rake::Task['doc:dev'].comment = "Generate developer level docs for the app. (Uses the --all option)"
 end
