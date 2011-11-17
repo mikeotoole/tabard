@@ -6,15 +6,25 @@
 # This class represents a TermsOfService Document.
 ###
 class TermsOfService < Document
-  after_save :reset_user_acceptance
+###
+# Public Methods
+###
+  ###
+  # Gets the current Terms Of Service
+  ###
+  def self.current
+    TermsOfService.find(:first, :conditions => { :published => true })
+  end
 
-  # Sets a user's acceptance of the Terms of Service to false
-  def reset_user_acceptance
-    if self == TermsOfService.first
-      User.update_all(:accepted_current_terms_of_service => false)
-    end
+  ###
+  # [Returns] true if this is the current Terms Of Service, false otherwise.
+  ###
+  def is_current?
+    self.id == TermsOfService.current.id
   end
 end
+
+
 # == Schema Information
 #
 # Table name: documents
@@ -22,8 +32,9 @@ end
 #  id         :integer         not null, primary key
 #  type       :string(255)
 #  body       :text
-#  version    :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  version    :integer
+#  published  :boolean         default(FALSE)
 #
 

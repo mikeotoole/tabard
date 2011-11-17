@@ -33,6 +33,7 @@ class CommunityProfile < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :name, :to => :community, :prefix => true
 
 ###
 # Public Methods

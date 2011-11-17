@@ -287,9 +287,9 @@ protected
   def ensure_accepted_most_recent_legal_documents
     if user_signed_in?
       if not current_user.accepted_current_terms_of_service
-        redirect_to accept_document_path(current_user.current_terms_of_service)
+        redirect_to accept_document_path(TermsOfService.current)
       elsif not current_user.accepted_current_privacy_policy
-        redirect_to accept_document_path(current_user.current_privacy_policy)
+        redirect_to accept_document_path(PrivacyPolicy.current)
       end
     end
   end

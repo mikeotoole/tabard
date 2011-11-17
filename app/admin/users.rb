@@ -88,6 +88,8 @@ ActiveAdmin.register User do
   filter :failed_attempts
   filter :created_at
   filter :suspended, :as => :select
+  filter :accepted_current_terms_of_service, :as => :select
+  filter :accepted_current_privacy_policy, :as => :select
 
   index do
     column "View" do |user|

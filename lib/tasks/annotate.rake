@@ -10,7 +10,7 @@ namespace :annotate do
 end
 
 namespace :db do
-  task :migrate do 
+  task :migrate do
     if Rails.env.development?
       require "annotate/annotate_models"
       AnnotateModels.do_annotations(:position_in_class => 'after', :position_in_fixture => 'before')
@@ -20,7 +20,7 @@ end
 
 namespace :migrate do
   [:up, :down, :reset, :redo].each do |t|
-    task t do 
+    task t do
       if Rails.env.development?
         require "annotate/annotate_models"
         AnnotateModels.do_annotations(:position_in_class => 'after', :position_in_fixture => 'before')

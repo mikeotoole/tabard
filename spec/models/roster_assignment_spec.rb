@@ -46,20 +46,36 @@ describe RosterAssignment do
   describe "approve" do
     before(:each) do
       roster_assignment.update_attribute(:pending, true)
-      roster_assignment.approve
     end
+    
     it "should remove the pending status" do
+      roster_assignment.approve
       RosterAssignment.find(roster_assignment).pending.should be_false
+    end
+    
+    it "should send message to user" do
+      expect {
+        roster_assignment.approve
+      }.to change(Message, :count).by(1)
+      Message.first.subject.should eql "Character Accepted"
     end
   end
 
   describe "reject" do
     before(:each) do
       roster_assignment.update_attribute(:pending, true)
-      roster_assignment.reject
     end
+    
     it "should remove the roster assignment" do
+      roster_assignment.reject
       RosterAssignment.exists?(roster_assignment).should be_false
+    end
+    
+    it "should send message to user" do
+      expect {
+        roster_assignment.reject
+      }.to change(Message, :count).by(1)
+      Message.first.subject.should eql "Character Rejected"
     end
   end
 end
