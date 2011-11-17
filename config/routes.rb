@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :themes
+
   # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users , ActiveAdmin::Devise.config

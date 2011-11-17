@@ -34,12 +34,15 @@ class Community < ActiveRecord::Base
   has_many :comments
   has_many :page_spaces
   has_many :pages, :through => :page_spaces
+  has_one :theme
+
+  accepts_nested_attributes_for :theme
 
 ###
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :create_default_theme
 
 ###
 # Validators
@@ -196,7 +199,19 @@ protected
       end
     end
   end
+
+  ###
+  # _after_create_
+  #
+  # The method creates the community announcement space.
+  ###
+  def create_default_theme
+    self.theme = Theme.create(:predefined_theme => Theme.default_theme, :community => self)
+  end
 end
+
+
+
 
 
 # == Schema Information
