@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Community:
+  = @theme.community_id
+%p
+  %b Background image:
+  = @theme.background_image
+%p
+  %b Predefined theme:
+  = @theme.predefined_theme
+
+= link_to 'Edit', edit_theme_path(@theme)
+\|
+= link_to 'Back', themes_path

@@ -1,0 +1,10 @@
+= simple_form_for(@theme) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :community_id
+    = f.input :background_image
+    = f.input :predefined_theme
+
+  .actions
+    = f.button :submit
