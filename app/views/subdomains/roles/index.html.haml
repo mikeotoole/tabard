@@ -1,8 +1,6 @@
 - title 'Roles'
 
 %h1 Listing roles
-%h2=current_community.roles
-%h2="HERP #{can? :view, @community.roles.first}"
 - if @roles and @roles.size > 0
   %table
     %tr

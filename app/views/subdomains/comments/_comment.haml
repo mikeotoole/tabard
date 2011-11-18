@@ -21,13 +21,13 @@
         - elsif comment.replies_locked?
           %em Comment is locked
       %span.actions
-        - if (can? :update, as_unlocked(comment))
+        - if can? :update, as_unlocked(comment)
           = link_to 'Edit comment', edit_comment_path(comment), :remote => true, 'data-type' => :text, :class => 'edit', :title => 'Edit comment'
-        - if (can? :destroy, as_unlocked(comment))
+        - if can? :destroy, as_unlocked(comment)
           = link_to 'Delete comment', comment, :remote => true, 'data-type' => :text, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
-        - if (can? :lock, comment)
+        - if can? :lock, comment
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'lock', :title => 'Lock comment'
-        - if (can? :unlock, comment)
+        - if can? :unlock, comment
           = link_to 'Unlock comment', unlock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'unlock', :title => 'Unlock comment'
     - if comment.comments.size > 0
       %ol

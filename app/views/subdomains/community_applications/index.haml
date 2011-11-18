@@ -1,0 +1,59 @@
+- title "Community Applications | #{current_community.name}"
+
+%h1 Pending Applications
+- if @pending_community_applications.size > 0
+  %table
+    %thead
+      %tr
+        %th Status
+        %th Submission Date
+        %th Appliccant
+        %th
+  
+    - @pending_community_applications.each do |community_application|
+      %tr{ community_application.pending? ? {} : { :class => 'dim'} }
+        %td.cinch
+          %strong= community_application.status
+        %td.cinch
+          %time= l community_application.created_at, :format => :date_short
+        %td
+          = link_to community_application.user_profile_display_name, community_application.user_profile
+        %td.actions
+          %div
+            - if can? :show, community_application
+              = link_to 'Review', community_application, :class => 'review', :meta => "Review #{community_application.user_profile_display_name}'s application"
+    %tfoot
+      %tr
+        %td{ :colspan => 4 }
+- else
+  %p There are no pending applications
+
+- if @other_community_applications.size > 0
+  %h1 Other Applications
+  %table
+    %thead
+      %tr
+        %th Status
+        %th Submission Date
+        %th Join Date
+        %th Appliccant
+        %th
+  
+    - @other_community_applications.each do |community_application|
+      %tr{ community_application.pending? ? {} : { :class => 'dim'} }
+        %td.cinch
+          %strong= community_application.status
+        %td.cinch
+          %time= l community_application.created_at, :format => :date_short
+        %td.cinch
+          - if community_application.accepted?
+            %time= l community_application.user_profile.joined_community_on(current_community), :format => :date_short
+        %td
+          = link_to community_application.user_profile_display_name, community_application.user_profile
+        %td.actions
+          %div
+            - if can? :show, community_application
+              = link_to 'Review', community_application, :class => 'review', :meta => "Review #{community_application.user_profile_display_name}'s application"
+    %tfoot
+      %tr
+        %td{ :colspan => 5 }

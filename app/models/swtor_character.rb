@@ -9,7 +9,7 @@ class SwtorCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  #attr_accessible :name, :server, :game, :discussion
+  #attr_accessible :name, :server, :game
 
 ###
 # Associations

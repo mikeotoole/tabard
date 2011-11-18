@@ -67,6 +67,8 @@ class User < ActiveRecord::Base
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :has_seen?, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
+  delegate :is_member?, :to => :user_profile, :allow_nil => true
+  delegate :application_pending?, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -176,7 +178,6 @@ protected
     self.new_record? || self.password.present?
   end
 end
-
 
 
 

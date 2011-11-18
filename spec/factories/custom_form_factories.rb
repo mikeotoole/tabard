@@ -20,6 +20,10 @@ FactoryGirl.define do
     sequence(:body) {|n| "long_answer_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
   end
+
+  factory :required_long_answer_question, :parent => :long_answer_question do
+    required true
+  end
   
   factory :short_answer_question, :class => TextQuestion do
     style "short_answer_question"
@@ -57,6 +61,9 @@ FactoryGirl.define do
     sequence(:body) {|n| "User given answer #{n}"}
     submission
     question_id { FactoryGirl.create(:long_answer_question).id }
+  end
+  factory :required_answer, :parent => :answer do
+    question_id { FactoryGirl.create(:required_long_answer_question).id }
   end
 
   factory :submission do

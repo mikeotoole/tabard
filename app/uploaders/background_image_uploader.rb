@@ -28,7 +28,7 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
     when :standard
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=1280x1105"
+      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=1280x600"
     else
       "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
     end
@@ -43,7 +43,7 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :standard do
-    process :resize_to_fill => [1280, 1105]
+    process :resize_to_fill => [1280, 600]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

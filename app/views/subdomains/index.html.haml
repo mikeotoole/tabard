@@ -16,6 +16,10 @@
 %p
   %b Subdomain:
   = @community.subdomain
+
+%p
+  %b Theme Background Image
+  = @community.theme.background_image_url
 %p
   %b Admin Profile:
   =link_to @community.admin_profile.full_name, @community.admin_profile

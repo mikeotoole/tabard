@@ -174,7 +174,7 @@ protected
   def current_character
     return unless character_active?
     if defined? session[:profile_type].constantize
-      @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
+      session[:profile_type].constantize.find_by_id(session[:profile_id])
     end
   end
   helper_method :current_character
@@ -183,7 +183,7 @@ protected
   def current_profile
     return nil unless profile_active?
     if defined? session[:profile_type].constantize
-      @current_profile ||= session[:profile_type].constantize.find_by_id(session[:profile_id])
+      session[:profile_type].constantize.find_by_id(session[:profile_id])
     end
   end
   helper_method :current_profile
@@ -194,7 +194,7 @@ protected
       profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
       profiles = Array.new
       profile_collection.each do |profile|
-        profiles << { :name => profile.name, :is_current => (profile == @current_profile), :profile_id => profile.id, :type => profile.class }
+        profiles << { :name => profile.name, :is_current => (profile == current_profile), :profile_id => profile.id, :type => profile.class }
       end
       profiles
     end
@@ -217,7 +217,6 @@ protected
   def activate_profile(profile_id, profile_type)
     session[:profile_id] = profile_id
     session[:profile_type] = profile_type
-    @current_profile = session[:profile_type].constantize.find_by_id(session[:profile_id])
   end
 
 ###
@@ -241,6 +240,9 @@ protected
   def ensure_active_profile_is_valid
     if user_signed_in?
       unless current_profile
+        activate_profile(current_user.user_profile_id, "UserProfile")
+      end
+      if current_profile != current_user.user_profile and not character_active?
         activate_profile(current_user.user_profile_id, "UserProfile")
       end
       if character_active? and not current_user.available_character_proxies(current_community,current_game).include?(current_character.character_proxy)

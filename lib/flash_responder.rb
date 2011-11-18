@@ -14,7 +14,7 @@ module FlashResponder
       namespace << controller.action_name
       controller.flash[:messages] = Array.new unless controller.flash[:messages]
       if has_errors?
-        if options.delete(:behavior) == :list or resource.errors.size == 1
+        if options.delete(:error_behavior) == :list or resource.errors.size == 1
           resource.errors.full_messages.map{ |error|
             controller.flash[:messages] << { :class => 'alert', :title => '', :body => error }
           }

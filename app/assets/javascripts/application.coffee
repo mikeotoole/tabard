@@ -100,6 +100,15 @@ $(document).ready ->
           $('#modal button.cancel').trigger 'click'
       false
   
+  # Batch actions
+  $('form .batch button, form button.batch')
+    .click ->    
+      $(this)
+        .closest('form')
+        .prop({ action: $(this).attr('action') })
+        .find('input[name="_method"]')
+        .val $(this).attr('method')
+  
   # Flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
     if $('body.fluid').length || $('#flash').css('position') != 'relative'

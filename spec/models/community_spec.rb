@@ -15,6 +15,7 @@
 #  protected_roster                :boolean         default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
+#  public_roster                   :boolean         default(TRUE)
 #
 
 require 'spec_helper'
@@ -73,8 +74,8 @@ describe Community do
   end
 
   describe "slogan" do
-    it "should be required" do
-      build(:community, :slogan => nil).should_not be_valid
+    it "should be optional" do
+      build(:community, :slogan => nil).should be_valid
     end
   end
 

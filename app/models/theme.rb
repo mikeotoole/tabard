@@ -7,7 +7,7 @@
 ###
 class Theme < ActiveRecord::Base
   # This is a collection of strings that are valid for subject classes.
-  VALID_THEMES = %w( DEFAULT )
+  VALID_THEMES = %w( RedRum )
 
 ###
 # Associations
@@ -27,7 +27,7 @@ validates :predefined_theme, :presence => true,
 
   # This method returns the default theme.
   def self.default_theme
-    "DEFAULT"
+    "RedRum"
   end
 end
 

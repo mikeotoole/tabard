@@ -139,7 +139,7 @@ body
             width: 0
       
       >ul
-        background: #704323
+        background: #792914
         border: 1px solid rgba(#000,.2)
         +border_radius(0,5,5,5)
         +box_shadow(0 0 5px rgba(#000,.5))
@@ -160,13 +160,28 @@ body
             color: #dac6b7
             display: block
             font-size: 13px
-            padding: 0 10px
+            padding: 0 40px 0 10px
             position: relative
             white-space: nowrap
+            
+            &[meta]:before
+              background: #BFA65F
+              +border_radius(3)
+              color: #792914
+              content: attr(meta)
+              font: 12px DinMedium, sans
+              line-height: 12px
+              padding: 3px
+              position: absolute
+              right: 5px
+              top: 5px
             
             &:hover
               background: rgba(#000,.1)
               color: #fff
+            
+              &[meta]:before
+                background: #fff
           
           &:last-child,
           &:last-child >a
@@ -175,7 +190,7 @@ body
       &:hover
         
         >a
-          background: #704323
+          background: #792914
           border-color: rgba(#000,.2)
           color: #fff
           +transition(color .2s linear)
@@ -196,7 +211,8 @@ body
             height: auto
             
             >a
-              padding: 7px 10px
+              padding-bottom: 7px
+              padding-top: 7px
               +transition(padding .2s linear)
       
       &.current
@@ -228,6 +244,11 @@ body
           
           &:hover
             color: #fff
+          
+          &:not([href])
+            background: transparent
+            color: #fff
+            cursor: default
         
         >ul
           +border-radius(5,0,5,5)
@@ -254,6 +275,7 @@ body
   // GENERAL CONTENT
   
   a
+    +border_radius(3)
     color: #580B19
     padding: 0 3px
     text-decoration: underline
@@ -261,7 +283,6 @@ body
     
     &:hover
       background: #6F2B3D
-      +border_radius(3)
       color: #fff
       text-decoration: none
   
@@ -280,15 +301,17 @@ body
   
   h2
     font-size: 24px
+    padding: 10px 0
   
   h3
     font-size: 18px
+    padding: 10px 0
     
   nav
   
     h1
-      background: #ccc
-      +bg_gradient(rgba(#fff,0),#ccc)
+      background: #E1D5CD
+      +bg_gradient(rgba(#fff,0),#E1D5CD)
       border-bottom: 1px solid #fff
       font-family: DinLight, serif
       font-size: 16px
@@ -322,29 +345,209 @@ body
   
   p
     padding: 10px 0
+  
+  dl
+    
+    dt
+      color: #6e4b2f
+      font-family: DinMedium, sans
+      padding: 10px 0 0
+    
+    dd
+      padding: 10px 0
+    
+  strong
+    color: #6e4b2f
 
+  time
+    font: 12px DinMedium, sans
+    white-space: nowrap
 
   // FORMS
   
   button,
   .button
-    background: #6F2D3D
-    border: 1px solid #8f364e
+    background: #a1391d
+    border: 1px solid #771f07 !important
     +border_radius(5)
-    color: #efd9df
+    color: #e3d5a9  
     display: block
     float: left
     font: 16px DinMedium, serif
     height: 30px
     line-height: 30px
+    margin: 0 5px 0 0
     padding: 0 15px
     text-decoration: none
     +transition(background .2s linear)
     
     &:focus,
     &:hover
-      background: #8f364e
+      background: #cd4723
       color: #fff
+      
+  input[type="checkbox"],
+  input[type="radio"]
+    height: 1px
+    margin: 10px 0 0 5px
+    position: absolute
+    width: 1px
+    
+    + label
+      display: block
+      line-height: 24px
+      margin: 0 0 5px
+      position: relative
+      text-indent: 34px
+      z-index: 3
+      
+      &:before
+        background: #C7B2A3
+        +bg_gradient(#C7B2A3,#EBDED5)
+        border: 1px solid #fff
+        +border_radius(5)
+        +box_shadow(0 0 3px #ddd)
+        content: ''
+        height: 24px
+        left: 0
+        position: absolute
+        top: 0
+        width: 24px
+    
+    &:focus + label
+    
+      &:before
+        background: #d7eaf8
+        +box_shadow(0 0 8px #2d7cb4)
+        +bg_gradient(#f2f8fd,#d7eaf8)
+    
+    &:checked
+
+      + label
+            
+        &:after
+          background: #570A17
+          +bg_gradient(#7B3D4C,#570A17)
+          border: 1px solid #ddd
+          +border_radius(20)
+          +box_shadow(0 0 9px #999)
+          content: ''
+          height: 14px
+          left: 5px
+          position: absolute
+          top: 5px
+          width: 14px
+          z-index: 2
+      
+      &:focus + label,
+      &:hover + label,
+      + label:hover
+              
+        &:after
+          background: #A1391D
+          +bg_gradient(#CD4723,#A1391D)
+  
+  div.select
+    height: 33px
+    float: left
+    margin: 0 5px 0 0
+    width: 435px
+  
+  .select
+    height: 55px
+    position: relative
+  
+    ul
+      background: #C7B2A3
+      +bg_gradient(#C7B2A3,#EBDED5)
+      +border_radius(5)
+      +box_shadow(0 0 3px rgba(#000,.2))
+      border: 1px solid #fff
+      display: block
+      height: 0
+      line-height: 30px
+      overflow: hidden
+      padding: 30px 1px 1px
+      position: absolute
+      +transition(box-shadow .2s linear)
+      width: 430px
+      z-index: 9
+          
+      &:before
+        border: 5px solid transparent
+        border-top-color: #A23919
+        content: ''
+        height: 0
+        position: absolute
+        right: 10px
+        top: 13px
+        width: 0
+        z-index: 10
+      
+      li
+        padding: 0
+        
+        label
+          background: #ECDDD8
+          +bg_gradient(#FDF3EE,#F2E5E1)
+          +border_radius(5)
+          border-top: 1px solid #ECDDD8
+          color: #66482f
+          display: none
+          font-family: DinMedium, sans
+          height: 30px
+          line-height: 30px
+          margin: 1px 0 0
+          padding: 0 8px
+          text-indent: 0
+          
+          &:before,
+          &:after
+            display: none
+        
+          .avatar
+            background: #C7B2A3
+            border: 1px solid #fff
+            +border_radius(3)
+            +box_shadow(0 0 5px rgba(#000,.2))
+            float: left
+            margin: 3px 6px 3px 0
+        
+        input
+          left: -500em
+          position: absolute
+          
+          &:checked + label
+            background: transparent
+            border-top-color: transparent
+            color: #66482f
+            display: block
+            font-family: DinLight, sans
+            position: absolute
+            top: 0
+            width: 420px
+            z-index: 3
+            
+            .avatar
+              background: #EADDD4
+
+      &:hover
+        background: #ECDDD8
+        +box_shadow(0 0 8px #560B17)
+        +bg_gradient(#FDF3EE,#F2E5E1)
+        color: #580B15
+        height: auto
+      
+        li
+        
+          label
+            color: #580B15 !important
+            display: block
+            position: static
+          
+            &:hover
+              background: #580B15
+              color: #fff !important
   
   fieldset
   
@@ -365,9 +568,9 @@ body
       input[type="password"],
       input[type="text"],
       textarea
-        background: #eee
-        color: #66482f
-        +bg_gradient(#ddd,#eee)
+        background: #C7B2A3
+        +bg_gradient(#C7B2A3,#EBDED5)
+        color: #6F2D3D
         +border_radius(5)
         +box_shadow(0 0 3px #ddd)
         border: 1px solid #fff
@@ -380,6 +583,10 @@ body
           +box_shadow(0 0 8px #560B17)
           +bg_gradient(#FDF3EE,#F2E5E1)
           color: #580B15
+        
+        &[disabled]
+          color: #999
+          +opacity(.5)
       
       input[type="email"],
       input[type="password"],
@@ -390,154 +597,15 @@ body
       textarea
         height: 240px
         padding: 10px
-      
-      input[type="checkbox"],
-      input[type="radio"]
-        height: 1px
-        margin: 10px 0 0 5px
-        position: absolute
-        width: 1px
-        
-        + label
-          display: block
-          line-height: 24px
-          margin: 0 0 5px
-          position: relative
-          text-indent: 34px
-          z-index: 3
-          
-          &:before
-            background: #eee
-            +bg_gradient(#ddd,#eee)
-            border: 1px solid #fff
-            +border_radius(5)
-            +box_shadow(0 0 3px #ddd)
-            content: ''
-            height: 24px
-            left: 0
-            position: absolute
-            top: 0
-            width: 24px
-        
-        &:focus + label
-        
-          &:before
-            background: #d7eaf8
-            +box_shadow(0 0 8px #2d7cb4)
-            +bg_gradient(#f2f8fd,#d7eaf8)
-        
-        &:checked
     
-          + label
-                
-            &:after
-              background: #ddd
-              +bg_gradient(#7a569e,#51346e)
-              border: 1px solid #ddd
-              +border_radius(20)
-              +box_shadow(0 0 9px #999)
-              content: ''
-              height: 14px
-              left: 5px
-              position: absolute
-              top: 5px
-              width: 14px
-              z-index: 2
-          
-          &:focus + label,
-          &:hover + label,
-          + label:hover
-                  
-            &:after
-              background: #be4124
-              +bg_gradient(#2d7bb3,#155481)
-      
-      .select
-        height: 55px
-        position: relative
-      
-        ul
-          background: #eee
-          +bg_gradient(#ddd,#eee)
-          +border_radius(5)
-          +box_shadow(0 0 3px #ddd)
-          border: 1px solid #fff
-          display: block
-          height: 0
-          line-height: 30px
-          overflow: hidden
-          padding: 30px 1px 1px
-          position: absolute
-          +transition(box-shadow .2s linear)
-          width: 430px
-          z-index: 9
-              
-          &:before
-            border: 5px solid transparent
-            border-top-color: #bea761
-            content: ''
-            height: 0
-            position: absolute
-            right: 10px
-            top: 13px
-            width: 0
-            z-index: 10
-          
-          li
-            padding: 0
-            
-            label
-              background: #ECDDD8
-              +bg_gradient(#FDF3EE,#F2E5E1)
-              +border_radius(5)
-              border-top: 1px solid #ECDDD8
-              color: #66482f
-              display: none
-              font-family: DinMedium, sans
-              height: 30px
-              line-height: 30px
-              margin: 1px 0 0
-              padding: 0 5px
-              text-indent: 0
-              
-              &:before,
-              &:after
-                display: none
-            
-            input
-              left: -500em
-              position: absolute
-              
-              &:checked + label
-                background: transparent
-                border-top-color: transparent
-                color: #66482f
-                display: block
-                font-family: DinLight, sans
-                position: absolute
-                top: 0
-                width: 420px
-                z-index: 3
-          
-          &:hover
-            background: #ECDDD8
-            +box_shadow(0 0 8px #560B17)
-            +bg_gradient(#FDF3EE,#F2E5E1)
-            color: #580B15
-            height: auto
-          
-            li
-            
-              label
-                color: #580B15 !important
-                display: block
-                position: static
-              
-                &:hover
-                  background: #580B15
-                  color: #fff !important
-    
-      
+      dfn.hint
+        display: block
+        font: 12px DinMedium, sans
+        padding: 5px
+        
+        &:before
+          content: '\2014\00A0'
+        
       &.field_with_errors
         
         > input,
@@ -569,7 +637,7 @@ body
 
   table
     +border_radius(5)
-    margin: 0 0 15px
+    margin: 15px 0
     
     td,
     tr
@@ -598,88 +666,155 @@ body
           +border_radius(5,5,0,0)
   
     tbody
+      
+      tr
     
-      td
-        background: #eee
-        +bg_gradient(#eee,#ddd)
-        border-bottom: 1px solid #ccc
-        border-top: 1px solid #fff
-        padding: 5px 10px
-        width: 100%
-        
-        &.actions
-          padding: 5px
-          white-space: nowrap
+        td
+          background: #eee
+          +bg_gradient(#f7f1ec,#eaddd4)
+          border-bottom: 1px solid #c7b2a3
+          border-top: 1px solid #fff
+          padding: 5px 10px
+          width: 100%
           
-          div
-            position: relative
-          
-            a
-              background: image-url('application/icons.png') no-repeat #D47B48
-              +border_radius(5)
-              display: block
-              float: left
-              height: 30px
-              overflow: hidden
-              padding: 0
-              margin: 0 0 0 5px
-              text-indent: -500em
-              +transition(background-color .2s linear, box-shadow .2s linear)
-              width: 30px
-              
-              &:hover
-                background: image-url('application/icons.png') no-repeat #570A17
-                +box_shadow(0 0 10px #333)
-              
-                &[meta]
+          &.actions
+            padding: 5px
+            white-space: nowrap
+            
+            div
+              position: relative
+            
+              a
+                background: image-url('application/icons.png') no-repeat #9C682F
+                +border_radius(5)
+                display: block
+                float: left
+                height: 30px
+                overflow: hidden
+                padding: 0
+                margin: 0 0 0 5px
+                text-indent: -500em
+                +transition(background-color .2s linear, box-shadow .2s linear)
+                width: 30px
                 
-                  &:before
-                    background: rgba(#6F2B3D,.9)
-                    +border_radius(5)
-                    color: #fff
-                    content: attr(meta)
-                    font-size: 13px
-                    height: 30px
-                    line-height: 30px
-                    margin: 0 5px 0 0
-                    padding: 0 10px
-                    position: absolute
-                    right: 100%
-                    text-indent: 0
-                    white-space: nowrap
+                &:hover
+                  background: image-url('application/icons.png') no-repeat #570A17
+                  +box_shadow(0 0 10px #333)
+                
+                  &[meta]
                   
-                  &:after
-                    border: 5px solid transparent
-                    border-left: 5px solid rgba(#6F2B3D,.9)
-                    content: ''
-                    height: 0
-                    left: -5px
-                    position: absolute
-                    top: 10px
-                    width: 0
+                    &:before
+                      background: rgba(#6F2B3D,.9)
+                      +border_radius(5)
+                      color: #fff
+                      content: attr(meta)
+                      font-size: 13px
+                      height: 30px
+                      line-height: 30px
+                      margin: 0 5px 0 0
+                      padding: 0 10px
+                      position: absolute
+                      right: 100%
+                      text-indent: 0
+                      white-space: nowrap
                     
+                    &:after
+                      border: 5px solid transparent
+                      border-left: 5px solid rgba(#6F2B3D,.9)
+                      content: ''
+                      height: 0
+                      left: -5px
+                      position: absolute
+                      top: 10px
+                      width: 0
+                      
+                
+                &.apply
+                  background-position: 0 -30px
+                  
+                &.delete
+                  background-position: -30px -30px
+                  
+                &.edit
+                  background-position: -60px -30px
               
-              &.apply
-                background-position: 0 -30px
+                &.approve
+                  background-position: -510px -30px
                 
-              &.delete
-                background-position: -30px -30px
-                
-              &.edit
-                background-position: -60px -30px
-    
+                &.reject
+                  background-position: -540px -30px
+                  
+                &.review
+                  background-position: -120px -30px
+            
+          img.avatar
+            background: #C7B2A3
+            border: 1px solid #fff
+            +border_radius(5)
+            +box_shadow(0 0 10px rgba(#000,.2))
+            float: left
+            margin: 0 -5px
+          
+          img.icon
+            border: 0
+            +border_radius(3)
+            +box_shadow(0 0 5px rgba(#000,.2))
+          
+          &.cinch
+            white-space: nowrap
+            width: 0
+          
+          &.character
+          
+            h3
+              line-height: 1em
+              padding: 5px 0 0
+          
+          &.characters
+            
+            li
+              display: inline-block
+              font: 13px DinLight, sans
+              line-height: 20px
+              padding: 0 0 3px
+              width: 180px
+            
+              img.avatar
+                margin: 0 5px 0 0
+              
+              label
+                text-indent: 0
+              
+                img.avatar
+                  margin: 3px 5px 0 30px
+              
+          &.check
+            border-right: 1px #ccc solid
+            padding: 5px 32px 5px 5px
+            text-align: center
+            width: 0
+            
+            label:before
+              +box_shadow(0 0 10px rgba(#000,.3))
+        
+        &.dim
+          
+          td
+            border-color: #aa856a
+            +bg_gradient(#C7B2A3,#EADDD4)
+        
     tfoot
     
       td
         background: #BCA964
-        +bg_gradient(#9b8c4a,#cdbf81)
+        +bg_gradient(#b28769,#916749)
         border-top: 1px solid #fff
         color: #570A17
         padding: 10px
         position: relative
         
         &:before
-          border-top: 1px solid #ccc
+          border-top: 1px solid #5E371B
           content: ''
           left: 0
           position: absolute
@@ -736,8 +871,8 @@ body
             z-index: 3
           
           .avatar
-            background: image-url('application/avatar.png') center center no-repeat #5F5F5F
-            border: 1px solid #eee
+            background: image-url('application/avatar.png') center center no-repeat #e1d5cd
+            border: 1px solid #e1d5cd
             border-right: 0
             height: 62px
             left: 10px
@@ -768,7 +903,7 @@ body
               width: 0
             
             img
-              background: #ddd
+              background: #e1d5cd
               border: 1px solid #fff
               border-right: 0
               display: block
@@ -776,7 +911,7 @@ body
           .meta
             background: #fff
             border-bottom: 1px solid #ddd
-            color: #999
+            color: #b59d8b
             font-size: 12px
             line-height: 15px
             overflow: hidden
@@ -832,7 +967,7 @@ body
                   background: #aa000b
               
               &.collapse
-                background: #bbb
+                background: #C7B2A3
                 +border_radius(3)
                 color: #fff
                 
@@ -915,7 +1050,7 @@ body
           
             .avatar
               +box_shadow(0 0 15px rgba(#000,.5))
-              border-color: #999
+              border-color: #C7B2A3
           
             .actions
             
@@ -1113,7 +1248,7 @@ body
         z-index: 3
       
       .profile
-        background: #eee
+        background: #C7B2A3
         margin: 0
         overflow: hidden
         padding: 0
@@ -1131,17 +1266,23 @@ body
           padding: 0
         
           label
-            background: #eee
+            background: #E1D5CD
             display: none
             float: left
             height: 44px
+            margin: 0
             position: relative
             width: 44px
+            text-indent: 0
             +transition(background .2s linear)
             z-index: 2
             
+            &:before,
+            &:after
+              display: none
+            
             img
-              background: #ddd
+              background: #E1D5CD
               border: 1px solid #fff
               margin: 1px
           
@@ -1296,21 +1437,243 @@ body
         display: none
         font: 12px DinMedium, sans
         line-height: 20px
+        margin: 0
         padding: 0 5px 0 0
         position: absolute
         right: 0
         
         &:before
           background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
+          border: 0
           bottom: 0
           content: ''
           height: 20px
-          margin: 5px 0 0 -25px
+          left: auto
+          margin: 0 0 0 -25px
           position: absolute
           right: -20px
           width: 20px
           z-index: 2
+            
+        &:after
+          display: none
+    
+    #newcomment
+      height: 175px
+  
+  
+  // Community Applications
+  .community_application
+    margin: -30px 0 0 0
+  
+    h1,
+    h2
+      background: #792914
+      +border_radius(5)
+      color: #fff
+      font: 20px DinLight, serif
+      height: 40px
+      line-height: 40px
+      margin: 30px 0 15px
+      padding: 0 10px 0 50px
+      position: relative
+      
+      &:before
+        background: image-url('application/icons.png') no-repeat
+        content: ''
+        height: 30px
+        left: 5px
+        position: absolute
+        top: 5px
+        width: 30px
+      
+      &:after
+        border-left: 1px solid rgba(#000,.2)
+        border-right: 1px solid rgba(#fff,.2)
+        content: ''
+        bottom: 0
+        left: 40px
+        position: absolute
+        top: 0
+        width: 0
+  
+    h1,
+    .questions >h2
+      width: 525px
+      
+      &:before
+        background-position: -120px -30px
+    
+    .sidebar
+      float: right
+      width: 280px
+      
+      .applicant
+        
+        h2:before
+          background-position: -570px -30px
+      
+      .characters
+        
+        h2:before
+          background-position: -570px -30px
+        
+        p
+          padding: 0 0 15px
+        
+        .select
+          float: none
+          margin: 15px 0 0
+          width: 280px
+          
+          ul
+            width: 276px
+            
+            label
+              position: relative
+              text-indent: 25px
+              
+              img
+                display: block
+                left: 3px
+                position: absolute
+                top: 1px
+            
+            input:checked + label
+              display: none
+        
+      .characters >label,
+      .characters >ul li,
+      .applicant a
+        background: #83583A
+        +border_radius(5)
+        color: #fff
+        display: block
+        min-height: 28px
+        line-height: 28px
+        margin: 0 0 2px
+        padding: 0 20px 0 35px
+        position: relative
+        +transition(background .2s linear)
+          
+        img
+          background: #C7B2A3
+          +border_radius(4)
+          +box_shadow(0 0 5px rgba(#000,.5))
+          left: 4px
+          position: absolute
+          top: 4px
+      
+      .applicant a
+        height: auto
+        font: 14px DinMedium, sans
+        line-height: 48px
+        min-height: 48px
+        padding: 0 8px 0 50px
+        text-decoration: none
+        +transition(background .2s linear)
+        
+        &:hover
+          background: #5F381C
+      
+      .characters
+      
+        >label
+        
+          &:before
+            display: none
+          
+          &:after
+            color: #BBA55F
+            content: '\00D7'
+            font-size: 17px
+            height: 28px
+            line-height: 28px
+            position: absolute
+            right: 8px
+          
+          &:hover
+            background: #5F381C
+            
+            &:after
+              color: #fff
+        >ul
+          padding-bottom: 30px
+          
+          li
+            height: auto
+            min-height: 32px
+            padding: 8px 8px 8px 50px
+            
+            span
+              display: block
+              min-height: 16px
+              line-height: 16px
+          
+              &.name
+                font: 14px DinMedium, sans
+                
+              &.game
+                font: 12px DinLight, sans
+      
+      .instructions
+        
+        h2:before
+          background-position: -450px -30px
+        
+        p
+          padding: 0 0 3px
+
+    .questions
+      float: left
+      padding: 0 0 30px
+      width: 580px
+      
+      >fieldset
+        
+        >ol
+        
+          >li
+          
+            >label,
+            .select >label
+              color: #550A16
+              font: 18px DinMedium, serif
+            
+            >input,
+            >textarea
+              width: 558px
+              
+            .select
+              float: none
+              margin: 0 0 30px
+              width: auto
+              
+              ul
+                width: 576px
+                
+                input:checked + label
+                  width: 560px
+      
+    h2.comments
+      margin: 60px 0 0
+      
+      &:before
+        background-position: -450px -30px
+    
+    aside.comments
+      margin-top: 0
+    
+    #newcomment h3
+      margin-left: 10px
+      margin-right: 10px
+    
+    .submit
+      +bg_gradient(#EBDED5,rgba(#fff,0))
+      +border_radius(5,5,0,0)
+      border-top: 1px solid #C8B3A4
+      clear: both
+      padding: 15px 15px 30px
 
 
-@import subdomains/theme
 @import application/footer

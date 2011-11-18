@@ -30,6 +30,7 @@ describe Subdomains::DiscussionsController do
   let(:community) { DefaultObjects.community }
   let(:discussion) { DefaultObjects.discussion }
   let(:space) { DefaultObjects.discussion_space }
+  let(:community_space) { DefaultObjects.community.discussion_spaces.find_by_name("Community")}
   let(:anouncment_space) { DefaultObjects.announcement_discussion_space }
 
   before(:each) do
@@ -138,32 +139,31 @@ describe Subdomains::DiscussionsController do
   
     describe "with valid params" do
       it "creates a new Discussion" do
-        space
         expect {
-          post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+          post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
         }.to change(Discussion, :count).by(1)
       end
 
       it "assigns a newly created discussion as @discussion" do
-        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+        post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
         assigns(:discussion).should be_a(Discussion)
         assigns(:discussion).should be_persisted
       end
 
       it "redirects to the created discussion" do
-        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
+        post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
         response.should redirect_to(Discussion.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved discussion as @discussion" do
-        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion, :name => nil)
+        post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
         assigns(:discussion).should be_a_new(Discussion)
       end
 
       it "re-renders the 'new' template" do
-        post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion, :name => nil)
+        post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
         response.should render_template("new")
       end
     end

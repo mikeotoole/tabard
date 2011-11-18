@@ -28,9 +28,12 @@ describe Subdomains::RosterAssignmentsController do
   let(:character_proxy) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
   let(:character_proxy2) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
   let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy)}
+  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2)}
+  let(:roster_assignment_id_array) { [[roster_assignment.id], [roster_assignment2.id]] }
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
+    community.update_attribute(:public_roster, false)
     @request.host = "#{community.subdomain}.example.com"
   end
   
@@ -49,76 +52,7 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
-    end
-  end
-
-  describe "GET 'show'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'show', :id => roster_assignment
       response.response_code.should == 403
-    end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'show', :id => roster_assignment
-      response.should be_success
-    end
-
-    it "should redirected to new user session path when not authenticated as a user" do
-      get 'show', :id => roster_assignment
-      response.should redirect_to(new_user_session_path)
-    end
-  end
-
-  describe "GET 'new'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'new'
-      response.response_code.should == 403
-    end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'new'
-      response.should be_success
-    end
-
-    it "shouldn't be successful when not authenticated as a user" do
-      get 'new'
-      response.should redirect_to(new_user_session_path)
-    end
-
-    it "should render roster_assignments/new template" do
-      sign_in admin_user
-      get 'new'
-      response.should render_template('roster_assignments/new')
-    end
-  end
-
-  describe "GET 'edit'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'edit', :id => roster_assignment
-      response.response_code.should == 403
-    end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should be_success
-    end
-
-    it "shouldn't be successful when not authenticated as a user" do
-      get 'edit', :id => roster_assignment
-      response.should redirect_to(new_user_session_path)
-    end
-
-    it "should render roster_assignments/new template" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should render_template('roster_assignments/edit')
     end
   end
 
@@ -194,7 +128,7 @@ describe Subdomains::RosterAssignmentsController do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_false
-      response.should redirect_to(roster_assignments_path)
+      response.should redirect_to(my_roster_assignments_path)
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user
@@ -206,6 +140,15 @@ describe Subdomains::RosterAssignmentsController do
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_true
       response.should redirect_to(new_user_session_path)
+    end
+  end
+  
+  describe "PUT 'batch_destroy'" do
+    it "should delete all roster assignments when authenticated as admin" do
+      sign_in admin_user
+      delete :batch_destroy, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).should be_nil
+      RosterAssignment.find_by_id(roster_assignment2).should be_nil
     end
   end
 
@@ -224,6 +167,24 @@ describe Subdomains::RosterAssignmentsController do
       response.should redirect_to(pending_roster_assignments_path)
     end
   end
+  
+  describe "PUT 'batch_approve'" do
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment2.update_attribute(:pending, true)
+    end
+    it "should mark all roster assignments as approved when authenticated as admin" do
+      sign_in admin_user
+      put :batch_approve, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment2).pending.should be_false
+    end
+    it "should be forbidden when authenticated as member" do
+      sign_in billy
+      put :batch_approve, :ids => roster_assignment_id_array
+      response.should be_forbidden
+    end
+  end
 
   describe "PUT 'reject' when authenticated as an owner" do
     before(:each) do
@@ -238,6 +199,24 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirect to pending path" do
       response.should redirect_to(pending_roster_assignments_path)
+    end
+  end
+  
+  describe "PUT 'batch_reject'" do
+    before(:each) do
+      roster_assignment.update_attribute(:pending, true)
+      roster_assignment2.update_attribute(:pending, true)
+    end
+    it "should mark all roster assignments as approved when authenticated as admin" do
+      sign_in admin_user
+      put :batch_reject, :ids => roster_assignment_id_array
+      RosterAssignment.find_by_id(roster_assignment).should be_nil
+      RosterAssignment.find_by_id(roster_assignment2).should be_nil
+    end
+    it "should be forbidden when authenticated as member" do
+      sign_in billy
+      put :batch_reject, :ids => roster_assignment_id_array
+      response.should be_forbidden
     end
   end
 

@@ -28,7 +28,7 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
-  resources :communities, :except => :destroy
+  resources :communities, :except => [:destroy, :edit, :update]
 
   # Games
   resources :games, :only => :show
@@ -71,6 +71,11 @@ DaBvRails::Application.routes.draw do
     get "/" => "subdomains#index", :as => 'subdomain_home'
     scope :module => "subdomains" do
 
+      # Community edit/update
+      get "/community_settings" => "communities#edit", :as => "edit_community_settings"
+      match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
+      resources :communities, :only => [:edit, :update]
+
       # Roles and Permissions
       resources :roles do
         resources :permissions
@@ -78,6 +83,10 @@ DaBvRails::Application.routes.draw do
 
       # Roster assignments
       get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"
+      get '/my_roster_assignments' => 'roster_assignments#mine', :as => "my_roster_assignments"
+      put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", :as => "batch_approve_roster_assignments"
+      put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", :as => "batch_reject_roster_assignments"
+      delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", :as => "batch_destroy_roster_assignments"
       resources :roster_assignments do
         member do
           put :approve
@@ -86,7 +95,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Community applications
-      resources :community_applications do
+      resources :community_applications, :except => [:edit, :update] do
         member do
           post :accept
           post :reject

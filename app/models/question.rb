@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style
+  attr_accessible :body, :style, :type, :required
 
 ###
 # Associations
@@ -30,6 +30,11 @@ class Question < ActiveRecord::Base
   validates :style, :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
+
+###
+# Callbacks
+###
+  before_save :ensure_type_is_not_changed
 
 ###
 # Delegates
@@ -57,6 +62,14 @@ class Question < ActiveRecord::Base
   ###
   def self.select_options
     self::VALID_STYLES.collect { |style| [ style.gsub(/_/, ' ').split(' ').each{|word| word.capitalize!}.join(' '), "#{self.to_s}|#{style}" ] } if self::VALID_STYLES
+  end
+
+  ###
+  # This method ensures that type is not editable.
+  ###
+  def ensure_type_is_not_changed
+    self.type = self.type_was if self.type_changed? and self.persisted?
+    true
   end
 
   ###

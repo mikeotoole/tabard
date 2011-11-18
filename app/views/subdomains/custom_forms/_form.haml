@@ -1,0 +1,8 @@
+= simple_form_for custom_form do |f|
+  %fieldset
+    %ol
+      = f.input :name
+      = f.input :instructions
+      = f.input :thankyou, :label => 'Thank you message', :hint => 'This message will be displayed to uses upon submission of the form.'
+      %li
+        %button{ :type => 'submit' }= custom_form.persisted? ? 'Save' : 'Create'
