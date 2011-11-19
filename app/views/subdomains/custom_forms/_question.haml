@@ -1,5 +1,7 @@
 %li
-  = f.simple_fields_for question, :index => question.to_s.gsub(/[^\d\w]/,'') do |qf|
+  = f.simple_fields_for :questions, question do |qf|
+    =qf.input :type, :as => :hidden,  :wrapper => false
+    =qf.input :style, :as => :hidden, :wrapper => false
     .left
       = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question'
       .select

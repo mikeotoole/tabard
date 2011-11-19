@@ -9,7 +9,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :instructions, :thankyou, :published
+  attr_accessible :name, :instructions, :thankyou, :published, :questions_attributes
 
 ###
 # Associations

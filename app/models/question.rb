@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :type, :required
+  attr_accessible :body, :style, :type, :required, :explanation, :type_style
   attr_accessor :type_style
 
 ###
@@ -36,6 +36,7 @@ class Question < ActiveRecord::Base
 # Callbacks
 ###
   before_save :ensure_type_is_not_changed
+  before_validation :decode_type_style
 
 ###
 # Delegates
@@ -71,6 +72,14 @@ class Question < ActiveRecord::Base
   def ensure_type_is_not_changed
     self.type = self.type_was if self.type_changed? and self.persisted?
     true
+  end
+  
+  def decode_type_style
+    if !self.type_style.blank?
+      decoded = self.type_style.split('|')
+      self.type = decoded[0]
+      self.style = decoded[1]
+    end
   end
 
   ###
