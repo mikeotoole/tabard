@@ -28,9 +28,9 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
     when :standard
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=1280x600"
+      "/assets/community/bg.jpg"
     else
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
+      "/assets/community/bg.jpg"
     end
   end
 
