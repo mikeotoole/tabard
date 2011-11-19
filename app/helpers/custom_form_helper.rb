@@ -15,7 +15,16 @@ module CustomFormHelper
   ###
   def add_question_link(name, f, options={})
     question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new }
-    page = %{ $(this).parent('.add').before("#{escape_javascript question}"); }
+    page = %{
+      $(this)
+        .closest('form')
+        .find('.questions')
+        .append("#{escape_javascript question}")
+        .find('>li:last')
+        .trigger('load')
+        .hide()
+        .slideDown(400);
+    }
     link_to_function name, page, options
   end
 end

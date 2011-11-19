@@ -537,6 +537,10 @@ body
         +bg_gradient(#FDF3EE,#F2E5E1)
         color: #580B15
         height: auto
+        z-index: 11
+        
+        &:before
+          z-index: 12
       
         li
         
@@ -1692,15 +1696,16 @@ body
           textarea
             height: 120px
         
-      >ul
+      ul.questions
         
         >li
-          background: #B18567
-          border: 1px solid #916648
+          +bg_gradient(#E5DAD3,rgba(#fff,0))
+          border-top: 1px solid #bb8b7d
           +border_radius(5)
           clear: both
           margin: 0 0 15px
           padding: 0 10px
+          position: relative
           
           &:after
             clear: both
@@ -1708,9 +1713,6 @@ body
             display: block
             height: 0
             visibility: hidden
-          
-          &:hover
-            z-index: 9
           
           >div
             height: 125px
@@ -1723,9 +1725,36 @@ body
             &.right
               float: right
           
-            >label,
-            >p >label
-              color: #5F200E
+          a.remove
+            background: #A03A1B
+            color: #E4D4A8
+            display: block
+            height: 20px
+            overflow: hidden
+            padding: 0
+            position: absolute
+            right: 10px
+            text-decoration: none
+            text-indent: -500em
+            top: 5px
+            width: 20px
+            
+            &:before
+              content: '\00D7'
+              font: 17px DinLight, sans
+              height: 20px
+              left: 0
+              line-height: 17px
+              padding: 0
+              position: absolute
+              text-align: center
+              text-indent: 0
+              top: 0
+              width: 20px
+            
+            &:hover
+              background: #CC4820
+              color: #fff
 
 
 @import application/footer
