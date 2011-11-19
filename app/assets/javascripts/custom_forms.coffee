@@ -1,10 +1,13 @@
 $(document).ready ->
 
-  $('.add a')
-    .bind 'ajax:beforeSend', ->
-      $(this).closest('.add').addClass('busy')
-    .bind 'ajax:error', (xhr, status, error) ->
-      $(this).closest('.add').removeClass('busy')
-      $.alert { body: 'Error: unable to add question.' }
-    .bind 'ajax:success', (event, data, status, xhr) ->
-      $.alert { body: data.responseText }
+  $('form.custom_form >fieldset >ul >li')
+    .live 'load', ->
+      $(this)
+        .append('<a class="remove">Remove</a>')
+        .find('.remove')
+        .bind 'click', ->
+          $(this)
+            .closest('li')
+            .slideUp 400, ->
+              $(this).remove()
+    .trigger 'load'
