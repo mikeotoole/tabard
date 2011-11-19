@@ -470,7 +470,7 @@ body
       padding: 30px 1px 1px
       position: absolute
       +transition(box-shadow .2s linear)
-      width: 430px
+      width: 428px
       z-index: 9
           
       &:before
@@ -1668,12 +1668,64 @@ body
       margin-left: 10px
       margin-right: 10px
     
-    .submit
-      +bg_gradient(#EBDED5,rgba(#fff,0))
-      +border_radius(5,5,0,0)
-      border-top: 1px solid #C8B3A4
-      clear: both
-      padding: 15px 15px 30px
+  .submit
+    +bg_gradient(#EBDED5,rgba(#fff,0))
+    +border_radius(5,5,0,0)
+    border-top: 1px solid #C8B3A4
+    clear: both
+    margin: 15px 0
+    padding: 15px 15px 30px
+  
+  // Custom Forms
+  form.custom_form
+    
+    >fieldset
+    
+      >ol
+        position: relative
+        
+        li.instructions
+          position: absolute
+          right: 0
+          top: 0
+          
+          textarea
+            height: 120px
+        
+      >ul
+        
+        >li
+          background: #B18567
+          border: 1px solid #916648
+          +border_radius(5)
+          clear: both
+          margin: 0 0 15px
+          padding: 0 10px
+          
+          &:after
+            clear: both
+            content: ''
+            display: block
+            height: 0
+            visibility: hidden
+          
+          &:hover
+            z-index: 9
+          
+          >div
+            height: 125px
+            padding: 0
+          
+            &.left
+              float: left
+              width: 50%
+          
+            &.right
+              float: right
+          
+            >label,
+            >p >label
+              color: #5F200E
 
 
 @import application/footer

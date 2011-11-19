@@ -1,0 +1,8 @@
+= f.simple_fields_for question, :index => Time.now.to_i do |qf|
+  .left
+    = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question'
+    .select
+      = qf.collection_radio :type_style, [['TextQuestion|short_answer_question','Short Answer'],['TextQuestion|long_answer_question','Long Answer'],['MultiSelectQuestion|check_box_question','Checkboxes'],['SingleSelectQuestion|radio_button_question','Radio Buttons'],['SingleSelectQuestion|select_box_question','Dropdown']], :first, :last
+  .right
+    = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)'
+    = qf.input :required, :as => :boolean, :wrapper => false
