@@ -9,12 +9,12 @@ class WowCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  #attr_accessible :name, :faction, :race, :level, :server, :game, :discussion
+  attr_accessible :name, :race, :level, :wow_id, :avatar
 
 ###
 # Associations
 ###
-  belongs_to :wow, :foreign_key => :game_id
+  belongs_to :wow
 
 ###
 # Validators
@@ -45,17 +45,16 @@ class WowCharacter < BaseCharacter
   end
 end
 
+
 # == Schema Information
 #
 # Table name: wow_characters
 #
 #  id         :integer         not null, primary key
 #  name       :string(255)
-#  faction    :string(255)
 #  race       :string(255)
 #  level      :integer
-#  server     :string(255)
-#  game_id    :integer
+#  wow_id     :integer
 #  avatar     :string(255)
 #  created_at :datetime
 #  updated_at :datetime

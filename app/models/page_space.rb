@@ -9,12 +9,13 @@ class PageSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :game_id
+  attr_accessible :name, :game_id, :game_type
 
 ###
 # Associations
 ###
-  belongs_to :game
+  belongs_to :supported_game
+  has_one :game, :through => :supported_game
   belongs_to :community
   has_many :pages, :dependent => :destroy
 
@@ -29,7 +30,7 @@ class PageSpace < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
-  delegate :name, :to => :community, :prefix => true, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true
 
 ###
 # Public Methods
@@ -47,18 +48,6 @@ class PageSpace < ActiveRecord::Base
   end
 
   ###
-  # This method gets the name of the game this page space belongs to, if it has
-  # one. If it is not associated with a game an empty string is returned.
-  # [Returns] The game that this discussion space belongs to, otherwise empty string.
-  ###
-  def game_name
-    if self.game
-      self.game.name
-    else
-      ''
-    end
-  end
-  ###
   # This method validates that the selected game is valid for the community.
   ###
   def game_is_valid_for_community
@@ -70,13 +59,15 @@ end
 
 
 
+
+
 # == Schema Information
 #
 # Table name: page_spaces
 #
 #  id           :integer         not null, primary key
 #  name         :string(255)
-#  game_id      :integer
+#  supported_gam:integer
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime

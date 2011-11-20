@@ -8,6 +8,8 @@
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  game_announcement_space_id :integer
+#  name                       :string(255)
+#  game_type                  :string(255)
 #
 
 require 'spec_helper'

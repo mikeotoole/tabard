@@ -2,14 +2,11 @@ FactoryGirl.define do
   factory :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
     swtor { DefaultObjects.swtor }
-    server "Default SWTOR Server"
   end
   
   factory :wow_character do
     sequence(:name) {|n| "WOW Character #{n}" }
     wow { DefaultObjects.wow }
-    server "Default WOW Server"
-    faction "Horde"
     race "Goblin"
     level 20
   end

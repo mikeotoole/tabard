@@ -7,22 +7,29 @@
 ###
 class SupportedGame < ActiveRecord::Base
 ###
+# Attribute accessible
+###
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :name, :game_id, :game_type
+
+###
 # Associations
 ###
   belongs_to :community
-  belongs_to :game
+  belongs_to :game, :polymorphic => true
   belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
 
 ###
 # Delegates
 ###
-  delegate :name, :to => :game, :allow_nil => true
+  delegate :name, :to => :game, :prefix => true
 
 ###
 # Validators
 ###
   validates :community, :presence => true
   validates :game, :presence => true
+  validates :name, :presence => true
 
 ###
 # Callbacks
@@ -44,7 +51,7 @@ protected
   ###
   def make_game_announcement_space
     if !self.game_announcement_space
-      space = DiscussionSpace.new(:name => "#{self.game.name} Announcements")
+      space = DiscussionSpace.new(:name => "#{self.name} #{self.game_name} Announcements")
       if space
         space.community = self.community
         space.game = self.game
@@ -60,6 +67,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -70,5 +78,7 @@ end
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  game_announcement_space_id :integer
+#  name                       :string(255)
+#  game_type                  :string(255)
 #
 

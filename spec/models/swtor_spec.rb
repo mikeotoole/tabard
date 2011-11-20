@@ -1,13 +1,13 @@
 # == Schema Information
 #
-# Table name: games
+# Table name: swtors
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  type       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  pretty_url :string(255)
+#  id          :integer         not null, primary key
+#  faction     :string(255)
+#  server_name :string(255)
+#  server_type :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 require 'spec_helper'

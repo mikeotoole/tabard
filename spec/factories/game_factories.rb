@@ -1,11 +1,28 @@
 FactoryGirl.define do
   factory :swtor do
-    name "Star Wars the Old Republic"
-    pretty_url "star-wars-old-republic-guilds"
+    faction "Sith"
+    server_name "server name"
+    server_type "PvE"
   end
   
   factory :wow do
-    name "World of Warcraft"
-    pretty_url "world-of-warcraft-guilds"
+    faction "Alliance"
+    server_name "server name"
+    server_type "PvE"    
   end
+  
+  factory :supported_game do
+    community_id { DefaultObjects.community.id }
+    association :game, :factory => :wow
+  end
+  
+  factory :wow_supported_game do
+    community_id { DefaultObjects.community.id }
+    association :game, :factory => :wow
+  end
+  
+  factory :swtor_supported_game do
+    community_id { DefaultObjects.community.id }
+    association :game, :factory => :swtor
+  end  
 end

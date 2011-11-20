@@ -9,12 +9,12 @@ class SwtorCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  #attr_accessible :name, :server, :game, :discussion
+  attr_accessible :name, :swtor_id, :avatar
 
 ###
 # Associations
 ###
-  belongs_to :swtor, :foreign_key => :game_id
+  belongs_to :swtor
 
 ###
 # Validators
@@ -45,14 +45,14 @@ class SwtorCharacter < BaseCharacter
   end
 end
 
+
 # == Schema Information
 #
 # Table name: swtor_characters
 #
 #  id         :integer         not null, primary key
 #  name       :string(255)
-#  server     :string(255)
-#  game_id    :integer
+#  swtor_id   :integer
 #  avatar     :string(255)
 #  created_at :datetime
 #  updated_at :datetime

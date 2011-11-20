@@ -34,8 +34,6 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Associations
 ###
-  # The game the character belongs to.
-  belongs_to :game
   #The character_proxy that associates this character to a user.
   has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
 
@@ -43,7 +41,6 @@ class BaseCharacter < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :game, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
