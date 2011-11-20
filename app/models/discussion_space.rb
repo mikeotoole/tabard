@@ -15,7 +15,6 @@ class DiscussionSpace < ActiveRecord::Base
 # Associations
 ###
   belongs_to :supported_game
-  has_one :game, :through => :supported_game
   belongs_to :community
   has_many :discussions, :dependent => :destroy
 
@@ -24,7 +23,6 @@ class DiscussionSpace < ActiveRecord::Base
 ###
   validates :name, :presence => true
   validates :community, :presence => true
-  validate :game_is_valid_for_community
 
 ###
 # Delegates
@@ -39,20 +37,21 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+
+  def game
+    if self.supported_game
+      self.supported_game.game
+    else
+      nil
+    end    
+  end
+  
   ###
   # This method checks to see if this discussion sapce exists in a game context.
   # [Returns] True if space has game context. False otherwise.
   ###
   def has_game_context?
-    self.game_id != nil
-  end
-
-  ###
-  # This method validates that the selected game is valid for the community.
-  ###
-  def game_is_valid_for_community
-    return unless self.game
-    self.errors.add(:game_id, "this game is not part of the community") unless self.community.games.map{|g| g.id}.include?(self.game.id)
+    self.supported_game_id != nil
   end
 
   ###
@@ -63,12 +62,6 @@ class DiscussionSpace < ActiveRecord::Base
     self.discussions.count
   end
 end
-
-
-
-
-
-
 
 # == Schema Information
 #

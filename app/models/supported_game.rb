@@ -30,7 +30,7 @@ class SupportedGame < ActiveRecord::Base
   validates :community, :presence => true
   validates :game, :presence => true
   validates :name, :presence => true
-
+  
 ###
 # Callbacks
 ###
@@ -54,7 +54,7 @@ protected
       space = DiscussionSpace.new(:name => "#{self.name} #{self.game_name} Announcements")
       if space
         space.community = self.community
-        space.game = self.game
+        space.supported_game = self
         space.is_announcement = true
         space.save!
         self.game_announcement_space = space

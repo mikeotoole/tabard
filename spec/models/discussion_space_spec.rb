@@ -39,8 +39,8 @@ describe DiscussionSpace do
     wow_space.has_game_context?.should be_true
   end 
 
-  it "game_name should return '' if there is no game" do
-    space.game_name.should eq('')
+  it "game_name should return nil if there is no game" do
+    space.game_name.should be_nil
   end 
   
   it "game_name should return game name if there is a game" do
@@ -54,14 +54,5 @@ describe DiscussionSpace do
   it "should not allow access to is_announcement flag" do
     wow_space.update_attributes(:is_announcement => true).should be_true
     DiscussionSpace.find(wow_space).is_announcement.should be_false
-  end
-
-  describe "game_is_valid_for_community" do
-    it "should allow a community supported game" do
-      build(:discussion_space, :game_id => DefaultObjects.wow.id).should be_valid  
-    end
-    it "should not allow a non-community supported game" do
-      build(:discussion_space, :game_id => DefaultObjects.swtor.id).should_not be_valid  
-    end
   end
 end
