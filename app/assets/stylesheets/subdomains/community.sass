@@ -448,13 +448,12 @@ body
           +bg_gradient(#CD4723,#A1391D)
   
   div.select
-    height: 33px
     float: left
     margin: 0 5px 0 0
     width: 435px
   
   .select
-    height: 55px
+    padding: 0 0 48px
     position: relative
   
     ul
@@ -556,6 +555,7 @@ body
   fieldset
   
     li
+      clear: both
       padding: 10px 0
   
       label
@@ -579,6 +579,7 @@ body
         +box_shadow(0 0 3px #ddd)
         border: 1px solid #fff
         display: block
+        position: relative
         +transition(box-shadow .2s linear)
         width: 410px
         
@@ -587,6 +588,7 @@ body
           +box_shadow(0 0 8px #560B17)
           +bg_gradient(#FDF3EE,#F2E5E1)
           color: #580B15
+          z-index: 3
         
         &[disabled]
           color: #999
@@ -750,6 +752,9 @@ body
                   
                 &.review
                   background-position: -120px -30px
+                
+                &.submission
+                  background-position: -600px -30px
             
           img.avatar
             background: #C7B2A3
@@ -1466,7 +1471,8 @@ body
       height: 175px
   
   
-  // Community Applications
+  // Submissions & Community Applications
+  .submission,
   .community_application
     margin: -30px 0 0 0
   
@@ -1649,8 +1655,6 @@ body
               width: 558px
               
             .select
-              float: none
-              margin: 0 0 30px
               width: auto
               
               ul
@@ -1703,8 +1707,9 @@ body
           border-top: 1px solid #bb8b7d
           +border_radius(5)
           clear: both
-          margin: 0 0 15px
-          padding: 0 10px
+          height: auto
+          margin: 0 0 20px
+          padding: 20px 10px
           position: relative
           
           &:after
@@ -1713,37 +1718,24 @@ body
             display: block
             height: 0
             visibility: hidden
-          
-          >div
-            height: 125px
-            padding: 0
-          
-            &.left
-              float: left
-              width: 50%
-          
-            &.right
-              float: right
-          
+              
           a.remove
             background: #A03A1B
             color: #E4D4A8
             display: block
             height: 20px
-            overflow: hidden
-            padding: 0
+            line-height: 20px
+            padding: 0 25px 0 5px
             position: absolute
             right: 10px
             text-decoration: none
-            text-indent: -500em
-            top: 5px
-            width: 20px
+            top: 10px
             
             &:before
               content: '\00D7'
               font: 17px DinLight, sans
               height: 20px
-              left: 0
+              right: 0
               line-height: 17px
               padding: 0
               position: absolute
@@ -1755,6 +1747,91 @@ body
             &:hover
               background: #CC4820
               color: #fff
+              
+          >div
+            
+            p
+              padding: 0
+          
+            &.left
+              float: left
+              width: 50%
+              
+              .select
+                float: left
+                margin-top: 5px
+                width: 185px
+                
+                ul
+                  width: 176px
+                  
+                  input:checked + label
+                    width: 160px
+              
+              .optreq
+                float: left
+                margin: 8px 0 0
+              
+              .explanation
+                clear: left
+          
+            &.right
+              float: right
+                
+              .answers
+                margin: -5px 0 0
+                
+                li
+                  background: #ECE5E0
+                  +border_radius(5)
+                  margin: 0 0 1px
+                  padding: 5px
+                  position: relative
+                  
+                  input
+                    margin: 0 25px 0 0
+                    width: 380px
+                  
+                  .remove
+                    background: #A28052
+                    overflow: hidden
+                    padding: 0
+                    right: 5px
+                    text-indent: -500em
+                    top: 10px
+                    width: 20px
+                    
+                    &:hover
+                      background: #896243
+                      
+    .add
+      text-align: right
+      
+      a
+        background: #A03A1B
+        color: #E4D4A8
+        height: 20px
+        line-height: 20px
+        padding: 0 25px 0 5px
+        position: relative
+        text-decoration: none
+        
+        &:before
+          content: '\002B'
+          font: 17px DinLight, sans
+          height: 20px
+          right: 0
+          line-height: 17px
+          padding: 0
+          position: absolute
+          text-align: center
+          text-indent: 0
+          top: 0
+          width: 20px
+        
+        &:hover
+          background: #CC4820
+          color: #fff
 
 
 @import application/footer

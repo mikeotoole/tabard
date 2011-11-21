@@ -33,7 +33,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # POST /custom_forms
   def create
     add_new_flash_message('Form was successfully created.') if @custom_form.save
-    respond_with @custom_form
+    respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
   end
 
   # PUT /custom_forms/1
@@ -42,7 +42,7 @@ class Subdomains::CustomFormsController < SubdomainsController
       add_new_flash_message 'Form was successfully updated.', 'success'
     end
     logger.debug("#{@custom_form.questions.to_yaml}")
-    respond_with @custom_form
+    respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
   end
 
   # DELETE /custom_forms/1

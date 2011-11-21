@@ -6,16 +6,16 @@
     %tr
       %th Name
       %th Instructions
-      %th Submissions
       %th 
   %tbody
     - @custom_forms.each do |custom_form|
       %tr
-        %td.cinch= link_to custom_form.name, custom_form.application_form? ? new_community_application_path : custom_form
+        %td.cinch= link_to custom_form.name, custom_form.application_form? ? new_community_application_path : new_custom_form_submission_path(custom_form)
         %td= custom_form.instructions
-        %td= custom_form.submissions.size
         %td.actions
           %div
+            - if can? :view_submissions, custom_form
+              = link_to 'Submissions', custom_form_submissions_path(custom_form), :class => 'submission', :meta => custom_form.submissions.any? ? pluralize(custom_form.submissions.size,'submission') : 'No submissions'
             - if can? :update, custom_form
               = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
             - if can? :delete, custom_form

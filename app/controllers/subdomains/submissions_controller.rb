@@ -25,12 +25,13 @@ class Subdomains::SubmissionsController < SubdomainsController
 
   # GET /submissions/:id(.:format)
   def show
-
   end
 
   # GET /custom_forms/:custom_form_id/submissions/new(.:format)
   def new
-
+    @submission.custom_form_questions.each do |question|
+      @submission.answers.new(:question_id => question.id)
+    end
   end
 
   # POST /custom_forms/:custom_form_id/submissions(.:format)

@@ -19,8 +19,6 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # GET /custom_forms/:custom_form_id/questions/new(.:format)
   def new
-    layout nil
-    render :partial => 'subdomains/custom_forms/question'
   end
 
   # POST /custom_forms/:custom_form_id/questions(.:format)

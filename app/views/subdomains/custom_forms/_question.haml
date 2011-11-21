@@ -6,6 +6,15 @@
       = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question'
       .select
         = qf.collection_radio :type_style, [['TextQuestion|short_answer_question','Short Answer'],['TextQuestion|long_answer_question','Long Answer'],['MultiSelectQuestion|check_box_question','Checkboxes'],['SingleSelectQuestion|radio_button_question','Radio Buttons'],['SingleSelectQuestion|select_box_question','Dropdown']], :first, :last
+      .optreq
+        = qf.input :required, :as => :boolean, :wrapper => false
+      .explanation
+        = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)'
     .right
-      = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)'
-      = qf.input :required, :as => :boolean, :wrapper => false
+      - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type)
+        %label Predefined Answers
+        - if question.predefined_answers.any?
+          %ol.answers
+            - question.predefined_answers.each do |answer|
+              = qf.simple_fields_for :predefined_answers, answer do |af|
+                = af.input :body, :as => :string, :label => false

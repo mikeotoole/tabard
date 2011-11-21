@@ -53,7 +53,7 @@
         %td.actions
           %div
             - if can? :show, community_application
-              = link_to 'Review', community_application, :class => 'review', :meta => "Review #{community_application.user_profile_display_name}'s application"
+              = link_to 'Review', community_application, :class => 'submission', :meta => "#{community_application.user_profile_display_name}'s application"
     %tfoot
       %tr
         %td{ :colspan => 5 }

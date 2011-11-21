@@ -13,9 +13,5 @@
       %td= submission.custom_form_id
       %td= submission.user_profile_id
       %td= link_to 'Show', submission
-      %td= link_to 'Edit', edit_submission_path(submission)
+      -#%td= link_to 'Edit', edit_submission_path(submission)
       %td= link_to 'Destroy', submission, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Submission', new_submission_path

@@ -1,7 +1,8 @@
 $(document).ready ->
 
-  $('form.custom_form >fieldset >ul >li')
-    .live 'load', ->
+  # Removal links
+  $('form.custom_form >fieldset >ul >li, form.custom_form .answers li')
+    .one 'load', ->
       $(this)
         .append('<a class="remove">Remove</a>')
         .find('.remove')
