@@ -9,8 +9,8 @@
     %h2 Questions
     %ul.questions
       - if custom_form.questions.any?
-        - custom_form.questions.each do |question|
-          = render 'question', :f => f, :question => question
+        - custom_form.questions.each_with_index do |question,q|
+          = render 'question', :f => f, :question => question, :q => q
     %p.add
       = add_question_link 'Add a question', f
     %p.submit

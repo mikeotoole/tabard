@@ -15,7 +15,7 @@ class SelectQuestion < Question
 ###
 # Attribute accessible
 ###
-  attr_accessible :predefined_answer
+  attr_accessible :predefined_answers_attributes
 
 ###
 # Associations
