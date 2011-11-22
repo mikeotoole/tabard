@@ -1,6 +1,6 @@
 - if question.type or true #HACK - checking for question.type magically puts q in scope. why? who the hell knows?
   %li{ :question => q, :question_id => (question.id ||= '') }
-    = f.simple_fields_for :questions, question do |qf|
+    = f.simple_fields_for :questions, question, :child_index => (question.persisted? ? nil : q) do |qf|
       =qf.input :type, :as => :hidden,  :wrapper => false
       =qf.input :style, :as => :hidden, :wrapper => false
       .left
