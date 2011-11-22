@@ -41,7 +41,6 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form.update_attributes(params[:custom_form])
       add_new_flash_message 'Form was successfully updated.', 'success'
     end
-    logger.debug("#{@custom_form.questions.to_yaml}")
     respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
   end
 

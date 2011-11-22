@@ -16,7 +16,6 @@ class Question < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :body, :style, :type, :required, :explanation, :type_style
-  attr_accessor :type_style
 
 ###
 # Associations
@@ -35,8 +34,8 @@ class Question < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :ensure_type_is_not_changed
-  before_validation :decode_type_style
+  before_save :ensure_type_and_style_is_not_changed
+  #before_validation :decode_type_style
 
 ###
 # Delegates
@@ -69,17 +68,39 @@ class Question < ActiveRecord::Base
   ###
   # This method ensures that type is not editable.
   ###
-  def ensure_type_is_not_changed
+  def ensure_type_and_style_is_not_changed
     self.type = self.type_was if self.type_changed? and self.persisted?
     true
   end
-  
-  def decode_type_style
-    if !self.type_style.blank?
-      decoded = self.type_style.split('|')
+
+  def type_style=(new_thing)
+    return if new_thing == self.type_style
+    if self.persisted? 
+      decoded = new_thing.split('|')
+      my_clone = self.type.constantize.new
+      my_clone.body = self.body
+      my_clone.style = self.style
+      my_clone.custom_form_id = self.custom_form_id
+      my_clone.explanation = self.explanation
+      my_clone.required = self.required
+      my_clone.save
+      if self.respond_to?(:predefined_answers)
+        self.predefined_answers.update_all(:select_question_id => my_clone.id)
+      end
+      if self.respond_to?(:answers)
+        self.answers.update_all(:question_id => my_clone.id)
+      end
+      my_clone.destroy
+      self.update_attribute(:type, decoded[0])
+      self.update_attribute(:style, decoded[1])
+    else
+      decoded = new_thing.split('|')
       self.type = decoded[0]
       self.style = decoded[1]
     end
+  end
+  def type_style
+    "#{self.type.to_s}|#{self.style}"
   end
 
   ###
