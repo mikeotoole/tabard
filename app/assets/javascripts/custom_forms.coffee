@@ -1,18 +1,35 @@
 $(document).ready ->
 
   # Remove question link
-  $('form.custom_form >fieldset >ul >li')
-    .one 'load', ->
+  $('form.custom_form .questions >li')
+    .live 'load', ->
       $(this)
         .append('<a class="remove">Remove Question</a>')
         .find('.remove')
         .bind 'click', ->
           li = $(this).closest('li')
           question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
-          q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+li.attr('question_id')+'">'
+          qid = li.attr('question_id')
+          q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
           li.slideUp 400, ->
             $(this).replaceWith(question + q)
-    .trigger 'load'
+      $(this)
+        .find('.select input')
+        .bind 'change', ->
+          select = $(this).closest('.select')
+          li = select.closest('li')
+          val = select.find('input:checked').val()
+          right = li.find('.right')
+          answers = right.find('.answers')
+          if val.match /textquestion/i
+            right.addClass('hidden')
+            answers.find('input').attr('readonly',true)
+          else
+            right.removeClass('hidden')
+            answers.find('input').removeAttr('readonly')
+            if answers.find('li').size() == 0
+              right.find('.add a').trigger 'click'
+  .trigger 'load'
     
   # Add answer link
   $('form.custom_form .right')

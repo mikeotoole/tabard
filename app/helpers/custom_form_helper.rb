@@ -14,7 +14,7 @@ module CustomFormHelper
   # [Returns] herp
   ###
   def add_question_link(name, f, options={})
-    question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new, :q => Time.now.to_s }
+    question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new, :q => Time.now.to_s.gsub(/[^\d\w]/,'') }
     page = %{
       $(this)
         .closest('form')
