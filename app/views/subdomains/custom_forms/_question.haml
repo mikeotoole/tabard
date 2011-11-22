@@ -11,11 +11,10 @@
           = qf.input :required, :as => :boolean, :wrapper => false
         .explanation
           = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)'
-      .right
-        - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type)
-          %label Predefined Answers
-          - if question.predefined_answers.any?
-            %ol.answers
-              - question.predefined_answers.each_with_index do |answer,a|
-                = qf.simple_fields_for :predefined_answers, answer do |af|
-                  = af.input :body, :as => :string, :label => false, :wrapper_html => { :question => q, :answer => a }
+      %div{ :class => 'right' + (['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) ? '' : ' hidden') }
+        %label Predefined Answers
+        %ol.answers
+          - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) and question.predefined_answers.any?
+            - question.predefined_answers.each_with_index do |answer,a|
+              = qf.simple_fields_for :predefined_answers, answer do |af|
+                = af.input :body, :as => :string, :label => false, :wrapper_html => { :question => q, :answer => a }
