@@ -114,6 +114,16 @@ class Question < ActiveRecord::Base
     question_clone.save
     question_clone
   end
+
+  def destroy
+      run_callbacks :destroy do
+        if self.answers.empty?
+          self.delete
+        else
+          self.update_attribute(:custom_form_id, nil)
+        end
+      end
+    end
 end
 
 

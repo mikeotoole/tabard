@@ -41,11 +41,8 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # DELETE /questions/:id(.:format)
   def destroy # TODO Joe, How can we move this logic to the model? -MO
-    if @question and @question.answers.empty?
+    if @question
       add_new_flash_message('Question was successfully deleted.') if @question.destroy
-    else
-      @question.custom_form_id = nil
-      add_new_flash_message('Question was successfully deleted.') if @question.save
     end
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end

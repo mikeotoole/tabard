@@ -89,13 +89,17 @@ class CommunityApplication < ActiveRecord::Base
     return false unless self.pending?
     self.update_attribute(:status, "Accepted")
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    self.character_proxies.each do |proxy|
-      RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy) # TODO ??????
-    end
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Accepted", :body => "Your application to #{self.community.name} has been accepted.", :to => [self.user_profile.id])
     message.system_sent = true
     message.save
+    self.character_proxies.each do |proxy|
+      if self.community.protected_roster
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
+      else
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
+      end
+    end
   end
 
   ###

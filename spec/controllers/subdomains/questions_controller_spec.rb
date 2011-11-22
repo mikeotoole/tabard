@@ -14,7 +14,8 @@ describe Subdomains::QuestionsController do
   describe "GET index" do
     it "assigns all questions as @questions" do
       sign_in user
-      question
+      pending
+      question.custom_form_id.should eq(custom_form.id)
       get :index, :custom_form_id => custom_form.id
       assigns(:questions).should eq([question])
     end
