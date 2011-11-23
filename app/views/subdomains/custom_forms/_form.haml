@@ -1,6 +1,6 @@
 = javascript_include_tag "custom_forms"
 
-= simple_form_for custom_form do |f|
+= simple_form_for custom_form, :html => {:novalidate => true} do |f|
   %fieldset
     %ol
       = f.input :name
