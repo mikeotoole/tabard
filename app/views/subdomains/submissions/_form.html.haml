@@ -15,14 +15,14 @@
                 - when 'long_answer_question'
                   = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_required
               - when 'SingleSelectQuestion'
-                - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
                 - case answer.question_style
                 - when 'select_box_question'
                   .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_required
                 - when 'radio_buttons_question'
                   = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
               - when 'MultiSelectQuestion'
-                - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
                 = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
   .sidebar
     .instructions

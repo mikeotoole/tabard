@@ -4,8 +4,8 @@
   %fieldset
     %ol
       = f.input :name
-      = f.input :instructions, :wrapper_html => { :class => 'instructions' }
       = f.input :thankyou, :label => 'Thank you message', :hint => 'This message will be displayed to users upon submission of the form.'
+      = f.input :instructions, :wrapper_html => { :class => 'instructions' }
     %h2 Questions
     %ul.questions
       - if custom_form.questions.any?

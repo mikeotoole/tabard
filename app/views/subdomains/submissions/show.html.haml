@@ -1,10 +1,20 @@
-%p#notice= notice
+- title "Submission | #{@submission.custom_form_name} | #{current_community.name}"
 
-%pre=YAML::dump @submission.answers
-
-%p
-  %b Custom form:
-  = @submission.custom_form_id
-%p
-  %b User profile:
-  = @submission.user_profile_id
+.submission
+  .sidebar
+    .submitter
+      %h2 Submitted by
+      %a{ :href => user_profile_url(@submission.user_profile, :subdomain => false) }
+        = image_tag @submission.user_profile_avatar_url(:tiny), :class => 'avatar'
+        = @submission.user_profile_display_name
+  - if @submission.answers.size > 0
+    .questions
+      %h2 Question Answers
+      %dl
+        - @submission.answers.each do |answer|
+          %dt= answer.question_body
+          %dd= answer.body
+  
+  - if can? :destroy, @submission
+    %p.submit
+      = link_to 'Delete Submission', @submission, :confirm => 'Are you sure?', :method => :delete, :class => 'button'

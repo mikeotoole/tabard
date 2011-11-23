@@ -13,7 +13,7 @@
           %td.cinch
             %time= l submission.created_at, :format => :date_short
           %td
-            = link_to submission.user_profile_name, custom_form_submission_path(@form,submission)
+            = link_to submission.user_profile_display_name, custom_form_submission_path(@form,submission)
           %td.actions
             %div
               - if can? :destroy, submission
