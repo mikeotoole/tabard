@@ -36,6 +36,7 @@ class Answer < ActiveRecord::Base
 ###
   before_save :try_to_replicate
 
+  # This trys to transform the body from an array to a comma separated string.
   def try_to_replicate
     if self.body.is_a?(Array)
       self.body = self.body.delete_if{|elem| elem.blank?}.join(', ')

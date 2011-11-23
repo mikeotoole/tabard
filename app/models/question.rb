@@ -79,6 +79,9 @@ class Question < ActiveRecord::Base
     end
   end
 
+  ###
+  # This method attempts to decode and handle changing of a questions type/style
+  ###
   def type_style=(new_thing)
     @type_style = new_thing
     return if new_thing == "#{self.type.to_s}|#{self.style}"
@@ -109,6 +112,10 @@ class Question < ActiveRecord::Base
       self.style = decoded[1]
     end
   end
+
+  ###
+  # This method returns the type|style.
+  ###
   def type_style
     @type_style ||= "#{self.type.to_s}|#{self.style}"
   end
@@ -146,6 +153,9 @@ class Question < ActiveRecord::Base
     question_clone
   end
 
+  ###
+  # This method destroys questions, smartly.
+  ###
   def destroy
       run_callbacks :destroy do
         if self.answers.empty?
