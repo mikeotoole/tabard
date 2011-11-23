@@ -1,3 +1,5 @@
+- title "Submissions for \"#{@form.name}\" | #{current_community.name}"
+
 %h1= "Submissions for \"#{@form.name}\""
 
 - if @submissions.any?
@@ -5,7 +7,7 @@
     %thead
       %tr
         %th Date
-        %th Submission
+        %th Submitted by
         %th
     %tbody
       - @submissions.each do |submission|
@@ -13,9 +15,11 @@
           %td.cinch
             %time= l submission.created_at, :format => :date_short
           %td
-            = link_to submission.user_profile_display_name, custom_form_submission_path(@form,submission)
+            = link_to submission.user_profile_display_name, submission.user_profile
           %td.actions
             %div
+              - if can? :show, submission
+                = link_to submission.user_profile_display_name, custom_form_submission_path(@form,submission), :class => 'submission', :meta => 'Review submission'
               - if can? :destroy, submission
                 = link_to 'Delete', submission, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete submission'
     %tfoot
