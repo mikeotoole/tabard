@@ -5,9 +5,10 @@ $(document).ready ->
     .live 'load', ->
       li = $(this)
       right = $(this).find('.right')
+      li.data('qtype',li.attr('question_type'))
       if $(this).find('>a.remove').size() == 0
         # Remove question link
-        $(this)
+        li
           .append('<a class="remove">Remove Question</a>')
           .find('.remove')
           .bind 'click', ->
@@ -17,7 +18,7 @@ $(document).ready ->
             li.slideUp 400, ->
               $(this).replaceWith(question + q)
         # TypeStyle select change action
-        $(this)
+        li
           .find('.select input')
           .bind 'change', ->
             select = $(this).closest('.select')
@@ -30,7 +31,14 @@ $(document).ready ->
                 .attr('readonly',true)
             else
               right.removeClass('hidden')
-              answers.find('input').removeAttr('disabled readonly')
+              if val == li.data('qtype')
+                answers.find('input').removeAttr('disabled readonly')
+              else
+                answers.find('input[type="hidden"]')
+                  .attr('disabled',true)
+                  .attr('readonly',true)
+                answers.find('input[type="text"]')
+                  .removeAttr('disabled readonly')
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
         # Add answer link
