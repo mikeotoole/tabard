@@ -1,12 +1,10 @@
 %p#notice= notice
 
+%pre=YAML::dump @submission.answers
+
 %p
   %b Custom form:
   = @submission.custom_form_id
 %p
   %b User profile:
   = @submission.user_profile_id
-
-= link_to 'Edit', edit_submission_path(@submission)
-\|
-= link_to 'Back', submissions_path
