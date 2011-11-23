@@ -15,26 +15,30 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :type, :required, :explanation, :type_style
+  attr_accessible :body, :style, :type, :required, :explanation, :type_style, :predefined_answers_attributes
 
 ###
 # Associations
 ###
   belongs_to :custom_form
   has_many :answers
+  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id
 
 ###
 # Validators
 ###
   validates :body,  :presence => true
-  validates :style, :presence => true
+  #validates :style, :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
+  validate :ensure_type_is_not_changed
+
+  accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
 
 ###
 # Callbacks
 ###
-  before_save :ensure_type_and_style_is_not_changed
+  #before_save :ensure_type_and_style_is_not_changed
   #before_validation :decode_type_style
 
 ###
@@ -68,9 +72,11 @@ class Question < ActiveRecord::Base
   ###
   # This method ensures that type is not editable.
   ###
-  def ensure_type_and_style_is_not_changed
-    self.type = self.type_was if self.type_changed? and self.persisted?
-    true
+  def ensure_type_is_not_changed
+    if self.type_changed? and self.persisted?
+      self.type = self.type_was 
+      self.errors.add(:type_style, "can not be changed")
+    end
   end
 
   def type_style=(new_thing)
@@ -84,15 +90,16 @@ class Question < ActiveRecord::Base
       my_clone.explanation = self.explanation
       my_clone.required = self.required
       my_clone.save
-      if self.respond_to?(:predefined_answers)
+      if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
         self.predefined_answers.update_all(:select_question_id => my_clone.id)
       end
-      if self.respond_to?(:answers)
+      if self.respond_to?(:answers) and !self.answers.empty?
         self.answers.update_all(:question_id => my_clone.id)
       end
       my_clone.destroy
-      self.update_attribute(:type, decoded[0])
-      self.update_attribute(:style, decoded[1])
+      self.style = decoded[1]
+      self.type = decoded[0]
+      self.save(:validate => false)
     else
       decoded = new_thing.split('|')
       self.type = decoded[0]

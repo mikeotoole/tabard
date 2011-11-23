@@ -23,6 +23,7 @@ class Answer < ActiveRecord::Base
   validates :question, :presence => true
   #validates :submission, :presence => true
   validates :body, :presence => true, :if => Proc.new { |answer| answer.question_required }
+  before_save :try_to_replicateg
 
 ###
 # Delegates

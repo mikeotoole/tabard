@@ -11,18 +11,6 @@ class SelectQuestion < Question
 ###
   # The list of vaild game subclass types.
   VALID_STYLES = nil
-
-###
-# Attribute accessible
-###
-  attr_accessible :predefined_answers_attributes
-
-###
-# Associations
-###
-  has_many :predefined_answers, :dependent => :destroy
-
-  accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
 end
 
 

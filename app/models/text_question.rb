@@ -10,12 +10,12 @@ class TextQuestion < Question
 # Constants
 ###
   # The list of vaild game subclass types.
-  VALID_STYLES = %w(short_answer_question long_answer_question)
+  #VALID_STYLES = %w(short_answer_question long_answer_question)
 
 ###
 # Validators
 ###
-  validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported text question style"}
+  #validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported text question style"}
 end
 
 
