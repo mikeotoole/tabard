@@ -9,7 +9,7 @@ class Answer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :question_id
+  attr_accessible :body, :question_id, :submission_id
 
 ###
 # Associations
@@ -30,6 +30,17 @@ class Answer < ActiveRecord::Base
   delegate :user_profile_id, :to => :submission, :allow_nil => true
   delegate :required, :to => :question, :prefix => true, :allow_nil => true
   delegate :body, :style, :type, :predefined_answers, :to => :question, :prefix => true
+
+###
+# Callbacks
+###
+  before_save :try_to_replicate
+
+  def try_to_replicate
+    if self.body.is_a?(Array)
+      self.body = self.body.delete_if{|elem| elem.blank?}.join(', ')
+    end
+  end
 end
 
 # == Schema Information
