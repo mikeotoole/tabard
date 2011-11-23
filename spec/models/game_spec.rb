@@ -15,39 +15,5 @@ require 'spec_helper'
 describe Game do
   let(:swtor) { Factory.create(:swtor) }
 
-  describe "name" do
-    it "should be required" do
-      build(:swtor, :name => nil).should_not be_valid
-    end
-  end
-    
-  describe "type" do
-    it "should be set to subclass name" do
-      swtor.type.should eq("Swtor")
-    end
-    
-    it "shouldn't be editable to nil" do
-      swtor.update_attributes(:type => nil).should be_false
-      Game.find(swtor).type.should eq("Swtor")
-    end
-    
-    it "should be editable to valid subclass" do
-      valid_subclasses = %w{ Swtor Wow } # TESTING valid game types.
-      valid_subclasses.each do |type|
-        build(:swtor, :type => type).should be_valid
-      end
-    end
-    
-    it "shouldn't be editable to invalid subclass" do
-      valid_subclasses = %w{ NotASubclass } # TESTING Invalid game types.
-      valid_subclasses.each do |type|
-        build(:swtor, :type => type).should_not be_valid
-      end
-    end
-    
-    it "should validate only one game of each type exists" do
-      swtor.should be_valid
-      build(:swtor, :type => "Swtor").should_not be_valid
-    end
-  end
+  pending
 end

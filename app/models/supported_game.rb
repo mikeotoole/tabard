@@ -10,7 +10,7 @@ class SupportedGame < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :game_id, :game_type
+  attr_accessible :name, :game_id, :game_type, :game
 
 ###
 # Associations
@@ -36,6 +36,10 @@ class SupportedGame < ActiveRecord::Base
 ###
   after_create :make_game_announcement_space
 
+  def full_name
+    "#{self.game_name} - #{self.name}"
+  end
+
 ###
 # Protected Methods
 ###
@@ -56,7 +60,7 @@ protected
         space.community = self.community
         space.supported_game = self
         space.is_announcement = true
-        space.save!
+        space.save
         self.game_announcement_space = space
         self.save
       else

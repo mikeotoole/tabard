@@ -118,11 +118,11 @@ protected
     AppResponder
   end
 
-  # This Method is a helper that exposes the active_games
-  def active_games
-    @active_games ||= Game.all_games
-  end
-  helper_method :active_games
+#   # This Method is a helper that exposes the active_games
+#   def active_games
+#     @active_games ||= Game.all_games
+#   end
+#   helper_method :active_games
 
   # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
   def show_pitch?

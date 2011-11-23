@@ -9,7 +9,7 @@ class WowCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :race, :level, :wow_id, :avatar
+  attr_accessible :name, :race, :level, :wow_id
 
 ###
 # Associations

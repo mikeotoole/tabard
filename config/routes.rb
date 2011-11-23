@@ -29,14 +29,12 @@ DaBvRails::Application.routes.draw do
   resources :communities, :except => :destroy
 
   # Games
-  resources :games, :only => :show
+  get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
+  get "/world-of-warcraft" => 'wows#index', :as => 'wows'
 
   # Characters
-  get "/wow_characters/new" => "base_characters#new", :as => "new_wow_character"
-  get "/swtor_characters/new" => "base_characters#new", :as => "new_swtor_character"
-  resources :wow_characters, :except => [:index, :new]
-  resources :swtor_characters, :except => [:index, :new]
-  resources :base_characters, :only => :new
+  resources :wow_characters, :except => [:index]
+  resources :swtor_characters, :except => [:index]
 
   # Messaging
   resources :sent_messages, :only => [:create]
@@ -94,7 +92,7 @@ DaBvRails::Application.routes.draw do
       # Custom Forms
       resources :custom_forms do
         resources :questions, :shallow => true
-        resources :submissions, :shallow => true, :except => [:update, :edit] do
+        resources :submissions, :shallow => false, :except => [:update, :edit] do
           resources :answers, :except => [:update, :edit, :destroy]
         end
       end

@@ -18,4 +18,22 @@ describe Wow do
   it "should create a new instance given valid attributes" do
     wow.should be_valid
   end
+  
+  describe "faction" do
+    it "should be required" do
+      pending
+    end
+  end
+  
+  describe "server_name" do
+    it "should be required" do
+      pending
+    end
+  end
+  
+  describe "server_type" do
+    it "should be required" do
+      pending
+    end
+  end
 end

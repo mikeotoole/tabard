@@ -22,6 +22,10 @@ describe SwtorCharactersController do
       response.should be_success
     end
   end
+
+  describe "GET 'new'" do
+    pending
+  end  
   
   describe "GET 'edit'" do
     before(:each) do
@@ -58,7 +62,7 @@ describe SwtorCharactersController do
     before(:each) do
       sign_in @user
       @game = DefaultObjects.swtor
-      post 'create', :swtor_character => {:name => "My Test Name", :game_id => @game.id}
+      post 'create', :swtor_character => {:name => "My Test Name", :swtor_id => @game.id}
     end
     
     it "should add new character" do
@@ -77,7 +81,7 @@ describe SwtorCharactersController do
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = DefaultObjects.swtor
-      post 'create', :swtor_character => {:name => "TestName", :game_id => @game.id}
+      post 'create', :swtor_character => {:name => "TestName", :swtor_id => @game.id}
     end
     
     it "should not create new record" do
@@ -114,15 +118,17 @@ describe SwtorCharactersController do
     end
   
     it "should update default when set to true" do
+      SwtorCharacter.find(@characterNotDefault).default.should be_false
       put 'update', :id => @characterNotDefault, :swtor_character => { :default => true }
-      SwtorCharacter.exists?(2).should be_true
-      SwtorCharacter.find(2).default.should be_true
+      SwtorCharacter.exists?(@characterNotDefault).should be_true
+      SwtorCharacter.find(@characterNotDefault).default.should be_true
     end
     
     it "should not update default when set from true to false" do
+      SwtorCharacter.find(@characterDefault).default.should be_true
       put 'update', :id => @characterDefault, :swtor_character => { :default => false }
-      SwtorCharacter.exists?(1).should be_true
-      SwtorCharacter.find(1).default.should be_true
+      SwtorCharacter.exists?(@characterDefault).should be_true
+      SwtorCharacter.find(@characterDefault).default.should be_true
     end
   end
   

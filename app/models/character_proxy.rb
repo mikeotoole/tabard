@@ -37,8 +37,6 @@ class CharacterProxy < ActiveRecord::Base
   delegate :class, :to => :character, :prefix => true
   delegate :name, :to => :character
   delegate :game, :to => :character
-  delegate :game_id, :to => :character
-  delegate :name, :to => :character, :allow_nil => true
   delegate :avatar_url, :to => :character, :allow_nil => true
 
 ###
@@ -71,14 +69,6 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-#   ###
-#   # This method gets the active_profile_id for this character proxy.
-#   # [Returns] The id of this character_proxy's user_profile.
-#   ###
-#   def active_profile_id
-#     self.user_profile.id
-#   end
-
   ###
   # Sets this character proxy as default for characters game.
   ###

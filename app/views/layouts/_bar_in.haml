@@ -37,10 +37,13 @@
                 = image_tag(profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon))
                 = link_to(active_profile_path(:id => profile[:profile_id], :type => profile[:type]), :method => :post) do
                   = profile[:name]
-          %li.extra
-            - if profiles.size > 1
+          - if profiles.size > 1
+            %li.extra
               = link_to 'View all characters', user_profile_path(current_user)
-            - else
-              = link_to 'Add new character', new_base_character_path
+          - else
+            %li.extra
+              = link_to 'Add new WoW character', new_wow_character_path
+            %li.extra
+              = link_to 'Add new SWTOR character', new_swtor_character_path
 
   = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'

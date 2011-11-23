@@ -32,6 +32,11 @@ class BaseCharacter < ActiveRecord::Base
   attr_accessor :default
 
 ###
+# Attribute accessible
+###
+  attr_accessible :avatar, :avatar_cache, :remove_avatar, :default
+
+###
 # Associations
 ###
   #The character_proxy that associates this character to a user.

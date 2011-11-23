@@ -21,23 +21,20 @@ describe SwtorCharacter do
   
   describe "game" do 
     it "should return swtor game" do
-      swtor_character.game.type.should eq("Swtor")
+      swtor_character.game.should be_a(Swtor)
     end
     
     it "should be required" do
-      Factory.build(:swtor_character, :game => nil).should_not be_valid
       Factory.build(:swtor_character, :swtor => nil).should_not be_valid
     end
     
     it "should reject non-Swtor type game" do
-      Factory.build(:swtor_character, :game => DefaultObjects.wow).should_not be_valid
       assert_raises(ActiveRecord::AssociationTypeMismatch) do
         Factory.build(:swtor_character, :swtor => DefaultObjects.wow)
       end
     end
     
     it "should accept Swtor type game" do
-      Factory.build(:swtor_character, :game => DefaultObjects.swtor).should be_valid
       Factory.build(:swtor_character, :swtor => DefaultObjects.swtor).should be_valid
     end
   end

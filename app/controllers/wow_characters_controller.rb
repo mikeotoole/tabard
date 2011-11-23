@@ -17,11 +17,13 @@ class WowCharactersController < ApplicationController
 ###
 # REST Actions
 ###
-  ###
   # GET /wow_characters/:id(.:format)
-  ###
   def show
     respond_with(@wow_character)
+  end
+
+  # GET /wow_characters/new
+  def new
   end
 
   # GET /wow_characters/:id/edit(.:format)

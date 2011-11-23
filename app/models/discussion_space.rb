@@ -9,7 +9,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :game_id, :game_type
+  attr_accessible :name, :supported_game_id
 
 ###
 # Associations
@@ -29,6 +29,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true
+  delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
@@ -69,7 +70,7 @@ end
 #
 #  id              :integer         not null, primary key
 #  name            :string(255)
-#  supported_game_i:integer
+#  supported_game_id :integer
 #  community_id    :integer
 #  created_at      :datetime
 #  updated_at      :datetime

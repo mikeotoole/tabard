@@ -17,11 +17,13 @@ class SwtorCharactersController < ApplicationController
 ###
 # REST Actions
 ###
-  ###
   # GET /swtor_characters/:id(.:format)
-  ###
   def show
     respond_with(@swtor_character)
+  end
+
+  # GET /swtor_characters/new
+  def new
   end
 
   # GET /swtor_characters/:id/edit(.:format)

@@ -23,23 +23,20 @@ describe WowCharacter do
   
   describe "game" do 
     it "should return wow game" do
-      wow_character.game.type.should eq("Wow")
+      wow_character.game.should be_a(Wow)
     end
     
     it "should be required" do
-      build(:wow_character, :game => nil).should_not be_valid
       build(:wow_character, :wow => nil).should_not be_valid
     end
     
     it "should reject non-Wow type game" do
-      build(:wow_character, :game => DefaultObjects.swtor).should_not be_valid
       assert_raises(ActiveRecord::AssociationTypeMismatch) do
         build(:wow_character, :wow => DefaultObjects.swtor)
       end
     end
     
     it "should accept Wow type game" do
-      build(:wow_character, :game => DefaultObjects.wow).should be_valid
       build(:wow_character, :wow => DefaultObjects.wow).should be_valid
     end
   end

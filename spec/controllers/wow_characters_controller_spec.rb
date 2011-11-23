@@ -22,6 +22,10 @@ describe WowCharactersController do
       response.should be_success
     end
   end
+
+  describe "GET 'new'" do
+    pending
+  end
   
   describe "GET 'edit'" do
     before(:each) do
@@ -57,7 +61,7 @@ describe WowCharactersController do
     before(:each) do
       sign_in @user
       @game = DefaultObjects.wow
-      post 'create', :wow_character => {:name => "My Test Name", :game_id => @game.id}
+      post 'create', :wow_character => {:name => "My Test Name", :wow_id => @game.id}
     end
     
     it "should add new character" do
@@ -76,7 +80,7 @@ describe WowCharactersController do
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = Wow.new(:name => "My Wow")
-      post 'create', :wow_character => {:name => "TestName", :game_id => @game.id}
+      post 'create', :wow_character => {:name => "TestName", :wow_id => @game.id}
     end
     
     it "should not create new record" do
@@ -97,7 +101,7 @@ describe WowCharactersController do
     end
   
     it "should change attributes" do
-      WowCharacter.find(1).name.should == @new_name
+      WowCharacter.find(@character).name.should == @new_name
     end
     
     it "should redirect to wow character" do
@@ -113,15 +117,17 @@ describe WowCharactersController do
     end
   
     it "should update default when set to true" do
+      @characterNotDefault.default.should be_false
       put 'update', :id => @characterNotDefault, :wow_character => { :default => true }
-      WowCharacter.exists?(2).should be_true
-      WowCharacter.find(2).default.should be_true
+      WowCharacter.exists?(@characterNotDefault).should be_true
+      WowCharacter.find(@characterNotDefault).default.should be_true
     end
     
     it "should not update default when set from true to false" do
+      @characterDefault.default.should be_true
       put 'update', :id => @characterDefault, :wow_character => { :default => false }
-      WowCharacter.exists?(1).should be_true
-      WowCharacter.find(1).default.should be_true
+      WowCharacter.exists?(@characterDefault).should be_true
+      WowCharacter.find(@characterDefault).default.should be_true
     end
   end  
   
