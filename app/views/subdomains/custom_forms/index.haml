@@ -14,10 +14,10 @@
         %td= custom_form.instructions
         %td.actions
           %div
-            - if can? :view_submissions, custom_form
-              = link_to 'Submissions', custom_form_submissions_path(custom_form), :class => 'submission', :meta => custom_form.submissions.any? ? pluralize(custom_form.submissions.size,'submission') : 'No submissions'
             - if can? :update, custom_form
               = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
+            - if can? :view_submissions, custom_form and custom_form.submissions.any?
+              = link_to 'Submissions', custom_form_submissions_path(custom_form), :class => 'submission', :meta => pluralize(custom_form.submissions.size,'submission')
             - if can? :delete, custom_form
               = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot

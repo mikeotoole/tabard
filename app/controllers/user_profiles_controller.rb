@@ -23,12 +23,10 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1
   def show
-
   end
 
   # GET /user_profiles/1/edit
   def edit
-
   end
 
   # PUT /user_profiles/1
