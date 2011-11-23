@@ -80,7 +80,8 @@ class Question < ActiveRecord::Base
   end
 
   def type_style=(new_thing)
-    return if new_thing == self.type_style
+    @type_style = new_thing
+    return if new_thing == "#{self.type.to_s}|#{self.style}"
     if self.persisted? 
       decoded = new_thing.split('|')
       my_clone = self.type.constantize.new
@@ -92,9 +93,11 @@ class Question < ActiveRecord::Base
       my_clone.save
       if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
         self.predefined_answers.update_all(:select_question_id => my_clone.id)
+        self.predefined_answers.clear
       end
       if self.respond_to?(:answers) and !self.answers.empty?
         self.answers.update_all(:question_id => my_clone.id)
+        self.answers.clear
       end
       my_clone.destroy
       self.style = decoded[1]
@@ -107,7 +110,7 @@ class Question < ActiveRecord::Base
     end
   end
   def type_style
-    "#{self.type.to_s}|#{self.style}"
+    @type_style ||= "#{self.type.to_s}|#{self.style}"
   end
 
   ###
