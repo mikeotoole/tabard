@@ -5,5 +5,3 @@
 .full
   = simple_form_for @page do |f|
     = render 'fields', :page => @page, :f => f
-    %p.submit
-      = f.button :submit, 'Save Changes'
