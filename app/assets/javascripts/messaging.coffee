@@ -56,6 +56,16 @@ $(document).ready ->
     $('#message_to').focus()
   else
     $('#message_body').focus()
+  
+  # Toggle check/uncheck box for messages
+  $('#mailbox-menu .actions')
+    .after('<dd class="toggle"><button type="button" meta="Check/uncheck all messages">Check/uncheck all messages</button></dd>')
+    .closest('dl')
+    .find('.toggle button')
+    .data('checked',false)
+    .click ->
+      $(this).data('checked',!$(this).data('checked'))
+      $('#mailbox dd .meta input').attr('checked',$(this).data('checked'))
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })
