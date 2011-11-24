@@ -5,18 +5,28 @@
       %ul
         - swtor_character.errors.full_messages.each do |msg|
           %li= msg
-
+  =f.hidden_field :avatar_cache
+  .field
+    = f.label :faction
+    = f.select :faction, Swtor::VALID_FACTIONS
+  .field
+    = f.label :server
+    = f.select :server_name, Swtor.servers
   .field
     = f.label :name
     = f.text_field :name
-  .field
-    = f.label :server
-    = f.text_field :server
-  .field
-    = f.label :game_id
-    = f.number_field :game_id
-  .field
-    = f.label :avatar
-    = f.text_field :avatar
+  - if not swtor_character.default # Can only edit a character to the default and not make it the default
+    .field
+      = f.label "Make Default For Game"
+      = f.check_box :default
+  - if swtor_character.default
+    Character is default for this game  
+  .avatar
+    = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url
+    .field
+      = f.file_field :avatar
+    .field
+      =f.label :remote_avatar_url, "or image URL"
+      = f.text_field :remote_avatar_url
   .actions
     = f.submit 'Save'

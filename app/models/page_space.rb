@@ -56,15 +56,16 @@ class PageSpace < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: page_spaces
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
+#  id                :integer         not null, primary key
+#  name              :string(255)
 #  supported_game_id :integer
-#  community_id :integer
-#  created_at   :datetime
-#  updated_at   :datetime
+#  community_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 

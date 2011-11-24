@@ -10,6 +10,8 @@
 #  avatar     :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  char_class :string(255)
+#  about      :text
 #
 
 require 'spec_helper'

@@ -26,7 +26,8 @@ class CharacterProxy < ActiveRecord::Base
 # Validators
 ###
   validates :user_profile, :presence => true
-  validates :character, :presence => true
+  validates :character_id, :presence => true
+  validates :character_type, :presence => true
   # The only way to unset a character as default is to set another as default.
   validate :default_character_not_from_true_to_false, :on => :update
 

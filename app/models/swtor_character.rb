@@ -7,14 +7,25 @@
 ###
 class SwtorCharacter < BaseCharacter
 ###
+# Attribute accessors
+###
+  attr_accessor :faction, :server
+
+###
 # Attribute accessible
 ###
-  attr_accessible :name, :swtor_id
+  attr_accessible :name, :swtor_id, :swtor
 
 ###
 # Associations
 ###
   belongs_to :swtor
+
+###
+# Delegates
+###
+  delegate :faction, :to => :swtor, :allow_nil => true
+  delegate :server_name, :to => :swtor, :allow_nil => true
 
 ###
 # Validators

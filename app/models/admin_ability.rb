@@ -56,6 +56,8 @@ class AdminAbility
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
       can [:destroy], Community
+      can [:read, :create, :update], [Wow, 'Wow']
+      can [:read, :create, :update], [Swtor, 'Swtor']
       can [:toggle_maintenance_mode], SiteActionController
     end
 

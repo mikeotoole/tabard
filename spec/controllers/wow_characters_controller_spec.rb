@@ -129,6 +129,14 @@ describe WowCharactersController do
       WowCharacter.exists?(@characterDefault).should be_true
       WowCharacter.find(@characterDefault).default.should be_true
     end
+    
+    it "should not make character default on update" do
+      @characterNotDefault.default.should be_false
+      put 'update', :id => @characterNotDefault, :wow_character => { :name => "New Name" }
+      WowCharacter.exists?(@characterNotDefault).should be_true
+      WowCharacter.find(@characterNotDefault).default.should be_false
+      WowCharacter.find(@characterNotDefault).name.should eql "New Name"
+    end
   end  
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do

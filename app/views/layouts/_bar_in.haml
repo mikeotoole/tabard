@@ -17,7 +17,7 @@
       = link_to 'Search', '#'
     %li
       %p
-        = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
+        = link_to "My Profile", user_profile_url(current_user.user_profile, :subdomain => false)
         = link_to "Logout", destroy_user_session_url(:subdomain => false)
 
   %ul.characters

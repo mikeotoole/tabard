@@ -114,12 +114,16 @@ class BaseCharacter < ActiveRecord::Base
   # [Returns] A string that contains the display name for this character.
   ###
   def default=(value)
-    self.set_as_default if value
+    self.set_as_default if value == true or value == "1"
   end
 
   # If the character is the default for its game.
   def default
-    self.character_proxy.default_character
+    if self.character_proxy
+      self.character_proxy.default_character ? true : false
+    else
+      return false
+    end    
   end
 
   ###

@@ -2,12 +2,12 @@
 #
 # Table name: page_spaces
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  supported_gam:integer
-#  community_id :integer
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                :integer         not null, primary key
+#  name              :string(255)
+#  supported_game_id :integer
+#  community_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 
 require 'spec_helper'

@@ -32,12 +32,16 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
+    swtor = Swtor.find(:first, :conditions => {:faction => params[:swtor_character][:faction], :server_name => params[:swtor_character][:server_name]})
+    params[:swtor_character][:swtor_id] = swtor.id if swtor 
     @swtor_character = SwtorCharacter.create(params[:swtor_character])
 
-    profile = current_user.user_profile
-    proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:default])
-
-    add_new_flash_message('Character was successfully created.') if proxy.save
+    if @swtor_character.valid?
+      profile = current_user.user_profile
+      proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:swtor_character][:default])
+      add_new_flash_message('Character was successfully created.') if proxy.save
+    end  
+      
     respond_with(@swtor_character)
   end
 
@@ -46,6 +50,8 @@ class SwtorCharactersController < ApplicationController
     @swtor_character = SwtorCharacter.find(params[:id])
     authorize!(:update, @swtor_character)
 
+    swtor = Swtor.find(:first, :conditions => {:faction => params[:swtor_character][:faction], :server_name => params[:swtor_character][:server_name]})
+    @swtor_character.swtor = swtor if swtor
     add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])
     respond_with(@swtor_character)
   end

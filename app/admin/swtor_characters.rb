@@ -1,12 +1,12 @@
 ActiveAdmin.register SwtorCharacter do
-  menu :parent => "Character", :if => proc{ can?(:read, SwtorCharacter) }
+  menu :parent => "Game and Character", :if => proc{ can?(:read, SwtorCharacter) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
 
   filter :id
   filter :name
-  filter :server
+  filter :swtor
   filter :avatar
   filter :created_at
   filter :updated_at
@@ -17,10 +17,10 @@ ActiveAdmin.register SwtorCharacter do
     end
     column :id
     column :name
+    column :swtor, :sortable => false
     column "User Profile" do |character|
       link_to character.user_profile.display_name, [:admin, character.user_profile]
     end
-    column :server
     column :created_at
     column "Destroy" do |character|
       if can? :destroy, character

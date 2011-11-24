@@ -1,15 +1,14 @@
 ActiveAdmin.register WowCharacter do
-  menu :parent => "Character", :if => proc{ can?(:read, WowCharacter) }
+  menu :parent => "Game and Character", :if => proc{ can?(:read, WowCharacter) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
 
   filter :id
   filter :name
-  filter :faction
+  filter :wow
   filter :race
   filter :level
-  filter :server
   filter :avatar
   filter :created_at
   filter :updated_at
@@ -20,13 +19,10 @@ ActiveAdmin.register WowCharacter do
     end
     column :id
     column :name
+    column :wow, :sortable => false
     column "User Profile" do |character|
       link_to character.user_profile.display_name, [:admin, character.user_profile]
     end
-    column :faction
-    column :race
-    column :level
-    column :server
     column :created_at
     column "Destroy" do |character|
       if can? :destroy, character

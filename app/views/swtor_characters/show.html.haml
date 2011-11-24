@@ -1,18 +1,16 @@
 %p#notice= notice
 
 %p
+  = image_tag(@swtor_character.avatar_url)
+%p
+  %b Game:
+  = @swtor_character.swtor.name  
+%p
   %b Name:
   = @swtor_character.name
 %p
-  %b Server:
-  = @swtor_character.server
-%p
-  %b Game:
-  = @swtor_character.game_id
-%p
-  %b Avatar:
-  = @swtor_character.avatar
+  %b Default For Game:
+  = @swtor_character.default
 
-= link_to 'Edit', edit_swtor_character_path(@swtor_character)
-\|
-= link_to 'Back', swtor_characters_path
+- if can? :edit, @swtor_character
+  = link_to 'Edit', edit_swtor_character_path(@swtor_character)

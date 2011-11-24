@@ -17,9 +17,15 @@ if ENV["RAILS_ENV"] != 'test'
 
   puts "Creating Games..."
   alliance_wow_game = Wow.create(:faction => "Alliance", :server_name => "Manamana", :server_type => "PvE")
+  Wow.create(:faction => "Alliance", :server_name => "Burning Legion", :server_type => "PvP")
+  
   horde_wow_game = Wow.create(:faction => "Horde", :server_name => "Manamana", :server_type => "PvE")
+  Wow.create(:faction => "Horde", :server_name => "Burning Legion", :server_type => "PvP")
+  
   republic_swtor_game = Swtor.create(:faction => "Republic", :server_name => "Herp", :server_type => "PvE")
-  sith_swtor_game = Swtor.create(:faction => "Sith", :server_name => "Derp", :server_type => "PvE")
+  Swtor.create(:faction => "Republic", :server_name => "Derp", :server_type => "PvP")
+  sith_swtor_game = Swtor.create(:faction => "Sith", :server_name => "Herp", :server_type => "PvE")
+  Swtor.create(:faction => "Sith", :server_name => "Derp", :server_type => "PvP")
 
   puts "Creating TOS"
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1", published: true)
@@ -95,6 +101,7 @@ if ENV["RAILS_ENV"] != 'test'
   k_fox.save
   miss_fox = WowCharacter.create(:name => "Miss Fox",
     :wow => horde_wow_game,
+    :char_class => "Hunter",
     :race => "Goblin",
     :level => 20)
   k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
@@ -156,11 +163,11 @@ if ENV["RAILS_ENV"] != 'test'
   puts "RoboBilly is getting some characters..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :swtor_id => sith_swtor_game.id))
+    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :swtor => sith_swtor_game))
     rb_cp.approved_character_proxies << proxy
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :wow_id => horde_wow_game.id))
+    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :wow => horde_wow_game, :char_class => "Druid", :race => "Troll"))
     rb_cp.approved_character_proxies << proxy
   end
 

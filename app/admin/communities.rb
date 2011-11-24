@@ -51,8 +51,8 @@ ActiveAdmin.register Community do
 
     div do
       panel("Supported Games") do
-        table_for(community.games) do
-          column :name
+        table_for(community.supported_games) do
+          column :full_name
         end
       end
     end

@@ -28,17 +28,22 @@ class Wow < Game
 ###
   validates :faction,  :presence => true,
                     :inclusion => { :in => VALID_FACTIONS, :message => "%{value} is not a valid faction." } 
-  validates :server_name, :presence => true
   validates :server_type,  :presence => true,
                     :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." }
+  validates :server_name, :presence => true, 
+                    :uniqueness => {:case_sensitive => false, :scope => [:faction, :server_type], :message => "A game with this faction, server name, server type exists."}
 
 ###
 # Public Methods
 ###
 
+  def self.servers
+    Wow.all.collect{|w| w.server_name}.uniq # TODO Joe, Is there a more efficient way to do this? -MO
+  end
+
   def name
     "World of Warcraft - #{self.faction} - #{self.server_name}"
-  end
+  end 
 end
 
 
