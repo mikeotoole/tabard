@@ -360,7 +360,8 @@ ActiveRecord::Schema.define(:version => 20111124200136) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "char_class"
-    t.string   "race"
+    t.string   "advanced_class"
+    t.string   "species"
     t.string   "level"
     t.string   "about"
   end

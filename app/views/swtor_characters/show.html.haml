@@ -12,8 +12,14 @@
   %b Class:
   = @swtor_character.char_class
 %p
-  %b Race:
-  = @swtor_character.race
+  %b Advanced Class:
+  - if @swtor_character.advanced_class and @swtor_character.advanced_class != ""
+    = @swtor_character.advanced_class
+  - else
+    = "None"  
+%p
+  %b Species:
+  = @swtor_character.species
 %p
   %b Level:
   = @swtor_character.level

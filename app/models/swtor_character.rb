@@ -9,20 +9,32 @@ class SwtorCharacter < BaseCharacter
 ###
 # Constants
 ###
-  VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Trooper Jedi\ Consular Smuggler)
-  VALID_SITH_CLASSES = %w(Sith\ Warrior Bounty\ Hunter Sith\ Inquisitor Imperial\ Agent)
+  VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Jedi\ Consular Smuggler Trooper)
+  VALID_SITH_CLASSES = %w(Sith\ Warrior Sith\ Inquisitor Bounty\ Hunter Imperial\ Agent)
   
-  VALID_RACES = %w(Chiss Cyborg Human Miraluka Mirialan Rattataki Sith\ Pureblood Twi'lek Zabrak)
+  VALID_ADVANCED_CLASSES = %w(Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper)
   
-  VALID_JEDI_KNIGHT_RACES = %w(Human Miraluka Mirialan Twi'lek Zabrak)
-  VALID_TROOPER_RACES = %w(Cyborg Human Mirialan Zabrak)
-  VALID_JEDI_CONSULAR_RACES = %w(Human Miraluka Mirialan Twi'lek Zabrak)
-  VALID_SMUGGLER_RACES = %w(Cyborg Human Mirialan Twi'lek Zabrak)
+  VALID_JEDI_KNIGHT_ADVANCED_CLASSES = %w(Guardian Sentinel)
+  VALID_TROOPER_ADVANCED_CLASSES = %w(Vanguard Commando)
+  VALID_JEDI_CONSULAR_ADVANCED_CLASSES = %w(Sage Shadow)
+  VALID_SMUGGLER_ADVANCED_CLASSES = %w(Gunslinger Scoundrel)
   
-  VALID_SITH_WARRIOR_RACES = %w(Cyborg Human Sith\ Pureblood Zabrak)
-  VALID_BOUNTY_HUNTER_RACES = %w(Chiss Cyborg Human Rattataki Zabrak)
-  VALID_SITH_INQUISITOR_RACES = %w(Human Rattataki Sith\ Pureblood Twi'lek Zabrak)
-  VALID_IMPERIAL_AGENT_RACES = %w(Chiss Cyborg Human Rattataki Zabrak)
+  VALID_SITH_WARRIOR_ADVANCED_CLASSES = %w(Juggernaut Marauder)
+  VALID_BOUNTY_HUNTER_ADVANCED_CLASSES = %w(Powertech Mercenary)
+  VALID_SITH_INQUISITOR_ADVANCED_CLASSES = %w(Assassin Sorcerer)
+  VALID_IMPERIAL_AGENT_ADVANCED_CLASSES = %w(Operative Sniper)
+  
+  VALID_SPECIES = %w(Chiss Cyborg Human Miraluka Mirialan Rattataki Sith\ Pureblood Twi'lek Zabrak)
+  
+  VALID_JEDI_KNIGHT_SPECIES = %w(Human Miraluka Mirialan Twi'lek Zabrak)
+  VALID_TROOPER_SPECIES = %w(Cyborg Human Mirialan Zabrak)
+  VALID_JEDI_CONSULAR_SPECIES = %w(Human Miraluka Mirialan Twi'lek Zabrak)
+  VALID_SMUGGLER_SPECIES = %w(Cyborg Human Mirialan Twi'lek Zabrak)
+  
+  VALID_SITH_WARRIOR_SPECIES = %w(Cyborg Human Sith\ Pureblood Zabrak)
+  VALID_BOUNTY_HUNTER_SPECIESS = %w(Chiss Cyborg Human Rattataki Zabrak)
+  VALID_SITH_INQUISITOR_SPECIESS = %w(Human Rattataki Sith\ Pureblood Twi'lek Zabrak)
+  VALID_IMPERIAL_AGENT_SPECIES = %w(Chiss Cyborg Human Rattataki Zabrak)
 
 ###
 # Attribute accessors
@@ -32,7 +44,7 @@ class SwtorCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :race, :level
+  attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :advanced_class, :species, :level
 
 ###
 # Associations
@@ -53,14 +65,21 @@ class SwtorCharacter < BaseCharacter
   end
   validates :char_class,  :presence => true
   validate do |swtor_character|
-    if not SwtorCharacter.classes_for_faction(swtor_character.faction).include?(swtor_character.char_class)
+    if not SwtorCharacter.classes(swtor_character.faction).include?(swtor_character.char_class)
       swtor_character.errors.add(:class, "is not valid for given faction")
     end  
   end
-  validates :race,  :presence => true
   validate do |swtor_character|
-    if not SwtorCharacter.races_for_class(swtor_character.char_class).include?(swtor_character.race)
-      swtor_character.errors.add(:race, "is not valid for given class")
+    if swtor_character.advanced_class and swtor_character.advanced_class != ""
+      if not SwtorCharacter.advanced_classes(swtor_character.char_class).include?(swtor_character.advanced_class)
+        swtor_character.errors.add(:advanced_class, "is not valid for given class")
+      end
+    end    
+  end
+  validates :species,  :presence => true
+  validate do |swtor_character|
+    if not SwtorCharacter.species(swtor_character.char_class).include?(swtor_character.species)
+      swtor_character.errors.add(:species, "is not valid for given class")
     end  
   end
 
@@ -72,11 +91,15 @@ class SwtorCharacter < BaseCharacter
     return VALID_REPUBLIC_CLASSES + VALID_SITH_CLASSES
   end
   
-  def self.all_races
-    return VALID_RACES
+  def self.all_advanced_classes
+    return VALID_ADVANCED_CLASSES
+  end
+  
+  def self.all_species
+    return VALID_SPECIES
   end
 
-  def self.classes_for_faction(faction)
+  def self.classes(faction)
     case faction
       when "Republic"
         return VALID_REPUBLIC_CLASSES
@@ -87,24 +110,47 @@ class SwtorCharacter < BaseCharacter
      end       
   end
 
-  def self.races_for_class(char_class)
+  def self.advanced_classes(char_class)
     case char_class
       when "Jedi Knight"
-        return VALID_JEDI_KNIGHT_RACES
+        return VALID_JEDI_KNIGHT_ADVANCED_CLASSES
       when "Trooper"
-        return VALID_TROOPER_RACES
+        return VALID_TROOPER_ADVANCED_CLASSES
       when "Jedi Consular"
-        return VALID_JEDI_CONSULAR_RACES
+        return VALID_JEDI_CONSULAR_ADVANCED_CLASSES
       when "Smuggler"
-        return VALID_SMUGGLER_RACES
+        return VALID_SMUGGLER_ADVANCED_CLASSES
       when "Sith Warrior"
-        return VALID_SITH_WARRIOR_RACES
+        return VALID_SITH_WARRIOR_ADVANCED_CLASSES
       when "Bounty Hunter"
-        return VALID_BOUNTY_HUNTER_RACES
+        return VALID_BOUNTY_HUNTER_ADVANCED_CLASSES
       when "Sith Inquisitor"
-        return VALID_SITH_INQUISITOR_RACES  
+        return VALID_SITH_INQUISITOR_ADVANCED_CLASSES  
       when "Imperial Agent"
-        return VALID_IMPERIAL_AGENT_RACES
+        return VALID_IMPERIAL_AGENT_ADVANCED_CLASSES
+      else
+        return []
+    end
+  end
+
+  def self.species(char_class)
+    case char_class
+      when "Jedi Knight"
+        return VALID_JEDI_KNIGHT_SPECIES
+      when "Trooper"
+        return VALID_TROOPER_SPECIES
+      when "Jedi Consular"
+        return VALID_JEDI_CONSULAR_SPECIES
+      when "Smuggler"
+        return VALID_SMUGGLER_SPECIES
+      when "Sith Warrior"
+        return VALID_SITH_WARRIOR_SPECIES
+      when "Bounty Hunter"
+        return VALID_BOUNTY_HUNTER_SPECIES
+      when "Sith Inquisitor"
+        return VALID_SITH_INQUISITOR_SPECIES  
+      when "Imperial Agent"
+        return VALID_IMPERIAL_AGENT_SPECIES
       else
         return []
     end

@@ -9,7 +9,8 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  char_class :string(255)
-#  race       :string(255)
+#  advanced_cl:string(255)
+#  species    :string(255)
 #  level      :string(255)
 #  about      :string(255)
 #

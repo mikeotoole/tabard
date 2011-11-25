@@ -73,7 +73,7 @@ class WowCharacter < BaseCharacter
                     :inclusion => { :in => VALID_CLASSES, :message => "%{value} is not a valid class." }
   validates :race,  :presence => true
   validate do |wow_character|
-    if not WowCharacter.races_for_faction_class(wow_character.faction, wow_character.char_class).include?(wow_character.race)
+    if not WowCharacter.races(wow_character.faction, wow_character.char_class).include?(wow_character.race)
       wow_character.errors.add(:race, "is not valid for given faction and class")
     end  
   end                 
@@ -82,7 +82,7 @@ class WowCharacter < BaseCharacter
 # Public Methods
 ###
   
-  def self.races_for_faction_class(faction, char_class)
+  def self.races(faction, char_class)
     case faction
       when "Alliance"
         case char_class

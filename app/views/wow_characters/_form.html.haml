@@ -20,7 +20,7 @@
     = f.select :char_class, WowCharacter::VALID_CLASSES
   .field
     = f.label :race
-    = f.select :race, WowCharacter::VALID_RACES # TODO Doug, This needs to be updated dynamically using what is selected in the faction and char_class fields. I made a WowCharacter.races_for_faction_class(faction, char_class) method that will return the collection. -MO
+    = f.select :race, WowCharacter.races("Horde", "Paladin") # TODO Doug, This needs to be updated dynamically using what is selected in the faction and char_class fields. -MO
   .field
     = f.label :level
     = f.number_field :level

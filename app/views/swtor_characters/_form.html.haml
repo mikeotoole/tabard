@@ -17,10 +17,13 @@
     = f.text_field :name
   .field
     = f.label :class
-    = f.select :char_class, SwtorCharacter.classes_for_faction("Republic") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
+    = f.select :char_class, SwtorCharacter.classes("Republic") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
   .field
-    = f.label :race
-    = f.select :race, SwtorCharacter.races_for_class("Jedi Knight") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. 
+    = f.label :advanced_class
+    = f.select :advanced_class, SwtorCharacter.advanced_classes("Jedi Knight"), :include_blank => true  # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
+  .field
+    = f.label :species
+    = f.select :species, SwtorCharacter.species("Jedi Knight") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
   .field
     = f.label :level
     = f.number_field :level

@@ -8,7 +8,8 @@ ActiveAdmin.register SwtorCharacter do
   filter :name
   filter :swtor
   filter :char_class, :as => :select, :collection => SwtorCharacter.all_classes
-  filter :race, :as => :select, :collection => SwtorCharacter.all_races
+  filter :advanced_class, :as => :select, :collection => SwtorCharacter.all_advanced_classes
+  filter :species, :as => :select, :collection => SwtorCharacter.all_species
   filter :level
   filter :about
   filter :avatar
