@@ -1,4 +1,5 @@
 DaBvRails::Application.routes.draw do
+
   # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users , ActiveAdmin::Devise.config
@@ -117,6 +118,9 @@ DaBvRails::Application.routes.draw do
       resources :page_spaces do
         resources :pages, :shallow => true
       end
+      
+      # Supported Games
+      resources :supported_games
     end
   end
 

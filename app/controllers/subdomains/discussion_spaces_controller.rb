@@ -90,7 +90,7 @@ protected
   ###
   # _before_filter_
   #
-  # This before filter attempts to create @discussion_space from: discussion_spaces.new(params[:custom_form]), for the current community.
+  # This before filter attempts to create @discussion_space from: discussion_spaces.new(params[:discussion_space]), for the current community.
   ###
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
