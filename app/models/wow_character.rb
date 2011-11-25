@@ -108,7 +108,7 @@ class WowCharacter < BaseCharacter
             return VALID_ALLIANCE_WARRIOR_RACES
           else
             return []
-        end                   
+        end
       when "Horde"
         case char_class
           when "Death Knight"

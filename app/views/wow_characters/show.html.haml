@@ -20,9 +20,10 @@
 %p
   %b About:
   = @wow_character.about
-%p
-  %b Default For Game:
-  = @wow_character.default
+- if @wow_character.default
+  %p
+    Default Character For
+    = @wow_character.wow.name
   
 - if can? :edit, @wow_character
   = link_to 'Edit', edit_wow_character_path(@wow_character)

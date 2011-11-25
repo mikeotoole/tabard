@@ -7,8 +7,10 @@ ActiveAdmin.register WowCharacter do
   filter :id
   filter :name
   filter :wow
-  filter :race
+  filter :char_class, :as => :select, :collection => WowCharacter::VALID_CLASSES
+  filter :race, :as => :select, :collection => WowCharacter::VALID_RACES
   filter :level
+  filter :about
   filter :avatar
   filter :created_at
   filter :updated_at

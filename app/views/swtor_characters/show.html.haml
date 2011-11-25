@@ -9,8 +9,21 @@
   %b Name:
   = @swtor_character.name
 %p
-  %b Default For Game:
-  = @swtor_character.default
+  %b Class:
+  = @swtor_character.char_class
+%p
+  %b Race:
+  = @swtor_character.race
+%p
+  %b Level:
+  = @swtor_character.level
+%p
+  %b About:
+  = @swtor_character.about
+- if @swtor_character.default
+  %p
+    Default Character For
+    = @swtor_character.swtor.name
 
 - if can? :edit, @swtor_character
   = link_to 'Edit', edit_swtor_character_path(@swtor_character)
