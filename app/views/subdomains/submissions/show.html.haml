@@ -14,7 +14,7 @@
         - @submission.answers.each do |answer|
           %dt= answer.question_body
           %dd= answer.body
-  
+
   - if can? :destroy, @submission
     %p.submit
       = link_to 'Delete Submission', @submission, :confirm => 'Are you sure?', :method => :delete, :class => 'button'

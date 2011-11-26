@@ -23,7 +23,7 @@ class RosterAssignment < ActiveRecord::Base
 
 ###
 # Delegates
-### 
+###
   delegate :user_profile, :user_profile_id, :to => :community_profile, :prefix => true, :allow_nil => true
   delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
   delegate :name, :avatar_url, :to => :character_proxy, :prefix => true
@@ -44,7 +44,7 @@ class RosterAssignment < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile.id])
     message.system_sent = true
-    message.save    
+    message.save
   end
 
   # This method rejects this roster assignment, if it is pending.

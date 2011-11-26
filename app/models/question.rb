@@ -74,7 +74,7 @@ class Question < ActiveRecord::Base
   ###
   def ensure_type_is_not_changed
     if self.type_changed? and self.persisted?
-      self.type = self.type_was 
+      self.type = self.type_was
       self.errors.add(:type_style, "can not be changed")
     end
   end
@@ -85,24 +85,26 @@ class Question < ActiveRecord::Base
   def type_style=(new_thing)
     @type_style = new_thing
     return if new_thing == "#{self.type.to_s}|#{self.style}"
-    if self.persisted? 
+    if self.persisted?
       decoded = new_thing.split('|')
-      my_clone = self.type.constantize.new
-      my_clone.body = self.body
-      my_clone.style = self.style
-      my_clone.custom_form_id = self.custom_form_id
-      my_clone.explanation = self.explanation
-      my_clone.required = self.required
-      my_clone.save
-      if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
-        self.predefined_answers.update_all(:select_question_id => my_clone.id)
-        self.predefined_answers.clear
+      unless self.answers.empty?
+        my_clone = self.type.constantize.new
+        my_clone.body = self.body
+        my_clone.style = self.style
+        my_clone.custom_form_id = self.custom_form_id
+        my_clone.explanation = self.explanation
+        my_clone.required = self.required
+        my_clone.save
+        if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
+          self.predefined_answers.update_all(:select_question_id => my_clone.id)
+          self.predefined_answers.clear
+        end
+        if self.respond_to?(:answers) and !self.answers.empty?
+          self.answers.update_all(:question_id => my_clone.id)
+          self.answers.clear
+        end
+        my_clone.destroy
       end
-      if self.respond_to?(:answers) and !self.answers.empty?
-        self.answers.update_all(:question_id => my_clone.id)
-        self.answers.clear
-      end
-      my_clone.destroy
       self.style = decoded[1]
       self.type = decoded[0]
       self.save(:validate => false)

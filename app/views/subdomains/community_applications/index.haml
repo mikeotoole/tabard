@@ -9,7 +9,7 @@
         %th Submission Date
         %th Appliccant
         %th
-  
+
     - @pending_community_applications.each do |community_application|
       %tr{ community_application.pending? ? {} : { :class => 'dim'} }
         %td.cinch
@@ -38,7 +38,7 @@
         %th Join Date
         %th Appliccant
         %th
-  
+
     - @other_community_applications.each do |community_application|
       %tr{ community_application.pending? ? {} : { :class => 'dim'} }
         %td.cinch

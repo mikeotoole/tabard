@@ -88,7 +88,7 @@ end
 
 def create_predefined_answers(question)
   3.times do
-    FactoryGirl.create(:predefined_answer, :select_question => question)
+    FactoryGirl.create(:predefined_answer, :question => question)
   end
 end
 
