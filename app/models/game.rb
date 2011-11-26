@@ -10,6 +10,11 @@ class Game < ActiveRecord::Base
   self.abstract_class = true
 
 ###
+# Constants
+###
+  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor']]
+
+###
 # Associations
 ###
   has_many :supported_games

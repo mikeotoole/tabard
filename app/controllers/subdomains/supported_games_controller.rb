@@ -7,6 +7,7 @@
 ###
 class Subdomains::SupportedGamesController < SubdomainsController
   respond_to :html
+  
 ###
 # Before Filters
 ###
@@ -36,20 +37,45 @@ class Subdomains::SupportedGamesController < SubdomainsController
 
   # GET /supported_games/1/edit
   def edit
+    @factions = @supported_game.game.all_factions
+    @servers = @supported_game.game.all_servers
     respond_with(@supported_game)
   end
 
   # POST /supported_games
   def create
+    game_class = params[:supported_game][:game_type].constantize
+    game = game_class.find(:first, :conditions => {:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name]}) if game_class.superclass.name == "Game"  
+    if game
+      @supported_game.game = game
+    else
+      @supported_game.game = game_class.new(:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name])  if game_class.superclass.name == "Game"
+    end
+    
     add_new_flash_message('Game was successfully added.') if @supported_game.save
+    
     respond_with(@supported_game)
   end
 
   # PUT /supported_games/1
   def update
+    game_class = @supported_game.game_type.constantize
+    game = game_class.find(:first, :conditions => {:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name]}) if game_class.superclass.name == "Game"
+    if game
+      @supported_game.game = game
+    else
+      @supported_game.game = game_class.new(:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name])  if game_class.superclass.name == "Game"
+    end
+    
     if @supported_game.update_attributes(params[:supported_game])
       add_new_flash_message('Successfully updated.')
     end
+    
+    if not @supported_game.valid?
+      @factions = @supported_game.game.all_factions
+      @servers = @supported_game.game.all_servers
+    end
+
     respond_with(@supported_game)
   end
 

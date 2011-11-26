@@ -1,17 +1,5 @@
-%h1 Listing subdomains_supported_games
+- title "Games | #{current_community.name}"
 
-%table
-  %tr
-    %th
-    %th
-    %th
+%h1 Games
 
-  - @subdomains_supported_games.each do |subdomains_supported_game|
-    %tr
-      %td= link_to 'Show', subdomains_supported_game
-      %td= link_to 'Edit', edit_subdomains_supported_game_path(subdomains_supported_game)
-      %td= link_to 'Destroy', subdomains_supported_game, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Supported game', new_subdomains_supported_game_path
+= render "table", :supported_games => @supported_games

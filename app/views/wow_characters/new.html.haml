@@ -1,5 +1,8 @@
+- title "New World of Warcraft Character"
+
 %h1 New World of Warcraft Character
 
-= render 'form', :wow_character => @wow_character
-
-= link_to 'Cancel', user_profile_path(current_user)
+= simple_form_for @wow_character do |f|
+  = render 'fields', :f => f, :wow_character => @wow_character
+  %p.submit
+    = f.button :submit, 'Create Character'

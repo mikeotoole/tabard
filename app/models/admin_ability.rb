@@ -43,6 +43,7 @@ class AdminAbility
         space.is_announcement != true
       end
       can [:read, :destroy, :remove_comment], Discussion
+      can [:read, :update], SupportedGame
       can [:read], SwtorCharacter
       can [:read], WowCharacter
       can [:update_account, :edit_account], AdminUser do |admin_user|
@@ -50,18 +51,19 @@ class AdminAbility
       end
     end
 
-    # Rules for admin user. (Inherits rules for moderator).
+    # Rules for admin user. (Inherits rules from moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
       can [:destroy, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
       can [:destroy], Community
+      can [:destroy], SupportedGame
       can [:read, :create, :update], [Wow, 'Wow']
       can [:read, :create, :update], [Swtor, 'Swtor']
       can [:toggle_maintenance_mode], SiteActionController
     end
 
-    # Rules for superadmin user. (Inherits rules for admin).
+    # Rules for superadmin user. (Inherits rules from admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can [:read, :create, :view_document], [Document, 'Document']
       can [:update], Document do |document|

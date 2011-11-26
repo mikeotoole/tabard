@@ -17,6 +17,9 @@
   %b Subdomain:
   = @community.subdomain
 %p
+  %b 
+  = link_to 'Games', supported_games_path
+%p
   %b Admin Profile:
   =link_to @community.admin_profile.full_name, @community.admin_profile
 =link_to "HOME", root_url(:subdomain => false)

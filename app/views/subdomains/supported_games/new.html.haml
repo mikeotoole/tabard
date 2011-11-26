@@ -1,5 +1,17 @@
-%h1 New subdomains_supported_game
+- title "Adding Game | #{current_community.name}"
 
-= render 'form'
+%h1 Add Game
 
-= link_to 'Back', subdomains_supported_games_path
+= simple_form_for @supported_game do |f|
+  = f.error_notification
+  %fieldset
+    %ol
+      = f.input :game_type, :label => 'Game', :collection => Game::VALID_GAMES
+      = f.input :faction, :collection => Wow.all_factions + Swtor.all_factions # TODO Doug, This needs to be updated dynamically using what is selected in the game_type field. -MO
+      = f.input :server_name, :label => 'Server', :collection => Wow.all_servers + Swtor.all_servers # TODO Doug, This needs to be updated dynamically using what is selected in the game_type field. -MO
+      = f.input :name
+  %p.submit    
+    = f.button :submit, 'Add Game'
+
+%br
+= link_to 'Cancel', supported_games_path

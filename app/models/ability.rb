@@ -232,6 +232,14 @@ class Ability
     can :manage, MessageAssociation do |message_association|
       message_association.recipient_id == user.user_profile.id
     end
+    
+    # Supported Game Rules
+    can [:read], SupportedGame do |supported_game|
+      user.user_profile.is_member?(supported_game.community)
+    end
+    can [:update, :destroy, :create], SupportedGame do |supported_game|
+      supported_game.community.admin_profile_id == user.user_profile.id
+    end
   end
 
   ###

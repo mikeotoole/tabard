@@ -43,11 +43,6 @@ class WowCharacter < BaseCharacter
   VALID_HORDE_WARRIOR_RACES = %w(Blood\ Elf Forsaken Goblin Orc Tauren Troll)
 
 ###
-# Attribute accessors
-###
-  attr_accessor :faction, :server
-
-###
 # Attribute accessible
 ###
   attr_accessible :name, :race, :level, :wow_id, :wow, :about, :char_class
@@ -81,6 +76,14 @@ class WowCharacter < BaseCharacter
 ###
 # Public Methods
 ###
+
+  def self.all_classes
+    VALID_CLASSES
+  end
+  
+  def self.all_races
+    VALID_RACES
+  end
   
   def self.races(faction, char_class)
     case faction

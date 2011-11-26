@@ -1,6 +1,17 @@
-%p#notice= notice
+- title "#{@supported_game.name} | #{current_community.name}"
 
+%nav
+  %h1
+    = link_to "Games", supported_games_path
+    %rt= " — #{@supported_game.game_name}"
+    %strong= @supported_game.name
 
-= link_to 'Edit', edit_subdomains_supported_game_path(@subdomains_supported_game)
-\|
-= link_to 'Back', subdomains_supported_games_path
+- # TODO Doug, Need to list the characters in this games roster. -MO
+Need to list the characters in this games roster
+%br
+
+- if can? :edit, @supported_game
+  = link_to 'Edit', edit_supported_game_path(@supported_game)
+  \|
+- if can? :destroy, @supported_game
+  = link_to 'Destroy', @supported_game, :confirm => 'Are you sure?', :method => :delete

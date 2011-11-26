@@ -37,11 +37,6 @@ class SwtorCharacter < BaseCharacter
   VALID_IMPERIAL_AGENT_SPECIES = %w(Chiss Cyborg Human Rattataki Zabrak)
 
 ###
-# Attribute accessors
-###
-  attr_accessor :faction, :server
-
-###
 # Attribute accessible
 ###
   attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :advanced_class, :species, :level
@@ -70,11 +65,9 @@ class SwtorCharacter < BaseCharacter
     end  
   end
   validate do |swtor_character|
-    if swtor_character.advanced_class and swtor_character.advanced_class != ""
-      if not SwtorCharacter.advanced_classes(swtor_character.char_class).include?(swtor_character.advanced_class)
-        swtor_character.errors.add(:advanced_class, "is not valid for given class")
-      end
-    end    
+    if not swtor_character.advanced_class.blank? and not SwtorCharacter.advanced_classes(swtor_character.char_class).include?(swtor_character.advanced_class)
+      swtor_character.errors.add(:advanced_class, "is not valid for given class")
+    end   
   end
   validates :species,  :presence => true
   validate do |swtor_character|

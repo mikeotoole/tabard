@@ -37,8 +37,20 @@ class Swtor < Game
 # Public Methods
 ###
 
-  def self.servers
+  def self.all_servers
     Swtor.all.collect{|w| w.server_name}.uniq # TODO Joe, Is there a more efficient way to do this? -MO
+  end
+  
+  def all_servers
+    self.class.all_servers
+  end
+  
+  def self.all_factions
+    VALID_FACTIONS
+  end
+  
+  def all_factions
+    self.class.all_factions
   end
 
   def name

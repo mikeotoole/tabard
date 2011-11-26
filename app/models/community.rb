@@ -22,7 +22,7 @@ class Community < ActiveRecord::Base
   has_many :community_applications
   has_many :roles
   
-  has_many :supported_games, :dependent => :destroy                      
+  has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
   
   has_many :custom_forms, :dependent => :destroy

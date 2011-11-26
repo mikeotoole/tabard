@@ -23,12 +23,16 @@ class SupportedGame < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, :to => :game, :prefix => true
+  delegate :name, :to => :community, :prefix => true
+  delegate :faction, :to => :game, :allow_nil => true
+  delegate :server_name, :to => :game, :allow_nil => true
+
 
 ###
 # Validators
 ###
   validates :community, :presence => true
-  validates :game, :presence => true
+  validate :game_faction_server_combination
   validates :name, :presence => true
   
 ###
@@ -55,7 +59,7 @@ protected
   ###
   def make_game_announcement_space
     if !self.game_announcement_space
-      space = DiscussionSpace.new(:name => "#{self.name} #{self.game_name} Announcements")
+      space = DiscussionSpace.new(:name => "#{self.game_name} - #{self.name} Announcements") # TODO Doug, What should this name be? This is very long. -MO
       if space
         space.community = self.community
         space.supported_game = self
@@ -67,6 +71,18 @@ protected
         logger.error("Could not create game announcement space for SupportedGame #{self.to_yaml}")
       end
     end
+  end
+  
+  def game_faction_server_combination
+    if self.game_id.blank?
+      game_class = self.game_type.constantize
+      if game_class.superclass.name == "Game"
+        self.errors.add(:server_name, "invalid for game type") if not game_class.all_servers.include?(self.server_name)
+        self.errors.add(:faction, "invalid for game type") if not game_class.all_factions.include?(self.faction)
+      else
+        self.errors.add(:game_type, "is not valid")
+      end  
+    end 
   end
 end
 

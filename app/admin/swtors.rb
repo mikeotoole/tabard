@@ -28,6 +28,18 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
 
   show :title => :name do
     attributes_table *default_attribute_table_rows
+
+    div do
+      panel("Supported Games") do
+        table_for(swtor.supported_games) do
+          column "Name" do |supported_game|
+            link_to supported_game.name, [:admin, supported_game]
+          end
+          column :game_name
+        end
+      end
+    end
+    
 #     active_admin_comments
   end
   

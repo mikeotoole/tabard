@@ -1,0 +1,19 @@
+=f.hidden_field :avatar_cache
+%fieldset
+  %ol
+    = f.input :faction, :collection => Swtor.all_factions
+    = f.input :server_name, :label => 'Server', :collection => Swtor.all_servers
+    = f.input :name
+    = f.input :char_class, :label => 'Class', :collection => SwtorCharacter.classes("Republic") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
+    = f.input :advanced_class, :collection => SwtorCharacter.advanced_classes("Jedi Knight")  # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
+    = f.input :species, :collection => SwtorCharacter.species("Jedi Knight"), :wrapper_html => { :class => 'select' } # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
+    = f.input :level
+    = f.input :about, :as => :text
+    - if not swtor_character.default # Can only edit a character to the default and not make it the default
+      = f.input :default, :label => "Make Default For Game", :as => :boolean
+    - else
+      Character is default for this game  
+    .avatar
+      = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url
+      = f.input :avatar
+      = f.input :remote_avatar_url, :label => "or image URL"
