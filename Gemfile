@@ -59,7 +59,7 @@ source 'http://rubygems.org'
 # Development Specific Gems
   group :development do
     gem 'annotate'
-    gem 'rails_best_practices', '1.3.0'
+    gem 'rails_best_practices'
     gem 'haml-rails'
     gem 'timecop'
   end
