@@ -10,7 +10,7 @@ class Wow < Game
 # Constants
 ###
   VALID_FACTIONS =  %w(Alliance Horde)
-  VALID_SERVER_TYPES =  %w(PvP PvE)
+  VALID_SERVER_TYPES =  %w(PvP PvE RP\ PvP RP)
   
 ###
 # Attribute accessible
@@ -38,7 +38,7 @@ class Wow < Game
 ###
 
   def self.all_servers
-    Wow.all.collect{|w| w.server_name}.uniq # TODO Joe, Is there a more efficient way to do this? -MO
+    Wow.group(:server_name).order(:server_name).collect{|game| game.server_name}
   end
   
   def all_servers

@@ -5,6 +5,9 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+require 'wow_servers_list'
+
 if ENV["RAILS_ENV"] != 'test'
 
   Timecop.freeze(2.months.ago)
@@ -16,16 +19,23 @@ if ENV["RAILS_ENV"] != 'test'
   admin = AdminUser.create(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
   puts "Creating Games..."
-  alliance_wow_game = Wow.create(:faction => "Alliance", :server_name => "Manamana", :server_type => "PvE")
-  Wow.create(:faction => "Alliance", :server_name => "Burning Legion", :server_type => "PvP")
   
-  horde_wow_game = Wow.create(:faction => "Horde", :server_name => "Manamana", :server_type => "PvE")
-  Wow.create(:faction => "Horde", :server_name => "Burning Legion", :server_type => "PvP")
+  WowServersList::VALID_SERVERS.each do |server_name, server_type|
+    Wow.create(:faction => "Alliance", :server_name => server_name, :server_type => server_type)
+    Wow.create(:faction => "Horde", :server_name => server_name, :server_type => server_type)
+  end
   
-  republic_swtor_game = Swtor.create(:faction => "Republic", :server_name => "Herp", :server_type => "PvE")
-  Swtor.create(:faction => "Republic", :server_name => "Derp", :server_type => "PvP")
-  sith_swtor_game = Swtor.create(:faction => "Sith", :server_name => "Herp", :server_type => "PvE")
-  Swtor.create(:faction => "Sith", :server_name => "Derp", :server_type => "PvP")
+  alliance_wow_game = Wow.find(:first, :conditions => {:faction => "Alliance"})
+  horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
+  
+  SwtorServersList::VALID_SERVERS.each do |server_name, server_type|
+    Swtor.create(:faction => "Republic", :server_name => server_name, :server_type => server_type)
+    Swtor.create(:faction => "Sith", :server_name => server_name, :server_type => server_type)
+  end
+  
+  republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
+  sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Sith"})
+  
 
   puts "Creating TOS"
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1", published: true)
@@ -163,11 +173,17 @@ if ENV["RAILS_ENV"] != 'test'
   puts "RoboBilly is getting some characters..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :swtor => sith_swtor_game))
+    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, 
+                                                                                                :swtor => sith_swtor_game, 
+                                                                                                :char_class => "Bounty Hunter", 
+                                                                                                :species => "Cyborg"))
     rb_cp.approved_character_proxies << proxy
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :wow => horde_wow_game, :char_class => "Druid", :race => "Troll"))
+    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, 
+                                                                                              :wow => horde_wow_game, 
+                                                                                              :char_class => "Druid", 
+                                                                                              :race => "Troll"))
     rb_cp.approved_character_proxies << proxy
   end
 

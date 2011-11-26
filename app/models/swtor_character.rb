@@ -32,8 +32,8 @@ class SwtorCharacter < BaseCharacter
   VALID_SMUGGLER_SPECIES = %w(Cyborg Human Mirialan Twi'lek Zabrak)
   
   VALID_SITH_WARRIOR_SPECIES = %w(Cyborg Human Sith\ Pureblood Zabrak)
-  VALID_BOUNTY_HUNTER_SPECIESS = %w(Chiss Cyborg Human Rattataki Zabrak)
-  VALID_SITH_INQUISITOR_SPECIESS = %w(Human Rattataki Sith\ Pureblood Twi'lek Zabrak)
+  VALID_BOUNTY_HUNTER_SPECIES = %w(Chiss Cyborg Human Rattataki Zabrak)
+  VALID_SITH_INQUISITOR_SPECIES = %w(Human Rattataki Sith\ Pureblood Twi'lek Zabrak)
   VALID_IMPERIAL_AGENT_SPECIES = %w(Chiss Cyborg Human Rattataki Zabrak)
 
 ###

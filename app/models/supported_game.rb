@@ -33,7 +33,8 @@ class SupportedGame < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validate :game_faction_server_combination
-  validates :name, :presence => true
+  validates :name, :presence => true, 
+                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type], :message => "exists for this exact game."}
   
 ###
 # Callbacks

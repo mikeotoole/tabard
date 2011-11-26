@@ -34,7 +34,7 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :avatar, :avatar_cache, :remove_avatar, :default
+  attr_accessible :avatar, :avatar_cache, :remove_avatar, :default, :remote_avatar_url
 
 ###
 # Associations
@@ -62,27 +62,6 @@ class BaseCharacter < ActiveRecord::Base
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
-
-  ###
-  # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
-  ###
-  def remove_avatar!
-    begin
-      super
-    rescue Fog::Storage::Rackspace::NotFound
-    end
-  end
-
-  ###
-  # This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
-  ###
-  def remove_previously_stored_avatar
-    begin
-      super
-    rescue Fog::Storage::Rackspace::NotFound
-      @previous_model_for_avatar = nil
-    end
-  end
 
 ###
 # Public Methods
@@ -135,4 +114,30 @@ class BaseCharacter < ActiveRecord::Base
   def owned_by_user?(unknown_user)
     self.user_profile.user == unknown_user
   end
+  
+###
+# Protected Methods
+###
+protected
+
+  ###
+  # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_avatar!
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+    end
+  end
+
+  ###
+  # This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_previously_stored_avatar
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+      @previous_model_for_avatar = nil
+    end
+  end  
 end

@@ -13,6 +13,6 @@
     - else
       Character is default for this game
     .avatar
-      = image_tag(wow_character.avatar_url) if wow_character.avatar_url
+      = image_tag(wow_character.avatar_url) if wow_character.avatar_url and wow_character.persisted?
       = f.input :avatar
       = f.input :remote_avatar_url, :label => "or image URL"

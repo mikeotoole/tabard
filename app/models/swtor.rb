@@ -38,7 +38,7 @@ class Swtor < Game
 ###
 
   def self.all_servers
-    Swtor.all.collect{|w| w.server_name}.uniq # TODO Joe, Is there a more efficient way to do this? -MO
+    Swtor.group(:server_name).order(:server_name).collect{|game| game.server_name}
   end
   
   def all_servers
