@@ -965,6 +965,8 @@
 
         var background = doc.createElement("div");
         background.className = "wmd-prompt-background";
+        
+        /*
         style = background.style;
         style.position = "absolute";
         style.top = "0";
@@ -989,6 +991,7 @@
             style.left = "0";
             style.width = "100%";
         }
+        */
 
         doc.body.appendChild(background);
         return background;
@@ -1058,20 +1061,24 @@
             // The main dialog box.
             dialog = doc.createElement("div");
             dialog.className = "wmd-prompt-dialog";
+            /*
             dialog.style.padding = "10px;";
             dialog.style.position = "fixed";
             dialog.style.width = "400px";
             dialog.style.zIndex = "1001";
-
+            */
+            
             // The dialog text.
             var question = doc.createElement("div");
+            question.className = "wmd-prompt-question";
             question.innerHTML = text;
-            question.style.padding = "5px";
+            //question.style.padding = "5px";
             dialog.appendChild(question);
 
             // The web form container for the text box and buttons.
             var form = doc.createElement("form");
             form.onsubmit = function () { return close(false); };
+            /*
             style = form.style;
             style.padding = "0";
             style.margin = "0";
@@ -1079,43 +1086,61 @@
             style.width = "100%";
             style.textAlign = "center";
             style.position = "relative";
+            */
             dialog.appendChild(form);
+            
+            var formp = doc.createElement("p");
+            form.appendChild(formp);
 
             // The input text box
             input = doc.createElement("input");
             input.type = "text";
             input.value = defaultInputText;
+            /*
             style = input.style;
             style.display = "block";
             style.width = "80%";
             style.marginLeft = style.marginRight = "auto";
-            form.appendChild(input);
+            */
+            formp.appendChild(input);
+            
+            
+            // The dialog text.
+            var actions = doc.createElement("div");
+            actions.className = "actions";
+            formp.appendChild(actions);
 
             // The ok button
             var okButton = doc.createElement("input");
+            okButton.className = "ok";
             okButton.type = "button";
             okButton.onclick = function () { return close(false); };
             okButton.value = "OK";
+            /*
             style = okButton.style;
             style.margin = "10px";
             style.display = "inline";
             style.width = "7em";
-
+            */
 
             // The cancel button
             var cancelButton = doc.createElement("input");
+            cancelButton.className = "cancel";
             cancelButton.type = "button";
             cancelButton.onclick = function () { return close(true); };
             cancelButton.value = "Cancel";
+            /*
             style = cancelButton.style;
             style.margin = "10px";
             style.display = "inline";
             style.width = "7em";
-
-            form.appendChild(okButton);
-            form.appendChild(cancelButton);
+            */
+            
+            actions.appendChild(okButton);
+            actions.appendChild(cancelButton);
 
             util.addEvent(doc.body, "keydown", checkEscape);
+            /*
             dialog.style.top = "50%";
             dialog.style.left = "50%";
             dialog.style.display = "block";
@@ -1124,13 +1149,15 @@
                 dialog.style.top = doc.documentElement.scrollTop + 200 + "px";
                 dialog.style.left = "50%";
             }
+            */
             doc.body.appendChild(dialog);
 
             // This has to be done AFTER adding the dialog to the form if you
             // want it to be centered.
+            /*
             dialog.style.marginTop = -(position.getHeight(dialog) / 2) + "px";
             dialog.style.marginLeft = -(position.getWidth(dialog) / 2) + "px";
-
+            */
         };
 
         // Why is this in a zero-length timeout?

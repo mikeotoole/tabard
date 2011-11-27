@@ -1,0 +1,6 @@
+#wmd-fields
+  %fieldset
+    %ol
+      = f.input :name, :label => 'Name'
+      = f.input :show_in_navigation, :as => :boolean, :label => 'Display this page in the "info" menu'        
+      = f.input :markup, :as => :text, :label => false, :input_html => { :id => "wmd-input", :class => "wmd-input" }, :wrapper_html => { :class => "wmd-panel" }
