@@ -1,5 +1,5 @@
 production:
-  ssl: false
+  ssl: true
   monitor_mode: true
   license_key: <%= ENV["NEW_RELIC_LICENSE_KEY"] %>
   developer_mode: false
