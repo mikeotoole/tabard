@@ -146,7 +146,8 @@
           +box_shadow(0 0 15px rgba(#000,.4))
           +opacity(.9)
 
-#mask
+#mask,
+.wmd-prompt-background
   background: #000
   bottom: 0
   left: 0
@@ -156,7 +157,8 @@
   top: 0
   z-index: 100
 
-#modal
+#modal,
+.wmd-prompt-dialog
   background: #eee
   +bg_gradient(#ddd,#fff)
   border: 1px solid #fff
@@ -171,24 +173,63 @@
   width: 498px
   z-index: 101
   
-  h1
+  h1,
+  .wmd-prompt-question p b
     color: #367BB1
+    display: block
     font: 20px DinMedium, serif
     margin: 20px 20px 0
     padding: 0
+    
+  .wmd-prompt-question p b
+    margin: 0 0 -20px
   
   p
     color: #4B385C
     font: 16px DinLight, sans
     margin: 20px 20px 30px
     padding: 0
+    
+    a
+      +border_radius(3)
+      font-family: DinMedium, sans
+      padding: 0 3px
+      text-decoration: underline
+      
+      &:hover
+        background: #4B385C
+        color: #fff
+        text-decoration: none
+  
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"]
+    background: #eee
+    +bg_gradient(#ddd,#eee)
+    +border_radius(5)
+    +box_shadow(0 0 3px #999)
+    border: 1px solid #fff
+    display: block
+    line-height: 30px
+    margin: 0 0 5px -10px
+    padding: 0 10px
+    +transition(box-shadow .2s linear)
+    width: 456px
+    
+    &:focus
+      background: #d7eaf8
+      +box_shadow(0 0 8px #2d7cb4)
+      +bg_gradient(#f2f8fd,#d7eaf8)
+      color: #09558a
   
   .actions
     bottom: 10px
     position: absolute
     right: 10px
     
-    button
+    button,
+    input[type="button"]
       +bg_gradient(#d24723,#792b28)
       border: 1px solid #eee
       +border_radius(5)
@@ -221,6 +262,11 @@
         &:hover
           +bg_gradient(#999,#777)
           color: #fff
+          
+.wmd-prompt-dialog
+  
+  form
+    padding: 0 0 40px
 
 body.fluid
 

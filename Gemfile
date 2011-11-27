@@ -17,6 +17,7 @@ source 'http://rubygems.org'
   gem 'cancan'
 
 # Caching
+  gem 'dalli'
 
 # Form Handling
   gem 'simple_form'
