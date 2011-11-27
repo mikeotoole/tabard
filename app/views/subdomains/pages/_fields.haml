@@ -2,9 +2,5 @@
   %fieldset
     %ol
       = f.input :name, :label => 'Name'
-      %li
-        .wmd-panel
-          = text_area_tag :markup, page.markup, :class => "wmd-input", :id => "wmd-input"
-      %li
-        = f.input :show_in_navigation, :as => :boolean, :label => 'Display this page in the "info" menu', :wrapper => false
-        %button{ :type => 'submit'}= page.persisted? ? 'Save Changes' : 'Create Page'
+      = f.input :show_in_navigation, :as => :boolean, :label => 'Display this page in the "info" menu'        
+      = f.input :markup, :as => :text, :label => false, :input_html => { :id => "wmd-input", :class => "wmd-input" }, :wrapper_html => { :class => "wmd-panel" }
