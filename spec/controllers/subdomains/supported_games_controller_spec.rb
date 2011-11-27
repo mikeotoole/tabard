@@ -19,25 +19,29 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::SupportedGamesController do
+  let(:user) { DefaultObjects.user }
+  let(:admin) { DefaultObjects.community_admin }
+  let(:non_member) { create(:user_profile).user }
+  let(:community) { DefaultObjects.community }
+  
+  let(:supported_game) { create(:supported_game) }
+  let(:valid_attributes) { attributes_for(:supported_game_att) }
 
-  # This should return the minimal set of attributes required to create a valid
-  # Subdomains::SupportedGame. As you add validations to Subdomains::SupportedGame, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
+  before(:each) do
+    sign_in admin
+    @request.host = "#{community.subdomain}.example.com"
   end
 
   describe "GET index" do
     it "assigns all subdomains_supported_games as @subdomains_supported_games" do
-      supported_game = Subdomains::SupportedGame.create! valid_attributes
       get :index
-      assigns(:subdomains_supported_games).should eq([supported_game])
+      assigns(:supported_games).should eq(community.supported_games)
     end
   end
 
   describe "GET show" do
     it "assigns the requested supported_game as @supported_game" do
-      supported_game = Subdomains::SupportedGame.create! valid_attributes
+      supported_game
       get :show, :id => supported_game.id
       assigns(:supported_game).should eq(supported_game)
     end
@@ -46,13 +50,13 @@ describe Subdomains::SupportedGamesController do
   describe "GET new" do
     it "assigns a new supported_game as @supported_game" do
       get :new
-      assigns(:supported_game).should be_a_new(Subdomains::SupportedGame)
+      assigns(:supported_game).should be_a_new(SupportedGame)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested supported_game as @supported_game" do
-      supported_game = Subdomains::SupportedGame.create! valid_attributes
+      supported_game
       get :edit, :id => supported_game.id
       assigns(:supported_game).should eq(supported_game)
     end
@@ -60,36 +64,32 @@ describe Subdomains::SupportedGamesController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Subdomains::SupportedGame" do
+      it "creates a new SupportedGame" do
         expect {
           post :create, :supported_game => valid_attributes
-        }.to change(Subdomains::SupportedGame, :count).by(1)
+        }.to change(SupportedGame, :count).by(1)
       end
 
       it "assigns a newly created supported_game as @supported_game" do
         post :create, :supported_game => valid_attributes
-        assigns(:supported_game).should be_a(Subdomains::SupportedGame)
+        assigns(:supported_game).should be_a(SupportedGame)
         assigns(:supported_game).should be_persisted
       end
 
       it "redirects to the created supported_game" do
         post :create, :supported_game => valid_attributes
-        response.should redirect_to(Subdomains::SupportedGame.last)
+        response.should redirect_to(SupportedGame.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved supported_game as @supported_game" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Subdomains::SupportedGame.any_instance.stub(:save).and_return(false)
-        post :create, :supported_game => {}
-        assigns(:supported_game).should be_a_new(Subdomains::SupportedGame)
+        post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
+        assigns(:supported_game).should be_a_new(SupportedGame)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Subdomains::SupportedGame.any_instance.stub(:save).and_return(false)
-        post :create, :supported_game => {}
+        post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
         response.should render_template("new")
       end
     end
@@ -98,23 +98,20 @@ describe Subdomains::SupportedGamesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested supported_game" do
-        supported_game = Subdomains::SupportedGame.create! valid_attributes
         # Assuming there are no other subdomains_supported_games in the database, this
         # specifies that the Subdomains::SupportedGame created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Subdomains::SupportedGame.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        SupportedGame.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => supported_game.id, :supported_game => {'these' => 'params'}
       end
 
       it "assigns the requested supported_game as @supported_game" do
-        supported_game = Subdomains::SupportedGame.create! valid_attributes
         put :update, :id => supported_game.id, :supported_game => valid_attributes
         assigns(:supported_game).should eq(supported_game)
       end
 
       it "redirects to the supported_game" do
-        supported_game = Subdomains::SupportedGame.create! valid_attributes
         put :update, :id => supported_game.id, :supported_game => valid_attributes
         response.should redirect_to(supported_game)
       end
@@ -122,18 +119,16 @@ describe Subdomains::SupportedGamesController do
 
     describe "with invalid params" do
       it "assigns the supported_game as @supported_game" do
-        supported_game = Subdomains::SupportedGame.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Subdomains::SupportedGame.any_instance.stub(:save).and_return(false)
-        put :update, :id => supported_game.id, :supported_game => {}
+        SupportedGame.any_instance.stub(:save).and_return(false)
+        put :update, :id => supported_game.id, :supported_game => {:game_type => DefaultObjects.wow.class.name}
         assigns(:supported_game).should eq(supported_game)
       end
 
       it "re-renders the 'edit' template" do
-        supported_game = Subdomains::SupportedGame.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Subdomains::SupportedGame.any_instance.stub(:save).and_return(false)
-        put :update, :id => supported_game.id, :supported_game => {}
+        SupportedGame.any_instance.stub(:save).and_return(false)
+        put :update, :id => supported_game.id, :supported_game => {:game_type => DefaultObjects.wow.class.name}
         response.should render_template("edit")
       end
     end
@@ -141,16 +136,15 @@ describe Subdomains::SupportedGamesController do
 
   describe "DELETE destroy" do
     it "destroys the requested supported_game" do
-      supported_game = Subdomains::SupportedGame.create! valid_attributes
+      supported_game
       expect {
         delete :destroy, :id => supported_game.id
-      }.to change(Subdomains::SupportedGame, :count).by(-1)
+      }.to change(SupportedGame, :count).by(-1)
     end
 
     it "redirects to the subdomains_supported_games list" do
-      supported_game = Subdomains::SupportedGame.create! valid_attributes
       delete :destroy, :id => supported_game.id
-      response.should redirect_to(subdomains_supported_games_url)
+      response.should redirect_to(supported_games_url)
     end
   end
 

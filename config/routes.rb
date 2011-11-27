@@ -93,7 +93,7 @@ DaBvRails::Application.routes.draw do
       # Custom Forms
       resources :custom_forms do
         resources :questions, :shallow => true
-        resources :submissions, :shallow => false, :except => [:update, :edit] do
+        resources :submissions, :shallow => true, :except => [:update, :edit] do
           resources :answers, :except => [:update, :edit, :destroy]
         end
       end

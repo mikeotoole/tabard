@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe SwtorCharactersController do
+  let(:valid_attributes) { attributes_for(:swtor_character_att) }
+
   before(:each) do
     @user_profile = DefaultObjects.user_profile
     @user = DefaultObjects.user
@@ -61,27 +63,30 @@ describe SwtorCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in @user
-      @game = DefaultObjects.swtor
-      post 'create', :swtor_character => {:name => "My Test Name", :swtor_id => @game.id}
     end
     
     it "should add new character" do
-      SwtorCharacter.exists?(1).should be_true
+      expect {
+          post :create, :swtor_character => valid_attributes
+        }.to change(SwtorCharacter, :count).by(1)
     end
     
     it "should pass params to swtor_character" do
-      SwtorCharacter.find(1).name.should == "My Test Name"
+      post :create, :swtor_character => valid_attributes
+      assigns(:swtor_character).should be_a(SwtorCharacter)
+      assigns(:swtor_character).should be_persisted
     end
     
     it "should redirect to new swtor character" do
-      response.should redirect_to(swtor_character_path(1))
+      post :create, :swtor_character => valid_attributes
+      response.should redirect_to(SwtorCharacter.last)
     end
   end
   
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = DefaultObjects.swtor
-      post 'create', :swtor_character => {:name => "TestName", :swtor_id => @game.id}
+      post 'create', :swtor_character => valid_attributes
     end
     
     it "should not create new record" do

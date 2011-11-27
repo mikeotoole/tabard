@@ -2,12 +2,34 @@ FactoryGirl.define do
   factory :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
     swtor { DefaultObjects.swtor }
+    char_class "Bounty Hunter"
+    species "Cyborg"
+    level 20
+  end
+
+  factory :swtor_character_att, :class => :swtor_character do
+    sequence(:name) {|n| "SWTOR Character #{n}" }
+    faction { DefaultObjects.swtor.faction }
+    server_name { DefaultObjects.swtor.server_name }
+    char_class "Bounty Hunter"
+    species "Cyborg"
+    level 20
   end
   
   factory :wow_character do
     sequence(:name) {|n| "WOW Character #{n}" }
     wow { DefaultObjects.wow }
-    race "Goblin"
+    char_class "Mage"
+    race "Human"
+    level 20
+  end
+
+  factory :wow_character_att, :class => :wow_character do
+    sequence(:name) {|n| "WOW Character #{n}" }
+    faction { DefaultObjects.wow.faction }
+    server_name { DefaultObjects.wow.server_name }
+    char_class "Mage"
+    race "Human"
     level 20
   end
   

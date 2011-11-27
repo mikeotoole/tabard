@@ -34,8 +34,6 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :id, :to => :character, :prefix => true
-  delegate :class, :to => :character, :prefix => true
   delegate :name, :to => :character
   delegate :game, :to => :character
   delegate :avatar_url, :to => :character, :allow_nil => true
@@ -62,7 +60,7 @@ class CharacterProxy < ActiveRecord::Base
   # [Returns] A user_profile for the character argument, otherwise nil.
   ###
   def self.character_user_profile(character)
-    proxy = CharacterProxy.find_by_character_id(character)
+    proxy = CharacterProxy.find_by_character_id(character.id)
     profile = proxy.user_profile if proxy
     profile
   end

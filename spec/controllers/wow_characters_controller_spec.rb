@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe WowCharactersController do
+  let(:valid_attributes) { attributes_for(:wow_character_att, :name => "My Test Name") }
+
   before(:each) do
     @user_profile = DefaultObjects.user_profile
     @user = DefaultObjects.user
@@ -61,7 +63,7 @@ describe WowCharactersController do
     before(:each) do
       sign_in @user
       @game = DefaultObjects.wow
-      post 'create', :wow_character => {:name => "My Test Name", :wow_id => @game.id}
+      post 'create', :wow_character => valid_attributes
     end
     
     it "should add new character" do
@@ -80,7 +82,7 @@ describe WowCharactersController do
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = Wow.new(:name => "My Wow")
-      post 'create', :wow_character => {:name => "TestName", :wow_id => @game.id}
+      post 'create', :wow_character => valid_attributes
     end
     
     it "should not create new record" do
