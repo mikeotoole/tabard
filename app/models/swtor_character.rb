@@ -134,16 +134,16 @@ class SwtorCharacter < BaseCharacter
   end
   
   def self.faction(advanced_class)
-    if VALID_REPUBLIC_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+    if VALID_REPUBLIC_ADVANCED_CLASSES.include?(advanced_class)
       return "Republic"
-    elsif VALID_EMPIRE_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+    elsif VALID_EMPIRE_ADVANCED_CLASSES.include?(advanced_class)
       return "Empire"
     else
       return nil
     end
   end
   
-  def self.char_class(advanced_class)
+  def self.advanced_classes(char_class)
     case char_class
       when "Jedi Knight"
         return VALID_JEDI_KNIGHT_ADVANCED_CLASSES
