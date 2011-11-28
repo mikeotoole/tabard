@@ -54,7 +54,6 @@ class SwtorCharacter < BaseCharacter
 ###
   delegate :faction, :to => :swtor, :allow_nil => true
   delegate :server_name, :to => :swtor, :allow_nil => true
-  delegate :game_name, :to => :swtor
 
 ###
 # Validators
@@ -232,6 +231,14 @@ class SwtorCharacter < BaseCharacter
   ###
   def game
     self.swtor
+  end
+
+  ###
+  # This method gets the game name for the character.
+  # [Returns] The name of SWTOR
+  ###
+  def game_name
+    "Star Wars: The Old Republic"
   end
 
   ###

@@ -6,10 +6,10 @@
 = f.input :level, :as => :string
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
 - if not swtor_character.default # Can only edit a character to the default and not make it the default
-  = f.input :default, :label => "Make this my default character for #{@swtor_character.game_name}", :as => :boolean
+  = f.input :default, :as => :boolean, :label => "Make this my default character for #{@swtor_character.game_name}"
 - else
   = "This is your default character for #{@swtor_character.game_name}"
-.avatar
+%li.avatar
   = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url and swtor_character.persisted?
-  = f.input :avatar
-  = f.input :remote_avatar_url, :label => "or image URL"
+  = f.input :avatar, :wrapper => false
+  = f.input :remote_avatar_url, :label => "or image URL", :wrapper => false
