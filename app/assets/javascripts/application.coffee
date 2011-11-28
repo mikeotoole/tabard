@@ -33,7 +33,7 @@ dump = (arr, level) ->
     $('body').append('<div id="mask"></div><div id="modal" class="alert"><div class="actions"><button>' + button + '</button></div></div>')
     $('#modal').prepend('<p>' + body + '</p>') if body
     $('#modal').prepend('<h1>' + title + '</h1>') if title
-    $('#mask')
+    $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
       .animate({ opacity: .7 }, 400, 'linear')
     $('#modal')
@@ -42,8 +42,8 @@ dump = (arr, level) ->
     $('#modal button').click action if action
     $('#modal button').click ->
       $('#modal').animate { marginTop: 0, opacity: 0 }, 300
-      $('#mask').animate { opacity: 0 }, 600, ->
-        $('#mask, #modal').remove()
+      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
+        $('#mask, .wmd-prompt-background, #modal').remove()
         
   # confirm box
   $.confirm = (options) ->
@@ -53,7 +53,7 @@ dump = (arr, level) ->
     affirm = options['affirm'] or= 'Continue'
     action = options['action']
     $('body').append('<div id="mask"></div><div id="modal" class="confirm"><h1>' + title + '</h1><p>' + body + '</p><div class="actions"><button class="cancel">' + cancel + '</button><button class="affirm">' + affirm + '</button></div></div>')
-    $('#mask')
+    $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
       .animate({ opacity: .7 }, 400, 'linear')
     $('#modal')
@@ -61,8 +61,8 @@ dump = (arr, level) ->
       .animate({ opacity: 1, marginLeft: -250 }, 200)
     $('#modal button.cancel').click ->
       $('#modal').animate { marginTop: 0, opacity: 0 }, 300
-      $('#mask').animate { opacity: 0 }, 600, ->
-        $('#mask, #modal').remove()
+      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
+        $('#mask, .wmd-prompt-background, #modal').remove()
       
     $('#modal button.affirm').click action if action
     $('#modal button.affirm').click ->
@@ -114,12 +114,11 @@ $(document).ready ->
           .animate({ top: (amount + 70) + 'px' }, speed)
 
   $('#flash li')
-    .live 'load', ->
-          
+    .live 'init', ->
       $(this).append('<a class="dismiss">✕</a>') unless $(this).find('.read').length
       $(this)
         .css({ height: 0, lineHeight: 0 })
-        .animate({ height: 40, lineHeight: 40 + 'px' }, 600)
+        .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
       
       $(this).find('.dismiss')
         .click ->
@@ -155,12 +154,22 @@ $(document).ready ->
               .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
                 if data.announcement
                   $('#flash').prepend data.announcement
-                  $('#flash li:first').trigger 'load'
+                  $('#flash li:first').trigger 'init'
                 setTimeout adjustHeaderByFlash, 50
                 $(this).remove()
           else
             $(this).closest('li').removeClass('busy')
             
-    .trigger 'load'
+    .each ->
+      $(this).trigger 'init'
+  
+  # Fluid menu
+  $('.sidemenu')
+    .find('a, button, .wmd-button')
+    .filter('[title]')
+    .each ->
+      $(this)
+        .attr('meta',$(this).attr('title'))
+        .removeAttr 'title'
             
   adjustHeaderByFlash(600)

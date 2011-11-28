@@ -1,0 +1,312 @@
+@import mixins
+
+.fluid
+  min-width: 0
+  overflow-x: hidden
+  
+  &:before,
+  &:after
+    display: none !important
+    
+  #content,
+  #header,
+  #body
+    background: #fff
+    min-height: 0 !important
+    min-width: 0 !important
+    
+    &:before,
+    &:after
+      display: none !important
+  
+  #header
+    display: none
+    
+  #body
+    position: static
+  
+  .editor
+    background: #eee
+    +bg_gradient(#ccc,#fff)
+    bottom: 0
+    +box_shadow(0 0 10px rgba(#000,.7))
+    left: 60px
+    overflow: hidden
+    padding: 30px
+    position: fixed
+    right: 45%
+    top: 70px
+    z-index: 4
+    
+    #wmd-fields
+      bottom: 0
+      left: 60px
+      overflow: hidden
+      padding: 0
+      position: fixed
+      top: 85px
+      right: 45%
+      
+      fieldset
+        bottom: 0
+        left: 30px
+        position: absolute
+        right: 0
+        top: 0
+        
+        ol
+          bottom: 0
+          left: 0
+          position: absolute
+          right: 0
+          top: 0
+        
+          li
+            margin-right: 43px
+            
+            label
+              display: inline-block
+          
+            &.wmd-panel
+              bottom: 40px
+              left: 0
+              position: absolute
+              right: 0
+              top: 120px
+              
+              textarea
+                height: 100%
+                max-height: 100%
+                max-width: 100%
+        
+        input,
+        textarea
+          width: 100%
+    
+  #wmd-preview
+    background: #fff
+    bottom: 200px
+    left: 55%
+    padding: 30px
+    position: absolute
+    right: 0
+    top: 70px
+    z-index: 3
+  
+  .sidemenu a,
+  .sidemenu button,
+  .wmd-button,
+  #content #body .sidemenu a,
+  #content #body .sidemenu button,
+  #content #body .sidemenu .wmd-button
+    background: image-url('application/icons.png') no-repeat #333
+    border: 1px solid #333
+    +border_radius(30)
+    +box_shadow(0 0 15px #888)
+    display: block
+    height: 30px
+    +opacity(.7)
+    overflow: hidden
+    margin: 0 14px 10px
+    padding: 0
+    position: static
+    text-decoration: none
+    text-indent: -100em
+    width: 30px
+    +transition(box-shadow .2s linear, border .2s linear)
+    
+    &:hover
+      border: 1px solid #000
+      +box_shadow(0 0 20px #ccc)
+      +opacity(1)
+      
+      &[meta]
+                
+        &:before
+          background: #A23B31
+          border: 1px solid #CFA893
+          +border_radius(5)
+          +box_shadow(-5px 0 15px rgba(#000,.7))
+          color: #F8D5BB
+          content: attr(meta)
+          font: 13px DinLight
+          height: 30px
+          left: 68px
+          letter-spacing: 0
+          line-height: 30px
+          margin: -1px 0 0
+          padding: 0 10px
+          position: absolute
+          text-indent: 0
+          text-transform: none
+          white-space: nowrap
+          z-index: 15
+        
+        &:after
+          border: 5px solid transparent
+          border-right: 5px solid #CFA893
+          content: ''
+          height: 0
+          margin: 10px 0
+          position: absolute
+          right: -9px
+          width: 0
+          z-index: 16
+    
+    &.wmd-save
+      background-color: #2D7CB4
+      background-position: -480px -30px
+      border-color: #1c6293
+      +opacity(1)
+      
+      &:hover
+        border-color: #4594cc
+  
+  .sidemenu
+    background: #444
+    +bg_gradient(#555,#333)
+    border-right: 1px solid #333
+    bottom: 0
+    +box_shadow(0 0 10px rgba(#000,.7))
+    left: 0
+    padding: 0
+    position: fixed
+    text-align: center
+    top: 70px
+    width: 59px
+    z-index: 5
+    
+    dt
+      border-bottom: 1px solid #000
+      color: #999
+      font: 13px DinLight, sans
+      margin: 0 0 20px
+      padding: 10px 0 5px
+    
+    #wmd-button-bar
+      
+      ul
+        height: 100%
+        padding: 0
+        
+        li
+          list-style: none
+        
+          &.wmd-button
+            cursor: pointer
+            height: 30px
+            margin-top: -5px
+            
+            &#wmd-bold-button
+              background-position: -630px -30px
+            
+            &#wmd-italic-button
+              background-position: -660px -30px
+              display: none
+            
+            &#wmd-link-button
+              background-position: -690px -30px
+            
+            &#wmd-quote-button
+              background-position: -750px -30px
+            
+            &#wmd-code-button
+              background-position: -780px -30px
+              display: none
+            
+            &#wmd-image-button
+              background-position: -810px -30px
+            
+            &#wmd-olist-button
+              background-position: -840px -30px
+            
+            &#wmd-ulist-button
+              background-position: -870px -30px
+            
+            &#wmd-heading-button
+              background-position: -900px -30px
+            
+            &#wmd-hr-button
+              display: none
+            
+            &#wmd-undo-button
+              background-position: -930px -30px
+              display: none
+            
+            &#wmd-redo-button
+              background-position: -960px -30px
+              display: none
+            
+            &#wmd-help-button
+              background-position: -990px -30px
+      
+    dd
+      
+      &.cinch
+      
+        a,
+        button
+          margin: -5px 14px 15px
+    
+      &.cancel
+        
+        a,
+        button
+          background-position: -930px -30px !important
+          
+      &.inbox
+      
+        a,
+        button
+          background-position: -270px -30px
+      
+      &.sent
+      
+        a,
+        button
+          background-position: -300px -30px
+      
+      &.trash
+      
+        a,
+        button
+          background-position: -240px -30px
+    
+      &.compose
+      
+        a,
+        button
+          background-position: -120px -30px
+      
+      &.move
+      
+        a,
+        button
+          background-position: -210px -30px
+      
+      &.read
+      
+        a,
+        button
+          background-position: -420px -30px
+      
+      &.unread
+      
+        a,
+        button
+          background-position: -390px -30px
+      
+      &.destroy
+      
+        a,
+        button
+          background-position: -360px -30px
+      
+      &.current
+      
+        a,
+        button
+          background-color: #2D7CB4
+          border-color: #5099cc
+          +box_shadow(0 0 20px #ccc)
+          +opacity(1)
