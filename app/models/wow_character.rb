@@ -142,7 +142,7 @@ class WowCharacter < BaseCharacter
     end  
   end
 
-  def self.races
+  def self.all_races
     {:Alliance => { 
         "Death Knight" => VALID_ALLIANCE_DEATH_KNIGHT_RACES,
         "Druid" => VALID_ALLIANCE_DRUID_RACES,

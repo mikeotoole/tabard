@@ -10,7 +10,7 @@
     = f.input :advanced_class, :collection => SwtorCharacter.advanced_classes("Jedi Knight")  # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
     = #f.input :species, :collection => SwtorCharacter.species("Jedi Knight"), :wrapper_html => { :class => 'select' } # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
     = f.input :species do
-      = f.select 'species', grouped_options_for_select(SwtorCharacter.species)
+      = f.select 'species', grouped_options_for_select(SwtorCharacter.all_species)
     = f.input :level
     = f.input :about, :as => :text
     - if not swtor_character.default # Can only edit a character to the default and not make it the default

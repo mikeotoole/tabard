@@ -149,7 +149,7 @@ class SwtorCharacter < BaseCharacter
     end
   end
   
-  def self.species
+  def self.all_species
     { "Jedi Knight" =>  VALID_JEDI_KNIGHT_SPECIES,
       "Trooper" => VALID_TROOPER_SPECIES,
       "Jedi Consular" => VALID_JEDI_CONSULAR_SPECIES,
