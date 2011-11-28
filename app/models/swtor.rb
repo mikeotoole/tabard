@@ -53,12 +53,8 @@ class Swtor < Game
     self.class.all_factions
   end
 
-  def game_name
-    "Star Wars: The Old Republic"
-  end
-
   def name
-    "#{self.game_name} (#{self.faction}) #{self.server_name}"
+    "Star Wars: The Old Republic (#{self.faction}) #{self.server_name}"
   end
 end
 
