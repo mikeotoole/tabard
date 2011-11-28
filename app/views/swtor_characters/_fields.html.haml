@@ -2,7 +2,7 @@
 = f.input :name
 = f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
 = f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select' }
-= f.input :species, :as => :radio, :label => 'Species', :collection => SwtorCharacter.species_hash, :wrapper_html => { class: 'select' }
+= f.input :species, :as => :radio, :label => 'Species', :collection => SwtorCharacter.all_species, :wrapper_html => { class: 'select' }
 = f.input :level, :as => :string
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
 - if not swtor_character.default # Can only edit a character to the default and not make it the default
