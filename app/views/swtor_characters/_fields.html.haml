@@ -1,18 +1,14 @@
 = f.hidden_field :avatar_cache
-= f.input :faction, :as => :radio, :collection => Swtor.all_factions, :wrapper_html => { class: 'select' }
-= f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
 = f.input :name
-= f.input :char_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.classes("Republic") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO    
-= f.input :advanced_class, :collection => SwtorCharacter.advanced_classes("Jedi Knight")  # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
-= #f.input :species, :collection => SwtorCharacter.species("Jedi Knight"), :wrapper_html => { :class => 'select' } # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO
-= f.input :species do
-  = f.select 'species', grouped_options_for_select(SwtorCharacter.all_species)
-= f.input :level
-= f.input :about, :as => :text
+= f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
+= f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select' }
+= f.input :species, :as => :radio, :label => 'Species', :collection => SwtorCharacter.all_species, :wrapper_html => { class: 'select' }
+= f.input :level, :as => :string
+= f.input :about, :as => :text, :input_html => { :rows => 5 }
 - if not swtor_character.default # Can only edit a character to the default and not make it the default
-  = f.input :default, :label => "Make Default For Game", :as => :boolean
+  = f.input :default, :label => "Make this my default character for #{@swtor_character.game_name}", :as => :boolean
 - else
-  Character is default for this game  
+  = "This is your default character for #{@swtor_character.game_name}"
 .avatar
   = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url and swtor_character.persisted?
   = f.input :avatar
