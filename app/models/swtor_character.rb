@@ -148,6 +148,18 @@ class SwtorCharacter < BaseCharacter
         return []
     end
   end
+  
+  def self.species
+    { "Jedi Knight" =>  VALID_JEDI_KNIGHT_SPECIES,
+      "Trooper" => VALID_TROOPER_SPECIES,
+      "Jedi Consular" => VALID_JEDI_CONSULAR_SPECIES,
+      "Smuggler" => VALID_SMUGGLER_SPECIES,
+      "Sith Warrior" => VALID_SITH_WARRIOR_SPECIES,
+      "Bounty Hunter" => VALID_BOUNTY_HUNTER_SPECIES,
+      "Sith Inquisitor" => VALID_SITH_INQUISITOR_SPECIES,
+      "Imperial Agent" => VALID_IMPERIAL_AGENT_SPECIES
+    }    
+  end
 
 ###
 # Instance Methods
