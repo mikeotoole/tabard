@@ -39,6 +39,9 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a user has accepted legal documents.
   before_filter :ensure_accepted_most_recent_legal_documents
 
+  # This before_filter ensures that ssl mode is not running
+  prepend_before_filter :ensure_not_ssl_mode
+
 ###
 # Status Code Rescues
 ###
@@ -155,6 +158,23 @@ protected
     end
   end
 
+  def ensure_secure_subdomain
+    the_subdomain = request.subdomain
+    the_protocol = request.protocol
+
+    the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
+    the_protocol = "https://" if Rails.env.development? and request.protocol != "https://"
+    
+    redirect_to [the_protocol, the_subdomain, '.', request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
+  end
+
+  def ensure_not_ssl_mode
+    the_protocol = request.protocol
+
+    the_protocol = "http://" if Rails.env.development? or request.protocol == "https://"
+    
+    redirect_to [the_protocol, request.subdomain, '.', request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
+  end
 ###
 # Active Character/Profile
 ###
@@ -301,6 +321,10 @@ protected
   ###
   def remember_last_page
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    root_url(:subdomain => false)
   end
 
 end

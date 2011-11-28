@@ -16,9 +16,9 @@
             %li= link_to game.name, game_url(game, :subdomain => false)
 
   %p.signup
-    = link_to 'Sign in', new_user_session_path
+    = link_to 'Sign in', new_user_session_url(:subdomain => "secure")
     or
-    = link_to 'Sign up', new_user_registration_path, :class => 'button'
+    = link_to 'Sign up', new_user_registration_url(:subdomain => "secure"), :class => 'button'
 
   -# TODO Doug, connect search to this form once search has been added to the project
   = form_tag('#', :method => "get") do |f|

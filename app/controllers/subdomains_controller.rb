@@ -57,8 +57,12 @@ protected
   ###
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
-    redirect_to root_url(:subdomain => false), :alert => "That community does not exist" and return false unless @community
-    false
+    if @community
+      return true
+    else
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join, :alert => "That community does not exist"
+      return false
+    end
   end
 
   ###
