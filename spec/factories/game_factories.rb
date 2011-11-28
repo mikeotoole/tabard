@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :swtor do
-    faction "Sith"
+    faction "Empire"
     server_name "server name"
     server_type "PvE"
   end

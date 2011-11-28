@@ -10,9 +10,12 @@ class SwtorCharacter < BaseCharacter
 # Constants
 ###
   VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Jedi\ Consular Smuggler Trooper)
-  VALID_SITH_CLASSES = %w(Sith\ Warrior Sith\ Inquisitor Bounty\ Hunter Imperial\ Agent)
+  VALID_EMPIRE_CLASSES = %w(Sith\ Warrior Sith\ Inquisitor Bounty\ Hunter Imperial\ Agent)
   
   VALID_ADVANCED_CLASSES = %w(Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper)
+  
+  VALID_REPUBLIC_ADVANCED_CLASSES = %w(Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel)
+  VALID_EMPIRE_ADVANCED_CLASSES = %w(Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper)
   
   VALID_JEDI_KNIGHT_ADVANCED_CLASSES = %w(Guardian Sentinel)
   VALID_TROOPER_ADVANCED_CLASSES = %w(Vanguard Commando)
@@ -81,7 +84,7 @@ class SwtorCharacter < BaseCharacter
 ###
 
   def self.all_classes
-    return VALID_REPUBLIC_CLASSES + VALID_SITH_CLASSES
+    return VALID_REPUBLIC_CLASSES + VALID_EMPIRE_CLASSES
   end
   
   def self.all_advanced_classes
@@ -96,8 +99,8 @@ class SwtorCharacter < BaseCharacter
     case faction
       when "Republic"
         return VALID_REPUBLIC_CLASSES
-      when "Sith"
-        return VALID_SITH_CLASSES
+      when "Empire"
+        return VALID_EMPIRE_CLASSES
       else
         return []
      end       
@@ -105,10 +108,45 @@ class SwtorCharacter < BaseCharacter
   
   def self.classes_hash
     { "Republic" => VALID_REPUBLIC_CLASSES,
-      "Sith" =>  VALID_SITH_CLASSES }      
+      "Empire" =>  VALID_EMPIRE_CLASSES }      
   end
 
+#Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper
+
   def self.advanced_classes(char_class)
+    case char_class
+      when "Guardian"
+        return "Jedi Knight"
+#       when "Trooper"
+#         return VALID_TROOPER_ADVANCED_CLASSES
+#       when "Jedi Consular"
+#         return VALID_JEDI_CONSULAR_ADVANCED_CLASSES
+#       when "Smuggler"
+#         return VALID_SMUGGLER_ADVANCED_CLASSES
+#       when "Sith Warrior"
+#         return VALID_SITH_WARRIOR_ADVANCED_CLASSES
+#       when "Bounty Hunter"
+#         return VALID_BOUNTY_HUNTER_ADVANCED_CLASSES
+#       when "Sith Inquisitor"
+#         return VALID_SITH_INQUISITOR_ADVANCED_CLASSES  
+#       when "Imperial Agent"
+#         return VALID_IMPERIAL_AGENT_ADVANCED_CLASSES
+      else
+        return nil
+    end
+  end
+  
+  def self.faction(advanced_class)
+    if VALID_REPUBLIC_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+      return "Republic"
+    elsif VALID_EMPIRE_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+      return "Empire"
+    else
+      return nil
+    end
+  end
+  
+  def self.char_class(advanced_class)
     case char_class
       when "Jedi Knight"
         return VALID_JEDI_KNIGHT_ADVANCED_CLASSES
@@ -164,16 +202,24 @@ class SwtorCharacter < BaseCharacter
         return []
     end
   end
-  
-  def self.all_species
-    { "Jedi Knight" =>  VALID_JEDI_KNIGHT_SPECIES,
-      "Trooper" => VALID_TROOPER_SPECIES,
-      "Jedi Consular" => VALID_JEDI_CONSULAR_SPECIES,
-      "Smuggler" => VALID_SMUGGLER_SPECIES,
-      "Sith Warrior" => VALID_SITH_WARRIOR_SPECIES,
-      "Bounty Hunter" => VALID_BOUNTY_HUNTER_SPECIES,
-      "Sith Inquisitor" => VALID_SITH_INQUISITOR_SPECIES,
-      "Imperial Agent" => VALID_IMPERIAL_AGENT_SPECIES }    
+
+  def self.species_hash
+    { "Guardian" =>  VALID_JEDI_KNIGHT_SPECIES,
+      "Sentinel" =>  VALID_JEDI_KNIGHT_SPECIES,
+      "Vanguard" => VALID_TROOPER_SPECIES,
+      "Commando" => VALID_TROOPER_SPECIES,
+      "Sage" => VALID_JEDI_CONSULAR_SPECIES,
+      "Shadow" => VALID_JEDI_CONSULAR_SPECIES,
+      "Gunslinger" => VALID_SMUGGLER_SPECIES,
+      "Scoundrel" => VALID_SMUGGLER_SPECIES,
+      "Juggernaut" => VALID_SITH_WARRIOR_SPECIES,
+      "Marauder" => VALID_SITH_WARRIOR_SPECIES,
+      "Powertech" => VALID_BOUNTY_HUNTER_SPECIES,
+      "Mercenaryr" => VALID_BOUNTY_HUNTER_SPECIES,
+      "Assassin" => VALID_SITH_INQUISITOR_SPECIES,
+      "Sorcerer" => VALID_SITH_INQUISITOR_SPECIES,
+      "Operative" => VALID_IMPERIAL_AGENT_SPECIES,
+      "Sniper" => VALID_IMPERIAL_AGENT_SPECIES }    
   end
 
 ###

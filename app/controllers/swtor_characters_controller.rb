@@ -32,8 +32,9 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
-    swtor = Swtor.find(:first, :conditions => {:faction => params[:swtor_character][:faction], :server_name => params[:swtor_character][:server_name]})
-    params[:swtor_character][:swtor_id] = swtor.id if swtor 
+    swtor = Swtor.find(:first, :conditions => {:faction => SwtorCharacter.faction(params[:swtor_character][:advanced_class]), :server_name => params[:swtor_character][:server_name]})
+    params[:swtor_character][:swtor_id] = swtor.id if swtor
+    params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class])
     @swtor_character = SwtorCharacter.create(params[:swtor_character])
 
     if @swtor_character.valid?

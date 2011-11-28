@@ -15,5 +15,15 @@ require 'spec_helper'
 describe Game do
   let(:swtor) { Factory.create(:swtor) }
 
-  pending
+  it "should not allow new instance of base class" do
+    assert_raises(ActiveRecord::StatementInvalid) do
+      Game.new
+    end
+  end
+
+  describe "all games" do
+    it "should return all games" do
+        Game.all_games.should eql Wow.all + Swtor.all
+    end
+  end  
 end

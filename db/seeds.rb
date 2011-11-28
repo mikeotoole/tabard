@@ -30,11 +30,11 @@ if ENV["RAILS_ENV"] != 'test'
   
   SwtorServersList::VALID_SERVERS.each do |server_name, server_type|
     Swtor.create(:faction => "Republic", :server_name => server_name, :server_type => server_type)
-    Swtor.create(:faction => "Sith", :server_name => server_name, :server_type => server_type)
+    Swtor.create(:faction => "Empire", :server_name => server_name, :server_type => server_type)
   end
   
   republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
-  sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Sith"})
+  sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
   
 
   puts "Creating TOS"
