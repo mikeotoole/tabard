@@ -15,7 +15,6 @@ $(document).ready ->
     $.prompt {
       body: 'Place a link to the image below:'
       action: (link) ->
-        # link = link.replace /[^\w\d;:%-_+=&$!@#~,\*\.\/\?\[\]\(\)]/gi, ''
         callback(link)
     }
     true
