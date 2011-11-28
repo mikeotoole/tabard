@@ -12,20 +12,12 @@ $(document).ready ->
   editor1 = new Markdown.Editor(converter1, "", { handler: help })
   
   editor1.hooks.set "insertImageDialog", (callback) ->
-    $.confirm {
-      title: 'Insert an Image'
-      body: 'This needs to be connected to some sort of image uploader/manager component.'
-      action: ->
-        alert 'test'
+    $.prompt {
+      body: 'Place a link to the image below:'
+      action: (link) ->
+        # link = link.replace /[^\w\d;:%-_+=&$!@#~,\*\.\/\?\[\]\(\)]/gi, ''
+        callback(link)
     }
     true
-    #
-    # Old code saved for reference:
-    #
-    #  var prompt = "We have detected that you like cats. Do you want to insert an image of a cat?";
-    #  if (confirm(prompt))
-    #    callback("http://icanhascheezburger.files.wordpress.com/2007/06/schrodingers-lolcat1.jpg")
-    #  else
-    #    callback(null);
   
   editor1.run()
