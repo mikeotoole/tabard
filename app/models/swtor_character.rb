@@ -102,6 +102,11 @@ class SwtorCharacter < BaseCharacter
         return []
      end       
   end
+  
+  def self.classes_hash
+    { "Republic" => VALID_REPUBLIC_CLASSES,
+      "Sith" =>  VALID_SITH_CLASSES }      
+  end
 
   def self.advanced_classes(char_class)
     case char_class
@@ -125,6 +130,17 @@ class SwtorCharacter < BaseCharacter
         return []
     end
   end
+  
+  def self.advanced_classes_hash
+    { "Jedi Knight" => VALID_JEDI_KNIGHT_ADVANCED_CLASSES,
+      "Trooper" => VALID_TROOPER_ADVANCED_CLASSES,
+      "Jedi Consular" => VALID_JEDI_CONSULAR_ADVANCED_CLASSES,
+      "Smuggler" => VALID_SMUGGLER_ADVANCED_CLASSES,
+      "Sith Warrior" => VALID_SITH_WARRIOR_ADVANCED_CLASSES,
+      "Bounty Hunter" => VALID_BOUNTY_HUNTER_ADVANCED_CLASSES,
+      "Sith Inquisitor" => VALID_SITH_INQUISITOR_ADVANCED_CLASSES,
+      "Imperial Agent" => VALID_IMPERIAL_AGENT_ADVANCED_CLASSES }
+  end  
 
   def self.species(char_class)
     case char_class
@@ -157,8 +173,7 @@ class SwtorCharacter < BaseCharacter
       "Sith Warrior" => VALID_SITH_WARRIOR_SPECIES,
       "Bounty Hunter" => VALID_BOUNTY_HUNTER_SPECIES,
       "Sith Inquisitor" => VALID_SITH_INQUISITOR_SPECIES,
-      "Imperial Agent" => VALID_IMPERIAL_AGENT_SPECIES
-    }    
+      "Imperial Agent" => VALID_IMPERIAL_AGENT_SPECIES }    
   end
 
 ###
