@@ -142,33 +142,58 @@ class WowCharacter < BaseCharacter
     end  
   end
 
-  def self.all_races
-    {:Alliance => { 
-        "Death Knight" => VALID_ALLIANCE_DEATH_KNIGHT_RACES,
-        "Druid" => VALID_ALLIANCE_DRUID_RACES,
-        "Hunter" => VALID_ALLIANCE_HUNTER_RACES,
-        "Mage" => VALID_ALLIANCE_MAGE_RACES,
-        "Paladin" => VALID_ALLIANCE_PALADIN_RACES,
-        "Priest" => VALID_ALLIANCE_PRIEST_RACES,
-        "Rogue" => VALID_ALLIANCE_ROGUE_RACES,
-        "Shaman" => VALID_ALLIANCE_SHAMAN_RACES,
-        "Warlock" => VALID_ALLIANCE_WARLOCK_RACES,
-        "Warrior" => VALID_ALLIANCE_WARRIOR_RACES
-        },
-      :Horde => {
-        "Death Knight" => VALID_HORDE_DEATH_KNIGHT_RACES,
-        "Druid" => VALID_HORDE_DRUID_RACES,
-        "Hunter" => VALID_HORDE_HUNTER_RACES,
-        "Mage" => VALID_HORDE_MAGE_RACES,
-        "Paladin" => VALID_HORDE_PALADIN_RACES,
-        "Priest" => VALID_HORDE_PRIEST_RACES,
-        "Rogue" => VALID_HORDE_ROGUE_RACES,
-        "Shaman" => VALID_HORDE_SHAMAN_RACES,
-        "Warlock" => VALID_HORDE_WARLOCK_RACES,
-        "Warrior" => VALID_HORDE_WARRIOR_RACES
-        }
+#   def self.races_hash
+#     {:Alliance => { 
+#         "Alliance - Death Knight" => VALID_ALLIANCE_DEATH_KNIGHT_RACES,
+#         "Druid" => VALID_ALLIANCE_DRUID_RACES,
+#         "Hunter" => VALID_ALLIANCE_HUNTER_RACES,
+#         "Mage" => VALID_ALLIANCE_MAGE_RACES,
+#         "Paladin" => VALID_ALLIANCE_PALADIN_RACES,
+#         "Priest" => VALID_ALLIANCE_PRIEST_RACES,
+#         "Rogue" => VALID_ALLIANCE_ROGUE_RACES,
+#         "Shaman" => VALID_ALLIANCE_SHAMAN_RACES,
+#         "Warlock" => VALID_ALLIANCE_WARLOCK_RACES,
+#         "Warrior" => VALID_ALLIANCE_WARRIOR_RACES
+#         },
+#       :Horde => {
+#         "Death Knight" => VALID_HORDE_DEATH_KNIGHT_RACES,
+#         "Druid" => VALID_HORDE_DRUID_RACES,
+#         "Hunter" => VALID_HORDE_HUNTER_RACES,
+#         "Mage" => VALID_HORDE_MAGE_RACES,
+#         "Paladin" => VALID_HORDE_PALADIN_RACES,
+#         "Priest" => VALID_HORDE_PRIEST_RACES,
+#         "Rogue" => VALID_HORDE_ROGUE_RACES,
+#         "Shaman" => VALID_HORDE_SHAMAN_RACES,
+#         "Warlock" => VALID_HORDE_WARLOCK_RACES,
+#         "Warrior" => VALID_HORDE_WARRIOR_RACES
+#         }
+#     }      
+#   end
+
+  def self.races_hash
+    { "Alliance - Death Knight" => VALID_ALLIANCE_DEATH_KNIGHT_RACES,
+      "Alliance - Druid" => VALID_ALLIANCE_DRUID_RACES,
+      "Alliance - Hunter" => VALID_ALLIANCE_HUNTER_RACES,
+      "Alliance - Mage" => VALID_ALLIANCE_MAGE_RACES,
+      "Alliance - Paladin" => VALID_ALLIANCE_PALADIN_RACES,
+      "Alliance - Priest" => VALID_ALLIANCE_PRIEST_RACES,
+      "Alliance - Rogue" => VALID_ALLIANCE_ROGUE_RACES,
+      "Alliance - Shaman" => VALID_ALLIANCE_SHAMAN_RACES,
+      "Alliance - Warlock" => VALID_ALLIANCE_WARLOCK_RACES,
+      "Alliance - Warrior" => VALID_ALLIANCE_WARRIOR_RACES,
+      "Horde - Death Knight" => VALID_HORDE_DEATH_KNIGHT_RACES,
+      "Horde - Druid" => VALID_HORDE_DRUID_RACES,
+      "Horde - Hunter" => VALID_HORDE_HUNTER_RACES,
+      "Horde - Mage" => VALID_HORDE_MAGE_RACES,
+      "Horde - Paladin" => VALID_HORDE_PALADIN_RACES,
+      "Horde - Priest" => VALID_HORDE_PRIEST_RACES,
+      "Horde - Rogue" => VALID_HORDE_ROGUE_RACES,
+      "Horde - Shaman" => VALID_HORDE_SHAMAN_RACES,
+      "Horde - Warlock" => VALID_HORDE_WARLOCK_RACES,
+      "Horde - Warrior" => VALID_HORDE_WARRIOR_RACES
     }      
   end
+
 
 ###
 # Instance Methods

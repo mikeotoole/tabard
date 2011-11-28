@@ -1,14 +1,13 @@
 =f.hidden_field :avatar_cache
-= #javascript_include_tag "wow_characters"
+= javascript_include_tag "wow_characters"
 %fieldset
   %ol
     = f.input :faction, :collection => Wow.all_factions, :prompt => "Select a Faction"
     = f.input :server_name, :label => 'Server', :collection => Wow.all_servers, :prompt => "Select a Server"
     = f.input :name
     = f.input :char_class, :label => 'Class', :collection => WowCharacter.all_classes, :prompt => "Select a Class"
-    = #f.input :race, :collection => WowCharacter.races, :prompt => "Select a Race" # TODO Doug, This needs to be updated dynamically using what is selected in the faction and char_class fields. -MO
     = f.input :race do
-      = f.select 'race', grouped_options_for_select(WowCharacter.all_races)
+      = f.select 'race', grouped_options_for_select(WowCharacter.races_hash)
     = f.input :level
     = f.input :about, :as => :text
     - if not wow_character.default # Can only edit a character to the default and not make it the default
