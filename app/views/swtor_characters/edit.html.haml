@@ -1,8 +1,13 @@
 - title "Editing Star Wars: The Old Republic Character"
 
-%h1 Editing Star Wars: The Old Republic Character
+= javascript_include_tag "swtor_characters"
 
-= simple_form_for @swtor_character do |f|
-  = render 'fields', :f => f, :swtor_character => @swtor_character
-  %p.submit
-    = f.button :submit, 'Update Character'
+#body
+  %h1 Editing Star Wars: The Old Republic Character
+  
+  = simple_form_for @swtor_character do |f|
+    %fieldset
+      %ol
+        = render 'fields', :f => f, :swtor_character => @swtor_character
+        %li
+          %button{ :type => 'submit' } Save character

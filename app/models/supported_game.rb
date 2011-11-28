@@ -42,7 +42,7 @@ class SupportedGame < ActiveRecord::Base
   after_create :make_game_announcement_space
 
   def full_name
-    "#{self.game_name} - #{self.name}"
+    "#{self.game_name} \u2014 #{self.name}"
   end
 
 ###
@@ -60,7 +60,7 @@ protected
   ###
   def make_game_announcement_space
     if !self.game_announcement_space
-      space = DiscussionSpace.new(:name => "#{self.game_name} - #{self.name} Announcements") # TODO Doug, What should this name be? This is very long. -MO
+      space = DiscussionSpace.new(:name => "#{self.game_name} | #{self.name} Announcements") # TODO Doug, What should this name be? This is very long. -MO
       if space
         space.community = self.community
         space.supported_game = self

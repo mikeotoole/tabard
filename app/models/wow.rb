@@ -54,7 +54,7 @@ class Wow < Game
   end
 
   def name
-    "World of Warcraft - #{self.faction} - #{self.server_name}"
+    "World of Warcraft (#{self.faction}) #{self.server_name}"
   end 
 end
 

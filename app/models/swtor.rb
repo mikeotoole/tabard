@@ -9,7 +9,7 @@ class Swtor < Game
 ###
 # Constants
 ###
-  VALID_FACTIONS =  %w(Republic Sith)
+  VALID_FACTIONS =  %w(Republic Empire)
   VALID_SERVER_TYPES =  %w(PvP PvE)
 
 ###
@@ -54,7 +54,7 @@ class Swtor < Game
   end
 
   def name
-    "Star Wars: The Old Republic - #{self.faction} - #{self.server_name}"
+    "Star Wars: The Old Republic (#{self.faction}) #{self.server_name}"
   end  
 end
 

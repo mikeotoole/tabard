@@ -472,6 +472,7 @@ body
                 background: #be4124
                 +bg_gradient(#2d7bb3,#155481)
         
+        &.select,
         .select
           height: 55px
           position: relative
@@ -504,6 +505,7 @@ body
               z-index: 10
             
             li
+              display: inline
               padding: 0
               
               label
@@ -514,10 +516,10 @@ body
                 color: #66482f
                 display: none
                 font-family: DinMedium, sans
-                height: 30px
-                line-height: 30px
+                min-height: 20px
+                line-height: 20px
                 margin: 1px 0 0
-                padding: 0 5px
+                padding: 5px
                 text-indent: 0
                 
                 &:before,
@@ -533,10 +535,14 @@ body
                   border-top-color: transparent
                   color: #66482f
                   display: block
+                  height: 30px
                   font-family: DinLight, sans
+                  line-height: 30px
+                  overflow: hidden
+                  padding: 0 25px 0 5px
                   position: absolute
                   top: 0
-                  width: 420px
+                  width: 400px
                   z-index: 3
             
             &:hover

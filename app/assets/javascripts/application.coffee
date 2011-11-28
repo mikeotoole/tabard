@@ -41,7 +41,7 @@ dump = (arr, level) ->
       .animate({ opacity: 1, marginLeft: -250 }, 200)
     $('#modal button').click action if action
     $('#modal button').click ->
-      $('#modal').animate { marginTop: 0, opacity: 0 }, 300
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
         
@@ -52,6 +52,10 @@ dump = (arr, level) ->
     cancel = options['cancel'] or= 'Cancel'
     affirm = options['affirm'] or= 'Continue'
     action = options['action']
+    dismiss = ->
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
+      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
+        $('#mask, .wmd-prompt-background, #modal').remove()
     $('body').append('<div id="mask"></div><div id="modal" class="confirm"><h1>' + title + '</h1><p>' + body + '</p><div class="actions"><button class="cancel">' + cancel + '</button><button class="affirm">' + affirm + '</button></div></div>')
     $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
@@ -59,14 +63,34 @@ dump = (arr, level) ->
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
       .animate({ opacity: 1, marginLeft: -250 }, 200)
-    $('#modal button.cancel').click ->
-      $('#modal').animate { marginTop: 0, opacity: 0 }, 300
+    $('#modal button.cancel').click dismiss
+    $('#modal button.affirm').click ->
+      action()
+      dismiss()
+        
+  # prompt input box
+  $.prompt = (options) ->
+    require = options['require'] or= false
+    title = options['title'] or= ''
+    body = options['body'] or= ''
+    cancel = options['cancel'] or= 'Cancel'
+    affirm = options['affirm'] or= 'Submit'
+    action = options['action']
+    dismiss = ->
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
-      
-    $('#modal button.affirm').click action if action
+    $('body').append('<div id="mask"></div><div id="modal" class="prompt"><h1>' + title + '</h1><p>' + body + '</p><p><input type="text" id="prompt" /></p><div class="actions">' + (if !require then '<button class="cancel">' + cancel + '</button>' else '') + '<button class="affirm">' + affirm + '</button></div></div>')
+    $('#mask, .wmd-prompt-background')
+      .css({ opacity: 0 })
+      .animate({ opacity: .7 }, 400, 'linear')
+    $('#modal')
+      .css({ opacity: 0, marginLeft: -500 })
+      .animate({ opacity: 1, marginLeft: -250 }, 200)
+    $('#modal button.cancel').click dismiss if !require
     $('#modal button.affirm').click ->
-      $('#modal button.cancel').trigger 'click'
+      action($('#modal #prompt').val())
+      dismiss()
         
 ) jQuery
 
