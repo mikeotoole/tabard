@@ -1,6 +1,6 @@
 = f.hidden_field :avatar_cache
 = f.input :faction, :as => :radio, :collection => Swtor.all_factions, :wrapper_html => { class: 'select' }
-= f.input :server_name, :label => 'Server', :collection => Swtor.all_servers
+= f.input :server_name, :as => :radio, :collection => Swtor.all_servers, :label => 'Server', :wrapper_html => { class: 'select' }
 = f.input :name
 = f.input :char_class, :label => 'Class', :collection => SwtorCharacter.classes("Republic") # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO    
 = f.input :advanced_class, :collection => SwtorCharacter.advanced_classes("Jedi Knight")  # TODO Doug, This needs to be updated dynamically using what is selected in the char_class field. -MO

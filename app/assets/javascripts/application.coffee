@@ -124,7 +124,18 @@ $(document).ready ->
           $('#modal button.cancel').trigger 'click'
       false
   
-  # Flash messages
+  # select box auto-hide after click
+  $('.select ul label').click ->
+    li = $(this).closest('li')
+    if !li.find('input:checked').length
+      ul = li.closest('ul')
+      ul.animate { opacity: 0 }, 200, ->
+        ul
+          .hide()
+          .animate { opacity: 0 }, 5, ->
+            ul.show().css { opacity: 1 }
+  
+  # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
     if $('body.fluid').length || $('#flash').css('position') != 'relative'
       messageCount = $('#flash li').length or= 0
@@ -187,7 +198,7 @@ $(document).ready ->
     .each ->
       $(this).trigger 'init'
   
-  # Fluid menu
+  # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
     .filter('[title]')

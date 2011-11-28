@@ -462,7 +462,99 @@ button,
           background: #be4124
           +bg_gradient(#2d7bb3,#155481)
   
-  textarea
+  .select
+    height: 55px
+    position: relative
+  
+    ul
+      background: #eee
+      +bg_gradient(#ddd,#eee)
+      +border_radius(5)
+      +box_shadow(0 0 3px #ddd)
+      border: 1px solid #fff
+      display: block
+      height: 0
+      line-height: 30px
+      overflow: hidden
+      padding: 32px 1px 1px
+      position: absolute
+      +transition(box-shadow .2s linear)
+      width: 430px
+      z-index: 9
+          
+      &:before
+        border: 5px solid transparent
+        border-top-color: #999
+        content: ''
+        height: 0
+        position: absolute
+        right: 10px
+        top: 13px
+        width: 0
+        z-index: 10
+      
+      li
+        display: inline
+        padding: 0
+        position: static
+        
+        label
+          background: #f2f8fd
+          +bg_gradient(#f2f8fd,#d7eaf8)
+          +border_radius(5)
+          border-top: 1px solid #95B3CA
+          color: #66482f
+          display: none
+          font-family: DinMedium, sans
+          min-height: 20px
+          line-height: 20px
+          margin: 1px 0 0
+          padding: 5px
+          text-indent: 0
+          
+          &:before,
+          &:after
+            display: none
+        
+        input
+          left: -500em
+          position: absolute
+          
+          &:checked + label
+            background: transparent
+            border-top-color: transparent
+            color: #66482f
+            display: block
+            height: 30px
+            font-family: DinLight, sans
+            line-height: 30px
+            overflow: hidden
+            padding: 0 25px 0 5px
+            position: absolute
+            top: 0
+            width: 400px
+            z-index: 3
+      
+      &:hover
+        background: #d7eaf8
+        +box_shadow(0 0 8px #2d7cb4)
+        +bg_gradient(#f2f8fd,#d7eaf8)
+        color: #09558a
+        height: auto
+        
+        &:before
+          border-top-color: #5A96C6
+      
+        li
+        
+          label
+            color: #09558a !important
+            display: block
+            position: static
+          
+            &:hover
+              background: #3679B3
+              color: #fff !important
       
   .field_with_errors
       
