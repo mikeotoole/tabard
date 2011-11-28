@@ -323,8 +323,17 @@ protected
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 
+  def after_sign_in_path_for(resource)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+end
+
   def after_sign_out_path_for(resource_or_scope)
-    root_url(:subdomain => false)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
   end
+
+  def root_url_hack_helper(the_broken_url)
+    return the_broken_url.sub('secure.', '')
+  end
+
 
 end
