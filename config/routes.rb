@@ -34,8 +34,10 @@ DaBvRails::Application.routes.draw do
   get "/world-of-warcraft" => 'wows#index', :as => 'wows'
 
   # Characters
-  resources :wow_characters, :except => [:index]
-  resources :swtor_characters, :except => [:index]
+  resources :wow_characters, :except => [:index, :create]
+  post 'wow_characters/new' => 'wow_characters#create', :as => :wow_characters
+  resources :swtor_characters, :except => [:index, :create]
+  post 'swtor_characters/new' => 'swtor_characters#create', :as => :swtor_characters
 
   # Messaging
   resources :sent_messages, :only => [:create]
