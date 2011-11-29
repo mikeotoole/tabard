@@ -60,6 +60,8 @@ protected
 end
 
 
+
+
 # == Schema Information
 #
 # Table name: supported_games

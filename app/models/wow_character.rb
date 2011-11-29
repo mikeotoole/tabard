@@ -45,6 +45,8 @@ class WowCharacter < BaseCharacter
   end
 end
 
+
+
 # == Schema Information
 #
 # Table name: wow_characters
