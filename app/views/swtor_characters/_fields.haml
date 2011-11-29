@@ -1,6 +1,6 @@
 = f.hidden_field :avatar_cache
 = f.input :name
-= f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
+= f.input :server_name, :as => :radio, :label => 'Server', :required => true, :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
 = f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'species' }
 = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'advanced_class', affected_by_value: swtor_character.advanced_class, label: 'Species', field: 'species', field_value: swtor_character.species, collection: SwtorCharacter.species_class_collection }
 = f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }

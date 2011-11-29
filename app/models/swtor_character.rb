@@ -168,7 +168,7 @@ class SwtorCharacter < BaseCharacter
   end
 
   def self.species(char_class)
-    species_class_collection.select{|item| item[0] == char_class }[0][1]
+    char_class ? species_class_collection.select{|item| item[0] == char_class }[0][1] : []
   end
 
   def self.species_class_collection

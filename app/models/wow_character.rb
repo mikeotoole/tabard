@@ -75,7 +75,7 @@ class WowCharacter < BaseCharacter
   end
   
   def self.classes(faction, race)
-    faction_race_class_collection.select{|item| item[0] == "#{faction}_#{race.gsub(/\s/,'_')}" }[0][1]
+    faction and race ? faction_race_class_collection.select{|item| item[0] == "#{faction}_#{race.gsub(/\s/,'_')}" }[0][1] : []
   end
 
   def self.faction_race_collection
