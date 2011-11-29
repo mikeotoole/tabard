@@ -1,20 +1,11 @@
 = f.hidden_field :avatar_cache
 = f.input :name
 = f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
-= f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'advanced_class' }
-%li{ :class => 'select tier', :tier => 'advanced_class' }
-  %label Species
-  - SwtorCharacter.species_class_collection.each do |class_species|
-    %div{ :class => 'options select', :class_name => class_species[0] }
-      %ul
-        - class_species[1].each do |species|
-          %li
-            - id = "swtor_character_species_#{class_species[0].downcase}_#{species.downcase}"
-            = f.radio_button 'species', species, :id => id, :checked => (swtor_character.advanced_class == class_species[0] && swtor_character.species == species ? 'checked' : 'false')
-            = f.label 'species', species, :for => id
-= f.input :level, :as => :string
+= f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'species' }
+= render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'advanced_class', affected_by_value: swtor_character.advanced_class, label: 'Species', field: 'species', field_value: swtor_character.species, collection: SwtorCharacter.species_class_collection }
+= f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
-- if not swtor_character.default
+- unless swtor_character.default
   = f.input :default, :as => :boolean, :label => "Make this my default character for #{@swtor_character.game_name}"
 %li.avatar
   = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url and swtor_character.persisted?

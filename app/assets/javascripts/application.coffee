@@ -199,22 +199,25 @@ $(document).ready ->
       $(this).trigger 'init'
   
   # tiered form field selection
-  $('form li[affects] input')
+  $('form .select[affects] input')
     .change ->
       select = $(this).closest('.select')
-      val = select.find('input:checked').val()
+      li = select.closest('li')
       affects = select.attr('affects')
       form = select.closest('form')
-      tier = form.find('.tier[tier="'+affects+'"]')
-      options = tier.find('.options[class_name="'+val+'"]')
-      tier
+      affected = form.find('.affected.'+affects)
+      val = select.find('input:checked').val()
+      if li.filter('[affected_by]').length
+        val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
+      options = affected.find('.options[class_name="'+val+'"]')
+      affected
         .find('.options')
         .hide()
         .find('input')
         .prop('disabled', true)
         .prop('readonly', true)
       return false if options.length == 0
-      tier.show()
+      affected.show()
       options
         .show()
         .find('input')
@@ -222,7 +225,7 @@ $(document).ready ->
           $(this)
             .prop('disabled', false)
             .prop('readonly', false)
-  $('form li[affects]').each ->
+  $('form .select[affects]').each ->
     $(this).find('input:first').trigger 'change'
   
   # fluid sidebar menu

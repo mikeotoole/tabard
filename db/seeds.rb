@@ -175,14 +175,15 @@ if ENV["RAILS_ENV"] != 'test'
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
     proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, 
                                                                                                 :swtor => sith_swtor_game, 
-                                                                                                :char_class => "Bounty Hunter", 
+                                                                                                :char_class => "Bounty Hunter",
+                                                                                                :advanced_class => 'Mercenary',
                                                                                                 :species => "Cyborg"))
     rb_cp.approved_character_proxies << proxy
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
     proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, 
                                                                                               :wow => horde_wow_game, 
-                                                                                              :char_class => "Druid", 
+                                                                                              :char_class => "Druid",
                                                                                               :race => "Troll"))
     rb_cp.approved_character_proxies << proxy
   end

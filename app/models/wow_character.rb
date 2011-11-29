@@ -10,37 +10,26 @@ class WowCharacter < BaseCharacter
 # Constants
 ###
   VALID_CLASSES = %w(Death\ Knight Druid Hunter Mage Paladin Priest Rogue Shaman Warlock Warrior)
-  VALID_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Blood\ Elf Forsaken Goblin Orc Tauren Troll)
+  VALID_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Blood\ Elf Goblin Orc Tauren Troll Pandaren Undead)
   
-  VALID_ALLIANCE_DEATH_KNIGHT_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen)
-  VALID_HORDE_DEATH_KNIGHT_RACES = %w(Blood\ Elf Forsaken Goblin Orc Tauren Troll)
+  VALID_ALLIANCE_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Pandaren)
+  VALID_HORDE_RACES = %w(Blood\ Elf Goblin Orc Tauren Troll Pandaren Undead)
   
-  VALID_ALLIANCE_DRUID_RACES = %w(Night\ Elf Worgen)
-  VALID_HORDE_DRUID_RACES = %w(Tauren Troll)
+  VALID_ALLIANCE_DRAENEI_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Shaman Warrior)
+  VALID_ALLIANCE_DWARF_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Shaman Warlock Warrior)
+  VALID_ALLIANCE_GNOME_CLASSES = %w(Death\ Night Mage Monk Priest Rogue Warlock Warrior)
+  VALID_ALLIANCE_HUMAN_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Warlock Warrior)
+  VALID_ALLIANCE_NIGHT_ELF_CLASSES = %w(Death\ Night Druid Hunter Mage Monk Priest Rogue Warrior)
+  VALID_ALLIANCE_WORGEN_CLASSES = %w(Death\ Night Druid Hunter Mage Priest Rogue Warlock Warrior)
+  VALID_ALLIANCE_PANDAREN_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Shaman Warrior)
   
-  VALID_ALLIANCE_HUNTER_RACES = %w(Draenei Dwarf Human Night\ Elf Worgen)
-  VALID_HORDE_HUNTER_RACES = %w(Blood\ Elf Forsaken Goblin Orc Tauren Troll)
-  
-  VALID_ALLIANCE_MAGE_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen)
-  VALID_HORDE_MAGE_RACES = %w(Blood\ Elf Forsaken Goblin Orc Troll)
-  
-  VALID_ALLIANCE_PALADIN_RACES = %w(Draenei Dwarf Human)
-  VALID_HORDE_PALADIN_RACES = %w(Blood\ Elf Tauren)
-  
-  VALID_ALLIANCE_PRIEST_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen)
-  VALID_HORDE_PRIEST_RACES = %w(Blood\ Elf Forsaken Goblin Tauren Troll)
-  
-  VALID_ALLIANCE_ROGUE_RACES = %w(Dwarf Gnome Human Night\ Elf Worgen)
-  VALID_HORDE_ROGUE_RACES = %w(Blood\ Elf Forsaken Goblin Orc Troll)
-  
-  VALID_ALLIANCE_SHAMAN_RACES = %w(Draenei Dwarf)
-  VALID_HORDE_SHAMAN_RACES = %w(Goblin Orc Tauren Troll)
-  
-  VALID_ALLIANCE_WARLOCK_RACES = %w(Dwarf Gnome Human Worgen)
-  VALID_HORDE_WARLOCK_RACES = %w(Blood\ Elf Forsaken Goblin Orc Troll)
-  
-  VALID_ALLIANCE_WARRIOR_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen)
-  VALID_HORDE_WARRIOR_RACES = %w(Blood\ Elf Forsaken Goblin Orc Tauren Troll)
+  VALID_HORDE_BLOOD_ELF_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Warlock Warrior)
+  VALID_HORDE_GOBLIN_CLASSES = %w(Death\ Night Hunter Mage Priest Rogue Shaman Warlock Warrior)
+  VALID_HORDE_ORC_CLASSES = %w(Death\ Night Hunter Mage Monk Rogue Shaman Warlock Warrior)
+  VALID_HORDE_TAUREN_CLASSES = %w(Death\ Night Druid Hunter Monk Paladin Priest Shaman Warrior)
+  VALID_HORDE_TROLL_CLASSES = %w(Death\ Night Druid Hunter Mage Monk Priest Rogue Shaman Warlock Warrior)
+  VALID_HORDE_PANDAREN_CLASSES = %w(Hunter Mage Monk Priest Rogue Shaman Warrior)
+  VALID_HORDE_UNDEAD_CLASSES = %w(Death\ Night Hunter Mage Monk Priest Rogue Warlock Warrior)
 
 ###
 # Attribute accessible
@@ -142,28 +131,30 @@ class WowCharacter < BaseCharacter
     end  
   end
 
-  def self.races_hash
-    { "Alliance - Death Knight" => VALID_ALLIANCE_DEATH_KNIGHT_RACES,
-      "Alliance - Druid" => VALID_ALLIANCE_DRUID_RACES,
-      "Alliance - Hunter" => VALID_ALLIANCE_HUNTER_RACES,
-      "Alliance - Mage" => VALID_ALLIANCE_MAGE_RACES,
-      "Alliance - Paladin" => VALID_ALLIANCE_PALADIN_RACES,
-      "Alliance - Priest" => VALID_ALLIANCE_PRIEST_RACES,
-      "Alliance - Rogue" => VALID_ALLIANCE_ROGUE_RACES,
-      "Alliance - Shaman" => VALID_ALLIANCE_SHAMAN_RACES,
-      "Alliance - Warlock" => VALID_ALLIANCE_WARLOCK_RACES,
-      "Alliance - Warrior" => VALID_ALLIANCE_WARRIOR_RACES,
-      "Horde - Death Knight" => VALID_HORDE_DEATH_KNIGHT_RACES,
-      "Horde - Druid" => VALID_HORDE_DRUID_RACES,
-      "Horde - Hunter" => VALID_HORDE_HUNTER_RACES,
-      "Horde - Mage" => VALID_HORDE_MAGE_RACES,
-      "Horde - Paladin" => VALID_HORDE_PALADIN_RACES,
-      "Horde - Priest" => VALID_HORDE_PRIEST_RACES,
-      "Horde - Rogue" => VALID_HORDE_ROGUE_RACES,
-      "Horde - Shaman" => VALID_HORDE_SHAMAN_RACES,
-      "Horde - Warlock" => VALID_HORDE_WARLOCK_RACES,
-      "Horde - Warrior" => VALID_HORDE_WARRIOR_RACES
-    }      
+  def self.faction_race_collection
+    [
+      ["Alliance", VALID_ALLIANCE_RACES],
+      ["Horde", VALID_HORDE_RACES]
+    ]
+  end
+
+  def self.faction_race_class_collection
+    [
+      ["Alliance_Draenei", VALID_ALLIANCE_DRAENEI_CLASSES],
+      ["Alliance_Dwarf", VALID_ALLIANCE_DWARF_CLASSES],
+      ["Alliance_Gnome", VALID_ALLIANCE_GNOME_CLASSES],
+      ["Alliance_Human", VALID_ALLIANCE_HUMAN_CLASSES],
+      ["Alliance_Night_Elf", VALID_ALLIANCE_NIGHT_ELF_CLASSES],
+      ["Alliance_Worgen", VALID_ALLIANCE_WORGEN_CLASSES],
+      ["Alliance_Pandaren", VALID_ALLIANCE_PANDAREN_CLASSES],
+      ["Horde_Blood_Elf", VALID_HORDE_BLOOD_ELF_CLASSES],
+      ["Horde_Goblin", VALID_HORDE_GOBLIN_CLASSES],
+      ["Horde_Orc", VALID_HORDE_ORC_CLASSES],
+      ["Horde_Pandaren", VALID_HORDE_PANDAREN_CLASSES],
+      ["Horde_Tauren", VALID_HORDE_TAUREN_CLASSES],
+      ["Horde_Troll", VALID_HORDE_TROLL_CLASSES],
+      ["Horde_Undead", VALID_HORDE_UNDEAD_CLASSES]
+    ]
   end
 
 
@@ -176,6 +167,14 @@ class WowCharacter < BaseCharacter
   ###
   def game
     self.wow
+  end
+
+  ###
+  # This method gets the game name for the character.
+  # [Returns] The name of WoW
+  ###
+  def game_name
+    "World of Warcraft"
   end
 
   ###

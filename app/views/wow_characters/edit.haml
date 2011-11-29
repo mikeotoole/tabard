@@ -1,0 +1,13 @@
+- title "Editing World of Warcraft Character"
+
+#body
+  %h1 Editing Star Wars: The Old Republic Character
+  - if @wow_character.default
+    %p= "This is your default character for #{@wow_character.game_name}"
+  
+  = simple_form_for @wow_character, :html => {:novalidate => true}  do |f|
+    %fieldset
+      %ol
+        = render 'fields', :f => f, :wow_character => @wow_character
+        %li
+          %button{ :type => 'submit' } Save character

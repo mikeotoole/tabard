@@ -1,0 +1,14 @@
+= f.hidden_field :avatar_cache
+= f.input :name
+= f.input :server_name, :as => :radio, :label => 'Server', :collection => Wow.all_servers, :wrapper_html => { :class => 'select' }
+= f.input :faction, :as => :radio, :collection => Wow.all_factions, :wrapper_html => { :class => 'faction select', :affects => 'race' }
+= render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'faction', affected_by_value: wow_character.faction, label: 'Race', field: 'race', field_value: wow_character.race, collection: WowCharacter.faction_race_collection, affects: 'char_class' }
+= render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'race', affected_by_value: wow_character.race, label: 'Class', field: 'char_class', field_value: wow_character.char_class, collection: WowCharacter.faction_race_class_collection }
+= f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
+= f.input :about, :as => :text, :input_html => { :rows => 5 }
+- unless wow_character.default
+  = f.input :default, :as => :boolean, :label => "Make this my default character for #{@wow_character.game_name}"
+%li.avatar
+  = image_tag(wow_character.avatar_url) if wow_character.avatar_url and wow_character.persisted?
+  = f.input :avatar, :wrapper => false
+  = f.input :remote_avatar_url, :label => "or image URL", :wrapper => false

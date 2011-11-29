@@ -1,9 +1,0 @@
-- title "New World of Warcraft Character"
-
-#body
-  %h1 New World of Warcraft Character
-  
-  = simple_form_for @wow_character do |f|
-    = render 'fields', :f => f, :wow_character => @wow_character
-    %p.submit
-      = f.button :submit, 'Create Character'
