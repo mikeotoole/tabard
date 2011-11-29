@@ -87,6 +87,12 @@ describe Subdomains::DiscussionSpacesController do
       get :new
       response.should be_forbidden
     end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      get :new
+      response.should be_forbidden
+    end
   end
 
   describe "GET edit" do

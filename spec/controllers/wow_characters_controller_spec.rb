@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe WowCharactersController do
   let(:valid_attributes) { attributes_for(:wow_character_att, :name => "My Test Name") }
-
-  before(:each) do
-    @user_profile = DefaultObjects.user_profile
-    @user = DefaultObjects.user
-  end
+  let(:user) { DefaultObjects.user }
   
   describe "GET 'show'" do
     before(:each) do
@@ -14,7 +10,7 @@ describe WowCharactersController do
     end
     
     it "should be successful when authenticated as a user" do
-      sign_in @user
+      sign_in user
       get 'show', :id => @character
       response.should be_success
     end
@@ -26,7 +22,22 @@ describe WowCharactersController do
   end
 
   describe "GET 'new'" do
-    pending
+    it "should be successful when authenticated as user" do
+      sign_in user
+      get 'new'
+      response.should be_success
+    end
+
+    it "shouldn't be successful when not authenticated as a user" do
+      get 'new'
+      response.should redirect_to(new_user_session_path)
+    end
+
+    it "should render wow_characters/new template" do
+      sign_in user
+      get 'new'
+      response.should render_template('wow_characters/new')
+    end
   end
   
   describe "GET 'edit'" do
@@ -35,7 +46,7 @@ describe WowCharactersController do
     end
   
     it "should be successful when authenticated as a user" do
-      sign_in @user
+      sign_in user
       get 'edit', :id => @character
       response.should be_success
     end
@@ -46,7 +57,7 @@ describe WowCharactersController do
     end
     
     it "should render wow_characters/edit template" do
-      sign_in @user
+      sign_in user
       get 'edit', :id => @character
       response.should render_template('wow_characters/edit')
     end
@@ -61,7 +72,7 @@ describe WowCharactersController do
   
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
-      sign_in @user
+      sign_in user
       @game = DefaultObjects.wow
       post 'create', :wow_character => valid_attributes
     end
@@ -98,7 +109,7 @@ describe WowCharactersController do
     before(:each) do
       @character = Factory.create(:wow_char_profile)
       @new_name = 'My new name.'
-      sign_in @user
+      sign_in user
       put 'update', :id => @character, :wow_character => { :name => @new_name }
     end
   
@@ -115,7 +126,7 @@ describe WowCharactersController do
     before(:each) do
       @characterDefault = Factory.create(:wow_char_profile)
       @characterNotDefault = Factory.create(:wow_char_profile)
-      sign_in @user
+      sign_in user
     end
   
     it "should update default when set to true" do
@@ -170,7 +181,7 @@ describe WowCharactersController do
     end
   
     it "should be successful when authenticated as a user" do
-      sign_in @user
+      sign_in user
       delete 'destroy', :id => @character
       response.should redirect_to(wow_characters_path)
     end

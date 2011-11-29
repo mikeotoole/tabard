@@ -19,7 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe Subdomains::SupportedGamesController do
-  let(:user) { DefaultObjects.user }
+  let(:member) { DefaultObjects.user }
   let(:admin) { DefaultObjects.community_admin }
   let(:non_member) { create(:user_profile).user }
   let(:community) { DefaultObjects.community }
@@ -28,41 +28,104 @@ describe Subdomains::SupportedGamesController do
   let(:valid_attributes) { attributes_for(:supported_game_att) }
 
   before(:each) do
-    sign_in admin
     @request.host = "#{community.subdomain}.example.com"
   end
 
   describe "GET index" do
-    it "assigns all subdomains_supported_games as @subdomains_supported_games" do
+    it "assigns all supported_games as @supported_games when authenticated as a member" do
+      sign_in member
       get :index
       assigns(:supported_games).should eq(community.supported_games)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :index
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :index
+      response.should be_forbidden
     end
   end
 
   describe "GET show" do
-    it "assigns the requested supported_game as @supported_game" do
+    it "assigns the requested supported_game as @supported_game when authenticated as a member" do
+      sign_in member
       supported_game
       get :show, :id => supported_game.id
       assigns(:supported_game).should eq(supported_game)
     end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :show, :id => supported_game
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :show, :id => supported_game
+      response.should be_forbidden
+    end 
   end
 
   describe "GET new" do
-    it "assigns a new supported_game as @supported_game" do
+    it "assigns a new supported_game as @supported_game when authenticated as community admin" do
+      sign_in admin
       get :new
       assigns(:supported_game).should be_a_new(SupportedGame)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :new
+      response.should redirect_to(new_user_session_path)
+    end 
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :new
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      get :new
+      response.should be_forbidden
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested supported_game as @supported_game" do
+    it "assigns the requested supported_game as @supported_game when authenticated as community admin" do
+      sign_in admin
       supported_game
       get :edit, :id => supported_game.id
       assigns(:supported_game).should eq(supported_game)
     end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :edit, :id => supported_game.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :edit, :id => supported_game.id.to_s
+      response.should be_forbidden
+    end 
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      get :edit, :id => supported_game.id.to_s
+      response.should be_forbidden
+    end
   end
 
-  describe "POST create" do
+  describe "POST create when authenticated as community admin" do
+    before(:each) {
+      sign_in admin
+    }
+    
     describe "with valid params" do
       it "creates a new SupportedGame" do
         expect {
@@ -94,8 +157,31 @@ describe Subdomains::SupportedGamesController do
       end
     end
   end
+  
+  describe "POST create" do
+    it "should redirected to new user session path when not authenticated as a user" do
+      post :create, :supported_game => valid_attributes
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      post :create, :supported_game => valid_attributes
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      post :create, :supported_game => valid_attributes
+      response.should be_forbidden
+    end   
+  end
 
-  describe "PUT update" do
+  describe "PUT update when authenticated as community admin" do
+    before(:each) {
+      sign_in admin
+    }
+    
     describe "with valid params" do
       it "updates the requested supported_game" do
         # Assuming there are no other subdomains_supported_games in the database, this
@@ -134,17 +220,55 @@ describe Subdomains::SupportedGamesController do
     end
   end
 
+  describe "PUT update" do
+    it "should redirected to new user session path when not authenticated as a user" do
+      put :update, :id => supported_game.id, :supported_game => valid_attributes
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      put :update, :id => supported_game.id, :supported_game => valid_attributes
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      put :update, :id => supported_game.id, :supported_game => valid_attributes
+      response.should be_forbidden
+    end   
+  end
+
   describe "DELETE destroy" do
-    it "destroys the requested supported_game" do
+    it "destroys the requested supported_game when authenticated as community admin" do
+      sign_in admin
       supported_game
       expect {
         delete :destroy, :id => supported_game.id
       }.to change(SupportedGame, :count).by(-1)
     end
 
-    it "redirects to the subdomains_supported_games list" do
+    it "redirects to the subdomains_supported_games list when authenticated as community admin" do
+      sign_in admin
       delete :destroy, :id => supported_game.id
       response.should redirect_to(supported_games_url)
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      delete :destroy, :id => supported_game.id.to_s
+      response.should redirect_to(new_user_session_path)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      delete :destroy, :id => supported_game.id.to_s
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in member
+      delete :destroy, :id => supported_game.id.to_s
+      response.should be_forbidden
     end
   end
 

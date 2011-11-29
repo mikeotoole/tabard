@@ -67,6 +67,7 @@ class SwtorCharacter < BaseCharacter
       swtor_character.errors.add(:class, "is not valid for given faction")
     end  
   end
+  validates :advanced_class,  :presence => true
   validate do |swtor_character|
     if not swtor_character.advanced_class.blank? and not SwtorCharacter.advanced_classes(swtor_character.char_class).include?(swtor_character.advanced_class)
       swtor_character.errors.add(:advanced_class, "is not valid for given class")

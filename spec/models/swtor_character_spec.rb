@@ -39,8 +39,8 @@ describe SwtorCharacter do
   end
 
   describe "advanced_class" do
-    it "should not be required" do
-      build(:swtor_character, :advanced_class => nil).should be_valid
+    it "should be required" do
+      build(:swtor_character, :advanced_class => nil).should_not be_valid
     end
     
     it "should validate advanced_class exists for char_class" do
