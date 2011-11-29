@@ -206,23 +206,20 @@ $(document).ready ->
       affects = select.attr('affects')
       form = select.closest('form')
       tier = form.find('.tier[tier="'+affects+'"]')
-      tierGroup = tier.find('>.input[class_name="'+val+'"]')
+      options = tier.find('.options[class_name="'+val+'"]')
       tier
-        .find('>.input')
+        .find('.options')
         .hide()
         .find('input')
-        .data('index', $(this).attr('id'))
-        .removeAttr('id')
         .prop('disabled', true)
         .prop('readonly', true)
-      return false if tierGroup.length == 0
+      return false if options.length == 0
       tier.show()
-      tierGroup
+      options
         .show()
         .find('input')
         .each ->
           $(this)
-            .attr('id', $(this).data('index'))
             .prop('disabled', false)
             .prop('readonly', false)
   $('form li[affects]').each ->

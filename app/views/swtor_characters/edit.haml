@@ -7,7 +7,7 @@
   - if @swtor_character.default
     %p= "This is your default character for #{@swtor_character.game_name}"
   
-  = simple_form_for @swtor_character do |f|
+  = simple_form_for @swtor_character, :html => {:novalidate => true}  do |f|
     %fieldset
       %ol
         = render 'fields', :f => f, :swtor_character => @swtor_character
