@@ -74,61 +74,8 @@ class WowCharacter < BaseCharacter
     VALID_RACES
   end
   
-  def self.races(faction, char_class)
-    case faction
-      when "Alliance"
-        case char_class
-          when "Death Knight"
-            return VALID_ALLIANCE_DEATH_KNIGHT_RACES
-          when "Druid"
-            return VALID_ALLIANCE_DRUID_RACES
-          when "Hunter"
-            return VALID_ALLIANCE_HUNTER_RACES
-          when "Mage"
-            return VALID_ALLIANCE_MAGE_RACES
-          when "Paladin"
-            return VALID_ALLIANCE_PALADIN_RACES
-          when "Priest"
-            return VALID_ALLIANCE_PRIEST_RACES
-          when "Rogue"
-            return VALID_ALLIANCE_ROGUE_RACES  
-          when "Shaman"
-            return VALID_ALLIANCE_SHAMAN_RACES
-          when "Warlock"
-            return VALID_ALLIANCE_WARLOCK_RACES
-          when "Warrior"
-            return VALID_ALLIANCE_WARRIOR_RACES
-          else
-            return []
-        end
-      when "Horde"
-        case char_class
-          when "Death Knight"
-            return VALID_HORDE_DEATH_KNIGHT_RACES
-          when "Druid"
-            return VALID_HORDE_DRUID_RACES
-          when "Hunter"
-            return VALID_HORDE_HUNTER_RACES
-          when "Mage"
-            return VALID_HORDE_MAGE_RACES
-          when "Paladin"
-            return VALID_HORDE_PALADIN_RACES
-          when "Priest"
-            return VALID_HORDE_PRIEST_RACES
-          when "Rogue"
-            return VALID_HORDE_ROGUE_RACES  
-          when "Shaman"
-            return VALID_HORDE_SHAMAN_RACES
-          when "Warlock"
-            return VALID_HORDE_WARLOCK_RACES
-          when "Warrior"
-            return VALID_HORDE_WARRIOR_RACES
-          else
-            return []
-        end
-      else
-        return []
-    end  
+  def self.classes(faction, race)
+    faction_race_class_collection["#{faction}_#{race.gsub(/\s/,'_')}"]
   end
 
   def self.faction_race_collection
