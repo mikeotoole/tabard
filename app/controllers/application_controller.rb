@@ -165,7 +165,7 @@ protected
     the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
     the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
     
-    redirect_to [the_protocol, the_subdomain, '.', request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
+    redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
   end
 
   def ensure_not_ssl_mode
@@ -173,7 +173,7 @@ protected
 
     the_protocol = "http://" if !Rails.env.development? or request.protocol == "https://"
     
-    redirect_to [the_protocol, request.subdomain, '.', request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
+    redirect_to [the_protocol, (request.subdomain.blank? ? "" : "#{request.subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
   end
 ###
 # Active Character/Profile
