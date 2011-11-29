@@ -8,6 +8,9 @@
 class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
+  skip_before_filter :ensure_not_ssl_mode, :limit_subdomain_access
+  before_filter :ensure_secure_subdomain
+
   # Cancels a user's account
   def destroy
     #TODO - We need to decide what we want to do here
@@ -16,4 +19,14 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
   end
 
+  def after_sign_up_path_for(resource)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+  end
+  
+  def after_inactive_sign_up_path_for(resource)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+  end
+  def after_update_path_for(resource)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+  end
 end

@@ -325,7 +325,7 @@ protected
 
   def after_sign_in_path_for(resource)
     root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
-end
+  end
 
   def after_sign_out_path_for(resource_or_scope)
     root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
