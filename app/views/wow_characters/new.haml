@@ -3,9 +3,6 @@
 #body
   %h1 New World of Warcraft Character
   
-  %pre=YAML::dump @wow_character
-  %pre=YAML::dump params[:wow_character]
-  
   = simple_form_for @wow_character, :html => {:novalidate => true} do |f|
     %fieldset
       %ol
