@@ -8,10 +8,8 @@
     = f.input :species, :as => :radio, :collection => class_species[1], :wrapper_tag => :div, :label => false, :wrapper_html => { class_name: class_species[0] }
 = f.input :level, :as => :string
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
-- if not swtor_character.default # Can only edit a character to the default and not make it the default
+- if not swtor_character.default
   = f.input :default, :as => :boolean, :label => "Make this my default character for #{@swtor_character.game_name}"
-- else
-  = "This is your default character for #{@swtor_character.game_name}"
 %li.avatar
   = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url and swtor_character.persisted?
   = f.input :avatar, :wrapper => false

@@ -12,7 +12,7 @@ class SwtorCharacter < BaseCharacter
   VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Jedi\ Consular Smuggler Trooper)
   VALID_EMPIRE_CLASSES = %w(Sith\ Warrior Sith\ Inquisitor Bounty\ Hunter Imperial\ Agent)
   
-  VALID_ADVANCED_CLASSES = %w(Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper)
+  VALID_ADVANCED_CLASSES = %w(Assassin Commando Guardian Gunslinger Juggernaut Marauder Mercenary Operative Powertech Sage Scoundrel Sentinel Shadow Sniper Sorcerer Vanguard)
   
   VALID_REPUBLIC_ADVANCED_CLASSES = %w(Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel)
   VALID_EMPIRE_ADVANCED_CLASSES = %w(Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper)
