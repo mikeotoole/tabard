@@ -43,7 +43,7 @@ describe SwtorCharactersController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => @character
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
@@ -70,7 +70,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to new swtor character" do
-      response.should redirect_to(swtor_character_path(1))
+      response.should redirect_to(swtor_character_url(1))
     end
   end
   
@@ -85,7 +85,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end   
 
@@ -102,7 +102,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to swtor character" do
-      response.should redirect_to(swtor_character_path(assigns[:swtor_character]))
+      response.should redirect_to(swtor_character_url(assigns[:swtor_character]))
     end
   end  
   
@@ -141,7 +141,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end  
     
     it "should not change attributes" do
@@ -157,12 +157,12 @@ describe SwtorCharactersController do
     it "should be successful when authenticated as a user" do
       sign_in @user
       delete 'destroy', :id => @character
-      response.should redirect_to(swtor_characters_path)
+      response.should redirect_to(swtor_characters_url)
     end
  
     it "should redirected to new user session path when not authenticated as a user" do
       delete 'destroy', :id => @character
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do

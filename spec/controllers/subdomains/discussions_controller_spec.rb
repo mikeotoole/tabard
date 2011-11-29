@@ -46,7 +46,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :index, :discussion_space_id => space.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -65,7 +65,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -84,7 +84,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :discussion_space_id => space.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -115,7 +115,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -172,7 +172,7 @@ describe Subdomains::DiscussionsController do
   describe "POST create" do
     it "should redirect to new user session path when not authenticated as a user" do
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -239,7 +239,7 @@ describe Subdomains::DiscussionsController do
   describe "PUT update" do
     it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -272,7 +272,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
     
     it "should respond forbidden when not a member" do
@@ -318,7 +318,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_path) 
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://")) 
     end
     
     it "should respond forbidden when not a member" do
@@ -360,7 +360,7 @@ describe Subdomains::DiscussionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_path) 
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://")) 
     end
     
     it "should respond forbidden when not a member" do

@@ -8,7 +8,7 @@ describe "Roles" do
   end
   describe "GET /roles" do
     it "should display all roles for the community" do
-      visit community_path(@community)
+      visit community_url(@community)
     end
   end
 end

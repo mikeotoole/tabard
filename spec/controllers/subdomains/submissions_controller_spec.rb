@@ -21,7 +21,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :index, :custom_form_id => custom_form.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -35,7 +35,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => submission.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -48,7 +48,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :new, :custom_form_id => custom_form.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -76,7 +76,7 @@ describe Subdomains::SubmissionsController do
       
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
-        response.should redirect_to(new_user_session_path)
+        response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
       end
     end
 
@@ -112,7 +112,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => submission.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 

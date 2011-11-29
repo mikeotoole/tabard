@@ -19,13 +19,17 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
   end
 
+  # Where to redirect to after signing up with devise
   def after_sign_up_path_for(resource)
     root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
   end
-  
+
+  # Where to redirect to after signing up with devise, and the account is inactive.
   def after_inactive_sign_up_path_for(resource)
     root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
   end
+
+  # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
     root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
   end

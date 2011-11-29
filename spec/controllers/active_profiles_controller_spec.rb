@@ -15,7 +15,7 @@ describe ActiveProfilesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -43,7 +43,7 @@ describe ActiveProfilesController do
     end
 
     it "should redirect to root path" do
-      response.should redirect_to(root_path)
+      response.should redirect_to(root_url)
     end
   end
 
@@ -73,7 +73,7 @@ describe ActiveProfilesController do
     end
 
     it "should redirect to root path" do
-      response.should redirect_to(root_path)
+      response.should redirect_to(root_url)
     end
   end
 

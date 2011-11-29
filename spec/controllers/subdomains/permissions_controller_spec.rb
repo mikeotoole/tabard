@@ -33,7 +33,7 @@ describe Subdomains::PermissionsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index', :role_id => role.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -57,7 +57,7 @@ describe Subdomains::PermissionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => permission, :role_id => role.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -81,7 +81,7 @@ describe Subdomains::PermissionsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new', :role_id => role.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -100,7 +100,7 @@ describe Subdomains::PermissionsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => permission, :role_id => role.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
 
     it "should render permissions/edit template" do
@@ -125,7 +125,7 @@ describe Subdomains::PermissionsController do
     end
 
     it "should redirect to new permission" do
-      response.should redirect_to(role_permission_path(role,assigns[:permission]))
+      response.should redirect_to(role_permission_url(role,assigns[:permission]))
     end
   end
   
@@ -150,7 +150,7 @@ describe Subdomains::PermissionsController do
       Permission.exists?(permission_att).should_not be_true
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -166,7 +166,7 @@ describe Subdomains::PermissionsController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(role_permission_path(role,assigns[:permission]))
+      response.should redirect_to(role_permission_url(role,assigns[:permission]))
     end
   end
 
@@ -193,7 +193,7 @@ describe Subdomains::PermissionsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
 
     it "should not change attributes" do
@@ -208,7 +208,7 @@ describe Subdomains::PermissionsController do
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       delete 'destroy', :id => @permission, :role_id => role.id
-      response.should redirect_to(role_permissions_path(role))
+      response.should redirect_to(role_permissions_url(role))
       Permission.exists?(@permission).should be_false
     end
     it "should be unauthorized when authenticated as a nonadmin user" do
@@ -220,7 +220,7 @@ describe Subdomains::PermissionsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @permission, :role_id => role.id
       Permission.exists?(@permission).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 end

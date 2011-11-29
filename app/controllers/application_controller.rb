@@ -158,21 +158,29 @@ protected
     end
   end
 
+  ###
+  # This method ensures that the request is located at https://secure.
+  # If not it will try to redirect to that location in the secure mode.
+  ###
   def ensure_secure_subdomain
     the_subdomain = request.subdomain
     the_protocol = request.protocol
 
     the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
     the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
-    
+
     redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
   end
 
+  ###
+  # This method ensures that the protocol is not https://.
+  # If it is, it will try to redirect to that location with the http:// protocol.
+  ###
   def ensure_not_ssl_mode
     the_protocol = request.protocol
 
     the_protocol = "http://" if !Rails.env.development? or request.protocol == "https://"
-    
+
     redirect_to [the_protocol, (request.subdomain.blank? ? "" : "#{request.subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
   end
 ###
@@ -323,15 +331,21 @@ protected
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 
+  # This method overrides the default devise method to set the proper protocol and subdomain
   def after_sign_in_path_for(resource)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+    return root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) if resource.kind_of?(User)
+    return stored_location_for(resource)
   end
 
+  # This method overrides the default devise method to set the proper protocol and subdomain
   def after_sign_out_path_for(resource_or_scope)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) if resource and resource.kind_of?(User)
+    return root_url
   end
 
+  # This method replaces the default url_for in rails because they think that url_for(:subdomain => false) is ambiguous.
   def root_url_hack_helper(the_broken_url)
     return the_broken_url.sub('secure.', '')
+    return stored_location_for(resource)
   end
 end

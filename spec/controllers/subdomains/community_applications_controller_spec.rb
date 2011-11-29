@@ -43,7 +43,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -74,7 +74,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => community_application
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -99,7 +99,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -124,7 +124,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'edit', :id => community_application
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -143,7 +143,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should redirect to new community application" do
-      response.should redirect_to(community_application_path(assigns[:community_application]))
+      response.should redirect_to(community_application_url(assigns[:community_application]))
     end
   end
   
@@ -163,7 +163,7 @@ describe Subdomains::CommunityApplicationsController do
       post 'create', :community_application => community_application_attr
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -180,7 +180,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(community_application_path(community_application))
+      response.should redirect_to(community_application_url(community_application))
     end
   end
 
@@ -208,7 +208,7 @@ describe Subdomains::CommunityApplicationsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
 
     it "should not change attributes" do
@@ -224,7 +224,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.should redirect_to(community_application_path)
+      response.should redirect_to(community_application_url)
       CommunityApplication.find(@community_application).withdrawn?.should be_true
     end
     
@@ -238,7 +238,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
       CommunityApplication.exists?(@community_application).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 end

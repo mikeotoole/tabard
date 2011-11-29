@@ -33,7 +33,7 @@ describe Subdomains::RolesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -58,7 +58,7 @@ describe Subdomains::RolesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => role
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -83,7 +83,7 @@ describe Subdomains::RolesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -102,7 +102,7 @@ describe Subdomains::RolesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => role
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
 
     it "should render roles/edit template" do
@@ -127,7 +127,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      response.should redirect_to(role_path(assigns[:role]))
+      response.should redirect_to(role_url(assigns[:role]))
     end
   end
   
@@ -152,7 +152,7 @@ describe Subdomains::RolesController do
       Role.exists?(role_att).should_not be_true
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 
@@ -168,7 +168,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(role_path(role))
+      response.should redirect_to(role_url(role))
     end
   end
 
@@ -195,7 +195,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
 
     it "should not change attributes" do
@@ -211,7 +211,7 @@ describe Subdomains::RolesController do
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       delete 'destroy', :id => @role
-      response.should redirect_to(roles_path)
+      response.should redirect_to(roles_url)
       Role.exists?(@role).should be_false
     end
     
@@ -225,7 +225,7 @@ describe Subdomains::RolesController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @role
       Role.exists?(@role).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
     end
   end
 end
