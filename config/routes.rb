@@ -28,7 +28,8 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
-  resources :communities, :except => :destroy
+  resources :communities, :except => [:destroy, :create]
+  post 'communities/new' => 'communities#create', :as => :communities
 
   # Games
   resources :games, :only => :show

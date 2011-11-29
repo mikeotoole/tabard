@@ -44,10 +44,9 @@ class Community < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name, :uniqueness => { :case_sensitive => false },
-                   :presence => true,
-                   :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
-                   :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
+  validates :name,  :presence => true,
+                    :uniqueness => { :case_sensitive => false },
+                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
   validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true

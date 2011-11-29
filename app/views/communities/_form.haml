@@ -1,5 +1,5 @@
 = form_for community do |f|
-  - if request[:action] == 'new'
+  - if not community.persisted?
     %p
       = f.label :name
       = f.text_field :name
