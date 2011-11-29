@@ -111,42 +111,39 @@ class SwtorCharacter < BaseCharacter
       "Empire" =>  VALID_EMPIRE_CLASSES }      
   end
 
-#Guardian Sentinel Vanguard Commando Sage Shadow Gunslinger Scoundrel Juggernaut Marauder Powertech Mercenary Assassin Sorcerer Operative Sniper
-
-  def self.advanced_classes(char_class)
-    case char_class
-      when "Guardian"
-        return "Jedi Knight"
-#       when "Trooper"
-#         return VALID_TROOPER_ADVANCED_CLASSES
-#       when "Jedi Consular"
-#         return VALID_JEDI_CONSULAR_ADVANCED_CLASSES
-#       when "Smuggler"
-#         return VALID_SMUGGLER_ADVANCED_CLASSES
-#       when "Sith Warrior"
-#         return VALID_SITH_WARRIOR_ADVANCED_CLASSES
-#       when "Bounty Hunter"
-#         return VALID_BOUNTY_HUNTER_ADVANCED_CLASSES
-#       when "Sith Inquisitor"
-#         return VALID_SITH_INQUISITOR_ADVANCED_CLASSES  
-#       when "Imperial Agent"
-#         return VALID_IMPERIAL_AGENT_ADVANCED_CLASSES
-      else
-        return nil
+  def self.char_class(advanced_class)
+    if VALID_JEDI_KNIGHT_ADVANCED_CLASSES.include?(advanced_class)
+      return "Jedi Knight"  
+    elsif VALID_TROOPER_ADVANCED_CLASSES.include?(advanced_class)
+      return "Trooper"
+    elsif VALID_JEDI_CONSULAR_ADVANCED_CLASSES.include?(advanced_class)
+      return "Jedi Consular"
+    elsif VALID_SMUGGLER_ADVANCED_CLASSES.include?(advanced_class)
+      return "Smuggler"
+    elsif VALID_SITH_WARRIOR_ADVANCED_CLASSES.include?(advanced_class)
+      return "Sith Warrior"
+    elsif VALID_BOUNTY_HUNTER_ADVANCED_CLASSES.include?(advanced_class)
+      return "Bounty Hunter"
+    elsif VALID_SITH_INQUISITOR_ADVANCED_CLASSES.include?(advanced_class)
+      return "Sith Inquisitor"  
+    elsif VALID_IMPERIAL_AGENT_ADVANCED_CLASSES.include?(advanced_class)
+      return "Imperial Agent"
+    else
+      return nil
     end
   end
   
   def self.faction(advanced_class)
-    if VALID_REPUBLIC_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+    if VALID_REPUBLIC_ADVANCED_CLASSES.include?(advanced_class)
       return "Republic"
-    elsif VALID_EMPIRE_ADVANCED_CLASSES.include?(swtor_character.advanced_class)
+    elsif VALID_EMPIRE_ADVANCED_CLASSES.include?(advanced_class)
       return "Empire"
     else
       return nil
     end
   end
   
-  def self.char_class(advanced_class)
+  def self.advanced_classes(char_class)
     case char_class
       when "Jedi Knight"
         return VALID_JEDI_KNIGHT_ADVANCED_CLASSES
@@ -216,7 +213,7 @@ class SwtorCharacter < BaseCharacter
       ["Juggernaut", VALID_SITH_WARRIOR_SPECIES],
       ["Marauder", VALID_SITH_WARRIOR_SPECIES],
       ["Powertech", VALID_BOUNTY_HUNTER_SPECIES],
-      ["Mercenaryr", VALID_BOUNTY_HUNTER_SPECIES],
+      ["Mercenary", VALID_BOUNTY_HUNTER_SPECIES],
       ["Assassin", VALID_SITH_INQUISITOR_SPECIES],
       ["Sorcerer", VALID_SITH_INQUISITOR_SPECIES],
       ["Operative", VALID_IMPERIAL_AGENT_SPECIES],
