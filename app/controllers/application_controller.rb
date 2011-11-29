@@ -334,6 +334,4 @@ protected
   def root_url_hack_helper(the_broken_url)
     return the_broken_url.sub('secure.', '')
   end
-
-
 end
