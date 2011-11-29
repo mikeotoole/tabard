@@ -41,6 +41,8 @@ class SwtorCharactersController < ApplicationController
       profile = current_user.user_profile
       proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:swtor_character][:default])
       add_new_flash_message('Character was successfully created.') if proxy.save
+    else 
+      @swtor_character.swtor = Swtor.new(:server_name => params[:swtor_character][:server_name])
     end  
       
     respond_with(@swtor_character)

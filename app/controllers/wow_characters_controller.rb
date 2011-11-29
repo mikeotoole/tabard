@@ -39,7 +39,9 @@ class WowCharactersController < ApplicationController
     if @wow_character.valid?
       profile = current_user.user_profile
       proxy = profile.character_proxies.build(:character => @wow_character, :default_character => params[:wow_character][:default])
-      add_new_flash_message('Character was successfully created.') if proxy.save 
+      add_new_flash_message('Character was successfully created.') if proxy.save
+    else  
+      @wow_character.wow = Wow.new(:faction => params[:wow_character][:faction], :server_name => params[:wow_character][:server_name])
     end
       
     respond_with(@wow_character)
