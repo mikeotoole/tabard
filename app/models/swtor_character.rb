@@ -166,45 +166,15 @@ class SwtorCharacter < BaseCharacter
         return []
     end
   end
-  
-  def self.advanced_classes_hash
-    { "Jedi Knight" => VALID_JEDI_KNIGHT_ADVANCED_CLASSES,
-      "Trooper" => VALID_TROOPER_ADVANCED_CLASSES,
-      "Jedi Consular" => VALID_JEDI_CONSULAR_ADVANCED_CLASSES,
-      "Smuggler" => VALID_SMUGGLER_ADVANCED_CLASSES,
-      "Sith Warrior" => VALID_SITH_WARRIOR_ADVANCED_CLASSES,
-      "Bounty Hunter" => VALID_BOUNTY_HUNTER_ADVANCED_CLASSES,
-      "Sith Inquisitor" => VALID_SITH_INQUISITOR_ADVANCED_CLASSES,
-      "Imperial Agent" => VALID_IMPERIAL_AGENT_ADVANCED_CLASSES }
-  end  
 
   def self.species(char_class)
-    case char_class
-      when "Jedi Knight"
-        return VALID_JEDI_KNIGHT_SPECIES
-      when "Trooper"
-        return VALID_TROOPER_SPECIES
-      when "Jedi Consular"
-        return VALID_JEDI_CONSULAR_SPECIES
-      when "Smuggler"
-        return VALID_SMUGGLER_SPECIES
-      when "Sith Warrior"
-        return VALID_SITH_WARRIOR_SPECIES
-      when "Bounty Hunter"
-        return VALID_BOUNTY_HUNTER_SPECIES
-      when "Sith Inquisitor"
-        return VALID_SITH_INQUISITOR_SPECIES  
-      when "Imperial Agent"
-        return VALID_IMPERIAL_AGENT_SPECIES
-      else
-        return []
-    end
+    species_class_collection.select{|item| item[0] == char_class }[0][1]
   end
 
   def self.species_class_collection
     [
       ["Guardian", VALID_JEDI_KNIGHT_SPECIES],
-      ["Sentinel",  VALID_JEDI_KNIGHT_SPECIES],
+      ["Sentinel", VALID_JEDI_KNIGHT_SPECIES],
       ["Vanguard", VALID_TROOPER_SPECIES],
       ["Commando", VALID_TROOPER_SPECIES],
       ["Sage", VALID_JEDI_CONSULAR_SPECIES],
