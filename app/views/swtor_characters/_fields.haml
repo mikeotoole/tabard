@@ -3,7 +3,6 @@
 = f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
 = f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'advanced_class' }
 %li{ :class => 'select tier', :tier => 'advanced_class' }
-  -#%pre{style: 'background:#fff;position:absolute;z-index:999'}=YAML::dump swtor_character
   %label Species
   - SwtorCharacter.species_class_collection.each do |class_species|
     %div{ :class => 'options select', :class_name => class_species[0] }
@@ -11,8 +10,8 @@
         - class_species[1].each do |species|
           %li
             - id = "swtor_character_species_#{class_species[0].downcase}_#{species.downcase}"
-            = f.radio_button :species, (swtor_character.advanced_class == class_species[0] ? species : ''), :id => id
-            = f.label :species, species, :for => id
+            = f.radio_button 'species', species, :id => id, :checked => (swtor_character.advanced_class == class_species[0] && swtor_character.species == species ? 'checked' : 'false')
+            = f.label 'species', species, :for => id
 = f.input :level, :as => :string
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
 - if not swtor_character.default
