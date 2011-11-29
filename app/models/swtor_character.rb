@@ -200,23 +200,25 @@ class SwtorCharacter < BaseCharacter
     end
   end
 
-  def self.species_hash
-    { "Guardian" =>  VALID_JEDI_KNIGHT_SPECIES,
-      "Sentinel" =>  VALID_JEDI_KNIGHT_SPECIES,
-      "Vanguard" => VALID_TROOPER_SPECIES,
-      "Commando" => VALID_TROOPER_SPECIES,
-      "Sage" => VALID_JEDI_CONSULAR_SPECIES,
-      "Shadow" => VALID_JEDI_CONSULAR_SPECIES,
-      "Gunslinger" => VALID_SMUGGLER_SPECIES,
-      "Scoundrel" => VALID_SMUGGLER_SPECIES,
-      "Juggernaut" => VALID_SITH_WARRIOR_SPECIES,
-      "Marauder" => VALID_SITH_WARRIOR_SPECIES,
-      "Powertech" => VALID_BOUNTY_HUNTER_SPECIES,
-      "Mercenary" => VALID_BOUNTY_HUNTER_SPECIES,
-      "Assassin" => VALID_SITH_INQUISITOR_SPECIES,
-      "Sorcerer" => VALID_SITH_INQUISITOR_SPECIES,
-      "Operative" => VALID_IMPERIAL_AGENT_SPECIES,
-      "Sniper" => VALID_IMPERIAL_AGENT_SPECIES }    
+  def self.species_class_collection
+    [
+      ["Guardian", VALID_JEDI_KNIGHT_SPECIES],
+      ["Sentinel",  VALID_JEDI_KNIGHT_SPECIES],
+      ["Vanguard", VALID_TROOPER_SPECIES],
+      ["Commando", VALID_TROOPER_SPECIES],
+      ["Sage", VALID_JEDI_CONSULAR_SPECIES],
+      ["Shadow", VALID_JEDI_CONSULAR_SPECIES],
+      ["Gunslinger", VALID_SMUGGLER_SPECIES],
+      ["Scoundrel", VALID_SMUGGLER_SPECIES],
+      ["Juggernaut", VALID_SITH_WARRIOR_SPECIES],
+      ["Marauder", VALID_SITH_WARRIOR_SPECIES],
+      ["Powertech", VALID_BOUNTY_HUNTER_SPECIES],
+      ["Mercenary", VALID_BOUNTY_HUNTER_SPECIES],
+      ["Assassin", VALID_SITH_INQUISITOR_SPECIES],
+      ["Sorcerer", VALID_SITH_INQUISITOR_SPECIES],
+      ["Operative", VALID_IMPERIAL_AGENT_SPECIES],
+      ["Sniper", VALID_IMPERIAL_AGENT_SPECIES]
+    ]
   end
 
 ###
