@@ -37,7 +37,7 @@ describe SwtorCharacter do
       build(:swtor_character, :swtor => republic_game, :char_class => "Sith Warrior").should_not be_valid
     end
   end
-  
+
   describe "advanced_class" do
     it "should not be required" do
       build(:swtor_character, :advanced_class => nil).should be_valid
