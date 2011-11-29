@@ -199,22 +199,34 @@ $(document).ready ->
       $(this).trigger 'init'
   
   # tiered form field selection
-  $('form li[affects] input').change ->
-    select = $(this).closest('.select')
-    val = select.find('input:checked').val()
-    affects = select.attr('affects')
-    form = select.closest('form')
-    tier = form.find('.tier[tier="'+affects+'"]')
-    field = tier.find('.input[class_name="'+val+'"]')
-    if field.length
+  $('form li[affects] input')
+    .change ->
+      select = $(this).closest('.select')
+      val = select.find('input:checked').val()
+      affects = select.attr('affects')
+      form = select.closest('form')
+      tier = form.find('.tier[tier="'+affects+'"]')
+      tierGroup = tier.find('>.input[class_name="'+val+'"]')
       tier
-        .find('.input input')
+        .find('>.input')
         .hide()
-        .attr { disabled: true, readonly: true }
+        .find('input')
+        .data('index', $(this).attr('id'))
+        .removeAttr('id')
+        .prop('disabled', true)
+        .prop('readonly', true)
+      return false if tierGroup.length == 0
       tier.show()
-      field
+      tierGroup
         .show()
-        .removeAttr 'disabled readonly'
+        .find('input')
+        .each ->
+          $(this)
+            .attr('id', $(this).data('index'))
+            .prop('disabled', false)
+            .prop('readonly', false)
+  $('form li[affects]').each ->
+    $(this).find('input:first').trigger 'change'
   
   # fluid sidebar menu
   $('.sidemenu')
