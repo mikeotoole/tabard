@@ -53,14 +53,9 @@ class WowCharacter < BaseCharacter
   validate do |wow_character|
     wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
   end
-  validates :char_class,  :presence => true,
-                    :inclusion => { :in => VALID_CLASSES, :message => "%{value} is not a valid class." }
-  validates :race,  :presence => true
-  validate do |wow_character|
-    if not WowCharacter.races(wow_character.faction, wow_character.char_class).include?(wow_character.race)
-      wow_character.errors.add(:race, "is not valid for given faction and class")
-    end  
-  end                 
+  validates :race,  :presence => true 
+  validates :char_class,  :presence => true
+  validate :class_exists_for_race         
 
 ###
 # Public Methods
@@ -130,6 +125,14 @@ class WowCharacter < BaseCharacter
   ###
   def description
     "WoW Character"
+  end
+  
+  # Class is valid for race and faction.
+  def class_exists_for_race
+    valid_classes = WowCharacter.classes(self.faction, self.race)
+    if valid_classes and not valid_classes.include?(self.char_class)
+      self.errors.add(:char_class, "is not valid for given race")
+    end  
   end
 end
 

@@ -43,6 +43,7 @@ class SwtorCharactersController < ApplicationController
       add_new_flash_message('Character was successfully created.') if proxy.save
     else 
       @swtor_character.swtor = Swtor.new(:server_name => params[:swtor_character][:server_name])
+      @swtor_character.errors.add(:server_name, "can't be blank") if not params[:swtor_character][:server_name]
     end  
       
     respond_with(@swtor_character)

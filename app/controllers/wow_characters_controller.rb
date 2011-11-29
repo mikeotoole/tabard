@@ -42,6 +42,8 @@ class WowCharactersController < ApplicationController
       add_new_flash_message('Character was successfully created.') if proxy.save
     else  
       @wow_character.wow = Wow.new(:faction => params[:wow_character][:faction], :server_name => params[:wow_character][:server_name])
+      @wow_character.errors.add(:server_name, "can't be blank") if not params[:wow_character][:server_name]
+      @wow_character.errors.add(:faction, "can't be blank") if not params[:wow_character][:faction]
     end
       
     respond_with(@wow_character)
