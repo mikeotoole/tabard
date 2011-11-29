@@ -4,6 +4,6 @@ module NameRestrictions
                   m, crumblin, digitalaugment, digitalaugmentinc, da)
 
   def self.name_set
-    @name_set ||= INVALID_NAMES.to_set
+    INVALID_NAMES.to_set
   end
 end
