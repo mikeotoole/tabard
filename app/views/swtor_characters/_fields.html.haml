@@ -1,8 +1,11 @@
 = f.hidden_field :avatar_cache
 = f.input :name
 = f.input :server_name, :as => :radio, :label => 'Server', :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }
-= f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select' }
-= f.input :species, :as => :radio, :label => 'Species', :collection => SwtorCharacter.species_hash, :wrapper_html => { class: 'select' }
+= f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'advanced_class' }
+%li{ :class => 'select tier', :tier => 'advanced_class' }
+  %label Species
+  - SwtorCharacter.species_class_collection.each do |class_species|
+    = f.input :species, :as => :radio, :collection => class_species[1], :wrapper_tag => :div, :label => false, :wrapper_html => { class_name: class_species[0] }
 = f.input :level, :as => :string
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
 - if not swtor_character.default # Can only edit a character to the default and not make it the default

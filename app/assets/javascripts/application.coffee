@@ -198,6 +198,24 @@ $(document).ready ->
     .each ->
       $(this).trigger 'init'
   
+  # tiered form field selection
+  $('form li[affects] input').change ->
+    select = $(this).closest('.select')
+    val = select.find('input:checked').val()
+    affects = select.attr('affects')
+    form = select.closest('form')
+    tier = form.find('.tier[tier="'+affects+'"]')
+    field = tier.find('.input[class_name="'+val+'"]')
+    if field.length
+      tier
+        .find('.input input')
+        .hide()
+        .attr { disabled: true, readonly: true }
+      tier.show()
+      field
+        .show()
+        .removeAttr 'disabled readonly'
+  
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
