@@ -45,6 +45,8 @@ class SwtorCharacter < BaseCharacter
   end
 end
 
+
+
 # == Schema Information
 #
 # Table name: swtor_characters

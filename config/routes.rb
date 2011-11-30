@@ -1,6 +1,8 @@
 DaBvRails::Application.routes.draw do
   # Admin Users
+
   ActiveAdmin.routes(self)
+  devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
