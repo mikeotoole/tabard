@@ -10,7 +10,7 @@ class Subdomains::PagesController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_page, :only => [:new, :create]

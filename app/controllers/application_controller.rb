@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 # Callbacks
 ###
   # This before_filter will requre that a user is authenticated.
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
 
   # This before_filter will prevent the actions from taking place in a subdomain.
   before_filter :limit_subdomain_access
@@ -331,10 +331,21 @@ protected
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 
+  def block_unauthorized_user!
+    session[:return_to] = request.url
+    authenticate_user!
+  end
+
   # This method overrides the default devise method to set the proper protocol and subdomain
-  def after_sign_in_path_for(resource)
-    return root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) if resource.kind_of?(User)
-    return stored_location_for(resource)
+  def after_sign_in_path_for(resource_or_scope)
+    case resource_or_scope
+    when :user, User
+      store_location = session[:return_to]
+      session[:return_to] = nil
+      (store_location.nil?) ? root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) : store_location.to_s
+    else
+      super
+    end
   end
 
   # This method overrides the default devise method to set the proper protocol and subdomain

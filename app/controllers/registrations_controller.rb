@@ -8,8 +8,10 @@
 class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
-  skip_before_filter :ensure_not_ssl_mode, :limit_subdomain_access
-  before_filter :ensure_secure_subdomain
+  skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
+  skip_before_filter :limit_subdomain_access
+  skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update]
+  before_filter :ensure_secure_subdomain, :only => [:create, :update]
 
   # Cancels a user's account
   def destroy
@@ -31,6 +33,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+    root_url_hack_helper(edit_user_registration_url(:protocol => "http://", :subdomain => false))
   end
 end

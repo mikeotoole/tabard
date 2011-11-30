@@ -202,6 +202,6 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
   config.warden do |manager|
-    manager.failure_app = CustomDeviseAuthFailure
+    #manager.failure_app = CustomDeviseAuthFailure
   end
 end

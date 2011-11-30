@@ -15,7 +15,7 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
-  before_filter :authenticate_user!, :except => [:index]
+  before_filter :block_unauthorized_user!, :except => [:index]
   skip_before_filter :limit_subdomain_access, :fetch_active_games
 
 ###

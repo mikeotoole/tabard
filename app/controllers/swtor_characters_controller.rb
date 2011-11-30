@@ -10,7 +10,7 @@ class SwtorCharactersController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :authenticate_user!, :except => :show
+  prepend_before_filter :block_unauthorized_user!, :except => :show
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => :update
 

@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!, :except => :show
+  before_filter :block_unauthorized_user!, :except => :show
   before_filter :find_game, :only => :show
   authorize_resource
 
@@ -28,6 +28,5 @@ class GamesController < ApplicationController
   # This method lets a game be found by pretty_url instead of id
   def find_game
     @game = Game.find_by_pretty_url(params[:id])
-    logger.debug params.to_yaml
   end
 end
