@@ -12,12 +12,12 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_path.should == crumblin_maintenance_path
+      current_url.should == crumblin_maintenance_url
       
       put :toggle_maintenance_mode
       
       visit root_url
-      current_path.should == root_path
+      current_url.should == root_url
     end
     
     it "redirects all traffic when logged in as admin" do
@@ -25,12 +25,12 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_path.should == crumblin_maintenance_path
+      current_url.should == crumblin_maintenance_url
       
       put :toggle_maintenance_mode
       
       visit root_url
-      current_path.should == root_path
+      current_url.should == root_url
     end
     
     it "does not redirect all traffic when logged in as moderator" do
@@ -38,7 +38,7 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_path.should == root_path
+      current_url.should == root_url
     end    
     
     it "does not redirect all traffic when logged in as regular User" do
@@ -46,14 +46,14 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_path.should == root_path
+      current_url.should == root_url
     end
 
     it "does not redirect all traffic when not logged in" do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_path.should == root_path
+      current_url.should == root_url
     end
   end
 end  

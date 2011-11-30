@@ -11,7 +11,7 @@ class SentMessagesController < MailboxController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
 
   # GET /mail/sent(.:format)
   def index

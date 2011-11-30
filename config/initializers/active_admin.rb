@@ -88,6 +88,7 @@ ActiveAdmin.setup do |config|
   # config.before_filter :do_something_awesome
   config.before_filter :sign_out_current_user
   config.skip_before_filter :authenticate_user!
+  config.skip_before_filter :block_unauthorized_user!
   config.skip_before_filter :check_maintenance_mode
   config.skip_before_filter :limit_subdomain_access
   config.skip_before_filter :ensure_accepted_most_recent_legal_documents

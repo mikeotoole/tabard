@@ -197,7 +197,7 @@ class Ability
     end
     can [:destroy], Page do |page|
       page.community_admin_profile_id == user.user_profile_id or
-      page.user_profile_id == user.user_profile.id
+      page.user_profile_id == user.user_profile_id
     end
 
     # Page Space Rules

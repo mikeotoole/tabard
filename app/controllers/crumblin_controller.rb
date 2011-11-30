@@ -10,7 +10,7 @@ class CrumblinController < ApplicationController
 ###
 # Callbacks
 ###
-  skip_before_filter :authenticate_user!
+  skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_maintenance_mode, :only => [:maintenance]
 
 ###

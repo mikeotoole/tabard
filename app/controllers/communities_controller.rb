@@ -10,7 +10,7 @@ class CommunitiesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :block_unauthorized_user!, :except => [:show, :index]
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => [:create]
 

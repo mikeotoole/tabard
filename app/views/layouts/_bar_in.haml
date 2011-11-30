@@ -17,12 +17,12 @@
       = link_to 'Search', '#'
     %li
       %p
-        = link_to "My Profile", user_profile_url(current_user.user_profile, :subdomain => false)
-        = link_to "Logout", destroy_user_session_url(:subdomain => false)
+        = link_to "My Profile", edit_user_profile_url(current_user.user_profile, :subdomain => false)
+        = link_to "Logout", destroy_user_session_url
 
   %ul.characters
     %li{ :class => 'icon gear' }
-      = link_to "Account", edit_user_registration_url(:subdomain => false)
+      = link_to "Account", edit_user_registration_url
     %li{ :class => 'icon notice' }
       = link_to "Announcements", announcements_path, (current_user.recent_unread_announcements.size > 0 ? { :meta => current_user.recent_unread_announcements.size } : {})
     %li{ :class => 'icon envelope' }

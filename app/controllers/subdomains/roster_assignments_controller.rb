@@ -11,7 +11,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   before_filter :get_community_profile
   before_filter :load_roster_assignment, :except => [:new, :create, :approve, :reject]
