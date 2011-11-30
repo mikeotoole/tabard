@@ -6,7 +6,7 @@ describe SwtorCharactersController do
   
   describe "GET 'show'" do
     before(:each) do
-      @character = Factory.create(:swtor_char_profile)
+      @character = create(:swtor_char_profile)
     end
     
     it "should be successful when authenticated as a user" do

@@ -6,7 +6,7 @@ describe WowCharactersController do
   
   describe "GET 'show'" do
     before(:each) do
-      @character = Factory.create(:wow_char_profile)
+      @character = create(:wow_char_profile)
     end
     
     it "should be successful when authenticated as a user" do
