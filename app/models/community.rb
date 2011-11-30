@@ -49,6 +49,7 @@ class Community < ActiveRecord::Base
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
+  validates :name, :not_restricted_name => {:all => true}
   validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
 
