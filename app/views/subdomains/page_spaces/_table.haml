@@ -9,8 +9,8 @@
       %tr
         %td
           = link_to space.name, space
-          - if space.game
-            %em= "— #{space.game.name}"
+          - if space.supported_game
+            %em= "— #{space.supported_game.full_name}"
         %td
           - if space.pages.size > 0
             = space.pages.size
@@ -23,5 +23,5 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        - if (can? :create, PageSpace)
+        - if can? :create, current_community.page_spaces.new
           = link_to 'New Space', new_page_space_path, :class => 'button primary'

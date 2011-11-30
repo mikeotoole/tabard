@@ -1,6 +1,6 @@
 DaBvRails::Application.routes.draw do
-  # Admin Users
 
+  # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
   devise_for :admin_users , ActiveAdmin::Devise.config
@@ -31,14 +31,14 @@ DaBvRails::Application.routes.draw do
   resources :communities, :except => :destroy
 
   # Games
-  resources :games, :only => :show
+  get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
+  get "/world-of-warcraft" => 'wows#index', :as => 'wows'
 
   # Characters
-  get "/wow_characters/new" => "base_characters#new", :as => "new_wow_character"
-  get "/swtor_characters/new" => "base_characters#new", :as => "new_swtor_character"
-  resources :wow_characters, :except => [:index, :new]
-  resources :swtor_characters, :except => [:index, :new]
-  resources :base_characters, :only => :new
+  resources :wow_characters, :except => [:index, :create]
+  post 'wow_characters/new' => 'wow_characters#create', :as => :wow_characters
+  resources :swtor_characters, :except => [:index, :create]
+  post 'swtor_characters/new' => 'swtor_characters#create', :as => :swtor_characters
 
   # Messaging
   resources :sent_messages, :only => [:create]
@@ -121,6 +121,9 @@ DaBvRails::Application.routes.draw do
       resources :page_spaces do
         resources :pages, :shallow => true
       end
+
+      # Supported Games
+      resources :supported_games
     end
   end
 

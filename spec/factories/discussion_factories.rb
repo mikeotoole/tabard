@@ -5,11 +5,11 @@ FactoryGirl.define do
   end
   
   factory :discussion_space_for_wow, :parent => :discussion_space do
-    game_id { DefaultObjects.wow.id }
+    supported_game_id { Factory.create(:wow_supported_game).id }
   end
   
   factory :discussion_space_for_swtor, :parent => :discussion_space do
-    game_id { DefaultObjects.swtor.id }
+    supported_game_id { Factory.create(:swtor_supported_game).id }
   end
   
   factory :discussion do

@@ -21,9 +21,10 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications
   has_many :roles
+
   has_many :supported_games, :dependent => :destroy
-  has_many :games, :through => :supported_games
   has_many :game_announcement_spaces, :through => :supported_games
+
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
@@ -61,6 +62,12 @@ class Community < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+
+
+  def games
+    self.supported_games.collect { |a| a.game }
+  end
+
   ###
   # This method promotes a user to a member, doing all of the business logic for you.
   # [Args]

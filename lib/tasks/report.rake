@@ -20,7 +20,11 @@ namespace :reports do
   task :notes  => [:ensure_report_dir] do
     puts "Collecting all of the standard code notes..."
     system "rake notes | tee doc/reports/code_notes.txt"
-    puts "Collecting all of the testing code notes..."
+    puts "Collecting all HACK code notes..."
+    system "rake notes:custom ANNOTATION=HACK | tee -a doc/reports/code_notes.txt"
+    puts "Collecting all view code notes..."
+    system "grep -rnE 'OPTIMIZE:|OPTIMIZE|FIXME:|FIXME|TODO:|TODO|HACK:|HACK' app/views | tee -a doc/reports/code_notes.txt"
+    puts "Collecting all of the testing code notes... (see file for output)"
     system "rake notes:custom ANNOTATION=TESTING > doc/reports/testing_notes.txt"
   end
 
