@@ -209,15 +209,17 @@ $(document).ready ->
       val = select.find('input:checked').val()
       if li.filter('[affected_by]').length
         val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
+      val = val.replace /\s/gi, '_'
       options = affected.find('.options[class_name="'+val+'"]')
       affected
+        .hide()
         .find('.options')
         .hide()
         .find('input')
         .prop('disabled', true)
         .prop('readonly', true)
-      return false if options.length == 0
-      affected.show()
+      if options.length
+        affected.show()
       options
         .show()
         .find('input')
@@ -225,6 +227,8 @@ $(document).ready ->
           $(this)
             .prop('disabled', false)
             .prop('readonly', false)
+      if affected.find('.select[affects]:visible').length
+        affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects]').each ->
     $(this).find('input:first').trigger 'change'
   
