@@ -48,6 +48,7 @@ class Community < ActiveRecord::Base
                     :uniqueness => { :case_sensitive => false },
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
+  validates :name, :not_profanity => true
   validate :can_not_change_name, :on => :update
   validates :slogan, :presence => true
 
@@ -194,7 +195,7 @@ protected
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
     end
-  end
+  end  
 end
 
 

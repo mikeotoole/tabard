@@ -20,4 +20,4 @@ en:
             name:
               existing_name: "is too similar to an existing community"
               restricted_name: "is not allowed for a community"
-              
+              profanity: "is not allowed"     

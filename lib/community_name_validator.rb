@@ -16,11 +16,15 @@ class CommunityNameValidator < ActiveModel::EachValidator
 # [Returns] True is the operation succeeded without errors, otherwise false.
 ###
   def validate_each(object, attribute, value)
+    error = false
     if ::Community.where(:subdomain => ::Community.convert_to_subdomain(value)).exists?
       object.errors.add(attribute, :existing_name, options.merge(:value => value))
+      error = true
     end
     if ::NameRestrictions.name_set.include?(value.downcase)
       object.errors.add(attribute, :restricted_name, options.merge(:value => value))
+      error = true
     end
+    error
   end
 end
