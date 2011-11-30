@@ -1,0 +1,11 @@
+- title "New World of Warcraft Character"
+
+#body
+  %h1 New World of Warcraft Character
+
+  = simple_form_for @wow_character, :html => {:novalidate => true} do |f|
+    %fieldset
+      %ol
+        = render 'fields', :f => f, :wow_character => @wow_character
+        %li
+          %button{ :type => 'submit' } Create character

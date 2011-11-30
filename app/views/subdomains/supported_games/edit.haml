@@ -1,0 +1,13 @@
+- title "Editing Game | #{current_community.name}"
+
+%h1 Editing Game
+
+= simple_form_for @supported_game, :html => {:novalidate => true} do |f|
+  = f.error_notification
+  %fieldset
+    %ol
+      = f.input :name
+      = f.input :faction, :as => :radio, :collection => @supported_game.all_factions, :wrapper_html => { class: 'select' }
+      = f.input :server_name, :as => :radio, :label => 'Server', :collection => @supported_game.all_servers, :wrapper_html => { class: 'select' }
+      %li
+        %button{ :type => 'submit' } Save changes

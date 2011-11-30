@@ -1,23 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
 if ENV["RAILS_ENV"] != 'test'
+
+  %w{ seed_wow_games seed_swtor_games }.each do |part|
+    require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
+  end
 
   Timecop.freeze(2.months.ago)
 
-  # Create a default user
   puts "Creating test active admin users"
   superadmin = AdminUser.create(:email => 'superadmin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "superadmin")
   moderator = AdminUser.create(:email => 'moderator@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
   admin = AdminUser.create(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
-  puts "Creating Games..."
-  wow_game = Wow.create(:name => "World of Warcraft", :pretty_url => 'world-of-warcraft-guilds')
-  swtor_game = Swtor.create(:name => "Star Wars the Old Republic", :pretty_url => 'star-wars-old-republic-guilds')
+  alliance_wow_game = Wow.find(:first, :conditions => {:faction => "Alliance"})
+  horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
+
+  republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
+  sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
 
   puts "Creating TOS"
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1", published: true)
@@ -101,9 +99,8 @@ if ENV["RAILS_ENV"] != 'test'
   k_fox.skip_confirmation!
   k_fox.save
   miss_fox = WowCharacter.create(:name => "Miss Fox",
-    :game => wow_game,
-    :server => "Default WOW Server",
-    :faction => "Horde",
+    :wow => horde_wow_game,
+    :char_class => "Hunter",
     :race => "Goblin",
     :level => 20)
   k_fox.character_proxies.create(:user_profile => k_fox.user_profile,
@@ -119,7 +116,9 @@ if ENV["RAILS_ENV"] != 'test'
 
   puts "Kinky Fox is creating Two Maidens Guild with the game WoW!"
   twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice")
-  twom.games << wow_game
+  twom_wow_supported_game = SupportedGame.new(:game => horde_wow_game, :name => "A-Team")
+  twom.supported_games << twom_wow_supported_game
+  twom_wow_supported_game.save
 
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
   puts "Accepting Sleepy Pidgeon, Apathic Tiger, Fuzzy Crab, and Sad Panda's applications"
@@ -132,11 +131,13 @@ if ENV["RAILS_ENV"] != 'test'
   twom_gds = twom.discussion_spaces.create(:name => "General Chat")
 
   puts "Creating Two Maidens Guild WoW Discussion Space"
-  twom_wds = twom.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
+  twom_wds = twom.discussion_spaces.create(:name => "WoW", :supported_game_id => twom_wow_supported_game.id)
 
   puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
   jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya")
-  jkit.games << swtor_game
+  jkit_swtor_supported_game = SupportedGame.new(:game => sith_swtor_game, :name => "A-Team")
+  jkit.supported_games << jkit_swtor_supported_game
+  jkit_swtor_supported_game.save
 
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
   puts "Accepting Dirty Badger and Robo Billy's applications"
@@ -145,8 +146,12 @@ if ENV["RAILS_ENV"] != 'test'
 
   puts "RoboBilly is creating Just Another Headshot Community with the game SWTOR and WoW!"
   jahc = robobilly.owned_communities.create(:name => "Just Another Headshot", :slogan => "Boom baby!")
-  jahc.games << swtor_game
-  jahc.games << wow_game
+  jahc_swtor_supported_game = SupportedGame.new(:game => sith_swtor_game, :name => "A-Team")
+  jahc_swtor_supported_game.community = jahc
+  jahc_swtor_supported_game.save
+  jahc_wow_supported_game = SupportedGame.new(:game => horde_wow_game, :name => "A-Team")
+  jahc_wow_supported_game.community = jahc
+  jahc_wow_supported_game.save
 
   puts "RoboBilly is creating a n00b role..."
   noob_role = jahc.roles.create(:name => "n00b")
@@ -157,11 +162,18 @@ if ENV["RAILS_ENV"] != 'test'
   puts "RoboBilly is getting some characters..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, :server => "Herp Derp", :game => swtor_game))
+    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname,
+                                                                                                :swtor => sith_swtor_game,
+                                                                                                :char_class => "Bounty Hunter",
+                                                                                                :advanced_class => 'Mercenary',
+                                                                                                :species => "Cyborg"))
     rb_cp.approved_character_proxies << proxy
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, :server => "Manamana", :game => wow_game))
+    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname,
+                                                                                              :wow => horde_wow_game,
+                                                                                              :char_class => "Druid",
+                                                                                              :race => "Troll"))
     rb_cp.approved_character_proxies << proxy
   end
 
@@ -179,10 +191,10 @@ if ENV["RAILS_ENV"] != 'test'
   jahc_gds = jahc.discussion_spaces.create(:name => "General Chat")
 
   puts "Creating Just Another Headshot Clan WoW Discussion Space"
-  jahc_wds = jahc.discussion_spaces.create(:name => "WoW", :game_id => wow_game.id)
+  jahc_wds = jahc.discussion_spaces.create(:name => "WoW", :supported_game_id => jahc_wow_supported_game.id)
 
   puts "Creating Just Another Headshot Clan SWTOR Discussion Space"
-  jahc_sds = jahc.discussion_spaces.create(:name => "SWTOR", :game_id => swtor_game.id)
+  jahc_sds = jahc.discussion_spaces.create(:name => "SWTOR", :supported_game_id => jahc_swtor_supported_game.id)
 
   puts "Creating Just Another Headshot Clan General Discussion Space Discussion"
   jahc_gd = jahc_gds.discussions.new(:name => "What up hommies!?", :body => "How was your weekend?")
@@ -237,7 +249,7 @@ if ENV["RAILS_ENV"] != 'test'
   jahc_gips = jahc.page_spaces.create(:name => "Guild Info")
 
   puts "Creating Just Another Headshot Clan WoW Page Space"
-  jahc_wps = jahc.page_spaces.create(:name => "WoW Resources", :game_id => wow_game.id)
+  jahc_wps = jahc.page_spaces.create(:name => "WoW Resources", :supported_game_id => jahc_wow_supported_game.id)
 
   puts "Creating Just Another Headshot Clan Guild Rules Page"
   jahc_g_rules = jahc_gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")

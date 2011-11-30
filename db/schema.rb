@@ -166,15 +166,15 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
 
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
-    t.integer  "game_id"
+    t.integer  "supported_game_id"
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_announcement", :default => false
+    t.boolean  "is_announcement",   :default => false
   end
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
-  add_index "discussion_spaces", ["game_id"], :name => "index_discussion_spaces_on_game_id"
+  add_index "discussion_spaces", ["supported_game_id"], :name => "index_discussion_spaces_on_game_id"
 
   create_table "discussions", :force => true do |t|
     t.string   "name"
@@ -221,14 +221,6 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
 
   add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
 
-  create_table "games", :force => true do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "pretty_url"
-  end
-
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"
     t.integer  "recipient_id"
@@ -257,14 +249,14 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
 
   create_table "page_spaces", :force => true do |t|
     t.string   "name"
-    t.integer  "game_id"
+    t.integer  "supported_game_id"
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
-  add_index "page_spaces", ["game_id"], :name => "index_page_spaces_on_game_id"
+  add_index "page_spaces", ["supported_game_id"], :name => "index_page_spaces_on_game_id"
 
   create_table "pages", :force => true do |t|
     t.string   "name"
@@ -352,22 +344,36 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_announcement_space_id"
+    t.string   "name"
+    t.string   "game_type"
   end
 
   add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
   add_index "supported_games", ["game_announcement_space_id"], :name => "index_supported_games_on_game_announcement_space_id"
-  add_index "supported_games", ["game_id"], :name => "index_supported_games_on_game_id"
+  add_index "supported_games", ["game_id", "game_type"], :name => "index_supported_games_on_game_id_and_game_type"
 
   create_table "swtor_characters", :force => true do |t|
     t.string   "name"
-    t.string   "server"
-    t.integer  "game_id"
+    t.integer  "swtor_id"
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "char_class"
+    t.string   "advanced_class"
+    t.string   "species"
+    t.string   "level"
+    t.string   "about"
   end
 
-  add_index "swtor_characters", ["game_id"], :name => "index_swtor_characters_on_game_id"
+  add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
+
+  create_table "swtors", :force => true do |t|
+    t.string   "faction"
+    t.string   "server_name"
+    t.string   "server_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
@@ -427,16 +433,24 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
 
   create_table "wow_characters", :force => true do |t|
     t.string   "name"
-    t.string   "faction"
     t.string   "race"
     t.integer  "level"
-    t.string   "server"
-    t.integer  "game_id"
+    t.integer  "wow_id"
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "char_class"
+    t.text     "about"
   end
 
-  add_index "wow_characters", ["game_id"], :name => "index_wow_characters_on_game_id"
+  add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"
+
+  create_table "wows", :force => true do |t|
+    t.string   "faction"
+    t.string   "server_name"
+    t.string   "server_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :date_of_birth
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
 # Callbacks
 ###
   after_save :update_document_acceptance
+  before_validation :combine_birthday
 
 ###
 # Delegates
@@ -156,12 +157,45 @@ class User < ActiveRecord::Base
     self.suspended ? :suspended : super
   end
 
-  ###
-  # 
-  ###
   def at_least_13_years_old
-    errors.add(:base, "you must be 13 years of age to use this service") unless 13.years.ago.to_date < self.date_of_birth
+    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago.to_date < self.date_of_birth
   end
+
+  def birth_month
+    return self.date_of_birth.month if self.date_of_birth?
+    @birth_month
+  end
+
+  def birth_day
+    return self.date_of_birth.day if self.date_of_birth?
+    @birth_day
+  end
+
+  def birth_year
+    return self.date_of_birth.year if self.date_of_birth?
+    @birth_year
+  end
+
+  def birth_month=(value)
+    @birth_month = value
+  end
+
+  def birth_day=(value)
+    @birth_day = value
+  end
+
+  def birth_year=(value)
+    @birth_year = value
+  end
+
+  def combine_birthday
+    if self.date_of_birth.blank? and !self.birth_year.blank? and !self.birth_month.blank? and !self.birth_day.blank?
+      self.date_of_birth = Date.new(self.birth_year.to_i,self.birth_month.to_i,self.birth_day.to_i) 
+    else
+      true
+    end
+  end
+
 
 ###
 # Protected Methods
@@ -176,7 +210,6 @@ protected
     self.new_record? || self.password.present?
   end
 end
-
 
 
 

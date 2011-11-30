@@ -1,10 +1,10 @@
-- title @game.name
+- title 'Star Wars: The Old Republic'
 
 #body
-  %h1= @game.name
+  %h1= 'Star Wars: The Old Republic'
 
-  - if @game.communities.size > 0
-    = render "communities/table", :communities => @game.communities
+  - if @communities.size > 0
+    = render "communities/table", :communities => @communities
   -else
     %p
       This game has no active communities.

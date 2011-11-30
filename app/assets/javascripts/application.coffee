@@ -41,7 +41,7 @@ dump = (arr, level) ->
       .animate({ opacity: 1, marginLeft: -250 }, 200)
     $('#modal button').click action if action
     $('#modal button').click ->
-      $('#modal').animate { marginTop: 0, opacity: 0 }, 300
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
         
@@ -52,6 +52,10 @@ dump = (arr, level) ->
     cancel = options['cancel'] or= 'Cancel'
     affirm = options['affirm'] or= 'Continue'
     action = options['action']
+    dismiss = ->
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
+      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
+        $('#mask, .wmd-prompt-background, #modal').remove()
     $('body').append('<div id="mask"></div><div id="modal" class="confirm"><h1>' + title + '</h1><p>' + body + '</p><div class="actions"><button class="cancel">' + cancel + '</button><button class="affirm">' + affirm + '</button></div></div>')
     $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
@@ -59,14 +63,34 @@ dump = (arr, level) ->
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
       .animate({ opacity: 1, marginLeft: -250 }, 200)
-    $('#modal button.cancel').click ->
-      $('#modal').animate { marginTop: 0, opacity: 0 }, 300
+    $('#modal button.cancel').click dismiss
+    $('#modal button.affirm').click ->
+      action()
+      dismiss()
+        
+  # prompt input box
+  $.prompt = (options) ->
+    require = options['require'] or= false
+    title = options['title'] or= ''
+    body = options['body'] or= ''
+    cancel = options['cancel'] or= 'Cancel'
+    affirm = options['affirm'] or= 'Submit'
+    action = options['action']
+    dismiss = ->
+      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
-      
-    $('#modal button.affirm').click action if action
+    $('body').append('<div id="mask"></div><div id="modal" class="prompt"><h1>' + title + '</h1><p>' + body + '</p><p><input type="text" id="prompt" /></p><div class="actions">' + (if !require then '<button class="cancel">' + cancel + '</button>' else '') + '<button class="affirm">' + affirm + '</button></div></div>')
+    $('#mask, .wmd-prompt-background')
+      .css({ opacity: 0 })
+      .animate({ opacity: .7 }, 400, 'linear')
+    $('#modal')
+      .css({ opacity: 0, marginLeft: -500 })
+      .animate({ opacity: 1, marginLeft: -250 }, 200)
+    $('#modal button.cancel').click dismiss if !require
     $('#modal button.affirm').click ->
-      $('#modal button.cancel').trigger 'click'
+      action($('#modal #prompt').val())
+      dismiss()
         
 ) jQuery
 
@@ -100,7 +124,18 @@ $(document).ready ->
           $('#modal button.cancel').trigger 'click'
       false
   
-  # Flash messages
+  # select box auto-hide after click
+  $('.select ul label').click ->
+    li = $(this).closest('li')
+    if !li.find('input:checked').length
+      ul = li.closest('ul')
+      ul.animate { opacity: 0 }, 200, ->
+        ul
+          .hide()
+          .animate { opacity: 0 }, 5, ->
+            ul.show().css { opacity: 1 }
+  
+  # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
     if $('body.fluid').length || $('#flash').css('position') != 'relative'
       messageCount = $('#flash li').length or= 0
@@ -163,7 +198,41 @@ $(document).ready ->
     .each ->
       $(this).trigger 'init'
   
-  # Fluid menu
+  # tiered form field selection
+  $('form .select[affects] input')
+    .change ->
+      select = $(this).closest('.select')
+      li = select.closest('li')
+      affects_collection = select.attr('affects')
+      form = select.closest('form')
+      for affects in affects_collection.split(/\s/) when affects
+        affected = form.find('.affected.'+affects)
+        val = select.find('input:checked').val()
+        if li.filter('[affected_by]').length
+          val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
+        val = if val? then val.replace /\s/gi, '_' else ''
+        options = affected.find('.options[class_name="'+val+'"]')
+        affected
+          .hide()
+          .find('.options')
+          .hide()
+          .find('input')
+          .prop('disabled', true)
+          .prop('readonly', true)
+        if options.length
+          affected.show()
+        options
+          .show()
+          .find('input')
+          .each ->
+            $(this)
+              .prop('disabled', false)
+              .prop('readonly', false)
+        if affected.find('.select[affects]:visible').length
+          affected.find('.select[affects]:visible input:first').trigger 'change'
+  $('form .select[affects] input:checked').trigger 'change'
+  
+  # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
     .filter('[title]')

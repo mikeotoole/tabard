@@ -32,10 +32,13 @@ class BaseCharacter < ActiveRecord::Base
   attr_accessor :default
 
 ###
+# Attribute accessible
+###
+  attr_accessible :avatar, :avatar_cache, :remove_avatar, :default, :remote_avatar_url
+
+###
 # Associations
 ###
-  # The game the character belongs to.
-  belongs_to :game
   #The character_proxy that associates this character to a user.
   has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
 
@@ -43,7 +46,6 @@ class BaseCharacter < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true
-  validates :game, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
@@ -60,27 +62,6 @@ class BaseCharacter < ActiveRecord::Base
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
-
-  ###
-  # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
-  ###
-  def remove_avatar!
-    begin
-      super
-    rescue Fog::Storage::Rackspace::NotFound
-    end
-  end
-
-  ###
-  # This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
-  ###
-  def remove_previously_stored_avatar
-    begin
-      super
-    rescue Fog::Storage::Rackspace::NotFound
-      @previous_model_for_avatar = nil
-    end
-  end
 
 ###
 # Public Methods
@@ -112,12 +93,16 @@ class BaseCharacter < ActiveRecord::Base
   # [Returns] A string that contains the display name for this character.
   ###
   def default=(value)
-    self.set_as_default if value
+    self.set_as_default if value == true or value == "1"
   end
 
   # If the character is the default for its game.
   def default
-    self.character_proxy.default_character
+    if self.character_proxy
+      self.character_proxy.default_character ? true : false
+    else
+      return false
+    end
   end
 
   ###
@@ -128,5 +113,31 @@ class BaseCharacter < ActiveRecord::Base
   ###
   def owned_by_user?(unknown_user)
     self.user_profile.user == unknown_user
+  end
+
+###
+# Protected Methods
+###
+protected
+
+  ###
+  # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_avatar!
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+    end
+  end
+
+  ###
+  # This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_previously_stored_avatar
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+      @previous_model_for_avatar = nil
+    end
   end
 end

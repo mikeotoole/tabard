@@ -381,6 +381,7 @@ body
           position: relative
           z-index: 2
         
+        input[type="url"],
         input[type="email"],
         input[type="password"],
         input[type="text"],
@@ -472,6 +473,7 @@ body
                 background: #be4124
                 +bg_gradient(#2d7bb3,#155481)
         
+        &.select,
         .select
           height: 55px
           position: relative
@@ -486,10 +488,10 @@ body
             height: 0
             line-height: 30px
             overflow: hidden
-            padding: 30px 1px 1px
+            padding: 32px 1px 1px
             position: absolute
             +transition(box-shadow .2s linear)
-            width: 430px
+            width: 428px
             z-index: 9
                 
             &:before
@@ -504,6 +506,7 @@ body
               z-index: 10
             
             li
+              display: inline
               padding: 0
               
               label
@@ -514,10 +517,10 @@ body
                 color: #66482f
                 display: none
                 font-family: DinMedium, sans
-                height: 30px
-                line-height: 30px
+                min-height: 20px
+                line-height: 20px
                 margin: 1px 0 0
-                padding: 0 5px
+                padding: 5px 10px
                 text-indent: 0
                 
                 &:before,
@@ -533,10 +536,14 @@ body
                   border-top-color: transparent
                   color: #66482f
                   display: block
+                  height: 30px
                   font-family: DinLight, sans
+                  line-height: 30px
+                  overflow: hidden
+                  padding: 0 30px 0 10px
                   position: absolute
                   top: 0
-                  width: 420px
+                  width: 388px
                   z-index: 3
             
             &:hover
@@ -545,6 +552,7 @@ body
               +bg_gradient(#FDF3EE,#F2E5E1)
               color: #580B15
               height: auto
+              z-index: 10
             
               li
               
@@ -556,7 +564,11 @@ body
                   &:hover
                     background: #580B15
                     color: #fff !important
-      
+        
+        &.short
+          
+          input
+            width: 50px
         
         &.field_with_errors
           
@@ -573,8 +585,26 @@ body
             margin: -5px 0 0
             padding: 10px 10px 5px
             position: relative
+            width: 412px
             z-index: 1
+    
+          &.select
+            margin-bottom: 25px
+            
+            ul
+              border-color: #A43D33
+              
+            > .options
+              margin-bottom: -55px
+            
+            > mark.error
+              margin-top: 30px
         
+      .affected
+        display: none
+        
+        .input
+          display: none
   
   .full
     

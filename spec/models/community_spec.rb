@@ -207,7 +207,7 @@ describe Community do
     it "should return announcement space for each game the community has" do
       community.games.should be_empty
       community.game_announcement_spaces.should be_empty
-      community.games << wow
+      community.supported_games << create(:supported_game, :game => wow)
       community.games.should eq([wow])
       community.game_announcement_spaces.count.should eq(1)
     end
