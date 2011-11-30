@@ -1,10 +1,15 @@
-%li{ :class => "select affected #{field}", :affected_by => affected_by }
-  %label= label
+%li{ :class => "select affected #{field} #{f.object.errors[field].any? ? 'field_with_errors' : ''}", :affected_by => affected_by }
+  %label
+    - if defined? required && required
+      %abbr.required *
+    = label
   - collection.each do |item|
-    %div{ :class => 'options select', :class_name => item[0], :affects => (defined?(affects) ? affects : '') }
+    %div{ :class => "options select", :class_name => item[0], :affects => (defined?(affects) ? affects : '') }
       %ul
         - item[1].each do |input|
           %li
             - id = "#{field}_#{item[0].downcase}_#{input.gsub(/[^\w\d]/,'').downcase}"
             = f.radio_button field, input, :id => id, :checked => (affected_by_value == item[0] && field_value == input ? 'checked' : 'false')
             = f.label field, input, :for => id
+  - if f.object.errors[field].any?
+    %mark.error= f.object.errors[field].first
