@@ -21,7 +21,7 @@ describe Subdomains::AnswersController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :index, :submission_id => submission.id
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end    
   end
 
@@ -34,7 +34,7 @@ describe Subdomains::AnswersController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => answer.id.to_s
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end  
   end
 
@@ -47,7 +47,7 @@ describe Subdomains::AnswersController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :new, :submission_id => submission.id
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end  
   end
 
@@ -76,7 +76,7 @@ describe Subdomains::AnswersController do
       
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :submission_id => create(:submission).id, :answer => attributes_for(:answer)
-        response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+        response.should redirect_to(new_user_session_url)
       end 
     end
 

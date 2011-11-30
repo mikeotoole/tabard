@@ -40,7 +40,7 @@ describe SentMessagesController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -59,7 +59,7 @@ describe SentMessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => message
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should raise error when authenticated as not the owner" do
@@ -83,7 +83,7 @@ describe SentMessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -128,7 +128,7 @@ describe SentMessagesController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :message => attributes_for(:message)
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end   
   end
 

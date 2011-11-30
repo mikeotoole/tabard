@@ -8,7 +8,7 @@ describe BaseCharactersController do
     describe "when not authenticated as a user" do
       it "shouldn't be successful" do
         get 'new', :game => {:game_id => DefaultObjects.wow.id}
-        response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+        response.should redirect_to(new_user_session_url)
       end
     end
     

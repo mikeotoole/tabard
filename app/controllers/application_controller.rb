@@ -331,6 +331,7 @@ protected
     session[:last_page] = session[:current_page] unless session[:current_page] == request.url
   end
 
+  # This method is a custom replacement to authenticate_user! provided by devise to get around the path/url issue.
   def block_unauthorized_user!
     session[:return_to] = request.url
     authenticate_user!

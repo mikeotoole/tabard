@@ -60,7 +60,7 @@ describe CommunitiesController do
 
     it "shouldn't be successful when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should render communities/new template" do
@@ -85,7 +85,7 @@ describe CommunitiesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => community
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should render communities/edit template" do
@@ -124,7 +124,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -166,7 +166,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(:subdomain => "secure", :protocol => "https://"))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should not change attributes" do
