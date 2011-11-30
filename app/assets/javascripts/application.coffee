@@ -230,8 +230,7 @@ $(document).ready ->
               .prop('readonly', false)
         if affected.find('.select[affects]:visible').length
           affected.find('.select[affects]:visible input:first').trigger 'change'
-  $('form .select[affects]').each ->
-    $(this).find('input:first').trigger 'change'
+  $('form .select[affects] input:checked').trigger 'change'
   
   # fluid sidebar menu
   $('.sidemenu')
