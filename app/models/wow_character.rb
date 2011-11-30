@@ -55,7 +55,7 @@ class WowCharacter < BaseCharacter
   end
   validates :race,  :presence => true 
   validates :char_class,  :presence => true
-  validate :class_exists_for_race         
+  validate :class_is_valid_for_race         
 
 ###
 # Public Methods
@@ -67,10 +67,6 @@ class WowCharacter < BaseCharacter
   
   def self.all_races
     VALID_RACES
-  end
-  
-  def self.classes(faction, race)
-    faction and race ? faction_race_class_collection.select{|item| item[0] == "#{faction}_#{race.gsub(/\s/,'_')}" }[0][1] : []
   end
 
   def self.faction_race_collection
@@ -128,9 +124,13 @@ class WowCharacter < BaseCharacter
   end
   
   # Class is valid for race and faction.
-  def class_exists_for_race
-    valid_classes = WowCharacter.classes(self.faction, self.race)
-    if valid_classes and not valid_classes.include?(self.char_class)
+  def class_is_valid_for_race
+    if self.faction and self.race
+      class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
+    end  
+    valid_classes = class_array[0][1] if class_array and class_array[0]
+    
+    if not valid_classes or not valid_classes.include?(self.char_class)
       self.errors.add(:char_class, "is not valid for given race")
     end  
   end
