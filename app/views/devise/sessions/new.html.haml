@@ -3,7 +3,7 @@
 #body
   %h1 Sign in to Crumblin
 
-  = simple_form_for(resource, :as => resource_name, :url => session_url(resource_name, :subdomain => "secure", :protocol => "https://")) do |f|
+  = simple_form_for(resource, :as => resource_name, :url => session_url(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))) do |f|
     %fieldset
       %ol
         = f.input :email
