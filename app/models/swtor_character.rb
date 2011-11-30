@@ -67,18 +67,10 @@ class SwtorCharacter < BaseCharacter
       swtor_character.errors.add(:class, "is not valid for given faction")
     end  
   end
-  validates :advanced_class,  :presence => true
-  validate do |swtor_character|
-    if not swtor_character.advanced_class.blank? and not SwtorCharacter.advanced_classes(swtor_character.char_class).include?(swtor_character.advanced_class)
-      swtor_character.errors.add(:advanced_class, "is not valid for given class")
-    end   
-  end
+  validates :advanced_class,  :presence => true,
+                              :inclusion => { :in => VALID_ADVANCED_CLASSES, :message => "%{value} is not a valid advanced class." }   
   validates :species,  :presence => true
-  validate do |swtor_character|
-    if not SwtorCharacter.species(swtor_character.char_class).include?(swtor_character.species)
-      swtor_character.errors.add(:species, "is not valid for given class")
-    end  
-  end
+  validate :species_is_valid_for_advanced_class
 
 ###
 # Public Methods
@@ -143,33 +135,6 @@ class SwtorCharacter < BaseCharacter
       return nil
     end
   end
-  
-  def self.advanced_classes(char_class)
-    case char_class
-      when "Jedi Knight"
-        return VALID_JEDI_KNIGHT_ADVANCED_CLASSES
-      when "Trooper"
-        return VALID_TROOPER_ADVANCED_CLASSES
-      when "Jedi Consular"
-        return VALID_JEDI_CONSULAR_ADVANCED_CLASSES
-      when "Smuggler"
-        return VALID_SMUGGLER_ADVANCED_CLASSES
-      when "Sith Warrior"
-        return VALID_SITH_WARRIOR_ADVANCED_CLASSES
-      when "Bounty Hunter"
-        return VALID_BOUNTY_HUNTER_ADVANCED_CLASSES
-      when "Sith Inquisitor"
-        return VALID_SITH_INQUISITOR_ADVANCED_CLASSES  
-      when "Imperial Agent"
-        return VALID_IMPERIAL_AGENT_ADVANCED_CLASSES
-      else
-        return []
-    end
-  end
-
-  def self.species(char_class)
-    char_class ? species_class_collection.select{|item| item[0] == char_class }[0][1] : []
-  end
 
   def self.species_class_collection
     [
@@ -218,9 +183,16 @@ class SwtorCharacter < BaseCharacter
   def description
     "SWTOR Character"
   end
+  
+  def species_is_valid_for_advanced_class
+    species_array = SwtorCharacter.species_class_collection.select{|item| item[0] == self.advanced_class }
+    vaild_species = species_array[0][1] if species_array and species_array[0]
+    
+    if not vaild_species or not vaild_species.include?(self.species)
+      self.errors.add(:species, "is not valid for given class")
+    end  
+  end
 end
-
-
 
 
 # == Schema Information
