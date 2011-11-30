@@ -203,32 +203,33 @@ $(document).ready ->
     .change ->
       select = $(this).closest('.select')
       li = select.closest('li')
-      affects = select.attr('affects')
+      affects_collection = select.attr('affects')
       form = select.closest('form')
-      affected = form.find('.affected.'+affects)
-      val = select.find('input:checked').val()
-      if li.filter('[affected_by]').length
-        val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
-      val = val.replace /\s/gi, '_'
-      options = affected.find('.options[class_name="'+val+'"]')
-      affected
-        .hide()
-        .find('.options')
-        .hide()
-        .find('input')
-        .prop('disabled', true)
-        .prop('readonly', true)
-      if options.length
-        affected.show()
-      options
-        .show()
-        .find('input')
-        .each ->
-          $(this)
-            .prop('disabled', false)
-            .prop('readonly', false)
-      if affected.find('.select[affects]:visible').length
-        affected.find('.select[affects]:visible input:first').trigger 'change'
+      for affects in affects_collection.split(/\s/) when affects
+        affected = form.find('.affected.'+affects)
+        val = select.find('input:checked').val()
+        if li.filter('[affected_by]').length
+          val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
+        val = if val? then val.replace /\s/gi, '_' else ''
+        options = affected.find('.options[class_name="'+val+'"]')
+        affected
+          .hide()
+          .find('.options')
+          .hide()
+          .find('input')
+          .prop('disabled', true)
+          .prop('readonly', true)
+        if options.length
+          affected.show()
+        options
+          .show()
+          .find('input')
+          .each ->
+            $(this)
+              .prop('disabled', false)
+              .prop('readonly', false)
+        if affected.find('.select[affects]:visible').length
+          affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects]').each ->
     $(this).find('input:first').trigger 'change'
   
