@@ -10,7 +10,7 @@ class WowsController < ApplicationController
 ###
 # Before Filters
 ###
-  skip_before_filter :authenticate_user!, :only => [:index]
+  skip_before_filter :block_unauthorized_user!, :only => [:index]
 
 ###
 # REST Actions
