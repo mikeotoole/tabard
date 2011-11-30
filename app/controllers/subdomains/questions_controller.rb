@@ -11,7 +11,7 @@ class Subdomains::QuestionsController < SubdomainsController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :create_question, :only => [:new, :create]
   load_and_authorize_resource :except => [:index, :new, :create]
   authorize_resource :only => [:new, :create]

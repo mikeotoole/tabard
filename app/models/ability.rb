@@ -148,15 +148,15 @@ class Ability
       (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
     end
     can [:destroy], Discussion do |discussion|
-      (discussion.community.admin_profile_id == user.user_profile.id and not discussion.has_been_locked) or
-      ((discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked)
+      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.has_been_locked) or
+      ((discussion.user_profile_id == user.user_profile_id) and not discussion.has_been_locked)
     end
     can [:unlock, :lock], Discussion do |discussion|
-      discussion.community.admin_profile_id == user.user_profile.id
+      discussion.community_admin_profile_id == user.user_profile_id
     end
     cannot :create, Discussion do |discussion|
       if discussion.is_announcement
-        discussion.community.admin_profile_id != user.user_profile.id
+        discussion.community_admin_profile_id != user.user_profile_id
       else
         false
       end
@@ -196,8 +196,8 @@ class Ability
       page.user_profile_id == user.user_profile.id
     end
     can [:destroy], Page do |page|
-      page.community.admin_profile_id == user.user_profile.id or
-      page.user_profile_id == user.user_profile.id
+      page.community_admin_profile_id == user.user_profile_id or
+      page.user_profile_id == user.user_profile_id
     end
 
     # Page Space Rules
@@ -231,6 +231,14 @@ class Ability
     end
     can :manage, MessageAssociation do |message_association|
       message_association.recipient_id == user.user_profile.id
+    end
+
+    # Supported Game Rules
+    can [:read], SupportedGame do |supported_game|
+      user.user_profile.is_member?(supported_game.community)
+    end
+    can [:update, :destroy, :create], SupportedGame do |supported_game|
+      supported_game.community_admin_profile_id == user.user_profile_id
     end
   end
 

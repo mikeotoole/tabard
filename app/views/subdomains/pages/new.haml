@@ -1,7 +1,24 @@
 - title "New Page | #{@community.name}"
 
+= javascript_include_tag "Markdown.Converter","Markdown.Sanitizer","Markdown.Editor","pages"
+= stylesheet_link_tag "application/fluid"
+
 %h1 New Page
 
-.full
-  = simple_form_for [@page.page_space,@page] do |f|
+= simple_form_for [@page.page_space,@page] do |f|
+
+  .sidemenu
+    %dl
+      %dt Actions
+      %dd.cinch
+        %button{ :class => 'wmd-save', :type => 'submit', :meta => 'Create page' } Create page
+      %dd{ :class => 'cinch cancel' }
+        = link_to 'Cancel', page_space_path(@page.page_space), :method => :get, :meta => 'Cancel changes', :confirm => 'All of your changes will be lost. Are you sure you want to leave this page?'
+      %dt Tools
+      %dd
+        #wmd-button-bar
+
+  .editor
     = render 'fields', :page => @page, :f => f
+
+  #wmd-preview{ :class => "wmd-panel" "wmd-preview" }

@@ -6,7 +6,7 @@
 # This controller is handling all announcement discussions for the current user.
 ###
 class AnnouncementsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   respond_to :html
 
 ###

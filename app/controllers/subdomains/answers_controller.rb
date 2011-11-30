@@ -11,7 +11,7 @@ class Subdomains::AnswersController < SubdomainsController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :find_submission_by_id
   before_filter :load_answers, :only => [:index]
   before_filter :create_answer, :only => [:new, :create]

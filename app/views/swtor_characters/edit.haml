@@ -1,0 +1,13 @@
+- title "Editing Star Wars: The Old Republic Character"
+
+#body
+  %h1 Editing Star Wars: The Old Republic Character
+  - if @swtor_character.default
+    %p= "This is your default character for #{@swtor_character.game_name}"
+
+  = simple_form_for @swtor_character, :html => {:novalidate => true}  do |f|
+    %fieldset
+      %ol
+        = render 'fields', :f => f, :swtor_character => @swtor_character
+        %li
+          %button{ :type => 'submit' } Save character

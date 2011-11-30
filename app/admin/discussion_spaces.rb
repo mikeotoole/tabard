@@ -6,7 +6,6 @@ ActiveAdmin.register DiscussionSpace do
 
   filter :id
   filter :name
-  filter :game
   filter :created_at
   filter :is_announcement, :as => :select
 
@@ -19,18 +18,13 @@ ActiveAdmin.register DiscussionSpace do
       link_to discussion_space.community_name, [:admin, discussion_space.community]
     end
     column :name
-    column :game, :sortable => :game_id
+    column :supported_game, :sortable => :supported_game_id
     column :created_at
     column :is_announcement
     column :number_of_discussions, :sortable => false
-    column "Destroy" do |discussion_space|
-      if can? :destroy, discussion_space
-        link_to "Destroy", [:admin, discussion_space], :method => :delete, :confirm => 'Are you sure you want to delete this discussion space?'
-      end
-    end
   end
 
-  show :title => proc{"#{discussion_space.community_name} - #{discussion_space.name}"} do
+  show :title => :name do
     attributes_table *default_attribute_table_rows
     div do
       panel("Discussions") do
@@ -50,7 +44,7 @@ ActiveAdmin.register DiscussionSpace do
 
   form do |f|
     f.inputs "Discussion Space Details" do
-      f.input :game
+      f.input :supported_game, :collection => f.object.community.supported_games
       f.input :name
     end
     f.buttons

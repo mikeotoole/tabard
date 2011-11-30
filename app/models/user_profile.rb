@@ -10,7 +10,7 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
-      :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
 
 ###
 # Associations
@@ -109,7 +109,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
   end
 
   ###
@@ -123,7 +123,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id or not proxy.default_character) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
     proxies = proxies.compact
     raise RuntimeError.new("too many default characters exception") if proxies.count > 1
     proxies.first

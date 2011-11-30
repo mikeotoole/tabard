@@ -9,8 +9,8 @@
       %tr
         %td
           = link_to space.name, space
-          - if space.game
-            %rt= space.game.name
+          - if space.supported_game
+            %rt= space.supported_game.full_name
         %td
           - if space.discussions.size > 0
             = space.discussions.size
@@ -23,5 +23,5 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        - if (can? :create, DiscussionSpace)
+        - if can? :create, current_community.discussion_spaces.new
           = link_to 'New Space', new_discussion_space_path, :class => 'button primary'
