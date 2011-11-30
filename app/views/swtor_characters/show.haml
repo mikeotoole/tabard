@@ -13,7 +13,7 @@
   = @swtor_character.char_class
 %p
   %b Advanced Class:
-  - if @swtor_character.advanced_class?
+  - if not @swtor_character.advanced_class?
     = "None"
   - else
     = @swtor_character.advanced_class
