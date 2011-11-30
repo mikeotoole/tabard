@@ -121,6 +121,27 @@ class WowCharacter < BaseCharacter
     ]
   end
 
+  # Creates a new wow character with the given params.
+  def self.create_character(params, current_user)
+    if params[:wow_character]
+      wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
+      params[:wow_character][:wow_id] = wow.id if wow
+      wow_character = WowCharacter.create(params[:wow_character])
+
+      if wow_character.valid?
+        profile = current_user.user_profile
+        proxy = profile.character_proxies.build(:character => wow_character, :default_character => params[:wow_character][:default])
+        wow_character.errors.add(:error, "could not add character to user profile") unless proxy.save
+      else
+        wow_character.wow = Wow.new(:faction => params[:wow_character][:faction], :server_name => params[:wow_character][:server_name])
+        wow_character.errors.add(:server_name, "can't be blank") if not params[:wow_character][:server_name]
+        wow_character.errors.add(:faction, "can't be blank") if not params[:wow_character][:faction]
+      end
+      return wow_character
+    else
+      return nil
+    end
+  end
 
 ###
 # Instance Methods

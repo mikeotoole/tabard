@@ -43,4 +43,24 @@ class Game < ActiveRecord::Base
   def self.all_games
     Wow.all + Swtor.all
   end
+
+  ###
+  # Gets a game for a given type, faction, server
+  # [Args]
+  #   * +type+ -> The game type
+  #   * +faction+ -> The faction for game
+  #   * +server_name+ -> The server for game
+  # [Returns] If a game is found the game is returned. If no game is found but type is a valid game type a stubbed out game instance is returned. Otherwise nil is returned.
+  ###
+  def self.get_game(type, faction, server_name)
+    game_class = type.constantize if type
+    game = game_class.game_for_faction_server(faction, server_name) if game_class and game_class.superclass.name == "Game"
+    if game
+      return game
+    elsif game_class and game_class.superclass.name == "Game"
+      return game_class.new(:faction => faction, :server_name => server_name)
+    else
+      return nil
+    end
+  end
 end

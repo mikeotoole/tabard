@@ -32,19 +32,9 @@ class WowCharactersController < ApplicationController
 
   # POST /wow_characters(.:format)
   def create
-    wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
-    params[:wow_character][:wow_id] = wow.id if wow
-    @wow_character = WowCharacter.create(params[:wow_character])
+    @wow_character = WowCharacter.create_character(params, current_user)
 
-    if @wow_character.valid?
-      profile = current_user.user_profile
-      proxy = profile.character_proxies.build(:character => @wow_character, :default_character => params[:wow_character][:default])
-      add_new_flash_message('Character was successfully created.') if proxy.save
-    else
-      @wow_character.wow = Wow.new(:faction => params[:wow_character][:faction], :server_name => params[:wow_character][:server_name])
-      @wow_character.errors.add(:server_name, "can't be blank") if not params[:wow_character][:server_name]
-      @wow_character.errors.add(:faction, "can't be blank") if not params[:wow_character][:faction]
-    end
+    add_new_flash_message('Character was successfully created') if @wow_character.character_proxy and @wow_character.character_proxy.valid?
 
     respond_with(@wow_character)
   end
@@ -56,14 +46,14 @@ class WowCharactersController < ApplicationController
 
     wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
     @wow_character.wow = wow if wow
-    add_new_flash_message('Character was successfully updated.') if @wow_character.update_attributes(params[:wow_character])
+    add_new_flash_message('Character was successfully updated') if @wow_character.update_attributes(params[:wow_character])
     respond_with(@wow_character)
   end
 
   # DELETE /wow_characters/:id(.:format)
   def destroy
     if @wow_character
-      add_new_flash_message('Character was successfully deleted.') if @wow_character.destroy
+      add_new_flash_message('Character was successfully deleted') if @wow_character.destroy
     end
     respond_with(@wow_character)
   end

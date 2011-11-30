@@ -27,7 +27,8 @@ class SupportedGame < ActiveRecord::Base
   delegate :faction, :to => :game, :allow_nil => true
   delegate :server_name, :to => :game, :allow_nil => true
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
-
+  delegate :all_factions, :to => :game, :allow_nil => true
+  delegate :all_servers, :to => :game, :allow_nil => true
 
 ###
 # Validators
@@ -96,8 +97,8 @@ protected
   ###
   def game_faction_server_combination
     if self.game_id.blank?
-      game_class = self.game_type.constantize
-      if game_class.superclass.name == "Game"
+      game_class = self.game_type.constantize if self.game_type
+      if game_class and game_class.superclass.name == "Game"
         self.errors.add(:server_name, "invalid for game type") if not game_class.all_servers.include?(self.server_name)
         self.errors.add(:faction, "invalid for game type") if not game_class.all_factions.include?(self.faction)
       else

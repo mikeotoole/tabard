@@ -95,7 +95,7 @@ class SwtorCharacter < BaseCharacter
     if SwtorCharacter.char_class(swtor_character.advanced_class) != swtor_character.char_class
       swtor_character.errors.add(:advanced_class, "is not valid for given class")
     end
-  end                            
+  end
   validates :species,  :presence => true
   validate :species_is_valid_for_advanced_class
 

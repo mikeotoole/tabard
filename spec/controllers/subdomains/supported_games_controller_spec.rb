@@ -205,16 +205,12 @@ describe Subdomains::SupportedGamesController do
 
     describe "with invalid params" do
       it "assigns the supported_game as @supported_game" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SupportedGame.any_instance.stub(:save).and_return(false)
-        put :update, :id => supported_game.id, :supported_game => {:game_type => DefaultObjects.wow.class.name}
+        put :update, :id => supported_game.id, :supported_game => {:name => nil}
         assigns(:supported_game).should eq(supported_game)
       end
 
       it "re-renders the 'edit' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        SupportedGame.any_instance.stub(:save).and_return(false)
-        put :update, :id => supported_game.id, :supported_game => {:game_type => DefaultObjects.wow.class.name}
+        put :update, :id => supported_game.id, :supported_game => {:name => nil}
         response.should render_template("edit")
       end
     end
