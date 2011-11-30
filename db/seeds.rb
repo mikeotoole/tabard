@@ -1,7 +1,8 @@
-require 'swtor_servers_list'
-require 'wow_servers_list'
-
 if ENV["RAILS_ENV"] != 'test'
+
+  %w{ seed_wow_games seed_swtor_games }.each do |part|
+    require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
+  end
 
   Timecop.freeze(2.months.ago)
 
@@ -10,19 +11,8 @@ if ENV["RAILS_ENV"] != 'test'
   moderator = AdminUser.create(:email => 'moderator@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
   admin = AdminUser.create(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
-  puts "Creating Games..."
-  WowServersList::VALID_SERVERS.each do |server_name, server_type|
-    Wow.create(:faction => "Alliance", :server_name => server_name, :server_type => server_type)
-    Wow.create(:faction => "Horde", :server_name => server_name, :server_type => server_type)
-  end
-
   alliance_wow_game = Wow.find(:first, :conditions => {:faction => "Alliance"})
   horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
-
-  SwtorServersList::VALID_SERVERS.each do |server_name, server_type|
-    Swtor.create(:faction => "Republic", :server_name => server_name, :server_type => server_type)
-    Swtor.create(:faction => "Empire", :server_name => server_name, :server_type => server_type)
-  end
 
   republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
   sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
