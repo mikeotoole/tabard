@@ -39,6 +39,7 @@ class Discussion < ActiveRecord::Base
   delegate :game_name, :to => :discussion_space, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
+  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods

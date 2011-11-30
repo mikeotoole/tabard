@@ -4,7 +4,7 @@
   %h1 Editing Star Wars: The Old Republic Character
   - if @swtor_character.default
     %p= "This is your default character for #{@swtor_character.game_name}"
-  
+
   = simple_form_for @swtor_character, :html => {:novalidate => true}  do |f|
     %fieldset
       %ol

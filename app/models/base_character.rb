@@ -102,7 +102,7 @@ class BaseCharacter < ActiveRecord::Base
       self.character_proxy.default_character ? true : false
     else
       return false
-    end    
+    end
   end
 
   ###
@@ -114,7 +114,7 @@ class BaseCharacter < ActiveRecord::Base
   def owned_by_user?(unknown_user)
     self.user_profile.user == unknown_user
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -139,5 +139,5 @@ protected
     rescue Fog::Storage::Rackspace::NotFound
       @previous_model_for_avatar = nil
     end
-  end  
+  end
 end

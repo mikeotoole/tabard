@@ -95,7 +95,7 @@ protected
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
   end
-# 
+#
 #   ###
 #   # _before_filter_
 #   #

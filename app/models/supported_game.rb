@@ -26,6 +26,7 @@ class SupportedGame < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true
   delegate :faction, :to => :game, :allow_nil => true
   delegate :server_name, :to => :game, :allow_nil => true
+  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
 
 
 ###
@@ -33,14 +34,23 @@ class SupportedGame < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validate :game_faction_server_combination
-  validates :name, :presence => true, 
+  validates :name, :presence => true,
                     :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type], :message => "exists for this exact game."}
-  
+
 ###
 # Callbacks
 ###
   after_create :make_game_announcement_space
 
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
+
+  # Gets the full name of this game with type faction and server
   def full_name
     "#{self.game_name} \u2014 #{self.name}"
   end
@@ -53,6 +63,7 @@ protected
 ###
 # Callback Methods
 ###
+
   ###
   # _after_create_
   #
@@ -73,7 +84,16 @@ protected
       end
     end
   end
-  
+
+###
+# Validator Methods
+###
+
+  ###
+  # _validator_
+  #
+  # Makes sure that there is a game for the given faction server combination.
+  ###
   def game_faction_server_combination
     if self.game_id.blank?
       game_class = self.game_type.constantize
@@ -82,8 +102,8 @@ protected
         self.errors.add(:faction, "invalid for game type") if not game_class.all_factions.include?(self.faction)
       else
         self.errors.add(:game_type, "is not valid")
-      end  
-    end 
+      end
+    end
   end
 end
 

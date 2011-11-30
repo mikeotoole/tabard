@@ -22,7 +22,7 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
     column "Edit" do |swtor|
       if can? :edit, swtor
         link_to "Edit", edit_admin_swtor_path(swtor)
-      end  
+      end
     end
   end
 
@@ -39,10 +39,10 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
         end
       end
     end
-    
+
 #     active_admin_comments
   end
-  
+
   form do |f|
     f.inputs "SWTOR Details" do
       f.input :faction, :as => :select, :collection => Swtor::VALID_FACTIONS
@@ -50,5 +50,5 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
       f.input :server_type, :as => :select, :collection => Swtor::VALID_SERVER_TYPES
     end
     f.buttons
-  end  
+  end
 end

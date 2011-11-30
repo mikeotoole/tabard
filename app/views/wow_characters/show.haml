@@ -2,7 +2,7 @@
 
 #body
   %p#notice= notice
-  
+
   %p
     = image_tag(@wow_character.avatar_url)
   %p
@@ -27,6 +27,6 @@
     %p
       Default Character For
       = @wow_character.wow.name
-    
+
   - if can? :edit, @wow_character
     = link_to 'Edit', edit_wow_character_path(@wow_character)

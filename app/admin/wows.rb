@@ -22,7 +22,7 @@ ActiveAdmin.register Wow, :as => "Wow" do
     column "Edit" do |wow|
       if can? :edit, wow
         link_to "Edit", edit_admin_wow_path(wow)
-      end  
+      end
     end
   end
 
@@ -42,7 +42,7 @@ ActiveAdmin.register Wow, :as => "Wow" do
 
 #     active_admin_comments
   end
-  
+
   form do |f|
     f.inputs "WoW Details" do
       f.input :faction, :as => :select, :collection => Wow::VALID_FACTIONS
@@ -50,5 +50,5 @@ ActiveAdmin.register Wow, :as => "Wow" do
       f.input :server_type, :as => :select, :collection => Wow::VALID_SERVER_TYPES
     end
     f.buttons
-  end 
+  end
 end

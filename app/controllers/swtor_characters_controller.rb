@@ -32,7 +32,7 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
-    swtor = Swtor.find(:first, :conditions => {:faction => SwtorCharacter.faction(params[:swtor_character][:advanced_class]), :server_name => params[:swtor_character][:server_name]})
+    swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
     params[:swtor_character][:swtor_id] = swtor.id if swtor
     params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class])
     @swtor_character = SwtorCharacter.create(params[:swtor_character])
@@ -41,11 +41,11 @@ class SwtorCharactersController < ApplicationController
       profile = current_user.user_profile
       proxy = profile.character_proxies.build(:character => @swtor_character, :default_character => params[:swtor_character][:default])
       add_new_flash_message('Character was successfully created.') if proxy.save
-    else 
+    else
       @swtor_character.swtor = Swtor.new(:server_name => params[:swtor_character][:server_name])
       @swtor_character.errors.add(:server_name, "can't be blank") if not params[:swtor_character][:server_name]
-    end  
-      
+    end
+
     respond_with(@swtor_character)
   end
 
@@ -54,7 +54,7 @@ class SwtorCharactersController < ApplicationController
     @swtor_character = SwtorCharacter.find(params[:id])
     authorize!(:update, @swtor_character)
 
-    swtor = Swtor.find(:first, :conditions => {:faction => SwtorCharacter.faction(params[:swtor_character][:advanced_class]), :server_name => params[:swtor_character][:server_name]})
+    swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
     @swtor_character.swtor = swtor if swtor
     params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
     add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])

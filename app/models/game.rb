@@ -38,7 +38,8 @@ class Game < ActiveRecord::Base
     end
     super
   end
-  
+
+  # Gets all games
   def self.all_games
     Wow.all + Swtor.all
   end

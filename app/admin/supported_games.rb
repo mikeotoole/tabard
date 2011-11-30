@@ -4,26 +4,24 @@ ActiveAdmin.register SupportedGame do
 
   actions :index, :show, :edit, :destroy
 
-  controller do
-    def update
-      @supported_game = SupportedGame.find(params[:id])
-      game_class = @supported_game.game_type.constantize
-      game = game_class.find(:first, :conditions => {:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name]}) if game_class.superclass.name == "Game"
-      if game
-        @supported_game.game = game
-      else
-        @supported_game.game = game_class.new(:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name])  if game_class.superclass.name == "Game"
-      end
-      
-      flash[:notice] = 'Supported game was successfully updated.' if @supported_game.update_attributes(params[:supported_game])
-  
-      if @supported_game.valid?
-        redirect_to :action => :show
-      else
-        render :action => :edit
-      end  
+  member_action :update, :method => :put do
+    @supported_game = SupportedGame.find(params[:id])
+    game_class = @supported_game.game_type.constantize
+    game = game_class.find(:first, :conditions => {:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name]}) if game_class.superclass.name == "Game"
+    if game
+      @supported_game.game = game
+    else
+      @supported_game.game = game_class.new(:faction => params[:supported_game][:faction], :server_name => params[:supported_game][:server_name])  if game_class.superclass.name == "Game"
     end
-  end  
+
+    flash[:notice] = 'Supported game was successfully updated.' if @supported_game.update_attributes(params[:supported_game])
+
+    if @supported_game.valid?
+      redirect_to :action => :show
+    else
+      render :action => :edit
+    end
+  end
 
   filter :id
   filter :name

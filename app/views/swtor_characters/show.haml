@@ -4,7 +4,7 @@
   = image_tag(@swtor_character.avatar_url)
 %p
   %b Game:
-  = @swtor_character.swtor.name  
+  = @swtor_character.swtor.name
 %p
   %b Name:
   = @swtor_character.name
@@ -13,10 +13,10 @@
   = @swtor_character.char_class
 %p
   %b Advanced Class:
-  - if @swtor_character.advanced_class.blank?
-    = "None"  
+  - if @swtor_character.advanced_class?
+    = "None"
   - else
-    = @swtor_character.advanced_class  
+    = @swtor_character.advanced_class
 %p
   %b Species:
   = @swtor_character.species

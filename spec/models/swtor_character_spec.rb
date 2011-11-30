@@ -54,9 +54,9 @@ describe SwtorCharacter do
        build(:swtor_character, :species => nil).should_not be_valid
     end
     
-    it "should validate species exists for char_class" do
+    it "should validate species exists for advanced_class" do
       build(:swtor_character, :species => "Not a species").should_not be_valid
-      build(:swtor_character, :swtor => empire_game, :char_class => "Sith Warrior", :species => "Rattataki").should_not be_valid
+      build(:swtor_character, :swtor => empire_game, :char_class => "Sith Warrior", :advanced_class => "Juggernaut", :species => "Rattataki").should_not be_valid
     end
   end
   

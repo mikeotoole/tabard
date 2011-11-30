@@ -89,7 +89,7 @@ describe Subdomains::DiscussionSpacesController do
     end
     
     it "should respond forbidden when a member without permissions" do
-      sign_in member
+      sign_in user
       get :new
       response.should be_forbidden
     end

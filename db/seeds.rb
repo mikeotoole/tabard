@@ -19,23 +19,21 @@ if ENV["RAILS_ENV"] != 'test'
   admin = AdminUser.create(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
   puts "Creating Games..."
-  
   WowServersList::VALID_SERVERS.each do |server_name, server_type|
     Wow.create(:faction => "Alliance", :server_name => server_name, :server_type => server_type)
     Wow.create(:faction => "Horde", :server_name => server_name, :server_type => server_type)
   end
-  
+
   alliance_wow_game = Wow.find(:first, :conditions => {:faction => "Alliance"})
   horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
-  
+
   SwtorServersList::VALID_SERVERS.each do |server_name, server_type|
     Swtor.create(:faction => "Republic", :server_name => server_name, :server_type => server_type)
     Swtor.create(:faction => "Empire", :server_name => server_name, :server_type => server_type)
   end
-  
+
   republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
   sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
-  
 
   puts "Creating TOS"
   tos_document = TermsOfService.create(body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.", version: "1", published: true)
@@ -127,7 +125,7 @@ if ENV["RAILS_ENV"] != 'test'
 
   puts "Kinky Fox is creating Two Maidens Guild with the game WoW!"
   twom = k_fox.owned_communities.create(:name => "Two Maidens", :slogan => "One Chalice")
-  twom_wow_supported_game = SupportedGame.new(:game => horde_wow_game, :name => "A-Team")  
+  twom_wow_supported_game = SupportedGame.new(:game => horde_wow_game, :name => "A-Team")
   twom.supported_games << twom_wow_supported_game
   twom_wow_supported_game.save
 
@@ -146,9 +144,9 @@ if ENV["RAILS_ENV"] != 'test'
 
   puts "Apathetic Tiger is creating Jedi Kittens the game SWTOR!"
   jkit = a_tiger.owned_communities.create(:name => "Jedi Kittens", :slogan => "Nya nya nya nya")
-  jkit_swtor_supported_game = SupportedGame.new(:game => sith_swtor_game, :name => "A-Team")  
+  jkit_swtor_supported_game = SupportedGame.new(:game => sith_swtor_game, :name => "A-Team")
   jkit.supported_games << jkit_swtor_supported_game
-  jkit_swtor_supported_game.save  
+  jkit_swtor_supported_game.save
 
   puts "Sleeping Pidgeon and Apathetic Tiger are submitting applications to Two Maidens Guild..."
   puts "Accepting Dirty Badger and Robo Billy's applications"
@@ -173,16 +171,16 @@ if ENV["RAILS_ENV"] != 'test'
   puts "RoboBilly is getting some characters..."
   rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
   ['Yoda','Han Solo','Chewbacca','R2D2'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname, 
-                                                                                                :swtor => sith_swtor_game, 
+    proxy = robobilly.user_profile.character_proxies.create(:character => SwtorCharacter.create(:name => cname,
+                                                                                                :swtor => sith_swtor_game,
                                                                                                 :char_class => "Bounty Hunter",
                                                                                                 :advanced_class => 'Mercenary',
                                                                                                 :species => "Cyborg"))
     rb_cp.approved_character_proxies << proxy
   end
   ['Eliand','Blaggarth','Drejan'].each do |cname|
-    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname, 
-                                                                                              :wow => horde_wow_game, 
+    proxy = robobilly.user_profile.character_proxies.create(:character => WowCharacter.create(:name => cname,
+                                                                                              :wow => horde_wow_game,
                                                                                               :char_class => "Druid",
                                                                                               :race => "Troll"))
     rb_cp.approved_character_proxies << proxy

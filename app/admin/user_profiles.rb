@@ -20,7 +20,7 @@ ActiveAdmin.register UserProfile do
     end
     column :display_name
     column "User" do |user_profile|
-      link_to user_profile.user.email, [:admin, user_profile.user]
+      link_to user_profile.email, [:admin, user_profile.user]
     end
     column :first_name
     column :last_name

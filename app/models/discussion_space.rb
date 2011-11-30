@@ -44,9 +44,9 @@ class DiscussionSpace < ActiveRecord::Base
       self.supported_game.game
     else
       nil
-    end    
+    end
   end
-  
+
   ###
   # This method checks to see if this discussion sapce exists in a game context.
   # [Returns] True if space has game context. False otherwise.

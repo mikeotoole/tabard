@@ -7,7 +7,7 @@
 = f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
 - unless wow_character.default
-  = f.input :default, :as => :boolean, :label => "Make this my default character for #{@wow_character.game_name}"
+  = f.input :default, :as => :boolean, :label => "Make this my default character for #{wow_character.game_name}"
 %li.avatar
   = image_tag(wow_character.avatar_url) if wow_character.avatar_url and wow_character.persisted?
   = f.input :avatar, :wrapper => false

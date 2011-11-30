@@ -10,7 +10,7 @@
       = f.input :faction, :collection => Wow.all_factions + Swtor.all_factions # TODO Doug, This needs to be updated dynamically using what is selected in the game_type field. -MO
       = f.input :server_name, :label => 'Server', :collection => Wow.all_servers + Swtor.all_servers # TODO Doug, This needs to be updated dynamically using what is selected in the game_type field. -MO
       = f.input :name
-  %p.submit    
+  %p.submit
     = f.button :submit, 'Add Game'
 
 %br

@@ -44,6 +44,7 @@ class Page < ActiveRecord::Base
   delegate :name, :to => :page_space, :prefix => true, :allow_nil => true # TODO Joe, Why is this here? Page has a name. -MO
   delegate :game, :to => :page_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :page_space, :allow_nil => true
+  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
