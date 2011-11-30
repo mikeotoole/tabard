@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :date_of_birth
 
 ###
 # Associations
@@ -92,6 +92,9 @@ class User < ActiveRecord::Base
       :acceptance => {:accept => true}
   validates :accepted_current_privacy_policy,
       :acceptance => {:accept => true}
+  validates :date_of_birth, :presence => true
+
+  validate :at_least_13_years_old
 
 ###
 # Public Methods
@@ -153,6 +156,13 @@ class User < ActiveRecord::Base
     self.suspended ? :suspended : super
   end
 
+  ###
+  # 
+  ###
+  def at_least_13_years_old
+    errors.add(:base, "you must be 13 years of age to use this service") unless 13.years.ago.to_date < self.date_of_birth
+  end
+
 ###
 # Protected Methods
 ###
@@ -166,6 +176,7 @@ protected
     self.new_record? || self.password.present?
   end
 end
+
 
 
 
@@ -197,5 +208,6 @@ end
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
 #  suspended                         :boolean         default(FALSE)
+#  date_of_birth                     :date
 #
 

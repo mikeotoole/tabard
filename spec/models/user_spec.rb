@@ -25,6 +25,7 @@
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
 #  suspended                         :boolean         default(FALSE)
+#  date_of_birth                     :date
 #
 
 require 'spec_helper'

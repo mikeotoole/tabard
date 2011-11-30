@@ -28,56 +28,64 @@ if ENV["RAILS_ENV"] != 'test'
   puts "Creating RoboBilly!"
   robobilly = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "billy@robo.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"})
+      :user_profile_attributes => {:first_name => "Robo", :last_name => "Billy", :display_name => "Robo Billy"},
+      :date_of_birth => 100.years.ago.to_date)
   robobilly.skip_confirmation!
   robobilly.save
 
   puts "Createing Diabolical Moose!"
   d_moose = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "diabolical@moose.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose", :display_name => "Diabolical Moose"})
+      :user_profile_attributes => {:first_name => "Diabolical", :last_name => "Moose", :display_name => "Diabolical Moose"},
+      :date_of_birth => 21.years.ago.to_date)
   d_moose.skip_confirmation!
   d_moose.save
 
   puts "Creating Snappy Turtle!"
   s_turtle = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "snappy@turtle.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Snappy", :last_name => "Turtle", :display_name => "Snappy Turtle"})
+      :user_profile_attributes => {:first_name => "Snappy", :last_name => "Turtle", :display_name => "Snappy Turtle"},
+      :date_of_birth => 18.years.ago.to_date)
   s_turtle.skip_confirmation!
   s_turtle.save
 
   puts "Creating Dirty Badger!"
   d_badger = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "dirty@badger.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger", :display_name => "Dirty Badger"})
+      :user_profile_attributes => {:first_name => "Dirty", :last_name => "Badger", :display_name => "Dirty Badger"},
+      :date_of_birth => 24.years.ago.to_date)
   d_badger.skip_confirmation!
   d_badger.save
 
   puts "Creating Sleepy Pidgeon!"
   s_pidgeon = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "sleepy@pidgeon.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Sleepy", :last_name => "Pidgeon", :display_name => "Sleepy Pidgeon"})
+      :user_profile_attributes => {:first_name => "Sleepy", :last_name => "Pidgeon", :display_name => "Sleepy Pidgeon"},
+      :date_of_birth => 14.years.ago.to_date)
   s_pidgeon.skip_confirmation!
   s_pidgeon.save
 
   puts "Creating Apathetic Tiger!"
   a_tiger = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "apathetic@tiger.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Apathetic", :last_name => "Tiger", :display_name => "Apathetic Tiger"})
+      :user_profile_attributes => {:first_name => "Apathetic", :last_name => "Tiger", :display_name => "Apathetic Tiger"},
+      :date_of_birth => 16.years.ago.to_date)
   a_tiger.skip_confirmation!
   a_tiger.save
 
   puts "Creating Fuzzy Crab!"
   f_crab = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "fuzzy@crab.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Fuzzy", :last_name => "Crab", :display_name => "Fuzzy Crab"})
+      :user_profile_attributes => {:first_name => "Fuzzy", :last_name => "Crab", :display_name => "Fuzzy Crab"},
+      :date_of_birth => 35.years.ago.to_date)
   f_crab.skip_confirmation!
   f_crab.save
 
   puts "Creating Sad Panda!"
   s_panda = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "sad@panda.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Sad", :last_name => "Panda", :display_name => "Sad Panda"})
+      :user_profile_attributes => {:first_name => "Sad", :last_name => "Panda", :display_name => "Sad Panda"},
+      :date_of_birth => 30.years.ago.to_date)
   s_panda.skip_confirmation!
   s_panda.save
   s_panda.update_attribute(:accepted_current_terms_of_service, false)
@@ -88,7 +96,8 @@ if ENV["RAILS_ENV"] != 'test'
   puts "Creating Kinky Fox!"
   k_fox = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "kinky@fox.com", :password => "Password",
-      :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"})
+      :user_profile_attributes => {:first_name => "Kinky", :last_name => "Fox", :display_name => "Kinky Fox"},
+      :date_of_birth => 22.years.ago.to_date)
   k_fox.skip_confirmation!
   k_fox.save
   miss_fox = WowCharacter.create(:name => "Miss Fox",
@@ -288,7 +297,9 @@ if ENV["RAILS_ENV"] != 'test'
   shortQ.custom_form = test_form
   shortQ.save
 
-  mike = User.new(:email => "mpotoole@gmail.com", :password => "Password", :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"})
+  mike = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
+  :email => "mpotoole@gmail.com", :password => "Password", :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
+  :date_of_birth => Date.new(1980,4,17))
   mike.skip_confirmation!
   mike.save
 end
