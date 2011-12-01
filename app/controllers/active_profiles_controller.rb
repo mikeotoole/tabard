@@ -7,7 +7,7 @@
 ###
 class ActiveProfilesController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
 
   #This creates the active profile, if possible.

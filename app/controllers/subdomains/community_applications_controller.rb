@@ -11,7 +11,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
   before_filter :ensure_current_user_is_member, :only => [:index]

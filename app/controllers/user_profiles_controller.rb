@@ -11,7 +11,7 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :block_unauthorized_user!, :except => [:show]
   before_filter :set_current_user_as_profile, :only => [:index, :account]
   load_and_authorize_resource
   skip_authorize_resource :only => :account

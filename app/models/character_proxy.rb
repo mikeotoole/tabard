@@ -26,19 +26,18 @@ class CharacterProxy < ActiveRecord::Base
 # Validators
 ###
   validates :user_profile, :presence => true
-  validates :character, :presence => true
+  validates :character_id, :presence => true
+  validates :character_type, :presence => true
   # The only way to unset a character as default is to set another as default.
   validate :default_character_not_from_true_to_false, :on => :update
 
 ###
 # Delegates
 ###
-  delegate :id, :to => :character, :prefix => true
-  delegate :class, :to => :character, :prefix => true
   delegate :name, :to => :character
   delegate :game, :to => :character
-  delegate :name, :to => :game, :prefix => true
   delegate :game_id, :to => :character
+  delegate :game_name, :to => :character
   delegate :avatar_url, :to => :character, :allow_nil => true
 
 ###
@@ -63,7 +62,7 @@ class CharacterProxy < ActiveRecord::Base
   # [Returns] A user_profile for the character argument, otherwise nil.
   ###
   def self.character_user_profile(character)
-    proxy = CharacterProxy.find_by_character_id(character)
+    proxy = CharacterProxy.find_by_character_id(character.id)
     profile = proxy.user_profile if proxy
     profile
   end
@@ -71,14 +70,6 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-#   ###
-#   # This method gets the active_profile_id for this character proxy.
-#   # [Returns] The id of this character_proxy's user_profile.
-#   ###
-#   def active_profile_id
-#     self.user_profile.id
-#   end
-
   ###
   # Sets this character proxy as default for characters game.
   ###

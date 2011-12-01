@@ -43,7 +43,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -74,7 +74,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => community_application
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -93,7 +93,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -103,6 +103,23 @@ describe Subdomains::CommunityApplicationsController do
         get 'edit'
         assert_response :missing
       end
+    end
+    
+    it "should be unauthorized when authenticated as the community admin" do
+      sign_in community_admin_user
+      get 'edit', :id => community_application
+      response.response_code.should == 403
+    end
+    
+    it "should render community_applications/new template when authenticated as a community admin" do
+      sign_in applicant_user
+      get 'edit', :id => community_application
+      response.should render_template('community_applications/edit')
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get 'edit', :id => community_application
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -120,8 +137,8 @@ describe Subdomains::CommunityApplicationsController do
       assigns[:community_application].user_profile.should eq(applicant_user.user_profile)
     end
 
-    it "should redirect to community root" do
-      response.should redirect_to(root_url(:subdomain => community.subdomain))
+    it "should redirect to new community application" do
+      response.should redirect_to(community_application_url(assigns[:community_application]))
     end
   end
   
@@ -141,7 +158,7 @@ describe Subdomains::CommunityApplicationsController do
       post 'create', :community_application => community_application_attr
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -151,6 +168,46 @@ describe Subdomains::CommunityApplicationsController do
         put 'update'
         assert_response :missing
       end
+    end
+
+    it "should change attributes" do
+      CommunityApplication.find_by_id(@application_id).character_proxy_ids.include?(@old_character.id).should be_false
+    end
+
+    it "should redirect to role" do
+      response.should redirect_to(community_application_url(community_application))
+    end
+  end
+
+  describe "PUT 'update' when authenticated as community admin" do
+    before(:each) do
+      @application_id = community_application.id
+      @old_character = community_application.character_proxies.first
+      sign_in community_admin_user
+      put 'update', :id => community_application, :community_application => { :character_proxy_ids => [] }
+    end
+
+    it "should not change attributes" do
+      CommunityApplication.find_by_id(@application_id).character_proxy_ids.include?(@old_character.id).should be_true
+    end
+
+    it "should be unauthorized" do
+      response.response_code.should == 403
+    end
+  end
+
+  describe "PUT 'update' when not authenticated as a user" do
+    before(:each) do
+      @new_name = 'New Name'
+      put 'update', :id => community_application
+    end
+
+    it "should redirect to new user session path" do
+      response.should redirect_to(new_user_session_url)
+    end
+
+    it "should not change attributes" do
+      assigns[:community_applicaiton].should be_nil
     end
   end
 
@@ -162,7 +219,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.should redirect_to(community_application_path)
+      response.should redirect_to(community_application_url)
       CommunityApplication.find(@community_application).withdrawn?.should be_true
     end
     
@@ -176,7 +233,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
       CommunityApplication.exists?(@community_application).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

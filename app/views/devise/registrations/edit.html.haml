@@ -3,7 +3,7 @@
 #body
   %h1 Account Details
 
-  = simple_form_for(@user, :url => registration_path(@user), :html => { :method => :put }) do |f|
+  = simple_form_for(@user, :url => registration_url(@user, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { :method => :put }) do |f|
     %fieldset
       %ol
         = f.input :email

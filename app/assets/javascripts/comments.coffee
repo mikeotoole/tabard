@@ -43,7 +43,7 @@ $(document).ready ->
       bq.find('p').after(xhr.responseText)
       bq
         .find('>form')
-        .trigger('load')
+        .trigger('init')
         .find('textarea')
         .focus()
   
@@ -58,7 +58,7 @@ $(document).ready ->
       li.addClass('editing')
       bq.find('>form').remove()
       p.after(xhr.responseText)
-      bq.find('>form').trigger('load')
+      bq.find('>form').trigger('init')
   
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
@@ -106,12 +106,12 @@ $(document).ready ->
       li2 = li.prev()
       li2.collapsable()
       li2.find('li').collapsable()
-      li2.find('form').trigger 'load'
+      li2.find('form').trigger 'init'
       li.remove()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
-    .live 'load', ->
+    .live 'init', ->
       $(this)
         .bind 'ajax:beforeSend', ->
           $(this).addClass('busy')
@@ -161,7 +161,7 @@ $(document).ready ->
         .find('.profile label')
         .bind 'click', ->
           $(this).closest('form').find('textarea').focus()
-    .trigger 'load'
+    .trigger 'init'
   
   # Collapses children of locked comments
   $('.comments li.locked >ol >li').addClass 'collapsed'

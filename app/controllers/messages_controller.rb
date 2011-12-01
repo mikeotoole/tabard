@@ -11,7 +11,7 @@ class MessagesController < MailboxController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_message, :only => [:show, :mark_read, :mark_unread]
   before_filter :load_original_message, :setup_message_body, :only => [:reply, :reply_all, :forward]
   authorize_resource :only => [:show, :mark_read, :mark_unread]

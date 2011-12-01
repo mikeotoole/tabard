@@ -60,7 +60,7 @@ describe CommunitiesController do
 
     it "shouldn't be successful when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should render communities/new template" do
@@ -87,11 +87,9 @@ describe CommunitiesController do
       end
     end
 
-    it "should throw routing error when not authenticated as a user" do
-      assert_raises(ActionController::RoutingError) do
-        get 'edit', :id => community
-        assert_response :missing
-      end
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'edit', :id => community
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -110,7 +108,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new community" do
-      response.should redirect_to(community_path(assigns[:community]))
+      response.should redirect_to(community_url(assigns[:community]))
     end
   end
 
@@ -124,7 +122,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -144,12 +142,28 @@ describe CommunitiesController do
       put 'update', :id => community, :community => { :slogan => @new_slogan }
       assert_response :missing
     end
+
+    it "should change attributes" do
+      assigns[:community].slogan.should == @new_slogan
+    end
+
+    it "should redirect to new community" do
+      response.should redirect_to(community_url(assigns[:community]))
+    end
   end
 
   it "PUT Update should throw routing error when not authenticated as a user" do
     assert_raises(ActionController::RoutingError) do
       put 'update', :id => community, :community => { :slogan => "New Slogan" }
       assert_response :missing
+    end
+
+    it "should redirect to new user session path" do
+      response.should redirect_to(new_user_session_url)
+    end
+
+    it "should not change attributes" do
+      assigns[:community].should be_nil
     end
   end
 

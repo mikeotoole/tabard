@@ -10,15 +10,14 @@
         %li= link_to 'Pricing', crumblin_pricing_url(:subdomain => false)
     %li
       = link_to 'Games', '#'
-      - if active_games.size > 0
-        %ul
-          - active_games.each do |game|
-            %li= link_to game.name, game_url(game, :subdomain => false)
+      %ul
+        %li= link_to "World of Warcraft", wows_url
+        %li= link_to "Star Wars: The Old Republic", swtors_url
 
   %p.signup
-    = link_to 'Sign in', new_user_session_path
+    = link_to 'Sign in', new_user_session_url
     or
-    = link_to 'Sign up', new_user_registration_path, :class => 'button'
+    = link_to 'Sign up', new_user_registration_url, :class => 'button'
 
   -# TODO Doug, connect search to this form once search has been added to the project
   = form_tag('#', :method => "get") do |f|

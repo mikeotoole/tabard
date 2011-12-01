@@ -35,13 +35,13 @@ describe "ActiveAdmin PageSpace" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit admin_discussion_spaces_url
+      visit admin_page_spaces_url
       page.status_code.should == 403
       page.should have_content('forbidden')
     end
     
     it "redirects to login page when not logged in" do
-      visit admin_discussion_spaces_url
+      visit admin_page_spaces_url
       current_path.should == new_admin_user_session_path
     end    
   end 

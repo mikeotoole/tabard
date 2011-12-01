@@ -52,7 +52,76 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'index'
+      response.should redirect_to(new_user_session_url)
+    end
+  end
+
+  describe "GET 'show'" do
+    it "should be unauthorized when authenticated as a non-owner" do
+      sign_in user
+      get 'show', :id => roster_assignment
       response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as an owner" do
+      sign_in admin_user
+      get 'show', :id => roster_assignment
+      response.should be_success
+    end
+
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'show', :id => roster_assignment
+      response.should redirect_to(new_user_session_url)
+    end
+  end
+
+  describe "GET 'new'" do
+    it "should be unauthorized when authenticated as a non-owner" do
+      sign_in user
+      get 'new'
+      response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as an owner" do
+      sign_in admin_user
+      get 'new'
+      response.should be_success
+    end
+
+    it "shouldn't be successful when not authenticated as a user" do
+      get 'new'
+      response.should redirect_to(new_user_session_url)
+    end
+
+    it "should render roster_assignments/new template" do
+      sign_in admin_user
+      get 'new'
+      response.should render_template('roster_assignments/new')
+    end
+  end
+
+  describe "GET 'edit'" do
+    it "should be unauthorized when authenticated as a non-owner" do
+      sign_in user
+      get 'edit', :id => roster_assignment
+      response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as an owner" do
+      sign_in admin_user
+      get 'edit', :id => roster_assignment
+      response.should be_success
+    end
+
+    it "shouldn't be successful when not authenticated as a user" do
+      get 'edit', :id => roster_assignment
+      response.should redirect_to(new_user_session_url)
+    end
+
+    it "should render roster_assignments/new template" do
+      sign_in admin_user
+      get 'edit', :id => roster_assignment
+      response.should render_template('roster_assignments/edit')
     end
   end
 
@@ -76,7 +145,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -106,7 +175,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to new community" do
-      response.should redirect_to(roster_assignment_path(assigns[:roster_assignment]))
+      response.should redirect_to(roster_assignment_url(assigns[:roster_assignment]))
     end
   end
 
@@ -116,7 +185,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -128,7 +197,7 @@ describe Subdomains::RosterAssignmentsController do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_false
-      response.should redirect_to(my_roster_assignments_path)
+      response.should redirect_to(roster_assignments_url)
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user
@@ -139,7 +208,7 @@ describe Subdomains::RosterAssignmentsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
   
@@ -164,7 +233,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_path)
+      response.should redirect_to(pending_roster_assignments_url)
     end
   end
   
@@ -198,7 +267,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_path)
+      response.should redirect_to(pending_roster_assignments_url)
     end
   end
   
@@ -235,7 +304,7 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'pending'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 

@@ -116,6 +116,23 @@ class Ability
     can [:update, :destroy], BaseCharacter do |character|
       character.user_profile.id == user.user_profile.id
     end
+    can [:update], Discussion do |discussion|
+      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
+    end
+    can [:destroy], Discussion do |discussion|
+      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.has_been_locked) or
+      ((discussion.user_profile_id == user.user_profile_id) and not discussion.has_been_locked)
+    end
+    can [:unlock, :lock], Discussion do |discussion|
+      discussion.community_admin_profile_id == user.user_profile_id
+    end
+    cannot :create, Discussion do |discussion|
+      if discussion.is_announcement
+        discussion.community_admin_profile_id != user.user_profile_id
+      else
+        false
+      end
+    end
 
     # Comment Rules
     can [:read, :create], Comment do |comment|
@@ -151,6 +168,10 @@ class Ability
     end
     can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
+    end
+    can [:destroy], Page do |page|
+      page.community_admin_profile_id == user.user_profile_id or
+      page.user_profile_id == user.user_profile_id
     end
 
     # Discussion Space Rules
@@ -199,6 +220,14 @@ class Ability
     can :read, UserProfile
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
+    end
+
+    # Supported Game Rules
+    can [:read], SupportedGame do |supported_game|
+      user.user_profile.is_member?(supported_game.community)
+    end
+    can [:update, :destroy, :create], SupportedGame do |supported_game|
+      supported_game.community_admin_profile_id == user.user_profile_id
     end
   end
 

@@ -17,6 +17,7 @@ source 'http://rubygems.org'
   gem 'cancan'
 
 # Caching
+  gem 'dalli'
 
 # Form Handling
   gem 'simple_form'
@@ -34,6 +35,13 @@ source 'http://rubygems.org'
 # Admin Portal
   gem 'activeadmin'
 
+# Asset Specific Gems
+  group :assets do
+    gem 'sass-rails'
+    gem 'coffee-rails'
+    gem 'uglifier'
+  end
+
 # Production Specific Gems
   group :production do
     gem 'heroku'
@@ -42,11 +50,12 @@ source 'http://rubygems.org'
     gem 'newrelic_rpm'
   end
 
-# Asset Specific Gems
-  group :assets do
-    gem 'sass-rails'
-    gem 'coffee-rails'
-    gem 'uglifier'
+# Development Specific Gems
+  group :development do
+    gem 'annotate'
+    gem 'rails_best_practices'
+    gem 'haml-rails'
+    gem 'timecop'
   end
 
 # Development and Test Specific Gems
@@ -54,14 +63,6 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'factory_girl_rails'
-  end
-
-# Development Specific Gems
-  group :development do
-    gem 'annotate'
-    gem 'rails_best_practices'
-    gem 'haml-rails'
-    gem 'timecop'
   end
 
 # Test Specific Gems

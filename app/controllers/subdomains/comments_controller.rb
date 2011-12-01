@@ -11,7 +11,7 @@ class Subdomains::CommentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :create_comment, :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
