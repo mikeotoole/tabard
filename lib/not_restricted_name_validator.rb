@@ -16,8 +16,15 @@ class NotRestrictedNameValidator < ActiveModel::EachValidator
 # [Returns] True if value is not restriced word, otherwise false.
 ###
   def validate_each(object, attribute, value)
-    if NameRestricter.restriced? value
+    return unless value.present?
+    if NameRestricter.restriced?(value.downcase, options)
       object.errors.add(attribute, :restriced, options.merge(:value => value))
+    end
+    if object and object.class.name == "Community"
+      subdomain = Community.convert_to_subdomain(value)
+      if NameRestricter.restriced?(subdomain, options)
+        object.errors.add(attribute, :restriced, options.merge(:value => value))
+      end
     end
   end
 end

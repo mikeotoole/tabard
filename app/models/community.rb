@@ -203,7 +203,7 @@ protected
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
     end
-  end  
+  end
 end
 
 
