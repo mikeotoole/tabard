@@ -75,5 +75,4 @@ source 'http://rubygems.org'
     gem 'growl_notify'
     gem 'simplecov'
     gem 'ruby-debug19'
-    gem 'nyan-cat-formatter'
   end
