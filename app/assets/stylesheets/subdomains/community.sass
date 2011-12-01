@@ -139,7 +139,7 @@ body
             width: 0
       
       >ul
-        background: #704323
+        background: #792914
         border: 1px solid rgba(#000,.2)
         +border_radius(0,5,5,5)
         +box_shadow(0 0 5px rgba(#000,.5))
@@ -392,7 +392,97 @@ body
     &:focus,
     &:hover
       background: #cd4723
+      +box_shadow(0 0 15px #F0884F)
       color: #fff
+  
+  input[type="url"],
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  textarea
+    background: #d2c69c
+    +bg_gradient(#d2c69c,#e8e3d1)
+    +box_shadow(0 0 3px rgba(#000,.2))
+    border-color: #fff
+    color: #560416
+    
+    &:focus
+      background: #e8e3d1
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
+      color: #560416
+      
+  input[type="checkbox"],
+  input[type="radio"]
+    
+    + label:before
+      background: #d2c69c
+      +bg_gradient(#d2c69c,#e8e3d1)
+      border-color: #fff
+      +box_shadow(0 0 3px rgba(#000,.2))
+    
+    &:focus + label:before
+      background: #e8e3d1
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
+    
+    &:checked
+
+      + label:after
+        background: #805B3E
+        +bg_gradient(#805B3E,#330901)
+        border-color: #ddd
+        +box_shadow(0 0 9px #999)
+      
+      &:focus + label,
+      &:hover + label,
+      + label:hover
+              
+        &:after
+          background: #DA6E4A
+          +bg_gradient(#A44D5B,#DA6E4A)
+  
+  .select
+  
+    ul
+      background: #eee
+      +bg_gradient(#ddd,#eee)
+      +box_shadow(0 0 3px rgba(#000,.2))
+      border-color: #fff
+          
+      &:before
+        border-top-color: #bbb
+      
+      li
+        
+        label
+          background: #d7eaf8
+          +bg_gradient(#f2f8fd,#d7eaf8)
+          border-top-color: #3679B3
+          color: #1a5a87
+        
+          .avatar
+            background: #C7B2A3
+            border-color: #fff
+            +box_shadow(0 0 5px rgba(#000,.2))
+        
+        input:checked + label
+          color: inherit
+  
+      &:hover
+        background: #d7eaf8
+        +box_shadow(0 0 8px #2d7cb4)
+        +bg_gradient(#f2f8fd,#d7eaf8)
+      
+        li
+        
+          label,
+          input:checked + label
+            color: #1a5a87
+            
+            &:hover
+              background: #3679B3
+              color: #fff
   
   
   // TABLES
@@ -1142,11 +1232,13 @@ body
       textarea
         background: #fff
         border: 1px solid #BCA767
+        +border_radius(0)
         display: block
         font-size: 14px
         height: 21px
         left: 5px
         line-height: 20px
+        position: static
         max-width: 100%
         padding: 5px 10px
         margin: 0
@@ -1221,7 +1313,9 @@ body
         &:before
           background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
           border: 0
+          +border_radius(0)
           bottom: 0
+          +box_shadow(none)
           content: ''
           height: 20px
           left: auto
@@ -1374,7 +1468,7 @@ body
             &:after
               color: #fff
         >ul
-          padding-bottom: 30px
+          padding: 0 0 30px
           
           li
             height: auto

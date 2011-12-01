@@ -186,6 +186,7 @@
     border: 1px solid
     display: block
     line-height: 20px
+    margin: 5px 0 0
     padding: 5px 10px
     +transition(box-shadow .2s linear)
     width: 410px
@@ -235,7 +236,7 @@
     width: 435px
       
   .select
-    padding: 0 0 48px
+    height: 55px
     position: relative
   
     ul
@@ -319,10 +320,8 @@
             position: static
   
   fieldset
-    width: 420px
     
     &.full
-      width: auto
       
       input[type="url"],
       input[type="email"],
@@ -336,6 +335,7 @@
       
       li
         clear: both
+        list-style: none
         margin: 15px 0
         
         &:before
@@ -353,13 +353,10 @@
             display: none
   
   .field_with_errors
-  
-    &.select
-      padding: 0 0 78px
       
     > input,
     > textarea
-      border-color: #A43D33
+      border-color: #A43D33 !important
     
     > mark.error
       background: #A43D33
@@ -372,6 +369,9 @@
       position: relative
       width: 412px
       z-index: 1
+  
+    &.select
+      height: 85px
       
       ul
         border-color: #A43D33
