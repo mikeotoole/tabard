@@ -24,13 +24,13 @@
             - if @community.page_spaces.size
               %ul
                 - @community.page_spaces.each do |space|
-                  %li= link_to space.name, space
+                  %li= link_to space.name, space if space.id
           %li
             = link_to 'Discussions', discussion_spaces_path
             - if @community.discussion_spaces.size
               %ul
                 - @community.discussion_spaces.each do |space|
-                  %li= link_to space.name, space
+                  %li= link_to space.name, space if space.id
           %li
             -#TODO Doug - Hookup link
             = link_to 'Announcements', '#'
@@ -38,7 +38,7 @@
               %ul
                 -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
-                  %li= link_to (space.game ? space.game.name : space.name), space
+                  %li= link_to (space.game ? space.game.name : space.name), space if space.id
           %li
             -#TODO Doug - Hookup link
             = link_to 'Members', '#'
