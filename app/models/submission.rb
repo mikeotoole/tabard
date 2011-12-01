@@ -14,10 +14,11 @@ class Submission < ActiveRecord::Base
 
   has_many :answers, :dependent => :destroy
   has_many :questions, :through => :answers
+  has_many :form_questions, :through => :custom_form, :class_name => "Question"
 
   has_one :community, :through => :custom_form
 
-  accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :answers, :allow_destroy => true
 
 ###
 # Validators
@@ -29,6 +30,11 @@ class Submission < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
+  delegate :name, :to => :custom_form, :prefix => true
+  delegate :instructions, :to => :custom_form, :prefix => true
+  delegate :questions, :to => :custom_form, :prefix => true, :allow_nil => true
+  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :avatar_url, :to => :user_profile, :prefix => true
 
 ###
 # Public Methods

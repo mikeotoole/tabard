@@ -1,0 +1,44 @@
+- title "Community Application | #{current_community.name}"
+= javascript_include_tag "comments"
+
+.submission
+  .sidebar
+    .submitter
+      %h2 Applicant
+      %a{ :href => user_profile_url(@community_application.user_profile, :subdomain => false) }
+        = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
+        = @community_application.user_profile_display_name
+    - if @community_application.character_proxies.size > 0
+      .characters
+        %h2 Characters
+        %ul
+          - @community_application.character_proxies.each do |cp|
+            %li
+              = image_tag cp.avatar_url(:tiny), :class => 'avatar'
+              %span.name= cp.name
+              %span.game= cp.game_name
+  - if @community_application.submission.answers.size > 0
+    .questions
+      %h2 Question Answers
+      %dl
+        - @community_application.submission.answers.each do |answer|
+          %dt= answer.question_body
+          %dd= answer.body
+  - if @community_application.pending?
+    %p.submit
+      - if can? :accept, @community_application
+        = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
+      - if can? :reject, @community_application
+        = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
+
+  - if @community_application.comments.size > 0 or can? :comment, @community_application
+    %h2.comments Comments
+    %aside.comments
+      - if @community_application.comments.size > 0
+        %ol
+          - @community_application.comments.each do |comment|
+            = render "subdomains/comments/comment", :comment => comment
+      - if can? :comment, @community_application
+        #newcomment
+          %h3= "Post a New Comment — not visible to #{@community_application.user_profile_display_name}"
+          = render 'subdomains/comments/form', :comment => @community_application.comments.new

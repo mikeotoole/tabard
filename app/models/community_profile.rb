@@ -26,13 +26,14 @@ class CommunityProfile < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => :community_id}
+  validates :user_profile_id, :uniqueness => {:scope => :community_id}, :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
 
 ###
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :id, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
 
 ###

@@ -71,27 +71,25 @@ describe CommunitiesController do
   end
 
   describe "GET 'edit'" do
-    it "should be unauthorized when authenticated as a non admin user" do
-      sign_in user
-      get 'edit', :id => community
-      response.response_code.should == 403
+    it "should throw routing error when authenticated as a non admin user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'edit', :id => community
+        assert_response :missing
+      end
     end
 
-    it "should be sucess when authenticated as the community admin user" do
-      sign_in admin_user
-      get 'edit', :id => community
-      response.should be_success
+    it "should throw routing error when authenticated as the community admin user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'edit', :id => community
+        assert_response :missing
+      end
     end
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => community
       response.should redirect_to(new_user_session_url)
-    end
-
-    it "should render communities/edit template" do
-      sign_in admin_user
-      get 'edit', :id => community
-      response.should render_template('communities/edit')
     end
   end
 
@@ -128,27 +126,21 @@ describe CommunitiesController do
     end
   end
 
-  describe "PUT 'update' when authenticated as a non admin user" do
-    before(:each) do
+  it "PUT Update should throw routing error when authenticated as a non admin user" do
+    assert_raises(ActionController::RoutingError) do
       @new_slogan = 'My new slogan.'
       sign_in billy
       put 'update', :id => community, :community => { :slogan => @new_slogan }
-    end
-
-    it "should change attributes" do
-      assigns[:community].slogan.should_not == @new_slogan
-    end
-
-    it "should redirect to new community" do
-      response.response_code.should == 403
+      assert_response :missing
     end
   end
 
-  describe "PUT 'update' when authenticated as an admin user" do
-    before(:each) do
+  it "PUT Update should throw routing error when authenticated as an admin user" do
+    assert_raises(ActionController::RoutingError) do
       @new_slogan = 'My new slogan.'
       sign_in admin_user
       put 'update', :id => community, :community => { :slogan => @new_slogan }
+      assert_response :missing
     end
 
     it "should change attributes" do
@@ -160,9 +152,10 @@ describe CommunitiesController do
     end
   end
 
-  describe "PUT 'update' when not authenticated as a user" do
-    before(:each) do
+  it "PUT Update should throw routing error when not authenticated as a user" do
+    assert_raises(ActionController::RoutingError) do
       put 'update', :id => community, :community => { :slogan => "New Slogan" }
+      assert_response :missing
     end
 
     it "should redirect to new user session path" do
@@ -182,9 +175,6 @@ describe CommunitiesController do
         delete 'destroy', :id => community
         assert_response :missing
       end
-#       delete 'destroy'
-#       response.code.should == "404"
-#       response.should redirect_to("/404")
     end
 #
     it "should throw routing error when not authenticated as a user" do
@@ -192,9 +182,6 @@ describe CommunitiesController do
         delete 'destroy', :id => community
         assert_response :missing
       end
-#       delete 'destroy'
-#       response.code.should == "404"
-#       response.should redirect_to("/404")
     end
   end
 end

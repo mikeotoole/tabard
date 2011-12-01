@@ -17,26 +17,8 @@ class Subdomains::QuestionsController < SubdomainsController
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
 
-  # GET /custom_forms/:custom_form_id/questions(.:format)
-  def index
-    form = CustomForm.find_by_id(params[:custom_form_id])
-    @questions = form.questions if form
-    authorize! :index, @questions
-  end
-
-  # GET /questions/:id(.:format)
-  def show
-
-  end
-
   # GET /custom_forms/:custom_form_id/questions/new(.:format)
   def new
-
-  end
-
-  # GET /questions/:id/edit(.:format)
-  def edit
-
   end
 
   # POST /custom_forms/:custom_form_id/questions(.:format)
@@ -59,11 +41,8 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # DELETE /questions/:id(.:format)
   def destroy # TODO Joe, How can we move this logic to the model? -MO
-    if @question and @question.answers.empty?
+    if @question
       add_new_flash_message('Question was successfully deleted.') if @question.destroy
-    else
-      @question.custom_form_id = nil
-      add_new_flash_message('Question was successfully deleted.') if @question.save
     end
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end

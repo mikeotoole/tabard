@@ -23,28 +23,29 @@ class Subdomains::SubmissionsController < SubdomainsController
   def index
   end
 
-  # GET /submissions/:id(.:format)
+  # GET /custom_forms/:custom_form_id/submissions/:id(.:format)
   def show
-
   end
 
   # GET /custom_forms/:custom_form_id/submissions/new(.:format)
   def new
-
+    @submission.custom_form_questions.each do |question|
+      @submission.answers.new :question_id => question.id
+    end
   end
 
   # POST /custom_forms/:custom_form_id/submissions(.:format)
   def create
-    add_new_flash_message('Form submission was successfully submitted.') if @submission.save
-    respond_with(@submission)
+    add_new_flash_message 'Your submission was successful.', 'success' if @submission.save
+    respond_with @submission, :location => custom_forms_path
   end
 
   # DELETE /submissions/:id(.:format)
   def destroy
     if @submission
-      add_new_flash_message('Form submission was successfully deleted.') if @submission.destroy
+      add_new_flash_message 'Submission was deleted.', 'notice' if @submission.destroy
     end
-    respond_with(@submission, :location => custom_form_url(@submission.custom_form))
+    redirect_to custom_form_submissions_path @submission.custom_form
   end
 
   ###
@@ -53,7 +54,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # This before filter loads the custom form from the id params.
   ###
   def load_custom_form_from_id
-    @form = CustomForm.find_by_id(params[:custom_form_id])
+    @form = CustomForm.find_by_id params[:custom_form_id]
   end
 
   ###
@@ -71,6 +72,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # This before filter attempts to create @submission from: submissions.new(params[:submission]) or submissions.new(), for the current custom form.
   ###
   def create_submission
-    @submission = @form.submissions.new(params[:submission]) if @form
+    @submission = @form.submissions.new params[:submission] if @form
+    @submission.user_profile = current_user.user_profile
   end
 end

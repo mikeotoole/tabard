@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id
+  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id, :community
 
 ###
 # Associations
@@ -29,6 +29,7 @@ class Comment < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :id, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
   delegate :body, :to => :commentable, :prefix => true, :allow_nil => true

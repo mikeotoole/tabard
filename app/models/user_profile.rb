@@ -91,8 +91,9 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
   ###
   def available_character_proxies(community, game = nil)
+    return self.character_proxies unless community
     available_character_proxies = Array.new
-    community_profile = self.community_profiles.where{:communtiy == community}.first
+    community_profile = self.community_profiles.where{community_id == community.id}.first
     available_character_proxies.concat community_profile.approved_character_proxies if community_profile
     available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game != game} if game
     available_character_proxies
@@ -159,6 +160,32 @@ class UserProfile < ActiveRecord::Base
      self.roles.include?(community.member_role)
     else
      false
+    end
+  end
+
+  ###
+  # This method checks if the user has a pending application with the community.
+  # [Args]
+  #   * +some_community+ The community to check membership of.
+  # [Returns] True if has pending application of the community, false otherwise.
+  def application_pending?(community)
+    if community
+     self.community_applications.where{(community_id == community.id) & (status == "Pending")}.exists?
+    else
+     false
+    end
+  end
+
+  ###
+  # This method determines when this user joined a community
+  # [Args]
+  #   * +community+ The community to check.
+  # [Returns] nil if this user is not a member of the community, otherwise it will return the join date of the user.
+  def joined_community_on(community)
+    if self.is_member?(community)
+      return self.community_profiles.find_by_community_id(community).created_at
+    else
+      return nil
     end
   end
 

@@ -1,0 +1,17 @@
+= javascript_include_tag "custom_forms"
+
+= simple_form_for custom_form, :html => {:novalidate => true} do |f|
+  %fieldset
+    %ol
+      = f.input :name
+      = f.input :thankyou, :label => 'Thank you message', :hint => 'This message will be displayed to users upon submission of the form.'
+      = f.input :instructions, :wrapper_html => { :class => 'instructions' }
+    %h2 Questions
+    %ul.questions
+      - if custom_form.questions.any?
+        - custom_form.questions.each_with_index do |question,q|
+          = render 'question', :f => f, :question => question, :q => q
+    %p.add
+      = add_question_link 'Add a question', f
+    %p.submit
+      %button{ :type => 'submit' }= custom_form.persisted? ? 'Save Form' : 'Create Form'

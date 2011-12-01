@@ -79,22 +79,16 @@ describe Subdomains::CommunityApplicationsController do
   end
 
   describe "GET 'new'" do
-    it "should be successful when authenticated as the application owner" do
+    it "should redirect to root when authenticated as the application owner" do
       sign_in applicant_user
       get 'new'
-      response.should be_success
+      response.should redirect_to(root_url(:subdomain => community.subdomain))
     end
     
-    it "should be successful when authenticated as the community admin" do
+    it "should redirect to my roster assignments when authenticated as the community admin" do
       sign_in community_admin_user
       get 'new'
-      response.should be_success
-    end
-    
-    it "should render community_applications/new template when authenticated as a community admin" do
-      sign_in applicant_user
-      get 'new'
-      response.should render_template('community_applications/new')
+      response.should redirect_to(my_roster_assignments_url)
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -104,10 +98,11 @@ describe Subdomains::CommunityApplicationsController do
   end
 
   describe "GET 'edit'" do
-    it "should be successful when authenticated as the application owner" do
-      sign_in applicant_user
-      get 'edit', :id => community_application
-      response.should be_success
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        get 'edit'
+        assert_response :missing
+      end
     end
     
     it "should be unauthorized when authenticated as the community admin" do
@@ -153,8 +148,8 @@ describe Subdomains::CommunityApplicationsController do
       post 'create'
     end
 
-    it "should render edit to new community application" do
-      #response.should render_template('community_applications/new')
+    it "should redirect to community root on successful submit" do
+      response.should be_success
     end
   end
 
@@ -167,12 +162,12 @@ describe Subdomains::CommunityApplicationsController do
     end
   end
 
-  describe "PUT 'update' when authenticated as owner" do
-    before(:each) do
-      @application_id = community_application.id
-      @old_character = community_application.character_proxies.first
-      sign_in applicant_user
-      put 'update', :id => community_application, :community_application => { :character_proxy_ids => [] }
+  describe "PUT 'update'" do
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        put 'update'
+        assert_response :missing
+      end
     end
 
     it "should change attributes" do
