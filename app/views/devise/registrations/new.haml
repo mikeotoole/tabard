@@ -10,7 +10,7 @@
         = f.input :email, :as => :email
         = f.simple_fields_for :user_profile do |uf|
           = uf.input :display_name, :required => false
-        %li{ :class => "select #{f.object.errors[:date_of_birth].any? ? 'field_with_errors' : ''}"}
+        %li{ :class => "date select #{f.object.errors[:date_of_birth].any? ? 'field_with_errors' : ''}"}
           %label Birthday
           .month= f.input :birth_day, :as => :radio, :label => false, :collection => (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, :wrapper => false
           .day= f.input :birth_month, :as => :radio, :label => false, :collection => 1..31, :wrapper => false
