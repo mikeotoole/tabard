@@ -122,14 +122,14 @@ class WowCharacter < BaseCharacter
   end
 
   # Creates a new wow character with the given params.
-  def self.create_character(params, current_user)
+  def self.create_character(params, user)
     if params[:wow_character]
       wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
       params[:wow_character][:wow] = wow
       wow_character = WowCharacter.create(params[:wow_character])
 
       if wow_character.valid?
-        profile = current_user.user_profile
+        profile = user.user_profile
         proxy = profile.character_proxies.build(:character => wow_character, :default_character => params[:wow_character][:default])
         wow_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
@@ -137,7 +137,7 @@ class WowCharacter < BaseCharacter
         wow_character.errors.add(:faction, "can't be blank") if not params[:wow_character][:faction]
       end
       return wow_character
-    end    
+    end
   end
 
 ###
@@ -181,7 +181,7 @@ class WowCharacter < BaseCharacter
       class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
     end
     valid_classes = class_array[0][1] if class_array and class_array[0]
-    
+
     if not valid_classes or not valid_classes.include?(self.char_class)
       self.errors.add(:char_class, "is not valid for given race")
     end
