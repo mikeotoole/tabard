@@ -45,7 +45,7 @@ class WowCharactersController < ApplicationController
     authorize!(:update, @wow_character)
     if params[:wow_character][:faction] or params[:wow_character][:server_name]
       @wow_character.wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
-    end  
+    end
     add_new_flash_message('Character was successfully updated') if @wow_character.update_attributes(params[:wow_character])
     respond_with(@wow_character)
   end
