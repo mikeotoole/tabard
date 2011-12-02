@@ -38,7 +38,6 @@ class SubdomainsController < ApplicationController
   def current_community
     @community
   end
-
   helper_method :current_community
 
 ###
