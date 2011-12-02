@@ -55,7 +55,9 @@ class Wow < Game
 
   # Gets a game instance for given faction server combination
   def self.game_for_faction_server(faction, server)
-    Wow.find(:first, :conditions => {:faction => faction, :server_name => server})
+    wow = Wow.find(:first, :conditions => {:faction => faction, :server_name => server})
+    wow = Wow.new(:faction => faction, :server_name => server) unless wow
+    return wow
   end
 
 ###
