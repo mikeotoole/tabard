@@ -18,11 +18,6 @@ class Subdomains::CommentsController < ApplicationController
   skip_before_filter :limit_subdomain_access
 
 ###
-# After Filters
-###
-  skip_after_filter :remember_current_page
-
-###
 # REST Actions
 ###
   # GET /comments/new

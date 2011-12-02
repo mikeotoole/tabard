@@ -12,7 +12,7 @@ ActiveAdmin.register Discussion do
       comment.has_been_deleted = true;
       comment.save
     end
-    redirect_to previous_page
+    redirect_to request.referer ? request.referer : admin_dashboard_url
   end
 
   filter :id
