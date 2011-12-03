@@ -6,6 +6,7 @@
 # This class is a community name validator.
 ###
 class CommunityNameValidator < ActiveModel::EachValidator
+
 ###
 # This method validates a community, ensuring that the subdomains will not collide. If it finds a validation error, it will add an error message to the community name attribute.
 # [Args]
@@ -15,8 +16,9 @@ class CommunityNameValidator < ActiveModel::EachValidator
 # [Returns] True is the operation succeeded without errors, otherwise false.
 ###
   def validate_each(object, attribute, value)
+    return unless value.present?
     if ::Community.where(:subdomain => ::Community.convert_to_subdomain(value)).exists?
-      object.errors.add(attribute, :community_name, options.merge(:value => value))
+      object.errors.add(attribute, :existing_name, options.merge(:value => value))
     end
   end
 end

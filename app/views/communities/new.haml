@@ -3,4 +3,7 @@
 #body
   %h1 New community
 
-  = render 'form', :community => @community
+  = simple_form_for @community, :html => {:novalidate => true} do |f|
+    = render 'fields', :f => f
+    %p.submit
+      = f.button :submit, 'Create Community'

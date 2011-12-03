@@ -20,7 +20,7 @@
             = roster_assignment.pending ? 'is pending approval' : 'is a member'
           %td.actions
             %div
-              - if can? :delete, roster_assignment
+              - if  can? :mine, RosterAssignment or can? :delete, roster_assignment
                 = link_to 'Remove', roster_assignment, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => "Remove #{roster_assignment.character_proxy_name} from the roster"
   %tfoot
     %tr

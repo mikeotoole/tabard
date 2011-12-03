@@ -17,8 +17,7 @@ class SubdomainsController < ApplicationController
   before_filter :find_community_by_subdomain
   before_filter :apply_dynamic_permissions
   before_filter :block_unauthorized_user!, :except => [:index]
-  skip_before_filter :limit_subdomain_access, :fetch_active_games
-  before_filter :ensure_active_profile_is_valid
+  skip_before_filter :limit_subdomain_access
 
 ###
 # REST Actions
@@ -40,10 +39,6 @@ class SubdomainsController < ApplicationController
   def current_community
     @community
   end
-
-  ###
-  # This Method is a helper that exposes the a set of management items for the current community.
-  ###
   helper_method :current_community
 
   ###
@@ -56,7 +51,7 @@ class SubdomainsController < ApplicationController
     management_items << {:link => edit_community_settings_path, :title => "Community Settings"} if can_manage(current_community)
     management_items << {:link => roles_url, :title => "Permissions"} if can_manage(current_community.roles.new)
     management_items << {:link => community_applications_path, :title => 'Applications', :meta => current_community.pending_applications.size} if can_manage(current_community.community_applications.new())
-    management_items << {:link => pending_roster_assignments_url, :title => "Member Roster", :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
+    management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
     management_items << {:link => my_roster_assignments_url, :title => "My Roster"} if can? :mine, RosterAssignment
     management_items << {:link => custom_forms_url, :title => "Forms"} if can_manage(current_community.custom_forms.new)
     management_items

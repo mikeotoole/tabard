@@ -19,6 +19,13 @@ FactoryGirl.define do
     discussion_space_id { DefaultObjects.discussion_space.id }
   end
   
+  factory :announcement, :class => Discussion do
+    sequence(:name) {|n| "Announcement #{n}"}
+    sequence(:body) {|n| "Announcement body #{n}"}
+    user_profile_id { DefaultObjects.community_admin.user_profile.id }
+    discussion_space_id { DefaultObjects.announcement_discussion_space.id }
+  end
+  
   factory :discussion_by_wow_character, :parent => :discussion do
     character_proxy_id { Factory.create(:character_proxy_with_wow_character).id }
   end

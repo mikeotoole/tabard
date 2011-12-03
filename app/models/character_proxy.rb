@@ -113,8 +113,8 @@ protected
   # This method is a validator on update. The only way to unset a character as
   # default is to set another as default. So not update from true to false is allowed.
   ###
-  def default_character_not_from_true_to_false #TODO Joe, is there a better way to do this?
-    if !self.default_character and CharacterProxy.find(self.id).default_character
+  def default_character_not_from_true_to_false
+    if not self.default_character and CharacterProxy.find(self.id).default_character
       self.errors.add(:default_character, 'can only be changed by setting another character as default.')
     end
   end

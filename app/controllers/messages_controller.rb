@@ -27,13 +27,21 @@ class MessagesController < MailboxController
   # POST /mail/mark_read/:id(.:format)
   def mark_read
     @message.update_attributes(:has_been_read => true)
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # POST /mail/mark_unread/:id(.:format)
   def mark_unread
     @message.update_attributes(:has_been_read => false)
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # PUT /mail/:id/move/:folder_id(.:format)
@@ -45,7 +53,11 @@ class MessagesController < MailboxController
     if @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
       add_new_flash_message("Message was moved to #{folder.name}.")
     end
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # PUT /mail/:id/batch_move/:folder_id(.:format)

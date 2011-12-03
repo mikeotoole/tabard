@@ -23,17 +23,17 @@
           - if can? :index, PageSpace
             %li
               = link_to 'Wiki', page_spaces_path
-              - if @community.page_spaces.size > 0
+              - if @community.page_spaces.any?
                 %ul
                   - @community.page_spaces.each do |space|
-                    %li= link_to space.name, space
+                    %li= link_to space.name, space if space.persisted?
           - if can? :index, DiscussionSpace
             %li
               = link_to 'Discussions', discussion_spaces_path
-              - if @community.discussion_spaces.size > 0
+              - if @community.discussion_spaces.any?
                 %ul
                   - @community.discussion_spaces.each do |space|
-                    %li= link_to space.name, space
+                    %li= link_to space.name, space if space.persisted?
           %li
             -#TODO Doug - Hookup link
             = link_to 'Announcements', '#'
@@ -41,7 +41,7 @@
               %ul
                 -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
-                  %li= link_to (space.game ? space.game.name : space.name), space
+                  %li= link_to (space.game ? space.game.name : space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.size > 1 and can? :index, CustomForm
             %li
               = link_to 'Forms', custom_forms_path

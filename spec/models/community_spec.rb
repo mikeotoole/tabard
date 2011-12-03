@@ -59,8 +59,8 @@ describe Community do
       end
     end
 
-    it "should reject excluded values" do
-      excluded_names = %w{ www wwW wWw wWW Www WwW WWw WWW }
+    it "should reject all restricted values" do
+      excluded_names = %w{ www WWW wWw w\ w\ w crumblin Crumblin admin blog }
       excluded_names.each do |name|
         build(:community, :name => name).should_not be_valid
       end

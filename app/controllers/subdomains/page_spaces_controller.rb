@@ -16,7 +16,6 @@ class Subdomains::PageSpacesController < SubdomainsController
   before_filter :create_page_space, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions

@@ -1,0 +1,7 @@
+%fieldset
+  %ol
+    - if not f.object.persisted?
+      = f.input :name
+    = f.input :slogan
+    = f.input :accepting_members
+    = f.input :email_notice_on_application

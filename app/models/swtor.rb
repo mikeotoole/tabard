@@ -55,7 +55,9 @@ class Swtor < Game
 
   # Gets a game instance for given faction server combination
   def self.game_for_faction_server(faction, server)
-    Swtor.find(:first, :conditions => {:faction => faction, :server_name => server})
+    swtor = Swtor.find(:first, :conditions => {:faction => faction, :server_name => server})
+    swtor = Swtor.new(:server_name => server) unless swtor
+    return swtor
   end
 
 ###

@@ -7,32 +7,6 @@
 ###
 module ApplicationHelper
   ###
-  # FIXME If there are errors in the form and the user just presses cancel it redirects to the blank form. Any way to make this work better?
-  #           Maybe we can store where it should redirect back to in the session. -MO
-  # Creates a submit button with the given name with a cancel link
-  # Accepts two arguments: Form object and the cancel link name
-  # [Args]
-  #   * +form+ -> The form that will be submit.
-  #   * +text_button+ -> The text for the submit button.
-  #   * +text_back+ ->   The text for the back button.
-  # [Returns] A button to submit form and a link to go back.
-  ###
-  def submit_or_cancel(form, text_button='Submit', text_back='Cancel')
-    text_button = 'Submit' if text_button.blank?
-    raw("<p class='submit'><button type='submit'>") + text_button + raw("</button>") + (
-      (session[:last_page] != request.path_info) ?
-      raw(' or ' + link_to(text_back, session[:last_page], :class => 'cancel' )) :
-      ("")
-      ) + raw('</p>')
-  end
-
-  # Creates a link to go back to previous page.
-  def back_link
-    # FIXME Joe, Add your new back link
-    link_to_if defined?session[:last_page], 'Back', session[:last_page]
-  end
-
-  ###
   # TODO Doug, Add the Args descriptions.
   # Creates a link to remove the given fields.
   # [Args]

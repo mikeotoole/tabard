@@ -17,18 +17,10 @@ class Subdomains::DiscussionsController < SubdomainsController
   before_filter :find_discussion_space_from_params
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
 ###
-  # GET /discussion_spaces/:discussion_space_id/discussions(.:format)
-  def index
-    discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
-    @discussions = discussion_space.discussions if discussion_space
-    authorize! :read, discussion_space
-  end
-
   # GET /discussions/:id(.:format)
   def show
     @discussion.update_viewed(current_user.user_profile)

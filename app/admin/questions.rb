@@ -13,7 +13,7 @@ ActiveAdmin.register Question do
   member_action :delete_predefined_answer, :method => :put do
     answer = PredefinedAnswer.find(params[:id])
     answer.destroy
-    redirect_to previous_page
+    redirect_to request.referer ? request.referer : admin_dashboard_url
   end
 
   filter :id

@@ -16,9 +16,11 @@
             = space.pages.size
         %td.actions
           %div
-            - if (can? :update, space)
+            - if can? :create, space.pages.new
+              = link_to 'New', new_page_space_page_path(space), :meta => 'New page', :class => 'new'
+            - if can? :update, space
               = link_to 'Edit', edit_page_space_path(space), :meta => 'Edit page space', :class => 'edit'
-            - if (can? :destroy, space)
+            - if can? :destroy, space
               = link_to 'Destroy', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page space', :class => 'delete'
   %tfoot
     %tr

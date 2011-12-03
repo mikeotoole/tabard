@@ -1,12 +1,11 @@
 DaBvRails::Application.routes.draw do
-
   # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users, :controllers => {  :sessions => 'sessions', :registrations => 'registrations' }
+  devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations' }
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Site Actions
@@ -28,7 +27,8 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
-  resources :communities, :except => [:destroy, :edit, :update]
+  resources :communities, :except => [:destroy, :create]
+  post 'communities/new' => 'communities#create', :as => :communities
 
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
@@ -63,7 +63,7 @@ DaBvRails::Application.routes.draw do
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
   # Announcements
-  get 'announcements' => "announcements#index", :as => "announcements"
+  resources :announcements, :only => [:index]
   put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Subdomains
@@ -119,7 +119,17 @@ DaBvRails::Application.routes.draw do
         end
       end
       resources :discussion_spaces do
-        resources :discussions, :shallow => true do
+        resources :discussions, :except => [:index], :shallow => true do
+          member do
+            post :lock
+            post :unlock
+          end
+        end
+      end
+
+      # Announcements
+      resources :announcement_spaces, :only => [:index, :show] do
+        resources :announcements, :except => [:index], :shallow => true do
           member do
             post :lock
             post :unlock

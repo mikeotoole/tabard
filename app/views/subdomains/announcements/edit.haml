@@ -1,0 +1,9 @@
+- title "Editing Announcement | #{@community.name}"
+
+%h1 Editing Announcement
+
+.full
+  = simple_form_for [@announcement_space, @announcement], :url => {:action =>:update}, :html => {:novalidate => true} do |f|
+    = render 'fields', :f => f
+    %p.submit
+      = f.button :submit, 'Save Changes'
