@@ -37,26 +37,6 @@ describe Subdomains::DiscussionsController do
     @request.host = "#{community.subdomain}.example.com"
   end
 
-  describe "GET index" do
-    it "assigns all discussions as @discussions when authenticated as a member" do
-      discussion
-      sign_in owner
-      get :index, :discussion_space_id => space.id
-      assigns(:discussions).should eq([discussion])
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :index, :discussion_space_id => space.id
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :index, :discussion_space_id => space.id
-      response.should be_forbidden
-    end    
-  end
-
   describe "GET show" do
     it "assigns the requested discussion as @discussion when authenticated as a member" do
       sign_in owner

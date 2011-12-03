@@ -121,7 +121,7 @@ GEM
       haml (~> 3.0)
       railties (~> 3.0)
     has_scope (0.5.1)
-    heroku (2.14.0)
+    heroku (2.15.1)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       rubyzip

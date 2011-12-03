@@ -1,5 +1,4 @@
 DaBvRails::Application.routes.draw do
-
   # Admin Users
   ActiveAdmin.routes(self)
   devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
@@ -64,7 +63,7 @@ DaBvRails::Application.routes.draw do
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
   # Announcements
-  get 'announcements' => "announcements#index", :as => "announcements"
+  resources :announcements, :only => [:index]
   put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Subdomains
@@ -120,7 +119,17 @@ DaBvRails::Application.routes.draw do
         end
       end
       resources :discussion_spaces do
-        resources :discussions, :shallow => true do
+        resources :discussions, :except => [:index], :shallow => true do
+          member do
+            post :lock
+            post :unlock
+          end
+        end
+      end
+
+      # Announcements
+      resources :announcement_spaces, :only => [:index, :show] do
+        resources :announcements, :except => [:index], :shallow => true do
           member do
             post :lock
             post :unlock

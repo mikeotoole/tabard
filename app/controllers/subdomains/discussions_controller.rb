@@ -21,13 +21,6 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
 # REST Actions
 ###
-  # GET /discussion_spaces/:discussion_space_id/discussions(.:format)
-  def index
-    discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
-    @discussions = discussion_space.discussions if discussion_space
-    authorize! :read, discussion_space
-  end
-
   # GET /discussions/:id(.:format)
   def show
     @discussion.update_viewed(current_user.user_profile)
