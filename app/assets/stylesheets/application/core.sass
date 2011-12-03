@@ -318,6 +318,27 @@
           label
             display: block
             position: static
+      
+    .day ul
+      left: 170px
+      width: 80px
+      
+      input:checked + label
+        width: 40px
+    
+    .month ul
+      left: 0
+      width: 150px
+      
+      input:checked + label
+        width: 110px
+    
+    .year ul
+      left: 270px
+      width: 100px
+      
+      input:checked + label
+        width: 60px
   
   fieldset
     
@@ -360,12 +381,12 @@
     
     > mark.error
       background: #A43D33
-      +border_radius(0,0,5,5)
+      +border_radius(6,6,5,5)
       color: #fff
       display: block
       font-family: DinMedium, sans
-      margin: -5px 0 0
-      padding: 10px 10px 5px
+      margin: -32px 0 0
+      padding: 40px 10px 5px
       position: relative
       width: 412px
       z-index: 1
@@ -381,6 +402,12 @@
       
       > mark.error
         margin-top: 30px
+      
+    &.date
+      
+      > mark.error
+        margin-top: 0
+        width: 354px
   
   //fieldset
   //  
