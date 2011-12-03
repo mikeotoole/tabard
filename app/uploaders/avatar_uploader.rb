@@ -29,15 +29,20 @@ class AvatarUploader < CarrierWave::Uploader::Base
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
     when :large
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
+      'application/avatar@240.png'
     when :small
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
+      'application/avatar@60.png'
     when :tiny
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
+      'application/avatar@40.png'
     when :icon
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
+      'application/avatar@20.png'
     else
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
+      'application/blank.gif'
     end
   end
 
