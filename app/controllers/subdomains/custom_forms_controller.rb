@@ -32,8 +32,12 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # POST /custom_forms
   def create
-    add_new_flash_message('Form was successfully created.') if @custom_form.save
-    respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
+    if @custom_form.save
+      add_new_flash_message('Form was successfully created.') 
+      respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
+    else
+      respond_with @custom_form
+    end
   end
 
   # PUT /custom_forms/1

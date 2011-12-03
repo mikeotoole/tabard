@@ -14,13 +14,13 @@ class PredefinedAnswer < ActiveRecord::Base
    ###
    # Associations
    ###
-   belongs_to :question, :foreign_key => :select_question_id
+   belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
 
    ###
    # Validators
    ###
    validates :body, :presence => true
-   #validates :question, :presence => true
+   validates :question, :presence => true
 end
 
 # == Schema Information

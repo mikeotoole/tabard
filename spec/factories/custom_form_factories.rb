@@ -88,7 +88,7 @@ end
 
 def create_predefined_answers(question)
   3.times do
-    FactoryGirl.create(:predefined_answer, :question => question)
+    FactoryGirl.create(:predefined_answer, :select_question_id => question.id)
   end
 end
 
@@ -98,8 +98,8 @@ end
 
 def create_answers(submission)
   submission.custom_form.questions.each do |question|
-    if question.respond_to?(:predefined_answers)
-      FactoryGirl.create(:answer, :body => question.predefined_answers[1].body, :question => question, :submission => submission)
+    if question.respond_to?(:predefined_answers) and not question.predefined_answers.empty?
+      FactoryGirl.create(:answer, :body => question.predefined_answers.first.body, :question => question, :submission => submission)
     else
       FactoryGirl.create(:answer, :question => question, :submission => submission)
     end

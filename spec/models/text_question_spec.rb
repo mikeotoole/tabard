@@ -22,13 +22,6 @@ describe TextQuestion do
     question.should be_valid
   end
   
-  it "shouldn't be valid with invalid style" do
-    invalid_styles = %w{ not_a_style check_box_question select_box_question radio_buttons_question long_answer_question_NOT } # TESTING invalid question styles.
-    invalid_styles.each do |style|
-      build(:short_answer_question, :style => style).should_not be_valid
-    end  
-  end
-  
   it "should be valid with valid style" do
     create(:short_answer_question).should be_valid
     create(:long_answer_question).should be_valid  
