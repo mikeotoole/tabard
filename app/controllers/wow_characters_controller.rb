@@ -43,18 +43,17 @@ class WowCharactersController < ApplicationController
   def update
     @wow_character = WowCharacter.find(params[:id])
     authorize!(:update, @wow_character)
-
-    wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
-    @wow_character.wow = wow if wow
+    if params[:wow_character][:faction] or params[:wow_character][:server_name]
+      @wow_character.wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
+    end
     add_new_flash_message('Character was successfully updated') if @wow_character.update_attributes(params[:wow_character])
     respond_with(@wow_character)
   end
 
   # DELETE /wow_characters/:id(.:format)
   def destroy
-    if @wow_character
-      add_new_flash_message('Character was successfully deleted') if @wow_character.destroy
-    end
+    add_new_flash_message('Character was successfully deleted') if @wow_character and @wow_character.destroy
+
     respond_with(@wow_character)
   end
 end

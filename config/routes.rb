@@ -28,7 +28,8 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Communities
-  resources :communities, :except => [:destroy, :edit, :update]
+  resources :communities, :except => [:destroy, :create]
+  post 'communities/new' => 'communities#create', :as => :communities
 
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'

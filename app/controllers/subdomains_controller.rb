@@ -17,8 +17,7 @@ class SubdomainsController < ApplicationController
   before_filter :find_community_by_subdomain
   before_filter :apply_dynamic_permissions
   before_filter :block_unauthorized_user!, :except => [:index]
-  skip_before_filter :limit_subdomain_access, :fetch_active_games
-  before_filter :ensure_active_profile_is_valid
+  skip_before_filter :limit_subdomain_access
 
 ###
 # REST Actions
@@ -40,10 +39,6 @@ class SubdomainsController < ApplicationController
   def current_community
     @community
   end
-
-  ###
-  # This Method is a helper that exposes the a set of management items for the current community.
-  ###
   helper_method :current_community
 
   ###

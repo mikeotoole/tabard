@@ -22,6 +22,9 @@ source 'http://rubygems.org'
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
+  
+# Filtering
+  gem 'profanalyzer'  
 
 # Markup
   gem 'rdiscount'

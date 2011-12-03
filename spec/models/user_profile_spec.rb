@@ -41,6 +41,20 @@ describe UserProfile do
   it "should ensure display names are unique" do
     Factory.build(:user_profile, :display_name => profile.display_name).should_not be_valid
   end
+  
+  it "display name should reject company and administration restricted values" do
+    excluded_names = %w{ crumblin Crumblin admin da }
+    excluded_names.each do |name|
+      build(:user_profile, :display_name => name).should_not be_valid
+    end
+  end
+  
+  it "display name should not reject domain restricted values" do
+    ok_names = %w{ www wwW wWw wWW Www WwW WWw WWW m blog mobile }
+    ok_names.each do |name|
+      build(:user_profile, :display_name => name).should be_valid
+    end
+  end
 
   it "should set publicly viewable to true by default" do
     Factory.build(:user_profile).publicly_viewable.should be_true

@@ -17,7 +17,6 @@ class Subdomains::SupportedGamesController < SubdomainsController
   before_filter :create_supported_game, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_active_profile_is_valid # TODO Joe, Why is this needed? -MO
 
 ###
 # REST Actions
