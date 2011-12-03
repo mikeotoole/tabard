@@ -24,7 +24,10 @@
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
-#  suspended                         :boolean         default(FALSE)
+#  admin_disabled                    :boolean         default(FALSE)
+#  user_disabled                     :boolean         default(FALSE)
+#  user_disabled_at                  :datetime
+#  admin_disabled_at                 :datetime
 #
 
 require 'spec_helper'

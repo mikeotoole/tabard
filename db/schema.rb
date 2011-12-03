@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130030729) do
+ActiveRecord::Schema.define(:version => 20111203213439) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -411,7 +411,10 @@ ActiveRecord::Schema.define(:version => 20111130030729) do
     t.boolean  "accepted_current_terms_of_service",                :default => false
     t.boolean  "accepted_current_privacy_policy",                  :default => false
     t.boolean  "force_logout",                                     :default => false
-    t.boolean  "suspended",                                        :default => false
+    t.boolean  "admin_disabled",                                   :default => false
+    t.boolean  "user_disabled",                                    :default => false
+    t.datetime "user_disabled_at"
+    t.datetime "admin_disabled_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

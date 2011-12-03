@@ -112,6 +112,23 @@ class User < ActiveRecord::Base
   def self.force_active_users_to_sign_out
     User.update_all(:force_logout => true)
   end
+  
+  def self.reset_all_passwords
+    begin
+      User.find_each(:conditions => ['admin_disabled == ? AND user_disabled == ?', false, false]) do |record|
+        random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+        record.password = random_password
+        record.reset_password_token = User.reset_password_token
+        record.reset_password_sent_at = Time.now
+        record.save
+        UserMailer.all_password_reset(record, random_password).deliver
+      end
+    rescue Exception => e
+      logger.error "Error Resetting All Passwords: #{e.message}"
+      redirect_to :action => :index, :alert => "Error resetting all passwords."
+      return
+    end
+  end
 
 ###
 # Instance Methods
@@ -142,15 +159,56 @@ class User < ActiveRecord::Base
   # [Returns] True if this is an active user, otherwise false.
   ###
   def active_for_authentication?
-    super and not self.suspended
+    super and not self.disabled
   end
 
   ###
-  # This method overrides the existing Devise method to check it account is suspended.
+  # This method overrides the existing Devise method to check it account is disabled.
   # [Returns] :suspended if account is suspended otherwise it returns super's response.
   ###
   def inactive_message
-    self.suspended ? :suspended : super
+    if self.admin_disabled
+      :admin_disabled
+    elsif self.user_disabled
+      :user_disabled
+    else
+      super
+    end
+  end
+  
+  def disabled
+    self.admin_disabled or self.user_disabled
+  end
+  
+  def disable_by_user
+    self.user_disabled = true
+    self.user_disabled_at = Time.now
+    # TODO Mike, This should delete community profile and roster assignments.
+    self.save
+  end
+  
+  def disable_by_admin
+    self.admin_disabled = true
+    self.admin_disabled_at = Time.now
+    # TODO Mike, This should delete community profile and roster assignments.
+    self.save
+  end
+  
+  def reinstate
+    self.admin_disabled = false
+    self.admin_disabled_at = nil
+    self.user_disabled = false
+    self.user_disabled_at = nil
+    self.save
+  end
+  
+  def reset_password
+    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+    user.password = random_password
+    user.reset_password_token = User.reset_password_token
+    user.reset_password_sent_at = Time.now
+    user.save
+    UserMailer.password_reset(user, random_password).deliver
   end
 
 ###
@@ -166,6 +224,9 @@ protected
     self.new_record? || self.password.present?
   end
 end
+
+
+
 
 
 
@@ -196,6 +257,9 @@ end
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
-#  suspended                         :boolean         default(FALSE)
+#  admin_disabled                    :boolean         default(FALSE)
+#  user_disabled                     :boolean         default(FALSE)
+#  user_disabled_at                  :datetime
+#  admin_disabled_at                 :datetime
 #
 
