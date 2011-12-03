@@ -408,6 +408,7 @@ body
     
     &:focus
       background: #e8e3d1
+      border-color: #a37961
       +box_shadow(0 0 8px #F0884F)
       +bg_gradient(#e8e3d1,#fff)
       color: #560416
@@ -423,6 +424,7 @@ body
     
     &:focus + label:before
       background: #e8e3d1
+      border-color: #a37961
       +box_shadow(0 0 8px #F0884F)
       +bg_gradient(#e8e3d1,#fff)
     
@@ -445,21 +447,22 @@ body
   .select
   
     ul
-      background: #eee
-      +bg_gradient(#ddd,#eee)
+      background: #d2c69c
+      +bg_gradient(#d2c69c,#e8e3d1)
       +box_shadow(0 0 3px rgba(#000,.2))
       border-color: #fff
+      color: #560416
           
       &:before
-        border-top-color: #bbb
+        border-top-color: #6C2413
       
       li
         
         label
-          background: #d7eaf8
-          +bg_gradient(#f2f8fd,#d7eaf8)
-          border-top-color: #3679B3
-          color: #1a5a87
+          background: #d2c69c
+          +bg_gradient(#d2c69c,#e8e3d1)
+          border-color: #a37961
+          color: #560416
         
           .avatar
             background: #C7B2A3
@@ -470,18 +473,19 @@ body
           color: inherit
   
       &:hover
-        background: #d7eaf8
-        +box_shadow(0 0 8px #2d7cb4)
-        +bg_gradient(#f2f8fd,#d7eaf8)
+        background: #e8e3d1
+        border-color: #a37961
+        +box_shadow(0 0 8px #F0884F)
+        +bg_gradient(#e8e3d1,#fff)
       
         li
         
           label,
           input:checked + label
-            color: #1a5a87
+            color: #560416
             
             &:hover
-              background: #3679B3
+              background: #9F3A1F
               color: #fff
   
   
@@ -1281,7 +1285,7 @@ body
         float: none
         font: 12px DinMedium, sans
         height: auto
-        line-height: 20px
+        line-height: 20px !important
         margin: 5px 0 0
         padding: 0 5px
       
@@ -1544,7 +1548,9 @@ body
     margin: 15px 0
     padding: 15px 15px 30px
   
+  
   // Custom Forms
+  
   form.custom_form
     
     >fieldset
@@ -1555,12 +1561,13 @@ body
         li.instructions
           position: absolute
           right: 0
-          top: 0
+          top: -15px
           
           textarea
             height: 120px
         
       ul.questions
+        padding: 0
         
         >li
           +bg_gradient(#E5DAD3,rgba(#fff,0))
@@ -1568,6 +1575,7 @@ body
           +border_radius(5)
           clear: both
           height: auto
+          list-style: none
           margin: 0 0 20px
           padding: 20px 10px
           position: relative
@@ -1626,7 +1634,7 @@ body
                   width: 176px
                   
                   input:checked + label
-                    width: 160px
+                    width: 136px
               
               .optreq
                 float: left
@@ -1639,7 +1647,7 @@ body
               float: right
                 
               .answers
-                margin: -5px 0 0
+                margin: 0
                 
                 li
                   background: #ECE5E0
