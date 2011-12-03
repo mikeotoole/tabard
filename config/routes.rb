@@ -6,7 +6,7 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users, :controllers => {  :sessions => 'sessions', :registrations => 'registrations' }
+  devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations' }
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Site Actions
