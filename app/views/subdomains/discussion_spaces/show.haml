@@ -10,10 +10,10 @@
         %rt= " — #{@discussion_space.supported_game_full_name}"
     %strong= @discussion_space.name
 
-- if @discussion_space.discussions.size > 0
+- if @discussion_space.discussions.any?
   = render "subdomains/discussions/table", :discussion_space => @discussion_space
 
 -else
   %p This discussion space has no viewable discussions.
   - if (can? :create, @discussion_space.discussions.new)
-    %p= link_to 'Create a Discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button primary'
+    %p= link_to 'Create a Discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button'
