@@ -16,13 +16,15 @@ class Subdomains::AnnouncementSpacesController < SubdomainsController
   skip_before_filter :limit_subdomain_access
   authorize_resource :except => :index
 
+  # GET /announcement_spaces
   def index
     @announcement_spaces = current_community.announcement_spaces
   end
 
+  # GET /announcement_spaces/:id
   def show
   end
-  
+
   # This method returns the current game that is in scope.
   def current_game
     @announcement_space ? @announcement_space.game : nil

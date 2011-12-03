@@ -2,7 +2,7 @@
   %h1 My Announcements
 
   - if current_user.announcements.size > 0
-    = form_tag announcements_batch_mark_as_seen_announcement_path, :method => :put do
+    = form_tag announcements_batch_mark_as_seen_path, :method => :put do
       %table
         %thead
           %tr
@@ -20,7 +20,7 @@
                 %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
                 %br/
                 = truncate announcement.body, :length => 150, :separator => ' '
-              %td= link_to announcement.community_name, root_url(:subdomain => discussion.subdomain)
+              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
               %td
                 %time
                   = l announcement.created_at, :format => :date_short

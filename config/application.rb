@@ -46,7 +46,7 @@ module DaBvRails
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    
+
     # Configure what files get generated with rails generate command.
     config.generators do |g|
       g.helper false

@@ -63,11 +63,8 @@ DaBvRails::Application.routes.draw do
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
   # Announcements
-  resources :announcements, :only => [:index] do
-    member do
-      put :batch_mark_as_seen
-    end  
-  end
+  resources :announcements, :only => [:index]
+  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Subdomains
   constraints(Subdomain) do
@@ -119,7 +116,7 @@ DaBvRails::Application.routes.draw do
           end
         end
       end
-      
+
       # Announcements
       resources :announcement_spaces, :only => [:index, :show] do
         resources :announcements, :except => [:index], :shallow => true do

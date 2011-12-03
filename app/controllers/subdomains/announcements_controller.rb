@@ -44,7 +44,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def create
     @announcement.user_profile = current_user.user_profile
     @announcement.character_proxy = (character_active? ? current_character.character_proxy : nil)
-    
+
     if @announcement.save
       add_new_flash_message('Announcement was successfully created.')
       next_location = {:location => announcement_url(@announcement)}
@@ -57,7 +57,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   # PUT /announcements/:id(.:format)
   def update
     add_new_flash_message('Announcement was successfully updated.') if @announcement.update_attributes(params[:discussion])
-    
+
     respond_with(@announcement, :render => :edit, :location => announcement_url)
   end
 
@@ -120,7 +120,7 @@ protected
     @announcement_space = DiscussionSpace.find_by_id(params[:announcement_space_id])
     @announcement = @announcement_space.discussions.new(params[:discussion])
   end
-  
+
   ###
   # _before_filter_
   #

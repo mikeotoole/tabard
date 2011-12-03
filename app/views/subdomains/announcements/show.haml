@@ -11,7 +11,7 @@
   %p
     = @announcement.body
 
-- # TODO Doug, We may want to pull this part out into its own partal for items that can have comments (this and discussion show). -MO 
+- # TODO Doug, We may want to pull this part out into its own partal for items that can have comments (this and discussion show). -MO
 - if @announcement.comments or (@announcement.comments_enabled and !@announcement.has_been_locked and (can? :create, @announcement.comments.new))
   %aside.comments
     - if @announcement.comments
