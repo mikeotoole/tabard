@@ -1,0 +1,16 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Announcements
+  %tbody
+    - announcement_spaces.each do |space|
+      %tr
+        %td
+          = link_to space.name, announcement_space_url(space)
+        %td
+          - if space.discussions.size > 0
+            = space.discussions.size
+  %tfoot
+    %tr
+      %td{ :colspan => 2 }

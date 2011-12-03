@@ -178,7 +178,7 @@ class Ability
     end
 
     # Discussion Space Rules
-    can [:read], DiscussionSpace do |space|
+    can [:read, :index_announcement_spaces], DiscussionSpace do |space|
       user.user_profile.is_member?(space.community)
     end
     can [:update, :destroy, :create], DiscussionSpace do |space|

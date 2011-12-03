@@ -14,7 +14,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_discussion_space, :except => [:new, :create, :index]
   before_filter :create_discussion_space, :only => [:new, :create]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index, :index_announcement_spaces]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -78,7 +78,7 @@ protected
   # This before filter attempts to populate @discussion_space from the current_community.
   ###
   def load_discussion_space
-    @discussion_space = DiscussionSpace.find(:first, :conditions => {:id => params[:id], :community_id => current_community.id}) if current_community
+    @discussion_space = current_community.discussion_spaces.find_by_id(params[:id]) if current_community
   end
 
   ###
