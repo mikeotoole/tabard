@@ -153,8 +153,8 @@ $(document).ready ->
         .animate({ paddingTop: amount }, speed)
       $('#body')
         .animate({ marginTop: amount }, speed)
-      if $('#mailbox').length
-        $('#mailbox, #mailbox-menu, #message, #message header .actions')
+      if $('.sidemenu').length
+        $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions')
           .animate({ top: (amount + 70) + 'px' }, speed)
 
   $('#flash li')
