@@ -260,6 +260,19 @@ body
       
       &.signup >a:before
         background-position: -120px -30px
+          
+button,
+.button
+  background: #a1391d
+  borde-color: #771f07
+  color: #e3d5a9
+  font: 16px DinMedium, serif
+  
+  &:focus,
+  &:hover
+    background: #cd4723
+    +box_shadow(0 0 15px #F0884F)
+    color: #fff
 
 #body
   background: rgba(#fff,.9)
@@ -381,19 +394,6 @@ body
   
   
   // FORMS
-  
-  button,
-  .button
-    background: #a1391d
-    borde-color: #771f07
-    color: #e3d5a9
-    font: 16px DinMedium, serif
-    
-    &:focus,
-    &:hover
-      background: #cd4723
-      +box_shadow(0 0 15px #F0884F)
-      color: #fff
   
   input[type="url"],
   input[type="email"],

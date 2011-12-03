@@ -40,6 +40,33 @@ body
       color: #fff
       text-decoration: none
   
+button,
+.button
+  +bg_gradient(#d24723,#792b28)
+  border-color: #eee
+  color: #f8d5bb
+  font: 16pt Malbeck, serif
+  letter-spacing: 1px
+  text-transform: lowercase
+  
+  &.read
+    padding-left: 40px
+  
+    &:before
+      background: image-url('application/icons.png') -420px -30px no-repeat
+      content: ''
+      height: 30px
+      left: 0
+      position: absolute
+      top: 0
+      width: 30px
+  
+  &:focus,
+  &:hover
+    +bg_gradient(#e05c2e,#9e3834)
+    +box_shadow(0 0 10px rgba(#000,.2))
+    color: #fff
+
 #content
   background: image-url('main/block.png') top center no-repeat
   position: relative
@@ -138,33 +165,6 @@ body
   
   
   // Forms
-  
-  button,
-  .button
-    +bg_gradient(#d24723,#792b28)
-    border-color: #eee
-    color: #f8d5bb
-    font: 16pt Malbeck, serif
-    letter-spacing: 1px
-    text-transform: lowercase
-    
-    &.read
-      padding-left: 40px
-    
-      &:before
-        background: image-url('application/icons.png') -420px -30px no-repeat
-        content: ''
-        height: 30px
-        left: 0
-        position: absolute
-        top: 0
-        width: 30px
-    
-    &:focus,
-    &:hover
-      +bg_gradient(#e05c2e,#9e3834)
-      +box_shadow(0 0 10px rgba(#000,.2))
-      color: #fff
   
   input[type="url"],
   input[type="email"],

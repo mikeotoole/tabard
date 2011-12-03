@@ -150,20 +150,21 @@
 
 
 // Forms
-#body
     
-  button,
-  .button
-    border: 1px solid
-    +border_radius(5)
-    display: inline-block
-    height: 30px
-    line-height: 30px !important
-    margin: 0 5px 0 0
-    padding: 0 15px
-    position: relative
-    text-decoration: none
-    +transition(box-shadow .2s linear)
+button,
+.button
+  border: 1px solid
+  +border_radius(5)
+  display: inline-block
+  height: 30px
+  line-height: 30px !important
+  margin: 0 5px 0 0
+  padding: 0 15px
+  position: relative
+  text-decoration: none
+  +transition(box-shadow .2s linear)
+  
+#body
 
   label
     font-family: DinMedium, sans
@@ -246,6 +247,9 @@
   .select
     height: 55px
     position: relative
+    
+    >label
+      padding-bottom: 5px
   
     ul
       +border_radius(5)
@@ -253,7 +257,6 @@
       display: block
       height: 0
       line-height: 30px
-      margin: 5px 0 0
       overflow: hidden
       padding: 32px 1px 1px
       position: absolute
