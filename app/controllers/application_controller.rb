@@ -292,7 +292,7 @@ protected
   ###
   def check_maintenance_mode
     if maintenance_mode?
-      redirect_to crumblin_maintenance_url
+      redirect_to top_level_maintenance_url
     else
       true
     end
