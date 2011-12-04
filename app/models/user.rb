@@ -23,13 +23,13 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled
 
 ###
 # Associations
 ###
-  has_one :user_profile, :inverse_of => :user
-  has_many :document_acceptances
+  has_one :user_profile, :inverse_of => :user, :dependent => :destroy
+  has_many :document_acceptances, :dependent => :destroy
   has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile
 
@@ -183,14 +183,16 @@ class User < ActiveRecord::Base
   def disable_by_user
     self.user_disabled = true
     self.user_disabled_at = Time.now
-    # TODO Mike, This should delete community profile and roster assignments.
+    self.community_profiles.delete
+    self.owned_communities.clear
     self.save
   end
   
   def disable_by_admin
     self.admin_disabled = true
     self.admin_disabled_at = Time.now
-    # TODO Mike, This should delete community profile and roster assignments.
+    self.community_profiles.delete
+    self.owned_communities.clear
     self.save
   end
   
@@ -224,11 +226,6 @@ protected
     self.new_record? || self.password.present?
   end
 end
-
-
-
-
-
 
 
 # == Schema Information

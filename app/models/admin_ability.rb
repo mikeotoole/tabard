@@ -28,7 +28,7 @@ class AdminAbility
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
       can [:read], ActiveAdmin::Dashboards::DashboardController
-      can [:read, :suspend, :reinstate, :reset_password], User
+      can [:read, :disable, :reinstate, :reset_password], User
       can [:read], UserProfile
       can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm

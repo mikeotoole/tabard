@@ -5,7 +5,7 @@ ActiveAdmin.register User do
   actions :index, :show, :destroy
 
   action_item :only => :show do
-    if !user.admin_disabled and can? :disable, user
+    if not user.admin_disabled and can? :disable, user
       link_to "Disable User", disable_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to disable this user?'
     end
   end
@@ -82,18 +82,12 @@ ActiveAdmin.register User do
     column "User Profile" do |user|
       link_to user.display_name, [:admin, user.user_profile]
     end
-    column :current_sign_in_at
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
     column :admin_disabled
     column :user_disabled
     column :created_at
-    column "Destroy" do |user|
-      if can? :destroy, user
-        link_to "Destroy", [:admin, user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
-      end
-    end
   end
 
   show :title => :email do
