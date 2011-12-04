@@ -41,7 +41,9 @@ body
       text-decoration: none
   
 button,
-.button
+.button,
+#body button,
+#body .button
   +bg_gradient(#d24723,#792b28)
   border-color: #eee
   color: #f8d5bb
@@ -68,7 +70,7 @@ button,
     color: #fff
 
 #content
-  background: image-url('main/block.png') top center no-repeat
+  background: image-url('application/block.png') top center no-repeat
   position: relative
   margin: 20px 0 0
   min-height: 310px
@@ -503,6 +505,71 @@ button,
         float: right
         font-family: DinMedium, sans
         padding: 3px 6px
+
+body.user_profiles.show
+
+  #content
+    background-image: image-url('application/block-2a.png')
+    margin: 100px 0 0
+  
+    #body
+    
+      >header
+        height: 60px
+        margin: -110px 0 50px -30px
+        padding: 0
+        
+        h1
+          color: #251534
+          font: 40px DinLight, sans
+          line-height: 40px
+          margin: 0
+          padding: 0
+        
+        p
+          font: 20px DinMedium, sans
+          line-height: 20px
+          margin: 0
+          padding: 0
+      
+      >aside
+        float: left
+        margin: -10px -10px 0
+        width: 260px
+      
+        .avatar
+          background: #ccc
+          border: 10px solid #ddd
+          height: 240px
+          position: relative
+          
+          &:before
+            border: 1px solid #2d7cb4
+            bottom: -2px
+            content: ''
+            left: -2px
+            position: absolute
+            right: -2px
+            top: -2px
+          
+          &:after
+            border: 1px solid #fff
+            bottom: -1px
+            content: ''
+            left: -1px
+            position: absolute
+            right: -1px
+            top: -1px
+          
+          img
+            display: block
+            height: 240px
+            width: 240px
+      
+      >article
+        float: right
+        margin: -10px -10px 0
+        width: 590px
 
 
 @import application/footer

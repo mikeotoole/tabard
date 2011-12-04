@@ -262,7 +262,9 @@ body
         background-position: -120px -30px
           
 button,
-.button
+.button,
+#body button,
+#body .button
   background: #a1391d
   borde-color: #771f07
   color: #e3d5a9
@@ -622,13 +624,17 @@ button,
             border: 1px solid #fff
             +border_radius(5)
             +box_shadow(0 0 10px rgba(#000,.2))
+            height: 40px
             float: left
             margin: 0 -5px
+            width: 40px
           
           img.icon
             border: 0
             +border_radius(3)
             +box_shadow(0 0 5px rgba(#000,.2))
+            height: 20px
+            width: 20px
           
           &.cinch
             white-space: nowrap
@@ -642,21 +648,24 @@ button,
           
           &.characters
             
-            li
-              display: inline-block
-              font: 13px DinLight, sans
-              line-height: 20px
-              padding: 0 0 3px
-              width: 180px
+            ul
+              padding: 0
             
-              img.avatar
-                margin: 0 5px 0 0
-              
-              label
-                text-indent: 0
+              li
+                display: inline-block
+                font: 13px DinLight, sans
+                line-height: 20px
+                padding: 0 0 3px
+                width: 180px
               
                 img.avatar
-                  margin: 3px 5px 0 30px
+                  margin: 0 5px 0 0
+                
+                label
+                  text-indent: 0
+                
+                  img.avatar
+                    margin: 3px 5px 0 30px
               
           &.check
             border-right: 1px #ccc solid
@@ -746,7 +755,7 @@ button,
             z-index: 3
           
           .avatar
-            background: image-url('application/avatar@60.png') center center no-repeat #5F5F5F
+            background: #E1D5CD
             border: 1px solid #e1d5cd
             border-right: 0
             height: 62px
@@ -782,6 +791,8 @@ button,
               border: 1px solid #fff
               border-right: 0
               display: block
+              height: 60px
+              width: 60px
           
           .meta
             background: #fff
@@ -1125,13 +1136,12 @@ button,
       .profile
         background: #C7B2A3
         margin: 0
-        overflow: hidden
         padding: 0
         position: absolute
         top: 0
         left: -62px
         +transition(box-shadow .2s linear)
-        z-index: 1
+        z-index: 4
         
         li
           background: none
@@ -1159,7 +1169,9 @@ button,
             img
               background: #E1D5CD
               border: 1px solid #fff
+              height: 40px
               margin: 1px
+              width: 40px
           
           input
             display: block
@@ -1177,7 +1189,6 @@ button,
           +border_radius(5)
           +box_shadow(0 0 15px rgba(#000,.5))
           left: -72px
-          overflow: visible !important
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)
@@ -1201,6 +1212,7 @@ button,
                     +border_radius(3)
                     color: #fff
                     content: attr(meta)
+                    display: block
                     font-size: 12px
                     height: 15px
                     left: 0
@@ -1211,12 +1223,16 @@ button,
                     text-indent: 0
                     top: -35px
                     white-space: nowrap
+                    width: auto
                   
                   &:after
                     border: 10px solid transparent
                     border-left: 0
+                    +border_radius(0)
                     border-top: 10px solid rgba(#6F2B3D,.9)
+                    +box_shadow(none)
                     content: ''
+                    display: block
                     height: 0
                     left: 10px
                     +opacity(1)
@@ -1391,6 +1407,10 @@ button,
         
         h2:before
           background-position: -570px -30px
+        
+        img.avatar
+          height: 40px
+          width: 40px
       
       .characters
         
@@ -1412,11 +1432,13 @@ button,
               position: relative
               text-indent: 25px
               
-              img
+              img.avatar
                 display: block
+                height: 20px
                 left: 3px
                 position: absolute
                 top: 1px
+                width: 20px
             
             input:checked + label
               display: none
@@ -1435,13 +1457,15 @@ button,
         position: relative
         +transition(background .2s linear)
           
-        img
+        img.avatar
           background: #C7B2A3
           +border_radius(4)
           +box_shadow(0 0 5px rgba(#000,.5))
+          height: 40px
           left: 4px
           position: absolute
           top: 4px
+          width: 40px
       
       .submitter a
         height: auto
