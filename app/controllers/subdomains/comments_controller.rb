@@ -48,13 +48,7 @@ class Subdomains::CommentsController < SubdomainsController
 
   # DELETE /comments/1
   def destroy
-    if @comment.comments.empty?
-      success = @comment.destroy
-    else
-      @comment.has_been_deleted = true;
-      success = @comment.save
-    end
-    render :json => success ? true : false
+    render :json => @comment.destroy ? true : false
   end
 
 ###

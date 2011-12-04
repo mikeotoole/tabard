@@ -6,12 +6,7 @@ ActiveAdmin.register Discussion do
 
   member_action :remove_comment, :method => :put do
     comment = Comment.find(params[:id])
-    if comment.comments.empty?
-      comment.destroy
-    else
-      comment.has_been_deleted = true;
-      comment.save
-    end
+    comment.destroy
     redirect_to request.referer ? request.referer : admin_dashboard_url
   end
 
@@ -33,7 +28,7 @@ ActiveAdmin.register Discussion do
     column :poster do |discussion|
       link_to discussion.poster.name, [:admin, discussion.poster]
     end
-    column :number_of_comments, :sortable => false
+    column :number_of_comments 
     column :created_at
     column "Destroy" do |discussion|
       if can? :destroy, discussion
@@ -53,7 +48,7 @@ ActiveAdmin.register Discussion do
           column :poster do |comment|
             link_to comment.poster.name, [:admin, comment.poster]
           end
-          column :number_of_comments
+          column :number_of_comments 
           column :has_been_deleted
           column "Commentable Body" do |comment|
             comment.commentable_body

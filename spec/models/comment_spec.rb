@@ -14,6 +14,8 @@
 #  has_been_locked    :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  original_commentabl:integer
+#  original_commentabl:string(255)
 #
 
 require 'spec_helper'

@@ -13,7 +13,7 @@
         %td= discussion.poster.name
         %td
           - if discussion.comments.size > 0
-            = discussion.comments.last.poster.name
+            = discussion.comments.last.poster_name
         %td
           - if discussion.comments_enabled
             = discussion.number_of_comments

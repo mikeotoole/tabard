@@ -13,7 +13,7 @@
         %td= announcement.poster.name
         %td
           - if announcement.comments.size > 0
-            = announcement.comments.last.poster.name
+            = announcement.comments.last.poster_name
         %td
           - if announcement.comments_enabled
             = announcement.number_of_comments

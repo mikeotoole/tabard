@@ -51,7 +51,7 @@ ActiveAdmin.register UserProfile do
           column :number_of_comments
           column :has_been_deleted
           column "Commentable Body" do |comment|
-            link_to comment.commentable_body, [:admin, comment.original_comment_item]
+            link_to comment.commentable_body, [:admin, comment.commentable]
           end
           column "Destroy" do |comment|
             link_to "Destroy", remove_comment_admin_discussion_path(comment), :method => :put, :confirm => 'Are you sure you want to delete this comment?'
