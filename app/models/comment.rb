@@ -33,6 +33,7 @@ class Comment < ActiveRecord::Base
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
   delegate :body, :to => :commentable, :prefix => true, :allow_nil => true
+  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
 ###
 # Validators
@@ -66,18 +67,6 @@ class Comment < ActiveRecord::Base
   end
 
   ###
-  # This method gets the name of the poster.
-  # [Returns] The name of the character or user_profile.
-  ###
-  def poster_name
-    if self.character_proxy
-      return self.character_proxy.name
-    else
-      return self.user_profile.display_name
-    end
-  end
-
-  ###
   # This method checks to see if a character posted this comment.
   # [Returns] True if a character made this comment, otherwise false.
   ###
@@ -85,6 +74,7 @@ class Comment < ActiveRecord::Base
     character_proxy != nil
   end
 
+  # TODO Mike, Replace me.
   ###
   # This method returns the total number of comments that this comment has, including itself.
   # [Returns] An integer that contains the number of comments this comment has including itself.
@@ -98,6 +88,7 @@ class Comment < ActiveRecord::Base
    temp_total_num_comments
   end
 
+  # TODO Mike, Replace me.
   ###
   # This method gets all comments attacted to this comment. Even comments comments.
   # [Returns] A collection of comments.
@@ -111,6 +102,7 @@ class Comment < ActiveRecord::Base
    temp_all_comments.flatten
   end
 
+  # TODO Mike, Replace me.
   ###
   # This method returns the original item that this comment is attached to, climbing the comment tree if needed.
   # [Returns] The original comment item.
@@ -119,6 +111,7 @@ class Comment < ActiveRecord::Base
     (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
   end
 
+  # TODO Mike, Update me.
   ###
   # This method checks to see if comments are disabled for the commentable item.
   # [Returns] false if what this is commenting on has comments disabled.
@@ -172,7 +165,7 @@ protected
   # This method will get and use the community of the item that this comment is attached to, if possible.
   # [Returns] False if an error was encountered, otherwise true.
   ###
-  def get_community_id_from_source
+  def get_community_id_from_source # TODO Mike, Update me.
     return if self.community_id or not self.commentable_id
     if self.commentable.respond_to?('community')
       self.community = self.commentable.community

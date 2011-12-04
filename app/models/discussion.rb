@@ -117,13 +117,6 @@ class Discussion < ActiveRecord::Base
     return unless self.character_proxy
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
-  
-  
-protected
-
-  def delete_all_comments
-    Comment.delete self.all_comments
-  end
 end
 
 
