@@ -57,46 +57,48 @@ describe Subdomains::RosterAssignmentsController do
   end
 
   describe "GET 'show'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'show', :id => roster_assignment
-      response.response_code.should == 403
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
     end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'show', :id => roster_assignment
-      response.should be_success
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
     end
-
-    it "should redirected to new user session path when not authenticated as a user" do
-      get 'show', :id => roster_assignment
-      response.should redirect_to(new_user_session_url)
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
     end
   end
 
   describe "GET 'new'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'new'
-      response.response_code.should == 403
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'new'
+        assert_response :missing
+      end
     end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'new'
-      response.should be_success
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'new'
+        assert_response :missing
+      end
     end
-
-    it "shouldn't be successful when not authenticated as a user" do
-      get 'new'
-      response.should redirect_to(new_user_session_url)
-    end
-
-    it "should render roster_assignments/new template" do
-      sign_in admin_user
-      get 'new'
-      response.should render_template('roster_assignments/new')
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'new'
+        assert_response :missing
+      end
     end
   end
 
@@ -197,7 +199,7 @@ describe Subdomains::RosterAssignmentsController do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_false
-      response.should redirect_to(roster_assignments_url)
+      response.should redirect_to(my_roster_assignments_url)
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user

@@ -10,7 +10,7 @@ class TextQuestion < Question
 # Constants
 ###
   # The list of vaild game subclass types.
-  #VALID_STYLES = %w(short_answer_question long_answer_question)
+  VALID_STYLES = %w(short_answer_question long_answer_question)
 
 ###
 # Validators

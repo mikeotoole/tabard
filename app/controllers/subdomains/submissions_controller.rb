@@ -37,7 +37,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # POST /custom_forms/:custom_form_id/submissions(.:format)
   def create
     add_new_flash_message 'Your submission was successful.', 'success' if @submission.save
-    respond_with @submission, :location => custom_forms_path
+    respond_with @submission, :location => root_url(:subdomain => current_community.subdomain)
   end
 
   # DELETE /submissions/:id(.:format)

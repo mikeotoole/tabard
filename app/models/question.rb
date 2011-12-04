@@ -22,7 +22,7 @@ class Question < ActiveRecord::Base
 ###
   belongs_to :custom_form
   has_many :answers
-  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id
+  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question
 
 ###
 # Validators
