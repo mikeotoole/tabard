@@ -12,9 +12,9 @@
             = link_to 'Join a community', communities_url(:subdomain => false)
     - else
       %li= link_to 'Join a community', communities_url(:subdomain => false)
-    %li{ :class => 'icon search' }
-      -# TODO Doug, hook up the link
-      = link_to 'Search', '#'
+    -# TODO - Uncomment this section and hookup link once we actually ad the search feature
+      %li{ :class => 'icon search' }
+        = link_to 'Search', '#'
     %li
       %p
         = link_to "My Profile", user_profile_url(current_user.user_profile, :subdomain => false)
@@ -34,7 +34,7 @@
           - profiles.each do |profile|
             - unless profile[:is_current]
               %li
-                = image_tag(profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon))
+                = image_tag profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon), :class => 'avatar'
                 = link_to(active_profile_path(:id => profile[:profile_id], :type => profile[:type]), :method => :post) do
                   = profile[:name]
           - if profiles.size > 1
