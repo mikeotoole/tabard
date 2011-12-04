@@ -99,7 +99,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @announcement.discussion_space_game
+    @announcement.discussion_space_game if @announcement
   end
   helper_method :current_game
 
