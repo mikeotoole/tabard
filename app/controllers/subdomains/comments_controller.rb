@@ -5,7 +5,7 @@
 #
 # This controller is handling comments within the scope of subdomains (communities).
 ###
-class Subdomains::CommentsController < ApplicationController
+class Subdomains::CommentsController < SubdomainsController
   layout nil
 
 ###

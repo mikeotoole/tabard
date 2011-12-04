@@ -25,6 +25,7 @@
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
 #  suspended                         :boolean         default(FALSE)
+#  date_of_birth                     :date
 #
 
 require 'spec_helper'
@@ -164,6 +165,20 @@ describe User do
       @user = User.find(@user)
       @user.accepted_documents.include?(@current_version).should be_true
       @user.has_accepted_current_privacy_policy?.should be_true
+    end
+  end
+  describe "date_of_birth" do
+    it "should not be valid for an 8 year old" do
+      build(:user, :date_of_birth => 8.years.ago.to_date).should_not be_valid
+    end
+    it "should be valid for an 13 year old" do
+      build(:user, :date_of_birth => 13.years.ago.to_date).should be_valid
+    end
+    it "should not be valid for an 13 year plus one day old" do
+      build(:user, :date_of_birth => (13.years.ago + 1.day).to_date).should_not be_valid
+    end
+    it "should be valid for an 27 year old" do
+      build(:user, :date_of_birth => 27.years.ago.to_date).should be_valid
     end
   end
 end

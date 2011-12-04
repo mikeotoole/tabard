@@ -1,5 +1,3 @@
-%h1 New submission
+- title "#{@submission.custom_form_name} | #{current_community.name}"
 
 = render 'form', :submission => @submission
-
-= link_to 'Back', submissions_path

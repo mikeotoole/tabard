@@ -13,12 +13,13 @@
   %p
     = @discussion.body
 
-- if @discussion.comments or (@discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new))
+- if @discussion.comments.size > 0 or can? :comment, @discussion
   %aside.comments
-    - if @discussion.comments
+    - if @discussion.comments.size > 0
       %ol
         - @discussion.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
-    - if @discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new)
-      %h3 Post a New Comment
-      = render 'subdomains/comments/form', :comment => @discussion.comments.new
+    - if can? :comment, @discussion
+      #newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @discussion.comments.new

@@ -7,6 +7,7 @@ FactoryGirl.define do
     sequence(:email) {|n| "person#{n}@example.com"}
     accepted_current_terms_of_service true
     accepted_current_privacy_policy true
+    date_of_birth 35.years.ago.to_date
   end
 
   # Create an active user with full associations.
@@ -23,6 +24,7 @@ FactoryGirl.define do
     end
     accepted_current_terms_of_service true
     accepted_current_privacy_policy true
+    date_of_birth 35.years.ago.to_date
   end
 
   factory :community_admin, :parent => :user do

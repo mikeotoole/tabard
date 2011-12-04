@@ -15,7 +15,7 @@ class SingleSelectQuestion < SelectQuestion
 ###
 # Validators
 ###
-  validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported single select question style"}
+  #validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported single select question style"}
 end
 
 

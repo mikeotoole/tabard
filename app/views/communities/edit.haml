@@ -1,10 +1,7 @@
 - title "Editing Community"
 
 #body
-  %h1
-    Editing
-    = link_to @community.name, @community
-    Community
+  %h1= "Editing #{@community.name} Community"
 
   = simple_form_for @community, :html => {:novalidate => true} do |f|
     = render 'fields', :f => f

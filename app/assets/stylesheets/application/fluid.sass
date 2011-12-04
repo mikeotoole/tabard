@@ -42,7 +42,6 @@
       bottom: 0
       left: 60px
       overflow: hidden
-      padding: 0
       position: fixed
       top: 85px
       right: 45%
@@ -57,6 +56,8 @@
         ol
           bottom: 0
           left: 0
+          margin: -10px 0 0
+          padding: 10px 0 0
           position: absolute
           right: 0
           top: 0
@@ -68,7 +69,7 @@
               display: inline-block
           
             &.wmd-panel
-              bottom: 40px
+              bottom: 30px
               left: 0
               position: absolute
               right: 0
@@ -87,7 +88,8 @@
     background: #fff
     bottom: 200px
     left: 55%
-    padding: 30px
+    margin: -10px 0 0
+    padding: 40px 40px 30px
     position: absolute
     right: 0
     top: 70px
@@ -169,19 +171,20 @@
     bottom: 0
     +box_shadow(0 0 10px rgba(#000,.7))
     left: 0
-    padding: 0
+    margin: -10px 0 0
+    padding: 10px 0 0
     position: fixed
     text-align: center
     top: 70px
     width: 59px
     z-index: 5
-    
+      
     dt
       border-bottom: 1px solid #000
-      color: #999
-      font: 13px DinLight, sans
+      color: #999 !important
+      font: 13px DinLight, sans !important
       margin: 0 0 20px
-      padding: 10px 0 5px
+      padding: 10px 0 5px !important
     
     #wmd-button-bar
       
@@ -241,12 +244,19 @@
               background-position: -990px -30px
       
     dd
+      padding: 0 !important
       
       &.cinch
       
         a,
         button
           margin: -5px 14px 15px
+    
+      &.toggle
+        
+        a,
+        button
+          background-position: -480px -30px !important
     
       &.cancel
         
