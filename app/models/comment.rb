@@ -172,7 +172,7 @@ protected
   # [Returns] False if an error was encountered, otherwise true.
   ###
   def get_community_id_from_source
-    return if self.community or not self.commentable_id
+    return if self.community_id or not self.commentable_id
     if self.commentable.respond_to?('community')
       self.community = self.commentable.community
     elsif self.original_comment_item.respond_to?('community')

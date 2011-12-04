@@ -37,6 +37,7 @@ class UserProfile < ActiveRecord::Base
 # Delegates
 ###
   delegate :email, :to => :user
+  delegate :disabled, :to => :user
 
 ###
 # Callbacks

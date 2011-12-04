@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled, :user_disabled_at
 
 ###
 # Associations
@@ -181,19 +181,17 @@ class User < ActiveRecord::Base
   end
   
   def disable_by_user
-    self.user_disabled = true
-    self.user_disabled_at = Time.now
-    self.community_profiles.delete
+    self.update_attributes(:user_disabled => true, :user_disabled_at => Time.now)
+    self.community_profiles.clear
     self.owned_communities.clear
-    self.save
   end
   
   def disable_by_admin
     self.admin_disabled = true
     self.admin_disabled_at = Time.now
-    self.community_profiles.delete
+    self.save(:validate => false)
+    self.community_profiles.clear
     self.owned_communities.clear
-    self.save
   end
   
   def reinstate
@@ -201,7 +199,7 @@ class User < ActiveRecord::Base
     self.admin_disabled_at = nil
     self.user_disabled = false
     self.user_disabled_at = nil
-    self.save
+    self.save(:validate => false)
   end
   
   def reset_password

@@ -19,8 +19,8 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
-  has_many :community_applications
-  has_many :roles
+  has_many :community_applications, :dependent => :destroy
+  has_many :roles, :dependent => :destroy
 
   has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
@@ -33,7 +33,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
-  has_many :page_spaces
+  has_many :page_spaces, :dependent => :destroy
   has_many :pages, :through => :page_spaces
 
 ###

@@ -43,6 +43,11 @@ class Discussion < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
 
 ###
+# Callbacks
+###
+  before_destroy :delete_all_comments
+
+###
 # Public Methods
 ###
 
@@ -84,7 +89,7 @@ class Discussion < ActiveRecord::Base
   end
 
   ###
-  # This method all comments in this discussion even comments comments.
+  # This method gets all comments in this discussion even comments comments.
   # [Returns] A collection of comments.
   ###
   def all_comments
@@ -111,6 +116,13 @@ class Discussion < ActiveRecord::Base
   def character_is_valid_for_user_profile
     return unless self.character_proxy
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+  end
+  
+  
+protected
+
+  def delete_all_comments
+    Comment.delete self.all_comments
   end
 end
 

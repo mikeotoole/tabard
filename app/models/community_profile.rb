@@ -69,7 +69,9 @@ class CommunityProfile < ActiveRecord::Base
   #   * +role+ -> The role being removed from the collection.
   ###
   def ensure_that_member_role_stays(role)
-    raise InvalidCollectionRemoval.new("You can't remove the member role.") if role == self.community.member_role
+    if not self.user_profile.disabled and role == self.community.member_role
+      raise InvalidCollectionRemoval.new("You can't remove the member role.")
+    end
   end
 end
 
