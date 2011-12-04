@@ -71,26 +71,23 @@ describe CommunitiesController do
   end
 
   describe "GET 'edit'" do
-    it "should throw routing error when authenticated as a non admin user" do
+    it "should throw routing error when user" do
       assert_raises(ActionController::RoutingError) do
         sign_in user
-        get 'edit', :id => community
+        get :edit, :id => community
         assert_response :missing
       end
     end
-
-    it "should throw routing error when authenticated as the community admin user" do
+    it "should throw routing error when admin" do
       assert_raises(ActionController::RoutingError) do
         sign_in admin_user
-        get 'edit', :id => community
+        get :edit, :id => community
         assert_response :missing
       end
     end
-
-    it "should redirected to new user session path when not authenticated as a user" do
+    it "should throw routing error when anon" do
       assert_raises(ActionController::RoutingError) do
-        get 'edit', :id => community
-        response.should redirect_to(new_user_session_url)
+        get :edit, :id => community
         assert_response :missing
       end
     end
@@ -129,28 +126,26 @@ describe CommunitiesController do
     end
   end
 
-  it "PUT Update should throw routing error when authenticated as a non admin user" do
-    assert_raises(ActionController::RoutingError) do
-      @new_slogan = 'My new slogan.'
-      sign_in billy
-      put 'update', :id => community, :community => { :slogan => @new_slogan }
-      assert_response :missing
+  describe "PUT 'update' when authenticated as a non admin user" do
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        put :update, :id => community
+        assert_response :missing
+      end
     end
-  end
-
-  it "PUT Update should throw routing error when authenticated as an admin user" do
-    assert_raises(ActionController::RoutingError) do
-      @new_slogan = 'My new slogan.'
-      sign_in admin_user
-      put 'update', :id => community, :community => { :slogan => @new_slogan }
-      assert_response :missing
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        put :update, :id => community
+        assert_response :missing
+      end
     end
-  end
-
-  it "PUT Update should throw routing error when not authenticated as a user" do
-    assert_raises(ActionController::RoutingError) do
-      put 'update', :id => community, :community => { :slogan => "New Slogan" }
-      assert_response :missing
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        put :update, :id => community
+        assert_response :missing
+      end
     end
   end
 
