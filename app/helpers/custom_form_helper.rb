@@ -23,7 +23,7 @@ module CustomFormHelper
         .find('.questions')
         .append(question.replace(/noindex/g,newIndex))
         .find('>li:last')
-        .trigger('load')
+        .trigger('init')
         .hide()
         .slideDown(400);
     }
