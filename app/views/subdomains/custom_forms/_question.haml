@@ -1,0 +1,18 @@
+- if question.type or true #HACK - checking for question.type magically puts q in scope. why? who the hell knows?
+  %li{ :question => q, :question_id => (question.id ||= ''), :question_type => (question.type ||= '') }
+    = f.simple_fields_for :questions, question, :child_index => (question.persisted? ? nil : q) do |qf|
+      .left
+        = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question'
+        .select
+          = qf.collection_radio :type_style, [['TextQuestion|short_answer_question','Short Answer'],['TextQuestion|long_answer_question','Long Answer'],['MultiSelectQuestion|check_box_question','Checkboxes'],['SingleSelectQuestion|radio_buttons_question','Radio Buttons'],['SingleSelectQuestion|select_box_question','Dropdown']], :first, :last
+        .optreq
+          = qf.input :required, :as => :boolean, :wrapper => false
+        .explanation
+          = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)'
+      %div{ :class => 'right' + (['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) ? '' : ' hidden') }
+        %label Predefined Answers
+        %ol.answers
+          - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) and question.predefined_answers.any?
+            - question.predefined_answers.each_with_index do |answer,a|
+              = qf.simple_fields_for :predefined_answers, answer do |af|
+                = af.input :body, :as => :string, :label => false, :wrapper_html => { :question => q, :answer => a }

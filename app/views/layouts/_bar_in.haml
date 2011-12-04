@@ -39,7 +39,7 @@
                   = profile[:name]
           - if profiles.size > 1
             %li.extra
-              = link_to 'View all characters', user_profile_path(current_user)
+              = link_to 'My characters', user_profile_path(current_user)
           - else
             %li.extra
               = link_to 'Add new WoW character', new_wow_character_path

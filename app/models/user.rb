@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled, :user_disabled_at
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
 # Callbacks
 ###
   after_save :update_document_acceptance
+  before_validation :combine_birthday
 
 ###
 # Delegates
@@ -67,6 +68,8 @@ class User < ActiveRecord::Base
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :has_seen?, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
+  delegate :is_member?, :to => :user_profile, :allow_nil => true
+  delegate :application_pending?, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -92,6 +95,9 @@ class User < ActiveRecord::Base
       :acceptance => {:accept => true}
   validates :accepted_current_privacy_policy,
       :acceptance => {:accept => true}
+  validates :date_of_birth, :presence => true
+
+  validate :at_least_13_years_old
 
 ###
 # Public Methods
@@ -211,6 +217,54 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(user, random_password).deliver
   end
 
+  # This validation method ensures that the user is 13 years of age according to the date_of_birth.
+  def at_least_13_years_old
+    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
+  end
+
+  # Birth month getter
+  def birth_month
+    return self.date_of_birth.month if self.date_of_birth?
+    @birth_month
+  end
+
+  # Birth day getter
+  def birth_day
+    return self.date_of_birth.day if self.date_of_birth?
+    @birth_day
+  end
+
+  # Birth year getter
+  def birth_year
+    return self.date_of_birth.year if self.date_of_birth?
+    @birth_year
+  end
+
+  # Birth month setter
+  def birth_month=(value)
+    @birth_month = value
+  end
+
+  # Birth day setter
+  def birth_day=(value)
+    @birth_day = value
+  end
+
+  # Birth year setter
+  def birth_year=(value)
+    @birth_year = value
+  end
+
+  # This method combines the individual birthday fields into one date
+  def combine_birthday
+    if self.date_of_birth.blank? and !self.birth_year.blank? and !self.birth_month.blank? and !self.birth_day.blank?
+      self.date_of_birth = Date.new(self.birth_year.to_i,self.birth_month.to_i,self.birth_day.to_i)
+    else
+      true
+    end
+  end
+
+
 ###
 # Protected Methods
 ###
@@ -224,6 +278,8 @@ protected
     self.new_record? || self.password.present?
   end
 end
+
+
 
 
 # == Schema Information
@@ -253,6 +309,7 @@ end
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
 #  admin_disabled                    :boolean         default(FALSE)
+#  date_of_birth                     :date
 #  user_disabled                     :boolean         default(FALSE)
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime

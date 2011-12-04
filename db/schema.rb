@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20111203213439) do
     t.boolean  "protected_roster",                :default => false
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
+    t.boolean  "public_roster",                   :default => true
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -275,12 +276,15 @@ ActiveRecord::Schema.define(:version => 20111203213439) do
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
-    t.string   "action"
     t.string   "permission_level"
     t.string   "subject_class"
     t.string   "id_of_subject"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "can_lock",                       :default => false
+    t.boolean  "can_accept",                     :default => false
+    t.string   "parent_association_for_subject"
+    t.integer  "id_of_parent"
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
@@ -412,6 +416,7 @@ ActiveRecord::Schema.define(:version => 20111203213439) do
     t.boolean  "accepted_current_privacy_policy",                  :default => false
     t.boolean  "force_logout",                                     :default => false
     t.boolean  "admin_disabled",                                   :default => false
+    t.date     "date_of_birth"
     t.boolean  "user_disabled",                                    :default => false
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"

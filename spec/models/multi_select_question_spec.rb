@@ -22,13 +22,6 @@ describe MultiSelectQuestion do
     question.should be_valid
   end
   
-  it "shouldn't be valid with invalid style" do
-    invalid_styles = %w{ not_a_style check_box_question_NOT select_box_question radio_buttons_question long_answer_question short_answer_question } # TESTING invalid question styles.
-    invalid_styles.each do |style|
-      build(:check_box_question, :style => style).should_not be_valid
-    end
-  end
-  
   it "should be valid with valid style" do
     create(:check_box_question).should be_valid
   end

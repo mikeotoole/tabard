@@ -25,10 +25,6 @@ describe Question do
   it "should require body" do
     build(:long_answer_question, :body => nil).should_not be_valid
   end
-
-  it "should require style" do
-    build(:long_answer_question, :style => nil).should_not be_valid
-  end
   
   subject { @question = question }
   
@@ -45,13 +41,20 @@ describe Question do
     end
     
     it "shouldn't be editable" do
-      question.update_attributes(:type => "SingleSelectQuestion").should be_true
+      question.update_attributes(:type => "SingleSelectQuestion").should be_false
       Question.find(question).type.should eq("TextQuestion")
     end
   end
-  
-  it "all_select_options should return all valid question types" do
-    Question.all_select_options.count.should eq(5)
+
+  describe "type_style" do
+    it "should properly decode this value" do
+      some_question = Question.new(:body => "Herp!", :type_style => Question.all_select_options.first[1])
+      some_question.should be_valid
+    end
+    it "should not be valid if type_style not valid" do
+      some_question = Question.new(:body => "Herp!", :type_style => "lololol|derp")
+      some_question.should_not be_valid
+    end
   end
   
   describe "new_question" do

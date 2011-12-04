@@ -31,10 +31,6 @@ class CommunitiesController < ApplicationController
     @community.admin_profile = current_user.user_profile
   end
 
-  # GET /communities/:id/edit(.:format)
-  def edit
-  end
-
   # POST /communities(.:format)
   def create
     @community = Community.new(params[:community])
@@ -43,11 +39,4 @@ class CommunitiesController < ApplicationController
     @community.save
     respond_with(@community)
   end
-
-  # PUT /communities/:id(.:format)
-  def update
-    @community.update_attributes(params[:community])
-    respond_with(@community)
-  end
-
 end

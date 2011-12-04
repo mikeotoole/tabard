@@ -57,17 +57,15 @@ $(document).ready ->
   else
     $('#message_body').focus()
   
-  # batch actions
-  $('#mailbox-menu .action button')
+  # Toggle check/uncheck box for messages
+  $('#mailbox-menu .actions')
+    .after('<dd class="toggle"><button type="button" meta="Check/uncheck all messages">Check/uncheck all messages</button></dd>')
+    .closest('dl')
+    .find('.toggle button')
+    .data('checked',false)
     .click ->
-      if $('#mailbox input:checked').length
-        $(this).closest('form')
-          .prop
-            action: $(this).attr('action')
-          .find('input[name="_method"]')
-            .val $(this).attr('method')
-      else
-        false
+      $(this).data('checked',!$(this).data('checked'))
+      $('#mailbox dd .meta input').attr('checked',$(this).data('checked'))
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })

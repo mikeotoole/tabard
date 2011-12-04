@@ -124,8 +124,17 @@ $(document).ready ->
           $('#modal button.cancel').trigger 'click'
       false
   
+  # batch actions
+  $('form .batch button, form button.batch')
+    .click ->    
+      $(this)
+        .closest('form')
+        .prop({ action: $(this).attr('action') })
+        .find('input[name="_method"]')
+        .val $(this).attr('method')
+  
   # select box auto-hide after click
-  $('.select ul label').click ->
+  $('.select ul label, form .profile label').click ->
     li = $(this).closest('li')
     if !li.find('input:checked').length
       ul = li.closest('ul')
@@ -144,8 +153,8 @@ $(document).ready ->
         .animate({ paddingTop: amount }, speed)
       $('#body')
         .animate({ marginTop: amount }, speed)
-      if $('#mailbox').length
-        $('#mailbox, #mailbox-menu, #message, #message header .actions')
+      if $('.sidemenu').length
+        $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions')
           .animate({ top: (amount + 70) + 'px' }, speed)
 
   $('#flash li')
@@ -242,3 +251,12 @@ $(document).ready ->
         .removeAttr 'title'
             
   adjustHeaderByFlash(600)
+  
+  # Global checkbox
+  $('thead th.check')
+    .append('<a>✔</a>')
+    .find('a')
+    .data('checked',false)
+    .click ->
+      $(this).data('checked', !$(this).data('checked'))
+      $(this).closest('table').find('tbody td.check input').attr('checked',$(this).data('checked'))

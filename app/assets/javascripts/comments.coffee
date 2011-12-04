@@ -127,7 +127,10 @@ $(document).ready ->
             is_inline = false
             container = $(this).closest('.comments')
           if !container.find('>ol').length
-            container.append('<ol></ol>')
+            if is_inline
+              container.append('<ol></ol>')
+            else
+              container.prepend('<ol></ol>')
           $(this)
             .removeClass('busy')
             .find('textarea')
