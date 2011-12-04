@@ -77,7 +77,7 @@ button,
       text-decoration: none
   
 #content
-  background: image-url('main/block.png') top center no-repeat
+  background: image-url('application/block.png') top center no-repeat
   position: relative
   margin: 20px 0 0
   min-height: 310px
@@ -666,6 +666,56 @@ button,
         float: right
         font-family: DinMedium, sans
         padding: 3px 6px
+
+body.user_profiles.show
+
+  #content
+    background-image: image-url('application/block-2a.png')
+    margin: 80px 0 0
+  
+    #body
+    
+      >header
+        height: 80px
+        margin: -110px 0 30px -30px
+        padding: 0
+        
+        h1
+          color: #251534
+          font: 40px DinLight, sans
+          line-height: 40px
+          margin: 0
+          padding: 0
+        
+        p
+          font: 20px DinMedium, sans
+          line-height: 20px
+          margin: 0
+          padding: 0
+      
+      >aside
+        float: left
+        margin: -10px -10px 0
+        width: 260px
+      
+        .avatar
+          border: 10px solid #ddd
+          
+          &:before
+            border: 1px solid #2d7cb4
+            bottom: 8px
+            content: ''
+            left: 8px
+            right: 8px
+            top: 8px
+          
+          img
+            display: block
+      
+      >article
+        float: right
+        margin: -10px -10px 0
+        width: 590px
 
 
 @import application/footer

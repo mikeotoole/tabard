@@ -12,6 +12,7 @@
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 
 require 'spec_helper'

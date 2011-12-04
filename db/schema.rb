@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130030729) do
+ActiveRecord::Schema.define(:version => 20111203232918) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -385,6 +385,7 @@ ActiveRecord::Schema.define(:version => 20111130030729) do
     t.text     "description"
     t.string   "display_name"
     t.boolean  "publicly_viewable", :default => true
+    t.string   "title"
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"

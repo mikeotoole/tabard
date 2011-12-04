@@ -9,7 +9,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name,
+  attr_accessible :first_name, :last_name, :display_name, :title,
       :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
 
 ###
@@ -311,6 +311,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -325,5 +326,6 @@ end
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 

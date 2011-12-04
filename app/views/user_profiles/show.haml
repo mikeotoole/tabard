@@ -1,0 +1,15 @@
+- title "Profile: #{@user_profile.display_name}"
+
+#body
+  %header
+    %h1= @user_profile.display_name.to_s
+    - if @user_profile.title
+      %p= @user_profile.title
+  %aside
+    .avatar= image_tag @user_profile.avatar_url :large
+    %ul
+      %li= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
+      %li= link_to 'Add new WoW character', new_wow_character_path
+      %li= link_to 'Add new SWTOR character', new_swtor_character_path
+  %article
+    herp derp
