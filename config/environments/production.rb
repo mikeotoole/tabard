@@ -58,6 +58,9 @@ DaBvRails::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Default mailer url
+  config.action_mailer.default_url_options = { :host => 'brutalvenom.com' }
   
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
