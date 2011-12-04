@@ -34,7 +34,7 @@ class Discussion < ActiveRecord::Base
 # Delegates
 ###
   delegate :is_announcement, :to => :discussion_space, :allow_nil => true
-  delegate :name, :to => :discussion_space, :prefix => true
+  delegate :name, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :discussion_space, :allow_nil => true
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
