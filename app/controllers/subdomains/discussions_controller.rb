@@ -95,7 +95,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @discussion.discussion_space_game
+    @discussion.discussion_space_game if @discussion
   end
   helper_method :current_game
 

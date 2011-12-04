@@ -96,6 +96,18 @@ dump = (arr, level) ->
 
 $(document).ready ->
   
+  # replace derp avatars with default
+  $('.avatar img, img.avatar').bind 'error', ->
+    if $(this).css('width')
+      width = $(this).css('width').replace /[^\d]/g, ''
+    else
+      width = $(this).closest('.avatar').width()
+    src = $(this).attr('src')
+    avatar = '/assets/application/avatar@'+width+'.png'
+    $(this)
+      .attr('src', avatar)
+      .unbind 'error'
+  
   # text box suggest
   $('form input').each ->
     $(this).data 'default', $(this).attr 'title'
