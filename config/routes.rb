@@ -219,7 +219,7 @@ DaBvRails::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 end
 #== Route Map
-# Generated on 03 Dec 2011 16:41
+# Generated on 04 Dec 2011 21:20
 #
 #                          admin_comments GET    /admin/comments(.:format)                                                      {:action=>"index", :controller=>"admin/comments"}
 #                                         POST   /admin/comments(.:format)                                                      {:action=>"create", :controller=>"admin/comments"}
@@ -328,7 +328,8 @@ end
 #                      admin_user_profile GET    /admin/user_profiles/:id(.:format)                                             {:action=>"show", :controller=>"admin/user_profiles"}
 #                                         PUT    /admin/user_profiles/:id(.:format)                                             {:action=>"update", :controller=>"admin/user_profiles"}
 #                                         DELETE /admin/user_profiles/:id(.:format)                                             {:action=>"destroy", :controller=>"admin/user_profiles"}
-#                      suspend_admin_user PUT    /admin/users/:id/suspend(.:format)                                             {:action=>"suspend", :controller=>"admin/users"}
+#                      disable_admin_user PUT    /admin/users/:id/disable(.:format)                                             {:action=>"disable", :controller=>"admin/users"}
+#                         nuke_admin_user DELETE /admin/users/:id/nuke(.:format)                                                {:action=>"nuke", :controller=>"admin/users"}
 #                    reinstate_admin_user PUT    /admin/users/:id/reinstate(.:format)                                           {:action=>"reinstate", :controller=>"admin/users"}
 #               reset_password_admin_user PUT    /admin/users/:id/reset_password(.:format)                                      {:action=>"reset_password", :controller=>"admin/users"}
 #         reset_all_passwords_admin_users POST   /admin/users/reset_all_passwords(.:format)                                     {:action=>"reset_all_passwords", :controller=>"admin/users"}
@@ -388,12 +389,13 @@ end
 #                  edit_user_registration GET    /users/edit(.:format)                                                          {:action=>"edit", :controller=>"registrations"}
 #                                         PUT    /users(.:format)                                                               {:action=>"update", :controller=>"registrations"}
 #                                         DELETE /users(.:format)                                                               {:action=>"destroy", :controller=>"registrations"}
-#                       user_confirmation POST   /users/confirmation(.:format)                                                  {:action=>"create", :controller=>"devise/confirmations"}
-#                   new_user_confirmation GET    /users/confirmation/new(.:format)                                              {:action=>"new", :controller=>"devise/confirmations"}
-#                                         GET    /users/confirmation(.:format)                                                  {:action=>"show", :controller=>"devise/confirmations"}
+#                       user_confirmation POST   /users/confirmation(.:format)                                                  {:action=>"create", :controller=>"confirmations"}
+#                   new_user_confirmation GET    /users/confirmation/new(.:format)                                              {:action=>"new", :controller=>"confirmations"}
+#                                         GET    /users/confirmation(.:format)                                                  {:action=>"show", :controller=>"confirmations"}
 #                             user_unlock POST   /users/unlock(.:format)                                                        {:action=>"create", :controller=>"devise/unlocks"}
 #                         new_user_unlock GET    /users/unlock/new(.:format)                                                    {:action=>"new", :controller=>"devise/unlocks"}
 #                                         GET    /users/unlock(.:format)                                                        {:action=>"show", :controller=>"devise/unlocks"}
+#                     cancel_confirmation GET    /cancel_confirmation(.:format)                                                 {:controller=>"registrations", :action=>"cancel_confirmation"}
 #                               user_root        /dashboard(.:format)                                                           {:controller=>"user_profiles", :action=>"index"}
 #                 toggle_maintenance_mode PUT    /toggle_maintenance_mode(.:format)                                             {:controller=>"site_action", :action=>"toggle_maintenance_mode"}
 #                         accept_document GET    /accept_document/:id(.:format)                                                 {:controller=>"document_acceptance", :action=>"new"}
@@ -414,9 +416,9 @@ end
 #                         active_profiles POST   /active_profiles(.:format)                                                     {:action=>"create", :controller=>"active_profiles"}
 #                          active_profile POST   /active_profile/:id/:type(.:format)                                            {:controller=>"active_profiles", :action=>"create"}
 #                             communities GET    /communities(.:format)                                                         {:action=>"index", :controller=>"communities"}
+#                                         POST   /communities(.:format)                                                         {:action=>"create", :controller=>"communities"}
 #                           new_community GET    /communities/new(.:format)                                                     {:action=>"new", :controller=>"communities"}
 #                               community GET    /communities/:id(.:format)                                                     {:action=>"show", :controller=>"communities"}
-#                             communities POST   /communities/new(.:format)                                                     {:controller=>"communities", :action=>"create"}
 #                                  swtors GET    /star-wars-the-old-republic(.:format)                                          {:controller=>"swtors", :action=>"index"}
 #                                    wows GET    /world-of-warcraft(.:format)                                                   {:controller=>"wows", :action=>"index"}
 #                       new_wow_character GET    /wow_characters/new(.:format)                                                  {:action=>"new", :controller=>"wow_characters"}
@@ -567,11 +569,11 @@ end
 #                          supported_game GET    /supported_games/:id(.:format)                                                 {:action=>"show", :controller=>"subdomains/supported_games"}
 #                                         PUT    /supported_games/:id(.:format)                                                 {:action=>"update", :controller=>"subdomains/supported_games"}
 #                                         DELETE /supported_games/:id(.:format)                                                 {:action=>"destroy", :controller=>"subdomains/supported_games"}
-#                                    root        /                                                                              {:controller=>"crumblin", :action=>"index"}
-#                          crumblin_index GET    /crumblin/index(.:format)                                                      {:controller=>"crumblin", :action=>"index"}
-#                          crumblin_intro GET    /intro(.:format)                                                               {:controller=>"crumblin", :action=>"intro"}
-#                       crumblin_features GET    /features(.:format)                                                            {:controller=>"crumblin", :action=>"features"}
-#                        crumblin_pricing GET    /pricing(.:format)                                                             {:controller=>"crumblin", :action=>"pricing"}
-#                    crumblin_maintenance GET    /maintenance(.:format)                                                         {:controller=>"crumblin", :action=>"maintenance"}
-#                 crumblin_privacy_policy GET    /privacy-policy(.:format)                                                      {:controller=>"crumblin", :action=>"privacy_policy"}
-#               crumblin_terms_of_service GET    /terms-of-service(.:format)                                                    {:controller=>"crumblin", :action=>"terms_of_service"}
+#                                    root        /                                                                              {:controller=>"top_level", :action=>"index"}
+#                         top_level_index GET    /top_level/index(.:format)                                                     {:controller=>"top_level", :action=>"index"}
+#                         top_level_intro GET    /intro(.:format)                                                               {:controller=>"top_level", :action=>"intro"}
+#                      top_level_features GET    /features(.:format)                                                            {:controller=>"top_level", :action=>"features"}
+#                       top_level_pricing GET    /pricing(.:format)                                                             {:controller=>"top_level", :action=>"pricing"}
+#                   top_level_maintenance GET    /maintenance(.:format)                                                         {:controller=>"top_level", :action=>"maintenance"}
+#                top_level_privacy_policy GET    /privacy-policy(.:format)                                                      {:controller=>"top_level", :action=>"privacy_policy"}
+#              top_level_terms_of_service GET    /terms-of-service(.:format)                                                    {:controller=>"top_level", :action=>"terms_of_service"}
