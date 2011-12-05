@@ -21,7 +21,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :index, :custom_form_id => custom_form.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -29,13 +29,13 @@ describe Subdomains::SubmissionsController do
     it "assigns the requested submission as @submission" do
       sign_in user
       submission
-      get :show, :id => submission.id.to_s
+      get :show, :custom_form_id => custom_form.id, :id => submission.id.to_s
       assigns(:submission).should eq(submission)
     end
     
     it "should redirected to new user session path when not authenticated as a user" do
-      get :show, :id => submission.id.to_s
-      response.should redirect_to(new_user_session_path)
+      get :show, :custom_form_id => custom_form.id, :id => submission.id.to_s
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -48,7 +48,7 @@ describe Subdomains::SubmissionsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :new, :custom_form_id => custom_form.id
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -68,29 +68,15 @@ describe Subdomains::SubmissionsController do
         assigns(:submission).should be_persisted
       end
 
-      it "redirects to the created submission" do
+      it "redirects to the community root" do
         sign_in user
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
-        response.should redirect_to(Submission.last)
+        response.should redirect_to(root_url(:subdomain => community.subdomain))
       end
       
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
-        response.should redirect_to(new_user_session_path)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved submission as @submission" do
-        sign_in user
-        post :create, :custom_form_id => custom_form.id, :submission => {:user_profile_id => nil}
-        assigns(:submission).should be_a_new(Submission)
-      end
-
-      it "re-renders the 'new' template" do
-        sign_in user
-        post :create, :custom_form_id => custom_form.id, :submission => {:user_profile_id => nil}
-        response.should render_template("new")
+        response.should redirect_to(new_user_session_url)
       end
     end
   end
@@ -107,12 +93,12 @@ describe Subdomains::SubmissionsController do
     it "redirects to the submissions list" do
       sign_in user
       delete :destroy, :id => submission.id.to_s
-      response.should redirect_to(custom_form_url(submission.custom_form))
+      response.should redirect_to(custom_form_submissions_url(submission.custom_form))
     end
     
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => submission.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 

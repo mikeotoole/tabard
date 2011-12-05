@@ -1,0 +1,23 @@
+- title "#{@announcement.name} | #{@announcement.discussion_space_name} | #{@community.name}"
+= javascript_include_tag "comments"
+
+%nav
+  %h1
+    = link_to "Announcement Spaces", announcement_spaces_url
+    = link_to @announcement.discussion_space_name, announcement_space_url(@announcement.discussion_space)
+    %strong= @announcement.name
+
+%article
+  %p
+    = @announcement.body
+
+- # TODO Doug, We may want to pull this part out into its own partal for items that can have comments (this and discussion show). -MO
+- if @announcement.comments or (!@announcement.is_locked and (can? :create, @announcement.comments.new))
+  %aside.comments
+    - if @announcement.comments
+      %ol
+        - @announcement.comments.each do |comment|
+          = render "subdomains/comments/comment", :comment => comment
+    - if @announcement.comments_enabled and !@announcement.is_locked and (can? :create, @announcement.comments.new)
+      %h3 Post a New Comment
+      = render 'subdomains/comments/form', :comment => @announcement.comments.new

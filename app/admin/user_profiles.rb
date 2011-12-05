@@ -4,17 +4,6 @@ ActiveAdmin.register UserProfile do
 
   actions :index, :show
 
-#  id                :integer         not null, primary key
-#  user_id           :integer
-#  first_name        :string(255)
-#  last_name         :string(255)
-#  avatar            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  description       :text
-#  display_name      :string(255)
-#  publicly_viewable :boolean         default(TRUE)
-
   filter :id
   filter :display_name
   filter :first_name
@@ -31,7 +20,7 @@ ActiveAdmin.register UserProfile do
     end
     column :display_name
     column "User" do |user_profile|
-      link_to user_profile.user.email, [:admin, user_profile.user]
+      link_to user_profile.email, [:admin, user_profile.user]
     end
     column :first_name
     column :last_name
@@ -60,7 +49,7 @@ ActiveAdmin.register UserProfile do
             link_to comment.poster.name, [:admin, comment.poster]
           end
           column :number_of_comments
-          column :has_been_deleted
+          column :is_removed
           column "Commentable Body" do |comment|
             link_to comment.commentable_body, [:admin, comment.original_comment_item]
           end
@@ -114,14 +103,3 @@ ActiveAdmin.register UserProfile do
 #     active_admin_comments
   end
 end
-
-#  id                :integer         not null, primary key
-#  user_id           :integer
-#  first_name        :string(255)
-#  last_name         :string(255)
-#  avatar            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  description       :text
-#  display_name      :string(255)
-#  publicly_viewable :boolean

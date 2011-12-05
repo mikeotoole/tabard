@@ -5,11 +5,11 @@ FactoryGirl.define do
   end
   
   factory :discussion_space_for_wow, :parent => :discussion_space do
-    game_id { DefaultObjects.wow.id }
+    supported_game_id { Factory.create(:wow_supported_game).id }
   end
   
   factory :discussion_space_for_swtor, :parent => :discussion_space do
-    game_id { DefaultObjects.swtor.id }
+    supported_game_id { Factory.create(:swtor_supported_game).id }
   end
   
   factory :discussion do
@@ -17,6 +17,13 @@ FactoryGirl.define do
     sequence(:body) {|n| "Discussion body #{n}"}
     user_profile_id { DefaultObjects.user_profile.id }
     discussion_space_id { DefaultObjects.discussion_space.id }
+  end
+  
+  factory :announcement, :class => Discussion do
+    sequence(:name) {|n| "Announcement #{n}"}
+    sequence(:body) {|n| "Announcement body #{n}"}
+    user_profile_id { DefaultObjects.community_admin.user_profile.id }
+    discussion_space_id { DefaultObjects.announcement_discussion_space.id }
   end
   
   factory :discussion_by_wow_character, :parent => :discussion do

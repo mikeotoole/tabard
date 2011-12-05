@@ -10,7 +10,7 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
-      :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
 
 ###
 # Associations
@@ -27,7 +27,7 @@ class UserProfile < ActiveRecord::Base
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :deleted => false}, :dependent => :destroy
+  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
   has_many :folders, :dependent => :destroy
   has_many :pages
   has_many :discussions
@@ -52,6 +52,7 @@ class UserProfile < ActiveRecord::Base
 # Validators
 ###
   validates :display_name, :presence => true, :uniqueness => true
+  validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
@@ -91,8 +92,9 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
   ###
   def available_character_proxies(community, game = nil)
+    return self.character_proxies unless community
     available_character_proxies = Array.new
-    community_profile = self.community_profiles.where{:communtiy == community}.first
+    community_profile = self.community_profiles.where{community_id == community.id}.first
     available_character_proxies.concat community_profile.approved_character_proxies if community_profile
     available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game != game} if game
     available_character_proxies
@@ -109,7 +111,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
   end
 
   ###
@@ -123,7 +125,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id or not proxy.default_character) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.is_default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
     proxies = proxies.compact
     raise RuntimeError.new("too many default characters exception") if proxies.count > 1
     proxies.first
@@ -159,6 +161,32 @@ class UserProfile < ActiveRecord::Base
      self.roles.include?(community.member_role)
     else
      false
+    end
+  end
+
+  ###
+  # This method checks if the user has a pending application with the community.
+  # [Args]
+  #   * +some_community+ The community to check membership of.
+  # [Returns] True if has pending application of the community, false otherwise.
+  def application_pending?(community)
+    if community
+     self.community_applications.where{(community_id == community.id) & (status == "Pending")}.exists?
+    else
+     false
+    end
+  end
+
+  ###
+  # This method determines when this user joined a community
+  # [Args]
+  #   * +community+ The community to check.
+  # [Returns] nil if this user is not a member of the community, otherwise it will return the join date of the user.
+  def joined_community_on(community)
+    if self.is_member?(community)
+      return self.community_profiles.find_by_community_id(community).created_at
+    else
+      return nil
     end
   end
 

@@ -1,0 +1,33 @@
+%h1 My Roster Assigments
+%p
+  This page keeps track of which of your characters are members of
+  %strong= current_community.name
+
+%table
+  %thead
+    %tr
+      %th
+      %th My Characters
+      %th.actions
+  - if @roster_assignments.size > 0
+    %tbody
+      - @roster_assignments.each do |roster_assignment|
+        %tr{ roster_assignment.is_pending ? { :class => 'dim' } : {} }
+          %td{ :class => 'avatar cinch' }
+            = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
+          %td.character
+            %h3= roster_assignment.character_proxy_name
+            = roster_assignment.is_pending ? 'is pending approval' : 'is a member'
+          %td.actions
+            %div
+              - if  can? :mine, RosterAssignment or can? :delete, roster_assignment
+                = link_to 'Remove', roster_assignment, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => "Remove #{roster_assignment.character_proxy_name} from the roster"
+  %tfoot
+    %tr
+      %td
+      %td
+        - if @avalible_characters.size > 0
+          = simple_form_for @roster_assignment, :wrapper => false do |f|
+            .select= f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @avalible_characters.collect{|c| c = [raw(image_tag(c.avatar_url(:icon), :class => 'avatar')) + "#{c.name} — #{c.game_name}", c.id]}
+            %button{ :type => 'submit' } Add character
+      %td

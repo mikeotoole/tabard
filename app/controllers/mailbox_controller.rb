@@ -12,7 +12,7 @@ class MailboxController < ApplicationController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
 
   # GET /mail/inbox(.:format)
   def inbox

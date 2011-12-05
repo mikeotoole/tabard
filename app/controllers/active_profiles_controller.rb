@@ -7,7 +7,7 @@
 ###
 class ActiveProfilesController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
 
   #This creates the active profile, if possible.
@@ -21,7 +21,7 @@ class ActiveProfilesController < ApplicationController
         activate_profile(params[:id], params[:type])
         active_profile_name = profile.name
         add_new_flash_message("Profile <em>#{active_profile_name}</em> activated.")
-        redirect_to previous_page
+        redirect_to request.referer ? request.referer : root_path
         return
       else
         add_new_flash_message("Error setting active profile","alert")

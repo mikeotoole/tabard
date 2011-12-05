@@ -1,0 +1,38 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Author
+      %th Last Reply
+      %th Comments?
+      %th.actions
+  %tbody
+    - announcement_space.discussions.each do |announcement|
+      %tr
+        %td= link_to announcement.name, announcement_url(announcement)
+        %td= announcement.poster.name
+        %td
+          - if announcement.comments.size > 0
+            = announcement.comments.last.poster.name
+        %td
+          - if not announcement.is_locked
+            = announcement.number_of_comments
+          - else
+            Closed
+        %td.actions
+          %div
+            - if announcement.is_locked
+              - if (can? :lock, announcement)
+                -# TODO Doug - if allowed, link to unlock announcement
+            - else
+              - if (can? :unlock, announcement)
+                -# TODO Doug - if allowed, link to lock announcement
+            - if (can? :update, announcement)
+              = link_to 'Edit', edit_announcement_path(announcement), :meta => 'Edit announcement', :class => 'edit'
+            - if (can? :destroy, announcement)
+              = link_to 'Destroy', announcement_path(announcement), :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 5 }
+        - if (can? :create, announcement_space.discussions.new)
+          = link_to 'New Announcement', new_announcement_space_announcement_path(announcement_space), :class => 'button primary'

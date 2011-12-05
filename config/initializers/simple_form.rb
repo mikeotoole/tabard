@@ -5,7 +5,7 @@ SimpleForm.setup do |config|
   # config.components = [ :placeholder, :label_input, :hint, :error ]
 
   # Default tag used on hints.
-  config.hint_tag = :rt
+  config.hint_tag = :dfn
 
   # CSS class to add to all hint tags.
   # config.hint_class = :hint

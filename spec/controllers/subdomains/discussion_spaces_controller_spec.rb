@@ -36,12 +36,12 @@ describe Subdomains::DiscussionSpacesController do
       space
       sign_in user
       get :index
-      assigns(:discussion_spaces).should eq([space])
+      assigns(:discussion_spaces).should have(community.discussion_spaces.count).things
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -60,7 +60,7 @@ describe Subdomains::DiscussionSpacesController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => space
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -79,11 +79,17 @@ describe Subdomains::DiscussionSpacesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end 
     
     it "should respond forbidden when not a member" do
       sign_in non_member
+      get :new
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member without permissions" do
+      sign_in user
       get :new
       response.should be_forbidden
     end
@@ -98,7 +104,7 @@ describe Subdomains::DiscussionSpacesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => space.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -107,7 +113,7 @@ describe Subdomains::DiscussionSpacesController do
       response.should be_forbidden
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       sign_in admin
       get :edit, :id => anouncment_space.id.to_s
       response.should be_forbidden
@@ -150,16 +156,16 @@ describe Subdomains::DiscussionSpacesController do
       end
     end
     
-    it "should not allow is_announcement to be set to true" do
-      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement => true)
-      assigns(:discussion_space).is_announcement.should eq(false)
+    it "should not allow is_announcement_space to be set to true" do
+      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement_space => true)
+      assigns(:discussion_space).is_announcement_space.should eq(false)
     end
   end
   
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :discussion_space => attributes_for(:discussion_space)
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -204,7 +210,7 @@ describe Subdomains::DiscussionSpacesController do
       end
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       put :update, :id => anouncment_space.id, :discussion_space => {:name => "New Name"}
       response.should be_forbidden
     end
@@ -213,7 +219,7 @@ describe Subdomains::DiscussionSpacesController do
   describe "PUT update" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :update, :id => space.id, :discussion_space => {:name => "New Name"}
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -240,7 +246,7 @@ describe Subdomains::DiscussionSpacesController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => space.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
@@ -249,7 +255,7 @@ describe Subdomains::DiscussionSpacesController do
       response.should be_forbidden
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       sign_in admin
       delete :destroy, :id => anouncment_space.id.to_s
       response.should be_forbidden

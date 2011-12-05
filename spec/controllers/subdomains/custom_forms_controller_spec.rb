@@ -21,20 +21,30 @@ describe Subdomains::CustomFormsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
   describe "GET show" do
-    it "assigns the requested custom_form as @custom_form when authenticated as a user" do
-      sign_in user
-      get :show, :id => custom_form.id.to_s
-      assigns(:custom_form).should eq(custom_form)
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get :show, :id => custom_form.id.to_s
+        assert_response :missing
+      end
     end
-    
-    it "should redirected to new user session path when not authenticated as a user" do
-      get :show, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_path)
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin
+        get :show, :id => custom_form.id.to_s
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get :show, :id => custom_form.id.to_s
+        assert_response :missing
+      end
     end
   end
 
@@ -47,7 +57,7 @@ describe Subdomains::CustomFormsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -60,7 +70,7 @@ describe Subdomains::CustomFormsController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get :edit, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -83,12 +93,12 @@ describe Subdomains::CustomFormsController do
       it "redirects to the created custom_form" do
         sign_in admin
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(custom_form_path(2))
+        response.should redirect_to(edit_custom_form_url(2))
       end
       
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(new_user_session_path)
+        response.should redirect_to(new_user_session_url)
       end
     end
 
@@ -103,7 +113,7 @@ describe Subdomains::CustomFormsController do
       end
 
       it "re-renders the 'new' template" do
-        response.should render_template("new")
+        response.should render_template(:new)
       end
     end
   end
@@ -126,7 +136,7 @@ describe Subdomains::CustomFormsController do
 
       it "redirects to the custom_form" do
         put :update, :id => custom_form.id, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(custom_form)
+        response.should redirect_to(edit_custom_form_url(custom_form))
       end
     end
 

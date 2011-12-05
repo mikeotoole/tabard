@@ -10,7 +10,7 @@ class Subdomains::PagesController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_page, :only => [:new, :create]
@@ -58,7 +58,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # DELETE /pages/:id(.:format)
   def destroy
-    add_new_flash_message('Page was successfully deleted.') if @page.destroy
+    add_new_flash_message('Page was successfully removed.') if @page.destroy
     respond_with(@page, :location => page_space_url(@page.page_space))
   end
 

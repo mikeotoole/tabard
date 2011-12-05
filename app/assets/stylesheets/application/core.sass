@@ -1,3 +1,5 @@
+// Flash Messages
+
 #flash
   left: 0
   margin: -5px 0 20px
@@ -146,7 +148,299 @@
           +box_shadow(0 0 15px rgba(#000,.4))
           +opacity(.9)
 
-#mask
+
+// Forms
+    
+button,
+.button,
+#body button,
+#body .button
+  border: 1px solid
+  +border_radius(5)
+  display: inline-block
+  height: 30px
+  line-height: 30px !important
+  margin: 0 5px 0 0
+  padding: 0 15px
+  position: relative
+  text-decoration: none
+  +transition(box-shadow .2s linear)
+  
+#body
+
+  label
+    font-family: DinMedium, sans
+  
+  input,
+  textarea
+    position: relative
+    z-index: 2
+  
+  input[type="file"]
+    display: block
+    margin: 0 0 5px
+  
+  input[type="url"],
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  textarea
+    +border_radius(5)
+    border: 1px solid
+    display: block
+    line-height: 20px
+    margin: 5px 0 0
+    padding: 5px 10px
+    +transition(box-shadow .2s linear)
+    width: 410px
+  
+  input[type="checkbox"],
+  input[type="radio"]
+    height: 1px
+    margin: 10px 0 0 5px
+    position: absolute
+    width: 1px
+    z-index: 1
+    
+    + label
+      display: block
+      line-height: 24px
+      margin: 0 0 5px
+      position: relative
+      text-indent: 34px
+      z-index: 3
+      
+      &:before
+        border: 1px solid
+        +border_radius(5)
+        content: ''
+        height: 24px
+        left: 0
+        position: absolute
+        top: 0
+        width: 24px
+    
+    &:checked
+
+      + label:after
+        border: 1px solid
+        +border_radius(20)
+        content: ''
+        height: 14px
+        left: 5px
+        position: absolute
+        top: 5px
+        width: 14px
+        z-index: 2
+
+  dfn.hint
+    display: block
+    font: 12px DinMedium, sans
+    padding: 5px
+    
+    &:before
+      content: '\2014\00A0'
+
+  div.select
+    float: left
+    margin: 0 5px 0 0
+    width: 435px
+      
+  .select
+    height: 55px
+    position: relative
+    
+    >label
+      padding-bottom: 5px
+  
+    ul
+      +border_radius(5)
+      border: 1px solid
+      display: block
+      height: 0
+      line-height: 30px
+      overflow: hidden
+      padding: 30px 1px 1px
+      position: absolute
+      +transition(box-shadow .2s linear)
+      width: 428px
+      z-index: 9
+          
+      &:before
+        border: 5px solid transparent
+        content: ''
+        height: 0
+        position: absolute
+        right: 10px
+        top: 13px
+        width: 0
+        z-index: 10
+      
+      li
+        display: inline
+        padding: 0
+        position: static
+        
+        label
+          +border_radius(5)
+          border-top: 1px solid
+          display: none
+          font-family: DinMedium, sans
+          line-height: 20px
+          margin: 1px 0 0
+          min-height: 20px
+          padding: 5px 10px
+          text-indent: 0
+          
+          &:before,
+          &:after
+            display: none
+        
+          .avatar
+            border: 1px solid
+            +border_radius(3)
+            float: left
+            margin: -1px 6px 3px -6px
+        
+        img.avatar
+          width: 20px
+        
+        input
+          left: -500em
+          position: absolute
+          
+          &:checked + label
+            background: transparent
+            border-top-color: transparent
+            display: block
+            font-family: DinLight, sans
+            height: 28px
+            line-height: 28px
+            overflow: hidden
+            padding: 0 30px 0 10px
+            position: absolute
+            top: 0
+            width: 388px
+            z-index: 3
+        
+            .avatar
+              margin: 3px 5px 3px -5px
+  
+      &:hover
+        height: auto
+        z-index: 11
+        
+        &:before
+          z-index: 12
+      
+        li
+        
+          label
+            display: block
+            position: static
+      
+    .day ul
+      left: 170px
+      width: 80px
+      
+      input:checked + label
+        width: 40px
+    
+    .month ul
+      left: 0
+      width: 150px
+      
+      input:checked + label
+        width: 110px
+    
+    .year ul
+      left: 270px
+      width: 100px
+      
+      input:checked + label
+        width: 60px
+  
+  fieldset
+    
+    &.full
+      
+      input[type="url"],
+      input[type="email"],
+      input[type="password"],
+      input[type="text"],
+      textarea
+        width: 880px
+    
+    ol
+      padding: 0
+      
+      li
+        clear: both
+        list-style: none
+        margin: 15px 0
+
+        >label,
+        .select >label
+        
+          &:after
+            content: '\A'
+            white-space: pre
+        
+        &:before
+          display: none
+        
+        &.short
+          
+          input
+            width: 50px
+        
+        &.affected
+          display: none
+          
+          .input
+            display: none
+  
+  .field_with_errors
+      
+    > input,
+    > textarea
+      border-color: #A43D33 !important
+    
+    > mark.error
+      background: #A43D33
+      +border_radius(6,6,5,5)
+      color: #fff
+      display: block
+      font-family: DinMedium, sans
+      margin: -32px 0 0
+      padding: 40px 10px 5px
+      position: relative
+      width: 412px
+      z-index: 1
+  
+    &.select
+      height: 85px
+      
+      ul
+        border-color: #A43D33
+        
+      > .options
+        margin-bottom: -55px
+      
+      > mark.error
+        margin-top: 30px
+      
+    &.date
+      
+      > mark.error
+        margin-top: 0
+        width: 354px
+
+
+// pop-up windows
+
+#mask,
+.wmd-prompt-background
   background: #000
   bottom: 0
   left: 0
@@ -156,7 +450,8 @@
   top: 0
   z-index: 100
 
-#modal
+#modal,
+.wmd-prompt-dialog
   background: #eee
   +bg_gradient(#ddd,#fff)
   border: 1px solid #fff
@@ -171,24 +466,63 @@
   width: 498px
   z-index: 101
   
-  h1
+  h1,
+  .wmd-prompt-question p b
     color: #367BB1
+    display: block
     font: 20px DinMedium, serif
     margin: 20px 20px 0
     padding: 0
+    
+  .wmd-prompt-question p b
+    margin: 0 0 -20px
   
   p
     color: #4B385C
     font: 16px DinLight, sans
     margin: 20px 20px 30px
     padding: 0
+    
+    a
+      +border_radius(3)
+      font-family: DinMedium, sans
+      padding: 0 3px
+      text-decoration: underline
+      
+      &:hover
+        background: #4B385C
+        color: #fff
+        text-decoration: none
+  
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"]
+    background: #eee
+    +bg_gradient(#ddd,#eee)
+    +border_radius(5)
+    +box_shadow(0 0 3px #999)
+    border: 1px solid #fff
+    display: block
+    line-height: 30px
+    margin: 0 0 5px -10px
+    padding: 0 10px
+    +transition(box-shadow .2s linear)
+    width: 456px
+    
+    &:focus
+      background: #d7eaf8
+      +box_shadow(0 0 8px #2d7cb4)
+      +bg_gradient(#f2f8fd,#d7eaf8)
+      color: #09558a
   
   .actions
     bottom: 10px
     position: absolute
     right: 10px
     
-    button
+    button,
+    input[type="button"]
       +bg_gradient(#d24723,#792b28)
       border: 1px solid #eee
       +border_radius(5)
@@ -221,6 +555,14 @@
         &:hover
           +bg_gradient(#999,#777)
           color: #fff
+
+  &.prompt
+    padding: 0 0 20px
+    
+.wmd-prompt-dialog
+  
+  form
+    padding: 0 0 40px
 
 body.fluid
 

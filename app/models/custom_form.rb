@@ -9,7 +9,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :instructions, :thankyou, :published
+  attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes
 
 ###
 # Associations
@@ -49,7 +49,16 @@ class CustomForm < ActiveRecord::Base
     return self.community.name if self.community
     ""
   end
+
+  ###
+  # This method checks to see if this custom form is an application form for a community.
+  # [Returns] True is this form is the community application form, otherwise false.
+  ###
+  def application_form?
+    self.community.community_application_form == self
+  end
 end
+
 
 # == Schema Information
 #
@@ -59,7 +68,7 @@ end
 #  name         :string(255)
 #  instructions :text
 #  thankyou     :string(255)
-#  published    :boolean         default(FALSE)
+#  is_published :boolean         default(FALSE)
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime

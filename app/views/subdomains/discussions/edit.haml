@@ -3,7 +3,7 @@
 %h1 Editing Discussion
 
 .full
-  = simple_form_for [@discussion_space, @discussion] do |f|
+  = simple_form_for [@discussion_space, @discussion], :html => {:novalidate => true} do |f|
     = render 'fields', :f => f
     %p.submit
       = f.button :submit, 'Save Changes'

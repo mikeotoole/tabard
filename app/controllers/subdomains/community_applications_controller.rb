@@ -11,7 +11,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
   before_filter :ensure_current_user_is_member, :only => [:index]
@@ -22,7 +22,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications.json
   def index
     authorize! :index, CommunityApplication
-    respond_with(@community_applications)
+    @pending_community_applications = @community_applications.where{status == "Pending"}.order{ created_at.desc }
+    @other_community_applications = @community_applications.where{status != "Pending"}.order{ status.asc }.order{ created_at.desc }
+    @community_applications = @community_applications.order{ status.asc }.order{ created_at.desc }
+    respond_with @community_applications
   end
 
   # GET /community_applications/1
@@ -33,32 +36,26 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new
   # GET /community_applications/new.json
   def new
-  end
-
-  # GET /community_applications/1/edit
-  def edit
-    respond_with(@community_application)
+    if current_user.is_member? current_community
+      add_new_flash_message "You are already a member of this community.", 'notice'
+      redirect_to my_roster_assignments_path
+    elsif current_user.application_pending? current_community
+      add_new_flash_message "You have already applied to this community. Your application is pending review.", 'notice'
+      redirect_to root_url(:subdomain => current_community.subdomain)
+    else
+      @community_application.submission.custom_form.questions.each do |question|
+        @community_application.submission.answers.new(:question_id => question.id)
+      end
+    end
   end
 
   # POST /community_applications
   # POST /community_applications.json
   def create
     if @community_application.save
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+      add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with(@community_application)
-  end
-
-  # PUT /community_applications/1
-  # PUT /community_applications/1.json
-  def update
-    if params[:community_application]
-      params[:community_application][:character_proxy_ids] ||= []
-      if @community_application.update_attributes(params[:community_application])
-        # TODO Doug/Joe Determine this success message, if applicable. -JW
-      end
-    end
-    respond_with(@community_application)
+    respond_with @community_application, :location => root_url(:subdomain => current_community.subdomain), :error_behavior => :list
   end
 
   # DELETE /community_applications/1
@@ -67,7 +64,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.withdraw
       # TODO Doug/Joe Determine this success message, if applicable. -JW
     end
-    respond_with(@community_application)
+    respond_with @community_application
   end
 
   # This accepts the specified application.
@@ -109,6 +106,10 @@ protected
       params[:community_application][:character_proxy_ids] ||= []
     end
     @community_application = current_community.community_applications.new(params[:community_application])
-    @community_application.prep(current_user.user_profile, current_community.community_application_form)
+    @community_application.user_profile = current_user.user_profile
+    @community_application.submission ||= Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
+    @community_application.submission.custom_form = current_community.community_application_form
+    @community_application.submission.user_profile = current_user.user_profile
+    #@community_application.prep(current_user.user_profile, current_community.community_application_form)
   end
 end

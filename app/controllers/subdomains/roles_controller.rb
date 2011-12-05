@@ -11,7 +11,7 @@ class Subdomains::RolesController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_role, :except => [:new, :create]
   before_filter :create_role, :only => [:new, :create]
   before_filter 

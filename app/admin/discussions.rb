@@ -9,19 +9,17 @@ ActiveAdmin.register Discussion do
     if comment.comments.empty?
       comment.destroy
     else
-      comment.has_been_deleted = true;
+      comment.is_removed = true;
       comment.save
     end
-    redirect_to previous_page
+    redirect_to request.referer ? request.referer : admin_dashboard_url
   end
 
   filter :id
   filter :name
   filter :body
   filter :created_at
-  filter :comments_enabled, :as => :select
-  filter :has_been_locked, :as => :select
-  filter :is_archived, :as => :select
+  filter :is_locked, :as => :select
 
   index do
     column "View" do |discussion|
@@ -54,7 +52,7 @@ ActiveAdmin.register Discussion do
             link_to comment.poster.name, [:admin, comment.poster]
           end
           column :number_of_comments
-          column :has_been_deleted
+          column :is_removed
           column "Commentable Body" do |comment|
             comment.commentable_body
           end

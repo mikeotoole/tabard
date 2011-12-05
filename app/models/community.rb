@@ -11,7 +11,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :accepting_members, :email_notice_on_application
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster
 
 ###
 # Associations
@@ -20,16 +20,19 @@ class Community < ActiveRecord::Base
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications
+  has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :roles
+
   has_many :supported_games, :dependent => :destroy
-  has_many :games, :through => :supported_games
   has_many :game_announcement_spaces, :through => :supported_games
+
   has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles
-  has_many :user_profiles, :through => :community_profiles
+  has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
+  has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => false}, :dependent => :destroy
-  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement => true}, :dependent => :destroy
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
+  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
@@ -40,28 +43,46 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
 
 ###
 # Validators
 ###
-  validates :name, :uniqueness => { :case_sensitive => false },
-                   :presence => true,
-                   :exclusion => { :in => %w(www wwW wWw wWW Www WwW WWw WWW), :message => "%{value} is not available" },
-                   :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
+  validates :name,  :presence => true,
+                    :uniqueness => { :case_sensitive => false },
+                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
   validates :name, :community_name => true, :on => :create
+  validates :name, :not_profanity => true
+  validates :name, :not_restricted_name => {:all => true}
   validate :can_not_change_name, :on => :update
-  validates :slogan, :presence => true
-
   validates :admin_profile, :presence => true
 
 ###
 # Public Methods
 ###
 
+  ###
+  # This method checks if a given user can apply to the community
+  # [Args]
+  #   * +user+ The user to check
+  # [Returns] True if the community can receive an application from the user, false otherwise
+  def can_receive_application_from?(user)
+    if user
+      self.is_accepting_members and !user.is_member? self and !user.application_pending? self
+    else
+      true
+    end
+  end
+
 ###
 # Instance Methods
 ###
+
+
+  def games
+    self.supported_games.collect { |a| a.game }
+  end
+
   ###
   # This method promotes a user to a member, doing all of the business logic for you.
   # [Args]
@@ -148,7 +169,7 @@ protected
   # This method creates the default member role.
   ###
   def setup_member_role
-    mr = self.build_member_role(:name => "Member", :system_generated => true)
+    mr = self.build_member_role(:name => "Member", :is_system_generated => true)
     mr.community = self
     mr.save
     self.update_attribute(:member_role, mr)
@@ -157,16 +178,48 @@ protected
   ###
   # _after_create_
   #
-  # This method creates the default member role.
+  # This method creates the community application form with some default questions.
   ###
   def setup_community_application_form
-    ca = self.build_community_application_form(:name => "Application Form",
-        :instructions => "Fill this out please.",
-        :thankyou => "Thanks!",
-        :published => true)
+    ca = self.build_community_application_form(
+      :name => "Application Form",
+      :instructions => "You want to join us? Awesome! Please answer these short questions, and don't forget to let us know if someone recommended you.",
+      :thankyou => "Your submission has been sent. Thank you!",
+      :is_published => true)
     ca.community = self
+
+    # First Question
+    question = SingleSelectQuestion.create(
+      :style => "select_box_question",
+      :body => "How often do you play?",
+      :is_required => true)
+    question.custom_form = ca
+    question.save
+    PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "10-20 hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "20+ hours", :select_question_id => question.id)
+
+    # Second Question
+    question = TextQuestion.create(
+      :style => "long_answer_question",
+      :body => "Why do you want to join?",
+      :explanation => "Let us know why we should game together.",
+      :is_required => true)
+    question.custom_form = ca
+    question.save
+
+    # Third Question
+    question = TextQuestion.create(
+      :style => "short_answer_question",
+      :body => "How did you hear about us?",
+      :explanation => "This is a short answer question",
+      :is_required => false)
+    question.custom_form = ca
+    question.save
+
     ca.save
-    self.update_attribute(:community_application_form, ca)
   end
 
   ###
@@ -188,7 +241,7 @@ protected
       space = DiscussionSpace.new(:name => "Community Announcements")
       if space
         space.community = self
-        space.is_announcement = true
+        space.is_announcement_space = true
         space.save!
         self.community_announcement_space = space
         self.save
@@ -197,7 +250,21 @@ protected
       end
     end
   end
+
+  ###
+  # _after_create_
+  #
+  # The method creates a default community discussion space
+  ###
+  def setup_default_community_items
+    self.member_role.permissions.create(subject_class: "PageSpace", permission_level: "View")
+    self.member_role.permissions.create(subject_class: "Page", permission_level: "Delete")
+    community_d_space = self.discussion_spaces.create(name: "Community")
+    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
+    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+  end
 end
+
 
 
 # == Schema Information
@@ -207,15 +274,16 @@ end
 #  id                              :integer         not null, primary key
 #  name                            :string(255)
 #  slogan                          :string(255)
-#  accepting_members               :boolean         default(TRUE)
+#  is_accepting_members            :boolean         default(TRUE)
 #  email_notice_on_application     :boolean         default(TRUE)
 #  subdomain                       :string(255)
 #  created_at                      :datetime
 #  updated_at                      :datetime
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
-#  protected_roster                :boolean         default(FALSE)
+#  is_protected_roster             :boolean         default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
+#  is_public_roster                :boolean         default(TRUE)
 #
 

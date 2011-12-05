@@ -11,7 +11,7 @@ class Subdomains::PermissionsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
   before_filter :load_and_authorize_permissions_from_role, :only => [:index]
   load_and_authorize_resource :role, :except => [:index]

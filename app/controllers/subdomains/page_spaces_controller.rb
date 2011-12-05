@@ -10,13 +10,12 @@ class Subdomains::PageSpacesController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   before_filter :load_page_space, :except => [:new, :create, :index]
   before_filter :create_page_space, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
@@ -55,7 +54,7 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # DELETE /page_spaces/:id(.:format)
   def destroy
-    add_new_flash_message('Page space was successfully deleted.') if @page_space.destroy
+    add_new_flash_message('Page space was successfully removed.') if @page_space.destroy
     respond_with(@page_space)
   end
 

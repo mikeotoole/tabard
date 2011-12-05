@@ -2,4 +2,10 @@
 
 %h1 Page Spaces
 
-= render "table", :page_spaces => @page_spaces
+- if @page_spaces.any?
+  = render "table", :page_spaces => @page_spaces
+
+-else
+  %p There are no page spaces.
+  - if can? :create, current_community.page_spaces.new
+    %p= link_to 'New Space', new_page_space_path, :class => 'button'

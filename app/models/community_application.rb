@@ -24,6 +24,7 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :submission
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
+  has_many :comments, :as => :commentable, :dependent => :destroy
 
 ###
 # Callbacks
@@ -49,6 +50,13 @@ class CommunityApplication < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :custom_form, :to => :submission, :allow_nil => true
+  delegate :answers, :to => :submission, :allow_nil => true, :prefix => true
+  delegate :instructions, :to => :custom_form, :allow_nil => true, :prefix => true
+  delegate :thankyou, :to => :custom_form, :allow_nil => true, :prefix => true
+  delegate :questions, :to => :custom_form, :allow_nil => true, :prefix => true
+  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
+  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :avatar_url, :to => :user_profile, :prefix => true
 
   ###
   # _before_create_
@@ -68,7 +76,7 @@ class CommunityApplication < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be.
     if self.community.email_notice_on_application
       message = Message.new(:subject => "Application Submitted for #{self.community.name}", :body => "#{self.user_profile.name} has submitted an application.", :to => [self.community.admin_profile_id])
-      message.system_sent = true
+      message.is_system_sent = true
       message.save
     end
   end
@@ -78,16 +86,20 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def accept_application
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Accepted")
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    self.character_proxies.each do |proxy|
-      community_profile.approved_character_proxies << proxy
-    end
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Accepted", :body => "Your application to #{self.community.name} has been accepted.", :to => [self.user_profile.id])
-    message.system_sent = true
+    message.is_system_sent = true
     message.save
+    self.character_proxies.each do |proxy|
+      if self.community.is_protected_roster
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
+      else
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
+      end
+    end
   end
 
   ###
@@ -95,11 +107,11 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def reject_application
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected", :body => "Your application to #{self.community.name} has been rejected.", :to => [self.user_profile.id])
-    message.system_sent = true
+    message.is_system_sent = true
     message.save
   end
 
@@ -108,12 +120,12 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def withdraw
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Withdrawn")
   end
 
   # This method returns true if this application's status is pending, otherwise false
-  def pending?
+  def is_pending?
     self.status == "Pending"
   end
 
@@ -140,9 +152,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.build_submission unless self.submission
-    self.submission.custom_form = custom_form
-    self.submission.user_profile = user_profile
+    self.submission = Submission.create(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
   end
 
 protected

@@ -1,0 +1,35 @@
+%p#notice= notice
+
+%p
+  = image_tag(@swtor_character.avatar_url)
+%p
+  %b Game:
+  = @swtor_character.swtor.name
+%p
+  %b Name:
+  = @swtor_character.name
+%p
+  %b Class:
+  = @swtor_character.char_class
+%p
+  %b Advanced Class:
+  - if not @swtor_character.advanced_class?
+    = "None"
+  - else
+    = @swtor_character.advanced_class
+%p
+  %b Species:
+  = @swtor_character.species
+%p
+  %b Level:
+  = @swtor_character.level
+%p
+  %b About:
+  = @swtor_character.about
+- if @swtor_character.default
+  %p
+    Default Character For
+    = @swtor_character.swtor.name
+
+- if can? :edit, @swtor_character
+  = link_to 'Edit', edit_swtor_character_path(@swtor_character)

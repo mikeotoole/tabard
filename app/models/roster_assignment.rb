@@ -12,6 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   belongs_to :community_profile
   belongs_to :character_proxy
+  has_one :user_profile, :through => :community_profile
 
 ###
 # Validators
@@ -23,8 +24,12 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :user_profile, :to => :community_profile, :prefix => true
-  delegate :community_admin_profile_id, :to => :community_profile
+  delegate :user_profile, :user_profile_id, :to => :community_profile, :prefix => true, :allow_nil => true
+  delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
+  delegate :name, :avatar_url, :to => :character_proxy, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :avatar_url, :to => :user_profile, :prefix => true
+  delegate :name, :to => :character_proxy, :prefix => true
 
 ###
 # Callbacks
@@ -34,17 +39,23 @@ class RosterAssignment < ActiveRecord::Base
   # This method approves this roster assignment, if it is pending.
   # [Returns] True if this was approved, otherwise false.
   def approve
-    return false unless self.pending
-    self.update_attribute(:pending, false)
-    # TODO Mike, Send message to owner -JW
+    return false unless self.is_pending
+    self.update_attribute(:is_pending, false)
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile.id])
+    message.is_system_sent = true
+    message.save
   end
 
   # This method rejects this roster assignment, if it is pending.
   # [Returns] True if this was rejected, otherwise false.
   def reject
-    return false unless self.pending
+    return false unless self.is_pending
     self.destroy
-    # TODO Mike, Send message to owner -JW
+    # TODO Doug/Bryan, Determine what message content should be.
+    message = Message.new(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile.id])
+    message.is_system_sent = true
+    message.save
   end
 
 ###
@@ -59,10 +70,10 @@ class RosterAssignment < ActiveRecord::Base
   # [Returns] False if an error occured, otherwise true.
   ###
   def ensure_proper_pending_status
-    if self.community_profile.community.protected_roster
-      self.pending = true
+    if self.community_profile.community.is_protected_roster
+      self.is_pending = true
     else
-      self.pending = false
+      self.is_pending = false
     end
     true
   end
@@ -75,7 +86,7 @@ end
 #  id                   :integer         not null, primary key
 #  community_profile_id :integer
 #  character_proxy_id   :integer
-#  pending              :boolean         default(TRUE)
+#  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
 #

@@ -4,7 +4,7 @@
 %nav
   %h1
     = link_to "Discussion Spaces", discussion_spaces_path
-    - if @discussion.discussion_space.game
+    - if @discussion.discussion_space_game
       %rt= " — #{@discussion.discussion_space.game_name}"
     = link_to @discussion.discussion_space_name, @discussion.discussion_space
     %strong= @discussion.name
@@ -13,12 +13,13 @@
   %p
     = @discussion.body
 
-- if @discussion.comments or (@discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new))
+- if @discussion.comments.size > 0 or can? :comment, @discussion
   %aside.comments
-    - if @discussion.comments
+    - if @discussion.comments.size > 0
       %ol
         - @discussion.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
-    - if @discussion.comments_enabled and !@discussion.has_been_locked and (can? :create, @discussion.comments.new)
-      %h3 Post a New Comment
-      = render 'subdomains/comments/form', :comment => @discussion.comments.new
+    - if can? :comment, @discussion
+      #newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @discussion.comments.new

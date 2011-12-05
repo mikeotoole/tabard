@@ -15,10 +15,10 @@ module CommentHelper
   ###
   def comment_class_names(comment)
     class_names = Array.new()
-    class_names << 'deleted' if comment.has_been_deleted
-    class_names << 'locked' if comment.has_been_locked
+    class_names << 'removed' if comment.is_removed
+    class_names << 'locked' if comment.is_locked
     class_names << 'edited' if comment.has_been_edited
-    class_names << 'owned' if comment.user_profile.id == current_user.user_profile.id
+    class_names << 'owned' if comment.user_profile_id == current_user.user_profile_id
     class_names
   end
 
@@ -29,9 +29,9 @@ module CommentHelper
   # [Returns] a string of the action
   ###
   def last_action_word(comment)
-    if comment.has_been_deleted
-      'deleted'
-    elsif comment.has_been_edited
+    if comment.is_removed
+      'removed'
+    elsif comment.is_removed
       'edited'
     else
       'posted'
@@ -46,7 +46,7 @@ module CommentHelper
   ###
   def as_unlocked(comment)
     proxy = comment
-    proxy.has_been_locked = false
+    proxy.is_locked = false
     proxy
   end
 end

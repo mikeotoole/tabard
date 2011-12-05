@@ -4,6 +4,7 @@
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
     = stylesheet_link_tag "subdomains/community"
+    = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
 
@@ -19,43 +20,47 @@
         .menu
           %li
             = link_to 'Dashboard', actual_community_url(@community)
-          %li
-            = link_to 'Wiki', page_spaces_path
-            - if @community.page_spaces.size
-              %ul
-                - @community.page_spaces.each do |space|
-                  %li= link_to space.name, space
-          %li
-            = link_to 'Discussions', discussion_spaces_path
-            - if @community.discussion_spaces.size
-              %ul
-                - @community.discussion_spaces.each do |space|
-                  %li= link_to space.name, space
+          - if can? :index, PageSpace
+            %li
+              = link_to 'Wiki', page_spaces_path
+              - if @community.page_spaces.any?
+                %ul
+                  - @community.page_spaces.each do |space|
+                    %li= link_to space.name, space if space.persisted?
+          - if can? :index, DiscussionSpace
+            %li
+              = link_to 'Discussions', discussion_spaces_path
+              - if @community.discussion_spaces.any?
+                %ul
+                  - @community.discussion_spaces.each do |space|
+                    %li= link_to space.name, space if space.persisted?
           %li
             -#TODO Doug - Hookup link
-            = link_to 'Announcements', '#'
+            = link_to 'Announcements', announcement_spaces_url
             - if @community.announcement_spaces.size
               %ul
                 -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
-                  %li= link_to (space.game ? space.game.name : space.name), space
-          %li
-            -#TODO Doug - Hookup link
-            = link_to 'Members', '#'
-          - if current_user and current_user.communities.include?(current_community)
-            %li{ :class => 'special settings' }
-              -#TODO Doug - Hookup link
-              = link_to 'Manage', '#'
-              %ul
-                %li= link_to 'Community Settings', edit_community_path(current_community)
-                %li= link_to 'Applications', community_applications_url
-                %li= link_to 'Forms', custom_forms_url
-                -#%li= link_to 'Roster', edit_roster_url
-                %li= link_to 'Permissions', roles_url
+                  %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
+          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.size > 1 and can? :index, CustomForm
+            %li
+              = link_to 'Forms', custom_forms_path
+          - if can? :index, RosterAssignment
+            %li
+              = link_to 'Members', roster_assignments_path
+          - if user_signed_in? and current_user.communities.include?(current_community)
+            - if management_navigation_items.size > 0
+              %li{ :class => 'special settings' }
+                = link_to 'Manage', '#'
+                %ul
+                  - management_navigation_items.each do |item|
+                    %li= link_to item[:title], item[:link], (item[:meta] and item[:meta] > 0 ? { :meta => item[:meta] } : {})
           - else
             %li{ :class => 'special signup' }
-              -#TODO Doug - Hookup link
-              = link_to 'Apply Now', new_community_application_path
+              - if current_community.can_receive_application_from? current_user
+                = link_to 'Apply Now', new_community_application_path
+              - elsif user_signed_in? and current_user.application_pending? current_community
+                %a Application Pending
 
       #body
         = yield

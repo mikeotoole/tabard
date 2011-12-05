@@ -78,13 +78,13 @@ describe CommunityProfile do
       it "approved_character_proxies should be all the approved proxies" do
         profile_with_characters.approved_character_proxies.each do |character_proxy|
           character_proxy.roster_assignments.size.should eq(1)
-          character_proxy.roster_assignments.first.pending.should be_false
+          character_proxy.roster_assignments.first.is_pending.should be_false
         end
       end
       it "pending_character_proxies should be all the pending proxies" do
         profile_with_characters.pending_character_proxies.each do |character_proxy|
           character_proxy.roster_assignments.size.should eq(1)
-          character_proxy.roster_assignments.first.pending.should be_true
+          character_proxy.roster_assignments.first.is_pending.should be_true
         end
       end
       it "character_proxies should be all the proxies" do

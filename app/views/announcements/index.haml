@@ -6,37 +6,37 @@
       %table
         %thead
           %tr
-            %th
+            %th.check
             %th Announcement
             %th Community
             %th Date
         %tbody
-          - current_user.unread_announcements.each do |discussion|
+          - current_user.unread_announcements.each do |announcement|
             %tr.unread
               %td.check
-                = check_box_tag "ids[#{discussion.id}]", true, false, :id => "discussion_id_#{discussion.id}"
-                %label{ :for => "discussion_id_#{discussion.id}" }
+                = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"
+                %label{ :for => "discussion_id_#{announcement.id}" }
               %td
-                %strong= link_to discussion.name, discussion_url(discussion, :subdomain => discussion.subdomain)
+                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
                 %br/
-                = truncate discussion.body, :length => 150, :separator => ' '
-              %td= link_to discussion.community_name, root_url(:subdomain => discussion.subdomain)
+                = truncate announcement.body, :length => 150, :separator => ' '
+              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
               %td
                 %time
-                  = l discussion.created_at, :format => :date_short
+                  = l announcement.created_at, :format => :date_short
                 %time
-                  = l discussion.created_at, :format => :time_12
-          - current_user.read_announcements[0,@limit_read_amount].each do |discussion|
+                  = l announcement.created_at, :format => :time_12
+          - current_user.read_announcements[0,@limit_read_amount].each do |announcement|
             %tr.read
               %td{ :class => 'check compact' } ✔
               %td
-                %strong= link_to discussion.name, discussion_url(discussion, :subdomain => discussion.subdomain)
-              %td= link_to discussion.community_name, root_url(:subdomain => discussion.subdomain)
+                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
+              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
               %td
                 %time
-                  = l discussion.created_at, :format => :date_short
+                  = l announcement.created_at, :format => :date_short
                 %time
-                  = l discussion.created_at, :format => :time_12
+                  = l announcement.created_at, :format => :time_12
           - if current_user.read_announcements.size > @limit_read_amount
             %tr.read
               %td.check

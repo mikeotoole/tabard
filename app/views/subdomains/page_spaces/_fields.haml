@@ -1,4 +1,4 @@
 %fieldset
   %ol
     = f.input :name, :label => 'Name'
-    = f.input :game_id, :label => 'Game', :collection => collection_with_blank(current_community.games), :as => :radio, :wrapper_html => { :class => 'select' }
+    = f.input :supported_game_id, :label => 'Game', :collection => current_community.supported_games.collect {|c| c = [c.full_name, c.id]}, :as => :radio, :wrapper_html => { :class => 'select' }

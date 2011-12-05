@@ -1,0 +1,25 @@
+%h1 Subdomains#index
+%p#notice= notice
+
+%p
+  %b Name:
+  = @community.name
+%p
+  %b Slogan:
+  = @community.slogan
+%p
+  %b Accepting members:
+  = @community.is_accepting_members
+%p
+  %b Email notice on application:
+  = @community.email_notice_on_application
+%p
+  %b Subdomain:
+  = @community.subdomain
+%p
+  %b
+  = link_to 'Games', supported_games_path
+%p
+  %b Admin Profile:
+  =link_to @community.admin_profile.full_name, @community.admin_profile
+=link_to "HOME", root_url(:subdomain => false)

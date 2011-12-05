@@ -43,7 +43,7 @@ $(document).ready ->
       bq.find('p').after(xhr.responseText)
       bq
         .find('>form')
-        .trigger('load')
+        .trigger('init')
         .find('textarea')
         .focus()
   
@@ -58,7 +58,7 @@ $(document).ready ->
       li.addClass('editing')
       bq.find('>form').remove()
       p.after(xhr.responseText)
-      bq.find('>form').trigger('load')
+      bq.find('>form').trigger('init')
   
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
@@ -67,10 +67,10 @@ $(document).ready ->
     .live 'ajax:success', (xhr, status, error) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
-      li.addClass('deleted')
+      li.addClass('removed')
       bq
         .find('.reply[data-remote]')
-        .after('<em>Comment was deleted</em>')
+        .after('<em>Comment was removed</em>')
         .remove()
       bq
         .find('.avatar img')
@@ -81,7 +81,7 @@ $(document).ready ->
         .remove()
       bq
         .find('.meta')
-        .html('<time>Deleted less than a minute ago</time>')
+        .html('<time>Removed less than a minute ago</time>')
       li.collapsable()
   
   # Locks a comment and updates the DOM
@@ -106,12 +106,12 @@ $(document).ready ->
       li2 = li.prev()
       li2.collapsable()
       li2.find('li').collapsable()
-      li2.find('form').trigger 'load'
+      li2.find('form').trigger 'init'
       li.remove()
   
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
-    .live 'load', ->
+    .live 'init', ->
       $(this)
         .bind 'ajax:beforeSend', ->
           $(this).addClass('busy')
@@ -127,7 +127,10 @@ $(document).ready ->
             is_inline = false
             container = $(this).closest('.comments')
           if !container.find('>ol').length
-            container.append('<ol></ol>')
+            if is_inline
+              container.append('<ol></ol>')
+            else
+              container.prepend('<ol></ol>')
           $(this)
             .removeClass('busy')
             .find('textarea')
@@ -158,7 +161,7 @@ $(document).ready ->
         .find('.profile label')
         .bind 'click', ->
           $(this).closest('form').find('textarea').focus()
-    .trigger 'load'
+    .trigger 'init'
   
   # Collapses children of locked comments
   $('.comments li.locked >ol >li').addClass 'collapsed'

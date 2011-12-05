@@ -1,0 +1,12 @@
+- title 'Star Wars: The Old Republic'
+
+#body
+  %h1= 'Star Wars: The Old Republic'
+
+  - if @communities.size > 0
+    = render "communities/table", :communities => @communities
+  -else
+    %p
+      This game has no active communities.
+      - if (can? :create, Community)
+        = link_to 'Create a community', new_community_url(:subdomain => false)

@@ -2,12 +2,12 @@
 #
 # Table name: page_spaces
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  game_id      :integer
-#  community_id :integer
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                :integer         not null, primary key
+#  name              :string(255)
+#  supported_game_id :integer
+#  community_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 
 require 'spec_helper'
@@ -38,20 +38,11 @@ describe PageSpace do
     wow_space.has_game_context?.should be_true
   end 
 
-  it "game_name should return '' if there is no game" do
-    space.game_name.should eq('')
+  it "game_name should return nil if there is no game" do
+    space.game_name.should be_nil
   end 
   
   it "game_name should return game name if there is a game" do
     wow_space.game_name.should eq(DefaultObjects.wow.name)
-  end
-
-  describe "game_is_valid_for_community" do
-    it "should allow a community supported game" do
-      build(:page_space, :game_id => DefaultObjects.wow.id).should be_valid  
-    end
-    it "should not allow a non-community supported game" do
-      build(:page_space, :game_id => DefaultObjects.swtor.id).should_not be_valid  
-    end
   end
 end

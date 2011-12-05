@@ -5,22 +5,17 @@
 #
 # This controller is handling comments within the scope of subdomains (communities).
 ###
-class Subdomains::CommentsController < ApplicationController
+class Subdomains::CommentsController < SubdomainsController
   layout nil
 
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :create_comment, :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-
-###
-# After Filters
-###
-  skip_after_filter :remember_current_page
 
 ###
 # REST Actions
@@ -56,7 +51,7 @@ class Subdomains::CommentsController < ApplicationController
     if @comment.comments.empty?
       success = @comment.destroy
     else
-      @comment.has_been_deleted = true;
+      @comment.is_removed = true;
       success = @comment.save
     end
     render :json => success ? true : false
@@ -67,13 +62,13 @@ class Subdomains::CommentsController < ApplicationController
 ###
   # POST /comments/:id/lock(.:format)
   def lock
-    @comment.has_been_locked = true
+    @comment.is_locked = true
     render :json => @comment.save ? true : false
   end
 
   # POST /comments/:id/unlock(.:format)
   def unlock
-    @comment.has_been_locked = false
+    @comment.is_locked = false
     if @comment.save
       render :partial => 'comment', :locals => { :comment => @comment }
     else

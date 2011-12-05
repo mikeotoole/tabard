@@ -6,7 +6,7 @@
 #  message_id    :integer
 #  recipient_id  :integer
 #  folder_id     :integer
-#  deleted       :boolean         default(FALSE)
+#  is_removed    :boolean         default(FALSE)
 #  has_been_read :boolean         default(FALSE)
 #  created_at    :datetime
 #  updated_at    :datetime
@@ -45,10 +45,10 @@ describe MessageAssociation do
     MessageAssociation.find(message_association).message.should eq(old_message)
   end
   
-  it "should allow mass assignment of deleted" do
-    message_association.deleted.should be_false
-    message_association.update_attributes(:deleted => true)
-    MessageAssociation.find(message_association).deleted.should be_true
+  it "should allow mass assignment of is_removed" do
+    message_association.is_removed.should be_false
+    message_association.update_attributes(:is_removed => true)
+    MessageAssociation.find(message_association).is_removed.should be_true
   end
   
   it "should allow mass assignment of recipient_id" do
