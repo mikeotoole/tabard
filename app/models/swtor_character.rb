@@ -200,7 +200,7 @@ class SwtorCharacter < BaseCharacter
 
       if swtor_character.valid?
         profile = user.user_profile
-        proxy = profile.character_proxies.build(:character => swtor_character, :default_character => params[:swtor_character][:default])
+        proxy = profile.character_proxies.build(:character => swtor_character, :is_default_character => params[:swtor_character][:default])
         swtor_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
         swtor_character.errors.add(:server_name, "can't be blank") if not params[:swtor_character][:server_name]

@@ -238,7 +238,7 @@ describe Subdomains::AnnouncementsController do
     it "should lock the announcement when authenticated as community admin" do
       sign_in admin
       post :lock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_true
+      Discussion.find(announcement).is_locked.should be_true
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -250,12 +250,12 @@ describe Subdomains::AnnouncementsController do
     it "should not lock the announcement when authenticated as a member" do
       sign_in member
       post :lock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_false    
+      Discussion.find(announcement).is_locked.should be_false    
     end
     
     it "should not lock the announcement when not authenticated as a user" do
       post :lock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_false 
+      Discussion.find(announcement).is_locked.should be_false 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -273,14 +273,14 @@ describe Subdomains::AnnouncementsController do
   describe "POST unlock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
-      announcement.has_been_locked = true
+      announcement.is_locked = true
       announcement.save
     }
   
     it "should unlock the announcement when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_false
+      Discussion.find(announcement).is_locked.should be_false
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -292,12 +292,12 @@ describe Subdomains::AnnouncementsController do
     it "should not unlock the announcement when authenticated as a member" do
       sign_in member
       post :unlock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_true    
+      Discussion.find(announcement).is_locked.should be_true    
     end
     
     it "should not unlock the announcement when not authenticated as a user" do
       post :unlock, :id => announcement.id.to_s
-      Discussion.find(announcement).has_been_locked.should be_true 
+      Discussion.find(announcement).is_locked.should be_true 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

@@ -4,7 +4,7 @@ class CreateCommunities < ActiveRecord::Migration
       t.string :name
       t.string :slogan
       t.string :label
-      t.boolean :accepting_members, :default => true
+      t.boolean :is_accepting_members, :default => true
       t.boolean :email_notice_on_application, :default => true
       t.string :subdomain
 

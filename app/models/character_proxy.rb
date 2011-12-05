@@ -74,7 +74,7 @@ class CharacterProxy < ActiveRecord::Base
   # Sets this character proxy as default for characters game.
   ###
   def set_as_default
-    self.update_attributes(:default_character => true) unless self.default_character
+    self.update_attributes(:is_default_character => true) unless self.is_default_character
   end
 
 ###
@@ -91,9 +91,9 @@ protected
   def check_one_default_character_exists
     default_proxy = self.user_profile.default_character_proxy_for_a_game(self.character.game)
     if default_proxy == nil
-      self.default_character = true
-    elsif self.default_character == true
-      default_proxy.update_attribute(:default_character, false)
+      self.is_default_character = true
+    elsif self.is_default_character == true
+      default_proxy.update_attribute(:is_default_character, false)
     end
   end
 
@@ -101,11 +101,11 @@ protected
   # This method is a before_destroy callback that checks if another character should be set as default.
   ###
   def set_default_character_if_needed
-    if self.default_character
+    if self.is_default_character
       proxies = self.user_profile.character_proxies_for_a_game(self.character.game)
       proxies.delete_if { |proxy| (proxy.id == self.id) }
       proxies = proxies.compact
-      proxies.first.update_attribute(:default_character, true) if proxies.count > 0
+      proxies.first.update_attribute(:is_default_character, true) if proxies.count > 0
     end
   end
 
@@ -114,22 +114,23 @@ protected
   # default is to set another as default. So not update from true to false is allowed.
   ###
   def default_character_not_from_true_to_false
-    if not self.default_character and CharacterProxy.find(self.id).default_character
-      self.errors.add(:default_character, 'can only be changed by setting another character as default.')
+    if not self.is_default_character and CharacterProxy.find(self.id).is_default_character
+      self.errors.add(:is_default_character, 'can only be changed by setting another character as default.')
     end
   end
 end
+
 
 # == Schema Information
 #
 # Table name: character_proxies
 #
-#  id                :integer         not null, primary key
-#  user_profile_id   :integer
-#  character_id      :integer
-#  character_type    :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  default_character :boolean         default(FALSE)
+#  id                   :integer         not null, primary key
+#  user_profile_id      :integer
+#  character_id         :integer
+#  character_type       :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  is_default_character :boolean         default(FALSE)
 #
 

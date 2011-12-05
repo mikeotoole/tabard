@@ -40,7 +40,7 @@ class AdminAbility
       can [:read, :destroy], Page
       can [:read], DiscussionSpace
       can [:update, :destroy], DiscussionSpace do |space|
-        space.is_announcement != true
+        space.is_announcement_space != true
       end
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :update], SupportedGame
@@ -67,7 +67,7 @@ class AdminAbility
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can [:read, :create, :view_document], [Document, 'Document']
       can [:update], Document do |document|
-        not Document.find(document).published
+        not Document.find(document).is_published
       end
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser

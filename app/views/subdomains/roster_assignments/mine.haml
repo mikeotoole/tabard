@@ -12,12 +12,12 @@
   - if @roster_assignments.size > 0
     %tbody
       - @roster_assignments.each do |roster_assignment|
-        %tr{ roster_assignment.pending ? { :class => 'dim' } : {} }
+        %tr{ roster_assignment.is_pending ? { :class => 'dim' } : {} }
           %td{ :class => 'avatar cinch' }
             = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
           %td.character
             %h3= roster_assignment.character_proxy_name
-            = roster_assignment.pending ? 'is pending approval' : 'is a member'
+            = roster_assignment.is_pending ? 'is pending approval' : 'is a member'
           %td.actions
             %div
               - if  can? :mine, RosterAssignment or can? :delete, roster_assignment

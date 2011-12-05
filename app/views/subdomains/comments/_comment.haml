@@ -1,30 +1,30 @@
-- if !comment.has_been_deleted or (comment.has_been_deleted and comment.comments.size > 0)
+- if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
   %li{ :class => comment_class_names(comment) }
     %blockquote
       %span.avatar
-        - if !comment.has_been_deleted
+        - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
-        - if comment.has_been_deleted
+        - if comment.is_removed
           = last_action_word(comment).capitalize
         - else
           = "#{last_action_word(comment).capitalize} by"
           = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since " + (l comment.user_profile_created_at, :format => :short)
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
-        - unless comment.has_been_deleted
+        - unless comment.is_removed
           %span.body
             = comment.body
           = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, 'data-type' => :text, :class => 'reply'
-        - if comment.has_been_deleted
-          %em Comment was deleted
+        - if comment.is_removed
+          %em Comment was removed
         - elsif comment.replies_locked?
           %em Comment is locked
       %span.actions
         - if can? :update, as_unlocked(comment)
           = link_to 'Edit comment', edit_comment_path(comment), :remote => true, 'data-type' => :text, :class => 'edit', :title => 'Edit comment'
         - if can? :destroy, as_unlocked(comment)
-          = link_to 'Delete comment', comment, :remote => true, 'data-type' => :text, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Delete comment'
+          = link_to 'Remove comment', comment, :remote => true, 'data-type' => :text, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :title => 'Remove comment'
         - if can? :lock, comment
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'lock', :title => 'Lock comment'
         - if can? :unlock, comment

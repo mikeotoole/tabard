@@ -9,7 +9,7 @@ class MessageAssociation < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :deleted, :recipient_id, :folder_id, :message_id, :has_been_read
+  attr_accessible :is_removed, :recipient_id, :folder_id, :message_id, :has_been_read
 
 ###
 # Associations
@@ -21,7 +21,7 @@ class MessageAssociation < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :author, :subject, :body, :recipients, :author_avatar_url, :system_sent, :to => :message
+  delegate :author, :subject, :body, :recipients, :author_avatar_url, :is_system_sent, :to => :message
   delegate :name, :id, :to => :author, :prefix => true, :allow_nil => true
   delegate :name, :to => :folder, :prefix => true
 
@@ -58,7 +58,7 @@ end
 #  message_id    :integer
 #  recipient_id  :integer
 #  folder_id     :integer
-#  deleted       :boolean         default(FALSE)
+#  is_removed    :boolean         default(FALSE)
 #  has_been_read :boolean         default(FALSE)
 #  created_at    :datetime
 #  updated_at    :datetime

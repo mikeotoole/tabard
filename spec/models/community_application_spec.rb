@@ -61,13 +61,13 @@ describe CommunityApplication do
 
     it "should be set to pending automatically" do
       community_application.status.should eq("Pending")
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should allow the pending status" do
       community_application.status = "Pending"
       community_application.valid?.should be_true
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should allow the accepted status" do
@@ -92,7 +92,7 @@ describe CommunityApplication do
   describe "accept_application" do
     before(:each) do
       community_application.user_profile.is_member?(community).should be_false
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should make the applicant a member of the community" do
@@ -116,7 +116,7 @@ describe CommunityApplication do
 
     it "should should not work if the application is not pending" do
       community_application.accept_application.should be_true
-      community_application.pending?.should be_false
+      community_application.is_pending?.should be_false
       community_application.accept_application.should be_false
     end
     
@@ -124,7 +124,7 @@ describe CommunityApplication do
       #Message.all.count.should eq(0)
       community_application.accept_application.should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.system_sent.should be_true
+      Message.first.is_system_sent.should be_true
       Message.first.author.should be_nil
     end
   end
@@ -132,7 +132,7 @@ describe CommunityApplication do
   describe "reject_application" do
     before(:each) do
       community_application.user_profile.is_member?(community).should be_false
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should not make the applicant a member of the community" do
@@ -147,7 +147,7 @@ describe CommunityApplication do
 
     it "should should not work if the application is not pending" do
       community_application.reject_application.should be_true
-      community_application.pending?.should be_false
+      community_application.is_pending?.should be_false
       community_application.reject_application.should be_false
     end
     
@@ -155,7 +155,7 @@ describe CommunityApplication do
       #Message.all.count.should eq(0)
       community_application.reject_application.should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.system_sent.should be_true
+      Message.first.is_system_sent.should be_true
       Message.first.author.should be_nil
     end
   end
@@ -166,7 +166,7 @@ describe CommunityApplication do
     end
 
     it "should allow withdrawl if pending" do
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
       community_application.withdraw.should be_true
       community_application.withdrawn?.should be_true
     end

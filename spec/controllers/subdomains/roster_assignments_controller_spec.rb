@@ -33,7 +33,7 @@ describe Subdomains::RosterAssignmentsController do
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
-    community.update_attribute(:public_roster, false)
+    community.update_attribute(:is_public_roster, false)
     @request.host = "#{community.subdomain}.example.com"
   end
   
@@ -154,7 +154,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'update' when authenticated as a non-owner" do
     before(:each) do
       sign_in user
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should change attributes" do
@@ -169,11 +169,11 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'update' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should change attributes" do
-      assigns[:roster_assignment].pending.should be_false
+      assigns[:roster_assignment].is_pending.should be_false
     end
 
     it "should redirect to new community" do
@@ -183,7 +183,7 @@ describe Subdomains::RosterAssignmentsController do
 
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should redirect to new user session path" do
@@ -226,12 +226,12 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'approve' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
       put 'approve', :id => roster_assignment
     end
 
     it "become approved" do
-      assigns[:roster_assignment].pending.should be_false
+      assigns[:roster_assignment].is_pending.should be_false
     end
 
     it "should redirect to pending path" do
@@ -241,14 +241,14 @@ describe Subdomains::RosterAssignmentsController do
   
   describe "PUT 'batch_approve'" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment2.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment2.update_attribute(:is_pending, true)
     end
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user
       put :batch_approve, :ids => roster_assignment_id_array
-      RosterAssignment.find_by_id(roster_assignment).pending.should be_false
-      RosterAssignment.find_by_id(roster_assignment2).pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment).is_pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment2).is_pending.should be_false
     end
     it "should be forbidden when authenticated as member" do
       sign_in billy
@@ -260,7 +260,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'reject' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
       put 'reject', :id => roster_assignment
     end
 
@@ -275,8 +275,8 @@ describe Subdomains::RosterAssignmentsController do
   
   describe "PUT 'batch_reject'" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment2.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment2.update_attribute(:is_pending, true)
     end
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user

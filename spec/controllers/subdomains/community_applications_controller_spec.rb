@@ -225,7 +225,7 @@ describe Subdomains::CommunityApplicationsController do
         applicant_user.is_member?(community).should be_true
       end
       it "should make the application not pending" do
-        community_application.pending?.should be_false
+        community_application.is_pending?.should be_false
       end
     end
   end
@@ -260,7 +260,7 @@ describe Subdomains::CommunityApplicationsController do
       end
       it "should make the application not pending" do
         community_application.reload
-        community_application.pending?.should be_false
+        community_application.is_pending?.should be_false
       end
     end
 

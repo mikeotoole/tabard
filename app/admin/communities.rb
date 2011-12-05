@@ -8,8 +8,8 @@ ActiveAdmin.register Community do
   filter :name
   filter :slogan
   filter :created_at
-  filter :protected_roster, :as => :select
-  filter :accepting_members, :as => :select
+  filter :is_protected_roster, :as => :select
+  filter :is_accepting_members, :as => :select
   filter :email_notice_on_application, :as => :select
 
   index do

@@ -113,7 +113,7 @@ describe Subdomains::DiscussionSpacesController do
       response.should be_forbidden
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       sign_in admin
       get :edit, :id => anouncment_space.id.to_s
       response.should be_forbidden
@@ -156,9 +156,9 @@ describe Subdomains::DiscussionSpacesController do
       end
     end
     
-    it "should not allow is_announcement to be set to true" do
-      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement => true)
-      assigns(:discussion_space).is_announcement.should eq(false)
+    it "should not allow is_announcement_space to be set to true" do
+      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement_space => true)
+      assigns(:discussion_space).is_announcement_space.should eq(false)
     end
   end
   
@@ -210,7 +210,7 @@ describe Subdomains::DiscussionSpacesController do
       end
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       put :update, :id => anouncment_space.id, :discussion_space => {:name => "New Name"}
       response.should be_forbidden
     end
@@ -255,7 +255,7 @@ describe Subdomains::DiscussionSpacesController do
       response.should be_forbidden
     end
     
-    it "should respond forbidden when is_announcement is true" do
+    it "should respond forbidden when is_announcement_space is true" do
       sign_in admin
       delete :destroy, :id => anouncment_space.id.to_s
       response.should be_forbidden

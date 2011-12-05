@@ -7,9 +7,9 @@ describe "ActiveAdmin Document" do
   let(:user) { DefaultObjects.user }
 
   let(:privacy_policy) { create(:privacy_policy) }
-  let(:unpublished_privacy_policy) { create(:privacy_policy, :published => false) } 
+  let(:unpublished_privacy_policy) { create(:privacy_policy, :is_published => false) } 
   let(:privacy_policy) { create(:privacy_policy) }
-  let(:unpublished_terms_of_service) { create(:terms_of_service, :published => false) }
+  let(:unpublished_terms_of_service) { create(:terms_of_service, :is_published => false) }
  
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do
@@ -129,7 +129,7 @@ describe "ActiveAdmin Document" do
   end
 
   describe "#edit" do 
-    it "returns 200 when logged in as superadmin and document has not been published" do
+    it "returns 200 when logged in as superadmin and document has not been is_published" do
       login_as superadmin
 
       visit edit_admin_document_url(:id => unpublished_privacy_policy.id)
@@ -137,9 +137,9 @@ describe "ActiveAdmin Document" do
       current_url.should == edit_admin_document_url(:id => unpublished_privacy_policy.id)
     end 
 
-    it "returns 403 when logged in as superadmin and document has been published" do
+    it "returns 403 when logged in as superadmin and document has been is_published" do
       login_as superadmin
-      privacy_policy.published.should be_true
+      privacy_policy.is_published.should be_true
       visit edit_admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('forbidden')
@@ -218,13 +218,13 @@ describe "ActiveAdmin Document" do
   end
 
   describe "#update" do 
-    it "updates Document when logged in as superadmin and document has not been published" do
+    it "updates Document when logged in as superadmin and document has not been is_published" do
       login_as superadmin
       page.driver.put("/admin/documents/#{unpublished_privacy_policy.id}", { :document => { :body => "test_case_body" } } )
       Document.find(unpublished_privacy_policy).body.should eql "test_case_body"
     end 
 
-    it "returns 403 when logged in as superadmin and document has been published" do
+    it "returns 403 when logged in as superadmin and document has been is_published" do
       login_as superadmin
 
       orginal_body = privacy_policy.body

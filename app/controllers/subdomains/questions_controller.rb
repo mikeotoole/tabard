@@ -42,10 +42,10 @@ class Subdomains::QuestionsController < SubdomainsController
   # DELETE /questions/:id(.:format)
   def destroy
     if @question and @question.answers.empty?
-      add_new_flash_message('Question was successfully deleted.') if @question.destroy
+      add_new_flash_message('Question was successfully removed.') if @question.destroy
     else
       @question.custom_form_id = nil
-      add_new_flash_message('Question was successfully deleted.') if @question.save
+      add_new_flash_message('Question was successfully removed.') if @question.save
     end
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end

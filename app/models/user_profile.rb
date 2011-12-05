@@ -27,7 +27,7 @@ class UserProfile < ActiveRecord::Base
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :deleted => false}, :dependent => :destroy
+  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
   has_many :folders, :dependent => :destroy
   has_many :pages
   has_many :discussions
@@ -125,7 +125,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.is_default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
     proxies = proxies.compact
     raise RuntimeError.new("too many default characters exception") if proxies.count > 1
     proxies.first

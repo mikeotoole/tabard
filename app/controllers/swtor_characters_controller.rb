@@ -53,7 +53,7 @@ class SwtorCharactersController < ApplicationController
 
   # DELETE /swtor_characters/:id(.:format)
   def destroy
-    add_new_flash_message('Character was successfully deleted.') if @swtor_character and @swtor_character.destroy
+    add_new_flash_message('Character was successfully removed.') if @swtor_character and @swtor_character.destroy
 
     respond_with(@swtor_character)
   end

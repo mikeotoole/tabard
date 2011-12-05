@@ -58,7 +58,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # DELETE /pages/:id(.:format)
   def destroy
-    add_new_flash_message('Page was successfully deleted.') if @page.destroy
+    add_new_flash_message('Page was successfully removed.') if @page.destroy
     respond_with(@page, :location => page_space_url(@page.page_space))
   end
 

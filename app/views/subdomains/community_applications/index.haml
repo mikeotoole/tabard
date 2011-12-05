@@ -11,7 +11,7 @@
         %th
 
     - @pending_community_applications.each do |community_application|
-      %tr{ community_application.pending? ? {} : { :class => 'dim'} }
+      %tr{ community_application.is_pending? ? {} : { :class => 'dim'} }
         %td.cinch
           %strong= community_application.status
         %td.cinch
@@ -40,7 +40,7 @@
         %th
 
     - @other_community_applications.each do |community_application|
-      %tr{ community_application.pending? ? {} : { :class => 'dim'} }
+      %tr{ community_application.is_pending? ? {} : { :class => 'dim'} }
         %td.cinch
           %strong= community_application.status
         %td.cinch

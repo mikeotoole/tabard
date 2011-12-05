@@ -63,7 +63,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # DELETE /announcements/:id(.:format)
   def destroy
-    add_new_flash_message('Announcement was successfully deleted.') if @announcement.destroy
+    add_new_flash_message('Announcement was successfully removed.') if @announcement.destroy
     respond_with(@announcement, :location => announcement_space_url(@announcement_space))
   end
 
@@ -72,7 +72,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # POST /announcements/:id/lock(.:format)
   def lock
-    @announcement.has_been_locked = true
+    @announcement.is_locked = true
     if @announcement.save
       add_new_flash_message("Announcement was successfully locked.")
     else
@@ -84,7 +84,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # POST /announcements/:id/unlock(.:format)
   def unlock
-    @announcement.has_been_locked = false
+    @announcement.is_locked = false
     if @announcement.save
       add_new_flash_message("Announcement was successfully unlocked.")
     else

@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :type, :required, :explanation, :type_style, :predefined_answers_attributes
+  attr_accessible :body, :style, :type, :is_required, :explanation, :type_style, :predefined_answers_attributes
 
 ###
 # Associations
@@ -93,7 +93,7 @@ class Question < ActiveRecord::Base
         my_clone.style = self.style
         my_clone.custom_form_id = self.custom_form_id
         my_clone.explanation = self.explanation
-        my_clone.required = self.required
+        my_clone.is_required = self.is_required
         my_clone.save
         if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
           self.predefined_answers.update_all(:select_question_id => my_clone.id)
@@ -171,6 +171,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: questions
@@ -183,6 +184,6 @@ end
 #  created_at     :datetime
 #  updated_at     :datetime
 #  explanation    :string(255)
-#  required       :boolean         default(FALSE)
+#  is_required    :boolean         default(FALSE)
 #
 
