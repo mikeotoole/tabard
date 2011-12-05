@@ -3,9 +3,9 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Don't Steal Me Bro!
 #
-# This is the controller for top level pages (http://crumblin.com/<page name>)
+# This is the controller for top level pages (http://<domain name>/<page name>)
 ###
-class CrumblinController < ApplicationController
+class TopLevelController < ApplicationController
   respond_to :html
 ###
 # Callbacks

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CrumblinController do
+describe TopLevelController do
   describe "GET 'index'" do
     it "should be successful" do
       get 'index'

@@ -1,5 +1,5 @@
 - title 'Home'
-= stylesheet_link_tag "crumblin/home"
+= stylesheet_link_tag "application/home"
 &nbsp;
 
 #homebox
@@ -27,7 +27,7 @@
     %p.pitch
       %strong Free for players.
       Compare
-      = link_to 'pricing', crumblin_pricing_url(:subdomain => false)
+      = link_to 'pricing', top_level_pricing_url(:subdomain => false)
 
     %h2 Ready to get started?
 
@@ -69,7 +69,7 @@
         %h3 Discussions.
         Forums are a lot of work. We’ve simplified the socilization of your community into manageable discussion pages that tie into a main feed. See what’s going on without checking for new posts in 10 different places.
       %li
-        = link_to 'More features', crumblin_features_url(:subdomain => false)
+        = link_to 'More features', top_level_features_url(:subdomain => false)
 
   .col2
 

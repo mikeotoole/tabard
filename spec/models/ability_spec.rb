@@ -37,7 +37,7 @@ def anonymous_can_permissions(user)
   end
 end
 
-def crumblin_member_can_permissions(ability)
+def site_member_can_permissions(ability)
 
   anonymous_can_permissions(ability)
 
@@ -107,7 +107,7 @@ describe Ability do
       @anonymous = User.new
       @ability = Ability.new(@anonymous)
     end
-    describe "can visit main page + crumblin information pages" do
+    describe "can visit main page + top level information pages" do
       pending
     end
     it "can create an account" do
@@ -119,7 +119,7 @@ describe Ability do
     anonymous_can_permissions(@anonymous)
     #In the scope of a community they are treated as a non member, with the exception that they can not apply to a community.
   end
-  describe "for a crumblin member" do
+  describe "for a site member" do
     pending
   end
 

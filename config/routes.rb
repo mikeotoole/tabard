@@ -149,17 +149,17 @@ DaBvRails::Application.routes.draw do
     end
   end
 
-  # Crumblin Home page
-  root :to => 'crumblin#index'
-  get "crumblin/index"
+  # Top level home page
+  root :to => 'top_level#index'
+  get "top_level/index"
 
-  # Crumblin top level pages
-  get "/intro" => "crumblin#intro", :as => 'crumblin_intro'
-  get "/features" => "crumblin#features", :as => 'crumblin_features'
-  get "/pricing" => "crumblin#pricing", :as => 'crumblin_pricing'
-  get "/maintenance" => "crumblin#maintenance", :as => 'crumblin_maintenance'
-  get "/privacy-policy" => "crumblin#privacy_policy", :as => 'crumblin_privacy_policy'
-  get "/terms-of-service" => "crumblin#terms_of_service", :as => 'crumblin_terms_of_service'
+  # Top level pages
+  get "/intro" => "top_level#intro", :as => 'top_level_intro'
+  get "/features" => "top_level#features", :as => 'top_level_features'
+  get "/pricing" => "top_level#pricing", :as => 'top_level_pricing'
+  get "/maintenance" => "top_level#maintenance", :as => 'top_level_maintenance'
+  get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
+  get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

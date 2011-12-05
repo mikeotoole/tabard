@@ -16,9 +16,9 @@ ActiveAdmin.register Document do
   member_action :view_document, :method => :get do
     @document = Document.find(params[:id])
     if @document.is_a?(PrivacyPolicy)
-      render 'app/views/crumblin/privacy_policy.haml', :layout => 'application'
+      render 'app/views/top_level/privacy_policy.haml', :layout => 'application'
     else
-      render 'app/views/crumblin/terms_of_service.haml', :layout => 'application'
+      render 'app/views/top_level/terms_of_service.haml', :layout => 'application'
     end
   end
 

@@ -82,7 +82,7 @@ module ApplicationHelper
   end
 
   ###
-  # Provides a clean way to set the page title within a view and adds the text " - Crumblin".
+  # Provides a clean way to set the page title within a view and adds the text " | Crumblin".
   # [Args]
   #   * +page_title+ -> The page title.
   # [Returns] :title for the yield.

@@ -12,7 +12,7 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_url.should == crumblin_maintenance_url
+      current_url.should == top_level_maintenance_url
       
       put :toggle_maintenance_mode
       
@@ -25,7 +25,7 @@ describe SiteActionController do
       put :toggle_maintenance_mode
 
       visit root_url
-      current_url.should == crumblin_maintenance_url
+      current_url.should == top_level_maintenance_url
       
       put :toggle_maintenance_mode
       
