@@ -52,7 +52,7 @@ class WowCharactersController < ApplicationController
 
   # DELETE /wow_characters/:id(.:format)
   def destroy
-    add_new_flash_message('Character was successfully deleted') if @wow_character and @wow_character.destroy
+    add_new_flash_message('Character was successfully removed') if @wow_character and @wow_character.destroy
 
     respond_with(@wow_character)
   end

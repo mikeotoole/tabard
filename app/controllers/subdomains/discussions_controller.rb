@@ -59,7 +59,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # DELETE /discussions/:id(.:format)
   def destroy
-    add_new_flash_message('Discussion was successfully deleted.') if @discussion.destroy
+    add_new_flash_message('Discussion was successfully removed.') if @discussion.destroy
     respond_with(@discussion, :location => discussion_space_url(@discussion.discussion_space))
   end
 
@@ -68,7 +68,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   # POST /discussions/:id/lock(.:format)
   def lock
-    @discussion.has_been_locked = true
+    @discussion.is_locked = true
     if @discussion.save
       add_new_flash_message("Discussion was successfully locked.")
     else
@@ -80,7 +80,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # POST /discussions/:id/unlock(.:format)
   def unlock
-    @discussion.has_been_locked = false
+    @discussion.is_locked = false
     if @discussion.save
       add_new_flash_message("Discussion was successfully unlocked.")
     else

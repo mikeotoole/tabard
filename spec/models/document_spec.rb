@@ -2,20 +2,20 @@
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  version    :integer
-#  published  :boolean         default(FALSE)
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 
 require 'spec_helper'
 
 describe Document do
   let(:document) { create(:terms_of_service) }
-  let(:unpublished) { create(:terms_of_service, :published => false) }
+  let(:unpublished) { create(:terms_of_service, :is_published => false) }
 
   it "should create a new instance given valid attributes" do
     document.should be_valid
@@ -69,15 +69,15 @@ describe Document do
     end
   end
   
-  it "should not allow updating a document with published equal to true" do
+  it "should not allow updating a document with is_published equal to true" do
     org_body = document.body
     document.update_attributes(:body => "New Body").should be_false
     document.errors.first.should include("This document has been published and can't be changed.")
     Document.find(document).body.should eql org_body
   end  
     
-  it "should allow updating a document with published equal to false" do
-    unpublished.published.should be_false
+  it "should allow updating a document with is_published equal to false" do
+    unpublished.is_published.should be_false
     unpublished.update_attributes(:body => "New Body").should be_true
     Document.find(unpublished).body.should eql "New Body"
   end

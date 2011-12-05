@@ -136,14 +136,14 @@ class MessagesController < MailboxController
     if(params[:id])
       @message = current_user.received_messages.find(params[:id])
       authorize!(:update, @message)
-      if @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
-        add_new_flash_message('Message was deleted.')
+      if @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
+        add_new_flash_message('Message was removed.')
       end
       redirect_to trash_path
-    else # If a message is not given all messages will be deleted from the trash.
+    else # If a message is not given all messages will be removed from the trash.
       current_user.trash.messages.each do |message|
         authorize!(:update, message)
-        message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+        message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
       end
       redirect_to inbox_path
     end
@@ -155,7 +155,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+        @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
       end
     end
     redirect_to trash_path

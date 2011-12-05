@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.string   "character_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_character", :default => false
+    t.boolean  "is_default_character", :default => false
   end
 
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
@@ -87,9 +87,9 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.integer  "community_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.boolean  "has_been_deleted",   :default => false
+    t.boolean  "is_removed",         :default => false
     t.boolean  "has_been_edited",    :default => false
-    t.boolean  "has_been_locked",    :default => false
+    t.boolean  "is_locked",          :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,17 +102,17 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.boolean  "accepting_members",               :default => true
+    t.boolean  "is_accepting_members",            :default => true
     t.boolean  "email_notice_on_application",     :default => true
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
-    t.boolean  "protected_roster",                :default => false
+    t.boolean  "is_protected_roster",             :default => false
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
-    t.boolean  "public_roster",                   :default => true
+    t.boolean  "is_public_roster",                :default => true
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.string   "name"
     t.text     "instructions"
     t.string   "thankyou"
-    t.boolean  "published",    :default => false
+    t.boolean  "is_published", :default => false
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_announcement",   :default => false
+    t.boolean  "is_announcement_space", :default => false
   end
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
@@ -183,11 +183,9 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.integer  "discussion_space_id"
     t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
-    t.boolean  "comments_enabled",    :default => true
-    t.boolean  "has_been_locked",     :default => false
+    t.boolean  "is_locked",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_archived",         :default => false
   end
 
   add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
@@ -210,7 +208,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "version"
-    t.boolean  "published",  :default => false
+    t.boolean  "is_published", :default => false
   end
 
   create_table "folders", :force => true do |t|
@@ -226,7 +224,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.integer  "message_id"
     t.integer  "recipient_id"
     t.integer  "folder_id"
-    t.boolean  "deleted",       :default => false
+    t.boolean  "is_removed",    :default => false
     t.boolean  "has_been_read", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -241,7 +239,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.text     "body"
     t.integer  "author_id"
     t.integer  "number_recipients"
-    t.boolean  "system_sent",       :default => false
+    t.boolean  "is_system_sent",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -306,7 +304,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "explanation"
-    t.boolean  "required",       :default => false
+    t.boolean  "is_required",    :default => false
   end
 
   add_index "questions", ["custom_form_id"], :name => "index_questions_on_custom_form_id"
@@ -314,7 +312,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
   create_table "roles", :force => true do |t|
     t.integer  "community_id"
     t.string   "name"
-    t.boolean  "system_generated", :default => false
+    t.boolean  "is_system_generated", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -324,7 +322,7 @@ ActiveRecord::Schema.define(:version => 20111130213038) do
   create_table "roster_assignments", :force => true do |t|
     t.integer  "community_profile_id"
     t.integer  "character_proxy_id"
-    t.boolean  "pending",              :default => true
+    t.boolean  "is_pending",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

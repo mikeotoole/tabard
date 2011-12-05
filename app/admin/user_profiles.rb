@@ -49,7 +49,7 @@ ActiveAdmin.register UserProfile do
             link_to comment.poster.name, [:admin, comment.poster]
           end
           column :number_of_comments
-          column :has_been_deleted
+          column :is_removed
           column "Commentable Body" do |comment|
             link_to comment.commentable_body, [:admin, comment.original_comment_item]
           end

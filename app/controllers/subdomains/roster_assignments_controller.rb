@@ -44,7 +44,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def create
     if @roster_assignment.save
       @roster_assignment.approve if can? :manage, @roster_assignment
-      if @roster_assignment.pending
+      if @roster_assignment.is_pending
         add_new_flash_message "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent.", 'notice'
       else
         add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the roster.", 'success'

@@ -7,7 +7,7 @@ ActiveAdmin.register DiscussionSpace do
   filter :id
   filter :name
   filter :created_at
-  filter :is_announcement, :as => :select
+  filter :is_announcement_space, :as => :select
 
   index do
     column "View" do |discussion_space|
@@ -20,7 +20,7 @@ ActiveAdmin.register DiscussionSpace do
     column :name
     column :supported_game, :sortable => :supported_game_id
     column :created_at
-    column :is_announcement
+    column :is_announcement_space
     column :number_of_discussions, :sortable => false
   end
 

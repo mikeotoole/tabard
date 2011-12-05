@@ -10,7 +10,7 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  explanation    :string(255)
-#  required       :boolean         default(FALSE)
+#  is_required    :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -36,7 +36,7 @@ describe Question do
       question.type.should eq("TextQuestion")
     end
     
-    it "should be required" do
+    it "should be is_required" do
       build(:long_answer_question, :type => nil).should_not be_valid
     end
     

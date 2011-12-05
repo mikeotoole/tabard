@@ -117,11 +117,11 @@ class Ability
       character.user_profile.id == user.user_profile.id
     end
     can [:update], Discussion do |discussion|
-      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
+      (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
     end
     can [:destroy], Discussion do |discussion|
-      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.has_been_locked) or
-      ((discussion.user_profile_id == user.user_profile_id) and not discussion.has_been_locked)
+      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.is_locked) or
+      ((discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked)
     end
     can [:unlock, :lock], Discussion do |discussion|
       discussion.community_admin_profile_id == user.user_profile_id
@@ -139,10 +139,10 @@ class Ability
       user.user_profile.is_member?(comment.community)
     end
     can [:update], Comment do |comment|
-      (comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted
+      (comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed
     end
     can [:destroy], Comment do |comment|
-      ((comment.user_profile_id == user.user_profile.id) and not comment.has_been_locked and not comment.has_been_deleted)
+      ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
     end
 
     # Community Rules
@@ -153,7 +153,7 @@ class Ability
       community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
     can [:comment], CommunityApplication do |community_application|
-      community_application.pending? and can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
+      community_application.is_pending? and can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
     end
 
     # Custom Form Rules
@@ -164,10 +164,10 @@ class Ability
       user.user_profile.is_member?(discussion.community) and discussion.is_announcement
     end
     can [:comment], Discussion do |discussion|
-      can? :read, discussion and discussion.comments_enabled and !discussion.has_been_locked
+      can? :read, discussion and not discussion.is_locked
     end
     can [:update, :destroy], Discussion do |discussion|
-      (discussion.user_profile_id == user.user_profile.id) and not discussion.has_been_locked
+      (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
     end
     can [:destroy], Page do |page|
       page.community_admin_profile_id == user.user_profile_id or
@@ -176,10 +176,10 @@ class Ability
 
     # Discussion Space Rules
     can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(space.community) and space.is_announcement == true
+      user.user_profile.is_member?(space.community) and space.is_announcement_space == true
     end
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement == true
+      space.is_announcement_space == true
     end
 
     # Messaging Rules
@@ -258,14 +258,14 @@ class Ability
     can [:manage], Page
     can [:manage], PageSpace
     can [:unlock, :lock, :destroy], Comment do |comment|
-      not comment.has_been_deleted
+      not comment.is_removed
     end
     can :manage, DiscussionSpace
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement == true
+      space.is_announcement_space == true
     end
     can :manage, Discussion do |discussion|
-      not discussion.has_been_locked
+      not discussion.is_locked
     end
     can :unlock, Discussion
     can :manage, CustomForm
@@ -274,7 +274,7 @@ class Ability
     end
     can :manage, Role
     cannot :destroy, Role do |role|
-      role.system_generated
+      role.is_system_generated
     end
     can :manage, Permission
     can [:read, :destroy], Submission
@@ -290,7 +290,7 @@ class Ability
   ###
   def dynamicContextRules(user, current_community)
     #Community Based Permissions
-    can :index, RosterAssignment if current_community.public_roster
+    can :index, RosterAssignment if current_community.is_public_roster
 
     if user
       community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)

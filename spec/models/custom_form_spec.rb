@@ -6,7 +6,7 @@
 #  name         :string(255)
 #  instructions :text
 #  thankyou     :string(255)
-#  published    :boolean         default(FALSE)
+#  is_published :boolean         default(FALSE)
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime

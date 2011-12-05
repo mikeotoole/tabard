@@ -51,7 +51,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # DELETE /custom_forms/1
   def destroy
     if @custom_form
-      add_new_flash_message('Form was successfully deleted.') if @custom_form.destroy
+      add_new_flash_message('Form was successfully removed.') if @custom_form.destroy
     end
     respond_with @custom_form
   end

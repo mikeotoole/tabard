@@ -9,7 +9,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :comments_enabled, :has_been_locked
+  attr_accessible :name, :body, :character_proxy_id, :is_locked
 
 ###
 # Associations
@@ -33,7 +33,6 @@ class Discussion < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :is_announcement, :to => :discussion_space, :allow_nil => true
   delegate :name, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :discussion_space, :allow_nil => true
@@ -49,6 +48,12 @@ class Discussion < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+
+  # Looks if this discussion is in an annoincment space. If true this is an announcement.
+  def is_announcement
+    self.discussion_space.is_announcement_space
+  end
+
   ###
   # This method gets the poster of this discussion. If character proxy is not nil
   # the character is returned. Otherwise the user profile is returned. These should
@@ -78,7 +83,7 @@ class Discussion < ActiveRecord::Base
   def number_of_comments
    temp_total_num_comments = 0
    comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
+     temp_total_num_comments += comment.number_of_comments unless comment.is_removed
    end
    temp_total_num_comments
   end
@@ -125,10 +130,8 @@ end
 #  discussion_space_id :integer
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
-#  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean         default(FALSE)
+#  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  is_archived         :boolean         default(FALSE)
 #
 

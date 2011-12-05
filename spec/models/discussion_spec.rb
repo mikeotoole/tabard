@@ -8,11 +8,9 @@
 #  discussion_space_id :integer
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
-#  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean         default(FALSE)
+#  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  is_archived         :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -107,15 +105,6 @@ describe Discussion do
   
   it "should respond to view_logs" do
     discussion.should respond_to(:view_logs)
-  end
-  
-  it "should respond to is_archived" do
-    discussion.should respond_to(:is_archived)
-  end
-  
-  it "should not allow access to is_archived flag" do
-    discussion.update_attributes(:is_archived => true).should be_true
-    Discussion.find(discussion).is_archived.should be_false
   end
 
   describe "character_is_valid_for_user_profile" do

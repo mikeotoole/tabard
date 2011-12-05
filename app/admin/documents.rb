@@ -9,7 +9,7 @@ ActiveAdmin.register Document do
   filter :type, :as => :select, :collection => Document::VALID_TYPES
   filter :body
   filter :version
-  filter :published, :as => :select
+  filter :is_published, :as => :select
   filter :created_at
   filter :updated_at
 
@@ -32,7 +32,7 @@ ActiveAdmin.register Document do
     column :id
     column :type
     column :version
-    column :published
+    column :is_published
     column "Is Current", :is_current?, :sortable => false
     column :created_at
   end
@@ -48,7 +48,7 @@ ActiveAdmin.register Document do
       f.input :type, :as => :select, :collection => Document::VALID_TYPES
       f.input :version
       f.input :body
-      f.input :published
+      f.input :is_published
     end
     f.buttons
   end

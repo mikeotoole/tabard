@@ -87,7 +87,7 @@ end
 #  body              :text
 #  author_id         :integer
 #  number_recipients :integer
-#  system_sent       :boolean         default(FALSE)
+#  is_system_sent    :boolean         default(FALSE)
 #  created_at        :datetime
 #  updated_at        :datetime
 #

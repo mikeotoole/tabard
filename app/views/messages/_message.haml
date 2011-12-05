@@ -14,7 +14,7 @@
         = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
 
     %h2
-      - if message.system_sent
+      - if message.is_system_sent
         %strong Notification:
       - else
         From:

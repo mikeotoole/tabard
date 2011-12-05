@@ -51,7 +51,7 @@ class Subdomains::CommentsController < SubdomainsController
     if @comment.comments.empty?
       success = @comment.destroy
     else
-      @comment.has_been_deleted = true;
+      @comment.is_removed = true;
       success = @comment.save
     end
     render :json => success ? true : false
@@ -62,13 +62,13 @@ class Subdomains::CommentsController < SubdomainsController
 ###
   # POST /comments/:id/lock(.:format)
   def lock
-    @comment.has_been_locked = true
+    @comment.is_locked = true
     render :json => @comment.save ? true : false
   end
 
   # POST /comments/:id/unlock(.:format)
   def unlock
-    @comment.has_been_locked = false
+    @comment.is_locked = false
     if @comment.save
       render :partial => 'comment', :locals => { :comment => @comment }
     else

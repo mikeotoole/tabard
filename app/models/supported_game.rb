@@ -76,7 +76,7 @@ protected
       if space
         space.community = self.community
         space.supported_game = self
-        space.is_announcement = true
+        space.is_announcement_space = true
         space.save
         self.game_announcement_space = space
         self.save

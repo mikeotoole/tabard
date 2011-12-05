@@ -2,13 +2,13 @@
 #
 # Table name: discussion_spaces
 #
-#  id                :integer         not null, primary key
-#  name              :string(255)
-#  supported_game_id :integer
-#  community_id      :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  is_announcement   :boolean         default(FALSE)
+#  id                    :integer         not null, primary key
+#  name                  :string(255)
+#  supported_game_id     :integer
+#  community_id          :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  is_announcement_space :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -47,12 +47,12 @@ describe DiscussionSpace do
     wow_space.game_name.should eq(DefaultObjects.wow.name)
   end 
   
-  it "should respond to is_announcement" do
-    wow_space.should respond_to(:is_announcement)
+  it "should respond to is_announcement_space" do
+    wow_space.should respond_to(:is_announcement_space)
   end
   
-  it "should not allow access to is_announcement flag" do
-    wow_space.update_attributes(:is_announcement => true).should be_true
-    DiscussionSpace.find(wow_space).is_announcement.should be_false
+  it "should not allow access to is_announcement_space flag" do
+    wow_space.update_attributes(:is_announcement_space => true).should be_true
+    DiscussionSpace.find(wow_space).is_announcement_space.should be_false
   end
 end

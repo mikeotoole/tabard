@@ -392,10 +392,10 @@ describe MessagesController do
   end
 
   describe "DELETE destroy" do
-    it "sets the requested message as deleted when authenticated as a owner" do
+    it "sets the requested message as is_removed when authenticated as a owner" do
       sign_in receiver
       delete :destroy, :id => rec_message
-      MessageAssociation.find(rec_message).deleted.should be_true
+      MessageAssociation.find(rec_message).is_removed.should be_true
     end
     
     it "sets the requested message folder to nil when authenticated as a owner" do
@@ -428,7 +428,7 @@ describe MessagesController do
       lambda { delete :destroy, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
     end  
   
-    it "should set all messages in trash folder as deleted when no message is given and authenticated as a owner" do
+    it "should set all messages in trash folder as is_removed when no message is given and authenticated as a owner" do
       message_two = create(:message).message_associations.first
       message_two.folder = receiver.user_profile.trash
       message_two.save.should be_true
@@ -436,8 +436,8 @@ describe MessagesController do
       rec_message.save.should be_true
       sign_in receiver
       delete :destroy
-      MessageAssociation.find(message_two).deleted.should be_true
-      MessageAssociation.find(rec_message).deleted.should be_true
+      MessageAssociation.find(message_two).is_removed.should be_true
+      MessageAssociation.find(rec_message).is_removed.should be_true
     end
     
     it "should set all messages in trash folder folder to nil when no message is given and authenticated as a owner" do
@@ -461,11 +461,11 @@ describe MessagesController do
   end
   
   describe "DELETE batch_destroy" do
-    it "sets all requested messages as deleted when authenticated as a owner" do
+    it "sets all requested messages as is_removed when authenticated as a owner" do
       sign_in receiver
       delete :batch_destroy, :ids => rec_message_id_array
-      MessageAssociation.find(rec_message).deleted.should be_true
-      MessageAssociation.find(rec_message_2).deleted.should be_true
+      MessageAssociation.find(rec_message).is_removed.should be_true
+      MessageAssociation.find(rec_message_2).is_removed.should be_true
     end
     
     it "sets all requested messages folders to nil when authenticated as a owner" do

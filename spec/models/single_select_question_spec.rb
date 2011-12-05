@@ -10,7 +10,7 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  explanation    :string(255)
-#  required       :boolean         default(FALSE)
+#  is_required    :boolean         default(FALSE)
 #
 
 require 'spec_helper'

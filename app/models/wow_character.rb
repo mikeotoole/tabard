@@ -130,7 +130,7 @@ class WowCharacter < BaseCharacter
 
       if wow_character.valid?
         profile = user.user_profile
-        proxy = profile.character_proxies.build(:character => wow_character, :default_character => params[:wow_character][:default])
+        proxy = profile.character_proxies.build(:character => wow_character, :is_default_character => params[:wow_character][:default])
         wow_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
         wow_character.errors.add(:server_name, "can't be blank") if not params[:wow_character][:server_name]

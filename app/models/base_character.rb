@@ -99,7 +99,7 @@ class BaseCharacter < ActiveRecord::Base
   # If the character is the default for its game.
   def default
     if self.character_proxy
-      self.character_proxy.default_character ? true : false
+      self.character_proxy.is_default_character ? true : false
     else
       return false
     end

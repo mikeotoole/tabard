@@ -19,7 +19,7 @@
               = link_to member_profile.name, member_profile
             %td.characters
               - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
-              - if cp.roster_assignments.delete_if{|ra| ra.pending?}.size > 0
+              - if cp.roster_assignments.delete_if{|ra| ra.is_pending?}.size > 0
                 %ul
                   - cp.roster_assignments.each do |ra|
                     %li

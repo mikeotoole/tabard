@@ -9,7 +9,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :instructions, :thankyou, :published, :questions_attributes
+  attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes
 
 ###
 # Associations
@@ -59,6 +59,7 @@ class CustomForm < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: custom_forms
@@ -67,7 +68,7 @@ end
 #  name         :string(255)
 #  instructions :text
 #  thankyou     :string(255)
-#  published    :boolean         default(FALSE)
+#  is_published :boolean         default(FALSE)
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime

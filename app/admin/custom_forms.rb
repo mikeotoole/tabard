@@ -16,7 +16,7 @@ ActiveAdmin.register CustomForm do
   filter :instructions
   filter :thankyou
   filter :created_at
-  filter :published, :as => :select
+  filter :is_published, :as => :select
 
   index do
     column "View" do |custom_form|
@@ -31,7 +31,7 @@ ActiveAdmin.register CustomForm do
     column "Number Questions" do |custom_form|
       "#{custom_form.questions.count}"
     end
-    column :published
+    column :is_published
     column "Destroy" do |custom_form|
       if can? :destroy, custom_form
         link_to "Destroy", [:admin, custom_form], :method => :delete, :confirm => 'Are you sure you want to delete this custom form?'
