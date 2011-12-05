@@ -1825,13 +1825,12 @@ button,
       position: relative
       
       label
-        background: #ddd
-        +bg_gradient(#ddd,#eee)
-        border: 1px solid #fff
+        +bg_gradient(#E5DAD3,rgba(#fff,0))
+        border-top: 1px solid #bb8b7d
         +border_radius(5)
         float: left
         height: 26px
-        margin: 0 5px 5px 0
+        margin: 0 6px 5px 1px
         padding: 5px
         width: 209px
         +transition(box-shadow .2s linear)
@@ -1847,10 +1846,16 @@ button,
         &:hover
           +box_shadow(0 0 10px rgba(#000,.5))
         
-      input:checked + label
-        background: #fff
-        +bg_gradient(#eee,#fff)
-        +box_shadow(0 0 10px rgba(#000,.3))
+      input
+        left: 10px
+        margin: 0
+        top: 10px
+        
+        &:checked + label
+          background: #E5DAD3
+          border: 1px solid #bb8b7d
+          +box_shadow(0 0 10px rgba(#000,.3))
+          margin: 0 5px 5px 0
 
   form.role
 
