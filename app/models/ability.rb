@@ -16,7 +16,7 @@ class Ability
   def initialize(user)
     user ||= User.guest
     anonymous_user_rules(user)
-    crumblin_member_rules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
+    site_member_rules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.
 
     # Define abilities for the passed in user here. For example:
     #
@@ -97,11 +97,11 @@ class Ability
   can :manage, WowCharacter
 =end
   ###
-  # This method defines the rules for a crumblin member.
+  # This method defines the rules for a member.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
-  def crumblin_member_rules(user)
+  def site_member_rules(user)
     # Answer Rules
     can :create, Answer
     can [:read, :destroy], Answer do |answer|

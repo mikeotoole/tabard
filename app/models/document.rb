@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This class represents a Document that the user must accept to use crumblin.
+# This class represents a Document that the user must accept to use the service.
 ###
 class Document < ActiveRecord::Base
   default_scope :order => "version DESC"
