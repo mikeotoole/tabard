@@ -12,7 +12,7 @@ class SiteActionController < ApplicationController
 ###
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :ensure_active_profile_is_valid
-  skip_before_filter :fetch_crumblin_games
+  skip_before_filter :fetch_top_level_games
   skip_before_filter :check_maintenance_mode
 
 ###
