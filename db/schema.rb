@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111204203436) do
+ActiveRecord::Schema.define(:version => 20111204235701) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(:version => 20111204203436) do
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
     t.boolean  "public_roster",                   :default => true
+    t.boolean  "has_been_deleted",                :default => false
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -264,17 +265,13 @@ ActiveRecord::Schema.define(:version => 20111204203436) do
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.text     "markup"
-    t.integer  "character_proxy_id"
-    t.integer  "user_profile_id"
     t.integer  "page_space_id"
     t.boolean  "show_in_navigation", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "pages", ["character_proxy_id"], :name => "index_pages_on_character_proxy_id"
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
-  add_index "pages", ["user_profile_id"], :name => "index_pages_on_user_profile_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"

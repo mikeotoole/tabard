@@ -16,6 +16,7 @@
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  public_roster                   :boolean         default(TRUE)
+#  has_been_deleted                :boolean         default(FALSE)
 #
 
 require 'spec_helper'

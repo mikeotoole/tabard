@@ -284,14 +284,10 @@ if ENV["RAILS_ENV"] != 'test'
   jahc_wps = jahc.page_spaces.create(:name => "WoW Resources", :supported_game_id => jahc_wow_supported_game.id)
 
   puts "Creating Just Another Headshot Clan Guild Rules Page"
-  jahc_g_rules = jahc_gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
-  jahc_g_rules.user_profile = robobilly.user_profile
-  jahc_g_rules.save
+  jahc_g_rules = jahc_gips.pages.create(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
 
   puts "Creating Just Another Headshot WoW Strategies Page"
-  jahc_wow_strategies = jahc_wps.pages.new(:name => "WoW Strategies", :markup => "##WoW Strategies##\n###Sarlacc Pit Strategy###\n* Don't get eaten!\n** It is really bad.\n** Instead just pew-pew-pew")
-  jahc_wow_strategies.user_profile = s_turtle.user_profile
-  jahc_wow_strategies.save
+  jahc_wow_strategies = jahc_wps.pages.create(:name => "WoW Strategies", :markup => "##WoW Strategies##\n###Sarlacc Pit Strategy###\n* Don't get eaten!\n** It is really bad.\n** Instead just pew-pew-pew")
 
   puts "Creating Example Messages"
   robobilly.sent_messages.create(:subject => "What up Homies?", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id, k_fox.id])

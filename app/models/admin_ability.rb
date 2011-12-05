@@ -53,7 +53,7 @@ class AdminAbility
 
     # Rules for admin user. (Inherits rules from moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
-      can [:destroy, :reset_all_passwords, :sign_out_all_users], User
+      can [:nuke, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
       can [:destroy], Community

@@ -6,6 +6,9 @@ DaBvRails::Application.routes.draw do
 
   # Users
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :confirmations => 'confirmations' }
+  devise_scope :user do
+    get '/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
+  end  
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Site Actions

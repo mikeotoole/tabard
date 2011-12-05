@@ -186,10 +186,19 @@ class User < ActiveRecord::Base
     self.admin_disabled or self.user_disabled
   end
   
-  def disable_by_user
-    self.update_attributes(:user_disabled => true, :user_disabled_at => Time.now)
-    self.community_profiles.clear
-    self.owned_communities.clear
+  def disable_by_user(params)
+    if(params[:user])
+      params[:user][:user_disabled] = true
+      params[:user][:user_disabled_at] = Time.now
+      success = self.update_with_password(params[:user])
+      if success
+        self.community_profiles.clear
+        self.owned_communities.clear
+      end
+      return success
+    else  
+      return false
+    end  
   end
   
   def disable_by_admin

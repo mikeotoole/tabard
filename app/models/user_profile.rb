@@ -29,7 +29,6 @@ class UserProfile < ActiveRecord::Base
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
   has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :deleted => false}, :dependent => :destroy
   has_many :folders, :dependent => :destroy
-  has_many :pages
   has_many :discussions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
 

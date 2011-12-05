@@ -2,7 +2,7 @@ ActiveAdmin.register User do
   menu :parent => "User", :priority => 1, :if => proc{ can?(:read, User) }
   controller.authorize_resource
 
-  actions :index, :show, :destroy
+  actions :index, :show
 
   action_item :only => :show do
     if not user.admin_disabled and can? :disable, user
@@ -21,6 +21,12 @@ ActiveAdmin.register User do
       link_to "Reset Password", reset_password_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
     end
   end
+  
+  action_item :only => :show do
+    if can? :reset_password, user
+      link_to "Nuke User", nuke_admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to NUKE User?'
+    end
+  end
 
   action_item :only => :index do
     if can? :reset_all_passwords, User.new
@@ -32,6 +38,13 @@ ActiveAdmin.register User do
     user = User.find(params[:id])
     user.disable_by_admin if user
     redirect_to :action => :show
+  end
+  
+  member_action :nuke, :method => :delete do
+    user = User.find(params[:id])
+    user.disable_by_admin if user
+    user.destroy if user
+    redirect_to :action => :index
   end
 
   member_action :reinstate, :method => :put do

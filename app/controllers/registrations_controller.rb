@@ -8,17 +8,25 @@
 class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
-  skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
+  skip_before_filter :block_unauthorized_user!, :only => [:create, :new, :cancel_confirmation]
   skip_before_filter :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update]
   before_filter :ensure_secure_subdomain, :only => [:create, :update]
 
   # Cancels a user's account
   def destroy
-    resource.disable_by_user if resource
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    set_flash_message :notice, :destroyed if is_navigational_format?
-    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+    success = resource ? resource.disable_by_user(params) : false
+    if success
+      Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+      set_flash_message :notice, :destroyed if is_navigational_format?
+      respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+    else
+      render 'cancel_confirmation'  
+    end  
+  end
+  
+  def cancel_confirmation
+    @user = current_user
   end
 
   # Where to redirect to after signing up with devise

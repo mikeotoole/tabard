@@ -81,16 +81,6 @@ ActiveAdmin.register UserProfile do
     end
 
     div do
-      panel("Owned Pages") do
-        table_for(user_profile.pages) do
-          column "Name" do |page|
-            link_to page.name, [:admin, page]
-          end
-        end
-      end
-    end
-
-    div do
       panel("Owned Discussions") do
         table_for(user_profile.discussions) do
           column "Name" do |discussion|
