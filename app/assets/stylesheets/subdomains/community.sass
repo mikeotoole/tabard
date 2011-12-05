@@ -504,6 +504,15 @@ button,
     
       &.r
         text-align: right
+      
+      &.slider
+        width: 202px
+      
+      &.permission
+      
+        h3
+          line-height: 30px
+          padding: 0
   
     thead
       text-align: left
@@ -719,6 +728,7 @@ button,
 
 
   // Comments
+  
   .comments
     background: #fff
     +border_radius(5)
@@ -1358,6 +1368,7 @@ button,
   
   
   // Submissions & Community Applications
+  
   .submission
     margin: -30px 0 0 0
   
@@ -1555,6 +1566,69 @@ button,
                 
                 input:checked + label
                   width: 560px
+                  
+            &.slider
+              +bg_gradient(#ddd,#fff)
+              border: 1px solid #aaa
+              +border_radius(5)
+              +box_shadow(0 0 10px rgba(#000,.2))
+              height: 30px
+              overflow: hidden
+              position: relative
+              +transition(box-shadow .2s linear)
+              width: 200px
+              
+              ul
+                padding: 0
+                
+                li
+                  padding: 0
+                  display: inline
+                  
+                  label
+                    border: 1px solid transparent
+                    +border_radius(4)
+                    height: 26px
+                    margin: 1px
+                    overflow: hidden
+                    position: absolute
+                    text-indent: -500em
+                    +transition(background .2s linear)
+                    
+                    &:before,
+                    &:after
+                      display: none
+                    
+                    &:hover
+                      background: #8F364E !important
+                      border-color: #5d2230
+                  
+                  &:nth-child(1) label
+                    width: 46px
+                    z-index: 5
+                  
+                  &:nth-child(2) label
+                    width: 96px
+                    z-index: 4
+                    
+                  &:nth-child(3) label
+                    width: 146px
+                    z-index: 3
+                    
+                  &:nth-child(4) label
+                    width: 196px
+                    z-index: 2
+              
+                  input
+                    margin: 0 0 0 -500em
+                    
+                    &:checked + label
+                      background: #6F2D3D
+                      border-color: #5d2230
+                      +box_shadow(0 0 5px rgba(#000,.5))
+              
+              &:hover
+                +box_shadow(0 0 15px rgba(#000,.7))
       
     h2.comments
       margin: 60px 0 0
@@ -1739,6 +1813,61 @@ button,
     
     .submit
       margin: -35px 0 0
+
+
+  // Roles & Permissions
+  
+  #usercheckboxes
+    margin: 0 -5px 0 0
+    
+    li
+      display: inline
+      position: relative
+      
+      label
+        background: #ddd
+        +bg_gradient(#ddd,#eee)
+        border: 1px solid #fff
+        +border_radius(5)
+        float: left
+        height: 26px
+        margin: 0 5px 5px 0
+        padding: 5px
+        width: 209px
+        +transition(box-shadow .2s linear)
+        
+        &:before
+          left: 5px
+          top: 5px
+          
+        &:after
+          left: 10px
+          top: 10px
+        
+        &:hover
+          +box_shadow(0 0 10px rgba(#000,.5))
+        
+      input:checked + label
+        background: #fff
+        +bg_gradient(#eee,#fff)
+        +box_shadow(0 0 10px rgba(#000,.3))
+
+  form.role
+
+    .suggest
+      
+      ol
+      
+        li
+          margin-right: 10px
+          padding: 0
+      
+          input
+            width: 100%
+    
+      ul,
+      ul *
+        display: none !important
 
 
 @import application/footer

@@ -184,11 +184,11 @@ if ENV["RAILS_ENV"] != 'test'
     jahc_wow_supported_game.community = jahc
     jahc_wow_supported_game.save
   
-    puts "RoboBilly is creating a n00b role..."
-    noob_role = jahc.roles.create(:name => "n00b")
+    puts "RoboBilly is creating a Officers role..."
+    officers_role = jahc.roles.create(:name => "n00b")
   
-    puts "RoboBilly is adding permissions to view roles to n00b role..."
-    noob_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
+    puts "RoboBilly is adding permissions to view roles to Officers role..."
+    officers_role.permissions.create(:subject_class => "Role", :permission_level => "Show")
   
     puts "RoboBilly is getting some characters..."
     rb_cp = robobilly.community_profiles.where(:community_id => jahc.id).first
@@ -216,7 +216,7 @@ if ENV["RAILS_ENV"] != 'test'
     generate_application_from_user_profile(jahc, k_fox.user_profile)
   
     puts "Giving D-Moose the n00b role..."
-    d_moose.add_new_role(noob_role)
+    d_moose.add_new_role(officers_role)
   
     puts "Creating Just Another Headshot Clan General Discussion Space"
     jahc_gds = jahc.discussion_spaces.create(:name => "General Chat")
