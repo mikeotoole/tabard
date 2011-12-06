@@ -35,7 +35,7 @@ ActiveAdmin.register DiscussionSpace do
           column "Poster" do |discussion|
             link_to discussion.poster.name, [:admin, discussion.poster]
           end
-          column :number_of_comments, :sortable => false
+          column :number_of_comments
         end
       end
     end

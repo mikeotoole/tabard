@@ -15,15 +15,6 @@ FactoryGirl.define do
   factory :page do
     sequence(:name) {|n| "Page #{n}"}
     markup "##H2 Heading##\n *Bold*"
-    user_profile_id { DefaultObjects.user_profile.id }
     page_space_id { DefaultObjects.page_space.id }
-  end
-  
-  factory :page_by_wow_character, :parent => :page do
-    character_proxy_id { Factory.create(:character_proxy_with_wow_character).id }
-  end
-  
-  factory :page_by_swtor_character, :parent => :page do
-    character_proxy_id { Factory.create(:character_proxy_with_swtor_character).id }
-  end  
+  end 
 end

@@ -130,7 +130,15 @@ describe "ActiveAdmin CustomForm" do
 
       page.driver.delete("/admin/custom_forms/#{custom_form.id}")
       CustomForm.exists?(custom_form).should be_false
-    end    
+    end
+    
+    it "returns 403 if form is application form" do
+      login_as superadmin
+      app_custom_form = create(:community).community_application_form
+      app_custom_form.application_form?.should be_true
+      page.driver.delete("/admin/custom_forms/#{app_custom_form.id}")
+      CustomForm.exists?(app_custom_form).should be_true
+    end
     
     it "returns 403 when logged in as regular User" do
       login_as user

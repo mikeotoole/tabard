@@ -2,13 +2,11 @@
   %thead
     %tr
       %th Name
-      %th Author
       %th.actions
   %tbody
     - page_space.pages.each do |page|
       %tr
         %td= link_to page.name, page
-        %td= page.poster.name
         %td.actions
           %div
             - if (can? :update, page)

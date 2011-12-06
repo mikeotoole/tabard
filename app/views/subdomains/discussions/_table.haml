@@ -13,7 +13,7 @@
         %td= discussion.poster.name
         %td
           - if discussion.comments.size > 0
-            = discussion.comments.last.poster.name
+            = discussion.comments.last.poster_name
         %td
           - if not discussion.is_locked
             = discussion.number_of_comments

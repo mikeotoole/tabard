@@ -18,7 +18,7 @@ class CommunityProfile < ActiveRecord::Base
   has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
   has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => true}
   has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
-  has_many :roster_assignments
+  has_many :roster_assignments, :dependent => :destroy
   has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
 
 ###
@@ -71,7 +71,9 @@ class CommunityProfile < ActiveRecord::Base
   #   * +role+ -> The role being removed from the collection.
   ###
   def ensure_that_member_role_stays(role)
-    raise InvalidCollectionRemoval.new("You can't remove the member role.") if role == self.community.member_role
+    if not self.user_profile.disabled and role == self.community.member_role
+      raise InvalidCollectionRemoval.new("You can't remove the member role.")
+    end
   end
 end
 

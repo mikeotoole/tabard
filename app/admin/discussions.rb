@@ -6,12 +6,7 @@ ActiveAdmin.register Discussion do
 
   member_action :remove_comment, :method => :put do
     comment = Comment.find(params[:id])
-    if comment.comments.empty?
-      comment.destroy
-    else
-      comment.is_removed = true;
-      comment.save
-    end
+    comment.destroy
     redirect_to request.referer ? request.referer : admin_dashboard_url
   end
 
@@ -31,7 +26,7 @@ ActiveAdmin.register Discussion do
     column :poster do |discussion|
       link_to discussion.poster.name, [:admin, discussion.poster]
     end
-    column :number_of_comments, :sortable => false
+    column :number_of_comments
     column :created_at
     column "Destroy" do |discussion|
       if can? :destroy, discussion
