@@ -17,7 +17,7 @@ if ENV["RAILS_ENV"] != 'test'
     horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
     republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
     sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
-    
+
     puts "Creating TOS"
     tos_document = TermsOfService.create(
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.",
@@ -279,14 +279,10 @@ if ENV["RAILS_ENV"] != 'test'
   jahc_wps = jahc.page_spaces.create(:name => "WoW Resources", :supported_game_id => jahc_wow_supported_game.id)
 
   puts "Creating Just Another Headshot Clan Guild Rules Page"
-  jahc_g_rules = jahc_gips.pages.new(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
-  jahc_g_rules.user_profile = robobilly.user_profile
-  jahc_g_rules.save
+  jahc_g_rules = jahc_gips.pages.create(:name => "Guild Rules", :markup => "##Guild Rules##\n 1. Don't be dumb\n 2. IF YOU DON'T KNOW WHAT TO DO THAT IS A 50 KPD MINUS!")
 
   puts "Creating Just Another Headshot WoW Strategies Page"
-  jahc_wow_strategies = jahc_wps.pages.new(:name => "WoW Strategies", :markup => "##WoW Strategies##\n###Sarlacc Pit Strategy###\n* Don't get eaten!\n** It is really bad.\n** Instead just pew-pew-pew")
-  jahc_wow_strategies.user_profile = s_turtle.user_profile
-  jahc_wow_strategies.save
+  jahc_wow_strategies = jahc_wps.pages.create(:name => "WoW Strategies", :markup => "##WoW Strategies##\n###Sarlacc Pit Strategy###\n* Don't get eaten!\n** It is really bad.\n** Instead just pew-pew-pew")
 
   puts "Creating Example Messages"
   robobilly.sent_messages.create(:subject => "What up Homies?", :body => "This is a test message created in the seed file. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices metus, ut tempus diam sollicitudin in. Nullam justo arcu, fringilla non mollis nec, blandit id orci. Maecenas condimentum tortor in felis ullamcorper ullamcorper. Nulla et lacus ac orci semper adipiscing eu laoreet leo.", :to => [d_moose.id, d_badger.id, k_fox.id])
@@ -349,7 +345,7 @@ if ENV["RAILS_ENV"] != 'test'
   shortQ.custom_form = test_form
   shortQ.save
 
-  puts "Creating a user for Mike, because he thinks he our adjective animals aren't cool enough..."
+  puts "Creating a user for Mike, because he thinks our adjective animals aren't cool enough..."
   mike = User.new(:email => "mpotoole@gmail.com", :password => "Password", :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
   :date_of_birth => Date.new(1980,4,17))
   mike.skip_confirmation!

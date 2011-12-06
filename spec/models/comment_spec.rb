@@ -105,12 +105,12 @@ describe Comment do
     comment.number_of_comments.should eq(2)
   end
   
-  it "original_comment_item should return 1 if the comment has no replies" do
+  it "original_commentable should return 1 if the comment has no replies" do
     leafComment = create(:comment)
     nodeComment = create(:comment)
     nodeComment.comments << leafComment
     comment.comments << nodeComment
-    leafComment.original_comment_item.should eq(DefaultObjects.discussion)
+    leafComment.original_commentable.should eq(DefaultObjects.discussion)
   end
   
   it "replies_locked? should return false when is_locked is false" do

@@ -18,6 +18,6 @@
       %ol
         - @announcement.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
-    - if @announcement.comments_enabled and !@announcement.is_locked and (can? :create, @announcement.comments.new)
+    - if not @announcement.is_locked and (can? :create, @announcement.comments.new)
       %h3 Post a New Comment
       = render 'subdomains/comments/form', :comment => @announcement.comments.new

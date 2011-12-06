@@ -16,27 +16,27 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
-  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
+  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
   has_many :announcements, :through => :announcement_spaces, :class_name => "Discussion", :source => "discussions"
-  has_many :community_applications
+  has_many :community_applications, :dependent => :destroy
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
   has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
   has_many :folders, :dependent => :destroy
-  has_many :pages
-  has_many :discussions
-  has_many :comments
+  has_many :discussions, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
 ###
 # Delegates
 ###
   delegate :email, :to => :user
+  delegate :disabled, :to => :user
 
 ###
 # Callbacks

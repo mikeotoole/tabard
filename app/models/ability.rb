@@ -169,10 +169,6 @@ class Ability
     can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
     end
-    can [:destroy], Page do |page|
-      page.community_admin_profile_id == user.user_profile_id or
-      page.user_profile_id == user.user_profile_id
-    end
 
     # Discussion Space Rules
     can [:read], DiscussionSpace do |space|

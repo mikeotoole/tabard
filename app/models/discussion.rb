@@ -18,7 +18,8 @@ class Discussion < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
-  has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :comments, :as => :commentable
+  has_many :all_comments, :as => :original_commentable, :class_name => "Comment", :dependent => :delete_all
   has_one :community, :through => :discussion_space
   has_many :view_logs, :as => :view_loggable
 
@@ -41,6 +42,7 @@ class Discussion < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
@@ -74,7 +76,7 @@ class Discussion < ActiveRecord::Base
   # [Returns] True if a character made this discussion, otherwise false.
   ###
   def charater_posted?
-    character_proxy != nil
+    self.character_proxy != nil
   end
 
   ###
@@ -82,23 +84,7 @@ class Discussion < ActiveRecord::Base
   # [Returns] An integer that contains how many comments have been made for this discussion, including comments on a comment (recursivly).
   ###
   def number_of_comments
-   temp_total_num_comments = 0
-   comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments unless comment.is_removed
-   end
-   temp_total_num_comments
-  end
-
-  ###
-  # This method all comments in this discussion even comments comments.
-  # [Returns] A collection of comments.
-  ###
-  def all_comments
-  temp_all_comments = Array.new
-   comments.each do |comment|
-     temp_all_comments << comment.all_comments
-   end
-   temp_all_comments.flatten
+    self.all_comments.not_deleted.count
   end
 
   ###
@@ -108,9 +94,17 @@ class Discussion < ActiveRecord::Base
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
   def update_viewed(user_profile)
-    user_profile.update_viewed(self)
+    self.user_profile.update_viewed(self)
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Methods
+###
   ###
   # This method validates that the selected character is valid for the community.
   ###

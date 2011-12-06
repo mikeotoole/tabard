@@ -29,9 +29,6 @@ ActiveAdmin.register PageSpace do
           column "Name" do |page|
             link_to page.name, [:admin, page]
           end
-          column "Poster" do |page|
-            link_to page.poster.name, [:admin, page.poster]
-          end
         end
       end
     end

@@ -51,7 +51,7 @@ ActiveAdmin.register UserProfile do
           column :number_of_comments
           column :is_removed
           column "Commentable Body" do |comment|
-            link_to comment.commentable_body, [:admin, comment.original_comment_item]
+            link_to comment.commentable_body, [:admin, comment.commentable]
           end
           column "Destroy" do |comment|
             link_to "Destroy", remove_comment_admin_discussion_path(comment), :method => :put, :confirm => 'Are you sure you want to delete this comment?'
@@ -75,16 +75,6 @@ ActiveAdmin.register UserProfile do
         table_for(user_profile.owned_communities) do
           column "Name" do |community|
             link_to community.name, [:admin, community]
-          end
-        end
-      end
-    end
-
-    div do
-      panel("Owned Pages") do
-        table_for(user_profile.pages) do
-          column "Name" do |page|
-            link_to page.name, [:admin, page]
           end
         end
       end
