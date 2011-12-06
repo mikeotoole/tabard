@@ -322,8 +322,14 @@ class Ability
           else
             # TODO Joe/Bryan Should this be logged?
         end
-        action.concat([:lock]) if permission.can_lock
-        action.concat([:accept]) if permission.can_accept
+        if permission.can_lock
+          action.concat([:lock]) 
+          action.concat([:unlock]) 
+        end
+        if permission.can_accept
+          action.concat([:accept]) 
+          action.concat([:reject]) 
+        end
         if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)
         else

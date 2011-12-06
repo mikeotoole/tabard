@@ -67,7 +67,7 @@ protected
   # This method conveniently checks to see whether the user can do any admin level functions on a given resource.
   ###
   def can_manage(resource)
-    (can? :update, resource) or (can? :destroy, resource) or (can? :approve, resource) or (can? :reject, resource)
+    (can? :update, resource) or (can? :destroy, resource) or (can? :accept, resource) or (can? :reject, resource)
   end
 
   ###

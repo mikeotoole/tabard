@@ -257,11 +257,29 @@ protected
   # The method creates a default community discussion space
   ###
   def setup_default_community_items
-    self.member_role.permissions.create(subject_class: "PageSpace", permission_level: "View")
-    self.member_role.permissions.create(subject_class: "Page", permission_level: "Delete")
     community_d_space = self.discussion_spaces.create(name: "Community")
-    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
-    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+
+    # Member role
+    self.member_role.permissions.create(subject_class: "Comment", permission_level: "Delete")
+    # Officer role
+    officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create(subject_class: "Comment", permission_level: "Delete", can_lock: true)
+    officer_role.permissions.create(subject_class: "CommunityApplication", permission_level: "View", can_accept: true)
+
+    # Discussions
+    self.discussion_spaces.each do |space|
+      self.member_role.permissions.create(subject_class: "DiscussionSpace", id_of_subject: space.id, permission_level: "View")
+      self.member_role.permissions.create(subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: space.id, permission_level: "Delete")
+      officer_role.permissions.create(subject_class: "DiscussionSpace", id_of_subject: space.id, permission_level: "View")
+      officer_role.permissions.create(subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: space.id, permission_level: "Delete", can_lock: true)
+    end
+    # Pages
+    self.page_spaces.each do |space|
+      self.member_role.permissions.create(subject_class: "PageSpace", id_of_subject: space.id, permission_level: "View")
+      self.member_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: space.id, permission_level: "View")
+      officer_role.permissions.create(subject_class: "PageSpace", id_of_subject: space.id, permission_level: "View")
+      officer_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: space.id, permission_level: "Delete")
+    end
   end
 end
 
