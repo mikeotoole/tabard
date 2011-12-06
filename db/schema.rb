@@ -87,9 +87,9 @@ ActiveRecord::Schema.define(:version => 20111204235701) do
     t.integer  "community_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.boolean  "is_removed",         :default => false
-    t.boolean  "has_been_edited",    :default => false
-    t.boolean  "is_locked",          :default => false
+    t.boolean  "is_removed",                :default => false
+    t.boolean  "has_been_edited",           :default => false
+    t.boolean  "is_locked",                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "original_commentable_id"

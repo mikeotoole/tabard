@@ -1,11 +1,11 @@
 = javascript_include_tag "permissions"
 
-= simple_form_for @role do |f|
+= simple_form_for role do |f|
   %fieldset
     %ol
       = f.input :name
 
-  - if @role.persisted?
+  - if role.persisted?
 
     %h2 Things they can do
 
@@ -19,9 +19,9 @@
           %th.permresource Thing
           %th.actions
       %tbody
-        - if @role.permissions.size > 0
-          - @role.permissions.each do |permission|
-            = render :partial => 'permission', :locals => { :role => @role, :permission => permission }
+        - if role.permissions.size > 0
+          - role.permissions.each do |permission|
+            = render 'permission', :role => role, :permission => permission
         -else
           %tr.temp
             %td &nbsp;
@@ -29,16 +29,16 @@
       %tfoot
         %tr
           %td{ :colspan => 6 }
-            = link_to "Add Thing", new_role_permission_path(@role), :remote => true, 'data-type' => :text, :class => 'button new'
+            = link_to "Add Thing", new_role_permission_path(role), :remote => true, 'data-type' => :text, :class => 'button new'
 
-    - unless @role.is_system_generated
+    - unless role.is_system_generated
       %h2 Users
       - if current_community.member_profiles.size > 0
         %fieldset#usercheckboxes
           %ol
             - current_community.community_profiles.each do |profile|
               %li.boolean
-                = check_box_tag 'role[community_profile_ids][]', profile.id, @role.community_profiles.include?(profile), :id => dom_id(profile)
+                = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
                 = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
       - else
         %p No users

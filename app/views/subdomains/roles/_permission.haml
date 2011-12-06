@@ -16,7 +16,7 @@
             = pf.collection_radio :subject_class, Permission::VALID_SUBJECT_CLASSES, :first, :last, :item_wrapper_tag => :li
       %td.actions
         %div
-          - if permission.id and (can? :destroy, permission)
-            = link_to 'Remove Permission', role_permission_path(@role, permission), :method => :delete, :remote => true, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Remove this permission'
+          - if permission.persisted? and can? :destroy, permission
+            = link_to 'Remove Permission', role_permission_path(role, permission), :method => :delete, :remote => true, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Remove this permission'
           - else
             %a{ :class => 'cancel', :meta => 'Cancel new permission' } Cancel
