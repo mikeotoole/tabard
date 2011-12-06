@@ -264,7 +264,7 @@ protected
     # Officer role
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
     officer_role.permissions.create(subject_class: "Comment", permission_level: "Delete", can_lock: true)
-    officer_role.permissions.create(subject_class: "CommunityApplication", permission_level: "View", can_accept: true)
+    officer_role.permissions.create(subject_class: "CommunityApplication", permission_level: "View")
 
     # Discussions
     self.discussion_spaces.each do |space|
