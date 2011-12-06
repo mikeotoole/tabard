@@ -24,7 +24,7 @@
         - @community_application.submission.answers.each do |answer|
           %dt= answer.question_body
           %dd= answer.body
-  - if @community_application.is_pending?
+  - if @community_application.is_pending? and (can? :accept, @community_application or can? :reject, @community_application)
     %p.submit
       - if can? :accept, @community_application
         = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"

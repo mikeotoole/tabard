@@ -787,11 +787,7 @@ button,
         
         button,
         .button
-          border-color: #1e102c
-          
-          &:focus,
-          &:hover
-            +box_shadow(0 0 10px #000)
+          border-color: #704f37
 
 
   // Comments
@@ -1827,14 +1823,16 @@ button,
     
     li
       display: inline
+      clear: none
+      float: left
+      margin: 0
       position: relative
       
       label
-        +bg_gradient(#E5DAD3,rgba(#fff,0))
+        +bg_gradient(#F0EAE6,#FFF)
         border-top: 1px solid #bb8b7d
         +border_radius(5)
-        float: left
-        height: 26px
+        height: 27px
         margin: 0 6px 5px 1px
         padding: 5px
         width: 209px
@@ -1860,6 +1858,7 @@ button,
           background: #E5DAD3
           border: 1px solid #bb8b7d
           +box_shadow(0 0 10px rgba(#000,.3))
+          height: 26px
           margin: 0 5px 5px 0
 
   form.role
