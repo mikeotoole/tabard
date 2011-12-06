@@ -31,6 +31,8 @@ class PageSpace < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true
   delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
+  after_create :apply_default_permissions
+
 ###
 # Public Methods
 ###
@@ -53,6 +55,11 @@ class PageSpace < ActiveRecord::Base
   ###
   def has_game_context?
     self.supported_game_id != nil
+  end
+
+  def apply_default_permissions
+    self.community.member_role.permissions.create(subject_class: "PageSpace", id_of_subject: self.id, permission_level: "View")
+    self.community.member_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: self.id, permission_level: "View")
   end
 end
 
