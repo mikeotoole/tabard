@@ -10,7 +10,7 @@ class Permission < ActiveRecord::Base
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.
-  VALID_SUBJECT_CLASSES = %w( Role Comment CustomForm PageSpace Page DiscussionSpace Discussion Announcement CommunityApplication )
+  VALID_SUBJECT_CLASSES = %w( Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication )
   # This is a collection of strings that are valid for parent associations.
   VALID_PARENT_ASSOCIATIONS = %w( discussion_space page_space )
   # This is a collection of strings that are valid for permission levels.
@@ -49,6 +49,32 @@ class Permission < ActiveRecord::Base
 ###
   def only_subject_id_if_not_nested
     errors.add(:base, "You can not have both id_of_subject and parent_association_for_subject/id_of_parent") if (not self.id_of_subject.blank?) and ((not self.id_of_parent.blank?) or (not self.parent_association_for_subject.blank?))
+  end
+
+  def label
+    case self.subject_class
+      when "DiscussionSpace"
+        if self.id_of_subject
+          dspace = DiscussionSpace.find_by_id(self.id_of_subject)
+          return (dspace ? dspace.name : "Unknown")
+        else
+          return "All Discussion Spaces"
+        end
+      when "Discussion"
+        if self.id_of_subject
+          disc = Discussion.find_by_id(self.id_of_subject)
+          return (disc ? disc.name : "Unknown")
+        else
+          if self.id_of_parent
+            dspace = DiscussionSpace.find_by_id(self.id_of_parent)
+            return (dspace ? "Discussions in #{dspace.name}" : "Unknown")
+          else
+            return "All Discussions"
+          end
+        end
+      else
+        return self.subject_class
+    end
   end
 end
 

@@ -296,6 +296,11 @@ class Ability
       community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
     end
+
+    # Comment fix
+    cannot :destroy, Comment do |comment|
+      comment.replies_locked?
+    end
   end
 
   ###

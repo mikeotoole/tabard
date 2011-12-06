@@ -6,6 +6,7 @@
 # This controller is for permissions.
 ###
 class Subdomains::PermissionsController < SubdomainsController
+  respond_to :html
   layout nil
 
 ###

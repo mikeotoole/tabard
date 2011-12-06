@@ -7,7 +7,7 @@
       %td
         - if permission.id
           = pf.input :id, :as => 'hidden', :wrapper => false
-          %h3= permission.subject_class
+          %h3= permission.label
         - else
           %fieldset.suggest
             %ol

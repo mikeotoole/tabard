@@ -25,11 +25,6 @@ describe Subdomains::PermissionsController do
       get 'index', :role_id => role.id
       response.should be_success
     end
-    it "should render permissions/index template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'index', :role_id => role.id
-      response.should render_template('permissions/index')
-    end
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index', :role_id => role.id
@@ -38,26 +33,25 @@ describe Subdomains::PermissionsController do
   end
 
   describe "GET 'show'" do
-    it "should be unauthorized when authenticated as a non admin user" do
-      sign_in user
-      get 'show', :id => permission, :role_id => role.id
-      response.response_code.should == 403
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'show', :id => permission, :role_id => role.id
+        assert_response :missing
+      end
     end
-    
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => permission, :role_id => role.id
-      response.should be_success
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'show', :id => permission, :role_id => role.id
+        assert_response :missing
+      end
     end
-    it "should render permissions/show template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => permission, :role_id => role.id
-      response.should render_template('permissions/show')
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get 'show', :id => permission, :role_id => role.id
-      response.should redirect_to(new_user_session_url)
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show', :id => permission, :role_id => role.id
+        assert_response :missing
+      end
     end
   end
 
@@ -72,11 +66,6 @@ describe Subdomains::PermissionsController do
       sign_in admin_user
       get 'new', :role_id => role.id
       response.should be_success
-    end
-    it "should render permissions/new template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'new', :role_id => role.id
-      response.should render_template('permissions/new')
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -101,12 +90,6 @@ describe Subdomains::PermissionsController do
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => permission, :role_id => role.id
       response.should redirect_to(new_user_session_url)
-    end
-
-    it "should render permissions/edit template" do
-      sign_in admin_user
-      get 'edit', :id => permission, :role_id => role.id
-      response.should render_template('permissions/edit')
     end
   end
 
