@@ -72,7 +72,7 @@ source 'http://rubygems.org'
   group :test do
     gem 'capybara'
     gem 'database_cleaner'
-    gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+    gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
     gem 'growl_notify'
