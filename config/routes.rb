@@ -74,7 +74,7 @@ DaBvRails::Application.routes.draw do
       resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
-      resources :roles, :except => [:show, :edit] do
+      resources :roles, :except => [:show] do
         resources :permissions
       end
 
