@@ -33,7 +33,7 @@ class AdminAbility
       can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm
       cannot [:destroy], CustomForm do |custom_form|
-        false # custom_form.application_form? # TODO Mike, Fix me.
+        custom_form.application_form?
       end
       can [:read, :delete_predefined_answer, :destroy], Question
       can [:read, :destroy, :update], PageSpace
