@@ -43,5 +43,8 @@
             %span= profile.name
 
   %article
-    :markdown
-      #{message.body}
+    - if message.is_system_sent # I found an XSS attack that :mardown is venerable to. For now we will only allow it on system sent messages.
+      :markdown
+        #{message.body}
+    - else
+      = message.body
