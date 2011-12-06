@@ -35,6 +35,9 @@ class Role < ActiveRecord::Base
       when "DiscussionSpace"
         permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Discussion",resource.id)
         return permission_match ? permission_match : Permission.new(role: self, subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: resource.id)
+      when "PageSpace"
+        permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Page",resource.id)
+        return permission_match ? permission_match : Permission.new(role: self, subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: resource.id)
       else
         return nil
     end
