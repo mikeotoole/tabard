@@ -50,10 +50,12 @@ class Community < ActiveRecord::Base
 ###
   validates :name,  :presence => true,
                     :uniqueness => { :case_sensitive => false },
-                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
+                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
+                    :length => { :maximum => 30 }
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
+  validates :slogan, :length => { :maximum => 50 }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
 
