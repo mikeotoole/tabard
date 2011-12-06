@@ -79,8 +79,8 @@ GEM
       eventmachine (>= 0.12.9)
     erubis (2.7.0)
     eventmachine (0.12.10)
-    excon (0.7.9)
-    execjs (1.2.9)
+    excon (0.7.12)
+    execjs (1.2.11)
       multi_json (~> 1.0)
     factory_girl (2.3.2)
       activesupport
