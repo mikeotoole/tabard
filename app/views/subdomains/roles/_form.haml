@@ -1,47 +1,25 @@
 = javascript_include_tag "permissions"
 
 = simple_form_for role do |f|
-  %fieldset
-    %ol
-      = f.input :name
+
+  %p= f.input :name, :wrapper => false
 
   - if role.persisted?
+    %h2 Permissions
+    %dl#permissions
+      %dt Discussion Spaces
+      %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
+      %dt Page Spaces
+      %dd= render 'subdomains/roles/permissions/page_spaces', :f => f, :role => role
 
-    %h2 Things they can do
-
-    %table
-      %thead
-        %tr
-          %th View
-          %th Edit
-          %th Add
-          %th Delete
-          %th.permresource Thing
-          %th.actions
-      %tbody
-        - if role.permissions.size > 0
-          - role.permissions.each do |permission|
-            = render 'permission', :role => role, :permission => permission
-        -else
-          %tr.temp
-            %td &nbsp;
-            %td{ :colspan => 5 } This role has no permissions.
-      %tfoot
-        %tr
-          %td{ :colspan => 6 }
-            = link_to "Add Thing", new_role_permission_path(role), :remote => true, 'data-type' => :text, :class => 'button new'
-
-    - unless role.is_system_generated
-      %h2 Users
-      - if current_community.member_profiles.size > 0
-        %fieldset#usercheckboxes
-          %ol
-            - current_community.community_profiles.each do |profile|
-              %li.boolean
-                = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
-                = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
-      - else
-        %p No users
-
-  %p
-    %button{ :type => 'submit' } Save
+  - unless role.is_system_generated
+    %h2 Users
+    - if current_community.member_profiles.size > 0
+      %fieldset#usercheckboxes
+        %ol
+          - current_community.community_profiles.each do |profile|
+            %li.boolean
+              = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
+              = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
+  %p.submit
+    %button{ :type => 'submit' } Save Changes

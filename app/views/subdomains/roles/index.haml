@@ -4,7 +4,7 @@
 
 %ul#roles
   - @roles.each do |role|
-    %li= link_to role.name, edit_role_path(role), :remote => true, :meta => (role.is_system_generated ? 'Edit permissions' : 'Edit users and permissions')
+    %li= link_to role.name
   - if (can? :create, @community.roles.new)
     %li= link_to 'New role', new_role_path, :class => 'button'
     

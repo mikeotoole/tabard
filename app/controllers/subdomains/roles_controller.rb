@@ -28,11 +28,6 @@ class Subdomains::RolesController < SubdomainsController
   def new
   end
 
-  # GET /roles/1/edit
-  def edit
-    respond_with(@role)
-  end
-
   # POST /roles
   def create
     if @role.save
@@ -50,7 +45,7 @@ class Subdomains::RolesController < SubdomainsController
       #  Permission.find_by_id(permission[:id]).update_attributes(:permission_level => permission[:permission_level])
       #end
     end
-    respond_with(@role, :location => edit_role_path(@role))
+    redirect_to roles_path
   end
 
   # DELETE /roles/1

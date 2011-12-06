@@ -1,9 +1,0 @@
-- title "Editing Role | #{current_community.name}"
-
-%h1= "Editing the \"#{@role.name}\" Role"
-
-- if (can? :destroy, role)
-  #actions
-    = link_to 'Delete', role, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete this role'
-    
-= render 'form', :role => @role

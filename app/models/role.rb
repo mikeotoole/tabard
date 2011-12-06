@@ -26,6 +26,10 @@ class Role < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
 
+  def permission_for_resource(resource)
+  	permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource.class.to_s,resource.id)
+  	return permission_match ? permission_match : Permission.new(:role => self, :subject_class => resource.class, :id_of_subject => resource.id)
+  end
 end
 
 
