@@ -7,18 +7,13 @@ DaBvRails::Application.routes.draw do
   # Users
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :confirmations => 'confirmations' }
   devise_scope :user do
-    get '/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
-  end  
+    get 'users/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
+  end
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
-  # Site Actions
-  put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
-
   # Documents
-  get "/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
-  post "/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
-
-  resources :documents
+  get "users/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
+  post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
   resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
@@ -148,6 +143,9 @@ DaBvRails::Application.routes.draw do
       resources :supported_games
     end
   end
+
+  # Site Actions
+  put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
 
   # Top level home page
   root :to => 'top_level#index'

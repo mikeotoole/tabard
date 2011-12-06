@@ -276,7 +276,7 @@ describe Subdomains::DiscussionsController do
     it "should lock the discussion when authenticated as community admin" do
       sign_in admin
       post :lock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_true
+      Discussion.find(discussion).is_locked.should be_true
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -288,12 +288,12 @@ describe Subdomains::DiscussionsController do
     it "should not lock the discussion when authenticated as a member" do
       sign_in owner
       post :lock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_false    
+      Discussion.find(discussion).is_locked.should be_false    
     end
     
     it "should not lock the discussion when not authenticated as a user" do
       post :lock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_false 
+      Discussion.find(discussion).is_locked.should be_false 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -311,14 +311,14 @@ describe Subdomains::DiscussionsController do
   describe "POST unlock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
-      discussion.has_been_locked = true
+      discussion.is_locked = true
       discussion.save
     }
   
     it "should unlock the discussion when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_false
+      Discussion.find(discussion).is_locked.should be_false
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -330,12 +330,12 @@ describe Subdomains::DiscussionsController do
     it "should not unlock the discussion when authenticated as a member" do
       sign_in owner
       post :unlock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_true    
+      Discussion.find(discussion).is_locked.should be_true    
     end
     
     it "should not unlock the discussion when not authenticated as a user" do
       post :unlock, :id => discussion.id.to_s
-      Discussion.find(discussion).has_been_locked.should be_true 
+      Discussion.find(discussion).is_locked.should be_true 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

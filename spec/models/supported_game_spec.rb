@@ -54,7 +54,7 @@ describe SupportedGame do
     community.supported_games.create(:game_id => wow.id, :game_type => "Wow", :name => "Test Supported Game").should be_valid
     supported_game = community.supported_games.first
     supported_game.game_announcement_space.should be_a(DiscussionSpace)
-    supported_game.game_announcement_space.is_announcement.should be_true
+    supported_game.game_announcement_space.is_announcement_space.should be_true
   end
     
   it "should destroy game specific announcement space on destruction" do

@@ -19,7 +19,7 @@ module MailboxHelper
     class_names << 'open' if message == @message
     class_names << 'sent' if !message.respond_to?('folder_name') && message.author_id == current_user.id
     class_names << 'read' if message.respond_to?('has_been_read') && message.has_been_read?
-    class_names << 'system' if message.system_sent
+    class_names << 'system' if message.is_system_sent
     class_names
   end
 

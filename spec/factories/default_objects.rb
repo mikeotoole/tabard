@@ -89,7 +89,13 @@ class DefaultObjects
   
     
   def self.community_admin
-    @community_admin ||= DefaultObjects.community.admin_profile.user
+    if @community_admin
+      @community_admin
+    else 
+      @community_admin = DefaultObjects.community.admin_profile.user
+      @community_admin.owned_communities << DefaultObjects.community
+      @community_admin
+    end
   end
   
   def self.community_two

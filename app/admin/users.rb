@@ -5,13 +5,13 @@ ActiveAdmin.register User do
   actions :index, :show
 
   action_item :only => :show do
-    if not user.admin_disabled and can? :disable, user
+    if not user.is_admin_disabled and can? :disable, user
       link_to "Disable User", disable_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to disable this user?'
     end
   end
 
   action_item :only => :show do
-    if (user.admin_disabled or user.user_disabled) and can? :reinstate, user
+    if (user.is_admin_disabled or user.is_user_disabled) and can? :reinstate, user
       link_to "Reinstate User", reinstate_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reinstate this user?'
     end
   end
@@ -21,7 +21,7 @@ ActiveAdmin.register User do
       link_to "Reset Password", reset_password_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
     end
   end
-  
+
   action_item :only => :show do
     if can? :reset_password, user
       link_to "Nuke User", nuke_admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to NUKE User?'
@@ -39,7 +39,7 @@ ActiveAdmin.register User do
     user.disable_by_admin if user
     redirect_to :action => :show
   end
-  
+
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
     user.disable_by_admin if user
@@ -80,9 +80,9 @@ ActiveAdmin.register User do
   filter :confirmation_sent_at
   filter :failed_attempts
   filter :created_at
-  filter :admin_disabled, :as => :select
+  filter :is_admin_disabled, :as => :select
   filter :admin_disabled_at
-  filter :user_disabled, :as => :select
+  filter :is_user_disabled, :as => :select
   filter :user_disabled_at
   filter :accepted_current_terms_of_service, :as => :select
   filter :accepted_current_privacy_policy, :as => :select
@@ -98,8 +98,8 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
-    column :admin_disabled
-    column :user_disabled
+    column :is_admin_disabled
+    column :is_user_disabled
     column :created_at
   end
 

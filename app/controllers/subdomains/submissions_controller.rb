@@ -43,7 +43,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # DELETE /submissions/:id(.:format)
   def destroy
     if @submission
-      add_new_flash_message 'Submission was deleted.', 'notice' if @submission.destroy
+      add_new_flash_message 'Submission was removed.', 'notice' if @submission.destroy
     end
     redirect_to custom_form_submissions_path @submission.custom_form
   end

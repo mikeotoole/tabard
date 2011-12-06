@@ -54,7 +54,7 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # DELETE /page_spaces/:id(.:format)
   def destroy
-    add_new_flash_message('Page space was successfully deleted.') if @page_space.destroy
+    add_new_flash_message('Page space was successfully removed.') if @page_space.destroy
     respond_with(@page_space)
   end
 

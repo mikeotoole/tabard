@@ -17,16 +17,16 @@ if ENV["RAILS_ENV"] != 'test'
     horde_wow_game = Wow.find(:first, :conditions => {:faction => "Horde"})
     republic_swtor_game = Swtor.find(:first, :conditions => {:faction => "Republic"})
     sith_swtor_game = Swtor.find(:first, :conditions => {:faction => "Empire"})
-    
+
     puts "Creating TOS"
     tos_document = TermsOfService.create(
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac mollis elit. Nulla at dapibus arcu. Aenean fringilla erat sit amet purus molestie suscipit. Etiam urna nisi, feugiat at commodo sed, dapibus vitae est.\n\nNullam pulvinar volutpat tellus, a semper massa lobortis et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed lobortis laoreet euismod. In semper justo ac massa interdum et vulputate dui accumsan. Maecenas eleifend, enim eu molestie volutpat, lacus sapien rutrum augue, vel mollis turpis arcu vel est.\n\nPellentesque pellentesque leo quis lacus convallis tempor. Maecenas interdum pellentesque justo, ut ultricies enim volutpat in.\n\nProin in diam nisi. Quisque at dolor arcu, at tincidunt tellus. Pellentesque ornare elit egestas enim fringilla eu dictum lacus varius. In hac habitasse platea dictumst. Vivamus feugiat imperdiet elementum. Fusce egestas enim in sapien vestibulum vitae tristique purus pellentesque.",
-      version: "1", published: true)
+      version: "1", is_published: true)
 
     puts "Creating Privacy Policy"
     privacy_policy_document = PrivacyPolicy.create(
       body: "Nullam consequat pulvinar velit, eget ultrices tortor semper vel. Suspendisse potenti. Praesent ut nibh in neque malesuada tempus sit amet eget odio. Curabitur volutpat, sem semper vulputate posuere, sem metus ornare elit, ac imperdiet felis urna hendrerit nisi. Maecenas vel ligula vel erat eleifend aliquet vel id ipsum.\n\nNullam convallis iaculis erat et mollis.\n\nSed urna neque, pretium in tempus nec, dapibus in enim. Aenean dapibus ipsum sit amet diam molestie aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque cursus feugiat ipsum vitae volutpat. Aenean laoreet, tortor a consequat convallis, libero dui suscipit tellus, et mollis massa nulla et libero. Vestibulum tincidunt quam nec lorem molestie id euismod urna venenatis. Aliquam erat volutpat.\n\nMauris dapibus, lorem ut lobortis blandit, enim ipsum fermentum neque, aliquet dictum nulla ligula sit amet quam. Fusce non pharetra sapien. Sed tincidunt euismod consequat.",
-      version: "1", published: true)
+      version: "1", is_published: true)
 
     puts "Creating RoboBilly!"
     robobilly = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
@@ -133,7 +133,7 @@ if ENV["RAILS_ENV"] != 'test'
       end
       app.save
       app.submission.custom_form.questions.each do |q|
-        if q.required
+        if q.is_required
           case q.type
             when 'TextQuestion'
               app.submission.answers.create(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')
@@ -320,7 +320,7 @@ if ENV["RAILS_ENV"] != 'test'
   puts "Creating a CustomForm for Just Another Headshot Clan"
   test_form = jahc.custom_forms.create(:name => "Test Custom Form", :instructions => "Fill me out!", :thankyou => "YAY!")
 
-  checkboxQ = MultiSelectQuestion.create(:style => "check_box_question", :body => "A check box makes me feel.", :explanation => "This is a checkbox question", :required => true)
+  checkboxQ = MultiSelectQuestion.create(:style => "check_box_question", :body => "A check box makes me feel.", :explanation => "This is a checkbox question", :is_required => true)
   checkboxQ.custom_form = test_form
   checkboxQ.save
   PredefinedAnswer.create(:body => "Happy", :select_question_id => checkboxQ.id)

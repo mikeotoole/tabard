@@ -358,14 +358,10 @@ describe Ability do
           end
           describe "Specific Page" do
             before(:each) do
-              @page = @page_space.pages.new(:name => "Some space",
+              @page = @page_space.pages.create!(:name => "Some space",
                 :markup => "lololol")
-              @page.user_profile = @user_profile
-              @page.save
-              @some_other_page_in_same_page_space = @page_space.pages.new(:name => "Some pther space",
+              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
                 :markup => "lololol")
-              @some_other_page_in_same_page_space.user_profile = @user_profile
-              @some_other_page_in_same_page_space.save
               pending
               #create_new_permission("Page", "View", @page.id)
             end
@@ -390,14 +386,10 @@ describe Ability do
           end
           describe "Specific Page" do
             before(:each) do
-              @page = @page_space.pages.new(:name => "Some space",
+              @page = @page_space.pages.create!(:name => "Some space",
                 :markup => "lololol")
-              @page.user_profile = @user_profile
-              @page.save
-              @some_other_page_in_same_page_space = @page_space.pages.new(:name => "Some pther space",
+              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
                 :markup => "lololol")
-              @some_other_page_in_same_page_space.user_profile = @user_profile
-              @some_other_page_in_same_page_space.save
               pending
               #create_new_permission("Page", "Update", @page.id)
             end
@@ -422,14 +414,10 @@ describe Ability do
           end
           describe "Specific Page" do
             before(:each) do
-              @page = @page_space.pages.new(:name => "Some space",
+              @page = @page_space.pages.create!(:name => "Some space",
                 :markup => "lololol")
-              @page.user_profile = @user_profile
-              @page.save
-              @some_other_page_in_same_page_space = @page_space.pages.new(:name => "Some pther space",
+              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
                 :markup => "lololol")
-              @some_other_page_in_same_page_space.user_profile = @user_profile
-              @some_other_page_in_same_page_space.save
               pending
               #create_new_permission("Page", "Create", @page.id)
             end
@@ -453,14 +441,10 @@ describe Ability do
           end
           describe "Specific Page" do
             before(:each) do
-              @page = @page_space.pages.new(:name => "Some space",
+              @page = @page_space.pages.create!(:name => "Some space",
                 :markup => "lololol")
-              @page.user_profile = @user_profile
-              @page.save
-              @some_other_page_in_same_page_space = @page_space.pages.new(:name => "Some pther space",
+              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
                 :markup => "lololol")
-              @some_other_page_in_same_page_space.user_profile = @user_profile
-              @some_other_page_in_same_page_space.save
               create_new_permission("Page", "Delete", @page.id)
             end
             it "should allow for specified page" do

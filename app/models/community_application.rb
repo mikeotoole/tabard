@@ -76,7 +76,7 @@ class CommunityApplication < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be.
     if self.community.email_notice_on_application
       message = Message.new(:subject => "Application Submitted for #{self.community.name}", :body => "#{self.user_profile.name} has submitted an application.", :to => [self.community.admin_profile_id])
-      message.system_sent = true
+      message.is_system_sent = true
       message.save
     end
   end
@@ -86,15 +86,15 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def accept_application
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Accepted")
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Accepted", :body => "Your application to #{self.community.name} has been accepted.", :to => [self.user_profile.id])
-    message.system_sent = true
+    message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
-      if self.community.protected_roster
+      if self.community.is_protected_roster
         RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
       else
         RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
@@ -107,11 +107,11 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def reject_application
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected", :body => "Your application to #{self.community.name} has been rejected.", :to => [self.user_profile.id])
-    message.system_sent = true
+    message.is_system_sent = true
     message.save
   end
 
@@ -120,12 +120,12 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def withdraw
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Withdrawn")
   end
 
   # This method returns true if this application's status is pending, otherwise false
-  def pending?
+  def is_pending?
     self.status == "Pending"
   end
 

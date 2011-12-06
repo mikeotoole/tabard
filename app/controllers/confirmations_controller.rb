@@ -5,7 +5,9 @@
 #
 # This controller overrides Devise's Confirmations Controller
 ###
-class ConfirmationsController < Devise::ConfirmationsController 
+class ConfirmationsController < Devise::ConfirmationsController
+  prepend_view_path "app/views/devise"
+
   protected
 
   # The path used after confirmation.
@@ -14,6 +16,6 @@ class ConfirmationsController < Devise::ConfirmationsController
       user_profile_path(resource.user_profile)
     else
       after_sign_in_path_for(resource)
-    end  
+    end
   end
 end

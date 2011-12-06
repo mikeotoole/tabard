@@ -1,5 +1,5 @@
 class AddPublicRosterToCommunity < ActiveRecord::Migration
   def change
-    add_column :communities, :public_roster, :boolean, :default => true
+    add_column :communities, :is_public_roster, :boolean, :default => true
   end
 end

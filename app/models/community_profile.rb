@@ -14,9 +14,9 @@ class CommunityProfile < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
-  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => false}
+  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => false}
   has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
-  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => true}
+  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => true}
   has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
   has_many :roster_assignments, :dependent => :destroy
   has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches

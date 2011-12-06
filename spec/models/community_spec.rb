@@ -5,18 +5,17 @@
 #  id                              :integer         not null, primary key
 #  name                            :string(255)
 #  slogan                          :string(255)
-#  accepting_members               :boolean         default(TRUE)
+#  is_accepting_members            :boolean         default(TRUE)
 #  email_notice_on_application     :boolean         default(TRUE)
 #  subdomain                       :string(255)
 #  created_at                      :datetime
 #  updated_at                      :datetime
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
-#  protected_roster                :boolean         default(FALSE)
+#  is_protected_roster             :boolean         default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
-#  public_roster                   :boolean         default(TRUE)
-#  has_been_deleted                :boolean         default(FALSE)
+#  is_public_roster                :boolean         default(TRUE)
 #
 
 require 'spec_helper'
@@ -109,28 +108,28 @@ describe Community do
     end
   end
 
-  describe "protected_roster" do
+  describe "is_protected_roster" do
     let(:community_profile) { create(:community_profile_with_characters, :community => community) }
     let(:new_proxy) { create(:character_proxy_with_wow_character, :user_profile => community_profile.user_profile)}
 
     it "should be false by default" do
-      community.protected_roster.should be_false
+      community.is_protected_roster.should be_false
     end
 
     describe "when true" do
       it "should make roster changes pending" do
-        community_profile.community.update_attribute(:protected_roster, true)
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :pending => false)
-        ra.pending.should be_true
+        community_profile.community.update_attribute(:is_protected_roster, true)
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => false)
+        ra.is_pending.should be_true
       end
     end
 
     describe "when false" do
       it "should not make roster changes pending" do
-        community_profile.community.update_attribute(:protected_roster, true)
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :pending => true)
-        ra.community_profile.community.protected_roster.should be_true
-        RosterAssignment.find(ra).pending.should be_true
+        community_profile.community.update_attribute(:is_protected_roster, true)
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => true)
+        ra.community_profile.community.is_protected_roster.should be_true
+        RosterAssignment.find(ra).is_pending.should be_true
       end
     end
   end
@@ -179,7 +178,7 @@ describe Community do
   end
 
   it "should be accepting members by default" do
-    community.accepting_members.should be_true
+    community.is_accepting_members.should be_true
   end
 
   it "should email on application by default" do
@@ -188,7 +187,7 @@ describe Community do
   
   it "should create a community announcements discussion space on creation" do
     community.community_announcement_space.should be_a(DiscussionSpace)
-    community.community_announcement_space.is_announcement.should be_true
+    community.community_announcement_space.is_announcement_space.should be_true
   end
   
   it "should destroy community announcements discussion space when destroyed" do

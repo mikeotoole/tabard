@@ -2,20 +2,18 @@
 #
 # Table name: comments
 #
-#  id                        :integer         not null, primary key
-#  body                      :text
-#  user_profile_id           :integer
-#  character_proxy_id        :integer
-#  community_id              :integer
-#  commentable_id            :integer
-#  commentable_type          :string(255)
-#  has_been_deleted          :boolean         default(FALSE)
-#  has_been_edited           :boolean         default(FALSE)
-#  has_been_locked           :boolean         default(FALSE)
-#  created_at                :datetime
-#  updated_at                :datetime
-#  original_commentable_id   :integer
-#  original_commentable_type :string(255)
+#  id                 :integer         not null, primary key
+#  body               :text
+#  user_profile_id    :integer
+#  character_proxy_id :integer
+#  community_id       :integer
+#  commentable_id     :integer
+#  commentable_type   :string(255)
+#  is_removed         :boolean         default(FALSE)
+#  has_been_edited    :boolean         default(FALSE)
+#  is_locked          :boolean         default(FALSE)
+#  created_at         :datetime
+#  updated_at         :datetime
 #
 
 require 'spec_helper'
@@ -52,16 +50,16 @@ describe Comment do
     comment.save.should be_false
   end
   
-  it "has_been_deleted should be false by default" do
-    comment.has_been_deleted.should be_false
+  it "is_removed should be false by default" do
+    comment.is_removed.should be_false
   end 
   
   it "has_been_edited should be false by default" do
     comment.has_been_edited.should be_false
   end 
   
-  it "has_been_locked should be false by default" do
-    comment.has_been_locked.should be_false
+  it "is_locked should be false by default" do
+    comment.is_locked.should be_false
   end
   
   it "should have community set to current community" do
@@ -103,30 +101,30 @@ describe Comment do
     nodeComment = create(:comment)
     nodeComment.comments << leafComment
     comment.comments << nodeComment
-    nodeComment.update_attribute(:has_been_deleted, true)
+    nodeComment.update_attribute(:is_removed, true)
     comment.number_of_comments.should eq(2)
   end
   
-  it "original_comment_item should return 1 if the comment has no replies" do
+  it "original_commentable should return 1 if the comment has no replies" do
     leafComment = create(:comment)
     nodeComment = create(:comment)
     nodeComment.comments << leafComment
     comment.comments << nodeComment
-    leafComment.original_comment_item.should eq(DefaultObjects.discussion)
+    leafComment.original_commentable.should eq(DefaultObjects.discussion)
   end
   
-  it "replies_locked? should return false when has_been_locked is false" do
+  it "replies_locked? should return false when is_locked is false" do
     comment.replies_locked?.should be_false
   end 
   
-  it "replies_locked? should return true when has_been_locked is true" do
-    comment.has_been_locked = true
+  it "replies_locked? should return true when is_locked is true" do
+    comment.is_locked = true
     comment.save
     comment.replies_locked?.should be_true
   end 
 
   it "should not be allowed to be created if what you are commenting on is locked" do
-    comment.has_been_locked = true
+    comment.is_locked = true
     comment.save
     invalid_comment = build(:comment, :commentable_id => comment.id, :commentable_type => comment.class.to_s)
     invalid_comment.valid?.should be_false

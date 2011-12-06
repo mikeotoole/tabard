@@ -20,4 +20,4 @@
           = image_tag proxy.avatar_url(:tiny), :class => 'avatar'
   = f.input :body, :label => false, :wrapper => false, :input_html => { :id => 'comment_body_'+unique }
   %button{ :type => 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'
-  = f.input :has_been_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false, :input_html => { :id => 'comment_has_been_locked_'+unique }
+  = f.input :is_locked, :label => 'Lock comment?', :type => :boolean, :wrapper => false, :input_html => { :id => 'comment_is_locked_'+unique }

@@ -7,9 +7,9 @@ class CreateComments < ActiveRecord::Migration
       t.integer :community_id
       t.integer :commentable_id
       t.string :commentable_type
-      t.boolean :has_been_deleted, :default => false
+      t.boolean :is_removed, :default => false
       t.boolean :has_been_edited, :default => false
-      t.boolean :has_been_locked, :default => false
+      t.boolean :is_locked, :default => false
 
       t.timestamps
     end

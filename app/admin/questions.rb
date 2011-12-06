@@ -23,7 +23,7 @@ ActiveAdmin.register Question do
   filter :created_at
   filter :updated_at
   filter :explanation
-  filter :required, :as => :select
+  filter :is_required, :as => :select
 
   index do
     column "View" do |question|

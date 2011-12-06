@@ -15,7 +15,6 @@ require 'spec_helper'
 
 describe Page do
   let(:page) { create(:page) }
-  let(:wow_page) { create(:page_by_wow_character) }
   let(:user_profile) { DefaultObjects.user_profile }
   let(:billy) { create(:billy) }
 
@@ -29,12 +28,6 @@ describe Page do
 
   it "should require markup" do
     build(:page, :markup => nil).should_not be_valid
-  end
-
-  it "should require user profile" do
-    page.should be_valid
-    page.user_profile = nil
-    page.save.should be_false
   end
   
   it "should require page space" do
@@ -90,22 +83,6 @@ describe Page do
     end
   end
   
-  it "poster should return the user profile when there is no character proxy" do
-    page.poster.should eq(DefaultObjects.user_profile)
-  end 
-  
-  it "poster should return the character when there is a character proxy" do
-    wow_page.poster.should be_a_kind_of(WowCharacter)
-  end
-  
-  it "charater_posted? should return false when there is no character proxy" do
-    page.charater_posted?.should be_false
-  end 
-  
-  it "charater_posted? should return true when there is a character proxy" do
-    wow_page.charater_posted?.should be_true
-  end 
-  
   it "should set show_in_navigation to false by default" do
     page.show_in_navigation.should be_false
   end
@@ -117,20 +94,5 @@ describe Page do
   it "should only allow 5 pages to be shown in navigation" do
     create_list(:page, 5, :show_in_navigation => true)
     build(:page, :show_in_navigation => true).should_not be_valid
-  end  
-  
-  describe "character_is_valid_for_user_profile" do
-    it "should allow a user's character" do
-      build(:page, :page_space_id => DefaultObjects.general_page_space.id, 
-          :user_profile_id => billy.user_profile.id,
-          :character_proxy_id => billy.character_proxies.first).should be_valid
-    end
-    it "should not allow a non user's character" do
-      another_user_profile = create(:user_profile_with_characters)
-      character_proxy_target = another_user_profile.character_proxies.first
-      build(:page, :page_space_id => DefaultObjects.general_page_space.id, 
-          :user_profile_id => billy.user_profile.id,
-          :character_proxy_id => another_user_profile.character_proxies.first).should_not be_valid
-    end
   end
 end

@@ -13,7 +13,7 @@ class PrivacyPolicy < Document
   # Gets the current Privacy Policy
   ###
   def self.current
-    PrivacyPolicy.find(:first, :conditions => { :published => true })
+    PrivacyPolicy.find(:first, :conditions => { :is_published => true })
   end
 
   ###
@@ -25,16 +25,17 @@ class PrivacyPolicy < Document
 end
 
 
+
 # == Schema Information
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  version    :integer
-#  published  :boolean         default(FALSE)
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 

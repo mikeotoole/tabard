@@ -39,6 +39,7 @@ en:
       inactive_signed_up: 'You have signed up successfully. Before logging in, please %{reason}.'
       updated: 'You updated your account successfully.'
       destroyed: 'Your account has been deactivated. We hope to see you again soon.'
+      not_signed_id: 'You must be signed in to cancel account.'
       reasons:
         unconfirmed: 'check your email to confirm your account.'
     unlocks:

@@ -14,9 +14,7 @@ ActiveAdmin.register Discussion do
   filter :name
   filter :body
   filter :created_at
-  filter :comments_enabled, :as => :select
-  filter :has_been_locked, :as => :select
-  filter :is_archived, :as => :select
+  filter :is_locked, :as => :select
 
   index do
     column "View" do |discussion|
@@ -28,7 +26,7 @@ ActiveAdmin.register Discussion do
     column :poster do |discussion|
       link_to discussion.poster.name, [:admin, discussion.poster]
     end
-    column :number_of_comments 
+    column :number_of_comments
     column :created_at
     column "Destroy" do |discussion|
       if can? :destroy, discussion
@@ -48,8 +46,8 @@ ActiveAdmin.register Discussion do
           column :poster do |comment|
             link_to comment.poster.name, [:admin, comment.poster]
           end
-          column :number_of_comments 
-          column :has_been_deleted
+          column :number_of_comments
+          column :is_removed
           column "Commentable Body" do |comment|
             comment.commentable_body
           end

@@ -8,7 +8,7 @@
   = @role.name
 %p
   %b System generated:
-  = @role.system_generated
+  = @role.is_system_generated
 
 - if @role.permissions.size > 0
   %ul

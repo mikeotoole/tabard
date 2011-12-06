@@ -67,10 +67,10 @@ $(document).ready ->
     .live 'ajax:success', (xhr, status, error) ->
       li = $(this).closest('li')
       bq = li.find('>blockquote')
-      li.addClass('deleted')
+      li.addClass('removed')
       bq
         .find('.reply[data-remote]')
-        .after('<em>Comment was deleted</em>')
+        .after('<em>Comment was removed</em>')
         .remove()
       bq
         .find('.avatar img')
@@ -81,7 +81,7 @@ $(document).ready ->
         .remove()
       bq
         .find('.meta')
-        .html('<time>Deleted less than a minute ago</time>')
+        .html('<time>Removed less than a minute ago</time>')
       li.collapsable()
   
   # Locks a comment and updates the DOM

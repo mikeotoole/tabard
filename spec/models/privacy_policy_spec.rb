@@ -2,31 +2,31 @@
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  version    :integer
-#  published  :boolean         default(FALSE)
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 
 require 'spec_helper'
 
 describe PrivacyPolicy do
   let(:document) { create(:privacy_policy) }
-  let(:unpublished) { create(:privacy_policy, :published => false) }
+  let(:unpublished) { create(:privacy_policy, :is_published => false) }
   
   describe "current" do
-    it "should return the Privacy Policy with highest version and marked as published" do
+    it "should return the Privacy Policy with highest version and marked as is_published" do
       document
       PrivacyPolicy.all.count.should eql 2
       PrivacyPolicy.first.should eql document
       document.version.should > PrivacyPolicy.last.version
-      document.published.should be_true
+      document.is_published.should be_true
       PrivacyPolicy.current.should eql document
     end
-     it "should not return the Privacy Policy with highest version and not marked as published" do
+     it "should not return the Privacy Policy with highest version and not marked as is_published" do
       document.version.should < unpublished.version
       PrivacyPolicy.current.should eql document
     end     

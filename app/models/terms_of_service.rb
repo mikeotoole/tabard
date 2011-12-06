@@ -13,7 +13,7 @@ class TermsOfService < Document
   # Gets the current Terms Of Service
   ###
   def self.current
-    TermsOfService.find(:first, :conditions => { :published => true })
+    TermsOfService.find(:first, :conditions => { :is_published => true })
   end
 
   ###
@@ -25,16 +25,17 @@ class TermsOfService < Document
 end
 
 
+
 # == Schema Information
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  version    :integer
-#  published  :boolean         default(FALSE)
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 

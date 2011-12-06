@@ -8,10 +8,11 @@
 class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
-  skip_before_filter :block_unauthorized_user!, :only => [:create, :new, :cancel_confirmation]
+  skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
   skip_before_filter :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update]
   before_filter :ensure_secure_subdomain, :only => [:create, :update]
+  before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
 
   # Cancels a user's account
   def destroy
@@ -21,12 +22,17 @@ class RegistrationsController < Devise::RegistrationsController
       set_flash_message :notice, :destroyed if is_navigational_format?
       respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
     else
-      render 'cancel_confirmation'  
-    end  
+      render 'cancel_confirmation'
+    end
   end
-  
+
+  # GET /users/cancel_confirmation
   def cancel_confirmation
     @user = current_user
+    if not @user
+      set_flash_message :alert, :not_signed_id
+      redirect_to new_user_session_url
+    end
   end
 
   # Where to redirect to after signing up with devise

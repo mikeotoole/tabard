@@ -15,13 +15,13 @@
           - if discussion.comments.size > 0
             = discussion.comments.last.poster_name
         %td
-          - if discussion.comments_enabled
+          - if not discussion.is_locked
             = discussion.number_of_comments
           - else
             Closed
         %td.actions
           %div
-            - if discussion.has_been_locked
+            - if discussion.is_locked
               - if (can? :lock, discussion)
                 -# TODO Doug - if allowed, link to unlock discussion
             - else

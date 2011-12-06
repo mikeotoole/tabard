@@ -204,16 +204,16 @@ describe Subdomains::CommentsController do
       response.should be_success
     end
     
-    it "sets comment has_been_deleted to true if comment has subcomments" do
+    it "sets comment is_removed to true if comment has subcomments" do
       comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
       comment.comments.should_not be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
-      Comment.find(comment).has_been_deleted.should be_true
+      Comment.find(comment).is_removed.should be_true
     end
     
     it "should be forbidden if comment is locked" do
-      comment.has_been_locked = true
+      comment.is_locked = true
       comment.save.should be_true
       sign_in user
       delete :destroy, :id => comment.id.to_s
@@ -242,7 +242,7 @@ describe Subdomains::CommentsController do
     it "should lock the comment when authenticated as community admin" do
       sign_in admin
       post :lock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_true
+      Comment.find(comment).is_locked.should be_true
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -254,12 +254,12 @@ describe Subdomains::CommentsController do
     it "should not lock the comment when authenticated as a user" do
       sign_in user
       post :lock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_false    
+      Comment.find(comment).is_locked.should be_false    
     end
     
     it "should not lock the comment when not authenticated as a user" do
       post :lock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_false 
+      Comment.find(comment).is_locked.should be_false 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -277,14 +277,14 @@ describe Subdomains::CommentsController do
   describe "POST unlock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
-      comment.has_been_locked = true
+      comment.is_locked = true
       comment.save
     }
   
     it "should unlock the comment when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_false
+      Comment.find(comment).is_locked.should be_false
     end
     
     it "should redirect back when authenticated as community admin" do
@@ -296,12 +296,12 @@ describe Subdomains::CommentsController do
     it "should not unlock the comment when authenticated as a user" do
       sign_in user
       post :unlock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_true    
+      Comment.find(comment).is_locked.should be_true    
     end
     
     it "should not unlock the comment when not authenticated as a user" do
       post :unlock, :id => comment.id.to_s
-      Comment.find(comment).has_been_locked.should be_true 
+      Comment.find(comment).is_locked.should be_true 
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

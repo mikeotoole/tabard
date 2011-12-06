@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :commentable_id, :commentable_type, :has_been_deleted, :has_been_edited, :has_been_locked, :character_proxy_id, :community
+  attr_accessible :body, :commentable_id, :commentable_type, :is_removed, :has_been_edited, :is_locked, :character_proxy_id, :community
 
 ###
 # Associations
@@ -20,11 +20,11 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   belongs_to :original_commentable, :polymorphic => true
   has_many :comments, :as => :commentable
-  
+
 ###
 # Scopes
 ###
-  scope :not_deleted, where(:has_been_deleted => false)  
+  scope :not_deleted, where(:is_removed => false)
 
 ###
 # Callbacks
@@ -85,8 +85,8 @@ class Comment < ActiveRecord::Base
   # [Returns] An integer that contains the number of comments this comment has including itself.
   ###
   def number_of_comments
-    total_num_comments = self.has_been_deleted ? 0 : 1
-    comments.each do |comment|
+    total_num_comments = self.is_removed ? 0 : 1
+    self.comments.each do |comment|
       total_num_comments += comment.number_of_comments
     end
     total_num_comments
@@ -97,7 +97,7 @@ class Comment < ActiveRecord::Base
   # [Returns] True if replies are allowed for this comment, otherwise false.
   ###
   def replies_locked?
-    self.has_been_locked or self.commentable_has_comments_disabled?
+    self.is_locked or self.commentable_has_comments_disabled?
   end
 
   ###
@@ -107,12 +107,15 @@ class Comment < ActiveRecord::Base
     return unless self.commentable_has_comments_disabled?
     self.errors.add(:base, "you can't reply to that!")
   end
-  
+
+  ###
+  # Overrides the default destory
+  # This will only delete the comment if it has no comments. If it has comments it will be marked is_removed and it's body will be cleared.
   def destroy
     if self.comments.empty?
       self.delete
     else
-      self.has_been_deleted = true
+      self.is_removed = true
       self.body = ""
       self.save(:validate => false)
     end
@@ -125,7 +128,7 @@ class Comment < ActiveRecord::Base
   def commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
-  
+
   # The original_commentable_type always needs to be of the base class type and not the subclass type.
   def original_commentable_type=(sType)
     super(sType.to_s.classify.constantize.base_class.to_s)
@@ -145,8 +148,7 @@ protected
   ###
   def commentable_has_comments_disabled?
     (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
-    (self.original_commentable.respond_to?('comment_enabled?') and not self.original_commentable.comments_enabled?) or
-    (self.original_commentable.respond_to?('has_been_locked') and self.original_commentable.has_been_locked)
+    (self.original_commentable.respond_to?('is_locked') and self.original_commentable.is_locked)
   end
 
 ###
@@ -177,7 +179,7 @@ protected
       self.community = self.original_commentable.community
     end
   end
-  
+
   ###
   # _before_create_
   #
@@ -196,6 +198,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: comments
@@ -207,9 +210,9 @@ end
 #  community_id              :integer
 #  commentable_id            :integer
 #  commentable_type          :string(255)
-#  has_been_deleted          :boolean         default(FALSE)
+#  is_removed                :boolean         default(FALSE)
 #  has_been_edited           :boolean         default(FALSE)
-#  has_been_locked           :boolean         default(FALSE)
+#  is_locked                 :boolean         default(FALSE)
 #  created_at                :datetime
 #  updated_at                :datetime
 #  original_commentable_id   :integer

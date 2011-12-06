@@ -31,7 +31,7 @@ ActiveAdmin.register Page do
 #     rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
 #     rows.insert(1, :poster)
 #     attributes_table *rows
-    attributes_table default_attribute_table_rows, :community
+    attributes_table *default_attribute_table_rows, :community
 
     div do
       page.body

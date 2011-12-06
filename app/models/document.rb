@@ -23,7 +23,7 @@ class Document < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :version, :published, :type
+  attr_accessible :body, :version, :is_published, :type
 
 ###
 # Associations
@@ -84,10 +84,10 @@ protected
   # before_update
   #
   # This method will check that the current document trying to be updated is not published.
-  # [Returns] False if published is true, otherwise true.
+  # [Returns] False if is_published is true, otherwise true.
   ###
   def ensure_published_document_not_updated
-    if Document.find(self).published
+    if Document.find(self).is_published
       self.errors.add(:type, "This document has been published and can't be changed.")
       return false
     else
@@ -115,16 +115,17 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
-#  version    :integer
-#  published  :boolean         default(FALSE)
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 

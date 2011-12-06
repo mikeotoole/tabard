@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:name) {|n| "Custom Form #{n}"}
     instructions "Fill out my form"
     thankyou "Thank You for submitting my form"
-    published true
+    is_published true
     community_id { DefaultObjects.community.id }
   end
   
@@ -22,7 +22,7 @@ FactoryGirl.define do
   end
 
   factory :required_long_answer_question, :parent => :long_answer_question do
-    required true
+    is_required true
   end
   
   factory :short_answer_question, :class => TextQuestion do
