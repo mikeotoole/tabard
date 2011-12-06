@@ -66,6 +66,7 @@ class DiscussionSpace < ActiveRecord::Base
   end
 
   def apply_default_permissions
+    return if self.is_announcement_space
     self.community.member_role.permissions.create(subject_class: "DiscussionSpace", id_of_subject: self.id, permission_level: "View")
     self.community.member_role.permissions.create(subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: self.id, permission_level: "Delete")
   end
