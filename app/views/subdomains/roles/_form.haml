@@ -7,7 +7,7 @@
 
   - if @role.persisted?
 
-    %h2 Permissions
+    %h2 Things they can do
 
     %table
       %thead
@@ -16,7 +16,7 @@
           %th Edit
           %th Add
           %th Delete
-          %th.permresource Permission
+          %th.permresource Thing
           %th.actions
       %tbody
         - if @role.permissions.size > 0
@@ -29,7 +29,7 @@
       %tfoot
         %tr
           %td{ :colspan => 6 }
-            = link_to "Add Permission", new_role_permission_path(@role), :remote => true, 'data-type' => :text, :class => 'button new'
+            = link_to "Add Thing", new_role_permission_path(@role), :remote => true, 'data-type' => :text, :class => 'button new'
 
     - unless @role.is_system_generated
       %h2 Users
