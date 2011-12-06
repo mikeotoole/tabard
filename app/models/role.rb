@@ -11,6 +11,7 @@ class Role < ActiveRecord::Base
 ###
   belongs_to :community
   has_many :permissions
+  has_many :discussion_space_permissions, :
   has_and_belongs_to_many :community_profiles
   has_many :user_profiles, :through => :community_profiles
   accepts_nested_attributes_for :permissions, :allow_destroy => true
@@ -26,6 +27,10 @@ class Role < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
 
+  def permission_for_resource(resource)
+  	permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource.class,resource.id).limit(1)
+  	return permission_match ? permission_match : Permission.new(:role => self, :subject_class => resource.class, :id_of_subject => resource.id
+  end
 end
 
 
