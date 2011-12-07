@@ -253,7 +253,11 @@ $(document).ready ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
-  # slider input fields that have a 'none' value
+  # slider input fields
+  $('.slider').each ->
+    $(this).css('width', $(this).find('label').length * 70)
+  $('.slider_with_none').each ->
+    $(this).css('width', $(this).find('li label').length * 70 + 25)
   $('.slider_with_none > input').bind 'click', ->
     $(this).prop 'checked', true
     $(this).parent().find('ul input').prop 'checked', false

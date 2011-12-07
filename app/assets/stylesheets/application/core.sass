@@ -389,6 +389,7 @@ button,
       padding: 0 9px 0 0 !important
       position: absolute !important
       text-align: right !important
+      text-indent: 0 !important
       top: 2px
       +transition(background .2s linear)
       
@@ -421,28 +422,30 @@ button,
         z-index: 2
         
   .slider_with_none
-    width: 350px
+    width: 305px
     
     > label
-      width: 55px
+      padding: 0 !important
+      width: 25px
+      text-align: center !important
       z-index: 6 !important
     
     li
       
       &:nth-child(1) label
-        width: 125px
+        width: 80px
         z-index: 5
         
       &:nth-child(2) label
-        width: 195px
+        width: 150px
         z-index: 4
         
       &:nth-child(3) label
-        width: 265px
+        width: 220px
         z-index: 3
         
       &:nth-child(4) label
-        width: 335px
+        width: 290px
         z-index: 2  
   
   fieldset

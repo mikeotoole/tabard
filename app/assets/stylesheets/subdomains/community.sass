@@ -395,6 +395,82 @@ button,
     white-space: nowrap
   
   
+  // Page actions
+  
+  #page_actions
+    position: absolute
+    top: 10px
+    right: 10px
+    
+  .actions a
+    background: image-url('application/icons.png') no-repeat #9C682F
+    +border_radius(5)
+    display: block
+    float: left
+    height: 30px
+    overflow: hidden
+    padding: 0
+    margin: 0 0 0 5px
+    text-indent: -500em
+    +transition(background-color .2s linear, box-shadow .2s linear)
+    width: 30px
+    
+    &:hover
+      background: image-url('application/icons.png') no-repeat #570A17
+      +box_shadow(0 0 10px #333)
+    
+      &[meta]
+      
+        &:before
+          background: rgba(#6F2B3D,.9)
+          +border_radius(5)
+          color: #fff
+          content: attr(meta)
+          font-size: 13px
+          height: 30px
+          line-height: 30px
+          margin: 0 5px 0 0
+          padding: 0 10px
+          position: absolute
+          right: 100%
+          text-indent: 0
+          white-space: nowrap
+        
+        &:after
+          border: 5px solid transparent
+          border-left: 5px solid rgba(#6F2B3D,.9)
+          content: ''
+          height: 0
+          left: -5px
+          position: absolute
+          top: 10px
+          width: 0
+    
+    &.apply
+      background-position: 0 -30px
+      
+    &.new
+      background-position: -600px -30px
+      
+    &.delete
+      background-position: -30px -30px
+      
+    &.edit
+      background-position: -60px -30px
+  
+    &.approve
+      background-position: -510px -30px
+    
+    &.reject
+      background-position: -540px -30px
+      
+    &.review
+      background-position: -120px -30px
+    
+    &.submission
+      background-position: -600px -30px
+  
+  
   // FORMS
   
   input[type="url"],
@@ -594,75 +670,6 @@ button,
             
             div
               position: relative
-            
-              a
-                background: image-url('application/icons.png') no-repeat #9C682F
-                +border_radius(5)
-                display: block
-                float: left
-                height: 30px
-                overflow: hidden
-                padding: 0
-                margin: 0 0 0 5px
-                text-indent: -500em
-                +transition(background-color .2s linear, box-shadow .2s linear)
-                width: 30px
-                
-                &:hover
-                  background: image-url('application/icons.png') no-repeat #570A17
-                  +box_shadow(0 0 10px #333)
-                
-                  &[meta]
-                  
-                    &:before
-                      background: rgba(#6F2B3D,.9)
-                      +border_radius(5)
-                      color: #fff
-                      content: attr(meta)
-                      font-size: 13px
-                      height: 30px
-                      line-height: 30px
-                      margin: 0 5px 0 0
-                      padding: 0 10px
-                      position: absolute
-                      right: 100%
-                      text-indent: 0
-                      white-space: nowrap
-                    
-                    &:after
-                      border: 5px solid transparent
-                      border-left: 5px solid rgba(#6F2B3D,.9)
-                      content: ''
-                      height: 0
-                      left: -5px
-                      position: absolute
-                      top: 10px
-                      width: 0
-                      
-                
-                &.apply
-                  background-position: 0 -30px
-                  
-                &.new
-                  background-position: -600px -30px
-                  
-                &.delete
-                  background-position: -30px -30px
-                  
-                &.edit
-                  background-position: -60px -30px
-              
-                &.approve
-                  background-position: -510px -30px
-                
-                &.reject
-                  background-position: -540px -30px
-                  
-                &.review
-                  background-position: -120px -30px
-                
-                &.submission
-                  background-position: -600px -30px
             
           img.avatar
             background: #C7B2A3
@@ -1786,6 +1793,45 @@ button,
 
 
   // Roles & Permissions
+  
+  #roles
+    left: 30px
+    position: absolute
+    top: 100px
+    width: 140px
+    z-index: 1
+    
+    ul
+      padding: 0
+      margin: 0 0 20px
+      
+      li
+        list-style: none
+        
+        a
+          background: #835839
+          +border_radius(5,0,0,5)
+          display: block
+          color: #DBD5B6
+          margin: 0 0 1px
+          padding: 5px 10px
+          text-decoration: none
+          +transition(background .2s linear, color .2s linear)
+          
+          &:hover
+            background: #5E371B
+            color: #fff
+  
+  #role
+    border: 1px solid #5E371B
+    border-bottom: 0
+    +border_radius(5,0,0,0)
+    +box_shadow(-5px -5px 10px rgba(#000,.2))
+    border-right: 0
+    margin: 0 -30px 0 140px
+    padding: 20px 30px 0
+    position: relative
+    z-index: 2
   
   #usercheckboxes
     margin: 0 -5px 0 0

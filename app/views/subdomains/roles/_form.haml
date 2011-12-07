@@ -4,20 +4,27 @@
   - if role.is_system_generated
     %h2= role.name
   - else
+    #page_actions.actions
+      = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
     %p= f.input :name, :wrapper => false
 
   - if role.persisted?
     %h2 Permissions
     %dl#permissions
-      %dt Comments
+      %dt
+        %h2 Comments
       %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
-      %dt Community Applications
+      %dt
+        %h2 Community Applications
       %dd= render 'subdomains/roles/permissions/community_applications', :f => f, :role => role
-      %dt Custom Forms
+      %dt
+        %h2 Custom Forms
       %dd= render 'subdomains/roles/permissions/custom_forms', :f => f, :role => role
-      %dt Discussion Spaces
+      %dt
+        %h2 Discussion Spaces
       %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
-      %dt Page Spaces
+      %dt
+        %h2 Page Spaces
       %dd= render 'subdomains/roles/permissions/page_spaces', :f => f, :role => role
 
   - unless role.is_system_generated

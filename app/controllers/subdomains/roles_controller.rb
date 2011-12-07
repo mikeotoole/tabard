@@ -55,10 +55,11 @@ class Subdomains::RolesController < SubdomainsController
 
   # DELETE /roles/1
   def destroy
+    role_name = @role.name
     if @role.destroy
-      # TODO Doug/Joe Determine this success message, if applicable. -JW
+      add_new_flash_message "The \"#{role_name}\" role has been deleted.", 'notice'
+      redirect_to roles_path
     end
-    respond_with(@role)
   end
 
 ###

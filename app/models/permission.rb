@@ -29,8 +29,9 @@ class Permission < ActiveRecord::Base
   validates :subject_class, :presence => true,
       :inclusion => { :in => VALID_SUBJECT_CLASSES, :message => "%{value} is not currently a supported permissionable" }
 
-  validates :permission_level, :presence => true,
-      :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" }
+  validates :permission_level,
+      :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" },
+      :unless => Proc.new{|permission| permission.permission_level.blank? }
 
   validates :parent_association_for_subject, :inclusion => { :in => VALID_PARENT_ASSOCIATIONS, :message => "%{value} is not a valid parent."}, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
 
@@ -38,6 +39,8 @@ class Permission < ActiveRecord::Base
   validates :parent_association_for_subject, :presence => true, :unless => Proc.new { |permission| permission.id_of_parent.blank?}
 
   validate :only_subject_id_if_not_nested
+
+  validate :only_booleans_or_permission_level
 
 ###
 # Delegates
@@ -49,6 +52,10 @@ class Permission < ActiveRecord::Base
 ###
   def only_subject_id_if_not_nested
     errors.add(:base, "You can not have both id_of_subject and parent_association_for_subject/id_of_parent") if (not self.id_of_subject.blank?) and ((not self.id_of_parent.blank?) or (not self.parent_association_for_subject.blank?))
+  end
+
+  def only_booleans_or_permission_level
+    errors.add(:base, "You can not have both permission_level and hand picked permissions") if (not self.permission_level.blank?) and (self.can_read or self.can_update or self.can_create or self.can_destroy)
   end
 
   def label
@@ -84,6 +91,8 @@ end
 
 
 
+
+
 # == Schema Information
 #
 # Table name: permissions
@@ -99,5 +108,9 @@ end
 #  can_accept                     :boolean         default(FALSE)
 #  parent_association_for_subject :string(255)
 #  id_of_parent                   :integer
+#  can_read                       :boolean         default(FALSE)
+#  can_create                     :boolean         default(FALSE)
+#  can_update                     :boolean         default(FALSE)
+#  can_destroy                    :boolean         default(FALSE)
 #
 
