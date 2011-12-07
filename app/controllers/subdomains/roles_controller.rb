@@ -48,7 +48,7 @@ class Subdomains::RolesController < SubdomainsController
     if @role.update_attributes(params[:role])
       add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
     else
-      add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'error'
+      add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
     end
     redirect_to roles_path
   end
