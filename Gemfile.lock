@@ -305,6 +305,7 @@ DEPENDENCIES
   haml-rails
   heroku
   jquery-rails
+  meta_search
   mini_magick
   newrelic_rpm
   pg
