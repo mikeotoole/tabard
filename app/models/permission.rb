@@ -76,30 +76,6 @@ class Permission < ActiveRecord::Base
         return self.subject_class
     end
   end
-
-  def view_permission=(value)
-    @view_permission = value
-  end
-
-  def view_permission
-    @view_permission ||= can_view(permission_level)
-    return @view_permission
-  end
-
-  def can_view(some_permission_level)
-    case some_permission_level
-    when "View" 
-      return true 
-    when "Update" 
-      return true 
-    when "Create"
-      return true 
-    when "Delete"
-      return true 
-    else
-      return false
-    end
-  end
 end
 
 
