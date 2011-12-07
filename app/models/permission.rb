@@ -19,7 +19,7 @@ class Permission < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :role
+  belongs_to :role, :inverse_of => :permissions
 
 ###
 # Validators

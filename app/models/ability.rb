@@ -135,7 +135,7 @@ class Ability
     end
 
     # Comment Rules
-    can [:read, :create], Comment do |comment|
+    can [:read], Comment do |comment|
       user.user_profile.is_member?(comment.community)
     end
     can [:update], Comment do |comment|
