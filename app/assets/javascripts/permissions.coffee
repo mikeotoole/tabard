@@ -23,6 +23,7 @@ $(document).ready ->
       $(this).addClass('active')
       $('#roles, #role').removeClass('busy')
       $('#role').html xhr.responseText
+      $('#role').find('.slider, .slider_with_none').trigger 'init'
   
   $('#permissions > dt h2').click ->
     $(this).closest('dt').find('+ dd').slideToggle 200

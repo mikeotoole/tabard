@@ -254,14 +254,18 @@ $(document).ready ->
   $('form .select[affects] input:checked').trigger 'change'
   
   # slider input fields
-  $('.slider').each ->
-    $(this).css('width', $(this).find('label').length * 70)
-  $('.slider_with_none').each ->
-    $(this).css('width', $(this).find('li label').length * 70 + 25)
-  $('.slider_with_none > input').bind 'click', ->
+  $('.slider')
+    .live 'init', ->
+      $(this).css('width', $(this).find('label').length * 70)
+    .trigger 'init'
+  $('.slider_with_none')
+    .live 'init', ->
+      $(this).css('width', $(this).find('li label').length * 70 + 25)
+    .trigger 'init'
+  $('.slider_with_none > input').live 'click', ->
     $(this).prop 'checked', true
     $(this).parent().find('ul input').prop 'checked', false
-  $('.slider_with_none ul input').bind 'click', ->
+  $('.slider_with_none ul input').live 'click', ->
     $(this).closest('.slider_with_none').find('> input').prop 'checked', false
   
   # fluid sidebar menu
