@@ -36,7 +36,7 @@ class Subdomains::RolesController < SubdomainsController
   # POST /roles
   def create
     if @role.save
-      add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'notice'
+      add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
     end
     respond_with(@role, :location => edit_role_path(@role))
   end
@@ -45,7 +45,7 @@ class Subdomains::RolesController < SubdomainsController
   def update
     params[:role][:community_profile_ids] ||= Array.new
     if @role.update_attributes(params[:role])
-      add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'notice'
+      add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
       #for params[:role][:permissions].each do |permission|
       #  Permission.find_by_id(permission[:id]).update_attributes(:permission_level => permission[:permission_level])
       #end

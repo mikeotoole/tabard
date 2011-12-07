@@ -14,9 +14,15 @@ $(document).ready ->
         }
         false
     .bind 'ajax:beforeSend', ->
-      $('#roles').addClass('busy')
+      $('#roles, #role').addClass('busy')
     .bind 'ajax:error', (xhr, status, error) ->
-      $(this).removeClass('busy')
+      $('#roles, #role').removeClass('busy')
       $.alert { body: 'Error: unable to load role.' }
     .bind 'ajax:success', (event, data, status, xhr) ->
+      $('#roles li').removeClass('active')
+      $(this).addClass('active')
+      $('#roles, #role').removeClass('busy')
       $('#role').html xhr.responseText
+  
+  $('#permissions > dt h2').click ->
+    $(this).closest('dt').find('+ dd').slideToggle 200

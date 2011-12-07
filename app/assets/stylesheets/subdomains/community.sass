@@ -1797,7 +1797,7 @@ button,
   #roles
     left: 30px
     position: absolute
-    top: 100px
+    top: 90px
     width: 140px
     z-index: 1
     
@@ -1818,20 +1818,81 @@ button,
           text-decoration: none
           +transition(background .2s linear, color .2s linear)
           
-          &:hover
-            background: #5E371B
-            color: #fff
+        &.active a,
+        a:hover
+          background: #5E371B
+          color: #fff
   
   #role
+    background: #fff
     border: 1px solid #5E371B
-    border-bottom: 0
-    +border_radius(5,0,0,0)
+    +border_radius(5,0,0,5)
     +box_shadow(-5px -5px 10px rgba(#000,.2))
     border-right: 0
     margin: 0 -30px 0 140px
-    padding: 20px 30px 0
+    padding: 0
     position: relative
     z-index: 2
+    
+    form > p
+      padding: 10px 20px 20px
+    
+    .submit
+      background: #C7B2A4
+      border: 0
+      +border_radius(0,0,0,5)
+      margin: -4px 0 0
+      padding: 20px
+      position: relative
+      z-index: 1
+      
+      &:before
+        background: #fff
+        +border_radius(0,0,5,5)
+        content: ''
+        height: 5px
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+  
+  #permissions
+    padding: 1px 0 0
+    position: relative
+    z-index: 2
+  
+    >dd
+      display: none
+      padding: 10px 30px 20px
+      
+      h3
+        padding: 0
+        
+      dl
+        
+        dt
+          padding: 0
+    
+    >dt
+      padding: 0
+      
+      h2
+        +bg_gradient(#EBDED5,#F5EFEB)
+        border-bottom: 1px solid #ECDFD6
+        border-left: 0
+        +border_radius(5)
+        border-right: 0
+        border-top: 1px solid #C7B2A4
+        font: 20px DinLight, serif
+        height: 40px
+        line-height: 40px
+        margin: 1px 2px 0
+        padding: 0 20px
+      
+        &:hover
+          background: #8F334E
+          color: #fff
+          cursor: pointer
   
   #usercheckboxes
     margin: 0 -5px 0 0
