@@ -55,7 +55,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.save
       add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with @community_application, :location => root_url(:subdomain => current_community.subdomain), :error_behavior => :list
+    respond_with @community_application, :location => custom_form_thankyou_url(@community_application.custom_form), :error_behavior => :list
   end
 
   # DELETE /community_applications/1
