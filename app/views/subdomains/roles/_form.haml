@@ -4,35 +4,35 @@
     - if role.name == 'Member'
       %p This role is automatically assigned to every member of the community.
   - else
-    #page_actions.actions
-      = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
+    - if role.persisted?
+      #page_actions.actions
+        = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
     %p= f.input :name, :wrapper => false, :label => 'Role Name'
 
-  - if role.persisted?
-    %dl#permissions
+  %dl#permissions
+    %dt
+      %h2 Comments
+    %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
+    %dt
+      %h2 Community Applications
+    %dd= render 'subdomains/roles/permissions/community_applications', :f => f, :role => role
+    %dt
+      %h2 Custom Forms
+    %dd= render 'subdomains/roles/permissions/custom_forms', :f => f, :role => role
+    %dt
+      %h2 Discussion Spaces
+    %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
+    %dt
+      %h2 Page Spaces
+    %dd= render 'subdomains/roles/permissions/page_spaces', :f => f, :role => role
+    - unless role.is_system_generated and current_community.member_profiles.any?
       %dt
-        %h2 Comments
-      %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
-      %dt
-        %h2 Community Applications
-      %dd= render 'subdomains/roles/permissions/community_applications', :f => f, :role => role
-      %dt
-        %h2 Custom Forms
-      %dd= render 'subdomains/roles/permissions/custom_forms', :f => f, :role => role
-      %dt
-        %h2 Discussion Spaces
-      %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
-      %dt
-        %h2 Page Spaces
-      %dd= render 'subdomains/roles/permissions/page_spaces', :f => f, :role => role
-      - unless role.is_system_generated and current_community.member_profiles.any?
-        %dt
-          %h2 Users
-          %dd#usercheckboxes
-            %ol
-              - current_community.community_profiles.each do |profile|
-                %li.boolean
-                  = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
-                  = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
+        %h2 Users
+        %dd#usercheckboxes
+          %ol
+            - current_community.community_profiles.each do |profile|
+              %li.boolean
+                = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
+                = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
   %p.submit
     %button{ :type => 'submit' } Save Changes

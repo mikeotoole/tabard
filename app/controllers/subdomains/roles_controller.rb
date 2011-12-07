@@ -12,7 +12,7 @@ class Subdomains::RolesController < SubdomainsController
 # Before Filters
 ###
   before_filter :block_unauthorized_user!
-  before_filter :load_role, :except => [:new, :create]
+  before_filter :load_roles
   before_filter :create_role, :only => [:new, :create]
   before_filter 
   authorize_resource
@@ -38,8 +38,12 @@ class Subdomains::RolesController < SubdomainsController
   def create
     if @role.save
       add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
+      redirect_to roles_path
+    else
+      add_new_flash_message "Unable to create role.", 'alert'
+      logger.debug @role.errors.to_yaml
+      render :index
     end
-    respond_with(@role, :render => :index)
   end
 
   # PUT /roles/1
@@ -47,11 +51,11 @@ class Subdomains::RolesController < SubdomainsController
     params[:role][:community_profile_ids] ||= Array.new
     if @role.update_attributes(params[:role])
       add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
+      redirect_to roles_path
     else
       add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
-      logger.debug @role.errors.to_yaml
+      render :index
     end
-    redirect_to roles_path
   end
 
   # DELETE /roles/1
@@ -76,9 +80,9 @@ protected
   #
   # This before filter attempts to populate @roles and @role from the current_community.
   ###
-  def load_role
+  def load_roles
     @roles = current_community.roles
-    @role = current_community.roles.find_by_id(params[:id])
+    @role ||= current_community.roles.find_by_id(params[:id])
   end
 
   ###
