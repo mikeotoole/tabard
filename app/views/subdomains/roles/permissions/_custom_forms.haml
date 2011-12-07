@@ -5,16 +5,13 @@
     %dd
       = f.simple_fields_for :permissions, role.permissions_for_resource(form) do |pf|
         = pf.input :subject_class, :as => :hidden
-        %h3 For this custom form
         .slider_with_none
           = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
           = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
-      %h3 For submissions to this
       = f.simple_fields_for :permissions, role.nested_permissions_for_resource(form) do |pf|
         = pf.input :subject_class, :as => :hidden
         = pf.input :id_of_parent, :as => :hidden
         = pf.input :parent_association_for_subject, :as => :hidden
-        .slider_with_none
-          = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
-          = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
+        = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
+        = pf.input :view_permission, :as => :boolean, :label => 'View submissions', :wrapper => false, :required => false
         = pf.input :can_accept, :as => :boolean, :label => 'Accept/Reject', :wrapper => false
