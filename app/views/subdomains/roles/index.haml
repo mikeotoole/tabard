@@ -1,13 +1,14 @@
-- title 'Roles'
+- title "Roles & Permissions | #{current_community.name}"
+= javascript_include_tag "permissions"
 
 %h1 User Roles & Permissions
 
 #roles
   %ul
     - @roles.each do |role|
-      %li{ :class => (role == @roles.first ? 'active' : '') }= link_to role.name, edit_role_path(role), :remote => true, 'data-type' => :text
+      %li= link_to role.name, edit_role_path(role), :remote => true, 'data-type' => :text, :class => (role == @roles.first ? 'active' : '')
   - if (can? :create, @community.roles.new)
-    = link_to 'New role', new_role_path, :class => 'button'
+    = link_to 'New role', new_role_path, :remote => true, 'data-type' => :text, :class => 'button'
     
 #role
   = render 'form', :role => @roles.first

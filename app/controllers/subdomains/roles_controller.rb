@@ -26,6 +26,7 @@ class Subdomains::RolesController < SubdomainsController
 
   # GET /roles/new
   def new
+    render :partial => 'form', :locals => { :role => @role }
   end
 
   # GET /roles/edit

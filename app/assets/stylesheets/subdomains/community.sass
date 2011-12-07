@@ -1817,11 +1817,25 @@ button,
           padding: 5px 10px
           text-decoration: none
           +transition(background .2s linear, color .2s linear)
+        
+          &.active,
+          &:hover
+            background: #5E371B
+            color: #fff
           
-        &.active a,
-        a:hover
-          background: #5E371B
-          color: #fff
+    &.busy
+        
+      &:after
+        background: rgba(#480010,.8)
+        +border_radius(5,0,0,5)
+        bottom: 0
+        +box_shadow(0 0 3px #480010)
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+        z-index: 9
   
   #role
     background: #fff
@@ -1863,6 +1877,20 @@ button,
         position: absolute
         right: 0
         top: 0
+    
+    &.busy
+        
+      &:after
+        background: image-url('application/busy.gif') center center no-repeat rgba(#480010,.8)
+        +border_radius(4,0,0,4)
+        bottom: 0
+        +box_shadow(0 0 3px #480010)
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+        z-index: 9
   
   #permissions
     padding: 1px 0 0
