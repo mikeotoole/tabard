@@ -8,8 +8,8 @@ namespace :seed do
   task :extra => :environment do
     puts "Seeding extra users and communities.."
     
-    @dont_run = true
-     %w{ users characters communities discussions }.each do |part|
+    @dont_run = Rails.env.development?
+     %w{ users characters communities roles_permissions discussions pages messages custom_forms }.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/../../db/seeds/#{part}.rb"
     end
     
