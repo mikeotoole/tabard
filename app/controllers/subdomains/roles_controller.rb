@@ -28,6 +28,11 @@ class Subdomains::RolesController < SubdomainsController
   def new
   end
 
+  # GET /roles/edit
+  def edit
+    render :partial => 'form', :locals => { :role => @role }
+  end
+
   # POST /roles
   def create
     if @role.save

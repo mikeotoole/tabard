@@ -1,18 +1,29 @@
 $(document).ready ->
 
-  # Cancel button for newly added permissions
-  $('form.role .actions .cancel')
-    .live 'click', ->
-      $(this).closest('tr').remove()
-  
-  # Adds new permission form fields to the DOM
-  $('form.role tfoot .new')
+  $('#roles').data 'changed', false
+  $('#roles li')
+    .bind 'click', ->
+      if $('#roles').data 'changed'
+        $.confirm {
+          title: 'Wait'
+          body: 'Your changes will be lost if you switch to editing a different role.'
+          affirm: 'Discard Changes'
+          action: ->
+            $('#roles').data 'changed', false
+            $(this).trigger 'click'
+        }
+        false
     .bind 'ajax:beforeSend', ->
-      $(this).addClass('busy')
+      $('#roles').addClass('busy')
     .bind 'ajax:error', (xhr, status, error) ->
       $(this).removeClass('busy')
-      $.alert { body: 'Error: unable to create new permission.' }
+      $.alert { body: 'Error: unable to load role.' }
     .bind 'ajax:success', (event, data, status, xhr) ->
-      $(this).removeClass('busy')
-      tbody = $(this).closest('table').find('tbody')
-      tbody.append xhr.responseText
+      $('#role').html xhr.responseText
+  
+  $('#role .slider > input').bind 'click', ->
+    $(this).prop 'checked', true
+    $(this).parent().find('ul input').prop 'checked', false
+    
+  $('#role .slider ul input').bind 'click', ->
+    $(this).closest('.slider').find('> input').prop 'checked', false
