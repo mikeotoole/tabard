@@ -13,6 +13,6 @@
         = pf.input :id_of_parent, :as => :hidden
         = pf.input :parent_association_for_subject, :as => :hidden
         = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
-        = pf.input :add_permission, :as => :boolean, :label => 'Add discussions', :wrapper => false
-        = pf.input :delete_permission, :as => :boolean, :label => 'Delete discussions', :wrapper => false
+        = pf.input :can_read, :as => :boolean, :label => 'Add discussions', :wrapper => false
+        = pf.input :can_destroy, :as => :boolean, :label => 'Delete discussions', :wrapper => false
         = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false

@@ -19,7 +19,8 @@ class Role < ActiveRecord::Base
 # Validators
 ###
   validates :community, :presence => true
-  validates :name, :uniqueness => {:scope => :community_id}
+  validates :name,  :uniqueness => {:scope => :community_id}, 
+                    :length => { :maximum => 100 }
 
 ###
 # Delegates
