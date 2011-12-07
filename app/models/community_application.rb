@@ -94,12 +94,12 @@ include Rails.application.routes.url_helpers
   # [Returns] True if this action was successful, otherwise false.
   ###
   def accept_application
-    return false unless self.is_pending?
+    return false if self.accepted?
     self.update_attribute(:status, "Accepted")
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
     # TODO Doug/Bryan, Determine what message content should be. subdomain_home
     message = Message.new(:subject => "Application Accepted",
-                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in My Communities.",
+                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
                           :to => [self.user_profile.id])
     message.is_system_sent = true
     message.save
