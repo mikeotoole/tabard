@@ -13,7 +13,7 @@ include Rails.application.routes.url_helpers
 # Attribute accessible
 ###
   attr_accessible :submission_attributes, :character_proxy_ids
-  
+
 ###
 # Constants
 ###
@@ -80,9 +80,9 @@ include Rails.application.routes.url_helpers
     # TODO Doug/Bryan, Determine what message content should be.
     if self.community.email_notice_on_application
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
-      
-      message = Message.new(:subject => "Application Submitted for #{self.community.name}", 
-                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})", 
+
+      message = Message.new(:subject => "Application Submitted for #{self.community.name}",
+                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})",
                             :to => [self.community.admin_profile_id])
       message.is_system_sent = true
       message.save
@@ -98,8 +98,8 @@ include Rails.application.routes.url_helpers
     self.update_attribute(:status, "Accepted")
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
     # TODO Doug/Bryan, Determine what message content should be. subdomain_home
-    message = Message.new(:subject => "Application Accepted", 
-                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in My Communities.", 
+    message = Message.new(:subject => "Application Accepted",
+                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in My Communities.",
                           :to => [self.user_profile.id])
     message.is_system_sent = true
     message.save
@@ -120,8 +120,8 @@ include Rails.application.routes.url_helpers
     return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
     # TODO Doug/Bryan, Determine what message content should be.
-    message = Message.new(:subject => "Application Rejected", 
-                          :body => "Your application to #{self.community.name} has been rejected.", 
+    message = Message.new(:subject => "Application Rejected",
+                          :body => "Your application to #{self.community.name} has been rejected.",
                           :to => [self.user_profile.id])
     message.is_system_sent = true
     message.save

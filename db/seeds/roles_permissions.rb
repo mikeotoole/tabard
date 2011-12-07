@@ -11,17 +11,17 @@
 #   * +community_name+ -> array of strings with the name of permissions that should be given to all classes.
 #   * +community_name+ -> array of strings with the last name of user role should be given to.
 # [Returns] a new role
-### 
+###
 def create_role(community_name, role_name, subject_class_array, permission_level_array, to_users_array)
   puts "#{community_name} is creating a #{role_name} role..."
   role = Community.find_by_name(community_name).roles.create(:name => role_name)
-  
+
   subject_class_array.each do |sub_class|
     permission_level_array.each do |level|
       role.permissions.create(:subject_class => sub_class, :permission_level => level)
     end
   end
-  
+
   to_users_array.each do |last_name|
     profile = UserProfile.find_by_last_name(last_name)
     puts "Giving #{profile.name} the #{role_name} role..."
@@ -35,7 +35,7 @@ unless @dont_run
   ###
   # Create Roles with Permissions
   ###
-  
+
   create_role('Two Maidens', 'n00b', %w(Role), %w(Show), %w(Moose))
 
 end
