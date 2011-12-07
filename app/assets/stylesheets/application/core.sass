@@ -130,7 +130,7 @@
         top: 0
     
     .meta
-      font: 13px DinLight, sans
+      font: 13px DinLight, sans-serif
     
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
@@ -155,7 +155,7 @@ button,
 .button,
 #body button,
 #body .button
-  border: 1px solid
+  border: 1px solid transparent
   +border_radius(5)
   display: inline-block
   height: 30px
@@ -169,7 +169,7 @@ button,
 #body
 
   label
-    font-family: DinMedium, sans
+    font-family: DinMedium, sans-serif
   
   input,
   textarea
@@ -186,7 +186,7 @@ button,
   input[type="password"],
   textarea
     +border_radius(5)
-    border: 1px solid
+    border: 1px solid transparent
     display: block
     line-height: 20px
     margin: 5px 0 0
@@ -211,7 +211,7 @@ button,
       z-index: 3
       
       &:before
-        border: 1px solid
+        border: 1px solid transparent
         +border_radius(5)
         content: ''
         height: 24px
@@ -219,11 +219,9 @@ button,
         position: absolute
         top: 0
         width: 24px
-    
-    &:checked
-
-      + label:after
-        border: 1px solid
+        
+      &:after
+        border: 1px solid transparent
         +border_radius(20)
         content: ''
         height: 14px
@@ -235,7 +233,7 @@ button,
 
   dfn.hint
     display: block
-    font: 12px DinMedium, sans
+    font: 12px DinMedium, sans-serif
     padding: 5px
     
     &:before
@@ -255,7 +253,7 @@ button,
   
     ul
       +border_radius(5)
-      border: 1px solid
+      border: 1px solid transparent
       display: block
       height: 0
       line-height: 30px
@@ -283,9 +281,9 @@ button,
         
         label
           +border_radius(5)
-          border-top: 1px solid
+          border-top: 1px solid transparent
           display: none
-          font-family: DinMedium, sans
+          font-family: DinMedium, sans-serif
           line-height: 20px
           margin: 1px 0 0
           min-height: 20px
@@ -297,7 +295,7 @@ button,
             display: none
         
           .avatar
-            border: 1px solid
+            border: 1px solid transparent
             +border_radius(3)
             float: left
             margin: -1px 6px 3px -6px
@@ -313,7 +311,7 @@ button,
             background: transparent
             border-top-color: transparent
             display: block
-            font-family: DinLight, sans
+            font-family: DinLight, sans-serif
             height: 28px
             line-height: 28px
             overflow: hidden
@@ -362,7 +360,7 @@ button,
   
   .slider,
   .slider_with_none
-    border: 1px solid
+    border: 1px solid transparent
     +border_radius(5)
     height: 30px
     margin: 0 0 10px
@@ -499,7 +497,7 @@ button,
       +border_radius(6,6,5,5)
       color: #fff
       display: block
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       margin: -32px 0 0
       padding: 40px 10px 5px
       position: relative
@@ -567,13 +565,13 @@ button,
   
   p
     color: #4B385C
-    font: 16px DinLight, sans
+    font: 16px DinLight, sans-serif
     margin: 20px 20px 30px
     padding: 0
     
     a
       +border_radius(3)
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       padding: 0 3px
       text-decoration: underline
       

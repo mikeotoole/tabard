@@ -27,7 +27,7 @@ body
 body
   background: #fff
   color: #896243
-  font-family: DinLight, sans
+  font-family: DinLight, sans-serif
   min-width: 980px
   
   &:before
@@ -49,7 +49,7 @@ body
     top: 670px
   
   strong
-    font-family: DinMedium, sans
+    font-family: DinMedium, sans-serif
 
 #content
   background: image-url('community/bg.jpg') center 70px no-repeat
@@ -85,7 +85,7 @@ body
     
     strong
       display: block
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       font-size: 36px
       letter-spacing: -2px
       text-shadow: 3px 3px 3px rgba(#000,.5)
@@ -169,7 +169,7 @@ body
               +border_radius(3)
               color: #792914
               content: attr(meta)
-              font: 12px DinMedium, sans
+              font: 12px DinMedium, sans-serif
               line-height: 12px
               padding: 3px
               position: absolute
@@ -381,7 +381,7 @@ button,
     
     dt
       color: #6e4b2f
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       padding: 10px 0 0
     
     dd
@@ -391,7 +391,7 @@ button,
     color: #6e4b2f
 
   time
-    font: 12px DinMedium, sans
+    font: 12px DinMedium, sans-serif
     white-space: nowrap
   
   
@@ -511,7 +511,7 @@ button,
       + label:after
         background: #805B3E
         +bg_gradient(#805B3E,#330901)
-        border-color: #ddd
+        border-color: #5D361A
         +box_shadow(0 0 9px #999)
       
       &:focus + label,
@@ -705,7 +705,7 @@ button,
             
               li
                 display: inline-block
-                font: 13px DinLight, sans
+                font: 13px DinLight, sans-serif
                 line-height: 20px
                 padding: 0 0 3px
                 width: 180px
@@ -857,7 +857,7 @@ button,
             
             a
               color: #aa000b
-              font-family: DinMedium, sans
+              font-family: DinMedium, sans-serif
               position: relative
               text-decoration: none
               
@@ -962,7 +962,7 @@ button,
           .reply
             display: block
             float: left
-            font: 12px DinMedium, sans
+            font: 12px DinMedium, sans-serif
             line-height: 20px
             padding: 0 5px
             margin: 10px 0 0
@@ -1354,7 +1354,7 @@ button,
         +border_radius(0)
         display: none
         float: none
-        font: 12px DinMedium, sans
+        font: 12px DinMedium, sans-serif
         height: auto
         line-height: 20px !important
         margin: 5px 0 0
@@ -1378,7 +1378,7 @@ button,
       >label
         bottom: 5px
         display: none
-        font: 12px DinMedium, sans
+        font: 12px DinMedium, sans-serif
         line-height: 20px
         margin: 0
         padding: 0 5px 0 0
@@ -1520,7 +1520,7 @@ button,
       
       .submitter a
         height: auto
-        font: 14px DinMedium, sans
+        font: 14px DinMedium, sans-serif
         line-height: 48px
         min-height: 48px
         padding: 0 8px 0 50px
@@ -1565,10 +1565,10 @@ button,
               line-height: 16px
           
               &.name
-                font: 14px DinMedium, sans
+                font: 14px DinMedium, sans-serif
                 
               &.game
-                font: 12px DinLight, sans
+                font: 12px DinLight, sans-serif
       
       .instructions
         
@@ -1681,7 +1681,7 @@ button,
             
             &:before
               content: '\00D7'
-              font: 17px DinLight, sans
+              font: 17px DinLight, sans-serif
               height: 20px
               right: 0
               line-height: 17px
@@ -1773,7 +1773,7 @@ button,
         
         &:before
           content: '\002B'
-          font: 17px DinLight, sans
+          font: 17px DinLight, sans-serif
           height: 20px
           right: 0
           line-height: 17px
@@ -1817,9 +1817,12 @@ button,
           padding: 5px 10px
           text-decoration: none
           +transition(background .2s linear, color .2s linear)
-        
-          &.active,
+          
           &:hover
+            background: #CD4622
+            color: #fff
+            
+          &.active
             background: #5E371B
             color: #fff
           
@@ -1935,47 +1938,61 @@ button,
           cursor: pointer
   
   #usercheckboxes
-    margin: 0 -5px 0 0
+    margin: 0 -5px 10px 0
     
-    li
-      display: inline
-      clear: none
-      float: left
-      margin: 0
-      position: relative
+    &:after
+      clear: both
+      content: '.'
+      display: block
+      height: 0
+      visibility: hidden
+    
+    ol
+      padding: 0
       
-      label
-        +bg_gradient(#F0EAE6,#FFF)
-        border-top: 1px solid #bb8b7d
-        +border_radius(5)
-        height: 27px
-        margin: 0 6px 5px 1px
-        padding: 5px
-        width: 209px
-        +transition(box-shadow .2s linear)
-        
-        &:before
-          left: 5px
-          top: 5px
-          
-        &:after
-          left: 10px
-          top: 10px
-        
-        &:hover
-          +box_shadow(0 0 10px rgba(#000,.5))
-        
-      input
-        left: 10px
+      li
+        display: inline
+        clear: none
+        float: left
         margin: 0
-        top: 10px
+        position: relative
         
-        &:checked + label
-          background: #E5DAD3
-          border: 1px solid #bb8b7d
-          +box_shadow(0 0 10px rgba(#000,.3))
-          height: 26px
-          margin: 0 5px 5px 0
+        label
+          +bg_gradient(#F0EAE6,#FFF)
+          border-top: 1px solid #bb8b7d
+          +border_radius(5)
+          font: 13px DinMedium, sans-serif
+          height: 17px
+          line-height: 16px
+          margin: 0 6px 5px 1px
+          padding: 5px
+          text-indent: 25px
+          +transition(box-shadow .2s linear, color .2s linear)
+          width: 201px
+          
+          &:before
+            display: none
+            
+          &:after
+            border-color: #C6B1A3
+            left: 5px
+            top: 5px
+          
+          &:hover
+            +box_shadow(0 0 6px rgba(#000,.5))
+          
+        input
+          left: 10px
+          margin: 0
+          top: 10px
+          
+          &:checked + label
+            background: #E5DAD3
+            border: 1px solid #bb8b7d
+            +box_shadow(0 0 3px rgba(#000,.3))
+            color: #560716
+            height: 16px
+            margin: 0 5px 5px 0
 
 
 @import application/footer
