@@ -38,4 +38,8 @@ unless @dont_run
   
   create_role('Two Maidens', 'n00b', %w(Role), %w(Show), %w(Moose))
 
+  # Joe's Workaround. Don't kill me Mike
+  puts "Promoting DMoose to officer in JAH..."
+  UserProfile.find_by_last_name("Moose").add_new_role(Community.find_by_name("Just Another Headshot").roles.find_by_name("Officer"))
+
 end
