@@ -1,6 +1,7 @@
 - if current_community.custom_forms.any?
   %dl
     - current_community.custom_forms.each do |form|
+      - next if form == current_community.community_application_form
       %dt
         %h3= form.name
       %dd
@@ -15,7 +16,4 @@
           = pf.input :parent_association_for_subject, :as => :hidden
           = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
           = pf.input :can_read, :as => :boolean, :label => 'View submissions', :wrapper => false, :required => false
-          - if form.id == current_community.community_application_form_id
-            = pf.input :can_accept, :as => :boolean, :label => 'Accept/Reject', :wrapper => false
-          - else
-            = pf.input :can_create, :as => :boolean, :label => 'Create submissions', :wrapper => false
+          = pf.input :can_create, :as => :boolean, :label => 'Create submissions', :wrapper => false

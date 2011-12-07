@@ -51,6 +51,10 @@ class Role < ActiveRecord::Base
         return nil
     end
   end
+
+  def is_member_role?
+    self.community.member_role.id == self.id
+  end
 end
 
 
