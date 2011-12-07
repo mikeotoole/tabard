@@ -4,7 +4,7 @@ $(document).ready ->
   $('form.community_application .sidebar .characters .select label')
     .bind 'click', ->
       select = $(this).closest('.select')
-      select.before($(this).clone())
+      select.before $(this).clone()
   $('form.community_application .sidebar .characters .select input[type="checkbox"]')
     .bind 'change', ->
       select = $(this).closest('.select')

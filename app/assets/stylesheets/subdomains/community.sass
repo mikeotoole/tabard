@@ -1428,18 +1428,6 @@ button,
           ul
             width: 276px
             
-            label
-              position: relative
-              text-indent: 25px
-              
-              img.avatar
-                display: block
-                height: 20px
-                left: 3px
-                position: absolute
-                top: 1px
-                width: 20px
-            
             input:checked + label
               display: none
         
@@ -1450,10 +1438,10 @@ button,
         +border_radius(5)
         color: #fff
         display: block
-        min-height: 28px
-        line-height: 28px
+        min-height: 40px
+        line-height: 20px
         margin: 0 0 2px
-        padding: 0 20px 0 35px
+        padding: 4px 20px 4px 50px
         position: relative
         +transition(background .2s linear)
           
@@ -1490,10 +1478,10 @@ button,
             color: #BBA55F
             content: '\00D7'
             font-size: 17px
-            height: 28px
-            line-height: 28px
+            line-height: 1em
             position: absolute
-            right: 8px
+            top: 0
+            right: 5px
           
           &:hover
             background: #5F381C
@@ -1548,6 +1536,7 @@ button,
               width: 558px
               
             .select
+              margin-bottom: 15px
               width: auto
               
               ul
