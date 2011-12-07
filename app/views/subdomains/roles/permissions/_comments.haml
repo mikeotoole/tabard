@@ -1,6 +1,4 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("Comment") do |pf|
   = pf.input :subject_class, :as => :hidden
-  .slider_with_none
-    = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
-    = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
+  = pf.input :can_create, :as => :boolean, :label => 'Add new comments', :wrapper => false
   = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock', :wrapper => false
