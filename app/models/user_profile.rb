@@ -51,7 +51,9 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name, :presence => true, :uniqueness => true
+  validates :display_name,  :presence => true, 
+                            :uniqueness => true, 
+                            :length => { :maximum => 50 }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :user, :presence => true
   validates :avatar,

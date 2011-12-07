@@ -23,7 +23,8 @@ class CustomForm < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name, :presence => true
+  validates :name,  :presence => true, 
+                    :length => { :maximum => 100 }
   validates :instructions, :presence => true
   validates :thankyou, :presence => true
   validates :community, :presence => true

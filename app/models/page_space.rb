@@ -21,7 +21,8 @@ class PageSpace < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name, :presence => true
+  validates :name,  :presence => true, 
+                    :length => { :maximum => 100 }
   validates :community, :presence => true
 
 ###

@@ -2,7 +2,7 @@
 
 = simple_form_for community_application, :html => {:novalidate => true} do |f|
   .questions
-    %h1= @community_application.custom_form_name
+    %h1= community_application.custom_form_name
     = f.simple_fields_for :submission do |sf|
       %fieldset
         %ol
@@ -32,7 +32,7 @@
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:
-        - @community_application.character_proxies.each do |cp|
+        - community_application.character_proxies.each do |cp|
           %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
             = image_tag cp.avatar_url(:icon), :class => 'avatar'
             = cp.name

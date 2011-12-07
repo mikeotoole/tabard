@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20111207035159) do
   add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
   add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_id"
   add_index "comments", ["community_id"], :name => "index_comments_on_community_id"
+  add_index "comments", ["original_commentable_id", "original_commentable_type"], :name => "index_comments_original_commentable"
   add_index "comments", ["user_profile_id"], :name => "index_comments_on_user_profile_id"
 
   create_table "communities", :force => true do |t|
