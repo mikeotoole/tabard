@@ -12,7 +12,10 @@
     - @custom_forms.each do |custom_form|
       - if (custom_form.is_published and not custom_form.application_form?) or can? :edit, custom_form
         %tr
-          %td.cinch= link_to custom_form.name, custom_form.application_form? ? new_community_application_path : new_custom_form_submission_path(custom_form)
+          - if custom_form.application_form?
+            %td.cinch= custom_form.name
+          - else
+            %td.cinch= link_to custom_form.name, new_custom_form_submission_path(custom_form)
           %td= custom_form.instructions
           %td= custom_form.is_published if can? :edit, custom_form
           %td.actions
