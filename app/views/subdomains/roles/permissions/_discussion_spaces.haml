@@ -6,7 +6,7 @@
       = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
         = pf.input :subject_class, :as => :hidden
         %h3 For this discussion space
-        .slider
+        .slider_with_none
           = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
           = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
       %h3 For discussions within this space
@@ -14,7 +14,7 @@
         = pf.input :subject_class, :as => :hidden
         = pf.input :id_of_parent, :as => :hidden
         = pf.input :parent_association_for_subject, :as => :hidden
-        .slider
+        .slider_with_none
           = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
           = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
         = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock', :wrapper => false

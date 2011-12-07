@@ -20,10 +20,3 @@ $(document).ready ->
       $.alert { body: 'Error: unable to load role.' }
     .bind 'ajax:success', (event, data, status, xhr) ->
       $('#role').html xhr.responseText
-  
-  $('#role .slider > input').bind 'click', ->
-    $(this).prop 'checked', true
-    $(this).parent().find('ul input').prop 'checked', false
-    
-  $('#role .slider ul input').bind 'click', ->
-    $(this).closest('.slider').find('> input').prop 'checked', false

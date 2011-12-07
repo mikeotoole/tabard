@@ -253,6 +253,13 @@ $(document).ready ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
+  # slider input fields that have a 'none' value
+  $('.slider_with_none > input').bind 'click', ->
+    $(this).prop 'checked', true
+    $(this).parent().find('ul input').prop 'checked', false
+  $('.slider_with_none ul input').bind 'click', ->
+    $(this).closest('.slider_with_none').find('> input').prop 'checked', false
+  
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
