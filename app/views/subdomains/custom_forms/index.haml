@@ -22,4 +22,6 @@
               = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot
     %tr
-      %td{ :colspan => 4 }= link_to 'New form', new_custom_form_path, :class => 'button'
+      %td{ :colspan => 4 }
+        - if (can? :create, current_community.custom_forms.new)
+          = link_to 'New form', new_custom_form_path, :class => 'button'

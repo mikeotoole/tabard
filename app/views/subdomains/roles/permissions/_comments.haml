@@ -6,7 +6,7 @@
       = pf.input :subject_class, :as => :hidden
       %h3 For comments within this community
       .slider
-        = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :checked => !pf.object.persisted?
+        = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
         = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
       = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock', :wrapper => false
       
