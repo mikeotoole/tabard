@@ -42,8 +42,6 @@ class Subdomains::PagesController < SubdomainsController
 
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
-    @page.user_profile = current_user.user_profile
-    @page.character_proxy = (character_active? ? current_character.character_proxy : nil)
     add_new_flash_message('Page was successfully created.') if @page.save
     respond_with(@page)
   end
@@ -82,7 +80,7 @@ protected
   # This before filter attempts to create @page from: pages.new(params[:page]), for the page space.
   ###
   def create_page
-    page_space = PageSpace.find_by_id(params[:page_space_id])
+    page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
     @page = page_space.pages.new(params[:page])
   end
 end

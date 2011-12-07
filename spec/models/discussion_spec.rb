@@ -72,13 +72,15 @@ describe Discussion do
   end
   
   it "number_of_comments should return the total number of comments attached" do
+    comment = create(:comment, :commentable_id => discussion.id)
     comment.number_of_comments.should eq(1)
-    leafComment = create(:comment)
-    nodeComment = create(:comment)
-    nodeComment.comments << leafComment
+    nodeComment = FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment")
     comment.comments << nodeComment
+    comment.number_of_comments.should eq(2)
+    leafComment = FactoryGirl.create(:comment, :commentable_id => nodeComment.id, :commentable_type => "Comment")
+    nodeComment.comments << leafComment
+    nodeComment.number_of_comments.should eq(2)
     comment.number_of_comments.should eq(3)
-    discussion.comments << comment
     discussion.number_of_comments.should eq(3)
   end
 

@@ -28,12 +28,12 @@ class AdminAbility
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
       can [:read], ActiveAdmin::Dashboards::DashboardController
-      can [:read, :suspend, :reinstate, :reset_password], User
+      can [:read, :disable, :reinstate, :reset_password], User
       can [:read], UserProfile
       can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm
       cannot [:destroy], CustomForm do |custom_form|
-        false # custom_form.application_form? # TODO Mike, Fix me.
+        custom_form.application_form?
       end
       can [:read, :delete_predefined_answer, :destroy], Question
       can [:read, :destroy, :update], PageSpace
@@ -53,7 +53,7 @@ class AdminAbility
 
     # Rules for admin user. (Inherits rules from moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
-      can [:destroy, :reset_all_passwords, :sign_out_all_users], User
+      can [:nuke, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
       can [:destroy], Community

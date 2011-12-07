@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111203232918) do
+ActiveRecord::Schema.define(:version => 20111204235701) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -87,16 +87,19 @@ ActiveRecord::Schema.define(:version => 20111203232918) do
     t.integer  "community_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.boolean  "is_removed",         :default => false
-    t.boolean  "has_been_edited",    :default => false
-    t.boolean  "is_locked",          :default => false
+    t.boolean  "is_removed",                :default => false
+    t.boolean  "has_been_edited",           :default => false
+    t.boolean  "is_locked",                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "original_commentable_id"
+    t.string   "original_commentable_type"
   end
 
   add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
   add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_id"
   add_index "comments", ["community_id"], :name => "index_comments_on_community_id"
+  add_index "comments", ["original_commentable_id", "original_commentable_type"], :name => "index_comments_original_commentable"
   add_index "comments", ["user_profile_id"], :name => "index_comments_on_user_profile_id"
 
   create_table "communities", :force => true do |t|
@@ -260,17 +263,13 @@ ActiveRecord::Schema.define(:version => 20111203232918) do
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.text     "markup"
-    t.integer  "character_proxy_id"
-    t.integer  "user_profile_id"
     t.integer  "page_space_id"
     t.boolean  "show_in_navigation", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "pages", ["character_proxy_id"], :name => "index_pages_on_character_proxy_id"
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
-  add_index "pages", ["user_profile_id"], :name => "index_pages_on_user_profile_id"
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
@@ -414,8 +413,11 @@ ActiveRecord::Schema.define(:version => 20111203232918) do
     t.boolean  "accepted_current_terms_of_service",                :default => false
     t.boolean  "accepted_current_privacy_policy",                  :default => false
     t.boolean  "force_logout",                                     :default => false
-    t.boolean  "suspended",                                        :default => false
+    t.boolean  "is_admin_disabled",                                :default => false
     t.date     "date_of_birth"
+    t.boolean  "is_user_disabled",                                 :default => false
+    t.datetime "user_disabled_at"
+    t.datetime "admin_disabled_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

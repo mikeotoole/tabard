@@ -37,12 +37,15 @@ source 'http://rubygems.org'
 
 # Admin Portal
   gem 'activeadmin'
+  gem 'meta_search'
 
-# Asset Specific Gems
+# Asset Specific Gems, Pulled out of Group for Activeadmin
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+  
   group :assets do
-    gem 'sass-rails'
-    gem 'coffee-rails'
-    gem 'uglifier'
+
   end
 
 # Production Specific Gems

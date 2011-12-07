@@ -2,18 +2,20 @@
 #
 # Table name: comments
 #
-#  id                 :integer         not null, primary key
-#  body               :text
-#  user_profile_id    :integer
-#  character_proxy_id :integer
-#  community_id       :integer
-#  commentable_id     :integer
-#  commentable_type   :string(255)
-#  is_removed         :boolean         default(FALSE)
-#  has_been_edited    :boolean         default(FALSE)
-#  is_locked          :boolean         default(FALSE)
-#  created_at         :datetime
-#  updated_at         :datetime
+#  id                        :integer         not null, primary key
+#  body                      :text
+#  user_profile_id           :integer
+#  character_proxy_id        :integer
+#  community_id              :integer
+#  commentable_id            :integer
+#  commentable_type          :string(255)
+#  is_removed                :boolean         default(FALSE)
+#  has_been_edited           :boolean         default(FALSE)
+#  is_locked                 :boolean         default(FALSE)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  original_commentable_id   :integer
+#  original_commentable_type :string(255)
 #
 
 require 'spec_helper'
@@ -105,12 +107,12 @@ describe Comment do
     comment.number_of_comments.should eq(2)
   end
   
-  it "original_comment_item should return 1 if the comment has no replies" do
+  it "original_commentable should return 1 if the comment has no replies" do
     leafComment = create(:comment)
     nodeComment = create(:comment)
     nodeComment.comments << leafComment
     comment.comments << nodeComment
-    leafComment.original_comment_item.should eq(DefaultObjects.discussion)
+    leafComment.original_commentable.should eq(DefaultObjects.discussion)
   end
   
   it "replies_locked? should return false when is_locked is false" do

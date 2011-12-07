@@ -18,21 +18,28 @@ class Comment < ActiveRecord::Base
   belongs_to :character_proxy
   belongs_to :community
   belongs_to :commentable, :polymorphic => true
+  belongs_to :original_commentable, :polymorphic => true
   has_many :comments, :as => :commentable
+
+###
+# Scopes
+###
+  scope :not_deleted, where(:is_removed => false)
 
 ###
 # Callbacks
 ###
   after_initialize :get_community_id_from_source
+  before_create :set_original_commentable
 
 ###
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
-  delegate :id, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true
   delegate :body, :to => :commentable, :prefix => true, :allow_nil => true
+  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
 ###
 # Validators
@@ -66,18 +73,6 @@ class Comment < ActiveRecord::Base
   end
 
   ###
-  # This method gets the name of the poster.
-  # [Returns] The name of the character or user_profile.
-  ###
-  def poster_name
-    if self.character_proxy
-      return self.character_proxy.name
-    else
-      return self.user_profile.display_name
-    end
-  end
-
-  ###
   # This method checks to see if a character posted this comment.
   # [Returns] True if a character made this comment, otherwise false.
   ###
@@ -90,42 +85,11 @@ class Comment < ActiveRecord::Base
   # [Returns] An integer that contains the number of comments this comment has including itself.
   ###
   def number_of_comments
-    temp_total_num_comments = 0
-   temp_total_num_comments = 1 unless self.is_removed
-   comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments
-   end
-   temp_total_num_comments
-  end
-
-  ###
-  # This method gets all comments attacted to this comment. Even comments comments.
-  # [Returns] A collection of comments.
-  ###
-  def all_comments
-  temp_all_comments = Array.new
-  temp_all_comments << self
-   comments.each do |comment|
-     temp_all_comments << comment.all_comments
-   end
-   temp_all_comments.flatten
-  end
-
-  ###
-  # This method returns the original item that this comment is attached to, climbing the comment tree if needed.
-  # [Returns] The original comment item.
-  ###
-  def original_comment_item
-    (commentable.respond_to?('original_comment_item')) ? commentable.original_comment_item : commentable
-  end
-
-  ###
-  # This method checks to see if comments are disabled for the commentable item.
-  # [Returns] false if what this is commenting on has comments disabled.
-  ###
-  def commentable_has_comments_disabled?
-    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
-    (self.original_comment_item.respond_to?('is_locked') and self.original_comment_item.is_locked)
+    total_num_comments = self.is_removed ? 0 : 1
+    self.comments.each do |comment|
+      total_num_comments += comment.number_of_comments
+    end
+    total_num_comments
   end
 
   ###
@@ -136,19 +100,6 @@ class Comment < ActiveRecord::Base
     self.is_locked or self.commentable_has_comments_disabled?
   end
 
-  # The commentable_type always needs to be of the base class type and not the subclass type.
-  def commentable_type=(sType)
-    super(sType.to_s.classify.constantize.base_class.to_s)
-  end
-
-  ###
-  # This method validates that the selected game is valid for the community.
-  ###
-  def character_is_valid_for_user_profile
-    return unless self.character_proxy
-    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
-  end
-
   ###
   # This method validates that what the comment is commenting on allows replys.
   ###
@@ -157,10 +108,59 @@ class Comment < ActiveRecord::Base
     self.errors.add(:base, "you can't reply to that!")
   end
 
+  ###
+  # Overrides the default destory
+  # This will only delete the comment if it has no comments. If it has comments it will be marked is_removed and it's body will be cleared.
+  def destroy
+    if self.comments.empty?
+      self.delete
+    else
+      self.is_removed = true
+      self.body = ""
+      self.save(:validate => false)
+    end
+  end
+
+###
+# Setter Methods
+###
+  # The commentable_type always needs to be of the base class type and not the subclass type.
+  def commentable_type=(sType)
+    super(sType.to_s.classify.constantize.base_class.to_s)
+  end
+
+  # The original_commentable_type always needs to be of the base class type and not the subclass type.
+  def original_commentable_type=(sType)
+    super(sType.to_s.classify.constantize.base_class.to_s)
+  end
+
 ###
 # Protected Methods
 ###
 protected
+
+###
+# Instance Methods
+###
+  ###
+  # This method checks to see if comments are disabled for the commentable item.
+  # [Returns] false if what this is commenting on has comments disabled.
+  ###
+  def commentable_has_comments_disabled?
+    (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
+    (self.original_commentable.respond_to?('is_locked') and self.original_commentable.is_locked)
+  end
+
+###
+# Validator Methods
+###
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def character_is_valid_for_user_profile
+    return unless self.character_proxy
+    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+  end
 
 ###
 # Callback Methods
@@ -172,31 +172,52 @@ protected
   # [Returns] False if an error was encountered, otherwise true.
   ###
   def get_community_id_from_source
-    return if self.community or not self.commentable_id
+    return if self.community_id or not self.commentable_id
     if self.commentable.respond_to?('community')
       self.community = self.commentable.community
-    elsif self.original_comment_item.respond_to?('community')
-      self.community = self.original_comment_item.community
+    elsif self.original_commentable.respond_to?('community')
+      self.community = self.original_commentable.community
+    end
+  end
+
+  ###
+  # _before_create_
+  #
+  # This method will get the original_commentable from the commentable.
+  # [Returns] False if an error was encountered, otherwise true.
+  ###
+  def set_original_commentable
+    return if self.original_commentable_id or not self.commentable_id
+    if self.commentable.respond_to?('original_commentable')
+      self.original_commentable = self.commentable.original_commentable
+    else
+      self.original_commentable = self.commentable
     end
   end
 end
+
+
+
+
 
 
 # == Schema Information
 #
 # Table name: comments
 #
-#  id                 :integer         not null, primary key
-#  body               :text
-#  user_profile_id    :integer
-#  character_proxy_id :integer
-#  community_id       :integer
-#  commentable_id     :integer
-#  commentable_type   :string(255)
-#  is_removed         :boolean         default(FALSE)
-#  has_been_edited    :boolean         default(FALSE)
-#  is_locked          :boolean         default(FALSE)
-#  created_at         :datetime
-#  updated_at         :datetime
+#  id                        :integer         not null, primary key
+#  body                      :text
+#  user_profile_id           :integer
+#  character_proxy_id        :integer
+#  community_id              :integer
+#  commentable_id            :integer
+#  commentable_type          :string(255)
+#  is_removed                :boolean         default(FALSE)
+#  has_been_edited           :boolean         default(FALSE)
+#  is_locked                 :boolean         default(FALSE)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  original_commentable_id   :integer
+#  original_commentable_type :string(255)
 #
 

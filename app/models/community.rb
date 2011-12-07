@@ -19,9 +19,9 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, :class_name => "UserProfile"
   belongs_to :member_role, :class_name => "Role"
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
-  has_many :community_applications
+  has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
-  has_many :roles
+  has_many :roles, :dependent => :destroy
 
   has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
@@ -36,7 +36,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
-  has_many :page_spaces
+  has_many :page_spaces, :dependent => :destroy
   has_many :pages, :through => :page_spaces
 
 ###
@@ -50,10 +50,12 @@ class Community < ActiveRecord::Base
 ###
   validates :name,  :presence => true,
                     :uniqueness => { :case_sensitive => false },
-                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" }
+                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
+                    :length => { :maximum => 30 }
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
+  validates :slogan, :length => { :maximum => 50 }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
 
@@ -264,6 +266,7 @@ protected
     self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
   end
 end
+
 
 
 

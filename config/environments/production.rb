@@ -61,7 +61,7 @@ DaBvRails::Application.configure do
 
   # Default mailer url
   config.action_mailer.default_url_options = { :host => 'brutalvenom.com' }
-  
+
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
@@ -69,6 +69,6 @@ DaBvRails::Application.configure do
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => 'heroku.com'
-  }  
+  }
   ActionMailer::Base.delivery_method = :smtp
 end
