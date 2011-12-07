@@ -49,6 +49,7 @@ class Subdomains::RolesController < SubdomainsController
       add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
     else
       add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
+      logger.debug @role.errors.to_yaml
     end
     redirect_to roles_path
   end

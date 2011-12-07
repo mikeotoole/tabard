@@ -30,7 +30,7 @@ class Role < ActiveRecord::Base
   def permissions_for_resource(resource)
     if resource.is_a?(String)
       permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource,nil)
-      return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class)
+      return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.to_s)
     else
       permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource.class.to_s,resource.id)
       return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class, id_of_subject: resource.id)
@@ -46,7 +46,7 @@ class Role < ActiveRecord::Base
         return permission_match ? permission_match : Permission.new(role: self, subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: resource.id)
       when "CustomForm"
         permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Submission",resource.id)
-        return permission_match ? permission_match : Permission.new(role: self, subject_class: "Submssion", parent_association_for_subject: "custom_form", id_of_parent: resource.id)
+        return permission_match ? permission_match : Permission.new(role: self, subject_class: "Submission", parent_association_for_subject: "custom_form", id_of_parent: resource.id)
       else
         return nil
     end
