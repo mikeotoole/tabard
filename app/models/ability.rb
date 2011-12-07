@@ -311,17 +311,24 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        case permission.permission_level
-          when "Delete"
-            action.concat([:read, :update, :create, :destroy])
-          when "Create"
-            action.concat([:read, :update, :create])
-          when "Update"
-            action.concat([:read, :update])
-          when "View"
-            action.concat([:read])
-          else
-            # TODO Joe/Bryan Should this be logged?
+        if permission.permission_level.blank?
+          action.concat([:read]) if permission.can_read
+          action.concat([:update]) if permission.can_update
+          action.concat([:create]) if permission.can_create
+          action.concat([:destroy]) if permission.can_destroy
+        else
+          case permission.permission_level
+            when "Delete"
+              action.concat([:read, :update, :create, :destroy])
+            when "Create"
+              action.concat([:read, :update, :create])
+            when "Update"
+              action.concat([:read, :update])
+            when "View"
+              action.concat([:read])
+            else
+              # TODO Joe/Bryan Should this be logged?
+          end
         end
         if permission.can_lock
           action.concat([:lock]) 

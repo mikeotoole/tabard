@@ -13,5 +13,5 @@
         = pf.input :id_of_parent, :as => :hidden
         = pf.input :parent_association_for_subject, :as => :hidden
         = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
-        = pf.input :view_permission, :as => :boolean, :label => 'View submissions', :wrapper => false, :required => false
+        = pf.input :can_read, :as => :boolean, :label => 'View submissions', :wrapper => false, :required => false
         = pf.input :can_accept, :as => :boolean, :label => 'Accept/Reject', :wrapper => false
