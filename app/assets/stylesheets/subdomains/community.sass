@@ -490,7 +490,46 @@ button,
             &:hover
               background: #9F3A1F
               color: #fff
+
+  .slider,
+  .slider_with_none
+    background: #d2c69c
+    +bg_gradient(#d2c69c,#e8e3d1)
+    border-color: #fff
+    +border_radius(5)
+    +box_shadow(0 0 3px rgba(#000,.2))
+        
+    label
+      color: #DBD5B6
+
+    input
+      
+      &:checked + label
+        background: #A57C5E
+        border-color: #90684A
+        +box_shadow(0 0 5px rgba(#000,.5))
   
+    &:hover
+      background: #e8e3d1
+      border-color: #a37961
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
+      
+      label:hover
+        background: #8F334E !important
+        border-color: #5d2230
+        color: #fff
+        
+  .slider_with_none
+    
+    > label
+      color: #A47D5F
+      
+    >input:checked + label
+      color: #DBD5B6
+      
+      &:hover
+        color: #fff
   
   // TABLES
 
@@ -504,9 +543,6 @@ button,
     
       &.r
         text-align: right
-      
-      &.slider
-        width: 202px
       
       &.permission
       
@@ -684,73 +720,6 @@ button,
             
             label:before
               +box_shadow(0 0 10px rgba(#000,.3))
-                            
-          &.slider
-            padding: 5px
-          
-            fieldset
-              background: #d2c69c
-              +bg_gradient(#d2c69c,#e8e3d1)
-              border: 1px solid #fff
-              +border_radius(5)
-              +box_shadow(0 0 10px rgba(#000,.2))
-              height: 30px
-              overflow: hidden
-              position: relative
-              +transition(box-shadow .2s linear)
-              width: 200px
-              
-              ul
-                padding: 0
-                
-                li
-                  padding: 0
-                  display: inline
-                  
-                  label
-                    border: 1px solid transparent
-                    +border_radius(4)
-                    height: 24px
-                    margin: 2px
-                    overflow: hidden
-                    position: absolute
-                    text-indent: -500em
-                    +transition(background .2s linear)
-                    
-                    &:before,
-                    &:after
-                      display: none
-                    
-                    &:hover
-                      background: #8F364E !important
-                      border-color: #5d2230
-                  
-                  &:nth-child(1) label
-                    width: 44px
-                    z-index: 5
-                  
-                  &:nth-child(2) label
-                    width: 94px
-                    z-index: 4
-                    
-                  &:nth-child(3) label
-                    width: 144px
-                    z-index: 3
-                    
-                  &:nth-child(4) label
-                    width: 194px
-                    z-index: 2
-              
-                  input
-                    margin: 0 0 0 -500em
-                    
-                    &:checked + label
-                      background: #6F2D3D
-                      border-color: #5d2230
-                      +box_shadow(0 0 5px rgba(#000,.5))
-            
-              &:hover
-                +box_shadow(0 0 15px rgba(#000,.7))
         
         &.dim
           

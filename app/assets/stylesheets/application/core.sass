@@ -360,6 +360,91 @@ button,
       input:checked + label
         width: 60px
   
+  .slider,
+  .slider_with_none
+    border: 1px solid
+    +border_radius(5)
+    height: 30px
+    margin: 0 0 10px
+    overflow: hidden
+    position: relative
+    +transition(box-shadow .2s linear)
+    
+    ul
+      padding: 0
+      
+      li
+        padding: 0
+        display: inline
+        
+    label
+      border: 1px solid transparent
+      +border_radius(4)
+      font: 12px DinMedium, sans-serif
+      height: 24px
+      left: 2px
+      line-height: 24px
+      margin: 2px
+      overflow: hidden
+      padding: 0 9px 0 0 !important
+      position: absolute !important
+      text-align: right !important
+      top: 2px
+      +transition(background .2s linear)
+      
+      &:before,
+      &:after
+        display: none
+
+    input
+      margin: 0 0 0 -500em
+  
+  .slider
+    width: 280px
+  
+    li
+    
+      &:nth-child(1) label
+        width: 55px
+        z-index: 5
+      
+      &:nth-child(2) label
+        width: 125px
+        z-index: 4
+        
+      &:nth-child(3) label
+        width: 195px
+        z-index: 3
+        
+      &:nth-child(4) label
+        width: 265px
+        z-index: 2
+        
+  .slider_with_none
+    width: 350px
+    
+    > label
+      width: 55px
+      z-index: 6 !important
+    
+    li
+      
+      &:nth-child(1) label
+        width: 125px
+        z-index: 5
+        
+      &:nth-child(2) label
+        width: 195px
+        z-index: 4
+        
+      &:nth-child(3) label
+        width: 265px
+        z-index: 3
+        
+      &:nth-child(4) label
+        width: 335px
+        z-index: 2  
+  
   fieldset
     
     &.full
