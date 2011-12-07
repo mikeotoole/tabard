@@ -38,7 +38,7 @@ class Subdomains::RolesController < SubdomainsController
     if @role.save
       add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
     end
-    respond_with(@role, :location => edit_role_path(@role))
+    respond_with(@role, :render => :index)
   end
 
   # PUT /roles/1
@@ -50,7 +50,7 @@ class Subdomains::RolesController < SubdomainsController
       #  Permission.find_by_id(permission[:id]).update_attributes(:permission_level => permission[:permission_level])
       #end
     end
-    redirect_to roles_path
+    respond_with(@role, :location => roles_path)
   end
 
   # DELETE /roles/1

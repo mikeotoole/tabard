@@ -5,7 +5,7 @@
 #roles
   %ul
     - @roles.each do |role|
-      %li= link_to role.name, edit_role_path(role), :remote => true, 'data-type' => :text
+      %li{ :class => (role == @roles.first ? 'active' : '') }= link_to role.name, edit_role_path(role), :remote => true, 'data-type' => :text
   - if (can? :create, @community.roles.new)
     = link_to 'New role', new_role_path, :class => 'button'
     

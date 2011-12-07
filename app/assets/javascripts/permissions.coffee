@@ -26,4 +26,6 @@ $(document).ready ->
       $('#role').find('.slider, .slider_with_none').trigger 'init'
   
   $('#permissions > dt h2').click ->
-    $(this).closest('dt').find('+ dd').slideToggle 200
+    $(this).closest('dt').find('+ dd input[type="checkbox"]').hide()
+    $(this).closest('dt').find('+ dd').slideToggle 200, ->
+      $(this).find('input[type="checkbox"]').show()
