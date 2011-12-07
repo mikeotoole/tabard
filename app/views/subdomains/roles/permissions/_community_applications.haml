@@ -1,0 +1,12 @@
+%dl
+  %dt
+    %h2 Community Applications
+  %dd
+    = f.simple_fields_for :permissions, role.permissions_for_resource("CommunityApplication") do |pf|
+      = pf.input :subject_class, :as => :hidden
+      %h3 For applications to this community
+      .slider
+        = pf.input :_destroy, :as => :boolean, :label => 'None', :wrapper => false, :checked => !pf.object.persisted?
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Update'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
+      = pf.input :can_accept, :as => :boolean, :label => 'Accept/Reject', :wrapper => false
+      
