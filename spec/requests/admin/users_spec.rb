@@ -400,6 +400,7 @@ describe "ActiveAdmin User" do
       login_as superadmin
 
       page.driver.post("/admin/users/reset_all_passwords")
+      sleep 3
       User.all.each do |this_user|
         this_user.reset_password_token.should_not be_nil
       end

@@ -34,14 +34,17 @@ def create_page(community_name, space_name, page_name)
     :markup => "##Heading\n###H3\nPhasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non. Phasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sapien.")
 end
 
+unless @dont_run
 
-###
-# Create Pages
-###
- 
-# Just Another Headshot
-create_page_space('Just Another Headshot', 'Guild Info') 
-create_page_space('Just Another Headshot', 'WoW Resources', 'Horde')
+  ###
+  # Create Pages
+  ###
+   
+  # Just Another Headshot
+  create_page_space('Just Another Headshot', 'Guild Info') 
+  create_page_space('Just Another Headshot', 'WoW Resources', 'Horde')
+  
+  create_page('Just Another Headshot', 'Guild Info', 'Guild Rules')
+  create_page('Just Another Headshot', 'WoW Resources', 'WoW Strategies')
 
-create_page('Just Another Headshot', 'Guild Info', 'Guild Rules')
-create_page('Just Another Headshot', 'WoW Resources', 'WoW Strategies')
+end

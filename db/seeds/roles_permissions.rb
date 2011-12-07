@@ -30,9 +30,12 @@ def create_role(community_name, role_name, subject_class_array, permission_level
   return role
 end
 
+unless @dont_run
 
-###
-# Create Roles with Permissions
-###
+  ###
+  # Create Roles with Permissions
+  ###
+  
+  create_role('Two Maidens', 'n00b', %w(Role), %w(Show), %w(Moose))
 
-create_role('Two Maidens', 'n00b', %w(Role), %w(Show), %w(Moose))
+end

@@ -54,52 +54,54 @@ def create_announcement(community_name, name, body, poster_last_name)
   return announcement
 end
 
+unless @dont_run
 
-###
-# Create Discussion Spaces, Discussions, and Comments
-###
-
-# Two Maiden
-create_discussion_space('Two Maidens', 'General Chat')
-create_discussion_space('Two Maidens', 'WoW', 'Horde')
-
-# Just Another Headshot
-create_discussion_space('Just Another Headshot', 'General Chat')
-create_discussion_space('Just Another Headshot', 'WoW Discussions', 'Horde')
-create_discussion_space('Just Another Headshot', 'SWTOR Discussions', 'Empire')
-
-jahc_gd = create_discussion('Just Another Headshot', 'General Chat', 'What up hommies!?', 'How was your weekend?', 'Billy')
-create_discussion('Just Another Headshot', 'WoW Discussions', 'General WoW Discussion', 'YAY lets discuss WoW', 'Turtle')
-create_discussion('Just Another Headshot', 'SWTOR Discussions', 'General SWTOR Discussion', 'YAY lets discuss SWTOR', 'Badger')
-
-puts "Adding comments to general discussion space discussion"
-comment1 = create_comment(jahc_gd, "What's up RoboBilly!", 'Moose')
-comment1a = create_comment(comment1, "What's up Diabolical Moose!", 'Turtle')
-comment1b = create_comment(comment1, "You guys are weird.", 'Badger')
-comment1b2 = create_comment(comment1b, "No, you are.", 'Moose')
-comment2 = create_comment(jahc_gd, "Herp a derp.", 'Billy')
-comment2.update_attributes!(:has_been_edited => true)
-
-puts "Time: 3 weeks ago"
-Timecop.freeze(3.weeks.ago)
-create_announcement('Just Another Headshot', 
-                    'This announcement is derp old', 
-                    "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.",
-                    'Billy')
-
-puts "Time: Now"
-Timecop.return
-
-create_announcement('Just Another Headshot',
-                    'Website is up and running!',
-                    "This new website is off the hook!.",
-                    'Billy')
-create_announcement('Just Another Headshot',
-                    'WoW is now supported!',
-                    "Everyone add your WoW characters.",
-                    'Billy')                
-create_announcement('Just Another Headshot',
-                    'Star Wars is bad ass!',
-                    "Raids are super cool. The new vent channel is open for SWTOR.",
-                    'Billy')
+  ###
+  # Create Discussion Spaces, Discussions, and Comments
+  ###
   
+  # Two Maiden
+  create_discussion_space('Two Maidens', 'General Chat')
+  create_discussion_space('Two Maidens', 'WoW', 'Horde')
+  
+  # Just Another Headshot
+  create_discussion_space('Just Another Headshot', 'General Chat')
+  create_discussion_space('Just Another Headshot', 'WoW Discussions', 'Horde')
+  create_discussion_space('Just Another Headshot', 'SWTOR Discussions', 'Empire')
+  
+  jahc_gd = create_discussion('Just Another Headshot', 'General Chat', 'What up hommies!?', 'How was your weekend?', 'Billy')
+  create_discussion('Just Another Headshot', 'WoW Discussions', 'General WoW Discussion', 'YAY lets discuss WoW', 'Turtle')
+  create_discussion('Just Another Headshot', 'SWTOR Discussions', 'General SWTOR Discussion', 'YAY lets discuss SWTOR', 'Badger')
+  
+  puts "Adding comments to general discussion space discussion"
+  comment1 = create_comment(jahc_gd, "What's up RoboBilly!", 'Moose')
+  comment1a = create_comment(comment1, "What's up Diabolical Moose!", 'Turtle')
+  comment1b = create_comment(comment1, "You guys are weird.", 'Badger')
+  comment1b2 = create_comment(comment1b, "No, you are.", 'Moose')
+  comment2 = create_comment(jahc_gd, "Herp a derp.", 'Billy')
+  comment2.update_attributes!(:has_been_edited => true)
+  
+  puts "Time: 3 weeks ago"
+  Timecop.freeze(3.weeks.ago)
+  create_announcement('Just Another Headshot', 
+                      'This announcement is derp old', 
+                      "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.",
+                      'Billy')
+  
+  puts "Time: Now"
+  Timecop.return
+  
+  create_announcement('Just Another Headshot',
+                      'Website is up and running!',
+                      "This new website is off the hook!.",
+                      'Billy')
+  create_announcement('Just Another Headshot',
+                      'WoW is now supported!',
+                      "Everyone add your WoW characters.",
+                      'Billy')                
+  create_announcement('Just Another Headshot',
+                      'Star Wars is bad ass!',
+                      "Raids are super cool. The new vent channel is open for SWTOR.",
+                      'Billy')
+
+end

@@ -56,22 +56,25 @@ def create_horde_character(user_last_name, char_name, char_class, race, level)
         :level => level))
 end
 
+unless @dont_run
 
-###
-# Create Characters
-###
+  ###
+  # Create Characters
+  ###
+  
+  User.all.each do |user|
+    create_empire_character(user.last_name, "Darth #{user.last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+  end
+  
+  create_horde_character('Moose', 'Moose Drool', 'Hunter', 'Orc', 80)
+  create_horde_character('Fox', 'Miss Fox', 'Hunter', 'Goblin', 20)
+  
+  %w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
+    create_empire_character('Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33)
+  end
+  
+  %w(Eliand Blaggarth Drejan).each do |cname|
+    create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
+  end
 
-User.all.each do |user|
-  create_empire_character(user.last_name, "Darth #{user.last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
-end
-
-create_horde_character('Moose', 'Moose Drool', 'Hunter', 'Orc', 80)
-create_horde_character('Fox', 'Miss Fox', 'Hunter', 'Goblin', 20)
-
-%w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
-  create_empire_character('Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33)
-end
-
-%w(Eliand Blaggarth Drejan).each do |cname|
-  create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
 end

@@ -42,10 +42,14 @@ def create_custom_form(community_name, form_name, published)
   shortQ.save
 end
 
-###
-# Create Custom Forms
-###
+unless @dont_run
 
-# Just Another Headshot
-create_custom_form('Just Another Headshot', 'Test Published', true)
-create_custom_form('Just Another Headshot', 'Test NOT Published', false)  
+  ###
+  # Create Custom Forms
+  ###
+  
+  # Just Another Headshot
+  create_custom_form('Just Another Headshot', 'Test Published', true)
+  create_custom_form('Just Another Headshot', 'Test NOT Published', false)
+  
+end
