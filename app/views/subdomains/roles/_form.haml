@@ -1,12 +1,20 @@
 = javascript_include_tag "permissions"
 
 = simple_form_for role do |f|
-
-  %p= f.input :name, :wrapper => false
+  - if role.is_system_generated
+    %h2= role.name
+  - else
+    %p= f.input :name, :wrapper => false
 
   - if role.persisted?
     %h2 Permissions
     %dl#permissions
+      %dt Comments
+      %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
+      %dt Community Applications
+      %dd= render 'subdomains/roles/permissions/community_applications', :f => f, :role => role
+      %dt Custom Forms
+      %dd= render 'subdomains/roles/permissions/custom_forms', :f => f, :role => role
       %dt Discussion Spaces
       %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
       %dt Page Spaces

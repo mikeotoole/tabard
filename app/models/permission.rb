@@ -21,8 +21,6 @@ class Permission < ActiveRecord::Base
 ###
   belongs_to :role
 
-  attr_accessor :_destroy
-
 ###
 # Validators
 ###

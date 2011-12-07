@@ -27,14 +27,25 @@ class Role < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true
 
   def permissions_for_resource(resource)
-    permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource.class.to_s,resource.id)
-    return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class, id_of_subject: resource.id)
+    if resource.is_a?(String)
+      permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource,nil)
+      return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class)
+    else
+      permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource.class.to_s,resource.id)
+      return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class, id_of_subject: resource.id)
+    end
   end
   def nested_permissions_for_resource(resource)
     case resource.class.to_s
       when "DiscussionSpace"
         permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Discussion",resource.id)
         return permission_match ? permission_match : Permission.new(role: self, subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: resource.id)
+      when "PageSpace"
+        permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Page",resource.id)
+        return permission_match ? permission_match : Permission.new(role: self, subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: resource.id)
+      when "CustomForm"
+        permission_match = self.permissions.find_by_subject_class_and_id_of_parent("Submission",resource.id)
+        return permission_match ? permission_match : Permission.new(role: self, subject_class: "Submssion", parent_association_for_subject: "custom_form", id_of_parent: resource.id)
       else
         return nil
     end
