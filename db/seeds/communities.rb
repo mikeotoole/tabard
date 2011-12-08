@@ -54,9 +54,11 @@ unless @dont_run
 
   # Two Maidens
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
-
+  
+  fox = UserProfile.find_by_last_name('Fox')
+  
   %w(Pidgeon Tiger Crab).each do |last_name|
-    generate_application(two_maidens, last_name).accept_application
+    generate_application(two_maidens, last_name).accept_application(fox)
     puts "Accepted application"
   end
   generate_application(two_maidens, 'Panda')
@@ -64,16 +66,20 @@ unless @dont_run
   # Jedi Kittens
   jedi_kittens = create_community('Tiger', 'Jedi Kittens', 'Nya nya nya nya', %w(Empire))
 
+  tiger = UserProfile.find_by_last_name('Tiger')
+
   %w(Badger Billy).each do |last_name|
-    generate_application(jedi_kittens, last_name).accept_application
+    generate_application(jedi_kittens, last_name).accept_application(tiger)
     puts "Accepted application"
   end
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde))
 
+  billy = UserProfile.find_by_last_name('Billy')
+
   %w(Moose Turtle Badger).each do |last_name|
-    generate_application(headshot, last_name).accept_application
+    generate_application(headshot, last_name).accept_application(billy)
     puts "Accepted application"
   end
   generate_application(headshot, 'Fox')

@@ -146,7 +146,7 @@ describe Ability do
         app = @different_community.community_applications.new(:character_proxies => @user_profile.character_proxies)
         app.prep(@user_profile, @different_community.community_application_form)
         app.save
-        app.accept_application
+        app.accept_application(@different_community.admin_profile)
         @specific_role = @community.roles.create(:name => "Uber N00b!", :community => @community)
         @specific_role.permissions.create(:subject_class => "Role", :permission_level => "Delete", :role => @specific_role)
         @user_profile.add_new_role(@specific_role)

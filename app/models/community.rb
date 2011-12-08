@@ -94,7 +94,11 @@ class Community < ActiveRecord::Base
   def promote_user_profile_to_member(user_profile)
     return nil unless (self.community_applications.where{(:user_profile == user_profile)}.exists? or
         self.admin_profile == user_profile)
-    user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+    community_profile = self.community_profiles.find_by_user_profile_id(user_profile.id)
+    if not community_profile
+      community_profile = user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+    end
+    return community_profile    
   end
 
   ###
