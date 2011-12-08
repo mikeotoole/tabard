@@ -6,6 +6,7 @@
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
           = pf.input :subject_class, :as => :hidden
+          %label Space
           .slider_with_none
             = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
             = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
@@ -13,6 +14,7 @@
           = pf.input :subject_class, :as => :hidden
           = pf.input :id_of_parent, :as => :hidden
           = pf.input :parent_association_for_subject, :as => :hidden
-          = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
-          = pf.input :can_create, :as => :boolean, :label => 'Add new pages', :wrapper => false
-          = pf.input :can_destroy, :as => :boolean, :label => 'Delete pages', :wrapper => false
+          %label Pages
+          .slider_with_none
+            = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
+            = pf.collection_radio :permission_level, [['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last

@@ -268,6 +268,10 @@ $(document).ready ->
   $('.slider_with_none ul input').live 'click', ->
     $(this).closest('.slider_with_none').find('> input').prop 'checked', false
   
+  # inputs that affect the hidden _destroy field
+  $('input[toggle_destroy="true"]').change ->
+    $(this).prevAll('input[name*="_destroy"]:first').attr('checked', !$(this).prop('checked'))
+  
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
