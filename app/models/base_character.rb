@@ -45,7 +45,7 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name,  :presence => true, 
+  validates :name,  :presence => true,
                     :length => { :maximum => 100 }
   validates :avatar,
       :if => :avatar?,

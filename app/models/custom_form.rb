@@ -23,11 +23,12 @@ class CustomForm < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name,  :presence => true, 
+  validates :name,  :presence => true,
                     :length => { :maximum => 100 }
   validates :instructions, :presence => true
   validates :thankyou, :presence => true
   validates :community, :presence => true
+  validate :cant_unpublish_application_form
 
 ###
 # Delegates
@@ -36,6 +37,11 @@ class CustomForm < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
   after_create :apply_default_permissions
+
+###
+# Scopes
+###
+  scope :published, where(:is_published => true)
 
 ###
 # Public Methods
@@ -63,6 +69,22 @@ class CustomForm < ActiveRecord::Base
 
   def apply_default_permissions
     self.community.apply_default_permissions(self)
+  end
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Methods
+###
+  ###
+  # This method validates that the selected game is valid for the community.
+  ###
+  def cant_unpublish_application_form
+    return unless not self.is_published and self.community and self.community.community_application_form == self
+    self.errors.add(:is_published, "must be true for community application form.")
   end
 end
 

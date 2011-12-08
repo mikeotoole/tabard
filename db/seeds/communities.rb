@@ -7,12 +7,12 @@ def create_community(admin_user_last_name, name, slogan, game_array)
   admin_user = UserProfile.find_by_last_name(admin_user_last_name)
   puts "#{admin_user.name} is creating #{name} Guild with the game WoW Horde!"
   community = admin_user.owned_communities.create!(:name => name, :slogan => slogan)
-  
+
   game_array.each do |game_name|
     case game_name
       when "Horde"
         community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Horde"}), :name => "A-Team")
-      when "Alliance" 
+      when "Alliance"
         community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Alliance"}), :name => "A-Team")
       when "Empire"
         community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Empire"}), :name => "A-Team")
@@ -54,24 +54,24 @@ unless @dont_run
 
   # Two Maidens
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
-  
+
   %w(Pidgeon Tiger Crab).each do |last_name|
     generate_application(two_maidens, last_name).accept_application
     puts "Accepted application"
   end
   generate_application(two_maidens, 'Panda')
-  
+
   # Jedi Kittens
   jedi_kittens = create_community('Tiger', 'Jedi Kittens', 'Nya nya nya nya', %w(Empire))
-  
+
   %w(Badger Billy).each do |last_name|
     generate_application(jedi_kittens, last_name).accept_application
     puts "Accepted application"
   end
-  
+
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde))
-  
+
   %w(Moose Turtle Badger).each do |last_name|
     generate_application(headshot, last_name).accept_application
     puts "Accepted application"

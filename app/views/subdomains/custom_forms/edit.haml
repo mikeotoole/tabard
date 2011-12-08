@@ -1,4 +1,4 @@
 - title "Editing Custom Form | #{current_community.name}"
-%h1 Editing Custom Form
+%h1= @custom_form.application_form? ? "Editing Community Application Form" : "Editing Custom Form"
 
 = render 'form', :custom_form => @custom_form

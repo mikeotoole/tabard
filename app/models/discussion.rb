@@ -26,7 +26,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name,  :presence => true, 
+  validates :name,  :presence => true,
                     :length => { :maximum => 100 }
   validates :body, :presence => true
   validates :user_profile, :presence => true
@@ -42,7 +42,6 @@ class Discussion < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
-  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
   delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
 ###

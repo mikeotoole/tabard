@@ -6,9 +6,9 @@
 def create_custom_form(community_name, form_name, published)
   puts "Creating #{community_name} custom form #{form_name}"
   community = Community.find_by_name(community_name)
-  test_form = community.custom_forms.create!( :name => form_name, 
+  test_form = community.custom_forms.create!( :name => form_name,
                                               :is_published => published,
-                                              :instructions => "My instructions. Phasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem.", 
+                                              :instructions => "My instructions. Phasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem.",
                                               :thankyou => "My thankyou. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non. Phasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sapien.")
 
   checkboxQ = MultiSelectQuestion.create(:style => "check_box_question", :body => "A check box makes me feel.", :explanation => "This is a checkbox question", :is_required => true)
@@ -47,9 +47,9 @@ unless @dont_run
   ###
   # Create Custom Forms
   ###
-  
+
   # Just Another Headshot
   create_custom_form('Just Another Headshot', 'Test Published', true)
   create_custom_form('Just Another Headshot', 'Test NOT Published', false)
-  
+
 end

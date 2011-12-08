@@ -19,7 +19,7 @@ class PredefinedAnswer < ActiveRecord::Base
    ###
    # Validators
    ###
-   validates :body, :presence => true, 
+   validates :body, :presence => true,
                     :length => { :maximum => 100 }
    validates :question, :presence => true
 end
