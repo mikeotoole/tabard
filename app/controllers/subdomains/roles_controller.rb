@@ -26,6 +26,7 @@ class Subdomains::RolesController < SubdomainsController
 
   # GET /roles/new
   def new
+    @role.setup_permission_defaults
     render :partial => 'form', :locals => { :role => @role }
   end
 

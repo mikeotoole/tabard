@@ -31,7 +31,7 @@ class Role < ActiveRecord::Base
 
   after_create :setup_permission_defaults
 
-  def is_empty_permission?
+  def is_empty_permission?(attributed)
     attributed['permission_level'].blank? and not attributed['can_lock'] and not attributed['can_accept'] and not attributed['can_read'] and not attributed['can_create'] and not attributed['can_update'] and not attributed['can_destroy']
   end
 
@@ -61,8 +61,43 @@ class Role < ActiveRecord::Base
   end
   def permissions_defaults_for_resource(resource)
     if resource.is_a?(String)
-      permission_match = self.permission_defaults.find_by_object_class(resource)
-      return permission_match
+      case resource
+      when "DiscussionSpace"
+        permission_default_match = self.permission_defaults.find_by_object_class(resource)
+        return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "DiscussionSpace",
+          permission_level: "View", 
+          can_lock: false, 
+          can_accept: false,
+          can_read_nested: false, 
+          can_update_nested: false, 
+          can_create_nested: true, 
+          can_destroy_nested: false, 
+          can_lock_nested: false, 
+          can_accept_nested: false)
+      when "PageSpace"
+        permission_default_match = self.permission_defaults.find_by_object_class(resource)
+        return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "PageSpace",
+          permission_level: "View", 
+          can_lock: false, 
+          can_accept: false,
+          nested_permission_level: "", 
+          can_lock_nested: false, 
+          can_accept_nested: false)
+      when "CustomForm"
+        permission_default_match = self.permission_defaults.find_by_object_class(resource)
+        return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "CustomForm",
+          permission_level: "View", 
+          can_lock: false, 
+          can_accept: false,
+          can_read_nested: false, 
+          can_update_nested: false, 
+          can_create_nested: false, 
+          can_destroy_nested: false, 
+          can_lock_nested: false, 
+          can_accept_nested: false)
+      else
+        return nil
+      end
     else
       return nil
     end
@@ -73,26 +108,27 @@ class Role < ActiveRecord::Base
   end
 
   def setup_permission_defaults
+    return if self.permission_defaults.size > 0 or not self.persisted?
     self.permission_defaults.create(object_class: "CustomForm",
-      permission_level: "View", 
-      can_lock: false, 
-      can_accept: false,
-      can_read_nested: false, 
-      can_update_nested: false, 
-      can_create_nested: false, 
-      can_destroy_nested: false, 
-      can_lock_nested: false, 
-      can_accept_nested: false)
+          permission_level: "View", 
+          can_lock: false, 
+          can_accept: false,
+          can_read_nested: false, 
+          can_update_nested: false, 
+          can_create_nested: false, 
+          can_destroy_nested: false, 
+          can_lock_nested: false, 
+          can_accept_nested: false)
     self.permission_defaults.create(object_class: "DiscussionSpace",
-      permission_level: "View", 
-      can_lock: false, 
-      can_accept: false,
-      can_read_nested: false, 
-      can_update_nested: false, 
-      can_create_nested: true, 
-      can_destroy_nested: false, 
-      can_lock_nested: false, 
-      can_accept_nested: false)
+          permission_level: "View", 
+          can_lock: false, 
+          can_accept: false,
+          can_read_nested: false, 
+          can_update_nested: false, 
+          can_create_nested: true, 
+          can_destroy_nested: false, 
+          can_lock_nested: false, 
+          can_accept_nested: false)
     self.permission_defaults.create(object_class: "PageSpace",
       permission_level: "View", 
       can_lock: false, 
