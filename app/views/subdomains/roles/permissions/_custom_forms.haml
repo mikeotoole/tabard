@@ -2,16 +2,18 @@
   %dt
     %h3 New Forms
   %dd
-    = f.simple_fields_for :permissions, role.permissions_for_resource("CustomForm") do |pf|
-      = pf.input :subject_class, :as => :hidden
-      = pf.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
+    = f.simple_fields_for :permissions, role.permissions_for_resource("CustomForm") do |af|
+      = af.input :subject_class, :as => :hidden
+      = af.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
   %dt
     %h3 Default Values
   %dd
     = f.simple_fields_for :permission_defaults, role.permissions_defaults_for_resource("CustomForm") do |pf|
       = pf.input :object_class, :as => :hidden
-      .slider
-        = pf.collection_radio :permission_level, [['', 'x'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      .slider_with_none
+        %input{ type: 'radio', id: 'custom_form_default_permission_level', name: 'role[permission_defaults_attributes][0][permission_level]', value: '', checked: pf.object.permission_level == '' }
+        %label{ for: 'custom_form_default_permission_level' } ×
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       = pf.input :can_read_nested, :as => :boolean, :label => 'View all submissions', :wrapper => false, :required => false 
   - if current_community.custom_forms.any?
     - current_community.custom_forms.each do |form|

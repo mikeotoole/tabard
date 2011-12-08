@@ -4,8 +4,10 @@
   %dd
     = f.simple_fields_for :permission_defaults, role.permissions_defaults_for_resource("DiscussionSpace") do |pf|
       = pf.input :object_class, :as => :hidden
-      .slider
-        = pf.collection_radio :permission_level, [['', 'x'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      .slider_with_none
+        %input{ type: 'radio', id: 'discussion_spaces_default_permission_level', name: 'role[permission_defaults_attributes][1][permission_level]', value: '', checked: pf.object.permission_level == '' }
+        %label{ for: 'discussion_spaces_default_permission_level' } ×
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       = pf.input :can_create_nested, :as => :boolean, :label => 'Add new discussions', :wrapper => false
       = pf.input :can_destroy_nested, :as => :boolean, :label => 'Delete discussions', :wrapper => false
       = pf.input :can_lock_nested, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false
