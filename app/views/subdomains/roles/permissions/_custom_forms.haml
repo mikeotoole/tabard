@@ -2,9 +2,9 @@
   %dt
     %h3 New Forms
   %dd
-    = f.simple_fields_for :permissions, role.permissions_for_resource("CustomForm") do |af|
-      = af.input :subject_class, :as => :hidden
-      = af.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
+    = f.simple_fields_for :permissions, role.permissions_for_resource("CustomForm") do |pf|
+      = pf.input :subject_class, :as => :hidden
+      = pf.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
   %dt
     %h3 Default Values
   %dd
