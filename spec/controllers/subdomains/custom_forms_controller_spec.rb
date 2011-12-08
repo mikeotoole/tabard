@@ -118,6 +118,25 @@ describe Subdomains::CustomFormsController do
     end
   end
 
+  describe "GET thankyou" do
+    it "assigns the requested custom_form as @custom_form when authenticated as a user" do
+      sign_in admin
+      get :thankyou, :id => custom_form
+      assigns(:custom_form).should eq(custom_form)
+    end
+    
+    it "renders the thankyou template when authenticated as a user" do
+      sign_in admin
+      get :thankyou, :id => custom_form
+      response.should render_template('thankyou')
+    end
+    
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :thankyou, :id => custom_form.id.to_s
+      response.should redirect_to(new_user_session_url)
+    end
+  end
+
   describe "PUT update" do
     before(:each) {
       sign_in admin

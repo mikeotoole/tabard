@@ -26,6 +26,7 @@ include Rails.application.routes.url_helpers
   belongs_to :community
   belongs_to :user_profile
   belongs_to :submission
+  belongs_to :status_changer, :class_name => "UserProfile"
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
   has_many :comments, :as => :commentable, :dependent => :destroy
@@ -93,9 +94,10 @@ include Rails.application.routes.url_helpers
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application
+  def accept_application(accepted_by_user_profile)
     return false if self.accepted?
     self.update_attribute(:status, "Accepted")
+    self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
     # TODO Doug/Bryan, Determine what message content should be. subdomain_home
     message = Message.new(:subject => "Application Accepted",
@@ -116,9 +118,10 @@ include Rails.application.routes.url_helpers
   # This method rejects this application.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def reject_application
+  def reject_application(rejected_by_user_profile)
     return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
+    self.update_attribute(:status_changer, rejected_by_user_profile)
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected",
                           :body => "Your application to #{self.community.name} has been rejected.",
@@ -185,16 +188,18 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: community_applications
 #
-#  id              :integer         not null, primary key
-#  community_id    :integer
-#  user_profile_id :integer
-#  submission_id   :integer
-#  status          :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                :integer         not null, primary key
+#  community_id      :integer
+#  user_profile_id   :integer
+#  submission_id     :integer
+#  status            :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  status_changer_id :integer
 #
 

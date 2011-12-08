@@ -141,8 +141,8 @@ describe Subdomains::CommunityApplicationsController do
       assigns[:community_application].user_profile.should eq(applicant_user.user_profile)
     end
 
-    it "should redirect to community root" do
-      response.should redirect_to(root_url(:subdomain => community.subdomain))
+    it "should redirect to thank you" do
+      response.should redirect_to(custom_form_thankyou_url(assigns[:community_application].custom_form))
     end
   end
   
@@ -219,7 +219,7 @@ describe Subdomains::CommunityApplicationsController do
         applicant_user.reload
       end
       it "should be successful" do
-        response.should render_template(:show)
+        response.should redirect_to(community_application_url(community_application))
       end
       it "should make the applicant a member" do
         applicant_user.is_member?(community).should be_true
@@ -253,7 +253,7 @@ describe Subdomains::CommunityApplicationsController do
         applicant_user.reload
       end
       it "should be successful" do
-        response.should render_template(:show)
+        response.should redirect_to(community_application_url(community_application))
       end
       it "should not make the applicant a member" do
         applicant_user.is_member?(community).should be_false

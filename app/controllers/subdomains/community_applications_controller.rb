@@ -69,14 +69,14 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This accepts the specified application.
   def accept
-    @community_application.accept_application
-    render :show
+    @community_application.accept_application(current_user.user_profile)
+    redirect_to community_application_url(@community_application)
   end
 
   # This rejects the specified application.
   def reject
-    @community_application.reject_application
-    render :show
+    @community_application.reject_application(current_user.user_profile)
+    redirect_to community_application_url(@community_application)
   end
 ###
 # Protected Methods
