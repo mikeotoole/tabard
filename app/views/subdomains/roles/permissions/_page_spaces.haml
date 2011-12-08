@@ -5,11 +5,15 @@
     = f.simple_fields_for :permission_defaults, role.permissions_defaults_for_resource("PageSpace") do |pf|
       = pf.input :object_class, :as => :hidden
       %label Space
-      .slider
-        = pf.collection_radio :permission_level, [['', 'x'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      .slider_with_none
+        = check_box_tag :permission_level, '', pf.object.permission_level == ''
+        = label_tag :permission_level, '×'
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       %label Pages
-      .slider
-        = pf.collection_radio :nested_permission_level, [['', 'x'], ['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
+      .slider_with_none
+        = check_box_tag :nested_permission_level, '', pf.object.nested_permission_level == ''
+        = label_tag :nested_permission_level, '×'
+        = pf.collection_radio :nested_permission_level, [['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
   - if current_community.page_spaces.any?
     - current_community.page_spaces.each do |space|
       %dt
