@@ -1,5 +1,16 @@
-- if current_community.custom_forms.any?
-  %dl
+%dl
+  %dt
+    %h3 New Forms
+  %dd
+    = f.simple_fields_for :permissions, role.permissions_for_resource("CustomForm") do |pf|
+      = pf.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
+  %dt
+    %h3 Default Values
+    .slider_with_none
+      -#= pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
+      -#= pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+    -#= pf.input :can_read, :as => :boolean, :label => 'View all submissions', :wrapper => false, :required => false 
+  - if current_community.custom_forms.any?
     - current_community.custom_forms.each do |form|
       - next if form == current_community.community_application_form
       %dt
@@ -9,11 +20,9 @@
           = pf.input :subject_class, :as => :hidden
           .slider_with_none
             = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
-            = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last, :checked => 'show_p'
+            = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
         = f.simple_fields_for :permissions, role.nested_permissions_for_resource(form) do |pf|
           = pf.input :subject_class, :as => :hidden
           = pf.input :id_of_parent, :as => :hidden
           = pf.input :parent_association_for_subject, :as => :hidden
-          = pf.input :_destroy, :as => :hidden, :input_html => { :checked => !pf.object.persisted? }
-          = pf.input :can_read, :as => :boolean, :label => 'View submissions', :wrapper => false, :required => false
-          = pf.input :can_create, :as => :boolean, :label => 'Create submissions', :wrapper => false
+          = pf.input :can_read, :as => :boolean, :label => 'View all submissions', :wrapper => false, :required => false

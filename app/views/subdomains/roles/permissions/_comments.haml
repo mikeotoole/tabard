@@ -1,4 +1,4 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("Comment") do |pf|
   = pf.input :subject_class, :as => :hidden
   = pf.input :can_create, :as => :boolean, :label => 'Add new comments', :wrapper => false
-  = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock', :wrapper => false
+  = pf.input :can_lock, :as => :boolean, :label => 'Lock and unlock all comments', :wrapper => false
