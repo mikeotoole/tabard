@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207035159) do
+ActiveRecord::Schema.define(:version => 20111207225904) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -270,6 +270,27 @@ ActiveRecord::Schema.define(:version => 20111207035159) do
   end
 
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
+
+  create_table "permission_defaults", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "object_class"
+    t.string   "permission_level"
+    t.boolean  "can_read",                :default => false
+    t.boolean  "can_update",              :default => false
+    t.boolean  "can_create",              :default => false
+    t.boolean  "can_destroy",             :default => false
+    t.boolean  "can_lock",                :default => false
+    t.boolean  "can_accept",              :default => false
+    t.string   "nested_permission_level"
+    t.boolean  "can_read_nested",         :default => false
+    t.boolean  "can_update_nested",       :default => false
+    t.boolean  "can_create_nested",       :default => false
+    t.boolean  "can_destroy_nested",      :default => false
+    t.boolean  "can_lock_nested",         :default => false
+    t.boolean  "can_accept_nested",       :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
