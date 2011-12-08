@@ -6,6 +6,7 @@
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
           = pf.input :subject_class, :as => :hidden
+          %label Space
           .slider_with_none
             = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
             = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
