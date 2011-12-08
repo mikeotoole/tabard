@@ -59,8 +59,7 @@ class PageSpace < ActiveRecord::Base
   end
 
   def apply_default_permissions
-    self.community.member_role.permissions.create(subject_class: "PageSpace", id_of_subject: self.id, permission_level: "View")
-    self.community.member_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: self.id, permission_level: "View")
+    self.community.apply_default_permissions(self)
   end
 end
 

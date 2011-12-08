@@ -118,6 +118,12 @@ class Community < ActiveRecord::Base
     return community_roster
   end
 
+  def apply_default_permissions(some_thing)
+    self.roles.each do |role|
+      role.apply_default_permissions(some_thing)
+    end
+  end
+
 ###
 # Protected Methods
 ###
@@ -282,6 +288,22 @@ protected
       officer_role.permissions.create(subject_class: "PageSpace", id_of_subject: space.id, permission_level: "View")
       officer_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: space.id,  can_create: true, can_destroy: true)
     end
+    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View", 
+      can_lock: false, 
+      can_accept: false,
+      can_read_nested: false, 
+      can_update_nested: false, 
+      can_create_nested: true, 
+      can_destroy_nested: true, 
+      can_lock_nested: true, 
+      can_accept_nested: false)
+    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View", 
+      permission_level: "View", 
+      can_lock: false, 
+      can_accept: false,
+      nested_permission_level: "", 
+      can_lock_nested: false, 
+      can_accept_nested: false)
   end
 end
 

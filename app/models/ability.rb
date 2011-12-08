@@ -288,6 +288,14 @@ class Ability
       submission.custom_form.is_published and can? :read, submission.custom_form
     end
 
+    can [:read], Discussion do |discussion|
+      can? :read, discussion.discussion_space
+    end
+
+    can [:read], Page do |page|
+      can? :read, page.page_space
+    end
+
     # Cannot Overrides
     cannot :destroy, Comment do |comment|
       comment.replies_locked?
