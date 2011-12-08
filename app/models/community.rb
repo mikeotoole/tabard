@@ -273,21 +273,6 @@ protected
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
     officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
     officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
-
-    # Discussions
-    self.discussion_spaces.each do |space|
-      self.member_role.permissions.create(subject_class: "DiscussionSpace", id_of_subject: space.id, permission_level: "View")
-      self.member_role.permissions.create(subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: space.id, permission_level: "Delete")
-      officer_role.permissions.create(subject_class: "DiscussionSpace", id_of_subject: space.id, permission_level: "View")
-      officer_role.permissions.create(subject_class: "Discussion", parent_association_for_subject: "discussion_space", id_of_parent: space.id, can_create: true, can_destroy: true, can_lock: true)
-    end
-    # Pages
-    self.page_spaces.each do |space|
-      self.member_role.permissions.create(subject_class: "PageSpace", id_of_subject: space.id, permission_level: "View")
-      self.member_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: space.id, permission_level: "View")
-      officer_role.permissions.create(subject_class: "PageSpace", id_of_subject: space.id, permission_level: "View")
-      officer_role.permissions.create(subject_class: "Page", parent_association_for_subject: "page_space", id_of_parent: space.id,  can_create: true, can_destroy: true)
-    end
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View", 
       can_lock: false, 
       can_accept: false,
@@ -300,10 +285,7 @@ protected
     officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View", 
       permission_level: "View", 
       can_lock: false, 
-      can_accept: false,
-      nested_permission_level: "", 
-      can_lock_nested: false, 
-      can_accept_nested: false)
+      can_accept: false)
   end
 end
 

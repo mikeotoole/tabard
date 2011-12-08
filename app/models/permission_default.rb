@@ -13,14 +13,18 @@ class PermissionDefault < ActiveRecord::Base
   def is_nested?
     case self.object_class
       when "CustomForm"
-        return true
+        return (not nested_permission_level.blank? or can_read_nested or can_update_nested or can_create_nested or can_destroy_nested or can_lock_nested or can_accept_nested)
       when "DiscussionSpace"
-        return true
+        return (not nested_permission_level.blank? or can_read_nested or can_update_nested or can_create_nested or can_destroy_nested or can_lock_nested or can_accept_nested)
       when "PageSpace"
-        return true
+        return (not nested_permission_level.blank? or can_read_nested or can_update_nested or can_create_nested or can_destroy_nested or can_lock_nested or can_accept_nested)
       else
         return false
     end
+  end
+
+  def defined_empty_permission?
+    (permission_level.blank? and nested_permission_level.blank? and not can_read and not can_update and not can_create and not can_destroy and not can_lock and not can_accept and not can_read_nested and not can_update_nested and not can_create_nested and not can_destroy_nested and not can_lock_nested and not can_accept_nested)
   end
 
   def nested_object_class

@@ -15,7 +15,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :community_profiles
   has_many :user_profiles, :through => :community_profiles
   accepts_nested_attributes_for :permission_defaults, :allow_destroy => true
-  accepts_nested_attributes_for :permissions, :allow_destroy => true
+  accepts_nested_attributes_for :permissions, :reject_if => :is_empty_permission?, :allow_destroy => true
 
 ###
 # Validators
@@ -30,6 +30,10 @@ class Role < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true
 
   after_create :setup_permission_defaults
+
+  def is_empty_permission?
+    attributed['permission_level'].blank? and not attributed['can_lock'] and not attributed['can_accept'] and not attributed['can_read'] and not attributed['can_create'] and not attributed['can_update'] and not attributed['can_destroy']
+  end
 
   def permissions_for_resource(resource)
     if resource.is_a?(String)
@@ -53,6 +57,14 @@ class Role < ActiveRecord::Base
         return permission_match ? permission_match : Permission.new(role: self, subject_class: "Submission", parent_association_for_subject: "custom_form", id_of_parent: resource.id)
       else
         return nil
+    end
+  end
+  def permissions_defaults_for_resource(resource)
+    if resource.is_a?(String)
+      permission_match = self.permission_defaults.find_by_object_class(resource)
+      return permission_match
+    else
+      return nil
     end
   end
 
@@ -92,7 +104,7 @@ class Role < ActiveRecord::Base
 
   def apply_default_permissions(some_thing)
     template = self.permission_defaults.find_by_object_class(some_thing.class.to_s)
-    return unless template and some_thing.persisted?
+    return unless template and some_thing.persisted? or template.defined_empty_permission?
     if template.permission_level.blank?
       self.permissions.create(subject_class: template.object_class, 
         id_of_subject: some_thing.id, 
