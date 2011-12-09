@@ -24,13 +24,16 @@
         - @community_application.submission.answers.each do |answer|
           %dt= answer.question_body
           %dd= answer.body
-  - if @community_application.is_pending?
+  - if not @community_application.accepted?
     %p.submit
       - if can? :accept, @community_application
         = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
-      - if can? :reject, @community_application
-        = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
-
+      - if not @community_application.rejected? and can? :reject, @community_application
+        = link_to 'Reject', reject_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
+  - if not @community_application.is_pending? # TODO Doug, Fix this part of view. -MO
+    %h3
+      = "#{@community_application.status} by "
+      = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
   - if @community_application.comments.size > 0 or can? :comment, @community_application
     %h2.comments Comments
     %aside.comments

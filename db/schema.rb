@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111204235701) do
+ActiveRecord::Schema.define(:version => 20111207233535) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -130,9 +130,11 @@ ActiveRecord::Schema.define(:version => 20111204235701) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status_changer_id"
   end
 
   add_index "community_applications", ["community_id"], :name => "index_community_applications_on_community_id"
+  add_index "community_applications", ["status_changer_id"], :name => "index_community_applications_on_status_changer_id"
   add_index "community_applications", ["submission_id"], :name => "index_community_applications_on_submission_id"
   add_index "community_applications", ["user_profile_id"], :name => "index_community_applications_on_user_profile_id"
 

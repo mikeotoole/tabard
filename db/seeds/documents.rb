@@ -73,9 +73,9 @@ The security of the network through which the Service is provided, as well as th
 
 1) All information you provide during the User Account creation process must be true and accurate. When information changes, such as your adoption of a new email address, you are responsible for updating your user profile. *THE SERVICE IS NOT AVAILABLE TO ANYONE UNDER THE AGE OF 13*.
 
-2) User names must not infringe on the intellectual property rights of any person or entity. We reserve the right to disable your account and require the selection of another username if We are advised that your user name infringes on someone's intellectual property rights. 
+2) User names must not infringe on the intellectual property rights of any person or entity. We reserve the right to disable your account and require the selection of another username if We are advised that your user name infringes on someone's intellectual property rights.
 
-3) If We disable your account you may not create another account without our prior permission. 
+3) If We disable your account you may not create another account without our prior permission.
 
 4) Passwords must meet security guidelines and must not be shared with others in such a way that compromises or threatens the security of your account or that of the Service.
 

@@ -107,6 +107,7 @@ DaBvRails::Application.routes.draw do
           resources :answers, :except => [:update, :edit, :destroy]
         end
       end
+      get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', :as => :custom_form_thankyou
 
       # Discussions
       resources :comments, :except => [:index, :show] do

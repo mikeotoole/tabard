@@ -12,7 +12,7 @@ class DefaultObjects
         :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @user_profile),
         :character_proxies => []
       )
-      app.accept_application
+      app.accept_application(DefaultObjects.community.admin_profile)
       if not @user_profile.is_member?(DefaultObjects.community_two)
       appTwo = FactoryGirl.create(:community_application,
           :community => DefaultObjects.community_two,
@@ -20,7 +20,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @user_profile),
           :character_proxies => @user_profile.character_proxies
         )
-      appTwo.accept_application
+      appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
     end
     @user_profile
@@ -35,7 +35,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
           :character_proxies => @additional_community_user_profile.character_proxies
         )
-      app.accept_application
+      app.accept_application(DefaultObjects.community.admin_profile)
     end
     if not @additional_community_user_profile.is_member?(DefaultObjects.community_two)
       appTwo = FactoryGirl.create(:community_application,
@@ -44,7 +44,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @additional_community_user_profile),
           :character_proxies => @additional_community_user_profile.character_proxies
         )
-      appTwo.accept_application
+      appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
     @additional_community_user_profile
   end

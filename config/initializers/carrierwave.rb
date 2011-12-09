@@ -2,19 +2,19 @@ if Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_credentials = {
       :provider               => 'AWS',
-      :aws_access_key_id      => 'AKIAJONWOSPO4BPWMBQQ',
-      :aws_secret_access_key  => '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'
+      :aws_access_key_id      => ENV['BV_S3_KEY'],
+      :aws_secret_access_key  => ENV['BV_S3_SECRET']
     }
-    config.fog_directory = 'BrutalVenom_Production'
+    config.fog_directory = 'BrutalVenom-Production'
   end
 else
   CarrierWave.configure do |config|
     config.fog_credentials = {
       :provider               => 'AWS',
-      :aws_access_key_id      => 'AKIAIETD62Z4ILCUSGFA',
-      :aws_secret_access_key  => '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'
+      :aws_access_key_id      => ENV['DEV_BV_S3_KEY'],
+      :aws_secret_access_key  => ENV['DEV_BV_S3_SECRET']
     }
-    config.fog_directory = 'BrutalVenom_Development'
+    config.fog_directory = 'BrutalVenom-Development'
   end
 end
 if Rails.env.test? or Rails.env.cucumber?

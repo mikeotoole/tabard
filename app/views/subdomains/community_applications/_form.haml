@@ -1,6 +1,4 @@
-= javascript_include_tag "community_application"
-
-= simple_form_for community_application, :html => {:novalidate => true} do |f|
+= simple_form_for community_application, :html => { novalidate: true, class: 'community_application submission' } do |f|
   .questions
     %h1= community_application.custom_form_name
     = f.simple_fields_for :submission do |sf|
@@ -34,9 +32,9 @@
         %p Select which of your characters you are applying with:
         - community_application.character_proxies.each do |cp|
           %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
-            = image_tag cp.avatar_url(:icon), :class => 'avatar'
+            = image_tag cp.avatar_url(:tiny), :class => 'avatar'
             = cp.name
-        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
+        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       %h2 Instructions
       :markdown

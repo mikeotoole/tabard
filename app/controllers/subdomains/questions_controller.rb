@@ -29,7 +29,7 @@ class Subdomains::QuestionsController < SubdomainsController
 
   # PUT /questions/:id(.:format)
   def update
-    if @question and !@question.answers.empty?
+    if @question and not @question.answers.empty?
       new_question = @question.clone
       @question.custom_form_id = nil
       @question.save

@@ -71,7 +71,7 @@ describe Subdomains::SubmissionsController do
       it "redirects to the community root" do
         sign_in user
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
-        response.should redirect_to(root_url(:subdomain => community.subdomain))
+        response.should redirect_to(custom_form_thankyou_url(assigns(:submission).custom_form))
       end
       
       it "should redirected to new user session path when not authenticated as a user" do

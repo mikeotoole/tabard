@@ -153,7 +153,7 @@ class Ability
       community_application.user_profile.id == user.user_profile.id if community_application.user_profile
     end
     can [:comment], CommunityApplication do |community_application|
-      community_application.is_pending? and can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
+      can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
     end
 
     # Custom Form Rules

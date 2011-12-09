@@ -13,7 +13,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   before_filter :block_unauthorized_user!
   before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index, :thankyou]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
@@ -26,7 +26,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   def new
   end
 
-  # GET /custom_forms/1/edit
+  # GET /custom_forms/:id/edit
   def edit
   end
 
@@ -38,6 +38,10 @@ class Subdomains::CustomFormsController < SubdomainsController
     else
       respond_with @custom_form
     end
+  end
+  
+  # GET /custom_forms/:id/thankyou
+  def thankyou
   end
 
   # PUT /custom_forms/1
