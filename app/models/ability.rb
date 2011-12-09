@@ -127,11 +127,8 @@ class Ability
     can [:read], Comment do |comment|
       user.user_profile.is_member?(comment.community)
     end
-    can [:lock, :update, :destroy], Comment do |comment|
+    can [:update,:destroy], Comment do |comment|
       ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
-    end
-    can [:unlock], Comment do |comment|
-      (comment.user_profile_id == user.user_profile.id) and not comment.is_removed
     end
 
     # Community Rules

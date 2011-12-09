@@ -110,32 +110,12 @@ class Role < ActiveRecord::Base
   def setup_permission_defaults
     return if self.permission_defaults.size > 0 or not self.persisted?
     self.permission_defaults.create(object_class: "CustomForm",
-          permission_level: "View", 
-          can_lock: false, 
-          can_accept: false,
-          can_read_nested: false, 
-          can_update_nested: false, 
-          can_create_nested: false, 
-          can_destroy_nested: false, 
-          can_lock_nested: false, 
-          can_accept_nested: false)
+          permission_level: "View")
     self.permission_defaults.create(object_class: "DiscussionSpace",
           permission_level: "View", 
-          can_lock: false, 
-          can_accept: false,
-          can_read_nested: false, 
-          can_update_nested: false, 
-          can_create_nested: true, 
-          can_destroy_nested: false, 
-          can_lock_nested: false, 
-          can_accept_nested: false)
+          can_create_nested: true)
     self.permission_defaults.create(object_class: "PageSpace",
-      permission_level: "View", 
-      can_lock: false, 
-      can_accept: false,
-      nested_permission_level: "", 
-      can_lock_nested: false, 
-      can_accept_nested: false)
+      permission_level: "View")
   end
 
   def apply_default_permissions(some_thing)

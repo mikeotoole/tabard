@@ -277,16 +277,16 @@ describe Subdomains::PagesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested page when authenticated as owner" do
+    it "destroys the requested page when authenticated an admin" do
       page
-      sign_in owner
+      sign_in admin
       expect {
         delete :destroy, :id => page.id.to_s
       }.to change(Page, :count).by(-1)
     end
 
-    it "redirects to the page list when authenticated as owner" do
-      sign_in owner
+    it "redirects to the page list when authenticated an admin" do
+      sign_in admin
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)
     end

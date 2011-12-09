@@ -148,25 +148,25 @@ describe Ability do
         app.save
         app.accept_application(@different_community.admin_profile)
         @specific_role = @community.roles.create(:name => "Uber N00b!", :community => @community)
-        @specific_role.permissions.create(:subject_class => "Role", :permission_level => "Delete", :role => @specific_role)
+        @specific_role.permissions.create(:subject_class => "PageSpace", :permission_level => "Delete", :role => @specific_role)
         @user_profile.add_new_role(@specific_role)
         @user_profile = UserProfile.find(@user_profile)
       end
       it "should work in the context of a community" do
         ability = Ability.new(@user_profile.user)
         ability.dynamicContextRules(@user_profile.user, @community)
-        ability.should be_able_to(:read, @community.roles.new)
-        ability.should be_able_to(:update, @community.roles.new)
-        ability.should be_able_to(:create, @community.roles.new)
-        ability.should be_able_to(:destroy, @community.roles.new)
+        ability.should be_able_to(:read, @community.page_spaces.new)
+        ability.should be_able_to(:update, @community.page_spaces.new)
+        ability.should be_able_to(:create, @community.page_spaces.new)
+        ability.should be_able_to(:destroy, @community.page_spaces.new)
       end
       it "should not work in context of a different community" do
         ability = Ability.new(@user_profile.user)
         ability.dynamicContextRules(@user_profile.user, @different_community)
-        ability.should_not be_able_to(:read, @different_community.roles.new)
-        ability.should_not be_able_to(:update, @different_community.roles.new)
-        ability.should_not be_able_to(:create, @different_community.roles.new)
-        ability.should_not be_able_to(:destroy, @different_community.roles.new)
+        ability.should_not be_able_to(:read, @different_community.page_spaces.new)
+        ability.should_not be_able_to(:update, @different_community.page_spaces.new)
+        ability.should_not be_able_to(:create, @different_community.page_spaces.new)
+        ability.should_not be_able_to(:destroy, @different_community.page_spaces.new)
       end
     end
 
