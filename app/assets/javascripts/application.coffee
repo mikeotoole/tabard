@@ -262,9 +262,11 @@ $(document).ready ->
     .live 'init', ->
       $(this).css('width', $(this).find('li label').length * 70 + 25)
     .trigger 'init'
+  $('.slider_with_none > input[type="checkbox"]').live 'click', ->
+    $(this).prop 'checked', true
   $('.slider_with_none > label').live 'click', ->
     slider = $(this).closest('.slider_with_none')
-    slider.find('>input').removeAttr('disabled readonly').prop 'checked', true
+    slider.find('> input').removeAttr('disabled readonly')
     slider.find('ul input').removeAttr 'checked'
   $('.slider_with_none ul label').live 'click', ->
     slider = $(this).closest('.slider_with_none')
