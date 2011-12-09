@@ -40,7 +40,7 @@ class BaseCharacter < ActiveRecord::Base
 # Associations
 ###
   #The character_proxy that associates this character to a user.
-  has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
+  has_one :character_proxy, :as => :character, :foreign_key => :character_id
 
 ###
 # Validators
@@ -114,6 +114,14 @@ class BaseCharacter < ActiveRecord::Base
   ###
   def owned_by_user?(unknown_user)
     self.user_profile.user == unknown_user
+  end
+
+  def is_disabled?
+    self.is_removed or self.user_profile.is_disabled?
+  end
+  
+  def destroy
+    self.update_attribute(:is_removed, true)
   end
 
 ###

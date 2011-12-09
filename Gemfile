@@ -3,6 +3,9 @@ source 'http://rubygems.org'
 # Rails Gem
   gem 'rails'
 
+# ActiveRecord extensions
+  gem 'rails3_acts_as_paranoid'
+
 # Javascript Library
   gem 'jquery-rails'
 

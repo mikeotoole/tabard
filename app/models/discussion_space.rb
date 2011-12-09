@@ -6,6 +6,9 @@
 # This class represents a discussion space.
 ###
 class DiscussionSpace < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Attribute accessible
 ###
@@ -67,6 +70,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: discussion_spaces
@@ -78,5 +82,6 @@ end
 #  created_at            :datetime
 #  updated_at            :datetime
 #  is_announcement_space :boolean         default(FALSE)
+#  deleted_at            :datetime
 #
 

@@ -6,23 +6,27 @@
 # This class represents a predefined answer.
 ###
 class PredefinedAnswer < ActiveRecord::Base
-   ###
-   # Attribute accessible
-   ###
-   attr_accessible :body, :select_question_id
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
 
-   ###
-   # Associations
-   ###
-   belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
+###
+# Attribute accessible
+###
+  attr_accessible :body, :select_question_id
 
-   ###
-   # Validators
-   ###
-   validates :body, :presence => true,
+###
+# Associations
+###
+  belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
+
+###
+# Validators
+###
+  validates :body,  :presence => true,
                     :length => { :maximum => 100 }
-   validates :question, :presence => true
+  validates :question, :presence => true
 end
+
 
 # == Schema Information
 #
@@ -33,5 +37,6 @@ end
 #  select_question_id :integer
 #  created_at         :datetime
 #  updated_at         :datetime
+#  deleted_at         :datetime
 #
 

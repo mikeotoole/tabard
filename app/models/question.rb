@@ -6,6 +6,9 @@
 # This class represents a question.
 ###
 class Question < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -160,17 +163,15 @@ class Question < ActiveRecord::Base
   # This method destroys questions, smartly.
   ###
   def destroy
-      run_callbacks :destroy do
-        if self.answers.empty?
-          self.delete
-        else
-          self.update_attribute(:custom_form_id, nil)
-        end
+    run_callbacks :destroy do
+      if self.answers.empty?
+        self.update_attribute(:deleted_at, Time.now)
+      else
+        self.update_attribute(:custom_form_id, nil)
       end
     end
+  end
 end
-
-
 
 
 # == Schema Information
@@ -186,5 +187,6 @@ end
 #  updated_at     :datetime
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
+#  deleted_at     :datetime
 #
 

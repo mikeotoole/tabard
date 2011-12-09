@@ -9,6 +9,7 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  is_announcement_space :boolean         default(FALSE)
+#  deleted_at            :datetime
 #
 
 require 'spec_helper'

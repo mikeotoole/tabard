@@ -7,7 +7,10 @@
 ###
 class Community < ActiveRecord::Base
 # TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
-
+  
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+  
 ###
 # Attribute accessible
 ###
@@ -27,7 +30,7 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
 
   has_many :custom_forms, :dependent => :destroy
-  has_many :community_profiles
+  has_many :community_profiles, :dependent => :destroy
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
@@ -49,9 +52,8 @@ class Community < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :uniqueness => { :case_sensitive => false },
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
-                    :length => { :maximum => 30 }
+                    :length => { :maximum => 30 }     
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
@@ -274,6 +276,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -292,5 +295,6 @@ end
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
+#  deleted_at                      :datetime
 #
 

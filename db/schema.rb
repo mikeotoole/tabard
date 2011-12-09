@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207233535) do
+ActiveRecord::Schema.define(:version => 20111209035256) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "submission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.datetime "updated_at"
     t.integer  "original_commentable_id"
     t.string   "original_commentable_type"
+    t.datetime "deleted_at"
   end
 
   add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
@@ -116,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
     t.boolean  "is_public_roster",                :default => true
+    t.datetime "deleted_at"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -131,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status_changer_id"
+    t.datetime "deleted_at"
   end
 
   add_index "community_applications", ["community_id"], :name => "index_community_applications_on_community_id"
@@ -143,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "user_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "community_profiles", ["community_id"], :name => "index_community_profiles_on_community_id"
@@ -166,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
@@ -177,6 +183,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_announcement_space", :default => false
+    t.datetime "deleted_at"
   end
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
@@ -191,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "is_locked",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
@@ -257,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "community_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
@@ -269,6 +278,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "show_in_navigation", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
@@ -284,6 +294,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "can_accept",                     :default => false
     t.string   "parent_association_for_subject"
     t.integer  "id_of_parent"
+    t.datetime "deleted_at"
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
@@ -293,6 +304,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "select_question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "predefined_answers", ["select_question_id"], :name => "index_predefined_answers_on_select_question_id"
@@ -306,6 +318,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.datetime "updated_at"
     t.string   "explanation"
     t.boolean  "is_required",    :default => false
+    t.datetime "deleted_at"
   end
 
   add_index "questions", ["custom_form_id"], :name => "index_questions_on_custom_form_id"
@@ -316,6 +329,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "is_system_generated", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
@@ -326,6 +340,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "is_pending",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
@@ -336,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "user_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
@@ -349,6 +365,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.integer  "game_announcement_space_id"
     t.string   "name"
     t.string   "game_type"
+    t.datetime "deleted_at"
   end
 
   add_index "supported_games", ["community_id"], :name => "index_supported_games_on_community_id"
@@ -366,6 +383,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.string   "species"
     t.string   "level"
     t.string   "about"
+    t.boolean  "is_removed",     :default => false
   end
 
   add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
@@ -414,9 +432,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "accepted_current_terms_of_service",                :default => false
     t.boolean  "accepted_current_privacy_policy",                  :default => false
     t.boolean  "force_logout",                                     :default => false
-    t.boolean  "is_admin_disabled",                                :default => false
     t.date     "date_of_birth"
-    t.boolean  "is_user_disabled",                                 :default => false
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
   end
@@ -432,6 +448,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.string   "view_loggable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "view_logs", ["user_profile_id"], :name => "index_view_logs_on_user_profile_id"
@@ -447,6 +464,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.datetime "updated_at"
     t.string   "char_class"
     t.text     "about"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"

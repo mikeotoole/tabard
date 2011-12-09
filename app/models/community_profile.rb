@@ -7,6 +7,10 @@
 ###
 class CommunityProfile < ActiveRecord::Base
   include Exceptions
+  
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid  
+  
 ###
 # Associations
 ###
@@ -14,19 +18,20 @@ class CommunityProfile < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
+  has_many :roster_assignments, :dependent => :destroy
+  has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
   has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => false}
   has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
   has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => true}
   has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
-  has_many :roster_assignments, :dependent => :destroy
-  has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
 
 ###
 # Validators
 ###
   validates :community, :presence => true
   validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => :community_id}, :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
+  validates :user_profile_id, :uniqueness => {:scope => [:community_id, :deleted_at]}, 
+                                :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
 
 ###
@@ -77,6 +82,7 @@ class CommunityProfile < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: community_profiles
@@ -86,5 +92,6 @@ end
 #  user_profile_id :integer
 #  created_at      :datetime
 #  updated_at      :datetime
+#  deleted_at      :datetime
 #
 

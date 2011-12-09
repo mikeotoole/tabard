@@ -16,9 +16,14 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
+  
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
+  
   has_many :character_proxies, :dependent => :destroy
+  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter', :conditions => {:is_removed => false}
+  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter', :conditions => {:is_removed => false}
+  
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
@@ -36,7 +41,7 @@ class UserProfile < ActiveRecord::Base
 # Delegates
 ###
   delegate :email, :to => :user
-  delegate :disabled, :to => :user
+  delegate :is_disabled?, :to => :user
 
 ###
 # Callbacks
@@ -82,11 +87,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the characters attached to this user profile.
   ###
   def characters
-    characters = Array.new()
-    for proxy in self.character_proxies
-        characters << proxy.character
-    end
-    characters
+    self.swtor_characters + self.wow_characters
   end
 
   ###

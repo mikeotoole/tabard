@@ -13,6 +13,8 @@
           %div
             - if (can? :update, supported_game)
               = link_to 'Edit', edit_supported_game_path(supported_game), :meta => 'Edit game', :class => 'edit'
+            - if (can? :destroy, supported_game)
+              = link_to 'Destroy', supported_game, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete game', :class => 'delete'  
   %tfoot
     %tr
       %td{ :colspan => 3 }

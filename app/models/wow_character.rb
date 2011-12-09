@@ -190,6 +190,8 @@ end
 
 
 
+
+
 # == Schema Information
 #
 # Table name: wow_characters
@@ -204,5 +206,6 @@ end
 #  updated_at :datetime
 #  char_class :string(255)
 #  about      :text
+#  is_removed :boolean         default(FALSE)
 #
 

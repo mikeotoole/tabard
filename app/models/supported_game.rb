@@ -6,6 +6,9 @@
 # This class represents an association between a game and a community that participates (supports) it.
 ###
 class SupportedGame < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Attribute accessible
 ###
@@ -36,7 +39,7 @@ class SupportedGame < ActiveRecord::Base
   validates :community, :presence => true
   validate :game_faction_server_combination
   validates :name, :presence => true,
-                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type], :message => "exists for this exact game."}
+                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
 
 ###
 # Callbacks
@@ -110,6 +113,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -122,5 +126,6 @@ end
 #  game_announcement_space_id :integer
 #  name                       :string(255)
 #  game_type                  :string(255)
+#  deleted_at                 :datetime
 #
 

@@ -6,6 +6,9 @@
 # This class represents a comment.
 ###
 class Comment < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Attribute accessible
 ###
@@ -112,12 +115,11 @@ class Comment < ActiveRecord::Base
   # Overrides the default destory
   # This will only delete the comment if it has no comments. If it has comments it will be marked is_removed and it's body will be cleared.
   def destroy
-    if self.comments.empty?
-      self.delete
+    if self.comments.where(:is_removed => false).empty?
+      self.comments.destroy_all
+      self.update_attribute(:deleted_at, Time.now)
     else
-      self.is_removed = true
-      self.body = ""
-      self.save(:validate => false)
+      self.update_attribute(:is_removed, true)
     end
   end
 
@@ -198,9 +200,6 @@ end
 
 
 
-
-
-
 # == Schema Information
 #
 # Table name: comments
@@ -219,5 +218,6 @@ end
 #  updated_at                :datetime
 #  original_commentable_id   :integer
 #  original_commentable_type :string(255)
+#  deleted_at                :datetime
 #
 

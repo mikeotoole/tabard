@@ -6,6 +6,9 @@
 # This class represents a site form.
 ###
 class CustomForm < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Attribute accessible
 ###
@@ -83,6 +86,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: custom_forms
@@ -95,5 +99,6 @@ end
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime
+#  deleted_at   :datetime
 #
 

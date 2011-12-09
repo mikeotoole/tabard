@@ -6,18 +6,21 @@
 # This model represents a role.
 ###
 class Role < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Associations
 ###
   belongs_to :community
-  has_many :permissions
+  has_many :permissions, :dependent => :destroy
   has_and_belongs_to_many :community_profiles
 
 ###
 # Validators
 ###
   validates :community, :presence => true
-  validates :name,  :uniqueness => {:scope => :community_id},
+  validates :name,  :uniqueness => {:scope => [:community_id, :deleted_at]},
                     :length => { :maximum => 100 }
 
 ###
@@ -26,6 +29,7 @@ class Role < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true
 
 end
+
 
 
 # == Schema Information
@@ -38,5 +42,6 @@ end
 #  is_system_generated :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  deleted_at          :datetime
 #
 

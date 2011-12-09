@@ -6,6 +6,9 @@
 # This class represents a page.
 ###
 class Page < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -85,6 +88,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: pages
@@ -96,5 +100,6 @@ end
 #  show_in_navigation :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  deleted_at         :datetime
 #
 

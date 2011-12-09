@@ -6,8 +6,11 @@
 # This class represents an application to a community.
 ###
 class CommunityApplication < ActiveRecord::Base
+  # Used by mailer to add links to application.
+  include Rails.application.routes.url_helpers
 
-include Rails.application.routes.url_helpers
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
 
 ###
 # Attribute accessible
@@ -189,6 +192,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: community_applications
@@ -201,5 +205,6 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  status_changer_id :integer
+#  deleted_at        :datetime
 #
 

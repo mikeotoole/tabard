@@ -6,6 +6,8 @@
 # This class represents an assignment of a character_proxy to a community profile.
 ###
 class RosterAssignment < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
 
 ###
 # Associations
@@ -19,7 +21,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   validates :community_profile, :presence => true
   validates :character_proxy, :presence => true
-  validates :character_proxy_id, :uniqueness => { :scope => "community_profile_id", :message => "is already rostered to the community."}
+  validates :character_proxy_id, :uniqueness => { :scope => [:community_profile_id, :deleted_at], :message => "is already rostered to the community."}
 
 ###
 # Delegates
@@ -79,6 +81,7 @@ class RosterAssignment < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -89,5 +92,6 @@ end
 #  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  deleted_at           :datetime
 #
 

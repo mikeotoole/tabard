@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :is_user_disabled, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
   # [Returns] True if this is an active user, otherwise false.
   ###
   def active_for_authentication?
-    super and not self.disabled
+    super and not self.is_disabled?
   end
 
   ###
@@ -179,9 +179,9 @@ class User < ActiveRecord::Base
   # [Returns] :suspended if account is suspended otherwise it returns super's response.
   ###
   def inactive_message
-    if self.is_admin_disabled
+    if self.admin_disabled_at
       :admin_disabled
-    elsif self.is_user_disabled
+    elsif self.user_disabled_at
       :user_disabled
     else
       super
@@ -207,8 +207,8 @@ class User < ActiveRecord::Base
   end
 
   # Checks if this user is disabled.
-  def disabled
-    self.is_admin_disabled or self.is_user_disabled
+  def is_disabled?
+    self.admin_disabled_at or self.user_disabled_at
   end
 
   ###
@@ -218,7 +218,6 @@ class User < ActiveRecord::Base
   ###
   def disable_by_user(params)
     if(params[:user])
-      params[:user][:is_user_disabled] = true
       params[:user][:user_disabled_at] = Time.now
       success = self.update_with_password(params[:user])
       if success
@@ -233,20 +232,16 @@ class User < ActiveRecord::Base
 
   # Used by the admin panel to disable a user.
   def disable_by_admin
-    self.is_admin_disabled = true
-    self.admin_disabled_at = Time.now
-    self.save(:validate => false)
-    self.community_profiles.clear
-    self.owned_communities.clear
+    if self.update_attribute(:admin_disabled_at, Time.now)
+      self.community_profiles.clear
+      self.owned_communities.clear
+    end  
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
   def reinstate
-    self.is_admin_disabled = false
-    self.admin_disabled_at = nil
-    self.is_user_disabled = false
-    self.user_disabled_at = nil
-    self.save(:validate => false)
+    self.update_attribute(:admin_disabled_at, nil)
+    self.update_attribute(:user_disabled_at, nil)
   end
 
 ###
@@ -288,6 +283,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -314,9 +310,7 @@ end
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
-#  is_admin_disabled                 :boolean         default(FALSE)
 #  date_of_birth                     :date
-#  is_user_disabled                  :boolean         default(FALSE)
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
 #
