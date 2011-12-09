@@ -506,6 +506,9 @@ button,
         font-family: DinMedium, sans
         padding: 3px 6px
 
+
+// User profile
+
 body.user_profiles.show
 
   #content
@@ -566,10 +569,51 @@ body.user_profiles.show
             height: 240px
             width: 240px
       
-      >article
+      >dl
         float: right
         margin: -10px -10px 0
+        padding: 0
+        position: relative
         width: 590px
+        
+        dd
+          display: none
+        
+        dt
+          background: image-url('application/icons.png') #E4E4E4
+          border: 5px solid #E4E4E4
+          border-bottom: 0
+          +border_radius(5,5,0,0)
+          +box_shadow(0 -5px 5px rgba(#000,.2))
+          height: 30px
+          overflow: hidden
+          position: absolute
+          text-indent: -500em
+          top: -56px
+          +transition(background .2s linear, border .2s linear)
+          width: 30px
+          z-index: 1
+          
+          &.activity
+            background-position: -1020px 0
+            right: 40px
+          
+          &.characters
+            background-position: -570px 0
+            right: 0
+          
+          &:hover
+            background-color: #fff
+            border-color: #fff
+            z-index: 3
+          
+          &.active
+            background-color: #fff
+            border-color: #fff
+            z-index: 2
+            
+            + dd
+              display: block
 
 
 @import application/footer

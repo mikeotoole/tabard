@@ -11,5 +11,11 @@
       %li= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       %li= link_to 'Add new WoW character', new_wow_character_path
       %li= link_to 'Add new SWTOR character', new_swtor_character_path
-  %article
-    herp derp
+  %dl.tabs
+    %dt{ :class => 'activity' } Recent Activity
+    %dd derp derp
+    %dt{ :class => 'characters active' } Characters
+    %dd
+      %pre=YAML::dump @user_profile
+      - @user_profile.characters.each do |character|
+        -#%pre=YAML::dump character

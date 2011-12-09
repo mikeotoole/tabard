@@ -253,6 +253,11 @@ $(document).ready ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
+  # tabs
+  $('dl.tabs >dt').click ->
+    $(this).closest('dl.tabs').find('>dt').removeClass('active')
+    $(this).addClass('active')
+  
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
