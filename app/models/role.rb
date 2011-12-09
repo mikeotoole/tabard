@@ -140,7 +140,8 @@ class Role < ActiveRecord::Base
 
   def apply_default_permissions(some_thing)
     template = self.permission_defaults.find_by_object_class(some_thing.class.to_s)
-    return unless template and some_thing.persisted? or template.defined_empty_permission?
+    return unless (template and some_thing.persisted?)
+    return if template.defined_empty_permission?
     if template.permission_level.blank?
       self.permissions.create(subject_class: template.object_class, 
         id_of_subject: some_thing.id, 
