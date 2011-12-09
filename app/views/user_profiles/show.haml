@@ -5,17 +5,41 @@
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title
       %p= @user_profile.title
+      
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
-    %ul
-      %li= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
-      %li= link_to 'Add new WoW character', new_wow_character_path
-      %li= link_to 'Add new SWTOR character', new_swtor_character_path
+    %ul.actions
+      - if @user_profile == current_user.user_profile
+        %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
+      - else
+        %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
+        -# TODO Doug - Add this link once we add the friends feature %li.friend= link_to 'Friend', '#'
+    %h3 My Communities
+    - if @user_profile.communities.any?
+      %ul
+        - @user_profile.communities.each do |community|
+          %li= link_to community.name, community
+    - else
+      %p No memberships.
+    %h3 About Me
+    %p= @user_profile.description ||= 'No description given.'
+      
   %dl.tabs
+    
     %dt{ :class => 'activity' } Recent Activity
     %dd derp derp
+    
     %dt{ :class => 'characters active' } Characters
     %dd
-      %pre=YAML::dump @user_profile
-      - @user_profile.characters.each do |character|
-        -#%pre=YAML::dump character
+      - if @user_profile.swtor_characters.any?
+        %h2
+          Star Wars: The Old Republic
+          - if @user_profile == current_user.user_profile
+            = link_to '+ add new', new_swtor_character_path
+        = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
+      - if @user_profile.wow_characters.any?
+        %h2
+          World of Warcraft
+          - if @user_profile == current_user.user_profile
+            = link_to '+ add new', new_wow_character_path
+        = render 'wow_characters/list', :characters => @user_profile.wow_characters

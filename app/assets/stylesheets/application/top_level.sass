@@ -568,6 +568,107 @@ body.user_profiles.show
             display: block
             height: 240px
             width: 240px
+          
+        .actions
+          background: image-url('bar/bg.png') top center repeat-x #3d2753
+          +border_radius(0,0,5,5)
+          color: #a89db5
+          font-size: 13px
+          height: 40px
+          padding: 0
+          position: relative
+          
+          &:before
+            border-top: 1px solid #bbb
+            content: ''
+            left: 0
+            position: absolute
+            right: 0
+            top: -2px
+          
+          &:after
+            border-top: 1px solid #fff
+            content: ''
+            left: 0
+            position: absolute
+            right: 0
+            top: -1px
+          
+          li
+            display: inline
+            
+            &:before
+              display: none
+            
+            a
+              background: none
+              color: #fff
+              display: block
+              float: left
+              height: 30px
+              line-height: 30px
+              margin: 5px 0 0 10px
+              padding: 0
+              position: relative
+              text-decoration: none
+              text-indent: 30px
+              
+              &:before
+                background: image-url('application/icons.png') no-repeat
+                content: ''
+                height: 30px
+                left: 0
+                +opacity(.7)
+                position: absolute
+                top: 0
+                width: 30px
+              
+              &:hover:before
+                +opacity(1)
+              
+            &.message a:before
+              background-position: -330px -30px
+              
+            &.friend a:before
+              background-position: -570px -30px
+              
+            &.edit a:before
+              background-position: -60px -30px
+        
+        h3
+          line-height: 1em
+          padding: 30px 0 0
+          
+          + ul
+            padding: 5px 0 0
+            
+            li
+              margin: 0
+              
+              &:before
+                margin: 5px 0 0 20px
+              
+              a
+                +bg_gradient(#eee,#fff)
+                border-bottom: 1px solid #ccc
+                +border_radius(0)
+                display: block
+                margin: 0
+                padding: 5px 0 5px 25px
+                text-decoration: none
+                
+                &:hover
+                  background: #A23B31
+                  color: #fff
+              
+              &:first-child a
+                +border_radius(5,5,0,0)
+                
+              &:last-child a
+                +border_radius(0,0,5,5)
+
+          + p
+            padding: 5px 0 0
       
       >dl
         float: right
@@ -576,41 +677,139 @@ body.user_profiles.show
         position: relative
         width: 590px
         
-        dd
+        >dd
           display: none
+          
+          >h2
+            background: #F0F5F8
+            border-bottom: 1px solid #D9E6EE
+            +border_radius(3,3,0,0)
+            clear: both
+            line-height: 1em
+            margin: 0
+            padding: 10px
+            position: relative
+            
+            a
+              background: #2D7CB4
+              +border_radius(3)
+              color: #fff
+              font: 14px DinLight, sans-serif
+              padding: 3px 9px
+              position: absolute
+              right: 7px
+              text-decoration: none
+              top: 7px
+              
+              &:hover
+                background: #A53E34
+          
+          .characters
+            margin: 0
+            padding: 0
+            
+            >li
+              border-top: 1px solid #D1E1EB
+              float: left
+              margin: -1px 0 10px
+              padding: 20px 0 20px 75px
+              position: relative
+              width: 220px
+              
+              &:before
+                display: none
+              
+              .avatar
+                left: 0
+                position: absolute
+                top: 20px
+                
+                &:before
+                  background: image-url('application/comment-shadow.png') 0 0 no-repeat
+                  content: ''
+                  height: 101px
+                  position: absolute
+                  right: 0
+                  top: -15px
+                  width: 18px
+              
+              h3
+                color: #56149C
+                line-height: 1em
+                margin: 0 0 10px
+                padding: 0
+                
+                a
+                  color: #56149C
+                  margin: 0 -3px
+                  
+                  &:hover
+                    color: #fff
+              
+              .attributes
+                font-size: 13px
+                line-height: 15px
+                
+                dt
+                  clear: left
+                  float: left
+                  width: 60px
+                
+                dd
+                  float: left
+                  font-family: DinMedium, sans-serif
+                  width: 160px
         
-        dt
-          background: image-url('application/icons.png') #E4E4E4
-          border: 5px solid #E4E4E4
-          border-bottom: 0
+        >dt
+          background: #E4E4E4
           +border_radius(5,5,0,0)
           +box_shadow(0 -5px 5px rgba(#000,.2))
-          height: 30px
+          height: 35px
           overflow: hidden
           position: absolute
           text-indent: -500em
           top: -56px
-          +transition(background .2s linear, border .2s linear)
-          width: 30px
+          +transition(background .2s linear)
+          width: 40px
           z-index: 1
           
+          &:before
+            background: image-url('application/icons.png')
+            content: ''
+            +opacity(.3)
+            height: 30px
+            width: 30px
+            left: 5px
+            position: absolute
+            top: 5px
+          
           &.activity
-            background-position: -1020px 0
-            right: 40px
+            right: 41px
+            
+            &:before
+              background-position: -1020px 0
           
           &.characters
-            background-position: -570px 0
             right: 0
+            
+            &:before
+              background-position: -570px 0
           
           &:hover
-            background-color: #fff
-            border-color: #fff
+            background: #fff
+            cursor: pointer
             z-index: 3
+            
+            &:before
+              +opacity(.5)
           
           &.active
-            background-color: #fff
-            border-color: #fff
+            background: #fff
+            cursor: default
             z-index: 2
+            
+            &:before
+              +opacity(.2)
             
             + dd
               display: block
