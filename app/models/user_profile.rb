@@ -19,6 +19,8 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
+  has_many :swtor_characters, :through => :character_proxies, :source_type => "SwtorCharacter", :source => :character
+  has_many :wow_characters, :through => :character_proxies, :source_type => "WowCharacter", :source => :character
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
@@ -82,11 +84,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the characters attached to this user profile.
   ###
   def characters
-    characters = Array.new()
-    for proxy in self.character_proxies
-        characters << proxy.character
-    end
-    characters
+    self.wow_characters + self.swtor_characters
   end
 
   ###
