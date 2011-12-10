@@ -22,3 +22,4 @@ public/assets/
 
 # Visual Paradigm
 *.vpp~*
+.metrics
