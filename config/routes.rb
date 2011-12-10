@@ -24,6 +24,9 @@ DaBvRails::Application.routes.draw do
   resource :active_profiles, :only => [:create]
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
+  # Activity
+  resources :activity, :only => [:index]
+
   # Communities
   resources :communities, :except => [:destroy, :update, :edit]
 

@@ -274,6 +274,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -292,5 +293,6 @@ end
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
+#  deleted_at                      :datetime
 #
 

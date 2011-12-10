@@ -9,6 +9,7 @@
 #  show_in_navigation :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  deleted_at         :datetime
 #
 
 require 'spec_helper'

@@ -67,6 +67,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: discussion_spaces
@@ -78,5 +79,6 @@ end
 #  created_at            :datetime
 #  updated_at            :datetime
 #  is_announcement_space :boolean         default(FALSE)
+#  deleted_at            :datetime
 #
 

@@ -13,6 +13,7 @@
 #  can_accept                     :boolean         default(FALSE)
 #  parent_association_for_subject :string(255)
 #  id_of_parent                   :integer
+#  deleted_at                     :datetime
 #
 
 require 'spec_helper'

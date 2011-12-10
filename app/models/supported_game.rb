@@ -110,6 +110,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -122,5 +123,6 @@ end
 #  game_announcement_space_id :integer
 #  name                       :string(255)
 #  game_type                  :string(255)
+#  deleted_at                 :datetime
 #
 

@@ -85,6 +85,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: pages
@@ -96,5 +97,6 @@ end
 #  show_in_navigation :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  deleted_at         :datetime
 #
 

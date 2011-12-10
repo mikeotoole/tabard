@@ -16,6 +16,7 @@
 #  updated_at                :datetime
 #  original_commentable_id   :integer
 #  original_commentable_type :string(255)
+#  deleted_at                :datetime
 #
 
 require 'spec_helper'
