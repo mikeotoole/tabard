@@ -334,7 +334,7 @@ protected
       session[:return_to] = nil
       (store_location.nil?) ? root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) : store_location.to_s
     else
-      super
+      user_root_url(current_user)
     end
   end
 

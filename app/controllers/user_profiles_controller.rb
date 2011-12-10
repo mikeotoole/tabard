@@ -16,8 +16,9 @@ class UserProfilesController < ApplicationController
   load_and_authorize_resource
   skip_authorize_resource :only => :account
 
-  # GET /user_profiles/
-  def index
+  # GET /dashboard
+  def dashboard
+    @user_profile = current_user.user_profile
     render :show
   end
 

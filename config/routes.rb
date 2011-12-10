@@ -9,16 +9,16 @@ DaBvRails::Application.routes.draw do
   devise_scope :user do
     get 'users/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
   end
-  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Documents
   get "users/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
+  resources :user_profiles, :only => [:show, :edit, :update, :account]
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
+  match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
 
   # Active profile
   resource :active_profiles, :only => [:create]

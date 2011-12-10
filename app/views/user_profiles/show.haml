@@ -24,12 +24,12 @@
     %h3 About Me
     %p= @user_profile.description ||= 'No description given.'
       
-  %dl.tabs
+  %dl#tabs.tabs
     
-    %dt{ :class => 'activity' } Recent Activity
+    %dt{ :class => 'activity active' } Recent Activity
     %dd derp derp
     
-    %dt{ :class => 'characters active' } Characters
+    %dt{ :class => 'characters' } Characters
     %dd
       - if @user_profile.swtor_characters.any?
         %h2

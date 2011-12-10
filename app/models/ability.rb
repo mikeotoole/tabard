@@ -96,12 +96,17 @@ class Ability
   can :manage, Wow
   can :manage, WowCharacter
 =end
+
   ###
   # This method defines the rules for a member.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
+    can :dashboard, UserProfile do |user_profile|
+      user_profile == user.user_profile
+    end
+  
     # Answer Rules
     can :create, Answer
     can [:read, :destroy], Answer do |answer|

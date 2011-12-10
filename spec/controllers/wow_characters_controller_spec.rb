@@ -5,19 +5,11 @@ describe WowCharactersController do
   let(:user) { DefaultObjects.user }
   
   describe "GET 'show'" do
-    before(:each) do
-      @character = create(:wow_char_profile)
-    end
-    
-    it "should be successful when authenticated as a user" do
-      sign_in user
-      get 'show', :id => @character
-      response.should be_success
-    end
-  
-    it "should be successful when not authenticated as a user" do
-      get 'show', :id => @character
-      response.should be_success
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show'
+        assert_response :missing
+      end
     end
   end
 
@@ -85,8 +77,8 @@ describe WowCharactersController do
       WowCharacter.find(1).name.should == "My Test Name"
     end
     
-    it "should redirect to new wow character" do
-      response.should redirect_to(wow_character_url(1))
+    it "should redirect to user profile dashboard" do
+      response.should redirect_to(concat(user_root_url,'#characters'))
     end
   end
   
@@ -117,8 +109,8 @@ describe WowCharactersController do
       WowCharacter.find(@character).name.should == @new_name
     end
     
-    it "should redirect to wow character" do
-      response.should redirect_to(wow_character_url(assigns[:swtor_character]))
+    it "should redirect to user profile dashboard" do
+      response.should redirect_to(concat(user_root_url,'#characters'))
     end
   end
   

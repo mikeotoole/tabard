@@ -5,19 +5,11 @@ describe SwtorCharactersController do
   let(:user) { DefaultObjects.user }
   
   describe "GET 'show'" do
-    before(:each) do
-      @character = create(:swtor_char_profile)
-    end
-    
-    it "should be successful when authenticated as a user" do
-      sign_in user
-      get 'show', :id => @character
-      response.should be_success
-    end
-  
-    it "should be successful when not authenticated as a user" do
-      get 'show', :id => @character
-      response.should be_success
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show'
+        assert_response :missing
+      end
     end
   end
 
@@ -88,9 +80,9 @@ describe SwtorCharactersController do
       assigns(:swtor_character).should be_persisted
     end
     
-    it "should redirect to new swtor character" do
+    it "should redirect to user profile dashboard" do
       post :create, :swtor_character => valid_attributes
-      response.should redirect_to(SwtorCharacter.last)
+      response.should redirect_to(concat(user_root_url,'#characters'))
     end
   end
   
@@ -121,8 +113,8 @@ describe SwtorCharactersController do
       SwtorCharacter.find(1).name.should eq(@new_name)
     end
     
-    it "should redirect to swtor character" do
-      response.should redirect_to(swtor_character_url(assigns[:swtor_character]))
+    it "should redirect user profile dashboard" do
+      response.should redirect_to(concat(user_root_url,'#characters'))
     end
   end  
   
