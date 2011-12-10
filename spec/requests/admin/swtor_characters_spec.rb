@@ -114,14 +114,14 @@ describe "ActiveAdmin SwtorCharacter" do
       login_as superadmin
 
       page.driver.delete("/admin/swtor_characters/#{character.id}")
-      SwtorCharacter.exists?(character).should be_false
+      SwtorCharacter.find(character).is_removed.should be_true
     end 
     
     it "deletes character when logged in as admin" do
       login_as admin
 
       page.driver.delete("/admin/swtor_characters/#{character.id}")
-      SwtorCharacter.exists?(character).should be_false
+      SwtorCharacter.find(character).is_removed.should be_true
     end    
     
     it "returns 403 when logged in as moderator" do

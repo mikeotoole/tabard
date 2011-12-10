@@ -55,9 +55,7 @@ describe RegistrationsController do
         delete :destroy, :user => {:current_password => "Password"}
         response.should redirect_to(root_url)
         updated_user = User.find(user)
-        updated_user.is_user_disabled.should be_true
         updated_user.user_disabled_at.should_not be_nil
-        updated_user.is_admin_disabled.should be_false
         updated_user.admin_disabled_at.should be_nil
       end
       

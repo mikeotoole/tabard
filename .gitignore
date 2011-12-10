@@ -3,7 +3,7 @@ db/*.sqlite3*
 log/*.log
 log/test.log
 tmp/**/*
-tmp/
+tmp/*
 
 .DS_Store
 Icon?

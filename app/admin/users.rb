@@ -5,13 +5,13 @@ ActiveAdmin.register User do
   actions :index, :show
 
   action_item :only => :show do
-    if not user.is_admin_disabled and can? :disable, user
+    if not user.admin_disabled_at and can? :disable, user
       link_to "Disable User", disable_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to disable this user?'
     end
   end
 
   action_item :only => :show do
-    if (user.is_admin_disabled or user.is_user_disabled) and can? :reinstate, user
+    if (user.admin_disabled_at or user.user_disabled_at) and can? :reinstate, user
       link_to "Reinstate User", reinstate_admin_user_path(user), :method => :put, :confirm => 'Are you sure you want to reinstate this user?'
     end
   end
@@ -60,7 +60,7 @@ ActiveAdmin.register User do
   end
 
   collection_action :reset_all_passwords, :method => :post do
-    User.reset_all_passwords
+    User.reset_all_passwords # TODO Mike, May want to have the run in a worker thread.
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
 
@@ -80,9 +80,7 @@ ActiveAdmin.register User do
   filter :confirmation_sent_at
   filter :failed_attempts
   filter :created_at
-  filter :is_admin_disabled, :as => :select
   filter :admin_disabled_at
-  filter :is_user_disabled, :as => :select
   filter :user_disabled_at
   filter :accepted_current_terms_of_service, :as => :select
   filter :accepted_current_privacy_policy, :as => :select
@@ -98,8 +96,9 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
-    column :is_admin_disabled
-    column :is_user_disabled
+    column :disabled do
+      user.is_disabled?
+    end
     column :created_at
   end
 

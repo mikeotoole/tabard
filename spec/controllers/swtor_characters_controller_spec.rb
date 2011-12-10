@@ -124,28 +124,6 @@ describe SwtorCharactersController do
     it "should redirect to swtor character" do
       response.should redirect_to(swtor_character_url(assigns[:swtor_character]))
     end
-  end  
-  
-  describe "PUT 'update' when authenticated as a user" do
-    before(:each) do
-      @characterDefault = Factory.create(:swtor_char_profile)
-      @characterNotDefault = Factory.create(:swtor_char_profile)
-      sign_in user
-    end
-  
-    it "should update default when set to true" do
-      SwtorCharacter.find(@characterNotDefault).default.should be_false
-      put 'update', :id => @characterNotDefault, :swtor_character => { :default => true }
-      SwtorCharacter.exists?(@characterNotDefault).should be_true
-      SwtorCharacter.find(@characterNotDefault).default.should be_true
-    end
-    
-    it "should not update default when set from true to false" do
-      SwtorCharacter.find(@characterDefault).default.should be_true
-      put 'update', :id => @characterDefault, :swtor_character => { :default => false }
-      SwtorCharacter.exists?(@characterDefault).should be_true
-      SwtorCharacter.find(@characterDefault).default.should be_true
-    end
   end
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
@@ -179,7 +157,7 @@ describe SwtorCharactersController do
     it "should be successful when authenticated as a user" do
       sign_in user
       delete 'destroy', :id => @character
-      response.should redirect_to(swtor_characters_url)
+      response.should redirect_to(user_profile_url(@character.user_profile))
     end
  
     it "should redirected to new user session path when not authenticated as a user" do

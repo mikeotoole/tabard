@@ -54,6 +54,6 @@ class WowCharactersController < ApplicationController
   def destroy
     add_new_flash_message('Character was successfully removed') if @wow_character and @wow_character.destroy
 
-    respond_with(@wow_character)
+    respond_with(@wow_character, :location => user_profile_url(@wow_character.user_profile))
   end
 end

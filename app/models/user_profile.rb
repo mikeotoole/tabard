@@ -90,6 +90,7 @@ class UserProfile < ActiveRecord::Base
     self.swtor_characters + self.wow_characters
   end
 
+  # TODO Mike, Update this and make it better!
   ###
   # This method gets all of the avaliable characters attached to this user profile.
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
@@ -103,6 +104,7 @@ class UserProfile < ActiveRecord::Base
     available_character_proxies
   end
 
+  # TODO Mike, Is this needed?
   ###
   # This method will return all of the character proxies for this user profile who's character matches the specified game.
   # [Args]
@@ -115,23 +117,6 @@ class UserProfile < ActiveRecord::Base
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
     proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
-  end
-
-  ###
-  # This method will return all of the character proxies for this user profile who's character matches the specified game.
-  # [Args]
-  #   * +game+ -> The game to scope the proxies by.
-  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
-  ###
-  def default_character_proxy_for_a_game(game)
-    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
-    # FIXME Joe, WTF! Associations why you no work!
-    proxies = CharacterProxy.where(:user_profile_id => self.id)
-
-    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.is_default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
-    proxies = proxies.compact
-    raise RuntimeError.new("too many default characters exception") if proxies.count > 1
-    proxies.first
   end
 
   # This method returns the first name + space + last name
@@ -268,6 +253,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of unviewed messages within the past two weeks.
   ###
   def recent_unread_announcements
+    # TODO Mike, make this better.
     self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago}
   end
 

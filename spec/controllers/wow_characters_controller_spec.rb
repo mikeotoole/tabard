@@ -120,37 +120,7 @@ describe WowCharactersController do
     it "should redirect to wow character" do
       response.should redirect_to(wow_character_url(assigns[:swtor_character]))
     end
-  end
-  
-  describe "PUT 'update' when authenticated as a user" do
-    before(:each) do
-      @characterDefault = Factory.create(:wow_char_profile)
-      @characterNotDefault = Factory.create(:wow_char_profile)
-      sign_in user
-    end
-  
-    it "should update default when set to true" do
-      @characterNotDefault.default.should be_false
-      put 'update', :id => @characterNotDefault, :wow_character => { :default => true }
-      WowCharacter.exists?(@characterNotDefault).should be_true
-      WowCharacter.find(@characterNotDefault).default.should be_true
-    end
-    
-    it "should not update default when set from true to false" do
-      @characterDefault.default.should be_true
-      put 'update', :id => @characterDefault, :wow_character => { :default => false }
-      WowCharacter.exists?(@characterDefault).should be_true
-      WowCharacter.find(@characterDefault).default.should be_true
-    end
-    
-    it "should not make character default on update" do
-      @characterNotDefault.default.should be_false
-      put 'update', :id => @characterNotDefault, :wow_character => { :name => "New Name" }
-      WowCharacter.exists?(@characterNotDefault).should be_true
-      WowCharacter.find(@characterNotDefault).default.should be_false
-      WowCharacter.find(@characterNotDefault).name.should eql "New Name"
-    end
-  end  
+  end 
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
     @character = Factory.create(:wow_char_profile)
@@ -183,7 +153,7 @@ describe WowCharactersController do
     it "should be successful when authenticated as a user" do
       sign_in user
       delete 'destroy', :id => @character
-      response.should redirect_to(wow_characters_url)
+      response.should redirect_to(user_profile_url(@character.user_profile))
     end
  
     it "should redirected to new user session path when not authenticated as a user" do

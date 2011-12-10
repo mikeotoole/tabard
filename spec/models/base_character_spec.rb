@@ -48,43 +48,41 @@ describe BaseCharacter do
     end
   end
   
-  describe "default" do
-    it "should be true when first character of game type is created" do
-      character.default.should be_true
+  describe "is_disabled?" do
+    it "should return true when character is removed" do
+      pending
     end
     
-    it "should be false by default on creation when default for game exists" do
-      create(:wow_char_profile).default.should be_true
-      create(:wow_char_profile).default.should be_false
+    it "should return true when character's owner is disabled" do
+      pending
+    end
+    
+    it "should return false when not removed and owner is active" do
+      pending
     end
   end
   
-  describe "set_as_default" do   
-    it "should set character as default for game for user" do
-      create(:wow_char_profile)
-      character.default.should be_false
-      character.set_as_default
-      character.default.should be_true
+  describe "destroy" do
+    it "should mark character as is_removed" do
+      character = create(:wow_char_profile)
+      character.should be_valid
+      proxy = character.character_proxy
+      proxy.should be_valid
+      character.destroy.should be_true
+      WowCharacter.find(character).is_removed.should be_true
     end
     
-    it "should remove previous for game for user" do
-      firstCharacter = create(:wow_char_profile)
-      firstCharacter.default.should be_true
-      firstCharacter_id = firstCharacter.id
-      character.default.should be_false
-      character_id = character.id
-      character.set_as_default
-      WowCharacter.find(character_id).default.should be_true
-      WowCharacter.find(firstCharacter_id).default.should be_false
+    it "should not delete character proxy" do
+      character = create(:wow_char_profile)
+      character.should be_valid
+      proxy = character.character_proxy
+      proxy.should be_valid
+      character.destroy.should be_true
+      CharacterProxy.exists?(proxy).should be_true
     end
-  end
-  
-  it "should delete character proxy when destroyed" do
-    character = create(:wow_char_profile)
-    character.should be_valid
-    proxy = character.character_proxy
-    proxy.should be_valid
-    character.destroy.should be_true
-    CharacterProxy.exists?(proxy).should be_false
+    
+    it "should destroy all roster assignments" do
+      pending
+    end
   end
 end

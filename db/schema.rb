@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209035256) do
+ActiveRecord::Schema.define(:version => 20111209192406) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(:version => 20111209035256) do
     t.string   "character_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_default_character", :default => false
   end
 
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
