@@ -32,6 +32,8 @@ class DiscussionSpace < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true
   delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
+  after_create :apply_default_permissions
+
 ###
 # Public Methods
 ###
@@ -62,6 +64,11 @@ class DiscussionSpace < ActiveRecord::Base
   ###
   def number_of_discussions
     self.discussions.count
+  end
+
+  def apply_default_permissions
+    return if self.is_announcement_space
+    self.community.apply_default_permissions(self)
   end
 end
 

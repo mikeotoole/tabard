@@ -120,29 +120,18 @@ class Ability
       (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
     end
     can [:destroy], Discussion do |discussion|
-      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.is_locked) or
       ((discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked)
-    end
-    can [:unlock, :lock], Discussion do |discussion|
-      discussion.community_admin_profile_id == user.user_profile_id
-    end
-    cannot :create, Discussion do |discussion|
-      if discussion.is_announcement
-        discussion.community_admin_profile_id != user.user_profile_id
-      else
-        false
-      end
     end
 
     # Comment Rules
-    can [:read, :create], Comment do |comment|
+    can [:read], Comment do |comment|
       user.user_profile.is_member?(comment.community)
     end
-    can [:update], Comment do |comment|
-      (comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed
-    end
-    can [:destroy], Comment do |comment|
+    can [:lock, :update, :destroy], Comment do |comment|
       ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
+    end
+    can [:unlock], Comment do |comment|
+      (comment.user_profile_id == user.user_profile.id) and not comment.is_removed
     end
 
     # Community Rules
@@ -256,6 +245,7 @@ class Ability
     can [:unlock, :lock, :destroy], Comment do |comment|
       not comment.is_removed
     end
+
     can :manage, DiscussionSpace
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
       space.is_announcement_space == true
@@ -292,6 +282,30 @@ class Ability
       community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
     end
+
+    # Special context rules
+    can [:create], Submission do |submission|
+      submission.custom_form.is_published and can? :read, submission.custom_form
+    end
+
+    can [:read], Discussion do |discussion|
+      can? :read, discussion.discussion_space
+    end
+
+    can [:read], Page do |page|
+      can? :read, page.page_space
+    end
+
+    # Cannot Overrides
+    cannot :destroy, Comment do |comment|
+      comment.replies_locked?
+    end
+    cannot :update, Comment do |comment|
+      (comment.user_profile_id != user.user_profile.id)
+    end
+    cannot :update, Discussion do |discussion|
+      (discussion.user_profile_id != user.user_profile.id)
+    end
   end
 
   ###
@@ -306,20 +320,33 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        case permission.permission_level
-          when "Delete"
-            action.concat([:read, :update, :create, :destroy])
-          when "Create"
-            action.concat([:read, :update, :create])
-          when "Update"
-            action.concat([:read, :update])
-          when "View"
-            action.concat([:read])
-          else
-            # TODO Joe/Bryan Should this be logged?
+        if permission.permission_level.blank?
+          action.concat([:read]) if permission.can_read
+          action.concat([:update]) if permission.can_update
+          action.concat([:create]) if permission.can_create
+          action.concat([:destroy]) if permission.can_destroy
+        else
+          case permission.permission_level
+            when "Delete"
+              action.concat([:read, :update, :create, :destroy])
+            when "Create"
+              action.concat([:read, :update, :create])
+            when "Update"
+              action.concat([:read, :update])
+            when "View"
+              action.concat([:read])
+            else
+              # TODO Joe/Bryan Should this be logged?
+          end
         end
-        action.concat([:lock]) if permission.can_lock
-        action.concat([:accept]) if permission.can_accept
+        if permission.can_lock
+          action.concat([:lock]) 
+          action.concat([:unlock]) 
+        end
+        if permission.can_accept
+          action.concat([:accept]) 
+          action.concat([:reject]) 
+        end
         if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)
         else

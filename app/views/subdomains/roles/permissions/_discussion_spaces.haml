@@ -1,0 +1,32 @@
+%dl
+  %dt
+    %h3 Default Values
+  %dd
+    - defaults = role.permissions_defaults_for_resource("DiscussionSpace")
+    = f.simple_fields_for :permission_defaults, defaults, :child_index => defaults.id do |pf|
+      = pf.input :object_class, :as => :hidden
+      .slider_with_none
+        %input{ type: 'radio', id: 'discussion_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{defaults.id}][permission_level]", value: '', checked: pf.object.permission_level == '' }
+        %label{ for: 'discussion_spaces_default_permission_level' } ×
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      = pf.input :can_create_nested, :as => :boolean, :label => 'Add new discussions', :wrapper => false
+      = pf.input :can_destroy_nested, :as => :boolean, :label => 'Delete discussions', :wrapper => false
+      = pf.input :can_lock_nested, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false
+  - if current_community.discussion_spaces.any?
+    - current_community.discussion_spaces.each do |space|
+      %dt
+        %h3= space.name
+      %dd
+        = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
+          = pf.input :subject_class, :as => :hidden
+          %label Space
+          .slider_with_none
+            = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
+            = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+        = f.simple_fields_for :permissions, role.nested_permissions_for_resource(space) do |pf|
+          = pf.input :subject_class, :as => :hidden
+          = pf.input :id_of_parent, :as => :hidden
+          = pf.input :parent_association_for_subject, :as => :hidden
+          = pf.input :can_create, :as => :boolean, :label => 'Add new discussions', :wrapper => false
+          = pf.input :can_destroy, :as => :boolean, :label => 'Delete discussions', :wrapper => false
+          = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false
