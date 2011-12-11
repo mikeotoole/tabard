@@ -509,7 +509,8 @@ button,
 
 // User profile
 
-body.user_profiles.show
+body.user_profiles.show,
+body.user_profiles.dashboard
 
   #content
     background-image: image-url('application/block-2a.png')
@@ -720,9 +721,12 @@ body.user_profiles.show
                 display: none
               
               .avatar
+                background: #eee
+                height: 60px
                 left: 0
                 position: absolute
                 top: 20px
+                width: 60px
                 
                 &:before
                   background: image-url('application/comment-shadow.png') 0 0 no-repeat

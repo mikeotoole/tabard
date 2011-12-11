@@ -7,16 +7,16 @@ describe UserProfilesController do
   let(:owner) { create(:user, :user_profile => user_profile) }
   let(:private_owner) { create(:user, :user_profile => private_user_profile) }
 
-	describe "GET 'index'" do
+	describe "GET 'dashboard'" do
 		it "should show the current user when authenticated as a user" do
       sign_in owner
-      get 'index'
+      get 'dashboard'
       assigns[:user_profile].should eq(owner.user_profile)
       response.should be_success
       response.should render_template('user_profiles/show')
     end
     it "should redirected to new user session path when not authenticated as a user" do
-      get 'index'
+      get 'dashboard'
       response.should redirect_to(new_user_session_url)
     end
 	end

@@ -257,6 +257,8 @@ $(document).ready ->
   $('dl.tabs >dt').click ->
     $(this).closest('dl.tabs').find('>dt').removeClass('active')
     $(this).addClass('active')
+  if window.location.hash
+    $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
   
   # fluid sidebar menu
   $('.sidemenu')
