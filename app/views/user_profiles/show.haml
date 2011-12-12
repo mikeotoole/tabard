@@ -27,7 +27,14 @@
   %dl#tabs.tabs
     
     %dt{ :class => 'activity active' } Recent Activity
-    %dd derp derp
+    %dd
+      - if @activities.any?
+        %ol.activities
+          - @activities.each do |activity|
+            - if activity.target_type.match /character/i
+              %li= render "user_profiles/activities/character", :activity => activity
+            - else
+              %li= render "user_profiles/activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
     
     %dt{ :class => 'characters' } Characters
     %dd
