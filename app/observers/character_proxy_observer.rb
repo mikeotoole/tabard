@@ -9,7 +9,7 @@ class CharacterProxyObserver < ActiveRecord::Observer
   
   def after_create(character_proxy)
     Activity.create!( :user_profile => character_proxy.user_profile, 
-                      :target => character_proxy, 
+                      :target => character_proxy.is_a?(CharacterProxy) ? character_proxy : character_proxy.character, 
                       :action => "created")
   end
 end
