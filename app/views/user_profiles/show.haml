@@ -41,7 +41,7 @@
                 %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
             - else
               - next if activity.target_type == 'SwtorCharacter'
-              %li= render "user_profiles/activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
+              %li= render "activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
       - else
         %em No recent activity
     
