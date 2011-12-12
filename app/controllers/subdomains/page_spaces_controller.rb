@@ -98,7 +98,7 @@ protected
   ###
   def create_activity
     @page_space.valid?
-      action = @page_space.created_at == @page_space.updated_at ? "created wiki space" : "edited wiki space"
+      action = @page_space.created_at == @page_space.updated_at ? "created" : "edited"
       
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @page_space.community, 

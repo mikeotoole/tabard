@@ -98,7 +98,7 @@ protected
   ###
   def create_activity
     if @discussion_space.valid?
-      action = @discussion_space.created_at == @discussion_space.updated_at ? "created discussion space" : "edited discussion space"
+      action = @discussion_space.created_at == @discussion_space.updated_at ? "created" : "edited"
       
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @discussion_space.community, 

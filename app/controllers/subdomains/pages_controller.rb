@@ -92,7 +92,7 @@ protected
   ###
   def create_activity
     if @page.valid?
-      action = @page.created_at == @page.updated_at ? "created wiki page" : "edited wiki page"
+      action = @page.created_at == @page.updated_at ? "created" : "edited"
       
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @page.community, 

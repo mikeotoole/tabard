@@ -94,7 +94,7 @@ protected
   ###
   def create_activity
     if @supported_game.valid?
-      action = @supported_game.created_at == @supported_game.updated_at ? "added game" : "edited game"
+      action = @supported_game.created_at == @supported_game.updated_at ? "created" : "edited"
       
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @supported_game.community, 

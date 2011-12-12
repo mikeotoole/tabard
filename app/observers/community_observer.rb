@@ -11,6 +11,6 @@ class CommunityObserver < ActiveRecord::Observer
     Activity.create!( :user_profile => community.admin_profile,
                       :community => community,
                       :target => community, 
-                      :action => "created community")
+                      :action => "created")
   end
 end

@@ -9,8 +9,12 @@ class CharacterObserver < ActiveRecord::Observer
   observe :wow_character, :swtor_character
   
   def after_update(character)
-    Activity.create!( :user_profile => character.user_profile, 
-                      :target => character, 
-                      :action => "updated character")
+    if character.changed?
+      change = change ? "updated" : "avatar" if character.avatar_changed?
+    
+      Activity.create!( :user_profile => character.user_profile, 
+                        :target => character, 
+                        :action => change)
+    end                      
   end
 end

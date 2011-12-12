@@ -25,7 +25,7 @@ class ActivitiesController < ApplicationController
   def index
 #     params[:updated] = {:since => 2.day.ago, :before => 3.months.ago}
 #     params[:updated] = {:before => 1.day.ago}
-    params[:max_items] = 100
+#     params[:max_items] = 100
     
     @items = Activity.activities(params[:activity], params[:updated], params[:max_items])
   end

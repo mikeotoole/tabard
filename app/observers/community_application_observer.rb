@@ -17,7 +17,7 @@ class CommunityApplicationObserver < ActiveRecord::Observer
       Activity.create!( :user_profile => community_application.user_profile, 
                         :community => community_application.community, 
                         :target => community_application, 
-                        :action => "application accepted") unless activity
+                        :action => "accepted") unless activity
     end  
   end
 end

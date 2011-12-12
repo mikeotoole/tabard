@@ -12,12 +12,12 @@ class DiscussionObserver < ActiveRecord::Observer
       Activity.create!( :user_profile => discussion.user_profile, 
                         :community => discussion.community, 
                         :target => discussion,
-                        :action => "created discussion")
+                        :action => "created")
     else
       Activity.create!( :user_profile => discussion.user_profile, 
                         :community => discussion.community, 
                         :target => discussion,
-                        :action => "edited discussion")
+                        :action => "edited")
     end  
   end
 end
