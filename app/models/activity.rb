@@ -53,6 +53,7 @@ class Activity < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: activities
@@ -65,5 +66,6 @@ end
 #  action          :string(255)
 #  deleted_at      :datetime
 #  created_at      :datetime
+#  updated_at      :datetime
 #
 

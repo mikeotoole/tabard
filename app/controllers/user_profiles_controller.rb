@@ -18,11 +18,13 @@ class UserProfilesController < ApplicationController
   # GET /dashboard
   def dashboard
     @user_profile = current_user.user_profile
+    @activities = Activity.activities
     render :show
   end
 
   # GET /user_profiles/1
   def show
+    @activities = Activity.activities
   end
 
   # GET /user_profiles/1/edit
