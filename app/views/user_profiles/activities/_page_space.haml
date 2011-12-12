@@ -1,1 +1,9 @@
-%pre=YAML::dump activity
+- page_space = PageSpace.find_by_id(activity.target_id)
+- case activity.action
+- when 'created'
+  Created a
+- when 'updated'
+  Edited the
+%strong= link_to_if (can? :show, page_space), 'page space', page_space_url(page_space, :subdomain => activity.community_subdomain), :meta => page_space.name
+in
+%strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

@@ -1,1 +1,9 @@
-%pre=YAML::dump activity
+- discussion = Discussion.find_by_id(activity.target_id)
+- case activity.action
+- when 'created'
+  Created a
+- when 'updated'
+  Edited the
+%strong= link_to_if (can? :show, discussion), 'discussion', discussion_url(discussion, :subdomain => activity.community_subdomain), :meta => discussion.name
+in
+%strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

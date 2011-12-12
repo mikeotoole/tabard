@@ -36,6 +36,8 @@ class Comment < ActiveRecord::Base
 ###
 # Delegates
 ###
+  delegate :name, :to => :community, :prefix => true
+  delegate :subdomain, :to => :community, :prefix => true
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :created_at, :to => :user_profile, :prefix => true

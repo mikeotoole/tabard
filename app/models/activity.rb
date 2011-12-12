@@ -21,6 +21,12 @@ class Activity < ActiveRecord::Base
   belongs_to :target, :polymorphic => true
 
 ###
+# Delegates
+###
+  delegate :name, :to => :community, :prefix => true
+  delegate :subdomain, :to => :community, :prefix => true
+
+###
 # Validators
 ###
   validates :user_profile, :presence => true

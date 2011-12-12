@@ -28,13 +28,22 @@
     
     %dt{ :class => 'activity active' } Recent Activity
     %dd
-      - if @activities.any?
+      - if defined? @activities and @activities.any?
         %ol.activities
           - @activities.each do |activity|
-            - if activity.target_type.match /character/i
-              %li= render "user_profiles/activities/character", :activity => activity
+            - if activity.is_a? Comment
+              - if can? :show, activity
+                = render "subdomains/comments/comment", :comment => activity
+              - else
+                Posted a
+                %strong comment
+                in
+                %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
             - else
+              - next if activity.target_type == 'SwtorCharacter'
               %li= render "user_profiles/activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
+      - else
+        %em No recent activity
     
     %dt{ :class => 'characters' } Characters
     %dd

@@ -1,1 +1,3 @@
-%pre=YAML::dump activity
+- community = Community.find_by_id(activity.target_id)
+Created a new community called
+%strong= link_to community.name, root_url(:activity => community.subdomain)
