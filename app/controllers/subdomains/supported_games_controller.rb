@@ -54,9 +54,12 @@ class Subdomains::SupportedGamesController < SubdomainsController
   def update
     @supported_game.game = Game.get_game(@supported_game.game_type, params[:supported_game][:faction], params[:supported_game][:server_name])
     
-    if @supported_game.update_attributes(params[:supported_game])
+    @supported_game.assign_attributes(params[:supported_game])
+    is_changed = @supported_game.changed?
+    
+    if @supported_game.save
       add_new_flash_message('Successfully updated.')
-      @action = 'edited'
+      @action = is_changed ? 'edited' : nil
     end  
 
     respond_with(@supported_game)
@@ -101,7 +104,7 @@ protected
   ###
   def create_activity
     if @action      
-      Activity.create!( :user_profile => current_user.user_profile, 
+      Activity.create( :user_profile => current_user.user_profile, 
                         :community => @supported_game.community, 
                         :target => @supported_game, 
                         :action => @action)

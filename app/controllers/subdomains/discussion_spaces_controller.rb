@@ -50,9 +50,11 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # PUT /discussion_spaces/1
   def update
-    if @discussion_space.update_attributes(params[:discussion_space])
+    @discussion_space.assign_attributes(params[:discussion_space])
+    is_changed = @discussion_space.changed?
+    if @discussion_space.save
       add_new_flash_message('Discussion space was successfully updated.')
-      @action = 'edited'
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@discussion_space)
   end
@@ -102,7 +104,7 @@ protected
   ###
   def create_activity
     if @action      
-      Activity.create!( :user_profile => current_user.user_profile, 
+      Activity.create( :user_profile => current_user.user_profile, 
                         :community => @discussion_space.community, 
                         :target => @discussion_space, 
                         :action => @action)                    

@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :target_type, :target_id, :target, :action, :user_profile, :community
+  attr_accessible :target_type, :target_id, :target, :action, :user_profile, :user_profile_id, :community
 
 ###
 # Associations

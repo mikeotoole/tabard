@@ -50,9 +50,12 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # PUT /page_spaces/:id(.:format)
   def update
-    if @page_space.update_attributes(params[:page_space])
+    @page_space.assign_attributes(params[:page_space])
+    is_changed = @page_space.changed?
+    
+    if @page_space.save
       add_new_flash_message('Page space was successfully updated.')
-      @action = 'edited'
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@page_space)
   end

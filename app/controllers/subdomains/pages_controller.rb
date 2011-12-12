@@ -52,9 +52,12 @@ class Subdomains::PagesController < SubdomainsController
 
   # PUT /pages/:id(.:format)
   def update
-    if @page.update_attributes(params[:page])
+    @page.assign_attributes(params[:page])
+    is_changed = @page.changed?
+  
+    if @page.save
       add_new_flash_message('Page was successfully updated.')
-      @action = 'edited'
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@page)
   end
