@@ -41,7 +41,10 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # POST /discussion_spaces
   def create
-    add_new_flash_message('Discussion space was successfully created.') if @discussion_space.save
+    if @discussion_space.save
+      add_new_flash_message('Discussion space was successfully created.')
+      @action = 'created'
+    end  
     respond_with(@discussion_space)
   end
 
@@ -49,6 +52,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   def update
     if @discussion_space.update_attributes(params[:discussion_space])
       add_new_flash_message('Discussion space was successfully updated.')
+      @action = 'edited'
     end
     respond_with(@discussion_space)
   end
@@ -97,13 +101,11 @@ protected
   # This after filter will created a new activty when a discussion space is created or updated.
   ###
   def create_activity
-    if @discussion_space.valid? and @discussion_space.changed?
-      action = @discussion_space.created_at == @discussion_space.updated_at ? "created" : "edited"
-      
+    if @action      
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @discussion_space.community, 
                         :target => @discussion_space, 
-                        :action => action)
+                        :action => @action)                    
     end                       
   end
 end
