@@ -2,7 +2,7 @@
 # Helpers
 ###
 
-def create_discussion_space(creater_last_name, community_name, space_name, faction='')
+def create_discussion_space(creator_last_name, community_name, space_name, faction='')
   puts "Creating #{community_name} discussion space #{space_name}"
   community = Community.find_by_name(community_name)
 
@@ -22,8 +22,8 @@ def create_discussion_space(creater_last_name, community_name, space_name, facti
 
   puts "With game #{supported_game.game_name}" if supported_game
   ds = community.discussion_spaces.create!(:name => space_name, :supported_game => supported_game)
-  creater = UserProfile.find_by_last_name(creater_last_name)
-  Activity.create!(:user_profile => creater, :community => community, :target => ds, :action => "created")
+  creator = UserProfile.find_by_last_name(creator_last_name)
+  Activity.create!(:user_profile => creator, :community => community, :target => ds, :action => "created")
 end
 
 def create_discussion(community_name, space_name, name, body, poster_last_name)

@@ -42,7 +42,10 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # POST /supported_games
   def create
     @supported_game.game = Game.get_game(params[:supported_game][:game_type], params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Game was successfully added.') if @supported_game.save
+    if @supported_game.save
+      add_new_flash_message('Game was successfully added.')
+      @action = 'created'
+    end  
 
     respond_with(@supported_game)
   end
@@ -50,7 +53,11 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # PUT /supported_games/1
   def update
     @supported_game.game = Game.get_game(@supported_game.game_type, params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Successfully updated.') if @supported_game.update_attributes(params[:supported_game])
+    
+    if @supported_game.update_attributes(params[:supported_game])
+      add_new_flash_message('Successfully updated.')
+      @action = 'edited'
+    end  
 
     respond_with(@supported_game)
   end
@@ -93,13 +100,11 @@ protected
   # This after filter will created a new activty when a page is created or updated.
   ###
   def create_activity
-    if @supported_game.valid?
-      action = @supported_game.created_at == @supported_game.updated_at ? "created" : "edited"
-      
+    if @action      
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @supported_game.community, 
                         :target => @supported_game, 
-                        :action => action)
+                        :action => @action)
     end                      
   end
 end

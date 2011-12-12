@@ -11,16 +11,20 @@ def create_community(admin_user_last_name, name, slogan, game_array)
     case game_name
       when "Horde"
         puts "with the game WoW Horde"
-        community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Horde"}), :name => "A-Team")
+        sg = community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Horde"}), :name => "A-Team")
+        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
       when "Alliance"
-        puts "with the game WoW Alliance"
+        sg = puts "with the game WoW Alliance"
         community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Alliance"}), :name => "A-Team")
+        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
       when "Empire"
         puts "with the game SWTOR Empire"
-        community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Empire"}), :name => "A-Team")
+        sg = community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Empire"}), :name => "A-Team")
+        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
       when "Republic"
         puts "with the game SWTOR Republic"
-        community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Republic"}), :name => "A-Team")
+        sg = community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Republic"}), :name => "A-Team")
+        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
     end
   end
   return community

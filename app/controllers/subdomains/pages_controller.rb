@@ -43,7 +43,10 @@ class Subdomains::PagesController < SubdomainsController
 
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
-    add_new_flash_message('Page was successfully created.') if @page.save
+    if @page.save
+      add_new_flash_message('Page was successfully created.')
+      @action = 'created'
+    end  
     respond_with(@page)
   end
 
@@ -51,6 +54,7 @@ class Subdomains::PagesController < SubdomainsController
   def update
     if @page.update_attributes(params[:page])
       add_new_flash_message('Page was successfully updated.')
+      @action = 'edited'
     end
     respond_with(@page)
   end
@@ -91,13 +95,11 @@ protected
   # This after filter will created a new activty when a page is created or updated.
   ###
   def create_activity
-    if @page.valid?
-      action = @page.created_at == @page.updated_at ? "created" : "edited"
-      
+    if @action
       Activity.create!( :user_profile => current_user.user_profile, 
                         :community => @page.community, 
                         :target => @page, 
-                        :action => action)
+                        :action => @action)
     end                      
   end
 end
