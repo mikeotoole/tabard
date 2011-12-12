@@ -102,31 +102,6 @@ describe Subdomains::RosterAssignmentsController do
     end
   end
 
-  describe "GET 'edit'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'edit', :id => roster_assignment
-      response.response_code.should == 403
-    end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should be_success
-    end
-
-    it "shouldn't be successful when not authenticated as a user" do
-      get 'edit', :id => roster_assignment
-      response.should redirect_to(new_user_session_url)
-    end
-
-    it "should render roster_assignments/new template" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should render_template('roster_assignments/edit')
-    end
-  end
-
   describe "POST 'create' authenticated as non-owner" do
     before(:each) do
       sign_in user
@@ -144,46 +119,6 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should not create new record" do
       assigns[:roster_assignment].should be_nil
-    end
-
-    it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
-    end
-  end
-
-  describe "PUT 'update' when authenticated as a non-owner" do
-    before(:each) do
-      sign_in user
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
-    end
-
-    it "should change attributes" do
-      assigns[:roster_assignment].should be_nil
-    end
-
-    it "should be unauthorize" do
-      response.response_code.should == 403
-    end
-  end
-
-  describe "PUT 'update' when authenticated as an owner" do
-    before(:each) do
-      sign_in admin_user
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
-    end
-
-    it "should change attributes" do
-      assigns[:roster_assignment].is_pending.should be_false
-    end
-
-    it "should redirect to new community" do
-      response.should redirect_to(roster_assignment_url(assigns[:roster_assignment]))
-    end
-  end
-
-  describe "PUT 'update' when not authenticated as a user" do
-    before(:each) do
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should redirect to new user session path" do

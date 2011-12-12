@@ -82,7 +82,7 @@ describe SwtorCharactersController do
     
     it "should redirect to user profile dashboard" do
       post :create, :swtor_character => valid_attributes
-      response.should redirect_to(concat(user_root_url,'#characters'))
+      response.should redirect_to(user_root_url + "#characters")
     end
   end
   
@@ -114,29 +114,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect user profile dashboard" do
-      response.should redirect_to(concat(user_root_url,'#characters'))
-    end
-  end  
-  
-  describe "PUT 'update' when authenticated as a user" do
-    before(:each) do
-      @characterDefault = Factory.create(:swtor_char_profile)
-      @characterNotDefault = Factory.create(:swtor_char_profile)
-      sign_in user
-    end
-  
-    it "should update default when set to true" do
-      SwtorCharacter.find(@characterNotDefault).default.should be_false
-      put 'update', :id => @characterNotDefault, :swtor_character => { :default => true }
-      SwtorCharacter.exists?(@characterNotDefault).should be_true
-      SwtorCharacter.find(@characterNotDefault).default.should be_true
-    end
-    
-    it "should not update default when set from true to false" do
-      SwtorCharacter.find(@characterDefault).default.should be_true
-      put 'update', :id => @characterDefault, :swtor_character => { :default => false }
-      SwtorCharacter.exists?(@characterDefault).should be_true
-      SwtorCharacter.find(@characterDefault).default.should be_true
+      response.should redirect_to(user_root_url + "#characters")
     end
   end
   

@@ -141,21 +141,6 @@ describe UserProfile do
     end
   end
 
-  describe "default_character_proxy_for_a_game" do
-    it "should return the default if there is one of the game" do
-      profile = create(:user_profile)
-      proxy = create(:character_proxy, :user_profile => profile)
-      proxy.is_default_character.should be_true
-      profile.default_character_proxy_for_a_game(DefaultObjects.wow).should eq(proxy)
-    end
-
-    it "should return nil if there is not one of the game" do
-      profile = create(:user_profile)
-      create(:character_proxy, :user_profile => profile)
-      profile.default_character_proxy_for_a_game(DefaultObjects.swtor).should be_nil
-    end
-  end
-
   describe "add_new_role method" do
     it "should add a valid role" do
       valid_roles = []
