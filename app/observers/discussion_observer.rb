@@ -13,7 +13,7 @@ class DiscussionObserver < ActiveRecord::Observer
                         :community => discussion.community, 
                         :target => discussion,
                         :action => "created")
-    else
+    elsif discussion.changed?
       Activity.create!( :user_profile => discussion.user_profile, 
                         :community => discussion.community, 
                         :target => discussion,

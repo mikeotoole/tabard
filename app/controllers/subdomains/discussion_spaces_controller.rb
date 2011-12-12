@@ -97,7 +97,7 @@ protected
   # This after filter will created a new activty when a discussion space is created or updated.
   ###
   def create_activity
-    if @discussion_space.valid?
+    if @discussion_space.valid? and @discussion_space.changed?
       action = @discussion_space.created_at == @discussion_space.updated_at ? "created" : "edited"
       
       Activity.create!( :user_profile => current_user.user_profile, 

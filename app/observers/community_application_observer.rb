@@ -8,15 +8,15 @@
 class CommunityApplicationObserver < ActiveRecord::Observer
   
   def after_update(community_application)
-    if community_application.status == "Accepted"
+    if community_application.changed? and community_application.status == "Accepted"
       activity = Activity.where(:user_profile_id => community_application.user_profile_id, 
                                 :community_id => community_application.community_id,
-                                :target_type => community_application.class.name,
-                                :target_id => community_application.id).first
+                                :target_type => "UserProfile",
+                                :target_id => community_application.user_profile_id).first
                                 
       Activity.create!( :user_profile => community_application.user_profile, 
                         :community => community_application.community, 
-                        :target => community_application, 
+                        :target => community_application.user_profile, 
                         :action => "accepted") unless activity
     end  
   end

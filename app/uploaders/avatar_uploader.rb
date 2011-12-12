@@ -19,7 +19,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   storage :fog
 
   process :convert => 'png'
-#   process :create_activity
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -84,13 +83,4 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def filename
     "avatar.png" if original_filename
   end
-  
-#   def create_activity
-#     if model.persisted?
-#       action = model.class.find(model).avatar == nil ? "added avatar" : "changed avatar"
-#       Activity.create!( :user_profile => model.is_a?(UserProfile) ? model : model.user_profile, 
-#                         :target => model,
-#                         :action => action)
-#     end                      
-#   end
 end
