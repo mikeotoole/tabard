@@ -17,6 +17,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   before_filter :create_supported_game, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -84,5 +85,21 @@ protected
   ###
   def create_supported_game
     @supported_game = current_community.supported_games.new(params[:supported_game]) if current_community
+  end
+  
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page is created or updated.
+  ###
+  def create_activity
+    if @supported_game.valid?
+      action = @supported_game.created_at == @supported_game.updated_at ? "added game" : "edited game"
+      
+      Activity.create!( :user_profile => current_user.user_profile, 
+                        :community => @supported_game.community, 
+                        :target => @supported_game, 
+                        :action => action)
+    end                      
   end
 end

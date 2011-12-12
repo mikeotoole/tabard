@@ -19,6 +19,16 @@ class UserProfileObserver < ActiveRecord::Observer
     if user_profile.persisted?
       org_user_profile = UserProfile.find(user_profile)
       
+      change = org_user_profile.display_name == user_profile.display_name ? "display name" : nil
+      
+      if not user_profile.description.blank? and not org_user_profile.description == user_profile.description
+        change = change ? "profile" : "description"
+      end
+      if not user_profile.title.blank? and not org_user_profile.title == user_profile.title
+        change = change ? "profile" : "title"
+      end
+                
+      
       unless org_user_profile.display_name == user_profile.display_name
         Activity.create!( :user_profile => user_profile, 
                           :target => user_profile,

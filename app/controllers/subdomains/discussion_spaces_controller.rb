@@ -16,6 +16,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :create_discussion_space, :only => [:new, :create]
   authorize_resource :except => [:index, :index_announcement_spaces]
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -88,5 +89,21 @@ protected
   ###
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
+  end
+  
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a discussion space is created or updated.
+  ###
+  def create_activity
+    if @discussion_space.valid?
+      action = @discussion_space.created_at == @discussion_space.updated_at ? "created discussion space" : "edited discussion space"
+      
+      Activity.create!( :user_profile => current_user.user_profile, 
+                        :community => @discussion_space.community, 
+                        :target => @discussion_space, 
+                        :action => action)
+    end                       
   end
 end

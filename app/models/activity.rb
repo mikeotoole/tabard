@@ -6,6 +6,8 @@
 # This class represents an actvity.
 ###
 class Activity < ActiveRecord::Base
+
+  DEFAULT_MAX_ITEMS = 10
 ###
 # Attribute accessible
 ###
@@ -26,6 +28,29 @@ class Activity < ActiveRecord::Base
   validates :action, :presence => true
   
   scope :ordered, :order => "updated_at DESC"
+  
+  
+  def self.activities(activity=nil, updated=nil, max_items=DEFAULT_MAX_ITEMS)
+    max_items = DEFAULT_MAX_ITEMS unless max_items
+     
+    if updated and updated[:since] and updated[:before]
+      @activities = Activity.ordered.where(activity).where('updated_at < :since AND updated_at > :before', updated).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < :since AND updated_at > :before', updated).first(max_items.to_i)
+    elsif updated and updated[:since]
+      @activities = Activity.ordered.where(activity).where('updated_at > :since', updated).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at > :since', updated).first(max_items.to_i)
+    elsif updated and updated[:before]
+      @activities = Activity.ordered.where(activity).where('updated_at < :before', updated).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < :before', updated).first(max_items.to_i)
+    else
+      @activities = Activity.ordered.where(activity).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).first(max_items.to_i)
+    end
+    
+    @items = @activities + @comments
+    @items.sort!{|item1, item2| item2.updated_at <=> item1.updated_at}
+    @items[0..max_items.to_i-1]
+  end
 end
 
 # == Schema Information

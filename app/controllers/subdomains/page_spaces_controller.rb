@@ -16,6 +16,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   before_filter :create_page_space, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -88,5 +89,21 @@ protected
   ###
   def create_page_space
     @page_space = current_community.page_spaces.new(params[:page_space]) if current_community
+  end
+  
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page space is created or updated.
+  ###
+  def create_activity
+    @page_space.valid?
+      action = @page_space.created_at == @page_space.updated_at ? "created wiki space" : "edited wiki space"
+      
+      Activity.create!( :user_profile => current_user.user_profile, 
+                        :community => @page_space.community, 
+                        :target => @page_space, 
+                        :action => action)
+    end                      
   end
 end

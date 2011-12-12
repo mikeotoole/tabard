@@ -17,6 +17,7 @@ class Subdomains::PagesController < SubdomainsController
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_active_profile_is_valid
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -82,5 +83,21 @@ protected
   def create_page
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
     @page = page_space.pages.new(params[:page])
+  end
+  
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page is created or updated.
+  ###
+  def create_activity
+    if @page.valid?
+      action = @page.created_at == @page.updated_at ? "created wiki page" : "edited wiki page"
+      
+      Activity.create!( :user_profile => current_user.user_profile, 
+                        :community => @page.community, 
+                        :target => @page, 
+                        :action => action)
+    end                      
   end
 end
