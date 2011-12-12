@@ -11,7 +11,6 @@ class CharacterObserver < ActiveRecord::Observer
   def after_update(character)
     if character.changed?
       change = character.changed == ["avatar", "updated_at"] ? "avatar" : "updated"
-      puts character.changed.to_yaml
     
       Activity.create!( :user_profile => character.user_profile, 
                         :target => character.character_proxy, 
