@@ -25,6 +25,7 @@ class Comment < ActiveRecord::Base
 # Scopes
 ###
   scope :not_deleted, where(:is_removed => false)
+  scope :ordered, :order => "updated_at DESC"
 
 ###
 # Callbacks
@@ -202,6 +203,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: comments
@@ -220,6 +222,5 @@ end
 #  updated_at                :datetime
 #  original_commentable_id   :integer
 #  original_commentable_type :string(255)
-#  deleted_at                :datetime
 #
 

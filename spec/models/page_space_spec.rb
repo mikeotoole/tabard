@@ -8,7 +8,6 @@
 #  community_id      :integer
 #  created_at        :datetime
 #  updated_at        :datetime
-#  deleted_at        :datetime
 #
 
 require 'spec_helper'

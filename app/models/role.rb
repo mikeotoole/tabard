@@ -29,6 +29,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: roles
@@ -39,6 +40,5 @@ end
 #  is_system_generated :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  deleted_at          :datetime
 #
 

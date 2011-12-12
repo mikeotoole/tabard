@@ -25,7 +25,7 @@ DaBvRails::Application.routes.draw do
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
 
   # Activity
-  resources :activity, :only => [:index]
+  resources :activities, :only => [:index]
 
   # Communities
   resources :communities, :except => [:destroy, :update, :edit]
@@ -87,7 +87,7 @@ DaBvRails::Application.routes.draw do
       put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", :as => "batch_approve_roster_assignments"
       put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", :as => "batch_reject_roster_assignments"
       delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", :as => "batch_destroy_roster_assignments"
-      resources :roster_assignments, :except => [:show, :new] do
+      resources :roster_assignments, :except => [:show, :new, :edit, :update] do
         member do
           put :approve
           put :reject

@@ -21,6 +21,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: questions
@@ -34,6 +35,5 @@ end
 #  updated_at     :datetime
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
-#  deleted_at     :datetime
 #
 

@@ -10,6 +10,7 @@
 #  action          :string(255)
 #  deleted_at      :datetime
 #  created_at      :datetime
+#  updated_at      :datetime
 #
 
 require 'spec_helper'

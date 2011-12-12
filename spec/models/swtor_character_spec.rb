@@ -13,7 +13,6 @@
 #  species        :string(255)
 #  level          :string(255)
 #  about          :string(255)
-#  is_removed     :boolean         default(FALSE)
 #
 
 require 'spec_helper'

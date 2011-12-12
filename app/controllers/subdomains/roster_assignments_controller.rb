@@ -53,13 +53,13 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     redirect_to my_roster_assignments_path
   end
 
-  # PUT /roster_assignments/1
-  # PUT /roster_assignments/1.json
-  def update
-    #@roster_assignment = RosterAssignment.find(params[:id])
-    @roster_assignment.update_attributes(params[:roster_assignment])
-    respond_with(@roster_assignment)
-  end
+#   # PUT /roster_assignments/1 This is not needed.. Right? -MO
+#   # PUT /roster_assignments/1.json
+#   def update
+#     #@roster_assignment = RosterAssignment.find(params[:id])
+#     @roster_assignment.update_attributes(params[:roster_assignment])
+#     respond_with(@roster_assignment)
+#   end
 
   # DELETE /roster_assignments/1
   # DELETE /roster_assignments/1.json

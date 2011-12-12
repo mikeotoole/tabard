@@ -8,7 +8,6 @@
 #  is_system_generated :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  deleted_at          :datetime
 #
 
 require 'spec_helper'

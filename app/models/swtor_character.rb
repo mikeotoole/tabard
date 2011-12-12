@@ -257,6 +257,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: swtor_characters
@@ -272,6 +273,5 @@ end
 #  species        :string(255)
 #  level          :string(255)
 #  about          :string(255)
-#  is_removed     :boolean         default(FALSE)
 #
 

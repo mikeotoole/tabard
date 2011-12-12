@@ -115,6 +115,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: discussions
@@ -128,6 +129,5 @@ end
 #  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  deleted_at          :datetime
 #
 

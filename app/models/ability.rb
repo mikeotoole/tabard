@@ -242,7 +242,7 @@ class Ability
     apply_rules_from_roles(user, current_community)
 
     can :mine, RosterAssignment
-    can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
+    can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile_id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
   end

@@ -190,6 +190,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: community_applications
@@ -202,6 +203,5 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  status_changer_id :integer
-#  deleted_at        :datetime
 #
 

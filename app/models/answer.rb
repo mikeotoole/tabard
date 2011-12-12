@@ -45,6 +45,7 @@ class Answer < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: answers
@@ -55,6 +56,5 @@ end
 #  submission_id :integer
 #  created_at    :datetime
 #  updated_at    :datetime
-#  deleted_at    :datetime
 #
 

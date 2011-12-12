@@ -7,13 +7,6 @@
 ###
 class CharacterProxy < ActiveRecord::Base
 ###
-# Callbacks
-###
-  # There should always be a default character
-  before_save :check_one_default_character_exists
-  before_destroy :set_default_character_if_needed
-
-###
 # Associations
 ###
   belongs_to :user_profile
@@ -28,9 +21,7 @@ class CharacterProxy < ActiveRecord::Base
   validates :user_profile, :presence => true
   validates :character_id, :presence => true
   validates :character_type, :presence => true
-  # The only way to unset a character as default is to set another as default.
-  validate :default_character_not_from_true_to_false, :on => :update
-
+  
 ###
 # Delegates
 ###
@@ -76,49 +67,8 @@ class CharacterProxy < ActiveRecord::Base
   def set_as_default
     self.update_attributes(:is_default_character => true) unless self.is_default_character
   end
-
-###
-# Protected Methods
-###
-protected
-
-###
-# Callback Methods
-###
-  ###
-  # This method is a before_save callback that checks that there is one and only one default for this characters game.
-  ###
-  def check_one_default_character_exists
-    default_proxy = self.user_profile.default_character_proxy_for_a_game(self.character.game)
-    if default_proxy == nil
-      self.is_default_character = true
-    elsif self.is_default_character == true
-      default_proxy.update_attribute(:is_default_character, false)
-    end
-  end
-
-  ###
-  # This method is a before_destroy callback that checks if another character should be set as default.
-  ###
-  def set_default_character_if_needed
-    if self.is_default_character
-      proxies = self.user_profile.character_proxies_for_a_game(self.character.game)
-      proxies.delete_if { |proxy| (proxy.id == self.id) }
-      proxies = proxies.compact
-      proxies.first.update_attribute(:is_default_character, true) if proxies.count > 0
-    end
-  end
-
-  ###
-  # This method is a validator on update. The only way to unset a character as
-  # default is to set another as default. So not update from true to false is allowed.
-  ###
-  def default_character_not_from_true_to_false
-    if not self.is_default_character and CharacterProxy.find(self.id).is_default_character
-      self.errors.add(:is_default_character, 'can only be changed by setting another character as default.')
-    end
-  end
 end
+
 
 
 
@@ -126,11 +76,12 @@ end
 #
 # Table name: character_proxies
 #
-#  id              :integer         not null, primary key
-#  user_profile_id :integer
-#  character_id    :integer
-#  character_type  :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                   :integer         not null, primary key
+#  user_profile_id      :integer
+#  character_id         :integer
+#  character_type       :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  is_default_character :boolean         default(FALSE)
 #
 

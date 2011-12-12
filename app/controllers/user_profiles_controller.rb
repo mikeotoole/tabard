@@ -5,7 +5,6 @@
 #
 # This controller is for user profiles.
 ###
-
 class UserProfilesController < ApplicationController
   respond_to :html
   ###

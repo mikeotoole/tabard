@@ -25,6 +25,7 @@ class PredefinedAnswer < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: predefined_answers
@@ -34,6 +35,5 @@ end
 #  select_question_id :integer
 #  created_at         :datetime
 #  updated_at         :datetime
-#  deleted_at         :datetime
 #
 

@@ -7,7 +7,8 @@ class CreateActivities < ActiveRecord::Migration
       t.integer :target_id
       t.string :action
       t.datetime :deleted_at
-      t.datetime :created_at
+      
+      t.timestamps
     end
   end
 end

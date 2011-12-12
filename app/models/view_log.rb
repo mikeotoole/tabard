@@ -21,6 +21,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: view_logs
@@ -31,6 +32,5 @@ end
 #  view_loggable_type :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  deleted_at         :datetime
 #
 

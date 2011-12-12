@@ -10,7 +10,6 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  status_changer_id :integer
-#  deleted_at        :datetime
 #
 
 require 'spec_helper'

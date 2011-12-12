@@ -8,7 +8,6 @@
 #  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  deleted_at           :datetime
 #
 
 require 'spec_helper'

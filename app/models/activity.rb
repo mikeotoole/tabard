@@ -9,20 +9,23 @@ class Activity < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :target_type, :target_id, :action
+  attr_accessible :target_type, :target_id, :target, :action, :user_profile, :community
 
 ###
 # Associations
 ###
   belongs_to :user_profile
   belongs_to :community
-  belongs_to :target
+  belongs_to :target, :polymorphic => true
 
 ###
 # Validators
 ###
+  validates :user_profile, :presence => true
   validates :target, :presence => true
-
+  validates :action, :presence => true
+  
+  scope :ordered, :order => "updated_at DESC"
 end
 
 # == Schema Information
