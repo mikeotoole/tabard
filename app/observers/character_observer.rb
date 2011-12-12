@@ -14,7 +14,7 @@ class CharacterObserver < ActiveRecord::Observer
       puts character.changed.to_yaml
     
       Activity.create!( :user_profile => character.user_profile, 
-                        :target => character, 
+                        :target => character.character_proxy, 
                         :action => change)
     end                      
   end

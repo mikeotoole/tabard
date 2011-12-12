@@ -24,7 +24,8 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1
   def show
-    @activities = Activity.activities
+    #@activities = Activity.activities
+    @activities = Activity.activities({ :user_profile_id => @user_profile.id })
   end
 
   # GET /user_profiles/1/edit
