@@ -38,7 +38,14 @@ describe Subdomains::RosterAssignmentsController do
   end
   
   describe "GET 'index'" do
-    it "should be unauthorized when authenticated as a non-member" do
+    it "should be success when authenticated as a non-member and a public roster" do
+      community.update_attribute(:is_public_roster, true)
+      sign_in user
+      get 'index'
+      response.should be_success
+    end
+
+    it "should be unauthorized when authenticated as a non-member and a non public roster" do
       sign_in user
       get 'index'
       response.response_code.should == 403
@@ -50,9 +57,14 @@ describe Subdomains::RosterAssignmentsController do
       response.should be_success
     end
 
-    it "should redirected to new user session path when not authenticated as a user" do
+    it "should be successful as an anon and public roster" do
+      community.update_attribute(:is_public_roster, true)
       get 'index'
-      response.should redirect_to(new_user_session_url)
+      response.should be_success
+    end
+    it "should be unauthorized as an anon and a non public roster" do
+      get 'index'
+      response.response_code.should == 403
     end
   end
 

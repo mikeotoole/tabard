@@ -27,7 +27,7 @@ body
 body
   background: #fff
   color: #896243
-  font-family: DinLight, sans
+  font-family: DinLight, sans-serif
   min-width: 980px
   
   &:before
@@ -49,7 +49,7 @@ body
     top: 670px
   
   strong
-    font-family: DinMedium, sans
+    font-family: DinMedium, sans-serif
 
 #content
   background: image-url('community/bg.jpg') center 70px no-repeat
@@ -85,7 +85,7 @@ body
     
     strong
       display: block
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       font-size: 36px
       letter-spacing: -2px
       text-shadow: 3px 3px 3px rgba(#000,.5)
@@ -169,7 +169,7 @@ body
               +border_radius(3)
               color: #792914
               content: attr(meta)
-              font: 12px DinMedium, sans
+              font: 12px DinMedium, sans-serif
               line-height: 12px
               padding: 3px
               position: absolute
@@ -381,7 +381,7 @@ button,
     
     dt
       color: #6e4b2f
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       padding: 10px 0 0
     
     dd
@@ -391,8 +391,84 @@ button,
     color: #6e4b2f
 
   time
-    font: 12px DinMedium, sans
+    font: 12px DinMedium, sans-serif
     white-space: nowrap
+  
+  
+  // Page actions
+  
+  #page_actions
+    position: absolute
+    top: 10px
+    right: 10px
+    
+  .actions a
+    background: image-url('application/icons.png') no-repeat #9C682F
+    +border_radius(5)
+    display: block
+    float: left
+    height: 30px
+    overflow: hidden
+    padding: 0
+    margin: 0 0 0 5px
+    text-indent: -500em
+    +transition(background-color .2s linear, box-shadow .2s linear)
+    width: 30px
+    
+    &:hover
+      background: image-url('application/icons.png') no-repeat #570A17
+      +box_shadow(0 0 10px #333)
+    
+      &[meta]
+      
+        &:before
+          background: rgba(#6F2B3D,.9)
+          +border_radius(5)
+          color: #fff
+          content: attr(meta)
+          font-size: 13px
+          height: 30px
+          line-height: 30px
+          margin: 0 5px 0 0
+          padding: 0 10px
+          position: absolute
+          right: 100%
+          text-indent: 0
+          white-space: nowrap
+        
+        &:after
+          border: 5px solid transparent
+          border-left: 5px solid rgba(#6F2B3D,.9)
+          content: ''
+          height: 0
+          left: -5px
+          position: absolute
+          top: 10px
+          width: 0
+    
+    &.apply
+      background-position: 0 -30px
+      
+    &.new
+      background-position: -600px -30px
+      
+    &.delete
+      background-position: -30px -30px
+      
+    &.edit
+      background-position: -60px -30px
+  
+    &.approve
+      background-position: -510px -30px
+    
+    &.reject
+      background-position: -540px -30px
+      
+    &.review
+      background-position: -120px -30px
+    
+    &.submission
+      background-position: -600px -30px
   
   
   // FORMS
@@ -435,7 +511,7 @@ button,
       + label:after
         background: #805B3E
         +bg_gradient(#805B3E,#330901)
-        border-color: #ddd
+        border-color: #5D361A
         +box_shadow(0 0 9px #999)
       
       &:focus + label,
@@ -490,7 +566,46 @@ button,
             &:hover
               background: #9F3A1F
               color: #fff
+
+  .slider,
+  .slider_with_none
+    background: #d2c69c
+    +bg_gradient(#d2c69c,#e8e3d1)
+    border-color: #fff
+    +border_radius(5)
+    +box_shadow(0 0 3px rgba(#000,.2))
+        
+    label
+      color: #DBD5B6
+
+    input
+      
+      &:checked + label
+        background: #A57C5E
+        border-color: #90684A
+        +box_shadow(0 0 5px rgba(#000,.5))
   
+    &:hover
+      background: #e8e3d1
+      border-color: #a37961
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
+      
+      label:hover
+        background: #8F334E !important
+        border-color: #5d2230
+        color: #fff
+        
+  .slider_with_none
+    
+    > label
+      color: #A47D5F
+      
+    >input:checked + label
+      color: #DBD5B6
+      
+      &:hover
+        color: #fff
   
   // TABLES
 
@@ -504,6 +619,12 @@ button,
     
       &.r
         text-align: right
+      
+      &.permission
+      
+        h3
+          line-height: 30px
+          padding: 0
   
     thead
       text-align: left
@@ -550,75 +671,6 @@ button,
             div
               position: relative
             
-              a
-                background: image-url('application/icons.png') no-repeat #9C682F
-                +border_radius(5)
-                display: block
-                float: left
-                height: 30px
-                overflow: hidden
-                padding: 0
-                margin: 0 0 0 5px
-                text-indent: -500em
-                +transition(background-color .2s linear, box-shadow .2s linear)
-                width: 30px
-                
-                &:hover
-                  background: image-url('application/icons.png') no-repeat #570A17
-                  +box_shadow(0 0 10px #333)
-                
-                  &[meta]
-                  
-                    &:before
-                      background: rgba(#6F2B3D,.9)
-                      +border_radius(5)
-                      color: #fff
-                      content: attr(meta)
-                      font-size: 13px
-                      height: 30px
-                      line-height: 30px
-                      margin: 0 5px 0 0
-                      padding: 0 10px
-                      position: absolute
-                      right: 100%
-                      text-indent: 0
-                      white-space: nowrap
-                    
-                    &:after
-                      border: 5px solid transparent
-                      border-left: 5px solid rgba(#6F2B3D,.9)
-                      content: ''
-                      height: 0
-                      left: -5px
-                      position: absolute
-                      top: 10px
-                      width: 0
-                      
-                
-                &.apply
-                  background-position: 0 -30px
-                  
-                &.new
-                  background-position: -600px -30px
-                  
-                &.delete
-                  background-position: -30px -30px
-                  
-                &.edit
-                  background-position: -60px -30px
-              
-                &.approve
-                  background-position: -510px -30px
-                
-                &.reject
-                  background-position: -540px -30px
-                  
-                &.review
-                  background-position: -120px -30px
-                
-                &.submission
-                  background-position: -600px -30px
-            
           img.avatar
             background: #C7B2A3
             border: 1px solid #fff
@@ -653,7 +705,7 @@ button,
             
               li
                 display: inline-block
-                font: 13px DinLight, sans
+                font: 13px DinLight, sans-serif
                 line-height: 20px
                 padding: 0 0 3px
                 width: 180px
@@ -711,17 +763,15 @@ button,
         
         button,
         .button
-          border-color: #1e102c
-          
-          &:focus,
-          &:hover
-            +box_shadow(0 0 10px #000)
+          border-color: #704f37
 
 
   // Comments
+  
   .comments
     background: #fff
     +border_radius(5)
+    clear: both
     margin: 30px -30px 0
     padding: 20px
     
@@ -807,7 +857,7 @@ button,
             
             a
               color: #aa000b
-              font-family: DinMedium, sans
+              font-family: DinMedium, sans-serif
               position: relative
               text-decoration: none
               
@@ -912,7 +962,7 @@ button,
           .reply
             display: block
             float: left
-            font: 12px DinMedium, sans
+            font: 12px DinMedium, sans-serif
             line-height: 20px
             padding: 0 5px
             margin: 10px 0 0
@@ -1304,7 +1354,7 @@ button,
         +border_radius(0)
         display: none
         float: none
-        font: 12px DinMedium, sans
+        font: 12px DinMedium, sans-serif
         height: auto
         line-height: 20px !important
         margin: 5px 0 0
@@ -1328,7 +1378,7 @@ button,
       >label
         bottom: 5px
         display: none
-        font: 12px DinMedium, sans
+        font: 12px DinMedium, sans-serif
         line-height: 20px
         margin: 0
         padding: 0 5px 0 0
@@ -1358,6 +1408,7 @@ button,
   
   
   // Submissions & Community Applications
+  
   .submission
     margin: -30px 0 0 0
   
@@ -1457,7 +1508,7 @@ button,
       
       .submitter a
         height: auto
-        font: 14px DinMedium, sans
+        font: 14px DinMedium, sans-serif
         line-height: 48px
         min-height: 48px
         padding: 0 8px 0 50px
@@ -1502,10 +1553,10 @@ button,
               line-height: 16px
           
               &.name
-                font: 14px DinMedium, sans
+                font: 14px DinMedium, sans-serif
                 
               &.game
-                font: 12px DinLight, sans
+                font: 12px DinLight, sans-serif
       
       .instructions
         
@@ -1619,7 +1670,7 @@ button,
             
             &:before
               content: '\00D7'
-              font: 17px DinLight, sans
+              font: 17px DinLight, sans-serif
               height: 20px
               right: 0
               line-height: 17px
@@ -1711,7 +1762,7 @@ button,
         
         &:before
           content: '\002B'
-          font: 17px DinLight, sans
+          font: 17px DinLight, sans-serif
           height: 20px
           right: 0
           line-height: 17px
@@ -1728,6 +1779,213 @@ button,
     
     .submit
       margin: -35px 0 0
+
+
+  // Roles & Permissions
+  
+  #roles
+    left: 30px
+    position: absolute
+    top: 90px
+    width: 240px
+    z-index: 1
+    
+    ul
+      padding: 0
+      margin: 0 0 20px
+      
+      li
+        list-style: none
+        
+        a
+          background: #835839
+          +border_radius(5,0,0,5)
+          display: block
+          color: #DBD5B6
+          margin: 0 0 1px
+          padding: 5px 10px
+          text-decoration: none
+          +transition(background .2s linear, color .2s linear)
+          
+          &:hover
+            background: #CD4622
+            color: #fff
+            
+          &.active
+            background: #5E371B
+            color: #fff
+          
+    &.busy
+        
+      &:after
+        background: rgba(#480010,.8)
+        +border_radius(5,0,0,5)
+        bottom: 0
+        +box_shadow(0 0 3px #480010)
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+        z-index: 9
+  
+  #role
+    background: #fff
+    border: 1px solid #5E371B
+    +border_radius(5,0,0,5)
+    +box_shadow(-5px -5px 10px rgba(#000,.2))
+    border-right: 0
+    margin: 0 -30px 0 240px
+    padding: 0
+    position: relative
+    z-index: 2
+    
+    form
+    
+      >h2
+        padding: 10px 20px
+        
+        + p
+          margin: -20px 0 0
+      
+      >p
+        padding: 10px 20px 20px
+    
+    .submit
+      background: #C7B2A4
+      border: 0
+      +border_radius(0,0,0,5)
+      margin: -3px 0 0
+      padding: 20px
+      position: relative
+      z-index: 1
+      
+      &:before
+        background: #fff
+        +border_radius(0,0,5,5)
+        content: ''
+        height: 5px
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+    
+    &.busy
+        
+      &:after
+        background: image-url('application/busy.gif') center center no-repeat rgba(#480010,.8)
+        +border_radius(4,0,0,4)
+        bottom: 0
+        +box_shadow(0 0 3px #480010)
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+        z-index: 9
+  
+  #permissions
+    padding: 1px 0 0
+    position: relative
+    z-index: 2
+  
+    >dd
+      display: none
+      padding: 10px 20px 20px
+      
+      h3
+        line-height: 1em
+        padding: 10px 0 0
+        
+      &:first-child dd
+        padding: 0
+        
+      dl
+        
+        dt
+          padding: 0
+    
+    >dt
+      padding: 0
+      
+      h2
+        +bg_gradient(#EBDED5,#F5EFEB)
+        border-bottom: 1px solid #ECDFD6
+        border-left: 0
+        +border_radius(5)
+        border-right: 0
+        border-top: 1px solid #C7B2A4
+        font: 20px DinLight, serif
+        height: 40px
+        line-height: 40px
+        margin: 1px 2px 0
+        padding: 0 20px
+      
+        &:hover
+          background: #8F334E
+          color: #fff
+          cursor: pointer
+        
+    label + .slider,
+    label + .slider_with_none
+      margin-top: 5px
+  
+  #usercheckboxes
+    margin: 0 -5px 10px 0
+    
+    &:after
+      clear: both
+      content: '.'
+      display: block
+      height: 0
+      visibility: hidden
+    
+    ol
+      padding: 0
+      
+      li
+        display: inline
+        clear: none
+        float: left
+        margin: 0
+        position: relative
+        
+        label
+          +bg_gradient(#F0EAE6,#FFF)
+          border-top: 1px solid #bb8b7d
+          +border_radius(5)
+          font: 13px DinMedium, sans-serif
+          height: 17px
+          line-height: 16px
+          margin: 0 6px 5px 1px
+          padding: 5px
+          text-indent: 25px
+          +transition(box-shadow .2s linear, color .2s linear)
+          width: 201px
+          
+          &:before
+            display: none
+            
+          &:after
+            border-color: #C6B1A3
+            left: 5px
+            top: 5px
+          
+          &:hover
+            +box_shadow(0 0 6px rgba(#000,.5))
+          
+        input
+          left: 10px
+          margin: 0
+          top: 10px
+          
+          &:checked + label
+            background: #E5DAD3
+            border: 1px solid #bb8b7d
+            +box_shadow(0 0 3px rgba(#000,.3))
+            color: #560716
+            height: 16px
+            margin: 0 5px 5px 0
 
 
 @import application/footer

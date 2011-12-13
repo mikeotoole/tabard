@@ -295,8 +295,9 @@ describe Subdomains::CommentsController do
     
     it "should not unlock the comment when authenticated as a user" do
       sign_in user
+      Comment.find(comment).is_locked.should be_true
       post :unlock, :id => comment.id.to_s
-      Comment.find(comment).is_locked.should be_true    
+      Comment.find(comment).is_locked.should be_true
     end
     
     it "should not unlock the comment when not authenticated as a user" do

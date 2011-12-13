@@ -36,6 +36,8 @@ class CustomForm < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
+  after_create :apply_default_permissions
+
 ###
 # Scopes
 ###
@@ -63,6 +65,11 @@ class CustomForm < ActiveRecord::Base
   ###
   def application_form?
     self.community.community_application_form == self
+  end
+
+  # This method applys default permissions when this is created.
+  def apply_default_permissions
+    self.community.apply_default_permissions(self)
   end
   
 ###

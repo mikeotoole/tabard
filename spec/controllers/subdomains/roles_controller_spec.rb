@@ -38,27 +38,25 @@ describe Subdomains::RolesController do
   end
 
   describe "GET 'show'" do
-    it "should be unauthorized when authenticated as a non admin user" do
-      sign_in user
-      get 'show', :id => role
-      response.response_code.should == 403
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'show', :id => role
+        assert_response :missing
+      end
     end
-    
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => role
-      response.should be_success
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'show', :id => role
+        assert_response :missing
+      end
     end
-    
-    it "should render roles/show template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'show', :id => role
-      response.should render_template('roles/show')
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get 'show', :id => role
-      response.should redirect_to(new_user_session_url)
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show', :id => role
+        assert_response :missing
+      end
     end
   end
 
@@ -73,12 +71,6 @@ describe Subdomains::RolesController do
       sign_in admin_user
       get 'new'
       response.should be_success
-    end
-    
-    it "should render roles/new template when authenticated as a community admin" do
-      sign_in admin_user
-      get 'new'
-      response.should render_template('roles/new')
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -104,12 +96,6 @@ describe Subdomains::RolesController do
       get 'edit', :id => role
       response.should redirect_to(new_user_session_url)
     end
-
-    it "should render roles/edit template" do
-      sign_in admin_user
-      get 'edit', :id => role
-      response.should render_template('roles/edit')
-    end
   end
 
   describe "POST 'create' authenticated as community admin" do
@@ -127,7 +113,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      response.should redirect_to(role_url(assigns[:role]))
+      response.should redirect_to(roles_url)
     end
   end
   
@@ -168,7 +154,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(role_url(role))
+      response.should redirect_to(roles_url)
     end
   end
 

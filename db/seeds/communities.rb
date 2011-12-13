@@ -61,6 +61,8 @@ unless @dont_run
 
   # Two Maidens
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
+  puts "Two maidens is getting a private roster"
+  two_maidens.update_attribute(:is_public_roster, false)
   
   fox = UserProfile.find_by_last_name('Fox')
   

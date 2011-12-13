@@ -102,7 +102,8 @@ describe Subdomains::AnnouncementsController do
 
       it "redirects to the created announcement" do
         post :create, :announcement_space_id => space.id, :discussion => attributes_for(:announcement)
-        response.should redirect_to(announcement_url(Discussion.last))
+        some_announcement = Discussion.unscoped.last
+        response.should redirect_to(announcement_url(some_announcement))
       end
     end
 
