@@ -498,6 +498,28 @@ button,
         padding: 3px 6px
 
 
+// Activities
+
+#body
+
+  .activities
+    
+    li
+      border-bottom-color: #eee
+  
+    *[meta]:hover
+      
+      &:before
+        background: #3679B3
+        border-color: #5196CF
+        +box_shadow(0 0 15px rgba(#000,.4))
+        color: #fff
+      
+      &:after
+        border-left-color: #5196CF
+        border-top-color: #5196CF
+
+
 // User profile
 
 body.user_profiles.show,
@@ -695,17 +717,6 @@ body.user_profiles.dashboard
               
               &:hover
                 background: #A53E34
-          
-          .activities
-            margin: 0
-            padding: 0
-            
-            li
-              margin: 0
-              padding: 0
-              
-              &:before
-                display: none
           
           .characters
             margin: 0

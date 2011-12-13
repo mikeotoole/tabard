@@ -538,6 +538,53 @@ button,
         width: 354px
 
 
+// Activities
+
+#body
+
+  .activities
+    font-size: 14px
+    margin: 0
+    padding: 0
+    
+    li
+      border-bottom: 1px solid
+      margin: 0
+      padding: 10px 0
+      
+      &:before
+        display: none
+      
+      a
+        white-space: nowrap
+        
+    *[meta]:hover
+      position: relative
+      
+      &:before
+        border: 1px solid
+        +border_radius(3)
+        content: attr(meta)
+        font: 12px DinMedium, sans-serif
+        height: 12px
+        left: 0
+        padding: 5px 10px
+        position: absolute
+        top: -32px
+        white-space: nowrap
+        z-index: 2
+      
+      &:after
+        border: 5px solid
+        border-bottom-color: transparent
+        border-right-color: transparent
+        content: ''
+        left: 5px
+        position: absolute
+        top: -8px
+        z-index: 3
+      
+
 // pop-up windows
 
 #mask,

@@ -4,6 +4,6 @@
   Created a
 - when 'updated'
   Edited the
-%strong= link_to_if (can? :show, discussion_space), 'discussion space', discussion_space_url(discussion_space, :subdomain => activity.community_subdomain), :meta => discussion_space.name
+%strong= link_to_if (current_user.in_community(activity.community).can? :show, discussion_space), 'discussion space', discussion_space_url(discussion_space, :subdomain => activity.community_subdomain), :meta => discussion_space.name
 in
 %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
