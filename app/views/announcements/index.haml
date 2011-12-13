@@ -45,4 +45,5 @@
           %tr
             %td{ :colspan => 4 }
               -if current_user.unread_announcements.size > 0
-                %button{ :class => 'read' } Mark selected as read
+                %button{ :class => 'read' }
+                  %span Mark selected as read
