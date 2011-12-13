@@ -87,6 +87,13 @@ class UserProfile < ActiveRecord::Base
     self.wow_characters + self.swtor_characters
   end
 
+  def in_community(context_community)
+    return Ability.new(self.user) unless context_community
+    context_ability = Ability.new(self.user)
+    context_ability.dynamicContextRules(self.user, context_community)
+    return context_ability
+  end
+
   ###
   # This method gets all of the avaliable characters attached to this user profile.
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
