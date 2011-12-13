@@ -64,6 +64,14 @@ describe UserProfile do
   it "should require a user" do
     Factory.build(:user_profile, :user => nil).should_not be_valid
   end
+  
+  it "should create an activity when created" do
+    user_profile = create(:user_profile)
+    
+    activity = Activity.last
+    activity.target.should eql user_profile
+    activity.action.should eql 'joined'
+  end
 
   describe "avatars" do
     before(:all) do

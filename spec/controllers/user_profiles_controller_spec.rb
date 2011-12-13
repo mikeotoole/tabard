@@ -153,6 +153,22 @@ describe UserProfilesController do
     it "should redirect to show" do
       response.should redirect_to(user_profile_url(assigns[:user_profile]))
     end
+    
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target.should eql user_profile
+      activity.action.should eql 'profile'
+    end
+  end
+  
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
+      sign_in owner
+      
+      expect {
+          put 'update', :id => user_profile, :user_profile => nil
+        }.to change(Activity, :count).by(0)
+    end
   end
 
   describe "PUT 'update' when authenticated as non-owner" do

@@ -6,7 +6,8 @@ VALID_SWTOR_SERVERS = [
   ["Tarro Blood", 'PvP'],
   ["Vulkar Highway", 'PvP'],
   ["The Shadowlands", 'PvP'],
-  ["Prophecy of the Five", 'PvP']
+  ["Prophecy of the Five", 'PvP'],
+  ["Rakata Mind Prison", 'PvP']
 ]
 
 puts "Creating SWTOR Games..."

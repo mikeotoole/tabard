@@ -67,19 +67,19 @@ describe SwtorCharactersController do
     before(:each) do
       sign_in user
     end
-    
+
     it "should add new character" do
       expect {
           post :create, :swtor_character => valid_attributes
         }.to change(SwtorCharacter, :count).by(1)
     end
-    
+
     it "should pass params to swtor_character" do
       post :create, :swtor_character => valid_attributes
       assigns(:swtor_character).should be_a(SwtorCharacter)
       assigns(:swtor_character).should be_persisted
     end
-    
+
     it "should redirect to user profile dashboard" do
       post :create, :swtor_character => valid_attributes
       response.should redirect_to(user_root_url + "#characters")
