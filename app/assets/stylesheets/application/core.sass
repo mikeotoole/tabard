@@ -166,6 +166,21 @@ button,
   text-decoration: none
   +transition(box-shadow .2s linear)
   
+  span
+    display: block
+    margin: 0 -15px
+    padding: 0 15px 0 40px
+    position: relative
+    
+    &:before
+      background: image-url('application/icons.png') no-repeat
+      content: ''
+      height: 30px
+      left: 0
+      position: absolute
+      top: 0
+      width: 30px
+  
 #body
 
   label
