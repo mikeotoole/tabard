@@ -33,7 +33,7 @@ class SwtorCharactersController < ApplicationController
   # POST /swtor_characters(.:format)
   def create
     @swtor_character = SwtorCharacter.create_character(params, current_user)
-    add_new_flash_message('Character was successfully created') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
+    add_new_flash_message('Character was successfully created','success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
 
     respond_with(@swtor_character)
   end
@@ -47,7 +47,7 @@ class SwtorCharactersController < ApplicationController
       @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
     end
     params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
-    add_new_flash_message('Character was successfully updated.') if @swtor_character.update_attributes(params[:swtor_character])
+    add_new_flash_message('Character was successfully updated.','success') if @swtor_character.update_attributes(params[:swtor_character])
     respond_with(@swtor_character)
   end
 

@@ -35,7 +35,7 @@ class Subdomains::QuestionsController < SubdomainsController
       @question.save
       @question = new_question
     end
-    add_new_flash_message('Question was successfully updated.') if @question.update_attributes(params[:question])
+    add_new_flash_message('Question was successfully updated.','success') if @question.update_attributes(params[:question])
     respond_with(@question, :location => custom_form_url(@question.custom_form))
   end
 

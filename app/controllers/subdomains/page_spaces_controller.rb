@@ -40,14 +40,14 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # POST /page_spaces(.:format)
   def create
-    add_new_flash_message('Page space was successfully created.') if @page_space.save
+    add_new_flash_message('Page space was successfully created.','success') if @page_space.save
     respond_with(@page_space)
   end
 
   # PUT /page_spaces/:id(.:format)
   def update
     if @page_space.update_attributes(params[:page_space])
-      add_new_flash_message('Page space was successfully updated.')
+      add_new_flash_message('Page space was successfully updated.','success')
     end
     respond_with(@page_space)
   end

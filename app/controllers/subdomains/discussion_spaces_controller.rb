@@ -40,14 +40,14 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # POST /discussion_spaces
   def create
-    add_new_flash_message('Discussion space was successfully created.') if @discussion_space.save
+    add_new_flash_message('Discussion space was successfully created.','success') if @discussion_space.save
     respond_with(@discussion_space)
   end
 
   # PUT /discussion_spaces/1
   def update
     if @discussion_space.update_attributes(params[:discussion_space])
-      add_new_flash_message('Discussion space was successfully updated.')
+      add_new_flash_message('Discussion space was successfully updated.','success')
     end
     respond_with(@discussion_space)
   end

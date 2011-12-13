@@ -41,7 +41,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # POST /supported_games
   def create
     @supported_game.game = Game.get_game(params[:supported_game][:game_type], params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Game was successfully added.') if @supported_game.save
+    add_new_flash_message('Game was successfully added.','success') if @supported_game.save
 
     respond_with(@supported_game)
   end
@@ -49,7 +49,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # PUT /supported_games/1
   def update
     @supported_game.game = Game.get_game(@supported_game.game_type, params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Successfully updated.') if @supported_game.update_attributes(params[:supported_game])
+    add_new_flash_message('Successfully updated.','success') if @supported_game.update_attributes(params[:supported_game])
 
     respond_with(@supported_game)
   end

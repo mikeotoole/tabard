@@ -34,7 +34,7 @@ class WowCharactersController < ApplicationController
   def create
     @wow_character = WowCharacter.create_character(params, current_user)
 
-    add_new_flash_message('Character was successfully created') if @wow_character.character_proxy and @wow_character.character_proxy.valid?
+    add_new_flash_message('Character was successfully created','success') if @wow_character.character_proxy and @wow_character.character_proxy.valid?
 
     respond_with(@wow_character)
   end
@@ -46,7 +46,7 @@ class WowCharactersController < ApplicationController
     if params[:wow_character][:faction] or params[:wow_character][:server_name]
       @wow_character.wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
     end
-    add_new_flash_message('Character was successfully updated') if @wow_character.update_attributes(params[:wow_character])
+    add_new_flash_message('Character was successfully updated','success') if @wow_character.update_attributes(params[:wow_character])
     respond_with(@wow_character)
   end
 

@@ -45,14 +45,14 @@ class Subdomains::DiscussionsController < SubdomainsController
   def create
     @discussion.user_profile = current_user.user_profile
     @discussion.character_proxy = (character_active? ? current_character.character_proxy : nil)
-    add_new_flash_message('Discussion was successfully created.') if @discussion.save
+    add_new_flash_message('Discussion was successfully created.','success') if @discussion.save
     respond_with(@discussion)
   end
 
   # PUT /discussions/:id(.:format)
   def update
     if @discussion.update_attributes(params[:discussion])
-      add_new_flash_message('Discussion was successfully updated.')
+      add_new_flash_message('Discussion was successfully updated.','success')
     end
     respond_with(@discussion)
   end

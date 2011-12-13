@@ -42,14 +42,14 @@ class Subdomains::PagesController < SubdomainsController
 
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
-    add_new_flash_message('Page was successfully created.') if @page.save
+    add_new_flash_message('Page was successfully created.','success') if @page.save
     respond_with(@page)
   end
 
   # PUT /pages/:id(.:format)
   def update
     if @page.update_attributes(params[:page])
-      add_new_flash_message('Page was successfully updated.')
+      add_new_flash_message('Page was successfully updated.','success')
     end
     respond_with(@page)
   end

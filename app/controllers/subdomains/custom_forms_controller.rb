@@ -33,7 +33,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # POST /custom_forms
   def create
     if @custom_form.save
-      add_new_flash_message('Form was successfully created.')
+      add_new_flash_message('Form was successfully created.','success')
       respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
     else
       respond_with @custom_form
