@@ -11,13 +11,12 @@
   %p
     = @announcement.body
 
-- # TODO Doug, We may want to pull this part out into its own partal for items that can have comments (this and discussion show). -MO
-- if @announcement.comments or (!@announcement.is_locked and (can? :create, @announcement.comments.new))
+- if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments
-    - if @announcement.comments
+    - if @announcement.comments.any?
       %ol
         - @announcement.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
-    - if not @announcement.is_locked and (can? :create, @announcement.comments.new)
+    - if can? :comment, @announcement
       %h3 Post a New Comment
       = render 'subdomains/comments/form', :comment => @announcement.comments.new

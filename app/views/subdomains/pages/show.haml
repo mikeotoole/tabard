@@ -8,5 +8,11 @@
     = link_to @page.page_space_name, @page.page_space
     %strong= @page.name
 
+#actions
+  - if (can? :update, @page)
+    = link_to 'Edit', edit_page_path(@page), :meta => 'Edit page', :class => 'edit'
+  - if (can? :destroy, @page)
+    = link_to 'Destroy', @page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page', :class => 'delete'
+
 %section
   = @page.body
