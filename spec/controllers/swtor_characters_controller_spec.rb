@@ -84,6 +84,16 @@ describe SwtorCharactersController do
       post :create, :swtor_character => valid_attributes
       response.should redirect_to(user_root_url + "#characters")
     end
+    
+    it "should create an activity" do
+      expect {
+        post :create, :swtor_character => valid_attributes
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'created'
+    end
   end
   
   describe "POST 'create' when not authenticated as a user" do
@@ -115,6 +125,23 @@ describe SwtorCharactersController do
     
     it "should redirect user profile dashboard" do
       response.should redirect_to(user_root_url + "#characters")
+    end
+    
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'edited'
+    end
+  end
+  
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
+      sign_in user
+      @character = create(:swtor_char_profile)
+      
+      expect {
+        put 'update', :id => @character, :swtor_character => { :name => @character.name }
+      }.to change(Activity, :count).by(0)
     end
   end
   
