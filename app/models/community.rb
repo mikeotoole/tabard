@@ -122,6 +122,11 @@ class Community < ActiveRecord::Base
     return community_roster
   end
 
+  ###
+  # This method attempts to apply default permissions for an item by calling apply_default_permissions for each role in the community.
+  # [Args]
+  #   * +some_thing+ -> The object to apply default permissions on.
+  ###
   def apply_default_permissions(some_thing)
     self.roles.each do |role|
       role.apply_default_permissions(some_thing)

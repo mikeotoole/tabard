@@ -67,6 +67,7 @@ class CustomForm < ActiveRecord::Base
     self.community.community_application_form == self
   end
 
+  # This method applys default permissions when this is created.
   def apply_default_permissions
     self.community.apply_default_permissions(self)
   end

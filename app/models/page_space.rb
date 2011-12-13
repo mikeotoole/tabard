@@ -58,6 +58,7 @@ class PageSpace < ActiveRecord::Base
     self.supported_game_id != nil
   end
 
+  # This method applys default permissions when this is created.
   def apply_default_permissions
     self.community.apply_default_permissions(self)
   end
