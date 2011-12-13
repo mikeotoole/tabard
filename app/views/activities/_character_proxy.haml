@@ -1,6 +1,6 @@
 - character = CharacterProxy.find_by_id(activity.target_id)
 - case activity.action
-- when 'updated'
+- when 'edited'
   Edited character
   %strong{ :meta => "#{character.game_name} character" }= character.name
 - when 'avatar'
