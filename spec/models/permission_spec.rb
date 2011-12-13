@@ -13,6 +13,10 @@
 #  can_accept                     :boolean         default(FALSE)
 #  parent_association_for_subject :string(255)
 #  id_of_parent                   :integer
+#  can_read                       :boolean         default(FALSE)
+#  can_create                     :boolean         default(FALSE)
+#  can_update                     :boolean         default(FALSE)
+#  can_destroy                    :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -32,7 +36,7 @@ describe Permission do
   
   describe "subject_class" do
     it "should have a limited inclusion set" do
-      valid_classes = %w{ Role CustomForm PageSpace Page DiscussionSpace Discussion Announcement CommunityApplication } # TESTING Valid subject classes for testing.
+      valid_classes = %w{ Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication } # TESTING Valid subject classes for testing.
       valid_classes.each do |valid_class|
         build(:permission, :subject_class => valid_class).should be_valid
       end

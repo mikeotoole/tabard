@@ -24,7 +24,7 @@
     %li{ :class => 'icon gear' }
       = link_to "Account", edit_user_registration_url
     %li{ :class => 'icon notice' }
-      = link_to "Announcements", announcements_path, (current_user.recent_unread_announcements.size > 0 ? { :meta => current_user.recent_unread_announcements.size } : {})
+      = link_to "Announcements", announcements_path, (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
     %li{ :class => 'icon envelope' }
       = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
     %li

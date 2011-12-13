@@ -2,11 +2,11 @@
 - case activity.action
 - when 'created'
   Added
-  %strong= link_to game.game_name
+  %strong= game.game_name
   as a supported game to
   %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
 - when 'edited'
   Edited
-  %strong= link_to game.game_name
+  %strong= game.game_name
   in
   %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

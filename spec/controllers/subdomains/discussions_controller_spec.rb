@@ -132,7 +132,7 @@ describe Subdomains::DiscussionsController do
 
       it "redirects to the created discussion" do
         post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
-        response.should redirect_to(Discussion.last)
+        response.should redirect_to(Discussion.unscoped.last)
       end
     end
 

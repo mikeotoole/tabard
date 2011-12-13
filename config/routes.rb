@@ -77,9 +77,7 @@ DaBvRails::Application.routes.draw do
       resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
-      resources :roles do
-        resources :permissions
-      end
+      resources :roles, :except => [:show]
 
       # Roster assignments
       get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"

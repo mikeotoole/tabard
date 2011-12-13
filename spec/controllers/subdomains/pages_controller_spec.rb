@@ -87,14 +87,14 @@ describe Subdomains::PagesController do
   end
 
   describe "GET new" do
-    it "assigns a new page as @page when authenticated as a member" do
-      sign_in owner
+    it "assigns a new page as @page when authenticated as a admin" do
+      sign_in admin
       get :new, :page_space_id => space.id
       assigns(:page).should be_a_new(Page)
     end
     
-    it "should render the 'new' template when authenticated as a member" do
-      sign_in owner
+    it "should render the 'new' template when authenticated as a admin" do
+      sign_in admin
       get :new, :page_space_id => space.id
       response.should render_template("new")
     end
@@ -102,6 +102,12 @@ describe Subdomains::PagesController do
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :page_space_id => space.id
       response.should redirect_to(new_user_session_url)
+    end
+
+    it "should respond forbidden when a member(owner)" do
+      sign_in owner
+      get :new, :page_space_id => space.id
+      response.should be_forbidden
     end
     
     it "should respond forbidden when not a member" do
@@ -112,14 +118,14 @@ describe Subdomains::PagesController do
   end
 
   describe "GET edit" do
-    it "assigns the requested page as @page when authenticated as a owner" do
-      sign_in owner
+    it "assigns the requested page as @page when authenticated as an admin" do
+      sign_in admin
       get :edit, :id => page.id.to_s
       assigns(:page).should eq(page)
     end
     
-    it "should render the 'edit' template when authenticated as a owner" do
-      sign_in owner
+    it "should render the 'edit' template when authenticated as an admin" do
+      sign_in admin
       get :edit, :id => page.id.to_s
       response.should render_template("edit")
     end
@@ -129,6 +135,12 @@ describe Subdomains::PagesController do
       response.should redirect_to(new_user_session_url)
     end
     
+    it "should respond forbidden when an member(owner)" do
+      sign_in owner
+      get :edit, :id => page.id.to_s
+      response.should be_forbidden
+    end
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => page.id.to_s
@@ -142,9 +154,9 @@ describe Subdomains::PagesController do
     end
   end
 
-  describe "POST create when authenticated as member" do
+  describe "POST create when authenticated as admin" do
     before(:each) {
-      sign_in owner
+      sign_in admin
     }
   
     describe "with valid params" do
@@ -185,6 +197,12 @@ describe Subdomains::PagesController do
       post :create, :page_space_id => space.id, :page => attributes_for(:page)
       response.should redirect_to(new_user_session_url)
     end
+
+    it "should respond forbidden when a member(owner)" do
+      sign_in owner
+      post :create, :page_space_id => space.id, :page => attributes_for(:page)
+      response.should be_forbidden
+    end
     
     it "should respond forbidden when not a member" do
       sign_in non_member
@@ -193,9 +211,9 @@ describe Subdomains::PagesController do
     end
   end
 
-  describe "PUT update when authenticated as owner" do
+  describe "PUT update when authenticated as admin" do
     before(:each) {
-      sign_in owner
+      sign_in admin
     }
   
     describe "with valid params" do
@@ -238,6 +256,12 @@ describe Subdomains::PagesController do
       put :update, :id => page.id, :page => {:name => "New name"}
       response.should redirect_to(new_user_session_url)
     end
+
+    it "should respond forbidden when a member(owner)" do
+      sign_in owner
+      put :update, :id => page.id, :page => {:name => "New name"}
+      response.should be_forbidden
+    end
     
     it "should respond forbidden when not a member" do
       sign_in non_member
@@ -253,16 +277,16 @@ describe Subdomains::PagesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested page when authenticated as owner" do
+    it "destroys the requested page when authenticated an admin" do
       page
-      sign_in owner
+      sign_in admin
       expect {
         delete :destroy, :id => page.id.to_s
       }.to change(Page, :count).by(-1)
     end
 
-    it "redirects to the page list when authenticated as owner" do
-      sign_in owner
+    it "redirects to the page list when authenticated an admin" do
+      sign_in admin
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)
     end

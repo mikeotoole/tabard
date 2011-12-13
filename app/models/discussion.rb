@@ -6,6 +6,7 @@
 # This class represents a discussion.
 ###
 class Discussion < ActiveRecord::Base
+  default_scope :order => 'created_at DESC'
 ###
 # Attribute accessible
 ###

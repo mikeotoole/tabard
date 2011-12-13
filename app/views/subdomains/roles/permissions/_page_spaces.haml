@@ -1,0 +1,36 @@
+%dl
+  %dt
+    %h3 Default Values
+  %dd
+    - defaults = role.permissions_defaults_for_resource("PageSpace")
+    = f.simple_fields_for :permission_defaults, defaults, :child_index => defaults.id do |pf|
+      = pf.input :object_class, :as => :hidden
+      %label Space
+      .slider_with_none
+        %input{ type: 'radio', id: 'page_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{defaults.id}][permission_level]", value: '', checked: pf.object.permission_level == '' }
+        %label{ for: 'page_spaces_default_permission_level' } ×
+        = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      %label Pages
+      .slider_with_none
+        %input{ type: 'radio', id: 'page_spaces_default_nested_permission_level', name: "role[permission_defaults_attributes][#{defaults.id}][nested_permission_level]", value: '', checked: pf.object.nested_permission_level == '' }
+        %label{ for: 'page_spaces_default_nested_permission_level' } ×
+        = pf.collection_radio :nested_permission_level, [['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
+  - if current_community.page_spaces.any?
+    - current_community.page_spaces.each do |space|
+      %dt
+        %h3= space.name
+      %dd
+        = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
+          = pf.input :subject_class, :as => :hidden
+          %label Space
+          .slider_with_none
+            = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
+            = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+        = f.simple_fields_for :permissions, role.nested_permissions_for_resource(space) do |pf|
+          = pf.input :subject_class, :as => :hidden
+          = pf.input :id_of_parent, :as => :hidden
+          = pf.input :parent_association_for_subject, :as => :hidden
+          %label Pages
+          .slider_with_none
+            = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
+            = pf.collection_radio :permission_level, [['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last

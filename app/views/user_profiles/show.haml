@@ -35,13 +35,17 @@
               - if can? :show, activity
                 = render "subdomains/comments/comment", :comment => activity
               - else
-                Posted a
-                %strong comment
-                in
-                %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+                %li.comment
+                  Posted a
+                  %strong comment
+                  in
+                  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+                  %time= "#{time_ago_in_words(activity.created_at)} ago"
             - else
-              - next if activity.target_type == 'SwtorCharacter'
-              %li= render "activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
+              - class_name = activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase
+              %li{ :class => class_name }
+                = render "activities/#{class_name}", :activity => activity
+                %time= "#{time_ago_in_words(activity.created_at)} ago"
       - else
         %em No recent activity
     

@@ -8,12 +8,12 @@
 body
   background: image-url('main/bg.png') 0 70px repeat-x #fff
   color: #251533
-  font-family: DinLight, sans
+  font-family: DinLight, sans-serif
   min-width: 980px
   padding: 75px 0 0
   
   strong
-    font-family: DinMedium, sans
+    font-family: DinMedium, sans-serif
 
 #pitch
   line-height: 22px
@@ -51,17 +51,8 @@ button,
   letter-spacing: 1px
   text-transform: lowercase
   
-  &.read
-    padding-left: 40px
-  
-    &:before
-      background: image-url('application/icons.png') -420px -30px no-repeat
-      content: ''
-      height: 30px
-      left: 0
-      position: absolute
-      top: 0
-      width: 30px
+  &.read span:before
+    background-position: -420px -30px
   
   &:focus,
   &:hover
@@ -133,7 +124,7 @@ button,
         +border_radius(3)
         content: counter(li)
         color: #999
-        font-family: DinMedium, sans
+        font-family: DinMedium, sans-serif
         font-size: 11px
         height: 15px
         line-height: 15px
@@ -385,7 +376,7 @@ button,
             
           time
             display: block
-            font: 12px DinMedium, sans
+            font: 12px DinMedium, sans-serif
             white-space: nowrap
         
         &.read
@@ -503,8 +494,30 @@ button,
         +border_radius(5)
         color: #fff
         float: right
-        font-family: DinMedium, sans
+        font-family: DinMedium, sans-serif
         padding: 3px 6px
+
+
+// Activities
+
+#body
+
+  .activities
+    
+    li
+      border-bottom-color: #eee
+  
+    *[meta]:hover
+      
+      &:before
+        background: #3679B3
+        border-color: #5196CF
+        +box_shadow(0 0 15px rgba(#000,.4))
+        color: #fff
+      
+      &:after
+        border-left-color: #5196CF
+        border-top-color: #5196CF
 
 
 // User profile
@@ -525,13 +538,13 @@ body.user_profiles.dashboard
         
         h1
           color: #251534
-          font: 40px DinLight, sans
+          font: 40px DinLight, sans-serif
           line-height: 40px
           margin: 0
           padding: 0
         
         p
-          font: 20px DinMedium, sans
+          font: 20px DinMedium, sans-serif
           line-height: 20px
           margin: 0
           padding: 0
@@ -704,17 +717,6 @@ body.user_profiles.dashboard
               
               &:hover
                 background: #A53E34
-          
-          .activities
-            margin: 0
-            padding: 0
-            
-            li
-              margin: 0
-              padding: 0
-              
-              &:before
-                display: none
           
           .characters
             margin: 0
