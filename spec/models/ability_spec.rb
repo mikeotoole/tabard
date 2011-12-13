@@ -13,80 +13,6 @@
 require 'spec_helper'
 require "cancan/matchers"
 
-def anonymous_can_permissions(user)
-  before(:each) do
-    @ability = Ability.new(user)
-  end
-  describe "BaseCharacter" do
-    it "should allow read when public" do
-      #@ability.should_not be_able_to(:read, )
-      pending
-    end
-  end
-  describe "Community" do
-    it "should allow read" do
-      public_community = create(:community)
-      @ability.should be_able_to(:read, public_community)
-    end
-  end
-  describe "Game" do
-    it "should allow read" do
-      #@ability.should_not be_able_to(:read, )
-      pending
-    end
-  end
-end
-
-def site_member_can_permissions(ability)
-
-  anonymous_can_permissions(ability)
-
-  describe "BaseCharacter" do
-    it "should allow creation" do
-      #@ability.should be_able_to(:create, )
-      pending
-    end
-    it "should allow read, update, delete for owned" do
-      #@ability.should be_able_to(:read, )
-      #@ability.should be_able_to(:update, )
-      #@ability.should be_able_to(:delete, )
-      pending
-    end
-  end
-  describe "Community" do
-    it "should allow create" do
-      #@ability.should_not be_able_to(:create, )
-      pending
-    end
-  end
-  describe "CommunityApplication" do
-    it "should allow creation" do
-      #@ability.should be_able_to(:create, )
-      pending
-    end
-    it "should allow read, update, delete for owned" do
-      #@ability.should be_able_to(:read, )
-      #@ability.should be_able_to(:update, )
-      #@ability.should be_able_to(:delete, )
-      pending
-    end
-  end
-  describe "Messages" do
-    it "should allow create" do
-      #@ability.should_not be_able_to(:read, )
-      pending
-    end
-    it "should allow read, delete for owned" do
-      #@ability.should be_able_to(:read, )
-      #@ability.should be_able_to(:update, )
-      #@ability.should be_able_to(:delete, )
-      pending
-    end
-  end
-end
-
-
-
 describe Ability do
   ###
   # Here is a quick example to writing tests for cancan using the magical cancan matcher:
@@ -104,358 +30,255 @@ describe Ability do
   ###
   describe "for an anonymous user" do
     before(:each) do
-      @anonymous = User.new
-      @ability = Ability.new(@anonymous)
-    end
-    describe "can visit main page + top level information pages" do
-      pending
+      @user = User.new
+      @ability = Ability.new(@user)
     end
     it "can create an account" do
       @ability.should be_able_to(:create, User.new)
     end
-    it "can log in" do
-      pending
+
+    describe "Anonymous Permissions" do
+      before(:each) do
+        @ability = Ability.new(@user)
+      end
+      describe "Community" do
+        it "should allow read" do
+          public_community = create(:community)
+          @ability.should be_able_to(:read, public_community)
+        end
+      end
+      describe "Game" do
+        it "should allow read" do
+          @ability.should be_able_to(:read, Game)
+        end
+      end
+      describe "User" do
+        it "should be able to create user" do
+          @ability.should be_able_to(:create, User)
+        end
+      end
+      describe "UserProfile" do
+        it "should be able to read public profiles" do
+          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => true))
+        end
+        it "should not be able to read non public profiles" do
+          @ability.should_not be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => false))
+        end
+      end
     end
-    anonymous_can_permissions(@anonymous)
     #In the scope of a community they are treated as a non member, with the exception that they can not apply to a community.
   end
+
   describe "for a site member" do
-    pending
-  end
-
-  describe "for dynamic rules" do
     before(:each) do
-      @community_profile_with_characters = create(:community_profile_with_characters)
-      @community = @community_profile_with_characters.community
-      @user_profile = @community_profile_with_characters.user_profile
-      @community_member_user = @user_profile.user
-      @community_admin_user = @community.admin_profile.user
-      @different_community = create(:community)
+      if not PrivacyPolicy.first and not TermsOfService.first
+        FactoryGirl.create(:privacy_policy)
+        FactoryGirl.create(:terms_of_service)
+      end
+      @user = Factory.create(:user_profile).user
+      @ability = Ability.new(@user)
     end
-
-    describe "for a community member" do
-      pending
+    it "should be a valid user" do
+      @user.persisted?.should be_true
     end
-
-    describe "for a community admin" do
-      pending
-    end
-
-    describe "should be community specific" do
+    describe "Anonymous Permissions" do
       before(:each) do
-        app = @different_community.community_applications.new(:character_proxies => @user_profile.character_proxies)
-        app.prep(@user_profile, @different_community.community_application_form)
-        app.save
-        app.accept_application(@different_community.admin_profile)
-        @specific_role = @community.roles.create(:name => "Uber N00b!", :community => @community)
-        @specific_role.permissions.create(:subject_class => "PageSpace", :permission_level => "Delete", :role => @specific_role)
-        @user_profile.add_new_role(@specific_role)
-        @user_profile = UserProfile.find(@user_profile)
+        @ability = Ability.new(@user)
       end
-      it "should work in the context of a community" do
-        ability = Ability.new(@user_profile.user)
-        ability.dynamicContextRules(@user_profile.user, @community)
-        ability.should be_able_to(:read, @community.page_spaces.new)
-        ability.should be_able_to(:update, @community.page_spaces.new)
-        ability.should be_able_to(:create, @community.page_spaces.new)
-        ability.should be_able_to(:destroy, @community.page_spaces.new)
+      describe "Community" do
+        it "should allow read" do
+          public_community = create(:community)
+          @ability.should be_able_to(:read, public_community)
+        end
       end
-      it "should not work in context of a different community" do
-        ability = Ability.new(@user_profile.user)
-        ability.dynamicContextRules(@user_profile.user, @different_community)
-        ability.should_not be_able_to(:read, @different_community.page_spaces.new)
-        ability.should_not be_able_to(:update, @different_community.page_spaces.new)
-        ability.should_not be_able_to(:create, @different_community.page_spaces.new)
-        ability.should_not be_able_to(:destroy, @different_community.page_spaces.new)
+      describe "Game" do
+        it "should allow read" do
+          @ability.should be_able_to(:read, Game)
+        end
+      end
+      describe "User" do
+        it "should be able to create user" do
+          @ability.should be_able_to(:create, User)
+        end
+      end
+      describe "UserProfile" do
+        it "should be able to read public profiles" do
+          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => true))
+        end
+        it "should not be able to read non public profiles" do
+          @ability.should_not be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => false))
+        end
       end
     end
-
-    describe "for role testing" do
-      def create_new_permission(subject, permission_level, subject_id = nil, parent = nil, parent_id = nil)
-        if subject_id
-          @community_profile_with_characters.roles.first.permissions.create(:subject_class => subject,
-            :permission_level => permission_level,
-            :id_of_subject => subject_id
-          )
-        else
-          @community_profile_with_characters.roles.first.permissions.create(:subject_class => subject,
-            :permission_level => permission_level
-          ) 
-        end
+ 
+    describe "Site Member Permissions" do
+      before(:each) do
+        @ability = Ability.new(@user)
       end
 
-      def test_all_basic_role_permission_levels(test_object)
-        test_simple_role_test(test_object, "View")
-        test_simple_role_test(test_object, "Update")
-        test_simple_role_test(test_object, "Create")
-        test_simple_role_test(test_object, "Delete")
+      it "should be a valid user" do
+        @user.persisted?.should be_true
+      end
+    
+      describe "Discussion" do
+        it "should be able to update a owned discussion" do
+          @ability.should be_able_to(:update, Factory.build(:discussion, :user_profile_id => @user.user_profile.id))
+        end
+        it "should be able to destroy a owned discussion" do
+          @ability.should be_able_to(:destroy, Factory.build(:discussion, :user_profile_id => @user.user_profile.id))
+        end
       end
 
-      def test_simple_role_test(test_object, permission_level)
-        if test_object.id?
-          create_new_permission(test_object.class.to_s, permission_level, test_object.id)
-        else
-          create_new_permission(test_object.class.to_s, permission_level)
-        end
-        test_ability(permission_level, test_object)
-        test_no_ability(permission_level, test_object)
-      end
-
-      def test_ability(permission_level, item)
-        ability = Ability.new(@user_profile.user)
-        ability.dynamicContextRules(@user_profile.user, @community)
-        case permission_level
-          when "Delete"
-            ability.should be_able_to(:read, item)
-            ability.should be_able_to(:update, item)
-            ability.should be_able_to(:create, item)
-            ability.should be_able_to(:destroy, item)
-          when "Create"
-            ability.should be_able_to(:read, item)
-            ability.should be_able_to(:update, item)
-            ability.should be_able_to(:create, item)
-            ability.should_not be_able_to(:destroy, item)
-          when "Update"
-            ability.should be_able_to(:read, item)
-            ability.should be_able_to(:update, item)
-            ability.should_not be_able_to(:create, item)
-            ability.should_not be_able_to(:destroy, item)
-          when "View"
-            ability.should be_able_to(:read, item)
-            ability.should_not be_able_to(:update, item)
-            ability.should_not be_able_to(:create, item)
-            ability.should_not be_able_to(:destroy, item)
-        end
-      end
-      def test_no_ability(permission_level, item)
-        ability = Ability.new(@user_profile.user)
-        ability.dynamicContextRules(@user_profile.user, @different_community)
-        ability.should_not be_able_to(:read, item)
-        ability.should_not be_able_to(:update, item)
-        ability.should_not be_able_to(:create, item)
-        ability.should_not be_able_to(:destroy, item)
-      end
-      describe "comment" do
-        it "should pass basic tests" do
-          pending
-          #some_new_comment = Comment.new
-          #test_all_basic_role_permission_levels(some_new_comment)
-
-        end
-      end
-      describe "page spaces" do
-        it "should pass basic tests" do 
-          some_new_page_space = @community.page_spaces.new
-          test_all_basic_role_permission_levels(some_new_page_space)
-        end
-        describe "view level"  do
-          it "should allow read if view level is set in the same community" do
-            create_new_permission("PageSpace", "View")
-            test_ability("View", @community.page_spaces.new)
-          end
-          it "should not allow read if view level is set in the different community" do
-            create_new_permission("PageSpace", "View")
-            test_no_ability("View", @different_community.page_spaces.new)
-          end
-          describe "Specific Space" do
-            before(:each) do
-              @page_space = @community.page_spaces.create(:name => "Some space")
-              @some_other_page_space = @community.page_spaces.create(:name => "Some other space")
-              create_new_permission("PageSpace", "View", @page_space.id)
-            end
-            it "should allow for specified space" do
-              test_ability("View", @page_space)
-            end
-            it "should not allow for something other than specified space" do
-              test_no_ability("View", @page_space)
-            end
-          end
-        end
-        describe "Update level"  do
-          it "should allow in the same community" do
-            create_new_permission("PageSpace", "Update")
-            test_ability("Update", @community.page_spaces.new)
-          end
-          it "should not allow different community" do
-            create_new_permission("PageSpace", "Update")
-            test_no_ability("Update", @different_community.page_spaces.new)
-          end
-          describe "Specific Space" do
-            before(:each) do
-              @page_space = @community.page_spaces.create(:name => "Some space")
-              @some_other_page_space = @community.page_spaces.create(:name => "Some other space")
-              create_new_permission("PageSpace", "Update", @page_space.id)
-            end
-            it "should allow for specified space" do
-              test_ability("Update", @page_space)
-            end
-            it "should not allow for something other than specified space" do
-              test_no_ability("Update", @some_other_page_space)
-            end
-          end
-        end
-        describe "Create level"  do
-          it "should allow in the same community" do
-            create_new_permission("PageSpace", "Create")
-            test_ability("Create", @community.page_spaces.new)
-          end
-          it "should not allow different community" do
-            create_new_permission("PageSpace", "Create")
-            test_ability("Create", @different_community.page_spaces.new)
-          end
-          describe "Specific Space" do
-            before(:each) do
-              @page_space = @community.page_spaces.create(:name => "Some space")
-              @some_other_page_space = @community.page_spaces.create(:name => "Some other space")
-              create_new_permission("PageSpace", "Create", @page_space.id)
-            end
-            it "should allow for specified space" do
-              test_ability("Create", @page_space)
-            end
-            it "should not allow for something other than specified space" do
-              test_no_ability("Create", @some_other_page_space)
-            end
-          end
-        end
-        describe "Delete level"  do
-          it "should allow in the same community" do
-            create_new_permission("PageSpace", "Delete")
-            test_ability("Delete", @community.page_spaces.new)
-          end
-          it "should not allow different community" do
-            create_new_permission("PageSpace", "Delete")
-            test_no_ability("Delete", @different_community.page_spaces.new)
-          end
-          describe "Specific Space" do
-            before(:each) do
-              @page_space = @community.page_spaces.create(:name => "Some space")
-              @some_other_page_space = @community.page_spaces.create(:name => "Some other space")
-              create_new_permission("PageSpace", "Delete", @page_space.id)
-            end
-            it "should allow for specified space" do
-              test_ability("Delete", @page_space)
-            end
-            it "should not allow for something other than specified space" do
-              test_no_ability("Delete", @some_other_page_space)
-            end
-          end
-        end
-      end
-      describe "page" do
+      describe "Comment" do
         before(:each) do
-          @page_space = @community.page_spaces.create(:name => "Some space")
-          @some_other_page_space = @community.page_spaces.create(:name => "Some other space")
-          @another_community_page_space = @different_community.page_spaces.create(:name => "Some space")
+          @comment = Comment.new
+          @comment.user_profile = @user.user_profile
         end
-        describe "view level"  do
-          it "should allow read if view level is set in the same community" do
-            create_new_permission("Page", "View")
-            #test_ability("View", @page_space.pages.new)
-          end
-          it "should not allow read if view level is set in the different community" do
-            create_new_permission("Page", "View")
-            test_no_ability("View", @another_community_page_space.pages.new)
-          end
-          describe "Specific Page" do
-            before(:each) do
-              @page = @page_space.pages.create!(:name => "Some space",
-                :markup => "lololol")
-              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
-                :markup => "lololol")
-              pending
-              #create_new_permission("Page", "View", @page.id)
-            end
-            it "should allow for specified page" do
-              pending
-              #test_ability("View", @page)
-            end
-            it "should not allow for something other than specified page" do
-              test_no_ability("View", @some_other_page_in_same_page_space)
-            end
-          end
+        # Comment Rules
+        it "should be able to update a comment they own" do
+          @ability.should be_able_to(:update, @comment)
         end
-        describe "Update level"  do
-          it "should allow in the same community" do
-            pending
-            #create_new_permission("Page", "Update")
-            #test_ability("Update", @page_space.pages.new)
+        it "should be able to destroy a comment they own" do
+          @ability.should be_able_to(:destroy, @comment)
+        end
+      end
+
+      describe "Community" do
+        it "should be able to create a community" do
+          @ability.should be_able_to(:create, Community)
+        end
+      end
+
+      describe "CommunityApplication" do
+        before(:each) do
+          @community_application = CommunityApplication.new
+          @community_application.user_profile = @user.user_profile
+        end
+        it "should be able to create an application they own" do
+          @ability.should be_able_to(:create, @community_application)
+        end
+        it "should be able to destroy an application they own" do
+          @ability.should be_able_to(:destroy, @community_application)
+        end
+        it "should be able to uodate an application they own" do
+          @ability.should be_able_to(:update, @community_application)
+        end
+        it "should be able to read an application they own" do
+          @ability.should be_able_to(:read, @community_application)
+        end
+      end
+
+      describe "Discussion" do
+        before(:each) do
+          @discussion = Discussion.new
+          @discussion.user_profile = @user.user_profile
+        end
+        describe "not locked" do
+          before(:each) do
+            @discussion.is_locked = false
           end
-          it "should not allow different community" do
-            create_new_permission("Page", "Update")
-            test_no_ability("Update", @another_community_page_space.pages.new)
+          it "should be able to update an discussion they own" do
+            @ability.should be_able_to(:update, @discussion)
           end
-          describe "Specific Page" do
-            before(:each) do
-              @page = @page_space.pages.create!(:name => "Some space",
-                :markup => "lololol")
-              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
-                :markup => "lololol")
-              pending
-              #create_new_permission("Page", "Update", @page.id)
-            end
-            it "should allow for specified page" do
-              pending
-              #test_ability("Update", @page)
-            end
-            it "should not allow for something other than specified page" do
-              test_no_ability("Update", @some_other_page_in_same_page_space)
-            end
+          it "should be able to destroy an discussion they own" do
+            @ability.should be_able_to(:destroy, @discussion)
           end
         end
-        describe "Create level"  do
-          it "should allow in the same community" do
-            create_new_permission("Page", "Create")
-            pending
-            #test_ability("Create", @page_space.pages.new)
+        describe "locked" do
+          before(:each) do
+            @discussion.is_locked = true
           end
-          it "should not allow different community" do
-            create_new_permission("Page", "Create")
-            test_no_ability("Create", @another_community_page_space.pages.new)
+          it "should be able to update an discussion they own" do
+            @ability.should_not be_able_to(:update, @discussion)
           end
-          describe "Specific Page" do
-            before(:each) do
-              @page = @page_space.pages.create!(:name => "Some space",
-                :markup => "lololol")
-              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
-                :markup => "lololol")
-              pending
-              #create_new_permission("Page", "Create", @page.id)
-            end
-            it "should allow for specified page" do
-              pending
-              #test_ability("Create", @page)
-            end
-            it "should not allow for something other than specified page" do
-              test_no_ability("Create", @some_other_page_in_same_page_space)
-            end
+          it "should be able to destroy an discussion they own" do
+            @ability.should_not be_able_to(:destroy, @discussion)
           end
         end
-        describe "Delete level"  do
-          it "should allow in the same community" do
-            create_new_permission("Page", "Delete")
-            test_ability("Delete", @page_space.pages.new)
+      end
+      describe "DiscussionSpace" do
+        before(:each) do
+          @discussion_space = DiscussionSpace.new
+          @discussion_space.is_announcement_space == true
+        end
+        it "should not be able to update an announcement discussion space" do
+          @ability.should_not be_able_to(:update, @discussion_space)
+        end
+        it "should not be able to destroy an announcement discussion space" do
+          @ability.should_not be_able_to(:destroy, @discussion_space)
+        end
+        it "should not be able to create an announcement discussion space" do
+          @ability.should_not be_able_to(:create, @discussion_space)
+        end
+      end
+      describe "Messaging" do
+        before(:each) do
+          @folder = Folder.new
+          @folder.user_profile = @user.user_profile
+          @message = Message.new
+          @message.author = @user.user_profile
+          @message_association = MessageAssociation.new
+          @message_association.recipient = @user.user_profile
+        end
+        describe "Folder" do
+          it "should allow management of folders" do
+            @ability.should be_able_to(:manage, @folder)
           end
-          it "should not allow different community" do
-            create_new_permission("Page", "Delete")
-            test_no_ability("Delete", @another_community_page_space.pages.new)
+          it "should not allow deletion of folders" do
+            @ability.should_not be_able_to(:destroy, @folder)
           end
-          describe "Specific Page" do
-            before(:each) do
-              @page = @page_space.pages.create!(:name => "Some space",
-                :markup => "lololol")
-              @some_other_page_in_same_page_space = @page_space.pages.create!(:name => "Some pther space",
-                :markup => "lololol")
-              create_new_permission("Page", "Delete", @page.id)
-            end
-            it "should allow for specified page" do
-              pending
-              #test_ability("Delete", @page)
-            end
-            it "should not allow for something other than specified page" do
-              pending
-              #test_no_ability("Delete", @some_other_page_in_same_page_space)
-            end
+        end
+        describe "Message" do
+          it "should allow management of messages" do
+            @ability.should be_able_to(:manage, @message)
           end
+          it "should not allow deletion of messages" do
+            @ability.should_not be_able_to(:destroy, @message)
+          end
+          it "should not allow update of messages" do
+            @ability.should_not be_able_to(:update, @message)
+          end
+        end 
+        describe "Message Association" do
+          it "should allow management of message associations" do
+            @ability.should be_able_to(:manage, @message_association)
+          end
+        end
+      end
+      
+      describe "Question" do
+        it "should allow reading of questions" do
+          @ability.should be_able_to(:read, Question)
+        end
+      end
+
+      describe "Submission" do
+        before(:each) do
+          @submission = Submission.new
+          @submission.user_profile = @user.user_profile
+        end
+        it "should allow creation of submissions" do
+          @ability.should be_able_to(:create, Submission)
+        end
+        it "should allow read of owned submissions" do
+          @ability.should be_able_to(:read, @submission)
+        end
+        it "should allow destroy of owned submissions" do
+          @ability.should be_able_to(:destroy, @submission)
+        end
+      end
+      describe "User" do
+        it "should allow management of the current user" do
+          @ability.should be_able_to(:manage, @user)
+        end
+      end
+
+      describe "User Profile" do
+        it "should allow read of user profiles" do
+          @ability.should be_able_to(:read, UserProfile)
+        end
+        it "should allow update of current user profile" do
+          @ability.should be_able_to(:update, @user.user_profile)
         end
       end
     end

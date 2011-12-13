@@ -48,8 +48,6 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def anonymous_user_rules(user)
-    # Character Rules
-    can :read, BaseCharacter
     # Community Rules
     can :read, Community
     # Game Rules
@@ -102,31 +100,18 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-    # Answer Rules
-    can :create, Answer
-    can [:read, :destroy], Answer do |answer|
-      answer.user_profile_id == user.user_profile.id
-    end
-    can [:update], Answer do |answer|
-      answer.user_profile_id == user.user_profile.id
-    end
-
     # Character Rules
     can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|
       character.user_profile.id == user.user_profile.id
     end
-    can [:update], Discussion do |discussion|
+
+    #Discussion Rules
+    can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
-    end
-    can [:destroy], Discussion do |discussion|
-      ((discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked)
     end
 
     # Comment Rules
-    can [:read], Comment do |comment|
-      user.user_profile.is_member?(comment.community)
-    end
     can [:update,:destroy], Comment do |comment|
       ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
     end
@@ -142,13 +127,7 @@ class Ability
       can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
     end
 
-    # Custom Form Rules
-    can :read, CustomForm
-
     # Discussion Rules
-    can [:read], Discussion do |discussion|
-      user.user_profile.is_member?(discussion.community) and discussion.is_announcement
-    end
     can [:comment], Discussion do |discussion|
       can? :read, discussion and not discussion.is_locked
     end
@@ -157,9 +136,6 @@ class Ability
     end
 
     # Discussion Space Rules
-    can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(space.community) and space.is_announcement_space == true
-    end
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
       space.is_announcement_space == true
     end
@@ -168,9 +144,7 @@ class Ability
     can :manage, Folder do |folder|
       folder.user_profile_id == user.user_profile.id
     end
-    cannot :destroy, Folder do |folder|
-      true
-    end
+    cannot :destroy, Folder
     can :manage, Message do |message|
       message.author_id == user.user_profile.id
     end
@@ -189,9 +163,6 @@ class Ability
     can [:read, :destroy], Submission do |submission|
       submission.user_profile_id == user.user_profile.id
     end
-    can [:update], Submission do |answer|
-      submission.user_profile_id == user.user_profile.id
-    end
 
     # User Rules
     can :manage, User do |some_user|
@@ -199,7 +170,9 @@ class Ability
     end
 
     # UserProfile Rules
-    can :read, UserProfile
+    can :read, UserProfile do |user_profile|
+      user_profile.publicly_viewable
+    end
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
     end
@@ -221,6 +194,19 @@ class Ability
   def community_member_rules(user, current_community)
     # RosterAssignments
     apply_rules_from_roles(user, current_community)
+    can :index, PageSpace
+
+    can [:read], Comment do |comment|
+      user.user_profile.is_member?(current_community)
+    end
+
+    can [:read], Discussion do |discussion|
+      user.user_profile.is_member?(current_community) and discussion.is_announcement
+    end
+
+    can [:read], DiscussionSpace do |space|
+      user.user_profile.is_member?(current_community) and space.is_announcement_space == true
+    end
 
     can :mine, RosterAssignment
     can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
@@ -272,11 +258,8 @@ class Ability
   #   * +current_community+ -> The current community context.
   ###
   def dynamicContextRules(user, current_community)
-    #Community Based Permissions
-    can :index, RosterAssignment if current_community.is_public_roster
-
     if user
-      community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
+      community_member_rules(user, current_community) if user.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
     end
 
@@ -294,7 +277,7 @@ class Ability
     end
 
     # Cannot Overrides
-    cannot :destroy, Comment do |comment|
+    cannot [:create, :update, :destroy], Comment do |comment|
       comment.replies_locked?
     end
     cannot :update, Comment do |comment|
