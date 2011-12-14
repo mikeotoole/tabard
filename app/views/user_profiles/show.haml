@@ -1,10 +1,11 @@
 - title "Profile: #{@user_profile.display_name}"
+= javascript_include_tag "user_profile"
 
 #body
   %header
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title
-      %p= @user_profile.title
+      %p= "“#{@user_profile.title}”"
 
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
@@ -38,37 +39,23 @@
       - if defined? @activities and @activities.any?
         %ol.activities
           - @activities.each do |activity|
-            - if activity.is_a? Comment
-              - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
-                = render "subdomains/comments/comment", :comment => activity, :include_children => false
-              - else
-                %li.comment
-                  Posted a
-                  %strong comment
-                  in
-                  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
-                  —
-                  %time= "#{time_ago_in_words(activity.created_at)} ago"
-            - else
-              - partial_name = activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase
-              %li{ :class => "activity #{partial_name}" }
-                = render "activities/#{partial_name}", :activity => activity
-                —
-                %time= "#{time_ago_in_words(activity.created_at)} ago"
+            = render "activities/activity", :activity => activity
       - else
         %em No recent activity
+      %p.submit
+        = link_to 'Load more', activities_url(), :remote => true, :class => 'button more_activites'
 
     %dt{ :class => 'characters' } Characters
     %dd
+      %h2
+        Star Wars: The Old Republic
+        - if user_signed_in? and @user_profile == current_user.user_profile
+          = link_to '+ add new', new_swtor_character_path
       - if @user_profile.swtor_characters.any?
-        %h2
-          Star Wars: The Old Republic
-          - if user_signed_in? and @user_profile == current_user.user_profile
-            = link_to '+ add new', new_swtor_character_path
         = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
+      %h2
+        World of Warcraft
+        - if user_signed_in? and @user_profile == current_user.user_profile
+          = link_to '+ add new', new_wow_character_path
       - if @user_profile.wow_characters.any?
-        %h2
-          World of Warcraft
-          - if user_signed_in? and @user_profile == current_user.user_profile
-            = link_to '+ add new', new_wow_character_path
         = render 'wow_characters/list', :characters => @user_profile.wow_characters

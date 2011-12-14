@@ -10,7 +10,7 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name, :title,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
 
 ###
 # Associations
