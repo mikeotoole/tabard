@@ -13,7 +13,8 @@
       - if can? :update, @user_profile
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
-        %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
+        - if user_signed_in? and current_user.address_book.include(@user_profile)
+          %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
         -# TODO Doug - Add this link once we add the friends feature %li.friend= link_to 'Friend', '#'
     %h3 My Communities
     - if @user_profile.communities.any?
@@ -47,15 +48,21 @@
 
     %dt{ :class => 'characters' } Characters
     %dd
-      %h2
-        Star Wars: The Old Republic
-        - if user_signed_in? and @user_profile == current_user.user_profile
-          = link_to '+ add new', new_swtor_character_path
+      - if @user_profile.swtor_characters.any? or @user_profile == current_user.user_profile
+        %h2
+          Star Wars: The Old Republic
+          - if user_signed_in? and @user_profile == current_user.user_profile
+            = link_to '+ add new', new_swtor_character_path
       - if @user_profile.swtor_characters.any?
         = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
-      %h2
-        World of Warcraft
-        - if user_signed_in? and @user_profile == current_user.user_profile
-          = link_to '+ add new', new_wow_character_path
+      - else
+        %p No characters.
+      - if @user_profile.wow_characters.any? or @user_profile == current_user.user_profile
+        %h2
+          World of Warcraft
+          - if user_signed_in? and @user_profile == current_user.user_profile
+            = link_to '+ add new', new_wow_character_path
       - if @user_profile.wow_characters.any?
         = render 'wow_characters/list', :characters => @user_profile.wow_characters
+      - else
+        %p No characters.

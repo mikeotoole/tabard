@@ -867,7 +867,7 @@ button,
     padding: 0
     
     li
-      margin: 0
+      margin: 10px 0 0
       padding: 10px 0
       position: relative
       
@@ -894,7 +894,8 @@ button,
       &.supported_game + .supported_game,
       &.user_profile + .user_profile,
       &.community + .community,
-      &.character_proxy + .character_proxy
+      &.character_proxy + .character_proxy,
+      &.comment + .comment
         border-top: 0
         margin: -10px 0 0
         padding: 0 0 10px
@@ -902,14 +903,30 @@ button,
         &:after
           display: none
       
-      &.comment >blockquote
-        padding-right: 0 !important
+      &.comment
+        border-bottom: 0
+        padding: 10px 0
         
-        >.meta
-          font-size: 1em
+        >blockquote
+          min-height: 68px
+          padding: 0 0 10px 82px
+          
+          &:before
+            border-bottom: 0
+          >p
+            
+            >.reply,
+            >em
+              display: none
         
-        >.actions
-          right: 0
+          >.meta
+            font-size: 1em
+          
+          >.actions
+            right: 0
+        
+        + .activity
+          margin-top: 0
         
     *[meta]:hover
       position: relative

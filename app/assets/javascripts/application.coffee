@@ -259,6 +259,12 @@ $(document).ready ->
     $(this).addClass('active')
   if window.location.hash
     $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
+  $('a[href*="#"]').click ->
+    link = $(this).attr('href').split('#').pop()
+    tab = $('dl.tabs >dt.'+link)
+    if(tab.length)
+      tab.trigger 'click'
+      return false
   
   # slider input fields
   $('.slider')

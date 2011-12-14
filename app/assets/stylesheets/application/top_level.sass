@@ -522,36 +522,23 @@ button,
       &:after
         border-top-color: #eee
       
-      &.comment
-        border-bottom: 0
-        
-        >blockquote
-          padding: 0 15px 10px 82px
+      &.comment >blockquote
+          
+        >.avatar
+          border-color: #ccc
+          left: 0
           
           &:before
-            border-bottom: 0
+            border-right-color: #fff
           
-          >.avatar
-            border-color: #ccc
-            left: 0
-            
-            &:before
-              border-right-color: #fff
-            
-            &:after
-              border-top-color: #fff
-            
-            >img
-              border-color: #fff
+          &:after
+            border-top-color: #fff
           
-          >.meta
-            border-bottom-color: #eee
-          
-          >p
-            
-            >.reply,
-            >em
-              display: none
+          >img
+            border-color: #fff
+        
+        >.meta
+          border-bottom-color: #eee
       
       time
         color: #3679B3

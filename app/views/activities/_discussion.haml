@@ -2,7 +2,7 @@
 - case activity.action
 - when 'created'
   Created a
-- when 'updated'
+- when 'edited'
   Edited the
 %strong= link_to_if (user_signed_in? and current_user.in_community(activity.community).can? :show, discussion), 'discussion', discussion_url(discussion, :subdomain => activity.community_subdomain), :meta => discussion.name
 in
