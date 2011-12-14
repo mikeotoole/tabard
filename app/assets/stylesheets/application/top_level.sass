@@ -496,6 +496,14 @@ button,
         float: right
         font-family: DinMedium, sans-serif
         padding: 3px 6px
+  
+  p.submit
+    +bg_gradient(#eee,#fff)
+    border-top: 1px solid #ccc
+    +border_radius(5,5,0,0)
+    +box_shadow(0 -5px 5px rgba(#000,.1))
+    margin: 10px 0
+    padding: 20px
 
 
 // Activities
@@ -504,6 +512,10 @@ button,
 
   .activities
     padding: 10px 0
+    
+    a
+      color: #56149C
+      text-decoration: none
     
     li
     
@@ -597,14 +609,14 @@ body.user_profiles.dashboard
         padding: 0
         
         h1
-          color: #251534
+          color: #A33B31
           font: 40px DinLight, sans-serif
           line-height: 40px
           margin: 0
           padding: 0
         
         p
-          font: 20px DinMedium, sans-serif
+          font: 16px DinMedium, sans-serif
           line-height: 20px
           margin: 0
           padding: 0
