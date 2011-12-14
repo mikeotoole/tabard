@@ -7,6 +7,7 @@
 ###
 class CommunityObserver < ActiveRecord::Observer
   
+  # Creates an activity when a Community is created.
   def after_create(community)
     Activity.create!( :user_profile => community.admin_profile,
                       :community => community,

@@ -8,6 +8,7 @@
 class CharacterObserver < ActiveRecord::Observer
   observe :wow_character, :swtor_character
   
+  # Creates an activity when a character is updated.
   def after_update(character)
     if character.changed?
       change = character.changed == ["avatar", "updated_at"] ? "avatar" : "edited"

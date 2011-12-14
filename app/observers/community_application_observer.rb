@@ -7,6 +7,7 @@
 ###
 class CommunityApplicationObserver < ActiveRecord::Observer
   
+  # Creates an activity when a user is accpeted to a community.
   def after_update(community_application)
     if community_application.changed? and community_application.status == "Accepted"
       activity = Activity.where(:user_profile_id => community_application.user_profile_id, 
