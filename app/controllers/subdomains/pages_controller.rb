@@ -46,7 +46,7 @@ class Subdomains::PagesController < SubdomainsController
     if @page.save
       add_new_flash_message('Page was successfully created.')
       @action = 'created'
-    end  
+    end
     respond_with(@page)
   end
 
@@ -54,7 +54,7 @@ class Subdomains::PagesController < SubdomainsController
   def update
     @page.assign_attributes(params[:page])
     is_changed = @page.changed?
-  
+
     if @page.save
       add_new_flash_message('Page was successfully updated.')
       @action = is_changed ? 'edited' : nil
@@ -91,7 +91,7 @@ protected
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
     @page = page_space.pages.new(params[:page])
   end
-  
+
   ###
   # _after_filter_
   #
@@ -99,10 +99,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create!( :user_profile => current_user.user_profile, 
-                        :community => @page.community, 
-                        :target => @page, 
+      Activity.create!( :user_profile => current_user.user_profile,
+                        :community => @page.community,
+                        :target => @page,
                         :action => @action)
-    end                      
+    end
   end
 end

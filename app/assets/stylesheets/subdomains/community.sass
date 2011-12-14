@@ -402,7 +402,7 @@ button,
     top: 10px
     right: 10px
     
-  .actions a
+  >.actions a
     background: image-url('application/icons.png') no-repeat #9C682F
     +border_radius(5)
     display: block
@@ -778,88 +778,36 @@ button,
     ol
       margin: 0
       padding: 0
-    
-      li
-        border-bottom: 1px solid #fff
-        list-style: none
-        min-width: 500px
-        position: relative
+  
+      li.comment
+        border-bottom-color: #fff
       
         blockquote
-          background: transparent
-          border: 0
-          margin: 0
-          min-height: 88px
-          padding: 0 15px 10px 92px
-          position: relative
-          +transition(margin .2s linear)
-          z-index: 3
           
           &:before
-            border-bottom: 1px solid #EBDFC4
-            bottom: 15px
-            content: ''
-            left: 92px
-            position: absolute
-            right: 15px
-            z-index: 3
+            border-bottom-color: #EBDFC4
           
-          .avatar
+          >.avatar
             background: #E1D5CD
-            border: 1px solid #e1d5cd
-            border-right: 0
-            height: 62px
-            left: 10px
-            +opacity(1)
-            position: absolute
-            top: 10px
-            +transition(box-shadow .2s linear, opacity 1s linear)
-            width: 61px
+            border-color: #e1d5cd
             
             &:before
-              background: image-url('application/comment-shadow.png') 0 0 no-repeat
-              border-right: 20px solid #fff
-              content: ''
-              height: 101px
-              position: absolute
-              right: -20px
-              top: -14px
-              width: 18px
+              border-right-color: #fff
             
             &:after
-              border-left: 10px solid transparent
-              border-top: 10px solid #fff
-              content: ''
-              height: 0
-              position: absolute
-              right: 0
-              top: 10px
-              width: 0
+              border-top-color: #fff
             
-            img
+            >img
               background: #e1d5cd
-              border: 1px solid #fff
-              border-right: 0
-              display: block
-              height: 60px
-              width: 60px
+              border-color: #fff
           
           .meta
             background: #fff
-            border-bottom: 1px solid #ddd
+            border-bottom-color: #ddd
             color: #b59d8b
-            font-size: 12px
-            line-height: 15px
-            overflow: hidden
-            padding: 5px 0 3px 0
-            position: relative
-            z-index: 4
             
             a
               color: #aa000b
-              font-family: DinMedium, sans-serif
-              position: relative
-              text-decoration: none
               
               &:hover
                 background: #aa000b
@@ -869,114 +817,49 @@ button,
                 
                   &:before
                     background: rgba(#6F2B3D,.9)
-                    +border_radius(3)
                     color: #fff
-                    content: attr(meta)
-                    font-size: 12px
-                    height: 15px
-                    left: 0
-                    line-height: 15px
-                    padding: 5px 10px
-                    position: absolute
-                    text-indent: 0
-                    top: -30px
-                    white-space: nowrap
                   
                   &:after
-                    border: 5px solid transparent
-                    border-left: 0
-                    border-top: 5px solid rgba(#6F2B3D,.9)
-                    content: ''
-                    height: 0
-                    left: 10px
-                    position: absolute
-                    top: -5px
-                    width: 0
+                    border-top-color: rgba(#6F2B3D,.9)
               
               &.expand
                 background: #70293D
-                +border_radius(3)
                 color: #fff
-                display: none
                 
                 &:hover
                   background: #aa000b
               
               &.collapse
                 background: #C7B2A3
-                +border_radius(3)
                 color: #fff
                 
                 &:hover
                   background: #aa000b
           
-          .actions
-            position: absolute
-            right: 15px
-            top: -5px
-            z-index: 4
+          .actions a
+              
+            &.edit
+              background-position: -65px -5px
             
-            a
-              background: image-url('application/icons.png') no-repeat
-              +border_radius(0)
-              display: block
-              height: 20px
-              overflow: hidden
-              +opacity(0)
-              margin: 5px 0 0
-              padding: 0
-              text-indent: -500em
-              +transition(opacity .2s linear)
-              width: 20px
-              
-              &:hover
-                +opacity(1)
-              
-              &.edit
-                background-position: -65px -5px
-              
-              &.delete
-                background-position: -35px -5px
-              
-              &.lock
-                background-position: -185px -5px
-              
-              &.unlock
-                background-position: -155px -5px
-                display: none
+            &.delete
+              background-position: -35px -5px
+            
+            &.lock
+              background-position: -185px -5px
+            
+            &.unlock
+              background-position: -155px -5px
           
           p
             color: #000
-            font-size: 14px
-            line-height: 20px
-            margin: 0
-            padding: 12px 40px 40px 0
-            position: relative
-            word-wrap: break-word
-            z-index: 2
-            
-            .body
-              display: block
           
-          em,
-          .reply
-            display: block
-            float: left
-            font: 12px DinMedium, sans-serif
-            line-height: 20px
-            padding: 0 5px
-            margin: 10px 0 0
-            
           em
             background: #eee
             color: #999
-            font-size: 12px
             
           .reply
             background: #EBDFC4
-            +border_radius(0)
             color: #917000
-            text-decoration: none
             
             &:hover
               background: #6F2B3D
@@ -987,183 +870,18 @@ button,
             .avatar
               +box_shadow(0 0 15px rgba(#000,.5))
               border-color: #C7B2A3
-          
-            .actions
-            
-              a
-                +opacity(.3)
+        
+        &.owned >blockquote >.meta a[meta]
+          background: #70293D
+          color: #fff
                 
-                &:hover
-                  +opacity(1)
-        
-        ol
-          margin: 0 0 0 20px
-          position: relative
+          &:hover
+            background: #aa000b
+            color: #fff
           
-          >li.collapsed >blockquote
-            margin: 0 0 0 -62px
-          
-          .avatar
-            background-size: 40px 40px
-            height: 42px
-            margin-left: 20px
-            width: 41px
+        &.removed >blockquote >.avatar
+          border-color: #ccc
             
-            &:after
-              border-left-width: 8px
-              border-top-width: 8px
-              top: 8px
-            
-            img
-              height: 40px
-              width: 40px
-        
-        &.owned
-        
-          >blockquote
-            
-            >.meta
-            
-              a[meta]
-                background: #70293D
-                +border_radius(3)
-                color: #fff
-                
-                &:hover
-                  background: #aa000b
-                  color: #fff
-        
-        &.locked
-          
-          blockquote
-          
-            >p
-              
-              .reply
-                display: none
-            
-            >.actions
-            
-              a
-                display: none
-            
-          >blockquote
-            
-            >.actions
-              
-              >.unlock
-                display: block
-          
-        &.removed
-          
-          >blockquote
-            
-            &:before
-              bottom: auto
-              top: 62px
-            
-            >p
-            
-              .reply
-                display: none
-          
-            >.actions
-              .edit,
-              .delete,
-              .lock,
-              .unlock
-                display: none
-            
-            >.avatar
-              +box_shadow(none)
-              border-color: #ccc
-        
-        &.replying
-          
-          >blockquote
-          
-            >p
-              
-              .reply
-                display: none
-            
-            >form
-            
-              &.open textarea,
-              textarea:hover
-                height: 80px
-                
-              button,
-              >input,
-              >label
-                display: block
-        
-        &.editing
-          
-          >blockquote
-            min-height: 0
-            
-            >p
-            
-              .body,
-              .reply
-                display: none
-            
-            >.actions
-              display: none
-            
-            >form
-              margin: -40px 0 12px 0
-              
-              &:before
-                display: none
-        
-              .profile
-                display: none
-              
-              textarea
-                height: 80px
-                
-              button,
-              >input,
-              >label
-                display: block
-        
-        &.collapsed
-          
-          >blockquote
-            margin: 0 0 0 -82px
-            min-height: 0
-            
-            &:before
-              display: none
-            
-            .meta
-            
-              .collapse
-                display: none
-              
-              .expand
-                display: inline
-            
-            .avatar
-              +opacity(0)
-              +transition(none)
-            
-            .meta
-              margin-left: 1px
-              
-            >p,
-            >form,
-            .actions
-              display: none
-          
-          >ol
-            display: none
-      
-      form
-        margin: -10px 0 12px 62px
-    
     form
       background: #EBDFC4
       border-right: 22px solid #EBDFC4
@@ -1216,11 +934,13 @@ button,
             &:after
               display: none
             
-            img
+            >.avatar
               background: #E1D5CD
-              border: 1px solid #fff
+              border: 1px solid #fff !important
               height: 40px
+              left: auto
               margin: 1px
+              top: auto
               width: 40px
           
           input

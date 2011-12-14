@@ -29,12 +29,16 @@ unless @dont_run
   USER_NAMES = [%w(Robo Billy), %w(Diabolical Moose), %w(Snappy Turtle), %w(Dirty Badger), %w(Sleepy Pidgeon), %w(Apathetic Tiger), %w(Fuzzy Crab),
                 %w(Sad Panda), %w(Kinky Fox)]
 
-  puts "Time: 3 months ago"
+  puts "Time: 5 months ago"
+
   Timecop.freeze(3.months.ago)
 
   USER_NAMES.each do |user|
     create_user(user[0], user[1])
   end
+
+  Timecop.return
+  puts "Time: 3 months ago"
 
   UserProfile.find_by_last_name("Billy").user.update_attribute(:email, "billy@robo.com")
 

@@ -5,61 +5,65 @@
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title
       %p= @user_profile.title
-      
+
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
-      - if @user_profile == current_user.user_profile
+      - if can? :update, @user_profile
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
         %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
         -# TODO Doug - Add this link once we add the friends feature %li.friend= link_to 'Friend', '#'
     %h3 My Communities
     - if @user_profile.communities.any?
-      %ul
+      %ul.communities
         - @user_profile.communities.each do |community|
           %li= link_to community.name, community
     - else
       %p No memberships.
     %h3 About Me
     %p= @user_profile.description ||= 'No description given.'
-      
+    %h3 Stats
+    %p.stats= "Crumblin since #{l @user_profile.created_at, :format => :date_short}."
+
   %dl#tabs.tabs
-    
+
     %dt{ :class => 'activity active' } Recent Activity
     %dd
       - if defined? @activities and @activities.any?
         %ol.activities
           - @activities.each do |activity|
             - if activity.is_a? Comment
-              - if can? :show, activity
-                = render "subdomains/comments/comment", :comment => activity
+              - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
+                = render "subdomains/comments/comment", :comment => activity, :include_children => false
               - else
                 %li.comment
                   Posted a
                   %strong comment
                   in
                   %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+                  —
                   %time= "#{time_ago_in_words(activity.created_at)} ago"
             - else
               - class_name = activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase
               %li{ :class => class_name }
                 = render "activities/#{class_name}", :activity => activity
+                —
                 %time= "#{time_ago_in_words(activity.created_at)} ago"
       - else
         %em No recent activity
-    
+
     %dt{ :class => 'characters' } Characters
     %dd
       - if @user_profile.swtor_characters.any?
         %h2
           Star Wars: The Old Republic
-          - if @user_profile == current_user.user_profile
+          - if user_signed_in? and @user_profile == current_user.user_profile
             = link_to '+ add new', new_swtor_character_path
         = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
       - if @user_profile.wow_characters.any?
         %h2
           World of Warcraft
-          - if @user_profile == current_user.user_profile
+          - if user_signed_in? and @user_profile == current_user.user_profile
             = link_to '+ add new', new_wow_character_path
         = render 'wow_characters/list', :characters => @user_profile.wow_characters

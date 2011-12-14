@@ -137,14 +137,6 @@ class Comment < ActiveRecord::Base
     super(sType.to_s.classify.constantize.base_class.to_s)
   end
 
-###
-# Protected Methods
-###
-protected
-
-###
-# Instance Methods
-###
   ###
   # This method checks to see if comments are disabled for the commentable item.
   # [Returns] false if what this is commenting on has comments disabled.
@@ -153,6 +145,15 @@ protected
     (self.commentable.respond_to?('replies_locked?') and self.commentable.replies_locked?) or
     (self.original_commentable.respond_to?('is_locked') and self.original_commentable.is_locked)
   end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Instance Methods
+###
 
 ###
 # Validator Methods

@@ -65,35 +65,35 @@ class Role < ActiveRecord::Base
       when "DiscussionSpace"
         permission_default_match = self.permission_defaults.find_by_object_class(resource)
         return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "DiscussionSpace",
-          permission_level: "View", 
-          can_lock: false, 
+          permission_level: "View",
+          can_lock: false,
           can_accept: false,
-          can_read_nested: false, 
-          can_update_nested: false, 
-          can_create_nested: true, 
-          can_destroy_nested: false, 
-          can_lock_nested: false, 
+          can_read_nested: false,
+          can_update_nested: false,
+          can_create_nested: true,
+          can_destroy_nested: false,
+          can_lock_nested: false,
           can_accept_nested: false)
       when "PageSpace"
         permission_default_match = self.permission_defaults.find_by_object_class(resource)
         return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "PageSpace",
-          permission_level: "View", 
-          can_lock: false, 
+          permission_level: "View",
+          can_lock: false,
           can_accept: false,
-          nested_permission_level: "", 
-          can_lock_nested: false, 
+          nested_permission_level: "",
+          can_lock_nested: false,
           can_accept_nested: false)
       when "CustomForm"
         permission_default_match = self.permission_defaults.find_by_object_class(resource)
         return permission_default_match ? permission_default_match : PermissionDefault.new(object_class: "CustomForm",
-          permission_level: "View", 
-          can_lock: false, 
+          permission_level: "View",
+          can_lock: false,
           can_accept: false,
-          can_read_nested: false, 
-          can_update_nested: false, 
-          can_create_nested: false, 
-          can_destroy_nested: false, 
-          can_lock_nested: false, 
+          can_read_nested: false,
+          can_update_nested: false,
+          can_create_nested: false,
+          can_destroy_nested: false,
+          can_lock_nested: false,
           can_accept_nested: false)
       else
         return nil
@@ -112,7 +112,7 @@ class Role < ActiveRecord::Base
     self.permission_defaults.create(object_class: "CustomForm",
           permission_level: "View")
     self.permission_defaults.create(object_class: "DiscussionSpace",
-          permission_level: "View", 
+          permission_level: "View",
           can_create_nested: true)
     self.permission_defaults.create(object_class: "PageSpace",
       permission_level: "View")
@@ -123,38 +123,38 @@ class Role < ActiveRecord::Base
     return unless (template and some_thing.persisted?)
     return if template.defined_empty_permission?
     if template.permission_level.blank?
-      self.permissions.create(subject_class: template.object_class, 
-        id_of_subject: some_thing.id, 
-        can_read: template.can_read, 
-        can_update: template.can_update, 
-        can_create: template.can_create, 
-        can_destroy: template.can_destroy, 
-        can_lock: template.can_lock, 
+      self.permissions.create(subject_class: template.object_class,
+        id_of_subject: some_thing.id,
+        can_read: template.can_read,
+        can_update: template.can_update,
+        can_create: template.can_create,
+        can_destroy: template.can_destroy,
+        can_lock: template.can_lock,
         can_accept: template.can_accept)
     else
-      self.permissions.create(subject_class: template.object_class, 
-        id_of_subject: some_thing.id, 
-        permission_level: template.permission_level, 
-        can_lock: template.can_lock, 
+      self.permissions.create(subject_class: template.object_class,
+        id_of_subject: some_thing.id,
+        permission_level: template.permission_level,
+        can_lock: template.can_lock,
         can_accept: template.can_accept)
     end
     if template.is_nested?
       if template.nested_permission_level.blank?
-        self.permissions.create(subject_class: template.nested_object_class, 
-          parent_association_for_subject: template.parent_association_for_subject, 
-          id_of_parent: some_thing.id, 
-          can_read: template.can_read_nested, 
-          can_update: template.can_update_nested, 
-          can_create: template.can_create_nested, 
-          can_destroy: template.can_destroy_nested, 
-          can_lock: template.can_lock_nested, 
+        self.permissions.create(subject_class: template.nested_object_class,
+          parent_association_for_subject: template.parent_association_for_subject,
+          id_of_parent: some_thing.id,
+          can_read: template.can_read_nested,
+          can_update: template.can_update_nested,
+          can_create: template.can_create_nested,
+          can_destroy: template.can_destroy_nested,
+          can_lock: template.can_lock_nested,
           can_accept: template.can_accept_nested)
       else
-        self.permissions.create(subject_class: template.nested_object_class, 
-          parent_association_for_subject: template.parent_association_for_subject, 
-          id_of_parent: some_thing.id, 
-          permission_level: template.nested_permission_level, 
-          can_lock: template.can_lock_nested, 
+        self.permissions.create(subject_class: template.nested_object_class,
+          parent_association_for_subject: template.parent_association_for_subject,
+          id_of_parent: some_thing.id,
+          permission_level: template.nested_permission_level,
+          can_lock: template.can_lock_nested,
           can_accept: template.can_accept_nested)
       end
     end
