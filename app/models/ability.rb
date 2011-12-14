@@ -175,7 +175,7 @@ class Ability
 
     # UserProfile Rules
     can :read, UserProfile do |user_profile|
-      user_profile.publicly_viewable
+      user_profile.id == user.user_profile.id
     end
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
