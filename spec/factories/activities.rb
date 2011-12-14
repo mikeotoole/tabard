@@ -5,7 +5,7 @@ FactoryGirl.define do
     user_profile { DefaultObjects.user_profile }
     community { DefaultObjects.community }
     target { DefaultObjects.discussion }
-    action "editied"
+    action "created"
     deleted_at nil
   end
 end
