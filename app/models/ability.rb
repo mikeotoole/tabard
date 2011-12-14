@@ -175,7 +175,7 @@ class Ability
 
     # UserProfile Rules
     can :read, UserProfile do |user_profile|
-      user_profile.publicly_viewable
+      user_profile.id == user.user_profile.id
     end
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
@@ -281,7 +281,10 @@ class Ability
     end
 
     # Cannot Overrides
-    cannot [:create, :update, :destroy], Comment do |comment|
+    cannot [:create], Comment do |comment|
+      comment.commentable_has_comments_disabled?
+    end
+    cannot [:update, :destroy], Comment do |comment|
       comment.replies_locked?
     end
     cannot :update, Comment do |comment|

@@ -50,14 +50,17 @@ class Permission < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # This method ensure that the subject id is only added if it is not nested.
   def only_subject_id_if_not_nested
     errors.add(:base, "You can not have both id_of_subject and parent_association_for_subject/id_of_parent") if (not self.id_of_subject.blank?) and ((not self.id_of_parent.blank?) or (not self.parent_association_for_subject.blank?))
   end
 
+  # This method ensures that only booleans or the permission level string are set.
   def only_booleans_or_permission_level
     errors.add(:base, "You can not have both permission_level and hand picked permissions") if (not self.permission_level.blank?) and (self.can_read or self.can_update or self.can_create or self.can_destroy)
   end
 
+  # This method gets the label for this permission to display to the user.
   def label
     case self.subject_class
       when "DiscussionSpace"

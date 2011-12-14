@@ -16,7 +16,7 @@ describe Subdomains::CustomFormsController do
       sign_in user
       custom_form
       get :index
-      assigns(:custom_forms).should eq([community.community_application_form, custom_form])
+      assigns(:custom_forms).count.should eq([community.community_application_form, custom_form].count)
     end
     
     it "should redirected to new user session path when not authenticated as a user" do
