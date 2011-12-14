@@ -177,6 +177,16 @@ describe Subdomains::PagesController do
         post :create, :page_space_id => space.id, :page => attributes_for(:page)
         response.should redirect_to(Page.last)
       end
+      
+      it "should create an activity" do
+        expect {
+          post :create, :page_space_id => space.id, :page => attributes_for(:page)
+        }.to change(Activity, :count).by(1)
+        
+        activity = Activity.last
+        activity.target_type.should eql "Page"
+        activity.action.should eql 'created'
+      end
     end
 
     describe "with invalid params" do
@@ -188,6 +198,12 @@ describe Subdomains::PagesController do
       it "re-renders the 'new' template" do
         post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
         response.should render_template("new")
+      end
+      
+      it "should not create an activity" do
+        expect {
+          post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
+        }.to change(Activity, :count).by(0)
       end
     end
   end
@@ -218,13 +234,8 @@ describe Subdomains::PagesController do
   
     describe "with valid params" do
       it "updates the requested page" do
-        page
-        # Assuming there are no other pages in the database, this
-        # specifies that the Page created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Page.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => page.id, :page => {'these' => 'params'}
+        put :update, :id => page.id, :page => {:name => "New name"}
+        Page.find(page).name.should eql "New name"
       end
 
       it "assigns the requested page as @page" do
@@ -235,6 +246,20 @@ describe Subdomains::PagesController do
       it "redirects to the page" do
         put :update, :id => page.id, :page => {:name => "New name"}
         response.should redirect_to(page)
+      end
+      
+      it "should create an Activity when attributes change" do
+        put :update, :id => page.id, :page => {:name => "New name"}
+        activity = Activity.last
+        activity.target_type.should eql "Page"
+        activity.action.should eql 'edited'
+      end
+      
+      it "should not create an Activity when attributes don't change" do        
+        page
+        expect {
+          put :update, :id => page.id, :page => {:name => page.name}
+        }.to change(Activity, :count).by(0)
       end
     end
 

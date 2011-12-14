@@ -15,8 +15,8 @@ class UserProfileObserver < ActiveRecord::Observer
   end
   
   # Creates a new activity when a user updates profile display_name, description, or title.
-  def before_save(user_profile)
-    if user_profile.persisted? and user_profile.changed?
+  def after_update(user_profile)
+    if user_profile.changed?
 
       change = user_profile.display_name_changed? ? "display name" : nil
       change = change ? "profile" : "description" if user_profile.description_changed?
