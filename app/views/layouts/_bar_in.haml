@@ -36,13 +36,11 @@
                 = image_tag profile[:type].find_by_id(profile[:profile_id]).avatar_url(:icon), :class => 'avatar'
                 = link_to(active_profile_path(:id => profile[:profile_id], :type => profile[:type]), :method => :post) do
                   = profile[:name]
-          - if profiles.size > 1
+          - if profiles.size > 1 or !current_community
             %li.extra
               = link_to 'My characters', user_profile_path(current_user) + '#characters'
           - else
             %li.extra
-              = link_to 'Add new WoW character', new_wow_character_path
-            %li.extra
-              = link_to 'Add new SWTOR character', new_swtor_character_path
+              = link_to 'Edit my roster', my_roster_assignments_url
 
   = link_to image_tag(current_profile.avatar_url :tiny), user_profile_path(current_user) + '#characters', :class => 'avatar'
