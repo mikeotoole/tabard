@@ -9,7 +9,7 @@
           = last_action_word(comment).capitalize
         - else
           = "#{last_action_word(comment).capitalize} by"
-          = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since " + (l comment.user_profile_created_at, :format => :short)
+          = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since #{l comment.user_profile_created_at, :format => :date_short}"
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
         - unless comment.is_removed
@@ -29,7 +29,7 @@
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'lock', :title => 'Lock comment'
         - if can? :unlock, comment
           = link_to 'Unlock comment', unlock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'unlock', :title => 'Unlock comment'
-    - if comment.comments.size > 0
+    - if comment.comments.any? and defined? include_children and !!include_children
       %ol
         - comment.comments.each do |reply|
           = render "subdomains/comments/comment", :comment => reply

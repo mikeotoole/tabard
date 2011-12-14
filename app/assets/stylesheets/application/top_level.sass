@@ -503,9 +503,18 @@ button,
 #body
 
   .activities
+    padding: 10px 0
     
     li
-      border-bottom-color: #eee
+      border-top-color: #eee
+      
+      &.comment
+        
+        .meta
+          font-size: 1em !important
+          
+          a[meta]
+            display: none
       
       time
         color: #3679B3
@@ -655,37 +664,41 @@ body.user_profiles.dashboard
         h3
           line-height: 1em
           padding: 30px 0 0
-          
-          + ul
-            padding: 5px 0 0
-            
-            li
-              margin: 0
-              
-              &:before
-                margin: 5px 0 0 20px
-              
-              a
-                +bg_gradient(#eee,#fff)
-                border-bottom: 1px solid #ccc
-                +border_radius(0)
-                display: block
-                margin: 0
-                padding: 5px 0 5px 25px
-                text-decoration: none
-                
-                &:hover
-                  background: #A23B31
-                  color: #fff
-              
-              &:first-child a
-                +border_radius(5,5,0,0)
-                
-              &:last-child a
-                +border_radius(0,0,5,5)
 
           + p
             padding: 5px 0 0
+          
+        ul.communities
+          padding: 5px 0 0
+          
+          li
+            margin: 0
+            
+            &:before
+              margin: 5px 0 0 20px
+            
+            a
+              +bg_gradient(#eee,#fff)
+              border-bottom: 1px solid #ccc
+              +border_radius(0)
+              display: block
+              margin: 0
+              padding: 5px 0 5px 25px
+              text-decoration: none
+              
+              &:hover
+                background: #A23B31
+                color: #fff
+            
+            &:first-child a
+              +border_radius(5,5,0,0)
+              
+            &:last-child a
+              +border_radius(0,0,5,5)
+        
+        .stats
+          font: 13px DinMedium
+          line-height: 15px
       
       >dl
         float: right

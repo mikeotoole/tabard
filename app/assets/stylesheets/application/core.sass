@@ -538,6 +538,325 @@ button,
         width: 354px
 
 
+// Comments
+
+#body
+
+  .comments,
+  .activities
+  
+    li.comment
+      border-bottom: 1px solid
+      list-style: none
+      min-width: 500px
+      padding: 0
+      position: relative
+    
+      blockquote
+        background: transparent
+        border: 0
+        margin: 0
+        min-height: 88px
+        padding: 0 15px 10px 92px
+        position: relative
+        +transition(margin .2s linear)
+        z-index: 3
+        
+        &:before
+          border-bottom: 1px solid
+          bottom: 15px
+          content: ''
+          left: 92px
+          position: absolute
+          right: 15px
+          z-index: 3
+        
+        .avatar
+          border: 1px solid
+          border-right: 0
+          height: 62px
+          left: 10px
+          +opacity(1)
+          position: absolute
+          top: 10px
+          +transition(box-shadow .2s linear, opacity 1s linear)
+          width: 61px
+          
+          &:before
+            background: image-url('application/comment-shadow.png') 0 0 no-repeat
+            border-right: 20px solid
+            content: ''
+            height: 101px
+            position: absolute
+            right: -20px
+            top: -14px
+            width: 18px
+          
+          &:after
+            border-left: 10px solid transparent
+            border-top: 10px solid
+            content: ''
+            height: 0
+            position: absolute
+            right: 0
+            top: 10px
+            width: 0
+          
+          >img
+            border: 1px solid
+            border-right: 0
+            display: block
+            height: 60px
+            width: 60px
+        
+        .meta
+          border-bottom: 1px solid
+          font-size: 12px
+          line-height: 15px
+          overflow: hidden
+          padding: 5px 0 3px 0
+          position: relative
+          z-index: 4
+          
+          a
+            font-family: DinMedium, sans-serif
+            position: relative
+            text-decoration: none
+            
+            &[meta]:hover
+              
+              &:before
+                +border_radius(3)
+                content: attr(meta)
+                font-size: 12px
+                height: 15px
+                left: 0
+                line-height: 15px
+                padding: 5px 10px
+                position: absolute
+                text-indent: 0
+                top: -30px
+                white-space: nowrap
+              
+              &:after
+                border: 5px solid transparent
+                border-left: 0
+                border-top: 5px solid
+                content: ''
+                height: 0
+                left: 10px
+                position: absolute
+                top: -5px
+                width: 0
+            
+            &.expand
+              +border_radius(3)
+              display: none
+            
+            &.collapse
+              +border_radius(3)
+        
+        >.actions
+          position: absolute
+          right: 15px
+          top: -5px
+          z-index: 4
+          
+          >a
+            background: image-url('application/icons.png') no-repeat
+            +border_radius(0)
+            display: block
+            height: 20px
+            overflow: hidden
+            +opacity(0)
+            margin: 5px 0 0
+            padding: 0
+            text-indent: -500em
+            +transition(opacity .2s linear)
+            width: 20px
+            
+            &:hover
+              +opacity(1)
+            
+            &.unlock
+              display: none
+        
+        p
+          font-size: 14px
+          line-height: 20px
+          margin: 0
+          padding: 12px 40px 40px 0
+          position: relative
+          word-wrap: break-word
+          z-index: 2
+          
+          .body
+            display: block
+        
+        em,
+        .reply
+          display: block
+          float: left
+          font: 12px DinMedium, sans-serif
+          line-height: 20px
+          padding: 0 5px
+          margin: 10px 0 0
+          
+        em
+          font-size: 12px
+          
+        .reply
+          +border_radius(0)
+          text-decoration: none
+        
+        &:hover .actions a
+          +opacity(.3)
+          
+          &:hover
+            +opacity(1)
+      
+      ol
+        margin: 0 0 0 20px
+        position: relative
+        
+        >li.collapsed >blockquote
+          margin: 0 0 0 -62px
+        
+        .avatar
+          background-size: 40px 40px
+          height: 42px
+          margin-left: 20px
+          width: 41px
+          
+          &:after
+            border-left-width: 8px
+            border-top-width: 8px
+            top: 8px
+          
+          >img
+            height: 40px
+            width: 40px
+      
+      &.owned >blockquote >.meta a[meta]
+        +border_radius(3)
+      
+      &.locked blockquote
+        
+        >p .reply
+          display: none
+          
+        >.actions a
+          display: none
+          
+        >blockquote >.actions >.unlock
+          display: block
+        
+      &.removed
+        
+        >blockquote
+          
+          &:before
+            bottom: auto
+            top: 62px
+          
+          >p
+          
+            .reply
+              display: none
+        
+          >.actions
+            .edit,
+            .delete,
+            .lock,
+            .unlock
+              display: none
+          
+          >.avatar
+            +box_shadow(none)
+      
+      &.replying >blockquote
+        
+        >p .reply
+          display: none
+        
+        >form
+        
+          &.open textarea,
+          textarea:hover
+            height: 80px
+            
+          button,
+          >input,
+          >label
+            display: block
+      
+      &.editing
+        
+        >blockquote
+          min-height: 0
+          
+          >p
+          
+            .body,
+            .reply
+              display: none
+          
+          >.actions
+            display: none
+          
+          >form
+            margin: -40px 0 12px 0
+            
+            &:before
+              display: none
+      
+            .profile
+              display: none
+            
+            textarea
+              height: 80px
+              
+            button,
+            >input,
+            >label
+              display: block
+      
+      &.collapsed
+        
+        >blockquote
+          margin: 0 0 0 -82px
+          min-height: 0
+          
+          &:before
+            display: none
+          
+          .meta
+          
+            .collapse
+              display: none
+            
+            .expand
+              display: inline
+          
+          .avatar
+            +opacity(0)
+            +transition(none)
+          
+          .meta
+            margin-left: 1px
+            
+          >p,
+          >form,
+          .actions
+            display: none
+        
+        >ol
+          display: none
+      
+      form
+        margin: -10px 0 12px 62px
+
+
 // Activities
 
 #body
@@ -548,7 +867,7 @@ button,
     padding: 0
     
     li
-      border-bottom: 1px solid
+      border-top: 1px solid
       margin: 0
       padding: 10px 0
       
@@ -557,6 +876,19 @@ button,
       
       a
         white-space: nowrap
+      
+      &:first-child,
+      &.page + .page,
+      &.page_space + .page_space,
+      &.discussion + .discussion,
+      &.discussion_space + .discussion_space,
+      &.supported_game + .supported_game,
+      &.user_profile + .user_profile,
+      &.community + .community,
+      &.character_proxy + .character_proxy
+        border-top: 0
+        margin: -10px 0 0
+        padding: 0 0 10px
         
     *[meta]:hover
       position: relative
@@ -575,15 +907,16 @@ button,
         z-index: 2
       
       &:after
-        border: 5px solid
+        background: transparent
+        border: 3px solid
         border-bottom-color: transparent
         border-right-color: transparent
         content: ''
-        left: 5px
+        left: 10px
         position: absolute
         top: -8px
         z-index: 3
-      
+
 
 // pop-up windows
 

@@ -16,13 +16,15 @@
         -# TODO Doug - Add this link once we add the friends feature %li.friend= link_to 'Friend', '#'
     %h3 My Communities
     - if @user_profile.communities.any?
-      %ul
+      %ul.communities
         - @user_profile.communities.each do |community|
           %li= link_to community.name, community
     - else
       %p No memberships.
     %h3 About Me
     %p= @user_profile.description ||= 'No description given.'
+    %h3 Stats
+    %p.stats= "Crumblin since #{l @user_profile.created_at, :format => :date_short}."
       
   %dl#tabs.tabs
     
@@ -33,7 +35,7 @@
           - @activities.each do |activity|
             - if activity.is_a? Comment
               - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
-                = render "subdomains/comments/comment", :comment => activity
+                = render "subdomains/comments/comment", :comment => activity, :include_children => false
               - else
                 %li.comment
                   Posted a
