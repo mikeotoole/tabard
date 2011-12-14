@@ -740,7 +740,7 @@ button,
       &.owned >blockquote >.meta a[meta]
         +border_radius(3)
       
-      &.locked blockquote
+      &.locked >blockquote
         
         >p .reply
           display: none
@@ -748,8 +748,8 @@ button,
         >.actions a
           display: none
           
-        >blockquote >.actions >.unlock
-          display: block
+          &.unlock
+            display: block
         
       &.removed
         
@@ -867,12 +867,21 @@ button,
     padding: 0
     
     li
-      border-top: 1px solid
       margin: 0
       padding: 10px 0
+      position: relative
       
       &:before
         display: none
+      
+      &:after
+        border-top: 1px solid
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: -10px
+        z-index: 4
       
       a
         white-space: nowrap
@@ -890,8 +899,18 @@ button,
         margin: -10px 0 0
         padding: 0 0 10px
         
+        &:after
+          display: none
+      
+      &.comment >blockquote
+        padding-right: 0 !important
+        
+        >.actions
+          right: 0
+        
     *[meta]:hover
       position: relative
+      z-index: 5
       
       &:before
         border: 1px solid
