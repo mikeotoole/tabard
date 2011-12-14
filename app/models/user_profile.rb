@@ -87,6 +87,12 @@ class UserProfile < ActiveRecord::Base
     self.wow_characters + self.swtor_characters
   end
 
+  ###
+  # This method will return a cancan ability with the passed community's dynamic rules added in.
+  # [Args]
+  #   * +context_community+ -> The community to scope the ability with.
+  # [Returns] A CanCan ability with the community scope.
+  ###
   def in_community(context_community)
     return Ability.new(self.user) unless context_community
     context_ability = Ability.new(self.user)
