@@ -63,7 +63,7 @@ describe Subdomains::PageSpacesController do
     end
     
     it "should render the 'show' template when authenticated as a member" do
-      sign_in user
+      sign_in admin
       get :show, :id => space
       response.should render_template("show")
     end

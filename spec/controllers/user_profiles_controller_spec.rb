@@ -59,7 +59,7 @@ describe UserProfilesController do
       it "show should be successful when authenticated as the owner" do
         sign_in private_owner
         get 'show', :id => private_user_profile
-        response.should_not be_success
+        response.should be_success
       end
 
       it "show should not be successful when authenticated as a non-owner" do

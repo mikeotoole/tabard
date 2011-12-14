@@ -13,10 +13,10 @@ describe Subdomains::CustomFormsController do
 
   describe "GET index" do
     it "assigns all custom_forms as @custom_forms when authenticated as a user" do
-      sign_in user
+      sign_in admin
       custom_form
       get :index
-      assigns(:custom_forms).count.should eq([community.community_application_form, custom_form].count)
+      assigns(:custom_forms).should eq([community.community_application_form, custom_form])
     end
     
     it "should redirected to new user session path when not authenticated as a user" do
