@@ -61,6 +61,7 @@ source 'http://rubygems.org'
     gem 'annotate'
     gem 'rails_best_practices'
     gem 'haml-rails'
+    gem 'rails-dev-tweaks'
   end
 
 # Development and Test Specific Gems
