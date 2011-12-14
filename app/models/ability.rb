@@ -269,7 +269,7 @@ class Ability
 
     # Special context rules
     can [:create], Submission do |submission|
-      submission.custom_form.is_published and can? :read, submission.custom_form
+      submission.custom_form_is_published and can? :read, submission.custom_form
     end
 
     can [:read], Discussion do |discussion|
@@ -307,7 +307,7 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        if permission.permission_level.blank?
+        if permission.permission_level?
           action.concat([:read]) if permission.can_read
           action.concat([:update]) if permission.can_update
           action.concat([:create]) if permission.can_create
