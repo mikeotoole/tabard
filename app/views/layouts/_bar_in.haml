@@ -17,7 +17,6 @@
         = link_to 'Search', '#'
     %li
       %p
-        = link_to "My Profile", user_profile_url(current_user.user_profile, :subdomain => false)
         = link_to "Logout", destroy_user_session_url
 
   %ul.characters
@@ -46,4 +45,4 @@
             %li.extra
               = link_to 'Add new SWTOR character', new_swtor_character_path
 
-  = link_to image_tag(current_profile.avatar_url(:tiny)), current_profile, :class => 'avatar'
+  = link_to image_tag(current_profile.avatar_url :tiny), user_profile_path(current_user) + '#characters', :class => 'avatar'
