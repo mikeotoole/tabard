@@ -506,20 +506,45 @@ button,
     padding: 10px 0
     
     li
-      border-top-color: #eee
+    
+      &:after
+        border-top-color: #eee
       
       &.comment
+        border-bottom: 0
         
-        .meta
-          font-size: 1em !important
+        >blockquote
+          padding: 0 15px 10px 82px
           
-          a[meta]
-            display: none
+          &:before
+            border-bottom: 0
+          
+          >.avatar
+            border-color: #ccc
+            left: 0
+            
+            &:before
+              border-right-color: #fff
+            
+            &:after
+              border-top-color: #fff
+            
+            >img
+              border-color: #fff
+          
+          >.meta
+            border-bottom-color: #eee
+          
+          >p
+            
+            >.reply,
+            >em
+              display: none
       
       time
         color: #3679B3
   
-    *[meta]:hover
+    li.activity *[meta]:hover
       
       &:before
         background: #3679B3
@@ -530,6 +555,29 @@ button,
       &:after
         border-left-color: #5196CF
         border-top-color: #5196CF
+
+    li.comment
+      
+      >blockquote >.actions a
+        display: none
+              
+        &.edit
+          background-position: -65px -5px
+        
+        &.delete
+          background-position: -35px -5px
+        
+        &.lock
+          background-position: -185px -5px
+        
+        &.unlock
+          background-position: -155px -5px
+    
+      *[meta]
+        
+        &:before,
+        &:after
+          display: none
 
 
 // User profile
