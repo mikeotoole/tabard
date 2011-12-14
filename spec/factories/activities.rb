@@ -2,11 +2,10 @@
 
 FactoryGirl.define do
   factory :activity do
-    user_profile_id 1
-    community_id 1
-    target_type "MyString"
-    target_id 1
-    action "MyString"
-    deleted_at ""
+    user_profile { DefaultObjects.user_profile }
+    community { DefaultObjects.community }
+    target { DefaultObjects.discussion }
+    action "editied"
+    deleted_at nil
   end
 end

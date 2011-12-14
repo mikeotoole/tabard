@@ -28,6 +28,5 @@ class ActivitiesController < ApplicationController
     params[:max_items] = 300
 
     @items = Activity.activities(params[:activity], params[:updated], params[:max_items])
-
   end
 end

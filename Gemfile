@@ -61,7 +61,6 @@ source 'http://rubygems.org'
     gem 'annotate'
     gem 'rails_best_practices'
     gem 'haml-rails'
-    gem 'timecop'
   end
 
 # Development and Test Specific Gems
@@ -69,6 +68,7 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'factory_girl_rails'
+    gem 'timecop'
   end
 
 # Test Specific Gems
