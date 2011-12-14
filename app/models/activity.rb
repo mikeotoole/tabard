@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
 ###
   # The default number of items self.activities() should return.
   DEFAULT_MAX_ITEMS = 10
-  
+
 ###
 # Attribute accessible
 ###
@@ -46,8 +46,8 @@ class Activity < ActiveRecord::Base
   # Used to retrive an array of activities.
   # [Args]
   #   * +activity+ An optinal hash containg :user_profile_id and/or :community_id. For example: {:user_profile_id => 1, :community_id => 4}
-  #   * +updated+ An optinal hash containg :since and/or :before. These are both dates. 
-  #                   If only since is given activities that occurred after that date will be returned. 
+  #   * +updated+ An optinal hash containg :since and/or :before. These are both dates.
+  #                   If only since is given activities that occurred after that date will be returned.
   #                     For example: {:since => 2.day.ago} will return all activiies that happend from now till 2 days ago.
   #                   If only before is given activities that occurred before that date will be returned.
   #                   If both since and before is given activities that occurred between those dates will be returned.
