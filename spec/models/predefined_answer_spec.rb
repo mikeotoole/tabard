@@ -23,6 +23,6 @@ describe PredefinedAnswer do
   end
 
   it "should require select_question" do
-    build(:predefined_answer, :select_question => nil).should_not be_valid
+    build(:predefined_answer, :question => nil).should_not be_valid
   end
 end

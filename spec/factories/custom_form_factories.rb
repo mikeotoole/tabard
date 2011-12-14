@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:name) {|n| "Custom Form #{n}"}
     instructions "Fill out my form"
     thankyou "Thank You for submitting my form"
-    published true
+    is_published true
     community_id { DefaultObjects.community.id }
   end
   
@@ -22,7 +22,7 @@ FactoryGirl.define do
   end
 
   factory :required_long_answer_question, :parent => :long_answer_question do
-    required true
+    is_required true
   end
   
   factory :short_answer_question, :class => TextQuestion do
@@ -88,7 +88,7 @@ end
 
 def create_predefined_answers(question)
   3.times do
-    FactoryGirl.create(:predefined_answer, :select_question => question)
+    FactoryGirl.create(:predefined_answer, :select_question_id => question.id)
   end
 end
 
@@ -98,8 +98,8 @@ end
 
 def create_answers(submission)
   submission.custom_form.questions.each do |question|
-    if question.respond_to?(:predefined_answers)
-      FactoryGirl.create(:answer, :body => question.predefined_answers[1].body, :question => question, :submission => submission)
+    if question.respond_to?(:predefined_answers) and not question.predefined_answers.empty?
+      FactoryGirl.create(:answer, :body => question.predefined_answers.first.body, :question => question, :submission => submission)
     else
       FactoryGirl.create(:answer, :question => question, :submission => submission)
     end

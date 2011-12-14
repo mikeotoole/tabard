@@ -6,8 +6,7 @@ class CreateDiscussions < ActiveRecord::Migration
       t.integer :discussion_space_id
       t.integer :character_proxy_id
       t.integer :user_profile_id
-      t.boolean :comments_enabled, :default => true
-      t.boolean :has_been_locked, :default => false
+      t.boolean :is_locked, :default => false
 
       t.timestamps
     end

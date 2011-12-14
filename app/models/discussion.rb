@@ -9,7 +9,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :comments_enabled, :has_been_locked
+  attr_accessible :name, :body, :character_proxy_id, :is_locked
 
 ###
 # Associations
@@ -17,14 +17,16 @@ class Discussion < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
-  has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :comments, :as => :commentable
+  has_many :all_comments, :as => :original_commentable, :class_name => "Comment", :dependent => :delete_all
   has_one :community, :through => :discussion_space
   has_many :view_logs, :as => :view_loggable
 
 ###
 # Validators
 ###
-  validates :name, :presence => true
+  validates :name,  :presence => true,
+                    :length => { :maximum => 100 }
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
@@ -33,12 +35,13 @@ class Discussion < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :is_announcement, :to => :discussion_space, :allow_nil => true
-  delegate :name, :to => :discussion_space, :prefix => true
+  delegate :name, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :discussion_space, :allow_nil => true
+  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
+  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
 ###
 # Public Methods
@@ -47,6 +50,12 @@ class Discussion < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+
+  # Looks if this discussion is in an annoincment space. If true this is an announcement.
+  def is_announcement
+    self.discussion_space.is_announcement_space
+  end
+
   ###
   # This method gets the poster of this discussion. If character proxy is not nil
   # the character is returned. Otherwise the user profile is returned. These should
@@ -66,7 +75,7 @@ class Discussion < ActiveRecord::Base
   # [Returns] True if a character made this discussion, otherwise false.
   ###
   def charater_posted?
-    character_proxy != nil
+    self.character_proxy != nil
   end
 
   ###
@@ -74,23 +83,7 @@ class Discussion < ActiveRecord::Base
   # [Returns] An integer that contains how many comments have been made for this discussion, including comments on a comment (recursivly).
   ###
   def number_of_comments
-   temp_total_num_comments = 0
-   comments.each do |comment|
-     temp_total_num_comments += comment.number_of_comments unless comment.has_been_deleted
-   end
-   temp_total_num_comments
-  end
-
-  ###
-  # This method all comments in this discussion even comments comments.
-  # [Returns] A collection of comments.
-  ###
-  def all_comments
-  temp_all_comments = Array.new
-   comments.each do |comment|
-     temp_all_comments << comment.all_comments
-   end
-   temp_all_comments.flatten
+    self.all_comments.not_deleted.count
   end
 
   ###
@@ -100,9 +93,17 @@ class Discussion < ActiveRecord::Base
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
   def update_viewed(user_profile)
-    user_profile.update_viewed(self)
+    self.user_profile.update_viewed(self)
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Methods
+###
   ###
   # This method validates that the selected character is valid for the community.
   ###
@@ -123,10 +124,8 @@ end
 #  discussion_space_id :integer
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
-#  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean         default(FALSE)
+#  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  is_archived         :boolean         default(FALSE)
 #
 

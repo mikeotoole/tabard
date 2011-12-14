@@ -19,9 +19,6 @@ ActiveAdmin.register Page do
     column "Page Space" do |page|
       link_to page.page_space_name, [:admin, page.page_space]
     end
-    column "Poster" do |page|
-      link_to page.poster.name, [:admin, page.poster]
-    end
     column :created_at
     column "Destroy" do |page|
       if can? :destroy, page
@@ -30,10 +27,11 @@ ActiveAdmin.register Page do
     end
   end
 
-  show :title => proc{ "#{page.poster.name} - #{page.name}" } do
-    rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
-    rows.insert(1, :poster)
-    attributes_table *rows, :community
+  show :title => :name do
+#     rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
+#     rows.insert(1, :poster)
+#     attributes_table *rows
+    attributes_table *default_attribute_table_rows, :community
 
     div do
       page.body

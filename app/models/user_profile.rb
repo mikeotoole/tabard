@@ -10,33 +10,33 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
-      :avatar, :remote_avatar_url, :remove_avatar, :avatar_cache
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
 
 ###
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
-  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id"
+  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
   has_many :announcements, :through => :announcement_spaces, :class_name => "Discussion", :source => "discussions"
-  has_many :community_applications
+  has_many :community_applications, :dependent => :destroy
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :deleted => false}, :dependent => :destroy
+  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
   has_many :folders, :dependent => :destroy
-  has_many :pages
-  has_many :discussions
-  has_many :comments
+  has_many :discussions, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
 ###
 # Delegates
 ###
   delegate :email, :to => :user
+  delegate :disabled, :to => :user
 
 ###
 # Callbacks
@@ -51,7 +51,10 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name, :presence => true, :uniqueness => true
+  validates :display_name,  :presence => true,
+                            :uniqueness => true,
+                            :length => { :maximum => 50 }
+  validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
@@ -110,7 +113,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
   end
 
   ###
@@ -124,7 +127,7 @@ class UserProfile < ActiveRecord::Base
     # FIXME Joe, WTF! Associations why you no work!
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
-    proxies.delete_if { |proxy| (proxy.game.id != game.id or not proxy.default_character) }
+    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.is_default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
     proxies = proxies.compact
     raise RuntimeError.new("too many default characters exception") if proxies.count > 1
     proxies.first
@@ -337,6 +340,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -351,5 +355,6 @@ end
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 

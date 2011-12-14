@@ -13,19 +13,10 @@ class ApplicationController < ActionController::Base
 # Callbacks
 ###
   # This before_filter will requre that a user is authenticated.
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
 
   # This before_filter will prevent the actions from taking place in a subdomain.
   before_filter :limit_subdomain_access
-
-  # This after_filter attempts to remember the current crumblin page.
-  after_filter :remember_current_page
-
-  # This before_filter attempts to remember the last crumblin page.
-  before_filter :remember_last_page
-
-  # This before_filter builds a list of the Crumblin supported games.
-  before_filter :fetch_crumblin_games
 
   # This before_filter ensures that a profile is active.
   before_filter :ensure_active_profile_is_valid
@@ -39,12 +30,14 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a user has accepted legal documents.
   before_filter :ensure_accepted_most_recent_legal_documents
 
+  # This before_filter ensures that ssl mode is not running
+  prepend_before_filter :ensure_not_ssl_mode
+
 ###
 # Status Code Rescues
 ###
   # This method rescues from a CanCan Access Denied Exception
   rescue_from CanCan::AccessDenied do |exception|
-    #redirect_to previous_page, :alert => exception.message
     http_status_code(:forbidden, exception)
   end
 
@@ -75,11 +68,6 @@ class ApplicationController < ActionController::Base
 ###
 # Public Methods
 ###
-  # This method gets the users path to last page, if it is from this site, otherwise it returns the root path.
-  def previous_page
-    session[:last_page] ? session[:last_page] : root_url
-  end
-
   ###
   # Adds a new message to the flash messsages array
   # [Args]
@@ -95,6 +83,7 @@ class ApplicationController < ActionController::Base
 ###
 # Active Admin
 ###
+  # Returns current cancan ability for current user/admin_user.
   def current_ability
     if current_admin_user
       @current_ability ||= AdminAbility.new(current_admin_user)
@@ -108,7 +97,7 @@ class ApplicationController < ActionController::Base
   # [Returns] true if maintenance mode is on, false otherwise.
   ###
   def maintenance_mode?
-    $maintenance_mode ||= (ENV["RAILS_ENV"] != 'test' and ENV["RAILS_ENV"] != 'development')
+    $maintenance_mode ||= false
   end
 
 ###
@@ -116,22 +105,17 @@ class ApplicationController < ActionController::Base
 ###
 protected
 
+###
+# Class Methods
+###
   # Overrides default responder
   def self.responder
     AppResponder
   end
 
-  # Builds a list of the Crumblin supported games.
-  def fetch_crumblin_games
-    @active_games = Game.all
-  end
-
-  # This Method is a helper that exposes the active_games
-  def active_games
-    @active_games
-  end
-  helper_method :active_games
-
+###
+# Helper Methods
+###
   # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
   def show_pitch?
     !!@show_pitch
@@ -145,15 +129,22 @@ protected
   helper_method :hide_announcements?
 
   ###
-  # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
-  # The allows us to white list controller that inherit from application controller.
+  # This helper method returns the current community that is in scope.
+  # It is defined as nil when not in a subdomain.
   ###
-  def limit_subdomain_access
-    if request.subdomain.present?
-      redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
-      #redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
-    end
+  def current_community
+    nil
   end
+  helper_method :current_community
+
+  ###
+  # This helper method returns the current game that is in scope.
+  # It is defined as nil when not in a game scope.
+  ###
+  def current_game
+    nil
+  end
+  helper_method :current_game
 
 ###
 # Active Character/Profile
@@ -201,18 +192,6 @@ protected
   end
   helper_method :profiles
 
-  # This helper method returns the current community that is in scope.
-  def current_community
-    nil
-  end
-  helper_method :current_community
-
-  # This helper method returns the current game that is in scope.
-  def current_game
-    nil
-  end
-  helper_method :current_game
-
   # This method activates a profile, given a profile_id and profile_type.
   def activate_profile(profile_id, profile_type)
     session[:profile_id] = profile_id
@@ -223,13 +202,50 @@ protected
 # Callback Methods
 ###
 
+###
+# Before Filters
+###
   ###
   # _before_filter_
   #
-  # This method remembers the current page in the session variable [:current_page]
+  # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
+  # The allows us to white list controller that inherit from application controller.
   ###
-  def remember_current_page
-    session[:current_page] = request.url
+  def limit_subdomain_access
+    if request.subdomain.present?
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
+      #redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
+    end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This method ensures that the request is located at https://secure.
+  # If not it will try to redirect to that location in the secure mode.
+  ###
+  def ensure_secure_subdomain
+    the_subdomain = request.subdomain
+    the_protocol = request.protocol
+
+    the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
+    the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
+
+    redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This method ensures that the protocol is not https://.
+  # If it is, it will try to redirect to that location with the http:// protocol.
+  ###
+  def ensure_not_ssl_mode
+    the_protocol = request.protocol
+
+    the_protocol = "http://" if !Rails.env.development? or request.protocol == "https://"
+
+    redirect_to [the_protocol, (request.subdomain.blank? ? "" : "#{request.subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
   end
 
   ###
@@ -264,7 +280,8 @@ protected
   ###
   def check_force_logout
     if current_user and current_user.force_logout
-      redirect_to destroy_user_session_path, :notice => "You have been logged out for system maintenance." # TODO Joe, This message does not get pushed to user. -MO
+      add_new_flash_message('You have been logged out for system maintenance')
+      redirect_to destroy_user_session_path
     end
   end
 
@@ -275,7 +292,7 @@ protected
   ###
   def check_maintenance_mode
     if maintenance_mode?
-      redirect_to crumblin_maintenance_url
+      redirect_to top_level_maintenance_url
     else
       true
     end
@@ -289,20 +306,50 @@ protected
   def ensure_accepted_most_recent_legal_documents
     if user_signed_in?
       if not current_user.accepted_current_terms_of_service
-        redirect_to accept_document_path(current_user.current_terms_of_service)
+        redirect_to accept_document_path(TermsOfService.current)
       elsif not current_user.accepted_current_privacy_policy
-        redirect_to accept_document_path(current_user.current_privacy_policy)
+        redirect_to accept_document_path(PrivacyPolicy.current)
       end
     end
   end
 
   ###
-  # _after_filter_
+  # _before_filter_
   #
-  # This method remembers the previous crumblin page in the session variable [:last_page]
+  # This method is a custom replacement to authenticate_user! provided by devise to get around the path/url issue.
   ###
-  def remember_last_page
-    session[:last_page] = session[:current_page] unless session[:current_page] == request.url
+  def block_unauthorized_user!
+    session[:return_to] = request.url
+    authenticate_user!
   end
 
+###
+# Devise
+###
+  # This method overrides the default devise method to set the proper protocol and subdomain
+  def after_sign_in_path_for(resource_or_scope)
+    case resource_or_scope
+    when :user, User
+      store_location = session[:return_to]
+      session[:return_to] = nil
+      (store_location.nil?) ? root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) : store_location.to_s
+    else
+      super
+    end
+  end
+
+  # This method overrides the default devise method to set the proper protocol and subdomain
+  def after_sign_out_path_for(resource_or_scope)
+    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) if resource and resource.kind_of?(User)
+    return root_url
+  end
+
+###
+# System Hacks
+###
+  # This method replaces the default url_for in rails because they think that url_for(:subdomain => false) is ambiguous.
+  def root_url_hack_helper(the_broken_url)
+    return the_broken_url.sub('secure.', '')
+    return stored_location_for(resource)
+  end
 end

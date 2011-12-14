@@ -10,10 +10,10 @@ class Subdomains::CustomFormsController < SubdomainsController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index, :thankyou]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
@@ -26,14 +26,22 @@ class Subdomains::CustomFormsController < SubdomainsController
   def new
   end
 
-  # GET /custom_forms/1/edit
+  # GET /custom_forms/:id/edit
   def edit
   end
 
   # POST /custom_forms
   def create
-    add_new_flash_message('Form was successfully created.') if @custom_form.save
-    respond_with @custom_form
+    if @custom_form.save
+      add_new_flash_message('Form was successfully created.')
+      respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
+    else
+      respond_with @custom_form
+    end
+  end
+  
+  # GET /custom_forms/:id/thankyou
+  def thankyou
   end
 
   # PUT /custom_forms/1
@@ -41,13 +49,13 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form.update_attributes(params[:custom_form])
       add_new_flash_message 'Form was successfully updated.', 'success'
     end
-    respond_with @custom_form
+    respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
   end
 
   # DELETE /custom_forms/1
   def destroy
     if @custom_form
-      add_new_flash_message('Form was successfully deleted.') if @custom_form.destroy
+      add_new_flash_message('Form was successfully removed.') if @custom_form.destroy
     end
     respond_with @custom_form
   end

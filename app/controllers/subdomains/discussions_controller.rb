@@ -10,25 +10,17 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   load_and_authorize_resource :except => [:new, :create, :index]
   before_filter :create_discussion, :only => [:new, :create]
   before_filter :find_discussion_space_from_params
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_active_profile_is_valid
 
 ###
 # REST Actions
 ###
-  # GET /discussion_spaces/:discussion_space_id/discussions(.:format)
-  def index
-    discussion_space = DiscussionSpace.find_by_id(params[:discussion_space_id])
-    @discussions = discussion_space.discussions if discussion_space
-    authorize! :read, discussion_space
-  end
-
   # GET /discussions/:id(.:format)
   def show
     @discussion.update_viewed(current_user.user_profile)
@@ -67,7 +59,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # DELETE /discussions/:id(.:format)
   def destroy
-    add_new_flash_message('Discussion was successfully deleted.') if @discussion.destroy
+    add_new_flash_message('Discussion was successfully removed.') if @discussion.destroy
     respond_with(@discussion, :location => discussion_space_url(@discussion.discussion_space))
   end
 
@@ -76,7 +68,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   # POST /discussions/:id/lock(.:format)
   def lock
-    @discussion.has_been_locked = true
+    @discussion.is_locked = true
     if @discussion.save
       add_new_flash_message("Discussion was successfully locked.")
     else
@@ -88,7 +80,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # POST /discussions/:id/unlock(.:format)
   def unlock
-    @discussion.has_been_locked = false
+    @discussion.is_locked = false
     if @discussion.save
       add_new_flash_message("Discussion was successfully unlocked.")
     else
@@ -103,7 +95,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @discussion.discussion_space_game
+    @discussion.discussion_space_game if @discussion
   end
   helper_method :current_game
 

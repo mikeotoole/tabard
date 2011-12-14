@@ -11,7 +11,7 @@ class MessagesController < MailboxController
 ###
 # Callbacks
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_message, :only => [:show, :mark_read, :mark_unread]
   before_filter :load_original_message, :setup_message_body, :only => [:reply, :reply_all, :forward]
   authorize_resource :only => [:show, :mark_read, :mark_unread]
@@ -27,13 +27,21 @@ class MessagesController < MailboxController
   # POST /mail/mark_read/:id(.:format)
   def mark_read
     @message.update_attributes(:has_been_read => true)
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # POST /mail/mark_unread/:id(.:format)
   def mark_unread
     @message.update_attributes(:has_been_read => false)
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # PUT /mail/:id/move/:folder_id(.:format)
@@ -45,7 +53,11 @@ class MessagesController < MailboxController
     if @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
       add_new_flash_message("Message was moved to #{folder.name}.")
     end
-    redirect_to previous_page
+    if params[:return_url]
+      redirect_to params[:return_url]
+    else
+      redirect_to request.referer ? request.referer : root_path
+    end
   end
 
   # PUT /mail/:id/batch_move/:folder_id(.:format)
@@ -124,14 +136,14 @@ class MessagesController < MailboxController
     if(params[:id])
       @message = current_user.received_messages.find(params[:id])
       authorize!(:update, @message)
-      if @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
-        add_new_flash_message('Message was deleted.')
+      if @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
+        add_new_flash_message('Message was removed.')
       end
       redirect_to trash_path
-    else # If a message is not given all messages will be deleted from the trash.
+    else # If a message is not given all messages will be removed from the trash.
       current_user.trash.messages.each do |message|
         authorize!(:update, message)
-        message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+        message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
       end
       redirect_to inbox_path
     end
@@ -143,7 +155,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:deleted => true, :folder_id => nil, :has_been_read => true)
+        @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
       end
     end
     redirect_to trash_path

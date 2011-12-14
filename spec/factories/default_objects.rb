@@ -12,7 +12,7 @@ class DefaultObjects
         :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @user_profile),
         :character_proxies => []
       )
-      app.accept_application
+      app.accept_application(DefaultObjects.community.admin_profile)
       if not @user_profile.is_member?(DefaultObjects.community_two)
       appTwo = FactoryGirl.create(:community_application,
           :community => DefaultObjects.community_two,
@@ -20,7 +20,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @user_profile),
           :character_proxies => @user_profile.character_proxies
         )
-      appTwo.accept_application
+      appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
     end
     @user_profile
@@ -35,7 +35,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
           :character_proxies => @additional_community_user_profile.character_proxies
         )
-      app.accept_application
+      app.accept_application(DefaultObjects.community.admin_profile)
     end
     if not @additional_community_user_profile.is_member?(DefaultObjects.community_two)
       appTwo = FactoryGirl.create(:community_application,
@@ -44,7 +44,7 @@ class DefaultObjects
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @additional_community_user_profile),
           :character_proxies => @additional_community_user_profile.character_proxies
         )
-      appTwo.accept_application
+      appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
     @additional_community_user_profile
   end
@@ -72,7 +72,7 @@ class DefaultObjects
   def self.community
     @community ||= FactoryGirl.create(:community)
     unless @community.games.include?(DefaultObjects.wow)
-      @community.games << DefaultObjects.wow
+      @community.supported_games.create(:name => "Test Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
     end
     unless @community.community_announcement_space.discussions.size > 0
       announcement1 = @community.community_announcement_space.discussions.new(:name => "Announcement 1", 
@@ -89,13 +89,19 @@ class DefaultObjects
   
     
   def self.community_admin
-    @community_admin ||= DefaultObjects.community.admin_profile.user
+    if @community_admin
+      @community_admin
+    else 
+      @community_admin = DefaultObjects.community.admin_profile.user
+      @community_admin.owned_communities << DefaultObjects.community
+      @community_admin
+    end
   end
   
   def self.community_two
     @community_two ||= FactoryGirl.create(:community)
     unless @community_two.games.include?(DefaultObjects.swtor)
-      @community_two.games << DefaultObjects.swtor
+      @community_two.supported_games.create(:name => "Test Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
     end
     @community_two
   end

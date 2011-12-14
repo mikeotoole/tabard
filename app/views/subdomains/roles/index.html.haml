@@ -14,7 +14,7 @@
       %tr
         %td= role.community_id
         %td= role.name
-        %td= role.system_generated
+        %td= role.is_system_generated
         %td= link_to_if (can? :show, role), 'Show', role
         %td= link_to_if (can? :update, role), 'Edit', edit_role_path(role)
         %td= link_to_if (can? :destroy, role), 'Destroy', role, :confirm => 'Are you sure?', :method => :delete

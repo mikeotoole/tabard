@@ -1,0 +1,14 @@
+- title 'Sign in'
+
+#body
+  %h1 Sign in to Crumblin
+
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    %fieldset
+      %ol
+        = f.input :email
+        = f.input :password
+        %li
+          %button{ :type => 'submit' } Sign in
+
+  = render "/devise/shared/links"

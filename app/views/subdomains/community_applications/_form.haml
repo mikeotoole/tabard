@@ -1,8 +1,6 @@
-= javascript_include_tag "community_application"
-
-= simple_form_for community_application, :html => {:novalidate => true} do |f|
+= simple_form_for community_application, :html => { novalidate: true, class: 'community_application submission' } do |f|
   .questions
-    %h1= @community_application.custom_form_name
+    %h1= community_application.custom_form_name
     = f.simple_fields_for :submission do |sf|
       %fieldset
         %ol
@@ -14,28 +12,29 @@
                 - when 'TextQuestion'
                   - case answer.question_style
                   - when 'short_answer_question'
-                    = af.input :body, :as => :string, :wrapper => false, :label => answer.question_body, :required => answer.question_required
+                    = af.input :body, :as => :string, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required
                   - when 'long_answer_question'
-                    = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_required
+                    = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required
                 - when 'SingleSelectQuestion'
-                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.body]}
                   - case answer.question_style
                   - when 'select_box_question'
-                    .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_required
+                    .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
                   - when 'radio_buttons_question'
-                    = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_required
+                    = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
                 - when 'MultiSelectQuestion'
-                  = af.input :body, :as => :check_boxes, :wrapper => false, :label => answer.question_body, :required => answer.question_required
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
+                  = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
   .sidebar
     - if current_user.character_proxies.size > 0
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:
-        - @community_application.character_proxies.each do |cp|
+        - community_application.character_proxies.each do |cp|
           %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
-            = image_tag cp.avatar_url(:icon), :class => 'avatar'
+            = image_tag cp.avatar_url(:tiny), :class => 'avatar'
             = cp.name
-        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + cp.name, cp.id]}
+        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       %h2 Instructions
       :markdown

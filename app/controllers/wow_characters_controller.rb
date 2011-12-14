@@ -10,18 +10,20 @@ class WowCharactersController < ApplicationController
 ###
 # Before Filters
 ###
-  prepend_before_filter :authenticate_user!, :except => :show
+  prepend_before_filter :block_unauthorized_user!, :except => :show
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => :update
 
 ###
 # REST Actions
 ###
-  ###
   # GET /wow_characters/:id(.:format)
-  ###
   def show
     respond_with(@wow_character)
+  end
+
+  # GET /wow_characters/new
+  def new
   end
 
   # GET /wow_characters/:id/edit(.:format)
@@ -30,12 +32,10 @@ class WowCharactersController < ApplicationController
 
   # POST /wow_characters(.:format)
   def create
-    @wow_character = WowCharacter.create(params[:wow_character])
+    @wow_character = WowCharacter.create_character(params, current_user)
 
-    profile = current_user.user_profile
-    proxy = profile.character_proxies.build(:character => @wow_character, :default_character => params[:default])
+    add_new_flash_message('Character was successfully created') if @wow_character.character_proxy and @wow_character.character_proxy.valid?
 
-    add_new_flash_message('Character was successfully created.') if proxy.save
     respond_with(@wow_character)
   end
 
@@ -43,16 +43,17 @@ class WowCharactersController < ApplicationController
   def update
     @wow_character = WowCharacter.find(params[:id])
     authorize!(:update, @wow_character)
-
-    add_new_flash_message('Character was successfully updated.') if @wow_character.update_attributes(params[:wow_character])
+    if params[:wow_character][:faction] or params[:wow_character][:server_name]
+      @wow_character.wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
+    end
+    add_new_flash_message('Character was successfully updated') if @wow_character.update_attributes(params[:wow_character])
     respond_with(@wow_character)
   end
 
   # DELETE /wow_characters/:id(.:format)
   def destroy
-    if @wow_character
-      add_new_flash_message('Character was successfully deleted.') if @wow_character.destroy
-    end
+    add_new_flash_message('Character was successfully removed') if @wow_character and @wow_character.destroy
+
     respond_with(@wow_character)
   end
 end

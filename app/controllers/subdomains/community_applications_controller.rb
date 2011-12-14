@@ -11,7 +11,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
   before_filter :ensure_current_user_is_member, :only => [:index]
@@ -55,7 +55,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.save
       add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with @community_application, :location => root_url(:subdomain => current_community.subdomain), :error_behavior => :list
+    respond_with @community_application, :location => custom_form_thankyou_url(@community_application.custom_form), :error_behavior => :list
   end
 
   # DELETE /community_applications/1
@@ -69,14 +69,14 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This accepts the specified application.
   def accept
-    @community_application.accept_application
-    render :show
+    @community_application.accept_application(current_user.user_profile)
+    redirect_to community_application_url(@community_application)
   end
 
   # This rejects the specified application.
   def reject
-    @community_application.reject_application
-    render :show
+    @community_application.reject_application(current_user.user_profile)
+    redirect_to community_application_url(@community_application)
   end
 ###
 # Protected Methods

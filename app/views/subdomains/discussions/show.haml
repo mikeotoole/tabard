@@ -4,7 +4,7 @@
 %nav
   %h1
     = link_to "Discussion Spaces", discussion_spaces_path
-    - if @discussion.discussion_space.game
+    - if @discussion.discussion_space_game
       %rt= " — #{@discussion.discussion_space.game_name}"
     = link_to @discussion.discussion_space_name, @discussion.discussion_space
     %strong= @discussion.name

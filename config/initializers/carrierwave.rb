@@ -1,22 +1,20 @@
 if Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_credentials = {
-      :provider           => 'Rackspace',
-      :rackspace_username => 'digitalaugment',
-      :rackspace_api_key  => '0e59d0dac7349766543fe958a5c1003a'
+      :provider               => 'AWS',
+      :aws_access_key_id      => ENV['BV_S3_KEY'],
+      :aws_secret_access_key  => ENV['BV_S3_SECRET']
     }
-    config.fog_host = "http://c655941.r41.cf2.rackcdn.com"
-    config.fog_directory = 'Crumblin-Production'
+    config.fog_directory = 'BrutalVenom-Production'
   end
 else
   CarrierWave.configure do |config|
     config.fog_credentials = {
-      :provider           => 'Rackspace',
-      :rackspace_username => 'digitalaugment',
-      :rackspace_api_key  => '0e59d0dac7349766543fe958a5c1003a'
+      :provider               => 'AWS',
+      :aws_access_key_id      => ENV['DEV_BV_S3_KEY'],
+      :aws_secret_access_key  => ENV['DEV_BV_S3_SECRET']
     }
-    config.fog_host = "http://c655790.r90.cf2.rackcdn.com"
-    config.fog_directory = 'Crumblin-Development'
+    config.fog_directory = 'BrutalVenom-Development'
   end
 end
 if Rails.env.test? or Rails.env.cucumber?

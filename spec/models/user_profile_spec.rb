@@ -12,6 +12,7 @@
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 
 require 'spec_helper'
@@ -40,6 +41,20 @@ describe UserProfile do
 
   it "should ensure display names are unique" do
     Factory.build(:user_profile, :display_name => profile.display_name).should_not be_valid
+  end
+  
+  it "display name should reject company and administration restricted values" do
+    excluded_names = %w{ crumblin Crumblin admin da }
+    excluded_names.each do |name|
+      build(:user_profile, :display_name => name).should_not be_valid
+    end
+  end
+  
+  it "display name should not reject domain restricted values" do
+    ok_names = %w{ www wwW wWw wWW Www WwW WWw WWW m blog mobile }
+    ok_names.each do |name|
+      build(:user_profile, :display_name => name).should be_valid
+    end
   end
 
   it "should set publicly viewable to true by default" do
@@ -130,7 +145,7 @@ describe UserProfile do
     it "should return the default if there is one of the game" do
       profile = create(:user_profile)
       proxy = create(:character_proxy, :user_profile => profile)
-      proxy.default_character.should be_true
+      proxy.is_default_character.should be_true
       profile.default_character_proxy_for_a_game(DefaultObjects.wow).should eq(proxy)
     end
 
@@ -236,15 +251,15 @@ describe UserProfile do
       new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
-    it "should return messages marked as deleted" do
+    it "should return messages marked as is_removed" do
       new_profile = DefaultObjects.additional_community_user_profile
       startCount = new_profile.received_messages.count
       create(:message)
       message = create(:message).message_associations.first
-      message.deleted = true
+      message.is_removed = true
       message.save.should be_true
       new_profile.received_messages.count.should eq(startCount + 2)
-      new_profile.received_messages.find(message).deleted.should be_true
+      new_profile.received_messages.find(message).is_removed.should be_true
     end
   end
   
@@ -259,12 +274,12 @@ describe UserProfile do
       new_profile.unread_messages.first.should eq(message.message_associations.first)
     end
     
-    it "should not return unread messages marked as deleted" do
+    it "should not return unread messages marked as is_removed" do
       new_profile = DefaultObjects.additional_community_user_profile
       startCount = new_profile.unread_messages.count
       message = create(:message)
-      message.message_associations.first.update_attributes(:deleted => true)
-      MessageAssociation.find(message.message_associations.first).deleted.should be_true
+      message.message_associations.first.update_attributes(:is_removed => true)
+      MessageAssociation.find(message.message_associations.first).is_removed.should be_true
       message.recipients.first.should eq(new_profile)
       new_profile.unread_messages.count.should eq(startCount)
     end

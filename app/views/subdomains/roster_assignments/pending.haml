@@ -7,9 +7,9 @@
     %table
       %thead
         %tr
-          %th
+          %th.check
           %th{ :colspan => 2 } Pending Character
-          %th.actions Action
+          %th
       %tbody
         - @roster_assignments.each do |roster_assignment|
           %tr
@@ -23,7 +23,7 @@
               Requested by
               = (link_to roster_assignment.user_profile_display_name, roster_assignment.user_profile) + ', '
               who has
-              %strong= pluralize roster_assignment.user_profile.characters.size, 'character'
+              %strong= pluralize roster_assignment.community_profile.approved_character_proxies.size, 'character'
               on the roster.
             %td.actions
               %div

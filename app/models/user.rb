@@ -8,7 +8,6 @@
 # This class is configured to work with devise to provide us authentication capabilities.
 ###
 class User < ActiveRecord::Base
-  # TODO Bryan/Joe We need to configure config/enviroments/production.rb with the mailer info. -JW
 ###
 # Devise configuration information
 ###
@@ -19,17 +18,22 @@ class User < ActiveRecord::Base
          :confirmable, :lockable
 
 ###
+# Attribute accessors
+###
+  attr_accessor :birth_month, :birth_day, :birth_year
+
+###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :is_user_disabled, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
 ###
-  has_one :user_profile, :inverse_of => :user
-  has_many :document_acceptances
+  has_one :user_profile, :inverse_of => :user, :dependent => :destroy
+  has_many :document_acceptances, :dependent => :destroy
   has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile
 
@@ -37,6 +41,7 @@ class User < ActiveRecord::Base
 # Callbacks
 ###
   after_save :update_document_acceptance
+  before_validation :combine_birthday
 
 ###
 # Delegates
@@ -94,6 +99,9 @@ class User < ActiveRecord::Base
       :acceptance => {:accept => true}
   validates :accepted_current_privacy_policy,
       :acceptance => {:accept => true}
+  validates :date_of_birth, :presence => true
+
+  validate :at_least_13_years_old
 
 ###
 # Public Methods
@@ -102,8 +110,7 @@ class User < ActiveRecord::Base
 ###
 # Class Methods
 ###
-
-  # This method returns a default guest user that is used to handle permissions
+  # This method returns a default guest user that is used to handle permissions.
   def self.guest
     user = User.new
     user.build_user_profile
@@ -115,33 +122,39 @@ class User < ActiveRecord::Base
     User.update_all(:force_logout => true)
   end
 
+  # This will reset all passwords for non disabled users.
+  def self.reset_all_passwords
+    begin
+      User.find_each(:conditions => ['is_admin_disabled == ? AND is_user_disabled == ?', false, false]) do |record|
+        random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+        record.password = random_password
+        record.reset_password_token = User.reset_password_token
+        record.reset_password_sent_at = Time.now
+        record.save
+        UserMailer.all_password_reset(record, random_password).deliver
+      end
+    rescue Exception => e
+      logger.error "Error Resetting All Passwords: #{e.message}"
+      redirect_to :action => :index, :alert => "Error resetting all passwords."
+      return
+    end
+  end
+
 ###
 # Instance Methods
 ###
-  #This method updates the acceptance of documents
-  def update_document_acceptance
-    self.accepted_documents << current_terms_of_service if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
-    self.accepted_documents << current_privacy_policy if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
-  end
 
-  #This method finds the most recent version of the terms of service
-  def current_terms_of_service
-    TermsOfService.first
-  end
-
+###
+# Doc Acceptance
+###
   #This method checks to see if the user has accepted the most recent version of the Terms of Service.
   def has_accepted_current_terms_of_service?
-    accepted_documents.include?(current_terms_of_service)
-  end
-
-  #This method finds the most recent version of the terms of service
-  def current_privacy_policy
-    PrivacyPolicy.first
+    accepted_documents.include?(TermsOfService.current)
   end
 
   #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
-    accepted_documents.include?(current_privacy_policy)
+    accepted_documents.include?(PrivacyPolicy.current)
   end
 
   #This method checks to see if the user has accepted the most recent version of all legal documents.
@@ -149,26 +162,31 @@ class User < ActiveRecord::Base
     has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
 
+
+###
+# Authentication
+###
   ###
   # This method determines if the user is active. It is adding to the existing Devise method.
   # [Returns] True if this is an active user, otherwise false.
   ###
   def active_for_authentication?
-    super and not self.suspended
+    super and not self.disabled
   end
 
   ###
-  # This method overrides the existing Devise method to check it account is suspended.
+  # This method overrides the existing Devise method to check it account is disabled.
   # [Returns] :suspended if account is suspended otherwise it returns super's response.
   ###
   def inactive_message
-    self.suspended ? :suspended : super
+    if self.is_admin_disabled
+      :admin_disabled
+    elsif self.is_user_disabled
+      :user_disabled
+    else
+      super
+    end
   end
-
-###
-# Protected Methods
-###
-protected
 
   ###
   # This method determines if the password is required. It is used to determine if password needs to be validated.
@@ -177,7 +195,96 @@ protected
   def password_required?
     self.new_record? || self.password.present?
   end
+
+  # Will reset the users password.
+  def reset_password
+    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+    self.password = random_password
+    self.reset_password_token = User.reset_password_token
+    self.reset_password_sent_at = Time.now
+    self.save!
+    UserMailer.password_reset(self, random_password).deliver
+  end
+
+  # Checks if this user is disabled.
+  def disabled
+    self.is_admin_disabled or self.is_user_disabled
+  end
+
+  ###
+  # Used to disable a user.
+  # [Args]
+  #   * +params+ -> a hash that should contain a user with current password.
+  ###
+  def disable_by_user(params)
+    if(params[:user])
+      params[:user][:is_user_disabled] = true
+      params[:user][:user_disabled_at] = Time.now
+      success = self.update_with_password(params[:user])
+      if success
+        self.community_profiles.clear
+        self.owned_communities.clear
+      end
+      return success
+    else
+      return false
+    end
+  end
+
+  # Used by the admin panel to disable a user.
+  def disable_by_admin
+    self.is_admin_disabled = true
+    self.admin_disabled_at = Time.now
+    self.save(:validate => false)
+    self.community_profiles.clear
+    self.owned_communities.clear
+  end
+
+  # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
+  def reinstate
+    self.is_admin_disabled = false
+    self.admin_disabled_at = nil
+    self.is_user_disabled = false
+    self.user_disabled_at = nil
+    self.save(:validate => false)
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+  # This method combines the individual birthday fields into one date
+  def combine_birthday
+    if self.date_of_birth.blank? and !self.birth_year.blank? and !self.birth_month.blank? and !self.birth_day.blank?
+      begin
+        self.date_of_birth = Date.new(self.birth_year.to_i,self.birth_month.to_i,self.birth_day.to_i)
+      rescue
+        self.errors.add(:date_of_birth, "invalid")
+      end
+    else
+      true
+    end
+  end
+
+  #This method updates the acceptance of documents
+  def update_document_acceptance
+    self.accepted_documents << TermsOfService.current if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
+    self.accepted_documents << PrivacyPolicy.current if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+  end
+
+###
+# Validator Mathods
+###
+  # This validation method ensures that the user is 13 years of age according to the date_of_birth.
+  def at_least_13_years_old
+    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
+  end
 end
+
 
 
 
@@ -207,6 +314,10 @@ end
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
-#  suspended                         :boolean         default(FALSE)
+#  is_admin_disabled                 :boolean         default(FALSE)
+#  date_of_birth                     :date
+#  is_user_disabled                  :boolean         default(FALSE)
+#  user_disabled_at                  :datetime
+#  admin_disabled_at                 :datetime
 #
 

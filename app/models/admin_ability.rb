@@ -28,21 +28,22 @@ class AdminAbility
     # Rules for moderator user.
     if user.role? :moderator # TODO Bryan, Review all these rules -MO
       can [:read], ActiveAdmin::Dashboards::DashboardController
-      can [:read, :suspend, :reinstate, :reset_password], User
+      can [:read, :disable, :reinstate, :reset_password], User
       can [:read], UserProfile
       can [:read], Community
       can [:read, :destroy, :delete_question], CustomForm
       cannot [:destroy], CustomForm do |custom_form|
-        false # custom_form.application_form? # TODO Mike, Fix me.
+        custom_form.application_form?
       end
       can [:read, :delete_predefined_answer, :destroy], Question
       can [:read, :destroy, :update], PageSpace
       can [:read, :destroy], Page
       can [:read], DiscussionSpace
       can [:update, :destroy], DiscussionSpace do |space|
-        space.is_announcement != true
+        space.is_announcement_space != true
       end
       can [:read, :destroy, :remove_comment], Discussion
+      can [:read, :update], SupportedGame
       can [:read], SwtorCharacter
       can [:read], WowCharacter
       can [:update_account, :edit_account], AdminUser do |admin_user|
@@ -50,17 +51,24 @@ class AdminAbility
       end
     end
 
-    # Rules for admin user. (Inherits rules for moderator).
+    # Rules for admin user. (Inherits rules from moderator).
     if user.role? :admin # TODO Bryan, Review all these rules -MO
-      can [:destroy, :reset_all_passwords, :sign_out_all_users], User
+      can [:nuke, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
       can [:destroy], Community
+      can [:destroy], SupportedGame
+      can [:read, :create, :update], [Wow, 'Wow']
+      can [:read, :create, :update], [Swtor, 'Swtor']
       can [:toggle_maintenance_mode], SiteActionController
     end
 
-    # Rules for superadmin user. (Inherits rules for admin).
+    # Rules for superadmin user. (Inherits rules from admin).
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
+      can [:read, :create, :view_document], [Document, 'Document']
+      can [:update], Document do |document|
+        not Document.find(document).is_published
+      end
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser
       cannot [:update_account, :edit_account], AdminUser do |admin_user|

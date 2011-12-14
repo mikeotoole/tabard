@@ -7,7 +7,7 @@
 #  body              :text
 #  author_id         :integer
 #  number_recipients :integer
-#  system_sent       :boolean         default(FALSE)
+#  is_system_sent    :boolean         default(FALSE)
 #  created_at        :datetime
 #  updated_at        :datetime
 #
@@ -33,8 +33,8 @@ describe Message do
     build(:message, :to => nil).should_not be_valid
   end
   
-  it "should set system_sent to false by default" do
-    message.system_sent.should be_false
+  it "should set is_system_sent to false by default" do
+    message.is_system_sent.should be_false
   end
   
   it "should respond to message_associations" do
@@ -63,10 +63,10 @@ describe Message do
     Message.find(message).author.should eq(org_author)
   end
   
-  it "should not allow mass assignment of system_sent" do
-    message.system_sent.should be_false
-    message.update_attributes(:system_sent => true)
-    Message.find(message).system_sent.should be_false
+  it "should not allow mass assignment of is_system_sent" do
+    message.is_system_sent.should be_false
+    message.update_attributes(:is_system_sent => true)
+    Message.find(message).is_system_sent.should be_false
   end
   
   it "should create a message_association for all users the message is to" do
@@ -89,7 +89,7 @@ describe Message do
     end
   end
   
-  it "should destroy all message associations when message is deleted" do
+  it "should destroy all message associations when message is_removed" do
     message
     countMessageAss = MessageAssociation.all.count
     countMessage = Message.all.count

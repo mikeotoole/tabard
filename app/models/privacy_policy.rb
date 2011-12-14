@@ -6,24 +6,36 @@
 # This class represents a PrivacyPolicy Document.
 ###
 class PrivacyPolicy < Document
-  after_save :reset_user_acceptance
+###
+# Public Methods
+###
+  ###
+  # Gets the current Privacy Policy
+  ###
+  def self.current
+    PrivacyPolicy.find(:first, :conditions => { :is_published => true })
+  end
 
-  # Sets a user's acceptance of the Privacy Policy to false
-  def reset_user_acceptance
-    if self == PrivacyPolicy.first
-      User.update_all(:accepted_current_privacy_policy => false)
-    end
+  ###
+  # [Returns] true if this is the current Privacy Policy, false otherwise.
+  ###
+  def is_current?
+    self.id == PrivacyPolicy.current.id
   end
 end
+
+
+
 # == Schema Information
 #
 # Table name: documents
 #
-#  id         :integer         not null, primary key
-#  type       :string(255)
-#  body       :text
-#  version    :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer         not null, primary key
+#  type         :string(255)
+#  body         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  version      :integer
+#  is_published :boolean         default(FALSE)
 #
 

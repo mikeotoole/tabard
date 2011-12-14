@@ -18,4 +18,11 @@ en:
         community:
           attributes:
             name:
-              community_name: "is too similar to an existing community"
+              existing_name: "is too similar to an existing community"
+              restricted_name: "is not allowed for a community"
+              profanity: "is not allowed"
+              restriced: "is not allowed"  
+        user_profile:
+          attributes:
+            display_name:
+              restriced: "is not allowed"

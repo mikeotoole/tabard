@@ -18,6 +18,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #storage :file
   storage :fog
 
+  process :convert => 'png'
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -29,15 +31,20 @@ class AvatarUploader < CarrierWave::Uploader::Base
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
     when :large
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
+      'application/avatar@240.png'
     when :small
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
+      'application/avatar@60.png'
     when :tiny
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
+      'application/avatar@40.png'
     when :icon
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
+      'application/avatar@20.png'
     else
-      "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
+      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
+      'application/blank.gif'
     end
   end
 
@@ -73,8 +80,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def filename
+    "avatar.png" if original_filename
+  end
 
 end

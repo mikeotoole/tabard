@@ -11,16 +11,11 @@ class Subdomains::CommentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :authenticate_user!
+  before_filter :block_unauthorized_user!
   before_filter :create_comment, :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
-
-###
-# After Filters
-###
-  skip_after_filter :remember_current_page
 
 ###
 # REST Actions
@@ -53,13 +48,7 @@ class Subdomains::CommentsController < SubdomainsController
 
   # DELETE /comments/1
   def destroy
-    if @comment.comments.empty?
-      success = @comment.destroy
-    else
-      @comment.has_been_deleted = true;
-      success = @comment.save
-    end
-    render :json => success ? true : false
+    render :json => @comment.destroy ? true : false
   end
 
 ###
@@ -67,13 +56,13 @@ class Subdomains::CommentsController < SubdomainsController
 ###
   # POST /comments/:id/lock(.:format)
   def lock
-    @comment.has_been_locked = true
+    @comment.is_locked = true
     render :json => @comment.save ? true : false
   end
 
   # POST /comments/:id/unlock(.:format)
   def unlock
-    @comment.has_been_locked = false
+    @comment.is_locked = false
     if @comment.save
       render :partial => 'comment', :locals => { :comment => @comment }
     else

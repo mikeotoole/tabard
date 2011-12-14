@@ -15,7 +15,7 @@ class TextQuestion < Question
 ###
 # Validators
 ###
-  validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported text question style"}
+  #validates :style, :inclusion => {:in => VALID_STYLES, :message => "%{value} is not a currently supported text question style"}
 end
 
 
@@ -32,6 +32,6 @@ end
 #  created_at     :datetime
 #  updated_at     :datetime
 #  explanation    :string(255)
-#  required       :boolean         default(FALSE)
+#  is_required    :boolean         default(FALSE)
 #
 

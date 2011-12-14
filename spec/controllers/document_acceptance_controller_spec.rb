@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DocumentAcceptanceController do
-  let(:privacy_policy) { create(:privacy_policy, :version => "9") }
+  let(:privacy_policy) { create(:privacy_policy) }
   let(:user) { DefaultObjects.user }
 
   describe "GET 'new'" do
@@ -14,15 +14,15 @@ describe DocumentAcceptanceController do
   end
 
   describe "POST 'create'" do
-    it "redirects_to user_root_path, if user accepts" do
+    it "redirects_to user_root_url, if user accepts" do
       sign_in user
       post :create, :id => privacy_policy, :accept => true
-      response.should redirect_to(user_root_path)
+      response.should redirect_to(user_root_url)
     end
-    it "redirects if they hava already accepted it" do
+    it "redirects if they have already accepted it" do
       sign_in user
       post :create, :id => privacy_policy
-      response.should redirect_to(accept_document_path(privacy_policy))
+      response.should redirect_to(accept_document_url(privacy_policy))
     end
   end
 

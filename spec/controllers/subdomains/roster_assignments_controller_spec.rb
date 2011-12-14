@@ -33,7 +33,7 @@ describe Subdomains::RosterAssignmentsController do
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
-    community.update_attribute(:public_roster, false)
+    community.update_attribute(:is_public_roster, false)
     @request.host = "#{community.subdomain}.example.com"
   end
   
@@ -52,7 +52,78 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'index'
+      response.should redirect_to(new_user_session_url)
+    end
+  end
+
+  describe "GET 'show'" do
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show', :id => roster_assignment
+        assert_response :missing
+      end
+    end
+  end
+
+  describe "GET 'new'" do
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get 'new'
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get 'new'
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'new'
+        assert_response :missing
+      end
+    end
+  end
+
+  describe "GET 'edit'" do
+    it "should be unauthorized when authenticated as a non-owner" do
+      sign_in user
+      get 'edit', :id => roster_assignment
       response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as an owner" do
+      sign_in admin_user
+      get 'edit', :id => roster_assignment
+      response.should be_success
+    end
+
+    it "shouldn't be successful when not authenticated as a user" do
+      get 'edit', :id => roster_assignment
+      response.should redirect_to(new_user_session_url)
+    end
+
+    it "should render roster_assignments/new template" do
+      sign_in admin_user
+      get 'edit', :id => roster_assignment
+      response.should render_template('roster_assignments/edit')
     end
   end
 
@@ -76,14 +147,14 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
   describe "PUT 'update' when authenticated as a non-owner" do
     before(:each) do
       sign_in user
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should change attributes" do
@@ -98,25 +169,25 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'update' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should change attributes" do
-      assigns[:roster_assignment].pending.should be_false
+      assigns[:roster_assignment].is_pending.should be_false
     end
 
     it "should redirect to new community" do
-      response.should redirect_to(roster_assignment_path(assigns[:roster_assignment]))
+      response.should redirect_to(roster_assignment_url(assigns[:roster_assignment]))
     end
   end
 
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
-      put 'update', :id => roster_assignment, :roster_assignment => { :pending => false }
+      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -128,7 +199,7 @@ describe Subdomains::RosterAssignmentsController do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_false
-      response.should redirect_to(my_roster_assignments_path)
+      response.should redirect_to(my_roster_assignments_url)
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user
@@ -139,7 +210,7 @@ describe Subdomains::RosterAssignmentsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
   
@@ -155,29 +226,29 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'approve' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
       put 'approve', :id => roster_assignment
     end
 
     it "become approved" do
-      assigns[:roster_assignment].pending.should be_false
+      assigns[:roster_assignment].is_pending.should be_false
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_path)
+      response.should redirect_to(pending_roster_assignments_url)
     end
   end
   
   describe "PUT 'batch_approve'" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment2.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment2.update_attribute(:is_pending, true)
     end
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user
       put :batch_approve, :ids => roster_assignment_id_array
-      RosterAssignment.find_by_id(roster_assignment).pending.should be_false
-      RosterAssignment.find_by_id(roster_assignment2).pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment).is_pending.should be_false
+      RosterAssignment.find_by_id(roster_assignment2).is_pending.should be_false
     end
     it "should be forbidden when authenticated as member" do
       sign_in billy
@@ -189,7 +260,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'reject' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
       put 'reject', :id => roster_assignment
     end
 
@@ -198,14 +269,14 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_path)
+      response.should redirect_to(pending_roster_assignments_url)
     end
   end
   
   describe "PUT 'batch_reject'" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment2.update_attribute(:pending, true)
+      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment2.update_attribute(:is_pending, true)
     end
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user
@@ -235,7 +306,7 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'pending'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 

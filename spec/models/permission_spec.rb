@@ -13,6 +13,10 @@
 #  can_accept                     :boolean         default(FALSE)
 #  parent_association_for_subject :string(255)
 #  id_of_parent                   :integer
+#  can_read                       :boolean         default(FALSE)
+#  can_create                     :boolean         default(FALSE)
+#  can_update                     :boolean         default(FALSE)
+#  can_destroy                    :boolean         default(FALSE)
 #
 
 require 'spec_helper'

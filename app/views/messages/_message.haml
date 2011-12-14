@@ -11,10 +11,10 @@
       - if mailbox_view_state == 'trash'
         = link_to '✖ Delete', mail_delete_path(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete forever'
       - elsif mailbox_view_state != 'sent'
-        = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
+        = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
 
     %h2
-      - if message.system_sent
+      - if message.is_system_sent
         %strong Notification:
       - else
         From:
@@ -43,5 +43,8 @@
             %span= profile.name
 
   %article
-    :markdown
-      #{message.body}
+    - if message.is_system_sent # I found an XSS attack that :mardown is venerable to. For now we will only allow it on system sent messages.
+      :markdown
+        #{message.body}
+    - else
+      = message.body

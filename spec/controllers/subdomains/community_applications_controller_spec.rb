@@ -43,7 +43,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -74,7 +74,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => community_application
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -93,14 +93,35 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
   describe "GET 'edit'" do
-    it "should throw routing error" do
+    it "should throw routing error when a generic user" do
       assert_raises(ActionController::RoutingError) do
-        get 'edit'
+        sign_in generic_user
+        get 'edit', :id => community_application
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when a owner" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in applicant_user
+        get 'edit', :id => community_application
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in community_admin_user
+        get 'edit', :id => community_application
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get 'edit', :id => community_application
         assert_response :missing
       end
     end
@@ -120,8 +141,8 @@ describe Subdomains::CommunityApplicationsController do
       assigns[:community_application].user_profile.should eq(applicant_user.user_profile)
     end
 
-    it "should redirect to community root" do
-      response.should redirect_to(root_url(:subdomain => community.subdomain))
+    it "should redirect to thank you" do
+      response.should redirect_to(custom_form_thankyou_url(assigns[:community_application].custom_form))
     end
   end
   
@@ -141,17 +162,108 @@ describe Subdomains::CommunityApplicationsController do
       post 'create', :community_application => community_application_attr
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 
   describe "PUT 'update'" do
-    it "should throw routing error" do
+    it "should throw routing error when a generic user" do
       assert_raises(ActionController::RoutingError) do
-        put 'update'
+        sign_in generic_user
+        put 'update', :id => community_application
         assert_response :missing
       end
     end
+    it "should throw routing error when a owner" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in applicant_user
+        put 'update', :id => community_application
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in community_admin_user
+        put 'update', :id => community_application
+        assert_response :missing
+      end
+    end
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        put 'update', :id => community_application
+        assert_response :missing
+      end
+    end
+  end
+
+  describe "PUT 'accept'" do
+    it "should be forbidden for generic user" do
+      sign_in generic_user
+      post 'accept', :id => community_application
+      response.should be_forbidden
+    end
+    it "should be forbidden for applicant" do
+      sign_in applicant_user
+      post 'accept', :id => community_application
+      response.should be_forbidden
+    end
+    it "should be forbidden for anon" do
+      post 'accept', :id => community_application
+      response.should redirect_to(new_user_session_url)
+    end
+    describe "community admin" do
+      before(:each) do
+        sign_in community_admin_user
+        post 'accept', :id => community_application
+        community_application.reload
+        applicant_user.reload
+      end
+      it "should be successful" do
+        response.should redirect_to(community_application_url(community_application))
+      end
+      it "should make the applicant a member" do
+        applicant_user.is_member?(community).should be_true
+      end
+      it "should make the application not pending" do
+        community_application.is_pending?.should be_false
+      end
+    end
+  end
+
+  describe "PUT 'reject'" do
+    it "should be forbidden for generic user" do
+      sign_in generic_user
+      post 'reject', :id => community_application
+      response.should be_forbidden
+    end
+    it "should be forbidden for applicant" do
+      sign_in applicant_user
+      put 'reject', :id => community_application
+      response.should be_forbidden
+    end
+    it "should be forbidden for anon" do
+      put 'reject', :id => community_application
+      response.should redirect_to(new_user_session_url)
+    end
+    describe "community admin" do
+      before(:each) do
+        sign_in community_admin_user
+        post 'reject', :id => community_application
+        community_application.reload
+        applicant_user.reload
+      end
+      it "should be successful" do
+        response.should redirect_to(community_application_url(community_application))
+      end
+      it "should not make the applicant a member" do
+        applicant_user.is_member?(community).should be_false
+      end
+      it "should make the application not pending" do
+        community_application.reload
+        community_application.is_pending?.should be_false
+      end
+    end
+
   end
 
   describe "DELETE 'destroy'" do 
@@ -162,7 +274,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
-      response.should redirect_to(community_application_path)
+      response.should redirect_to(community_application_url)
       CommunityApplication.find(@community_application).withdrawn?.should be_true
     end
     
@@ -176,7 +288,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
       CommunityApplication.exists?(@community_application).should be_true
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

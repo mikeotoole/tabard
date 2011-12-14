@@ -14,11 +14,11 @@ class CommunityProfile < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
-  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => false}
+  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => false}
   has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
-  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:pending => true}
+  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => true}
   has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
-  has_many :roster_assignments
+  has_many :roster_assignments, :dependent => :destroy
   has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
 
 ###
@@ -26,7 +26,7 @@ class CommunityProfile < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => :community_id}
+  validates :user_profile_id, :uniqueness => {:scope => :community_id}, :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
 
 ###
@@ -34,6 +34,7 @@ class CommunityProfile < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :id, :to => :user_profile, :prefix => true
+  delegate :name, :to => :community, :prefix => true
 
 ###
 # Public Methods
@@ -69,7 +70,9 @@ class CommunityProfile < ActiveRecord::Base
   #   * +role+ -> The role being removed from the collection.
   ###
   def ensure_that_member_role_stays(role)
-    raise InvalidCollectionRemoval.new("You can't remove the member role.") if role == self.community.member_role
+    if not self.user_profile.disabled and role == self.community.member_role
+      raise InvalidCollectionRemoval.new("You can't remove the member role.")
+    end
   end
 end
 

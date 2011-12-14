@@ -6,10 +6,14 @@
 # This class represents an application to a community.
 ###
 class CommunityApplication < ActiveRecord::Base
+
+include Rails.application.routes.url_helpers
+
 ###
 # Attribute accessible
 ###
   attr_accessible :submission_attributes, :character_proxy_ids
+
 ###
 # Constants
 ###
@@ -22,6 +26,7 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   belongs_to :submission
+  belongs_to :status_changer, :class_name => "UserProfile"
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
   has_many :comments, :as => :commentable, :dependent => :destroy
@@ -75,8 +80,12 @@ class CommunityApplication < ActiveRecord::Base
   def message_community_admin
     # TODO Doug/Bryan, Determine what message content should be.
     if self.community.email_notice_on_application
-      message = Message.new(:subject => "Application Submitted for #{self.community.name}", :body => "#{self.user_profile.name} has submitted an application.", :to => [self.community.admin_profile_id])
-      message.system_sent = true
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
+
+      message = Message.new(:subject => "Application Submitted for #{self.community.name}",
+                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})",
+                            :to => [self.community.admin_profile_id])
+      message.is_system_sent = true
       message.save
     end
   end
@@ -85,29 +94,39 @@ class CommunityApplication < ActiveRecord::Base
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application
-    return false unless self.pending?
+  def accept_application(accepted_by_user_profile)
+    return false if self.accepted?
     self.update_attribute(:status, "Accepted")
+    self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    self.character_proxies.each do |proxy|
-      RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy) # TODO ??????
-    end
-    # TODO Doug/Bryan, Determine what message content should be.
-    message = Message.new(:subject => "Application Accepted", :body => "Your application to #{self.community.name} has been accepted.", :to => [self.user_profile.id])
-    message.system_sent = true
+    # TODO Doug/Bryan, Determine what message content should be. subdomain_home
+    message = Message.new(:subject => "Application Accepted",
+                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
+                          :to => [self.user_profile.id])
+    message.is_system_sent = true
     message.save
+    self.character_proxies.each do |proxy|
+      if self.community.is_protected_roster
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
+      else
+        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
+      end
+    end
   end
 
   ###
   # This method rejects this application.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def reject_application
-    return false unless self.pending?
+  def reject_application(rejected_by_user_profile)
+    return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
+    self.update_attribute(:status_changer, rejected_by_user_profile)
     # TODO Doug/Bryan, Determine what message content should be.
-    message = Message.new(:subject => "Application Rejected", :body => "Your application to #{self.community.name} has been rejected.", :to => [self.user_profile.id])
-    message.system_sent = true
+    message = Message.new(:subject => "Application Rejected",
+                          :body => "Your application to #{self.community.name} has been rejected.",
+                          :to => [self.user_profile.id])
+    message.is_system_sent = true
     message.save
   end
 
@@ -116,12 +135,12 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def withdraw
-    return false unless self.pending?
+    return false unless self.is_pending?
     self.update_attribute(:status, "Withdrawn")
   end
 
   # This method returns true if this application's status is pending, otherwise false
-  def pending?
+  def is_pending?
     self.status == "Pending"
   end
 
@@ -169,16 +188,18 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: community_applications
 #
-#  id              :integer         not null, primary key
-#  community_id    :integer
-#  user_profile_id :integer
-#  submission_id   :integer
-#  status          :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                :integer         not null, primary key
+#  community_id      :integer
+#  user_profile_id   :integer
+#  submission_id     :integer
+#  status            :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  status_changer_id :integer
 #
 

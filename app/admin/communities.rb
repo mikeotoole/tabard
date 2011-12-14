@@ -1,5 +1,5 @@
 ActiveAdmin.register Community do
-  menu :if => proc{ can?(:read, Community) }
+  menu :parent => "Community", :if => proc{ can?(:read, Community) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -8,8 +8,8 @@ ActiveAdmin.register Community do
   filter :name
   filter :slogan
   filter :created_at
-  filter :protected_roster, :as => :select
-  filter :accepting_members, :as => :select
+  filter :is_protected_roster, :as => :select
+  filter :is_accepting_members, :as => :select
   filter :email_notice_on_application, :as => :select
 
   index do
@@ -51,8 +51,11 @@ ActiveAdmin.register Community do
 
     div do
       panel("Supported Games") do
-        table_for(community.games) do
-          column :name
+        table_for(community.supported_games) do
+          column "Name" do |supported_game|
+            link_to supported_game.name, [:admin, supported_game]
+          end
+          column :game_name
         end
       end
     end

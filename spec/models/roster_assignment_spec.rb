@@ -5,7 +5,7 @@
 #  id                   :integer         not null, primary key
 #  community_profile_id :integer
 #  character_proxy_id   :integer
-#  pending              :boolean         default(TRUE)
+#  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
 #
@@ -19,9 +19,9 @@ describe RosterAssignment do
     roster_assignment.should be_valid
   end
   
-  describe "pending" do
+  describe "is_pending" do
     it "should be true by default" do
-      build(:roster_assignment).pending.should be_true
+      build(:roster_assignment).is_pending.should be_true
     end
   end
 
@@ -45,21 +45,37 @@ describe RosterAssignment do
 
   describe "approve" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment.approve
+      roster_assignment.update_attribute(:is_pending, true)
     end
+    
     it "should remove the pending status" do
-      RosterAssignment.find(roster_assignment).pending.should be_false
+      roster_assignment.approve
+      RosterAssignment.find(roster_assignment).is_pending.should be_false
+    end
+    
+    it "should send message to user" do
+      expect {
+        roster_assignment.approve
+      }.to change(Message, :count).by(1)
+      Message.first.subject.should eql "Character Accepted"
     end
   end
 
   describe "reject" do
     before(:each) do
-      roster_assignment.update_attribute(:pending, true)
-      roster_assignment.reject
+      roster_assignment.update_attribute(:is_pending, true)
     end
+    
     it "should remove the roster assignment" do
+      roster_assignment.reject
       RosterAssignment.exists?(roster_assignment).should be_false
+    end
+    
+    it "should send message to user" do
+      expect {
+        roster_assignment.reject
+      }.to change(Message, :count).by(1)
+      Message.first.subject.should eql "Character Rejected"
     end
   end
 end

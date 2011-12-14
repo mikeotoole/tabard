@@ -1,0 +1,7 @@
+production:
+  ssl: true
+  monitor_mode: true
+  license_key: <%= ENV["NEW_RELIC_LICENSE_KEY"] %>
+  developer_mode: false
+  app_name: <%= ENV["NEW_RELIC_APP_NAME"] %>
+  log_level: info

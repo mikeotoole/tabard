@@ -1,5 +1,5 @@
 class AddLockAndApprovePermissions < ActiveRecord::Migration
-  def up	
+  def up
     add_column :permissions, :can_lock, :boolean, :default => false
     add_column :permissions, :can_accept, :boolean, :default => false
     remove_column :permissions, :action

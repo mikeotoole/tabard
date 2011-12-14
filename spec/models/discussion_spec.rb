@@ -8,11 +8,9 @@
 #  discussion_space_id :integer
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
-#  comments_enabled    :boolean         default(TRUE)
-#  has_been_locked     :boolean         default(FALSE)
+#  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  is_archived         :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -74,13 +72,15 @@ describe Discussion do
   end
   
   it "number_of_comments should return the total number of comments attached" do
+    comment = create(:comment, :commentable_id => discussion.id)
     comment.number_of_comments.should eq(1)
-    leafComment = create(:comment)
-    nodeComment = create(:comment)
-    nodeComment.comments << leafComment
+    nodeComment = FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment")
     comment.comments << nodeComment
+    comment.number_of_comments.should eq(2)
+    leafComment = FactoryGirl.create(:comment, :commentable_id => nodeComment.id, :commentable_type => "Comment")
+    nodeComment.comments << leafComment
+    nodeComment.number_of_comments.should eq(2)
     comment.number_of_comments.should eq(3)
-    discussion.comments << comment
     discussion.number_of_comments.should eq(3)
   end
 
@@ -107,15 +107,6 @@ describe Discussion do
   
   it "should respond to view_logs" do
     discussion.should respond_to(:view_logs)
-  end
-  
-  it "should respond to is_archived" do
-    discussion.should respond_to(:is_archived)
-  end
-  
-  it "should not allow access to is_archived flag" do
-    discussion.update_attributes(:is_archived => true).should be_true
-    Discussion.find(discussion).is_archived.should be_false
   end
 
   describe "character_is_valid_for_user_profile" do

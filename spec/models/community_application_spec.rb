@@ -2,13 +2,14 @@
 #
 # Table name: community_applications
 #
-#  id              :integer         not null, primary key
-#  community_id    :integer
-#  user_profile_id :integer
-#  submission_id   :integer
-#  status          :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                :integer         not null, primary key
+#  community_id      :integer
+#  user_profile_id   :integer
+#  submission_id     :integer
+#  status            :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  status_changer_id :integer
 #
 
 require 'spec_helper'
@@ -61,13 +62,13 @@ describe CommunityApplication do
 
     it "should be set to pending automatically" do
       community_application.status.should eq("Pending")
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should allow the pending status" do
       community_application.status = "Pending"
       community_application.valid?.should be_true
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should allow the accepted status" do
@@ -92,16 +93,16 @@ describe CommunityApplication do
   describe "accept_application" do
     before(:each) do
       community_application.user_profile.is_member?(community).should be_false
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should make the applicant a member of the community" do
-      community_application.accept_application.should be_true
+      community_application.accept_application(community.admin_profile).should be_true
       community_application.user_profile.is_member?(community).should be_true
     end
 
     it "should automaticaly add and approve the characters used for the application" do
-      community_application.accept_application.should be_true
+      community_application.accept_application(community.admin_profile).should be_true
       community_profile = user_profile.community_profiles.where(:community == community).first
       community_application.character_proxies.each do |proxy|
         community_profile.approved_character_proxies.include?(proxy).should be_true
@@ -110,53 +111,63 @@ describe CommunityApplication do
     end
 
     it "should set the application to the accepted status" do
-      community_application.accept_application.should be_true
+      community_application.accept_application(community.admin_profile).should be_true
       community_application.accepted?.should be_true
     end
 
     it "should should not work if the application is not pending" do
-      community_application.accept_application.should be_true
-      community_application.pending?.should be_false
-      community_application.accept_application.should be_false
+      community_application.accept_application(community.admin_profile).should be_true
+      community_application.is_pending?.should be_false
+      community_application.accept_application(community.admin_profile).should be_false
     end
     
     it "should send a message to the applicant" do
       #Message.all.count.should eq(0)
-      community_application.accept_application.should be_true
+      community_application.accept_application(community.admin_profile).should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.system_sent.should be_true
+      Message.first.is_system_sent.should be_true
       Message.first.author.should be_nil
+    end
+    
+    it "should set status_changer" do
+      community_application.accept_application(community.admin_profile).should be_true
+      community_application.status_changer.should eql community.admin_profile
     end
   end
 
   describe "reject_application" do
     before(:each) do
       community_application.user_profile.is_member?(community).should be_false
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
     end
 
     it "should not make the applicant a member of the community" do
-      community_application.reject_application.should be_true
+      community_application.reject_application(community.admin_profile).should be_true
       community_application.user_profile.is_member?(community).should be_false
     end
 
     it "should set the application to the rejected status" do
-      community_application.reject_application.should be_true
+      community_application.reject_application(community.admin_profile).should be_true
       community_application.rejected?.should be_true
     end
 
     it "should should not work if the application is not pending" do
-      community_application.reject_application.should be_true
-      community_application.pending?.should be_false
-      community_application.reject_application.should be_false
+      community_application.reject_application(community.admin_profile).should be_true
+      community_application.is_pending?.should be_false
+      community_application.reject_application(community.admin_profile).should be_false
     end
     
     it "should send a message to the applicant" do
       #Message.all.count.should eq(0)
-      community_application.reject_application.should be_true
+      community_application.reject_application(community.admin_profile).should be_true
       Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.system_sent.should be_true
+      Message.first.is_system_sent.should be_true
       Message.first.author.should be_nil
+    end
+    
+    it "should set status_changer" do
+      community_application.reject_application(community.admin_profile).should be_true
+      community_application.status_changer.should eql community.admin_profile
     end
   end
 
@@ -166,19 +177,19 @@ describe CommunityApplication do
     end
 
     it "should allow withdrawl if pending" do
-      community_application.pending?.should be_true
+      community_application.is_pending?.should be_true
       community_application.withdraw.should be_true
       community_application.withdrawn?.should be_true
     end
 
     it "should not allow withdrawl if accepted" do
-      community_application.accept_application.should be_true
+      community_application.accept_application(community.admin_profile).should be_true
       community_application.withdraw.should be_false
       community_application.withdrawn?.should be_false
     end
 
     it "should not allow withdrawl if rejected" do
-      community_application.reject_application.should be_true
+      community_application.reject_application(community.admin_profile).should be_true
       community_application.withdraw.should be_false
       community_application.withdrawn?.should be_false
     end

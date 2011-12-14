@@ -1,9 +1,9 @@
 - title "Community Application | #{current_community.name}"
 = javascript_include_tag "comments"
 
-.community_application
+.submission
   .sidebar
-    .applicant
+    .submitter
       %h2 Applicant
       %a{ :href => user_profile_url(@community_application.user_profile, :subdomain => false) }
         = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
@@ -24,12 +24,16 @@
         - @community_application.submission.answers.each do |answer|
           %dt= answer.question_body
           %dd= answer.body
-  %p.submit
-    - if can? :accept, @community_application and @community_application.pending?
-      = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
-    - if can? :reject, @community_application and @community_application.pending?
-      = link_to 'Reject', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you wat to reject #{@community_application.user_profile_display_name}'s application?"
-
+  - if not @community_application.accepted?
+    %p.submit
+      - if can? :accept, @community_application
+        = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
+      - if not @community_application.rejected? and can? :reject, @community_application
+        = link_to 'Reject', reject_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
+  - if not @community_application.is_pending? # TODO Doug, Fix this part of view. -MO
+    %h3
+      = "#{@community_application.status} by "
+      = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
   - if @community_application.comments.size > 0 or can? :comment, @community_application
     %h2.comments Comments
     %aside.comments

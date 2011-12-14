@@ -6,7 +6,7 @@
       = f.input :name
 
   - if @role.persisted?
-  
+
     %h2 Permissions
 
     %table
@@ -31,7 +31,7 @@
           %td{ :colspan => 6 }
             = link_to "Add Permission", new_role_permission_path(@role), :remote => true, 'data-type' => :text, :class => 'button new'
 
-    - unless @role.system_generated
+    - unless @role.is_system_generated
       %h2 Users
       - if current_community.user_profiles.size > 0
         %fieldset#usercheckboxes

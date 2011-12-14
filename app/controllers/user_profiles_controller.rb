@@ -11,7 +11,7 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :block_unauthorized_user!, :except => [:show]
   before_filter :set_current_user_as_profile, :only => [:index, :account]
   load_and_authorize_resource
   skip_authorize_resource :only => :account
@@ -23,12 +23,10 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1
   def show
-
   end
 
   # GET /user_profiles/1/edit
   def edit
-
   end
 
   # PUT /user_profiles/1

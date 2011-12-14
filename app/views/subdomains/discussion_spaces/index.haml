@@ -2,4 +2,10 @@
 
 %h1 Discussion Spaces
 
-= render "table", :discussion_spaces => @discussion_spaces
+- if @discussion_spaces.any?
+  = render "table", :discussion_spaces => @discussion_spaces
+
+-else
+  %p There are no discussion spaces.
+  - if can? :create, current_community.discussion_spaces.new
+    %p= link_to 'New Space', new_discussion_space_path, :class => 'button'

@@ -16,7 +16,7 @@
           %td.actions
             %div
               - if (can? :update, role)
-                = link_to 'Edit', edit_role_path(role), :class => 'edit', :meta => (role.system_generated ? 'Edit permissions' : 'Edit users and permissions')
+                = link_to 'Edit', edit_role_path(role), :class => 'edit', :meta => (role.is_system_generated ? 'Edit permissions' : 'Edit users and permissions')
               - if (can? :destroy, role)
                 = link_to 'Delete', role, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete this role'
   %tfoot

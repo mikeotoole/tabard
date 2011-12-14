@@ -2,43 +2,80 @@
 #
 # Table name: swtor_characters
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  server     :string(255)
-#  game_id    :integer
-#  avatar     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id             :integer         not null, primary key
+#  name           :string(255)
+#  swtor_id       :integer
+#  avatar         :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  char_class     :string(255)
+#  advanced_class :string(255)
+#  species        :string(255)
+#  level          :string(255)
+#  about          :string(255)
 #
 
 require 'spec_helper'
 
 describe SwtorCharacter do
-  let(:swtor_character) { Factory.create(:swtor_character) }
+  let(:swtor_character) { create(:swtor_character) }
+  let(:empire_game) { DefaultObjects.swtor }
+  let(:republic_game) { create(:swtor, :faction => "Republic") }
 
   it "should create a new instance given valid attributes" do
     swtor_character.should be_valid
   end
+
+  describe "char_class" do
+    it "should be required" do
+      build(:swtor_character, :char_class => nil).should_not be_valid
+    end
+
+    it "should validate char_class exists for faction" do
+      build(:swtor_character, :char_class => "Not a class").should_not be_valid
+      build(:swtor_character, :swtor => empire_game, :char_class => "Jedi Knight").should_not be_valid
+      build(:swtor_character, :swtor => republic_game, :char_class => "Sith Warrior").should_not be_valid
+    end
+  end
+
+  describe "advanced_class" do
+    it "should be required" do
+      build(:swtor_character, :advanced_class => nil).should_not be_valid
+    end
+    
+    it "should validate advanced_class exists for char_class" do
+      build(:swtor_character, :advanced_class => "Not an advanced class").should_not be_valid
+      build(:swtor_character, :swtor => empire_game, :char_class => "Sith Warrior", :advanced_class => "Powertech").should_not be_valid
+    end
+  end
+
+  describe "species" do
+    it "should be required" do
+       build(:swtor_character, :species => nil).should_not be_valid
+    end
+    
+    it "should validate species exists for advanced_class" do
+      build(:swtor_character, :species => "Not a species").should_not be_valid
+      build(:swtor_character, :swtor => empire_game, :char_class => "Sith Warrior", :advanced_class => "Juggernaut", :species => "Rattataki").should_not be_valid
+    end
+  end
   
   describe "game" do 
     it "should return swtor game" do
-      swtor_character.game.type.should eq("Swtor")
+      swtor_character.game.should be_a(Swtor)
     end
     
     it "should be required" do
-      Factory.build(:swtor_character, :game => nil).should_not be_valid
       Factory.build(:swtor_character, :swtor => nil).should_not be_valid
     end
     
     it "should reject non-Swtor type game" do
-      Factory.build(:swtor_character, :game => DefaultObjects.wow).should_not be_valid
       assert_raises(ActiveRecord::AssociationTypeMismatch) do
         Factory.build(:swtor_character, :swtor => DefaultObjects.wow)
       end
     end
     
     it "should accept Swtor type game" do
-      Factory.build(:swtor_character, :game => DefaultObjects.swtor).should be_valid
       Factory.build(:swtor_character, :swtor => DefaultObjects.swtor).should be_valid
     end
   end

@@ -17,10 +17,14 @@ source 'http://rubygems.org'
   gem 'cancan'
 
 # Caching
+  gem 'dalli'
 
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
+  
+# Filtering
+  gem 'profanalyzer'  
 
 # Markup
   gem 'rdiscount'
@@ -33,6 +37,16 @@ source 'http://rubygems.org'
 
 # Admin Portal
   gem 'activeadmin'
+  gem 'meta_search'
+
+# Asset Specific Gems, Pulled out of Group for Activeadmin
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+  
+  group :assets do
+
+  end
 
 # Production Specific Gems
   group :production do
@@ -40,20 +54,6 @@ source 'http://rubygems.org'
     gem 'thin'
     gem 'pg'
     gem 'newrelic_rpm'
-  end
-
-# Asset Specific Gems
-  group :assets do
-    gem 'sass-rails'
-    gem 'coffee-rails'
-    gem 'uglifier'
-  end
-
-# Development and Test Specific Gems
-  group :development, :test do
-    gem 'sqlite3'
-    gem 'rspec-rails'
-    gem 'factory_girl_rails'
   end
 
 # Development Specific Gems
@@ -64,11 +64,18 @@ source 'http://rubygems.org'
     gem 'timecop'
   end
 
+# Development and Test Specific Gems
+  group :development, :test do
+    gem 'sqlite3'
+    gem 'rspec-rails'
+    gem 'factory_girl_rails'
+  end
+
 # Test Specific Gems
   group :test do
     gem 'capybara'
     gem 'database_cleaner'
-    gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+    gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
     gem 'growl_notify'

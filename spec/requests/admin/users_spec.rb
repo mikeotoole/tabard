@@ -6,6 +6,7 @@ describe "ActiveAdmin User" do
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
   let(:user_2) { DefaultObjects.fresh_user_profile.user }
+  let(:community_admin) { DefaultObjects.community_admin }
  
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do
@@ -109,25 +110,97 @@ describe "ActiveAdmin User" do
     end  
   end
 
-  describe "#destroy" do
+  describe "#nuke" do
     it "deletes user when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.delete("/admin/users/#{user.id}")
+      page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_false
+    end
+    
+    it "deletes users discussions when logged in as superadmin" do
+      login_as superadmin
+      community_admin.user_profile.discussions << create(:discussion)
+      discussions = community_admin.user_profile.discussions
+      page.driver.delete("/admin/users/#{community_admin.id}/nuke")
+      User.exists?(community_admin).should be_false
+      
+      discussions.should_not be_empty
+      discussions.each do |discussion|
+        Discussion.exists?(discussion).should be_false
+      end
     end 
+
+    it "deletes users comments when logged in as superadmin" do
+      login_as superadmin
+      community_admin.user_profile.comments << create(:comment)
+      comments = community_admin.user_profile.comments
+      page.driver.delete("/admin/users/#{community_admin.id}/nuke")
+      User.exists?(community_admin).should be_false
+      
+      comments.should_not be_empty
+      comments.each do |comment|
+        Comment.exists?(comment).should be_false
+      end
+    end
+
+    it "deletes users character_proxies when logged in as superadmin" do
+      login_as superadmin
+      user.user_profile.character_proxies << create(:character_proxy_with_wow_character)
+      character_proxies = user.user_profile.character_proxies
+      page.driver.delete("/admin/users/#{user.id}/nuke")
+      User.exists?(user).should be_false
+      
+      character_proxies.should_not be_empty
+      character_proxies.each do |cp|
+        CharacterProxy.exists?(cp).should be_false
+      end
+    end 
+
+    it "deletes users user profile when logged in as superadmin" do
+      login_as superadmin
+      profile = community_admin.user_profile
+      page.driver.delete("/admin/users/#{community_admin.id}/nuke")
+      User.exists?(community_admin).should be_false
+      
+      UserProfile.exists?(profile).should be_false
+    end
+
+    it "deletes users community profiles when logged in as superadmin" do
+      login_as superadmin
+      community_profiles = community_admin.user_profile.community_profiles
+      page.driver.delete("/admin/users/#{community_admin.id}/nuke")
+      User.exists?(community_admin).should be_false
+
+      community_profiles.should_not be_empty
+      community_profiles.each do |c_profile|
+        CommunityProfile.exists?(c_profile).should be_false
+      end
+    end 
+
+    it "deletes users owned_communities when logged in as superadmin" do
+      login_as superadmin
+      owned_communities = community_admin.user_profile.owned_communities
+      page.driver.delete("/admin/users/#{community_admin.id}/nuke")
+      User.exists?(community_admin).should be_false
+      
+      owned_communities.should_not be_empty
+      owned_communities.each do |community|
+        Community.exists?(community).should be_false
+      end
+    end
     
     it "deletes user when logged in as admin" do
       login_as admin
 
-      page.driver.delete("/admin/users/#{user.id}")
+      page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_false
     end    
     
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      page.driver.delete("/admin/users/#{user.id}")
+      page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_true
       page.driver.status_code.should == 403
       page.should have_content('forbidden')
@@ -136,85 +209,114 @@ describe "ActiveAdmin User" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.delete("/admin/users/#{user.id}")
+      page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_true
       page.driver.status_code.should == 403
       page.should have_content('forbidden')
     end
     
     it "does not delete user when not logged in" do
-      page.driver.delete("/admin/users/#{user.id}")
+      page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_true
     end      
   end
 
-  describe "#suspend" do 
+  describe "#disable" do 
     before(:each) do
-      user.suspended.should be_false
+      user.is_admin_disabled.should be_false
     end
 
-    it "suspends user when logged in as superadmin" do
+    it "disables user when logged in as superadmin" do
       login_as superadmin
       
-      page.driver.put("/admin/users/#{user.id}/suspend")
-      User.find(user).suspended.should be_true
-    end 
+      page.driver.put("/admin/users/#{user.id}/disable")
+      updated_user = User.find(user)
+      updated_user.is_admin_disabled.should be_true
+      updated_user.admin_disabled_at.should_not be_nil
+      updated_user.is_user_disabled.should be_false
+      updated_user.user_disabled_at.should be_nil
+    end
     
-    it "suspends user when logged in as admin" do
+    it "removes user from any communities when logged in as superadmin" do
+      login_as superadmin
+      
+      page.driver.put("/admin/users/#{user.id}/disable")
+      User.find(user).is_admin_disabled.should be_true
+      user.community_profiles.each do |c_profile|
+          CommunityProfile.exists?(c_profile).should be_false
+      end
+    end
+    
+    it "removes any user owned communities when logged in as superadmin" do
+      login_as superadmin
+      
+      page.driver.put("/admin/users/#{community_admin.id}/disable")
+      User.find(community_admin).is_admin_disabled.should be_true
+      community_admin.owned_communities.each do |community|
+        Community.exists?(community).should be_false
+      end
+    end
+    
+    it "disables user when logged in as admin" do
       login_as admin
 
-      page.driver.put("/admin/users/#{user.id}/suspend")
-      User.find(user).suspended.should be_true
+      page.driver.put("/admin/users/#{user.id}/disable")
+      User.find(user).is_admin_disabled.should be_true
     end    
     
-    it "suspends user when logged in as moderator" do
+    it "disables user when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/admin/users/#{user.id}/suspend")
-      User.find(user).suspended.should be_true
+      page.driver.put("/admin/users/#{user.id}/disable")
+      User.find(user).is_admin_disabled.should be_true
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.put("/admin/users/#{user.id}/suspend") 
+      page.driver.put("/admin/users/#{user.id}/disable") 
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).suspended.should be_false
+      User.find(user).is_admin_disabled.should be_false
     end
     
-    it "does not suspend user when not logged in" do
-      page.driver.put("/admin/users/#{user.id}/suspend")
-      User.find(user).suspended.should be_false
+    it "does not disable user when not logged in" do
+      page.driver.put("/admin/users/#{user.id}/disable")
+      User.find(user).is_admin_disabled.should be_false
     end
   end  
 
   describe "#reinstate" do
     before(:each) do
-      user.suspended = true
+      user.is_admin_disabled = true
+      user.is_user_disabled = true
       user.save!
-      user.suspended.should be_true
+      user.is_admin_disabled.should be_true
+      user.is_user_disabled.should be_true
     end
   
     it "reinstates user when logged in as superadmin" do
       login_as superadmin
       
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).suspended.should be_false
+      User.find(user).is_admin_disabled.should be_false
+      User.find(user).is_user_disabled.should be_false
     end 
     
     it "reinstates user when logged in as admin" do
       login_as admin
 
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).suspended.should be_false
+      User.find(user).is_admin_disabled.should be_false
+      User.find(user).is_user_disabled.should be_false
     end    
     
     it "reinstates user when logged in as moderator" do
       login_as moderator
 
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).suspended.should be_false
+      User.find(user).is_admin_disabled.should be_false
+      User.find(user).is_user_disabled.should be_false
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -223,12 +325,14 @@ describe "ActiveAdmin User" do
       page.driver.put("/admin/users/#{user.id}/reinstate")
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).suspended.should be_true
+      User.find(user).is_admin_disabled.should be_true
+      User.find(user).is_user_disabled.should be_true
     end
     
     it "does not reinstate user when not logged in" do
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).suspended.should be_true
+      User.find(user).is_admin_disabled.should be_true
+      User.find(user).is_user_disabled.should be_true
     end
   end
 
@@ -296,6 +400,7 @@ describe "ActiveAdmin User" do
       login_as superadmin
 
       page.driver.post("/admin/users/reset_all_passwords")
+      sleep 3
       User.all.each do |this_user|
         this_user.reset_password_token.should_not be_nil
       end

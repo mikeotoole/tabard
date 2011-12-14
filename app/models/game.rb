@@ -6,39 +6,19 @@
 # This class represents a Game. Only subclasses of this should be created.
 ###
 class Game < ActiveRecord::Base
+  # This is an abstract_class and therefore has no table.
+  self.abstract_class = true
+
 ###
 # Constants
 ###
-  # The list of vaild game subclass types.
-  VALID_TYPES =  %w(Wow Swtor)
-
-###
-# Attribute accessible
-###
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :type, :pretty_url
+  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor']]
 
 ###
 # Associations
 ###
   has_many :supported_games
   has_many :communities, :through => :supported_games
-
-###
-# Validators
-###
-  validates :name,  :presence => true
-  validates :type,  :presence => true,
-                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported game" },
-                    :uniqueness => true
-
-###
-# Public Methods
-###
-  # Let's us access the game from pretty_url instead of id
-  def to_param
-    self.pretty_url
-  end
 
 ###
 # Class Methods
@@ -58,19 +38,29 @@ class Game < ActiveRecord::Base
     end
     super
   end
+
+  # Gets all games
+  def self.all_games
+    Wow.all + Swtor.all
+  end
+
+  ###
+  # Gets a game for a given type, faction, server
+  # [Args]
+  #   * +type+ -> The game type
+  #   * +faction+ -> The faction for game
+  #   * +server_name+ -> The server for game
+  # [Returns] If a game is found the game is returned. If no game is found but type is a valid game type a stubbed out game instance is returned. Otherwise nil is returned.
+  ###
+  def self.get_game(type, faction, server_name)
+    game_class = type.constantize if type
+    game = game_class.game_for_faction_server(faction, server_name) if game_class and game_class.superclass.name == "Game"
+    if game
+      return game
+    elsif game_class and game_class.superclass.name == "Game"
+      return game_class.new(:faction => faction, :server_name => server_name)
+    else
+      return nil
+    end
+  end
 end
-
-
-
-# == Schema Information
-#
-# Table name: games
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  type       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  pretty_url :string(255)
-#
-

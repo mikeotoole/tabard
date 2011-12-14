@@ -1,16 +1,33 @@
-= form_for submission do |f|
-  -if submission.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(submission.errors.count, "error")} prohibited this submission from being saved:"
-      %ul
-        - submission.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :custom_form_id
-    = f.number_field :custom_form_id
-  .field
-    = f.label :user_profile_id
-    = f.number_field :user_profile_id
-  .actions
-    = f.submit 'Save'
+= simple_form_for [submission.custom_form,submission], :html => {:novalidate => true} do |f|
+  .questions
+    %h1= submission.custom_form_name
+    %fieldset
+      %ol
+        - submission.answers.each do |answer|
+          = f.simple_fields_for :answers, answer do |af|
+            %li
+              = af.input :question_id, :as => :hidden, :wrapper => false
+              - case answer.question_type
+              - when 'TextQuestion'
+                - case answer.question_style
+                - when 'short_answer_question'
+                  = af.input :body, :as => :string, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required
+                - when 'long_answer_question'
+                  = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required
+              - when 'SingleSelectQuestion'
+                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
+                - case answer.question_style
+                - when 'select_box_question'
+                  .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
+                - when 'radio_buttons_question'
+                  = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
+              - when 'MultiSelectQuestion'
+                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
+                = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
+  .sidebar
+    .instructions
+      %h2 Instructions
+      :markdown
+        #{submission.custom_form_instructions}
+  %p.submit
+    %button{ :type => 'submit' } Submit

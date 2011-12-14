@@ -17,7 +17,8 @@ class Role < ActiveRecord::Base
 # Validators
 ###
   validates :community, :presence => true
-  validates :name, :uniqueness => {:scope => :community_id}
+  validates :name,  :uniqueness => {:scope => :community_id},
+                    :length => { :maximum => 100 }
 
 ###
 # Delegates
@@ -26,15 +27,16 @@ class Role < ActiveRecord::Base
 
 end
 
+
 # == Schema Information
 #
 # Table name: roles
 #
-#  id               :integer         not null, primary key
-#  community_id     :integer
-#  name             :string(255)
-#  system_generated :boolean         default(FALSE)
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id                  :integer         not null, primary key
+#  community_id        :integer
+#  name                :string(255)
+#  is_system_generated :boolean         default(FALSE)
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 

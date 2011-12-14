@@ -260,6 +260,21 @@ body
       
       &.signup >a:before
         background-position: -120px -30px
+          
+button,
+.button,
+#body button,
+#body .button
+  background: #a1391d
+  borde-color: #771f07
+  color: #e3d5a9
+  font: 16px DinMedium, serif
+  
+  &:focus,
+  &:hover
+    background: #cd4723
+    +box_shadow(0 0 15px #F0884F)
+    color: #fff
 
 #body
   background: rgba(#fff,.9)
@@ -346,6 +361,22 @@ body
   p
     padding: 10px 0
   
+  blockquote
+    border: 1px solid #e9d6cd
+    background: #FCF2ED
+    margin: 10px 0
+    padding: 10px 20px
+  
+  ul,
+  ol
+    padding: 10px 30px
+  
+  ul li
+    list-style: square
+  
+  ol li
+    list-style: decimal
+
   dl
     
     dt
@@ -362,275 +393,103 @@ body
   time
     font: 12px DinMedium, sans
     white-space: nowrap
-
+  
+  
   // FORMS
   
-  button,
-  .button
-    background: #a1391d
-    border: 1px solid #771f07 !important
-    +border_radius(5)
-    color: #e3d5a9  
-    display: block
-    float: left
-    font: 16px DinMedium, serif
-    height: 30px
-    line-height: 30px
-    margin: 0 5px 0 0
-    padding: 0 15px
-    text-decoration: none
-    +transition(background .2s linear)
+  input[type="url"],
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  textarea
+    background: #d2c69c
+    +bg_gradient(#d2c69c,#e8e3d1)
+    +box_shadow(0 0 3px rgba(#000,.2))
+    border-color: #fff
+    color: #560416
     
-    &:focus,
-    &:hover
-      background: #cd4723
-      color: #fff
+    &:focus
+      background: #e8e3d1
+      border-color: #a37961
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
+      color: #560416
       
   input[type="checkbox"],
   input[type="radio"]
-    height: 1px
-    margin: 10px 0 0 5px
-    position: absolute
-    width: 1px
     
-    + label
-      display: block
-      line-height: 24px
-      margin: 0 0 5px
-      position: relative
-      text-indent: 34px
-      z-index: 3
-      
-      &:before
-        background: #C7B2A3
-        +bg_gradient(#C7B2A3,#EBDED5)
-        border: 1px solid #fff
-        +border_radius(5)
-        +box_shadow(0 0 3px #ddd)
-        content: ''
-        height: 24px
-        left: 0
-        position: absolute
-        top: 0
-        width: 24px
+    + label:before
+      background: #d2c69c
+      +bg_gradient(#d2c69c,#e8e3d1)
+      border-color: #fff
+      +box_shadow(0 0 3px rgba(#000,.2))
     
-    &:focus + label
-    
-      &:before
-        background: #d7eaf8
-        +box_shadow(0 0 8px #2d7cb4)
-        +bg_gradient(#f2f8fd,#d7eaf8)
+    &:focus + label:before
+      background: #e8e3d1
+      border-color: #a37961
+      +box_shadow(0 0 8px #F0884F)
+      +bg_gradient(#e8e3d1,#fff)
     
     &:checked
 
-      + label
-            
-        &:after
-          background: #570A17
-          +bg_gradient(#7B3D4C,#570A17)
-          border: 1px solid #ddd
-          +border_radius(20)
-          +box_shadow(0 0 9px #999)
-          content: ''
-          height: 14px
-          left: 5px
-          position: absolute
-          top: 5px
-          width: 14px
-          z-index: 2
+      + label:after
+        background: #805B3E
+        +bg_gradient(#805B3E,#330901)
+        border-color: #ddd
+        +box_shadow(0 0 9px #999)
       
       &:focus + label,
       &:hover + label,
       + label:hover
               
         &:after
-          background: #A1391D
-          +bg_gradient(#CD4723,#A1391D)
-  
-  div.select
-    height: 33px
-    float: left
-    margin: 0 5px 0 0
-    width: 435px
+          background: #DA6E4A
+          +bg_gradient(#A44D5B,#DA6E4A)
   
   .select
-    height: 55px
-    position: relative
   
     ul
-      background: #C7B2A3
-      +bg_gradient(#C7B2A3,#EBDED5)
-      +border_radius(5)
+      background: #d2c69c
+      +bg_gradient(#d2c69c,#e8e3d1)
       +box_shadow(0 0 3px rgba(#000,.2))
-      border: 1px solid #fff
-      display: block
-      height: 0
-      line-height: 30px
-      overflow: hidden
-      padding: 30px 1px 1px
-      position: absolute
-      +transition(box-shadow .2s linear)
-      width: 430px
-      z-index: 9
+      border-color: #fff
+      color: #560416
           
       &:before
-        border: 5px solid transparent
-        border-top-color: #A23919
-        content: ''
-        height: 0
-        position: absolute
-        right: 10px
-        top: 13px
-        width: 0
-        z-index: 10
+        border-top-color: #6C2413
       
       li
-        padding: 0
         
         label
-          background: #ECDDD8
-          +bg_gradient(#FDF3EE,#F2E5E1)
-          +border_radius(5)
-          border-top: 1px solid #ECDDD8
-          color: #66482f
-          display: none
-          font-family: DinMedium, sans
-          height: 30px
-          line-height: 30px
-          margin: 1px 0 0
-          padding: 0 8px
-          text-indent: 0
-          
-          &:before,
-          &:after
-            display: none
+          background: #d2c69c
+          +border_radius(4)
+          +bg_gradient(#d2c69c,#e8e3d1)
+          border-color: #a37961
+          color: #560416
         
           .avatar
             background: #C7B2A3
-            border: 1px solid #fff
-            +border_radius(3)
+            border-color: #fff
             +box_shadow(0 0 5px rgba(#000,.2))
-            float: left
-            margin: 3px 6px 3px 0
         
-        input
-          left: -500em
-          position: absolute
-          
-          &:checked + label
-            background: transparent
-            border-top-color: transparent
-            color: #66482f
-            display: block
-            font-family: DinLight, sans
-            position: absolute
-            top: 0
-            width: 420px
-            z-index: 3
-            
-            .avatar
-              background: #EADDD4
-
+        input:checked + label
+          color: inherit
+  
       &:hover
-        background: #ECDDD8
-        +box_shadow(0 0 8px #560B17)
-        +bg_gradient(#FDF3EE,#F2E5E1)
-        color: #580B15
-        height: auto
+        background: #e8e3d1
+        border-color: #a37961
+        +box_shadow(0 0 8px #F0884F)
+        +bg_gradient(#e8e3d1,#fff)
       
         li
         
-          label
-            color: #580B15 !important
-            display: block
-            position: static
-          
+          label,
+          input:checked + label
+            color: #560416
+            
             &:hover
-              background: #580B15
-              color: #fff !important
-  
-  fieldset
-  
-    li
-      padding: 10px 0
-  
-      label
-        display: block
-        font-family: DinMedium, sans
-        margin: 0 0 5px
-      
-      input,
-      textarea
-        position: relative
-        z-index: 2
-      
-      input[type="email"],
-      input[type="password"],
-      input[type="text"],
-      textarea
-        background: #C7B2A3
-        +bg_gradient(#C7B2A3,#EBDED5)
-        color: #6F2D3D
-        +border_radius(5)
-        +box_shadow(0 0 3px #ddd)
-        border: 1px solid #fff
-        display: block
-        +transition(box-shadow .2s linear)
-        width: 410px
-        
-        &:focus
-          background: #ECDDD8
-          +box_shadow(0 0 8px #560B17)
-          +bg_gradient(#FDF3EE,#F2E5E1)
-          color: #580B15
-        
-        &[disabled]
-          color: #999
-          +opacity(.5)
-      
-      input[type="email"],
-      input[type="password"],
-      input[type="text"]
-        line-height: 30px
-        padding: 0 10px
-      
-      textarea
-        height: 240px
-        padding: 10px
-    
-      dfn.hint
-        display: block
-        font: 12px DinMedium, sans
-        padding: 5px
-        
-        &:before
-          content: '\2014\00A0'
-        
-      &.field_with_errors
-        
-        > input,
-        > textarea
-          border-color: #A43D33
-        
-        > mark.error
-          background: #A43D33
-          +border_radius(0,0,5,5)
-          color: #fff
-          display: block
-          font-family: DinMedium, sans
-          margin: -5px 0 0
-          padding: 10px 10px 5px
-          position: relative
-          z-index: 1
-        
-  
-  .full
-    
-    input[type="email"],
-    input[type="password"],
-    input[type="text"],
-    textarea
-      width: 880px
+              background: #9F3A1F
+              color: #fff
   
   
   // TABLES
@@ -638,6 +497,7 @@ body
   table
     +border_radius(5)
     margin: 15px 0
+    width: 100%
     
     td,
     tr
@@ -664,6 +524,12 @@ body
         
         &:only-child
           +border_radius(5,5,0,0)
+        
+        &.check
+          
+          a
+            color: #fff
+            text-decoration: none
   
     tbody
       
@@ -732,6 +598,9 @@ body
                 &.apply
                   background-position: 0 -30px
                   
+                &.new
+                  background-position: -600px -30px
+                  
                 &.delete
                   background-position: -30px -30px
                   
@@ -746,19 +615,26 @@ body
                   
                 &.review
                   background-position: -120px -30px
+                
+                &.submission
+                  background-position: -600px -30px
             
           img.avatar
             background: #C7B2A3
             border: 1px solid #fff
             +border_radius(5)
             +box_shadow(0 0 10px rgba(#000,.2))
+            height: 40px
             float: left
             margin: 0 -5px
+            width: 40px
           
           img.icon
             border: 0
             +border_radius(3)
             +box_shadow(0 0 5px rgba(#000,.2))
+            height: 20px
+            width: 20px
           
           &.cinch
             white-space: nowrap
@@ -772,21 +648,24 @@ body
           
           &.characters
             
-            li
-              display: inline-block
-              font: 13px DinLight, sans
-              line-height: 20px
-              padding: 0 0 3px
-              width: 180px
+            ul
+              padding: 0
             
-              img.avatar
-                margin: 0 5px 0 0
-              
-              label
-                text-indent: 0
+              li
+                display: inline-block
+                font: 13px DinLight, sans
+                line-height: 20px
+                padding: 0 0 3px
+                width: 180px
               
                 img.avatar
-                  margin: 3px 5px 0 30px
+                  margin: 0 5px 0 0
+                
+                label
+                  text-indent: 0
+                
+                  img.avatar
+                    margin: 3px 5px 0 30px
               
           &.check
             border-right: 1px #ccc solid
@@ -847,13 +726,18 @@ body
     padding: 20px
     
     ol
+      margin: 0
+      padding: 0
     
       li
         border-bottom: 1px solid #fff
+        list-style: none
         min-width: 500px
         position: relative
       
         blockquote
+          background: transparent
+          border: 0
           margin: 0
           min-height: 88px
           padding: 0 15px 10px 92px
@@ -871,7 +755,7 @@ body
             z-index: 3
           
           .avatar
-            background: image-url('application/avatar.png') center center no-repeat #e1d5cd
+            background: #E1D5CD
             border: 1px solid #e1d5cd
             border-right: 0
             height: 62px
@@ -907,6 +791,8 @@ body
               border: 1px solid #fff
               border-right: 0
               display: block
+              height: 60px
+              width: 60px
           
           .meta
             background: #fff
@@ -1118,7 +1004,7 @@ body
               >.unlock
                 display: block
           
-        &.deleted
+        &.removed
           
           >blockquote
             
@@ -1250,13 +1136,12 @@ body
       .profile
         background: #C7B2A3
         margin: 0
-        overflow: hidden
         padding: 0
         position: absolute
         top: 0
         left: -62px
         +transition(box-shadow .2s linear)
-        z-index: 1
+        z-index: 4
         
         li
           background: none
@@ -1284,7 +1169,9 @@ body
             img
               background: #E1D5CD
               border: 1px solid #fff
+              height: 40px
               margin: 1px
+              width: 40px
           
           input
             display: block
@@ -1302,7 +1189,6 @@ body
           +border_radius(5)
           +box_shadow(0 0 15px rgba(#000,.5))
           left: -72px
-          overflow: visible !important
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)
@@ -1326,6 +1212,7 @@ body
                     +border_radius(3)
                     color: #fff
                     content: attr(meta)
+                    display: block
                     font-size: 12px
                     height: 15px
                     left: 0
@@ -1336,12 +1223,16 @@ body
                     text-indent: 0
                     top: -35px
                     white-space: nowrap
+                    width: auto
                   
                   &:after
                     border: 10px solid transparent
                     border-left: 0
+                    +border_radius(0)
                     border-top: 10px solid rgba(#6F2B3D,.9)
+                    +box_shadow(none)
                     content: ''
+                    display: block
                     height: 0
                     left: 10px
                     +opacity(1)
@@ -1366,11 +1257,13 @@ body
       textarea
         background: #fff
         border: 1px solid #BCA767
+        +border_radius(0)
         display: block
         font-size: 14px
         height: 21px
         left: 5px
         line-height: 20px
+        position: static
         max-width: 100%
         padding: 5px 10px
         margin: 0
@@ -1413,7 +1306,7 @@ body
         float: none
         font: 12px DinMedium, sans
         height: auto
-        line-height: 20px
+        line-height: 20px !important
         margin: 5px 0 0
         padding: 0 5px
       
@@ -1445,7 +1338,9 @@ body
         &:before
           background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
           border: 0
+          +border_radius(0)
           bottom: 0
+          +box_shadow(none)
           content: ''
           height: 20px
           left: auto
@@ -1462,8 +1357,8 @@ body
       height: 175px
   
   
-  // Community Applications
-  .community_application
+  // Submissions & Community Applications
+  .submission
     margin: -30px 0 0 0
   
     h1,
@@ -1508,10 +1403,14 @@ body
       float: right
       width: 280px
       
-      .applicant
+      .submitter
         
         h2:before
           background-position: -570px -30px
+        
+        img.avatar
+          height: 40px
+          width: 40px
       
       .characters
         
@@ -1529,42 +1428,34 @@ body
           ul
             width: 276px
             
-            label
-              position: relative
-              text-indent: 25px
-              
-              img
-                display: block
-                left: 3px
-                position: absolute
-                top: 1px
-            
             input:checked + label
               display: none
         
       .characters >label,
       .characters >ul li,
-      .applicant a
+      .submitter a
         background: #83583A
         +border_radius(5)
         color: #fff
         display: block
-        min-height: 28px
-        line-height: 28px
+        min-height: 40px
+        line-height: 20px
         margin: 0 0 2px
-        padding: 0 20px 0 35px
+        padding: 4px 20px 4px 50px
         position: relative
         +transition(background .2s linear)
           
-        img
+        img.avatar
           background: #C7B2A3
           +border_radius(4)
           +box_shadow(0 0 5px rgba(#000,.5))
+          height: 40px
           left: 4px
           position: absolute
           top: 4px
+          width: 40px
       
-      .applicant a
+      .submitter a
         height: auto
         font: 14px DinMedium, sans
         line-height: 48px
@@ -1587,10 +1478,10 @@ body
             color: #BBA55F
             content: '\00D7'
             font-size: 17px
-            height: 28px
-            line-height: 28px
+            line-height: 1em
             position: absolute
-            right: 8px
+            top: 0
+            right: 5px
           
           &:hover
             background: #5F381C
@@ -1598,7 +1489,7 @@ body
             &:after
               color: #fff
         >ul
-          padding-bottom: 30px
+          padding: 0 0 30px
           
           li
             height: auto
@@ -1645,8 +1536,7 @@ body
               width: 558px
               
             .select
-              float: none
-              margin: 0 0 30px
+              margin-bottom: 15px
               width: auto
               
               ul
@@ -1668,12 +1558,176 @@ body
       margin-left: 10px
       margin-right: 10px
     
+  .submit
+    +bg_gradient(#EBDED5,rgba(#fff,0))
+    +border_radius(5,5,0,0)
+    border-top: 1px solid #C8B3A4
+    clear: both
+    margin: 15px 0
+    padding: 15px 15px 30px
+  
+  
+  // Custom Forms
+  
+  form.custom_form
+    
+    >fieldset
+    
+      >ol
+        position: relative
+        
+        li.instructions
+          position: absolute
+          right: 0
+          top: -15px
+          
+          textarea
+            height: 120px
+        
+      ul.questions
+        padding: 0
+        
+        >li
+          +bg_gradient(#E5DAD3,rgba(#fff,0))
+          border-top: 1px solid #bb8b7d
+          +border_radius(5)
+          clear: both
+          height: auto
+          list-style: none
+          margin: 0 0 20px
+          padding: 20px 10px
+          position: relative
+          
+          &:after
+            clear: both
+            content: ''
+            display: block
+            height: 0
+            visibility: hidden
+              
+          a.remove
+            background: #A03A1B
+            color: #E4D4A8
+            display: block
+            height: 20px
+            line-height: 20px
+            padding: 0 25px 0 5px
+            position: absolute
+            right: 10px
+            text-decoration: none
+            top: 10px
+            
+            &:before
+              content: '\00D7'
+              font: 17px DinLight, sans
+              height: 20px
+              right: 0
+              line-height: 17px
+              padding: 0
+              position: absolute
+              text-align: center
+              text-indent: 0
+              top: 0
+              width: 20px
+            
+            &:hover
+              background: #CC4820
+              color: #fff
+              
+          >div
+            width: 440px
+            
+            p
+              padding: 0
+          
+            &.left
+              float: left
+              
+              .select
+                float: left
+                margin-top: 5px
+                width: 185px
+                
+                ul
+                  width: 176px
+                  
+                  input:checked + label
+                    width: 136px
+              
+              .optreq
+                float: left
+                margin: 8px 0 0
+              
+              .explanation
+                clear: left
+          
+            &.right
+              float: right
+                
+              .answers
+                margin: 0
+                
+                li
+                  background: #ECE5E0
+                  +border_radius(5)
+                  margin: 0 0 1px
+                  padding: 5px
+                  position: relative
+                  
+                  input
+                    margin: 0 25px 0 0
+                    width: 380px
+                  
+                  .remove
+                    background: #A28052
+                    overflow: hidden
+                    padding: 0
+                    right: 5px
+                    text-indent: -500em
+                    top: 10px
+                    width: 20px
+                    
+                    &:hover
+                      background: #896243
+                  
+              .add
+                padding: 5px 0 0 0
+            
+            &.hidden
+              display: none
+              
+    .add
+      padding: 20px 10px 0
+      text-align: right
+      
+      a
+        background: #A28052
+        color: #E4D4A8
+        height: 20px
+        line-height: 20px
+        padding: 0 25px 0 5px
+        position: relative
+        text-decoration: none
+        
+        &:before
+          content: '\002B'
+          font: 17px DinLight, sans
+          height: 20px
+          right: 0
+          line-height: 17px
+          padding: 0
+          position: absolute
+          text-align: center
+          text-indent: 0
+          top: 0
+          width: 20px
+        
+        &:hover
+          background: #896243
+          color: #fff
+    
     .submit
-      +bg_gradient(#EBDED5,rgba(#fff,0))
-      +border_radius(5,5,0,0)
-      border-top: 1px solid #C8B3A4
-      clear: both
-      padding: 15px 15px 30px
+      margin: -35px 0 0
 
 
 @import application/footer
