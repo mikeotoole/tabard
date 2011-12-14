@@ -71,7 +71,7 @@ class CustomForm < ActiveRecord::Base
   def apply_default_permissions
     self.community.apply_default_permissions(self)
   end
-  
+
 ###
 # Protected Methods
 ###

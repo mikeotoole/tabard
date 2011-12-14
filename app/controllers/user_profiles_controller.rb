@@ -45,7 +45,7 @@ class UserProfilesController < ApplicationController
     @user_profile = current_user.user_profile
     authorize! :update, @user_profile
   end
-  
+
   # This method gets a list of activites for the user profile
   def load_activities
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, 50)

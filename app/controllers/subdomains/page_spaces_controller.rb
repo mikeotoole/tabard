@@ -44,7 +44,7 @@ class Subdomains::PageSpacesController < SubdomainsController
     if @page_space.save
       add_new_flash_message('Page space was successfully created.')
       @action = 'created'
-    end  
+    end
     respond_with(@page_space)
   end
 
@@ -52,7 +52,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   def update
     @page_space.assign_attributes(params[:page_space])
     is_changed = @page_space.changed?
-    
+
     if @page_space.save
       add_new_flash_message('Page space was successfully updated.')
       @action = is_changed ? 'edited' : nil
@@ -97,18 +97,18 @@ protected
   def create_page_space
     @page_space = current_community.page_spaces.new(params[:page_space]) if current_community
   end
-  
+
   ###
   # _after_filter_
   #
   # This after filter will created a new activty when a page space is created or updated.
   ###
   def create_activity
-    if @action      
-      Activity.create!( :user_profile => current_user.user_profile, 
-                        :community => @page_space.community, 
-                        :target => @page_space, 
+    if @action
+      Activity.create!( :user_profile => current_user.user_profile,
+                        :community => @page_space.community,
+                        :target => @page_space,
                         :action => @action)
-    end                      
+    end
   end
 end

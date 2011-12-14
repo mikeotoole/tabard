@@ -101,7 +101,7 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-	can :dashboard, UserProfile do |user_profile|
+  can :dashboard, UserProfile do |user_profile|
       user_profile == user.user_profile
     end
     # Character Rules
@@ -327,12 +327,12 @@ class Ability
           end
         end
         if permission.can_lock
-          action.concat([:lock]) 
-          action.concat([:unlock]) 
+          action.concat([:lock])
+          action.concat([:unlock])
         end
         if permission.can_accept
-          action.concat([:accept]) 
-          action.concat([:reject]) 
+          action.concat([:accept])
+          action.concat([:reject])
         end
         if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)

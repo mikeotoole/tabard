@@ -30,13 +30,13 @@ unless @dont_run
                 %w(Sad Panda), %w(Kinky Fox)]
 
   puts "Time: 5 months ago"
-  
+
   Timecop.freeze(3.months.ago)
 
   USER_NAMES.each do |user|
     create_user(user[0], user[1])
   end
-  
+
   Timecop.return
   puts "Time: 3 months ago"
 

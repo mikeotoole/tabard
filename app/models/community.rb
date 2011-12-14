@@ -98,7 +98,7 @@ class Community < ActiveRecord::Base
     if not community_profile
       community_profile = user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
     end
-    return community_profile    
+    return community_profile
   end
 
   ###
@@ -282,18 +282,18 @@ protected
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
     officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
     officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
-    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View", 
-      can_lock: false, 
+    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
+      can_lock: false,
       can_accept: false,
-      can_read_nested: false, 
-      can_update_nested: false, 
-      can_create_nested: true, 
-      can_destroy_nested: true, 
-      can_lock_nested: true, 
+      can_read_nested: false,
+      can_update_nested: false,
+      can_create_nested: true,
+      can_destroy_nested: true,
+      can_lock_nested: true,
       can_accept_nested: false)
-    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View", 
-      permission_level: "View", 
-      can_lock: false, 
+    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View",
+      permission_level: "View",
+      can_lock: false,
       can_accept: false)
   end
 end
