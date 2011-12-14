@@ -13,7 +13,7 @@
       - if can? :update, @user_profile
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
-        - if user_signed_in? and current_user.address_book.include(@user_profile)
+        - if user_signed_in? and current_user.address_book.include? @user_profile
           %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
         -# TODO Doug - Add this link once we add the friends feature %li.friend= link_to 'Friend', '#'
     %h3 My Communities

@@ -1,6 +1,6 @@
 - if activity.is_a? Comment
   - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
-    = render "subdomains/comments/comment", :comment => activity, :include_children => false
+    = render "activities/comment", :comment => activity
   - else
     %li.comment
       Posted a

@@ -29,7 +29,7 @@
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'lock', :title => 'Lock comment'
         - if can? :unlock, comment
           = link_to 'Unlock comment', unlock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'unlock', :title => 'Unlock comment'
-    - if comment.comments.any? and defined? include_children and !!include_children
+    - if comment.comments.any?
       %ol
         - comment.comments.each do |reply|
           = render "subdomains/comments/comment", :comment => reply
