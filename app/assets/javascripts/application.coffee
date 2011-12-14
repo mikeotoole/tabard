@@ -274,6 +274,8 @@ $(document).ready ->
   $('.slider_with_none')
     .live 'init', ->
       $(this).css('width', $(this).find('li label').length * 70 + 25)
+      unless $(this).find('ul input:checked').length
+        $(this).find('>input').prop 'checked', true
     .trigger 'init'
   $('.slider_with_none > input[type="checkbox"]').live 'click', ->
     $(this).prop 'checked', true

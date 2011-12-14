@@ -28,7 +28,11 @@ class SubdomainsController < ApplicationController
   # GET /
   ###
   def index
-    render :index
+    if user_signed_in?
+      render :community_dashboard
+    else
+      render :community_home
+    end
   end
 ###
 # Public Methods
@@ -49,6 +53,7 @@ class SubdomainsController < ApplicationController
     return management_items unless signed_in?
     #application
     management_items << {:link => edit_community_settings_path, :title => "Community Settings"} if can_manage(current_community)
+    management_items << {:link => supported_games_url, :title => "Supported Games"} if can_manage(current_community.supported_games.new)
     management_items << {:link => roles_url, :title => "Permissions"} if can_manage(current_community.roles.new)
     management_items << {:link => community_applications_path, :title => 'Applications', :meta => current_community.pending_applications.size} if can_manage(current_community.community_applications.new()) or can? :read, CommunityApplication
     management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
