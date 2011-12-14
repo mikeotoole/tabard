@@ -665,7 +665,9 @@ button,
           >a
             background: image-url('application/icons.png') no-repeat
             +border_radius(0)
+            +box_shadow(none)
             display: block
+            float: none
             height: 20px
             overflow: hidden
             +opacity(0)
@@ -740,16 +742,16 @@ button,
       &.owned >blockquote >.meta a[meta]
         +border_radius(3)
       
-      &.locked >blockquote
+      &.locked
         
-        >p .reply
+        .reply
+          display: none !important
+          
+        .actions a
           display: none
           
-        >.actions a
-          display: none
-          
-          &.unlock
-            display: block
+        >blockquote >.actions .unlock
+          display: block
         
       &.removed
         
