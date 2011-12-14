@@ -63,9 +63,9 @@ unless @dont_run
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
   puts "Two maidens is getting a private roster"
   two_maidens.update_attribute(:is_public_roster, false)
-  
+
   fox = UserProfile.find_by_last_name('Fox')
-  
+
   %w(Pidgeon Tiger Crab).each do |last_name|
     generate_application(two_maidens, last_name).accept_application(fox)
     puts "Accepted application"

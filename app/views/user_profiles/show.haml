@@ -5,7 +5,7 @@
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title
       %p= @user_profile.title
-      
+
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
@@ -32,7 +32,7 @@
       = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
       
   %dl#tabs.tabs
-    
+
     %dt{ :class => 'activity active' } Recent Activity
     %dd
       - if defined? @activities and @activities.any?
@@ -57,7 +57,7 @@
                 %time= "#{time_ago_in_words(activity.created_at)} ago"
       - else
         %em No recent activity
-    
+
     %dt{ :class => 'characters' } Characters
     %dd
       - if @user_profile.swtor_characters.any?

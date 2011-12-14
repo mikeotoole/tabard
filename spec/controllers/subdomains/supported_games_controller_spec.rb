@@ -143,6 +143,16 @@ describe Subdomains::SupportedGamesController do
         post :create, :supported_game => valid_attributes
         response.should redirect_to(SupportedGame.last)
       end
+      
+      it "should create an activity" do
+        expect {
+          post :create, :supported_game => valid_attributes
+        }.to change(Activity, :count).by(1)
+        
+        activity = Activity.last
+        activity.target_type.should eql "SupportedGame"
+        activity.action.should eql 'created'
+      end
     end
 
     describe "with invalid params" do
@@ -154,6 +164,12 @@ describe Subdomains::SupportedGamesController do
       it "re-renders the 'new' template" do
         post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
         response.should render_template("new")
+      end
+      
+      it "should not create an activity" do
+        expect {
+          post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
+        }.to change(Activity, :count).by(0)
       end
     end
   end
@@ -184,12 +200,8 @@ describe Subdomains::SupportedGamesController do
     
     describe "with valid params" do
       it "updates the requested supported_game" do
-        # Assuming there are no other subdomains_supported_games in the database, this
-        # specifies that the Subdomains::SupportedGame created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        SupportedGame.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => supported_game.id, :supported_game => {'these' => 'params'}
+        put :update, :id => supported_game.id, :supported_game => {:name => "New Name", :faction => supported_game.faction, :server_name => supported_game.server_name}
+        SupportedGame.find(supported_game).name.should eql "New Name"
       end
 
       it "assigns the requested supported_game as @supported_game" do
@@ -200,6 +212,20 @@ describe Subdomains::SupportedGamesController do
       it "redirects to the supported_game" do
         put :update, :id => supported_game.id, :supported_game => valid_attributes
         response.should redirect_to(supported_game)
+      end
+      
+      it "should create an Activity when attributes change" do
+        put :update, :id => supported_game.id, :supported_game => valid_attributes
+        activity = Activity.last
+        activity.target_type.should eql "SupportedGame"
+        activity.action.should eql 'edited'
+      end
+      
+      it "should not create an Activity when attributes don't change" do        
+        supported_game
+        expect {
+          put :update, :id => supported_game.id, :supported_game => {:name => supported_game.name, :faction => supported_game.faction, :server_name => supported_game.server_name}
+        }.to change(Activity, :count).by(0)
       end
     end
 

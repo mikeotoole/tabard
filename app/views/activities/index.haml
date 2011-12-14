@@ -14,7 +14,7 @@
             = "created comment"
             = truncate item.body, :length => 30, :separator => ' '
             = "— "
-            = link_to item.community.name, item.community 
+            = link_to item.community.name, item.community
         - elsif item.target.is_a?(CharacterProxy)
           %li
             = l item.created_at, :format => :date_short
@@ -34,7 +34,7 @@
             = item.action
             = link_to item.target.name, item.target if item.target.respond_to?(:name)
             = "— " if item.community
-            = link_to item.community.name, item.community if item.community      
+            = link_to item.community.name, item.community if item.community
     - else
       %li
         No recent activity.

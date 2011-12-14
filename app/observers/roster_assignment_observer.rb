@@ -7,7 +7,7 @@
 ###
 class RosterAssignmentObserver < ActiveRecord::Observer
   
-  def after_save(roster_assignment)
+  def after_update(roster_assignment)
     unless roster_assignment.is_pending    
       Activity.create!( :user_profile => roster_assignment.user_profile, 
                         :community => roster_assignment.community, 

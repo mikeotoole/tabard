@@ -21,7 +21,7 @@ class CharacterProxy < ActiveRecord::Base
   validates :user_profile, :presence => true
   validates :character_id, :presence => true
   validates :character_type, :presence => true
-  
+
 ###
 # Delegates
 ###

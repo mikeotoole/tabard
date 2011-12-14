@@ -101,7 +101,7 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-	can :dashboard, UserProfile do |user_profile|
+  can :dashboard, UserProfile do |user_profile|
       user_profile == user.user_profile
     end
     # Character Rules
@@ -269,7 +269,7 @@ class Ability
 
     # Special context rules
     can [:create], Submission do |submission|
-      submission.custom_form.is_published and can? :read, submission.custom_form
+      submission.custom_form_is_published and can? :read, submission.custom_form
     end
 
     can [:read], Discussion do |discussion|
@@ -307,7 +307,7 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        if permission.permission_level.blank?
+        if permission.permission_level?
           action.concat([:read]) if permission.can_read
           action.concat([:update]) if permission.can_update
           action.concat([:create]) if permission.can_create
@@ -327,12 +327,12 @@ class Ability
           end
         end
         if permission.can_lock
-          action.concat([:lock]) 
-          action.concat([:unlock]) 
+          action.concat([:lock])
+          action.concat([:unlock])
         end
         if permission.can_accept
-          action.concat([:accept]) 
-          action.concat([:reject]) 
+          action.concat([:accept])
+          action.concat([:reject])
         end
         if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)

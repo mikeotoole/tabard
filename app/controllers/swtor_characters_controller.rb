@@ -37,13 +37,13 @@ class SwtorCharactersController < ApplicationController
   def update
     @swtor_character = SwtorCharacter.find(params[:id])
     authorize!(:update, @swtor_character)
-    
+
     if params[:swtor_character] and (params[:swtor_character][:advanced_class] or params[:swtor_character][:server_name])
       @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
     end
     params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
     add_new_flash_message('Character was successfully updated.','success') if @swtor_character.update_attributes(params[:swtor_character])
-    
+
     respond_with @swtor_character, :location => user_root_url + '#characters'
   end
 
