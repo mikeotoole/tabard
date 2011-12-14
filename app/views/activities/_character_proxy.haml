@@ -1,14 +1,14 @@
 - character = CharacterProxy.find_by_id(activity.target_id)
 - case activity.action
-- when 'updated'
+- when 'edited'
   Edited character
-  %strong{ :meta => character.game_name }= character.name
+  %strong{ :meta => "#{character.game_name} character" }= character.name
 - when 'avatar'
   = image_tag character.avatar_url :tiny
   Changed their
   %strong avatar
   for
-  %strong{ :meta => character.game_name }= character.name
+  %strong{ :meta => "#{character.game_name} character" }= character.name
 - when 'created'
   Created a new
   %strong= character.game_name
@@ -16,6 +16,6 @@
   %strong= character.name
 - when 'accepted'
   Added
-  %strong{ :meta => character.game_name }= character.name
+  %strong{ :meta => "#{character.game_name} character" }= character.name
   to
   %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

@@ -9,7 +9,7 @@
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
-      - if @user_profile == current_user.user_profile
+      - if can? :update, @user_profile
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
         %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
@@ -32,16 +32,22 @@
         %ol.activities
           - @activities.each do |activity|
             - if activity.is_a? Comment
-              - if can? :show, activity
+              - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
                 = render "subdomains/comments/comment", :comment => activity
               - else
-                Posted a
-                %strong comment
-                in
-                %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+                %li.comment
+                  Posted a
+                  %strong comment
+                  in
+                  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+                  —
+                  %time= "#{time_ago_in_words(activity.created_at)} ago"
             - else
-              - next if activity.target_type == 'SwtorCharacter'
-              %li= render "activities/#{activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase}", :activity => activity
+              - class_name = activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase
+              %li{ :class => class_name }
+                = render "activities/#{class_name}", :activity => activity
+                —
+                %time= "#{time_ago_in_words(activity.created_at)} ago"
       - else
         %em No recent activity
     
@@ -50,12 +56,12 @@
       - if @user_profile.swtor_characters.any?
         %h2
           Star Wars: The Old Republic
-          - if @user_profile == current_user.user_profile
+          - if user_signed_in? and @user_profile == current_user.user_profile
             = link_to '+ add new', new_swtor_character_path
         = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
       - if @user_profile.wow_characters.any?
         %h2
           World of Warcraft
-          - if @user_profile == current_user.user_profile
+          - if user_signed_in? and @user_profile == current_user.user_profile
             = link_to '+ add new', new_wow_character_path
         = render 'wow_characters/list', :characters => @user_profile.wow_characters

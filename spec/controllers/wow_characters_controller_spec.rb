@@ -65,7 +65,6 @@ describe WowCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in user
-      @game = DefaultObjects.wow
       post 'create', :wow_character => valid_attributes
     end
     
@@ -82,9 +81,21 @@ describe WowCharactersController do
     end
   end
   
+  describe "POST 'create' when authenticated as a user" do
+    it "should create an activity" do
+      sign_in user
+      expect {
+        post :create, :wow_character => valid_attributes
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'created'
+    end
+  end  
+  
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
-      @game = Wow.new(:name => "My Wow")
       post 'create', :wow_character => valid_attributes
     end
     
@@ -111,6 +122,23 @@ describe WowCharactersController do
     
     it "should redirect to user profile dashboard" do
       response.should redirect_to(user_root_url + "#characters")
+    end
+    
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'edited'
+    end
+  end
+  
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
+      sign_in user
+      @character = create(:wow_char_profile)
+      
+      expect {
+        put 'update', :id => @character, :wow_character => { :name => @character.name }
+      }.to change(Activity, :count).by(0)
     end
   end
   

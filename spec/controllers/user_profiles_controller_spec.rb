@@ -166,8 +166,8 @@ describe UserProfilesController do
       sign_in owner
       
       expect {
-          put 'update', :id => user_profile, :user_profile => nil
-        }.to change(Activity, :count).by(0)
+        put 'update', :id => user_profile, :user_profile => nil
+      }.to change(Activity, :count).by(0)
     end
   end
 
