@@ -31,10 +31,12 @@ class Role < ActiveRecord::Base
 
   after_create :setup_permission_defaults
 
+  # This method is a helper for validation
   def is_empty_permission?(attributed)
     attributed['permission_level'].blank? and not attributed['can_lock'] and not attributed['can_accept'] and not attributed['can_read'] and not attributed['can_create'] and not attributed['can_update'] and not attributed['can_destroy']
   end
 
+  # This method gets the permissions for a resource. It is used by the permission view.
   def permissions_for_resource(resource)
     if resource.is_a?(String)
       permission_match = self.permissions.find_by_subject_class_and_id_of_subject(resource,nil)
@@ -44,6 +46,7 @@ class Role < ActiveRecord::Base
       return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class, id_of_subject: resource.id)
     end
   end
+  # This method gets the permissions for a nested resource. It is used by the permission view.
   def nested_permissions_for_resource(resource)
     case resource.class.to_s
       when "DiscussionSpace"
@@ -59,6 +62,7 @@ class Role < ActiveRecord::Base
         return nil
     end
   end
+  # This method gets the permission defaults for a resource. It is used by the permission view.
   def permissions_defaults_for_resource(resource)
     if resource.is_a?(String)
       case resource
@@ -103,10 +107,12 @@ class Role < ActiveRecord::Base
     end
   end
 
+  # This method checks to see if this is the member role of a community.
   def is_member_role?
     self.community.member_role.id == self.id
   end
 
+  # This method sets up the default permissions if they are not defined.
   def setup_permission_defaults
     return if self.permission_defaults.size > 0 or not self.persisted?
     self.permission_defaults.create(object_class: "CustomForm",
@@ -118,6 +124,7 @@ class Role < ActiveRecord::Base
       permission_level: "View")
   end
 
+  # This method applys the default permissions for an item.
   def apply_default_permissions(some_thing)
     template = self.permission_defaults.find_by_object_class(some_thing.class.to_s)
     return unless (template and some_thing.persisted?)
