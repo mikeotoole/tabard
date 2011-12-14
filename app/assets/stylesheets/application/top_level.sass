@@ -502,8 +502,23 @@ button,
     border-top: 1px solid #ccc
     +border_radius(5,5,0,0)
     +box_shadow(0 -5px 5px rgba(#000,.1))
-    margin: 10px 0
+    margin: 10px -20px
     padding: 20px
+    position: relative
+    
+    &.busy
+      
+      &:before
+        background: image-url('application/busy.gif') center center no-repeat
+        content: ''
+        height: 30px
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+      
+      .button
+        display: none
 
 
 // Activities

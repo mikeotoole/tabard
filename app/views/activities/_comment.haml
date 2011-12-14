@@ -1,5 +1,5 @@
 - if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
-  %li.comment{ :class => comment_class_names(comment) }
+  %li.comment{ :class => comment_class_names(comment), :created_at => comment.created_at }
     %blockquote
       %span.avatar
         - if !comment.is_removed
@@ -11,12 +11,14 @@
         - case comment.original_commentable_type
         - when 'Discussion'
           - discussion = Discussion.find_by_id(comment.original_commentable_id)
-          in
-          = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, discussion), discussion.name, discussion_url(:subdomain => comment.community_subdomain)
+          - if discussion
+            in
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, discussion), discussion.name, discussion_url(discussion, :subdomain => comment.community_subdomain)
         - when 'CommunityApplication'
           - community_application = CommunityApplication.find_by_id(comment.original_commentable_id)
-          in
-          = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, community_application), community_application.name, community_application_url(:subdomain => comment.community_subdomain)
+          - if community_application
+            in
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, community_application), community_application.name, community_application_url(community_application, :subdomain => comment.community_subdomain)
       %p
         - unless comment.is_removed
           %span.body

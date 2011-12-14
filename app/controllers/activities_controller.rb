@@ -6,7 +6,7 @@
 # This controller is for activity stream.
 ###
 class ActivitiesController < ApplicationController
-  respond_to :html, :js
+  layout nil
 
 ###
 # Before Filters
@@ -23,10 +23,10 @@ class ActivitiesController < ApplicationController
   # -> max_items
   ###
   def index
-    # params[:updated] = {:since => 2.day.ago, :before => 3.months.ago}
-    # params[:updated] = {:before => 1.day.ago}
-    params[:max_items] = 50
-
-    @items = Activity.activities(params[:activity], params[:updated], params[:max_items])
+    if @items = Activity.activities(params[:activity], params[:updated], params[:max_items])
+      render :partial => 'activities', :locals => { :activities => @items }
+    else
+      render :text => '', :layout => false
+    end
   end
 end

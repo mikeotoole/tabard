@@ -39,12 +39,11 @@
     %dd
       - if defined? @activities and @activities.any?
         %ol.activities
-          - @activities.each do |activity|
-            = render "activities/activity", :activity => activity
+          = render "activities/activities", :activities => @activities
+        %p.submit
+          = link_to 'Load more', activities_url('activity[user_profile_id]' => @user_profile.id, :max_items => 10), :remote => true, 'data-type' => :text, :class => 'button more_activites'
       - else
         %em No recent activity
-      %p.submit
-        = link_to 'Load more', activities_url(), :remote => true, :class => 'button more_activites'
 
     %dt{ :class => 'characters' } Characters
     %dd

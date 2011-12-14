@@ -55,7 +55,8 @@ class Activity < ActiveRecord::Base
   # [Returns] An array containg both activites and comments in decending order.
   ###
   def self.activities(activity=nil, updated=nil, max_items=DEFAULT_MAX_ITEMS)
-    max_items = DEFAULT_MAX_ITEMS unless max_items
+    max_items = max_items.to_i
+    max_items = DEFAULT_MAX_ITEMS unless max_items > 0
     max_items = 50 unless max_items < 50
 
     if updated and updated[:since] and updated[:before]
