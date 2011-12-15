@@ -7,6 +7,11 @@
 ###
 class UserProfile < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name,
@@ -53,7 +58,7 @@ class UserProfile < ActiveRecord::Base
 ###
   validates :display_name,  :presence => true,
                             :uniqueness => true,
-                            :length => { :maximum => 50 }
+                            :length => { :maximum => MAX_NAME_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :user, :presence => true
   validates :avatar,

@@ -9,6 +9,8 @@ class WowCharacter < BaseCharacter
 ###
 # Constants
 ###
+  MAX_NAME_LENGTH = 12
+
   # All valid classes
   VALID_CLASSES = %w(Death\ Knight Druid Hunter Mage Paladin Priest Rogue Shaman Warlock Warrior)
   # All valid races
@@ -68,6 +70,7 @@ class WowCharacter < BaseCharacter
 ###
 # Validators
 ###
+  validates :name, :length => { :maximum => MAX_NAME_LENGTH }
   validate do |wow_character|
     wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
   end

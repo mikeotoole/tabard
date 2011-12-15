@@ -1,5 +1,5 @@
 = f.hidden_field :avatar_cache
-= f.input :name
+= f.input :name, :input_html => { :maxlength => WowCharacter::MAX_NAME_LENGTH }
 = f.input :server_name, :as => :radio, :required => true, :label => 'Server', :collection => Wow.all_servers, :wrapper_html => { :class => 'select' }
 = f.input :faction, :as => :radio, :required => true, :collection => Wow.all_factions, :wrapper_html => { :class => 'faction select', :affects => 'race' }
 = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'faction', affected_by_value: wow_character.faction, label: 'Race', field: 'race', field_value: wow_character.race, collection: WowCharacter.faction_race_collection, affects: 'char_class' }
