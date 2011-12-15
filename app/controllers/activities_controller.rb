@@ -12,6 +12,7 @@ class ActivitiesController < ApplicationController
 # Before Filters
 ###
   before_filter :block_unauthorized_user!, :except => [:index]
+  skip_before_filter :limit_subdomain_access
 
   ###
   # GET /activities
