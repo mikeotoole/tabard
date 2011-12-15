@@ -14,12 +14,21 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :ensure_secure_subdomain, :only => [:create, :update]
   before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
 
+  def create
+    user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
+    if user and user.user_disabled_at
+      add_new_flash_message("You need to reenable account.")
+    else
+      super
+    end
+  end
+
   # Cancels a user's account
   def destroy
     success = resource ? resource.disable_by_user(params) : false
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      set_flash_message :notice, :destroyed if is_navigational_format?
+      add_new_flash_message("Your account has be canceled.", 'notice')
       respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
     else
       render 'cancel_confirmation'
