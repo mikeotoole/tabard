@@ -22,12 +22,6 @@ class Subdomains::PagesController < SubdomainsController
 ###
 # REST Actions
 ###
-  # GET /page_spaces/:page_space_id/pages(.:format)
-  def index
-    page_space = PageSpace.find_by_id(params[:page_space_id])
-    @pages = page_space.pages if page_space
-  end
-
   # GET /pages/:id(.:format)
   def show
   end

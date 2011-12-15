@@ -138,7 +138,7 @@ DaBvRails::Application.routes.draw do
 
       # Pages
       resources :page_spaces do
-        resources :pages, :shallow => true
+        resources :pages, :shallow => true, :except => [:index]
       end
 
       # Supported Games
