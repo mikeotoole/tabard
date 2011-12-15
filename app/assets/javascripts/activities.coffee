@@ -3,13 +3,13 @@ $(document).ready ->
   $('.more_activites')
     .bind 'ajax:before', ->
       $(this).closest('.submit').addClass('busy')
-      if $(this).data 'original-params'
-        params = $(this).data 'original-params'
-      else
-        params = $(this).data 'params'
-        $(this).data 'original-params', params
       updatedBefore = $('.activities li:last').attr 'created_at'
       if updatedBefore
+        if $(this).data 'original-params'
+          params = $(this).data 'original-params'
+        else
+          params = $(this).data 'params'
+          $(this).data 'original-params', params
         $(this).data 'params', params + '&updated[before]=' + updatedBefore
     .bind 'ajax:error', (xhr, status, error) ->
       $(this).closest('.submit').removeClass('busy')
