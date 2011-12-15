@@ -9,6 +9,8 @@ class SwtorCharacter < BaseCharacter
 ###
 # Constants
 ###
+  MAX_NAME_LENGTH = 20
+
   # all valid republic classes
   VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Jedi\ Consular Smuggler Trooper)
   # all valid empire classes
@@ -80,6 +82,7 @@ class SwtorCharacter < BaseCharacter
 ###
 # Validators
 ###
+  validates :name, :length => { :maximum => MAX_NAME_LENGTH }
   validate do |swtor_character|
     swtor_character.errors.add(:game, "not found with this faction server combination") if swtor_character.swtor_id.blank?
   end

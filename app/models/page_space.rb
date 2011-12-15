@@ -7,6 +7,11 @@
 ###
 class PageSpace < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :supported_game_id
@@ -22,7 +27,7 @@ class PageSpace < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :community, :presence => true
 
 ###

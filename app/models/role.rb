@@ -7,6 +7,11 @@
 ###
 class Role < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Associations
 ###
   belongs_to :community
@@ -22,7 +27,7 @@ class Role < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :name,  :uniqueness => {:scope => :community_id},
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
 
 ###
 # Delegates

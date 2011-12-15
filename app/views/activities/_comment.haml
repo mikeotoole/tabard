@@ -1,12 +1,12 @@
-- if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
+- if !comment.is_removed or (comment.is_removed and comment.comments.any?)
   %li.comment{ :class => comment_class_names(comment), :created_at => comment.created_at }
     %blockquote
       %span.avatar
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
-        As
-        %strong= comment.poster_name
+        %strong= link_to_unless (defined? @user_profile and @user_profile == comment.user_profile), comment.poster_name, user_profile_url(comment.user_profile)
+        = last_action_word(comment)
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
         - case comment.original_commentable_type
         - when 'Discussion'

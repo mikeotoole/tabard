@@ -1,5 +1,7 @@
 %fieldset
   %ol
     - if not f.object.persisted?
-      = f.input :name
-    = f.input :slogan
+      = f.input :name, :input_html => { :maxlength => Community::MAX_NAME_LENGTH }
+    = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
+    = f.input :is_accepting_members, :label => "Accepting New Members"
+    = f.input :email_notice_on_application

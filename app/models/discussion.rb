@@ -8,6 +8,11 @@
 class Discussion < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 60
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :body, :character_proxy_id, :is_locked
@@ -27,7 +32,7 @@ class Discussion < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true

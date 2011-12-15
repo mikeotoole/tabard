@@ -9,6 +9,12 @@ class Community < ActiveRecord::Base
 # TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
 
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+  MAX_SLOGAN_LENGTH = 60
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster
@@ -51,11 +57,11 @@ class Community < ActiveRecord::Base
   validates :name,  :presence => true,
                     :uniqueness => { :case_sensitive => false },
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
-                    :length => { :maximum => 30 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
-  validates :slogan, :length => { :maximum => 50 }
+  validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
 

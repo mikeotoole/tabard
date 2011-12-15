@@ -17,7 +17,7 @@ FactoryGirl.define do
   end
   
   factory :wow_character do
-    sequence(:name) {|n| "WOW Character #{n}" }
+    sequence(:name) {|n| "WOWChar #{n}" }
     wow { DefaultObjects.wow }
     char_class "Mage"
     race "Human"
@@ -25,7 +25,7 @@ FactoryGirl.define do
   end
 
   factory :wow_character_att, :class => :wow_character do
-    sequence(:name) {|n| "WOW Character #{n}" }
+    sequence(:name) {|n| "WOWChar #{n}" }
     faction { DefaultObjects.wow.faction }
     server_name { DefaultObjects.wow.server_name }
     char_class "Mage"

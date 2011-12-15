@@ -3,6 +3,7 @@ db/*.sqlite3*
 log/*.log
 log/test.log
 tmp/**/*
+.metrics
 
 .DS_Store
 Icon?
