@@ -10,6 +10,11 @@ class Role < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Associations
 ###
   belongs_to :community
@@ -21,7 +26,7 @@ class Role < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :name,  :uniqueness => {:scope => [:community_id, :deleted_at]},
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
 
 ###
 # Delegates

@@ -41,7 +41,7 @@
               %ul
                 -#TODO Doug - Double check this after BVR-290 is complete
                 - @community.announcement_spaces.each do |space|
-                  %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
+                  %li= link_to space.name, announcement_space_url(space) if space.persisted?
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.size > 1 and can? :index, CustomForm
             %li
               = link_to 'Forms', custom_forms_path

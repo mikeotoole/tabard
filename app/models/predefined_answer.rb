@@ -10,21 +10,26 @@ class PredefinedAnswer < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Constants
+###
+  MAX_BODY_LENGTH = 30
+  
+###
 # Attribute accessible
 ###
-  attr_accessible :body, :select_question_id
+   attr_accessible :body, :select_question_id
 
 ###
 # Associations
 ###
-  belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
+   belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
 
 ###
 # Validators
 ###
-  validates :body,  :presence => true,
-                    :length => { :maximum => 100 }
-  validates :question, :presence => true
+   validates :body, :presence => true,
+                    :length => { :maximum => MAX_BODY_LENGTH }
+   validates :question, :presence => true
 end
 
 

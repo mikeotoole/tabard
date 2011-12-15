@@ -14,6 +14,10 @@ class Question < ActiveRecord::Base
 ###
   # The list of vaild game subclass types.
   VALID_TYPES =  %w(SingleSelectQuestion MultiSelectQuestion TextQuestion)
+  # Used by validators and view to restrict body length
+  MAX_BODY_LENGTH = 60
+  # Used by validators and view to restrict explanation length
+  MAX_EXPLANATION_LENGTH = 100
 
 ###
 # Attribute accessible
@@ -30,8 +34,9 @@ class Question < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :body,  :presence => true,
-                    :length => { :maximum => 100 }
+  validates :body, :presence => true,
+                   :length => { :maximum => MAX_BODY_LENGTH }
+  validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }                 
   #validates :style, :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
