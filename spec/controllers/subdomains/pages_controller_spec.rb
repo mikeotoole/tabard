@@ -36,29 +36,26 @@ describe Subdomains::PagesController do
   end
 
   describe "GET index" do
-    it "assigns all pages as @pages when authenticated as a member" do
-      page.page_space_id.should eq(space.id)
-      sign_in owner
-      get :index, :page_space_id => space.id
-      assigns(:pages).should eq([page])
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in owner
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
     end
-    
-    it "should render the 'index' template when authenticated as a member" do
-      sign_in owner
-      get :index, :page_space_id => space.id
-      response.should render_template("index")
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
     end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :index, :page_space_id => space.id
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :index, :page_space_id => space.id
-      response.should be_forbidden
-    end    
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
+    end   
   end
 
   describe "GET show" do

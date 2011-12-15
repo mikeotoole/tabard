@@ -272,14 +272,6 @@ class Ability
       submission.custom_form_is_published and can? :read, submission.custom_form
     end
 
-    can [:read], Discussion do |discussion|
-      can? :read, discussion.discussion_space
-    end
-
-    can [:read], Page do |page|
-      can? :read, page.page_space
-    end
-
     # Cannot Overrides
     cannot [:create], Comment do |comment|
       comment.commentable_has_comments_disabled?
@@ -307,7 +299,7 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        if permission.permission_level?
+        if not permission.permission_level?
           action.concat([:read]) if permission.can_read
           action.concat([:update]) if permission.can_update
           action.concat([:create]) if permission.can_create
@@ -356,6 +348,20 @@ class Ability
     else
       can action, subject_class do |subject_class_instance|
         subject_class_instance.id.to_s == subject_id
+      end
+      case subject_class.to_s
+      when "DiscussionSpace"
+        if action.include?(:read) and subject_class != nil
+          can :read, Discussion do |discussion|
+            discussion.discussion_space_id.to_s == subject_id
+          end
+        end
+      when "PageSpace"
+        if action.include?(:read) and subject_class != nil
+          can :read, Page do |page|
+            page.page_space_id.to_s == subject_id
+          end
+        end
       end
     end
   end
