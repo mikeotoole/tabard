@@ -20,5 +20,3 @@ $(document).ready ->
       lastLi = $('.activities li:last')
       $('.activities').append xhr.responseText
       lastLi.nextAll('li').hide().slideDown 500, 'swing'
-      if $('.activities .activity.user_profile.joined').length
-        $(this).closest('.submit').remove()
