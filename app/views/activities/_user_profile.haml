@@ -21,4 +21,5 @@
   %strong profile
 - when 'accepted'
   Joined
-  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+  - unless current_community and activity.community == current_community
+    %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

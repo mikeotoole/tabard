@@ -768,7 +768,8 @@ button,
 
   // Comments
   
-  .comments
+  .comments,
+  .activities
     background: #fff
     +border_radius(5)
     clear: both
@@ -778,109 +779,121 @@ button,
     ol
       margin: 0
       padding: 0
-  
-      li.comment
-        border-bottom-color: #fff
-      
-        blockquote
+    
+    li.owned
+    
+      &.activity >a:first-of-type,
+      &.activity >strong:first-child >a,
+      &.comment >blockquote >.meta >strong:first-of-type a
+        background: #70293D
+        color: #fff
+        
+        &:before,
+        &:after
+          display: none
+              
+        &:hover
+          background: #aa000b
+          color: #fff
+
+    li.comment
+      border-bottom-color: #fff
+    
+      blockquote
+        
+        &:before
+          border-bottom-color: #EBDFC4
+        
+        >.avatar
+          background: #E1D5CD
+          border-color: #e1d5cd
           
           &:before
-            border-bottom-color: #EBDFC4
+            border-right-color: #fff
           
-          >.avatar
-            background: #E1D5CD
-            border-color: #e1d5cd
-            
-            &:before
-              border-right-color: #fff
-            
-            &:after
-              border-top-color: #fff
-            
-            >img
-              background: #e1d5cd
-              border-color: #fff
+          &:after
+            border-top-color: #fff
           
-          .meta
-            background: #fff
-            border-bottom-color: #ddd
-            color: #b59d8b
+          >img
+            background: #e1d5cd
+            border-color: #fff
+        
+        .meta
+          background: #fff
+          border-bottom-color: #E1D5CD
+          color: #b59d8b
+          
+          a
+            color: #aa000b
             
-            a
-              color: #aa000b
+            &:hover
+              background: #aa000b
+              color: #fff
+            
+            &.expand
+              background: #70293D
+              color: #fff
               
               &:hover
                 background: #aa000b
-                color: #fff
-                
-                &[meta]
-                
-                  &:before
-                    background: rgba(#6F2B3D,.9)
-                    color: #fff
-                  
-                  &:after
-                    border-top-color: rgba(#6F2B3D,.9)
-              
-              &.expand
-                background: #70293D
-                color: #fff
-                
-                &:hover
-                  background: #aa000b
-              
-              &.collapse
-                background: #C7B2A3
-                color: #fff
-                
-                &:hover
-                  background: #aa000b
-          
-          .actions a
-              
-            &.edit
-              background-position: -65px -5px
             
-            &.delete
-              background-position: -35px -5px
-            
-            &.lock
-              background-position: -185px -5px
-            
-            &.unlock
-              background-position: -155px -5px
-          
-          p
-            color: #000
-          
-          em
-            background: #eee
-            color: #999
-            
-          .reply
-            background: #EBDFC4
-            color: #917000
-            
-            &:hover
-              background: #6F2B3D
+            &.collapse
+              background: #C7B2A3
               color: #fff
-          
-          &:hover
-          
-            .avatar
-              +box_shadow(0 0 15px rgba(#000,.5))
-              border-color: #C7B2A3
+              
+              &:hover
+                background: #aa000b
         
-        &.owned >blockquote >.meta a[meta]
-          background: #70293D
-          color: #fff
-                
-          &:hover
-            background: #aa000b
-            color: #fff
+        .actions a
+            
+          &.edit
+            background-position: -65px -5px
           
-        &.removed >blockquote >.avatar
-          border-color: #ccc
+          &.delete
+            background-position: -35px -5px
+          
+          &.lock
+            background-position: -185px -5px
+          
+          &.unlock
+            background-position: -155px -5px
+        
+        p
+          color: #000
+        
+        em
+          background: #eee
+          color: #999
+          
+        .reply
+          background: #EBDFC4
+          color: #917000
+          
+          &:hover
+            background: #6F2B3D
+            color: #fff
+        
+        &:hover
+        
+          .avatar
+            +box_shadow(0 0 15px rgba(#000,.5))
+            border-color: #C7B2A3
+        
+      &.removed >blockquote >.avatar
+        border-color: #ccc
+
+        
+    *[meta]:hover
+      
+      &:before
+        background: #d9be6b
+        border-color: #9f8a4b
+        +box_shadow(0 0 15px rgba(#000,.3))
+        color: #443916
+      
+      &:after
+        border-left-color: #9f8a4b
+        border-top-color: #9f8a4b
             
     form
       background: #EBDFC4
@@ -1126,6 +1139,55 @@ button,
     #newcomment
       height: 175px
   
+  
+  // Activities
+  
+  .activities
+    padding: 30px
+    
+    a
+      color: #AA000B
+      font-family: DinMedium, sans-serif
+      text-decoration: none
+      
+      &:hover
+        background: #AA000B
+        color: #fff
+    
+    time
+      color: #6E4B2F
+    
+    >li
+      list-style: none
+      
+      &:after
+        border-color: #E1D5CD
+        
+    li.activity
+      padding-top: 5px !important
+    
+    li.comment
+    
+      >blockquote
+        padding-left: 72px
+        
+        >p
+          padding-right: 0
+        
+        .avatar
+          left: 0
+          top: 0
+        
+        .meta
+          color: #896243
+      
+      + li.comment:after
+        display: block
+        top: -14px
+    
+    + .submit
+      margin-left: -20px
+      margin-right: -20px
   
   // Submissions & Community Applications
   

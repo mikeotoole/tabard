@@ -29,6 +29,7 @@ class Activity < ActiveRecord::Base
 ###
   delegate :name, :to => :community, :prefix => true
   delegate :subdomain, :to => :community, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
 
 ###
 # Validators

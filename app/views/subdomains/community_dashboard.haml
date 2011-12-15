@@ -1,1 +1,10 @@
-Soon to be activity stream.
+= javascript_include_tag "activities"
+
+%h2 Recent Activity
+- if defined? @activities and @activities.any?
+  %ol.activities
+    = render "activities/activities", :activities => @activities
+  %p.submit
+    = link_to 'Load more', activities_url('activity[community_id]' => current_community.id, :max_items => 20), :remote => true, 'data-type' => :text, :class => 'button more_activites'
+- else
+  %p No recent activity

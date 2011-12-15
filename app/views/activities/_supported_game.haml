@@ -3,10 +3,12 @@
 - when 'created'
   Added
   %strong= game.game_name
-  to
-  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+  - unless current_community and activity.community == current_community
+    to
+    %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
 - when 'edited'
   Edited
   %strong= game.game_name
-  in
-  %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+  - unless current_community and activity.community == current_community
+    in
+    %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

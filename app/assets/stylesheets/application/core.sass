@@ -551,6 +551,7 @@ button,
       min-width: 500px
       padding: 0
       position: relative
+      z-index: 5
     
       blockquote
         background: transparent
@@ -560,7 +561,7 @@ button,
         padding: 0 15px 10px 92px
         position: relative
         +transition(margin .2s linear)
-        z-index: 3
+        z-index: 5
         
         &:before
           border-bottom: 1px solid
@@ -569,7 +570,7 @@ button,
           left: 92px
           position: absolute
           right: 15px
-          z-index: 3
+          z-index: 5
         
         .avatar
           border: 1px solid
@@ -622,32 +623,6 @@ button,
             font-family: DinMedium, sans-serif
             position: relative
             text-decoration: none
-            
-            &[meta]:hover
-              
-              &:before
-                +border_radius(3)
-                content: attr(meta)
-                font-size: 12px
-                height: 15px
-                left: 0
-                line-height: 15px
-                padding: 5px 10px
-                position: absolute
-                text-indent: 0
-                top: -30px
-                white-space: nowrap
-              
-              &:after
-                border: 5px solid transparent
-                border-left: 0
-                border-top: 5px solid
-                content: ''
-                height: 0
-                left: 10px
-                position: absolute
-                top: -5px
-                width: 0
             
             &.expand
               +border_radius(3)
@@ -854,6 +829,35 @@ button,
         
         >ol
           display: none
+        
+    *[meta]:hover
+      position: relative
+      z-index: 5
+      
+      &:before
+        border: 1px solid
+        +border_radius(3)
+        content: attr(meta)
+        font: 12px DinMedium, sans-serif
+        height: 20px
+        left: 0
+        line-height: 20px
+        padding: 0 10px
+        position: absolute
+        top: -30px
+        white-space: nowrap
+        z-index: 4
+      
+      &:after
+        background: transparent
+        border: 3px solid
+        border-bottom-color: transparent
+        border-right-color: transparent
+        content: ''
+        left: 10px
+        position: absolute
+        top: -8px
+        z-index: 5
       
       form
         margin: -10px 0 12px 62px
@@ -929,34 +933,6 @@ button,
         
         + .activity
           margin-top: 0
-        
-    *[meta]:hover
-      position: relative
-      z-index: 5
-      
-      &:before
-        border: 1px solid
-        +border_radius(3)
-        content: attr(meta)
-        font: 12px DinMedium, sans-serif
-        height: 12px
-        left: 0
-        padding: 5px 10px
-        position: absolute
-        top: -32px
-        white-space: nowrap
-        z-index: 2
-      
-      &:after
-        background: transparent
-        border: 3px solid
-        border-bottom-color: transparent
-        border-right-color: transparent
-        content: ''
-        left: 10px
-        position: absolute
-        top: -8px
-        z-index: 3
 
 
 // pop-up windows
