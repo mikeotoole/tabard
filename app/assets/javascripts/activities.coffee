@@ -10,6 +10,7 @@ $(document).ready ->
         else
           params = $(this).data 'params'
           $(this).data 'original-params', params
+        params = '' unless params
         $(this).data 'params', params + '&updated[before]=' + updatedBefore
     .bind 'ajax:error', (xhr, status, error) ->
       $(this).closest('.submit').removeClass('busy')
@@ -19,5 +20,3 @@ $(document).ready ->
       lastLi = $('.activities li:last')
       $('.activities').append xhr.responseText
       lastLi.nextAll('li').hide().slideDown 500, 'swing'
-      if $('.activities .activity.user_profile.joined').length
-        $(this).closest('.submit').remove()
