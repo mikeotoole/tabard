@@ -399,6 +399,18 @@ body
     margin: -10px 0 0
     min-height: 310px
     padding: 50px 40px 40px
+      
+    a
+      +border_radius(3)
+      color: #be4124
+      padding: 0 3px
+      text-decoration: underline
+      +transition(background .2s linear, color .2s linear)
+      
+      &:hover
+        background: #be4124
+        color: #fff
+        text-decoration: none
     
     p
       padding: 0 0 1em
