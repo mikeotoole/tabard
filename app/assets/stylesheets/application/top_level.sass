@@ -566,17 +566,22 @@ button,
       time
         color: #3679B3
   
-    li.activity *[meta]:hover
+    li.activity
       
-      &:before
-        background: #3679B3
-        border-color: #5196CF
-        +box_shadow(0 0 15px rgba(#000,.4))
-        color: #fff
-      
-      &:after
-        border-left-color: #5196CF
-        border-top-color: #5196CF
+      >a:first-child
+        display: none
+    
+      *[meta]:hover
+        
+        &:before
+          background: #3679B3
+          border-color: #5196CF
+          +box_shadow(0 0 15px rgba(#000,.4))
+          color: #fff
+        
+        &:after
+          border-left-color: #5196CF
+          border-top-color: #5196CF
 
 
 // User profile
