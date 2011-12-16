@@ -7,7 +7,7 @@
 %strong= link_to_if (user_signed_in? and current_user.in_community(activity.community).can? :show, discussion), 'discussion', discussion_url(discussion, :subdomain => activity.community_subdomain), :meta => discussion.name
 in
 %strong
-  - if defined? current_community and can? :show, discussion.discussion_space
+  - if !!current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, discussion.discussion_space
     = link_to discussion.discussion_space_name, discussion.discussion_space
   - else
     = link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
