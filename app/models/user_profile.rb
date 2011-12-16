@@ -25,9 +25,9 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   
-  has_many :character_proxies, :dependent => :destroy
-  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter', :conditions => {:is_removed => false}
-  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter', :conditions => {:is_removed => false}
+  has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
+  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter'
+  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter'
   
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
@@ -37,7 +37,7 @@ class UserProfile < ActiveRecord::Base
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
+  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}
   has_many :folders, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -231,7 +231,7 @@ class UserProfile < ActiveRecord::Base
     if community
       return (Array.new() << (self)).concat(self.available_character_proxies(community,game).map{|proxy| proxy.character})
     else
-      return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
+      return (Array.new() << (self)).concat(self.characters)
     end
   end
 
@@ -285,6 +285,27 @@ class UserProfile < ActiveRecord::Base
   ###
   def trash
     folders.find_by_name("Trash")
+  end
+  
+  def remove_all_avatars
+    self.remove_avatar!
+    characters.each do |character|
+      character.remove_avatar!
+    end
+  end
+  
+  def nuke    
+    self.swtor_characters.each{|swtor_character| swtor_character.delete}
+    self.wow_characters.each{|wow_character| wow_character.delete}
+    self.character_proxies.each{|character_proxy| character_proxy.delete}
+    
+    self.owned_communities.each{|community| community.nuke}
+    self.community_applications.each{|application| application.destroy!}
+    self.community_profiles.each{|community_profile| community_profile.destroy!}
+    self.view_logs.each{|application| view_log.destroy!}
+    
+    self.discussions.each{|discussion| discussion.nuke}
+    self.comments.each{|comment| comment.nuke}
   end
 
 ###

@@ -122,6 +122,11 @@ class Comment < ActiveRecord::Base
       self.update_attribute(:is_removed, true)
     end
   end
+  
+  def nuke
+    self.comments.each{|comment| comment.nuke}
+    self.destroy!
+  end
 
 ###
 # Setter Methods

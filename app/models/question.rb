@@ -45,12 +45,6 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
 
 ###
-# Callbacks
-###
-  #before_save :ensure_type_and_style_is_not_changed
-  #before_validation :decode_type_style
-
-###
 # Delegates
 ###
   delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true

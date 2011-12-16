@@ -28,10 +28,6 @@
     %p
       %b About:
       = @swtor_character.about
-    - if @swtor_character.default
-      %p
-        Default Character For
-        = @swtor_character.swtor.name
     
     - if can? :edit, @swtor_character
       = link_to 'Edit', edit_swtor_character_path(@swtor_character)

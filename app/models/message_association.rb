@@ -34,12 +34,33 @@ class MessageAssociation < ActiveRecord::Base
   default_scope :order => "created_at DESC"
 
 ###
+# Callbacks
+###
+  before_destroy :delete_message_if_system_sent
+
+###
 # Instance Methods
 ###
   def original_message_id
     self.message_id
   end
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+  ###
+  # _before_destroy_
+  #
+  # Will delete associated message if it's system sent.
+  ###
+  def delete_message_if_system_sent
+    self.message.delete if self.message.is_system_sent
+  end
 end
 
 

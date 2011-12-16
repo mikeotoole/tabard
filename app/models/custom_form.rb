@@ -27,10 +27,9 @@ class CustomForm < ActiveRecord::Base
 ###
 # Associations
 ###
+  has_many :submissions, :dependent => :destroy
   has_many :questions, :dependent => :destroy
   accepts_nested_attributes_for :questions, :allow_destroy => true
-
-  has_many :submissions, :dependent => :destroy
   belongs_to :community
 
 ###

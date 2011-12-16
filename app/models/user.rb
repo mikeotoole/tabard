@@ -74,6 +74,7 @@ class User < ActiveRecord::Base
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
   delegate :is_member?, :to => :user_profile, :allow_nil => true
   delegate :application_pending?, :to => :user_profile, :allow_nil => true
+  delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -219,6 +220,7 @@ class User < ActiveRecord::Base
       if success
         self.community_profiles.clear
         self.owned_communities.clear
+        self.remove_all_avatars
       end
       return success
     else
@@ -231,6 +233,7 @@ class User < ActiveRecord::Base
     if self.update_attribute(:admin_disabled_at, Time.now)
       self.community_profiles.clear
       self.owned_communities.clear
+      self.remove_all_avatars
     end  
   end
 
@@ -239,7 +242,7 @@ class User < ActiveRecord::Base
     self.update_attribute(:admin_disabled_at, nil)
     self.update_attribute(:user_disabled_at, nil)
   end
-  
+
   def reinstate_by_user
     if self.user_disabled_at
       random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
@@ -250,7 +253,12 @@ class User < ActiveRecord::Base
       UserMailer.reinstate_account(self, random_password).deliver
     else
       false
-    end    
+    end
+  end
+
+  def nuke
+    self.user_profile.nuke
+    User.find(self).destroy
   end
 
 ###

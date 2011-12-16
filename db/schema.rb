@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20111209192406) do
     t.string   "character_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed",      :default => false
   end
 
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
@@ -382,7 +383,6 @@ ActiveRecord::Schema.define(:version => 20111209192406) do
     t.string   "species"
     t.string   "level"
     t.string   "about"
-    t.boolean  "is_removed",     :default => false
   end
 
   add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
@@ -463,7 +463,6 @@ ActiveRecord::Schema.define(:version => 20111209192406) do
     t.datetime "updated_at"
     t.string   "char_class"
     t.text     "about"
-    t.boolean  "is_removed", :default => false
   end
 
   add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"

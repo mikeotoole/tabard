@@ -12,7 +12,6 @@
 #  updated_at :datetime
 #  char_class :string(255)
 #  about      :text
-#  is_removed :boolean         default(FALSE)
 #
 
 require 'spec_helper'

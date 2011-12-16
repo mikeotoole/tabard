@@ -45,7 +45,18 @@ class CharacterProxy < ActiveRecord::Base
   def self.all_characters
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end
+
+###
+# Instance Methods
+###  
+  # Overrides the destroy to only mark as deleted and removes character from any rosters.
+  def destroy
+    self.roster_assignments.clear if self.roster_assignments
+    self.update_attribute(:is_removed, true)
+    self.character.remove_avatar!
+  end
 end
+
 
 
 
@@ -59,5 +70,6 @@ end
 #  character_type  :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  is_removed      :boolean         default(FALSE)
 #
 

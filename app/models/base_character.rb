@@ -53,6 +53,7 @@ class BaseCharacter < ActiveRecord::Base
 ###
   delegate :user_profile, :to => :character_proxy, :allow_nil => true
   delegate :roster_assignments, :to => :character_proxy, :allow_nil => true
+  delegate :is_removed, :to => :character_proxy, :allow_nil => true
 
 ###
 # Uploaders
@@ -100,14 +101,9 @@ class BaseCharacter < ActiveRecord::Base
   # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
   def destroy
     self.roster_assignments.clear if self.roster_assignments
-    # TODO Mike, Need to remove avatar.
-    self.update_attribute(:is_removed, true)
+    self.character_proxy.update_attribute(:is_removed, true)
+    self.remove_avatar!
   end
-
-###
-# Protected Methods
-###
-protected
 
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW

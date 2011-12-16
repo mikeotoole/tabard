@@ -67,7 +67,7 @@ protected
   # If it would the question is deleted too.
   ###
   def dont_orphan_question
-    if not self.question.custom_form_id and self.question.answers.count < 2
+    if self.question and not self.question.custom_form_id and self.question.answers.count < 2
       self.question.update_attribute(:deleted_at, Time.now)  
     end
   end

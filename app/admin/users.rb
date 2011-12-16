@@ -42,8 +42,7 @@ ActiveAdmin.register User do
 
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
-    user.disable_by_admin if user
-    user.destroy if user
+    user.nuke if user
     redirect_to :action => :index
   end
 
@@ -96,8 +95,8 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :failed_attempts
     column :locked_at
-    column :disabled do
-      user.is_disabled?
+    column :disabled do |user|
+      user.is_disabled? ? "Yes" : "No"
     end
     column :created_at
   end

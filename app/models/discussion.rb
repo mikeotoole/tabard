@@ -106,6 +106,11 @@ class Discussion < ActiveRecord::Base
   def update_viewed(user_profile)
     self.user_profile.update_viewed(self)
   end
+  
+  def nuke
+    self.all_comments.each{|comment| comment.nuke}
+    self.destroy!
+  end
 
 ###
 # Protected Methods
