@@ -146,12 +146,8 @@ describe Subdomains::AnnouncementsController do
     describe "with valid params" do
       it "updates the requested announcement" do
         announcement
-        # Assuming there are no other discussions in the database, this
-        # specifies that the Discussion created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Discussion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => announcement.id, :discussion => {'these' => 'params'}
+        put :update, :id => announcement.id, :discussion => {:name => "New name"}
+        Discussion.find(announcement).name.should eql "New name"
       end
 
       it "assigns the requested announcement as @announcement" do
@@ -162,6 +158,11 @@ describe Subdomains::AnnouncementsController do
       it "redirects to the discussion" do
         put :update, :id => announcement.id, :discussion => {:name => "New name"}
         response.should redirect_to(announcement_url(announcement))
+      end
+      
+      it "should set has_been_edit to true" do
+        put :update, :id => announcement.id, :discussion => {:name => "New name"}
+        Discussion.find(announcement).has_been_edited.should be_true
       end
     end
 

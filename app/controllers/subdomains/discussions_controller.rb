@@ -51,6 +51,7 @@ class Subdomains::DiscussionsController < SubdomainsController
 
   # PUT /discussions/:id(.:format)
   def update
+    params[:discussion][:has_been_edited] = true
     if @discussion.update_attributes(params[:discussion])
       add_new_flash_message('Discussion was successfully updated.')
     end
