@@ -122,11 +122,9 @@ describe CommunityApplication do
     end
     
     it "should send a message to the applicant" do
-      #Message.all.count.should eq(0)
-      community_application.accept_application(community.admin_profile).should be_true
-      Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.is_system_sent.should be_true
-      Message.first.author.should be_nil
+      expect {
+        community_application.accept_application(community.admin_profile).should be_true
+      }.to change(Message, :count).by(1)
     end
     
     it "should set status_changer" do
@@ -158,11 +156,9 @@ describe CommunityApplication do
     end
     
     it "should send a message to the applicant" do
-      #Message.all.count.should eq(0)
-      community_application.reject_application(community.admin_profile).should be_true
-      Message.first.recipients.first.should eq(community_application.user_profile)
-      Message.first.is_system_sent.should be_true
-      Message.first.author.should be_nil
+      expect {
+        community_application.reject_application(community.admin_profile).should be_true
+      }.to change(Message, :count).by(1)
     end
     
     it "should set status_changer" do
