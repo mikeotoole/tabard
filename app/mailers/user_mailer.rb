@@ -32,4 +32,12 @@ class UserMailer < ActionMailer::Base
        format.html { render "devise/mailer/new_admin_user_setup_instructions" }
     end
   end
+  
+  # Used for reinstating an account.
+  def reinstate_account(user, password)
+    @resource = user
+    mail(:to => @resource.email, :subject => 'Crumblin Reinstate Account Notification', :tag => 'password-reset') do |format|
+       format.html { render "devise/mailer/reinstate_account_instructions" }
+    end
+  end
 end

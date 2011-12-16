@@ -7,7 +7,11 @@ DaBvRails::Application.routes.draw do
   # Users
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :confirmations => 'confirmations' }
   devise_scope :user do
-    get 'users/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
+    get 'users/disable_confirmation' => 'registrations#disable_confirmation', :as => :disable_confirmation
+    get 'users/reinstate' => 'registrations#reinstate_confirmation', :as => :reinstate_confirmation
+    put 'users/reinstate' => 'registrations#send_reinstate', :as => :send_reinstate
+    get 'users/reinstate_account' => 'registrations#reinstate_account_edit', :as => :reinstate_account
+    put 'users/reinstate_account' => 'registrations#reinstate_account', :as => :reinstate_account
   end
   match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 

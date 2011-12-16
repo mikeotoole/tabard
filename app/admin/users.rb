@@ -49,7 +49,7 @@ ActiveAdmin.register User do
 
   member_action :reinstate, :method => :put do
     user = User.find(params[:id])
-    user.reinstate if user
+    user.reinstate_by_admin if user
     redirect_to :action => :show
   end
 

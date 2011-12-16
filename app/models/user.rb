@@ -196,8 +196,6 @@ class User < ActiveRecord::Base
 
   # Will reset the users password.
   def reset_password
-    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
-    self.password = random_password
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
     self.save!
@@ -237,9 +235,22 @@ class User < ActiveRecord::Base
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
-  def reinstate
+  def reinstate_by_admin
     self.update_attribute(:admin_disabled_at, nil)
     self.update_attribute(:user_disabled_at, nil)
+  end
+  
+  def reinstate_by_user
+    if self.user_disabled_at
+      random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+      self.password = random_password
+      self.reset_password_token = User.reset_password_token
+      self.reset_password_sent_at = Time.now
+      self.save!
+      UserMailer.reinstate_account(self, random_password).deliver
+    else
+      false
+    end    
   end
 
 ###
