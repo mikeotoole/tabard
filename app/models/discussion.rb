@@ -98,8 +98,8 @@ class Discussion < ActiveRecord::Base
   # [Args]
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
-  def update_viewed(user_profile)
-    self.user_profile.update_viewed(self)
+  def update_viewed(some_user_profile)
+    some_user_profile.update_viewed(self)
   end
 
 ###
