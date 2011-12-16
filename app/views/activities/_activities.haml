@@ -1,19 +1,25 @@
 - activities.each do |activity|
   - if activity.is_a? Comment
-    - if user_signed_in? and current_user.in_community(activity.community).can? :show, activity
+    - if user_signed_in? and current_user.in_community(activity.community).can? :read, activity.original_commentable
       = render "activities/comment", :comment => activity
-    - elsif not defined? current_community
-      %li{ :class => 'comment', :created_at => activity.created_at }
+    - else
+      %li{ :class => 'activity', :created_at => activity.created_at }
+        - if !!current_community
+          = link_to activity.user_profile_display_name, user_profile_url(activity.user_profile)
         Posted a
         %strong comment
-        in
-        %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
+        - if user_signed_in? and current_user.in_community(activity.community).can? :read, activity.original_commentable
+          to
+          = link_to activity.original_commentable_name, activity.original_commentable
+        - elsif !defined?(current_community) or activity.community != current_community
+          in
+          = link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)
         —
         %time= "#{time_ago_in_words(activity.created_at)} ago"
   - else
     - partial_name = activity.target_type.gsub(/(.)([A-Z])/,'\1_\2').downcase
     %li{ :class => "activity #{partial_name} #{activity.action} #{(user_signed_in? and activity.user_profile == current_user.user_profile ? 'owned' : '')}", :created_at => activity.created_at }
-      - if defined? current_community
+      - if !!current_community
         = link_to activity.user_profile_display_name, user_profile_url(activity.user_profile)
       = render "activities/#{partial_name}", :activity => activity
       —
