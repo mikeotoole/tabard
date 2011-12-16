@@ -1398,6 +1398,21 @@ button,
     clear: both
     margin: 15px 0
     padding: 15px 15px 30px
+    position: relative
+    
+    &.busy
+      
+      &:before
+        background: image-url('application/busy.gif') center center no-repeat
+        content: ''
+        height: 30px
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+      
+      .button
+        visibility: hidden
   
   
   // Custom Forms

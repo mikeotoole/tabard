@@ -18,5 +18,20 @@ $(document).ready ->
     .bind 'ajax:success', (event, data, status, xhr) ->
       $(this).closest('.submit').removeClass('busy')
       lastLi = $('.activities li:last')
-      $('.activities').append xhr.responseText
-      lastLi.nextAll('li').hide().slideDown 500, 'swing'
+      if xhr.responseText
+        $('.activities').append xhr.responseText
+        lastLi.nextAll('li').hide().slideDown 600, 'swing'
+        initialCount = $(this).attr('initial')*1
+        incrementCount = $(this).attr('increment')*1
+        baseCount = $('.activities li').length - initialCount
+        while baseCount < incrementCount
+          baseCount += incrementCount
+        if baseCount % incrementCount
+          $(this).closest('.submit').animate { opacity: 0 }, 300
+      else
+        submitNode = $(this).closest('.submit')
+        $.alert {
+          body: 'No more history available to display.'
+          action: ->
+            submitNode.animate { opacity: 0 }, 300
+        }

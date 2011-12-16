@@ -29,12 +29,15 @@ class SubdomainsController < ApplicationController
   ###
   def index
     if user_signed_in?
-      @activities = Activity.activities({ community_id: @community.id }, nil, 40)
+      @activities_count_initial = 20
+      @activities_count_increment = 10
+      @activities = Activity.activities({ community_id: @community.id }, nil, @activities_count_initial)
       render :community_dashboard
     else
       render :community_home
     end
   end
+
 ###
 # Public Methods
 ###

@@ -48,7 +48,9 @@ class UserProfilesController < ApplicationController
 
   # This method gets a list of activites for the user profile
   def load_activities
-    @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, 20)
+    @activities_count_initial = 20
+    @activities_count_increment = 10
+    @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, @activities_count_initial)
   end
 
 end
