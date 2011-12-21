@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214004238) do
+ActiveRecord::Schema.define(:version => 20111216044652) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20111214004238) do
     t.boolean  "is_locked",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_been_edited",     :default => false
   end
 
   add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"

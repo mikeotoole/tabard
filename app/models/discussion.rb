@@ -15,7 +15,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited
 
 ###
 # Associations
@@ -121,7 +121,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: discussions
@@ -135,5 +134,6 @@ end
 #  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  has_been_edited     :boolean         default(FALSE)
 #
 
