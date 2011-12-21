@@ -8,6 +8,11 @@
 class Discussion < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 60
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :body, :character_proxy_id, :is_locked
@@ -27,7 +32,7 @@ class Discussion < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
@@ -93,8 +98,8 @@ class Discussion < ActiveRecord::Base
   # [Args]
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
-  def update_viewed(user_profile)
-    self.user_profile.update_viewed(self)
+  def update_viewed(some_user_profile)
+    some_user_profile.update_viewed(self)
   end
 
 ###
@@ -113,6 +118,8 @@ protected
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 end
+
+
 
 
 # == Schema Information

@@ -253,6 +253,19 @@ $(document).ready ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
+  # tabs
+  $('dl.tabs >dt').click ->
+    $(this).closest('dl.tabs').find('>dt').removeClass('active')
+    $(this).addClass('active')
+  if window.location.hash
+    $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
+  $('a[href*="#"]').click ->
+    link = $(this).attr('href').split('#').pop()
+    tab = $('dl.tabs >dt.'+link)
+    if(tab.length)
+      tab.trigger 'click'
+      return false
+  
   # slider input fields
   $('.slider')
     .live 'init', ->
@@ -261,6 +274,8 @@ $(document).ready ->
   $('.slider_with_none')
     .live 'init', ->
       $(this).css('width', $(this).find('li label').length * 70 + 25)
+      unless $(this).find('ul input:checked').length
+        $(this).find('>input').prop 'checked', true
     .trigger 'init'
   $('.slider_with_none > input[type="checkbox"]').live 'click', ->
     $(this).prop 'checked', true

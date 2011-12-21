@@ -10,6 +10,7 @@ class PermissionDefault < ActiveRecord::Base
 
   validates :object_class,  :uniqueness => {:scope => :role_id}
 
+  # This method checks to see if this permission default includes a nested item's permissions.
   def is_nested?
     case self.object_class
       when "CustomForm"
@@ -23,10 +24,12 @@ class PermissionDefault < ActiveRecord::Base
     end
   end
 
+  # This method checks to see if this default is defining an empty permissions.
   def defined_empty_permission?
     (permission_level.blank? and nested_permission_level.blank? and not can_read and not can_update and not can_create and not can_destroy and not can_lock and not can_accept and not can_read_nested and not can_update_nested and not can_create_nested and not can_destroy_nested and not can_lock_nested and not can_accept_nested)
   end
 
+  # This method gets the name of the nested object.
   def nested_object_class
     case self.object_class
       when "CustomForm"
@@ -40,6 +43,7 @@ class PermissionDefault < ActiveRecord::Base
     end
   end
 
+  # This method gets the name of the nested object's parent association_for_subject.
   def parent_association_for_subject
     case self.nested_object_class
       when "Submission"

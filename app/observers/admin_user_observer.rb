@@ -6,8 +6,6 @@
 # This is an observer for AdminUser.
 ###
 class AdminUserObserver < ActiveRecord::Observer
-  observe AdminUser
-
   ###
   # notify user and send password setup instructions.
   ###

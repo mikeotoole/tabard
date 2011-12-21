@@ -5,19 +5,11 @@ describe SwtorCharactersController do
   let(:user) { DefaultObjects.user }
   
   describe "GET 'show'" do
-    before(:each) do
-      @character = create(:swtor_char_profile)
-    end
-    
-    it "should be successful when authenticated as a user" do
-      sign_in user
-      get 'show', :id => @character
-      response.should be_success
-    end
-  
-    it "should be successful when not authenticated as a user" do
-      get 'show', :id => @character
-      response.should be_success
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show'
+        assert_response :missing
+      end
     end
   end
 
@@ -75,22 +67,32 @@ describe SwtorCharactersController do
     before(:each) do
       sign_in user
     end
-    
+
     it "should add new character" do
       expect {
           post :create, :swtor_character => valid_attributes
         }.to change(SwtorCharacter, :count).by(1)
     end
-    
+
     it "should pass params to swtor_character" do
       post :create, :swtor_character => valid_attributes
       assigns(:swtor_character).should be_a(SwtorCharacter)
       assigns(:swtor_character).should be_persisted
     end
-    
-    it "should redirect to new swtor character" do
+
+    it "should redirect to user profile dashboard" do
       post :create, :swtor_character => valid_attributes
-      response.should redirect_to(SwtorCharacter.last)
+      response.should redirect_to(user_root_url + "#characters")
+    end
+    
+    it "should create an activity" do
+      expect {
+        post :create, :swtor_character => valid_attributes
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'created'
     end
   end
   
@@ -121,30 +123,25 @@ describe SwtorCharactersController do
       SwtorCharacter.find(1).name.should eq(@new_name)
     end
     
-    it "should redirect to swtor character" do
-      response.should redirect_to(swtor_character_url(assigns[:swtor_character]))
-    end
-  end  
-  
-  describe "PUT 'update' when authenticated as a user" do
-    before(:each) do
-      @characterDefault = Factory.create(:swtor_char_profile)
-      @characterNotDefault = Factory.create(:swtor_char_profile)
-      sign_in user
-    end
-  
-    it "should update default when set to true" do
-      SwtorCharacter.find(@characterNotDefault).default.should be_false
-      put 'update', :id => @characterNotDefault, :swtor_character => { :default => true }
-      SwtorCharacter.exists?(@characterNotDefault).should be_true
-      SwtorCharacter.find(@characterNotDefault).default.should be_true
+    it "should redirect user profile dashboard" do
+      response.should redirect_to(user_root_url + "#characters")
     end
     
-    it "should not update default when set from true to false" do
-      SwtorCharacter.find(@characterDefault).default.should be_true
-      put 'update', :id => @characterDefault, :swtor_character => { :default => false }
-      SwtorCharacter.exists?(@characterDefault).should be_true
-      SwtorCharacter.find(@characterDefault).default.should be_true
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'edited'
+    end
+  end
+  
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
+      sign_in user
+      @character = create(:swtor_char_profile)
+      
+      expect {
+        put 'update', :id => @character, :swtor_character => { :name => @character.name }
+      }.to change(Activity, :count).by(0)
     end
   end
   

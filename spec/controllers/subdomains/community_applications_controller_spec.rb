@@ -227,6 +227,10 @@ describe Subdomains::CommunityApplicationsController do
       it "should make the application not pending" do
         community_application.is_pending?.should be_false
       end
+      it "should create an Activity" do
+        activity = Activity.find_last_by_target_id_and_target_type(community_application.user_profile.id, "UserProfile")
+        activity.action.should eql 'accepted'
+      end
     end
   end
 

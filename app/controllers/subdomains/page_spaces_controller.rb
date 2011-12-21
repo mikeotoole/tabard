@@ -16,6 +16,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   before_filter :create_page_space, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -40,14 +41,21 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # POST /page_spaces(.:format)
   def create
-    add_new_flash_message('Page space was successfully created.') if @page_space.save
+    if @page_space.save
+      add_new_flash_message('Page space was successfully created.')
+      @action = 'created'
+    end
     respond_with(@page_space)
   end
 
   # PUT /page_spaces/:id(.:format)
   def update
-    if @page_space.update_attributes(params[:page_space])
+    @page_space.assign_attributes(params[:page_space])
+    is_changed = @page_space.changed?
+
+    if @page_space.save
       add_new_flash_message('Page space was successfully updated.')
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@page_space)
   end
@@ -88,5 +96,19 @@ protected
   ###
   def create_page_space
     @page_space = current_community.page_spaces.new(params[:page_space]) if current_community
+  end
+
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page space is created or updated.
+  ###
+  def create_activity
+    if @action
+      Activity.create!( :user_profile => current_user.user_profile,
+                        :community => @page_space.community,
+                        :target => @page_space,
+                        :action => @action)
+    end
   end
 end

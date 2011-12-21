@@ -7,6 +7,16 @@
 ###
 class CustomForm < ActiveRecord::Base
 ###
+# Constants
+###
+  # Used by validators and view to restrict name length
+  MAX_NAME_LENGTH = 30
+  # Used by validators and view to restrict instructions length
+  MAX_INSTRUCTIONS_LENGTH = 500
+  # Used by validators and view to restrict thank you length
+  MAX_THANKYOU_LENGTH = 255
+  
+###
 # Attribute accessible
 ###
   attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes
@@ -24,9 +34,11 @@ class CustomForm < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
-  validates :instructions, :presence => true
-  validates :thankyou, :presence => true
+                    :length => { :maximum => MAX_NAME_LENGTH }
+  validates :instructions, :presence => true,
+                           :length => { :maximum => MAX_INSTRUCTIONS_LENGTH }
+  validates :thankyou, :presence => true,
+                       :length => { :maximum => MAX_THANKYOU_LENGTH }
   validates :community, :presence => true
   validate :cant_unpublish_application_form
 
@@ -67,10 +79,11 @@ class CustomForm < ActiveRecord::Base
     self.community.community_application_form == self
   end
 
+  # This method applys default permissions when this is created.
   def apply_default_permissions
     self.community.apply_default_permissions(self)
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -87,6 +100,8 @@ protected
     self.errors.add(:is_published, "must be true for community application form.")
   end
 end
+
+
 
 
 # == Schema Information

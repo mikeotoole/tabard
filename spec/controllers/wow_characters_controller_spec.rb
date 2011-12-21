@@ -5,19 +5,11 @@ describe WowCharactersController do
   let(:user) { DefaultObjects.user }
   
   describe "GET 'show'" do
-    before(:each) do
-      @character = create(:wow_char_profile)
-    end
-    
-    it "should be successful when authenticated as a user" do
-      sign_in user
-      get 'show', :id => @character
-      response.should be_success
-    end
-  
-    it "should be successful when not authenticated as a user" do
-      get 'show', :id => @character
-      response.should be_success
+    it "should throw routing error" do
+      assert_raises(ActionController::RoutingError) do
+        get 'show'
+        assert_response :missing
+      end
     end
   end
 
@@ -73,7 +65,6 @@ describe WowCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in user
-      @game = DefaultObjects.wow
       post 'create', :wow_character => valid_attributes
     end
     
@@ -85,14 +76,26 @@ describe WowCharactersController do
       WowCharacter.find(1).name.should == "My Test Name"
     end
     
-    it "should redirect to new wow character" do
-      response.should redirect_to(wow_character_url(1))
+    it "should redirect to user profile dashboard" do
+      response.should redirect_to(user_root_url + "#characters")
     end
   end
   
+  describe "POST 'create' when authenticated as a user" do
+    it "should create an activity" do
+      sign_in user
+      expect {
+        post :create, :wow_character => valid_attributes
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'created'
+    end
+  end  
+  
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
-      @game = Wow.new(:name => "My Wow")
       post 'create', :wow_character => valid_attributes
     end
     
@@ -117,40 +120,27 @@ describe WowCharactersController do
       WowCharacter.find(@character).name.should == @new_name
     end
     
-    it "should redirect to wow character" do
-      response.should redirect_to(wow_character_url(assigns[:swtor_character]))
+    it "should redirect to user profile dashboard" do
+      response.should redirect_to(user_root_url + "#characters")
+    end
+    
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'edited'
     end
   end
   
-  describe "PUT 'update' when authenticated as a user" do
-    before(:each) do
-      @characterDefault = Factory.create(:wow_char_profile)
-      @characterNotDefault = Factory.create(:wow_char_profile)
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
       sign_in user
+      @character = create(:wow_char_profile)
+      
+      expect {
+        put 'update', :id => @character, :wow_character => { :name => @character.name }
+      }.to change(Activity, :count).by(0)
     end
-  
-    it "should update default when set to true" do
-      @characterNotDefault.default.should be_false
-      put 'update', :id => @characterNotDefault, :wow_character => { :default => true }
-      WowCharacter.exists?(@characterNotDefault).should be_true
-      WowCharacter.find(@characterNotDefault).default.should be_true
-    end
-    
-    it "should not update default when set from true to false" do
-      @characterDefault.default.should be_true
-      put 'update', :id => @characterDefault, :wow_character => { :default => false }
-      WowCharacter.exists?(@characterDefault).should be_true
-      WowCharacter.find(@characterDefault).default.should be_true
-    end
-    
-    it "should not make character default on update" do
-      @characterNotDefault.default.should be_false
-      put 'update', :id => @characterNotDefault, :wow_character => { :name => "New Name" }
-      WowCharacter.exists?(@characterNotDefault).should be_true
-      WowCharacter.find(@characterNotDefault).default.should be_false
-      WowCharacter.find(@characterNotDefault).name.should eql "New Name"
-    end
-  end  
+  end
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
     @character = Factory.create(:wow_char_profile)

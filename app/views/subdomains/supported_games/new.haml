@@ -5,7 +5,7 @@
 = simple_form_for @supported_game, :html => {:novalidate => true} do |f|
   %fieldset
     %ol
-      = f.input :name, :hint => 'A unique name for this configuration (i.e. Main Server, Alpha Team, etc)'
+      = f.input :name, :hint => 'A unique name for this configuration (i.e. Main Server, Alpha Team, etc)', :input_html => { :maxlength => SupportedGame::MAX_NAME_LENGTH }
       = f.input :game_type, :as => :radio, :label => 'Game', :collection => Game::VALID_GAMES, :wrapper_html => { class: 'game_type select', affects: 'faction server_name' }
       = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'game_type', affected_by_value: @supported_game.game_type, label: 'Faction', field: 'faction', field_value: @supported_game.faction, collection: [['Wow',Wow.all_factions],['Swtor',Swtor.all_factions]] }
       = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'game_type', affected_by_value: @supported_game.game_type, label: 'Server', field: 'server_name', field_value: @supported_game.server_name, collection: [['Wow',Wow.all_servers],['Swtor',Swtor.all_servers]] }

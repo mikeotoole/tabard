@@ -27,45 +27,6 @@ describe CharacterProxy do
     build(:character_proxy, :character => nil).should_not be_valid
   end
   
-  describe "is_default_character" do
-    it "updated from true to false should not be allowed" do
-      firstProxy = create(:character_proxy)
-      secondProxy = create(:character_proxy)
-      firstProxy.is_default_character.should be_true
-      secondProxy.is_default_character.should be_false
-      firstProxy_id = firstProxy.id
-      secondProxy_id = secondProxy.id
-      
-      firstProxy.update_attributes(:is_default_character => false)
-      CharacterProxy.find(firstProxy_id).is_default_character.should be_true
-      CharacterProxy.find(secondProxy_id).is_default_character.should be_false
-    end
-  
-    it "updated from false to true should unset previous default" do
-      firstProxy = create(:character_proxy)
-      secondProxy = create(:character_proxy)
-      firstProxy.is_default_character.should be_true
-      secondProxy.is_default_character.should be_false
-      firstProxy_id = firstProxy.id
-      secondProxy_id = secondProxy
-      
-      secondProxy.update_attributes(:is_default_character => true)
-      CharacterProxy.find(firstProxy_id).is_default_character.should be_false
-      CharacterProxy.find(secondProxy_id).is_default_character.should be_true
-    end
-   end
-  
-  it "was default and is removed should set first for game as default" do
-      firstProxy = create(:character_proxy)
-      secondProxy = create(:character_proxy)
-      firstProxy.is_default_character.should be_true
-      secondProxy.is_default_character.should be_false
-      secondProxy_id = secondProxy
-      
-      firstProxy.destroy.should be_true
-      CharacterProxy.find(secondProxy_id).is_default_character.should be_true
-  end
-  
   it "should delete character when destroyed" do
     character = create(:wow_char_profile)
     character.should be_valid

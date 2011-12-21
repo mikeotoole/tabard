@@ -6,23 +6,30 @@
 # This class represents a predefined answer.
 ###
 class PredefinedAnswer < ActiveRecord::Base
-   ###
-   # Attribute accessible
-   ###
+###
+# Constants
+###
+  MAX_BODY_LENGTH = 30
+  
+###
+# Attribute accessible
+###
    attr_accessible :body, :select_question_id
 
-   ###
-   # Associations
-   ###
+###
+# Associations
+###
    belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
 
-   ###
-   # Validators
-   ###
+###
+# Validators
+###
    validates :body, :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_BODY_LENGTH }
    validates :question, :presence => true
 end
+
+
 
 # == Schema Information
 #

@@ -2,7 +2,7 @@
 # Helpers
 ###
 
-def create_discussion_space(community_name, space_name, faction='')
+def create_discussion_space(creator_last_name, community_name, space_name, faction='')
   puts "Creating #{community_name} discussion space #{space_name}"
   community = Community.find_by_name(community_name)
 
@@ -21,7 +21,9 @@ def create_discussion_space(community_name, space_name, faction='')
   supported_game = game ? community.supported_games.find_by_game_id_and_game_type(game.id, game.class.name) : nil
 
   puts "With game #{supported_game.game_name}" if supported_game
-  community.discussion_spaces.create!(:name => space_name, :supported_game => supported_game)
+  ds = community.discussion_spaces.create!(:name => space_name, :supported_game => supported_game)
+  creator = UserProfile.find_by_last_name(creator_last_name)
+  Activity.create!(:user_profile => creator, :community => community, :target => ds, :action => "created")
 end
 
 def create_discussion(community_name, space_name, name, body, poster_last_name)
@@ -61,13 +63,13 @@ unless @dont_run
   ###
 
   # Two Maiden
-  create_discussion_space('Two Maidens', 'General Chat')
-  create_discussion_space('Two Maidens', 'WoW', 'Horde')
+  create_discussion_space('Fox', 'Two Maidens', 'General Chat')
+  create_discussion_space('Fox', 'Two Maidens', 'WoW', 'Horde')
 
   # Just Another Headshot
-  create_discussion_space('Just Another Headshot', 'General Chat')
-  create_discussion_space('Just Another Headshot', 'WoW Discussions', 'Horde')
-  create_discussion_space('Just Another Headshot', 'SWTOR Discussions', 'Empire')
+  create_discussion_space('Billy', 'Just Another Headshot', 'General Chat')
+  create_discussion_space('Billy', 'Just Another Headshot', 'WoW Discussions', 'Horde')
+  create_discussion_space('Billy', 'Just Another Headshot', 'SWTOR Discussions', 'Empire')
 
   jahc_gd = create_discussion('Just Another Headshot', 'General Chat', 'What up hommies!?', 'How was your weekend?', 'Billy')
   create_discussion('Just Another Headshot', 'WoW Discussions', 'General WoW Discussion', 'YAY lets discuss WoW', 'Turtle')

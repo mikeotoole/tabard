@@ -7,6 +7,14 @@
 ###
 class DiscussionSpace < ActiveRecord::Base
 ###
+# Constants
+###
+  # Used by the validator. Needs to be extra long to allow announcment spacee names using full game name.
+  MAX_NAME_LENGTH = 150
+  # Used buy the view to limit the number of characters a user can enter.
+  MAX_NAME_LENGTH_VIEW = 30
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :supported_game_id
@@ -22,7 +30,7 @@ class DiscussionSpace < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :community, :presence => true
 
 ###
@@ -66,11 +74,14 @@ class DiscussionSpace < ActiveRecord::Base
     self.discussions.count
   end
 
+  # This method applys default permissions when this is created.
   def apply_default_permissions
     return if self.is_announcement_space
     self.community.apply_default_permissions(self)
   end
 end
+
+
 
 
 

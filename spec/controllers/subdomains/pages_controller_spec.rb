@@ -36,29 +36,26 @@ describe Subdomains::PagesController do
   end
 
   describe "GET index" do
-    it "assigns all pages as @pages when authenticated as a member" do
-      page.page_space_id.should eq(space.id)
-      sign_in owner
-      get :index, :page_space_id => space.id
-      assigns(:pages).should eq([page])
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in owner
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
     end
-    
-    it "should render the 'index' template when authenticated as a member" do
-      sign_in owner
-      get :index, :page_space_id => space.id
-      response.should render_template("index")
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
     end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :index, :page_space_id => space.id
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :index, :page_space_id => space.id
-      response.should be_forbidden
-    end    
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get :index, :page_space_id => space.id
+        assert_response :missing
+      end
+    end   
   end
 
   describe "GET show" do
@@ -177,6 +174,16 @@ describe Subdomains::PagesController do
         post :create, :page_space_id => space.id, :page => attributes_for(:page)
         response.should redirect_to(Page.last)
       end
+      
+      it "should create an activity" do
+        expect {
+          post :create, :page_space_id => space.id, :page => attributes_for(:page)
+        }.to change(Activity, :count).by(1)
+        
+        activity = Activity.last
+        activity.target_type.should eql "Page"
+        activity.action.should eql 'created'
+      end
     end
 
     describe "with invalid params" do
@@ -188,6 +195,12 @@ describe Subdomains::PagesController do
       it "re-renders the 'new' template" do
         post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
         response.should render_template("new")
+      end
+      
+      it "should not create an activity" do
+        expect {
+          post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
+        }.to change(Activity, :count).by(0)
       end
     end
   end
@@ -218,13 +231,8 @@ describe Subdomains::PagesController do
   
     describe "with valid params" do
       it "updates the requested page" do
-        page
-        # Assuming there are no other pages in the database, this
-        # specifies that the Page created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Page.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => page.id, :page => {'these' => 'params'}
+        put :update, :id => page.id, :page => {:name => "New name"}
+        Page.find(page).name.should eql "New name"
       end
 
       it "assigns the requested page as @page" do
@@ -235,6 +243,20 @@ describe Subdomains::PagesController do
       it "redirects to the page" do
         put :update, :id => page.id, :page => {:name => "New name"}
         response.should redirect_to(page)
+      end
+      
+      it "should create an Activity when attributes change" do
+        put :update, :id => page.id, :page => {:name => "New name"}
+        activity = Activity.last
+        activity.target_type.should eql "Page"
+        activity.action.should eql 'edited'
+      end
+      
+      it "should not create an Activity when attributes don't change" do        
+        page
+        expect {
+          put :update, :id => page.id, :page => {:name => page.name}
+        }.to change(Activity, :count).by(0)
       end
     end
 
@@ -277,16 +299,16 @@ describe Subdomains::PagesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested page when authenticated as owner" do
+    it "destroys the requested page when authenticated an admin" do
       page
-      sign_in owner
+      sign_in admin
       expect {
         delete :destroy, :id => page.id.to_s
       }.to change(Page, :count).by(-1)
     end
 
-    it "redirects to the page list when authenticated as owner" do
-      sign_in owner
+    it "redirects to the page list when authenticated an admin" do
+      sign_in admin
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)
     end

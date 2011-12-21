@@ -10,7 +10,9 @@ class Page < ActiveRecord::Base
 # Constants
 ###
   # The max number of pages the user can have displayed in the navigation.
-  MAX_NUMBER_OF_NAVIGATION_PAGES =  5
+  MAX_NUMBER_OF_NAVIGATION_PAGES = 5
+  # Used by validators and view to restrict name length
+  MAX_NAME_LENGTH = 30
 
 ###
 # Attribute accessible
@@ -29,8 +31,8 @@ class Page < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+  validates :name, :presence => true,
+                   :length => { :maximum => MAX_NAME_LENGTH }
   validates :markup, :presence => true
   validates :page_space, :presence => true
   validate :limit_number_of_pages
@@ -82,6 +84,8 @@ protected
     end
   end
 end
+
+
 
 
 

@@ -38,7 +38,14 @@ describe Subdomains::RosterAssignmentsController do
   end
   
   describe "GET 'index'" do
-    it "should be unauthorized when authenticated as a non-member" do
+    it "should be success when authenticated as a non-member and a public roster" do
+      community.update_attribute(:is_public_roster, true)
+      sign_in user
+      get 'index'
+      response.should be_success
+    end
+
+    it "should be unauthorized when authenticated as a non-member and a non public roster" do
       sign_in user
       get 'index'
       response.response_code.should == 403
@@ -50,9 +57,14 @@ describe Subdomains::RosterAssignmentsController do
       response.should be_success
     end
 
-    it "should redirected to new user session path when not authenticated as a user" do
+    it "should be successful as an anon and public roster" do
+      community.update_attribute(:is_public_roster, true)
       get 'index'
-      response.should redirect_to(new_user_session_url)
+      response.should be_success
+    end
+    it "should be unauthorized as an anon and a non public roster" do
+      get 'index'
+      response.response_code.should == 403
     end
   end
 
@@ -102,31 +114,6 @@ describe Subdomains::RosterAssignmentsController do
     end
   end
 
-  describe "GET 'edit'" do
-    it "should be unauthorized when authenticated as a non-owner" do
-      sign_in user
-      get 'edit', :id => roster_assignment
-      response.response_code.should == 403
-    end
-
-    it "should be successful when authenticated as an owner" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should be_success
-    end
-
-    it "shouldn't be successful when not authenticated as a user" do
-      get 'edit', :id => roster_assignment
-      response.should redirect_to(new_user_session_url)
-    end
-
-    it "should render roster_assignments/new template" do
-      sign_in admin_user
-      get 'edit', :id => roster_assignment
-      response.should render_template('roster_assignments/edit')
-    end
-  end
-
   describe "POST 'create' authenticated as non-owner" do
     before(:each) do
       sign_in user
@@ -144,46 +131,6 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should not create new record" do
       assigns[:roster_assignment].should be_nil
-    end
-
-    it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
-    end
-  end
-
-  describe "PUT 'update' when authenticated as a non-owner" do
-    before(:each) do
-      sign_in user
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
-    end
-
-    it "should change attributes" do
-      assigns[:roster_assignment].should be_nil
-    end
-
-    it "should be unauthorize" do
-      response.response_code.should == 403
-    end
-  end
-
-  describe "PUT 'update' when authenticated as an owner" do
-    before(:each) do
-      sign_in admin_user
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
-    end
-
-    it "should change attributes" do
-      assigns[:roster_assignment].is_pending.should be_false
-    end
-
-    it "should redirect to new community" do
-      response.should redirect_to(roster_assignment_url(assigns[:roster_assignment]))
-    end
-  end
-
-  describe "PUT 'update' when not authenticated as a user" do
-    before(:each) do
-      put 'update', :id => roster_assignment, :roster_assignment => { :is_pending => false }
     end
 
     it "should redirect to new user session path" do
@@ -239,21 +186,50 @@ describe Subdomains::RosterAssignmentsController do
     end
   end
   
+  describe "PUT 'approve' when authenticated as an owner" do
+    it "should create an activity" do
+      sign_in admin_user
+      roster_assignment.update_attribute(:is_pending, true)
+      
+      expect {
+         put 'approve', :id => roster_assignment
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'accepted'
+    end
+  end
+  
   describe "PUT 'batch_approve'" do
     before(:each) do
       roster_assignment.update_attribute(:is_pending, true)
       roster_assignment2.update_attribute(:is_pending, true)
     end
+    
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user
       put :batch_approve, :ids => roster_assignment_id_array
       RosterAssignment.find_by_id(roster_assignment).is_pending.should be_false
       RosterAssignment.find_by_id(roster_assignment2).is_pending.should be_false
     end
+    
     it "should be forbidden when authenticated as member" do
       sign_in billy
       put :batch_approve, :ids => roster_assignment_id_array
       response.should be_forbidden
+    end
+    
+    it "should create multiple activities" do      
+      sign_in admin_user
+      
+      expect {
+         put :batch_approve, :ids => roster_assignment_id_array
+      }.to change(Activity, :count).by(2)
+      
+      activity = Activity.last
+      activity.target_type.should eql "CharacterProxy"
+      activity.action.should eql 'accepted'
     end
   end
 
