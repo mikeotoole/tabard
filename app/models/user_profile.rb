@@ -21,14 +21,14 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
-  
+
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
-  
+
   has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
   has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter'
   has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter'
-  
+
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
@@ -286,24 +286,24 @@ class UserProfile < ActiveRecord::Base
   def trash
     folders.find_by_name("Trash")
   end
-  
+
   def remove_all_avatars
     self.remove_avatar!
     characters.each do |character|
       character.remove_avatar!
     end
   end
-  
-  def nuke    
+
+  def nuke
     self.swtor_characters.each{|swtor_character| swtor_character.delete}
     self.wow_characters.each{|wow_character| wow_character.delete}
     self.character_proxies.each{|character_proxy| character_proxy.delete}
-    
+
     self.owned_communities.each{|community| community.nuke}
     self.community_applications.each{|application| application.destroy!}
     self.community_profiles.each{|community_profile| community_profile.destroy!}
     self.view_logs.each{|application| view_log.destroy!}
-    
+
     self.discussions.each{|discussion| discussion.nuke}
     self.comments.each{|comment| comment.nuke}
   end

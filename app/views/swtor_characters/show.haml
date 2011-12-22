@@ -1,6 +1,6 @@
 - if not @swtor_character.is_disabled?
   - title "#{@swtor_character.name}"
-  
+
   #body
     %p
       = image_tag(@swtor_character.avatar_url)
@@ -28,11 +28,11 @@
     %p
       %b About:
       = @swtor_character.about
-    
+
     - if can? :edit, @swtor_character
       = link_to 'Edit', edit_swtor_character_path(@swtor_character)
     - if can? :destroy, @swtor_character
-      = link_to 'Remove', @swtor_character, :confirm => 'Are you sure?', :method => :delete 
+      = link_to 'Remove', @swtor_character, :confirm => 'Are you sure?', :method => :delete
 - else
   #body
     %b This character has been removed

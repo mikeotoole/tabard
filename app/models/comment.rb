@@ -122,7 +122,8 @@ class Comment < ActiveRecord::Base
       self.update_attribute(:is_removed, true)
     end
   end
-  
+
+  # This will force comment and its comments to be fully removed.
   def nuke
     self.comments.each{|comment| comment.nuke}
     self.destroy!

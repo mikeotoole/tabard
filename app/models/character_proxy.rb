@@ -48,7 +48,7 @@ class CharacterProxy < ActiveRecord::Base
 
 ###
 # Instance Methods
-###  
+###
   # Overrides the destroy to only mark as deleted and removes character from any rosters.
   def destroy
     self.roster_assignments.clear if self.roster_assignments

@@ -106,7 +106,7 @@ class Discussion < ActiveRecord::Base
   def update_viewed(user_profile)
     self.user_profile.update_viewed(self)
   end
-  
+
   def nuke
     self.all_comments.each{|comment| comment.nuke}
     self.destroy!
@@ -127,8 +127,8 @@ protected
     return unless self.character_proxy
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
-  
-  
+
+
 ###
 # Callback Methods
 ###
@@ -136,7 +136,7 @@ protected
   # _before_destroy_
   #
   # Destroys all comments
-  ###  
+  ###
   def destroy_all_comments
     Comment.where(:original_commentable_id => self.id, :original_commentable_type => 'Discussion').update_all(:deleted_at => Time.now)
   end

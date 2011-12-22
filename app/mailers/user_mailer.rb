@@ -32,7 +32,7 @@ class UserMailer < ActionMailer::Base
        format.html { render "devise/mailer/new_admin_user_setup_instructions" }
     end
   end
-  
+
   # Used for reinstating an account.
   def reinstate_account(user, password)
     @resource = user

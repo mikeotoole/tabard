@@ -39,7 +39,7 @@ class Subdomains::CustomFormsController < SubdomainsController
       respond_with @custom_form
     end
   end
-  
+
   # GET /custom_forms/:id/thankyou
   def thankyou
   end

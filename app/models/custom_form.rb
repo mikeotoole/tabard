@@ -18,7 +18,7 @@ class CustomForm < ActiveRecord::Base
   MAX_INSTRUCTIONS_LENGTH = 500
   # Used by validators and view to restrict thank you length
   MAX_THANKYOU_LENGTH = 255
-  
+
 ###
 # Attribute accessible
 ###
@@ -78,7 +78,7 @@ class CustomForm < ActiveRecord::Base
   def application_form?
     self.community.community_application_form == self
   end
-  
+
 ###
 # Protected Methods
 ###

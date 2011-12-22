@@ -97,7 +97,7 @@ class BaseCharacter < ActiveRecord::Base
   def is_disabled?
     self.is_removed or self.user_profile.is_disabled?
   end
-  
+
   # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
   def destroy
     self.roster_assignments.clear if self.roster_assignments

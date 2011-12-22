@@ -8,7 +8,7 @@
 class Answer < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
-  
+
 ###
 # Attribute accessible
 ###
@@ -59,7 +59,7 @@ protected
       self.body = self.body.delete_if{|elem| elem.blank?}.join(', ')
     end
   end
-  
+
   ###
   # _before_save_
   #
@@ -68,7 +68,7 @@ protected
   ###
   def dont_orphan_question
     if self.question and not self.question.custom_form_id and self.question.answers.count < 2
-      self.question.update_attribute(:deleted_at, Time.now)  
+      self.question.update_attribute(:deleted_at, Time.now)
     end
   end
 end

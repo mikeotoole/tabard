@@ -13,7 +13,7 @@ class PredefinedAnswer < ActiveRecord::Base
 # Constants
 ###
   MAX_BODY_LENGTH = 30
-  
+
 ###
 # Attribute accessible
 ###

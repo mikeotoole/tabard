@@ -7,10 +7,10 @@
 ###
 class CommunityProfile < ActiveRecord::Base
   include Exceptions
-  
+
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
-  acts_as_paranoid  
-  
+  acts_as_paranoid
+
 ###
 # Associations
 ###
@@ -30,7 +30,7 @@ class CommunityProfile < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => [:community_id, :deleted_at]}, 
+  validates :user_profile_id, :uniqueness => {:scope => [:community_id, :deleted_at]},
                                 :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
 

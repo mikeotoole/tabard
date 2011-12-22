@@ -57,9 +57,9 @@ unless @dont_run
 
   # Two Maidens
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
-  
+
   fox = UserProfile.find_by_last_name('Fox')
-  
+
   %w(Pidgeon Tiger Crab).each do |last_name|
     generate_application(two_maidens, last_name).accept_application(fox)
     puts "Accepted application"

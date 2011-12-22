@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
   def reinstate_confirmation
     @user = User.new
   end
-  
+
   # PUT /users/reinstate
   def send_reinstate
     user = User.find_by_email(params[:user][:email]) if params[:user]
@@ -73,18 +73,18 @@ class RegistrationsController < Devise::RegistrationsController
       render :reinstate_confirmation
     end
   end
-  
+
   # GET /users/reinstate_account?reset_password_token=abcdef
   def reinstate_account_edit
     self.resource = resource_class.new
     resource.reset_password_token = params[:reset_password_token]
     render :reinstate_account
   end
-  
+
   # PUT /users/reinstate_account
   def reinstate_account
     self.resource = resource_class.reset_password_by_token(params[resource_name])
-    
+
     if resource.errors.empty?
       resource.update_attribute(:user_disabled_at, nil)
       add_new_flash_message "Your account has been reinstated!", "success"

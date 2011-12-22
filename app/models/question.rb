@@ -36,7 +36,7 @@ class Question < ActiveRecord::Base
 ###
   validates :body, :presence => true,
                    :length => { :maximum => MAX_BODY_LENGTH }
-  validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }                 
+  validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }
   #validates :style, :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }

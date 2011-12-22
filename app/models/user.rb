@@ -234,7 +234,7 @@ class User < ActiveRecord::Base
       self.community_profiles.clear
       self.owned_communities.clear
       self.remove_all_avatars
-    end  
+    end
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
