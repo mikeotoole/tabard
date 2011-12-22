@@ -228,7 +228,7 @@ describe Subdomains::DiscussionsController do
         }.to change(Activity, :count).by(0)
       end
 
-	  it "should set has_been_edit to true" do
+      it "should set has_been_edit to true" do
         put :update, :id => discussion.id, :discussion => {:name => "New name"}
         Discussion.find(discussion).has_been_edited.should be_true
       end
