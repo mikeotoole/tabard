@@ -12,14 +12,6 @@ describe Subdomains::QuestionsController do
   end
 
   describe "GET index" do
-    it "assigns all questions as @questions" do
-      sign_in user
-      pending
-      question.custom_form_id.should eq(custom_form.id)
-      get :index, :custom_form_id => custom_form.id
-      assigns(:questions).should eq([question])
-    end
-    
     it "should redirected to new user session path when not authenticated as a user" do
       get :index, :custom_form_id => custom_form.id
       response.should redirect_to(new_user_session_url)

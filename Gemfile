@@ -64,7 +64,7 @@ source 'http://rubygems.org'
     gem 'annotate'
     gem 'rails_best_practices'
     gem 'haml-rails'
-    gem 'timecop'
+    gem 'rails-dev-tweaks'
   end
 
 # Development and Test Specific Gems
@@ -72,6 +72,7 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'factory_girl_rails'
+    gem 'timecop'
   end
 
 # Test Specific Gems
@@ -81,7 +82,7 @@ source 'http://rubygems.org'
     gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
-    gem 'growl_notify'
+    #gem 'growl_notify'
     gem 'simplecov'
     gem 'ruby-debug19'
   end

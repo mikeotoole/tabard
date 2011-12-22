@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :permission do
     role
     permission_level "View"
-    subject_class "Role"
+    subject_class "Comment"
     
     trait :view do
       permission_level "View"
@@ -20,8 +20,8 @@ FactoryGirl.define do
       permission_level "Delete"
     end
     
-    trait :role do
-      subject_class "Role"
+    trait :comment do
+      subject_class "Comment"
     end
   end
 end

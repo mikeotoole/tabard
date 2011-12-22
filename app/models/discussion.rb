@@ -7,8 +7,9 @@
 ###
 class Discussion < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
-  acts_as_paranoid
+  acts_as_paranoid  
 
+  #default_scope :order => 'created_at DESC' # TODO Mike/Joe, Can't use acts_as_paranoid and default scope. We will need to do this differently. -MO
 ###
 # Constants
 ###
@@ -17,7 +18,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited
 
 ###
 # Associations
@@ -103,8 +104,8 @@ class Discussion < ActiveRecord::Base
   # [Args]
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
-  def update_viewed(user_profile)
-    self.user_profile.update_viewed(self)
+  def update_viewed(some_user_profile)
+    some_user_profile.update_viewed(self)
   end
 
   def nuke
@@ -158,5 +159,6 @@ end
 #  created_at          :datetime
 #  updated_at          :datetime
 #  deleted_at          :datetime
+#  has_been_edited     :boolean         default(FALSE)
 #
 

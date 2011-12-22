@@ -13,20 +13,23 @@ DaBvRails::Application.routes.draw do
     get 'users/reinstate_account' => 'registrations#reinstate_account_edit', :as => :reinstate_account
     put 'users/reinstate_account' => 'registrations#reinstate_account', :as => :reinstate_account
   end
-  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Documents
   get "users/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
+  resources :user_profiles, :only => [:show, :edit, :update, :account]
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
+  match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
 
   # Active profile
   resource :active_profiles, :only => [:create]
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
+
+  # Activity
+  resources :activities, :only => [:index]
 
   # Communities
   resources :communities, :except => [:destroy, :update, :edit]
@@ -78,9 +81,7 @@ DaBvRails::Application.routes.draw do
       resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
-      resources :roles do
-        resources :permissions
-      end
+      resources :roles, :except => [:show]
 
       # Roster assignments
       get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"
@@ -88,7 +89,7 @@ DaBvRails::Application.routes.draw do
       put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", :as => "batch_approve_roster_assignments"
       put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", :as => "batch_reject_roster_assignments"
       delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", :as => "batch_destroy_roster_assignments"
-      resources :roster_assignments, :except => [:show, :new] do
+      resources :roster_assignments, :except => [:show, :new, :edit, :update] do
         member do
           put :approve
           put :reject
@@ -141,7 +142,7 @@ DaBvRails::Application.routes.draw do
 
       # Pages
       resources :page_spaces do
-        resources :pages, :shallow => true
+        resources :pages, :shallow => true, :except => [:index]
       end
 
       # Supported Games

@@ -11,6 +11,7 @@
 #  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  has_been_edit       :boolean         default(FALSE)
 #  deleted_at          :datetime
 #
 
@@ -94,16 +95,17 @@ describe Discussion do
   end
   
   it "update_viewed(user_profile) should update view_log modified time for user_profile if it exists" do
+    Timecop.freeze(1.day.ago)
     discussion.view_logs.should be_empty
     discussion.update_viewed(user_profile)
     Discussion.find(discussion).view_logs.count.should eq(1)
     org_log = Discussion.find(discussion).view_logs.first
     org_log.should be_a(ViewLog)
-    
+    Timecop.return
     discussion.update_viewed(user_profile)
     Discussion.find(discussion).view_logs.count.should eq(1)
     updated_log = Discussion.find(discussion).view_logs.first
-    (org_log.updated_at < updated_log.updated_at).should be_true
+    org_log.updated_at.should_not eql updated_log.updated_at
   end
   
   it "should respond to view_logs" do

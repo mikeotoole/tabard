@@ -74,6 +74,7 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: answers

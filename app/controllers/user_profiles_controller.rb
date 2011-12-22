@@ -5,19 +5,19 @@
 #
 # This controller is for user profiles.
 ###
-
 class UserProfilesController < ApplicationController
   respond_to :html
   ###
   # Before Filters
   ###
   before_filter :block_unauthorized_user!, :except => [:show]
-  before_filter :set_current_user_as_profile, :only => [:index, :account]
+  before_filter :set_current_user_as_profile, :only => [:dashboard, :account]
   load_and_authorize_resource
   skip_authorize_resource :only => :account
+  before_filter :load_activities, :only => [:dashboard, :show]
 
-  # GET /user_profiles/
-  def index
+  # GET /dashboard
+  def dashboard
     render :show
   end
 
@@ -44,6 +44,13 @@ class UserProfilesController < ApplicationController
   def set_current_user_as_profile
     @user_profile = current_user.user_profile
     authorize! :update, @user_profile
+  end
+
+  # This method gets a list of activites for the user profile
+  def load_activities
+    @activities_count_initial = 20
+    @activities_count_increment = 10
+    @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, @activities_count_initial)
   end
 
 end

@@ -13,9 +13,9 @@
   %p
     = @discussion.body
 
-- if @discussion.comments.size > 0 or can? :comment, @discussion
+- if @discussion.comments.any? or can? :comment, @discussion
   %aside.comments
-    - if @discussion.comments.size > 0
+    - if @discussion.comments.any?
       %ol
         - @discussion.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment

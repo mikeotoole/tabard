@@ -28,10 +28,12 @@ class RosterAssignment < ActiveRecord::Base
 ###
   delegate :user_profile, :user_profile_id, :to => :community_profile, :prefix => true, :allow_nil => true
   delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
+  delegate :community, :to => :community_profile, :allow_nil => true
   delegate :name, :avatar_url, :to => :character_proxy, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :avatar_url, :to => :user_profile, :prefix => true
   delegate :name, :to => :character_proxy, :prefix => true
+  delegate :character, :to => :character_proxy
 
 ###
 # Callbacks

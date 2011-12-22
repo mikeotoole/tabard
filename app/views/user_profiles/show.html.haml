@@ -1,9 +1,0 @@
-%h1= @user_profile.display_name.to_s
-%p
-  = image_tag(@user_profile.avatar_url)
-%p
-  = link_to 'Edit Profile', edit_user_profile_path(@user_profile)
-%p
-  = link_to 'Add new WoW character', new_wow_character_path
-%p
-  = link_to 'Add new SWTOR character', new_swtor_character_path

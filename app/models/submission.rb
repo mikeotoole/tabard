@@ -34,6 +34,7 @@ class Submission < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
   delegate :name, :to => :custom_form, :prefix => true
+  delegate :is_published, :to => :custom_form, :prefix => true
   delegate :instructions, :to => :custom_form, :prefix => true
   delegate :questions, :to => :custom_form, :prefix => true, :allow_nil => true
   delegate :display_name, :to => :user_profile, :prefix => true

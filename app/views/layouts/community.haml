@@ -27,29 +27,30 @@
                 %ul
                   - @community.page_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          - if can? :index, DiscussionSpace
+          - if (user_signed_in? and current_user.is_member? @community)
             %li
               = link_to 'Discussions', discussion_spaces_path
               - if @community.discussion_spaces.any?
                 %ul
                   - @community.discussion_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          %li
-            -#TODO Doug - Hookup link
-            = link_to 'Announcements', announcement_spaces_url
-            - if @community.announcement_spaces.size
-              %ul
-                -#TODO Doug - Double check this after BVR-290 is complete
-                - @community.announcement_spaces.each do |space|
-                  %li= link_to space.name, announcement_space_url(space) if space.persisted?
-          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.size > 1 and can? :index, CustomForm
+          - if (user_signed_in? and current_user.is_member? @community)
+            %li
+              -#TODO Doug - Hookup link
+              = link_to 'Announcements', announcement_spaces_url
+              - if @community.announcement_spaces.any?
+                %ul
+                  -#TODO Doug - Double check this after BVR-290 is complete
+                  - @community.announcement_spaces.each do |space|
+                    %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
+          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
             %li
               = link_to 'Forms', custom_forms_path
-          - if can? :index, RosterAssignment
+          - if @community.is_public_roster or (user_signed_in? and current_user.is_member? @community)
             %li
               = link_to 'Members', roster_assignments_path
           - if user_signed_in? and current_user.communities.include?(current_community)
-            - if management_navigation_items.size > 0
+            - if management_navigation_items.any?
               %li{ :class => 'special settings' }
                 = link_to 'Manage', '#'
                 %ul

@@ -27,7 +27,7 @@
           %dd{ :class => 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
             = link_to 'Trash', trash_path, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
 
-          - if !['compose','sent'].include?(mailbox_view_state)
+          - unless ['compose','sent'].include?(mailbox_view_state)
             %dt.actions Actions
             - if mailbox_view_state == 'trash'
               %dd{ :class => 'batch action move' }

@@ -1,0 +1,13 @@
+- if characters.any?
+  %ul.characters
+    - characters.each do |character|
+      %li
+        .avatar= image_tag character.avatar_url :small
+        %h3= link_to_if (can? :update, character), character.name, edit_wow_character_path(character)
+        %dl.attributes
+          %dt Level
+          %dd= character.level
+          %dt Race
+          %dd= character.race
+          %dt Class
+          %dd= character.char_class

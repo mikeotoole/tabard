@@ -1,0 +1,25 @@
+- user_profile = UserProfile.find_by_id(activity.target_id)
+- case activity.action
+- when 'joined'
+  Created their
+  %strong Crumblin account
+- when 'description'
+  Edited their
+  %strong profile description
+- when 'title'
+  Edited thier
+  %strong profile title
+- when 'display_name'
+  Edited their
+  %strong display name
+- when 'avatar'
+  = image_tag user_profile.avatar_url :tiny
+  Changed their
+  %strong profile avatar
+- when 'profile'
+  Updated their
+  %strong profile
+- when 'accepted'
+  Joined
+  - unless defined? current_community and activity.community == current_community
+    %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

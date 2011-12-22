@@ -7,8 +7,6 @@
       %rt= " — #{@page_space.supported_game_full_name}"
     %strong= @page_space.name
 
-
-
 - if @page_space.pages.size > 0
   = render "subdomains/pages/table", :page_space => @page_space
 

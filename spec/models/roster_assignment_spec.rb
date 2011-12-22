@@ -58,7 +58,6 @@ describe RosterAssignment do
       expect {
         roster_assignment.approve
       }.to change(Message, :count).by(1)
-      Message.first.subject.should eql "Character Accepted"
     end
   end
 
@@ -76,7 +75,6 @@ describe RosterAssignment do
       expect {
         roster_assignment.reject
       }.to change(Message, :count).by(1)
-      Message.first.subject.should eql "Character Rejected"
     end
   end
 end

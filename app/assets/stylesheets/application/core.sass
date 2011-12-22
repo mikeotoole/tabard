@@ -130,7 +130,7 @@
         top: 0
     
     .meta
-      font: 13px DinLight, sans
+      font: 13px DinLight, sans-serif
     
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
@@ -155,7 +155,7 @@ button,
 .button,
 #body button,
 #body .button
-  border: 1px solid
+  border: 1px solid transparent
   +border_radius(5)
   display: inline-block
   height: 30px
@@ -184,7 +184,7 @@ button,
 #body
 
   label
-    font-family: DinMedium, sans
+    font-family: DinMedium, sans-serif
   
   input,
   textarea
@@ -201,7 +201,7 @@ button,
   input[type="password"],
   textarea
     +border_radius(5)
-    border: 1px solid
+    border: 1px solid transparent
     display: block
     line-height: 20px
     margin: 5px 0 0
@@ -212,7 +212,7 @@ button,
   input[type="checkbox"],
   input[type="radio"]
     height: 1px
-    margin: 10px 0 0 5px
+    margin: 15px 0 0 10px
     position: absolute
     width: 1px
     z-index: 1
@@ -226,7 +226,7 @@ button,
       z-index: 3
       
       &:before
-        border: 1px solid
+        border: 1px solid transparent
         +border_radius(5)
         content: ''
         height: 24px
@@ -234,11 +234,9 @@ button,
         position: absolute
         top: 0
         width: 24px
-    
-    &:checked
-
-      + label:after
-        border: 1px solid
+        
+      &:after
+        border: 1px solid transparent
         +border_radius(20)
         content: ''
         height: 14px
@@ -250,7 +248,7 @@ button,
 
   dfn.hint
     display: block
-    font: 12px DinMedium, sans
+    font: 12px DinMedium, sans-serif
     padding: 5px
     
     &:before
@@ -270,7 +268,7 @@ button,
   
     ul
       +border_radius(5)
-      border: 1px solid
+      border: 1px solid transparent
       display: block
       height: 0
       line-height: 30px
@@ -298,9 +296,9 @@ button,
         
         label
           +border_radius(5)
-          border-top: 1px solid
+          border-top: 1px solid transparent
           display: none
-          font-family: DinMedium, sans
+          font-family: DinMedium, sans-serif
           line-height: 20px
           margin: 1px 0 0
           min-height: 20px
@@ -312,7 +310,7 @@ button,
             display: none
         
           .avatar
-            border: 1px solid
+            border: 1px solid transparent
             +border_radius(3)
             float: left
             margin: -1px 6px 3px -6px
@@ -328,7 +326,7 @@ button,
             background: transparent
             border-top-color: transparent
             display: block
-            font-family: DinLight, sans
+            font-family: DinLight, sans-serif
             height: 28px
             line-height: 28px
             overflow: hidden
@@ -374,6 +372,94 @@ button,
       
       input:checked + label
         width: 60px
+  
+  .slider,
+  .slider_with_none
+    border: 1px solid transparent
+    +border_radius(5)
+    height: 30px
+    margin: 0 0 10px
+    overflow: hidden
+    position: relative
+    +transition(box-shadow .2s linear)
+    
+    ul
+      padding: 0
+      
+      li
+        padding: 0
+        display: inline
+        
+    label
+      border: 1px solid transparent
+      +border_radius(4)
+      font: 12px DinMedium, sans-serif
+      height: 24px
+      left: 2px
+      line-height: 24px
+      margin: 2px
+      overflow: hidden
+      padding: 0 9px 0 0 !important
+      position: absolute !important
+      text-align: right !important
+      text-indent: 0 !important
+      top: 2px
+      +transition(background .2s linear)
+      
+      &:before,
+      &:after
+        display: none
+
+    input
+      margin: 0 0 0 -500em
+  
+  .slider
+    width: 280px
+  
+    li
+    
+      &:nth-child(1) label
+        width: 55px
+        z-index: 5
+      
+      &:nth-child(2) label
+        width: 125px
+        z-index: 4
+        
+      &:nth-child(3) label
+        width: 195px
+        z-index: 3
+        
+      &:nth-child(4) label
+        width: 265px
+        z-index: 2
+        
+  .slider_with_none
+    width: 305px
+    
+    > label
+      padding: 0 !important
+      width: 25px
+      text-align: center !important
+      z-index: 6 !important
+    
+    li
+      
+      &:nth-child(1) label
+        width: 80px
+        z-index: 5
+        
+      &:nth-child(2) label
+        width: 150px
+        z-index: 4
+        
+      &:nth-child(3) label
+        width: 220px
+        z-index: 3
+        
+      &:nth-child(4) label
+        width: 290px
+        z-index: 2  
   
   fieldset
     
@@ -421,19 +507,20 @@ button,
     > textarea
       border-color: #A43D33 !important
     
-    > mark.error
+    mark.error
       background: #A43D33
       +border_radius(6,6,5,5)
       color: #fff
       display: block
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       margin: -32px 0 0
       padding: 40px 10px 5px
       position: relative
       width: 412px
       z-index: 1
   
-    &.select
+    &.select,
+    .select
       height: 85px
       
       ul
@@ -443,13 +530,410 @@ button,
         margin-bottom: -55px
       
       > mark.error
-        margin-top: 30px
+        margin-top: 0
       
     &.date
       
       > mark.error
         margin-top: 0
         width: 354px
+
+
+// Comments
+
+#body
+
+  .comments,
+  .activities
+  
+    li.comment
+      border-bottom: 1px solid
+      list-style: none
+      min-width: 500px
+      padding: 0
+      position: relative
+      z-index: 5
+    
+      blockquote
+        background: transparent
+        border: 0
+        margin: 0
+        min-height: 88px
+        padding: 0 15px 10px 92px
+        position: relative
+        +transition(margin .2s linear)
+        z-index: 5
+        
+        &:before
+          border-bottom: 1px solid
+          bottom: 15px
+          content: ''
+          left: 92px
+          position: absolute
+          right: 15px
+          z-index: 5
+        
+        .avatar
+          border: 1px solid
+          border-right: 0
+          height: 62px
+          left: 10px
+          +opacity(1)
+          position: absolute
+          top: 10px
+          +transition(box-shadow .2s linear, opacity 1s linear)
+          width: 61px
+          
+          &:before
+            background: image-url('application/comment-shadow.png') 0 0 no-repeat
+            border-right: 20px solid
+            content: ''
+            height: 101px
+            position: absolute
+            right: -20px
+            top: -14px
+            width: 18px
+          
+          &:after
+            border-left: 10px solid transparent
+            border-top: 10px solid
+            content: ''
+            height: 0
+            position: absolute
+            right: 0
+            top: 10px
+            width: 0
+          
+          >img
+            border: 1px solid
+            border-right: 0
+            display: block
+            height: 60px
+            width: 60px
+        
+        .meta
+          border-bottom: 1px solid
+          font-size: 12px
+          line-height: 15px
+          overflow: hidden
+          padding: 5px 0 3px 0
+          position: relative
+          z-index: 4
+          
+          a
+            font-family: DinMedium, sans-serif
+            position: relative
+            text-decoration: none
+            
+            &.expand
+              +border_radius(3)
+              display: none
+            
+            &.collapse
+              +border_radius(3)
+        
+        >.actions
+          position: absolute
+          right: 15px
+          top: -5px
+          z-index: 4
+          
+          >a
+            background: image-url('application/icons.png') no-repeat
+            +border_radius(0)
+            +box_shadow(none)
+            display: block
+            float: none
+            height: 20px
+            overflow: hidden
+            +opacity(0)
+            margin: 5px 0 0
+            padding: 0
+            text-indent: -500em
+            +transition(opacity .2s linear)
+            width: 20px
+            
+            &:hover
+              +opacity(1)
+            
+            &.unlock
+              display: none
+        
+        p
+          font-size: 14px
+          line-height: 20px
+          margin: 0
+          padding: 12px 40px 40px 0
+          position: relative
+          word-wrap: break-word
+          z-index: 2
+          
+          .body
+            display: block
+        
+        em,
+        .reply
+          display: block
+          float: left
+          font: 12px DinMedium, sans-serif
+          line-height: 20px
+          padding: 0 5px
+          margin: 10px 0 0
+          
+        em
+          font-size: 12px
+          
+        .reply
+          +border_radius(0)
+          text-decoration: none
+        
+        &:hover .actions a
+          +opacity(.3)
+          
+          &:hover
+            +opacity(1)
+      
+      ol
+        margin: 0 0 0 20px
+        position: relative
+        
+        >li.collapsed >blockquote
+          margin: 0 0 0 -62px
+        
+        .avatar
+          background-size: 40px 40px
+          height: 42px
+          margin-left: 20px
+          width: 41px
+          
+          &:after
+            border-left-width: 8px
+            border-top-width: 8px
+            top: 8px
+          
+          >img
+            height: 40px
+            width: 40px
+      
+      &.owned >blockquote >.meta a[meta]
+        +border_radius(3)
+      
+      &.locked
+        
+        .reply
+          display: none !important
+          
+        .actions a
+          display: none
+          
+        >blockquote >.actions .unlock
+          display: block
+        
+      &.removed
+        
+        >blockquote
+          
+          &:before
+            bottom: auto
+            top: 62px
+          
+          >p
+          
+            .reply
+              display: none
+        
+          >.actions
+            .edit,
+            .delete,
+            .lock,
+            .unlock
+              display: none
+          
+          >.avatar
+            +box_shadow(none)
+      
+      &.replying >blockquote
+        
+        >p .reply
+          display: none
+        
+        >form
+        
+          &.open textarea,
+          textarea:hover
+            height: 80px
+            
+          button,
+          >input,
+          >label
+            display: block
+      
+      &.editing
+        
+        >blockquote
+          min-height: 0
+          
+          >p
+          
+            .body,
+            .reply
+              display: none
+          
+          >.actions
+            display: none
+          
+          >form
+            margin: -40px 0 12px 0
+            
+            &:before
+              display: none
+      
+            .profile
+              display: none
+            
+            textarea
+              height: 80px
+              
+            button,
+            >input,
+            >label
+              display: block
+      
+      &.collapsed
+        
+        >blockquote
+          margin: 0 0 0 -82px
+          min-height: 0
+          
+          &:before
+            display: none
+          
+          .meta
+          
+            .collapse
+              display: none
+            
+            .expand
+              display: inline
+          
+          .avatar
+            +opacity(0)
+            +transition(none)
+          
+          .meta
+            margin-left: 1px
+            
+          >p,
+          >form,
+          .actions
+            display: none
+        
+        >ol
+          display: none
+        
+    *[meta]:hover
+      position: relative
+      z-index: 5
+      
+      &:before
+        border: 1px solid
+        +border_radius(3)
+        content: attr(meta)
+        font: 12px DinMedium, sans-serif
+        height: 20px
+        left: 0
+        line-height: 20px
+        padding: 0 10px
+        position: absolute
+        top: -30px
+        white-space: nowrap
+        z-index: 4
+      
+      &:after
+        background: transparent
+        border: 3px solid
+        border-bottom-color: transparent
+        border-right-color: transparent
+        content: ''
+        left: 10px
+        position: absolute
+        top: -8px
+        z-index: 5
+      
+      form
+        margin: -10px 0 12px 62px
+
+
+// Activities
+
+#body
+
+  .activities
+    font-size: 14px
+    margin: 0
+    padding: 0
+    
+    li
+      margin: 10px 0 0
+      padding: 10px 0
+      position: relative
+      
+      &:before
+        display: none
+      
+      &:after
+        border-top: 1px solid
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: -10px
+        z-index: 4
+      
+      a
+        white-space: nowrap
+      
+      &:first-child,
+      &.page + .page,
+      &.page_space + .page_space,
+      &.discussion + .discussion,
+      &.discussion_space + .discussion_space,
+      &.supported_game + .supported_game,
+      &.user_profile + .user_profile,
+      &.community + .community,
+      &.character_proxy + .character_proxy,
+      &.comment + .comment
+        border-top: 0
+        margin: -10px 0 0
+        padding: 0 0 10px
+        
+        &:after
+          display: none
+      
+      &.comment
+        border-bottom: 0
+        padding: 10px 0
+        
+        >blockquote
+          min-height: 68px
+          padding: 0 0 10px 82px
+          
+          &:before
+            border-bottom: 0
+          >p
+            
+            >.reply,
+            >em
+              display: none
+        
+          >.meta
+            font-size: 1em
+          
+          >.actions
+            right: 0
+        
+        + .activity
+          margin-top: 0
 
 
 // pop-up windows
@@ -494,13 +978,13 @@ button,
   
   p
     color: #4B385C
-    font: 16px DinLight, sans
+    font: 16px DinLight, sans-serif
     margin: 20px 20px 30px
     padding: 0
     
     a
       +border_radius(3)
-      font-family: DinMedium, sans
+      font-family: DinMedium, sans-serif
       padding: 0 3px
       text-decoration: underline
       
@@ -573,11 +1057,12 @@ button,
 
   &.prompt
     padding: 0 0 20px
-    
-.wmd-prompt-dialog
-  
-  form
-    padding: 0 0 40px
+
+#modal
+  padding: 0 0 20px
+
+.wmd-prompt-dialog form
+  padding: 0 0 40px
 
 body.fluid
 

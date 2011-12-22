@@ -5,7 +5,7 @@ if Rails.env.production?
       :aws_access_key_id      => ENV['BV_S3_KEY'],
       :aws_secret_access_key  => ENV['BV_S3_SECRET']
     }
-    config.fog_directory = 'BrutalVenom-Production'
+    config.fog_directory = 'brutalvenom-production'
   end
 else
   CarrierWave.configure do |config|
@@ -14,7 +14,7 @@ else
       :aws_access_key_id      => ENV['DEV_BV_S3_KEY'],
       :aws_secret_access_key  => ENV['DEV_BV_S3_SECRET']
     }
-    config.fog_directory = 'BrutalVenom-Development'
+    config.fog_directory = 'brutalvenom-development'
   end
 end
 if Rails.env.test? or Rails.env.cucumber?

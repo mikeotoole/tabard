@@ -11,14 +11,14 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :block_unauthorized_user!
+  before_filter :block_unauthorized_user!, :except => [:index]
   before_filter :ensure_current_user_is_member, :except => [:index]
   before_filter :get_community_profile, :except => [:index]
   before_filter :load_roster_assignment, :except => [:new, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :create]
   before_filter :find_avalible_characters, :except => [:index]
-  authorize_resource
+  authorize_resource :except => [:index]
   skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
 
@@ -27,6 +27,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def index
     #@roster_assignments = RosterAssignment.all
     #authorize! :index, RosterAssignment
+    raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
     @member_profiles = current_community.member_profiles
   end
 
@@ -53,13 +54,13 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     redirect_to my_roster_assignments_path
   end
 
-  # PUT /roster_assignments/1
-  # PUT /roster_assignments/1.json
-  def update
-    #@roster_assignment = RosterAssignment.find(params[:id])
-    @roster_assignment.update_attributes(params[:roster_assignment])
-    respond_with(@roster_assignment)
-  end
+#   # PUT /roster_assignments/1 This is not needed.. Right? -MO
+#   # PUT /roster_assignments/1.json
+#   def update
+#     #@roster_assignment = RosterAssignment.find(params[:id])
+#     @roster_assignment.update_attributes(params[:roster_assignment])
+#     respond_with(@roster_assignment)
+#   end
 
   # DELETE /roster_assignments/1
   # DELETE /roster_assignments/1.json

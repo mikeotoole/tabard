@@ -14,8 +14,8 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
+  attr_accessible :first_name, :last_name, :display_name, :title,
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
 
 ###
 # Associations
@@ -92,10 +92,23 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the characters attached to this user profile.
   ###
   def characters
-    self.swtor_characters + self.wow_characters
+    self.wow_characters + self.swtor_characters
   end
 
   # TODO Mike, Update this and make it better!
+  ###
+  # This method will return a cancan ability with the passed community's dynamic rules added in.
+  # [Args]
+  #   * +context_community+ -> The community to scope the ability with.
+  # [Returns] A CanCan ability with the community scope.
+  ###
+  def in_community(context_community)
+    return Ability.new(self.user) unless context_community
+    context_ability = Ability.new(self.user)
+    context_ability.dynamicContextRules(self.user, context_community)
+    return context_ability
+  end
+
   ###
   # This method gets all of the avaliable characters attached to this user profile.
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
@@ -353,6 +366,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -367,5 +381,6 @@ end
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 

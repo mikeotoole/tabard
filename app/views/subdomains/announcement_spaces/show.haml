@@ -11,4 +11,4 @@
 -else
   %p This announcement space has no viewable announcements.
   - if (can? :create, @announcement_space.discussions.new)
-    %p= link_to 'Create an Announcement', new_discussion_space_discussion_path(@announcement_space), :class => 'button primary'
+    %p= link_to 'Create an Announcement', new_announcement_space_announcement_path(@announcement_space), :class => 'button primary'

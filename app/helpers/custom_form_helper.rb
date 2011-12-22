@@ -8,7 +8,7 @@
 module CustomFormHelper
 
   ###
-  # Herp
+  # Builds a dynamic javascript link for adding a new question based on the question partial
   # [Args]
   #   * +derp+ -> derp
   # [Returns] herp
