@@ -33,7 +33,7 @@
       = pluralize(Discussion.where(:user_profile_id => @user_profile.id).size, 'discussion') + ' created.'
       %br/
       = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
-      
+
   %dl#tabs.tabs
 
     %dt{ :class => 'activity active' } Recent Activity

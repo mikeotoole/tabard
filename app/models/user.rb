@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
     self.save!
-    UserMailer.password_reset(self, random_password).deliver
+    UserMailer.password_reset(self).deliver
   end
 
   # Checks if this user is disabled.
@@ -244,6 +244,7 @@ class User < ActiveRecord::Base
     self.update_attribute(:user_disabled_at, nil)
   end
 
+  # This will send an email for a user to reactivate their account.
   def reinstate_by_user
     if self.user_disabled_at
       random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
@@ -256,7 +257,8 @@ class User < ActiveRecord::Base
       false
     end
   end
-
+  
+  # This will destroy forever this user and all its associated resources.
   def nuke
     self.user_profile.nuke
     User.find(self).destroy

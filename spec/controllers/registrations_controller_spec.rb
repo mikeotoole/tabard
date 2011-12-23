@@ -26,21 +26,21 @@ describe RegistrationsController do
     request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
-  describe "GET cancel_confirmation" do
+  describe "GET disable_confirmation" do
     it "assigns the current_user as @user when authenticated as a user" do
       sign_in user
-      get :cancel_confirmation
+      get :disable_confirmation
       assigns(:user).should eq(user)
     end
     
     it "should render the 'cancel_confirmation' template when authenticated as a user" do
       sign_in user
-      get :cancel_confirmation
-      response.should render_template("cancel_confirmation")
+      get :disable_confirmation
+      response.should render_template("disable_confirmation")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :cancel_confirmation
+      get :disable_confirmation
       response.should redirect_to(new_user_session_url)
     end
   end
@@ -67,7 +67,7 @@ describe RegistrationsController do
   
         it "re-renders the 'cancel_confirmation' template" do
           delete :destroy, :user => {:current_password => "Not Pass"}
-          response.should render_template("cancel_confirmation")
+          response.should render_template("disable_confirmation")
         end
       end
       

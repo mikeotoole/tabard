@@ -7,7 +7,7 @@
 ###
 class Discussion < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
-  acts_as_paranoid  
+  acts_as_paranoid
 
   #default_scope :order => 'created_at DESC' # TODO Mike/Joe, Can't use acts_as_paranoid and default scope. We will need to do this differently. -MO
 ###
@@ -108,6 +108,7 @@ class Discussion < ActiveRecord::Base
     some_user_profile.update_viewed(self)
   end
 
+  # This will destroy forever this discussion and all its comments.
   def nuke
     self.all_comments.each{|comment| comment.nuke}
     self.destroy!

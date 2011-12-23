@@ -300,6 +300,7 @@ class UserProfile < ActiveRecord::Base
     folders.find_by_name("Trash")
   end
 
+  # This will remove this user profile's avatar and all character's avatars.
   def remove_all_avatars
     self.remove_avatar!
     characters.each do |character|
@@ -307,6 +308,7 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+  # This will destroy forever this user profile and all its associated resources.
   def nuke
     self.swtor_characters.each{|swtor_character| swtor_character.delete}
     self.wow_characters.each{|wow_character| wow_character.delete}
