@@ -39,8 +39,8 @@ source 'http://rubygems.org'
   gem 'carrierwave'
 
 # Admin Portal
+  gem 'meta_search', '>= 1.1.0.pre'
   gem 'activeadmin'
-  gem 'meta_search'
 
 # Asset Specific Gems, Pulled out of Group for Activeadmin
   gem 'sass-rails'

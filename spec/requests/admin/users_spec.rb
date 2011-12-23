@@ -398,6 +398,7 @@ describe "ActiveAdmin User" do
       login_as superadmin
 
       page.driver.post("/admin/users/reset_all_passwords")
+      sleep 3
       User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
         this_user.reset_password_sent_at.should_not be_nil
       end
@@ -407,6 +408,7 @@ describe "ActiveAdmin User" do
       login_as admin
 
       page.driver.post("/admin/users/reset_all_passwords")
+	  sleep 3      
       User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
         this_user.reset_password_sent_at.should_not be_nil
       end

@@ -11,8 +11,8 @@ else
   CarrierWave.configure do |config|
     config.fog_credentials = {
       :provider               => 'AWS',
-      :aws_access_key_id      => ENV['DEV_BV_S3_KEY'],
-      :aws_secret_access_key  => ENV['DEV_BV_S3_SECRET']
+      :aws_access_key_id      => ENV['BV_DEV_S3_KEY'],
+      :aws_secret_access_key  => ENV['BV_DEV_S3_SECRET']
     }
     config.fog_directory = 'brutalvenom-development'
   end
