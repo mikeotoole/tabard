@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207233535) do
+ActiveRecord::Schema.define(:version => 20111214004238) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -27,6 +27,21 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
   add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
+
+  create_table "activities", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "community_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.string   "action"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["community_id"], :name => "index_activities_on_community_id"
+  add_index "activities", ["target_type", "target_id"], :name => "index_activities_on_target_type_and_target_id"
+  add_index "activities", ["user_profile_id"], :name => "index_activities_on_user_profile_id"
 
   create_table "admin_users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -273,6 +288,29 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
 
   add_index "pages", ["page_space_id"], :name => "index_pages_on_page_space_id"
 
+  create_table "permission_defaults", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "object_class"
+    t.string   "permission_level"
+    t.boolean  "can_read",                :default => false
+    t.boolean  "can_update",              :default => false
+    t.boolean  "can_create",              :default => false
+    t.boolean  "can_destroy",             :default => false
+    t.boolean  "can_lock",                :default => false
+    t.boolean  "can_accept",              :default => false
+    t.string   "nested_permission_level"
+    t.boolean  "can_read_nested",         :default => false
+    t.boolean  "can_update_nested",       :default => false
+    t.boolean  "can_create_nested",       :default => false
+    t.boolean  "can_destroy_nested",      :default => false
+    t.boolean  "can_lock_nested",         :default => false
+    t.boolean  "can_accept_nested",       :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permission_defaults", ["role_id"], :name => "index_permission_defaults_on_role_id"
+
   create_table "permissions", :force => true do |t|
     t.integer  "role_id"
     t.string   "permission_level"
@@ -284,6 +322,10 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.boolean  "can_accept",                     :default => false
     t.string   "parent_association_for_subject"
     t.integer  "id_of_parent"
+    t.boolean  "can_read",                       :default => false
+    t.boolean  "can_create",                     :default => false
+    t.boolean  "can_update",                     :default => false
+    t.boolean  "can_destroy",                    :default => false
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
@@ -388,6 +430,7 @@ ActiveRecord::Schema.define(:version => 20111207233535) do
     t.text     "description"
     t.string   "display_name"
     t.boolean  "publicly_viewable", :default => true
+    t.string   "title"
   end
 
   add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"

@@ -132,7 +132,17 @@ describe Subdomains::DiscussionsController do
 
       it "redirects to the created discussion" do
         post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
-        response.should redirect_to(Discussion.last)
+        response.should redirect_to(Discussion.unscoped.last)
+      end
+      
+      it "should create an activity" do
+        expect {
+          post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
+        }.to change(Activity, :count).by(1)
+        
+        activity = Activity.last
+        activity.target_type.should eql "Discussion"
+        activity.action.should eql 'created'
       end
     end
 
@@ -145,6 +155,12 @@ describe Subdomains::DiscussionsController do
       it "re-renders the 'new' template" do
         post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
         response.should render_template("new")
+      end
+      
+      it "should not create an activity" do
+        expect {
+          post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
+        }.to change(Activity, :count).by(0)
       end
     end
   end
@@ -200,6 +216,20 @@ describe Subdomains::DiscussionsController do
       it "redirects to the discussion" do
         put :update, :id => discussion.id, :discussion => {:name => "New name"}
         response.should redirect_to(discussion)
+      end
+      
+      it "should create an Activity when attributes change" do
+        put :update, :id => discussion.id, :discussion => {:name => "New name"}
+        activity = Activity.last
+        activity.target_type.should eql "Discussion"
+        activity.action.should eql 'edited'
+      end
+      
+      it "should not create an Activity when attributes don't change" do        
+        discussion
+        expect {
+          put 'update', :id =>  discussion.id, :discussion => { :name => discussion.name }
+        }.to change(Activity, :count).by(0)
       end
     end
 

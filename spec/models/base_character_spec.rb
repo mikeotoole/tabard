@@ -48,37 +48,6 @@ describe BaseCharacter do
     end
   end
   
-  describe "default" do
-    it "should be true when first character of game type is created" do
-      character.default.should be_true
-    end
-    
-    it "should be false by default on creation when default for game exists" do
-      create(:wow_char_profile).default.should be_true
-      create(:wow_char_profile).default.should be_false
-    end
-  end
-  
-  describe "set_as_default" do   
-    it "should set character as default for game for user" do
-      create(:wow_char_profile)
-      character.default.should be_false
-      character.set_as_default
-      character.default.should be_true
-    end
-    
-    it "should remove previous for game for user" do
-      firstCharacter = create(:wow_char_profile)
-      firstCharacter.default.should be_true
-      firstCharacter_id = firstCharacter.id
-      character.default.should be_false
-      character_id = character.id
-      character.set_as_default
-      WowCharacter.find(character_id).default.should be_true
-      WowCharacter.find(firstCharacter_id).default.should be_false
-    end
-  end
-  
   it "should delete character proxy when destroyed" do
     character = create(:wow_char_profile)
     character.should be_valid

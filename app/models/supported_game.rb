@@ -7,6 +7,11 @@
 ###
 class SupportedGame < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 20
+
+###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
@@ -36,7 +41,8 @@ class SupportedGame < ActiveRecord::Base
   validates :community, :presence => true
   validate :game_faction_server_combination
   validates :name, :presence => true,
-                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type], :message => "exists for this exact game."}
+                   :length => { :maximum => MAX_NAME_LENGTH },
+                   :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type], :message => "exists for this exact game."}
 
 ###
 # Callbacks
@@ -72,7 +78,7 @@ protected
   ###
   def make_game_announcement_space
     if !self.game_announcement_space
-      space = DiscussionSpace.new(:name => "#{self.game_name} | #{self.name} Announcements") # TODO Doug, What should this name be? This is very long. -MO
+      space = DiscussionSpace.new(:name => "#{self.game_name} | #{self.name}") # TODO Doug, What should this name be? This is very long. -MO
       if space
         space.community = self.community
         space.supported_game = self
@@ -107,6 +113,8 @@ protected
     end
   end
 end
+
+
 
 
 

@@ -9,6 +9,14 @@ class Community < ActiveRecord::Base
 # TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
 
 ###
+# Constants
+###
+  # Used by validators and view to restrict name length
+  MAX_NAME_LENGTH = 30
+  # Used by validators and view to restrict slogan length
+  MAX_SLOGAN_LENGTH = 60
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster
@@ -51,11 +59,11 @@ class Community < ActiveRecord::Base
   validates :name,  :presence => true,
                     :uniqueness => { :case_sensitive => false },
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
-                    :length => { :maximum => 30 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :name, :community_name => true, :on => :create
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
-  validates :slogan, :length => { :maximum => 50 }
+  validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
 
@@ -98,7 +106,7 @@ class Community < ActiveRecord::Base
     if not community_profile
       community_profile = user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
     end
-    return community_profile    
+    return community_profile
   end
 
   ###
@@ -120,6 +128,17 @@ class Community < ActiveRecord::Base
       end
     end
     return community_roster
+  end
+
+  ###
+  # This method attempts to apply default permissions for an item by calling apply_default_permissions for each role in the community.
+  # [Args]
+  #   * +some_thing+ -> The object to apply default permissions on.
+  ###
+  def apply_default_permissions(some_thing)
+    self.roles.each do |role|
+      role.apply_default_permissions(some_thing)
+    end
   end
 
 ###
@@ -263,13 +282,31 @@ protected
   # The method creates a default community discussion space
   ###
   def setup_default_community_items
-    self.member_role.permissions.create(subject_class: "PageSpace", permission_level: "View")
-    self.member_role.permissions.create(subject_class: "Page", permission_level: "Delete")
     community_d_space = self.discussion_spaces.create(name: "Community")
-    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
-    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+
+    # Member role
+    self.member_role.permissions.create(subject_class: "Comment", can_create: true)
+    # Officer role
+    officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
+    officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
+    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
+      can_lock: false,
+      can_accept: false,
+      can_read_nested: false,
+      can_update_nested: false,
+      can_create_nested: true,
+      can_destroy_nested: true,
+      can_lock_nested: true,
+      can_accept_nested: false)
+    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View",
+      permission_level: "View",
+      can_lock: false,
+      can_accept: false)
   end
 end
+
+
 
 
 

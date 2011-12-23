@@ -142,6 +142,16 @@ describe Subdomains::DiscussionSpacesController do
         post :create, :discussion_space => attributes_for(:discussion_space)
         response.should redirect_to(DiscussionSpace.last)
       end
+      
+      it "should create an activity" do
+        expect {
+          post :create, :discussion_space => attributes_for(:discussion_space)
+        }.to change(Activity, :count).by(1)
+        
+        activity = Activity.last
+        activity.target_type.should eql "DiscussionSpace"
+        activity.action.should eql 'created'
+      end
     end
 
     describe "with invalid params" do
@@ -153,6 +163,12 @@ describe Subdomains::DiscussionSpacesController do
       it "re-renders the 'new' template" do
         post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
         response.should render_template("new")
+      end
+      
+      it "should not create an activity" do
+        expect {
+          post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
+        }.to change(Activity, :count).by(0)
       end
     end
     
@@ -182,9 +198,8 @@ describe Subdomains::DiscussionSpacesController do
   
     describe "with valid params" do
       it "updates the requested discussion_space" do
-        space
-        DiscussionSpace.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => space.id, :discussion_space => {'these' => 'params'}
+        put :update, :id => space.id, :discussion_space => {:name => "New Name"}
+        DiscussionSpace.find(space).name.should eql "New Name"
       end
 
       it "assigns the requested discussion_space as @discussion_space" do
@@ -195,6 +210,20 @@ describe Subdomains::DiscussionSpacesController do
       it "redirects to the discussion_space" do
         put :update, :id => space.id, :discussion_space => {:name => "New Name"}
         response.should redirect_to(space)
+      end
+      
+      it "should create an Activity when attributes change" do
+        put :update, :id => space.id, :discussion_space => {:name => "New Name"}
+        activity = Activity.last
+        activity.target_type.should eql "DiscussionSpace"
+        activity.action.should eql 'edited'
+      end
+      
+      it "should not create an Activity when attributes don't change" do        
+        space
+        expect {
+          put :update, :id => space.id, :discussion_space => {:name => space.name}
+        }.to change(Activity, :count).by(0)
       end
     end
 

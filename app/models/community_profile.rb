@@ -34,6 +34,7 @@ class CommunityProfile < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :id, :to => :user_profile, :prefix => true
+  delegate :name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
 
 ###
@@ -75,6 +76,8 @@ class CommunityProfile < ActiveRecord::Base
     end
   end
 end
+
+
 
 
 # == Schema Information

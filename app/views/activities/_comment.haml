@@ -1,0 +1,25 @@
+- unless comment.is_removed
+  %li.comment{ :class => comment_class_names(comment), :created_at => comment.created_at }
+    %blockquote
+      %span.avatar
+        - if !comment.is_removed
+          = image_tag comment.poster.avatar_url :small
+      %span.meta
+        %strong= link_to_unless (defined? @user_profile and @user_profile == comment.user_profile), comment.poster_name, user_profile_url(comment.user_profile), :meta => comment.user_profile_display_name
+        = last_action_word(comment).capitalize
+        %time= "#{time_ago_in_words(comment.updated_at)} ago"
+        - case comment.original_commentable_type
+        - when 'Discussion'
+          - discussion = Discussion.find_by_id(comment.original_commentable_id)
+          - if discussion
+            in
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, discussion), discussion.name, discussion_url(discussion, :subdomain => comment.community_subdomain)
+        - when 'CommunityApplication'
+          - community_application = CommunityApplication.find_by_id(comment.original_commentable_id)
+          - if community_application
+            on
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, community_application), 'Community Application', community_application_url(community_application, :subdomain => comment.community_subdomain), :meta => community_application.user_profile_display_name
+      %p
+        - unless comment.is_removed
+          %span.body
+            = comment.body

@@ -18,8 +18,7 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # GET /custom_forms
   def index
-    @custom_forms = current_community.custom_forms
-    authorize! :index, CustomForm
+    @custom_forms = current_community.custom_forms.delete_if{ |form| not can?(:read, form) }
   end
 
   # GET /custom_forms/new
@@ -39,7 +38,7 @@ class Subdomains::CustomFormsController < SubdomainsController
       respond_with @custom_form
     end
   end
-  
+
   # GET /custom_forms/:id/thankyou
   def thankyou
   end

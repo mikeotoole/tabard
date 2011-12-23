@@ -12,6 +12,7 @@
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 
 require 'spec_helper'
@@ -62,6 +63,14 @@ describe UserProfile do
 
   it "should require a user" do
     Factory.build(:user_profile, :user => nil).should_not be_valid
+  end
+  
+  it "should create an activity when created" do
+    user_profile = create(:user_profile)
+    
+    activity = Activity.last
+    activity.target.should eql user_profile
+    activity.action.should eql 'joined'
   end
 
   describe "avatars" do
@@ -137,21 +146,6 @@ describe UserProfile do
       all_wow_characters.each do |character|
         character.game.should eq(DefaultObjects.wow)
       end
-    end
-  end
-
-  describe "default_character_proxy_for_a_game" do
-    it "should return the default if there is one of the game" do
-      profile = create(:user_profile)
-      proxy = create(:character_proxy, :user_profile => profile)
-      proxy.is_default_character.should be_true
-      profile.default_character_proxy_for_a_game(DefaultObjects.wow).should eq(proxy)
-    end
-
-    it "should return nil if there is not one of the game" do
-      profile = create(:user_profile)
-      create(:character_proxy, :user_profile => profile)
-      profile.default_character_proxy_for_a_game(DefaultObjects.swtor).should be_nil
     end
   end
 
@@ -247,7 +241,6 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.received_messages.count.should eq(startCount + 1)
-      new_profile.received_messages.first.should eq(message.message_associations.first)
     end
     
     it "should return messages marked as is_removed" do
@@ -270,7 +263,6 @@ describe UserProfile do
       message = create(:message)
       message.recipients.first.should eq(new_profile)
       new_profile.unread_messages.count.should eq(startCount + 1)
-      new_profile.unread_messages.first.should eq(message.message_associations.first)
     end
     
     it "should not return unread messages marked as is_removed" do

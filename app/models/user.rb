@@ -74,6 +74,7 @@ class User < ActiveRecord::Base
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
   delegate :is_member?, :to => :user_profile, :allow_nil => true
   delegate :application_pending?, :to => :user_profile, :allow_nil => true
+  delegate :in_community, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -284,6 +285,8 @@ protected
     errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
   end
 end
+
+
 
 
 

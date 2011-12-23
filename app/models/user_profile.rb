@@ -7,10 +7,15 @@
 ###
 class UserProfile < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url
+  attr_accessible :first_name, :last_name, :display_name, :title,
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
 
 ###
 # Associations
@@ -19,6 +24,8 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   has_many :character_proxies, :dependent => :destroy
+  has_many :swtor_characters, :through => :character_proxies, :source_type => "SwtorCharacter", :source => :character
+  has_many :wow_characters, :through => :character_proxies, :source_type => "WowCharacter", :source => :character
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
@@ -53,7 +60,7 @@ class UserProfile < ActiveRecord::Base
 ###
   validates :display_name,  :presence => true,
                             :uniqueness => true,
-                            :length => { :maximum => 50 }
+                            :length => { :maximum => MAX_NAME_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :user, :presence => true
   validates :avatar,
@@ -82,11 +89,20 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the characters attached to this user profile.
   ###
   def characters
-    characters = Array.new()
-    for proxy in self.character_proxies
-        characters << proxy.character
-    end
-    characters
+    self.wow_characters + self.swtor_characters
+  end
+
+  ###
+  # This method will return a cancan ability with the passed community's dynamic rules added in.
+  # [Args]
+  #   * +context_community+ -> The community to scope the ability with.
+  # [Returns] A CanCan ability with the community scope.
+  ###
+  def in_community(context_community)
+    return Ability.new(self.user) unless context_community
+    context_ability = Ability.new(self.user)
+    context_ability.dynamicContextRules(self.user, context_community)
+    return context_ability
   end
 
   ###
@@ -340,6 +356,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -354,5 +371,6 @@ end
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
+#  title             :string(255)
 #
 

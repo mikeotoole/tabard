@@ -189,6 +189,8 @@ protected
 end
 
 
+
+
 # == Schema Information
 #
 # Table name: community_applications

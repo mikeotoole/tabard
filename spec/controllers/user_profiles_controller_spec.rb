@@ -7,16 +7,16 @@ describe UserProfilesController do
   let(:owner) { create(:user, :user_profile => user_profile) }
   let(:private_owner) { create(:user, :user_profile => private_user_profile) }
 
-	describe "GET 'index'" do
+	describe "GET 'dashboard'" do
 		it "should show the current user when authenticated as a user" do
       sign_in owner
-      get 'index'
+      get 'dashboard'
       assigns[:user_profile].should eq(owner.user_profile)
       response.should be_success
       response.should render_template('user_profiles/show')
     end
     it "should redirected to new user session path when not authenticated as a user" do
-      get 'index'
+      get 'dashboard'
       response.should redirect_to(new_user_session_url)
     end
 	end
@@ -62,10 +62,10 @@ describe UserProfilesController do
         response.should be_success
       end
 
-      it "show should be successful when authenticated as a non-owner" do
+      it "show should not be successful when authenticated as a non-owner" do
         sign_in non_owner
         get 'show', :id => private_user_profile
-        response.should be_success
+        response.should_not be_success
       end
 
       it "should be unauthorized when not authenticated as a user when user_profile is publicly viewable" do
@@ -152,6 +152,22 @@ describe UserProfilesController do
 
     it "should redirect to show" do
       response.should redirect_to(user_profile_url(assigns[:user_profile]))
+    end
+    
+    it "should create an Activity when attributes change" do
+      activity = Activity.last
+      activity.target.should eql user_profile
+      activity.action.should eql 'profile'
+    end
+  end
+  
+  describe "PUT 'update' when authenticated as owner" do
+    it "should not create an Activity when attributes don't change" do
+      sign_in owner
+      
+      expect {
+        put 'update', :id => user_profile, :user_profile => nil
+      }.to change(Activity, :count).by(0)
     end
   end
 

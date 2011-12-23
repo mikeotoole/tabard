@@ -253,6 +253,45 @@ $(document).ready ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
+  # tabs
+  $('dl.tabs >dt').click ->
+    $(this).closest('dl.tabs').find('>dt').removeClass('active')
+    $(this).addClass('active')
+  if window.location.hash
+    $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
+  $('a[href*="#"]').click ->
+    link = $(this).attr('href').split('#').pop()
+    tab = $('dl.tabs >dt.'+link)
+    if(tab.length)
+      tab.trigger 'click'
+      return false
+  
+  # slider input fields
+  $('.slider')
+    .live 'init', ->
+      $(this).css('width', $(this).find('label').length * 70)
+    .trigger 'init'
+  $('.slider_with_none')
+    .live 'init', ->
+      $(this).css('width', $(this).find('li label').length * 70 + 25)
+      unless $(this).find('ul input:checked').length
+        $(this).find('>input').prop 'checked', true
+    .trigger 'init'
+  $('.slider_with_none > input[type="checkbox"]').live 'click', ->
+    $(this).prop 'checked', true
+  $('.slider_with_none > label').live 'click', ->
+    slider = $(this).closest('.slider_with_none')
+    slider.find('> input').removeAttr('disabled readonly')
+    slider.find('ul input').removeAttr 'checked'
+  $('.slider_with_none ul label').live 'click', ->
+    slider = $(this).closest('.slider_with_none')
+    slider.find('>input').prop('disabled',true).prop('readonly',true).prop 'checked', false
+    slider.find('ul input').prop 'checked', true
+  
+  # inputs that affect the hidden _destroy field
+  $('input[toggle_destroy="true"]').change ->
+    $(this).prevAll('input[name*="_destroy"]:first').attr('checked', !$(this).prop('checked'))
+  
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
