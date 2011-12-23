@@ -8,7 +8,7 @@
     = link_to @page.page_space_name, @page.page_space
     %strong= @page.name
 
-#actions
+#actions.actions
   - if (can? :update, @page)
     = link_to 'Edit', edit_page_path(@page), :meta => 'Edit page', :class => 'edit'
   - if (can? :destroy, @page)

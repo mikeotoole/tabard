@@ -7,6 +7,12 @@
     = link_to @announcement.discussion_space_name, announcement_space_url(@announcement.discussion_space)
     %strong= @announcement.name
 
+#actions.actions
+  - if (can? :update, @announcement)
+    = link_to 'Edit', edit_discussion_path(@announcement), :meta => 'Edit announcement', :class => 'edit'
+  - if (can? :destroy, @announcement)
+    = link_to 'Destroy', @announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove announcement', :class => 'delete'
+
 %article
   %p
     = @announcement.body
