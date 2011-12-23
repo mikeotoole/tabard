@@ -56,7 +56,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # PUT /announcements/:id(.:format)
   def update
-    add_new_flash_message('Announcement was successfully updated.','success') if @announcement.update_attributes(params[:discussion])
+    params[:discussion][:has_been_edited] = true
+    add_new_flash_message('Announcement saved.') if @announcement.update_attributes(params[:discussion])
 
     respond_with(@announcement, :render => :edit, :location => announcement_url)
   end

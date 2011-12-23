@@ -79,7 +79,7 @@ source 'http://rubygems.org'
     gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
-    gem 'growl_notify'
+    #gem 'growl_notify'
     gem 'simplecov'
     gem 'ruby-debug19'
   end
