@@ -9,6 +9,12 @@
     = link_to @discussion.discussion_space_name, @discussion.discussion_space
     %strong= @discussion.name
 
+#actions.actions
+  - if (can? :update, @discussion)
+    = link_to 'Edit', edit_discussion_path(@discussion), :meta => 'Edit discussion', :class => 'edit'
+  - if (can? :destroy, @discussion)
+    = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
+
 %article
   %p
     = @discussion.body

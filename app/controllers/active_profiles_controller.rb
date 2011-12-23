@@ -20,7 +20,7 @@ class ActiveProfilesController < ApplicationController
       if profile and profile.owned_by_user?(current_user)
         activate_profile(params[:id], params[:type])
         active_profile_name = profile.name
-        add_new_flash_message("Profile <em>#{active_profile_name}</em> activated.")
+        add_new_flash_message("Profile <em>#{active_profile_name}</em> activated.",'success')
         redirect_to request.referer ? request.referer : root_path
         return
       else

@@ -38,7 +38,7 @@ class Subdomains::PagesController < SubdomainsController
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
     if @page.save
-      add_new_flash_message('Page was successfully created.')
+      add_new_flash_message 'Page has been created.', 'success'
       @action = 'created'
     end
     respond_with(@page)
@@ -50,7 +50,7 @@ class Subdomains::PagesController < SubdomainsController
     is_changed = @page.changed?
 
     if @page.save
-      add_new_flash_message('Page was successfully updated.')
+      add_new_flash_message 'Page has been saved.', 'success'
       @action = is_changed ? 'edited' : nil
     end
     respond_with(@page)

@@ -43,7 +43,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   def create
     @supported_game.game = Game.get_game(params[:supported_game][:game_type], params[:supported_game][:faction], params[:supported_game][:server_name])
     if @supported_game.save
-      add_new_flash_message('Game was successfully added.')
+      add_new_flash_message 'Game has been added.', 'success'
       @action = 'created'
     end
 
@@ -58,7 +58,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
     is_changed = @supported_game.changed?
 
     if @supported_game.save
-      add_new_flash_message('Successfully updated.')
+      add_new_flash_message 'Game saved.', 'success'
       @action = is_changed ? 'edited' : nil
     end
 
