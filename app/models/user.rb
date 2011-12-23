@@ -198,10 +198,12 @@ class User < ActiveRecord::Base
 
   # Will reset the users password.
   def reset_password
+  	random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+    self.password = random_password
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
     self.save!
-    UserMailer.password_reset(self).deliver
+    UserMailer.password_reset(self, random_password).deliver
   end
 
   # Checks if this user is disabled.
