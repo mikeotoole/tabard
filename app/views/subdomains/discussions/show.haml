@@ -16,6 +16,11 @@
     = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
 
 %article
+  %h1= @discussion.name
+  - if @discussion.has_been_edited
+    %time= "Edited #{time_ago_in_words(@discussion.updated_at)} ago"
+  - else
+    %time= "Created #{time_ago_in_words(@discussion.created_at)} ago"
   %p
     = @discussion.body
 
