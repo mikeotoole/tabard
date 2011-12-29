@@ -401,6 +401,7 @@ button,
     position: absolute
     top: 30px
     right: 30px
+    z-index: 8
   
   nav + #actions
     top: 70px
@@ -639,6 +640,7 @@ button,
         font-family: DinMedium, serif
         color: #fff
         padding: 10px
+        white-space: nowrap
         
         &:first-child
           +border_radius(5,0,0,0)
@@ -769,8 +771,25 @@ button,
           border-color: #704f37
 
 
+  // Pages
+
+  article
+    position: relative
+    z-index: 1
+    
+    h1
+      padding-right: 100px
+    
+    time
+      border-bottom: 1px solid #EBDFC4
+      display: block
+      padding: 0 0 5px
+      margin: -10px 0 20px
+
+
+
   // Comments
-  
+
   .comments,
   .activities
     background: #fff
