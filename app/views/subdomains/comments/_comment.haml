@@ -12,7 +12,7 @@
           = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since #{l comment.user_profile_created_at, :format => :date_short}"
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
-        - unless comment.is_removed
+        - unless comment.is_removed or comment.replies_locked?
           %span.body
             = comment.body
           = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, 'data-type' => :text, :class => 'reply'
