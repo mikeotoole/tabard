@@ -3,5 +3,7 @@
     - if not f.object.persisted?
       = f.input :name, :input_html => { :maxlength => Community::MAX_NAME_LENGTH }
     = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
-    = f.input :is_accepting_members, :label => "Accepting New Members"
-    = f.input :email_notice_on_application
+    = f.input :is_accepting_members, :label => "Accepting new members?"
+    = f.input :email_notice_on_application, :label => "Notify me when an application is submitted."
+    = f.input :is_public_roster, :as => :boolean, :label => "Make the community roster public."
+    = f.input :is_protected_roster, :as => :boolean, :label => "Roster changes require approval."
