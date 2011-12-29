@@ -2,7 +2,7 @@
 
 %h1 New Page Space
 
-= simple_form_for @page_space do |f|
+= simple_form_for @page_space, :html => {:novalidate => true} do |f|
   = render 'fields', :f => f
   %p.submit
     = f.button :submit, 'Create Page Space'
