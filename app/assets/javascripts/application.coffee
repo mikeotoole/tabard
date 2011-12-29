@@ -33,6 +33,7 @@ dump = (arr, level) ->
     $('body').append('<div id="mask"></div><div id="modal" class="alert"><div class="actions"><button>' + button + '</button></div></div>')
     $('#modal').prepend('<p>' + body + '</p>') if body
     $('#modal').prepend('<h1>' + title + '</h1>') if title
+    $('#mask').remove() if $('.wmd-prompt-background').length
     $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
       .animate({ opacity: .7 }, 400, 'linear')
@@ -57,9 +58,12 @@ dump = (arr, level) ->
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
     $('body').append('<div id="mask"></div><div id="modal" class="confirm"><h1>' + title + '</h1><p>' + body + '</p><div class="actions"><button class="cancel">' + cancel + '</button><button class="affirm">' + affirm + '</button></div></div>')
+    $('#mask').remove() if $('.wmd-prompt-background').length
     $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
       .animate({ opacity: .7 }, 400, 'linear')
+      .click ->
+        $('#modal, .wmd-prompt-dialog').find('.cancel').trigger 'click'
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
       .animate({ opacity: 1, marginLeft: -250 }, 200)
@@ -81,12 +85,17 @@ dump = (arr, level) ->
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
     $('body').append('<div id="mask"></div><div id="modal" class="prompt"><h1>' + title + '</h1><p>' + body + '</p><p><input type="text" id="prompt" /></p><div class="actions">' + (if !require then '<button class="cancel">' + cancel + '</button>' else '') + '<button class="affirm">' + affirm + '</button></div></div>')
+    $('#mask').remove() if $('.wmd-prompt-background').length
     $('#mask, .wmd-prompt-background')
       .css({ opacity: 0 })
       .animate({ opacity: .7 }, 400, 'linear')
+      .click ->
+        $('#modal, .wmd-prompt-dialog').find('.cancel').trigger 'click'
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
       .animate({ opacity: 1, marginLeft: -250 }, 200)
+    $('#prompt').focus ->
+      $(this).select()
     $('#modal button.cancel').click dismiss if !require
     $('#modal button.affirm').click ->
       action($('#modal #prompt').val())
