@@ -46,7 +46,11 @@ class Subdomains::PagesController < SubdomainsController
 
   # PUT /pages/:id(.:format)
   def update
-    @page.assign_attributes(params[:page])
+    if current_user.user_profile == current_community.admin_profile
+      @page.assign_attributes(params[:page], :as => :community_admin)
+    else
+      @page.assign_attributes(params[:page])
+    end
     is_changed = @page.changed?
 
     if @page.save
@@ -83,7 +87,11 @@ protected
   ###
   def create_page
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
-    @page = page_space.pages.new(params[:page])
+    if current_user.user_profile == current_community.admin_profile
+      @page = page_space.pages.new(params[:page], :as => :community_admin)
+    else
+      @page = page_space.pages.new(params[:page])
+    end
   end
 
   ###
