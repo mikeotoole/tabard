@@ -36,7 +36,10 @@ class CommunitiesController < ApplicationController
     @community = Community.new(params[:community])
     @community.admin_profile = current_user.user_profile
     authorize! :create, @community
-    @community.save
-    respond_with(@community)
+    if @community.save
+      redirect_to supported_games_url(:subdomain => @community.subdomain)
+    else
+      respond_with(@community)
+    end
   end
 end
