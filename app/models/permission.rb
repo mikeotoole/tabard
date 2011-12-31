@@ -96,6 +96,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: permissions
@@ -104,7 +105,7 @@ end
 #  role_id                        :integer
 #  permission_level               :string(255)
 #  subject_class                  :string(255)
-#  id_of_subject                  :string(255)
+#  id_of_subject                  :integer(255)
 #  created_at                     :datetime
 #  updated_at                     :datetime
 #  can_lock                       :boolean         default(FALSE)
