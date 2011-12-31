@@ -7,6 +7,12 @@
 ###
 class CommunityProfile < ActiveRecord::Base
   include Exceptions
+  
+###
+# Attribute accessible
+###
+  attr_accessor :force_destroy
+  
 ###
 # Associations
 ###
@@ -26,7 +32,7 @@ class CommunityProfile < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => :community_id}, :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
+  validates :user_profile_id, :uniqueness => {:scope => :community_id}, :unless => Proc.new {|community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
 
 ###
@@ -35,6 +41,7 @@ class CommunityProfile < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :id, :to => :user_profile, :prefix => true
   delegate :name, :to => :user_profile, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
 
 ###
@@ -71,7 +78,7 @@ class CommunityProfile < ActiveRecord::Base
   #   * +role+ -> The role being removed from the collection.
   ###
   def ensure_that_member_role_stays(role)
-    if not self.user_profile.disabled and role == self.community.member_role
+    if not self.force_destroy and not self.user_profile.disabled and role == self.community.member_role
       raise InvalidCollectionRemoval.new("You can't remove the member role.")
     end
   end

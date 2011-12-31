@@ -191,13 +191,13 @@ class Ability
   end
 
   ###
-  # This method defines the rules for a user who is a community admin.
+  # This method defines the rules for a user who is a community member.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
   def community_member_rules(user, current_community)
-    # RosterAssignments
     apply_rules_from_roles(user, current_community)
+    
     can :index, PageSpace
 
     can [:read], Comment do |comment|
@@ -225,6 +225,7 @@ class Ability
   ###
   def community_admin_rules(user)
     can [:read], Answer
+    can :destroy, CommunityProfile
     can :manage, RosterAssignment
     can [:read, :accept, :reject], CommunityApplication
     can [:manage], Page

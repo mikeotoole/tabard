@@ -7,6 +7,7 @@
 ###
 class Subdomains::PagesController < SubdomainsController
   respond_to :html
+
 ###
 # Before Filters
 ###
@@ -22,6 +23,7 @@ class Subdomains::PagesController < SubdomainsController
 ###
 # REST Actions
 ###
+
   # GET /pages/:id(.:format)
   def show
   end

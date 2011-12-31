@@ -115,13 +115,13 @@ describe Subdomains::PagesController do
   end
 
   describe "GET edit" do
-    it "assigns the requested page as @page when authenticated as an admin" do
+    it "assigns the requested page as @page when authenticated as as admin" do
       sign_in admin
       get :edit, :id => page.id.to_s
       assigns(:page).should eq(page)
     end
     
-    it "should render the 'edit' template when authenticated as an admin" do
+    it "should render the 'edit' template when authenticated as as admin" do
       sign_in admin
       get :edit, :id => page.id.to_s
       response.should render_template("edit")
@@ -306,7 +306,7 @@ describe Subdomains::PagesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested page when authenticated an admin" do
+    it "destroys the requested page when authenticated as admin" do
       page
       sign_in admin
       expect {
@@ -314,7 +314,7 @@ describe Subdomains::PagesController do
       }.to change(Page, :count).by(-1)
     end
 
-    it "redirects to the page list when authenticated an admin" do
+    it "redirects to the page list when authenticated as admin" do
       sign_in admin
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)

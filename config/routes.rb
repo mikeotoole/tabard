@@ -91,6 +91,9 @@ DaBvRails::Application.routes.draw do
           put :reject
         end
       end
+      
+      # Community profiles
+      resources :community_profiles, :only => [:destroy]
 
       # Community applications
       resources :community_applications, :except => [:edit, :update] do
