@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CommunityProfilesController do
+describe Subdomains::CommunityProfilesController do
   let(:owner) { DefaultObjects.user }
   let(:non_owner) { 
     profile = create(:user_profile)
