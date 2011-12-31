@@ -45,7 +45,7 @@ class Wow < Game
 
   # Gets an array of all server names.
   def self.all_servers
-    Wow.group(:server_name).order(:server_name).collect{|game| game.server_name}
+    Wow.order(:server_name).collect{|game| game.server_name}.uniq
   end
 
   # Gets an array of all faction names.
