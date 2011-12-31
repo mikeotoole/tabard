@@ -17,7 +17,8 @@ class Page < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :markup, :show_in_navigation
+  attr_accessible :name, :markup
+  attr_accessible :name, :markup, :show_in_navigation, :as => :community_admin
 
 ###
 # Associations

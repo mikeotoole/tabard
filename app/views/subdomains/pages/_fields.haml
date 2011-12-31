@@ -2,5 +2,6 @@
   %fieldset
     %ol
       = f.input :name, :input_html => { :maxlength => Page::MAX_NAME_LENGTH }
-      = f.input :show_in_navigation, :as => :boolean, :label => 'Display this page in the "info" menu'
+      - if current_user.id == current_community.admin_profile_id
+        = f.input :show_in_navigation, :as => :boolean, :label => 'Display this page in the "info" menu'
       = f.input :markup, :as => :text, :label => false, :input_html => { :id => "wmd-input", :class => "wmd-input" }, :wrapper_html => { :class => "wmd-panel" }

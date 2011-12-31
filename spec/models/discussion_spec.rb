@@ -11,7 +11,7 @@
 #  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
-#  has_been_edit       :boolean         default(FALSE)
+#  has_been_edited     :boolean         default(FALSE)
 #
 
 require 'spec_helper'

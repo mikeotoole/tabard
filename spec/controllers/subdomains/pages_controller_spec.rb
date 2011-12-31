@@ -169,6 +169,13 @@ describe Subdomains::PagesController do
         assigns(:page).should be_a(Page)
         assigns(:page).should be_persisted
       end
+      
+      it "should allow show_in_navigation to be edited" do
+        post :create, :page_space_id => space.id, :page => attributes_for(:page, :show_in_navigation => true)
+        assigns(:page).should be_a(Page)
+        assigns(:page).should be_persisted
+        assigns(:page).show_in_navigation.should be_true
+      end
 
       it "redirects to the created page" do
         post :create, :page_space_id => space.id, :page => attributes_for(:page)

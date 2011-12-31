@@ -22,11 +22,11 @@
         %td.actions
           %div
             - if announcement.is_locked
-              - if (can? :lock, announcement)
-                -# TODO Doug - if allowed, link to unlock announcement
+              - if can? :unlock, announcement
+                = link_to 'Unlock', unlock_discussion_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
             - else
-              - if (can? :unlock, announcement)
-                -# TODO Doug - if allowed, link to lock announcement
+              - if can? :lock, announcement
+                = link_to 'Lock', lock_discussion_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
             - if (can? :update, announcement)
               = link_to 'Edit', edit_announcement_path(announcement), :meta => 'Edit announcement', :class => 'edit'
             - if (can? :destroy, announcement)
