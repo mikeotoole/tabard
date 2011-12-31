@@ -1,7 +1,12 @@
 DaBvRails::Application.routes.draw do
   # Admin Users
+  devise_for :admin_users do 
+    get "/admin/login" => "admin/devise/sessions#new"
+    post "/admin/login" => "admin/devise/sessions#create"
+    get "/admin_users/sign_in" => "admin/devise/sessions#new"
+    post "/admin_users/sign_in" => "admin/devise/sessions#create"
+  end
   ActiveAdmin.routes(self)
-  devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users

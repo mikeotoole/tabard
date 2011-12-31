@@ -333,6 +333,8 @@ protected
       store_location = session[:return_to]
       session[:return_to] = nil
       (store_location.nil?) ? root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) : store_location.to_s
+    when :admin_user, AdminUser
+      root_url_hack_helper(admin_dashboard_url(:protocol => "http://", :subdomain => false))
     else
       user_root_url(current_user)
     end
