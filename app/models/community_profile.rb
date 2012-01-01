@@ -60,7 +60,7 @@ class CommunityProfile < ActiveRecord::Base
   
   # This method prevents the community admin's community profile from being destroyed
   def ensure_that_community_profile_is_not_admin
-    if self.user_profile == self.community.admin_profile
+    if self.community and self.user_profile == self.community.admin_profile
       errors.add(:base, "Cannot remove community admin.")
       return false
     end
