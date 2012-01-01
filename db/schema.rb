@@ -421,14 +421,6 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.datetime "updated_at"
   end
 
-  create_table "themes", :force => true do |t|
-    t.integer  "community_id"
-    t.string   "background_image"
-    t.string   "predefined_theme"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "first_name"

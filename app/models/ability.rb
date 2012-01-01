@@ -225,7 +225,9 @@ class Ability
   ###
   def community_admin_rules(user)
     can [:read], Answer
-    can :destroy, CommunityProfile
+    can :destroy, CommunityProfile do |community_profile|
+      community_profile.user_profile != community_profile.community.admin_profile
+    end
     can :manage, RosterAssignment
     can [:read, :accept, :reject], CommunityApplication
     can [:manage], Page

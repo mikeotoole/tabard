@@ -6,11 +6,12 @@
 # This controller is handling community profiles within communities.
 ###
 class Subdomains::CommunityProfilesController < SubdomainsController
+  respond_to :html
 
 ###
 # Before Filters
 ###
-  load_resource :only => [:destroy]
+  load_and_authorize_resource :only => [:destroy]
 
 ###
 # REST Actions
@@ -21,9 +22,7 @@ class Subdomains::CommunityProfilesController < SubdomainsController
     @community_profile.force_destroy = true
     if @community_profile.destroy
       add_new_flash_message "#{@community_profile.user_profile_display_name} has been removed from the community.", 'notice'
-    else
-      add_new_flash_message 'Unable to remove member.', 'alert'
     end
-    redirect_to roster_assignments_url
+    respond_with @community_profile, :location => roster_assignments_url
   end
 end

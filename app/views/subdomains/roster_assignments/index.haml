@@ -39,8 +39,8 @@
             %td.actions
               %div
                 - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
-                -# if can? :delete, community_profile
-                =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
+                - if can? :destroy, community_profile
+                  =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
       - if can? :manage, RosterAssignment
         %tfoot
           %tr
