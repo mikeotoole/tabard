@@ -61,24 +61,24 @@ describe Subdomains::PagesController do
   describe "GET show" do
     it "assigns the requested discussion as @page when authenticated as a member" do
       sign_in owner
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       assigns(:page).should eq(page)
     end
     
     it "should render the 'show' template when authenticated as a member" do
       sign_in owner
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should render_template("show")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
       sign_in non_member
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should be_forbidden
     end   
   end

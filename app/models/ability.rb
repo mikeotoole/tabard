@@ -347,19 +347,19 @@ class Ability
       can action, subject_class
     else
       can action, subject_class do |subject_class_instance|
-        subject_class_instance.id.to_s == subject_id
+        subject_class_instance.id == subject_id
       end
       case subject_class.to_s
       when "DiscussionSpace"
         if action.include?(:read) and subject_class != nil
           can :read, Discussion do |discussion|
-            discussion.discussion_space_id.to_s == subject_id
+            discussion.discussion_space_id == subject_id
           end
         end
       when "PageSpace"
         if action.include?(:read) and subject_class != nil
           can :read, Page do |page|
-            page.page_space_id.to_s == subject_id
+            page.page_space_id == subject_id
           end
         end
       end
