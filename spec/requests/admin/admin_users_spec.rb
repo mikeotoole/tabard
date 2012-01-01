@@ -330,21 +330,21 @@ describe "ActiveAdmin AdminUser" do
       login_as superadmin   
       
       page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
-      page.driver.status_code.should == 200   
+      AdminUser.find(superadmin).email.should eql "test-case-email@example.com" 
     end 
     
     it "changes password and email when logged in as admin" do
       login_as admin
 
       page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
-      page.driver.status_code.should == 200
+      AdminUser.find(admin).email.should eql "test-case-email@example.com" 
     end    
     
     it "changes password and email when logged in as moderator" do
       login_as moderator
 
       page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
-      page.driver.status_code.should == 200
+      AdminUser.find(moderator).email.should eql "test-case-email@example.com" 
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -375,7 +375,6 @@ describe "ActiveAdmin AdminUser" do
       login_as moderator
 
       page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword", :role => "superadmin" } } )
-      page.driver.status_code.should == 200
       
       AdminUser.find(moderator).role.should eql "moderator"
     end
