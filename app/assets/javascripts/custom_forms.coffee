@@ -1,8 +1,7 @@
 $(document).ready ->
-
-  # Remove question link
-  $('form.custom_form .questions >li')
-    .live 'init', ->
+  
+  $('form.custom_form .questions')
+    .delegate 'li', 'init', ->
       li = $(this)
       right = $(this).find('.right')
       li.data('qtype',li.attr('question_type'))
@@ -12,7 +11,7 @@ $(document).ready ->
         li
           .append('<a class="remove">Remove Question</a>')
           .find('.remove')
-          .bind 'click', ->
+          .click ->
             question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
             qid = li.attr('question_id')
             q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
@@ -22,7 +21,7 @@ $(document).ready ->
         # TypeStyle select change action
         li
           .find('.select input')
-          .bind 'change', ->
+          .change ->
             select = $(this).closest('.select')
             val = select.find('input:checked').val()
             answers = right.find('.answers')
@@ -45,32 +44,13 @@ $(document).ready ->
                 right.find('.add a').trigger 'click'
         
         # Add answer link
-        right
-          .append('<p class="add"><a>Add Answer</a></p>')
-          .find('p.add a')
-          .bind 'click', ->
-            q = li.attr('question')
-            div = $(this).closest('div')
-            answers = div.find('.answers')
-            a = answers.find('>li:last').attr('answer')
-            a = if a then a+1 else answers.find('li').size()
-            answer = '<li question="'+q+'" answer="'+a+'"><input name="custom_form[questions_attributes]['+q+'][predefined_answers_attributes]['+a+'][body]" type="text"></li>'
-            answers.append(answer)
-            answers
-              .find('>li:last')
-              .trigger 'init'
+        right.find('p.add').removeClass('hidden')
         
         # Remove answer link
-        right.find('.answers li')
-          .live 'init', ->
-            $(this)
-              .append('<a class="remove">Remove Answer</a>')
-              .find('.remove')
-              .bind 'click', ->
-                li = $(this).closest('li')
-                answer = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][predefined_answers_attributes]['+li.attr('answer')+'][_destroy]" type="hidden" value="true">'
-                li.slideUp 400, ->
-                  $(this).replaceWith(answer)
-          .trigger 'init'
-        
-    .trigger 'init'
+        right.find('.answers').delegate 'li a.remove', 'click', ->
+          li = $(this).closest('li')
+          answer = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][predefined_answers_attributes]['+li.attr('answer')+'][_destroy]" type="hidden" value="true">'
+          li.slideUp 400, ->
+            $(this).replaceWith(answer)
+      
+  $('form.custom_form .questions >li').trigger 'init'
