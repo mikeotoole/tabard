@@ -10,7 +10,7 @@ $(document).ready ->
         # Remove question link
         li
           .append('<a class="remove">Remove Question</a>')
-          .find('.remove')
+          .find('>.remove')
           .click ->
             question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
             qid = li.attr('question_id')
