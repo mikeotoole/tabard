@@ -28,7 +28,7 @@ class SwtorCharactersController < ApplicationController
   # POST /swtor_characters(.:format)
   def create
     @swtor_character = SwtorCharacter.create_character(params, current_user)
-    add_new_flash_message('Character was successfully created','success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
+    add_new_flash_message('Character has been created','success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
 
     respond_with @swtor_character, :location => user_root_url + '#characters'
   end
@@ -42,14 +42,14 @@ class SwtorCharactersController < ApplicationController
       @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
     end
     params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
-    add_new_flash_message('Character was successfully updated.','success') if @swtor_character.update_attributes(params[:swtor_character])
+    add_new_flash_message('Character has been saved.','success') if @swtor_character.update_attributes(params[:swtor_character])
 
     respond_with @swtor_character, :location => user_root_url + '#characters'
   end
 
   # DELETE /swtor_characters/:id(.:format)
   def destroy
-    add_new_flash_message('Character was successfully removed.') if @swtor_character and @swtor_character.destroy
+    add_new_flash_message('Character has been removed.') if @swtor_character and @swtor_character.destroy
 
     respond_with(@swtor_character, :location => user_profile_url(@swtor_character.user_profile))
   end

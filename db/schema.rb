@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216044652) do
+ActiveRecord::Schema.define(:version => 20111231181049) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -326,17 +326,17 @@ ActiveRecord::Schema.define(:version => 20111216044652) do
     t.integer  "role_id"
     t.string   "permission_level"
     t.string   "subject_class"
-    t.string   "id_of_subject"
+    t.integer  "id_of_subject",                  :limit => 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "can_lock",                       :default => false
-    t.boolean  "can_accept",                     :default => false
+    t.boolean  "can_lock",                                      :default => false
+    t.boolean  "can_accept",                                    :default => false
     t.string   "parent_association_for_subject"
     t.integer  "id_of_parent"
-    t.boolean  "can_read",                       :default => false
-    t.boolean  "can_create",                     :default => false
-    t.boolean  "can_update",                     :default => false
-    t.boolean  "can_destroy",                    :default => false
+    t.boolean  "can_read",                                      :default => false
+    t.boolean  "can_create",                                    :default => false
+    t.boolean  "can_update",                                    :default => false
+    t.boolean  "can_destroy",                                   :default => false
     t.datetime "deleted_at"
   end
 

@@ -5,7 +5,7 @@
       %p This role is automatically assigned to every member of the community.
   - else
     - if role.persisted?
-      #page_actions.actions
+      .actions
         = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
     %p= f.input :name, :wrapper => false, :label => 'Role Name'
 

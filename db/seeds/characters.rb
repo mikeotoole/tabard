@@ -13,7 +13,8 @@ def create_empire_character(user_last_name, char_name, char_class, advanced_clas
         :char_class => char_class,
         :advanced_class => advanced_class,
         :species => species,
-        :level => level))
+        :level => level,
+        :about => ""))
 end
 
 # Create SWTOR Republic Character
@@ -27,7 +28,8 @@ def create_republic_character(user_last_name, char_name, char_class, advanced_cl
         :char_class => char_class,
         :advanced_class => advanced_class,
         :species => species,
-        :level => level))
+        :level => level,
+        :about => ""))
 end
 
 # Create WoW Alliance Character
@@ -40,7 +42,8 @@ def create_alliance_character(user_last_name, char_name, char_class, race, level
         :wow => Wow.find(:first, :conditions => {:faction => "Alliance"}),
         :char_class => char_class,
         :race => race,
-        :level => level))
+        :level => level,
+        :about => ""))
 end
 
 # Create WoW Horde Character
@@ -53,7 +56,8 @@ def create_horde_character(user_last_name, char_name, char_class, race, level)
         :wow => Wow.find(:first, :conditions => {:faction => "Horde"}),
         :char_class => char_class,
         :race => race,
-        :level => level))
+        :level => level,
+        :about => ""))
 end
 
 unless @dont_run

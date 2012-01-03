@@ -12,6 +12,11 @@ class CommunityProfile < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute accessible
+###
+  attr_accessor :force_destroy
+  
+###
 # Associations
 ###
   # TODO Joe/Bryan We need to evaluate the eager loading of associations and inverse_of to optimize our memory footprints and speed. -JW
@@ -26,6 +31,11 @@ class CommunityProfile < ActiveRecord::Base
   has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
 
 ###
+# Callbacks
+###
+  before_destroy :ensure_that_community_profile_is_not_admin
+
+###
 # Validators
 ###
   validates :community, :presence => true
@@ -33,13 +43,14 @@ class CommunityProfile < ActiveRecord::Base
   validates :user_profile_id, :uniqueness => {:scope => [:community_id, :deleted_at]},
                                 :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
+  validate :has_at_least_the_default_member_role
 
 ###
 # Delegates
 ###
-  delegate :admin_profile_id, :to => :community, :prefix => true
   delegate :id, :to => :user_profile, :prefix => true
   delegate :name, :to => :user_profile, :prefix => true
+  delegate :display_name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
 
 ###
@@ -50,6 +61,14 @@ class CommunityProfile < ActiveRecord::Base
     errors.add(:roles, "must not be empty") if self.roles.blank?
     errors.add(:roles, "must include the member role of the community.") unless self.community and self.roles.include?(self.community.member_role)
   end
+  
+  # This method prevents the community admin's community profile from being destroyed
+  def ensure_that_community_profile_is_not_admin
+    if self.community and self.user_profile == self.community.admin_profile
+      errors.add(:base, "Cannot remove community admin.")
+      return false
+    end
+  end
 
   ###
   # This method ensures that the community matches when a role is added.
@@ -59,7 +78,6 @@ class CommunityProfile < ActiveRecord::Base
   def ensure_that_character_proxy_user_matches(character_proxy)
     raise InvalidCollectionAddition.new("You can't add a character_proxy from a different user.") if character_proxy and character_proxy.user_profile != self.user_profile
   end
-
 
   ###
   # This method ensures that the community matches when a role is added.
@@ -76,7 +94,7 @@ class CommunityProfile < ActiveRecord::Base
   #   * +role+ -> The role being removed from the collection.
   ###
   def ensure_that_member_role_stays(role)
-    if not self.user_profile.is_disabled? and role == self.community.member_role
+    if not self.force_destroy and not self.user_profile.is_disabled? and role == self.community.member_role
       raise InvalidCollectionRemoval.new("You can't remove the member role.")
     end
   end

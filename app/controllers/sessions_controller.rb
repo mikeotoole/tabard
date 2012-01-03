@@ -16,6 +16,11 @@ class SessionsController < Devise::SessionsController
   def create
     sign_out(current_admin_user) if current_admin_user
     current_user.update_attribute(:force_logout, false) if current_user and current_user.force_logout
-    super
+    resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
+    set_flash_message(:notice, :user_signed_in, :display_name => current_user.display_name) if is_navigational_format?
+    add_new_flash_message flash[:notice], 'success'
+    flash.delete :notice
+    session[:hide_announcements] = true
+    respond_with resource, :location => after_sign_in_path_for(resource)
   end
 end

@@ -7,6 +7,7 @@
 ###
 class Subdomains::PagesController < SubdomainsController
   respond_to :html
+
 ###
 # Before Filters
 ###
@@ -22,6 +23,7 @@ class Subdomains::PagesController < SubdomainsController
 ###
 # REST Actions
 ###
+
   # GET /pages/:id(.:format)
   def show
   end
@@ -38,7 +40,7 @@ class Subdomains::PagesController < SubdomainsController
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
     if @page.save
-      add_new_flash_message('Page was successfully created.')
+      add_new_flash_message 'Page has been created.', 'success'
       @action = 'created'
     end
     respond_with(@page)
@@ -46,11 +48,15 @@ class Subdomains::PagesController < SubdomainsController
 
   # PUT /pages/:id(.:format)
   def update
-    @page.assign_attributes(params[:page])
+    if current_user.user_profile == current_community.admin_profile
+      @page.assign_attributes(params[:page], :as => :community_admin)
+    else
+      @page.assign_attributes(params[:page])
+    end
     is_changed = @page.changed?
 
     if @page.save
-      add_new_flash_message('Page was successfully updated.')
+      add_new_flash_message 'Page has been saved.', 'success'
       @action = is_changed ? 'edited' : nil
     end
     respond_with(@page)
@@ -83,7 +89,11 @@ protected
   ###
   def create_page
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
-    @page = page_space.pages.new(params[:page])
+    if current_user.user_profile == current_community.admin_profile
+      @page = page_space.pages.new(params[:page], :as => :community_admin)
+    else
+      @page = page_space.pages.new(params[:page])
+    end
   end
 
   ###

@@ -13,10 +13,14 @@ $(document).ready ->
   
   editor1.hooks.set "insertImageDialog", (callback) ->
     $.prompt {
-      body: 'Place a link to the image below:'
+      title: 'Insert Image'
+      body: 'Paste a link to the image below:'
       action: (link) ->
         callback(link)
     }
+    setTimeout ->
+      $('#prompt').val('http://').focus()
+    , 100
     true
   
   editor1.run()

@@ -61,24 +61,24 @@ describe Subdomains::PagesController do
   describe "GET show" do
     it "assigns the requested discussion as @page when authenticated as a member" do
       sign_in owner
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       assigns(:page).should eq(page)
     end
     
     it "should render the 'show' template when authenticated as a member" do
       sign_in owner
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should render_template("show")
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should redirect_to(new_user_session_url)
     end
     
     it "should respond forbidden when not a member" do
       sign_in non_member
-      get :show, :id => page.id.to_s
+      get :show, :id => page
       response.should be_forbidden
     end   
   end
@@ -115,13 +115,13 @@ describe Subdomains::PagesController do
   end
 
   describe "GET edit" do
-    it "assigns the requested page as @page when authenticated as an admin" do
+    it "assigns the requested page as @page when authenticated as as admin" do
       sign_in admin
       get :edit, :id => page.id.to_s
       assigns(:page).should eq(page)
     end
     
-    it "should render the 'edit' template when authenticated as an admin" do
+    it "should render the 'edit' template when authenticated as as admin" do
       sign_in admin
       get :edit, :id => page.id.to_s
       response.should render_template("edit")
@@ -168,6 +168,13 @@ describe Subdomains::PagesController do
         post :create, :page_space_id => space.id, :page => attributes_for(:page)
         assigns(:page).should be_a(Page)
         assigns(:page).should be_persisted
+      end
+      
+      it "should allow show_in_navigation to be edited" do
+        post :create, :page_space_id => space.id, :page => attributes_for(:page, :show_in_navigation => true)
+        assigns(:page).should be_a(Page)
+        assigns(:page).should be_persisted
+        assigns(:page).show_in_navigation.should be_true
       end
 
       it "redirects to the created page" do
@@ -299,7 +306,7 @@ describe Subdomains::PagesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested page when authenticated an admin" do
+    it "destroys the requested page when authenticated as admin" do
       page
       sign_in admin
       expect {
@@ -307,7 +314,7 @@ describe Subdomains::PagesController do
       }.to change(Page, :count).by(-1)
     end
 
-    it "redirects to the page list when authenticated an admin" do
+    it "redirects to the page list when authenticated as admin" do
       sign_in admin
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)

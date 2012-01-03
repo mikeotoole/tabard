@@ -6,7 +6,7 @@
 def create_user(first_name, last_name)
   puts "Creating #{first_name} #{last_name}"
   user = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
-      :email => "#{first_name}@#{last_name}.com", :password => "Password",
+      :email => "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", :password => "Password",
       :user_profile_attributes => {:first_name => first_name, :last_name => last_name, :display_name => "#{first_name} #{last_name}"},
       :date_of_birth => 22.years.ago.to_date)
   user.skip_confirmation!
@@ -19,9 +19,9 @@ unless @dont_run
   # Create Admin Users
   ###
   puts "Creating test active admin users"
-  superadmin = AdminUser.create!(:email => 'superadmin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "superadmin")
-  moderator = AdminUser.create!(:email => 'moderator@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
-  admin = AdminUser.create!(:email => 'admin@example.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
+  superadmin = AdminUser.create!(:email => 'superadmin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "superadmin")
+  moderator = AdminUser.create!(:email => 'moderator@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
+  admin = AdminUser.create!(:email => 'admin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
   ###
   # Create Regular Users
@@ -39,8 +39,6 @@ unless @dont_run
 
   Timecop.return
   puts "Time: 3 months ago"
-
-  UserProfile.find_by_last_name("Billy").user.update_attribute(:email, "billy@robo.com")
 
   puts "Removing Panda accepted documents"
   s_panda = UserProfile.find_by_last_name("Panda")

@@ -38,7 +38,6 @@ class Community < ActiveRecord::Base
   has_many :game_announcement_spaces, :through => :supported_games
 
   has_many :custom_forms, :dependent => :destroy
-
   has_many :community_profiles, :dependent => :destroy
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles

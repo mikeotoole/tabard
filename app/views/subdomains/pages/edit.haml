@@ -5,7 +5,7 @@
 
 %h1 Editing Page
 
-= simple_form_for @page do |f|
+= simple_form_for @page, :html => {:novalidate => true} do |f|
 
   .sidemenu
     %dl

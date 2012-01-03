@@ -7,8 +7,7 @@
     - supported_games.each do |supported_game|
       %tr
         %td
-          = link_to supported_game.name, supported_game
-          %em= "— #{supported_game.game_name}"
+          %strong= "#{supported_game.name} — #{supported_game.game_name}"
         %td.actions
           %div
             - if (can? :update, supported_game)

@@ -398,9 +398,10 @@ describe "ActiveAdmin User" do
       login_as superadmin
 
       page.driver.post("/admin/users/reset_all_passwords")
-      sleep 3
+      page.driver.status_code.should eql 302
+      
       User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
-        this_user.reset_password_sent_at.should_not be_nil
+        this_user.reset_password_token.should_not be_nil
       end
     end 
     
@@ -408,9 +409,10 @@ describe "ActiveAdmin User" do
       login_as admin
 
       page.driver.post("/admin/users/reset_all_passwords")
-	  sleep 3      
+      page.driver.status_code.should eql 302
+      
       User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
-        this_user.reset_password_sent_at.should_not be_nil
+        this_user.reset_password_token.should_not be_nil
       end
     end    
     
@@ -418,26 +420,30 @@ describe "ActiveAdmin User" do
       login_as moderator
 
       page.driver.post("/admin/users/reset_all_passwords")
+      page.driver.status_code.should eql 403
+      page.should have_content('forbidden')
+      
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
       end
-      page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
       login_as user
 
       page.driver.post("/admin/users/reset_all_passwords")
+      page.driver.status_code.should eql 403
+      page.should have_content('forbidden')
+      
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
       end
-      page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
     end
     
     it "does not reset all passwords when not logged in" do
       page.driver.post("/admin/users/reset_all_passwords")
+      page.driver.status_code.should eql 302
+      
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
       end

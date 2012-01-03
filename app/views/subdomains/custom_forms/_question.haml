@@ -14,5 +14,6 @@
         %ol.answers
           - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) and question.predefined_answers.any?
             - question.predefined_answers.each_with_index do |answer,a|
-              = qf.simple_fields_for :predefined_answers, answer do |af|
-                = af.input :body, :as => :string, :label => false, :input_html => { :maxlength => PredefinedAnswer::MAX_BODY_LENGTH }, :wrapper_html => { :question => q, :answer => a }
+              = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
+        %p{ :class => 'add hidden' }
+          = add_predefined_answer_link 'Add Answer', qf, question, q

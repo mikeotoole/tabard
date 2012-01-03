@@ -270,9 +270,9 @@ class UserProfile < ActiveRecord::Base
   # This method gets an array of unviewed announcements within the past two weeks
   # [Returns] An array of unviewed messages within the past two weeks.
   ###
-  def recent_unread_announcements
+  def recent_unread_announcements(community = nil)
     # TODO Mike, make this better.
-    self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago}
+    self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago or (community and announcement.community.id != community.id)}
   end
 
   ###

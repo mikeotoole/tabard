@@ -221,8 +221,7 @@ class User < ActiveRecord::Base
       params[:user][:user_disabled_at] = Time.now
       success = self.update_with_password(params[:user])
       if success
-        self.community_profiles.clear
-        self.owned_communities.clear
+        self.remove_from_all_communities
         self.remove_all_avatars
       end
       return success
@@ -234,10 +233,15 @@ class User < ActiveRecord::Base
   # Used by the admin panel to disable a user.
   def disable_by_admin
     if self.update_attribute(:admin_disabled_at, Time.now)
-      self.community_profiles.clear
-      self.owned_communities.clear
+      self.remove_from_all_communities
       self.remove_all_avatars
     end
+  end
+
+  # Removes user from all communities.
+  def remove_from_all_communities
+    self.owned_communities.clear
+    self.community_profiles.clear
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.

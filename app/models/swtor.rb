@@ -45,7 +45,7 @@ class Swtor < Game
 
   # Gets an array of all server names.
   def self.all_servers
-    Swtor.group(:server_name).order(:server_name).collect{|game| game.server_name}
+    Swtor.order(:server_name).collect{|game| game.server_name}.uniq
   end
 
   # Gets an array of all faction names.

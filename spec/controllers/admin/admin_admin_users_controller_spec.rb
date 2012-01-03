@@ -6,7 +6,7 @@ describe Admin::AdminUsersController do
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
   
-  describe "GET index" do
+  describe "GET index" do    
     it "when signed in as User redirects to /admin/login" do
       sign_in user
       get :index
