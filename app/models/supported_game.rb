@@ -23,6 +23,7 @@ class SupportedGame < ActiveRecord::Base
   belongs_to :community
   belongs_to :game, :polymorphic => true
   belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
+  has_many :roster_assignments
 
 ###
 # Delegates

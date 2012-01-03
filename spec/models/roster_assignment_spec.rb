@@ -8,6 +8,7 @@
 #  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  supported_game_id    :integer
 #
 
 require 'spec_helper'

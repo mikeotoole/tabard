@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111231181049) do
+ActiveRecord::Schema.define(:version => 20120103224945) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -369,10 +369,12 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.boolean  "is_pending",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "supported_game_id"
   end
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
+  add_index "roster_assignments", ["supported_game_id"], :name => "index_roster_assignments_on_supported_game_id"
 
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"
@@ -417,6 +419,14 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.string   "faction"
     t.string   "server_name"
     t.string   "server_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "themes", :force => true do |t|
+    t.integer  "community_id"
+    t.string   "background_image"
+    t.string   "predefined_theme"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

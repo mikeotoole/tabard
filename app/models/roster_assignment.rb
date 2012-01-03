@@ -12,6 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   belongs_to :community_profile
   belongs_to :character_proxy
+  belongs_to :supported_game
   has_one :user_profile, :through => :community_profile
 
 ###
@@ -20,6 +21,9 @@ class RosterAssignment < ActiveRecord::Base
   validates :community_profile, :presence => true
   validates :character_proxy, :presence => true
   validates :character_proxy_id, :uniqueness => { :scope => "community_profile_id", :message => "is already rostered to the community."}
+  validates :supported_game, :presence => true
+  validate :community_valid_for_supported_game
+  validate :character_valid_for_supported_game
 
 ###
 # Delegates
@@ -65,6 +69,16 @@ class RosterAssignment < ActiveRecord::Base
 ###
   protected
 
+  # This method validates that the community is compatable with the supported game
+  def community_valid_for_supported_game
+    errors.add(:base, "Community and supported game do not match") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
+  end
+
+  # This method validates that the character is compatable with the supported game
+  def character_valid_for_supported_game
+    errors.add(:base, "Character is not compatable with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class != self.supported_game.game.class
+  end
+
   ###
   # _before_create_
   #
@@ -83,6 +97,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -93,5 +108,6 @@ end
 #  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  supported_game_id    :integer
 #
 
