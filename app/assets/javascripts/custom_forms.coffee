@@ -1,7 +1,7 @@
 $(document).ready ->
   
-  $('form.custom_form .questions')
-    .delegate 'li', 'init', ->
+  $('form.custom_form')
+    .delegate '.questions > li', 'init', ->
       li = $(this)
       right = $(this).find('.right')
       li.data('qtype',li.attr('question_type'))
@@ -14,6 +14,7 @@ $(document).ready ->
           .click ->
             question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
             qid = li.attr('question_id')
+            alert qid
             q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
             li.slideUp 400, ->
               $(this).replaceWith(question + q)
@@ -48,9 +49,9 @@ $(document).ready ->
         
         # Remove answer link
         right.find('.answers').delegate 'li a.remove', 'click', ->
-          li = $(this).closest('li')
-          answer = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][predefined_answers_attributes]['+li.attr('answer')+'][_destroy]" type="hidden" value="true">'
-          li.slideUp 400, ->
+          ali = $(this).closest('li')
+          answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
+          ali.slideUp 400, ->
             $(this).replaceWith(answer)
       
-  $('form.custom_form .questions >li').trigger 'init'
+  $('form.custom_form .questions > li').trigger 'init'

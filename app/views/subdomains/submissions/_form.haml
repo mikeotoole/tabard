@@ -5,7 +5,7 @@
       %ol
         - submission.answers.each do |answer|
           = f.simple_fields_for :answers, answer do |af|
-            %li
+            %li{ :class => (af.object.errors.any? ? 'field_with_errors' : '') }
               = af.input :question_id, :as => :hidden, :wrapper => false
               - case answer.question_type
               - when 'TextQuestion'
