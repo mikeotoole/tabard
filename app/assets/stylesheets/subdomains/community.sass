@@ -363,6 +363,7 @@ button,
   
   p
     padding: 10px 0
+    word-wrap: break-word
   
   blockquote
     border: 1px solid #e9d6cd
@@ -482,6 +483,12 @@ button,
     
     &.unlock
       background-position: -150px -30px
+    
+    &.publish
+      background-position: -420px -30px
+      
+    &.unpublish
+      background-position: -390px -30px
   
   
   // FORMS
@@ -1378,12 +1385,15 @@ button,
                 font: 12px DinLight, sans-serif
       
       .instructions
+        padding: 0 0 15px
         
         h2:before
           background-position: -450px -30px
         
         p
-          padding: 0 0 3px
+          line-height: 1.2em
+          padding: 0 0 15px
+          word-wrap: break-word
 
     .questions
       float: left

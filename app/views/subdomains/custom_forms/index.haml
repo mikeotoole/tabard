@@ -5,22 +5,22 @@
   %thead
     %tr
       %th Name
-      %th Instructions
-      %th= "Published?" if can? :edit, @custom_forms.first
       %th
   %tbody
     - @custom_forms.each do |custom_form|
       - if (custom_form.is_published and not custom_form.application_form?) or can? :edit, custom_form
         %tr
           - if custom_form.application_form?
-            %td.cinch= custom_form.name
+            %td= custom_form.name
           - else
-            %td.cinch= link_to custom_form.name, new_custom_form_submission_path(custom_form)
-          %td= custom_form.instructions
-          %td= custom_form.is_published if can? :edit, custom_form
+            %td= link_to custom_form.name, new_custom_form_submission_path(custom_form)
           %td.actions
             %div
               - if can? :update, custom_form
+                - if custom_form.is_published
+                  = link_to 'Unpublish', '#', :class => 'unpublish', :meta => 'Unpublish form'
+                - else
+                  = link_to 'Publish', '#', :class => 'publish', :meta => 'Publish form'
                 = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
               - if can? :view_submissions, custom_form and custom_form.submissions.any?
                 = link_to 'Submissions', custom_form_submissions_path(custom_form), :class => 'submission', :meta => pluralize(custom_form.submissions.size,'submission')
@@ -28,6 +28,6 @@
                 = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot
     %tr
-      %td{ :colspan => 4 }
+      %td{ :colspan => 2 }
         - if (can? :create, current_community.custom_forms.new)
           = link_to 'New form', new_custom_form_path, :class => 'button'

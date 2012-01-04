@@ -41,6 +41,9 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # GET /custom_forms/:id/thankyou
   def thankyou
+    if not(!!flash[:messages] and flash[:messages].any? and flash[:messages].reject{|message| message[:class] == 'success'}.any?)
+      redirect_to new_custom_form_submission_url(@custom_form)
+    end
   end
 
   # PUT /custom_forms/1
