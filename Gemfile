@@ -4,7 +4,7 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # ActiveRecord extensions
-  gem 'rails3_acts_as_paranoid'
+  gem 'rails3_acts_as_paranoid', :git => 'git://github.com/mikeotoole/rails3_acts_as_paranoid.git'
 
 # Javascript Library
   gem 'jquery-rails'
