@@ -25,6 +25,7 @@ class Submission < ActiveRecord::Base
 ###
   validates :custom_form, :presence => true
   validates :user_profile, :presence => true
+  validate :answered_all_required_questions
 
 ###
 # Delegates
@@ -82,6 +83,23 @@ class Submission < ActiveRecord::Base
   ###
   def all_questions
     self.answers.collect { |answer| answer.question }.uniq
+  end
+
+  def answered_all_required_questions
+    self.custom_form.questions.each do |question|
+      if question.is_required
+        self.answers.each do |answer|
+          if answer.question_id == question.id
+            if answer.body.class == String
+              answer.errors.add(:base, "is required to be answered.") if answer.body.blank?
+            end
+            if answer.body.class == Array
+              answer.errors.add(:base, "is required to be answered.") if answer.body.delete_if{|elem| elem.blank?}.join(', ').blank?
+            end
+          end
+        end
+      end
+    end
   end
 end
 
