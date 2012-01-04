@@ -91,10 +91,16 @@ class Submission < ActiveRecord::Base
         self.answers.each do |answer|
           if answer.question_id == question.id
             if answer.body.class == String
-              answer.errors.add(:base, "is required to be answered.") if answer.body.blank?
+              if answer.body.blank?
+                errors.add(:base, "All required questions must be answered.") 
+                answer.errors.add(:base, "is required to be answered.") 
+              end
             end
             if answer.body.class == Array
-              answer.errors.add(:base, "is required to be answered.") if answer.body.delete_if{|elem| elem.blank?}.join(', ').blank?
+              if answer.body.delete_if{|elem| elem.blank?}.join(', ').blank?
+                errors.add(:base, "All required questions must be answered.") 
+                answer.errors.add(:base, "is required to be answered.") 
+              end
             end
           end
         end
