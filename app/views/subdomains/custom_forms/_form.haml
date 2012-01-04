@@ -6,7 +6,7 @@
       = f.input :name, :input_html => { :maxlength => CustomForm::MAX_NAME_LENGTH }
       = f.input :thankyou, :label => 'Thank you message', :hint => 'This message will be displayed to users upon submission of the form.', :input_html => { :maxlength => CustomForm::MAX_THANKYOU_LENGTH }
       = f.input :instructions, :wrapper_html => { :class => 'instructions' }, :input_html => { :maxlength => CustomForm::MAX_INSTRUCTIONS_LENGTH }
-      = f.input :is_published, :label => 'Publish form', :hint => 'Form will be made visible to all members.' unless custom_form.application_form?
+      = f.input :is_published, :label => 'Publish?', :hint => 'Allow members to fill this form out.' unless custom_form == current_community.community_application_form
     %h2 Questions
     %ul.questions
       - if custom_form.questions.any?

@@ -32,8 +32,8 @@ class Subdomains::CustomFormsController < SubdomainsController
   # POST /custom_forms
   def create
     if @custom_form.save
-      add_new_flash_message('Form was successfully created.','success')
-      respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
+      add_new_flash_message "Form \"#{@custom_form.name}\" has been created.", 'success'
+      respond_with @custom_form, :location => custom_forms_url
     else
       respond_with @custom_form
     end
@@ -49,9 +49,9 @@ class Subdomains::CustomFormsController < SubdomainsController
   # PUT /custom_forms/1
   def update
     if @custom_form.update_attributes(params[:custom_form])
-      add_new_flash_message 'Form was successfully updated.', 'success'
+      add_new_flash_message "Form \"#{@custom_form.name}\" has been saved.", 'success'
     end
-    respond_with @custom_form, :location => edit_custom_form_path(@custom_form)
+    respond_with @custom_form, :location => custom_forms_url
   end
 
   # DELETE /custom_forms/1
