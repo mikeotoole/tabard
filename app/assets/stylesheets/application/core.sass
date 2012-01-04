@@ -490,6 +490,10 @@ button,
             content: '\A'
             white-space: pre
         
+        .check_boxes + ul
+          padding-top: 0
+          padding-bottom: 0
+        
         &:before
           display: none
         
@@ -521,6 +525,10 @@ button,
       position: relative
       width: 412px
       z-index: 1
+    
+    .check_boxes + ul + mark.error
+      margin-top: 0
+      padding-top: 5px
   
     &.select,
     .select

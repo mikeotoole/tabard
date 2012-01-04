@@ -25,6 +25,8 @@
                 - when 'MultiSelectQuestion'
                   - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.id]}
                   = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required
+                  - if af.object.errors.any?
+                    %mark.error= af.object.errors.full_messages.first
   .sidebar
     - if current_user.character_proxies.size > 0
       .characters

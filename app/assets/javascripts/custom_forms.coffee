@@ -14,7 +14,6 @@ $(document).ready ->
           .click ->
             question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
             qid = li.attr('question_id')
-            alert qid
             q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
             li.slideUp 400, ->
               $(this).replaceWith(question + q)
