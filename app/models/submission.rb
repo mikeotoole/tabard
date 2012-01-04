@@ -85,6 +85,7 @@ class Submission < ActiveRecord::Base
     self.answers.collect { |answer| answer.question }.uniq
   end
 
+  # This method ensures that all required questions have been answered.
   def answered_all_required_questions
     self.custom_form.questions.each do |question|
       if question.is_required

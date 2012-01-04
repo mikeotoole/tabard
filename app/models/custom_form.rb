@@ -41,6 +41,7 @@ class CustomForm < ActiveRecord::Base
                        :length => { :maximum => MAX_THANKYOU_LENGTH }
   validates :community, :presence => true
   validate :cant_unpublish_application_form
+  validate :question_have_predefined_answers
 
 ###
 # Delegates
@@ -98,6 +99,18 @@ protected
   def cant_unpublish_application_form
     return unless not self.is_published and self.community and self.community.community_application_form == self
     self.errors.add(:is_published, "must be true for community application form.")
+  end
+
+  # This method checks to see if questions that require predefined answers have at least one
+  def question_have_predefined_answers
+    self.questions.each do |question|
+      if question.type == "MultiSelectQuestion" or question.type == "SingleSelectQuestion"
+        unless question.predefined_answers.any?
+          errors.add(:base, "All questions that can have predefined answers require at least 1.") 
+          question.errors.add(:base, "requires at least one predefined answer.") 
+        end
+      end
+    end
   end
 end
 
