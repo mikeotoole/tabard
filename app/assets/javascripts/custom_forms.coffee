@@ -71,7 +71,8 @@ $(document).ready ->
         # Remove answer link
         right.find('.answers').delegate 'li a.remove', 'click', ->
           ali = $(this).closest('li')
-          answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
+          if ali.attr 'question'
+            answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
           ali.slideUp 400, ->
             $(this).replaceWith(answer)
       
