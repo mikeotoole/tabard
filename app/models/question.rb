@@ -26,7 +26,7 @@ class Question < ActiveRecord::Base
 ###
   belongs_to :custom_form
   has_many :answers
-  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question
+  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question, :autosave => true
 
 ###
 # Validators
@@ -39,12 +39,12 @@ class Question < ActiveRecord::Base
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
   validate :ensure_type_is_not_changed
 
-  accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
 
 ###
 # Callbacks
 ###
-  #before_save :ensure_type_and_style_is_not_changed
+  before_validation :mark_blank_predefined_answers_for_removal
   #before_validation :decode_type_style
 
 ###
@@ -55,6 +55,11 @@ class Question < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  def mark_blank_predefined_answers_for_removal
+    predefined_answers.each do |panswer|
+      panswer.mark_for_destruction if panswer.body.blank?
+    end
+  end
 
 ###
 # Class Methods
@@ -91,32 +96,32 @@ class Question < ActiveRecord::Base
   def type_style=(new_thing)
     @type_style = new_thing
     return if new_thing == "#{self.type.to_s}|#{self.style}"
-    #if self.persisted?
-    #  decoded = new_thing.split('|')
-    #  unless self.answers.empty?
-    #    my_clone = self.type.constantize.new
-    #    my_clone.body = self.body
-    #    my_clone.style = self.style
-    #    my_clone.explanation = self.explanation
-    #    my_clone.is_required = self.is_required
-    #    my_clone.save(:validate => false)
-    #    if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
-    #      self.predefined_answers.update_all(:select_question_id => my_clone.id)
-    #      self.predefined_answers.clear
-    #    end
-    #    if self.respond_to?(:answers) and !self.answers.empty?
-    #      self.answers.update_all(:question_id => my_clone.id)
-    #      self.answers.clear
-    #    end
-    #    my_clone.destroy
-    #  end
-    #  self.style = decoded[1]
-    #  self.type = decoded[0]
-    #else
+    if self.persisted?
+      decoded = new_thing.split('|')
+      unless self.answers.empty?
+        my_clone = self.type.constantize.new
+        my_clone.body = self.body
+        my_clone.style = self.style
+        my_clone.explanation = self.explanation
+        my_clone.is_required = self.is_required
+        my_clone.save(:validate => false)
+        if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
+          self.predefined_answers.update_all(:select_question_id => my_clone.id)
+          self.predefined_answers.clear
+        end
+        if self.respond_to?(:answers) and !self.answers.empty?
+          self.answers.update_all(:question_id => my_clone.id)
+          self.answers.clear
+        end
+        my_clone.destroy
+      end
+      self.style = decoded[1]
+      self.type = decoded[0]
+    else
       decoded = new_thing.split('|')
       self.type = decoded[0]
       self.style = decoded[1]
-    #end
+    end
   end
 
   ###
