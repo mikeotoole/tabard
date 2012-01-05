@@ -105,7 +105,14 @@ protected
   def question_have_predefined_answers
     self.questions.each do |question|
       if question.type == "MultiSelectQuestion" or question.type == "SingleSelectQuestion"
-        unless question.predefined_answers.any?
+        has_at_least_one = false
+        question.predefined_answers.each do |panswer|
+          if not panswer.marked_for_destruction?
+            has_at_least_one = true
+            break
+          end
+        end
+        unless has_at_least_one
           errors.add(:base, "All questions that can have predefined answers require at least 1.") 
           question.errors.add(:base, "requires at least one predefined answer.") 
         end

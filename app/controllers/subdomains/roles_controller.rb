@@ -42,7 +42,6 @@ class Subdomains::RolesController < SubdomainsController
       redirect_to roles_path
     else
       add_new_flash_message "Unable to create role.", 'alert'
-      logger.debug @role.errors.to_yaml
       render :index
     end
   end

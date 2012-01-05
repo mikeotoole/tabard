@@ -91,34 +91,32 @@ class Question < ActiveRecord::Base
   def type_style=(new_thing)
     @type_style = new_thing
     return if new_thing == "#{self.type.to_s}|#{self.style}"
-    if self.persisted?
-      decoded = new_thing.split('|')
-      unless self.answers.empty?
-        my_clone = self.type.constantize.new
-        my_clone.body = self.body
-        my_clone.style = self.style
-        my_clone.custom_form_id = self.custom_form_id
-        my_clone.explanation = self.explanation
-        my_clone.is_required = self.is_required
-        my_clone.save
-        if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
-          self.predefined_answers.update_all(:select_question_id => my_clone.id)
-          self.predefined_answers.clear
-        end
-        if self.respond_to?(:answers) and !self.answers.empty?
-          self.answers.update_all(:question_id => my_clone.id)
-          self.answers.clear
-        end
-        my_clone.destroy
-      end
-      self.style = decoded[1]
-      self.type = decoded[0]
-      self.save(:validate => false)
-    else
+    #if self.persisted?
+    #  decoded = new_thing.split('|')
+    #  unless self.answers.empty?
+    #    my_clone = self.type.constantize.new
+    #    my_clone.body = self.body
+    #    my_clone.style = self.style
+    #    my_clone.explanation = self.explanation
+    #    my_clone.is_required = self.is_required
+    #    my_clone.save(:validate => false)
+    #    if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
+    #      self.predefined_answers.update_all(:select_question_id => my_clone.id)
+    #      self.predefined_answers.clear
+    #    end
+    #    if self.respond_to?(:answers) and !self.answers.empty?
+    #      self.answers.update_all(:question_id => my_clone.id)
+    #      self.answers.clear
+    #    end
+    #    my_clone.destroy
+    #  end
+    #  self.style = decoded[1]
+    #  self.type = decoded[0]
+    #else
       decoded = new_thing.split('|')
       self.type = decoded[0]
       self.style = decoded[1]
-    end
+    #end
   end
 
   ###
