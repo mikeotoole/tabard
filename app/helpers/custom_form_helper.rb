@@ -43,7 +43,6 @@ module CustomFormHelper
   ###
   def add_predefined_answer_link(name, f, question, options={})
     answer = render :partial => 'subdomains/custom_forms/answer', :locals => { :f => f, :answer => question.predefined_answers.new, :q => 'indexQ', :a => 'newIndexA' }
-    logger.debug(escape_javascript answer)
     page = %{
       newIndexA = new Date().getTime();
       answers = $(this).closest('div').find('.answers');
