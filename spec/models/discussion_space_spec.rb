@@ -56,4 +56,8 @@ describe DiscussionSpace do
     wow_space.update_attributes(:is_announcement_space => true).should be_true
     DiscussionSpace.find(wow_space).is_announcement_space.should be_false
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

@@ -383,4 +383,15 @@ describe UserProfile do
     end
   end
   
+  describe "remove_all_avatars" do
+    pending
+  end
+  
+  describe "destroy" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end

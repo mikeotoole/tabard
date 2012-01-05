@@ -182,4 +182,32 @@ describe User do
       build(:user, :date_of_birth => 27.years.ago.to_date).should be_valid
     end
   end
+  
+  describe "is_disabled?" do
+    pending
+  end
+  
+  describe "disable_by_user" do
+    pending
+  end
+  
+  describe "disable_by_admin" do
+    pending
+  end
+  
+  describe "remove_from_all_communities" do
+    pending
+  end
+  
+  describe "reinstate_by_admin" do
+    pending
+  end
+  
+  describe "reinstate_by_user" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end

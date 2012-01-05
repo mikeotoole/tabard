@@ -191,4 +191,12 @@ describe CommunityApplication do
       community_application.withdrawn?.should be_false
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end

@@ -43,4 +43,8 @@ describe CustomForm do
       form.community_name.should eq(DefaultObjects.community.name)
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

@@ -26,4 +26,8 @@ describe PredefinedAnswer do
   it "should require select_question" do
     build(:predefined_answer, :question => nil).should_not be_valid
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

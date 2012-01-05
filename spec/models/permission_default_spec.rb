@@ -103,4 +103,7 @@ describe PermissionDefault do
     end
   end
   
+  describe "destroy" do
+    pending
+  end
 end

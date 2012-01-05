@@ -19,7 +19,7 @@ class Role < ActiveRecord::Base
 ###
   belongs_to :community
   has_many :permissions, :inverse_of => :role, :dependent => :destroy
-  has_many :permission_defaults, :inverse_of => :role
+  has_many :permission_defaults, :inverse_of => :role, :dependent => :destroy
   has_and_belongs_to_many :community_profiles
   has_many :user_profiles, :through => :community_profiles
   accepts_nested_attributes_for :permission_defaults, :allow_destroy => true

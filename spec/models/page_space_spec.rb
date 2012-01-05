@@ -46,4 +46,8 @@ describe PageSpace do
   it "game_name should return game name if there is a game" do
     wow_space.game_name.should eq(DefaultObjects.wow.name)
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

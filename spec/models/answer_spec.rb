@@ -31,7 +31,22 @@ describe Answer do
   it "should require body if question is required" do
     build(:required_answer, :body => nil).should_not be_valid
   end
+  
   it "should not require body if question is not required" do
     build(:answer, :body => nil).should be_valid
+  end
+  
+  describe "destroy"  
+    it "should should destroy question if its only attached to this answer" do
+      pending
+    end
+    
+    it "should should not destroy question if its attached to other answers" do
+      pending
+    end
+    
+    it "should should not destroy question if its attached to custom form" do
+      pending
+    end
   end
 end

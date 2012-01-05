@@ -31,4 +31,8 @@ describe Role do
       build(:role, :name => role.name, :community => role.community).should_not be_valid
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

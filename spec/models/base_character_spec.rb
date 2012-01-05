@@ -50,15 +50,23 @@ describe BaseCharacter do
   
   describe "is_disabled?" do
     it "should return true when character is removed" do
-      pending
+      character.is_disabled?.should be_false
+      character.destroy
+      character.is_removed.should_not be_false
+      WowCharacter.find(character).is_disabled?.should be_true
     end
     
     it "should return true when character's owner is disabled" do
-      pending
+      character.user_profile.user.disable_by_admin
+      character.user_profile.is_disabled?.should be_true
+      character.is_removed.should be_false
+      character.is_disabled?.should be_true
     end
     
     it "should return false when not removed and owner is active" do
-      pending
+      character.user_profile.is_disabled?.should be_false
+      character.is_removed.should be_false
+      character.is_disabled?.should be_false
     end
   end
   
@@ -82,6 +90,10 @@ describe BaseCharacter do
     end
     
     it "should destroy all roster assignments" do
+      pending
+    end
+    
+    it "should remove avatar" do
       pending
     end
   end

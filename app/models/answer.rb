@@ -61,7 +61,7 @@ protected
   end
 
   ###
-  # _before_save_
+  # _before_destroy_
   #
   # This makes sure that deleting this answer is not orphaning a question.
   # If it would the question is deleted too.

@@ -96,4 +96,8 @@ describe Page do
     create_list(:page, 5, :show_in_navigation => true)
     build(:page, :show_in_navigation => true).should_not be_valid
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

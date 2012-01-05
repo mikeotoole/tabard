@@ -126,4 +126,12 @@ describe Discussion do
           :character_proxy_id => another_user_profile.character_proxies.first).should_not be_valid
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end

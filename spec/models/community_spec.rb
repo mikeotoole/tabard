@@ -214,5 +214,13 @@ describe Community do
       community.game_announcement_spaces.count.should eq(1)
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end
 

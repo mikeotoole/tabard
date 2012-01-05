@@ -95,4 +95,8 @@ describe Question do
       Question.new_question(100).should be_nil
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
 end

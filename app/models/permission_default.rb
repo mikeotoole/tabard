@@ -8,6 +8,8 @@
 class PermissionDefault < ActiveRecord::Base
   belongs_to :role, :inverse_of => :permission_defaults
 
+  # TODO Mike, Need to make this acts_as_paranoid.
+
   validates :object_class,  :uniqueness => {:scope => :role_id}
 
   # This method checks to see if this permission default includes a nested item's permissions.

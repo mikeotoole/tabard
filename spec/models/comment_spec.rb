@@ -133,4 +133,11 @@ describe Comment do
     invalid_comment.valid?.should be_false
   end
   
+  describe "destroy" do
+    pending
+  end
+  
+  describe "nuke" do
+    pending
+  end
 end

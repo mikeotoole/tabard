@@ -34,6 +34,14 @@ describe CharacterProxy do
     character.character_proxy.destroy.should be_true
     WowCharacter.find(character).is_removed.should be_true
   end
+  
+  it "should remove all roster assignments when destroyed" do
+    pending
+  end
+  
+  it "should remove avatar when destroyed" do
+    pending
+  end
 
 ###
 # Class Method Tests

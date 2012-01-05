@@ -116,4 +116,8 @@ describe CommunityProfile do
       end
     end
   end
+  
+  describe "destroy" do
+    pending
+  end
 end
