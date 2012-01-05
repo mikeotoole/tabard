@@ -16,6 +16,6 @@
             - question.predefined_answers.each_with_index do |answer,a|
               = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
         %p{ :class => 'add hidden' }
-          = add_predefined_answer_link 'Add Answer', qf, question, q
+          = add_predefined_answer_link 'Add Answer', qf, question
       - if qf.object.errors.any?
         %mark.error= qf.object.errors.full_messages.first
