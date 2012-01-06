@@ -23,7 +23,7 @@ ActiveAdmin.register User do
   end
 
   action_item :only => :show do
-    if can? :reset_password, user
+    if can? :nuke, user
       link_to "Nuke User", nuke_admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to NUKE User?'
     end
   end
