@@ -13,7 +13,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   before_filter :block_unauthorized_user!
   before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
-  authorize_resource :except => [:index, :thankyou]
+  authorize_resource :except => [:index, :thankyou, :publish, :unpublish]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
@@ -60,6 +60,30 @@ class Subdomains::CustomFormsController < SubdomainsController
       add_new_flash_message('Form was successfully removed.') if @custom_form.destroy
     end
     respond_with @custom_form
+  end
+
+  # PUT /custom_forms/:id/publish
+  def publish
+    authorize! :update, @custom_form
+    @custom_form.is_published = true
+    if @custom_form.save
+      add_new_flash_message "Form \"#{@custom_form.name}\" has been published.", 'success'
+    else
+      add_new_flash_message "Unable to publish Form \"#{@custom_form.name}\".", 'alert'
+    end
+    redirect_to custom_forms_url
+  end
+
+  # PUT /custom_forms/:id/unpublish
+  def unpublish
+    authorize! :update, @custom_form
+    @custom_form.is_published = false
+    if @custom_form.save
+      add_new_flash_message "Form \"#{@custom_form.name}\" has been unpublished.", 'success'
+    else
+      add_new_flash_message "Unable to publish Form \"#{@custom_form.name}\".", 'alert'
+    end
+    redirect_to custom_forms_url
   end
 
 ###

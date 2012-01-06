@@ -112,6 +112,10 @@ DaBvRails::Application.routes.draw do
       resources :custom_forms, :except => :show do
         resources :submissions, :shallow => true, :only => [:index, :destroy]
         resources :submissions, :except => [:update, :edit, :destroy]
+        member do
+          put :publish
+          put :unpublish
+        end
       end
       get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', :as => :custom_form_thankyou
 

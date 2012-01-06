@@ -24,9 +24,9 @@
                 = link_to 'Submissions', custom_form_submissions_url(custom_form), :class => 'submission', :meta => pluralize(custom_form.submissions.size,'submission')
               - if can? :update, custom_form and custom_form != current_community.community_application_form
                 - if custom_form.is_published
-                  = link_to 'Unpublish', '#', :class => 'unpublish', :meta => 'Unpublish form'
+                  = link_to 'Unpublish', unpublish_custom_form_path(custom_form), :class => 'unpublish', :meta => 'Unpublish form', :method => :put
                 - else
-                  = link_to 'Publish', '#', :class => 'publish', :meta => 'Publish form'
+                  = link_to 'Publish', publish_custom_form_path(custom_form), :class => 'publish', :meta => 'Publish form', :method => :put
               - if can? :delete, custom_form
                 = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot
