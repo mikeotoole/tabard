@@ -87,6 +87,7 @@ class Submission < ActiveRecord::Base
 
   # This method ensures that all required questions have been answered.
   def answered_all_required_questions
+    return unless custom_form
     self.custom_form.questions.each do |question|
       if question.is_required
         self.answers.each do |answer|
