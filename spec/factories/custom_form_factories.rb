@@ -35,21 +35,21 @@ FactoryGirl.define do
     style "select_box_question"
     sequence(:body) {|n| "select_box_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id } 
-    after_create { |question| create_predefined_answers(question) }
-  end    
+    predefined_answers_attributes { [FactoryGirl.attributes_for(:predefined_answer, :select_question_id => nil)] }
+  end
   
   factory :radio_buttons_question, :class => SingleSelectQuestion do
     style "radio_buttons_question"
     sequence(:body) {|n| "radio_buttons_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
-    after_create { |question| create_predefined_answers(question) }
+    predefined_answers_attributes { [FactoryGirl.attributes_for(:predefined_answer, :select_question_id => nil)] }
   end 
   
   factory :check_box_question, :class => MultiSelectQuestion do
     style "check_box_question"
     sequence(:body) {|n| "check_box_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
-    after_create { |question| create_predefined_answers(question) }
+    predefined_answers_attributes { [FactoryGirl.attributes_for(:predefined_answer, :select_question_id => nil)] }
   end
   
   factory :predefined_answer do
@@ -62,6 +62,7 @@ FactoryGirl.define do
     submission
     question_id { FactoryGirl.create(:long_answer_question).id }
   end
+
   factory :required_answer, :parent => :answer do
     question_id { FactoryGirl.create(:required_long_answer_question).id }
   end
@@ -84,12 +85,6 @@ def create_questions(form)
   FactoryGirl.create(:select_box_question, :custom_form => form)
   FactoryGirl.create(:radio_buttons_question, :custom_form => form)
   FactoryGirl.create(:check_box_question, :custom_form => form)
-end
-
-def create_predefined_answers(question)
-  3.times do
-    FactoryGirl.create(:predefined_answer, :select_question_id => question.id)
-  end
 end
 
 def create_submissions(form)
