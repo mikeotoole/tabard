@@ -184,7 +184,7 @@ protected
   # This method ensures that the community application for is the custom form for the submission
   def user_profile_not_a_member
     return unless community and user_profile
-    errors.add(:base, "This user_profile is already a member of the community.") if user_profile.is_member?(community)
+    errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
   end
 end
 

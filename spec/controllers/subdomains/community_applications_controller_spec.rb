@@ -85,10 +85,10 @@ describe Subdomains::CommunityApplicationsController do
       response.should redirect_to(root_url(:subdomain => community.subdomain))
     end
     
-    it "should redirect to my roster assignments when authenticated as the community admin" do
+    it "should be successful when authenticated as the community admin" do
       sign_in community_admin_user
       get 'new'
-      response.should redirect_to(my_roster_assignments_url)
+      response.should be_success
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

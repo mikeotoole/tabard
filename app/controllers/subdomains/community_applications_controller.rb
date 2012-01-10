@@ -36,7 +36,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new
   # GET /community_applications/new.json
   def new
-    if current_user.is_member? current_community
+    if current_user.is_member? current_community and current_user.user_profile != current_community.admin_profile
       add_new_flash_message "You are already a member of this community.", 'notice'
       redirect_to my_roster_assignments_path
     elsif current_user.application_pending? current_community
