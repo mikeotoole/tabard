@@ -25,7 +25,8 @@ class PredefinedAnswer < ActiveRecord::Base
 # Validators
 ###
    validates :body, :presence => true,
-                    :length => { :maximum => MAX_BODY_LENGTH }
+                    :length => { :maximum => MAX_BODY_LENGTH },
+                    :if => Proc.new {|pa| pa.question.valid? }
    validates :question, :presence => true
 end
 

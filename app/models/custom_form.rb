@@ -113,7 +113,7 @@ protected
           end
         end
         unless has_at_least_one
-          errors.add(:base, "All questions that can have predefined answers require at least 1.") 
+          errors.add(:base, "All questions that can have predefined answers require at least one answer.") 
           question.errors.add(:base, "requires at least one predefined answer.") 
         end
       end
