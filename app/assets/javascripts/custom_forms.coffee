@@ -63,7 +63,6 @@ $(document).ready ->
               .attr('question', newIndexQ)
               .html(html)
             li.find('>a.remove').remove()
-            li.trigger 'init'
         
         # Add answer link
         right.find('p.add').removeClass('hidden')
@@ -75,5 +74,7 @@ $(document).ready ->
             answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
           ali.slideUp 400, ->
             $(this).replaceWith(answer)
+      
+      li.find('.select input:checked').trigger 'change'
       
   $('form.custom_form .questions > li').trigger 'init'
