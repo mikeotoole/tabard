@@ -46,7 +46,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @announcement.character_proxy = (character_active? ? current_character.character_proxy : nil)
 
     if @announcement.save
-      add_new_flash_message('Announcement was successfully created.')
+      add_new_flash_message('Announcement was successfully created.','success')
       next_location = {:location => announcement_url(@announcement)}
     else
       next_location = {:render => :new}
@@ -56,7 +56,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # PUT /announcements/:id(.:format)
   def update
-    add_new_flash_message('Announcement was successfully updated.') if @announcement.update_attributes(params[:discussion])
+    params[:discussion][:has_been_edited] = true
+    add_new_flash_message('Announcement saved.') if @announcement.update_attributes(params[:discussion])
 
     respond_with(@announcement, :render => :edit, :location => announcement_url)
   end

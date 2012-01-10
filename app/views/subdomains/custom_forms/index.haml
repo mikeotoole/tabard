@@ -1,31 +1,36 @@
-- title "Custom Forms | #{current_community.name}"
-%h1 Custom Forms
+- title "Forms | #{current_community.name}"
+%h1 Forms
 
 %table
   %thead
     %tr
       %th Name
-      %th Instructions
-      %th= "Published?" if can? :edit, @custom_forms.first
       %th
   %tbody
     - @custom_forms.each do |custom_form|
       - if (custom_form.is_published and not custom_form.application_form?) or can? :edit, custom_form
         %tr
           - if custom_form.application_form?
-            %td.cinch= custom_form.name
+            %td
+              %strong= link_to custom_form.name, new_community_application_url
           - else
-            %td.cinch= link_to custom_form.name, new_custom_form_submission_path(custom_form)
-          %td= custom_form.instructions
-          %td= custom_form.is_published if can? :edit, custom_form
+            %td
+              = link_to custom_form.name, new_custom_form_submission_url(custom_form)
           %td.actions
             %div
               - if can? :update, custom_form
-                = link_to 'Edit', edit_custom_form_path(custom_form), :class => 'edit', :meta => 'Edit form'
-              - if can? :view_submissions, custom_form and custom_form.submissions.any?
-                = link_to 'Submissions', custom_form_submissions_path(custom_form), :class => 'submission', :meta => pluralize(custom_form.submissions.size,'submission')
+                = link_to 'Edit', edit_custom_form_url(custom_form), :class => 'edit', :meta => 'Edit form'
+              - if can? :view_submissions, custom_form
+                = link_to 'Submissions', custom_form_submissions_url(custom_form), :class => 'submission', :meta => pluralize(custom_form.submissions.size,'submission')
+              - if can? :update, custom_form and custom_form != current_community.community_application_form
+                - if custom_form.is_published
+                  = link_to 'Unpublish', unpublish_custom_form_path(custom_form), :class => 'unpublish', :meta => 'Unpublish form', :method => :put
+                - else
+                  = link_to 'Publish', publish_custom_form_path(custom_form), :class => 'publish', :meta => 'Publish form', :method => :put
               - if can? :delete, custom_form
                 = link_to 'Destroy', custom_form, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete form'
   %tfoot
     %tr
-      %td{ :colspan => 4 }= link_to 'New form', new_custom_form_path, :class => 'button' if can? :create, current_community.custom_forms.new
+      %td{ :colspan => 2 }
+        - if (can? :create, current_community.custom_forms.new)
+          = link_to 'New form', new_custom_form_url, :class => 'button'

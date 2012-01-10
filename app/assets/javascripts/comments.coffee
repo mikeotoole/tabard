@@ -96,7 +96,7 @@ $(document).ready ->
         .after('<em>Comment is locked</em>')
       li.find('>ol >li').addClass('collapsed')
   
-  # Unlocks a comment and updates the DOM   
+  # Unlocks a comment and updates the DOM
   $('.comments .unlock[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
       $.alert { body: 'Unable to unlock comment.' }

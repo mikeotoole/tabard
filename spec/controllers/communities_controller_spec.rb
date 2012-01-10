@@ -108,9 +108,23 @@ describe CommunitiesController do
     end
 
     it "should redirect to new community" do
-      response.should redirect_to(community_url(assigns[:community]))
+      response.should redirect_to(supported_games_url(:subdomain => assigns[:community].subdomain))
     end
   end
+  
+  describe "POST 'create' authenticated as billy" do
+    it "should create an activity" do
+      sign_in billy
+      
+      expect {
+        post 'create', :community => community_att
+      }.to change(Activity, :count).by(1)
+      
+      activity = Activity.last
+      activity.target_type.should eql "Community"
+      activity.action.should eql 'created'
+    end
+  end  
 
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do

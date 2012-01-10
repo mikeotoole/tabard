@@ -25,12 +25,14 @@ class Submission < ActiveRecord::Base
 ###
   validates :custom_form, :presence => true
   validates :user_profile, :presence => true
+  validate :answered_all_required_questions
 
 ###
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
   delegate :name, :to => :custom_form, :prefix => true
+  delegate :is_published, :to => :custom_form, :prefix => true
   delegate :instructions, :to => :custom_form, :prefix => true
   delegate :questions, :to => :custom_form, :prefix => true, :allow_nil => true
   delegate :display_name, :to => :user_profile, :prefix => true
@@ -82,7 +84,34 @@ class Submission < ActiveRecord::Base
   def all_questions
     self.answers.collect { |answer| answer.question }.uniq
   end
+
+  # This method ensures that all required questions have been answered.
+  def answered_all_required_questions
+    return unless custom_form
+    self.custom_form.questions.each do |question|
+      if question.is_required
+        self.answers.each do |answer|
+          if answer.question_id == question.id
+            if answer.body.class == String
+              if answer.body.blank?
+                errors.add(:base, "All required questions must be answered.") 
+                answer.errors.add(:base, "is required to be answered.") 
+              end
+            end
+            if answer.body.class == Array
+              if answer.body.delete_if{|elem| elem.blank?}.join(', ').blank?
+                errors.add(:base, "All required questions must be answered.") 
+                answer.errors.add(:base, "is required to be answered.") 
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
+
+
 
 # == Schema Information
 #

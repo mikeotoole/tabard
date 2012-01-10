@@ -48,8 +48,6 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def anonymous_user_rules(user)
-    # Character Rules
-    can :read, BaseCharacter
     # Community Rules
     can :read, Community
     # Game Rules
@@ -96,52 +94,29 @@ class Ability
   can :manage, Wow
   can :manage, WowCharacter
 =end
+
   ###
   # This method defines the rules for a member.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-    # Answer Rules
-    can :create, Answer
-    can [:read, :destroy], Answer do |answer|
-      answer.user_profile_id == user.user_profile.id
+  can :dashboard, UserProfile do |user_profile|
+      user_profile == user.user_profile
     end
-    can [:update], Answer do |answer|
-      answer.user_profile_id == user.user_profile.id
-    end
-
     # Character Rules
     can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|
       character.user_profile.id == user.user_profile.id
     end
-    can [:update], Discussion do |discussion|
+
+    #Discussion Rules
+    can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
-    end
-    can [:destroy], Discussion do |discussion|
-      (discussion.community_admin_profile_id == user.user_profile_id and not discussion.is_locked) or
-      ((discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked)
-    end
-    can [:unlock, :lock], Discussion do |discussion|
-      discussion.community_admin_profile_id == user.user_profile_id
-    end
-    cannot :create, Discussion do |discussion|
-      if discussion.is_announcement
-        discussion.community_admin_profile_id != user.user_profile_id
-      else
-        false
-      end
     end
 
     # Comment Rules
-    can [:read, :create], Comment do |comment|
-      user.user_profile.is_member?(comment.community)
-    end
-    can [:update], Comment do |comment|
-      (comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed
-    end
-    can [:destroy], Comment do |comment|
+    can [:update,:destroy], Comment do |comment|
       ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
     end
 
@@ -156,13 +131,7 @@ class Ability
       can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
     end
 
-    # Custom Form Rules
-    can :read, CustomForm
-
     # Discussion Rules
-    can [:read], Discussion do |discussion|
-      user.user_profile.is_member?(discussion.community) and discussion.is_announcement
-    end
     can [:comment], Discussion do |discussion|
       can? :read, discussion and not discussion.is_locked
     end
@@ -171,9 +140,6 @@ class Ability
     end
 
     # Discussion Space Rules
-    can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(space.community) and space.is_announcement_space == true
-    end
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
       space.is_announcement_space == true
     end
@@ -182,9 +148,7 @@ class Ability
     can :manage, Folder do |folder|
       folder.user_profile_id == user.user_profile.id
     end
-    cannot :destroy, Folder do |folder|
-      true
-    end
+    cannot :destroy, Folder
     can :manage, Message do |message|
       message.author_id == user.user_profile.id
     end
@@ -203,9 +167,6 @@ class Ability
     can [:read, :destroy], Submission do |submission|
       submission.user_profile_id == user.user_profile.id
     end
-    can [:update], Submission do |answer|
-      submission.user_profile_id == user.user_profile.id
-    end
 
     # User Rules
     can :manage, User do |some_user|
@@ -213,7 +174,9 @@ class Ability
     end
 
     # UserProfile Rules
-    can :read, UserProfile
+    can :read, UserProfile do |user_profile|
+      user_profile.id == user.user_profile.id
+    end
     can :update, UserProfile do |user_profile|
       user_profile.id == user.user_profile.id
     end
@@ -228,16 +191,29 @@ class Ability
   end
 
   ###
-  # This method defines the rules for a user who is a community admin.
+  # This method defines the rules for a user who is a community member.
   # [Args]
   #   * +user+ -> A user to define permissions on.
   ###
   def community_member_rules(user, current_community)
-    # RosterAssignments
     apply_rules_from_roles(user, current_community)
+    
+    can :index, PageSpace
+
+    can [:read], Comment do |comment|
+      user.user_profile.is_member?(current_community)
+    end
+
+    can [:read], Discussion do |discussion|
+      user.user_profile.is_member?(current_community) and discussion.is_announcement
+    end
+
+    can [:read], DiscussionSpace do |space|
+      user.user_profile.is_member?(current_community) and space.is_announcement_space == true
+    end
 
     can :mine, RosterAssignment
-    can [:read, :create, :update, :destroy], RosterAssignment do |roster_assignment|
+    can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile_id == user.user_profile.id if roster_assignment.community_profile_user_profile
     end
   end
@@ -249,6 +225,9 @@ class Ability
   ###
   def community_admin_rules(user)
     can [:read], Answer
+    can :destroy, CommunityProfile do |community_profile|
+      community_profile.user_profile != community_profile.community.admin_profile
+    end
     can :manage, RosterAssignment
     can [:read, :accept, :reject], CommunityApplication
     can [:manage], Page
@@ -256,6 +235,7 @@ class Ability
     can [:unlock, :lock, :destroy], Comment do |comment|
       not comment.is_removed
     end
+
     can :manage, DiscussionSpace
     cannot [:update, :destroy, :create], DiscussionSpace do |space|
       space.is_announcement_space == true
@@ -285,12 +265,28 @@ class Ability
   #   * +current_community+ -> The current community context.
   ###
   def dynamicContextRules(user, current_community)
-    #Community Based Permissions
-    can :index, RosterAssignment if current_community.is_public_roster
-
     if user
-      community_member_rules(user, current_community) if user.user_profile.is_member?(current_community)
+      community_member_rules(user, current_community) if user.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
+    end
+
+    # Special context rules
+    can [:create], Submission do |submission|
+      submission.custom_form_is_published and can? :read, submission.custom_form
+    end
+
+    # Cannot Overrides
+    cannot [:create], Comment do |comment|
+      comment.commentable_has_comments_disabled?
+    end
+    cannot [:update, :destroy], Comment do |comment|
+      comment.replies_locked?
+    end
+    cannot :update, Comment do |comment|
+      (comment.user_profile_id != user.user_profile.id)
+    end
+    cannot :update, Discussion do |discussion|
+      (discussion.user_profile_id != user.user_profile.id)
     end
   end
 
@@ -306,20 +302,33 @@ class Ability
     community_profile.roles.each do |role|
       role.permissions.each do |permission|
         action = Array.new
-        case permission.permission_level
-          when "Delete"
-            action.concat([:read, :update, :create, :destroy])
-          when "Create"
-            action.concat([:read, :update, :create])
-          when "Update"
-            action.concat([:read, :update])
-          when "View"
-            action.concat([:read])
-          else
-            # TODO Joe/Bryan Should this be logged?
+        if not permission.permission_level?
+          action.concat([:read]) if permission.can_read
+          action.concat([:update]) if permission.can_update
+          action.concat([:create]) if permission.can_create
+          action.concat([:destroy]) if permission.can_destroy
+        else
+          case permission.permission_level
+            when "Delete"
+              action.concat([:read, :update, :create, :destroy])
+            when "Create"
+              action.concat([:read, :update, :create])
+            when "Update"
+              action.concat([:read, :update])
+            when "View"
+              action.concat([:read])
+            else
+              # TODO Joe/Bryan Should this be logged?
+          end
         end
-        action.concat([:lock]) if permission.can_lock
-        action.concat([:accept]) if permission.can_accept
+        if permission.can_lock
+          action.concat([:lock])
+          action.concat([:unlock])
+        end
+        if permission.can_accept
+          action.concat([:accept])
+          action.concat([:reject])
+        end
         if !permission.parent_association_for_subject?
           decodePermission(action, permission.subject_class.constantize, permission.id_of_subject)
         else
@@ -341,7 +350,21 @@ class Ability
       can action, subject_class
     else
       can action, subject_class do |subject_class_instance|
-        subject_class_instance.id.to_s == subject_id
+        subject_class_instance.id == subject_id
+      end
+      case subject_class.to_s
+      when "DiscussionSpace"
+        if action.include?(:read) and subject_class != nil
+          can :read, Discussion do |discussion|
+            discussion.discussion_space_id == subject_id
+          end
+        end
+      when "PageSpace"
+        if action.include?(:read) and subject_class != nil
+          can :read, Page do |page|
+            page.page_space_id == subject_id
+          end
+        end
       end
     end
   end

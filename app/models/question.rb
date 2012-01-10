@@ -11,6 +11,10 @@ class Question < ActiveRecord::Base
 ###
   # The list of vaild game subclass types.
   VALID_TYPES =  %w(SingleSelectQuestion MultiSelectQuestion TextQuestion)
+  # Used by validators and view to restrict body length
+  MAX_BODY_LENGTH = 60
+  # Used by validators and view to restrict explanation length
+  MAX_EXPLANATION_LENGTH = 100
 
 ###
 # Attribute accessible
@@ -22,24 +26,25 @@ class Question < ActiveRecord::Base
 ###
   belongs_to :custom_form
   has_many :answers
-  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question
+  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question, :autosave => true
 
 ###
 # Validators
 ###
-  validates :body,  :presence => true,
-                    :length => { :maximum => 100 }
+  validates :body, :presence => true,
+                   :length => { :maximum => MAX_BODY_LENGTH }
+  validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }                 
   #validates :style, :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
   validate :ensure_type_is_not_changed
 
-  accepts_nested_attributes_for :predefined_answers, :reject_if => lambda { |a| a[:body].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
 
 ###
 # Callbacks
 ###
-  #before_save :ensure_type_and_style_is_not_changed
+  before_validation :mark_blank_predefined_answers_for_removal
   #before_validation :decode_type_style
 
 ###
@@ -50,6 +55,17 @@ class Question < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  def mark_blank_predefined_answers_for_removal
+    predefined_answers.each do |panswer|
+      if panswer.body.blank? 
+        if self.predefined_answers.reject{|answer| answer.marked_for_destruction?}.count >= 1
+          panswer.mark_for_destruction 
+        else
+          errors.add(:base, "requires at least one predefined answer.") 
+        end
+      end
+    end
+  end
 
 ###
 # Class Methods
@@ -92,10 +108,9 @@ class Question < ActiveRecord::Base
         my_clone = self.type.constantize.new
         my_clone.body = self.body
         my_clone.style = self.style
-        my_clone.custom_form_id = self.custom_form_id
         my_clone.explanation = self.explanation
         my_clone.is_required = self.is_required
-        my_clone.save
+        my_clone.save(:validate => false)
         if self.respond_to?(:predefined_answers) and !self.predefined_answers.empty?
           self.predefined_answers.update_all(:select_question_id => my_clone.id)
           self.predefined_answers.clear
@@ -108,7 +123,6 @@ class Question < ActiveRecord::Base
       end
       self.style = decoded[1]
       self.type = decoded[0]
-      self.save(:validate => false)
     else
       decoded = new_thing.split('|')
       self.type = decoded[0]
@@ -169,6 +183,8 @@ class Question < ActiveRecord::Base
       end
     end
 end
+
+
 
 
 

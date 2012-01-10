@@ -35,8 +35,8 @@ DaBvRails::Application.configure do
   ActionMailer::Base.smtp_settings = {
     :address              => "secure.emailsrvr.com",
     :port                 => 587,
-    :user_name            => ENV['DEV_BV_EMAIL_USERNAME'],
-    :password             => ENV['DEV_BV_EMAIL_PASSWORD'],
+    :user_name            => ENV['BV_DEV_EMAIL_USERNAME'],
+    :password             => ENV['BV_DEV_EMAIL_PASSWORD'],
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

@@ -74,6 +74,7 @@ class User < ActiveRecord::Base
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
   delegate :is_member?, :to => :user_profile, :allow_nil => true
   delegate :application_pending?, :to => :user_profile, :allow_nil => true
+  delegate :in_community, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -222,8 +223,7 @@ class User < ActiveRecord::Base
       params[:user][:user_disabled_at] = Time.now
       success = self.update_with_password(params[:user])
       if success
-        self.community_profiles.clear
-        self.owned_communities.clear
+        self.remove_from_all_communities
       end
       return success
     else
@@ -236,8 +236,13 @@ class User < ActiveRecord::Base
     self.is_admin_disabled = true
     self.admin_disabled_at = Time.now
     self.save(:validate => false)
-    self.community_profiles.clear
+    self.remove_from_all_communities
+  end
+
+  # Removes user from all communities.
+  def remove_from_all_communities
     self.owned_communities.clear
+    self.community_profiles.clear
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
@@ -284,6 +289,8 @@ protected
     errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
   end
 end
+
+
 
 
 

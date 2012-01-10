@@ -2,8 +2,13 @@ DaBvRails::Application.routes.draw do
   resources :themes
 
   # Admin Users
+  devise_for :admin_users do 
+    get "/admin/login" => "admin/devise/sessions#new"
+    post "/admin/login" => "admin/devise/sessions#create"
+    get "/admin_users/sign_in" => "admin/devise/sessions#new"
+    post "/admin_users/sign_in" => "admin/devise/sessions#create"
+  end
   ActiveAdmin.routes(self)
-  devise_for :admin_users do match "/admin/login" => "admin/devise/sessions#new" end
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
@@ -11,20 +16,23 @@ DaBvRails::Application.routes.draw do
   devise_scope :user do
     get 'users/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
   end
-  match '/dashboard' => 'user_profiles#index', :as => 'user_root'
 
   # Documents
   get "users/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :index, :account]
+  resources :user_profiles, :only => [:show, :edit, :update, :account]
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
+  match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
 
   # Active profile
   resource :active_profiles, :only => [:create]
   post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
+
+  # Activity
+  resources :activities, :only => [:index]
 
   # Communities
   resources :communities, :except => [:destroy, :update, :edit]
@@ -76,9 +84,7 @@ DaBvRails::Application.routes.draw do
       resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
-      resources :roles do
-        resources :permissions
-      end
+      resources :roles, :except => [:show]
 
       # Roster assignments
       get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"
@@ -86,12 +92,15 @@ DaBvRails::Application.routes.draw do
       put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", :as => "batch_approve_roster_assignments"
       put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", :as => "batch_reject_roster_assignments"
       delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", :as => "batch_destroy_roster_assignments"
-      resources :roster_assignments, :except => [:show, :new] do
+      resources :roster_assignments, :except => [:show, :new, :edit, :update] do
         member do
           put :approve
           put :reject
         end
       end
+      
+      # Community profiles
+      resources :community_profiles, :only => [:destroy]
 
       # Community applications
       resources :community_applications, :except => [:edit, :update] do
@@ -103,10 +112,11 @@ DaBvRails::Application.routes.draw do
 
       # Custom Forms
       resources :custom_forms, :except => :show do
-        resources :questions, :shallow => true
         resources :submissions, :shallow => true, :only => [:index, :destroy]
-        resources :submissions, :except => [:update, :edit, :destroy] do
-          resources :answers, :except => [:update, :edit, :destroy]
+        resources :submissions, :except => [:update, :edit, :destroy]
+        member do
+          put :publish
+          put :unpublish
         end
       end
       get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', :as => :custom_form_thankyou
@@ -139,7 +149,7 @@ DaBvRails::Application.routes.draw do
 
       # Pages
       resources :page_spaces do
-        resources :pages, :shallow => true
+        resources :pages, :shallow => true, :except => [:index]
       end
 
       # Supported Games

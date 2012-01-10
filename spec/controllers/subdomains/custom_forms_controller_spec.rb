@@ -6,6 +6,7 @@ describe Subdomains::CustomFormsController do
   let(:admin) { DefaultObjects.community_admin }
   let(:community) { DefaultObjects.community }
   let(:custom_form) { DefaultObjects.custom_form }
+  let(:unpublished_form) { create(:custom_form, :is_published => false) }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
@@ -13,7 +14,7 @@ describe Subdomains::CustomFormsController do
 
   describe "GET index" do
     it "assigns all custom_forms as @custom_forms when authenticated as a user" do
-      sign_in user
+      sign_in admin
       custom_form
       get :index
       assigns(:custom_forms).should eq([community.community_application_form, custom_form])
@@ -93,7 +94,7 @@ describe Subdomains::CustomFormsController do
       it "redirects to the created custom_form" do
         sign_in admin
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(edit_custom_form_url(2))
+        response.should redirect_to(custom_forms_url)
       end
       
       it "should redirected to new user session path when not authenticated as a user" do
@@ -155,7 +156,7 @@ describe Subdomains::CustomFormsController do
 
       it "redirects to the custom_form" do
         put :update, :id => custom_form.id, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(edit_custom_form_url(custom_form))
+        response.should redirect_to(custom_forms_url)
       end
     end
 
@@ -168,6 +169,72 @@ describe Subdomains::CustomFormsController do
       it "re-renders the 'edit' template" do
         put :update, :id => custom_form.id.to_s, :custom_form => {:name => nil}
         response.should render_template("edit")
+      end
+    end
+  end
+
+  describe "PUT publish" do
+    before(:each) {
+      custom_form
+      unpublished_form
+    }
+    describe "as Admin" do
+      before(:each) {
+        sign_in admin
+      }
+      it "should publish an unpublished form" do
+        put :publish, :id => unpublished_form
+        CustomForm.find(unpublished_form).is_published.should be_true
+      end
+      it "should do nothing to a published form" do
+        put :publish, :id => custom_form
+        CustomForm.find(custom_form).is_published.should be_true
+      end
+    end
+    describe "as member" do
+      before(:each) {
+        sign_in user
+      }
+      it "should be forbidden for an unpublished form" do
+        put :publish, :id => unpublished_form
+        response.should be_forbidden
+      end
+      it "should forbidden for a published form" do
+        put :publish, :id => custom_form
+        response.should be_forbidden
+      end
+    end
+  end
+
+  describe "PUT unpublish" do
+    before(:each) {
+      custom_form
+      unpublished_form
+    }
+    describe "as Admin" do
+      before(:each) {
+        sign_in admin
+      }
+      it "should unpublish an published form" do
+        put :unpublish, :id => custom_form
+        CustomForm.find(custom_form).is_published.should be_false
+      end
+      it "should do nothing to a unpublished form" do
+        put :unpublish, :id => unpublished_form
+        CustomForm.find(unpublished_form).is_published.should be_false
+      end
+    end
+    describe "as member" do
+      before(:each) {
+        sign_in user
+      }
+      it "should be forbidden for an unpublished form" do
+        put :unpublish, :id => unpublished_form
+        response.should be_forbidden
+      end
+      it "should forbidden for a published form" do
+        put :unpublish, :id => custom_form
+        response.should be_forbidden
       end
     end
   end

@@ -1,18 +1,18 @@
 - if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
-  %li{ :class => comment_class_names(comment) }
+  %li.comment{ :class => comment_class_names(comment) }
     %blockquote
       %span.avatar
         - if !comment.is_removed
-          = image_tag comment.poster.avatar_url(:small)
+          = image_tag comment.poster.avatar_url :small
       %span.meta
         - if comment.is_removed
           = last_action_word(comment).capitalize
         - else
           = "#{last_action_word(comment).capitalize} by"
-          = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since " + (l comment.user_profile_created_at, :format => :short)
+          = link_to comment.poster_name, comment.user_profile, :meta => "#{comment.user_profile_display_name} — Crumblin since #{l comment.user_profile_created_at, :format => :date_short}"
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
-        - unless comment.is_removed
+        - unless comment.is_removed or comment.replies_locked?
           %span.body
             = comment.body
           = link_to 'Reply to this', new_comment_path(:commentable_id => comment.id, :commentable_type => comment.class), :remote => true, 'data-type' => :text, :class => 'reply'
@@ -29,7 +29,7 @@
           = link_to 'Lock comment', lock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'lock', :title => 'Lock comment'
         - if can? :unlock, comment
           = link_to 'Unlock comment', unlock_comment_path(comment), :remote => true, 'data-type' => :text, :method => :post, :class => 'unlock', :title => 'Unlock comment'
-    - if comment.comments.size > 0
+    - if comment.comments.any?
       %ol
         - comment.comments.each do |reply|
           = render "subdomains/comments/comment", :comment => reply

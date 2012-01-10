@@ -73,12 +73,30 @@
               left: 0
               position: absolute
               right: 0
-              top: 120px
+              top: 80px
+              
+              &.field_with_errors
+                bottom: 59px
               
               textarea
                 height: 100%
                 max-height: 100%
                 max-width: 100%
+            
+            + li + .wmd-panel
+              top: 120px
+            
+            &.field_with_errors
+            
+              + .wmd-panel
+                top: 109px
+                
+              + li +.wmd-panel
+                top: 149px
+              
+              mark.error
+                margin-right: -22px
+                width: auto
         
         input,
         textarea
@@ -182,7 +200,7 @@
     dt
       border-bottom: 1px solid #000
       color: #999 !important
-      font: 13px DinLight, sans !important
+      font: 13px DinLight, sans-serif !important
       margin: 0 0 20px
       padding: 10px 0 5px !important
     

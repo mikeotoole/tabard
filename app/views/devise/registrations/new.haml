@@ -14,7 +14,7 @@
           %label Birthday
           .month= f.input :birth_month, :as => :radio, :label => false, :collection => (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, :wrapper => false
           .day= f.input :birth_day, :as => :radio, :label => false, :collection => 1..31, :wrapper => false
-          .year= f.input :birth_year, :as => :radio, :label => false, :collection => (Time.now.year-13).downto(Time.now.year-100), :wrapper => false
+          .year= f.input :birth_year, :as => :radio, :label => false, :collection => Time.now.year.downto(Time.now.year-100), :wrapper => false
           - if f.object.errors[:date_of_birth].any?
             %mark.error= f.object.errors[:date_of_birth].first
         = f.input :password

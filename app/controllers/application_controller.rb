@@ -225,13 +225,15 @@ protected
   # If not it will try to redirect to that location in the secure mode.
   ###
   def ensure_secure_subdomain
-    the_subdomain = request.subdomain
-    the_protocol = request.protocol
-
-    the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
-    the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
-
-    redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
+    if not Rails.env.test?
+      the_subdomain = request.subdomain
+      the_protocol = request.protocol
+  
+      the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
+      the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
+  
+      redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
+    end
   end
 
   ###
@@ -333,8 +335,10 @@ protected
       store_location = session[:return_to]
       session[:return_to] = nil
       (store_location.nil?) ? root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) : store_location.to_s
+    when :admin_user, AdminUser
+      admin_dashboard_url(:protocol => "http://", :subdomain => false).sub('secure.', '')
     else
-      super
+      user_root_url(current_user)
     end
   end
 

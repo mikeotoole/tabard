@@ -7,6 +7,7 @@
 ###
 class Subdomains::PagesController < SubdomainsController
   respond_to :html
+
 ###
 # Before Filters
 ###
@@ -17,15 +18,11 @@ class Subdomains::PagesController < SubdomainsController
   authorize_resource :only => [:new, :create]
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_active_profile_is_valid
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
 ###
-  # GET /page_spaces/:page_space_id/pages(.:format)
-  def index
-    page_space = PageSpace.find_by_id(params[:page_space_id])
-    @pages = page_space.pages if page_space
-  end
 
   # GET /pages/:id(.:format)
   def show
@@ -42,14 +39,25 @@ class Subdomains::PagesController < SubdomainsController
 
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
-    add_new_flash_message('Page was successfully created.') if @page.save
+    if @page.save
+      add_new_flash_message 'Page has been created.', 'success'
+      @action = 'created'
+    end
     respond_with(@page)
   end
 
   # PUT /pages/:id(.:format)
   def update
-    if @page.update_attributes(params[:page])
-      add_new_flash_message('Page was successfully updated.')
+    if current_user.user_profile == current_community.admin_profile
+      @page.assign_attributes(params[:page], :as => :community_admin)
+    else
+      @page.assign_attributes(params[:page])
+    end
+    is_changed = @page.changed?
+
+    if @page.save
+      add_new_flash_message 'Page has been saved.', 'success'
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@page)
   end
@@ -81,6 +89,24 @@ protected
   ###
   def create_page
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
-    @page = page_space.pages.new(params[:page])
+    if current_user.user_profile == current_community.admin_profile
+      @page = page_space.pages.new(params[:page], :as => :community_admin)
+    else
+      @page = page_space.pages.new(params[:page])
+    end
+  end
+
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page is created or updated.
+  ###
+  def create_activity
+    if @action
+      Activity.create!( :user_profile => current_user.user_profile,
+                        :community => @page.community,
+                        :target => @page,
+                        :action => @action)
+    end
   end
 end

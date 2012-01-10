@@ -83,5 +83,4 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def filename
     "avatar.png" if original_filename
   end
-
 end

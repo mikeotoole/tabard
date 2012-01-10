@@ -7,6 +7,16 @@
 ###
 class CustomForm < ActiveRecord::Base
 ###
+# Constants
+###
+  # Used by validators and view to restrict name length
+  MAX_NAME_LENGTH = 30
+  # Used by validators and view to restrict instructions length
+  MAX_INSTRUCTIONS_LENGTH = 500
+  # Used by validators and view to restrict thank you length
+  MAX_THANKYOU_LENGTH = 255
+  
+###
 # Attribute accessible
 ###
   attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes
@@ -14,7 +24,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Associations
 ###
-  has_many :questions, :dependent => :destroy
+  has_many :questions, :dependent => :destroy, :autosave => true
   accepts_nested_attributes_for :questions, :allow_destroy => true
 
   has_many :submissions, :dependent => :destroy
@@ -24,17 +34,22 @@ class CustomForm < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
-  validates :instructions, :presence => true
-  validates :thankyou, :presence => true
+                    :length => { :maximum => MAX_NAME_LENGTH }
+  validates :instructions, :presence => true,
+                           :length => { :maximum => MAX_INSTRUCTIONS_LENGTH }
+  validates :thankyou, :presence => true,
+                       :length => { :maximum => MAX_THANKYOU_LENGTH }
   validates :community, :presence => true
   validate :cant_unpublish_application_form
+  validate :question_have_predefined_answers
 
 ###
 # Delegates
 ###
   delegate :admin_profile_id, :to => :community, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
+
+  after_create :apply_default_permissions
 
 ###
 # Scopes
@@ -64,7 +79,12 @@ class CustomForm < ActiveRecord::Base
   def application_form?
     self.community.community_application_form == self
   end
-  
+
+  # This method applys default permissions when this is created.
+  def apply_default_permissions
+    self.community.apply_default_permissions(self)
+  end
+
 ###
 # Protected Methods
 ###
@@ -80,7 +100,28 @@ protected
     return unless not self.is_published and self.community and self.community.community_application_form == self
     self.errors.add(:is_published, "must be true for community application form.")
   end
+
+  # This method checks to see if questions that require predefined answers have at least one
+  def question_have_predefined_answers
+    self.questions.each do |question|
+      if question.type == "MultiSelectQuestion" or question.type == "SingleSelectQuestion"
+        has_at_least_one = false
+        question.predefined_answers.each do |panswer|
+          if not panswer.marked_for_destruction?
+            has_at_least_one = true
+            break
+          end
+        end
+        unless has_at_least_one
+          errors.add(:base, "All questions that can have predefined answers require at least one answer.") 
+          question.errors.add(:base, "requires at least one predefined answer.") 
+        end
+      end
+    end
+  end
 end
+
+
 
 
 # == Schema Information

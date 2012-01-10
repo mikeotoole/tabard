@@ -16,6 +16,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :create_discussion_space, :only => [:new, :create]
   authorize_resource :except => [:index, :index_announcement_spaces]
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -40,14 +41,20 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # POST /discussion_spaces
   def create
-    add_new_flash_message('Discussion space was successfully created.') if @discussion_space.save
+    if @discussion_space.save
+      add_new_flash_message 'Discussion space has been created.', 'success'
+      @action = 'created'
+    end
     respond_with(@discussion_space)
   end
 
   # PUT /discussion_spaces/1
   def update
-    if @discussion_space.update_attributes(params[:discussion_space])
-      add_new_flash_message('Discussion space was successfully updated.')
+    @discussion_space.assign_attributes(params[:discussion_space])
+    is_changed = @discussion_space.changed?
+    if @discussion_space.save
+      add_new_flash_message 'Discussion space has been saved.', 'success'
+      @action = is_changed ? 'edited' : nil
     end
     respond_with(@discussion_space)
   end
@@ -88,5 +95,19 @@ protected
   ###
   def create_discussion_space
     @discussion_space = current_community.discussion_spaces.new(params[:discussion_space]) if current_community
+  end
+
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a discussion space is created or updated.
+  ###
+  def create_activity
+    if @action
+      Activity.create( :user_profile => current_user.user_profile,
+                        :community => @discussion_space.community,
+                        :target => @discussion_space,
+                        :action => @action)
+    end
   end
 end

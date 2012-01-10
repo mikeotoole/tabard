@@ -20,6 +20,8 @@ class ViewLog < ActiveRecord::Base
 end
 
 
+
+
 # == Schema Information
 #
 # Table name: view_logs

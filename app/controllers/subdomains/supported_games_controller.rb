@@ -17,6 +17,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   before_filter :create_supported_game, :only => [:new, :create]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
+  after_filter :create_activity, :only => [:update, :create]
 
 ###
 # REST Actions
@@ -41,7 +42,10 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # POST /supported_games
   def create
     @supported_game.game = Game.get_game(params[:supported_game][:game_type], params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Game was successfully added.') if @supported_game.save
+    if @supported_game.save
+      add_new_flash_message 'Game has been added.', 'success'
+      @action = 'created'
+    end
 
     respond_with(@supported_game)
   end
@@ -49,7 +53,14 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # PUT /supported_games/1
   def update
     @supported_game.game = Game.get_game(@supported_game.game_type, params[:supported_game][:faction], params[:supported_game][:server_name])
-    add_new_flash_message('Successfully updated.') if @supported_game.update_attributes(params[:supported_game])
+
+    @supported_game.assign_attributes(params[:supported_game])
+    is_changed = @supported_game.changed?
+
+    if @supported_game.save
+      add_new_flash_message 'Game saved.', 'success'
+      @action = is_changed ? 'edited' : nil
+    end
 
     respond_with(@supported_game)
   end
@@ -84,5 +95,19 @@ protected
   ###
   def create_supported_game
     @supported_game = current_community.supported_games.new(params[:supported_game]) if current_community
+  end
+
+  ###
+  # _after_filter_
+  #
+  # This after filter will created a new activty when a page is created or updated.
+  ###
+  def create_activity
+    if @action
+      Activity.create( :user_profile => current_user.user_profile,
+                        :community => @supported_game.community,
+                        :target => @supported_game,
+                        :action => @action)
+    end
   end
 end

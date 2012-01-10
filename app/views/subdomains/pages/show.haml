@@ -1,12 +1,17 @@
 - title "#{@page.name} | #{@page.page_space_name} | #{current_community.name}"
 
-%nav
-  %h1
-    = link_to "Page Spaces", page_spaces_path
-    - if @page.page_space.game
-      %rt= " — #{@page.page_space.game_name}"
-    = link_to @page.page_space_name, @page.page_space
-    %strong= @page.name
+#breadcrumb
+  %ol
+    %li= link_to "Page Spaces", page_spaces_path
+    %li= link_to @page.page_space_name, @page.page_space
+    %li
+      %span= @page.name
+
+#actions.actions
+  - if (can? :update, @page)
+    = link_to 'Edit', edit_page_path(@page), :meta => 'Edit page', :class => 'edit'
+  - if (can? :destroy, @page)
+    = link_to 'Destroy', @page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove page', :class => 'delete'
 
 %section
   = @page.body

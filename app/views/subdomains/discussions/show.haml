@@ -1,21 +1,31 @@
 - title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
 = javascript_include_tag "comments"
 
-%nav
-  %h1
-    = link_to "Discussion Spaces", discussion_spaces_path
-    - if @discussion.discussion_space_game
-      %rt= " — #{@discussion.discussion_space.game_name}"
-    = link_to @discussion.discussion_space_name, @discussion.discussion_space
-    %strong= @discussion.name
+#breadcrumb
+  %ol
+    %li= link_to "Discussion Spaces", discussion_spaces_path
+    %li= link_to @discussion.discussion_space_name, @discussion.discussion_space
+    %li
+      %span= @discussion.name
+
+#actions.actions
+  - if (can? :update, @discussion)
+    = link_to 'Edit', edit_discussion_path(@discussion), :meta => 'Edit discussion', :class => 'edit'
+  - if (can? :destroy, @discussion)
+    = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
 
 %article
+  %h1= @discussion.name
+  - if @discussion.has_been_edited
+    %time= "Edited #{time_ago_in_words(@discussion.updated_at)} ago"
+  - else
+    %time= "Created #{time_ago_in_words(@discussion.created_at)} ago"
   %p
     = @discussion.body
 
-- if @discussion.comments.size > 0 or can? :comment, @discussion
+- if @discussion.comments.any? or can? :comment, @discussion
   %aside.comments
-    - if @discussion.comments.size > 0
+    - if @discussion.comments.any?
       %ol
         - @discussion.comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment

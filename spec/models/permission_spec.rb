@@ -6,7 +6,7 @@
 #  role_id                        :integer
 #  permission_level               :string(255)
 #  subject_class                  :string(255)
-#  id_of_subject                  :string(255)
+#  id_of_subject                  :integer(255)
 #  created_at                     :datetime
 #  updated_at                     :datetime
 #  can_lock                       :boolean         default(FALSE)
@@ -36,7 +36,7 @@ describe Permission do
   
   describe "subject_class" do
     it "should have a limited inclusion set" do
-      valid_classes = %w{ Role CustomForm PageSpace Page DiscussionSpace Discussion Announcement CommunityApplication } # TESTING Valid subject classes for testing.
+      valid_classes = %w{ Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication } # TESTING Valid subject classes for testing.
       valid_classes.each do |valid_class|
         build(:permission, :subject_class => valid_class).should be_valid
       end

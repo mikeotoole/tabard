@@ -130,7 +130,7 @@ c) The following logos are trademarks owned by the Company and are considered Co
 10) *Change to these Terms and Conditions.* The Company may unilaterally change any of the provisions herein if, in its sole discretion, it believes the change to be appropriate. Upon any change, the new version of this Agreement will be posted on the main website for the Service, furthermore, upon log-in to any of the Service's resources, you will be provided the opportunity to view the new Agreement, and will be required to agree to the changes before being allowed to access such resources. If you do not agree to any such new agreements, then you will not be permitted to access the Service anymore.
 
 11) *Termination of Agreement.*
-a) *By You: If You wish to terminate this Agreement and your relationship with the 
+a) *By You: If You wish to terminate this Agreement and your relationship with the
 Company, then you may do so by closing your account. Please note that all of the provisions referenced in the Survivability section of this Agreement will survive the termination of this Agreement by either party, and will remain in force indefinitely.*
 b) *By the Company: If you by any action or inaction, violate the letter or spirit of this Agreement, or if by any action or inaction you expose the Company to legal, social, or business risk, then We may, at our sole discretion, terminate this Agreement, and by extension, your right to use the Service. In such a case, you will be notified by a displayed message the next time you try to access your User Account.*
 
@@ -165,7 +165,7 @@ g) *If any portion of this Mandatory Arbitration section is found by a court of 
     privacy_policy_document = PrivacyPolicy.create(
     :body => %{
 *Applicability of this Policy*
-This Policy applies to the Crumblin service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts. This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service. 
+This Policy applies to the Crumblin service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts. This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service.
 
 *Information we Receive about You*
 
@@ -188,7 +188,7 @@ Certain functionality of the Service or other Websites or social media accounts 
 User Initiated Communication
 If you decide to contact Us to provide feedback, accolades or complaints, then the contents of your communication to Us will be collected and recorded.
 
-Functionality Data and Connections 
+Functionality Data and Connections
 In order to enhance the value of the Service, to enhance security, and in an effort to constantly improve the user experience, We regularly collect (including by automated means such as by use of analytics tools) data about usage patterns of Users. This data may include, but is not limited to, IP addresses, bandwidth usage, operating systems of Users, types of browsers used, speed of user internet connections, frequency of log-in, purchasing habits, games played, guild affiliation, and use of different resources or interfaces.
 
 *Information from Children Under the Age of 13*

@@ -1,15 +1,16 @@
 %h1 Community Members
 
-= form_tag '' do
-  %input{ :name => '_method', :value => '', :type => 'hidden' }
-  %table
-    %thead
-      %tr
-        %th
-        %th Member
-        %th Characters in the Community
-        %th Joined
-    - if @member_profiles.size > 0
+- if @member_profiles.any?
+  = form_tag '' do
+    %input{ :name => '_method', :value => '', :type => 'hidden' }
+    %table
+      %thead
+        %tr
+          %th
+          %th Member
+          %th Characters in the Community
+          %th Joined
+          %th.actions
       %tbody
         - @member_profiles.each do |member_profile|
           %tr
@@ -35,8 +36,15 @@
                 —
             %td
               %time= l member_profile.joined_community_on(current_community), :format => :date_short
-    - if can? :manage, RosterAssignment
-      %tfoot
-        %tr
-          %td{ :colspan => 4, :class => 'batch' }
-            = button_tag 'Remove selected characters', :action => batch_destroy_roster_assignments_url, :method => :delete, :confirm => 'Are you sure? These characters will be no longer be a part of the community.'
+            %td.actions
+              %div
+                - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
+                - if can? :destroy, community_profile
+                  =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
+      - if can? :manage, RosterAssignment
+        %tfoot
+          %tr
+            %td{ :colspan => 5, :class => 'batch' }
+              = button_tag 'Remove selected characters', :action => batch_destroy_roster_assignments_url, :method => :delete, :confirm => 'Are you sure? These characters will be no longer be a part of the community.'
+- else
+  %p This community has no current members.

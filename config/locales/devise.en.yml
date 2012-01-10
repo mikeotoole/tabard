@@ -24,8 +24,9 @@ en:
       admin_disabled: 'Your account has been disabled by Crumblin.'
       user_disabled: 'Your account has been disabled.'
     sessions:
-      signed_in: 'Signed in successfully.'
-      signed_out: 'Signed out successfully.'
+      signed_in: 'Welcome. You are now signed in.'
+      user_signed_in: 'Welcome %{display_name}. You are now signed in.'
+      signed_out: 'You have been signed out. See you around soon.'
     passwords:
       send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'
@@ -35,11 +36,11 @@ en:
       send_paranoid_instructions: 'If your e-mail exists on our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
       confirmed: 'Your account was successfully confirmed. You are now signed in.'
     registrations:
-      signed_up: 'Welcome! You have signed up successfully.'
-      inactive_signed_up: 'You have signed up successfully. Before logging in, please %{reason}.'
+      signed_up: 'Welcome to Crubmlin!'
+      inactive_signed_up: 'Welcome to Crubmlin! Before logging in, please %{reason}.'
       updated: 'You updated your account successfully.'
       destroyed: 'Your account has been deactivated. We hope to see you again soon.'
-      not_signed_id: 'You must be signed in to cancel account.'
+      not_signed_id: 'You must be signed in to cancel your account.'
       reasons:
         unconfirmed: 'check your email to confirm your account.'
     unlocks:

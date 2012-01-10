@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :user_profile, :aliases => [:admin_profile] do
     sequence(:first_name) {|n| "First Name #{n}"}
     sequence(:last_name) {|n| "Last Name #{n}"}
-    sequence(:display_name) {|n| "Von Game Master #{n}"}
+    sequence(:display_name) {|n| "GameMaster#{n}"}
     sequence(:description) {|n| "Von Game Master is number #{n}"}
     user
   end

@@ -7,6 +7,11 @@
 ###
 class PageSpace < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_NAME_LENGTH = 30
+
+###
 # Attribute accessible
 ###
   attr_accessible :name, :supported_game_id
@@ -22,7 +27,7 @@ class PageSpace < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+                    :length => { :maximum => MAX_NAME_LENGTH }
   validates :community, :presence => true
 
 ###
@@ -31,6 +36,8 @@ class PageSpace < ActiveRecord::Base
   delegate :name, :to => :game, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true
   delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
+
+  after_create :apply_default_permissions
 
 ###
 # Public Methods
@@ -55,7 +62,14 @@ class PageSpace < ActiveRecord::Base
   def has_game_context?
     self.supported_game_id != nil
   end
+
+  # This method applys default permissions when this is created.
+  def apply_default_permissions
+    self.community.apply_default_permissions(self)
+  end
 end
+
+
 
 
 # == Schema Information

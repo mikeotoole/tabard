@@ -5,9 +5,9 @@ describe "ActiveAdmin Question" do
   let(:admin) { create(:admin_user, :role => 'admin') }
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
-  let(:question) { create(:check_box_question) }
-  let(:predefined_answer) { question.predefined_answers.first }
- 
+  let(:question) { create(:short_answer_question) }
+  let(:predefined_answer) { create(:check_box_question).predefined_answers.first }
+
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
@@ -85,13 +85,13 @@ describe "ActiveAdmin Question" do
       current_path.should == new_admin_user_session_path
     end    
   end
-  
+
   describe "#new" do
     it "raises error ActionNotFound" do
       lambda { visit new_admin_question_url }.should raise_error(AbstractController::ActionNotFound)
     end    
   end
- 
+
   describe "#create" do
     it "raises error ActionNotFound" do
       lambda { page.driver.post("/admin/questions") }.should raise_error(AbstractController::ActionNotFound)
@@ -146,7 +146,7 @@ describe "ActiveAdmin Question" do
       Question.exists?(question).should be_true
     end      
   end
-  
+
   describe "#delete_predefined_answer_admin_question" do 
     it "deletes predefined answer when logged in as superadmin" do
       login_as superadmin
