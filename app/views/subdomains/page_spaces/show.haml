@@ -1,11 +1,10 @@
 - title "#{@page_space.name} | #{current_community.name}"
 
-%nav
-  %h1
-    = link_to "Page Spaces", page_spaces_path
-    - if @page_space.game
-      %rt= " — #{@page_space.supported_game_full_name}"
-    %strong= @page_space.name
+#breadcrumb
+  %ol
+    %li= link_to "Page Spaces", page_spaces_path
+    %li
+      %span= @page_space.name
 
 - if @page_space.pages.size > 0
   = render "subdomains/pages/table", :page_space => @page_space

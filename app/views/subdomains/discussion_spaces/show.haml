@@ -1,11 +1,10 @@
 - title "#{@discussion_space.name} | #{@community.name}"
 
-%nav
-  %h1
-    = link_to "Discussion Spaces", discussion_spaces_path
-    - if @discussion_space.game
-      %rt= " — #{@discussion_space.supported_game_full_name}"
-    %strong= @discussion_space.name
+#breadcrumb
+  %ol
+    %li= link_to "Discussion Spaces", discussion_spaces_path
+    %li
+      %span= @discussion_space.name
 
 - if @discussion_space.discussions.any?
   = render "subdomains/discussions/table", :discussion_space => @discussion_space

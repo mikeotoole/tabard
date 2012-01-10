@@ -1,9 +1,10 @@
 - title "#{@announcement_space.name} | #{@community.name}"
 
-%nav
-  %h1
-    = link_to "Announcement Spaces", announcement_spaces_url
-    %strong= @announcement_space.name
+#breadcrumb
+  %ol
+    %li= link_to "Announcement Spaces", announcement_spaces_url
+    %li
+      %span= @announcement_space.name
 
 - if @announcement_space.discussions.size > 0
   = render "subdomains/announcements/table", :announcement_space => @announcement_space

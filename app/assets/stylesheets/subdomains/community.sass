@@ -325,41 +325,97 @@ button,
     font-size: 18px
     padding: 10px 0
     
-  nav
-  
-    h1
-      background: #E1D5CD
-      +bg_gradient(rgba(#fff,0),#E1D5CD)
-      border-bottom: 1px solid #fff
-      font-family: DinLight, serif
-      font-size: 16px
-      padding: 5px 25px
-      margin: -30px -30px 30px
+  #breadcrumb
+    height: 40px
+    margin: -30px -30px 30px
+    overflow: hidden
+    
+    ol
+      background: #EADDD4
+      +bg_gradient(#EADDD4,#C7B2A3)
+      border-bottom: 1px solid #B18668
+      +box_shadow(0 0 10px #B18668)
+      font: 12px DinMedium, serif
+      line-height: 30px
+      padding: 0 15px
+      margin: 0
       
-      a
-        font-family: DinMedium, serif
-      
-      strong
-        font-family: DinLight, serif
-      
-      a,
-      strong
-        margin-left: 20px
+      li
+        display: block
+        float: left
+        padding: 0 20px 0 10px
         position: relative
-      
+        
+        a,
+        span
+          +border_radius(0)
+          display: block
+          float: left
+          margin: 0 -5px 0 -25px
+          padding: 0 5px 0 25px
+          +transition(none)
+        
+        a
+          background: #fff
+        
+        span
+          background: #e4d7b1
+        
         &:before
-          border-left: 1px solid #560716
-          bottom: 0
+          border-top: 15px solid transparent
+          border-bottom: 15px solid transparent
+          border-left: 15px solid #B18668
           content: ''
-          left: -10px
+          height: 0
           position: absolute
+          right: 0
           top: 0
+          width: 0
+          z-index: 1
         
-      a:first-child
-        margin-left: 0
+        &:after
+          border-top: 15px solid transparent
+          border-bottom: 15px solid transparent
+          border-left: 15px solid #fff
+          content: ''
+          height: 0
+          position: absolute
+          right: 1px
+          top: 0
+          width: 0
+          z-index: 2
         
-        &:before
-          display: none
+        &:hover
+          
+          &:after
+            border-left-color: #CD4723
+            
+          a,
+          span
+            background: #CD4723
+            color: #fff
+        
+        &:last-child
+        
+          &:after
+            border-left-color: #e4d7b1
+          
+          &:hover
+            
+            &:after
+              border-left-color: #e4d7b1
+            
+            span
+              background: #e4d7b1
+              color: inherit
+            
+      
+      &:after
+        clear: both
+        content: '.'
+        display: block
+        height: 0
+        visibility: hidden
   
   p
     padding: 10px 0
@@ -407,8 +463,8 @@ button,
     right: 30px
     z-index: 8
   
-  nav + #actions
-    top: 70px
+  #breadcrumb + #actions
+    top: 60px
   
   .actions
     font-size: 0
@@ -1285,6 +1341,7 @@ button,
       width: 280px
       
       .submitter
+        margin: 0 0 30px
         
         h2:before
           background-position: -570px -30px
