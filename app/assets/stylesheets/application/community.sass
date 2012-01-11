@@ -6,26 +6,15 @@
 @import application/bar
 
 
-#bar:before
-  +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
-
 #flash
   position: absolute
   top: 75px
-  
-  li
-    border-left-color: rgba(#fff,.3) 
-    border-right-color: rgba(#fff,.3)
-    
-    &:last-child
-      border-bottom-color: rgba(#fff,.3)
 
 html,
 body
   min-height: 100%
 
 body
-  color: #896243
   font-family: DinLight, sans-serif
   min-width: 980px
   
@@ -33,7 +22,7 @@ body
     font-family: DinMedium, sans-serif
 
 #content
-  background: center 0 no-repeat fixed
+  background: center 70px no-repeat fixed
   min-height: 400px
   padding: 270px 0 0
   position: relative
@@ -49,7 +38,6 @@ body
   z-index: 10
   
   .title
-    color: #fff
     left: 0
     position: absolute
     bottom: 90px
@@ -59,17 +47,13 @@ body
       font-family: DinMedium, sans-serif
       font-size: 36px
       letter-spacing: -2px
-      text-shadow: 3px 3px 3px rgba(#000,.5)
     
     cite
       display: block
       font-size: 24px
       letter-spacing: -1px
-      text-shadow: 2px 2px 2px rgba(#000,.5)
   
   .menu
-    background: rgba(#792914,.9)
-    +box_shadow(0 0 20px rgba(#000,.5))
     bottom: 0
     height: 30px
     left: 0
@@ -84,7 +68,6 @@ body
       
       >a
         +border_radius(3)
-        color: #bea761
         display: block
         font-size: 18px
         height: 30px
@@ -100,7 +83,6 @@ body
     
           &:after
             border: 5px solid transparent
-            border-top-color: #B18668
             content: ''
             height: 0
             position: absolute
@@ -109,9 +91,7 @@ body
             width: 0
       
       >ul
-        background: #E4D7B1
         +border_radius(0,3,3,3)
-        +box_shadow(0 5px 15px rgba(#000,.5))
         left: 10px
         +opacity(.4)
         min-width: 120%
@@ -126,8 +106,6 @@ body
           padding: 0
         
           >a
-            border-top: 1px solid #B18668
-            color: #5E371B
             display: block
             font-size: 13px
             padding: 0 40px 0 10px
@@ -135,9 +113,7 @@ body
             white-space: nowrap
             
             &[meta]:before
-              background: #A1391D
               +border_radius(2)
-              color: #fff
               content: attr(meta)
               font: 12px DinMedium, sans-serif
               line-height: 12px
@@ -145,14 +121,6 @@ body
               position: absolute
               right: 5px
               top: 5px
-            
-            &:hover
-              background: #7B1828
-              color: #fff
-            
-              &[meta]:before
-                background: #fff
-                color: #70293D
           
           &:last-child,
           &:last-child >a
@@ -161,8 +129,6 @@ body
       &:hover
         
         >a
-          background: #E4D7B1
-          color: #5E371B !important
           +transition(color .2s linear)
           
           &:not(:only-child)
@@ -170,7 +136,6 @@ body
             +border_radius(3,3,0,0)
         
         >ul
-          border-bottom: 1px solid #B18668
           +opacity(1)
           padding: 5px 0 0
           top: 30px
@@ -184,23 +149,17 @@ body
               padding-top: 7px
               +transition(padding .2s linear)
       
-      &.current
-        
-        >a
-          background: #26000a
-      
       &.special
         float: right
         
         >a
-          color: #fff
           float: right
           font-size: 14px
           margin: 0 10px 0 0
           padding: 0 40px 0 10px
           
           &:before
-            background: image-url('application/icons.png') -90px -30px no-repeat
+            background: image-url('application/icons.png') no-repeat
             content: ''
             height: 30px
             position: absolute
@@ -214,36 +173,17 @@ body
           &:not([href])
             background: transparent
             cursor: default
-          
-        &:hover >a:before
-          background-position: -90px 0
-          +opacity(.7)
         
         >ul
           +border-radius(3,0,3,3)
           left: auto
           right: 10px
-      
-      &.settings >a:before
-        background-position: -90px -30px
-      
-      &.signup >a:before
-        background-position: -120px -30px
           
 button,
 .button,
 #body button,
 #body .button
-  background: #a1391d
-  border-color: #5F381C
-  color: #e3d5a9
   font: 16px DinMedium, serif
-  
-  &:focus,
-  &:hover
-    background: #cd4723
-    +box_shadow(0 0 15px #F0884F)
-    color: #fff
 
 #body
   background: #fff
@@ -273,7 +213,6 @@ button,
   h1,
   h2,
   h3
-    color: #560716
     font-family: DinMedium, serif
     letter-spacing: -1px
     line-height: 30px
@@ -301,10 +240,6 @@ button,
     overflow: hidden
     
     ol
-      background: #EADDD4
-      +bg_gradient(#EADDD4,#C7B2A3)
-      border-bottom: 1px solid #B18668
-      +box_shadow(0 0 10px #B18668)
       font: 12px DinMedium, serif
       line-height: 30px
       padding: 0 15px
@@ -325,16 +260,10 @@ button,
           padding: 0 5px 0 25px
           +transition(none)
         
-        a
-          background: #fff
-        
-        span
-          background: #e4d7b1
-        
         &:before
           border-top: 15px solid transparent
           border-bottom: 15px solid transparent
-          border-left: 15px solid #B18668
+          border-left: 15px solid
           content: ''
           height: 0
           position: absolute
@@ -346,7 +275,7 @@ button,
         &:after
           border-top: 15px solid transparent
           border-bottom: 15px solid transparent
-          border-left: 15px solid #fff
+          border-left: 15px solid
           content: ''
           height: 0
           position: absolute
@@ -355,29 +284,8 @@ button,
           width: 0
           z-index: 2
         
-        &:hover
-          
-          &:after
-            border-left-color: #CD4723
-            
-          a,
-          span
-            background: #CD4723
-            color: #fff
-        
-        &:last-child
-        
-          &:after
-            border-left-color: #e4d7b1
-          
-          &:hover
-            
-            &:after
-              border-left-color: #e4d7b1
-            
-            span
-              background: #e4d7b1
-              color: inherit
+        &:last-child:hover span
+          color: inherit
             
       
       &:after
@@ -392,8 +300,7 @@ button,
     word-wrap: break-word
   
   blockquote
-    border: 1px solid #e9d6cd
-    background: #FCF2ED
+    border: 1px solid
     margin: 10px 0
     padding: 10px 20px
   
@@ -410,22 +317,18 @@ button,
   dl
     
     dt
-      color: #6e4b2f
       font-family: DinMedium, sans-serif
       padding: 10px 0 0
     
     dd
       padding: 10px 0
-    
-  strong
-    color: #6e4b2f
 
   time
     font: 12px DinMedium, sans-serif
     white-space: nowrap
   
   
-  // Actions
+  // ACTIONS
   
   #actions
     position: absolute
@@ -442,7 +345,7 @@ button,
     word-spacing: 0
     
   .actions a
-    background: image-url('application/icons.png') no-repeat #9C682F
+    background: image-url('application/icons.png') no-repeat
     +border_radius(3)
     display: inline-block
     height: 30px
@@ -454,16 +357,13 @@ button,
     width: 30px
     
     &:hover
-      background: image-url('application/icons.png') no-repeat #A1391D
-      +box_shadow(0 0 10px #333)
+      background: image-url('application/icons.png') no-repeat
     
       &[meta]
       
         &:before
-          background: #7b1828
-          border: 1px solid #570A17
+          border: 1px solid
           +border_radius(3)
-          color: #fff
           content: attr(meta)
           font-size: 13px
           height: 28px
@@ -477,7 +377,7 @@ button,
         
         &:after
           border: 5px solid transparent
-          border-left: 5px solid #570A17
+          border-left: 5px solid
           content: ''
           height: 0
           left: -5px
@@ -520,144 +420,8 @@ button,
       
     &.unpublish
       background-position: -390px -30px
-  
-  
-  // FORMS
-  
-  input[type="url"],
-  input[type="email"],
-  input[type="text"],
-  input[type="password"],
-  textarea
-    background: #d2c69c
-    +bg_gradient(#d2c69c,#e8e3d1)
-    +box_shadow(0 0 3px rgba(#000,.2))
-    border-color: #fff
-    color: #560416
-    
-    &:focus
-      background: #e8e3d1
-      border-color: #a37961
-      +box_shadow(0 0 8px #F0884F)
-      +bg_gradient(#e8e3d1,#fff)
-      color: #560416
-      
-  input[type="checkbox"],
-  input[type="radio"]
-    
-    + label:before
-      background: #d2c69c
-      +bg_gradient(#d2c69c,#e8e3d1)
-      border-color: #fff
-      +box_shadow(0 0 3px rgba(#000,.2))
-    
-    &:focus + label:before
-      background: #e8e3d1
-      border-color: #a37961
-      +box_shadow(0 0 8px #F0884F)
-      +bg_gradient(#e8e3d1,#fff)
-    
-    &:checked
 
-      + label:after
-        background: #805B3E
-        +bg_gradient(#805B3E,#330901)
-        border-color: #5D361A
-        +box_shadow(0 0 9px #999)
-      
-      &:focus + label,
-      &:hover + label,
-      + label:hover
-              
-        &:after
-          background: #DA6E4A
-          +bg_gradient(#A44D5B,#DA6E4A)
-  
-  .select
-  
-    ul
-      background: #d2c69c
-      +bg_gradient(#d2c69c,#e8e3d1)
-      +box_shadow(0 0 3px rgba(#000,.2))
-      border-color: #fff
-      color: #560416
-          
-      &:before
-        border-top-color: #6C2413
-      
-      li
-        
-        label
-          background: #d2c69c
-          +border_radius(2)
-          +bg_gradient(#d2c69c,#e8e3d1)
-          border-color: #a37961
-          color: #560416
-        
-          .avatar
-            background: #C7B2A3
-            border-color: #fff
-            +box_shadow(0 0 5px rgba(#000,.2))
-        
-        input:checked + label
-          color: inherit
-  
-      &:hover
-        background: #e8e3d1
-        border-color: #a37961
-        +box_shadow(0 0 8px #F0884F)
-        +bg_gradient(#e8e3d1,#fff)
-      
-        li
-        
-          label,
-          input:checked + label
-            color: #560416
-            
-            &:hover
-              background: #9F3A1F
-              color: #fff
 
-  .slider,
-  .slider_with_none
-    background: #d2c69c
-    +bg_gradient(#d2c69c,#e8e3d1)
-    border-color: #fff
-    +border_radius(3)
-    +box_shadow(0 0 3px rgba(#000,.2))
-        
-    label
-      color: #DBD5B6
-
-    input
-      
-      &:checked + label
-        background: #A57C5E
-        border-color: #90684A
-        +box_shadow(0 0 5px rgba(#000,.5))
-  
-    &:hover
-      background: #e8e3d1
-      border-color: #a37961
-      +box_shadow(0 0 8px #F0884F)
-      +bg_gradient(#e8e3d1,#fff)
-      
-      label:hover
-        background: #8F334E !important
-        border-color: #5d2230
-        color: #fff
-        
-  .slider_with_none
-    
-    > label
-      color: #A47D5F
-      
-    >input:checked + label
-      color: #DBD5B6
-      
-      &:hover
-        color: #fff
-  
   // TABLES
 
   table
@@ -681,11 +445,8 @@ button,
       text-align: left
     
       th
-        background: #6F4324
-        +bg_gradient(#83583a,#5e371b)
-        border-bottom: 1px solid #fff
+        border-bottom: 1px solid
         font-family: DinMedium, serif
-        color: #fff
         padding: 10px
         white-space: nowrap
         
@@ -698,21 +459,16 @@ button,
         &:only-child
           +border_radius(3,3,0,0)
         
-        &.check
-          
-          a
-            color: #fff
-            text-decoration: none
+        &.check a
+          text-decoration: none
   
     tbody
       
       tr
     
         td
-          background: #eee
-          +bg_gradient(#f7f1ec,#eaddd4)
-          border-bottom: 1px solid #c7b2a3
-          border-top: 1px solid #fff
+          border-bottom: 1px solid
+          border-top: 1px solid
           padding: 5px 10px
           width: 100%
           
@@ -724,10 +480,8 @@ button,
               position: relative
             
           img.avatar
-            background: #C7B2A3
-            border: 1px solid #fff
+            border: 1px solid
             +border_radius(3)
-            +box_shadow(0 0 10px rgba(#000,.2))
             height: 40px
             float: left
             margin: 0 -5px
@@ -736,7 +490,6 @@ button,
           img.icon
             border: 0
             +border_radius(2)
-            +box_shadow(0 0 5px rgba(#000,.2))
             height: 20px
             width: 20px
           
@@ -772,32 +525,20 @@ button,
                     margin: 3px 5px 0 30px
               
           &.check
-            border-right: 1px #ccc solid
+            border-right: 1px solid
             padding: 5px 32px 5px 5px
             text-align: center
             width: 0
-            
-            label:before
-              +box_shadow(0 0 10px rgba(#000,.3))
-        
-        &.dim
-          
-          td
-            border-color: #aa856a
-            +bg_gradient(#C7B2A3,#EADDD4)
         
     tfoot
     
       td
-        background: #BCA964
-        +bg_gradient(#b28769,#916749)
-        border-top: 1px solid #fff
-        color: #570A17
+        border-top: 1px solid
         padding: 10px
         position: relative
         
         &:before
-          border-top: 1px solid #5E371B
+          border-top: 1px solid
           content: ''
           left: 0
           position: absolute
@@ -812,13 +553,9 @@ button,
         
         &:only-child
           +border_radius(0,0,3,3)
-        
-        button,
-        .button
-          border-color: #704f37
 
 
-  // Pages
+  // PAGES
 
   article
     position: relative
@@ -828,18 +565,16 @@ button,
       padding-right: 100px
     
     time
-      border-bottom: 1px solid #EBDFC4
+      border-bottom: 1px solid
       display: block
       padding: 0 0 5px
       margin: -10px 0 20px
 
 
-
-  // Comments
+  // COMMENTS
 
   .comments,
   .activities
-    background: #fff
     +border_radius(3)
     clear: both
     margin: 30px -30px 0
@@ -854,122 +589,16 @@ button,
       &.activity >a:first-of-type,
       &.activity >strong:first-child >a,
       &.comment >blockquote >.meta >strong:first-of-type a
-        background: #70293D
-        color: #fff
         
         &:before,
         &:after
           display: none
-              
-        &:hover
-          background: #aa000b
-          color: #fff
 
-    li.comment
-      border-bottom-color: #fff
-    
-      blockquote
-        
-        &:before
-          border-bottom-color: #EBDFC4
-        
-        >.avatar
-          background: #E1D5CD
-          border-color: #e1d5cd
-          
-          &:before
-            border-right-color: #fff
-          
-          &:after
-            border-top-color: #fff
-          
-          >img
-            background: #e1d5cd
-            border-color: #fff
-        
-        .meta
-          background: #fff
-          border-bottom-color: #E1D5CD
-          color: #b59d8b
-          
-          a
-            color: #aa000b
-            
-            &:hover
-              background: #aa000b
-              color: #fff
-            
-            &.expand
-              background: #70293D
-              color: #fff
-              
-              &:hover
-                background: #aa000b
-            
-            &.collapse
-              background: #C7B2A3
-              color: #fff
-              
-              &:hover
-                background: #aa000b
-        
-        .actions a
-            
-          &.edit
-            background-position: -65px -5px
-          
-          &.delete
-            background-position: -35px -5px
-          
-          &.lock
-            background-position: -185px -5px
-          
-          &.unlock
-            background-position: -155px -5px
-        
-        p
-          color: #000
-        
-        em
-          background: #eee
-          color: #999
-          
-        .reply
-          background: #EBDFC4
-          color: #917000
-          
-          &:hover
-            background: #6F2B3D
-            color: #fff
-        
-        form
-          margin-right: 0
-        
-        &:hover
-        
-          .avatar
-            +box_shadow(0 0 15px rgba(#000,.5))
-            border-color: #C7B2A3
-        
-      &.removed >blockquote >.avatar
-        border-color: #ccc
-
-        
-    *[meta]:hover
-      
-      &:before
-        background: #d9be6b
-        border-color: #9f8a4b
-        +box_shadow(0 0 15px rgba(#000,.3))
-        color: #443916
-      
-      &:after
-        border-left-color: #9f8a4b
-        border-top-color: #9f8a4b
+    li.comment blockquote form
+      margin-right: 0
             
     form
-      background: #EBDFC4
-      border-right: 22px solid #EBDFC4
+      border-right: 22px solid
       margin: 0 15px 10px 72px
       position: relative
       padding: 5px
@@ -977,7 +606,7 @@ button,
       
       &:before
         border-left: 10px solid transparent
-        border-top: 10px solid #EBDFC4
+        border-top: 10px solid
         content: ''
         height: 0
         position: absolute
@@ -987,7 +616,6 @@ button,
         z-index: 3
       
       .profile
-        background: #C7B2A3
         margin: 0
         padding: 0
         position: absolute
@@ -1004,7 +632,6 @@ button,
           padding: 0
         
           label
-            background: #E1D5CD
             display: none
             float: left
             height: 44px
@@ -1020,8 +647,7 @@ button,
               display: none
             
             >.avatar
-              background: #E1D5CD
-              border: 1px solid #fff !important
+              border: 1px solid !important
               height: 40px
               left: auto
               margin: 1px
@@ -1042,7 +668,6 @@ button,
         
         &:hover
           +border_radius(3)
-          +box_shadow(0 0 15px rgba(#000,.5))
           left: -72px
           padding: 10px
           top: -10px
@@ -1058,14 +683,11 @@ button,
               margin: 0 0 0 5px
               
               &:hover
-                background: #7D3D4F
                 
                 &[meta]
                 
                   &:before
-                    background: rgba(#6F2B3D,.9)
                     +border_radius(2)
-                    color: #fff
                     content: attr(meta)
                     display: block
                     font-size: 12px
@@ -1084,7 +706,7 @@ button,
                     border: 10px solid transparent
                     border-left: 0
                     +border_radius(0)
-                    border-top: 10px solid rgba(#6F2B3D,.9)
+                    border-top: 10px solid
                     +box_shadow(none)
                     content: ''
                     display: block
@@ -1097,12 +719,6 @@ button,
 
                 img
                   cursor: pointer
-                            
-            input:checked + label
-              background: #AB000B
-              
-              img
-                border-color: #AB000B
           
           li:first-child
           
@@ -1110,8 +726,7 @@ button,
               margin: 0
       
       textarea
-        background: #fff
-        border: 1px solid #BCA767
+        border: 1px solid
         +border_radius(0)
         display: block
         font-size: 14px
@@ -1127,7 +742,6 @@ button,
         
         &:focus,
         &.open
-          color: #333
           height: 80px
           
           ~ button,
@@ -1147,7 +761,7 @@ button,
           display: none !important
         
         &:after
-          background: image-url('application/busy.gif') center center no-repeat rgba(#000,.1)
+          background: image-url('application/busy.gif') center center no-repeat
           bottom: 0
           content: ''
           left: 0
@@ -1165,21 +779,6 @@ button,
         margin: 5px 0 0
         padding: 0 5px
       
-      >input
-        bottom: 14px
-        display: none
-        height: 1px
-        margin: 0
-        overflow: hidden
-        padding: 0
-        position: absolute
-        right: -8px
-        width: 1px
-        z-index: 0
-        
-        &:checked + label:before
-          background-position: -155px -5px
-      
       >label
         bottom: 5px
         display: none
@@ -1191,7 +790,7 @@ button,
         right: 0
         
         &:before
-          background: image-url('application/icons.png') -185px -5px no-repeat #EBDFC4
+          background: image-url('application/icons.png') no-repeat
           border: 0
           +border_radius(0)
           bottom: 0
@@ -1207,34 +806,37 @@ button,
             
         &:after
           display: none
+      
+      >input
+        bottom: 14px
+        display: none
+        height: 1px
+        margin: 0
+        overflow: hidden
+        padding: 0
+        position: absolute
+        right: -8px
+        width: 1px
+        z-index: 0
     
     #newcomment
       height: 175px
   
   
-  // Activities
+  // ACTIVITIES
   
   .activities
     min-height: 400px
     padding: 30px
     
     a
-      color: #AA000B
       font-family: DinMedium, sans-serif
       text-decoration: none
-      
-      &:hover
-        background: #AA000B
-        color: #fff
-    
-    time
-      color: #6E4B2F
     
     >li
       list-style: none
       
       &:after
-        border-color: #E1D5CD
         left: 72px
         
     li.activity
@@ -1252,9 +854,6 @@ button,
         .avatar
           left: 0
           top: 0
-        
-        .meta
-          color: #896243
       
       + li.comment:after
         display: block
@@ -1264,16 +863,15 @@ button,
       margin-left: -20px
       margin-right: -20px
   
-  // Submissions & Community Applications
+  
+  // SUBMISSIONS & COMMUNITY APPLICATIONS
   
   .submission
     margin: -30px 0 0 0
   
     h1,
     h2
-      background: #792914
       +border_radius(3)
-      color: #fff
       font: 20px DinLight, serif
       height: 40px
       line-height: 40px
@@ -1291,8 +889,8 @@ button,
         width: 30px
       
       &:after
-        border-left: 1px solid rgba(#000,.2)
-        border-right: 1px solid rgba(#fff,.2)
+        border-left: 1px solid
+        border-right: 1px solid
         content: ''
         bottom: 0
         left: 40px
@@ -1303,9 +901,6 @@ button,
     h1,
     .questions >h2
       width: 525px
-      
-      &:before
-        background-position: -120px -30px
     
     .sidebar
       float: right
@@ -1314,17 +909,11 @@ button,
       .submitter
         margin: 0 0 30px
         
-        h2:before
-          background-position: -570px -30px
-        
         img.avatar
           height: 40px
           width: 40px
       
       .characters
-        
-        h2:before
-          background-position: -570px -30px
         
         p
           padding: 0 0 15px
@@ -1343,9 +932,7 @@ button,
       .characters >label,
       .characters >ul li,
       .submitter a
-        background: #83583A
         +border_radius(3)
-        color: #fff
         display: block
         min-height: 40px
         line-height: 20px
@@ -1355,9 +942,7 @@ button,
         +transition(background .2s linear)
           
         img.avatar
-          background: #C7B2A3
           +border_radius(2)
-          +box_shadow(0 0 5px rgba(#000,.5))
           height: 40px
           left: 4px
           position: absolute
@@ -1372,31 +957,20 @@ button,
         padding: 0 8px 0 50px
         text-decoration: none
         +transition(background .2s linear)
-        
-        &:hover
-          background: #5F381C
       
-      .characters
-      
-        >label
+      .characters >label
         
-          &:before
-            display: none
-          
-          &:after
-            color: #BBA55F
-            content: '\00D7'
-            font-size: 17px
-            line-height: 1em
-            position: absolute
-            top: 0
-            right: 5px
-          
-          &:hover
-            background: #5F381C
+        &:before
+          display: none
+        
+        &:after
+          content: '\00D7'
+          font-size: 17px
+          line-height: 1em
+          position: absolute
+          top: 0
+          right: 5px
             
-            &:after
-              color: #fff
         >ul
           padding: 0 0 30px
           
@@ -1419,9 +993,6 @@ button,
       .instructions
         padding: 0 0 15px
         
-        h2:before
-          background-position: -450px -30px
-        
         p
           line-height: 1.2em
           padding: 0 0 15px
@@ -1432,34 +1003,29 @@ button,
       padding: 0 0 30px
       width: 580px
       
-      >fieldset
+      >fieldset >ol >li
+        margin: 0 0 30px
+      
+        >label,
+        .select >label
+          font: 18px DinMedium, serif
         
-        >ol
-        
-          >li
-            margin: 0 0 30px
+        >input,
+        >textarea
+          width: 558px
           
-            >label,
-            .select >label
-              color: #550A16
-              font: 18px DinMedium, serif
+        .select
+          margin-bottom: 15px
+          width: auto
+          
+          ul
+            width: 576px
             
-            >input,
-            >textarea
-              width: 558px
-              
-            .select
-              margin-bottom: 15px
-              width: auto
-              
-              ul
-                width: 576px
-                
-                input:checked + label
-                  width: 560px
-            
-            mark.error
+            input:checked + label
               width: 560px
+        
+        mark.error
+          width: 560px
       
     h2.comments
       margin: 60px 0 0
@@ -1475,9 +1041,8 @@ button,
       margin-right: 10px
     
   .submit
-    +bg_gradient(#EBDED5,rgba(#fff,0))
     +border_radius(3,3,0,0)
-    border-top: 1px solid #C8B3A4
+    border-top: 1px solid
     clear: both
     margin: 30px 0 15px
     padding: 15px 15px 30px
@@ -1498,7 +1063,7 @@ button,
         visibility: hidden
   
   
-  // Custom Forms
+  // CUSTOM FORMS
   
   form.custom_form
     
@@ -1519,8 +1084,7 @@ button,
         padding: 0
         
         >li
-          +bg_gradient(#E5DAD3,rgba(#fff,0))
-          border-top: 1px solid #bb8b7d
+          border-top: 1px solid
           +border_radius(3)
           clear: both
           height: auto
@@ -1537,8 +1101,6 @@ button,
             visibility: hidden
               
           a.remove
-            background: #A03A1B
-            color: #E4D4A8
             display: block
             height: 20px
             line-height: 20px
@@ -1560,10 +1122,6 @@ button,
               text-indent: 0
               top: 0
               width: 20px
-            
-            &:hover
-              background: #CC4820
-              color: #fff
               
           >div
             width: 440px
@@ -1599,7 +1157,6 @@ button,
                 margin: 0
                 
                 li
-                  background: #ECE5E0
                   +border_radius(3)
                   margin: 0 0 1px
                   padding: 5px
@@ -1610,31 +1167,25 @@ button,
                     width: 380px
                   
                   .remove
-                    background: #A28052
                     overflow: hidden
                     padding: 0
                     right: 5px
                     text-indent: -500em
                     top: 10px
                     width: 20px
-                    
-                    &:hover
-                      background: #896243
                   
               .add
                 padding: 5px 0 0 0
         
         .question_with_errors
-          border: 1px solid #A03A1B
+          border: 1px solid
           margin: 0 -1px 35px
           padding-bottom: 25px
           
           mark.error
-            background: #A03A1B
             +border_radius(3)
             bottom: -15px
             clear: both
-            color: #fff
             display: block
             height: 15px
             left: 9px
@@ -1652,8 +1203,6 @@ button,
       z-index: 2
       
       a
-        background: #A28052
-        color: #E4D4A8
         height: 20px
         line-height: 20px
         padding: 0 25px 0 5px
@@ -1672,16 +1221,12 @@ button,
           text-indent: 0
           top: 0
           width: 20px
-        
-        &:hover
-          background: #896243
-          color: #fff
     
     .submit
       margin: -35px 0 0
 
 
-  // Roles & Permissions
+  // ROLES & PERMISSIONS
   
   #roles
     left: 30px
@@ -1698,42 +1243,26 @@ button,
         list-style: none
         
         a
-          background: #835839
           +border_radius(3,0,0,3)
           display: block
-          color: #DBD5B6
           margin: 0 0 1px
           padding: 5px 10px
           text-decoration: none
           +transition(background .2s linear, color .2s linear)
           
-          &:hover
-            background: #CD4622
-            color: #fff
-            
-          &.active
-            background: #5E371B
-            color: #fff
-          
-    &.busy
-        
-      &:after
-        background: rgba(#480010,.8)
-        +border_radius(3,0,0,3)
-        bottom: 0
-        +box_shadow(0 0 3px #480010)
-        content: ''
-        left: 0
-        position: absolute
-        right: 0
-        top: 0
-        z-index: 9
+    &.busy:after
+      +border_radius(3,0,0,3)
+      bottom: 0
+      content: ''
+      left: 0
+      position: absolute
+      right: 0
+      top: 0
+      z-index: 9
   
   #role
-    background: #fff
-    border: 1px solid #5E371B
+    border: 1px solid
     +border_radius(3,0,0,3)
-    +box_shadow(-5px -5px 10px rgba(#000,.2))
     border-right: 0
     margin: 0 -30px 0 240px
     padding: 0
@@ -1757,7 +1286,6 @@ button,
         padding: 10px 20px 20px
     
     .submit
-      background: #C7B2A4
       border: 0
       +border_radius(0,0,0,3)
       margin: -3px 0 0
@@ -1766,7 +1294,6 @@ button,
       z-index: 1
       
       &:before
-        background: #fff
         +border_radius(0,0,3,3)
         content: ''
         height: 5px
@@ -1778,10 +1305,9 @@ button,
     &.busy
         
       &:after
-        background: image-url('application/busy.gif') center center no-repeat rgba(#480010,.8)
+        background: image-url('application/busy.gif') center center no-repeat
         +border_radius(2,0,0,2)
         bottom: 0
-        +box_shadow(0 0 3px #480010)
         content: ''
         left: 0
         position: absolute
@@ -1814,12 +1340,11 @@ button,
       padding: 0
       
       h2
-        +bg_gradient(#EBDED5,#F5EFEB)
-        border-bottom: 1px solid #ECDFD6
+        border-bottom: 1px solid
         border-left: 0
         +border_radius(3)
         border-right: 0
-        border-top: 1px solid #C7B2A4
+        border-top: 1px solid
         font: 20px DinLight, serif
         height: 40px
         line-height: 40px
@@ -1827,8 +1352,6 @@ button,
         padding: 0 20px
       
         &:hover
-          background: #8F334E
-          color: #fff
           cursor: pointer
         
     label + .slider,
@@ -1856,8 +1379,7 @@ button,
         position: relative
         
         label
-          +bg_gradient(#F0EAE6,#FFF)
-          border-top: 1px solid #bb8b7d
+          border-top: 1px solid
           +border_radius(3)
           font: 13px DinMedium, sans-serif
           height: 17px
@@ -1872,12 +1394,8 @@ button,
             display: none
             
           &:after
-            border-color: #C6B1A3
             left: 5px
             top: 5px
-          
-          &:hover
-            +box_shadow(0 0 6px rgba(#000,.5))
           
         input
           left: 10px
@@ -1885,9 +1403,7 @@ button,
           top: 10px
           
           &:checked + label
-            background: #E5DAD3
-            border: 1px solid #bb8b7d
-            +box_shadow(0 0 3px rgba(#000,.3))
+            border: 1px solid
             color: #560716
             height: 16px
             margin: 0 5px 5px 0
