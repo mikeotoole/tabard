@@ -3,7 +3,7 @@
 
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
-    = stylesheet_link_tag "application/community","themes/redrum"
+    = stylesheet_link_tag "application/community","themes/#{current_community.predefined_theme.downcase}"
     %style{:type => "text/css", :media => "screen"}
       :plain
         #content { background-image: url("#{current_community.theme_background_image_url(:standard)}") }

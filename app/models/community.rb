@@ -60,6 +60,8 @@ class Community < ActiveRecord::Base
 # Delegate
 ###
   delegate :background_image_url, :to => :theme, :prefix => true
+  delegate :predefined_theme, :to => :theme
+  
 ###
 # Validators
 ###

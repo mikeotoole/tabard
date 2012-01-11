@@ -34,7 +34,7 @@ validates :background_color, :format => { :with => /^#[0-9a-fA-F]{6}$/, :message
 
   # This method returns the default theme.
   def self.default_theme
-    "RedRum"
+    "Crumblin"
   end
 end
 
