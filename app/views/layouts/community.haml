@@ -4,9 +4,12 @@
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
     = stylesheet_link_tag "application/community","themes/#{current_community.predefined_theme.downcase}"
-    %style{:type => "text/css", :media => "screen"}
-      :plain
-        #content { background-image: url("#{current_community.theme_background_image_url(:standard)}") }
+    - if current_community.theme_background_color or current_community.theme_background_image
+      %style{:type => "text/css", :media => "screen"}
+        - if current_community.theme_background_color
+          = "#content { background-color: ##{current_community.theme_background_color}; }"
+        - if current_community.theme_background_image
+          = "#content { background-image: url(#{current_community.theme_background_image_url(:standard)}); }"
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags

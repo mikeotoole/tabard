@@ -59,7 +59,9 @@ class Community < ActiveRecord::Base
 ###
 # Delegate
 ###
+  delegate :background_image, :to => :theme, :prefix => true
   delegate :background_image_url, :to => :theme, :prefix => true
+  delegate :background_color, :to => :theme, :prefix => true
   delegate :predefined_theme, :to => :theme
   
 ###
