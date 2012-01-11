@@ -101,7 +101,7 @@ protected
   end
 
   def set_theme_variables
-    @@theme_background_image = current_community.theme.background_image_url :standard 
+    @@theme_background_image = current_community.theme_background_image_url :standard 
   end
 
   ###
