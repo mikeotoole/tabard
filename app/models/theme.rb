@@ -22,10 +22,9 @@ class Theme < ActiveRecord::Base
 ###
 # Validators
 ###
-validates :predefined_theme, :presence => true,
-      :inclusion => { :in => VALID_THEMES, :message => "%{value} is not currently a supported theme" }
-
-validates :background_color, :format => { :with => /^#[0-9a-fA-F]{6}$/, :message => "only hex colors are allowed with a leading #"}
+validates :predefined_theme, :presence => true, :inclusion => { :in => VALID_THEMES, :message => "\"%{value}\" is not a currently supported theme." }
+validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }
+validates :background_color, :length => { :is => 6, :message => "Only valid HEX colors are allowed." }
 
 ###
 # Uploaders
