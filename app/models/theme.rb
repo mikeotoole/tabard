@@ -10,6 +10,11 @@ class Theme < ActiveRecord::Base
   VALID_THEMES = %w( Crumblin BlueDawn RedRum Commando )
 
 ###
+# Attribute accessible
+###
+  attr_accessible :predefined_theme, :background_color, :background_image, :remove_background_image, :background_image_cache, :remote_background_image_url
+
+###
 # Associations
 ###
   belongs_to :community
@@ -19,6 +24,8 @@ class Theme < ActiveRecord::Base
 ###
 validates :predefined_theme, :presence => true,
       :inclusion => { :in => VALID_THEMES, :message => "%{value} is not currently a supported theme" }
+
+validates :background_color, :format => { :with => /^#[0-9a-fA-F]{6}$/, :message => "only hex colors are allowed with a leading #"}
 
 ###
 # Uploaders
@@ -33,6 +40,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: themes
@@ -43,5 +51,6 @@ end
 #  predefined_theme :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  background_color :string(255)
 #
 
