@@ -5,7 +5,7 @@
 # Create a community
 def create_community(admin_user_last_name, name, slogan, game_array)
   admin_user = UserProfile.find_by_last_name(admin_user_last_name)
-  community = admin_user.owned_communities.create!(:name => name, :slogan => slogan)
+  community = admin_user.owned_communities.create!(:name => name, :slogan => slogan, :theme => Theme.default_theme)
   puts "#{admin_user.name} is creating #{name} Community"
   game_array.each do |game_name|
     case game_name

@@ -75,7 +75,6 @@ class Community < ActiveRecord::Base
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
-  validates :theme,  :presence => true
 
 ###
 # Public Methods
