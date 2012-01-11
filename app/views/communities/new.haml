@@ -4,6 +4,6 @@
   %h1 Create a community
 
   = simple_form_for @community, :html => {:novalidate => true} do |f|
-    = render 'fields', :f => f
+    = render 'fields', :f => f, :community => @community
     %p.submit
       = f.button :submit, 'Create Community'

@@ -3,6 +3,6 @@
 %h1 Community Settings
 
 = simple_form_for @community, :html => {:novalidate => true} do |f|
-  = render 'communities/fields', :f => f
+  = render 'communities/fields', :f => f, :community => @community
   %p.submit
     = f.button :submit, 'Save Changes'

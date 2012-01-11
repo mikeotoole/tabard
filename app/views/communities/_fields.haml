@@ -7,3 +7,15 @@
     = f.input :email_notice_on_application, :label => "Notify me when an application is submitted."
     = f.input :is_public_roster, :as => :boolean, :label => "Make the community roster public."
     = f.input :is_protected_roster, :as => :boolean, :label => "Roster changes require approval."
+
+- if community.theme
+  %h2 Appearance
+  %fieldset
+    %ol
+      = f.simple_fields_for :theme do |af|
+        %li
+          .select= af.input :predefined_theme, :as => :radio, :wrapper => false, :label => false, :collection => Theme::VALID_THEMES, :required => true
+        %li
+          = image_tag(community.theme_background_image_url :large)
+          = af.input :background_image, :as => :file
+          = af.input :remote_background_image_url, :as => :string, :label => ' — or a link to an image'
