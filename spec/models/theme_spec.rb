@@ -8,6 +8,7 @@
 #  predefined_theme :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  background_color :string(255)
 #
 
 require 'spec_helper'
