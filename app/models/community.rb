@@ -297,7 +297,7 @@ protected
     self.member_role.permissions.create(subject_class: "Comment", can_create: true)
     self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
     self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
-	self.theme = Theme.create(:predefined_theme => Theme.default_theme, :community => self)
+    self.create_theme(:predefined_theme => Theme.default_theme)
 
     # Officer role
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
