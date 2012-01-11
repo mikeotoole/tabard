@@ -14,8 +14,8 @@
     %ol
       = f.simple_fields_for :theme do |af|
         %li
-          .select= af.input :predefined_theme, :as => :radio, :wrapper => false, :label => false, :collection => Theme::VALID_THEMES, :required => true
+          .select= af.input :predefined_theme, :as => :radio, :wrapper => false, :label => 'Color Scheme', :collection => Theme::VALID_THEMES, :required => true
         %li
-          = image_tag(community.theme_background_image_url :large)
+          = image_tag(community.theme_background_image_url :thumbnail)
           = af.input :background_image, :as => :file
           = af.input :remote_background_image_url, :as => :string, :label => ' — or a link to an image'

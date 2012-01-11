@@ -25,47 +25,18 @@ body
   min-height: 100%
 
 body
-  background: #fff
   color: #896243
   font-family: DinLight, sans-serif
   min-width: 980px
-  
-  &:before
-    background: #480012
-    content: ''
-    height: 670px
-    left: 0
-    position: absolute
-    right: 0
-    top: 0
-  
-  &:after
-    +bg_gradient(#d9b8c0,#fff)
-    content: ''
-    height: 200px
-    left: 0
-    position: absolute
-    right: 0
-    top: 670px
   
   strong
     font-family: DinMedium, sans-serif
 
 #content
-  background: image-url('community/bg.jpg') center 70px no-repeat
+  background: center 0 no-repeat fixed
   min-height: 400px
   padding: 270px 0 0
   position: relative
-  
-  &:before
-    background: image-url('community/shadow.png') top center no-repeat
-    content: ''
-    height: 356px
-    left: 0
-    position: absolute
-    right: 0
-    top: 670px
-    z-index: 2
 
 #header
   height: 200px
@@ -97,8 +68,8 @@ body
       text-shadow: 2px 2px 2px rgba(#000,.5)
   
   .menu
-    background: rgba(#480012,.9)
-    +border_radius(5,5,0,0)
+    background: rgba(#792914,.9)
+    +box_shadow(0 0 20px rgba(#000,.5))
     bottom: 0
     height: 30px
     left: 0
@@ -112,8 +83,7 @@ body
       position: relative
       
       >a
-        border: 1px solid transparent
-        +border_radius(5)
+        +border_radius(3)
         color: #bea761
         display: block
         font-size: 18px
@@ -130,7 +100,7 @@ body
     
           &:after
             border: 5px solid transparent
-            border-top-color: #bea761
+            border-top-color: #B18668
             content: ''
             height: 0
             position: absolute
@@ -139,10 +109,9 @@ body
             width: 0
       
       >ul
-        background: #792914
-        border: 0
-        +border_radius(0,5,5,5)
-        +box_shadow(0 0 5px rgba(#000,.5))
+        background: #E4D7B1
+        +border_radius(0,3,3,3)
+        +box_shadow(0 5px 15px rgba(#000,.5))
         left: 10px
         +opacity(.4)
         min-width: 120%
@@ -157,8 +126,8 @@ body
           padding: 0
         
           >a
-            border-top: 1px solid rgba(#000,.2)
-            color: #dac6b7
+            border-top: 1px solid #B18668
+            color: #5E371B
             display: block
             font-size: 13px
             padding: 0 40px 0 10px
@@ -166,9 +135,9 @@ body
             white-space: nowrap
             
             &[meta]:before
-              background: #BFA65F
-              +border_radius(3)
-              color: #792914
+              background: #A1391D
+              +border_radius(2)
+              color: #fff
               content: attr(meta)
               font: 12px DinMedium, sans-serif
               line-height: 12px
@@ -178,33 +147,30 @@ body
               top: 5px
             
             &:hover
-              background: rgba(#000,.1)
+              background: #7B1828
               color: #fff
             
               &[meta]:before
                 background: #fff
+                color: #70293D
           
           &:last-child,
           &:last-child >a
-            +border_radius(0,0,5,5)
+            +border_radius(0,0,3,3)
       
       &:hover
         
         >a
-          background: #792914
-          border-color: rgba(#000,.2)
-          color: #fff
+          background: #E4D7B1
+          color: #5E371B !important
           +transition(color .2s linear)
           
           &:not(:only-child)
             border-bottom: 0
-            +border_radius(5,5,0,0)
-      
-            &:after
-              border-top-color: #fff
+            +border_radius(3,3,0,0)
         
         >ul
-          border: 1px solid rgba(#000,.2)
+          border-bottom: 1px solid #B18668
           +opacity(1)
           padding: 5px 0 0
           top: 30px
@@ -245,16 +211,16 @@ body
           &:after
             display: none
           
-          &:hover
-            color: #fff
-          
           &:not([href])
             background: transparent
-            color: #fff
             cursor: default
+          
+        &:hover >a:before
+          background-position: -90px 0
+          +opacity(.7)
         
         >ul
-          +border-radius(5,0,5,5)
+          +border-radius(3,0,3,3)
           left: auto
           right: 10px
       
@@ -269,7 +235,7 @@ button,
 #body button,
 #body .button
   background: #a1391d
-  borde-color: #771f07
+  border-color: #5F381C
   color: #e3d5a9
   font: 16px DinMedium, serif
   
@@ -280,7 +246,7 @@ button,
     color: #fff
 
 #body
-  background: rgba(#fff,.9)
+  background: #fff
   margin: 0 auto
   min-height: 735px
   padding: 30px
@@ -293,7 +259,7 @@ button,
   // GENERAL CONTENT
   
   a
-    +border_radius(3)
+    +border_radius(2)
     color: #580B19
     padding: 0 3px
     text-decoration: underline
@@ -477,7 +443,7 @@ button,
     
   .actions a
     background: image-url('application/icons.png') no-repeat #9C682F
-    +border_radius(5)
+    +border_radius(3)
     display: inline-block
     height: 30px
     overflow: hidden
@@ -488,19 +454,20 @@ button,
     width: 30px
     
     &:hover
-      background: image-url('application/icons.png') no-repeat #570A17
+      background: image-url('application/icons.png') no-repeat #A1391D
       +box_shadow(0 0 10px #333)
     
       &[meta]
       
         &:before
-          background: rgba(#6F2B3D,.9)
-          +border_radius(5)
+          background: #7b1828
+          border: 1px solid #570A17
+          +border_radius(3)
           color: #fff
           content: attr(meta)
           font-size: 13px
-          height: 30px
-          line-height: 30px
+          height: 28px
+          line-height: 28px
           margin: 0 5px 0 0
           padding: 0 10px
           position: absolute
@@ -510,7 +477,7 @@ button,
         
         &:after
           border: 5px solid transparent
-          border-left: 5px solid rgba(#6F2B3D,.9)
+          border-left: 5px solid #570A17
           content: ''
           height: 0
           left: -5px
@@ -622,7 +589,7 @@ button,
         
         label
           background: #d2c69c
-          +border_radius(4)
+          +border_radius(2)
           +bg_gradient(#d2c69c,#e8e3d1)
           border-color: #a37961
           color: #560416
@@ -656,7 +623,7 @@ button,
     background: #d2c69c
     +bg_gradient(#d2c69c,#e8e3d1)
     border-color: #fff
-    +border_radius(5)
+    +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
         
     label
@@ -694,7 +661,7 @@ button,
   // TABLES
 
   table
-    +border_radius(5)
+    +border_radius(3)
     margin: 15px 0
     width: 100%
     
@@ -723,13 +690,13 @@ button,
         white-space: nowrap
         
         &:first-child
-          +border_radius(5,0,0,0)
+          +border_radius(3,0,0,0)
         
         &:last-child
-          +border_radius(0,5,0,0)
+          +border_radius(0,3,0,0)
         
         &:only-child
-          +border_radius(5,5,0,0)
+          +border_radius(3,3,0,0)
         
         &.check
           
@@ -759,7 +726,7 @@ button,
           img.avatar
             background: #C7B2A3
             border: 1px solid #fff
-            +border_radius(5)
+            +border_radius(3)
             +box_shadow(0 0 10px rgba(#000,.2))
             height: 40px
             float: left
@@ -768,7 +735,7 @@ button,
           
           img.icon
             border: 0
-            +border_radius(3)
+            +border_radius(2)
             +box_shadow(0 0 5px rgba(#000,.2))
             height: 20px
             width: 20px
@@ -838,13 +805,13 @@ button,
           top: 0
         
         &:first-child
-          +border_radius(0,0,0,5)
+          +border_radius(0,0,0,3)
         
         &:last-child
-          +border_radius(0,0,5,0)
+          +border_radius(0,0,3,0)
         
         &:only-child
-          +border_radius(0,0,5,5)
+          +border_radius(0,0,3,3)
         
         button,
         .button
@@ -873,7 +840,7 @@ button,
   .comments,
   .activities
     background: #fff
-    +border_radius(5)
+    +border_radius(3)
     clear: both
     margin: 30px -30px 0
     padding: 20px
@@ -1074,7 +1041,7 @@ button,
               +transition(none)
         
         &:hover
-          +border_radius(5)
+          +border_radius(3)
           +box_shadow(0 0 15px rgba(#000,.5))
           left: -72px
           padding: 10px
@@ -1097,7 +1064,7 @@ button,
                 
                   &:before
                     background: rgba(#6F2B3D,.9)
-                    +border_radius(3)
+                    +border_radius(2)
                     color: #fff
                     content: attr(meta)
                     display: block
@@ -1305,7 +1272,7 @@ button,
     h1,
     h2
       background: #792914
-      +border_radius(5)
+      +border_radius(3)
       color: #fff
       font: 20px DinLight, serif
       height: 40px
@@ -1377,7 +1344,7 @@ button,
       .characters >ul li,
       .submitter a
         background: #83583A
-        +border_radius(5)
+        +border_radius(3)
         color: #fff
         display: block
         min-height: 40px
@@ -1389,7 +1356,7 @@ button,
           
         img.avatar
           background: #C7B2A3
-          +border_radius(4)
+          +border_radius(2)
           +box_shadow(0 0 5px rgba(#000,.5))
           height: 40px
           left: 4px
@@ -1509,7 +1476,7 @@ button,
     
   .submit
     +bg_gradient(#EBDED5,rgba(#fff,0))
-    +border_radius(5,5,0,0)
+    +border_radius(3,3,0,0)
     border-top: 1px solid #C8B3A4
     clear: both
     margin: 30px 0 15px
@@ -1554,7 +1521,7 @@ button,
         >li
           +bg_gradient(#E5DAD3,rgba(#fff,0))
           border-top: 1px solid #bb8b7d
-          +border_radius(5)
+          +border_radius(3)
           clear: both
           height: auto
           list-style: none
@@ -1633,7 +1600,7 @@ button,
                 
                 li
                   background: #ECE5E0
-                  +border_radius(5)
+                  +border_radius(3)
                   margin: 0 0 1px
                   padding: 5px
                   position: relative
@@ -1664,7 +1631,7 @@ button,
           
           mark.error
             background: #A03A1B
-            +border_radius(5)
+            +border_radius(3)
             bottom: -15px
             clear: both
             color: #fff
@@ -1732,7 +1699,7 @@ button,
         
         a
           background: #835839
-          +border_radius(5,0,0,5)
+          +border_radius(3,0,0,3)
           display: block
           color: #DBD5B6
           margin: 0 0 1px
@@ -1752,7 +1719,7 @@ button,
         
       &:after
         background: rgba(#480010,.8)
-        +border_radius(5,0,0,5)
+        +border_radius(3,0,0,3)
         bottom: 0
         +box_shadow(0 0 3px #480010)
         content: ''
@@ -1765,7 +1732,7 @@ button,
   #role
     background: #fff
     border: 1px solid #5E371B
-    +border_radius(5,0,0,5)
+    +border_radius(3,0,0,3)
     +box_shadow(-5px -5px 10px rgba(#000,.2))
     border-right: 0
     margin: 0 -30px 0 240px
@@ -1792,7 +1759,7 @@ button,
     .submit
       background: #C7B2A4
       border: 0
-      +border_radius(0,0,0,5)
+      +border_radius(0,0,0,3)
       margin: -3px 0 0
       padding: 20px
       position: relative
@@ -1800,7 +1767,7 @@ button,
       
       &:before
         background: #fff
-        +border_radius(0,0,5,5)
+        +border_radius(0,0,3,3)
         content: ''
         height: 5px
         left: 0
@@ -1812,7 +1779,7 @@ button,
         
       &:after
         background: image-url('application/busy.gif') center center no-repeat rgba(#480010,.8)
-        +border_radius(4,0,0,4)
+        +border_radius(2,0,0,2)
         bottom: 0
         +box_shadow(0 0 3px #480010)
         content: ''
@@ -1850,7 +1817,7 @@ button,
         +bg_gradient(#EBDED5,#F5EFEB)
         border-bottom: 1px solid #ECDFD6
         border-left: 0
-        +border_radius(5)
+        +border_radius(3)
         border-right: 0
         border-top: 1px solid #C7B2A4
         font: 20px DinLight, serif
@@ -1891,7 +1858,7 @@ button,
         label
           +bg_gradient(#F0EAE6,#FFF)
           border-top: 1px solid #bb8b7d
-          +border_radius(5)
+          +border_radius(3)
           font: 13px DinMedium, sans-serif
           height: 17px
           line-height: 16px

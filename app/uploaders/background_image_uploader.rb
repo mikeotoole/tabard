@@ -38,13 +38,13 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :standard do
-    process :resize_to_fill => [1280, 600]
+    process :resize_to_limit => [1600, 1600]
   end
   version :large do
-    process :resize_to_fill => [900, 420]
+    process :resize_to_limit => [800, 800]
   end
   version :thumbnail do
-    process :resize_to_fill => [320, 150]
+    process :resize_to_limit => [200, 200]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
