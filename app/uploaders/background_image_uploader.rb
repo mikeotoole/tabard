@@ -26,12 +26,7 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
-    case version_name
-    when :standard
-      "/assets/community/bg.jpg"
-    else
-      "/assets/community/bg.jpg"
-    end
+    "/assets/application/blank.gif"
   end
 
   # Process files as they are uploaded:
@@ -43,7 +38,13 @@ class BackgroundImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :standard do
-    process :resize_to_fill => [1280, 600]
+    process :resize_to_limit => [1600, 1600]
+  end
+  version :large do
+    process :resize_to_limit => [800, 800]
+  end
+  version :thumbnail do
+    process :resize_to_limit => [200, 200]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
