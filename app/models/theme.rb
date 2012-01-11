@@ -10,6 +10,11 @@ class Theme < ActiveRecord::Base
   VALID_THEMES = %w( RedRum )
 
 ###
+# Attribute accessible
+###
+  attr_accessible :predefined_theme, :background_image, :remove_background_image, :background_image_cache, :remote_background_image_url
+
+###
 # Associations
 ###
   belongs_to :community
