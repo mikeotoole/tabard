@@ -25,7 +25,7 @@ source 'http://rubygems.org'
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
-  
+
 # Filtering
   gem 'profanalyzer'  
 
@@ -82,7 +82,7 @@ source 'http://rubygems.org'
     gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
-    #gem 'growl_notify'
+    gem 'growl_notify'
     gem 'simplecov'
     gem 'ruby-debug19'
   end

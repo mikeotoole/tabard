@@ -36,7 +36,7 @@ describe Answer do
     build(:answer, :body => nil).should be_valid
   end
   
-  describe "destroy"  
+  describe "destroy" do
     it "should should destroy question if its only attached to this answer" do
       pending
     end
