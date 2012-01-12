@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
   # Used for resetting a single users password.
   def password_reset(user, password)
     @resource = user
-    mail(:to => @resource.email, :subject => 'Crumblin Password Reset Notification', :tag => 'password-reset') do |format|
+    mail(:to => @resource.email, :subject => 'Crumblin - Password reset notification', :tag => 'password-reset') do |format|
        format.html { render "devise/mailer/reset_password_by_admin_instructions" }
     end
   end
@@ -20,7 +20,7 @@ class UserMailer < ActionMailer::Base
   # Used for resetting all users passwords.
   def all_password_reset(user, password)
     @resource = user
-    mail(:to => @resource.email, :subject => 'Crumblin Password Reset Notification', :tag => 'password-reset') do |format|
+    mail(:to => @resource.email, :subject => 'Crumblin - Password reset notification', :tag => 'password-reset') do |format|
        format.html { render "devise/mailer/reset_all_password_by_admin_instructions" }
     end
   end
@@ -28,7 +28,7 @@ class UserMailer < ActionMailer::Base
   # Used for creating a new AdminUser.
   def setup_admin(user, password)
     @resource = user
-    mail(:to => @resource.email, :subject => 'New Crumblin Admin Created', :tag => 'password-reset') do |format|
+    mail(:to => @resource.email, :subject => 'Crumblin - New admin account', :tag => 'password-reset') do |format|
        format.html { render "devise/mailer/new_admin_user_setup_instructions" }
     end
   end
