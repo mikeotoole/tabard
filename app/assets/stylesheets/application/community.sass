@@ -189,7 +189,6 @@ button,
 #body
   background: #fff
   margin: 0 auto
-  min-height: 735px
   padding: 30px
   position: relative
   text-align: left
@@ -645,7 +644,7 @@ button,
               display: none
             
             >.avatar
-              border: 1px solid !important
+              border: 1px solid
               height: 40px
               left: auto
               margin: 1px
@@ -696,7 +695,7 @@ button,
                     padding: 5px 10px
                     position: absolute
                     text-indent: 0
-                    top: -35px
+                    top: -37px
                     white-space: nowrap
                     width: auto
                   
@@ -728,7 +727,7 @@ button,
         +border_radius(0)
         display: block
         font-size: 14px
-        height: 21px
+        height: 22px
         left: 5px
         line-height: 20px
         position: static
@@ -864,6 +863,11 @@ button,
   
   // SUBMISSIONS & COMMUNITY APPLICATIONS
   
+  h2.status
+    border-bottom: 1px solid
+    margin: 0 0 30px
+    padding: 0 0 5px
+  
   .submission
     margin: -30px 0 0 0
   
@@ -956,18 +960,20 @@ button,
         text-decoration: none
         +transition(background .2s linear)
       
-      .characters >label
-        
-        &:before
-          display: none
-        
-        &:after
-          content: '\00D7'
-          font-size: 17px
-          line-height: 1em
-          position: absolute
-          top: 0
-          right: 5px
+      .characters
+      
+        >label
+          
+          &:before
+            display: none
+          
+          &:after
+            content: '\00D7'
+            font-size: 17px
+            line-height: 1em
+            position: absolute
+            top: 0
+            right: 5px
             
         >ul
           padding: 0 0 30px
@@ -1024,7 +1030,7 @@ button,
         
         mark.error
           width: 560px
-      
+    
     h2.comments
       margin: 60px 0 0
       
@@ -1231,7 +1237,6 @@ button,
     position: absolute
     top: 90px
     width: 240px
-    z-index: 1
     
     ul
       padding: 0
@@ -1260,12 +1265,11 @@ button,
   
   #role
     border: 1px solid
-    +border_radius(3,0,0,3)
+    +border_radius(4,0,0,4)
     border-right: 0
     margin: 0 -30px 0 240px
     padding: 0
     position: relative
-    z-index: 2
     
     .actions
       position: absolute
@@ -1273,6 +1277,8 @@ button,
       top: 20px
     
     form
+      position: relative
+      z-index: 1
     
       >h2
         padding: 10px 20px
@@ -1316,7 +1322,6 @@ button,
   #permissions
     padding: 1px 0 0
     position: relative
-    z-index: 2
   
     >dd
       display: none
@@ -1377,7 +1382,6 @@ button,
         position: relative
         
         label
-          border-top: 1px solid
           +border_radius(3)
           font: 13px DinMedium, sans-serif
           height: 17px
@@ -1385,26 +1389,18 @@ button,
           margin: 0 6px 5px 1px
           padding: 5px
           text-indent: 25px
-          +transition(box-shadow .2s linear, color .2s linear)
           width: 201px
           
           &:before
-            display: none
-            
-          &:after
-            left: 5px
-            top: 5px
+            height: 18px
+            left: 3px
+            top: 3px
+            width: 18px
           
         input
           left: 10px
           margin: 0
           top: 10px
-          
-          &:checked + label
-            border: 1px solid
-            color: #560716
-            height: 16px
-            margin: 0 5px 5px 0
 
 
 @import application/footer

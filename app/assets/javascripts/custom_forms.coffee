@@ -6,7 +6,6 @@ $(document).ready ->
       right = $(this).find('.right')
       li.data('qtype',li.attr('question_type'))
       if $(this).find('>a.remove').size() == 0
-        
         # Remove question link
         li
           .append('<a class="remove">Remove Question</a>')
@@ -47,7 +46,7 @@ $(document).ready ->
             
             select.find('input').removeAttr 'checked'
             checkedInput.attr 'checked','checked'
-            if li.attr 'question_id'
+            if li.attr 'question_id' > 0
               oldIdQ = li.attr 'question_id'
               oldIndexQ = li.attr 'question'
               li.before '<input name="custom_form[questions_attributes]['+oldIndexQ+'][_destroy]" type="hidden" value="true"><input name="custom_form[questions_attributes]['+oldIndexQ+'][id]" type="hidden" value="'+oldIdQ+'">'
@@ -75,6 +74,6 @@ $(document).ready ->
           ali.slideUp 400, ->
             $(this).replaceWith(answer)
       
-      li.find('.select input:checked').trigger 'change'
+      # li.find('.select input:checked').trigger 'change'
       
   $('form.custom_form .questions > li').trigger 'init'

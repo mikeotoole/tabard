@@ -1,9 +1,4 @@
 @import mixins
-@import fonts/din
-@import fonts/malbeck
-@import application/reset
-@import application/core
-@import application/bar
 
 
 #bar:before
@@ -32,6 +27,7 @@ body
   
   .menu
     background: rgba(#792914,.9)
+    +border_radius(3,3,0,0)
     +box_shadow(0 0 20px rgba(#000,.5))
     
     >li
@@ -113,7 +109,7 @@ button,
     color: #fff
 
 #body
-  
+  background: #fff
   
   // GENERAL CONTENT
   
@@ -261,8 +257,8 @@ button,
     ul
       background: #d2c69c
       +bg_gradient(#d2c69c,#e8e3d1)
-      +box_shadow(0 0 3px rgba(#000,.2))
       border-color: #fff
+      +box_shadow(0 0 3px rgba(#000,.2))
       color: #560416
           
       &:before
@@ -340,6 +336,7 @@ button,
       
       &:hover
         color: #fff
+  
   
   // TABLES
 
@@ -573,7 +570,6 @@ button,
         &:focus,
         &.open
           color: #896243
-          height: 80px
       
       &.busy:after
         background-color: rgba(#000,.1)
@@ -608,6 +604,9 @@ button,
   
   
   // SUBMISSIONS & COMMUNITY APPLICATIONS
+
+  h2.status
+    border-bottom-color: #E1D5CD
   
   .submission
   
@@ -772,7 +771,6 @@ button,
     
     label
       +bg_gradient(#F0EAE6,#FFF)
-      border-top-color: #bb8b7d
         
       &:after
         border-color: #C6B1A3
@@ -784,9 +782,5 @@ button,
       
       &:checked + label
         background: #E5DAD3
-        border-color: #bb8b7d
         +box_shadow(0 0 3px rgba(#000,.3))
         color: #560716
-
-
-@import application/footer
