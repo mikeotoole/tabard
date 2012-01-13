@@ -11,11 +11,15 @@ $(document).ready ->
           .append('<a class="remove">Remove Question</a>')
           .find('>.remove')
           .click ->
-            question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
-            qid = li.attr('question_id')
-            q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
-            li.slideUp 400, ->
-              $(this).replaceWith(question + q)
+            if li.filter('[question_id]').length
+              question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
+              qid = li.attr 'question_id'
+              q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
+              li.slideUp 400, ->
+                $(this).replaceWith(question + q)
+            else
+              li.slideUp 400, ->
+                $(this).remove()
         
         # TypeStyle select change action
         li
@@ -25,6 +29,8 @@ $(document).ready ->
             answers = right.find('.answers')
             checkedInput = select.find('input:checked')
             val = checkedInput.val()
+            select.find('input').removeAttr 'checked'
+            checkedInput.attr 'checked','checked'
 
             if val.match /textquestion/i
               right.addClass('hidden')
@@ -44,24 +50,24 @@ $(document).ready ->
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
             
-            select.find('input').removeAttr 'checked'
-            checkedInput.attr 'checked','checked'
-            if li.attr 'question_id' > 0
+            if val != li.data('qtype') and li.filter('[question_id]').length
               oldIdQ = li.attr 'question_id'
               oldIndexQ = li.attr 'question'
               li.before '<input name="custom_form[questions_attributes]['+oldIndexQ+'][_destroy]" type="hidden" value="true"><input name="custom_form[questions_attributes]['+oldIndexQ+'][id]" type="hidden" value="'+oldIdQ+'">'
               li.find('input[type="hidden"]').remove()
+              li.find('>a.remove').remove()
               $('#custom_form_questions_attributes_'+oldIndexQ+'_id').remove()
-            newIndexQ = new Date().getTime()
-            html = li.html()
-            html = html.replace(/(\[questions_attributes\]\[)\d(\])/g, "$1"+newIndexQ+"$2")
-            html = html.replace(/(custom_form_questions_attributes_)\d/g, "$1"+newIndexQ)
-            html = html.replace(/question=\"\d\"/g, '')
-            li
-              .removeAttr('question_id question_type')
-              .attr('question', newIndexQ)
-              .html(html)
-            li.find('>a.remove').remove()
+              newIndexQ = new Date().getTime()
+              html = li.html()
+              html = html.replace(/(\[questions_attributes\]\[)\d(\])/g, "$1"+newIndexQ+"$2")
+              html = html.replace(/(custom_form_questions_attributes_)\d/g, "$1"+newIndexQ)
+              html = html.replace(/question=\"\d\"/g, '')
+              li
+                .removeAttr('question_id question_type')
+                .attr('question', newIndexQ)
+                .data('qtype', val)
+                .html(html)
+                .trigger 'init'
         
         # Add answer link
         right.find('p.add').removeClass('hidden')
@@ -74,6 +80,6 @@ $(document).ready ->
           ali.slideUp 400, ->
             $(this).replaceWith(answer)
       
-      # li.find('.select input:checked').trigger 'change'
+      li.find('.select input:checked').trigger 'change'
       
   $('form.custom_form .questions > li').trigger 'init'

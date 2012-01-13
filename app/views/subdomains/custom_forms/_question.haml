@@ -1,21 +1,24 @@
 - if question.type or true #HACK - checking for question.type magically puts q in scope. why? who the hell knows?
   = f.simple_fields_for :questions, question, :child_index => (question.persisted? ? nil : q) do |qf|
-    %li{ :question => q, :question_id => (question.id ||= ''), :question_type => (question.type ||= ''), :class => (qf.object.errors.any? ? 'question_with_errors' : '') }
-      .left
-        = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
-        .select
-          = qf.collection_radio :type_style, [['TextQuestion|short_answer_question','Short Answer'],['TextQuestion|long_answer_question','Long Answer'],['MultiSelectQuestion|check_box_question','Checkboxes'],['SingleSelectQuestion|radio_buttons_question','Radio Buttons'],['SingleSelectQuestion|select_box_question','Dropdown']], :first, :last
-        .optreq
-          = qf.input :is_required, :as => :boolean, :wrapper => false
-        .explanation
-          = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)', :input_html => { :maxlength => Question::MAX_EXPLANATION_LENGTH }
-      %div{ :class => 'right' + (['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) ? '' : ' hidden') }
-        %label Predefined Answers
-        %ol.answers
-          - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) and question.predefined_answers.any?
-            - question.predefined_answers.each_with_index do |answer,a|
-              = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
-        %p{ :class => 'add hidden' }
-          = add_predefined_answer_link 'Add Answer', qf, question
-      - if qf.object.errors.any?
-        %mark.error= qf.object.errors.full_messages.first
+    - if qf.object.marked_for_destruction?
+      = qf.input :_destroy, :as => :hidden
+    - else
+      %li{ :question => q, :question_id => (question.id ||= ''), :question_type => (question.type_style ||= ''), :class => (qf.object.errors.any? ? 'question_with_errors' : '') }
+        .left
+          = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
+          .select
+            = qf.collection_radio :type_style, [['TextQuestion|short_answer_question','Short Answer'],['TextQuestion|long_answer_question','Long Answer'],['MultiSelectQuestion|check_box_question','Checkboxes'],['SingleSelectQuestion|radio_buttons_question','Radio Buttons'],['SingleSelectQuestion|select_box_question','Dropdown']], :first, :last
+          .optreq
+            = qf.input :is_required, :as => :boolean, :wrapper => false
+          .explanation
+            = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)', :input_html => { :maxlength => Question::MAX_EXPLANATION_LENGTH }
+        %div{ :class => 'right' + (['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) ? '' : ' hidden') }
+          %label Predefined Answers
+          %ol.answers
+            - if ['SingleSelectQuestion','MultiSelectQuestion'].include?(question.type) and question.predefined_answers.any?
+              - question.predefined_answers.each_with_index do |answer,a|
+                = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
+          %p{ :class => 'add hidden' }
+            = add_predefined_answer_link 'Add Answer', qf, question
+        - if qf.object.errors.any?
+          %mark.error= qf.object.errors.full_messages.first
