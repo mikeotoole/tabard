@@ -28,8 +28,10 @@ class CustomForm < ActiveRecord::Base
 # Associations
 ###
   has_many :submissions, :dependent => :destroy
-  has_many :questions, :dependent => :destroy
+  has_many :questions, :dependent => :destroy, :autosave => true
   accepts_nested_attributes_for :questions, :allow_destroy => true
+
+  has_many :submissions, :dependent => :destroy
   belongs_to :community
 
 ###
@@ -43,6 +45,7 @@ class CustomForm < ActiveRecord::Base
                        :length => { :maximum => MAX_THANKYOU_LENGTH }
   validates :community, :presence => true
   validate :cant_unpublish_application_form
+  validate :question_have_predefined_answers
 
 ###
 # Delegates
@@ -100,6 +103,25 @@ protected
   def cant_unpublish_application_form
     return unless not self.is_published and self.community and self.community.community_application_form == self
     self.errors.add(:is_published, "must be true for community application form.")
+  end
+
+  # This method checks to see if questions that require predefined answers have at least one
+  def question_have_predefined_answers
+    self.questions.each do |question|
+      if question.type == "MultiSelectQuestion" or question.type == "SingleSelectQuestion"
+        has_at_least_one = false
+        question.predefined_answers.each do |panswer|
+          if not panswer.marked_for_destruction?
+            has_at_least_one = true
+            break
+          end
+        end
+        unless has_at_least_one
+          errors.add(:base, "All questions that can have predefined answers require at least one answer.") 
+          question.errors.add(:base, "requires at least one predefined answer.") 
+        end
+      end
+    end
   end
 end
 

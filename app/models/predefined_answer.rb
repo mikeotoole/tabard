@@ -12,7 +12,7 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Constants
 ###
-  MAX_BODY_LENGTH = 30
+  MAX_BODY_LENGTH = 50
 
 ###
 # Attribute accessible
@@ -28,7 +28,8 @@ class PredefinedAnswer < ActiveRecord::Base
 # Validators
 ###
    validates :body, :presence => true,
-                    :length => { :maximum => MAX_BODY_LENGTH }
+                    :length => { :maximum => MAX_BODY_LENGTH },
+                    :if => Proc.new {|pa| pa.question and pa.question.valid? }
    validates :question, :presence => true
 end
 

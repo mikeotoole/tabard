@@ -1,5 +1,12 @@
 - title "Submissions for \"#{@form.name}\" | #{current_community.name}"
 
+#breadcrumb
+  %ol
+    %li= link_to 'Forms', custom_forms_url
+    %li= link_to @form.name, edit_custom_form_url(@form)
+    %li
+      %span Submissions
+
 %h1= "Submissions for \"#{@form.name}\""
 
 - if @submissions.any?

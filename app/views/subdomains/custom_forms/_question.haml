@@ -1,6 +1,6 @@
 - if question.type or true #HACK - checking for question.type magically puts q in scope. why? who the hell knows?
-  %li{ :question => q, :question_id => (question.id ||= ''), :question_type => (question.type ||= '') }
-    = f.simple_fields_for :questions, question, :child_index => (question.persisted? ? nil : q) do |qf|
+  = f.simple_fields_for :questions, question, :child_index => (question.persisted? ? nil : q) do |qf|
+    %li{ :question => q, :question_id => (question.id ||= ''), :question_type => (question.type ||= ''), :class => (qf.object.errors.any? ? 'question_with_errors' : '') }
       .left
         = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
         .select
@@ -16,4 +16,6 @@
             - question.predefined_answers.each_with_index do |answer,a|
               = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
         %p{ :class => 'add hidden' }
-          = add_predefined_answer_link 'Add Answer', qf, question, q
+          = add_predefined_answer_link 'Add Answer', qf, question
+      - if qf.object.errors.any?
+        %mark.error= qf.object.errors.full_messages.first

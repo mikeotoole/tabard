@@ -155,7 +155,7 @@ $(document).ready ->
         .val $(this).attr('method')
   
   # select box auto-hide after click
-  $('.select ul label, form .profile label').click ->
+  $('body').delegate '.select ul label, form .profile label', 'click', ->
     li = $(this).closest('li')
     if !li.find('input:checked').length
       ul = li.closest('ul')

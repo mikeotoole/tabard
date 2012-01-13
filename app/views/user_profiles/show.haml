@@ -11,7 +11,7 @@
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
       - if can? :update, @user_profile
-        %li.settings= link_to "Account Settings", edit_user_registration_url
+        %li.settings= link_to "Settings", edit_user_registration_url
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile

@@ -16,14 +16,14 @@ module CustomFormHelper
   # [Returns] A link that uses JavaScript to add new question html to the desired form
   ###
   def add_question_link(name, f, options={})
-    question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new, :q => 'noindex' }
+    question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new, :q => 'newIndexQ' }
     page = %{
-      newIndex = new Date().getTime();
+      newIndexQ = new Date().getTime();
       question = "#{escape_javascript question}";
       $(this)
         .closest('form')
         .find('.questions')
-        .append(question.replace(/noindex/g,newIndex))
+        .append(question.replace(/newIndexQ/g,newIndexQ))
         .find('>li:last')
         .trigger('init')
         .hide()
@@ -41,14 +41,17 @@ module CustomFormHelper
   #   * +options+ -> Block passed directly to the link
   # [Returns] A link that uses JavaScript to add new predefined answer html to the desired form question
   ###
-  def add_predefined_answer_link(name, f, question, q, options={})
-    answer = render :partial => 'subdomains/custom_forms/answer', :locals => { :f => f, :answer => question.predefined_answers.new, :q => q, :a => 'noindex' }
+  def add_predefined_answer_link(name, f, question, options={})
+    answer = render :partial => 'subdomains/custom_forms/answer', :locals => { :f => f, :answer => question.predefined_answers.new, :q => 'indexQ', :a => 'newIndexA' }
     page = %{
-      newIndex = new Date().getTime();
+      newIndexA = new Date().getTime();
       answers = $(this).closest('div').find('.answers');
+      indexQ = answers.closest('li').attr('question');
       answer = "#{escape_javascript answer}";
+      answer = answer.replace(/indexQ/g, indexQ).replace(/(\\[questions_attributes\\]\\[)\\d(\\])/g, "$1"+indexQ+"$2");
+      answer = answer.replace(/newindex/g, newIndexA).replace(/(\\[predefined_answers_attributes\\]\\[)\\d(\\])/g, "$1"+newIndexA+"$2");
       answers
-        .append(answer.replace(/noindex/g,newIndex).replace(/(\\[predefined_answers_attributes\\]\\[)\\d(\\])/g,"$1"+newIndex+"$2"))
+        .append(answer)
         .find('>li:last input')
         .focus();
     }

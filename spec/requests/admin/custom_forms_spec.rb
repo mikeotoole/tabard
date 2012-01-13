@@ -5,8 +5,8 @@ describe "ActiveAdmin CustomForm" do
   let(:admin) { create(:admin_user, :role => 'admin') }
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
-  let(:question) { custom_form.questions.first }
-  let(:custom_form) { create(:custom_form_w_questions) }
+  let(:custom_form) { create(:custom_form) }
+  let(:question) { create(:short_answer_question) }
  
   describe "#index" do 
     it "returns 200 when logged in as superadmin" do

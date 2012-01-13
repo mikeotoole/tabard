@@ -6,40 +6,10 @@
 # This helper module is for the main application.
 ###
 module ApplicationHelper
-  ###
-  # TODO Doug, Add the Args descriptions.
-  # Creates a link to remove the given fields.
-  # [Args]
-  #   * +name+ -> The name of the link.
-  #   * +f+ ->
-  #   * +target+ ->
-  #   * +attributes+ ->
-  # [Returns] Link to remove fields.
-  ###
-  def link_to_remove_fields(name, f, target='this', attributes='')
-    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(#{target})", attributes)
-  end
 
-  ###
-  # TODO Doug, Add the Args descriptions.
-  # Creates a link to add the given fields.
-  # [Args]
-  #   * +name+ -> The name of the link.
-  #   * +f+ ->
-  #   * +association+ ->
-  #   * +destination+ ->
-  #   * +before+ ->
-  #   * +after+ ->
-  #   * +attributes+ ->
-  # [Returns] Link to add fields.
-  ###
-  def link_to_add_fields(name, f, association, destination='this', before='', after='', attributes={})
-    new_object = f.object.class.reflect_on_association(association).klass.new
-    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render association.to_s.singularize + "_fields", :f => builder
-    end
-    link_to_function(name, "add_fields(#{destination}, '#{association}', '#{escape_javascript(fields)}', '#{before}', '#{after}')", attributes)
-  end
+###
+# Public Methods
+###
 
   ###
   # Gets a profiles avatar in the given size format.
@@ -60,9 +30,6 @@ module ApplicationHelper
     end
   end
 
-###
-# Public Methods
-###
   ###
   # Adds a new message to the flash messsages array
   # [Args]

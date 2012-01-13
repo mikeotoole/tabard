@@ -22,14 +22,14 @@
             = link_to 'Dashboard', actual_community_url(@community)
           - if can? :index, PageSpace
             %li
-              = link_to 'Wiki', page_spaces_path
+              = link_to 'Wiki', page_spaces_url
               - if @community.page_spaces.any?
                 %ul
                   - @community.page_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
           - if (user_signed_in? and current_user.is_member? @community)
             %li
-              = link_to 'Discussions', discussion_spaces_path
+              = link_to 'Discussions', discussion_spaces_url
               - if @community.discussion_spaces.any?
                 %ul
                   - @community.discussion_spaces.each do |space|
@@ -45,10 +45,10 @@
                     %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
             %li
-              = link_to 'Forms', custom_forms_path
+              = link_to 'Forms', custom_forms_url
           - if @community.is_public_roster or (user_signed_in? and current_user.is_member? @community)
             %li
-              = link_to 'Members', roster_assignments_path
+              = link_to 'Members', roster_assignments_url
           - if user_signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.any?
               %li{ :class => 'special settings' }
@@ -59,7 +59,7 @@
           - else
             %li{ :class => 'special signup' }
               - if current_community.can_receive_application_from? current_user
-                = link_to 'Apply Now', new_community_application_path
+                = link_to 'Apply Now', new_community_application_url
               - elsif user_signed_in? and current_user.application_pending? current_community
                 %a Application Pending
 
