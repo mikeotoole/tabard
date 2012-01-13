@@ -48,6 +48,18 @@ describe PageSpace do
   end
   
   describe "destroy" do
-    pending
+    it "should mark page_space as deleted" do
+      space.destroy
+      PageSpace.exists?(space).should be_false
+      PageSpace.with_deleted.exists?(space).should be_true
+    end
+    
+    it "should mark page_space's pages as deleted" do
+      page = create(:page)
+      space = page.page_space
+      space.destroy
+      Page.exists?(page).should be_false
+      Page.with_deleted.exists?(page).should be_true
+    end
   end
 end

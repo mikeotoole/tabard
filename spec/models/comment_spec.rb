@@ -134,10 +134,54 @@ describe Comment do
   end
   
   describe "destroy" do
-    pending
+    it "should mark comment as deleted if comment has not subcomments" do
+      comment.comments.empty?.should be_true
+      comment.destroy
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_true
+    end
+    
+    it "should mark comment as deleted if comment has only subcomments marked as is_removed" do
+      comment = create(:comment_with_comment)
+      comment.comments.count.should eq 1
+      subcomment = comment.comments.first
+      subcomment.update_attribute(:is_removed, true)
+      
+      comment.destroy
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_true
+      Comment.exists?(subcomment).should be_false
+      Comment.with_deleted.exists?(subcomment).should be_true
+    end
+    
+    it "should mark comment as is_removed if comment has subcomments" do
+      comment = create(:comment_with_comment)
+      comment.comments.count.should eq 1
+      
+      comment.destroy
+      Comment.exists?(comment).should be_true
+      comment.reload.is_removed.should be_true
+    end
   end
   
   describe "nuke" do
-    pending
+    it "should destroy comment" do
+      comment.comments.empty?.should be_true
+      comment.nuke
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_false
+    end
+    
+    it "should destroy comment's comments" do
+      comment = create(:comment_with_comment)
+      comment.comments.count.should eq 1
+      subcomment = comment.comments.first
+      
+      comment.nuke
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_false
+      Comment.exists?(subcomment).should be_false
+      Comment.with_deleted.exists?(subcomment).should be_false
+    end
   end
 end

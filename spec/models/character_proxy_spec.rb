@@ -36,11 +36,10 @@ describe CharacterProxy do
   end
   
   it "should remove all roster assignments when destroyed" do
-    pending
-  end
-  
-  it "should remove avatar when destroyed" do
-    pending
+    roster = create(:roster_assignment)
+    character_proxy = roster.character_proxy
+    character_proxy.destroy.should be_true
+    RosterAssignment.exists?(roster).should be_false
   end
 
 ###

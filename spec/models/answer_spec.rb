@@ -37,16 +37,29 @@ describe Answer do
   end
   
   describe "destroy" do
-    it "should should destroy question if its only attached to this answer" do
-      pending
+    it "should destroy question if its only attached to this answer" do
+      question = answer.question
+      question.update_attribute(:custom_form_id, nil)
+      question.custom_form_id.should be_nil
+      question.answers.count.should eq 1
+      answer.destroy
+      Question.exists?(question).should be_false
     end
     
-    it "should should not destroy question if its attached to other answers" do
-      pending
+    it "should not destroy question if its attached to other answers" do
+      question = answer.question
+      create(:answer, :question_id => question.id)
+      question.answers.count.should eq 2
+      answer.destroy
+      Question.exists?(question).should be_true
     end
     
-    it "should should not destroy question if its attached to custom form" do
-      pending
+    it "should not destroy question if its attached to custom form" do
+      question = create(:custom_form_w_questions).questions.first
+      answer = create(:answer, :question_id => question.id)
+      question.answers.count.should eq 1
+      answer.destroy
+      Question.exists?(question).should be_true
     end
   end
 end

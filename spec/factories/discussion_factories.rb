@@ -40,6 +40,10 @@ FactoryGirl.define do
     community_id { DefaultObjects.community.id }
     commentable_id { DefaultObjects.discussion.id }
     commentable_type "Discussion"
+    
+    factory :comment_with_comment do
+      after_create { |comment| FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment") }
+    end
   end
 
   factory :comment_by_wow_character, :parent => :comment do

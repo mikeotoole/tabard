@@ -384,14 +384,121 @@ describe UserProfile do
   end
   
   describe "remove_all_avatars" do
-    pending
+    it "should call remove_avatar! on self" do
+      profile.should_receive(:remove_avatar!)
+      profile.remove_all_avatars
+    end
+    
+    it "should call remove_avatar! on all characters" do
+      character = create(:wow_char_profile)
+      profile = character.user_profile
+      character = profile.characters.first
+      character.should_receive(:remove_avatar!)
+      profile.remove_all_avatars
+    end
   end
   
   describe "destroy" do
-    pending
+    it "should delete user_profile" do
+      profile.destroy
+      UserProfile.exists?(profile).should be_false
+    end
+    
+    it "should mark user_profile's owned_communities as deleted" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's community_profiles as deleted" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's character_proxies as is_removed" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's community_applications as deleted" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's view_logs as deleted" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's sent_messages" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's received_messages" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's folders" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's discussions as deleted" do
+      profile.destroy
+      pending
+    end
+    
+    it "should mark user_profile's comments as deleted" do
+      profile.destroy
+      pending
+    end
   end
   
   describe "nuke" do
-    pending
+    it "should delete user_profile's swtor_characters" do
+      profile.destroy
+      pending
+    end
+
+    it "should delete user_profile's wow_characters" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's character_proxies" do
+      profile.destroy
+      pending
+    end
+    
+    it "should call nuke on user_profile's owned_communities" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's community_applications" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's community_profiles" do
+      profile.destroy
+      pending
+    end
+    
+    it "should delete user_profile's view_logs" do
+      profile.destroy
+      pending
+    end
+    
+    it "should call nuke on user_profile's discussions" do
+      profile.destroy
+      pending
+    end
+    
+    it "should call nuke on user_profile's comments" do
+      profile.destroy
+      pending
+    end
   end
 end

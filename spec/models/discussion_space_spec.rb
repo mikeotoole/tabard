@@ -58,6 +58,19 @@ describe DiscussionSpace do
   end
   
   describe "destroy" do
-    pending
+    it "should mark discussion_space as deleted" do
+      space.destroy
+      DiscussionSpace.exists?(space).should be_false
+      DiscussionSpace.with_deleted.exists?(space).should be_true
+    end
+    
+    it "should mark discussion_space's discussions as deleted" do
+      discussion = create(:discussion)
+      space = discussion.discussion_space
+      
+      space.destroy
+      Discussion.exists?(discussion).should be_false
+      Discussion.with_deleted.exists?(discussion).should be_true
+    end
   end
 end

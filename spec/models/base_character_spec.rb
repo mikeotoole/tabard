@@ -77,7 +77,7 @@ describe BaseCharacter do
       proxy = character.character_proxy
       proxy.should be_valid
       character.destroy.should be_true
-      WowCharacter.find(character).is_removed.should be_true
+      character.reload.is_removed.should be_true
     end
     
     it "should not delete character proxy" do
@@ -90,11 +90,10 @@ describe BaseCharacter do
     end
     
     it "should destroy all roster assignments" do
-      pending
-    end
-    
-    it "should remove avatar" do
-      pending
+      roster = create(:roster_assignment)
+      character = roster.character
+      character.destroy.should be_true
+      RosterAssignment.exists?(roster).should be_false
     end
   end
 end

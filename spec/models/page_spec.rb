@@ -98,6 +98,10 @@ describe Page do
   end
   
   describe "destroy" do
-    pending
+    it "should mark page as deleted" do
+      page.destroy
+      Page.exists?(page).should be_false
+      Page.with_deleted.exists?(page).should be_true
+    end
   end
 end

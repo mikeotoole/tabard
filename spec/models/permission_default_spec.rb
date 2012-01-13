@@ -21,14 +21,15 @@
 #  can_accept_nested       :boolean         default(FALSE)
 #  created_at              :datetime
 #  updated_at              :datetime
+#  deleted_at              :datetime
 #
 
 require 'spec_helper'
 
 describe PermissionDefault do
+  let(:some_new_role) { Factory.create(:role) }
   
   describe "should be autocreated for a role" do
-    let(:some_new_role) { Factory.create(:role) }
     describe "for custom form" do
       let(:custom_form_defaults) { some_new_role.permission_defaults.find_by_object_class("CustomForm") }
       it "should exist" do
@@ -104,6 +105,12 @@ describe PermissionDefault do
   end
   
   describe "destroy" do
-    pending
+    let(:custom_form_defaults) { some_new_role.permission_defaults.find_by_object_class("CustomForm") }
+    
+    it "should mark permission_default as deleted" do
+      custom_form_defaults.destroy
+      PermissionDefault.exists?(custom_form_defaults).should be_false
+      PermissionDefault.with_deleted.exists?(custom_form_defaults).should be_true
+    end
   end
 end

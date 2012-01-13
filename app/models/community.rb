@@ -72,7 +72,6 @@ class Community < ActiveRecord::Base
 ###
 # Public Methods
 ###
-
   ###
   # This method checks if a given user can apply to the community
   # [Args]
@@ -89,8 +88,7 @@ class Community < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
-
+  # Returns all games that this community supports
   def games
     self.supported_games.collect { |a| a.game }
   end

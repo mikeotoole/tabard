@@ -42,7 +42,7 @@ ActiveAdmin.register User do
 
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
-    user.nuke if user
+    user.nuke if user # TODO Mike, May want to have the run in a worker thread.
     redirect_to :action => :index
   end
 

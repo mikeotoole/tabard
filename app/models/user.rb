@@ -240,8 +240,8 @@ class User < ActiveRecord::Base
 
   # Removes user from all communities.
   def remove_from_all_communities
-    self.owned_communities.clear
-    self.community_profiles.clear
+    self.owned_communities.clear if self.owned_communities
+    self.community_profiles.clear if self.community_profiles
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
@@ -255,6 +255,7 @@ class User < ActiveRecord::Base
     if self.user_disabled_at
       random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
       self.password = random_password
+      self.password_confirmation = random_password
       self.reset_password_token = User.reset_password_token
       self.reset_password_sent_at = Time.now
       self.save!
@@ -266,7 +267,7 @@ class User < ActiveRecord::Base
   
   # This will destroy forever this user and all its associated resources.
   def nuke
-    self.user_profile.nuke
+    self.user_profile.nuke if self.user_profile
     User.find(self).destroy
   end
 

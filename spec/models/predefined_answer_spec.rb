@@ -28,6 +28,10 @@ describe PredefinedAnswer do
   end
   
   describe "destroy" do
-    pending
+    it "should mark predefined_answer as deleted" do
+      predefined_answer.destroy
+      PredefinedAnswer.exists?(predefined_answer).should be_false
+      PredefinedAnswer.with_deleted.exists?(predefined_answer).should be_true
+    end
   end
 end

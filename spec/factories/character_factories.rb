@@ -6,6 +6,10 @@ FactoryGirl.define do
     advanced_class "Powertech"
     species "Cyborg"
     level 20
+    
+    factory :swtor_character_with_images do
+      avatar { File.open("#{Rails.root}/spec/testing_files/goodAvatar1.jpg") }
+    end
   end
 
   factory :swtor_character_att, :class => :swtor_character do
@@ -22,6 +26,10 @@ FactoryGirl.define do
     char_class "Mage"
     race "Human"
     level 20
+    
+    factory :wow_character_with_images do
+      avatar { File.open("#{Rails.root}/spec/testing_files/goodAvatar1.jpg") }
+    end
   end
 
   factory :wow_character_att, :class => :wow_character do

@@ -216,11 +216,119 @@ describe Community do
   end
   
   describe "destroy" do
-    pending
+    it "should mark community as deleted" do
+      pending
+    end
+    
+    it "should mark community's community_application_form as deleted" do
+      pending
+    end
+    
+    it "should mark community's community_applications as deleted" do
+      pending
+    end
+    
+    it "should mark community's roles as deleted" do
+      pending
+    end
+    
+    it "should mark community's member_role as deleted" do
+      pending
+    end
+    
+    it "should mark community's supported_games as deleted" do
+      pending
+    end
+    
+    it "should mark community's game_announcement_spaces as deleted" do
+      pending
+    end
+    
+    it "should mark community's custom_forms as deleted" do
+      pending
+    end
+    
+    it "should mark community's community_profiles as deleted" do
+      pending
+    end
+    
+    it "should mark community's discussion_spaces as deleted" do
+      pending
+    end
+    
+    it "should mark community's announcement_spaces as deleted" do
+      pending
+    end
+    
+    it "should mark community's community_announcement_space as deleted" do
+      pending
+    end
+    
+    it "should mark community's page_spaces as deleted" do
+      pending
+    end
   end
   
   describe "nuke" do
-    pending
+    it "should call 'nuke' on community applications comments" do
+      pending
+    end
+    
+    it "should call 'nuke' on community's discussions" do
+      pending
+    end
+    
+    it "should delete community" do
+      pending
+    end
+    
+    it "should delete community's community_application_form" do
+      pending
+    end
+    
+    it "should delete community's community_applications" do
+      pending
+    end
+    
+    it "should delete community's roles" do
+      pending
+    end
+    
+    it "should delete community's member_role" do
+      pending
+    end
+    
+    it "should delete community's supported_games" do
+      pending
+    end
+    
+    it "should delete community's game_announcement_spaces" do
+      pending
+    end
+    
+    it "should delete community's custom_forms" do
+      pending
+    end
+    
+    it "should delete community's community_profiles" do
+      pending
+    end
+    
+    it "should delete community's discussion_spaces" do
+      pending
+    end
+    
+    it "should delete community's announcement_spaces" do
+      pending
+    end
+    
+    it "should delete community's community_announcement_space" do
+      pending
+    end
+    
+    it "should delete community's page_spaces" do
+      pending
+    end
   end
 end
 

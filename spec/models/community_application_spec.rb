@@ -193,10 +193,29 @@ describe CommunityApplication do
   end
   
   describe "destroy" do
-    pending
-  end
-  
-  describe "nuke" do
-    pending
+    it "should mark community_application as deleted" do
+      community_application.destroy
+      CommunityApplication.exists?(community_application).should be_false
+      CommunityApplication.with_deleted.exists?(community_application).should be_true
+    end
+    
+    it "should mark community_application's submission as deleted" do
+      submission = community_application.submission
+      submission.should be_a(Submission)
+      
+      community_application.destroy
+      Submission.exists?(submission).should be_false
+      Submission.with_deleted.exists?(submission).should be_true
+    end
+    
+    it "should mark community_application's comments as deleted" do
+      community_application = create(:community_application_with_comment)
+      comment = community_application.comments.first
+      comment.should be_a(Comment)
+      
+      community_application.destroy
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_true
+    end
   end
 end

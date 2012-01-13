@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111231181049) do
+ActiveRecord::Schema.define(:version => 20120113023706) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -318,6 +318,7 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.boolean  "can_accept_nested",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "permission_defaults", ["role_id"], :name => "index_permission_defaults_on_role_id"
@@ -434,6 +435,14 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.string   "faction"
     t.string   "server_name"
     t.string   "server_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "themes", :force => true do |t|
+    t.integer  "community_id"
+    t.string   "background_image"
+    t.string   "predefined_theme"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

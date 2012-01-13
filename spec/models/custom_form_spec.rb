@@ -45,6 +45,32 @@ describe CustomForm do
   end
   
   describe "destroy" do
-    pending
+    it "should mark custom_form as deleted" do
+      form.destroy
+      CustomForm.exists?(form).should be_false
+      CustomForm.with_deleted.exists?(form).should be_true
+    end
+    
+    it "should mark custom_form's submissions as deleted" do
+      submission = create(:submission)
+      custom_form = submission.custom_form
+      custom_form.submissions.count.should eq 1
+      
+      custom_form.destroy
+      Submission.exists?(submission).should be_false
+      Submission.with_deleted.exists?(submission).should be_true
+    end
+    
+    it "should mark custom_form's questions as deleted" do
+      custom_form = create(:custom_form_w_questions)
+      questions = custom_form.questions.all
+      
+      custom_form.destroy
+      questions.should_not be_empty
+      questions.each do |question|
+        Question.exists?(question).should be_false
+        Question.with_deleted.exists?(question).should be_true
+      end
+    end
   end
 end

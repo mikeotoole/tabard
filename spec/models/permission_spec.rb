@@ -62,6 +62,10 @@ describe Permission do
   end
   
   describe "destroy" do
-    pending
+    it "should mark permission as deleted" do
+      permission.destroy
+      Permission.exists?(permission).should be_false
+      Permission.with_deleted.exists?(permission).should be_true
+    end
   end
 end

@@ -51,10 +51,15 @@ class CommunityProfile < ActiveRecord::Base
   delegate :id, :to => :user_profile, :prefix => true
   delegate :name, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :name, :to => :community, :prefix => true
+  delegate :name, :to => :community, :prefix => true 
 
 ###
-# Public Methods
+# Protected Methods
+###
+protected
+
+###
+# Validator Methods
 ###
   # This method ensures that this profile has the default role.
   def has_at_least_the_default_member_role

@@ -101,7 +101,7 @@ class BaseCharacter < ActiveRecord::Base
   # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
   def destroy
     self.roster_assignments.clear if self.roster_assignments
-    self.character_proxy.update_attribute(:is_removed, true)
+    self.character_proxy.update_attribute(:is_removed, true) if self.character_proxy
     self.remove_avatar!
   end
 
