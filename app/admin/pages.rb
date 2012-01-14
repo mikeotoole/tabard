@@ -8,7 +8,6 @@ ActiveAdmin.register Page do
   filter :name
   filter :markup
   filter :created_at
-  filter :show_in_navigation, :as => :select
 
   index do
     column "View" do |page|
