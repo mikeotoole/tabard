@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/mikeotoole/rails3_acts_as_paranoid.git
-  revision: 7f15fc41000785711b8d93832b5cab847de9e02f
+  remote: git@github.com:digitalaugment/rails3_acts_as_paranoid.git
+  revision: a7a0adf042893f8c9db1166a18de037a2bfcac6a
   specs:
     rails3_acts_as_paranoid (0.1.1)
       activerecord (~> 3.0)
