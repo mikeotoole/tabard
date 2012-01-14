@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111231181049) do
+ActiveRecord::Schema.define(:version => 20120112001250) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -282,7 +282,6 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.string   "name"
     t.text     "markup"
     t.integer  "page_space_id"
-    t.boolean  "show_in_navigation", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -419,6 +418,15 @@ ActiveRecord::Schema.define(:version => 20111231181049) do
     t.string   "server_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "themes", :force => true do |t|
+    t.integer  "community_id"
+    t.string   "background_image"
+    t.string   "predefined_theme"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "background_color"
   end
 
   create_table "user_profiles", :force => true do |t|

@@ -6,7 +6,6 @@
 #  name               :string(255)
 #  markup             :text
 #  page_space_id      :integer
-#  show_in_navigation :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
 #
@@ -38,10 +37,6 @@ describe Page do
   
   it "should respond to community" do
     page.should respond_to(:community)
-  end
-  
-  it "should respond to show_in_navigation" do
-    page.should respond_to(:show_in_navigation)
   end
   
   it "should respond to body" do
@@ -81,18 +76,5 @@ describe Page do
         page.body.should_not include("<#{tag}>")
       end
     end
-  end
-  
-  it "should set show_in_navigation to false by default" do
-    page.show_in_navigation.should be_false
-  end
-  
-  it "should allow show_in_navigation to be set" do
-    create(:page, :show_in_navigation => true).show_in_navigation.should be_true
-  end
-
-  it "should only allow 5 pages to be shown in navigation" do
-    create_list(:page, 5, :show_in_navigation => true)
-    build(:page, :show_in_navigation => true).should_not be_valid
   end
 end
