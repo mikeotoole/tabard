@@ -1,5 +1,4 @@
 @import mixins
-@import fonts/malbeck
 
 
 #bar:before
@@ -37,9 +36,6 @@ body
           
           &:after
             border-top-color: #ccc
-          
-          &:hover:after
-            border-top-color: #fff
       
       >ul
         background: #227FB5
@@ -63,14 +59,13 @@ body
           background: #227FB5
           border-color: #429BD1
           color: #fff !important
+          
+          &:after
+            border-top-color: #fff
         
         >ul
           border: 1px solid #429BD1
           +box_shadow(0 0 5px rgba(#000,.5))
-      
-      &.current >a
-        background: #241834
-        +box_shadow(0 0 3px #45365B)
       
       &.special >a
         color: #fff
@@ -198,8 +193,8 @@ button,
     
     &:focus
       background: #d7eaf8
-      +box_shadow(0 0 8px #2d7cb4)
       +bg_gradient(#f2f8fd,#d7eaf8)
+      +box_shadow(0 0 8px #2d7cb4)
       color: #09558a
       
   input[type="checkbox"],
@@ -213,8 +208,8 @@ button,
     
     &:focus + label:before
       background: #d7eaf8
-      +box_shadow(0 0 8px #2d7cb4)
       +bg_gradient(#f2f8fd,#d7eaf8)
+      +box_shadow(0 0 8px #2d7cb4)
     
     &:checked
 
@@ -282,7 +277,6 @@ button,
     background: #eee
     +bg_gradient(#ddd,#eee)
     border-color: #fff
-    +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
         
     label
@@ -308,6 +302,10 @@ button,
     
   dfn.hint
     color: #888
+    
+  .submit
+    +bg_gradient(#ddd,rgba(#fff,0))
+    border-top-color: #ccc
   
   
   // TABLES
@@ -345,13 +343,6 @@ button,
             
             label:before
               +box_shadow(0 0 10px rgba(#000,.3))
-        
-        &.dim
-          
-          td
-            background: #ccc
-            border-color: #aa856a
-            +bg_gradient(#ddd,#bbb)
         
     tfoot
     
@@ -464,9 +455,6 @@ button,
           .avatar
             +box_shadow(0 0 15px rgba(#000,.5))
             border-color: #999
-        
-      &.removed >blockquote >.avatar
-        border-color: #ccc
 
         
     *[meta]:hover
@@ -523,11 +511,11 @@ button,
         background-color: rgba(#000,.1)
       
       >label:before
-        background-color: #EBDFC4
-        background-position: -185px -5px
+        background-color: #ddd
+        background-position: -185px -5px !important
       
       >input:checked + label:before
-        background-position: -155px -5px
+        background-position: -155px -5px !important
       
       button
         border: 0
@@ -619,10 +607,6 @@ button,
       
     h2.comments:before
       background-position: -450px -30px
-    
-  .submit
-    +bg_gradient(#ddd,rgba(#fff,0))
-    border-top-color: #ccc
   
   
   // CUSTOM FORMS

@@ -67,9 +67,6 @@ body
         >ul
           border-bottom: 1px solid #B18668
       
-      &.current >a
-        background: #26000a
-      
       &.special
       
         >a
@@ -302,7 +299,6 @@ button,
     background: #d2c69c
     +bg_gradient(#d2c69c,#e8e3d1)
     border-color: #fff
-    +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
         
     label
@@ -336,6 +332,10 @@ button,
       
       &:hover
         color: #fff
+    
+  .submit
+    +bg_gradient(#EBDED5,rgba(#fff,0))
+    border-top-color: #C8B3A4
   
   
   // TABLES
@@ -375,12 +375,6 @@ button,
             
             label:before
               +box_shadow(0 0 10px rgba(#000,.3))
-        
-        &.dim
-          
-          td
-            border-color: #aa856a
-            +bg_gradient(#C7B2A3,#EADDD4)
         
     tfoot
     
@@ -576,10 +570,10 @@ button,
       
       >label:before
         background-color: #EBDFC4
-        background-position: -185px -5px
+        background-position: -185px -5px !important
       
       >input:checked + label:before
-        background-position: -155px -5px
+        background-position: -155px -5px !important
   
   
   // ACTIVITIES
@@ -670,10 +664,6 @@ button,
       
     h2.comments:before
       background-position: -450px -30px
-    
-  .submit
-    +bg_gradient(#EBDED5,rgba(#fff,0))
-    border-top-color: #C8B3A4
   
   
   // CUSTOM FORMS

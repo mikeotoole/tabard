@@ -7,7 +7,7 @@
 ###
 class Theme < ActiveRecord::Base
   # This is a collection of strings that are valid for subject classes.
-  VALID_THEMES = %w( Crumblin BlueDawn RedRum Commando )
+  VALID_THEMES = %w( Crumblin Station Droid MechDragon LastHope Metropolis RedRum )
 
 ###
 # Attribute accessible
