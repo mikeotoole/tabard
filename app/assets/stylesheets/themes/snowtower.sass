@@ -39,6 +39,7 @@ body
       
       >ul
         background: #2B4D7A
+        +bg_gradient(#2B4D7A,#406AA2)
         
         >li >a
           border-top: 1px solid #203b60
@@ -118,9 +119,10 @@ button,
   #breadcrumb
     
     ol
-      background: #ccc
-      border-bottom: 1px solid #aaa
-      +box_shadow(0 0 10px #999)
+      background: #92B0C8
+      border-bottom: 1px solid #7593ac
+      border-top: 1px solid #7593ac
+      +box_shadow(0 0 10px #7593ac)
       
       li
         
@@ -128,10 +130,11 @@ button,
           background: #fff
         
         span
-          background: #eee
+          background: #bed4e5
+          color: #3D5B7F
         
         &:before
-          border-left-color: #aaa
+          border-left-color: #7593ac
         
         &:after
           border-left-color: #fff
@@ -139,45 +142,46 @@ button,
         &:hover
           
           &:after
-            border-left-color: #227FB5
+            border-left-color: #4D9AB8
             
           a,
           span
-            background: #227FB5
+            background: #4D9AB8
             color: #fff
         
         &:last-child
         
           &:after
-            border-left-color: #eee
+            border-left-color: #bed4e5
           
           &:hover
             
             &:after
-              border-left-color: #eee
+              border-left-color: #bed4e5
             
             span
-              background: #eee
+              background: #bed4e5
   
   
   // ACTIONS
     
   .actions a
-    background-color: #666
+    background-color: #4D9AB8
     
     &:hover
-      background-color: #227FB5
-      +box_shadow(0 0 10px #ccc)
+      background-color: #2B4D7A
+      +box_shadow(0 0 10px #2B4D7A)
     
       &[meta]
       
         &:before
-          background: #A33C2F
-          border-color: #A33C2F
-          color: #F4D4B4
+          background: #9FC5DA
+          +bg_gradient(#fff,#9FC5DA)
+          border-color: #7593AC
+          color: #162840
         
         &:after
-          border-left-color: #A33C2F
+          border-left-color: #7593AC
   
   
   // FORMS
@@ -319,8 +323,8 @@ button,
     thead
     
       th
-        background: #574971
-        +bg_gradient(#6c5a8c,#574971)
+        background: #406aa2
+        +bg_gradient(#406aa2,#2B4D7A)
         border-bottom-color: #2E223F
         color: #fff
   
@@ -329,9 +333,9 @@ button,
       tr
     
         td
-          background: #eee
-          +bg_gradient(#fff,#ddd)
-          border-bottom-color: #ccc
+          background: #BED4E5
+          +bg_gradient(#fff,#D5E3EE)
+          border-bottom-color: #92B0C8
           border-top-color: #fff
             
           img.avatar
@@ -351,17 +355,17 @@ button,
     tfoot
     
       td
-        background: #999
-        +bg_gradient(#aaa,#888)
+        background: #7593AC
+        +bg_gradient(#7593AC,#7593AC)
         border-top-color: #fff
         color: #fff
         
         &:before
-          border-top-color: #888
+          border-top-color: #5b7992
         
         button,
         .button
-          border-color: #888
+          border-color: #445e74
 
 
   // PAGES
@@ -384,7 +388,7 @@ button,
         color: #fff
               
         &:hover
-          background: #1880AB
+          background: #2B4D7A
           color: #fff
 
     li.comment
@@ -541,13 +545,13 @@ button,
   // SUBMISSIONS & COMMUNITY APPLICATIONS
 
   h2.status
-    border-bottom-color: #ddd
+    border-bottom-color: #d1e3ee
   
   .submission
   
     h1,
     h2
-      background: #584770
+      background: #2B4D7A
       color: #fff
       
       &:after
