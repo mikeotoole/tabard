@@ -19,7 +19,8 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_attributes
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id,
+    :background_color, :background_image, :remove_background_image, :background_image_cache, :remote_background_image_url
 
 ###
 # Associations
@@ -46,7 +47,7 @@ class Community < ActiveRecord::Base
   has_many :comments
   has_many :page_spaces, :dependent => :destroy
   has_many :pages, :through => :page_spaces
-  has_one :theme
+  belongs_to :theme
 
   accepts_nested_attributes_for :theme
 
@@ -59,10 +60,7 @@ class Community < ActiveRecord::Base
 ###
 # Delegate
 ###
-  delegate :background_image, :to => :theme, :prefix => true
-  delegate :background_image_url, :to => :theme, :prefix => true
-  delegate :background_color, :to => :theme, :prefix => true
-  delegate :predefined_theme, :to => :theme
+  delegate :css, :to => :theme, :prefix => true
   
 ###
 # Validators
@@ -77,6 +75,13 @@ class Community < ActiveRecord::Base
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
   validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
+  validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, 
+            :unless => Proc.new{|community| community.background_color.blank? }
+
+###
+# Uploaders
+###
+  mount_uploader :background_image, BackgroundImageUploader
 
 ###
 # Public Methods
@@ -299,7 +304,7 @@ protected
     self.member_role.permissions.create(subject_class: "Comment", can_create: true)
     self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
     self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
-    self.create_theme(:predefined_theme => Theme.default_theme)
+    self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
@@ -326,6 +331,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -344,5 +350,8 @@ end
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
+#  background_image                :string(255)
+#  background_color                :string(255)
+#  theme_id                        :integer
 #
 

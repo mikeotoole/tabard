@@ -6,35 +6,22 @@
 # This class represents a theme.
 ###
 class Theme < ActiveRecord::Base
-  # This is a collection of strings that are valid for subject classes.
-  VALID_THEMES = %w( Crumblin Metropolis SnowTower Station Droid RedRum )
-
 ###
 # Attribute accessible
 ###
-  attr_accessible :predefined_theme, :background_color, :background_image, :remove_background_image, :background_image_cache, :remote_background_image_url
 
 ###
 # Associations
 ###
-  belongs_to :community
+  has_many :communities, :inverse_of => :theme
 
-###
-# Validators
-###
-validates :predefined_theme, :presence => true, :inclusion => { :in => VALID_THEMES, :message => "\"%{value}\" is not a currently supported theme." }
-validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, :unless => Proc.new{|theme| theme.background_color.blank? }
-
-###
-# Uploaders
-###
-  mount_uploader :background_image, BackgroundImageUploader
 
   # This method returns the default theme.
   def self.default_theme
-    "Crumblin"
+    Theme.find_by_name("Crumblin")
   end
 end
+
 
 
 
@@ -43,12 +30,13 @@ end
 #
 # Table name: themes
 #
-#  id               :integer         not null, primary key
-#  community_id     :integer
-#  background_image :string(255)
-#  predefined_theme :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  background_color :string(255)
+#  id         :integer         not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#  name       :string(255)
+#  css        :string(255)
+#  author     :string(255)
+#  author_url :string(255)
+#  thumbnail  :string(255)
 #
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120112001250) do
+ActiveRecord::Schema.define(:version => 20120114234942) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -131,12 +131,16 @@ ActiveRecord::Schema.define(:version => 20120112001250) do
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
     t.boolean  "is_public_roster",                :default => true
+    t.string   "background_image"
+    t.string   "background_color"
+    t.integer  "theme_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+  add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 
   create_table "community_applications", :force => true do |t|
     t.integer  "community_id"
@@ -421,12 +425,13 @@ ActiveRecord::Schema.define(:version => 20120112001250) do
   end
 
   create_table "themes", :force => true do |t|
-    t.integer  "community_id"
-    t.string   "background_image"
-    t.string   "predefined_theme"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_color"
+    t.string   "name"
+    t.string   "css"
+    t.string   "author"
+    t.string   "author_url"
+    t.string   "thumbnail"
   end
 
   create_table "user_profiles", :force => true do |t|

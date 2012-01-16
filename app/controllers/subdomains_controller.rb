@@ -15,7 +15,6 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
-  before_filter :set_theme_variables
   before_filter :apply_dynamic_permissions
   before_filter :block_unauthorized_user!, :except => [:index]
   skip_before_filter :limit_subdomain_access
@@ -98,10 +97,6 @@ protected
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join, :alert => "That community does not exist"
       return false
     end
-  end
-
-  def set_theme_variables
-    @@theme_background_image = current_community.theme_background_image_url :standard 
   end
 
   ###

@@ -12,13 +12,13 @@
   %h2 Appearance
   %fieldset
     %ol
-      = f.simple_fields_for :theme do |af|
-        =af.input :background_image_cache, :as => :hidden
-        %li
-          .select= af.input :predefined_theme, :as => :radio, :wrapper => false, :label => 'Color Scheme', :collection => Theme::VALID_THEMES, :required => true
-        %li
-          = image_tag(community.theme_background_image_url :thumbnail)
-          = af.input :background_image, :as => :file
-          = af.input :remote_background_image_url, :as => :string, :label => ' — or a link to an image'
-          = af.input :remove_background_image, :as => :boolean, :label => 'remove current image'
-        %li= af.input :background_color, :as => :string
+      = f.input :background_image_cache, :as => :hidden
+      %li
+        = image_tag(community.background_image_url :thumbnail)
+        = f.input :background_image, :as => :file
+        = f.input :remote_background_image_url, :as => :string, :label => ' — or a link to an image'
+        = f.input :remove_background_image, :as => :boolean, :label => 'remove current image'
+      %li= f.input :background_color, :as => :string
+      %li= f.association :theme, :collection => Theme.all
+        
+        
