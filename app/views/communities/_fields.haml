@@ -17,9 +17,8 @@
         %li
           .select= af.input :predefined_theme, :as => :radio, :wrapper => false, :label => 'Color Scheme', :collection => Theme::VALID_THEMES, :required => true
         %li
-          = af.input :background_color, :as => :string
-        %li
           = image_tag(community.theme_background_image_url :thumbnail)
           = af.input :background_image, :as => :file
           = af.input :remote_background_image_url, :as => :string, :label => ' — or a link to an image'
           = af.input :remove_background_image, :as => :boolean, :label => 'remove current image'
+        %li= af.input :background_color, :as => :string
