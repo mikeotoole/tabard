@@ -13,206 +13,288 @@
 
 body
   background: image-url('backgrounds/station.jpg') top center fixed no-repeat #000
-  color: #251533
+  color: #e7e1a4
 
 #header
   
   .title
     color: #fff
+    text-shadow: 1px 1px 2px #000
   
   .menu
-    background: image-url('bar/bg.png') 0 0 repeat-x #3E3250
+    background: #F38D41
+    background: rgba(#F38D41,.9)
     +border_radius(3,3,0,0)
-    +box_shadow(0 -5px 5px rgba(#000,.1))
     
     >li
       
       >a
         border: 1px solid transparent
-        color: #eee
+        color: #000
             
         &:not(:only-child)
           
           &:after
-            border-top-color: #ccc
+            border-top-color: #F9E56D
           
           &:hover:after
             border-top-color: #fff
       
       >ul
-        background: #227FB5
+        background: #A2320D
         
         >li >a
-          border-top: 1px solid #036C9F
-          color: #A8E5FA
+          border-top: 1px solid #7b2109
+          color: #fbf0b1
           
           &[meta]:before
-            background: #A33C2F
-            +box_shadow(0 0 3px #D0AEAF)
-            color: #fff
+            background: #FCE267
+            +box_shadow(0 0 3px #000)
+            color: #442312
           
           &:hover
-            background: #429BD1
+            background: #c43e19
             color: #fff
       
       &:hover
         
         >a
-          background: #227FB5
-          border-color: #429BD1
+          background: #A2320D
+          border-color: #942c09
           color: #fff !important
         
         >ul
-          border: 1px solid #429BD1
-          +box_shadow(0 0 5px rgba(#000,.5))
-      
-      &.current >a
-        background: #241834
-        +box_shadow(0 0 3px #45365B)
+          border: 1px solid #C33D1E
+          +box_shadow(0 0 5px rgba(#e7e1a4,.3))
       
       &.special >a
-        color: #fff
+        color: #000
+        
+        &:hover
+          color: #fff
       
       &.settings >a:before
+        background-position: -90px 0
+      
+      &.settings:hover >a:before
         background-position: -90px -30px
       
       &.signup >a:before
+        background-position: -120px 0
+      
+      &.signup:hover >a:before
         background-position: -120px -30px
   
 button,
 .button,
 #body button,
 #body .button
-  +bg_gradient(#d24723,#792b28)
-  border-color: #eee
-  color: #f8d5bb
-  font: 20px Malbeck, DinMedium, sans-serif
-  letter-spacing: 1px
-  text-transform: lowercase
+  +bg_gradient(#fa5e3a,#C33D1E)
+  border-color: #ff8972
+  color: #fff
   
   &:focus,
   &:hover
-    +bg_gradient(#e05c2e,#9e3834)
-    +box_shadow(0 0 15px rgba(#000,.2))
-    color: #fff
+    +bg_gradient(#F6E872,#c6b524)
+    +box_shadow(0 0 15px rgba(#F6E872,.2))
+    border-color: #fff
+    color: #000
 
 #body
-  background: #fff
-  +box_shadow(0 -5px 5px rgba(#000,.1))
+  background: #452311
   
   // GENERAL CONTENT
   
   a
-    color: #A43D31
+    color: #F6E872
     
     &:hover
-      background: #A43D31
-      color: #fff
+      background: #F6E872
+      color: #000
   
   h1,
   h2,
   h3
-    color: #227FB5
+    color: #F6E872
+  
+  time
+    color: #fbf0b1
     
   #breadcrumb
     
     ol
-      background: #ccc
-      border-bottom: 1px solid #aaa
-      +box_shadow(0 0 10px #999)
+      background: #8E4F29
+      border: 1px solid #713d1e
+      border-left: 0
+      border-right: 0
       
       li
         
         a
-          background: #fff
+          background: #F6E872
+          color: #442312
         
         span
-          background: #eee
+          background: #d0c84f
+          color: #442312
         
         &:before
-          border-left-color: #aaa
+          border-left-color: #713d1e
         
         &:after
-          border-left-color: #fff
+          border-left-color: #F6E872
         
         &:hover
           
           &:after
-            border-left-color: #227FB5
+            border-left-color: #C33D1E
             
-          a,
-          span
-            background: #227FB5
+          a
+            background: #C33D1E
             color: #fff
         
         &:last-child
         
           &:after
-            border-left-color: #eee
+            border-left-color: #d0c84f
           
           &:hover
             
             &:after
-              border-left-color: #eee
+              border-left-color: #d0c84f
             
             span
-              background: #eee
+              background: #d0c84f
+              color: #442312
   
   
   // ACTIONS
     
   .actions a
-    background-color: #666
+    background-color: #F3EB77
     
     &:hover
-      background-color: #227FB5
-      +box_shadow(0 0 10px #ccc)
+      background-color: #C23C22
+      +box_shadow(0 0 10px #000)
     
       &[meta]
       
         &:before
-          background: #A33C2F
-          border-color: #A33C2F
-          color: #F4D4B4
+          background: #fbf0b1
+          border-color: #fbf0b1
+          color: #000
         
         &:after
-          border-left-color: #A33C2F
+          border-left-color: #fbf0b1
+    
+        &.apply
+          background-position: 0 -30px
+          
+        &.new
+          background-position: -600px -30px
+          
+        &.delete
+          background-position: -30px -30px
+          
+        &.edit
+          background-position: -60px -30px
+      
+        &.approve
+          background-position: -510px -30px
+        
+        &.reject
+          background-position: -540px -30px
+          
+        &.review
+          background-position: -120px -30px
+        
+        &.submission
+          background-position: -600px -30px
+        
+        &.lock
+          background-position: -180px -30px
+        
+        &.unlock
+          background-position: -150px -30px
+        
+        &.publish
+          background-position: -420px -30px
+          
+        &.unpublish
+          background-position: -390px -30px
+    
+    &.apply
+      background-position: 0 0
+      
+    &.new
+      background-position: -600px 0
+      
+    &.delete
+      background-position: -30px 0
+      
+    &.edit
+      background-position: -60px 0
+  
+    &.approve
+      background-position: -510px 0
+    
+    &.reject
+      background-position: -540px 0
+      
+    &.review
+      background-position: -120px 0
+    
+    &.submission
+      background-position: -600px 0
+    
+    &.lock
+      background-position: -180px 0
+    
+    &.unlock
+      background-position: -150px 0
+    
+    &.publish
+      background-position: -420px 0
+      
+    &.unpublish
+      background-position: -390px 0
   
   
   // FORMS
   
   label
-    color: #52347c
+    color: #fbf0b1
   
   input[type="url"],
   input[type="email"],
   input[type="text"],
   input[type="password"],
   textarea
-    background: #eee
-    +bg_gradient(#ddd,#eee)
-    border-color: #fff
-    +box_shadow(0 0 3px rgba(#000,.2))
+    background: #A03016
+    +bg_gradient(#A03016,#C33D1E)
+    border-color: #442312
+    +box_shadow(0 0 3px #C23C22)
+    color: #fbf0b1
     
     &:focus
-      background: #d7eaf8
-      +box_shadow(0 0 8px #2d7cb4)
-      +bg_gradient(#f2f8fd,#d7eaf8)
-      color: #09558a
+      background: #C33D1E
+      +box_shadow(0 0 8px #EC8944)
+      +bg_gradient(#C33D1E,#f34d26)
+      color: #fff
       
   input[type="checkbox"],
   input[type="radio"]
     
     + label:before
-      background: #eee
-      +bg_gradient(#ddd,#eee)
-      border-color: #fff
-      +box_shadow(0 0 3px #ddd)
+      background: #A03016
+      +bg_gradient(#A03016,#C33D1E)
+      border-color: #442312
+      +box_shadow(0 0 3px #C23C22)
     
     &:focus + label:before
-      background: #d7eaf8
-      +box_shadow(0 0 8px #2d7cb4)
-      +bg_gradient(#f2f8fd,#d7eaf8)
+      background: #C33D1E
+      +box_shadow(0 0 8px #EC8944)
+      +bg_gradient(#C33D1E,#f34d26)
     
     &:checked
 
@@ -233,47 +315,42 @@ button,
   .select
   
     ul
-      background: #eee
-      +bg_gradient(#ddd,#eee)
-      +box_shadow(0 0 3px rgba(#000,.2))
-      border-color: #fff
+      background: #A03016
+      +bg_gradient(#A03016,#C33D1E)
+      border-color: #442312
+      +box_shadow(0 0 3px #C23C22)
           
       &:before
-        border-top-color: #bbb
+        border-top-color: #F38D41
       
       li
         
         label
-          background: #d7eaf8
-          +bg_gradient(#f2f8fd,#d7eaf8)
-          border-top-color: #3679B3
-          color: #1a5a87
+          background: #C33D1E
+          +bg_gradient(#C33D1E,#f34d26)
+          border-top-color: #7A200D
         
           .avatar
             background: #ddd
             border-color: #fff
             +box_shadow(0 0 5px rgba(#000,.2))
-        
-        input:checked + label
-          color: inherit
   
       &:hover
-        background: #d7eaf8
-        +box_shadow(0 0 8px #2d7cb4)
-        +bg_gradient(#f2f8fd,#d7eaf8)
-          
-        &:before
-          border-top-color: #2D7CB4
+        background: #C33D1E
+        +box_shadow(0 0 8px #EC8944)
+        +bg_gradient(#C33D1E,#f34d26)
       
         li
-        
-          label,
+            
           input:checked + label
-            color: #1a5a87
+            color: #fff
+        
+          label
+            color: #fbf0b1
             
             &:hover
-              background: #3679B3
-              color: #fff
+              background: #F9E56D
+              color: #000 !important
 
   .slider,
   .slider_with_none
@@ -305,7 +382,7 @@ button,
         color: #fff !important
     
   dfn.hint
-    color: #888
+    color: #fe9b74
   
   
   // TABLES
@@ -315,9 +392,9 @@ button,
     thead
     
       th
-        background: #574971
-        +bg_gradient(#6c5a8c,#574971)
-        border-bottom-color: #2E223F
+        background: #c77030
+        +bg_gradient(#F38D41,#c77030)
+        border-bottom-color: #8D502B
         color: #fff
   
     tbody
@@ -325,52 +402,45 @@ button,
       tr
     
         td
-          background: #eee
-          +bg_gradient(#fff,#ddd)
-          border-bottom-color: #ccc
-          border-top-color: #fff
+          background: #190D06
+          +bg_gradient(#190D06,#442312)
+          border-bottom-color: #703D20
+          border-top-color: #703D20
             
           img.avatar
-            background: #ccc
-            border-color: #fff
+            background: #F0EE7C
+            border-color: #8B512D
             +box_shadow(0 0 10px rgba(#000,.2))
           
           img.icon
             +box_shadow(0 0 5px rgba(#000,.2))
               
           &.check
-            border-right-color: #ccc
+            border-right-color: #703D20
             
             label:before
               +box_shadow(0 0 10px rgba(#000,.3))
         
-        &.dim
-          
-          td
-            background: #ccc
-            border-color: #aa856a
-            +bg_gradient(#ddd,#bbb)
-        
     tfoot
     
       td
-        background: #999
-        +bg_gradient(#aaa,#888)
-        border-top-color: #fff
+        background: #8D502B
+        +bg_gradient(#8D502B,#703D20)
+        border-top-color: #703D20
         color: #fff
         
         &:before
-          border-top-color: #888
+          border-top-color: #000
         
         button,
         .button
-          border-color: #888
+          border-color: #190D06 !important
 
 
   // PAGES
 
   article time
-    border-bottom-color: #ddd
+    border-bottom-color: #76320f
 
 
   // COMMENTS
@@ -391,30 +461,31 @@ button,
           color: #fff
 
     li.comment
-      border-bottom-color: #fff
+      border-bottom-color: #442312
     
       blockquote
         
         &:before
-          border-bottom-color: #ddd
+          border-bottom-color: #76320f
         
         >.avatar
           background: #ddd
           border-color: #ddd
           
           &:before
-            border-right-color: #fff
+            background-image: image-url('application/comment-glow.png')
+            border-right-color: #442312
           
           &:after
-            border-top-color: #fff
+            border-top-color: #442312
           
           >img
             background: #ddd
-            border-color: #fff
+            border-color: #442312
         
         .meta
-          background: #fff
-          border-bottom-color: #ddd
+          background: #442312
+          border-bottom-color: #76320f
           color: #999
             
           .expand
@@ -537,11 +608,8 @@ button,
   
   .activities
     
-    time
-      color: #6a518f
-    
     >li:after
-      border-color: #ddd
+      border-color: #76320f
     
     li.comment >blockquote .meta
       color: #888
@@ -550,13 +618,13 @@ button,
   // SUBMISSIONS & COMMUNITY APPLICATIONS
 
   h2.status
-    border-bottom-color: #ddd
+    border-bottom-color: #76320f
   
   .submission
   
     h1,
     h2
-      background: #584770
+      background: #7E4828
       color: #fff
       
       &:after
@@ -606,21 +674,13 @@ button,
       
       .instructions h2:before
         background-position: -450px -30px
-
-    .questions
-      
-      >fieldset >ol >li
-          
-        >label,
-        .select >label
-          color: #227FB5
       
     h2.comments:before
       background-position: -450px -30px
     
   .submit
-    +bg_gradient(#ddd,rgba(#fff,0))
-    border-top-color: #ccc
+    +bg_gradient(#A13112,rgba(#442312,0))
+    border-top-color: #C33D1E
   
   
   // CUSTOM FORMS

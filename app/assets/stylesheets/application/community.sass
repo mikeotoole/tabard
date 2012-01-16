@@ -158,6 +158,7 @@ body
           font-size: 14px
           margin: 0 10px 0 0
           padding: 0 40px 0 10px
+          +transition(none)
           
           &:before
             background: image-url('application/icons.png') no-repeat
@@ -381,42 +382,6 @@ button,
           position: absolute
           top: 10px
           width: 0
-    
-    &.apply
-      background-position: 0 -30px
-      
-    &.new
-      background-position: -600px -30px
-      
-    &.delete
-      background-position: -30px -30px
-      
-    &.edit
-      background-position: -60px -30px
-  
-    &.approve
-      background-position: -510px -30px
-    
-    &.reject
-      background-position: -540px -30px
-      
-    &.review
-      background-position: -120px -30px
-    
-    &.submission
-      background-position: -600px -30px
-    
-    &.lock
-      background-position: -180px -30px
-    
-    &.unlock
-      background-position: -150px -30px
-    
-    &.publish
-      background-position: -420px -30px
-      
-    &.unpublish
-      background-position: -390px -30px
 
 
   // TABLES
@@ -911,7 +876,7 @@ button,
   
     h1,
     .questions >h2
-      width: 525px
+      width: 520px
     
     .sidebar
       float: right
@@ -1035,7 +1000,7 @@ button,
             width: 576px
             
             input:checked + label
-              width: 560px
+              width: 536px
         
         mark.error
           width: 560px
