@@ -32,16 +32,17 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
-  has_many :roles, :dependent => :destroy
+  has_many :custom_forms, :dependent => :destroy
 
   has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
 
-  has_many :custom_forms, :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
+  has_many :roles, :dependent => :destroy
+  
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy

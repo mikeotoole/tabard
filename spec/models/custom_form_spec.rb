@@ -62,15 +62,12 @@ describe CustomForm do
     end
     
     it "should mark custom_form's questions as deleted" do
-      custom_form = create(:custom_form_w_questions)
-      questions = custom_form.questions.all
+      question = create(:short_answer_question)
+      custom_form = question.custom_form
       
       custom_form.destroy
-      questions.should_not be_empty
-      questions.each do |question|
-        Question.exists?(question).should be_false
-        Question.with_deleted.exists?(question).should be_true
-      end
+      Question.exists?(question).should be_false
+      Question.with_deleted.exists?(question).should be_true
     end
   end
 end

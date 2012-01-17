@@ -55,7 +55,7 @@ describe Answer do
     end
     
     it "should not destroy question if its attached to custom form" do
-      question = create(:custom_form_w_questions).questions.first
+      question = create(:short_answer_question)
       answer = create(:answer, :question_id => question.id)
       question.answers.count.should eq 1
       answer.destroy

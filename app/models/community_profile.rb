@@ -53,6 +53,13 @@ class CommunityProfile < ActiveRecord::Base
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true 
 
+  def destroy
+    self.force_destroy = true
+    run_callbacks :destroy do
+      self.update_attribute(:deleted_at, Time.now)
+    end
+  end
+
 ###
 # Protected Methods
 ###

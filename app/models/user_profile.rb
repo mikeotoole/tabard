@@ -315,9 +315,9 @@ class UserProfile < ActiveRecord::Base
     self.character_proxies.each{|character_proxy| character_proxy.delete}
 
     self.owned_communities.each{|community| community.nuke}
-    self.community_applications.each{|application| application.destroy!}
     self.community_profiles.each{|community_profile| community_profile.destroy!}
-    self.view_logs.each{|application| view_log.destroy!}
+    self.view_logs.each{|view_log| view_log.destroy!}
+    self.community_applications.each{|application| application.destroy!}
 
     self.discussions.each{|discussion| discussion.nuke}
     self.comments.each{|comment| comment.nuke}

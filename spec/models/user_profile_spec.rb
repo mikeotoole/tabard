@@ -512,13 +512,23 @@ describe UserProfile do
   
   describe "nuke" do
     it "should delete user_profile's swtor_characters" do
-      profile.destroy
-      pending
+      profile = create(:swtor_char_profile).user_profile
+      swtor_characters = profile.swtor_characters.all
+      profile.nuke
+      swtor_characters.should_not be_empty
+      swtor_characters.each do |swtor_character|
+        SwtorCharacter.exists?(swtor_character).should be_false
+      end
     end
 
     it "should delete user_profile's wow_characters" do
-      profile.destroy
-      pending
+      profile = create(:wow_char_profile).user_profile
+      wow_characters = profile.wow_characters.all
+      profile.nuke
+      wow_characters.should_not be_empty
+      wow_characters.each do |wow_character|
+        WowCharacter.exists?(wow_character).should be_false
+      end
     end
     
     it "should delete user_profile's character_proxies" do
@@ -532,7 +542,14 @@ describe UserProfile do
     end
     
     it "should call nuke on user_profile's owned_communities" do
-      pending
+      profile = DefaultObjects.community_admin.user_profile
+      owned_communities = profile.owned_communities.all
+      profile.nuke
+      owned_communities.should_not be_empty
+      owned_communities.each do |owned_community|
+        Community.exists?(owned_community).should be_false
+        Community.with_deleted.exists?(owned_community).should be_false
+      end
     end
     
     it "should delete user_profile's community_applications" do
@@ -549,7 +566,7 @@ describe UserProfile do
     it "should delete user_profile's community_profiles" do
       profile = DefaultObjects.user_profile
       community_profiles = profile.community_profiles.all
-      profile.destroy
+      profile.nuke
       community_profiles.should_not be_empty
       community_profiles.each do |community_profile|
         CommunityProfile.exists?(community_profile).should be_false
@@ -560,7 +577,7 @@ describe UserProfile do
     it "should delete user_profile's view_logs" do
       profile = create(:view_log).user_profile
       view_logs = profile.view_logs.all
-      profile.destroy
+      profile.nuke
       view_logs.should_not be_empty
       view_logs.each do |view_log|
         ViewLog.exists?(view_log).should be_false
@@ -568,12 +585,26 @@ describe UserProfile do
       end
     end
     
-    it "should call nuke on user_profile's discussions" do
-      pending
+    it "should delete user_profile's discussions" do
+      profile = create(:discussion).user_profile
+      discussions = profile.discussions.all
+      profile.nuke
+      discussions.should_not be_empty
+      discussions.each do |discussion|
+        Discussion.exists?(discussion).should be_false
+        Discussion.with_deleted.exists?(discussion).should be_false
+      end
     end
     
-    it "should call nuke on user_profile's comments" do
-      pending
+    it "should delete user_profile's comments" do
+      profile = create(:comment).user_profile
+      comments = profile.comments.all
+      profile.nuke
+      comments.should_not be_empty
+      comments.each do |comment|
+        Comment.exists?(comment).should be_false
+        Comment.with_deleted.exists?(comment).should be_false
+      end
     end
   end
 end
