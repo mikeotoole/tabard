@@ -37,24 +37,21 @@ body
           &:after
             border-top-color: #A9B795
       
-      >ul
-        background: #5A969E
+      >ul >li >a
+        border-top: 1px solid #467f86
+        color: #06151F
         
-        >li >a
-          border-top: 1px solid #467f86
-          color: #06151F
-          
-          &[meta]:before
-            background: #2f8100
-            +box_shadow(0 0 3px #71b2ba)
-            color: #fff
-          
-          &:hover
-            background: #AAB694
+        &[meta]:before
+          background: #2f8100
+          +box_shadow(0 0 3px #71b2ba)
+          color: #fff
+        
+        &:hover
+          background: #AAB694
       
       &:hover
         
-        >a
+        >a[href]
           background: #5A969E
           border-color: #71b2ba
           color: #fff !important
@@ -63,6 +60,7 @@ body
             border-top-color: #fff
         
         >ul
+          background: #5A969E
           border: 1px solid #71b2ba
           +box_shadow(0 0 5px rgba(#000,.5))
       
@@ -673,7 +671,8 @@ button,
             background: #5A969E
             color: #fff
             
-            &:hover
+            &:hover,
+            &:focus
               background: #a4c773
               color: #173B46
               
@@ -691,7 +690,8 @@ button,
       background: #A9B795
       color: #06151F
       
-      &:hover
+      &:hover,
+      &:focus
         background: #a4c773
         color: #173B46
 

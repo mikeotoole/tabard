@@ -40,30 +40,28 @@ body
           &:hover:after
             border-top-color: #fff
       
-      >ul
-        background: #A2320D
+      >ul >li >a
+        border-top: 1px solid #7b2109
+        color: #fbf0b1
         
-        >li >a
-          border-top: 1px solid #7b2109
-          color: #fbf0b1
-          
-          &[meta]:before
-            background: #FCE267
-            +box_shadow(0 0 3px #000)
-            color: #30170a
-          
-          &:hover
-            background: #c43e19
-            color: #fff
+        &[meta]:before
+          background: #FCE267
+          +box_shadow(0 0 3px #000)
+          color: #30170a
+        
+        &:hover
+          background: #c43e19
+          color: #fff
       
       &:hover
         
-        >a
+        >a[href]
           background: #A2320D
           border-color: #942c09
           color: #fff !important
         
         >ul
+          background: #A2320D
           border: 1px solid #C33D1E
           +box_shadow(0 0 5px rgba(#e7e1a4,.3))
       
@@ -721,7 +719,8 @@ button,
             background: #8D502B
             color: #000
             
-            &:hover
+            &:hover,
+            &:focus
               background: #F3EB77
               color: #000
               
@@ -735,7 +734,8 @@ button,
       background: #D8B757
       color: #000
       
-      &:hover
+      &:hover,
+      &:focus
         background: #F3EB77
         color: #000
 

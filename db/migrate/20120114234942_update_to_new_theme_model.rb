@@ -11,8 +11,8 @@ class UpdateToNewThemeModel < ActiveRecord::Migration
 
     add_column :themes, :name, :string
     add_column :themes, :css, :string
-    add_column :themes, :author, :string
-    add_column :themes, :author_url, :string
+    add_column :themes, :background_author, :string
+    add_column :themes, :background_author_url, :string
     add_column :themes, :thumbnail, :string
   end
 
@@ -28,8 +28,8 @@ class UpdateToNewThemeModel < ActiveRecord::Migration
 
     remove_column :themes, :name
     remove_column :themes, :css
-    remove_column :themes, :author
-    remove_column :themes, :author_url
+    remove_column :themes, :background_author
+    remove_column :themes, :background_author_url
     remove_column :themes, :thumbnail
   end
 end

@@ -38,25 +38,21 @@ body
           &:after
             border-top-color: #4D9AB8
       
-      >ul
-        background: #2B4D7A
-        +bg_gradient(#2B4D7A,#406AA2)
+      >ul >li >a
+        border-top: 1px solid #203b60
+        color: #acd3e6
         
-        >li >a
-          border-top: 1px solid #203b60
-          color: #acd3e6
-          
-          &[meta]:before
-            background: #fff
-            color: #203b60
-          
-          &:hover
-            background: #4B9BB6
-            color: #fff
+        &[meta]:before
+          background: #fff
+          color: #203b60
+        
+        &:hover
+          background: #4B9BB6
+          color: #fff
       
       &:hover
         
-        >a
+        >a[href]
           background: #2B4D7A
           border-color: #203b60
           color: #fff !important
@@ -65,6 +61,8 @@ body
             border-top-color: #fff
         
         >ul
+          background: #2B4D7A
+          +bg_gradient(#2B4D7A,#406AA2)
           border: 1px solid #203b60
           +box_shadow(0 0 5px rgba(#000,.5))
       
@@ -79,6 +77,9 @@ body
       
       &.signup >a:before
         background-position: -120px 0
+      
+      &.signup:hover >a:before
+        background-position: -120px -30px
   
 button,
 .button,
@@ -706,7 +707,8 @@ button,
             background: #859eb8
             color: #E2EDF5
             
-            &:hover
+            &:hover,
+            &:focus
               background: #1295CA
               color: #fff
           
@@ -753,7 +755,8 @@ button,
       background: #42639B
       color: #E2EDF5
       
-      &:hover
+      &:hover,
+      &:focus
         background: #1295CA
         color: #fff
 

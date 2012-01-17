@@ -429,8 +429,8 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "css"
-    t.string   "author"
-    t.string   "author_url"
+    t.string   "background_author"
+    t.string   "background_author_url"
     t.string   "thumbnail"
   end
 
