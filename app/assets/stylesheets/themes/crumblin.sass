@@ -338,6 +338,19 @@ button,
     
   dfn.hint
     color: #888
+  
+  .field_with_errors
+  
+    input[type="url"],
+    input[type="email"],
+    input[type="text"],
+    input[type="password"],
+    textarea
+      border-color: #A13A32 !important
+  
+  mark.error
+    background: #A13A32 !important
+    color: #fff !important
     
   .submit
     +bg_gradient(#ddd,rgba(#fff,0))
@@ -669,11 +682,7 @@ button,
             background: #eee
         
         .question_with_errors
-          border-color: #A53E31
-          
-          mark.error
-            background: #A53E31
-            color: #fff
+          border-color: #A13A32
 
     .add a
       background: #227FB5

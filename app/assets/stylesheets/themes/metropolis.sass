@@ -42,7 +42,7 @@ body
         
         >li >a
           border-top: 1px solid #467f86
-          color: #1A3C47
+          color: #06151F
           
           &[meta]:before
             background: #2f8100
@@ -105,6 +105,9 @@ button,
   h2,
   h3
     color: #a4c773
+  
+  h2 + fieldset
+    border-color: #183C47
   
   time
     color: #A6C470
@@ -334,6 +337,19 @@ button,
     
   dfn.hint
     color: #427F86
+  
+  .field_with_errors
+  
+    input[type="url"],
+    input[type="email"],
+    input[type="text"],
+    input[type="password"],
+    textarea
+      border-color: #A13A32 !important
+  
+  mark.error
+    background: #A13A32 !important
+    color: #fff !important
     
   .submit
     +bg_gradient(#1A3C47,rgba(#06161f,0))
@@ -395,7 +411,7 @@ button,
 
   article time
     border-bottom-color: #183C47
-
+  
 
   // COMMENTS
 
@@ -513,7 +529,7 @@ button,
         background: #2F5D62
         
         .avatar
-          background: #2F5D62
+          background: #898C6D
           border-color: #05161F !important
         
         &:hover
@@ -544,9 +560,10 @@ button,
         &:focus,
         &.open
           background: #CAE5E6
+          color: #06151F
       
       &.busy:after
-        background-color: rgba(#387B00,.1)
+        background-color: rgba(#A4C773,.5)
       
       >label:before
         background-color: #305D62
@@ -649,34 +666,34 @@ button,
       ul.questions
         
         >li
-          +bg_gradient(#eee,rgba(#fff,0))
-          border-top-color: #ccc
+          +bg_gradient(#325D62,#06151F)
+          border-top-color: #457F86
               
           a.remove
-            background: #999
-            color: #eee
+            background: #5A969E
+            color: #fff
             
             &:hover
-              background: #e05c2e
-              color: #fff
+              background: #a4c773
+              color: #173B46
               
           >div.right .answers li
-            background: #eee
+            background: #325D62
         
         .question_with_errors
-          border-color: #A53E31
+          border-color: #A13A32
           
           mark.error
-            background: #A53E31
+            background: #A2CA76
             color: #fff
 
     .add a
-      background: #227FB5
-      color: #CCEBFF
+      background: #A9B795
+      color: #06151F
       
       &:hover
-        background: #e05c2e
-        color: #fff
+        background: #a4c773
+        color: #173B46
 
 
   // ROLES & PERMISSIONS
