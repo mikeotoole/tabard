@@ -37,8 +37,18 @@ class Role < ActiveRecord::Base
 ###
   delegate :admin_profile_id, :to => :community, :prefix => true
 
+###
+# Callbacks
+###
   after_create :setup_permission_defaults
 
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
   # This method is a helper for validation
   def is_empty_permission?(attributed)
     attributed['permission_level'].blank? and not attributed['can_lock'] and not attributed['can_accept'] and not attributed['can_read'] and not attributed['can_create'] and not attributed['can_update'] and not attributed['can_destroy']
@@ -54,6 +64,7 @@ class Role < ActiveRecord::Base
       return permission_match ? permission_match : Permission.new(role: self, subject_class: resource.class, id_of_subject: resource.id)
     end
   end
+
   # This method gets the permissions for a nested resource. It is used by the permission view.
   def nested_permissions_for_resource(resource)
     case resource.class.to_s
@@ -70,6 +81,7 @@ class Role < ActiveRecord::Base
         return nil
     end
   end
+
   # This method gets the permission defaults for a resource. It is used by the permission view.
   def permissions_defaults_for_resource(resource)
     if resource.is_a?(String)
@@ -120,18 +132,6 @@ class Role < ActiveRecord::Base
     self.community.member_role.id == self.id
   end
 
-  # This method sets up the default permissions if they are not defined.
-  def setup_permission_defaults
-    return if self.permission_defaults.size > 0 or not self.persisted?
-    self.permission_defaults.create(object_class: "CustomForm",
-          permission_level: "View")
-    self.permission_defaults.create(object_class: "DiscussionSpace",
-          permission_level: "View",
-          can_create_nested: true)
-    self.permission_defaults.create(object_class: "PageSpace",
-      permission_level: "View")
-  end
-
   # This method applys the default permissions for an item.
   def apply_default_permissions(some_thing)
     template = self.permission_defaults.find_by_object_class(some_thing.class.to_s)
@@ -173,6 +173,26 @@ class Role < ActiveRecord::Base
           can_accept: template.can_accept_nested)
       end
     end
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+### 
+  # This method sets up the default permissions if they are not defined.
+  def setup_permission_defaults
+    return if self.permission_defaults.size > 0 or not self.persisted?
+    self.permission_defaults.create(object_class: "CustomForm",
+          permission_level: "View")
+    self.permission_defaults.create(object_class: "DiscussionSpace",
+          permission_level: "View",
+          can_create_nested: true)
+    self.permission_defaults.create(object_class: "PageSpace",
+      permission_level: "View")
   end
 end
 

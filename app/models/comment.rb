@@ -120,9 +120,9 @@ class Comment < ActiveRecord::Base
   def destroy
     if self.comments.where(:is_removed => false).empty?
       self.comments.destroy_all
-      self.update_attribute(:deleted_at, Time.now)
+      self.update_attribute(:deleted_at, Time.now) if Comment.exists?(self)
     else
-      self.update_attribute(:is_removed, true)
+      self.update_attribute(:is_removed, true) if Comment.exists?(self)
     end
   end
 

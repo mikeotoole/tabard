@@ -37,7 +37,7 @@ class Community < ActiveRecord::Base
   has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
 
-  has_many :community_profiles, :dependent => :destroy
+  has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
@@ -56,6 +56,7 @@ class Community < ActiveRecord::Base
 ###
   before_save :update_subdomain
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
+  after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
 # Validators
@@ -311,6 +312,27 @@ protected
       permission_level: "View",
       can_lock: false,
       can_accept: false)
+  end
+  
+  ###
+  # _after_destroy_
+  #
+  # The method will destory the admin_community_profile and member role. This is necessary becouse of the community_profile validators.
+  ###
+  def destroy_admin_community_profile_and_member_role
+    roles = Role.where(:community_id => self.id)
+    admin_community_profile = self.community_profiles.where(:user_profile_id => self.admin_profile.id).first
+    if Community.with_deleted.exists?(self)
+      admin_community_profile.destroy if admin_community_profile
+      roles.each do |role|
+        role.destroy
+      end
+    else
+      admin_community_profile.destroy! if admin_community_profile
+      roles.each do |role|
+        role.destroy!
+      end
+    end
   end
 end
 
