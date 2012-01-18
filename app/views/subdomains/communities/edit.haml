@@ -3,6 +3,30 @@
 %h1 Community Settings
 
 = simple_form_for @community, :html => {:novalidate => true} do |f|
-  = render 'communities/fields', :f => f, :community => @community
+
+  %section.left
+    %h2 Options
+    %fieldset
+      %ol
+        = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
+        = f.input :is_accepting_members, :label => "Accepting new members?"
+        = f.input :email_notice_on_application, :label => "Notify me when an application is submitted."
+        = f.input :is_public_roster, :as => :boolean, :label => "Make the community roster public."
+        = f.input :is_protected_roster, :as => :boolean, :label => "Roster changes require approval."
+
+  %section.right
+    %h2 Appearance
+    %fieldset
+      %ol
+        %li.select
+          = f.association :theme, :as => :radio, :collection => Theme.all, :wrapper => false
+        %li
+          %label Background Image (optional)
+          = image_tag(community.background_image_url :thumbnail) unless community.background_image_url == '/assets/application/blank.gif'
+          = f.input :background_image_cache, :as => :hidden
+          = f.input :background_image, :as => :file, :label => false
+        = f.input :remove_background_image, :as => :boolean, :label => 'remove current image'
+        = f.input :background_color, :as => :string        
+
   %p.submit
     = f.button :submit, 'Save Changes'
