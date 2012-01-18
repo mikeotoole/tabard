@@ -4,6 +4,9 @@
   %h1 Create a community
 
   = simple_form_for @community, :html => {:novalidate => true} do |f|
-    = render 'fields', :f => f, :community => @community
-    %p.submit
-      = f.button :submit, 'Create Community'
+    %fieldset
+      %ol
+        = f.input :name, :input_html => { :maxlength => Community::MAX_NAME_LENGTH }
+        = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
+      %p
+        %button{ :type => 'submit' } Create Community

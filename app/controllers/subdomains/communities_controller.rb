@@ -22,7 +22,11 @@ class Subdomains::CommunitiesController < SubdomainsController
 
   # PUT /communities/:id(.:format)
   def update
-    @community.update_attributes(params[:community])
-    respond_with(@community)
+    if @community.update_attributes(params[:community])
+      add_new_flash_message 'Your changes have been saved.', 'success'
+    else
+      add_new_flash_message 'Error. Unable to save changes.', 'alert'
+    end
+    respond_with(@community, :location => edit_community_url(@community))
   end
 end

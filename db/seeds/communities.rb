@@ -27,7 +27,11 @@ def create_community(admin_user_last_name, name, slogan, game_array)
         Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
     end
   end
-  theme = Theme.find(:first, :offset =>rand(Theme.count))
+  if Theme.count > 1
+    theme = Theme.find(:first, :offset =>rand(Theme.count))
+  else
+    theme = Theme.first
+  end
   puts "#{admin_user.name} is applying #{theme.name} theme to #{name} Community"
   community.theme = theme
   community.save

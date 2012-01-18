@@ -20,7 +20,7 @@ class Community < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :background_image, :remove_background_image, :background_image_cache, :remote_background_image_url
+    :background_color, :background_image, :remove_background_image, :background_image_cache
 
 ###
 # Associations
@@ -58,9 +58,11 @@ class Community < ActiveRecord::Base
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
 
 ###
-# Delegate
+# Delegates
 ###
   delegate :css, :to => :theme, :prefix => true
+  delegate :background_author, :to => :theme, :prefix => true, :allow_nil => true
+  delegate :background_author_url, :to => :theme, :prefix => true, :allow_nil => true
   
 ###
 # Validators
