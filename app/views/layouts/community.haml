@@ -3,7 +3,8 @@
 
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
-    = stylesheet_link_tag "application/community", use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}"
+    = stylesheet_link_tag "application/community"
+    = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image
       %style{:type => "text/css", :media => "screen"}
         - if current_community.background_color

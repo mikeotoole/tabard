@@ -19,7 +19,7 @@
     %fieldset
       %ol
         %li.select
-          = f.association :theme, :as => :radio, :collection => Theme.all.collect{|theme| theme = [raw(image_tag("themes/thumbnails/#{theme.thumbnail}", :class => 'big')) + ' ' + theme.name, theme.id]}, :wrapper => false
+          = f.association :theme, :as => :radio, :collection => Theme.all.collect{|theme| theme = [raw(image_tag("themes/thumbnails/#{theme.thumbnail}", :class => 'big', :theme => theme.css)) + ' ' + theme.name, theme.id]}, :wrapper => false
         %li
           %label Custom Background Image
           = image_tag(@community.background_image_url :thumbnail) unless @community.background_image_url == '/assets/application/blank.gif'
@@ -37,11 +37,17 @@
 %script{ :type => 'text/javascript' }
   :plain
     $(document).ready(function(){
+    
+      $('label[for="community_theme_id"] + ul input').change(function(){
+        theme = $(this).find('+ label img').attr('theme');
+        $('head link.theme').attr('href', '/assets/themes/' + theme + '.css');
+      });
 
       $('.color').each(function(){
         input = $(this).find('input');
         color = '#' + input.val();
         input.after('<div class="preview"></div>')
+        $('body').css({ backgroundColor: color });
     		input.next('.preview').css({ background: color });
         input.ColorPicker({
         	color: color,

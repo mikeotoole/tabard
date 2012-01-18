@@ -3,7 +3,7 @@
  * Color picker
  * Author: Stefan Petre www.eyecon.ro
  * 
- * Dual licensed under the MIT and GPL licenses
+ * Licensed under the MIT license
  * 
  */
 (function ($) {

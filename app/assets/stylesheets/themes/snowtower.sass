@@ -115,6 +115,9 @@ button,
   h3
     color: #227FB5
   
+  h2 + fieldset
+    border-color: #D5E3EE
+  
   time
     color: #2E4C72
     
@@ -364,6 +367,10 @@ button,
       
       &:before
         border-color: #fff !important
+    
+    &.field_with_errors .preview
+      border: 1px solid #A13A32 !important
+      padding: 0
 
     input:focus + .preview
       +box_shadow(0 0 10px #31A1D7)
