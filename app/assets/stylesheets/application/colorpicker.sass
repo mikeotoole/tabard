@@ -1,0 +1,147 @@
+@import mixins
+
+#content
+
+  .color
+    position: relative
+  
+    .preview
+      background: #fff
+      border: 1px solid #fff
+      +border_radius(3)
+      height: 30px
+      left: 0
+      position: absolute
+      top: 21px
+      +transition(box-shadow .2s linear)
+      width: 30px
+      z-index: 2
+      
+      &:before
+        border: 1px solid #000
+        +border_radius(3)
+        bottom: 0
+        content: ''
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+      
+      &:after
+        content: '#'
+        line-height: 28px
+        position: absolute
+        top: 2px
+        right: -30px
+    
+    input
+      position: relative
+      margin-left: 35px
+      text-indent: 15px
+      width: 151px
+
+.colorpicker
+  background: image-url('colorpicker/background.png')
+  display: none
+  height: 176px
+  margin: 0 0 0 -39px
+  overflow: hidden
+  position: absolute
+  width: 216px
+  z-index: 3
+
+.colorpicker_color
+  background: #f00
+  cursor: crosshair
+  height: 150px
+  left: 14px
+  overflow: hidden
+  position: absolute
+  top: 13px
+  width: 150px
+
+.colorpicker_color div
+  background: image-url('colorpicker/overlay.png')
+  height: 150px
+  left: 0
+  position: absolute
+  top: 0
+  width: 150px
+
+.colorpicker_color div div
+  background: image-url('colorpicker/select.gif')
+  height: 11px
+  left: 0
+  position: absolute
+  margin: -5px 0 0 -5px
+  overflow: hidden
+  top: 0
+  width: 11px
+
+.colorpicker_hue
+  cursor: n-resize
+  left: 171px
+  position: absolute
+  height: 150px
+  top: 13px
+  width: 35px
+
+.colorpicker_hue div
+  background: image-url('colorpicker/indic.gif') left top
+  height: 9px
+  left: 0px
+  margin: -4px 0 0 0
+  overflow: hidden
+  position: absolute
+  width: 35px
+
+.colorpicker_new_color,
+.colorpicker_current_color,
+.colorpicker input,
+.colorpicker_hex,
+.colorpicker_hex input
+  display: none
+
+.colorpicker_field
+  background-position: top
+  height: 22px
+  position: absolute
+  width: 62px
+
+.colorpicker_field span
+  cursor: n-resize
+  height: 22px
+  overflow: hidden
+  position: absolute
+  right: 0
+  top: 0
+  width: 12px
+
+.colorpicker_rgb_r,
+.colorpicker_rgb_g,
+.colorpicker_rgb_b,
+.colorpicker_hsb_h,
+.colorpicker_hsb_s,
+.colorpicker_hsb_b
+  display: none
+
+.colorpicker_submit
+  background: image-url('colorpicker/submit.png') top
+  height: 22px
+  left: 322px
+  overflow: hidden
+  position: absolute
+  top: 142px
+  width: 22px
+
+.colorpicker_focus
+  background-position: center
+
+.colorpicker_hex.colorpicker_focus
+  background-position: bottom
+
+.colorpicker_submit.colorpicker_focus
+  background-position: bottom
+
+.colorpicker_slider
+  background-position: bottom

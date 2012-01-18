@@ -19,14 +19,36 @@
     %fieldset
       %ol
         %li.select
-          = f.association :theme, :as => :radio, :collection => Theme.all, :wrapper => false
+          = f.association :theme, :as => :radio, :collection => Theme.all.collect{|theme| theme = [raw(image_tag("themes/thumbnails/#{theme.thumbnail}", :class => 'big')) + ' ' + theme.name, theme.id]}, :wrapper => false
         %li
-          %label Background Image (optional)
-          = image_tag(community.background_image_url :thumbnail) unless community.background_image_url == '/assets/application/blank.gif'
+          %label Custom Background Image
+          = image_tag(@community.background_image_url :thumbnail) unless @community.background_image_url == '/assets/application/blank.gif'
           = f.input :background_image_cache, :as => :hidden
           = f.input :background_image, :as => :file, :label => false
-        = f.input :remove_background_image, :as => :boolean, :label => 'remove current image'
-        = f.input :background_color, :as => :string        
+        - unless @community.background_image_url == '/assets/application/blank.gif'
+          = f.input :remove_background_image, :as => :boolean, :label => 'Remove image'
+        = f.input :background_color, :as => :string, :label => 'Optional Background Color', :input_html => { :maxlength => 6 }, :wrapper_html => { :class => 'color' }
 
   %p.submit
     = f.button :submit, 'Save Changes'
+
+= stylesheet_link_tag "application/colorpicker"
+= javascript_include_tag "colorpicker"
+%script{ :type => 'text/javascript' }
+  :plain
+    $(document).ready(function(){
+
+      $('.color').each(function(){
+        input = $(this).find('input');
+        color = '#' + input.val();
+        input.after('<div class="preview"></div>')
+    		input.next('.preview').css({ background: color });
+        input.ColorPicker({
+        	color: color,
+        	onChange: function (hsb, hex, rgb) {
+        		$('body').css({ backgroundColor: '#' + hex });
+        		input.val(hex).next('.preview').css({ background: '#' + hex });
+        	}
+        });
+      });
+    });

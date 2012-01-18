@@ -309,6 +309,9 @@ button,
           padding: 5px 10px
           text-indent: 0
           
+          em
+            font-family: DinLight, sans-serif
+          
           &:before,
           &:after
             display: none
@@ -321,6 +324,10 @@ button,
         
         img.avatar
           width: 20px
+        
+        img.big
+          border: 1px solid
+          +border_radius(3)
         
         input
           left: -500em
@@ -342,6 +349,12 @@ button,
         
             .avatar
               margin: 3px 5px 3px -5px
+            
+            .big
+              float: left
+              height: 20px
+              margin: 3px 10px 0 0
+              width: 30px
   
       &:hover
         height: auto

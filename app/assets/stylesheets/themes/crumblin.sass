@@ -336,6 +336,19 @@ button,
         background: #2d7cb4 !important
         border-color: #015c86
         color: #fff !important
+  
+  .color
+
+    .preview
+      border: 0 !important
+      +box_shadow(0 0 3px rgba(#000,.2))
+      padding: 1px
+      
+      &:before
+        border-color: #fff !important
+
+    input:focus + .preview
+      +box_shadow(0 0 8px #2d7cb4)
     
   dfn.hint
     color: #888

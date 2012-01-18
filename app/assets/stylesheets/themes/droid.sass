@@ -78,7 +78,7 @@ body
       &.signup >a:before
         background-position: -120px -30px
         
-      &.signup >a:before
+      &.signup:hover >a:before
         background-position: -120px 0
   
 button,
@@ -379,6 +379,22 @@ button,
         background: #FFFF69 !important
         border-color: #313F2C
         color: #000 !important
+  
+  .color
+
+    .preview
+      border: 0 !important
+      +box_shadow(0 0 3px #759c7d)
+      padding: 1px
+      
+      &:before
+        border-color: #080A09 !important
+      
+      &:after
+        color: #080A09
+
+    input:focus + .preview
+      +box_shadow(0 0 8px #D5E7D9)
     
   dfn.hint
     color: #5B7E62
