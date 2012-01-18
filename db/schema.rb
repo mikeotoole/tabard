@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.string   "background_image"
     t.string   "background_color"
     t.integer  "theme_id"
+    t.string   "title_color"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"

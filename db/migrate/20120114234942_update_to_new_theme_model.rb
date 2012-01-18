@@ -8,6 +8,7 @@ class UpdateToNewThemeModel < ActiveRecord::Migration
     add_column :communities, :theme_id, :integer
     add_index :communities, :theme_id
     remove_column :themes, :predefined_theme
+    add_column :communities, :title_color, :string
 
     add_column :themes, :name, :string
     add_column :themes, :css, :string
@@ -25,6 +26,7 @@ class UpdateToNewThemeModel < ActiveRecord::Migration
     remove_column :communities, :theme_id
     remove_index :communities, :theme_id
     add_column :themes, :predefined_theme, :string
+    remove_column :communities, :title_color
 
     remove_column :themes, :name
     remove_column :themes, :css

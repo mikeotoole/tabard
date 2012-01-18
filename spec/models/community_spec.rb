@@ -19,6 +19,7 @@
 #  background_image                :string(255)
 #  background_color                :string(255)
 #  theme_id                        :integer
+#  title_color                     :string(255)
 #
 
 require 'spec_helper'

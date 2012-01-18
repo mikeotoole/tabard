@@ -20,7 +20,7 @@ class Community < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :background_image, :remove_background_image, :background_image_cache
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache
 
 ###
 # Associations
@@ -79,6 +79,8 @@ class Community < ActiveRecord::Base
   validates :admin_profile, :presence => true
   validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, 
             :unless => Proc.new{|community| community.background_color.blank? }
+  validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, 
+            :unless => Proc.new{|community| community.title_color.blank? }
 
 ###
 # Uploaders
@@ -334,6 +336,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -355,5 +358,6 @@ end
 #  background_image                :string(255)
 #  background_color                :string(255)
 #  theme_id                        :integer
+#  title_color                     :string(255)
 #
 

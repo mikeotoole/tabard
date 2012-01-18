@@ -28,6 +28,7 @@
         - unless @community.background_image_url == '/assets/application/blank.gif'
           = f.input :remove_background_image, :as => :boolean, :label => 'Remove image'
         = f.input :background_color, :as => :string, :label => 'Optional Background Color', :input_html => { :maxlength => 6 }, :wrapper_html => { :class => 'color' }
+        = f.input :title_color, :as => :string, :label => 'Optional Title Text Color', :input_html => { :maxlength => 6 }, :wrapper_html => { :class => 'color' }
 
   %p.submit
     = f.button :submit, 'Save Changes'
@@ -43,17 +44,32 @@
         $('head link.theme').attr('href', '/assets/themes/' + theme + '.css');
       });
 
-      $('.color').each(function(){
-        input = $(this).find('input');
-        color = '#' + input.val();
-        input.after('<div class="preview"></div>')
+      $('#community_background_color').closest('.color').each(function(){
+        input_bg_color = $('#community_background_color');
+        color = '#' + input_bg_color.val();
+        input_bg_color.after('<div class="preview"></div>')
         $('body').css({ backgroundColor: color });
-    		input.next('.preview').css({ background: color });
-        input.ColorPicker({
+    		input_bg_color.next('.preview').css({ background: color });
+        input_bg_color.ColorPicker({
         	color: color,
         	onChange: function (hsb, hex, rgb) {
         		$('body').css({ backgroundColor: '#' + hex });
-        		input.val(hex).next('.preview').css({ background: '#' + hex });
+        		input_bg_color.val(hex).next('.preview').css({ background: '#' + hex });
+        	}
+        });
+      });
+
+      $('#community_title_color').closest('.color').each(function(){
+        input_title_color = $('#community_title_color');
+        color = '#' + input_title_color.val();
+        input_title_color.after('<div class="preview"></div>')
+        $('#header .title').css({ textShadow: 'none', color: color });
+    		input_title_color.next('.preview').css({ background: color });
+        input_title_color.ColorPicker({
+        	color: color,
+        	onChange: function (hsb, hex, rgb) {
+            $('#header .title').css({ textShadow: 'none', color: '#' + hex });
+        		input_title_color.val(hex).next('.preview').css({ background: '#' + hex });
         	}
         });
       });
