@@ -174,15 +174,7 @@ class Role < ActiveRecord::Base
       end
     end
   end
-
-###
-# Protected Methods
-###
-protected
-
-###
-# Callback Methods
-### 
+ 
   # This method sets up the default permissions if they are not defined.
   def setup_permission_defaults
     return if self.permission_defaults.size > 0 or not self.persisted?
