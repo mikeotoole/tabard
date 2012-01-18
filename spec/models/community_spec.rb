@@ -41,11 +41,39 @@ describe Community do
       community2.save.should be_true
       community2.member_role.should_not be_nil
     end
+    it "should have a default theme" do
+      community2 = build(:community, :theme => nil)
+      community2.save.should be_true
+      community2.member_role.should_not be_nil
+    end
+  end
+
+  describe "background_color" do
+    it "should allow blank" do
+      build(:community, :background_color => "").should be_valid
+    end
+    it "should accept valid format" do
+      valid_names = %w{ 111111 000000 1AA1AA FFFFFF } # TESTING Valid community names for testing.
+      valid_names.each do |name|
+        build(:community, :background_color => name).should be_valid
+      end
+    end
+
+    it "should reject invalid format" do
+      invalid_names = %w{ #111111111 #111111 aBcDEFD } # TESTING Invalid community names for testing.
+      invalid_names.each do |name|
+        build(:community, :background_color => name).should_not be_valid
+      end
+    end
   end
 
   describe "name" do
     it "should be required" do
       build(:community, :name => nil).should_not be_valid
+    end
+
+    it "should be unique" do
+      build(:community, :name => community.name).should_not be_valid
     end
 
     it "should accept valid format" do
