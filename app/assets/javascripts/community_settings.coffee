@@ -35,10 +35,10 @@ $(document).ready ->
       input_title_color.val ''
       input_title_color.siblings('.preview').css 'background', ''
       $('body').removeClass 'theme'
-      $('#content, .title').css 'color', ''
+      $('#content, .title').css { color: '', textShadow: '' }
       return false
     input_title_color.ColorPicker
       color: color
       onChange: (hsb, hex, rgb) ->
-        $('#header .title').css 'color', '#' + hex
+        $('#header .title').css { color: '#' + hex, textShadow: 'none' }
         input_title_color.val(hex).next('.preview').css 'background', '#' + hex
