@@ -7,17 +7,17 @@
     = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
       %style{:type => "text/css", :media => "screen"}
-        - if current_community.background_color
-          = "body { background-color: ##{current_community.background_color}; }"
         - if current_community.title_color
-          = "#header .title { color: ##{current_community.title_color}; text-shadow: none; }"
+          = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
+        - if current_community.background_color
+          = "body.theme , body.theme #content { background-color: ##{current_community.background_color}; }"
         - unless current_community.background_image_url == '/assets/application/blank.gif'
           = "#content { background-image: url(#{current_community.background_image_url(:standard)}); }"
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-  %body
+  %body.theme
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
 
