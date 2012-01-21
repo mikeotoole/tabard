@@ -12,7 +12,7 @@
         - if current_community.title_color
           = "#header .title { color: ##{current_community.title_color}; text-shadow: none; }"
         - unless current_community.background_image_url == '/assets/application/blank.gif'
-          = "body { background-image: url(#{current_community.background_image_url(:standard)}); }"
+          = "#content { background-image: url(#{current_community.background_image_url(:standard)}); }"
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags

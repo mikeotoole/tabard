@@ -34,43 +34,4 @@
     = f.button :submit, 'Save Changes'
 
 = stylesheet_link_tag "application/colorpicker"
-= javascript_include_tag "colorpicker"
-%script{ :type => 'text/javascript' }
-  :plain
-    $(document).ready(function(){
-    
-      $('label[for="community_theme_id"] + ul input').change(function(){
-        theme = $(this).find('+ label img').attr('theme');
-        $('head link.theme').attr('href', '/assets/themes/' + theme + '.css');
-      });
-
-      $('#community_background_color').closest('.color').each(function(){
-        input_bg_color = $('#community_background_color');
-        color = '#' + input_bg_color.val();
-        input_bg_color.after('<div class="preview"></div>')
-        $('body').css({ backgroundColor: color });
-    		input_bg_color.next('.preview').css({ background: color });
-        input_bg_color.ColorPicker({
-        	color: color,
-        	onChange: function (hsb, hex, rgb) {
-        		$('body').css({ backgroundColor: '#' + hex });
-        		input_bg_color.val(hex).next('.preview').css({ background: '#' + hex });
-        	}
-        });
-      });
-
-      $('#community_title_color').closest('.color').each(function(){
-        input_title_color = $('#community_title_color');
-        color = '#' + input_title_color.val();
-        input_title_color.after('<div class="preview"></div>')
-        $('#header .title').css({ textShadow: 'none', color: color });
-    		input_title_color.next('.preview').css({ background: color });
-        input_title_color.ColorPicker({
-        	color: color,
-        	onChange: function (hsb, hex, rgb) {
-            $('#header .title').css({ textShadow: 'none', color: '#' + hex });
-        		input_title_color.val(hex).next('.preview').css({ background: '#' + hex });
-        	}
-        });
-      });
-    });
+= javascript_include_tag "colorpicker","community_settings"
