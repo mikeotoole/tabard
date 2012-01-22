@@ -68,6 +68,25 @@ describe Community do
     end
   end
 
+  describe "title_color" do
+    it "should allow blank" do
+      build(:community, :title_color => "").should be_valid
+    end
+    it "should accept valid format" do
+      valid_names = %w{ 111111 000000 1AA1AA FFFFFF } # TESTING Valid community names for testing.
+      valid_names.each do |name|
+        build(:community, :title_color => name).should be_valid
+      end
+    end
+
+    it "should reject invalid format" do
+      invalid_names = %w{ #111111111 #111111 aBcDEFD } # TESTING Invalid community names for testing.
+      invalid_names.each do |name|
+        build(:community, :title_color => name).should_not be_valid
+      end
+    end
+  end
+
   describe "name" do
     it "should be required" do
       build(:community, :name => nil).should_not be_valid
