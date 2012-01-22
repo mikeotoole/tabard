@@ -6,8 +6,11 @@
 # This class represents an application to a community.
 ###
 class CommunityApplication < ActiveRecord::Base
+  # Used by mailer to add links to application.
+  include Rails.application.routes.url_helpers
 
-include Rails.application.routes.url_helpers
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
 
 ###
 # Attribute accessible
@@ -25,7 +28,7 @@ include Rails.application.routes.url_helpers
 ###
   belongs_to :community
   belongs_to :user_profile
-  belongs_to :submission
+  belongs_to :submission, :dependent => :destroy
   belongs_to :status_changer, :class_name => "UserProfile"
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
@@ -63,33 +66,9 @@ include Rails.application.routes.url_helpers
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :avatar_url, :to => :user_profile, :prefix => true
 
-  ###
-  # _before_create_
-  #
-  # This method sets the application to pending.
-  ###
-  def assign_pending_status
-    self.status = "Pending"
-  end
-
-  ###
-  # _before_create_
-  #
-  # This method send a message to the community admin, if the community settings specify this.
-  ###
-  def message_community_admin
-    # TODO Doug/Bryan, Determine what message content should be.
-    if self.community.email_notice_on_application
-      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
-
-      message = Message.new(:subject => "Application Submitted for #{self.community.name}",
-                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})",
-                            :to => [self.community.admin_profile_id])
-      message.is_system_sent = true
-      message.save
-    end
-  end
-
+###
+# Instance Methods
+###
   ###
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
@@ -170,24 +149,62 @@ include Rails.application.routes.url_helpers
     self.submission = Submission.create(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
   end
 
+###
+# Protected Methods
+###
 protected
+
+###
+# Validator Methods
+###
   # This method ensures that the community application for is the custom form for the submission
   def community_and_submission_match
     return unless submission and community
     errors.add(:base, "The submission does not match the community's application form.") unless submission.custom_form == community.community_application_form
   end
+
   # This method ensures that the community application for is the custom form for the submission
   def user_profile_and_submission_match
     return unless submission and user_profile
     errors.add(:base, "The submission does not match this user profile.") unless submission.user_profile == user_profile
   end
+
   # This method ensures that the community application for is the custom form for the submission
   def user_profile_not_a_member
     return unless community and user_profile
     errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
   end
-end
+  
+###
+# Callback Methods
+### 
+  ###
+  # _before_create_
+  #
+  # This method sets the application to pending.
+  ###
+  def assign_pending_status
+    self.status = "Pending"
+  end
 
+  ###
+  # _before_create_
+  #
+  # This method send a message to the community admin, if the community settings specify this.
+  ###
+  def message_community_admin
+    # TODO Doug/Bryan, Determine what message content should be.
+    if self.community.email_notice_on_application
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
+
+      message = Message.new(:subject => "Application Submitted for #{self.community.name}",
+                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})",
+                            :to => [self.community.admin_profile_id])
+      message.is_system_sent = true
+      message.save
+    end
+  end
+end
 
 
 
@@ -203,5 +220,6 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  status_changer_id :integer
+#  deleted_at        :datetime
 #
 

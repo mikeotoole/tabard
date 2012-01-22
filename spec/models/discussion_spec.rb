@@ -11,6 +11,7 @@
 #  is_locked           :boolean         default(FALSE)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  deleted_at          :datetime
 #  has_been_edited     :boolean         default(FALSE)
 #
 
@@ -123,6 +124,64 @@ describe Discussion do
       build(:discussion, :discussion_space_id => DefaultObjects.general_discussion_space.id, 
           :user_profile_id => billy.user_profile.id,
           :character_proxy_id => another_user_profile.character_proxies.first).should_not be_valid
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark discussion as deleted" do
+      discussion.destroy
+      Discussion.exists?(discussion).should be_false
+      Discussion.with_deleted.exists?(discussion).should be_true
+    end
+    
+    it "should mark discussion's view logs as deleted" do
+      view_log = create(:view_log)
+      discussion = view_log.view_loggable
+      discussion.should be_a(Discussion)
+      discussion.destroy
+      ViewLog.exists?(view_log).should be_false
+      ViewLog.with_deleted.exists?(view_log).should be_true
+    end
+    
+    it "should mark all comments as deleted" do
+      comment = create(:comment_with_comment)
+      comment_comment = comment.comments.first
+      discussion = comment.commentable
+      discussion.should be_a(Discussion)
+      discussion.destroy
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_true
+      Comment.exists?(comment_comment).should be_false
+      Comment.with_deleted.exists?(comment_comment).should be_true
+    end
+  end
+  
+  describe "nuke" do
+    it "should delete discussion" do
+      discussion.nuke
+      Discussion.exists?(discussion).should be_false
+      Discussion.with_deleted.exists?(discussion).should be_false
+    end
+    
+    it "should delete discussion's view logs" do
+      view_log = create(:view_log)
+      discussion = view_log.view_loggable
+      discussion.should be_a(Discussion)
+      discussion.nuke
+      ViewLog.exists?(view_log).should be_false
+      ViewLog.with_deleted.exists?(view_log).should be_false
+    end
+    
+    it "should delete all comments" do
+      comment = create(:comment_with_comment)
+      comment_comment = comment.comments.first
+      discussion = comment.commentable
+      discussion.should be_a(Discussion)
+      discussion.nuke
+      Comment.exists?(comment).should be_false
+      Comment.with_deleted.exists?(comment).should be_false
+      Comment.exists?(comment_comment).should be_false
+      Comment.with_deleted.exists?(comment_comment).should be_false
     end
   end
 end

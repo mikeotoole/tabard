@@ -10,6 +10,7 @@
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime
+#  deleted_at   :datetime
 #
 
 require 'spec_helper'
@@ -40,6 +41,33 @@ describe CustomForm do
   describe "community_name" do
     it "should return community name string" do
       form.community_name.should eq(DefaultObjects.community.name)
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark custom_form as deleted" do
+      form.destroy
+      CustomForm.exists?(form).should be_false
+      CustomForm.with_deleted.exists?(form).should be_true
+    end
+    
+    it "should mark custom_form's submissions as deleted" do
+      submission = create(:submission)
+      custom_form = submission.custom_form
+      custom_form.submissions.count.should eq 1
+      
+      custom_form.destroy
+      Submission.exists?(submission).should be_false
+      Submission.with_deleted.exists?(submission).should be_true
+    end
+    
+    it "should mark custom_form's questions as deleted" do
+      question = create(:short_answer_question)
+      custom_form = question.custom_form
+      
+      custom_form.destroy
+      Question.exists?(question).should be_false
+      Question.with_deleted.exists?(question).should be_true
     end
   end
 end

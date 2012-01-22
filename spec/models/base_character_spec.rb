@@ -48,12 +48,52 @@ describe BaseCharacter do
     end
   end
   
-  it "should delete character proxy when destroyed" do
-    character = create(:wow_char_profile)
-    character.should be_valid
-    proxy = character.character_proxy
-    proxy.should be_valid
-    character.destroy.should be_true
-    CharacterProxy.exists?(proxy).should be_false
+  describe "is_disabled?" do
+    it "should return true when character is removed" do
+      character.is_disabled?.should be_false
+      character.destroy
+      character.is_removed.should_not be_false
+      WowCharacter.find(character).is_disabled?.should be_true
+    end
+    
+    it "should return true when character's owner is disabled" do
+      character.user_profile.user.disable_by_admin
+      character.user_profile.is_disabled?.should be_true
+      character.is_removed.should be_false
+      character.is_disabled?.should be_true
+    end
+    
+    it "should return false when not removed and owner is active" do
+      character.user_profile.is_disabled?.should be_false
+      character.is_removed.should be_false
+      character.is_disabled?.should be_false
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark character as is_removed" do
+      character = create(:wow_char_profile)
+      character.should be_valid
+      proxy = character.character_proxy
+      proxy.should be_valid
+      character.destroy.should be_true
+      character.reload.is_removed.should be_true
+    end
+    
+    it "should not delete character proxy" do
+      character = create(:wow_char_profile)
+      character.should be_valid
+      proxy = character.character_proxy
+      proxy.should be_valid
+      character.destroy.should be_true
+      CharacterProxy.exists?(proxy).should be_true
+    end
+    
+    it "should destroy all roster assignments" do
+      roster = create(:roster_assignment)
+      character = roster.character
+      character.destroy.should be_true
+      RosterAssignment.exists?(roster).should be_false
+    end
   end
 end

@@ -11,7 +11,7 @@ class CharacterProxy < ActiveRecord::Base
 ###
   belongs_to :user_profile
   belongs_to :character, :polymorphic => true, :dependent => :destroy
-  has_many :roster_assignments
+  has_many :roster_assignments, :dependent => :destroy
   has_many :community_profiles, :through => :roster_assignments
   has_and_belongs_to_many :community_applications
 
@@ -46,42 +46,26 @@ class CharacterProxy < ActiveRecord::Base
     CharacterProxy.all.collect!{|proxy| proxy.character}
   end
 
-  ###
-  # This method gets the user profile for a character.
-  # [Args]
-  # * +character+ -> The character to use in the search.
-  # [Returns] A user_profile for the character argument, otherwise nil.
-  ###
-  def self.character_user_profile(character)
-    proxy = CharacterProxy.find_by_character_id(character.id)
-    profile = proxy.user_profile if proxy
-    profile
-  end
-
 ###
 # Instance Methods
 ###
-  ###
-  # Sets this character proxy as default for characters game.
-  ###
-  def set_as_default
-    self.update_attributes(:is_default_character => true) unless self.is_default_character
+  # Overrides the destroy to only mark as deleted and removes character from any rosters.
+  def destroy
+    self.character.destroy
   end
 end
-
-
 
 
 # == Schema Information
 #
 # Table name: character_proxies
 #
-#  id                   :integer         not null, primary key
-#  user_profile_id      :integer
-#  character_id         :integer
-#  character_type       :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
-#  is_default_character :boolean         default(FALSE)
+#  id              :integer         not null, primary key
+#  user_profile_id :integer
+#  character_id    :integer
+#  character_type  :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  is_removed      :boolean         default(FALSE)
 #
 

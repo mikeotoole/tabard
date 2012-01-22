@@ -6,6 +6,9 @@
 # This class represents an answer.
 ###
 class Answer < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Attribute accessible
 ###
@@ -35,11 +38,37 @@ class Answer < ActiveRecord::Base
 # Callbacks
 ###
   before_save :try_to_replicate
+  before_destroy :dont_orphan_question
 
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+
+  ###
+  # _before_save_
+  #
   # This trys to transform the body from an array to a comma separated string.
+  ###
   def try_to_replicate
     if self.body.is_a?(Array)
       self.body = self.body.delete_if{|elem| elem.blank?}.join(', ')
+    end
+  end
+
+  ###
+  # _before_destroy_
+  #
+  # This makes sure that deleting this answer is not orphaning a question.
+  # If it would the question is deleted too.
+  ###
+  def dont_orphan_question
+    if self.question and not self.question.custom_form_id and self.question.answers.count < 2
+      self.question.update_attribute(:deleted_at, Time.now)
     end
   end
 end
@@ -56,5 +85,6 @@ end
 #  submission_id :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  deleted_at    :datetime
 #
 

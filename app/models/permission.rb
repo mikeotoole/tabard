@@ -6,6 +6,9 @@
 # This class represents a permission.
 ###
 class Permission < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -112,5 +115,6 @@ end
 #  can_create                     :boolean         default(FALSE)
 #  can_update                     :boolean         default(FALSE)
 #  can_destroy                    :boolean         default(FALSE)
+#  deleted_at                     :datetime
 #
 

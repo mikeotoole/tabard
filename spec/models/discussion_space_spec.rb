@@ -9,6 +9,7 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  is_announcement_space :boolean         default(FALSE)
+#  deleted_at            :datetime
 #
 
 require 'spec_helper'
@@ -54,5 +55,22 @@ describe DiscussionSpace do
   it "should not allow access to is_announcement_space flag" do
     wow_space.update_attributes(:is_announcement_space => true).should be_true
     DiscussionSpace.find(wow_space).is_announcement_space.should be_false
+  end
+  
+  describe "destroy" do
+    it "should mark discussion_space as deleted" do
+      space.destroy
+      DiscussionSpace.exists?(space).should be_false
+      DiscussionSpace.with_deleted.exists?(space).should be_true
+    end
+    
+    it "should mark discussion_space's discussions as deleted" do
+      discussion = create(:discussion)
+      space = discussion.discussion_space
+      
+      space.destroy
+      Discussion.exists?(discussion).should be_false
+      Discussion.with_deleted.exists?(discussion).should be_true
+    end
   end
 end

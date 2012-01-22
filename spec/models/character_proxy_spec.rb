@@ -2,13 +2,13 @@
 #
 # Table name: character_proxies
 #
-#  id                   :integer         not null, primary key
-#  user_profile_id      :integer
-#  character_id         :integer
-#  character_type       :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
-#  is_default_character :boolean         default(FALSE)
+#  id              :integer         not null, primary key
+#  user_profile_id :integer
+#  character_id    :integer
+#  character_type  :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  is_removed      :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -27,12 +27,19 @@ describe CharacterProxy do
     build(:character_proxy, :character => nil).should_not be_valid
   end
   
-  it "should delete character when destroyed" do
+  it "should mark character as removed character when destroyed" do
     character = create(:wow_char_profile)
     character.should be_valid
     character.character_proxy.should be_valid
     character.character_proxy.destroy.should be_true
-    WowCharacter.exists?(character).should be_false
+    WowCharacter.find(character).is_removed.should be_true
+  end
+  
+  it "should remove all roster assignments when destroyed" do
+    roster = create(:roster_assignment)
+    character_proxy = roster.character_proxy
+    character_proxy.destroy.should be_true
+    RosterAssignment.exists?(roster).should be_false
   end
 
 ###
@@ -44,11 +51,4 @@ describe CharacterProxy do
     CharacterProxy.all_characters.count.should 
       eq(billy.user_profile.character_proxies.count)
   end
-  
-  it "character_user_profile should return the user profile for the character" do
-    character = create(:wow_char_profile)
-    user_profile = CharacterProxy.character_user_profile(character)
-    user_profile.id.should eq(DefaultObjects.user_profile.id)
-  end
-
 end

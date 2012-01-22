@@ -8,6 +8,9 @@
 class Community < ActiveRecord::Base
 # TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
 
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -30,16 +33,17 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
-  has_many :roles, :dependent => :destroy
+  has_many :custom_forms, :dependent => :destroy
 
   has_many :supported_games, :dependent => :destroy
   has_many :game_announcement_spaces, :through => :supported_games
 
-  has_many :custom_forms, :dependent => :destroy
-  has_many :community_profiles, :dependent => :destroy
+  has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
+  has_many :roles, :dependent => :destroy
+  
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
@@ -56,6 +60,7 @@ class Community < ActiveRecord::Base
 ###
   before_save :update_subdomain
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
+  after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
 # Delegates
@@ -68,7 +73,6 @@ class Community < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true,
-                    :uniqueness => { :case_sensitive => false },
                     :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
                     :length => { :maximum => MAX_NAME_LENGTH }
   validates :name, :community_name => true, :on => :create
@@ -90,7 +94,6 @@ class Community < ActiveRecord::Base
 ###
 # Public Methods
 ###
-
   ###
   # This method checks if a given user can apply to the community
   # [Args]
@@ -107,8 +110,7 @@ class Community < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
-
+  # Returns all games that this community supports
   def games
     self.supported_games.collect { |a| a.game }
   end
@@ -159,6 +161,13 @@ class Community < ActiveRecord::Base
     self.roles.each do |role|
       role.apply_default_permissions(some_thing)
     end
+  end
+
+  # This will force community and its comments and discussions to be fully removed.
+  def nuke
+    self.community_applications.each{|application| application.comments.each{|comment| comment.nuke}}
+    self.discussions.each{|discussion| discussion.nuke}
+    self.destroy!
   end
 
 ###
@@ -328,9 +337,28 @@ protected
       can_lock: false,
       can_accept: false)
   end
+  
+  ###
+  # _after_destroy_
+  #
+  # The method will destory the admin_community_profile and member role. This is necessary becouse of the community_profile validators.
+  ###
+  def destroy_admin_community_profile_and_member_role
+    roles = Role.where(:community_id => self.id)
+    admin_community_profile = self.community_profiles.where(:user_profile_id => self.admin_profile.id).first
+    if Community.with_deleted.exists?(self)
+      admin_community_profile.destroy if admin_community_profile
+      roles.each do |role|
+        role.destroy
+      end
+    else
+      admin_community_profile.destroy! if admin_community_profile
+      roles.each do |role|
+        role.destroy!
+      end
+    end
+  end
 end
-
-
 
 
 
@@ -355,6 +383,7 @@ end
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
+#  deleted_at                      :datetime
 #  background_image                :string(255)
 #  background_color                :string(255)
 #  theme_id                        :integer

@@ -6,6 +6,9 @@
 # This class represents a site form.
 ###
 class CustomForm < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -15,7 +18,7 @@ class CustomForm < ActiveRecord::Base
   MAX_INSTRUCTIONS_LENGTH = 500
   # Used by validators and view to restrict thank you length
   MAX_THANKYOU_LENGTH = 255
-  
+
 ###
 # Attribute accessible
 ###
@@ -24,6 +27,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Associations
 ###
+  has_many :submissions, :dependent => :destroy
   has_many :questions, :dependent => :destroy, :autosave => true
   accepts_nested_attributes_for :questions, :allow_destroy => true
 
@@ -123,7 +127,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: custom_forms
@@ -136,5 +139,6 @@ end
 #  community_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime
+#  deleted_at   :datetime
 #
 

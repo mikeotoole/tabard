@@ -223,7 +223,7 @@ describe "ActiveAdmin User" do
 
   describe "#disable" do 
     before(:each) do
-      user.is_admin_disabled.should be_false
+      user.admin_disabled_at.should be_nil
     end
 
     it "disables user when logged in as superadmin" do
@@ -231,9 +231,7 @@ describe "ActiveAdmin User" do
       
       page.driver.put("/admin/users/#{user.id}/disable")
       updated_user = User.find(user)
-      updated_user.is_admin_disabled.should be_true
       updated_user.admin_disabled_at.should_not be_nil
-      updated_user.is_user_disabled.should be_false
       updated_user.user_disabled_at.should be_nil
     end
     
@@ -241,7 +239,7 @@ describe "ActiveAdmin User" do
       login_as superadmin
       
       page.driver.put("/admin/users/#{user.id}/disable")
-      User.find(user).is_admin_disabled.should be_true
+      User.find(user).admin_disabled_at.should_not be_nil
       user.community_profiles.each do |c_profile|
           CommunityProfile.exists?(c_profile).should be_false
       end
@@ -251,7 +249,7 @@ describe "ActiveAdmin User" do
       login_as superadmin
       
       page.driver.put("/admin/users/#{community_admin.id}/disable")
-      User.find(community_admin).is_admin_disabled.should be_true
+      User.find(community_admin).admin_disabled_at.should_not be_nil
       community_admin.owned_communities.each do |community|
         Community.exists?(community).should be_false
       end
@@ -261,14 +259,14 @@ describe "ActiveAdmin User" do
       login_as admin
 
       page.driver.put("/admin/users/#{user.id}/disable")
-      User.find(user).is_admin_disabled.should be_true
+      User.find(user).admin_disabled_at.should_not be_nil
     end    
     
     it "disables user when logged in as moderator" do
       login_as moderator
 
       page.driver.put("/admin/users/#{user.id}/disable")
-      User.find(user).is_admin_disabled.should be_true
+      User.find(user).admin_disabled_at.should_not be_nil
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -277,46 +275,46 @@ describe "ActiveAdmin User" do
       page.driver.put("/admin/users/#{user.id}/disable") 
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).is_admin_disabled.should be_false
+      User.find(user).admin_disabled_at.should be_nil
     end
     
     it "does not disable user when not logged in" do
       page.driver.put("/admin/users/#{user.id}/disable")
-      User.find(user).is_admin_disabled.should be_false
+      User.find(user).admin_disabled_at.should be_nil
     end
   end  
 
   describe "#reinstate" do
     before(:each) do
-      user.is_admin_disabled = true
-      user.is_user_disabled = true
+      user.admin_disabled_at = Time.now
+      user.user_disabled_at = Time.now
       user.save!
-      user.is_admin_disabled.should be_true
-      user.is_user_disabled.should be_true
+      user.admin_disabled_at.should_not be_nil
+      user.admin_disabled_at.should_not be_nil
     end
   
     it "reinstates user when logged in as superadmin" do
       login_as superadmin
       
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).is_admin_disabled.should be_false
-      User.find(user).is_user_disabled.should be_false
+      User.find(user).admin_disabled_at.should be_nil
+      User.find(user).user_disabled_at.should be_nil
     end 
     
     it "reinstates user when logged in as admin" do
       login_as admin
 
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).is_admin_disabled.should be_false
-      User.find(user).is_user_disabled.should be_false
+      User.find(user).admin_disabled_at.should be_nil
+      User.find(user).user_disabled_at.should be_nil
     end    
     
     it "reinstates user when logged in as moderator" do
       login_as moderator
 
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).is_admin_disabled.should be_false
-      User.find(user).is_user_disabled.should be_false
+      User.find(user).admin_disabled_at.should be_nil
+      User.find(user).user_disabled_at.should be_nil
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -325,14 +323,14 @@ describe "ActiveAdmin User" do
       page.driver.put("/admin/users/#{user.id}/reinstate")
       page.driver.status_code.should eql 403
       page.should have_content('forbidden')
-      User.find(user).is_admin_disabled.should be_true
-      User.find(user).is_user_disabled.should be_true
+      User.find(user).admin_disabled_at.should_not be_nil
+      User.find(user).user_disabled_at.should_not be_nil
     end
     
     it "does not reinstate user when not logged in" do
       page.driver.put("/admin/users/#{user.id}/reinstate")
-      User.find(user).is_admin_disabled.should be_true
-      User.find(user).is_user_disabled.should be_true
+      User.find(user).admin_disabled_at.should_not be_nil
+      User.find(user).user_disabled_at.should_not be_nil
     end
   end
 
@@ -389,11 +387,11 @@ describe "ActiveAdmin User" do
   
   describe "#reset_all_passwords" do
     before(:each) do
-      user
-      user_2
+      create_list(:user, 2)
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
       end
+      User.all.count.should eql 2
     end
    
     it "resets all passwords when logged in as superadmin" do
@@ -402,7 +400,7 @@ describe "ActiveAdmin User" do
       page.driver.post("/admin/users/reset_all_passwords")
       page.driver.status_code.should eql 302
       
-      User.all.each do |this_user|
+      User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
         this_user.reset_password_token.should_not be_nil
       end
     end 
@@ -413,12 +411,12 @@ describe "ActiveAdmin User" do
       page.driver.post("/admin/users/reset_all_passwords")
       page.driver.status_code.should eql 302
       
-      User.all.each do |this_user|
+      User.where(:admin_disabled_at => nil, :user_disabled_at => nil).all.each do |this_user|
         this_user.reset_password_token.should_not be_nil
       end
     end    
     
-    it "resets all passwords when logged in as moderator" do
+    it "returns 403 when logged in as moderator" do
       login_as moderator
 
       page.driver.post("/admin/users/reset_all_passwords")

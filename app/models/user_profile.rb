@@ -21,11 +21,14 @@ class UserProfile < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user, :inverse_of => :user_profile
+
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
-  has_many :character_proxies, :dependent => :destroy
-  has_many :swtor_characters, :through => :character_proxies, :source_type => "SwtorCharacter", :source => :character
-  has_many :wow_characters, :through => :character_proxies, :source_type => "WowCharacter", :source => :character
+
+  has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
+  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter'
+  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter'
+
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcement_spaces, :through => :communities
@@ -34,7 +37,7 @@ class UserProfile < ActiveRecord::Base
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
   has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}, :dependent => :destroy
+  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}
   has_many :folders, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -43,7 +46,7 @@ class UserProfile < ActiveRecord::Base
 # Delegates
 ###
   delegate :email, :to => :user
-  delegate :disabled, :to => :user
+  delegate :is_disabled?, :to => :user
 
 ###
 # Callbacks
@@ -92,6 +95,7 @@ class UserProfile < ActiveRecord::Base
     self.wow_characters + self.swtor_characters
   end
 
+  # TODO Mike, Update this and make it better!
   ###
   # This method will return a cancan ability with the passed community's dynamic rules added in.
   # [Args]
@@ -118,6 +122,7 @@ class UserProfile < ActiveRecord::Base
     available_character_proxies
   end
 
+  # TODO Mike, Is this needed?
   ###
   # This method will return all of the character proxies for this user profile who's character matches the specified game.
   # [Args]
@@ -130,23 +135,6 @@ class UserProfile < ActiveRecord::Base
     proxies = CharacterProxy.where(:user_profile_id => self.id)
 
     proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
-  end
-
-  ###
-  # This method will return all of the character proxies for this user profile who's character matches the specified game.
-  # [Args]
-  #   * +game+ -> The game to scope the proxies by.
-  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
-  ###
-  def default_character_proxy_for_a_game(game)
-    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
-    # FIXME Joe, WTF! Associations why you no work!
-    proxies = CharacterProxy.where(:user_profile_id => self.id)
-
-    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or (not proxy.is_default_character) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
-    proxies = proxies.compact
-    raise RuntimeError.new("too many default characters exception") if proxies.count > 1
-    proxies.first
   end
 
   # This method returns the first name + space + last name
@@ -256,7 +244,7 @@ class UserProfile < ActiveRecord::Base
     if community
       return (Array.new() << (self)).concat(self.available_character_proxies(community,game).map{|proxy| proxy.character})
     else
-      return (Array.new() << (self)).concat(self.character_proxies.map{|proxy| proxy.character})
+      return (Array.new() << (self)).concat(self.characters)
     end
   end
 
@@ -283,6 +271,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array of unviewed messages within the past two weeks.
   ###
   def recent_unread_announcements(community = nil)
+    # TODO Mike, make this better.
     self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago or (community and announcement.community.id != community.id)}
   end
 
@@ -309,6 +298,29 @@ class UserProfile < ActiveRecord::Base
   ###
   def trash
     folders.find_by_name("Trash")
+  end
+
+  # This will remove this user profile's avatar and all character's avatars.
+  def remove_all_avatars
+    self.remove_avatar!
+    characters.each do |character|
+      character.remove_avatar!
+    end
+  end
+
+  # This will destroy forever this user profile and all its associated resources.
+  def nuke
+    self.swtor_characters.each{|swtor_character| swtor_character.delete}
+    self.wow_characters.each{|wow_character| wow_character.delete}
+    self.character_proxies.each{|character_proxy| character_proxy.delete}
+
+    self.owned_communities.each{|community| community.nuke}
+    self.community_profiles.each{|community_profile| community_profile.destroy!}
+    self.view_logs.each{|view_log| view_log.destroy!}
+    self.community_applications.each{|application| application.destroy!}
+
+    self.discussions.each{|discussion| discussion.nuke}
+    self.comments.each{|comment| comment.nuke}
   end
 
 ###

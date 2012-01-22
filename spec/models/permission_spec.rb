@@ -17,6 +17,7 @@
 #  can_create                     :boolean         default(FALSE)
 #  can_update                     :boolean         default(FALSE)
 #  can_destroy                    :boolean         default(FALSE)
+#  deleted_at                     :datetime
 #
 
 require 'spec_helper'
@@ -57,6 +58,14 @@ describe Permission do
       invalid_levels.each do |invalid_level|
         build(:permission, :permission_level => invalid_level).should_not be_valid
       end
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark permission as deleted" do
+      permission.destroy
+      Permission.exists?(permission).should be_false
+      Permission.with_deleted.exists?(permission).should be_true
     end
   end
 end

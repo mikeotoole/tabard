@@ -51,6 +51,6 @@ class SwtorCharactersController < ApplicationController
   def destroy
     add_new_flash_message('Character has been removed.') if @swtor_character and @swtor_character.destroy
 
-    respond_with(@swtor_character)
+    respond_with(@swtor_character, :location => user_profile_url(@swtor_character.user_profile))
   end
 end

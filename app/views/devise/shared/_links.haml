@@ -12,3 +12,5 @@
   - if devise_mapping.omniauthable?
     - resource_class.omniauth_providers.each do |provider|
       %li= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_url(resource_name, provider, :protocol => "http://", :subdomain => false)
+  - if action_name != 'reinstate_confirmation' and action_name != 'send_reinstate'
+    %li= link_to "Reinstate disabled account", reinstate_confirmation_url(:protocol => "http://", :subdomain => false)    

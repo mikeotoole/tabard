@@ -11,6 +11,7 @@
 #  updated_at     :datetime
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
+#  deleted_at     :datetime
 #
 
 require 'spec_helper'
@@ -92,6 +93,34 @@ describe Question do
     
     it "should return nil with invalid class_style_string type" do
       Question.new_question(100).should be_nil
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark question as deleted if it has no answers" do
+      question.destroy
+      Question.exists?(question).should be_false
+      Question.with_deleted.exists?(question).should be_true
+    end
+    
+    it "should mark question's predefined_answers as deleted" do
+      question = create(:select_box_question)
+      predefined_answers = question.predefined_answers.all
+      
+      question.destroy
+      predefined_answers.should_not be_empty
+      predefined_answers.each do |predefined_answer|
+        PredefinedAnswer.exists?(predefined_answer).should be_false
+        PredefinedAnswer.with_deleted.exists?(predefined_answer).should be_true
+      end
+    end
+    
+    it "should set custom_form_id to nil if has answers" do
+      question = create(:answer).question
+      question.answers.should_not be_empty
+      question.custom_form_id.should_not be_nil
+      question.destroy
+      Question.find(question).custom_form_id.should be_nil
     end
   end
 end

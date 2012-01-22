@@ -114,14 +114,14 @@ describe "ActiveAdmin WowCharacter" do
       login_as superadmin
 
       page.driver.delete("/admin/wow_characters/#{character.id}")
-      WowCharacter.exists?(character).should be_false
+      WowCharacter.find(character).is_removed.should be_true
     end 
     
     it "deletes character when logged in as admin" do
       login_as admin
 
       page.driver.delete("/admin/wow_characters/#{character.id}")
-      WowCharacter.exists?(character).should be_false
+      WowCharacter.find(character).is_removed.should be_true
     end    
     
     it "returns 403 when logged in as moderator" do

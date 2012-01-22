@@ -6,10 +6,22 @@
 # This model represents a default for a permission.
 ###
 class PermissionDefault < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
+###
+# Associations
+###
   belongs_to :role, :inverse_of => :permission_defaults
 
-  validates :object_class,  :uniqueness => {:scope => :role_id}
+###
+# Validators
+###
+  validates :object_class,  :uniqueness => {:scope => [:role_id, :deleted_at]}
 
+###
+# Instance Methods
+###
   # This method checks to see if this permission default includes a nested item's permissions.
   def is_nested?
     case self.object_class
@@ -59,6 +71,7 @@ class PermissionDefault < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: permission_defaults
@@ -82,5 +95,6 @@ end
 #  can_accept_nested       :boolean         default(FALSE)
 #  created_at              :datetime
 #  updated_at              :datetime
+#  deleted_at              :datetime
 #
 
