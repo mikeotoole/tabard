@@ -98,6 +98,7 @@ class RosterAssignment < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -108,7 +109,7 @@ end
 #  is_pending           :boolean         default(TRUE)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  supported_game_id    :integer
 #  deleted_at           :datetime
+#  supported_game_id    :integer
 #
 

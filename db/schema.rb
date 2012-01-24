@@ -389,6 +389,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "supported_game_id"
   end
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
