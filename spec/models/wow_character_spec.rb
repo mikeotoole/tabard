@@ -12,6 +12,7 @@
 #  updated_at :datetime
 #  char_class :string(255)
 #  about      :text
+#  gender     :string(255)
 #
 
 require 'spec_helper'
@@ -44,6 +45,18 @@ describe WowCharacter do
       build(:wow_character, :race => "Not a race").should_not be_valid
       build(:wow_character, :wow => horde_game, :char_class => "Druid", :race => "Worgen").should_not be_valid
       build(:wow_character, :wow => alliance_game, :char_class => "Druid", :race => "Troll").should_not be_valid
+    end
+  end
+  
+  describe "gender" do
+    it "should be required" do
+       build(:wow_character, :gender => nil).should_not be_valid
+    end
+    
+    it "should validate gender is valid" do
+      build(:wow_character, :gender => "Not a gender").should_not be_valid
+      build(:wow_character, :gender => "Female").should be_valid
+      build(:wow_character, :gender => "Male").should be_valid
     end
   end
   

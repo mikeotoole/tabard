@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114234942) do
+ActiveRecord::Schema.define(:version => 20120124211358) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -431,6 +431,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.string   "species"
     t.string   "level"
     t.string   "about"
+    t.string   "gender"
   end
 
   add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
@@ -522,6 +523,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.datetime "updated_at"
     t.string   "char_class"
     t.text     "about"
+    t.string   "gender"
   end
 
   add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"

@@ -5,6 +5,7 @@
 = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'advanced_class', affected_by_value: swtor_character.advanced_class, label: 'Species', field: 'species', field_value: swtor_character.species, collection: SwtorCharacter.species_class_collection }
 = f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
+= f.input :gender, :as => :radio, :required => true, :collection => SwtorCharacter::VALID_GENDERS
 %li.avatar
   = image_tag(swtor_character.avatar_url) if swtor_character.avatar_url and swtor_character.persisted?
   = f.input :avatar, :wrapper => false

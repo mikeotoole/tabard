@@ -6,6 +6,7 @@
 = render :partial => 'shared/affected_dropdown', :locals => { f: f, affected_by: 'race', affected_by_value: (wow_character.faction && wow_character.race ? "#{wow_character.faction}_#{wow_character.race.gsub(/\s/,'_')}" : ''), label: 'Class', field: 'char_class', field_value: wow_character.char_class, collection: WowCharacter.faction_race_class_collection }
 = f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
 = f.input :about, :as => :text, :input_html => { :rows => 5 }
+= f.input :gender, :as => :radio, :required => true, :collection => WowCharacter::VALID_GENDERS
 %li.avatar
   = image_tag(wow_character.avatar_url) if wow_character.avatar_url and wow_character.persisted?
   = f.input :avatar, :wrapper => false
