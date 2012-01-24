@@ -42,7 +42,7 @@ ActiveAdmin.register User do
 
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
-    user.nuke if user # TODO Mike, May want to have the run in a worker thread.
+    user.nuke if user # TODO Mike, May want to have the run in a worker thread. BVR-373.
     redirect_to :action => :index
   end
 
@@ -59,7 +59,7 @@ ActiveAdmin.register User do
   end
 
   collection_action :reset_all_passwords, :method => :post do
-    User.reset_all_passwords # TODO Mike, May want to have the run in a worker thread.
+    User.reset_all_passwords # TODO Mike, May want to have the run in a worker thread. BVR-373.
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
 

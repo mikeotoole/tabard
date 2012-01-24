@@ -39,7 +39,7 @@ class TopLevelController < ApplicationController
   end
 
   # This method gets the Maintenance page.
-  def maintenance # TODO Doug, This page needs content. -MO
+  def maintenance # TODO Doug, This page needs content. -MO BVR-396
     if maintenance_mode?
       render :layout => false
     else
