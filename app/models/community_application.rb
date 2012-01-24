@@ -73,7 +73,7 @@ class CommunityApplication < ActiveRecord::Base
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile)
+  def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
     return false if self.accepted?
     self.update_attribute(:status, "Accepted")
     self.update_attribute(:status_changer, accepted_by_user_profile)
@@ -85,10 +85,11 @@ class CommunityApplication < ActiveRecord::Base
     message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
+      next unless proxy_map[proxy.id.to_s]
       if self.community.is_protected_roster
-        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s],:character_proxy => proxy).approve
       else
-        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s],:character_proxy => proxy)
       end
     end
   end

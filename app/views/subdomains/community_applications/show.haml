@@ -6,37 +6,39 @@
     = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
 
 .submission
-  .sidebar
-    .submitter
-      %h2 Applicant
-      %a{ :href => user_profile_url(@community_application.user_profile, :subdomain => false) }
-        = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
-        = @community_application.user_profile_display_name
+  =form_tag(accept_community_application_path, :method => :post) do
+    .sidebar
+      .submitter
+        %h2 Applicant
+        %a{ :href => user_profile_url(@community_application.user_profile, :subdomain => false) }
+          = image_tag @community_application.user_profile_avatar_url(:tiny), :class => 'avatar'
+          = @community_application.user_profile_display_name
 
-    - if @community_application.character_proxies.size > 0
-      .characters
-        %h2 Characters
-        %ul
-          - @community_application.character_proxies.each do |cp|
-            %li
-              = image_tag cp.avatar_url(:tiny), :class => 'avatar'
-              %span.name= cp.name
-              %span.game= cp.game_name
+      - if @community_application.character_proxies.size > 0
+        .characters
+          %h2 Characters
+          %ul
+            - @community_application.character_proxies.each do |cp|
+              %li
+                = image_tag cp.avatar_url(:tiny), :class => 'avatar'
+                %span.name= cp.name
+                %span.game= cp.game_name
+              =select("proxy_hash", cp.id, @supported_games.where(:game_type => cp.game.class.to_s).collect {|sg| [ "#{sg.name} — #{sg.game_name}", sg.id ] }, {:include_blank => 'None'}) if @community_application.is_pending?
 
-  - if @community_application.submission.answers.size > 0
-    .questions
-      %h2 Question Answers
-      %dl
-        - @community_application.submission.answers.each do |answer|
-          %dt= answer.question_body
-          %dd= answer.body
+    - if @community_application.submission.answers.size > 0
+      .questions
+        %h2 Question Answers
+        %dl
+          - @community_application.submission.answers.each do |answer|
+            %dt= answer.question_body
+            %dd= answer.body
 
-  - unless @community_application.accepted?
-    %p.submit
-      - if can? :accept, @community_application
-        = link_to 'Accept', accept_community_application_path, :method => :post, :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
-      - if not @community_application.rejected? and can? :reject, @community_application
-        = link_to 'Reject', reject_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
+    - unless @community_application.accepted?
+      %p.submit
+        - if can? :accept, @community_application
+          = submit_tag 'Accept', :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"
+        - if not @community_application.rejected? and can? :reject, @community_application
+          = link_to 'Reject', reject_community_application_path, :method => :post, :class => 'button', :confirm => "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
       
   - if @community_application.comments.any? or can? :comment, @community_application
     = javascript_include_tag "comments"

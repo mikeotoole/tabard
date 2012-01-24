@@ -31,6 +31,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1
   # GET /community_applications/1.json
   def show
+    @supported_games = current_community.supported_games
   end
 
   # GET /community_applications/new
@@ -69,7 +70,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This accepts the specified application.
   def accept
-    @community_application.accept_application(current_user.user_profile)
+    @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
     redirect_to community_application_url(@community_application)
   end
 
