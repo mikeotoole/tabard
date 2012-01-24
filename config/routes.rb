@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :themes
+
   # Admin Users
   devise_for :admin_users do 
     get "/admin/login" => "admin/devise/sessions#new"
@@ -12,7 +14,11 @@ DaBvRails::Application.routes.draw do
   # Users
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :confirmations => 'confirmations' }
   devise_scope :user do
-    get 'users/cancel_confirmation' => 'registrations#cancel_confirmation', :as => :cancel_confirmation
+    get 'users/disable_confirmation' => 'registrations#disable_confirmation', :as => :disable_confirmation
+    get 'users/reinstate' => 'registrations#reinstate_confirmation', :as => :reinstate_confirmation
+    put 'users/reinstate' => 'registrations#send_reinstate', :as => :send_reinstate
+    get 'users/reinstate_account' => 'registrations#reinstate_account_edit', :as => :reinstate_account
+    put 'users/reinstate_account' => 'registrations#reinstate_account', :as => :reinstate_account
   end
 
   # Documents
@@ -110,10 +116,11 @@ DaBvRails::Application.routes.draw do
 
       # Custom Forms
       resources :custom_forms, :except => :show do
-        resources :questions, :shallow => true
         resources :submissions, :shallow => true, :only => [:index, :destroy]
-        resources :submissions, :except => [:update, :edit, :destroy] do
-          resources :answers, :except => [:update, :edit, :destroy]
+        resources :submissions, :except => [:update, :edit, :destroy]
+        member do
+          put :publish
+          put :unpublish
         end
       end
       get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', :as => :custom_form_thankyou

@@ -1,0 +1,854 @@
+@import mixins
+
+
+#bar:before
+  +bg_gradient(rgba(#480012,.3),rgba(#480012,0))
+
+#flash li
+  border-left-color: rgba(#fff,.3) 
+  border-right-color: rgba(#fff,.3)
+  
+  &:last-child
+    border-bottom-color: rgba(#fff,.3)
+
+body
+  background: #3F6592
+  color: #162840
+
+body,
+#content
+  background: image-url('themes/backgrounds/snowtower.jpg') top center fixed no-repeat #3F6592
+
+#header
+  
+  .title
+    color: #fff
+    text-shadow: 1px 1px 2px #162840
+  
+  .menu
+    background: #acd3e6
+    background: rgba(#acd3e6,.9)
+    +border_radius(3,3,0,0)
+    +box_shadow(0 -5px 5px rgba(#000,.1))
+    
+    >li
+      
+      >a
+        border: 1px solid transparent
+        color: #224676
+            
+        &:not(:only-child)
+          
+          &:after
+            border-top-color: #4D9AB8
+      
+      >ul >li >a
+        border-top: 1px solid #203b60
+        color: #acd3e6
+        
+        &[meta]:before
+          background: #fff
+          color: #203b60
+        
+        &:hover
+          background: #4B9BB6
+          color: #fff
+      
+      &:hover
+        
+        >a[href]
+          background: #2B4D7A
+          border-color: #203b60
+          color: #fff !important
+          
+          &:after
+            border-top-color: #fff
+        
+        >ul
+          background: #2B4D7A
+          +bg_gradient(#2B4D7A,#406AA2)
+          border: 1px solid #203b60
+          +box_shadow(0 0 5px rgba(#000,.5))
+      
+      &.special >a
+        color: #000
+      
+      &.settings >a:before
+        background-position: -90px 0
+      
+      &.settings:hover >a:before
+        background-position: -90px -30px
+      
+      &.signup >a:before
+        background-position: -120px 0
+      
+      &.signup:hover >a:before
+        background-position: -120px -30px
+  
+button,
+.button,
+#body button,
+#body .button
+  background: #1880AB
+  +bg_gradient(#128abb,#107098)
+  border-color: #135a7d
+  color: #D1E3EE
+  
+  &:focus,
+  &:hover
+    background: #1295CA
+    +bg_gradient(#13a0db,#128abb)
+    +box_shadow(0 0 15px rgba(#000,.2))
+    color: #fff
+
+#body
+  background: #fff
+  +box_shadow(0 -5px 5px rgba(#000,.1))
+  
+  // GENERAL CONTENT
+  
+  a
+    color: #1880ab
+    
+    &:hover
+      background: #1880ab
+      color: #fff
+  
+  h1,
+  h2,
+  h3
+    color: #227FB5
+  
+  h2 + fieldset
+    border-color: #D5E3EE
+  
+  time
+    color: #2E4C72
+    
+  #breadcrumb
+    
+    ol
+      background: #92B0C8
+      border-bottom: 1px solid #7593ac
+      border-top: 1px solid #7593ac
+      +box_shadow(0 0 10px #7593ac)
+      
+      li
+        
+        a
+          background: #fff
+        
+        span
+          background: #bed4e5
+          color: #3D5B7F
+        
+        &:before
+          border-left-color: #7593ac
+        
+        &:after
+          border-left-color: #fff
+        
+        &:hover
+          
+          &:after
+            border-left-color: #4D9AB8
+            
+          a,
+          span
+            background: #4D9AB8
+            color: #fff
+        
+        &:last-child
+        
+          &:after
+            border-left-color: #bed4e5
+          
+          &:hover
+            
+            &:after
+              border-left-color: #bed4e5
+            
+            span
+              background: #bed4e5
+  
+  
+  // ACTIONS
+    
+  .actions a
+    background-color: #4D9AB8
+    
+    &:hover
+      background-color: #2B4D7A
+      +box_shadow(0 0 10px #2B4D7A)
+    
+      &[meta]
+      
+        &:before
+          background: #9FC5DA
+          +bg_gradient(#fff,#9FC5DA)
+          border-color: #7593AC
+          color: #162840
+        
+        &:after
+          border-left-color: #7593AC
+    
+    &.apply
+      background-position: 0 -30px
+      
+    &.new
+      background-position: -600px -30px
+      
+    &.delete
+      background-position: -30px -30px
+      
+    &.edit
+      background-position: -60px -30px
+  
+    &.approve
+      background-position: -510px -30px
+    
+    &.reject
+      background-position: -540px -30px
+      
+    &.review
+      background-position: -120px -30px
+    
+    &.submission
+      background-position: -600px -30px
+    
+    &.lock
+      background-position: -180px -30px
+    
+    &.unlock
+      background-position: -150px -30px
+    
+    &.publish
+      background-position: -420px -30px
+      
+    &.unpublish
+      background-position: -390px -30px
+  
+  
+  // FORMS
+  
+  label
+    color: #227FB5
+  
+  input[type="url"],
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  textarea
+    background: #cde1ed
+    +bg_gradient(#e4eff6,#cde1ed)
+    border-color: #fff
+    +box_shadow(0 0 3px #a3b1cc)
+    color: #435f8f
+    
+    &:focus
+      background: #FAFCFE
+      +bg_gradient(#FAFCFE,#DEEFF8)
+      +box_shadow(0 0 10px #31A1D7)
+      color: #162840
+      
+  input[type="checkbox"],
+  input[type="radio"]
+    
+    + label:before
+      background: #cde1ed
+      +bg_gradient(#e4eff6,#cde1ed)
+      border-color: #fff
+      +box_shadow(0 0 3px #a3b1cc)
+    
+    &:hover + label:before,
+    &:focus + label:before
+      border-color: #4399ca
+      +box_shadow(0 0 10px #31A1D7)
+    
+    &:focus + label:before
+      background: #d7eaf8
+      +bg_gradient(#f2f8fd,#d7eaf8)
+    
+    &:checked
+      
+      + label:after
+        background: #4F9AB5
+        +bg_gradient(#4F9AB5,#266e88)
+        border-color: #71bcd9
+      
+      &:focus + label,
+      &:hover + label,
+      + label:hover
+      
+        &:before
+          border: 1px solid #4399ca
+          +box_shadow(0 0 5px #31A1D7)
+        
+        &:after
+          background: #4399ca
+          +bg_gradient(#4399ca,#146491)
+          +box_shadow(0 0 9px #4F9AB5)
+  
+  .select
+  
+    ul
+      background: #cde1ed
+      +bg_gradient(#e4eff6,#cde1ed)
+      +box_shadow(0 0 3px rgba(#000,.2))
+      border-color: #fff
+          
+      &:before
+        border-top-color: #5199B7
+      
+      li
+        
+        label
+          background: #cde1ed
+          +bg_gradient(#cde1ed,#e4eff6)
+          border-top-color: #a7c3d5
+          color: #162840
+        
+          .avatar
+            background: #5598B6
+            border-color: #fff
+            +box_shadow(0 0 5px rgba(#000,.2))
+        
+        input:checked + label
+          color: #435f8f
+  
+      &:hover
+        background: #d7eaf8
+        +box_shadow(0 0 8px #2d7cb4)
+        +bg_gradient(#f2f8fd,#d7eaf8)
+          
+        &:before
+          border-top-color: #2D7CB4
+      
+        li
+        
+          label,
+          input:checked + label
+            color: #435f8f
+            
+            &:hover
+              background: #2F4A79
+              color: #fff
+
+  .slider,
+  .slider_with_none
+    background: #cde1ed
+    +bg_gradient(#e4eff6,#cde1ed)
+    border-color: #fff
+    +box_shadow(0 0 3px #a3b1cc)
+        
+    label
+      color: #435f8f
+
+    input
+      
+      &:checked + label
+        background: #2979A7
+        border-color: #2F4A79
+        +box_shadow(0 0 5px rgba(#000,.5))
+        color: #fff !important
+  
+    &:hover
+      background: #FAFCFE
+      +bg_gradient(#FAFCFE,#DEEFF8)
+      +box_shadow(0 0 10px #31A1D7)
+      
+      label:hover
+        background: #48b3da !important
+        border-color: #2F4A79
+        color: #fff !important
+  
+  .color
+
+    .preview
+      border: 0 !important
+      +box_shadow(0 0 3px #a3b1cc)
+      padding: 1px
+      
+      &:before
+        border-color: #fff !important
+    
+    &.field_with_errors .preview
+      border: 1px solid #A13A32 !important
+      padding: 0
+
+    input:focus + .preview
+      +box_shadow(0 0 10px #31A1D7)
+    
+  dfn.hint
+    color: #435f8f
+  
+  .field_with_errors
+  
+    input[type="url"],
+    input[type="email"],
+    input[type="text"],
+    input[type="password"],
+    textarea
+      border-color: #A13A32 !important
+  
+  mark.error
+    background: #A13A32 !important
+    color: #fff !important
+    
+  .submit
+    +bg_gradient(#D1E3EE,rgba(#fff,0))
+    border-top-color: #9fc6de
+  
+  
+  // TABLES
+
+  table
+  
+    thead
+    
+      th
+        background: #406aa2
+        +bg_gradient(#406aa2,#2B4D7A)
+        border-bottom-color: #2E223F
+        color: #fff
+  
+    tbody
+      
+      tr
+    
+        td
+          background: #BED4E5
+          +bg_gradient(#fff,#D5E3EE)
+          border-bottom-color: #92B0C8
+          border-top-color: #fff
+            
+          img.avatar
+            background: #4F9AB5
+            border-color: #fff
+            +box_shadow(0 0 10px rgba(#000,.2))
+          
+          img.icon
+            +box_shadow(0 0 5px rgba(#000,.2))
+              
+          &.check
+            border-right-color: #92B0C8
+            
+            label:before
+              +box_shadow(0 0 10px rgba(#000,.3))
+        
+    tfoot
+    
+      td
+        background: #7593AC
+        +bg_gradient(#7593AC,#7593AC)
+        border-top-color: #fff
+        color: #fff
+        
+        &:before
+          border-top-color: #5b7992
+        
+        button,
+        .button
+          border-color: #445e74
+
+
+  // PAGES
+
+  article time
+    border-bottom-color: #D6E3EE
+
+
+  // COMMENTS
+
+  .comments,
+  .activities
+    
+    li.owned
+    
+      &.activity >a:first-of-type,
+      &.activity >strong:first-child >a,
+      &.comment >blockquote >.meta >strong:first-of-type a
+        background: #56749A
+        color: #fff
+              
+        &:hover
+          background: #2B4D7A
+          color: #fff
+
+    li.comment
+      border-bottom-color: #fff
+    
+      blockquote
+        
+        &:before
+          border-bottom-color: #D6E3EE
+        
+        >.avatar
+          background: #BED7E5
+          border-color: #BED7E5
+          
+          &:before
+            border-right-color: #fff
+          
+          &:after
+            border-top-color: #fff
+          
+          >img
+            background: #BED7E5
+            border-color: #fff
+        
+        .meta
+          background: #fff
+          border-bottom-color: #D6E3EE
+          color: #7792AB
+            
+          .expand
+            background: #5199B7
+            color: #fff
+            
+            &:hover
+              background: #334778
+              
+          .collapse
+            background: #97A3B2
+            color: #fff
+            
+            &:hover
+              background: #334778
+        
+        .actions a
+            
+          &.edit
+            background-position: -65px -5px
+          
+          &.delete
+            background-position: -35px -5px
+          
+          &.lock
+            background-position: -185px -5px
+          
+          &.unlock
+            background-position: -155px -5px
+        
+        em
+          background: #aeb9c9
+          color: #fff
+          
+        .reply
+          background: #367a9c
+          color: #D1E3EE
+          
+          &:hover
+            background: #1295CA
+            color: #fff
+        
+        &:hover
+        
+          .avatar
+            +box_shadow(0 0 15px rgba(#000,.5))
+            border-color: #1880AB
+
+        
+    *[meta]:hover
+      
+      &:before
+        background: #2F4A79
+        border-color: #2F4A79
+        +box_shadow(0 0 5px rgba(#000,.3))
+        color: #fff
+      
+      &:after
+        border-left-color: #2F4A79
+        border-top-color: #2F4A79
+            
+    form
+      background: #CCDFEA
+      border-right-color: #CCDFEA
+      
+      &:before
+        border-top-color: #CCDFEA
+      
+      .profile
+        background: #BFD7E5
+        
+        .avatar
+          background: #BED7E5
+          border-color: #334778 !important
+        
+        input:checked + label
+          background: #BFD7E5
+          
+          img
+            border-color: #fff !important
+        
+        &:hover
+          background: #4F9AB5
+            
+          input
+          
+            + label
+              background: #3a7e98
+                
+              img
+                border-color: #3a7e98 !important
+            
+              &:hover
+                background: #334778
+                +box_shadow(0 0 10px #fff)
+                
+                &:before
+                  background: #334778
+                  border-color: #364477
+                  +box_shadow(0 0 5px rgba(#000,.3))
+                
+                &:after
+                  border-top-color: #334778 !important
+                
+                img
+                  border-color: #334778 !important
+              
+            &:checked + label
+              background: #fff
+              
+              img
+                border-color: #fff !important
+      
+      textarea
+        background: #fff
+        border-color: #99ACB7
+        +box_shadow(none)
+      
+      &.busy:after
+        background-color: rgba(#23a3d8,.3)
+      
+      >label:before
+        background-color: #CDDFEA
+        background-position: -185px -5px !important
+      
+      >input:checked + label:before
+        background-position: -155px -5px !important
+      
+      button
+        background: #367a9c
+        border: 0
+        color: #D1E3EE
+        letter-spacing: 0
+        text-transform: none
+        
+        &:hover
+          background: #1295CA
+          color: #fff
+  
+  
+  // ACTIVITIES
+  
+  .activities
+    
+    >li:after
+      border-color: #d1e3ee
+    
+    li.comment >blockquote .meta
+      color: #56749A
+  
+  
+  // SUBMISSIONS & COMMUNITY APPLICATIONS
+
+  h2.status
+    border-bottom-color: #d1e3ee
+  
+  .submission
+  
+    h1,
+    h2
+      background: #2B4D7A
+      +bg_gradient(#2B4D7A,#406AA2)
+      color: #fff
+      
+      &:after
+        border-left-color: rgba(#000,.2)
+        border-right-color: rgba(#fff,.2)
+  
+    h1,
+    .questions >h2
+      
+      &:before
+        background-position: -120px -30px
+    
+    .sidebar
+      
+      .submitter h2:before
+        background-position: -570px -30px
+      
+      .characters h2:before
+        background-position: -570px -30px
+        
+      .characters >label,
+      .characters >ul li,
+      .submitter a
+        background: #5199B7
+        color: #fff
+        
+        img.avatar
+          background: #2F4A79
+          +box_shadow(0 0 5px rgba(#000,.5))
+      
+      .submitter a:hover
+        background: #227FB5
+        color: #fff
+      
+      .characters >label
+        
+        &:after
+          color: #ceebf6
+        
+        &:hover
+          background: #2c80a0
+          color: #fff
+          
+          &:after
+            color: #fff
+      
+      .instructions h2:before
+        background-position: -450px -30px
+      
+    h2.comments:before
+      background-position: -450px -30px
+  
+  
+  // CUSTOM FORMS
+  
+  form.custom_form
+    
+    >fieldset
+        
+      ul.questions
+        
+        >li
+          +bg_gradient(#ECF2F6,#fff)
+          border-top-color: #CEE1ED
+              
+          a.remove
+            background: #859eb8
+            color: #E2EDF5
+            
+            &:hover,
+            &:focus
+              background: #1295CA
+              color: #fff
+          
+          >div.left
+          
+            input[type="text"]
+              border: 5px solid #BCCBDB
+              +box_shadow(none)
+              width: 400px
+              
+            input[type="checkbox"] + label
+            
+              &:before
+                border: 5px solid #BCCBDB
+                +box_shadow(none)
+                margin: -3px 0 0 -4px
+              
+              &:after
+                margin: 1px 0 0
+            
+            .select
+              padding: 5px
+            
+              &:before
+                background: #BCCBDB
+                +border_radius(3)
+                content: ''
+                height: 43px
+                left: 0
+                position: absolute
+                right: 5px
+                top: 0
+                
+          >div.right .answers
+            margin-top: 5px
+          
+            li
+              background: #BBCCDB
+        
+        .question_with_errors
+          border-color: #A13A32
+
+    .add a
+      background: #42639B
+      color: #E2EDF5
+      
+      &:hover,
+      &:focus
+        background: #1295CA
+        color: #fff
+
+
+  // ROLES & PERMISSIONS
+  
+  #roles
+    
+    ul li a
+      background: #7d8eaa
+      color: #fff
+      
+      &:hover
+        background: #48b3da
+        
+      &.active
+        background: #1F7BA8
+          
+    &.busy:after
+      background: rgba(#23a3d8,.8)
+      +box_shadow(0 0 3px #23a3d8)
+  
+  #role
+    background: #fff
+    border-color: #7d8eaa
+    +box_shadow(-5px -5px 10px rgba(#000,.1))
+    
+    .submit
+      background: #a0abbf
+      +bg_gradient(#a0abbf,#7E8DA9)
+      
+      &:before
+        background: #fff
+      
+      button
+        border-color: #2F4A79
+    
+    &.busy
+        
+      &:after
+        background-color: rgba(#23a3d8,.8)
+        +box_shadow(0 0 3px #23a3d8)
+  
+  #permissions >dt h2
+    background: #DBE9F2
+    +bg_gradient(#DBE9F2,#fff)
+    border-bottom-color: #CEE1ED
+    border-top-color: #4890BB
+    color: #2F4A79
+  
+    &:hover
+      background: #4F9AB5
+      +bg_gradient(#6cb5d0,#347d97)
+      color: #fff
+  
+  #usercheckboxes ol li
+    
+    label
+      background: #9FA8BD
+      color: #fff
+      
+      &:hover
+        background: #4EB1D9
+    
+    input
+      
+      &:checked + label
+        background: #2979A7
+        
+        &:hover
+          background: #4EB1D9

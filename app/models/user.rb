@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :is_user_disabled, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
   delegate :is_member?, :to => :user_profile, :allow_nil => true
   delegate :application_pending?, :to => :user_profile, :allow_nil => true
   delegate :in_community, :to => :user_profile, :allow_nil => true
+  delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
@@ -125,19 +126,17 @@ class User < ActiveRecord::Base
 
   # This will reset all passwords for non disabled users.
   def self.reset_all_passwords
-    begin
-      User.find_each(:conditions => ['is_admin_disabled == ? AND is_user_disabled == ?', false, false]) do |record|
+    User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |record|
+      begin
         random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
         record.password = random_password
         record.reset_password_token = User.reset_password_token
         record.reset_password_sent_at = Time.now
-        record.save
+        record.save!
         UserMailer.all_password_reset(record, random_password).deliver
+      rescue Exception => e
+        logger.error "Error Resetting password in reset all passwords loop: #{e.message}"
       end
-    rescue Exception => e
-      logger.error "Error Resetting All Passwords: #{e.message}"
-      redirect_to :action => :index, :alert => "Error resetting all passwords."
-      return
     end
   end
 
@@ -172,7 +171,7 @@ class User < ActiveRecord::Base
   # [Returns] True if this is an active user, otherwise false.
   ###
   def active_for_authentication?
-    super and not self.disabled
+    super and not self.is_disabled?
   end
 
   ###
@@ -180,9 +179,9 @@ class User < ActiveRecord::Base
   # [Returns] :suspended if account is suspended otherwise it returns super's response.
   ###
   def inactive_message
-    if self.is_admin_disabled
+    if self.admin_disabled_at
       :admin_disabled
-    elsif self.is_user_disabled
+    elsif self.user_disabled_at
       :user_disabled
     else
       super
@@ -199,7 +198,7 @@ class User < ActiveRecord::Base
 
   # Will reset the users password.
   def reset_password
-    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+  	random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
     self.password = random_password
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
@@ -208,8 +207,8 @@ class User < ActiveRecord::Base
   end
 
   # Checks if this user is disabled.
-  def disabled
-    self.is_admin_disabled or self.is_user_disabled
+  def is_disabled?
+    self.admin_disabled_at or self.user_disabled_at
   end
 
   ###
@@ -219,11 +218,11 @@ class User < ActiveRecord::Base
   ###
   def disable_by_user(params)
     if(params[:user])
-      params[:user][:is_user_disabled] = true
       params[:user][:user_disabled_at] = Time.now
       success = self.update_with_password(params[:user])
       if success
         self.remove_from_all_communities
+        self.remove_all_avatars
       end
       return success
     else
@@ -233,25 +232,43 @@ class User < ActiveRecord::Base
 
   # Used by the admin panel to disable a user.
   def disable_by_admin
-    self.is_admin_disabled = true
-    self.admin_disabled_at = Time.now
-    self.save(:validate => false)
-    self.remove_from_all_communities
+    if self.update_attribute(:admin_disabled_at, Time.now)
+      self.remove_from_all_communities
+      self.remove_all_avatars
+    end
   end
 
   # Removes user from all communities.
   def remove_from_all_communities
-    self.owned_communities.clear
-    self.community_profiles.clear
+    self.owned_communities.clear if self.owned_communities
+    self.community_profiles.clear if self.community_profiles
   end
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
-  def reinstate
-    self.is_admin_disabled = false
-    self.admin_disabled_at = nil
-    self.is_user_disabled = false
-    self.user_disabled_at = nil
-    self.save(:validate => false)
+  def reinstate_by_admin
+    self.update_attribute(:admin_disabled_at, nil)
+    self.update_attribute(:user_disabled_at, nil)
+  end
+
+  # This will send an email for a user to reactivate their account.
+  def reinstate_by_user
+    if self.user_disabled_at
+      random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+      self.password = random_password
+      self.password_confirmation = random_password
+      self.reset_password_token = User.reset_password_token
+      self.reset_password_sent_at = Time.now
+      self.save!
+      UserMailer.reinstate_account(self, random_password).deliver
+    else
+      false
+    end
+  end
+  
+  # This will destroy forever this user and all its associated resources.
+  def nuke
+    self.user_profile.nuke if self.user_profile
+    User.find(self).destroy
   end
 
 ###
@@ -294,7 +311,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: users
@@ -321,9 +337,7 @@ end
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
-#  is_admin_disabled                 :boolean         default(FALSE)
 #  date_of_birth                     :date
-#  is_user_disabled                  :boolean         default(FALSE)
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
 #

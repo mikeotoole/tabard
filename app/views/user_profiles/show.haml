@@ -11,7 +11,7 @@
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
       - if can? :update, @user_profile
-        %li.settings= link_to "Account Settings", edit_user_registration_url
+        %li.settings= link_to "Settings", edit_user_registration_url
         %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile
@@ -33,7 +33,7 @@
       = pluralize(Discussion.where(:user_profile_id => @user_profile.id).size, 'discussion') + ' created.'
       %br/
       = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
-      
+
   %dl#tabs.tabs
 
     %dt{ :class => 'activity active' } Recent Activity
@@ -49,7 +49,7 @@
 
     %dt{ :class => 'characters' } Characters
     %dd
-      - if @user_profile.swtor_characters.any? or @user_profile == current_user.user_profile
+      - if @user_profile.swtor_characters.any? or (user_signed_in? and @user_profile == current_user.user_profile)
         %h2
           Star Wars: The Old Republic
           - if user_signed_in? and @user_profile == current_user.user_profile
@@ -58,7 +58,7 @@
         = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
       - else
         %p No characters.
-      - if @user_profile.wow_characters.any? or @user_profile == current_user.user_profile
+      - if @user_profile.wow_characters.any? or (user_signed_in? and @user_profile == current_user.user_profile)
         %h2
           World of Warcraft
           - if user_signed_in? and @user_profile == current_user.user_profile

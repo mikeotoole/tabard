@@ -84,7 +84,7 @@ describe Subdomains::CommunitiesController do
       assigns[:community].slogan.should_not == @new_slogan
     end
 
-    it "should redirect to new community" do
+    it "should respond with an error" do
       response.response_code.should == 403
     end
   end
@@ -100,8 +100,8 @@ describe Subdomains::CommunitiesController do
       assigns[:community].slogan.should == @new_slogan
     end
 
-    it "should redirect to new community" do
-      response.should redirect_to(community_path(assigns[:community]))
+    it "should redirect to the community edit view" do
+      response.should redirect_to(edit_community_url(assigns[:community]))
     end
   end
 

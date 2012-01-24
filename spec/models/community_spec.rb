@@ -16,6 +16,11 @@
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
+#  deleted_at                      :datetime
+#  background_image                :string(255)
+#  background_color                :string(255)
+#  theme_id                        :integer
+#  title_color                     :string(255)
 #
 
 require 'spec_helper'
@@ -38,11 +43,58 @@ describe Community do
       community2.save.should be_true
       community2.member_role.should_not be_nil
     end
+    it "should have a default theme" do
+      community2 = build(:community, :theme => nil)
+      community2.save.should be_true
+      community2.member_role.should_not be_nil
+    end
+  end
+
+  describe "background_color" do
+    it "should allow blank" do
+      build(:community, :background_color => "").should be_valid
+    end
+    it "should accept valid format" do
+      valid_names = %w{ 111111 000000 1AA1AA FFFFFF } # TESTING Valid community names for testing.
+      valid_names.each do |name|
+        build(:community, :background_color => name).should be_valid
+      end
+    end
+
+    it "should reject invalid format" do
+      invalid_names = %w{ #111111111 #111111 aBcDEFD } # TESTING Invalid community names for testing.
+      invalid_names.each do |name|
+        build(:community, :background_color => name).should_not be_valid
+      end
+    end
+  end
+
+  describe "title_color" do
+    it "should allow blank" do
+      build(:community, :title_color => "").should be_valid
+    end
+    it "should accept valid format" do
+      valid_names = %w{ 111111 000000 1AA1AA FFFFFF } # TESTING Valid community names for testing.
+      valid_names.each do |name|
+        build(:community, :title_color => name).should be_valid
+      end
+    end
+
+    it "should reject invalid format" do
+      invalid_names = %w{ #111111111 #111111 aBcDEFD } # TESTING Invalid community names for testing.
+      invalid_names.each do |name|
+        build(:community, :title_color => name).should_not be_valid
+      end
+    end
   end
 
   describe "name" do
     it "should be required" do
       build(:community, :name => nil).should_not be_valid
+    end
+
+    it "should be unique" do
+      build(:community, :name => community.name).should_not be_valid
     end
 
     it "should accept valid format" do
@@ -211,6 +263,295 @@ describe Community do
       community.supported_games << create(:supported_game, :game => wow)
       community.games.should eq([wow])
       community.game_announcement_spaces.count.should eq(1)
+    end
+  end
+  
+  describe "destroy" do
+    it "should mark community as deleted" do
+      community.destroy
+      Community.exists?(community).should be_false
+      Community.with_deleted.exists?(community).should be_true
+    end
+    
+    it "should mark community's community_application_form as deleted" do
+      community_application_form = community.community_application_form
+      community.destroy
+      community_application_form.should be_a(CustomForm)
+      CustomForm.exists?(community_application_form).should be_false
+      CustomForm.with_deleted.exists?(community_application_form).should be_true
+    end
+    
+    it "should mark community's community_applications as deleted" do
+      community = create(:community_application).community
+      community_applications = community.community_applications.all
+      community.destroy
+      community_applications.should_not be_empty
+      community_applications.each do |community_application|
+        CommunityApplication.exists?(community_application).should be_false
+        CommunityApplication.with_deleted.exists?(community_application).should be_true
+      end
+    end
+    
+    it "should mark community's roles as deleted" do
+      community = create(:role).community
+      roles = community.roles.all
+      community.destroy
+      roles.should_not be_empty
+      roles.each do |role|
+        Role.exists?(role).should be_false
+        Role.with_deleted.exists?(role).should be_true
+      end
+    end
+    
+    it "should mark community's member_role as deleted" do
+      member_role = community.member_role
+      community.destroy
+      member_role.should be_a(Role)
+      Role.exists?(member_role).should be_false
+      Role.with_deleted.exists?(member_role).should be_true
+    end
+    
+    it "should mark community's supported_games as deleted" do
+      community = create(:wow_supported_game).community
+      supported_games = community.supported_games.all
+      community.destroy
+      supported_games.should_not be_empty
+      supported_games.each do |supported_game|
+        SupportedGame.exists?(supported_game).should be_false
+        SupportedGame.with_deleted.exists?(supported_game).should be_true
+      end
+    end
+    
+    it "should mark community's game_announcement_spaces as deleted" do
+      community = create(:wow_supported_game).community
+      game_announcement_spaces = community.game_announcement_spaces.all
+      community.destroy
+      game_announcement_spaces.should_not be_empty
+      game_announcement_spaces.each do |game_announcement_space|
+        DiscussionSpace.exists?(game_announcement_space).should be_false
+        DiscussionSpace.with_deleted.exists?(game_announcement_space).should be_true
+      end
+    end
+    
+    it "should mark community's custom_forms as deleted" do
+      community = create(:custom_form).community
+      custom_forms = community.custom_forms.all
+      community.destroy
+      custom_forms.should_not be_empty
+      custom_forms.each do |custom_form|
+        CustomForm.exists?(custom_form).should be_false
+        CustomForm.with_deleted.exists?(custom_form).should be_true
+      end
+    end
+    
+    it "should mark community's community_profiles as deleted" do
+      community = create(:community_profile).community
+      community_profiles = community.community_profiles.all
+      community.destroy
+      community_profiles.should_not be_empty
+      community_profiles.each do |community_profile|
+        CommunityProfile.exists?(community_profile).should be_false
+        CommunityProfile.with_deleted.exists?(community_profile).should be_true
+      end
+    end
+    
+    it "should mark community's discussion_spaces as deleted" do
+      community = create(:discussion_space).community
+      discussion_spaces = community.discussion_spaces.all
+      community.destroy
+      discussion_spaces.should_not be_empty
+      discussion_spaces.each do |discussion_space|
+        DiscussionSpace.exists?(discussion_space).should be_false
+        DiscussionSpace.with_deleted.exists?(discussion_space).should be_true
+      end
+    end
+    
+    it "should mark community's announcement_spaces as deleted" do
+      community = create(:announcement).discussion_space.community
+      announcement_spaces = community.announcement_spaces.all
+      community.destroy
+      announcement_spaces.should_not be_empty
+      announcement_spaces.each do |announcement_space|
+        DiscussionSpace.exists?(announcement_space).should be_false
+        DiscussionSpace.with_deleted.exists?(announcement_space).should be_true
+      end
+    end
+    
+    it "should mark community's community_announcement_space as deleted" do
+      community = DefaultObjects.community
+      community_announcement_space = community.community_announcement_space
+      community.destroy
+      community_announcement_space.should be_a(DiscussionSpace)
+      DiscussionSpace.exists?(community_announcement_space).should be_false
+      DiscussionSpace.with_deleted.exists?(community_announcement_space).should be_true
+    end
+    
+    it "should mark community's page_spaces as deleted" do
+      community = create(:page_space).community
+      page_spaces = community.page_spaces.all
+      community.destroy
+      page_spaces.should_not be_empty
+      page_spaces.each do |page_space|
+        PageSpace.exists?(page_space).should be_false
+        PageSpace.with_deleted.exists?(page_space).should be_true
+      end
+    end
+  end
+  
+  describe "nuke" do    
+    it "should delete community" do
+      community.nuke
+      Community.exists?(community).should be_false
+      Community.with_deleted.exists?(community).should be_false
+    end
+    
+    it "should delete community applications comments" do
+      community_application = create(:community_application)
+      create(:comment, :commentable_id => community_application.id, :commentable_type => community_application.class.name)
+      community = community_application.community
+      community_application_comments = community_application.comments.all
+      community.nuke
+      community_application_comments.should_not be_empty
+      community_application_comments.each do |community_application_comment|
+        Comment.exists?(community_application_comment).should be_false
+        Comment.with_deleted.exists?(community_application_comment).should be_false
+      end
+    end
+    
+    it "should delete community's discussions" do
+      discussion_space = create(:discussion).discussion_space
+      community = discussion_space.community
+      discussions = discussion_space.discussions.all
+      community.nuke
+      discussions.should_not be_empty
+      discussions.each do |discussion|
+        Discussion.exists?(discussion).should be_false
+        Discussion.with_deleted.exists?(discussion).should be_false
+      end
+    end
+    
+    it "should delete community's community_application_form" do
+      community_application_form = community.community_application_form
+      community.nuke
+      community_application_form.should be_a(CustomForm)
+      CustomForm.exists?(community_application_form).should be_false
+      CustomForm.with_deleted.exists?(community_application_form).should be_false
+    end
+    
+    it "should delete community's community_applications" do
+      community = create(:community_application).community
+      community_applications = community.community_applications.all
+      community.nuke
+      community_applications.should_not be_empty
+      community_applications.each do |community_application|
+        CommunityApplication.exists?(community_application).should be_false
+        CommunityApplication.with_deleted.exists?(community_application).should be_false
+      end
+    end
+    
+    it "should delete community's roles" do
+      community = create(:role).community
+      roles = community.roles.all
+      community.nuke
+      roles.should_not be_empty
+      roles.each do |role|
+        Role.exists?(role).should be_false
+        Role.with_deleted.exists?(role).should be_false
+      end
+    end
+    
+    it "should delete community's member_role" do
+      member_role = community.member_role
+      community.nuke
+      member_role.should be_a(Role)
+      Role.exists?(member_role).should be_false
+      Role.with_deleted.exists?(member_role).should be_false
+    end
+    
+    it "should delete community's supported_games" do
+      community = create(:wow_supported_game).community
+      supported_games = community.supported_games.all
+      community.nuke
+      supported_games.should_not be_empty
+      supported_games.each do |supported_game|
+        SupportedGame.exists?(supported_game).should be_false
+        SupportedGame.with_deleted.exists?(supported_game).should be_false
+      end
+    end
+    
+    it "should delete community's game_announcement_spaces" do
+      community = create(:wow_supported_game).community
+      game_announcement_spaces = community.game_announcement_spaces.all
+      community.nuke
+      game_announcement_spaces.should_not be_empty
+      game_announcement_spaces.each do |game_announcement_space|
+        DiscussionSpace.exists?(game_announcement_space).should be_false
+        DiscussionSpace.with_deleted.exists?(game_announcement_space).should be_false
+      end
+    end
+    
+    it "should delete community's custom_forms" do
+      community = create(:custom_form).community
+      custom_forms = community.custom_forms.all
+      community.nuke
+      custom_forms.should_not be_empty
+      custom_forms.each do |custom_form|
+        CustomForm.exists?(custom_form).should be_false
+        CustomForm.with_deleted.exists?(custom_form).should be_false
+      end
+    end
+    
+    it "should delete community's community_profiles" do
+      community = create(:community_profile).community
+      community_profiles = community.community_profiles.all
+      community.nuke
+      community_profiles.should_not be_empty
+      community_profiles.each do |community_profile|
+        CommunityProfile.exists?(community_profile).should be_false
+        CommunityProfile.with_deleted.exists?(community_profile).should be_false
+      end
+    end
+    
+    it "should delete community's discussion_spaces" do
+      community = create(:discussion_space).community
+      discussion_spaces = community.discussion_spaces.all
+      community.nuke
+      discussion_spaces.should_not be_empty
+      discussion_spaces.each do |discussion_space|
+        DiscussionSpace.exists?(discussion_space).should be_false
+        DiscussionSpace.with_deleted.exists?(discussion_space).should be_false
+      end
+    end
+    
+    it "should delete community's announcement_spaces" do
+      community = create(:announcement).discussion_space.community
+      announcement_spaces = community.announcement_spaces.all
+      community.nuke
+      announcement_spaces.should_not be_empty
+      announcement_spaces.each do |announcement_space|
+        DiscussionSpace.exists?(announcement_space).should be_false
+        DiscussionSpace.with_deleted.exists?(announcement_space).should be_false
+      end
+    end
+    
+    it "should delete community's community_announcement_space" do
+      community = DefaultObjects.community
+      community_announcement_space = community.community_announcement_space
+      community.nuke
+      community_announcement_space.should be_a(DiscussionSpace)
+      DiscussionSpace.exists?(community_announcement_space).should be_false
+      DiscussionSpace.with_deleted.exists?(community_announcement_space).should be_false
+    end
+    
+    it "should delete community's page_spaces" do
+      community = create(:page_space).community
+      page_spaces = community.page_spaces.all
+      community.nuke
+      page_spaces.should_not be_empty
+      page_spaces.each do |page_space|
+        PageSpace.exists?(page_space).should be_false
+        PageSpace.with_deleted.exists?(page_space).should be_false
+      end
     end
   end
 end

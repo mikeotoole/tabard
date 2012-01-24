@@ -8,6 +8,7 @@
 #  community_id      :integer
 #  created_at        :datetime
 #  updated_at        :datetime
+#  deleted_at        :datetime
 #
 
 require 'spec_helper'
@@ -44,5 +45,21 @@ describe PageSpace do
   
   it "game_name should return game name if there is a game" do
     wow_space.game_name.should eq(DefaultObjects.wow.name)
+  end
+  
+  describe "destroy" do
+    it "should mark page_space as deleted" do
+      space.destroy
+      PageSpace.exists?(space).should be_false
+      PageSpace.with_deleted.exists?(space).should be_true
+    end
+    
+    it "should mark page_space's pages as deleted" do
+      page = create(:page)
+      space = page.page_space
+      space.destroy
+      Page.exists?(page).should be_false
+      Page.with_deleted.exists?(page).should be_true
+    end
   end
 end

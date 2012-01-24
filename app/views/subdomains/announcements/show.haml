@@ -1,11 +1,12 @@
 - title "#{@announcement.name} | #{@announcement.discussion_space_name} | #{@community.name}"
 = javascript_include_tag "comments"
 
-%nav
-  %h1
-    = link_to "Announcement Spaces", announcement_spaces_url
-    = link_to @announcement.discussion_space_name, announcement_space_url(@announcement.discussion_space)
-    %strong= @announcement.name
+#breadcrumb
+  %ol
+    %li= link_to "Announcement Spaces", announcement_spaces_url
+    %li= link_to @announcement.discussion_space_name, announcement_space_url(@announcement.discussion_space)
+    %li
+      %span= @announcement.name
 
 #actions.actions
   - if (can? :update, @announcement)

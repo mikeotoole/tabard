@@ -114,4 +114,13 @@ protected
       raise CanCan::AccessDenied
     end
   end
+
+###
+# Helper Methods
+###
+  # This helper method lets the community layout view know when to use the default theme
+  def use_default_theme?
+    !!@use_default_theme
+  end
+  helper_method :use_default_theme?
 end

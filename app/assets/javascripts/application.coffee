@@ -1,27 +1,6 @@
 //= require jquery
 //= require jquery_ujs
 
-dump = (arr, level) ->
-  dumped_text = ""
-  level = 0  unless level
-  level_padding = ""
-  j = 0
-
-  while j < level + 1
-    level_padding += "    "
-    j++
-  if typeof (arr) is "object"
-    for item of arr
-      value = arr[item]
-      if typeof (value) is "object"
-        dumped_text += level_padding + "'" + item + "' ...\n"
-        dumped_text += dump(value, level + 1)
-      else
-        dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n"
-  else
-    dumped_text = "===>" + arr + "<===(" + typeof (arr) + ")"
-  dumped_text
-
 (($) ->
 
   # alert box
@@ -155,7 +134,7 @@ $(document).ready ->
         .val $(this).attr('method')
   
   # select box auto-hide after click
-  $('.select ul label, form .profile label').click ->
+  $('body').delegate '.select ul label, form .profile label', 'click', ->
     li = $(this).closest('li')
     if !li.find('input:checked').length
       ul = li.closest('ul')

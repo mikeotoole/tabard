@@ -26,21 +26,16 @@ class BaseCharacter < ActiveRecord::Base
   ###
   attr_accessor :remove_avatar
 
-  ###
-  # This attribute is used to set the character as the default.
-  ###
-  attr_accessor :default
-
 ###
 # Attribute accessible
 ###
-  attr_accessible :avatar, :avatar_cache, :remove_avatar, :default, :remote_avatar_url
+  attr_accessible :avatar, :avatar_cache, :remove_avatar, :remote_avatar_url
 
 ###
 # Associations
 ###
   #The character_proxy that associates this character to a user.
-  has_one :character_proxy, :as => :character, :dependent => :destroy, :foreign_key => :character_id
+  has_one :character_proxy, :as => :character, :foreign_key => :character_id
 
 ###
 # Validators
@@ -56,8 +51,9 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :set_as_default, :to => :character_proxy, :allow_nil => true
   delegate :user_profile, :to => :character_proxy, :allow_nil => true
+  delegate :roster_assignments, :to => :character_proxy, :allow_nil => true
+  delegate :is_removed, :to => :character_proxy, :allow_nil => true
 
 ###
 # Uploaders
@@ -88,25 +84,6 @@ class BaseCharacter < ActiveRecord::Base
   end
 
   ###
-  # This method sets this as the default character.
-  # [Args]
-  #   * +value+ -> The boolean value to set.
-  # [Returns] A string that contains the display name for this character.
-  ###
-  def default=(value)
-    self.set_as_default if value == true or value == "1"
-  end
-
-  # If the character is the default for its game.
-  def default
-    if self.character_proxy
-      self.character_proxy.is_default_character ? true : false
-    else
-      return false
-    end
-  end
-
-  ###
   # This method checks to see if the specified user is the owner of this character.
   # [Args]
   #   * +unknown_user+ -> The user to check.
@@ -116,10 +93,17 @@ class BaseCharacter < ActiveRecord::Base
     self.user_profile.user == unknown_user
   end
 
-###
-# Protected Methods
-###
-protected
+  # Checks if this character should be viewable or messageable.
+  def is_disabled?
+    self.is_removed or self.user_profile.is_disabled?
+  end
+
+  # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
+  def destroy
+    self.roster_assignments.clear if self.roster_assignments
+    self.character_proxy.update_attribute(:is_removed, true) if self.character_proxy
+    self.remove_avatar!
+  end
 
   ###
   # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW

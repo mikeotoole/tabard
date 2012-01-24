@@ -16,7 +16,7 @@ class Folder < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile
-  has_many :messages, :class_name => "MessageAssociation"
+  has_many :messages, :class_name => "MessageAssociation", :dependent => :destroy
 
 ###
 # Validators

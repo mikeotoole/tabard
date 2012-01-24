@@ -1,3 +1,9 @@
 - title "#{@submission.custom_form_name} | #{current_community.name}"
 
+#breadcrumb
+  %ol
+    %li= link_to 'Forms', custom_forms_url
+    %li
+      %span= @submission.custom_form_name
+
 = render 'form', :submission => @submission

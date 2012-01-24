@@ -38,16 +38,16 @@ namespace :seed do
       generate_application(headshot, last_name).accept_application(billy)
     end
   end
-  
+
   desc "Seeds extra discussions and comments"
   task :comments => :environment do
     @dont_run = true
      %w{ discussions }.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/../../db/seeds/#{part}.rb"
     end
-    
+
     adj = ADJ_LIST[rand(ADJ_LIST.length)].capitalize
-  
+
     for i in 0..50
       Timecop.freeze(rand(20).days.ago)
       discussion = create_discussion('Just Another Headshot', 'Community', "#{adj} Herp Derp #{i}", "#{adj} Herp Derp #{i}", 'Billy')

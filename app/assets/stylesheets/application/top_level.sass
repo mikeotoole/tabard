@@ -16,6 +16,17 @@ body
   strong
     font-family: DinMedium, sans-serif
 
+#bar:after
+  background: image-url('bar/shadow.png') top center no-repeat
+  content: ''
+  height: 70px
+  left: 0
+  pointer-events: none
+  position: absolute
+  right: 0
+  top: 71px
+  z-index: 92
+
 #pitch
   line-height: 22px
   margin: 20px auto 0
@@ -36,7 +47,7 @@ body
     &:hover
       background: #367BB1
       border: none
-      +border_radius(5)
+      +border_radius(3)
       +box_shadow(0 0 25px #999)
       color: #fff
       text-decoration: none
@@ -78,7 +89,7 @@ button,
   width: 900px
   
   a:not(.button)
-    +border_radius(3)
+    +border_radius(2)
     color: #be4124
     padding: 0 3px
     text-decoration: underline
@@ -122,7 +133,7 @@ button,
       position: relative
       
       &:before
-        +border_radius(3)
+        +border_radius(2)
         content: counter(li)
         color: #999
         font-family: DinMedium, sans-serif
@@ -211,8 +222,8 @@ button,
     ul
       background: #eee
       +bg_gradient(#ddd,#eee)
-      +box_shadow(0 0 3px rgba(#000,.2))
       border-color: #fff
+      +box_shadow(0 0 3px rgba(#000,.2))
           
       &:before
         border-top-color: #bbb
@@ -237,6 +248,9 @@ button,
         background: #d7eaf8
         +box_shadow(0 0 8px #2d7cb4)
         +bg_gradient(#f2f8fd,#d7eaf8)
+          
+        &:before
+          border-top-color: #2D7CB4
       
         li
         
@@ -251,7 +265,7 @@ button,
   // Tables
   
   table
-    +border_radius(5)
+    +border_radius(3)
     margin: 0 0 15px
     
     td,
@@ -271,13 +285,13 @@ button,
         padding: 10px
         
         &:first-child
-          +border_radius(5,0,0,0)
+          +border_radius(3,0,0,0)
         
         &:last-child
-          +border_radius(0,5,0,0)
+          +border_radius(0,3,0,0)
         
         &:only-child
-          +border_radius(5,5,0,0)
+          +border_radius(3,3,0,0)
         
         &.check
           
@@ -320,7 +334,7 @@ button,
             
               a
                 background: image-url('application/icons.png') no-repeat #aaa
-                +border_radius(5)
+                +border_radius(3)
                 display: block
                 float: left
                 height: 30px
@@ -339,7 +353,7 @@ button,
                   
                     &:before
                       background: rgba(#251634,.8)
-                      +border_radius(5)
+                      +border_radius(3)
                       color: #fff
                       content: attr(meta)
                       font-size: 13px
@@ -420,13 +434,13 @@ button,
           top: 0
         
         &:first-child
-          +border_radius(0,0,0,5)
+          +border_radius(0,0,0,3)
         
         &:last-child
-          +border_radius(0,0,5,0)
+          +border_radius(0,0,3,0)
         
         &:only-child
-          +border_radius(0,0,5,5)
+          +border_radius(0,0,3,3)
         
         button,
         .button
@@ -447,7 +461,7 @@ button,
     background: #eee
     +bg_gradient(#eee,#fff)
     border: 1px solid #fff
-    +border_radius(5)
+    +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
     margin: 0 0 20px
     
@@ -463,7 +477,7 @@ button,
     
     .scroll
       +bg_gradient(#ddd,#fff)
-      +border_radius(5,5,0,0)
+      +border_radius(3,3,0,0)
       margin: 0 0 -40px
       overflow: scroll
       overflow-x: hidden
@@ -472,7 +486,7 @@ button,
     .accept
       background: #ccc
       +bg_gradient(#bbb,#ddd)
-      +border_radius(0,0,5,5)
+      +border_radius(0,0,3,3)
       border-top: 1px solid #999
       height: 26px
       margin: 40px 0 0
@@ -499,7 +513,7 @@ button,
       
       mark
         background: #A43D33
-        +border_radius(5)
+        +border_radius(3)
         color: #fff
         float: right
         font-family: DinMedium, sans-serif
@@ -508,9 +522,9 @@ button,
   p.submit
     +bg_gradient(#eee,#fff)
     border-top: 1px solid #ccc
-    +border_radius(5,5,0,0)
+    +border_radius(3,3,0,0)
     +box_shadow(0 -5px 5px rgba(#000,.1))
-    margin: 30px -20px
+    margin: 30px 0
     padding: 20px
     position: relative
     
@@ -649,7 +663,7 @@ body.user_profiles.dashboard
           
         .actions
           background: image-url('bar/bg.png') top center repeat-x #3d2753
-          +border_radius(0,0,5,5)
+          +border_radius(0,0,3,3)
           color: #a89db5
           font-size: 13px
           height: 40px
@@ -746,13 +760,13 @@ body.user_profiles.dashboard
                 color: #fff
             
             &:first-child a
-              +border_radius(5,5,0,0)
+              +border_radius(3,3,0,0)
               
             &:last-child a
-              +border_radius(0,0,5,5)
+              +border_radius(0,0,3,3)
             
             &:only-child a
-              +border_radius(5)
+              +border_radius(3)
         
         .stats
           font: 13px DinMedium
@@ -771,7 +785,7 @@ body.user_profiles.dashboard
           >h2
             background: #F0F5F8
             border-bottom: 1px solid #D9E6EE
-            +border_radius(3,3,0,0)
+            +border_radius(2,2,0,0)
             clear: both
             line-height: 1em
             margin: 0
@@ -780,7 +794,7 @@ body.user_profiles.dashboard
             
             a
               background: #2D7CB4
-              +border_radius(3)
+              +border_radius(2)
               color: #fff
               font: 14px DinLight, sans-serif
               padding: 3px 9px
@@ -853,7 +867,7 @@ body.user_profiles.dashboard
         
         >dt
           background: #E4E4E4
-          +border_radius(5,5,0,0)
+          +border_radius(3,3,0,0)
           +box_shadow(0 -5px 5px rgba(#000,.1))
           height: 35px
           overflow: hidden

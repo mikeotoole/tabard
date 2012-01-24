@@ -34,6 +34,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # GET /pages/:id/edit(.:format)
   def edit
+    @use_default_theme = true
     respond_with(@page)
   end
 

@@ -5,7 +5,7 @@
 # Create a community
 def create_community(admin_user_last_name, name, slogan, game_array)
   admin_user = UserProfile.find_by_last_name(admin_user_last_name)
-  community = admin_user.owned_communities.create!(:name => name, :slogan => slogan)
+  community = admin_user.owned_communities.create!(:name => name, :slogan => slogan, :theme => Theme.default_theme)
   puts "#{admin_user.name} is creating #{name} Community"
   game_array.each do |game_name|
     case game_name
@@ -27,6 +27,14 @@ def create_community(admin_user_last_name, name, slogan, game_array)
         Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
     end
   end
+  if Theme.count > 1
+    theme = Theme.find(:first, :offset =>rand(Theme.count))
+  else
+    theme = Theme.first
+  end
+  puts "#{admin_user.name} is applying #{theme.name} theme to #{name} Community"
+  community.theme = theme
+  community.save
   return community
 end
 

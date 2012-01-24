@@ -383,4 +383,228 @@ describe UserProfile do
     end
   end
   
+  describe "remove_all_avatars" do
+    it "should call remove_avatar! on self" do
+      profile.should_receive(:remove_avatar!)
+      profile.remove_all_avatars
+    end
+    
+    it "should call remove_avatar! on all characters" do
+      character = create(:wow_char_profile)
+      profile = character.user_profile
+      character = profile.characters.first
+      character.should_receive(:remove_avatar!)
+      profile.remove_all_avatars
+    end
+  end
+  
+  describe "destroy" do
+    it "should delete user_profile" do
+      profile.destroy
+      UserProfile.exists?(profile).should be_false
+    end
+    
+    it "should mark user_profile's owned_communities as deleted" do
+      profile = DefaultObjects.community_admin.user_profile
+      owned_communities = profile.owned_communities.all
+      profile.destroy
+      owned_communities.should_not be_empty
+      owned_communities.each do |owned_community|
+        Community.exists?(owned_community).should be_false
+        Community.with_deleted.exists?(owned_community).should be_true
+      end
+    end
+    
+    it "should mark user_profile's community_profiles as deleted" do
+      profile = DefaultObjects.user_profile
+      community_profiles = profile.community_profiles.all
+      profile.destroy
+      community_profiles.should_not be_empty
+      community_profiles.each do |community_profile|
+        CommunityProfile.exists?(community_profile).should be_false
+        CommunityProfile.with_deleted.exists?(community_profile).should be_true
+      end
+    end
+    
+    it "should mark user_profile's character_proxies as is_removed" do
+      profile = create(:wow_char_profile).user_profile
+      character_proxies = profile.character_proxies.all
+      profile.destroy
+      character_proxies.should_not be_empty
+      character_proxies.each do |character_proxy|
+        character_proxy.reload.is_removed.should be_true
+      end
+    end
+    
+    it "should mark user_profile's community_applications as deleted" do
+      profile = DefaultObjects.user_profile
+      community_applications = profile.community_applications.all
+      profile.destroy
+      community_applications.should_not be_empty
+      community_applications.each do |community_application|
+        CommunityApplication.exists?(community_application).should be_false
+        CommunityApplication.with_deleted.exists?(community_application).should be_true
+      end
+    end
+    
+    it "should mark user_profile's view_logs as deleted" do
+      profile = create(:view_log).user_profile
+      view_logs = profile.view_logs.all
+      profile.destroy
+      view_logs.should_not be_empty
+      view_logs.each do |view_log|
+        ViewLog.exists?(view_log).should be_false
+        ViewLog.with_deleted.exists?(view_log).should be_true
+      end
+    end
+    
+    it "should delete user_profile's sent_messages" do
+      profile = create(:message).author
+      sent_messages = profile.sent_messages.all
+      profile.destroy
+      sent_messages.should_not be_empty
+      sent_messages.each do |message|
+        Message.exists?(message).should be_false
+      end
+    end
+    
+    it "should delete user_profile's received_messages" do
+      profile = create(:message).message_associations.first.recipient
+      received_messages = profile.received_messages.all
+      profile.destroy
+      received_messages.should_not be_empty
+      received_messages.each do |message|
+        MessageAssociation.exists?(message).should be_false
+      end
+    end
+    
+    it "should delete user_profile's folders" do
+      folders = profile.folders.all
+      profile.destroy
+      folders.should_not be_empty
+      folders.each do |folder|
+        Folder.exists?(folder).should be_false
+      end
+    end
+    
+    it "should mark user_profile's discussions as deleted" do
+      profile = create(:discussion).user_profile
+      discussions = profile.discussions.all
+      profile.destroy
+      discussions.should_not be_empty
+      discussions.each do |discussion|
+        Discussion.exists?(discussion).should be_false
+        Discussion.with_deleted.exists?(discussion).should be_true
+      end
+    end
+    
+    it "should mark user_profile's comments as deleted" do
+      profile = create(:comment).user_profile
+      comments = profile.comments.all
+      profile.destroy
+      comments.should_not be_empty
+      comments.each do |comment|
+        Comment.exists?(comment).should be_false
+        Comment.with_deleted.exists?(comment).should be_true
+      end
+    end
+  end
+  
+  describe "nuke" do
+    it "should delete user_profile's swtor_characters" do
+      profile = create(:swtor_char_profile).user_profile
+      swtor_characters = profile.swtor_characters.all
+      profile.nuke
+      swtor_characters.should_not be_empty
+      swtor_characters.each do |swtor_character|
+        SwtorCharacter.exists?(swtor_character).should be_false
+      end
+    end
+
+    it "should delete user_profile's wow_characters" do
+      profile = create(:wow_char_profile).user_profile
+      wow_characters = profile.wow_characters.all
+      profile.nuke
+      wow_characters.should_not be_empty
+      wow_characters.each do |wow_character|
+        WowCharacter.exists?(wow_character).should be_false
+      end
+    end
+    
+    it "should delete user_profile's character_proxies" do
+      profile = create(:wow_char_profile).user_profile
+      character_proxies = profile.character_proxies.all
+      profile.nuke
+      character_proxies.should_not be_empty
+      character_proxies.each do |character_proxy|
+        CharacterProxy.exists?(character_proxy).should be_false
+      end
+    end
+    
+    it "should call nuke on user_profile's owned_communities" do
+      profile = DefaultObjects.community_admin.user_profile
+      owned_communities = profile.owned_communities.all
+      profile.nuke
+      owned_communities.should_not be_empty
+      owned_communities.each do |owned_community|
+        Community.exists?(owned_community).should be_false
+        Community.with_deleted.exists?(owned_community).should be_false
+      end
+    end
+    
+    it "should delete user_profile's community_applications" do
+      profile = DefaultObjects.user_profile
+      community_applications = profile.community_applications.all
+      profile.nuke
+      community_applications.should_not be_empty
+      community_applications.each do |community_application|
+        CommunityApplication.exists?(community_application).should be_false
+        CommunityApplication.with_deleted.exists?(community_application).should be_false
+      end
+    end
+    
+    it "should delete user_profile's community_profiles" do
+      profile = DefaultObjects.user_profile
+      community_profiles = profile.community_profiles.all
+      profile.nuke
+      community_profiles.should_not be_empty
+      community_profiles.each do |community_profile|
+        CommunityProfile.exists?(community_profile).should be_false
+        CommunityProfile.with_deleted.exists?(community_profile).should be_false
+      end
+    end
+    
+    it "should delete user_profile's view_logs" do
+      profile = create(:view_log).user_profile
+      view_logs = profile.view_logs.all
+      profile.nuke
+      view_logs.should_not be_empty
+      view_logs.each do |view_log|
+        ViewLog.exists?(view_log).should be_false
+        ViewLog.with_deleted.exists?(view_log).should be_false
+      end
+    end
+    
+    it "should delete user_profile's discussions" do
+      profile = create(:discussion).user_profile
+      discussions = profile.discussions.all
+      profile.nuke
+      discussions.should_not be_empty
+      discussions.each do |discussion|
+        Discussion.exists?(discussion).should be_false
+        Discussion.with_deleted.exists?(discussion).should be_false
+      end
+    end
+    
+    it "should delete user_profile's comments" do
+      profile = create(:comment).user_profile
+      comments = profile.comments.all
+      profile.nuke
+      comments.should_not be_empty
+      comments.each do |comment|
+        Comment.exists?(comment).should be_false
+        Comment.with_deleted.exists?(comment).should be_false
+      end
+    end
+  end
 end

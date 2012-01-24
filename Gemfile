@@ -3,6 +3,9 @@ source 'http://rubygems.org'
 # Rails Gem
   gem 'rails'
 
+# ActiveRecord extensions
+  gem 'rails3_acts_as_paranoid', :git => 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git'
+
 # Javascript Library
   gem 'jquery-rails'
 
@@ -22,7 +25,7 @@ source 'http://rubygems.org'
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
-  
+
 # Filtering
   gem 'profanalyzer'  
 
@@ -79,7 +82,7 @@ source 'http://rubygems.org'
     gem 'rb-fsevent'
     gem 'guard-rspec'
     gem 'guard-livereload'
-    #gem 'growl_notify'
+    gem 'growl_notify'
     gem 'simplecov'
     gem 'ruby-debug19'
   end

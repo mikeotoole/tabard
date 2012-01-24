@@ -6,6 +6,9 @@
 # This class is used to track if a user has viewed an item.
 ###
 class ViewLog < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Associations
 ###
@@ -21,7 +24,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: view_logs
@@ -32,5 +34,6 @@ end
 #  view_loggable_type :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  deleted_at         :datetime
 #
 

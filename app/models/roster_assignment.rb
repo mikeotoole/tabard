@@ -6,6 +6,8 @@
 # This class represents an assignment of a character_proxy to a community profile.
 ###
 class RosterAssignment < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
 
 ###
 # Associations
@@ -96,8 +98,6 @@ class RosterAssignment < ActiveRecord::Base
 end
 
 
-
-
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -109,5 +109,6 @@ end
 #  created_at           :datetime
 #  updated_at           :datetime
 #  supported_game_id    :integer
+#  deleted_at           :datetime
 #
 

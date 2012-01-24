@@ -3,12 +3,21 @@
 
   %head
     %title= yield_for(:title, "#{@community.name} - Crumblin")
-    = stylesheet_link_tag "subdomains/community"
+    = stylesheet_link_tag "application/community"
+    = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
+    - if current_community.background_color or current_community.background_image or current_community.title_color
+      %style{:type => "text/css", :media => "screen"}
+        - if current_community.title_color
+          = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
+        - if current_community.background_color
+          = "body.theme , body.theme #content { background-color: ##{current_community.background_color}; }"
+        - unless current_community.background_image_url == '/assets/application/blank.gif'
+          = "#content { background-image: url(#{current_community.background_image_url(:standard)}); }"
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-  %body
+  %body.theme
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
 
@@ -22,14 +31,14 @@
             = link_to 'Dashboard', actual_community_url(@community)
           - if can? :index, PageSpace
             %li
-              = link_to 'Wiki', page_spaces_path
+              = link_to 'Wiki', page_spaces_url
               - if @community.page_spaces.any?
                 %ul
                   - @community.page_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
           - if (user_signed_in? and current_user.is_member? @community)
             %li
-              = link_to 'Discussions', discussion_spaces_path
+              = link_to 'Discussions', discussion_spaces_url
               - if @community.discussion_spaces.any?
                 %ul
                   - @community.discussion_spaces.each do |space|
@@ -45,10 +54,10 @@
                     %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
             %li
-              = link_to 'Forms', custom_forms_path
+              = link_to 'Forms', custom_forms_url
           - if @community.is_public_roster or (user_signed_in? and current_user.is_member? @community)
             %li
-              = link_to 'Members', roster_assignments_path
+              = link_to 'Members', roster_assignments_url
           - if user_signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.any?
               %li{ :class => 'special settings' }
@@ -59,7 +68,7 @@
           - else
             %li{ :class => 'special signup' }
               - if current_community.can_receive_application_from? current_user
-                = link_to 'Apply Now', new_community_application_path
+                = link_to 'Apply Now', new_community_application_url
               - elsif user_signed_in? and current_user.application_pending? current_community
                 %a Application Pending
 

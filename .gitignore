@@ -3,7 +3,6 @@ db/*.sqlite3*
 log/*.log
 log/test.log
 tmp/**/*
-.metrics
 
 .DS_Store
 Icon?
@@ -23,4 +22,6 @@ public/assets/
 
 # Visual Paradigm
 *.vpp~*
+
+# Metrics
 .metrics

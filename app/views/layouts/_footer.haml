@@ -2,6 +2,9 @@
   © DigitalAugment, Inc.
   = Time.now.year
   = raw '&nbsp;|&nbsp;'
-  = link_to 'Privacy', top_level_privacy_policy_path
+  - if current_community and current_community.theme_background_author
+    = link_to_if current_community.theme_background_author_url, "Art by #{current_community.theme_background_author}", current_community.theme_background_author_url, :target => '_blank'
+    = raw '&nbsp;|&nbsp;'
+  = link_to 'Privacy', top_level_privacy_policy_url
   = raw '&nbsp;|&nbsp;'
-  = link_to 'Terms', top_level_terms_of_service_path
+  = link_to 'Terms', top_level_terms_of_service_url

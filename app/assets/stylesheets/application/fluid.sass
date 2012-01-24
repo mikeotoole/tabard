@@ -1,6 +1,7 @@
 @import mixins
 
 .fluid
+  background: #fff !important
   min-width: 0
   overflow-x: hidden
   
@@ -23,6 +24,7 @@
     display: none
     
   #body
+    +box_shadow(none)
     position: static
   
   .editor
@@ -145,7 +147,7 @@
         &:before
           background: #A23B31
           border: 1px solid #CFA893
-          +border_radius(5)
+          +border_radius(3)
           +box_shadow(-5px 0 15px rgba(#000,.7))
           color: #F8D5BB
           content: attr(meta)

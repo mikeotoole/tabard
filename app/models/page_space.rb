@@ -6,6 +6,9 @@
 # This class represents a page space.
 ###
 class PageSpace < ActiveRecord::Base
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  acts_as_paranoid
+
 ###
 # Constants
 ###
@@ -71,7 +74,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: page_spaces
@@ -82,5 +84,6 @@ end
 #  community_id      :integer
 #  created_at        :datetime
 #  updated_at        :datetime
+#  deleted_at        :datetime
 #
 

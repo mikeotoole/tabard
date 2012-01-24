@@ -25,17 +25,6 @@
     top: 70px
     z-index: 89
   
-  &:after
-    background: image-url('bar/shadow.png') top center no-repeat
-    content: ''
-    height: 70px
-    left: 0
-    pointer-events: none
-    position: absolute
-    right: 0
-    top: 71px
-    z-index: 92
-  
   .logo
     background: image-url('bar/logo.png') 0 50px no-repeat
     height: 104px
@@ -67,11 +56,12 @@
       >li
       
         >ul
-          +border_radius(5,0,5,5)
+          +border_radius(3,0,3,3)
           left: auto
           right: 0
           
           >li
+            display: block
             position: relative
             
             >a
@@ -80,7 +70,7 @@
             img
               background: #164e79
               border: 1px solid #164e79
-              +border_radius(3)
+              +border_radius(2)
               left: 4px
               position: absolute
               top: 4px
@@ -126,7 +116,7 @@
       >ul
         background: #2d7cb4
         border: 1px solid #4a99d0
-        +border_radius(0,5,5,5)
+        +border_radius(0,3,3,3)
         +box_shadow(0 0 5px rgba(#000, .5))
         left: 5px
         margin: -9000em 0 0
@@ -155,7 +145,7 @@
           &:last-child
             
             a
-              +border_radius(0,0,5,5)
+              +border_radius(0,0,3,3)
       
           &.extra
             
@@ -194,7 +184,7 @@
 
           &:not(:only-child)
             border-bottom: 0
-            +border_radius(5,5,0,0)
+            +border_radius(3,3,0,0)
             padding: 0 30px 7px 10px
             +transition(background .1s linear, padding .1s linear)
             
@@ -220,7 +210,7 @@
         padding: 0 0 0 5px
         
         a
-          +border_radius(3)
+          +border_radius(2)
           color: #a89db4
           line-height: 30px
           padding: 0 3px
@@ -247,7 +237,7 @@
         
           &[meta]:before
             background: #BC3F2B
-            +border_radius(3)
+            +border_radius(2)
             color: #F6CFC9
             content: attr(meta)
             font-family: DinMedium, sans-serif
@@ -299,7 +289,7 @@
     width: 40px
     
     img
-      +border_radius(4)
+      +border_radius(2)
       height: 40px
       left: 0
       position: absolute
@@ -330,7 +320,7 @@
     .button
       +bg_gradient(#d24723,#792b28)
       border-color: #1e102c
-      +border_radius(5)
+      +border_radius(3)
       color: #f8d5bb
       float: right
       font-family: Malbeck, serif
@@ -373,7 +363,7 @@
     input
       +bg_gradient(#cdcdcd,#fdfdfd)
       border: 1px solid #46345a
-      +border_radius(5)
+      +border_radius(3)
       color: #999
       height: 30px
       line-height: 30px

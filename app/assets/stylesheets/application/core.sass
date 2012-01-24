@@ -50,11 +50,11 @@
         top: 0
     
     &:last-child
-      +border_radius(0,0,5,5)
+      +border_radius(0,0,3,3)
       border-bottom: 1px solid #fff
       
       &:after
-        +border_radius(0,0,5,5)
+        +border_radius(0,0,3,3)
     
     &.alert
       +bg_gradient(#d73c31,#A13A32)
@@ -97,7 +97,7 @@
     .read
       background: #fff
       border: 1px solid rgba(#000,.5)
-      +border_radius(4)
+      +border_radius(2)
       +box_shadow(0 0 5px rgba(#000,.2))
       color: #000
       font-size: 12px
@@ -156,7 +156,7 @@ button,
 #body button,
 #body .button
   border: 1px solid transparent
-  +border_radius(5)
+  +border_radius(3)
   display: inline-block
   height: 30px
   line-height: 30px !important
@@ -188,6 +188,9 @@ button,
 
   label
     font-family: DinMedium, sans-serif
+    
+    + img
+      margin: 5px 0 0
   
   input,
   textarea
@@ -196,14 +199,14 @@ button,
   
   input[type="file"]
     display: block
-    margin: 0 0 5px
+    margin: 5px 0
   
   input[type="url"],
   input[type="email"],
   input[type="text"],
   input[type="password"],
   textarea
-    +border_radius(5)
+    +border_radius(3)
     border: 1px solid transparent
     display: block
     line-height: 20px
@@ -230,7 +233,7 @@ button,
       
       &:before
         border: 1px solid transparent
-        +border_radius(5)
+        +border_radius(3)
         content: ''
         height: 24px
         left: 0
@@ -240,7 +243,7 @@ button,
         
       &:after
         border: 1px solid transparent
-        +border_radius(20)
+        +border_radius(2)
         content: ''
         height: 14px
         left: 5px
@@ -255,7 +258,7 @@ button,
     padding: 5px
     
     &:before
-      content: '\2014\00A0'
+      content: '\27A5\00A0'
 
   div.select
     float: left
@@ -263,14 +266,15 @@ button,
     width: 435px
       
   .select
-    height: 55px
+    min-height: 55px
     position: relative
     
     >label
+      display: inline-block
       padding-bottom: 5px
   
     ul
-      +border_radius(5)
+      +border_radius(3)
       border: 1px solid transparent
       display: block
       height: 0
@@ -298,7 +302,7 @@ button,
         position: static
         
         label
-          +border_radius(5)
+          +border_radius(3)
           border-top: 1px solid transparent
           display: none
           font-family: DinMedium, sans-serif
@@ -308,18 +312,25 @@ button,
           padding: 5px 10px
           text-indent: 0
           
+          em
+            font-family: DinLight, sans-serif
+          
           &:before,
           &:after
             display: none
         
           .avatar
             border: 1px solid transparent
-            +border_radius(3)
+            +border_radius(2)
             float: left
             margin: -1px 6px 3px -6px
         
         img.avatar
           width: 20px
+        
+        img.big
+          border: 1px solid
+          +border_radius(3)
         
         input
           left: -500em
@@ -341,6 +352,12 @@ button,
         
             .avatar
               margin: 3px 5px 3px -5px
+            
+            .big
+              float: left
+              height: 20px
+              margin: 3px 10px 0 0
+              width: 30px
   
       &:hover
         height: auto
@@ -354,6 +371,9 @@ button,
           label
             display: block
             position: static
+
+    dfn.hint
+      padding-top: 39px
       
     .day ul
       left: 170px
@@ -379,7 +399,7 @@ button,
   .slider,
   .slider_with_none
     border: 1px solid transparent
-    +border_radius(5)
+    +border_radius(3)
     height: 30px
     margin: 0 0 10px
     overflow: hidden
@@ -395,7 +415,7 @@ button,
         
     label
       border: 1px solid transparent
-      +border_radius(4)
+      +border_radius(2)
       font: 12px DinMedium, sans-serif
       height: 24px
       left: 2px
@@ -490,6 +510,10 @@ button,
             content: '\A'
             white-space: pre
         
+        .check_boxes + ul
+          padding-top: 0
+          padding-bottom: 0
+        
         &:before
           display: none
         
@@ -512,7 +536,7 @@ button,
     
     mark.error
       background: #A43D33
-      +border_radius(6,6,5,5)
+      +border_radius(4,4,3,3)
       color: #fff
       display: block
       font-family: DinMedium, sans-serif
@@ -521,6 +545,10 @@ button,
       position: relative
       width: 412px
       z-index: 1
+    
+    .check_boxes + ul + mark.error
+      margin-top: 0
+      padding-top: 5px
   
     &.select,
     .select
@@ -540,6 +568,12 @@ button,
       > mark.error
         margin-top: 0
         width: 354px
+    
+    dfn.hint
+      margin-top: 30px
+      
+      + mark.error
+        margin-top: -85px
 
 
 // Comments
@@ -629,11 +663,11 @@ button,
             text-decoration: none
             
             &.expand
-              +border_radius(3)
+              +border_radius(2)
               display: none
             
             &.collapse
-              +border_radius(3)
+              +border_radius(2)
         
         >.actions
           position: absolute
@@ -719,7 +753,7 @@ button,
             width: 40px
       
       &.owned >blockquote >.meta a[meta]
-        +border_radius(3)
+        +border_radius(2)
       
       &.locked
         
@@ -840,7 +874,7 @@ button,
       
       &:before
         border: 1px solid
-        +border_radius(3)
+        +border_radius(2)
         content: attr(meta)
         font: 12px DinMedium, sans-serif
         height: 20px
@@ -986,7 +1020,7 @@ button,
     padding: 0
     
     a
-      +border_radius(3)
+      +border_radius(2)
       font-family: DinMedium, sans-serif
       padding: 0 3px
       text-decoration: underline
@@ -1002,7 +1036,7 @@ button,
   input[type="password"]
     background: #eee
     +bg_gradient(#ddd,#eee)
-    +border_radius(5)
+    +border_radius(3)
     +box_shadow(0 0 3px #999)
     border: 1px solid #fff
     display: block
@@ -1027,7 +1061,7 @@ button,
     input[type="button"]
       +bg_gradient(#d24723,#792b28)
       border: 1px solid #eee
-      +border_radius(5)
+      +border_radius(3)
       color: #f8d5bb
       display: inline-block
       float: left
