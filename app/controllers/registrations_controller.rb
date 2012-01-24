@@ -45,7 +45,7 @@ class RegistrationsController < Devise::RegistrationsController
     success = resource ? resource.disable_by_user(params) : false
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      add_new_flash_message "Your account has been disabled.", "notice" # TODO Joe, Why is this not displayed? -MO
+      add_new_flash_message "Your account has been disabled.", "notice" # TODO Joe, Why is this not displayed? -MO BVR-404
       redirect_to root_url
     else
       render 'disable_confirmation'
