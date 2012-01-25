@@ -15,7 +15,8 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :submission_attributes, :character_proxy_ids
+  attr_accessor :proxy_hash
+  attr_accessible :submission_attributes, :character_proxy_ids, :proxy_hash
 
 ###
 # Constants
