@@ -6,7 +6,7 @@
     = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
 
 .submission
-  =form_tag(accept_community_application_path, :method => :post) do
+  = simple_form_for @community_application, :url => accept_community_application_path, :method => :post do |f|
     .sidebar
       .submitter
         %h2 Applicant
@@ -17,13 +17,15 @@
       - if @community_application.character_proxies.size > 0
         .characters
           %h2 Characters
-          %ul
-            - @community_application.character_proxies.each do |cp|
+          - @community_application.character_proxies.each do |character_proxy|
+            %ul
               %li
-                = image_tag cp.avatar_url(:tiny), :class => 'avatar'
-                %span.name= cp.name
-                %span.game= cp.game_name
-              =select("proxy_hash", cp.id, @supported_games.where(:game_type => cp.game.class.to_s).collect {|sg| [ "#{sg.name} — #{sg.game_name}", sg.id ] }, {:include_blank => 'None'}) if @community_application.is_pending?
+                = image_tag character_proxy.avatar_url(:tiny), :class => 'avatar'
+                %span.name= character_proxy.name
+                %span.game= character_proxy.game_name
+            - if @community_application.is_pending? and can? :accept, @community_application
+              = f.simple_fields_for @community_application.character_proxies, character_proxy, :index => character_proxy.id do |pf|
+                .select= pf.input :id, :as => :radio, :wrapper => false, :label => false, :input_html => { :name => "proxy_hash[#{character_proxy.id}]" }, :collection => @supported_games.where(:game_type => character_proxy.game.class.to_s).collect {|sg| [ "#{sg.name} — #{sg.game_name}", sg.id ] }
 
     - if @community_application.submission.answers.size > 0
       .questions

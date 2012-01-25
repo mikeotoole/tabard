@@ -79,18 +79,17 @@ class CommunityApplication < ActiveRecord::Base
     self.update_attribute(:status, "Accepted")
     self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    # TODO Doug/Bryan, Determine what message content should be. subdomain_home
     message = Message.new(:subject => "Application Accepted",
-                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
+                          :body => "Your application to #{self.community.name} has been accepted. It will now appear within your communities list.",
                           :to => [self.user_profile.id])
     message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
       next unless proxy_map[proxy.id.to_s]
       if self.community.is_protected_roster
-        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s],:character_proxy => proxy).approve
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
       else
-        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s],:character_proxy => proxy)
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
       end
     end
   end

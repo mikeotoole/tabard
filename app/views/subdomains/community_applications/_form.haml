@@ -36,7 +36,7 @@
           %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
             = image_tag cp.avatar_url(:tiny), :class => 'avatar'
             = cp.name
-        .select= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
+        .select.picker= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       %h2 Instructions
       :markdown

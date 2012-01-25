@@ -913,9 +913,12 @@ button,
           
           ul
             width: 276px
-            
-            input:checked + label
-              display: none
+          
+          input:checked + label
+            width: 236px
+        
+        .picker input:checked + label
+          display: none
         
       .characters >label,
       .characters >ul li,
@@ -979,6 +982,10 @@ button,
                 
               &.game
                 font: 12px DinLight, sans-serif
+          
+          + ul,
+          + .select
+            margin: -30px 0 0
       
       .instructions
         padding: 0 0 15px
