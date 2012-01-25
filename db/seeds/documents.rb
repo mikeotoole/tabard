@@ -1,6 +1,8 @@
 # This file seeds our first ToS and PP
+
+##### SEED TOS #####
 puts "Creating TOS"
-    tos_document = TermsOfService.create(
+    tos_document = TermsOfService.create!(
       body: %{*Terms of Service and User Agreement for Crumblin Service*
 
 *Crumblin (the "Service") is a service of DigitalAugment Inc., a Washington State corporation (the "Company", or "We"). The following are the Terms of Service and User Agreement (collectively, "TOS") for Crumblin.*
@@ -161,8 +163,9 @@ g) *If any portion of this Mandatory Arbitration section is found by a court of 
 17) *Severability.* If a court of competent jurisdiction finds that any portion of these TOS to be unenforceable, then said portion shall be severed and the remaining portions shall be enforceable as if the unenforceable portion was never a part of these TOS to begin with.
 }, version: "1", is_published: true)
 
+#/##### SEED TOS #####
     puts "Creating Privacy Policy"
-    privacy_policy_document = PrivacyPolicy.create(
+    privacy_policy_document = PrivacyPolicy.create!(
     :body => %{
 *Applicability of this Policy*
 This Policy applies to the Crumblin service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts. This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service.
