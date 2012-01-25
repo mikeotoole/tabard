@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114234942) do
+ActiveRecord::Schema.define(:version => 20120125004533) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -393,6 +393,12 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
+
+  create_table "site_configurations", :force => true do |t|
+    t.boolean  "is_maintenance", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"

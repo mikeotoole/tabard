@@ -40,7 +40,7 @@ class TopLevelController < ApplicationController
 
   # This method gets the Maintenance page.
   def maintenance # TODO Doug, This page needs content. -MO BVR-396
-    if maintenance_mode?
+    if SiteConfiguration.is_maintenance?
       render :layout => false
     else
       redirect_to root_url
