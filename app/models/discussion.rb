@@ -62,12 +62,6 @@ class Discussion < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
-  # Looks if this discussion is in an annoincment space. If true this is an announcement.
-  def is_announcement
-    self.discussion_space.is_announcement_space
-  end
-
   ###
   # This method gets the poster of this discussion. If character proxy is not nil
   # the character is returned. Otherwise the user profile is returned. These should

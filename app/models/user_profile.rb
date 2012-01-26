@@ -31,8 +31,10 @@ class UserProfile < ActiveRecord::Base
 
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
-  has_many :announcement_spaces, :through => :communities
-  has_many :announcements, :through => :announcement_spaces, :class_name => "Discussion", :source => "discussions"
+  has_many :announcements, :through => :community_profiles
+  has_many :read_announcements, :through => :community_profiles
+  has_many :unread_announcements, :through => :community_profiles
+  has_many :recent_unread_announcements, :through => :community_profiles
   has_many :community_applications, :dependent => :destroy
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
@@ -252,28 +254,28 @@ class UserProfile < ActiveRecord::Base
   # This method gets an array of viewed announcements.
   # [Returns] An array of viewed messages.
   ###
-  def read_announcements
-    # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
-    self.announcements.reject{|announcement| !self.has_seen?(announcement)}
-  end
+  #def read_announcements
+  #  # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
+  #  self.announcements.reject{|announcement| !self.has_seen?(announcement)}
+  #end
 
   ###
   # This method gets an array of unviewed announcements.
   # [Returns] An array of unviewed messages.
   ###
-  def unread_announcements
-    # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
-    self.announcements.reject{|announcement| self.has_seen?(announcement)}
-  end
+  #def unread_announcements
+  #  # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
+  #  self.announcements.reject{|announcement| self.has_seen?(announcement)}
+  #end
 
   ###
   # This method gets an array of unviewed announcements within the past two weeks
   # [Returns] An array of unviewed messages within the past two weeks.
   ###
-  def recent_unread_announcements(community = nil)
-    # TODO Mike, make this better.
-    self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago or (community and announcement.community.id != community.id)}
-  end
+  #def recent_unread_announcements(community = nil)
+  #  # TODO Mike, make this better.
+  #  self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago or (community and announcement.community.id != community.id)}
+  #end
 
   ###
   # This method gets an array of possible active profile options.

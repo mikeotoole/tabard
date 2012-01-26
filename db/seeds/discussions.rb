@@ -45,12 +45,12 @@ def create_comment(commentable, body, poster_last_name)
   return comment
 end
 
-def create_announcement(community_name, name, body, poster_last_name)
+def create_announcement(community_name, name, body, poster_last_name, supported_game = nil)
   community = Community.find_by_name(community_name)
   user_profile = UserProfile.find_by_last_name(poster_last_name)
 
   puts "#{user_profile.name} is creating #{community_name} Announcement #{name}"
-  announcement = community.community_announcement_space.discussions.new(:name => name, :body => body)
+  announcement = community.announcements.new(:name => name, :body => body, :supported_game => supported_game)
   announcement.user_profile = user_profile
   announcement.save!
   return announcement
@@ -105,5 +105,14 @@ unless @dont_run
                       'Star Wars is bad ass!',
                       "Raids are super cool. The new vent channel is open for SWTOR.",
                       'Billy')
+  create_announcement('Just Another Headshot',
+                      'This is my favorite supported_game',
+                      "LOLOLOLOLOLOLOLOLOL",
+                      'Billy',
+                      Community.find_by_name('Just Another Headshot').supported_games.first)
+  create_announcement('Jedi Kittens',
+                      'Star Wars is mew mew mew!',
+                      "Raids are super mew. The new vent channel is open for SWTOR.",
+                      'Tiger')
 
 end

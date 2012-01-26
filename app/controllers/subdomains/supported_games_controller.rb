@@ -15,9 +15,10 @@ class Subdomains::SupportedGamesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_supported_game, :except => [:new, :create, :index]
   before_filter :create_supported_game, :only => [:new, :create]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index, :announcements]
   skip_before_filter :limit_subdomain_access
   after_filter :create_activity, :only => [:update, :create]
+
 
 ###
 # REST Actions
@@ -29,6 +30,10 @@ class Subdomains::SupportedGamesController < SubdomainsController
 
   # GET /supported_games/1
   def show
+  end
+
+  def announcements
+    @announcements = @supported_game.announcements
   end
 
   # GET /supported_games/new

@@ -101,7 +101,7 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-  can :dashboard, UserProfile do |user_profile|
+    can :dashboard, UserProfile do |user_profile|
       user_profile == user.user_profile
     end
     # Character Rules
@@ -197,19 +197,13 @@ class Ability
   ###
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
-    
+
+    can :read, Announcement if user.is_member?(current_community)
+
     can :index, PageSpace
 
     can [:read], Comment do |comment|
       user.user_profile.is_member?(current_community)
-    end
-
-    can [:read], Discussion do |discussion|
-      user.user_profile.is_member?(current_community) and discussion.is_announcement
-    end
-
-    can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(current_community) and space.is_announcement_space == true
     end
 
     can :mine, RosterAssignment
@@ -234,6 +228,10 @@ class Ability
     can [:manage], PageSpace
     can [:unlock, :lock, :destroy], Comment do |comment|
       not comment.is_removed
+    end
+
+    can :manage, Announcement do |announcement|
+      announcement.community.admin_profile_id == user.user_profile_id
     end
 
     can :manage, DiscussionSpace

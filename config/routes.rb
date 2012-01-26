@@ -73,10 +73,6 @@ DaBvRails::Application.routes.draw do
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
-  # Announcements
-  resources :announcements, :only => [:index]
-  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
-
   # Subdomains
   constraints(Subdomain) do
     get "/" => "subdomains#index", :as => 'subdomain_home'
@@ -142,12 +138,13 @@ DaBvRails::Application.routes.draw do
       end
 
       # Announcements
-      resources :announcement_spaces, :only => [:index, :show] do
-        resources :announcements, :except => [:index], :shallow => true do
-          member do
-            post :lock
-            post :unlock
-          end
+      resources :announcements do
+        member do
+          post :lock
+          post :unlock
+        end
+        collection do
+          get :community
         end
       end
 
@@ -157,9 +154,17 @@ DaBvRails::Application.routes.draw do
       end
 
       # Supported Games
-      resources :supported_games
+      resources :supported_games do
+        member do
+          get :announcements
+        end
+      end
     end
   end
+
+  # Announcements
+  resources :announcements, :only => [:index]
+  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Site Actions
   put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode

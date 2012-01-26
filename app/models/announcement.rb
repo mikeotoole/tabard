@@ -11,7 +11,7 @@ class Announcement < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game
 
 ###
 # Associations
@@ -20,6 +20,7 @@ class Announcement < ActiveRecord::Base
   belongs_to :character_proxy
   belongs_to :community
   belongs_to :supported_game
+  has_many :acknowledgements
   has_many :comments, :as => :commentable
   has_many :all_comments, :as => :original_commentable, :class_name => "Comment"
   
@@ -45,6 +46,8 @@ class Announcement < ActiveRecord::Base
 
   before_destroy :destroy_all_comments
 
+  after_create :create_acknowledgements
+
 ###
 # Public Methods
 ###
@@ -63,6 +66,26 @@ class Announcement < ActiveRecord::Base
       self.character_proxy.character
     else
       self.user_profile
+    end
+  end
+
+  def context_name
+    if self.supported_game
+      return self.supported_game.smart_name
+    else
+      return "#{self.community_name} Announcements"
+    end
+  end
+
+  def create_acknowledgements
+    if self.supported_game
+      self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
+        community_profile.announcements.create(:announcement => self)
+      end
+    else
+      self.community.community_profiles.each do |community_profile|
+        community_profile.acknowledgements.create(:announcement => self)
+      end
     end
   end
 
@@ -89,7 +112,9 @@ class Announcement < ActiveRecord::Base
   #   * +user_profile+ The profile of the user that viewed the discussion.
   ###
   def update_viewed(some_user_profile)
-    some_user_profile.update_viewed(self)
+    community_profile = some_user_profile.community_profiles.where(:community_id => self.community.id).first
+    acknowledgment = self.acknowledgements.where(:community_profile_id => community_profile.id).first if community_profile
+    acknowledgment.update_attributes({:has_been_viewed => true}) if acknowledgment
   end
 
   # This will destroy forever this discussion and all its comments.

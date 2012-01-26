@@ -46,12 +46,12 @@
           - if (user_signed_in? and current_user.is_member? @community)
             %li
               -#TODO Doug - Hookup link
-              = link_to 'Announcements', announcement_spaces_url
-              - if @community.announcement_spaces.any?
-                %ul
-                  -#TODO Doug - Double check this after BVR-290 is complete
-                  - @community.announcement_spaces.each do |space|
-                    %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
+              = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
+              %ul
+                %li= link_to "#{current_community.name} Announcements", community_announcements_url(:subdomain => current_community.subdomain)
+                - current_community.supported_games.each do |sp|
+                  %li= link_to "#{sp.smart_name} Announcements", announcements_supported_game_url(sp ,:subdomain => current_community.subdomain)
+             
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
             %li
               = link_to 'Forms', custom_forms_url

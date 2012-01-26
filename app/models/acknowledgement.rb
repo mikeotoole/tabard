@@ -1,4 +1,6 @@
 class Acknowledgement < ActiveRecord::Base
+  belongs_to :community_profile
+  belongs_to :announcement
 end
 
 # == Schema Information
