@@ -126,18 +126,14 @@ class User < ActiveRecord::Base
 
   # This will reset all passwords for non disabled users.
   def self.reset_all_passwords
-    User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |record|
-      begin
-        random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
-        record.password = random_password
-        record.reset_password_token = User.reset_password_token
-        record.reset_password_sent_at = Time.now
-        record.save!
-        UserMailer.all_password_reset(record, random_password).deliver
-      rescue Exception => e
-        logger.error "Error Resetting password in reset all passwords loop: #{e.message}"
-      end
+    User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |user|
+      User.delay.reset_user_password(user.id)
     end
+  end
+  
+  # This is a class method to reset a users password.
+  def self.reset_user_password(id)
+    User.find(id).reset_password if id
   end
 
 ###

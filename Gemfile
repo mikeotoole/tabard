@@ -27,7 +27,10 @@ source 'http://rubygems.org'
   gem 'client_side_validations'
 
 # Filtering
-  gem 'profanalyzer'  
+  gem 'profanalyzer' 
+  
+# Background jobs
+  gem 'delayed_job_active_record' 
 
 # Markup
   gem 'rdiscount'

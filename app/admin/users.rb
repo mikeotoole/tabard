@@ -59,7 +59,7 @@ ActiveAdmin.register User do
   end
 
   collection_action :reset_all_passwords, :method => :post do
-    User.reset_all_passwords # TODO Mike, May want to have the run in a worker thread. BVR-373.
+    User.delay.reset_all_passwords # TODO Mike, May want to have the run in a worker thread. BVR-373.
     redirect_to :action => :index, :notice => "All Passwords Reset"
   end
 

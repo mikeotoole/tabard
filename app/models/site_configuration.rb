@@ -41,7 +41,7 @@ class SiteConfiguration < ActiveRecord::Base
 protected
   # Gets the first cached site config
   def self.first_cached
-    Rails.cache.fetch('SiteConfiguration.first') { SiteConfiguration.first ? SiteConfiguration.first : SiteConfiguration.create }
+    Rails.cache.fetch('SiteConfiguration.first') { SiteConfiguration.first ? SiteConfiguration.first : SiteConfiguration.create } # TODO Mike, first_or_create
   end
 
   # clears the cache for the site configuration
@@ -62,12 +62,13 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: site_configurations
 #
 #  id             :integer         not null, primary key
-#  is_maintenance :boolean
+#  is_maintenance :boolean         default(FALSE)
 #  created_at     :datetime
 #  updated_at     :datetime
 #
