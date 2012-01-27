@@ -30,10 +30,10 @@ class Subdomains::CommunitiesController < SubdomainsController
     respond_with(@community, :location => edit_community_url(@community))
   end
   
-  # DELETE /communities/:id(.:format)
-  def destroy
-    Community.delay.destory_community(@community.id)
-    add_new_flash_message('Community is being removed.')
-    redirect_to root_url
-  end
+#   # DELETE /communities/:id(.:format)
+#   def destroy
+#     Community.delay.destory_community(@community.id)
+#     add_new_flash_message('Community is being removed.')
+#     redirect_to root_url
+#   end
 end

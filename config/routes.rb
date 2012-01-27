@@ -85,7 +85,7 @@ DaBvRails::Application.routes.draw do
       # Community edit/update
       get "/community_settings" => "communities#edit", :as => "edit_community_settings"
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
-      resources :communities, :only => [:edit, :update, :destroy]
+      resources :communities, :only => [:edit, :update]
 
       # Roles and Permissions
       resources :roles, :except => [:show]
