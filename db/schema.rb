@@ -453,6 +453,7 @@ ActiveRecord::Schema.define(:version => 20120126005942) do
     t.string   "species"
     t.string   "level"
     t.string   "about"
+    t.string   "gender"
   end
 
   add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
@@ -544,6 +545,7 @@ ActiveRecord::Schema.define(:version => 20120126005942) do
     t.datetime "updated_at"
     t.string   "char_class"
     t.text     "about"
+    t.string   "gender"
   end
 
   add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"

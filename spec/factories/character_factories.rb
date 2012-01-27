@@ -5,6 +5,7 @@ FactoryGirl.define do
     char_class "Bounty Hunter"
     advanced_class "Powertech"
     species "Cyborg"
+    gender "Male"
     level 20
     
     factory :swtor_character_with_images do
@@ -17,6 +18,7 @@ FactoryGirl.define do
     server_name { DefaultObjects.swtor.server_name }
     advanced_class "Powertech"
     species "Cyborg"
+    gender "Male"
     level 20
   end
   
@@ -26,6 +28,7 @@ FactoryGirl.define do
     char_class "Mage"
     race "Human"
     level 20
+    gender "Male"
     
     factory :wow_character_with_images do
       avatar { File.open("#{Rails.root}/spec/testing_files/goodAvatar1.jpg") }
@@ -39,6 +42,7 @@ FactoryGirl.define do
     char_class "Mage"
     race "Human"
     level 20
+    gender "Male"
   end
   
   # wow character with default user profile

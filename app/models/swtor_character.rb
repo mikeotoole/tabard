@@ -9,7 +9,11 @@ class SwtorCharacter < BaseCharacter
 ###
 # Constants
 ###
+  # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 20
+  
+  # All valid genders
+  VALID_GENDERS = %w(Male Female)
 
   # all valid republic classes
   VALID_REPUBLIC_CLASSES = %w(Jedi\ Knight Jedi\ Consular Smuggler Trooper)
@@ -66,7 +70,7 @@ class SwtorCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :advanced_class, :species, :level
+  attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :advanced_class, :species, :level, :gender
 
 ###
 # Associations
@@ -101,6 +105,8 @@ class SwtorCharacter < BaseCharacter
   end
   validates :species,  :presence => true
   validate :species_is_valid_for_advanced_class
+  validates :gender, :presence => true,
+                     :inclusion => {:in => VALID_GENDERS}
 
 ###
 # Public Methods
@@ -262,6 +268,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: swtor_characters
@@ -277,5 +284,6 @@ end
 #  species        :string(255)
 #  level          :string(255)
 #  about          :string(255)
+#  gender         :string(255)
 #
 
