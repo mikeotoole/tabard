@@ -92,14 +92,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  ###
-  # Used to check for maintenance mode.
-  # [Returns] true if maintenance mode is on, false otherwise.
-  ###
-  def maintenance_mode?
-    $maintenance_mode ||= false
-  end
-
 ###
 # Protected Methods
 ###
@@ -293,7 +285,7 @@ protected
   # This looks to see if the system is in maintenance mode. If so all traffic is redirected to the maintenance page.
   ###
   def check_maintenance_mode
-    if maintenance_mode?
+    if SiteConfiguration.is_maintenance?
       redirect_to top_level_maintenance_url
     else
       true

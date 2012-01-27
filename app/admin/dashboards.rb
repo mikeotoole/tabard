@@ -1,10 +1,10 @@
 ActiveAdmin::Dashboards.build do
 
   section "Site Actions", :priority => 1 do
-    if can?(:toggle_maintenance_mode, SiteActionController)
-      strong SiteActionController.new.maintenance_mode? ? "Maintenance Mode is ON" : "Maintenance Mode is OFF"
+    if can?(:toggle_maintenance_mode, SiteConfigurationController)
+      strong SiteConfiguration.is_maintenance? ? "Maintenance Mode is ON" : "Maintenance Mode is OFF"
       div do
-        button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :put, :confirm => 'Are you sure you want to toggle maintenance mode?'
+        button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :post, :confirm => 'Are you sure you want to toggle maintenance mode?'
       end
       div br
     end
@@ -16,7 +16,7 @@ ActiveAdmin::Dashboards.build do
     end
     if can?(:update_account, current_admin_user)
       div do
-        button_to "Update My Account", edit_account_admin_admin_users_path, :method => :get
+        link_to "Update My Account", edit_account_admin_admin_users_path, :method => :get
       end
     end
   end
