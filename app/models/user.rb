@@ -125,15 +125,20 @@ class User < ActiveRecord::Base
   end
 
   # This will reset all passwords for non disabled users.
-  def self.reset_all_passwords
+  def self.reset_all_passwords # TODO Mike, Test.
     User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |user|
       User.delay.reset_user_password(user.id)
     end
   end
   
   # This is a class method to reset a users password.
-  def self.reset_user_password(id)
-    User.find(id).reset_password if id
+  def self.reset_user_password(id) # TODO Mike, Test.
+    User.find(id).reset_password
+  end
+  
+  # This is a class method to nuke a user.
+  def self.nuke_user(id) # TODO Mike, Test.
+    User.find(id).nuke
   end
 
 ###
@@ -195,10 +200,11 @@ class User < ActiveRecord::Base
   # Will reset the users password.
   def reset_password
   	random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
-    self.password = random_password
+    self.password = random_password if random_password
+    self.password_confirmation = random_password if random_password
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
-    self.save!
+    self.save(:validate => false)
     UserMailer.password_reset(self, random_password).deliver
   end
 
@@ -263,6 +269,7 @@ class User < ActiveRecord::Base
   
   # This will destroy forever this user and all its associated resources.
   def nuke
+    self.disable_by_admin
     self.user_profile.nuke if self.user_profile
     User.find(self).destroy
   end

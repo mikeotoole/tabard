@@ -37,18 +37,21 @@ ActiveAdmin.register User do
   member_action :disable, :method => :put do
     user = User.find(params[:id])
     user.disable_by_admin if user
+    add_new_flash_message "User disabled.", "notice"
     redirect_to :action => :show
   end
 
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
-    user.nuke if user # TODO Mike, May want to have the run in a worker thread. BVR-373.
+    User.delay.nuke_user(user.id)
+    add_new_flash_message "User is being nuked.", "notice"
     redirect_to :action => :index
   end
 
   member_action :reinstate, :method => :put do
     user = User.find(params[:id])
     user.reinstate_by_admin if user
+    add_new_flash_message "User reinstated.", "notice"
     redirect_to :action => :show
   end
 
@@ -59,13 +62,15 @@ ActiveAdmin.register User do
   end
 
   collection_action :reset_all_passwords, :method => :post do
-    User.delay.reset_all_passwords # TODO Mike, May want to have the run in a worker thread. BVR-373.
-    redirect_to :action => :index, :notice => "All Passwords Reset"
+    User.delay.reset_all_passwords
+    add_new_flash_message "Password resets in progress.", "notice"
+    redirect_to :action => :index
   end
 
   collection_action :sign_out_all_users, :method => :post do
     User.force_active_users_to_sign_out
-    redirect_to admin_dashboard_url, :notice => "All Users Signed out"
+    add_new_flash_message "All Users Signed out.", "notice"
+    redirect_to admin_dashboard_url
   end
 
   filter :id

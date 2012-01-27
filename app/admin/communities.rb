@@ -2,7 +2,15 @@ ActiveAdmin.register Community do
   menu :parent => "Community", :if => proc{ can?(:read, Community) }
   controller.authorize_resource
 
-  actions :index, :show, :destroy
+  actions :index, :show
+
+  member_action :destroy, :method => :delete do
+    community = Community.find(params[:id])
+    authorize!(:destroy, community)
+    Community.delay.destory_community(community.id)
+    add_new_flash_message('Community is being removed.')
+    redirect_to :action => :index
+  end
 
   filter :id
   filter :name
@@ -19,7 +27,7 @@ ActiveAdmin.register Community do
     column :name
     column :slogan
     column :admin_profile do |community|
-      link_to community.admin_profile.name, [:admin, community.admin_profile]
+      link_to community.admin_profile.name, [:admin, community.admin_profile] if community.admin_profile
     end
     column :created_at
     column "Destroy" do |community|

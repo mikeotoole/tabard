@@ -46,26 +46,29 @@ class AdminUser < ActiveRecord::Base
 ###
 # Class Methods
 ###
-
-  def self.reset_all_passwords #TODO
-  
+  # This will reset all passwords for admin users.
+  def self.reset_all_passwords # TODO Mike, Test.
+    AdminUser.all.each do |user|
+      AdminUser.delay.reset_admin_user_password(user.id)
+    end
   end
  
   # This is a class method to reset a users password.
-  def self.reset_admin_user_password(id)
-    AdminUser.find(id).reset_password if id
+  def self.reset_admin_user_password(id) # TODO Mike, Test.
+    AdminUser.find(id).reset_password
   end
 
 ###
 # Instance Methods
 ###
-  # Will reset the users password.
-  def reset_password #TODO
-  	random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
-    self.password = random_password
-    self.reset_password_token = User.reset_password_token
+  # Will reset the admin users password.
+  def reset_password
+  	random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
+    self.password = random_password if random_password
+    self.password_confirmation = random_password if random_password
+    self.reset_password_token = AdminUser.reset_password_token
     self.reset_password_sent_at = Time.now
-    self.save!
+    self.save
     UserMailer.password_reset(self, random_password).deliver
   end
   

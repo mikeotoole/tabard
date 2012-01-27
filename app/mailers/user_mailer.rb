@@ -17,14 +17,6 @@ class UserMailer < ActionMailer::Base # TODO Doug, Update all subjects as needed
     end
   end
 
-  # Used for resetting all users passwords.
-  def all_password_reset(user, password=nil)
-    @resource = user
-    mail(:to => @resource.email, :subject => 'Crumblin - Password reset notification', :tag => 'password-reset') do |format|
-       format.html { render "devise/mailer/reset_all_password_by_admin_instructions" }
-    end
-  end
-
   # Used for creating a new AdminUser.
   def setup_admin(user, password=nil)
     @resource = user
