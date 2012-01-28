@@ -6,6 +6,7 @@
     = stylesheet_link_tag "application/top_level", "application/messaging"
     = javascript_include_tag "application", "messaging"
     = csrf_meta_tags
+    = favicon_link_tag asset_path 'favicon.gif'
 
   %body.fluid
     = render "layouts/bar_in"
