@@ -85,6 +85,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -96,6 +97,5 @@ end
 #  created_at           :datetime
 #  updated_at           :datetime
 #  deleted_at           :datetime
-#  supported_game_id    :integer
 #
 

@@ -60,7 +60,7 @@ class AdminAbility
       can [:destroy], SupportedGame
       can [:read, :create, :update], [Wow, 'Wow']
       can [:read, :create, :update], [Swtor, 'Swtor']
-      can [:toggle_maintenance_mode], SiteActionController
+      can [:toggle_maintenance_mode], SiteConfigurationController
     end
 
     # Rules for superadmin user. (Inherits rules from admin).

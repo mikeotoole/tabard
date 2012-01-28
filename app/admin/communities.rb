@@ -32,22 +32,15 @@ ActiveAdmin.register Community do
   show :title => :name do
     attributes_table *default_attribute_table_rows
 
-#     div :id => "discussion_spaces" do
-#       collection = resource.discussion_spaces.page(params[:discussion_space_page])
-#       pagination_options = {:entry_name => DiscussionSpace.model_name.human, :param_name => :discussion_space_page, :download_links => false}
-#       paginated_collection(collection, pagination_options) do
-#         table_options = { :id => 'discussion_spaces-table', :sortable => true, :class => "index_table", :i18n => DiscussionSpace }
-#         panel("Discussion Spaces") do
-#           table_for collection, table_options do
-#             column "Name", :sortable => :name do |discussion_space|
-#               link_to discussion_space.name, [:admin, discussion_space]
-#             end
-#             column :number_of_discussions
-#             column :created_at
-#           end
-#         end
-#       end
-#     end
+    div do
+      panel("Members") do
+        table_for(community.member_profiles) do
+          column "Display Name" do |member_profile|
+            link_to member_profile.display_name, [:admin, member_profile]
+          end
+        end
+      end
+    end
 
     div do
       panel("Supported Games") do

@@ -167,7 +167,7 @@ DaBvRails::Application.routes.draw do
   put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Site Actions
-  put "/toggle_maintenance_mode" => "site_action#toggle_maintenance_mode", :as => :toggle_maintenance_mode
+  match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", :as => :toggle_maintenance_mode
 
   # Top level home page
   root :to => 'top_level#index'

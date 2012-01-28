@@ -13,6 +13,7 @@
 #  species        :string(255)
 #  level          :string(255)
 #  about          :string(255)
+#  gender         :string(255)
 #
 
 require 'spec_helper'
@@ -57,6 +58,18 @@ describe SwtorCharacter do
     it "should validate species exists for advanced_class" do
       build(:swtor_character, :species => "Not a species").should_not be_valid
       build(:swtor_character, :swtor => empire_game, :char_class => "Sith Warrior", :advanced_class => "Juggernaut", :species => "Rattataki").should_not be_valid
+    end
+  end
+  
+  describe "gender" do
+    it "should be required" do
+       build(:swtor_character, :gender => nil).should_not be_valid
+    end
+    
+    it "should validate gender is valid" do
+      build(:swtor_character, :gender => "Not a gender").should_not be_valid
+      build(:swtor_character, :gender => "Female").should be_valid
+      build(:swtor_character, :gender => "Male").should be_valid
     end
   end
   

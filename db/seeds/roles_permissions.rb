@@ -18,7 +18,7 @@ def create_role(community_name, role_name, subject_class_array, permission_level
 
   subject_class_array.each do |sub_class|
     permission_level_array.each do |level|
-      role.permissions.create(:subject_class => sub_class, :permission_level => level)
+      role.permissions.create!(:subject_class => sub_class, :permission_level => level)
     end
   end
 
@@ -36,7 +36,7 @@ unless @dont_run
   # Create Roles with Permissions
   ###
 
-  create_role('Two Maidens', 'n00b', %w(Role), %w(Show), %w(Moose))
+  create_role('Two Maidens', 'n00b', %w(PageSpace), %w(Create), %w(Moose))
 
   # Joe's Workaround. Don't kill me Mike
   puts "Promoting DMoose to officer in JAH..."

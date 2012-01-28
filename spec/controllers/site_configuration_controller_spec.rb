@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SiteActionController do
+describe SiteConfigurationController do
   let(:superadmin) { create(:admin_user) }
   let(:admin) { create(:admin_user, :role => 'admin') }
   let(:moderator) { create(:admin_user, :role => 'moderator') }
