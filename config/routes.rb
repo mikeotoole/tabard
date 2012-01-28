@@ -1,9 +1,4 @@
 DaBvRails::Application.routes.draw do
-  # Used by BLIZ to auth site.
-  get '/mu-966b75a4-895e39c0-a6d40536-f8b36f30' do
-    '42'
-  end
-
   # Admin Users
   devise_for :admin_users do 
     get "/admin/login" => "admin/devise/sessions#new"
