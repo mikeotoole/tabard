@@ -50,6 +50,14 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 
 ###
+# Class Methods
+###
+  def self.destory_discussion_space(id) # TODO Mike, Test.
+    discussion_space = DiscussionSpace.with_deleted.find(id)
+    discussion_space.discussions.destroy_all
+  end
+
+###
 # Instance Methods
 ###
 
@@ -81,6 +89,12 @@ class DiscussionSpace < ActiveRecord::Base
   def apply_default_permissions
     return if self.is_announcement_space
     self.community.apply_default_permissions(self)
+  end
+  
+  # This is a class method to destory a DiscussionSpace using delay job.
+  def delay_destory # TODO Mike, Test.
+    self.update_attribute(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
+    DiscussionSpace.delay.destory_discussion_space(self.id)
   end
 end
 
