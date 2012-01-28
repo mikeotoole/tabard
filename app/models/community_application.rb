@@ -87,9 +87,9 @@ class CommunityApplication < ActiveRecord::Base
     self.character_proxies.each do |proxy|
       next unless proxy_map[proxy.id.to_s]
       if self.community.is_protected_roster
-        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
-      else
         RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
+      else
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
       end
     end
   end
