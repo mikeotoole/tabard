@@ -16,12 +16,7 @@ ActiveAdmin.register AdminUser do
 
   member_action :reset_password, :method => :put do
     admin_user = AdminUser.find(params[:id])
-    random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
-    admin_user.password = random_password
-    admin_user.reset_password_token = AdminUser.reset_password_token
-    admin_user.reset_password_sent_at = Time.now
-    admin_user.save
-    UserMailer.password_reset(admin_user, random_password).deliver
+    admin_user.reset_password
     redirect_to :action => :show
   end
 
@@ -44,23 +39,9 @@ ActiveAdmin.register AdminUser do
   end
 
   collection_action :reset_all_passwords, :method => :post do
-    begin
-      AdminUser.all.each do |record|
-        if record != current_admin_user
-          random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
-          record.password = random_password
-          record.reset_password_token = AdminUser.reset_password_token
-          record.reset_password_sent_at = Time.now
-          record.save
-          UserMailer.all_password_reset(record, random_password).deliver
-        end
-      end
-    rescue Exception => e
-      logger.error "Error Resetting All Passwords: #{e.message}"
-      redirect_to :action => :index, :notice => "Error resetting all passwords."
-      return
-    end
-    redirect_to :action => :index, :notice => "All Passwords Reset"
+    AdminUser.delay.reset_all_passwords
+    flash[:message] = "Password resets in progress."
+    redirect_to :action => :index
   end
 
   filter :id

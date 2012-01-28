@@ -2,7 +2,15 @@ ActiveAdmin.register DiscussionSpace do
   menu :parent => "Discussions", :if => proc{ can?(:read, DiscussionSpace) }
   controller.authorize_resource
 
-  actions :index, :show, :update, :edit, :destroy
+  actions :index, :show, :update, :edit
+  
+  member_action :destroy, :method => :delete do
+    space = DiscussionSpace.find(params[:id])
+    authorize!(:destroy, space)
+    space.delay_destory
+    flash[:message] = 'Discussion Space is being removed.'
+    redirect_to :action => :index
+  end
 
   filter :id
   filter :name
