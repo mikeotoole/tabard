@@ -66,6 +66,10 @@ class SupportedGame < ActiveRecord::Base
     "#{self.game_name} \u2014 #{self.name}"
   end
 
+  def smart_name
+    self.full_name
+  end
+
 ###
 # Protected Methods
 ###

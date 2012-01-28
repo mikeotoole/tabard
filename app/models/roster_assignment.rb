@@ -38,6 +38,8 @@ class RosterAssignment < ActiveRecord::Base
   delegate :avatar_url, :to => :user_profile, :prefix => true
   delegate :name, :to => :character_proxy, :prefix => true
   delegate :character, :to => :character_proxy
+  delegate :name, :to => :supported_game, :prefix => true
+  delegate :smart_name, :to => :supported_game, :prefix => true
 
 ###
 # Callbacks
