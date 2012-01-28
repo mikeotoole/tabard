@@ -8,7 +8,7 @@ ActiveAdmin.register Community do
     community = Community.find(params[:id])
     authorize!(:destroy, community)
     Community.delay.destory_community(community.id)
-    add_new_flash_message('Community is being removed.')
+    flash[:notice] = 'Community is being removed.'
     redirect_to :action => :index
   end
 

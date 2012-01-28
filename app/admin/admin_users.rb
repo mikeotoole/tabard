@@ -40,7 +40,7 @@ ActiveAdmin.register AdminUser do
 
   collection_action :reset_all_passwords, :method => :post do
     AdminUser.delay.reset_all_passwords
-    add_new_flash_message "Password resets in progress.", "notice"
+    flash[:message] = "Password resets in progress."
     redirect_to :action => :index
   end
 

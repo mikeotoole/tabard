@@ -37,21 +37,21 @@ ActiveAdmin.register User do
   member_action :disable, :method => :put do
     user = User.find(params[:id])
     user.disable_by_admin if user
-    add_new_flash_message "User disabled.", "notice"
+    flash[:message] = "User disabled."
     redirect_to :action => :show
   end
 
   member_action :nuke, :method => :delete do
     user = User.find(params[:id])
     User.delay.nuke_user(user.id)
-    add_new_flash_message "User is being nuked.", "notice"
+    flash[:message] = "User is being nuked."
     redirect_to :action => :index
   end
 
   member_action :reinstate, :method => :put do
     user = User.find(params[:id])
     user.reinstate_by_admin if user
-    add_new_flash_message "User reinstated.", "notice"
+    flash[:notice] = "User reinstated."
     redirect_to :action => :show
   end
 
@@ -63,13 +63,13 @@ ActiveAdmin.register User do
 
   collection_action :reset_all_passwords, :method => :post do
     User.delay.reset_all_passwords
-    add_new_flash_message "Password resets in progress.", "notice"
+    flash[:message] = "Password resets in progress."
     redirect_to :action => :index
   end
 
   collection_action :sign_out_all_users, :method => :post do
     User.force_active_users_to_sign_out
-    add_new_flash_message "All Users Signed out.", "notice"
+    flash[:notice] = "All Users Signed out."
     redirect_to admin_dashboard_url
   end
 
