@@ -97,14 +97,14 @@ class Submission < ActiveRecord::Base
           if answer.question_id == question.id
             if answer.body.class == String
               if answer.body.blank?
-                errors.add(:base, "All required questions must be answered.") 
-                answer.errors.add(:base, "is required to be answered.") 
+                errors.add(:base, "All required questions must be answered.")
+                answer.errors.add(:base, "is required to be answered.")
               end
             end
             if answer.body.class == Array
               if answer.body.delete_if{|elem| elem.blank?}.join(', ').blank?
-                errors.add(:base, "All required questions must be answered.") 
-                answer.errors.add(:base, "is required to be answered.") 
+                errors.add(:base, "All required questions must be answered.")
+                answer.errors.add(:base, "is required to be answered.")
               end
             end
           end

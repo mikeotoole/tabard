@@ -15,7 +15,7 @@ class CommunityProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessor :force_destroy
-  
+
 ###
 # Associations
 ###
@@ -51,7 +51,7 @@ class CommunityProfile < ActiveRecord::Base
   delegate :id, :to => :user_profile, :prefix => true
   delegate :name, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :name, :to => :community, :prefix => true 
+  delegate :name, :to => :community, :prefix => true
 
 ###
 # Protected Methods
@@ -66,7 +66,7 @@ protected
     errors.add(:roles, "must not be empty") if self.roles.blank?
     errors.add(:roles, "must include the member role of the community.") unless self.community and self.roles.include?(self.community.member_role)
   end
-  
+
 ###
 # Callbacks
 ###
@@ -91,7 +91,7 @@ protected
   def ensure_that_role_community_matches(role)
     raise InvalidCollectionAddition.new("You can't add a role from a different community.") if role and role.community != self.community
   end
-  
+
   ###
   # _before_remove_ on roles
   #
@@ -104,7 +104,7 @@ protected
       raise InvalidCollectionRemoval.new("You can't remove the member role.")
     end
   end
- 
+
   # This method prevents the community admin's community profile from being destroyed
   def ensure_that_community_profile_is_not_admin
     if self.community and self.user_profile == self.community.admin_profile

@@ -1,6 +1,7 @@
 DaBvRails::Application.routes.draw do
+
   # Admin Users
-  devise_for :admin_users do 
+  devise_for :admin_users do
     get "/admin/login" => "admin/devise/sessions#new"
     post "/admin/login" => "admin/devise/sessions#create"
     get "/admin_users/sign_in" => "admin/devise/sessions#new"
@@ -100,7 +101,7 @@ DaBvRails::Application.routes.draw do
           put :reject
         end
       end
-      
+
       # Community profiles
       resources :community_profiles, :only => [:destroy]
 

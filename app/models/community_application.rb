@@ -175,10 +175,10 @@ protected
     return unless community and user_profile
     errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
   end
-  
+
 ###
 # Callback Methods
-### 
+###
   ###
   # _before_create_
   #

@@ -29,7 +29,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     end
     respond_with(@community, :location => edit_community_url(@community))
   end
-  
+
 #   # DELETE /communities/:id(.:format)
 #   def destroy
 #     Community.delay.destory_community(@community.id)

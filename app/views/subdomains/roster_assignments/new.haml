@@ -28,9 +28,9 @@
       %td
         - if @avalible_characters.size > 0
           = simple_form_for @roster_assignment, :wrapper => false do |f|
-            .select{ :class => !!f.object.errors.messages[:character_proxy_id] ? 'field_with_errors' : '' }
+            .select{ :class => !!f.object_errors.messages[:character_proxy_id] ? 'field_with_errors' : '' }
               = f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @avalible_characters.collect{|c| c = [raw(image_tag(c.avatar_url(:icon), :class => 'avatar')) + "#{c.name} — #{c.game_name}", c.id]}
-            .select{ :class => !!f.object.errors.messages[:supported_game_id] ? 'field_with_errors' : '' }
+            .select{ :class => !!f.object_errors.messages[:supported_game_id] ? 'field_with_errors' : '' }
               = f.input :supported_game_id, :as => :radio, :label => false, :wrapper => false, :collection => current_community.supported_games.collect{|c| c = ["#{c.name} — #{c.game_name}", c.id]}
             %button{ :type => 'submit' } Add character
       %td

@@ -220,10 +220,10 @@ protected
     if not Rails.env.test?
       the_subdomain = request.subdomain
       the_protocol = request.protocol
-  
+
       the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
       the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
-  
+
       redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
     end
   end
