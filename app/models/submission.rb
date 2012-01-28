@@ -96,7 +96,7 @@ class Submission < ActiveRecord::Base
         self.answers.each do |answer|
           if answer.question_id == question.id
             if answer.body.class == String
-              if answer.body.blank?
+              if answer.body?
                 errors.add(:base, "All required questions must be answered.")
                 answer.errors.add(:base, "is required to be answered.")
               end
