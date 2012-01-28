@@ -34,7 +34,7 @@ def create_community(admin_user_last_name, name, slogan, game_array)
   end
   puts "#{admin_user.name} is applying #{theme.name} theme to #{name} Community"
   community.theme = theme
-  community.save
+  community.save!
   return community
 end
 
@@ -47,14 +47,14 @@ def generate_application(community, user_last_name)
   if user_profile.character_proxies.size > 0
     app.character_proxies << user_profile.character_proxies.first
   end
-  app.save
+  app.save!
   app.submission.custom_form.questions.each do |q|
     if q.is_required
       case q.type
         when 'TextQuestion'
-          app.submission.answers.create(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')
+          app.submission.answers.create!(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')
         when 'SingleSelectQuestion'
-          app.submission.answers.create(:question_id => q.id, :body => q.predefined_answers.first.body)
+          app.submission.answers.create!(:question_id => q.id, :body => q.predefined_answers.first.body)
       end
     end
   end

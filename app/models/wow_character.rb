@@ -9,7 +9,11 @@ class WowCharacter < BaseCharacter
 ###
 # Constants
 ###
+  # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 12
+
+  # All valid genders
+  VALID_GENDERS = %w(Male Female)
 
   # All valid classes
   VALID_CLASSES = %w(Death\ Knight Druid Hunter Mage Paladin Priest Rogue Shaman Warlock Warrior)
@@ -54,7 +58,7 @@ class WowCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :race, :level, :wow_id, :wow, :about, :char_class
+  attr_accessible :name, :race, :level, :wow_id, :wow, :about, :char_class, :gender
 
 ###
 # Associations
@@ -74,9 +78,11 @@ class WowCharacter < BaseCharacter
   validate do |wow_character|
     wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
   end
-  validates :race,  :presence => true
-  validates :char_class,  :presence => true
+  validates :race, :presence => true
+  validates :char_class, :presence => true
   validate :class_is_valid_for_race
+  validates :gender, :presence => true,
+                     :inclusion => {:in => VALID_GENDERS}
 
 ###
 # Public Methods
@@ -195,6 +201,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: wow_characters
@@ -209,5 +216,6 @@ end
 #  updated_at :datetime
 #  char_class :string(255)
 #  about      :text
+#  gender     :string(255)
 #
 

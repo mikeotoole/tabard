@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114234942) do
+ActiveRecord::Schema.define(:version => 20120125004533) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -396,6 +396,12 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
   add_index "roster_assignments", ["supported_game_id"], :name => "index_roster_assignments_on_supported_game_id"
 
+  create_table "site_configurations", :force => true do |t|
+    t.boolean  "is_maintenance", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"
     t.integer  "user_profile_id"
@@ -433,6 +439,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.string   "species"
     t.string   "level"
     t.string   "about"
+    t.string   "gender"
   end
 
   add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
@@ -524,6 +531,7 @@ ActiveRecord::Schema.define(:version => 20120114234942) do
     t.datetime "updated_at"
     t.string   "char_class"
     t.text     "about"
+    t.string   "gender"
   end
 
   add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"

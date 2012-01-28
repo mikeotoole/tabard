@@ -5,7 +5,7 @@
 #
 # This controller is used by the admin portal for site wide actions.
 ###
-class SiteActionController < ApplicationController
+class SiteConfigurationController < ApplicationController
   respond_to :html
 ###
 # Callbacks
@@ -21,16 +21,16 @@ class SiteActionController < ApplicationController
 
   ###
   # This redirects all traffic to maintenance page.
-  # PUT /toggle_maintenance_mode(.:format)
+  # POST /toggle_maintenance_mode(.:format)
   ###
   def toggle_maintenance_mode
-    if can?(:toggle_maintenance_mode, SiteActionController)
-      if maintenance_mode?
-        $maintenance_mode = false
+    if can?(:toggle_maintenance_mode, SiteConfigurationController)
+      if SiteConfiguration.is_maintenance?
+        SiteConfiguration.first.update_attribute(:is_maintenance, false)
       else
-        $maintenance_mode = true
+        SiteConfiguration.first.update_attribute(:is_maintenance, true)
       end
-      notice = (maintenance_mode? ? "Maintenance Mode ON" : "Maintenance Mode OFF")
+      notice = (SiteConfiguration.is_maintenance? ? "Maintenance Mode ON" : "Maintenance Mode OFF")
       redirect_to admin_dashboard_url, :notice => notice
     else
       redirect_to admin_dashboard_url, :alert => "You are not authorized!"

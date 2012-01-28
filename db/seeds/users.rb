@@ -54,6 +54,6 @@ unless @dont_run
                   :date_of_birth => Date.new(1980,4,17),
                   :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"})
   mike.skip_confirmation!
-  mike.save
+  mike.save!
 
 end
