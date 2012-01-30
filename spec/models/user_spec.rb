@@ -229,7 +229,7 @@ describe User do
       it "should remove user's owned communities" do
         user = DefaultObjects.community_admin
         owned_communities = user.owned_communities.all
-        user.disable_by_user({:user => {:current_password => user.password}}).should be_true
+        user.disable_by_user({:user => {:current_password => "Password"}}).should be_true
         owned_communities.should_not be_empty
         owned_communities.each do |owned_community|
           Community.exists?(owned_community).should be_false
