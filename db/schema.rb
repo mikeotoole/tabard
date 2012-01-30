@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120126005942) do
+ActiveRecord::Schema.define(:version => 20120130222958) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20120126005942) do
     t.boolean  "is_removed",      :default => false
   end
 
-  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
+  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id", :unique => true
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
   create_table "character_proxies_community_applications", :id => false, :force => true do |t|
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(:version => 20120126005942) do
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
-  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
-  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
+  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
   add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 
   create_table "community_applications", :force => true do |t|
