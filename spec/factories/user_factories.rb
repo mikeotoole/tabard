@@ -30,7 +30,7 @@ FactoryGirl.define do
   factory :community_admin, :parent => :user do
     after_create do |u|
       FactoryGirl.create(:user_profile, :user => u)
-      FactoryGirl.create(:community, :admin_profile => u.user_profile)
+      FactoryGirl.create(:community, :admin_profile_id => u.user_profile.id)
     end
   end
 end
