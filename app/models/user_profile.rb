@@ -20,7 +20,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user, :inverse_of => :user_profile
+  has_one :user, :inverse_of => :user_profile
 
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy

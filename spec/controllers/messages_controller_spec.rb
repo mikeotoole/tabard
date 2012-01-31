@@ -327,7 +327,7 @@ describe MessagesController do
     it "@message to is set to the author and all @original recipients when authenticated as owner" do
       sign_in receiver
       get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
-      assigns(:message).to.should eq(["#{DefaultObjects.community_admin.user_profile.id}", "#{rec_message.author.id}"])
+      assigns(:message).to.should eq(["#{DefaultObjects.community_admin.user_profile_id}", "#{rec_message.author.id}"])
     end
     
     it "should render the 'show' template when authenticated as owner" do

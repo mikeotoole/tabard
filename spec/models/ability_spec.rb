@@ -122,10 +122,10 @@ describe Ability do
     
       describe "Discussion" do
         it "should be able to update a owned discussion" do
-          @ability.should be_able_to(:update, Factory.build(:discussion, :user_profile_id => @user.user_profile.id))
+          @ability.should be_able_to(:update, Factory.build(:discussion, :user_profile_id => @user.user_profile_id))
         end
         it "should be able to destroy a owned discussion" do
-          @ability.should be_able_to(:destroy, Factory.build(:discussion, :user_profile_id => @user.user_profile.id))
+          @ability.should be_able_to(:destroy, Factory.build(:discussion, :user_profile_id => @user.user_profile_id))
         end
       end
 

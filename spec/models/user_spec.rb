@@ -27,6 +27,7 @@
 #  date_of_birth                     :date
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
+#  user_profile_id                   :integer
 #
 
 require 'spec_helper'

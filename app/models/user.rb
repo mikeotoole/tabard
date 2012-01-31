@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 ###
 # Associations
 ###
-  has_one :user_profile, :inverse_of => :user, :dependent => :destroy
+  belongs_to :user_profile, :inverse_of => :user, :dependent => :destroy
   has_many :document_acceptances, :dependent => :destroy
   has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile

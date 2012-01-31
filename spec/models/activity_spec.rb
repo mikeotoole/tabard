@@ -68,7 +68,7 @@ describe Activity do
     }
   
     it "should return activities in descending order by updated_at" do
-      list = Activity.activities({:user_profile_id => DefaultObjects.community_admin.user_profile.id})
+      list = Activity.activities({:user_profile_id => DefaultObjects.community_admin.user_profile_id})
       
       for i in 0..list.length
         (list[i].updated_at >= list[i+1].updated_at).should be_true if i+1 < list.length
@@ -85,7 +85,7 @@ describe Activity do
     end
     
     it "when user_profile_id is specified should only return that users activities" do
-      list = Activity.activities({:user_profile_id => DefaultObjects.community_admin.user_profile.id})
+      list = Activity.activities({:user_profile_id => DefaultObjects.community_admin.user_profile_id})
       
       list.each do |activity|
         activity.user_profile.should eql DefaultObjects.community_admin.user_profile

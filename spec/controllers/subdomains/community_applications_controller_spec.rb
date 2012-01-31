@@ -228,7 +228,7 @@ describe Subdomains::CommunityApplicationsController do
         community_application.is_pending?.should be_false
       end
       it "should create an Activity" do
-        activity = Activity.find_last_by_target_id_and_target_type(community_application.user_profile.id, "UserProfile")
+        activity = Activity.find_last_by_target_id_and_target_type(community_application.user_profile_id, "UserProfile")
         activity.action.should eql 'accepted'
       end
     end

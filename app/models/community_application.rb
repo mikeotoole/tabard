@@ -81,7 +81,7 @@ class CommunityApplication < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be. subdomain_home
     message = Message.new(:subject => "Application Accepted",
                           :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
-                          :to => [self.user_profile.id])
+                          :to => [self.user_profile_id])
     message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
@@ -104,7 +104,7 @@ class CommunityApplication < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected",
                           :body => "Your application to #{self.community.name} has been rejected.",
-                          :to => [self.user_profile.id])
+                          :to => [self.user_profile_id])
     message.is_system_sent = true
     message.save
   end

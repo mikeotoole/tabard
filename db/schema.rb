@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130222958) do
+ActiveRecord::Schema.define(:version => 20120131022151) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -477,7 +477,6 @@ ActiveRecord::Schema.define(:version => 20120130222958) do
   end
 
   create_table "user_profiles", :force => true do |t|
-    t.integer  "user_id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "avatar"
@@ -488,8 +487,6 @@ ActiveRecord::Schema.define(:version => 20120130222958) do
     t.boolean  "publicly_viewable", :default => true
     t.string   "title"
   end
-
-  add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                            :default => "",    :null => false
@@ -516,12 +513,14 @@ ActiveRecord::Schema.define(:version => 20120130222958) do
     t.date     "date_of_birth"
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
+    t.integer  "user_profile_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+  add_index "users", ["user_profile_id"], :name => "index_users_on_user_profile_id", :unique => true
 
   create_table "view_logs", :force => true do |t|
     t.integer  "user_profile_id"
