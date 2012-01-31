@@ -47,6 +47,10 @@ describe User do
     b.user_profile.characters.size.should eq(b.user_profile.character_proxies.size)
   end
   
+  it "should require a user_profile" do
+    Factory.build(:user, :user_profile_attributes => {}).should_not be_valid
+  end
+  
   describe "email address" do
     it "should be required" do
       build(:user, :email => nil).should_not be_valid

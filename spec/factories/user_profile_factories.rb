@@ -5,7 +5,9 @@ FactoryGirl.define do
     sequence(:last_name) {|n| "Last Name #{n}"}
     sequence(:display_name) {|n| "GameMaster#{n}"}
     sequence(:description) {|n| "Von Game Master is number #{n}"}
-    user
+    after_create do |profile|
+      FactoryGirl.create(:user, :user_profile => profile) unless profile.user
+    end
   end
 
   # Create a user profile with a user, 3 wow characters and 3 swtor characters.

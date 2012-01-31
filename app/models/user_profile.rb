@@ -65,7 +65,6 @@ class UserProfile < ActiveRecord::Base
                             :uniqueness => true,
                             :length => { :maximum => MAX_NAME_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
-  validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
@@ -369,12 +368,12 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
 #
 #  id                :integer         not null, primary key
-#  user_id           :integer
 #  first_name        :string(255)
 #  last_name         :string(255)
 #  avatar            :string(255)
