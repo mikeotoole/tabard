@@ -115,7 +115,7 @@ class MessagesController < MailboxController
     if @original.author == current_user.user_profile
       redirect_to inbox_path
     else
-      recipients = @original.recipients.map(&:id) - [current_user.id] + [@original.author.id]
+      recipients = @original.recipients.map(&:id) - [current_user.user_profile_id] + [@original.author.id]
       subject = "Re: #{@original.subject}"
       @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => @body)
       authorize!(:create, @message)
