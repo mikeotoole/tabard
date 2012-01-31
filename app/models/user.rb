@@ -79,8 +79,6 @@ class User < ActiveRecord::Base
 ###
 # Validators
 ###
-#   validates :user_profile, :presence => true
-  validates_associated :user_profile
   validates :user_profile, :presence => true
   validates :email,
       :uniqueness => true,

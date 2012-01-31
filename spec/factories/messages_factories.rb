@@ -3,11 +3,11 @@ FactoryGirl.define do
     subject "Message Subject"
     body "Message Body"
     author_id { DefaultObjects.user_profile.id }
-    to { [DefaultObjects.additional_community_user_profile] }
+    to { [DefaultObjects.additional_community_user_profile.id] }
   end
   
   factory :message_with_muti_to, :parent => :message do
-    to { [DefaultObjects.additional_community_user_profile, DefaultObjects.community_admin.user_profile] }
+    to { [DefaultObjects.additional_community_user_profile.id, DefaultObjects.community_admin.user_profile.id] }
   end
   
   factory :folder do

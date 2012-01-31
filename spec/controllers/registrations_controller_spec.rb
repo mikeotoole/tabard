@@ -73,7 +73,7 @@ describe RegistrationsController do
       
       it "should remove user from communities" do
         user.owned_communities.should be_empty
-        community_profiles = user.community_profiles
+        community_profiles = user.community_profiles.all
         
         delete :destroy, :user => {:current_password => "Password"}
         
@@ -85,8 +85,8 @@ describe RegistrationsController do
       
       it "should delete owned communities" do
         sign_in admin
-        owned_communities = admin.owned_communities
-        community_profiles = admin.community_profiles
+        owned_communities = admin.owned_communities.all
+        community_profiles = admin.community_profiles.all
         
         delete :destroy, :user => {:current_password => "Password"}
         

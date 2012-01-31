@@ -14,7 +14,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name, :title,
+  attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
       :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
 
 ###
@@ -51,7 +51,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_create :build_mailboxes
+  after_create :create_mailboxes
 
 ###
 # Uploaders
@@ -355,13 +355,13 @@ protected
 # Callback Methods
 ###
   ###
-  # _before_create_
+  # _after_create_
   #
-  # This method builds the user's inbox folder.
+  # This method creates the user's inbox folder.
   ###
-  def build_mailboxes
-    self.folders.build(:name => "Inbox")
-    self.folders.build(:name => "Trash")
+  def create_mailboxes
+    self.folders.create(:name => "Inbox")
+    self.folders.create(:name => "Trash")
   end
 end
 
