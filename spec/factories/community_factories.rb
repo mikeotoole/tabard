@@ -5,4 +5,13 @@ FactoryGirl.define do
     slogan "Default Community Slogan"
     admin_profile
   end
+  factory :community_with_supported_games, :parent => :community do
+    sequence(:name) {|n| "Community #{n}"}
+    slogan "Default Community Slogan"
+    admin_profile
+    after_create do |community|
+      FactoryGirl.create(:wow_supported_game, :community_id => community.id)
+      FactoryGirl.create(:swtor_supported_game, :community_id => community.id)
+    end
+  end
 end

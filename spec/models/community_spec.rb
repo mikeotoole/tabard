@@ -161,7 +161,7 @@ describe Community do
   end
 
   describe "is_protected_roster" do
-    let(:community_profile) { create(:community_profile_with_characters, :community => community) }
+    let(:community_profile) { create(:community_profile_with_characters, :community => create(:community_with_supported_games)) }
     let(:new_proxy) { create(:character_proxy_with_wow_character, :user_profile => community_profile.user_profile)}
 
     it "should be false by default" do
@@ -170,8 +170,8 @@ describe Community do
 
     describe "when true" do
       it "should make roster changes pending" do
-        community_profile.community.update_attribute(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => false)
+        community_profile.community.update_attribute(:is_protected_roster, true)        
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => false, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
         ra.is_pending.should be_true
       end
     end
@@ -179,9 +179,9 @@ describe Community do
     describe "when false" do
       it "should not make roster changes pending" do
         community_profile.community.update_attribute(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => true)
+        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => true, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
         ra.community_profile.community.is_protected_roster.should be_true
-        RosterAssignment.find(ra).is_pending.should be_true
+        RosterAssignment.find_by_id(ra.id).is_pending.should be_true
       end
     end
   end

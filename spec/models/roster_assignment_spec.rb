@@ -29,7 +29,7 @@ describe RosterAssignment do
 
   describe "community_profile" do
   	it "should be required" do
-      build(:roster_assignment, :community_profile => nil).should_not be_valid
+      build(:roster_assignment, :community_profile => nil, :supported_game => nil).should_not be_valid
     end
   end
 
@@ -40,9 +40,7 @@ describe RosterAssignment do
   end
 
   it "should enforce character non-duplication within a roster" do
-    profile_with_characters = create(:community_profile_with_characters)
-    the_proxy = profile_with_characters.character_proxies.first
-    RosterAssignment.new(:character_proxy => the_proxy, :community_profile => profile_with_characters).should_not be_valid
+    RosterAssignment.new(:character_proxy => roster_assignment.character_proxy, :community_profile => roster_assignment.community_profile, :supported_game => roster_assignment.supported_game).should_not be_valid
   end
 
   describe "approve" do
