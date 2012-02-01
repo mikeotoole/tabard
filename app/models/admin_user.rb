@@ -68,7 +68,7 @@ class AdminUser < ActiveRecord::Base
     self.password_confirmation = random_password if random_password
     self.reset_password_token = AdminUser.reset_password_token
     self.reset_password_sent_at = Time.now
-    self.save
+    self.save(:validate => false)
     UserMailer.password_reset(self, random_password).deliver
   end
   

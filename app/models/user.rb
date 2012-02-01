@@ -258,7 +258,7 @@ class User < ActiveRecord::Base
       self.password_confirmation = random_password
       self.reset_password_token = User.reset_password_token
       self.reset_password_sent_at = Time.now
-      self.save!
+      self.save(:validate => false)
       UserMailer.reinstate_account(self, random_password).deliver
     else
       false
