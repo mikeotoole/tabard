@@ -15,7 +15,7 @@ class AdminUserObserver < ActiveRecord::Observer
       admin_user.password = random_password
       admin_user.reset_password_token = AdminUser.reset_password_token
       admin_user.reset_password_sent_at = Time.now
-      admin_user.save
+      admin_user.save(:validate => false)
       UserMailer.setup_admin(AdminUser.find(admin_user), random_password).deliver
     end
   end

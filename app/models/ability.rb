@@ -107,17 +107,17 @@ class Ability
     # Character Rules
     can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|
-      character.user_profile.id == user.user_profile.id
+      character.user_profile.id == user.user_profile_id
     end
 
     #Discussion Rules
     can [:update, :destroy], Discussion do |discussion|
-      (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
+      (discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked
     end
 
     # Comment Rules
     can [:update,:destroy], Comment do |comment|
-      ((comment.user_profile_id == user.user_profile.id) and not comment.is_locked and not comment.is_removed)
+      ((comment.user_profile_id == user.user_profile_id) and not comment.is_locked and not comment.is_removed)
     end
 
     # Community Rules
@@ -125,7 +125,7 @@ class Ability
 
     # Community Applications
     can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
-      community_application.user_profile.id == user.user_profile.id if community_application.user_profile
+      community_application.user_profile_id == user.user_profile_id if community_application.user_profile_id
     end
     can [:comment], CommunityApplication do |community_application|
       can? :create, Comment.new(:commentable => community_application, :community => community_application.community)
@@ -136,7 +136,7 @@ class Ability
       can? :read, discussion and not discussion.is_locked
     end
     can [:update, :destroy], Discussion do |discussion|
-      (discussion.user_profile_id == user.user_profile.id) and not discussion.is_locked
+      (discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked
     end
 
     # Discussion Space Rules
@@ -146,17 +146,17 @@ class Ability
 
     # Messaging Rules
     can :manage, Folder do |folder|
-      folder.user_profile_id == user.user_profile.id
+      folder.user_profile_id == user.user_profile_id
     end
     cannot :destroy, Folder
     can :manage, Message do |message|
-      message.author_id == user.user_profile.id
+      message.author_id == user.user_profile_id
     end
     cannot [:update, :destroy], Message do |message|
       true
     end
     can :manage, MessageAssociation do |message_association|
-      message_association.recipient_id == user.user_profile.id
+      message_association.recipient_id == user.user_profile_id
     end
 
     # Question Form Rules
@@ -165,7 +165,7 @@ class Ability
     # Submission Rules
     can :create, Submission
     can [:read, :destroy], Submission do |submission|
-      submission.user_profile_id == user.user_profile.id
+      submission.user_profile_id == user.user_profile_id
     end
 
     # User Rules
@@ -175,10 +175,10 @@ class Ability
 
     # UserProfile Rules
     can :read, UserProfile do |user_profile|
-      user_profile.id == user.user_profile.id
+      user_profile.id == user.user_profile_id
     end
     can :update, UserProfile do |user_profile|
-      user_profile.id == user.user_profile.id
+      user_profile.id == user.user_profile_id
     end
 
     # Supported Game Rules
@@ -214,7 +214,7 @@ class Ability
 
     can :mine, RosterAssignment
     can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
-      roster_assignment.community_profile_user_profile_id == user.user_profile.id if roster_assignment.community_profile_user_profile
+      roster_assignment.community_profile_user_profile_id == user.user_profile_id if roster_assignment.community_profile_user_profile
     end
   end
 
@@ -283,10 +283,10 @@ class Ability
       comment.replies_locked?
     end
     cannot :update, Comment do |comment|
-      (comment.user_profile_id != user.user_profile.id)
+      (comment.user_profile_id != user.user_profile_id)
     end
     cannot :update, Discussion do |discussion|
-      (discussion.user_profile_id != user.user_profile.id)
+      (discussion.user_profile_id != user.user_profile_id)
     end
   end
 

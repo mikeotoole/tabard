@@ -80,8 +80,8 @@ class CommunityApplication < ActiveRecord::Base
     self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
     message = Message.new(:subject => "Application Accepted",
-                          :body => "Your application to #{self.community.name} has been accepted. It will now appear within your communities list.",
-                          :to => [self.user_profile.id])
+                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
+                          :to => [self.user_profile_id])
     message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
@@ -105,7 +105,7 @@ class CommunityApplication < ActiveRecord::Base
     # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected",
                           :body => "Your application to #{self.community.name} has been rejected.",
-                          :to => [self.user_profile.id])
+                          :to => [self.user_profile_id])
     message.is_system_sent = true
     message.save
   end

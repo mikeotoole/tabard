@@ -3,7 +3,6 @@
 # Table name: user_profiles
 #
 #  id                :integer         not null, primary key
-#  user_id           :integer
 #  first_name        :string(255)
 #  last_name         :string(255)
 #  avatar            :string(255)
@@ -59,10 +58,6 @@ describe UserProfile do
 
   it "should set publicly viewable to true by default" do
     Factory.build(:user_profile).publicly_viewable.should be_true
-  end
-
-  it "should require a user" do
-    Factory.build(:user_profile, :user => nil).should_not be_valid
   end
   
   it "should create an activity when created" do

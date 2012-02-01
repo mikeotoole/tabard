@@ -18,6 +18,8 @@ class Community < ActiveRecord::Base
   MAX_NAME_LENGTH = 30
   # Used by validators and view to restrict slogan length
   MAX_SLOGAN_LENGTH = 60
+  # Used by validator to limit number of communities a user can own
+  MAX_OWNED_COMMUNITIES = 3
 
 ###
 # Attribute accessible
@@ -79,12 +81,14 @@ class Community < ActiveRecord::Base
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
-  validate :can_not_change_name, :on => :update
   validates :admin_profile, :presence => true
   validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.background_color.blank? }
   validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.title_color.blank? }
+
+  validate :can_not_change_name, :on => :update
+  validate :within_owned_communities_limit
 
 ###
 # Uploaders
@@ -204,9 +208,11 @@ protected
   end
 
 ###
-# Instance Methods
+# Validator Methods
 ###
   ###
+  # _validator_
+  #
   # This method ensures that the name is not changed.
   ###
   def can_not_change_name
@@ -214,6 +220,17 @@ protected
       self.name = self.name_was
       self.errors.add(:name, "can not be changed.")
       return false
+    end
+  end
+
+  ###
+  # _validator_
+  #
+  # This will check that the admin is within the limit of maximum owned communities allowed.
+  ###
+  def within_owned_communities_limit
+    if admin_profile and admin_profile.owned_communities.size >= MAX_OWNED_COMMUNITIES #and not admin_profile.owned_communities.include?(self)
+      errors.add(:base, "Users can only administer #{Community::MAX_OWNED_COMMUNITIES} communities at a time.") # TODO Doug, Determine message content. -MO
     end
   end
 
@@ -229,7 +246,6 @@ protected
   def update_subdomain
     self.subdomain = Community.convert_to_subdomain(name)
   end
-
 
   ###
   # _after_create_

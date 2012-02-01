@@ -26,13 +26,13 @@ class User < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :user_profile,
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
 
 ###
 # Associations
 ###
-  has_one :user_profile, :inverse_of => :user, :dependent => :destroy
+  belongs_to :user_profile, :inverse_of => :user, :dependent => :destroy
   has_many :document_acceptances, :dependent => :destroy
   has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
   accepts_nested_attributes_for :user_profile
@@ -46,7 +46,6 @@ class User < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :id, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :first_name, :to => :user_profile, :allow_nil => true
   delegate :last_name, :to => :user_profile, :allow_nil => true
   delegate :display_name, :to => :user_profile, :allow_nil => true
@@ -80,8 +79,7 @@ class User < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates_associated :user_profile, :unless => Proc.new { |user| user.user_profile.nil? }
-
+  validates :user_profile, :presence => true
   validates :email,
       :uniqueness => true,
       :length => { :within => 5..128 },
@@ -260,7 +258,7 @@ class User < ActiveRecord::Base
       self.password_confirmation = random_password
       self.reset_password_token = User.reset_password_token
       self.reset_password_sent_at = Time.now
-      self.save!
+      self.save(:validate => false)
       UserMailer.reinstate_account(self, random_password).deliver
     else
       false
@@ -314,6 +312,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -343,5 +342,6 @@ end
 #  date_of_birth                     :date
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
+#  user_profile_id                   :integer
 #
 

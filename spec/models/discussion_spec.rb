@@ -115,14 +115,14 @@ describe Discussion do
   describe "character_is_valid_for_user_profile" do
     it "should allow a user's character" do
       build(:discussion, :discussion_space_id => DefaultObjects.general_discussion_space.id, 
-          :user_profile_id => billy.user_profile.id,
+          :user_profile_id => billy.user_profile_id,
           :character_proxy_id => billy.character_proxies.first).should be_valid
     end
     it "should not allow a non user's character" do
       another_user_profile = create(:user_profile_with_characters)
       character_proxy_target = another_user_profile.character_proxies.first
       build(:discussion, :discussion_space_id => DefaultObjects.general_discussion_space.id, 
-          :user_profile_id => billy.user_profile.id,
+          :user_profile_id => billy.user_profile_id,
           :character_proxy_id => another_user_profile.character_proxies.first).should_not be_valid
     end
   end

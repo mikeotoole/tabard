@@ -14,13 +14,13 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name, :title,
+  attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
       :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
 
 ###
 # Associations
 ###
-  belongs_to :user, :inverse_of => :user_profile
+  has_one :user, :inverse_of => :user_profile
 
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
@@ -51,7 +51,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_create :build_mailboxes
+  after_create :create_mailboxes
 
 ###
 # Uploaders
@@ -65,7 +65,6 @@ class UserProfile < ActiveRecord::Base
                             :uniqueness => true,
                             :length => { :maximum => MAX_NAME_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
-  validates :user, :presence => true
   validates :avatar,
       :if => :avatar?,
       :file_size => {
@@ -356,15 +355,16 @@ protected
 # Callback Methods
 ###
   ###
-  # _before_create_
+  # _after_create_
   #
-  # This method builds the user's inbox folder.
+  # This method creates the user's inbox folder.
   ###
-  def build_mailboxes
-    self.folders.build(:name => "Inbox")
-    self.folders.build(:name => "Trash")
+  def create_mailboxes
+    self.folders.create(:name => "Inbox")
+    self.folders.create(:name => "Trash")
   end
 end
+
 
 
 
@@ -374,7 +374,6 @@ end
 # Table name: user_profiles
 #
 #  id                :integer         not null, primary key
-#  user_id           :integer
 #  first_name        :string(255)
 #  last_name         :string(255)
 #  avatar            :string(255)

@@ -52,7 +52,7 @@ class RosterAssignment < ActiveRecord::Base
     return false unless self.is_pending
     self.update_attribute(:is_pending, false)
     # TODO Doug/Bryan, Determine what message content should be.
-    message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile.id])
+    message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id])
     message.is_system_sent = true
     message.save
   end
@@ -63,7 +63,7 @@ class RosterAssignment < ActiveRecord::Base
     return false unless self.is_pending
     self.destroy
     # TODO Doug/Bryan, Determine what message content should be.
-    message = Message.new(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile.id])
+    message = Message.new(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id])
     message.is_system_sent = true
     message.save
   end
