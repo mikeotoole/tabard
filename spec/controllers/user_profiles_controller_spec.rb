@@ -62,15 +62,15 @@ describe UserProfilesController do
         response.should be_success
       end
 
-      it "show should not be successful when authenticated as a non-owner" do
+      it "show should be successful when authenticated as a non-owner" do
         sign_in non_owner
         get 'show', :id => private_user_profile
-        response.should_not be_success
+        response.should be_success
       end
 
-      it "should be unauthorized when not authenticated as a user when user_profile is publicly viewable" do
+      it "show should be successful when not authenticated as a user when user_profile is publicly viewable" do
         get 'show', :id => private_user_profile
-        response.response_code.should == 403
+        response.should be_success
       end
     end
   end

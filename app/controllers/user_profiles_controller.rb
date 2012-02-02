@@ -23,6 +23,10 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1
   def show
+    if @user_profile.is_disabled?
+      add_new_flash_message 'The user profile you requested has been disabled.', 'alert'
+      redirect_to root_url
+    end
   end
 
   # GET /user_profiles/1/edit
