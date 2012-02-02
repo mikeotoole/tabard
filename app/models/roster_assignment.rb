@@ -46,6 +46,13 @@ class RosterAssignment < ActiveRecord::Base
 ###
   before_create :ensure_proper_pending_status
 
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
   # This method approves this roster assignment, if it is pending.
   # [Returns] True if this was approved, otherwise false.
   def approve
@@ -73,6 +80,9 @@ class RosterAssignment < ActiveRecord::Base
 ###
   protected
 
+###
+# Validator Methods
+###
   # This method validates that the community is compatable with the supported game
   def community_valid_for_supported_game
     errors.add(:base, "Community and supported game do not match") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
@@ -83,6 +93,9 @@ class RosterAssignment < ActiveRecord::Base
     errors.add(:base, "Character is not compatable with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class != self.supported_game.game.class
   end
 
+###
+# Callback Methods
+###
   ###
   # _before_create_
   #

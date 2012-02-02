@@ -68,6 +68,10 @@ class CommunityApplication < ActiveRecord::Base
   delegate :avatar_url, :to => :user_profile, :prefix => true
 
 ###
+# Public Methods
+###
+
+###
 # Instance Methods
 ###
   ###
