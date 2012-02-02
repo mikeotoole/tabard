@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131022151) do
+ActiveRecord::Schema.define(:version => 20120201232049) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -365,18 +365,17 @@ ActiveRecord::Schema.define(:version => 20120131022151) do
 
   create_table "predefined_answers", :force => true do |t|
     t.text     "body"
-    t.integer  "select_question_id"
+    t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
-  add_index "predefined_answers", ["select_question_id"], :name => "index_predefined_answers_on_select_question_id"
+  add_index "predefined_answers", ["question_id"], :name => "index_predefined_answers_on_select_question_id"
 
   create_table "questions", :force => true do |t|
     t.text     "body"
     t.integer  "custom_form_id"
-    t.string   "type"
     t.string   "style"
     t.datetime "created_at"
     t.datetime "updated_at"

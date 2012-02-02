@@ -15,7 +15,7 @@ FactoryGirl.define do
     after_create { |form| create_submissions(form) }
   end
 
-  factory :long_answer_question, :class => TextQuestion do
+  factory :long_answer_question, :class => Question do
     style "long_answer_question"
     sequence(:body) {|n| "long_answer_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
@@ -25,27 +25,27 @@ FactoryGirl.define do
     is_required true
   end
   
-  factory :short_answer_question, :class => TextQuestion do
+  factory :short_answer_question, :class =>Question do
     style "short_answer_question"
     sequence(:body) {|n| "short_answer_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
   end
   
-  factory :select_box_question, :class => SingleSelectQuestion do
+  factory :select_box_question, :class => Question do
     style "select_box_question"
     sequence(:body) {|n| "select_box_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id } 
     predefined_answers_attributes { [FactoryGirl.attributes_for(:predefined_answer, :select_question_id => nil)] }
   end
   
-  factory :radio_buttons_question, :class => SingleSelectQuestion do
+  factory :radio_buttons_question, :class => Question do
     style "radio_buttons_question"
     sequence(:body) {|n| "radio_buttons_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }
     predefined_answers_attributes { [FactoryGirl.attributes_for(:predefined_answer, :select_question_id => nil)] }
   end 
   
-  factory :check_box_question, :class => MultiSelectQuestion do
+  factory :check_box_question, :class => Question do
     style "check_box_question"
     sequence(:body) {|n| "check_box_question #{n}"}
     custom_form_id { DefaultObjects.custom_form.id }

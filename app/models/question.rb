@@ -12,8 +12,10 @@ class Question < ActiveRecord::Base
 ###
 # Constants
 ###
-  # The list of vaild game subclass types.
-  VALID_TYPES =  %w(SingleSelectQuestion MultiSelectQuestion TextQuestion)
+  # List of vaild question styles that require predefined_answers.
+  VALID_STYLES_WITH_PA = %w(check_box_question select_box_question radio_buttons_question)
+  # List of vaild question styles that don't have predefined_answers.
+  VALID_STYLES_WITHOUT_PA = %w(short_answer_question long_answer_question)
   # Used by validators and view to restrict body length
   MAX_BODY_LENGTH = 60
   # Used by validators and view to restrict explanation length
@@ -22,14 +24,14 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :type, :is_required, :explanation, :type_style, :predefined_answers_attributes
+  attr_accessible :body, :style, :is_required, :explanation, :type_style, :predefined_answers_attributes
 
 ###
 # Associations
 ###
   belongs_to :custom_form
   has_many :answers
-  has_many :predefined_answers, :dependent => :destroy, :foreign_key => :select_question_id, :inverse_of => :question, :autosave => true
+  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true
 
 ###
 # Validators
@@ -37,10 +39,8 @@ class Question < ActiveRecord::Base
   validates :body, :presence => true,
                    :length => { :maximum => MAX_BODY_LENGTH }
   validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }
-  #validates :style, :presence => true
-  validates :type,  :presence => true,
-                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not a valid question type." }
-  validate :ensure_type_is_not_changed
+  validates :style,  :presence => true,
+                    :inclusion => { :in => VALID_STYLES_WITH_PA + VALID_STYLES_WITHOUT_PA, :message => "%{value} is not a valid question style." }
 
   accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
 
@@ -48,7 +48,6 @@ class Question < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :mark_blank_predefined_answers_for_removal
-  #before_validation :decode_type_style
 
 ###
 # Delegates
@@ -58,17 +57,6 @@ class Question < ActiveRecord::Base
 ###
 # Public Methods
 ###
-  def mark_blank_predefined_answers_for_removal
-    predefined_answers.each do |panswer|
-      if panswer.body.blank? 
-        if self.predefined_answers.reject{|answer| answer.marked_for_destruction?}.count >= 1
-          panswer.mark_for_destruction 
-        else
-          errors.add(:base, "requires at least one predefined answer.") 
-        end
-      end
-    end
-  end
 
 ###
 # Class Methods
@@ -90,15 +78,27 @@ class Question < ActiveRecord::Base
   end
 
   ###
-  # This method ensures that type is not editable.
+  # This method creates a new question of the right type and style. If params is not nil the
+  # question is initalized with the params hash.
+  # [Args]
+  #   * +class_style_string+ -> A string with the class name and style separated by a pipe.
+  #   * +params+ -> A question attributes hash or nil.
+  # [Returns] An intialized question of the right type.
   ###
-  def ensure_type_is_not_changed
-    if self.type_changed? and self.persisted?
-      self.type = self.type_was
-      self.errors.add(:type_style, "can not be changed")
+  def self.new_question(class_style_string, params=nil)
+    begin
+      class_style_array = class_style_string.split('|')
+      @question = class_style_array[0].constantize.new(params)
+      @question.style = class_style_array[1]
+      @question
+    rescue
+      nil
     end
   end
 
+###
+# Instance Methods
+###
   ###
   # This method attempts to decode and handle changing of a questions type/style
   ###
@@ -141,32 +141,10 @@ class Question < ActiveRecord::Base
   end
 
   ###
-  # This method creates a new question of the right type and style. If params is not nil the
-  # question is initalized with the params hash.
-  # [Args]
-  #   * +class_style_string+ -> A string with the class name and style separated by a pipe.
-  #   * +params+ -> A question attributes hash or nil.
-  # [Returns] An intialized question of the right type.
-  ###
-  def self.new_question(class_style_string, params=nil)
-    begin
-      class_style_array = class_style_string.split('|')
-      @question = class_style_array[0].constantize.new(params)
-      @question.style = class_style_array[1]
-      @question
-    rescue
-      nil
-    end
-  end
-
-###
-# Instance Methods
-###
-  ###
   # This method overrides the clone method so the predefined answers are set to the clone.
   # [Returns] A clone of the select question with the predefined answers.
   ###
-  def clone
+  def clone # TODO Mike, Check if this can be removed.
     question_clone = self.type.constantize.new(self.attributes)
     question_clone.type = self.type
     question_clone.save
@@ -185,7 +163,33 @@ class Question < ActiveRecord::Base
       end
     end
   end
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+  ###
+  # _before_validation_
+  #
+  # This will remove any blank predefined answers. If the last was removed an error is added.
+  ###
+  def mark_blank_predefined_answers_for_removal
+    predefined_answers.each do |panswer|
+      if panswer.body.blank? 
+        if self.predefined_answers.reject{|answer| answer.marked_for_destruction?}.count >= 1
+          panswer.mark_for_destruction 
+        else
+          errors.add(:base, "requires at least one predefined answer.") 
+        end
+      end
+    end
+  end
 end
+
 
 
 # == Schema Information
@@ -195,7 +199,6 @@ end
 #  id             :integer         not null, primary key
 #  body           :text
 #  custom_form_id :integer
-#  type           :string(255)
 #  style          :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime

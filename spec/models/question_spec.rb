@@ -5,7 +5,6 @@
 #  id             :integer         not null, primary key
 #  body           :text
 #  custom_form_id :integer
-#  type           :string(255)
 #  style          :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
