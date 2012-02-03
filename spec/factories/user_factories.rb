@@ -10,6 +10,12 @@ FactoryGirl.define do
     date_of_birth 35.years.ago.to_date
     user_profile_attributes { FactoryGirl.attributes_for(:user_profile) }
   end
+  
+  factory :disabled_user, :parent => :user do
+    after_create do |u|
+      u.disable_by_admin
+    end
+  end
 
   # Create an active user with full associations.
   factory :billy, :class => User do
