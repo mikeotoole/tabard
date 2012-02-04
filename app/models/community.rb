@@ -46,7 +46,7 @@ class Community < ActiveRecord::Base
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
-  
+
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
   #has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
   #belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
@@ -71,7 +71,7 @@ class Community < ActiveRecord::Base
   delegate :css, :to => :theme, :prefix => true
   delegate :background_author, :to => :theme, :prefix => true, :allow_nil => true
   delegate :background_author_url, :to => :theme, :prefix => true, :allow_nil => true
-  
+
 ###
 # Validators
 ###
@@ -83,9 +83,9 @@ class Community < ActiveRecord::Base
   validates :name, :not_restricted_name => {:all => true}
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
   validates :admin_profile, :presence => true
-  validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, 
+  validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.background_color.blank? }
-  validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." }, 
+  validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.title_color.blank? }
 
   validate :can_not_change_name, :on => :update
@@ -348,7 +348,7 @@ protected
       can_lock: false,
       can_accept: false)
   end
-  
+
   ###
   # _after_destroy_
   #

@@ -13,9 +13,9 @@
 require 'spec_helper'
 
 describe CommunityProfile do
-  let(:profile) { Factory.create(:community_profile) }
-  let(:profile_with_characters) { create(:community_profile_with_characters) }
+  let(:profile) { Factory.create(:community_profile, :community => FactoryGirl.create(:community_with_supported_games)) }
   let(:community) { profile.community }
+  let(:profile_with_characters) { create(:community_profile_with_characters) }
   let(:some_other_community) { create(:community) }
 
   it "should create a new instance given valid attributes" do
@@ -97,22 +97,6 @@ describe CommunityProfile do
         end
         expected_size = profile_with_characters.pending_character_proxies.size + profile_with_characters.approved_character_proxies.size
         profile_with_characters.character_proxies.size.should eq(expected_size)
-      end
-    end
-
-    describe "adding" do
-      it "should not allow character_proxies from users other than the one this is attached to" do
-        original_character_proxies_count = profile_with_characters.character_proxies.size
-        invalid_character_proxy = create(:billy).user_profile.character_proxies.first
-        invalid_character_proxy.user_profile.should_not eq(profile_with_characters.user_profile)
-        lambda{profile_with_characters.character_proxies << invalid_character_proxy}.should raise_error
-        profile_with_characters.character_proxies.size.should eq(original_character_proxies_count)
-      end
-
-      it "should allow character from the same user as the one this is attached to" do
-        new_character_proxy = create(:character_proxy_with_wow_character, :user_profile => profile_with_characters.user_profile)
-        profile_with_characters.character_proxies << new_character_proxy
-        profile_with_characters.character_proxies.include?(new_character_proxy).should be_true
       end
     end
   end

@@ -105,7 +105,7 @@ describe Subdomains::CommunityApplicationsController do
         assert_response :missing
       end
     end
-    it "should throw routing error when a owner" do
+    it "should throw routing error when an owner" do
       assert_raises(ActionController::RoutingError) do
         sign_in applicant_user
         get 'edit', :id => community_application
@@ -174,7 +174,7 @@ describe Subdomains::CommunityApplicationsController do
         assert_response :missing
       end
     end
-    it "should throw routing error when a owner" do
+    it "should throw routing error when an owner" do
       assert_raises(ActionController::RoutingError) do
         sign_in applicant_user
         put 'update', :id => community_application
@@ -196,7 +196,7 @@ describe Subdomains::CommunityApplicationsController do
     end
   end
 
-  describe "PUT 'accept'" do
+  describe "POST 'accept'" do
     it "should be forbidden for generic user" do
       sign_in generic_user
       post 'accept', :id => community_application
@@ -234,7 +234,7 @@ describe Subdomains::CommunityApplicationsController do
     end
   end
 
-  describe "PUT 'reject'" do
+  describe "POST 'reject'" do
     it "should be forbidden for generic user" do
       sign_in generic_user
       post 'reject', :id => community_application

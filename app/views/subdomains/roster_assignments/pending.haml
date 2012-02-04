@@ -20,11 +20,13 @@
               = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
             %td.character
               %h3= roster_assignment.character_proxy_name
-              Requested by
-              = (link_to roster_assignment.user_profile_display_name, roster_assignment.user_profile) + ', '
-              who has
-              %strong= pluralize roster_assignment.community_profile.approved_character_proxies.size, 'character'
-              on the roster.
+              %strong= roster_assignment.supported_game_smart_name
+              %p.meta
+                Requested by
+                = (link_to roster_assignment.user_profile_display_name, roster_assignment.user_profile) + ', '
+                who has
+                %strong= pluralize roster_assignment.community_profile.approved_character_proxies.size, 'character'
+                on the roster.
             %td.actions
               %div
                 - if can? :approve, roster_assignment

@@ -14,7 +14,7 @@ class Theme < ActiveRecord::Base
 # Associations
 ###
   has_many :communities, :inverse_of => :theme
- 
+
 ###
 # Validator
 ###

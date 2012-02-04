@@ -14,6 +14,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   belongs_to :community_profile
   belongs_to :character_proxy
+  belongs_to :supported_game
   has_one :user_profile, :through => :community_profile
 
 ###
@@ -21,7 +22,10 @@ class RosterAssignment < ActiveRecord::Base
 ###
   validates :community_profile, :presence => true
   validates :character_proxy, :presence => true
-  validates :character_proxy_id, :uniqueness => { :scope => [:community_profile_id, :deleted_at], :message => "is already rostered to the community."}
+  validates :character_proxy_id, :uniqueness => { :scope => "community_profile_id", :message => "is already rostered to the community."}
+  validates :supported_game, :presence => true
+  validate :community_valid_for_supported_game
+  validate :character_valid_for_supported_game
 
 ###
 # Delegates
@@ -34,12 +38,21 @@ class RosterAssignment < ActiveRecord::Base
   delegate :avatar_url, :to => :user_profile, :prefix => true
   delegate :name, :to => :character_proxy, :prefix => true
   delegate :character, :to => :character_proxy
+  delegate :name, :to => :supported_game, :prefix => true
+  delegate :smart_name, :to => :supported_game, :prefix => true
 
 ###
 # Callbacks
 ###
   before_create :ensure_proper_pending_status
 
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
   # This method approves this roster assignment, if it is pending.
   # [Returns] True if this was approved, otherwise false.
   def approve
@@ -67,6 +80,22 @@ class RosterAssignment < ActiveRecord::Base
 ###
   protected
 
+###
+# Validator Methods
+###
+  # This method validates that the community is compatable with the supported game
+  def community_valid_for_supported_game
+    errors.add(:base, "Community and supported game do not match") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
+  end
+
+  # This method validates that the character is compatable with the supported game
+  def character_valid_for_supported_game
+    errors.add(:base, "Character is not compatable with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class != self.supported_game.game.class
+  end
+
+###
+# Callback Methods
+###
   ###
   # _before_create_
   #
@@ -85,7 +114,6 @@ end
 
 
 
-
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -97,5 +125,6 @@ end
 #  created_at           :datetime
 #  updated_at           :datetime
 #  deleted_at           :datetime
+#  supported_game_id    :integer
 #
 

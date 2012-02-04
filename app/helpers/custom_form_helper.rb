@@ -31,7 +31,7 @@ module CustomFormHelper
     }
     link_to_function name, page, options
   end
-  
+
   ###
   # Builds a dynamic javascript link for adding a new predefined answer based on the form and question
   # [Args]

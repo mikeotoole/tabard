@@ -60,11 +60,11 @@ class Question < ActiveRecord::Base
 ###
   def mark_blank_predefined_answers_for_removal
     predefined_answers.each do |panswer|
-      if panswer.body.blank? 
+      if panswer.body.blank?
         if self.predefined_answers.reject{|answer| answer.marked_for_destruction?}.count >= 1
-          panswer.mark_for_destruction 
+          panswer.mark_for_destruction
         else
-          errors.add(:base, "requires at least one predefined answer.") 
+          errors.add(:base, "requires at least one predefined answer.")
         end
       end
     end

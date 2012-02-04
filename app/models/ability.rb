@@ -198,8 +198,6 @@ class Ability
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
 
-    can :read, Announcement if user.is_member?(current_community)
-
     can :index, PageSpace
 
     can [:read], Comment do |comment|
