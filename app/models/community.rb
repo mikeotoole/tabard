@@ -230,7 +230,7 @@ protected
   ###
   def within_owned_communities_limit
     if admin_profile and admin_profile.owned_communities.size >= MAX_OWNED_COMMUNITIES #and not admin_profile.owned_communities.include?(self)
-      errors.add(:base, "Users can only administer #{Community::MAX_OWNED_COMMUNITIES} communities at a time.") # TODO Doug, Determine message content. -MO
+      errors.add(:base, "Too many communities! You can only administer #{Community::MAX_OWNED_COMMUNITIES} communities at a time.")
     end
   end
 
