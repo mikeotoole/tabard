@@ -15,14 +15,14 @@
             %ul
               - current_user.address_book.each do |profile|
                 %li
-                  %input{ :id => "message_to_#{profile.user_id}", :type => 'checkbox', :name => 'message[to][]', :value => profile.user_id, :checked => (@message.to.include?(profile.user_id.to_s) ?  'checked' : false) }
-                  %label{ :for => "message_to_#{profile.user_id}" }= profile.display_name
+                  %input{ :id => "message_to_#{profile.id}", :type => 'checkbox', :name => 'message[to][]', :value => profile.id, :checked => (@message.to.include?(profile.id.to_s) ?  'checked' : false) }
+                  %label{ :for => "message_to_#{profile.id}" }= profile.display_name
 
     %aside.suggestions
       %ul
         - current_user.address_book.each do |profile|
           %li
-            %label{ :for => "message_to_#{profile.user_id}" }= profile.display_name
+            %label{ :for => "message_to_#{profile.id}" }= profile.display_name
 
     = f.input :body, :as => :text, :label => false, :wrapper_tag => :article, :input_html => { :tabindex => 3 }
     %button{ :type => ':submit', :tabindex => 4 } Send

@@ -117,7 +117,7 @@ describe CommunitiesController do
       sign_in billy
       
       expect {
-        post 'create', :community => community_att
+        post 'create', :community => {:name => "New Community", :slogan => "My slogan"}
       }.to change(Activity, :count).by(1)
       
       activity = Activity.last

@@ -22,24 +22,24 @@ describe ActiveProfilesController do
   describe "POST 'create' when using own profile for user" do
     before(:each) do
       sign_in billy
-      post 'create', :id => billy.user_profile.id, :type => billy.user_profile.class
+      post 'create', :id => billy.user_profile_id, :type => billy.user_profile.class
     end
 
     it "should activate user_profile" do
       session[:profile_type].should eq("UserProfile")
-      session[:profile_id].should eq(billy.user_profile.id.to_s)
+      session[:profile_id].should eq(billy.user_profile_id.to_s)
     end
   end
 
   describe "POST 'create' when using anothers profile for user" do
     before(:each) do
       sign_in billy
-      post 'create', :id => another_person.user_profile.id, :type => another_person.user_profile.class
+      post 'create', :id => another_person.user_profile_id, :type => another_person.user_profile.class
     end
 
     it "should activate current_user user_profile" do
       session[:profile_type].should eq "UserProfile"
-      session[:profile_id].should eq billy.user_profile.id
+      session[:profile_id].should eq billy.user_profile_id
     end
 
     it "should redirect to root path" do
@@ -69,7 +69,7 @@ describe ActiveProfilesController do
 
     it "should activate current_user user_profile" do
       session[:profile_type].should eq "UserProfile"
-      session[:profile_id].should eq billy.user_profile.id
+      session[:profile_id].should eq billy.user_profile_id
     end
 
     it "should redirect to root path" do

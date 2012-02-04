@@ -27,6 +27,7 @@
 #  date_of_birth                     :date
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
+#  user_profile_id                   :integer
 #
 
 require 'spec_helper'
@@ -44,6 +45,10 @@ describe User do
     b.last_name.should eq("Billy")
     b.user_profile.character_proxies.size.should eq(CharacterProxy.all.count)
     b.user_profile.characters.size.should eq(b.user_profile.character_proxies.size)
+  end
+  
+  it "should require a user_profile" do
+    Factory.build(:user, :user_profile_attributes => {}).should_not be_valid
   end
   
   describe "email address" do
@@ -229,7 +234,7 @@ describe User do
       it "should remove user's owned communities" do
         user = DefaultObjects.community_admin
         owned_communities = user.owned_communities.all
-        user.disable_by_user({:user => {:current_password => user.password}}).should be_true
+        user.disable_by_user({:user => {:current_password => "Password"}}).should be_true
         owned_communities.should_not be_empty
         owned_communities.each do |owned_community|
           Community.exists?(owned_community).should be_false

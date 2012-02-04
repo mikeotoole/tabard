@@ -1,6 +1,4 @@
 DaBvRails::Application.routes.draw do
-  resources :themes
-
   # Admin Users
   devise_for :admin_users do 
     get "/admin/login" => "admin/devise/sessions#new"

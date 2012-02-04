@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe UserProfilesController do
   let(:non_owner) { create(:billy) }
-  let(:user_profile) { create(:user_profile) }
-  let(:private_user_profile) { create(:user_profile, :publicly_viewable => false) }
-  let(:owner) { create(:user, :user_profile => user_profile) }
-  let(:private_owner) { create(:user, :user_profile => private_user_profile) }
+  let(:owner) { create(:user) }
+  let(:user_profile) { owner.user_profile }
+  let(:private_owner) { create(:user, :user_profile_attributes => FactoryGirl.attributes_for(:user_profile, :publicly_viewable => false)) }
+  let(:private_user_profile) { private_owner.user_profile }
 
 	describe "GET 'dashboard'" do
 		it "should show the current user when authenticated as a user" do

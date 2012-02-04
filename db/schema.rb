@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125004533) do
+ActiveRecord::Schema.define(:version => 20120131022151) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
     t.boolean  "is_removed",      :default => false
   end
 
-  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id"
+  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id", :unique => true
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
   create_table "character_proxies_community_applications", :id => false, :force => true do |t|
@@ -172,8 +172,8 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
-  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id"
-  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id"
+  add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
+  add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
   add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 
   create_table "community_applications", :force => true do |t|
@@ -225,6 +225,22 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
   end
 
   add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "discussion_spaces", :force => true do |t|
     t.string   "name"
@@ -491,7 +507,6 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
   end
 
   create_table "user_profiles", :force => true do |t|
-    t.integer  "user_id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "avatar"
@@ -502,8 +517,6 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
     t.boolean  "publicly_viewable", :default => true
     t.string   "title"
   end
-
-  add_index "user_profiles", ["user_id"], :name => "index_user_profiles_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                            :default => "",    :null => false
@@ -530,12 +543,14 @@ ActiveRecord::Schema.define(:version => 20120125004533) do
     t.date     "date_of_birth"
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
+    t.integer  "user_profile_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+  add_index "users", ["user_profile_id"], :name => "index_users_on_user_profile_id", :unique => true
 
   create_table "view_logs", :force => true do |t|
     t.integer  "user_profile_id"

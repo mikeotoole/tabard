@@ -6,7 +6,7 @@
 # This class is a mailer used by the admin portal for sending password reset and new Admin emails.
 ###
 class UserMailer < ActionMailer::Base # TODO Doug, Update all subjects as needed. -MO
-  default :from => "noreply@crumblin.com",
+  default :from => "Crumblin <noreply@crumblin.com>",
           :content_type => "text/html"
 
   # Used for resetting a single users password.
@@ -14,14 +14,6 @@ class UserMailer < ActionMailer::Base # TODO Doug, Update all subjects as needed
     @resource = user
     mail(:to => @resource.email, :subject => 'Crumblin - Password reset notification', :tag => 'password-reset') do |format|
        format.html { render "devise/mailer/reset_password_by_admin_instructions" }
-    end
-  end
-
-  # Used for resetting all users passwords.
-  def all_password_reset(user, password=nil)
-    @resource = user
-    mail(:to => @resource.email, :subject => 'Crumblin - Password reset notification', :tag => 'password-reset') do |format|
-       format.html { render "devise/mailer/reset_all_password_by_admin_instructions" }
     end
   end
 
@@ -36,7 +28,7 @@ class UserMailer < ActionMailer::Base # TODO Doug, Update all subjects as needed
   # Used for reinstating an account.
   def reinstate_account(user, password=nil)
     @resource = user
-    mail(:to => @resource.email, :subject => 'Crumblin Reinstate Account Notification', :tag => 'password-reset') do |format|
+    mail(:to => @resource.email, :subject => 'Crumblin - Reinstate Account Notification', :tag => 'password-reset') do |format|
        format.html { render "devise/mailer/reinstate_account_instructions" }
     end
   end
