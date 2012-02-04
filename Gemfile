@@ -21,9 +21,6 @@ source 'http://rubygems.org'
 
 # Caching
   gem 'dalli'
-  
-# Exception Notifications
-  gem 'airbrake'
 
 # Form Handling
   gem 'simple_form'
