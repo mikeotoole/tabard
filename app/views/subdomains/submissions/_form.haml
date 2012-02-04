@@ -25,7 +25,7 @@
                 - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
                 = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - if af.object.errors.any?
-                  %mark.error= af.object_errors.full_messages.first
+                  %mark.error= af.object.errors.full_messages.first
   .sidebar
     .instructions
       %h2 Instructions

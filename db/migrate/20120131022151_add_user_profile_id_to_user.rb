@@ -5,7 +5,7 @@ class AddUserProfileIdToUser < ActiveRecord::Migration
     add_column :users, :user_profile_id, :integer
     add_index :users, :user_profile_id, :unique => true
   end
-  
+
   def down
     remove_index :users, :user_profile_id
     remove_column :users, :user_profile_id

@@ -156,7 +156,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Supported Games
-      resources :supported_games
+      resources :supported_games, :except => [:show]
     end
   end
 
@@ -174,6 +174,8 @@ DaBvRails::Application.routes.draw do
   get "/maintenance" => "top_level#maintenance", :as => 'top_level_maintenance'
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
+
+  match '*route', :to => 'status_code#not_found', :as => 'status_code_not_found'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

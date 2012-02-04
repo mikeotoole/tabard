@@ -27,10 +27,6 @@ class Subdomains::SupportedGamesController < SubdomainsController
     @supported_games = current_community.supported_games
   end
 
-  # GET /supported_games/1
-  def show
-  end
-
   # GET /supported_games/new
   def new
   end
@@ -45,9 +41,10 @@ class Subdomains::SupportedGamesController < SubdomainsController
     if @supported_game.save
       add_new_flash_message 'Game has been added.', 'success'
       @action = 'created'
+      redirect_to supported_games_url
+    else
+      respond_with(@supported_game)
     end
-
-    respond_with(@supported_game)
   end
 
   # PUT /supported_games/1

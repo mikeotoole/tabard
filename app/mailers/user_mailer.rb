@@ -5,7 +5,7 @@
 #
 # This class is a mailer used by the admin portal for sending password reset and new Admin emails.
 ###
-class UserMailer < ActionMailer::Base # TODO Doug, Update all subjects as needed. -MO
+class UserMailer < ActionMailer::Base
   default :from => "Crumblin <noreply@crumblin.com>",
           :content_type => "text/html"
 

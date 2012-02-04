@@ -49,28 +49,4 @@ describe SupportedGame do
     supported_game.save
     supported_game.should_not be_valid
   end
-  
-  it "should create game specific announcement space on creation" do
-    community.supported_games.should be_empty
-    community.supported_games.create(:game_id => wow.id, :game_type => "Wow", :name => "Test Supported Game").should be_valid
-    supported_game = community.supported_games.first
-    supported_game.game_announcement_space.should be_a(DiscussionSpace)
-    supported_game.game_announcement_space.is_announcement_space.should be_true
-  end
-    
-  it "should destroy game specific announcement space on destruction" do
-    SupportedGame.all.count.should eq(0)
-    
-    supported_game = community.supported_games.create(:game_id => wow.id, :game_type => "Wow", :name => "Test Supported Game")
-    supported_game.should be_valid
-    space = supported_game.game_announcement_space
-    space.should be_a(DiscussionSpace)
-    SupportedGame.all.count.should eq(1)
-    
-    community.supported_games.find_by_id(supported_game.id).destroy
-    SupportedGame.all.count.should eq(0)
-    SupportedGame.exists?(supported_game).should be_false
-    Wow.exists?(wow).should be_true
-    DiscussionSpace.exists?(space).should be_false
-  end
 end
