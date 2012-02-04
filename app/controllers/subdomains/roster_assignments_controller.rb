@@ -14,9 +14,9 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :block_unauthorized_user!, :except => [:index]
   before_filter :ensure_current_user_is_member, :except => [:index]
   before_filter :get_community_profile, :except => [:index]
-  before_filter :load_roster_assignment, :except => [:new, :create, :approve, :reject]
+  before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
-  before_filter :create_roster_assignment, :only => [:new, :create]
+  before_filter :create_roster_assignment, :only => [:new, :mine, :create]
   before_filter :find_avalible_characters, :except => [:index]
   authorize_resource :except => [:index]
   skip_authorize_resource :only => [:pending]
@@ -34,11 +34,12 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments
   # GET /roster_assignments.json
   def mine
-    @roster_assignment = RosterAssignment.new
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
     @roster_assignments = Array.new
     @roster_assignments = community_profile.roster_assignments if community_profile
+    render :new
   end
+  alias :new :mine
 
   # POST /roster_assignments
   # POST /roster_assignments.json
@@ -51,7 +52,10 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
         add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the roster.", 'success'
       end
     end
-    redirect_to my_roster_assignments_path
+    community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
+    @roster_assignments = Array.new
+    @roster_assignments = community_profile.roster_assignments if community_profile
+    respond_with @roster_assignment, :location => my_roster_assignments_path
   end
 
 #   # PUT /roster_assignments/1 This is not needed.. Right? -MO

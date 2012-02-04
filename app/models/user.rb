@@ -128,12 +128,12 @@ class User < ActiveRecord::Base
       User.delay.reset_user_password(user.id)
     end
   end
-  
+
   # This is a class method to reset a users password.
   def self.reset_user_password(id) # TODO Mike, Test.
     User.find(id).reset_password
   end
-  
+
   # This is a class method to nuke a user.
   def self.nuke_user(id) # TODO Mike, Test.
     User.find(id).nuke
@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
 
   # Will reset the users password.
   def reset_password
-  	random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
+    random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
     self.password = random_password if random_password
     self.password_confirmation = random_password if random_password
     self.reset_password_token = User.reset_password_token
@@ -264,7 +264,7 @@ class User < ActiveRecord::Base
       false
     end
   end
-  
+
   # This will destroy forever this user and all its associated resources.
   def nuke
     self.disable_by_admin

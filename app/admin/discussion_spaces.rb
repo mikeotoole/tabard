@@ -3,7 +3,7 @@ ActiveAdmin.register DiscussionSpace do
   controller.authorize_resource
 
   actions :index, :show, :update, :edit
-  
+
   member_action :destroy, :method => :delete do
     space = DiscussionSpace.find(params[:id])
     authorize!(:destroy, space)

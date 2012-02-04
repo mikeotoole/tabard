@@ -61,6 +61,17 @@ def generate_application(community, user_last_name)
   return app
 end
 
+# Gets the character to supported_game mappings
+def find_character_mapping(community, application)
+  mapping = Hash.new
+  application.character_proxies.each do |proxy|
+    sp = community.supported_games.where(:game_type => proxy.game.class.to_s).first
+    mapping[proxy.id.to_s] = sp.id if sp
+  end
+  puts "Finished Mapping #{community.name} #{application.user_profile_display_name} #{mapping.to_yaml}"
+  return mapping
+end
+
 unless @dont_run
 
   ###
@@ -75,18 +86,23 @@ unless @dont_run
   fox = UserProfile.find_by_last_name('Fox')
 
   %w(Pidgeon Tiger Crab).each do |last_name|
-    generate_application(two_maidens, last_name).accept_application(fox)
+    application = generate_application(two_maidens, last_name)
+    character_hash_map = find_character_mapping(two_maidens, application)
+    application.accept_application(fox, character_hash_map)
     puts "Accepted application"
   end
   generate_application(two_maidens, 'Panda')
 
   # Jedi Kittens
   jedi_kittens = create_community('Tiger', 'Jedi Kittens', 'Nya nya nya nya', %w(Empire))
+  jedi_kittens.update_attribute(:is_protected_roster, true)
 
   tiger = UserProfile.find_by_last_name('Tiger')
 
   %w(Badger Billy).each do |last_name|
-    generate_application(jedi_kittens, last_name).accept_application(tiger)
+    application = generate_application(jedi_kittens, last_name)
+    character_hash_map = find_character_mapping(jedi_kittens, application)
+    application.accept_application(tiger, character_hash_map)
     puts "Accepted application"
   end
 
@@ -96,7 +112,9 @@ unless @dont_run
   billy = UserProfile.find_by_last_name('Billy')
 
   %w(Moose Turtle Badger).each do |last_name|
-    generate_application(headshot, last_name).accept_application(billy)
+    application = generate_application(headshot, last_name)
+    character_hash_map = find_character_mapping(headshot, application)
+    application.accept_application(billy, character_hash_map)
     puts "Accepted application"
   end
   generate_application(headshot, 'Fox')

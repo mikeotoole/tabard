@@ -54,7 +54,7 @@ module DaBvRails
       g.javascripts false
       g.stylesheets false
       g.routing_specs false
-      g.view_specs false
+#       g.view_specs false
       g.request_specs false
     end
   end

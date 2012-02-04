@@ -53,9 +53,8 @@ class Ability
     # Game Rules
     can :read, Game
     # UserProfile Rules
-    can :read, UserProfile do |user_profile|
-      user_profile.publicly_viewable
-    end
+    can :read, UserProfile
+    # User Rules
     can :create, User
   end
 =begin
@@ -197,7 +196,7 @@ class Ability
   ###
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
-    
+
     can :index, PageSpace
 
     can [:read], Comment do |comment|
