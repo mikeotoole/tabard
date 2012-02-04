@@ -106,7 +106,6 @@ class CommunityApplication < ActiveRecord::Base
     return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
     self.update_attribute(:status_changer, rejected_by_user_profile)
-    # TODO Doug/Bryan, Determine what message content should be.
     message = Message.new(:subject => "Application Rejected",
                           :body => "Your application to #{self.community.name} has been rejected.",
                           :to => [self.user_profile_id])
@@ -198,12 +197,10 @@ protected
   # This method send a message to the community admin, if the community settings specify this.
   ###
   def message_community_admin
-    # TODO Doug/Bryan, Determine what message content should be.
     if self.community.email_notice_on_application
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
-
-      message = Message.new(:subject => "Application Submitted for #{self.community.name}",
-                            :body => "#{self.user_profile.name} has submitted an application. [View Application](#{community_application_url(self)})",
+      message = Message.new(:subject => "Application Submitted to #{self.community.name}",
+                            :body => "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
                             :to => [self.community.admin_profile_id])
       message.is_system_sent = true
       message.save
