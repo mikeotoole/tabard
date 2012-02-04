@@ -663,28 +663,19 @@ body.user_profiles.dashboard
           
         .actions
           background: image-url('bar/bg.png') top center repeat-x #3d2753
+          border-top: 1px solid #fff
           +border_radius(0,0,3,3)
           color: #a89db5
           font-size: 13px
-          height: 40px
           padding: 0
           position: relative
           
-          &:before
-            border-top: 1px solid #bbb
-            content: ''
-            left: 0
-            position: absolute
-            right: 0
-            top: -2px
-          
           &:after
-            border-top: 1px solid #fff
+            clear: both
             content: ''
-            left: 0
-            position: absolute
-            right: 0
-            top: -1px
+            display: block
+            height: 0
+            visibility: hidden
           
           li
             display: inline
@@ -699,7 +690,7 @@ body.user_profiles.dashboard
               float: left
               height: 30px
               line-height: 30px
-              margin: 5px 0 0 10px
+              margin: 5px 0 5px 10px
               padding: 0
               position: relative
               text-decoration: none
