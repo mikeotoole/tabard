@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201232049) do
+ActiveRecord::Schema.define(:version => 20120204200527) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -66,14 +66,13 @@ ActiveRecord::Schema.define(:version => 20120201232049) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
-    t.integer  "question_id"
     t.integer  "submission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string   "question_body"
   end
 
-  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
   add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
 
   create_table "character_proxies", :force => true do |t|

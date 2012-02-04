@@ -108,7 +108,7 @@ protected
   # This method checks to see if questions that require predefined answers have at least one
   def question_have_predefined_answers
     self.questions.each do |question|
-      if question.type == "MultiSelectQuestion" or question.type == "SingleSelectQuestion"
+      if Question::VALID_STYLES_WITH_PA.include?(question.style)
         has_at_least_one = false
         question.predefined_answers.each do |panswer|
           if not panswer.marked_for_destruction?

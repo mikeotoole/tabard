@@ -45,7 +45,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
       redirect_to root_url(:subdomain => current_community.subdomain)
     else
       @community_application.submission.custom_form.questions.each do |question|
-        @community_application.submission.answers.new(:question_id => question.id)
+        @community_application.submission.answers.new :question_body => question.body, :question_id => question.id
       end
     end
   end

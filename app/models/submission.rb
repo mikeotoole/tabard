@@ -16,7 +16,6 @@ class Submission < ActiveRecord::Base
   belongs_to :user_profile
 
   has_many :answers, :dependent => :destroy
-  has_many :questions, :through => :answers
   has_many :form_questions, :through => :custom_form, :class_name => "Question"
 
   has_one :community, :through => :custom_form
@@ -80,23 +79,15 @@ class Submission < ActiveRecord::Base
     self.answers
   end
 
-  ###
-  # This method gets all of the unique questions that were answered by this submission.
-  # [Returns] A unique array of questions.
-  ###
-  def all_questions
-    self.answers.collect { |answer| answer.question }.uniq
-  end
-
   # This method ensures that all required questions have been answered.
   def answered_all_required_questions
     return unless custom_form
     self.custom_form.questions.each do |question|
       if question.is_required
         self.answers.each do |answer|
-          if answer.question_id == question.id
+          if answer.question_id == "#{question.id}"
             if answer.body.class == String
-              if answer.body?
+              unless answer.body?
                 errors.add(:base, "All required questions must be answered.")
                 answer.errors.add(:base, "is required to be answered.")
               end

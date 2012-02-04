@@ -4,7 +4,7 @@ $(document).ready ->
     .delegate '.questions > li', 'init', ->
       li = $(this)
       right = $(this).find('.right')
-      li.data('qtype',li.attr('question_type'))
+      li.data('qstyle',li.attr('question_style'))
       if $(this).find('>a.remove').size() == 0
         # Remove question link
         li
@@ -31,15 +31,14 @@ $(document).ready ->
             val = checkedInput.val()
             select.find('input').removeAttr 'checked'
             checkedInput.attr 'checked','checked'
-
-            if val.match /textquestion/i
+            if val.match /short_answer_question|long_answer_question/i
               right.addClass('hidden')
               answers.find('input')
                 .attr('disabled',true)
                 .attr('readonly',true)
             else
               right.removeClass('hidden')
-              if val == li.data('qtype')
+              if val == li.data('qstyle')
                 answers.find('input').removeAttr('disabled readonly')
               else
                 answers.find('input[type="hidden"]')
@@ -50,7 +49,7 @@ $(document).ready ->
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
             
-            if val != li.data('qtype') and li.filter('[question_id]').length
+            if val != li.data('qstyle') and li.filter('[question_id]').length
               oldIdQ = li.attr 'question_id'
               oldIndexQ = li.attr 'question'
               li.before '<input name="custom_form[questions_attributes]['+oldIndexQ+'][_destroy]" type="hidden" value="true"><input name="custom_form[questions_attributes]['+oldIndexQ+'][id]" type="hidden" value="'+oldIdQ+'">'
@@ -65,7 +64,7 @@ $(document).ready ->
               li
                 .removeAttr('question_id question_type')
                 .attr('question', newIndexQ)
-                .data('qtype', val)
+                .data('qstyle', val)
                 .html(html)
                 .trigger 'init'
         

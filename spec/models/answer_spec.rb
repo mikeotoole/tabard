@@ -4,11 +4,11 @@
 #
 #  id            :integer         not null, primary key
 #  body          :text
-#  question_id   :integer
 #  submission_id :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime
+#  question_body :string(255)
 #
 
 require 'spec_helper'

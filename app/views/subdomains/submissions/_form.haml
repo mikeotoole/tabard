@@ -7,25 +7,23 @@
           = f.simple_fields_for :answers, answer do |af|
             %li{ :class => (af.object.errors.any? ? 'field_with_errors' : '') }
               = af.input :question_id, :as => :hidden, :wrapper => false
-              - case answer.question_type
-              - when 'TextQuestion'
-                - case answer.question_style
+              = af.input :question_body, :as => :hidden, :wrapper => false
+              - case answer.question_style
                 - when 'short_answer_question'
                   = af.input :body, :as => :string, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - when 'long_answer_question'
                   = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
-              - when 'SingleSelectQuestion'
-                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
-                - case answer.question_style
                 - when 'select_box_question'
+                  - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
                   .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - when 'radio_buttons_question'
+                  - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
                   = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
-              - when 'MultiSelectQuestion'
-                - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
-                = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
-                - if af.object.errors.any?
-                  %mark.error= af.object_errors.full_messages.first
+                - when 'check_box_question'
+                  - c = answer.question_predefined_answers.collect{|pa| pa = pa.body}
+                  = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
+                  - if af.object.errors.any?
+                    %mark.error= af.object.errors.full_messages.first
   .sidebar
     .instructions
       %h2 Instructions

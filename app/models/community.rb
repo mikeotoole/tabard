@@ -273,20 +273,20 @@ protected
     ca.community = self
 
     # First Question
-    question = SingleSelectQuestion.create(
+    question = Question.create(
       :style => "select_box_question",
       :body => "How often do you play?",
       :is_required => true)
     question.custom_form = ca
     question.save
-    PredefinedAnswer.create(:body => "1-3 hours", :select_question_id => question.id)
-    PredefinedAnswer.create(:body => "3-6 hours", :select_question_id => question.id)
-    PredefinedAnswer.create(:body => "6-10 hours", :select_question_id => question.id)
-    PredefinedAnswer.create(:body => "10-20 hours", :select_question_id => question.id)
-    PredefinedAnswer.create(:body => "20+ hours", :select_question_id => question.id)
+    PredefinedAnswer.create(:body => "1-3 hours", :question_id => question.id)
+    PredefinedAnswer.create(:body => "3-6 hours", :question_id => question.id)
+    PredefinedAnswer.create(:body => "6-10 hours", :question_id => question.id)
+    PredefinedAnswer.create(:body => "10-20 hours", :question_id => question.id)
+    PredefinedAnswer.create(:body => "20+ hours", :question_id => question.id)
 
     # Second Question
-    question = TextQuestion.create(
+    question = Question.create(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
@@ -295,7 +295,7 @@ protected
     question.save
 
     # Third Question
-    question = TextQuestion.create(
+    question = Question.create(
       :style => "short_answer_question",
       :body => "How did you hear about us?",
       :explanation => "This is a short answer question",
