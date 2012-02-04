@@ -4,8 +4,7 @@ describe UserProfilesController do
   let(:non_owner) { create(:billy) }
   let(:owner) { create(:user) }
   let(:user_profile) { owner.user_profile }
-  let(:private_owner) { create(:user, :user_profile_attributes => FactoryGirl.attributes_for(:user_profile, :publicly_viewable => false)) }
-  let(:private_user_profile) { private_owner.user_profile }
+  let(:disabled_user_profile) { create(:disabled_user).user_profile }
 
 	describe "GET 'dashboard'" do
 		it "should show the current user when authenticated as a user" do
@@ -36,41 +35,36 @@ describe UserProfilesController do
   end
 
   describe "GET 'show'" do
-    describe "user_profile is publicly viewable" do
-      it "show should be successful when authenticated as the owner" do
+    describe "when user_profile is not disabled" do
+      it "should be successful when authenticated as the owner" do
         sign_in owner
         get 'show', :id => user_profile
         response.should be_success
         response.should render_template('user_profiles/show')
       end
 
-      it "show should be successful when authenticated as a non-owner" do
+      it "should be successful when authenticated as a non-owner" do
         sign_in non_owner
         get 'show', :id => user_profile
         response.should be_success
       end
 
-      it "should be successful when not authenticated as a user when user_profile is publicly viewable" do
+      it "should be successful when not authenticated as a user" do
         get 'show', :id => user_profile
         response.should be_success
       end
     end
-    describe "user_profile is not publicly viewable" do
-      it "show should be successful when authenticated as the owner" do
-        sign_in private_owner
-        get 'show', :id => private_user_profile
-        response.should be_success
-      end
 
+    describe "when user_profile is disabled" do
       it "show should be successful when authenticated as a non-owner" do
         sign_in non_owner
-        get 'show', :id => private_user_profile
-        response.should be_success
+        get 'show', :id => disabled_user_profile
+        response.should redirect_to(root_path)
       end
 
-      it "show should be successful when not authenticated as a user when user_profile is publicly viewable" do
-        get 'show', :id => private_user_profile
-        response.should be_success
+      it "show should be successful when not authenticated as a user" do
+        get 'show', :id => disabled_user_profile
+        response.should redirect_to(root_path)
       end
     end
   end
