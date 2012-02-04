@@ -70,7 +70,7 @@ class DefaultObjects
   end
   
   def self.community
-    @community ||= FactoryGirl.create(:community)
+    @community ||= FactoryGirl.create(:community, :name => "LOLOLOLOLOLOL")
     unless @community.games.include?(DefaultObjects.wow)
       @community.supported_games.create(:name => "Test Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
     end
@@ -99,7 +99,7 @@ class DefaultObjects
   end
   
   def self.community_two
-    @community_two ||= FactoryGirl.create(:community)
+    @community_two ||= FactoryGirl.create(:community, :name => "LOLOLOL2")
     unless @community_two.games.include?(DefaultObjects.swtor)
       @community_two.supported_games.create(:name => "Test Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
     end

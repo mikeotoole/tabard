@@ -476,6 +476,10 @@ button,
             h3
               line-height: 1em
               padding: 5px 0 0
+            
+            .meta
+              font-size: 12px
+              padding: 0 0 10px
           
           &.characters
             
@@ -913,9 +917,12 @@ button,
           
           ul
             width: 276px
-            
-            input:checked + label
-              display: none
+          
+          input:checked + label
+            width: 236px
+        
+        .picker input:checked + label
+          display: none
         
       .characters >label,
       .characters >ul li,
@@ -979,6 +986,10 @@ button,
                 
               &.game
                 font: 12px DinLight, sans-serif
+          
+          + ul,
+          + .select
+            margin: -30px 0 0
       
       .instructions
         padding: 0 0 15px

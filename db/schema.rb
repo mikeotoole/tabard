@@ -405,10 +405,12 @@ ActiveRecord::Schema.define(:version => 20120131022151) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "supported_game_id"
   end
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
+  add_index "roster_assignments", ["supported_game_id"], :name => "index_roster_assignments_on_supported_game_id"
 
   create_table "site_configurations", :force => true do |t|
     t.boolean  "is_maintenance", :default => false

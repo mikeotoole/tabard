@@ -52,7 +52,7 @@ class AdminUser < ActiveRecord::Base
       AdminUser.delay.reset_admin_user_password(user.id)
     end
   end
- 
+
   # This is a class method to reset a users password.
   def self.reset_admin_user_password(id) # TODO Mike, Test.
     AdminUser.find(id).reset_password
@@ -63,7 +63,7 @@ class AdminUser < ActiveRecord::Base
 ###
   # Will reset the admin users password.
   def reset_password
-  	random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
+    random_password = AdminUser.send(:generate_token, 'encrypted_password').slice(0, 8)
     self.password = random_password if random_password
     self.password_confirmation = random_password if random_password
     self.reset_password_token = AdminUser.reset_password_token
@@ -71,7 +71,7 @@ class AdminUser < ActiveRecord::Base
     self.save(:validate => false)
     UserMailer.password_reset(self, random_password).deliver
   end
-  
+
   ###
   # This gives roles a hierarchy. e.g. admin has all moderator abilities.
   ###

@@ -15,7 +15,8 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :submission_attributes, :character_proxy_ids
+  attr_accessor :proxy_hash
+  attr_accessible :submission_attributes, :character_proxy_ids, :proxy_hash
 
 ###
 # Constants
@@ -67,28 +68,32 @@ class CommunityApplication < ActiveRecord::Base
   delegate :avatar_url, :to => :user_profile, :prefix => true
 
 ###
+# Public Methods
+###
+
+###
 # Instance Methods
 ###
   ###
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile)
+  def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
     return false if self.accepted?
     self.update_attribute(:status, "Accepted")
     self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    # TODO Doug/Bryan, Determine what message content should be. subdomain_home
     message = Message.new(:subject => "Application Accepted",
                           :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
                           :to => [self.user_profile_id])
     message.is_system_sent = true
     message.save
     self.character_proxies.each do |proxy|
+      next unless proxy_map[proxy.id.to_s]
       if self.community.is_protected_roster
-        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy).approve
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
       else
-        RosterAssignment.create(:community_profile => community_profile, :character_proxy => proxy)
+        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
       end
     end
   end
@@ -174,10 +179,10 @@ protected
     return unless community and user_profile
     errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
   end
-  
+
 ###
 # Callback Methods
-### 
+###
   ###
   # _before_create_
   #

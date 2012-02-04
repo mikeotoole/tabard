@@ -1,7 +1,7 @@
 - activities.each do |activity|
   - if activity.is_a? Comment
     - if user_signed_in? and current_user.in_community(activity.community).can? :read, activity.original_commentable
-      = render "activities/comment", :comment => activity
+      = render "activities/comment", :comment => activity, :user_profile => user_profile
     - else
       %li{ :class => 'activity', :created_at => activity.created_at }
         = link_to activity.user_profile_display_name, user_profile_url(activity.user_profile)

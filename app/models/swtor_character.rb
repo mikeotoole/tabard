@@ -11,7 +11,7 @@ class SwtorCharacter < BaseCharacter
 ###
   # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 20
-  
+
   # All valid genders
   VALID_GENDERS = %w(Male Female)
 
