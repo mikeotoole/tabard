@@ -20,7 +20,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -28,7 +28,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -36,7 +36,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
@@ -59,7 +59,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -67,7 +67,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -75,7 +75,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -98,7 +98,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit new_admin_admin_user_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -106,7 +106,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit new_admin_admin_user_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -114,7 +114,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit new_admin_admin_user_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end 
     
     it "redirects to login page when not logged in" do
@@ -137,7 +137,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit edit_admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -145,7 +145,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit edit_admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -153,7 +153,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit edit_admin_admin_user_url(:id => admin.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -176,7 +176,7 @@ describe "ActiveAdmin AdminUser" do
         page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -185,7 +185,7 @@ describe "ActiveAdmin AdminUser" do
         page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -194,7 +194,7 @@ describe "ActiveAdmin AdminUser" do
         page.driver.post("/admin/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not create AdminUser when not logged in" do
@@ -217,7 +217,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.put("/admin/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
       AdminUser.find(moderator).email.should eql orginal_email
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -226,7 +226,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.put("/admin/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
       AdminUser.find(admin).email.should eql orginal_email
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -235,7 +235,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.put("/admin/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
       AdminUser.find(moderator).email.should eql orginal_email
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update AdminUser when not logged in" do
@@ -259,7 +259,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.delete("/admin/admin_users/#{moderator.id}")
       AdminUser.exists?(moderator).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -268,7 +268,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.delete("/admin/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -277,7 +277,7 @@ describe "ActiveAdmin AdminUser" do
       page.driver.delete("/admin/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete AdminUser when not logged in" do
@@ -316,7 +316,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit edit_account_admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -352,7 +352,7 @@ describe "ActiveAdmin AdminUser" do
 
       page.driver.put("/admin/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -395,7 +395,7 @@ describe "ActiveAdmin AdminUser" do
 
       page.driver.put("/admin/admin_users/#{moderator.id}/reset_password")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       AdminUser.find(moderator).reset_password_token.should be_nil
     end    
     
@@ -404,7 +404,7 @@ describe "ActiveAdmin AdminUser" do
 
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       AdminUser.find(admin).reset_password_token.should be_nil
     end    
     
@@ -413,7 +413,7 @@ describe "ActiveAdmin AdminUser" do
 
       page.driver.put("/admin/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       AdminUser.find(admin).reset_password_token.should be_nil
     end
     
@@ -437,7 +437,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit reset_all_passwords_admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as moderator" do
@@ -445,7 +445,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit reset_all_passwords_admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -453,7 +453,7 @@ describe "ActiveAdmin AdminUser" do
 
       visit reset_all_passwords_admin_admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do

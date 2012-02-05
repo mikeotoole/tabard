@@ -30,7 +30,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_wows_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -38,7 +38,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_wows_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
@@ -69,7 +69,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_wow_url(:id => wow.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_wow_url(:id => wow.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -108,7 +108,7 @@ describe "ActiveAdmin Wow" do
 
       visit new_admin_wow_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -116,7 +116,7 @@ describe "ActiveAdmin Wow" do
 
       visit new_admin_wow_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end 
     
     it "redirects to login page when not logged in" do
@@ -147,7 +147,7 @@ describe "ActiveAdmin Wow" do
 
       visit edit_admin_wow_url(:id => wow.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -155,7 +155,7 @@ describe "ActiveAdmin Wow" do
 
       visit edit_admin_wow_url(:id => wow.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -185,7 +185,7 @@ describe "ActiveAdmin Wow" do
         page.driver.post("/admin/wows", { :wow => attributes_for(:wow, :server => "test_server") } )
       }.to change(Wow, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -194,7 +194,7 @@ describe "ActiveAdmin Wow" do
         page.driver.post("/admin/wows", { :wow => attributes_for(:wow, :server => "test_server") } )
       }.to change(Wow, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not create Wow when not logged in" do
@@ -226,7 +226,7 @@ describe "ActiveAdmin Wow" do
       page.driver.put("/admin/wows/#{wow.id}", { :wow => { :server_name => "test_case_server" } } )
       Wow.find(wow).server_name.should eql orginal_server
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -236,7 +236,7 @@ describe "ActiveAdmin Wow" do
       page.driver.put("/admin/wows/#{wow.id}", { :wow => { :server_name => "test_case_server" } } )
       Wow.find(wow).server_name.should eql orginal_server
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update Wow when not logged in" do

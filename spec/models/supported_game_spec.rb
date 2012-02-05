@@ -40,7 +40,8 @@ describe SupportedGame do
     supported_game.should_not be_valid
     supported_game = SupportedGame.create(:game_id => wow.id, :game_type => nil, :name => "Test Supported Game")
     supported_game.community = community
-    lambda { supported_game.save }.should raise_error
+    supported_game.save
+    supported_game.should raise_error
   end
 
   it "should require name" do

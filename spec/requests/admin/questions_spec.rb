@@ -38,7 +38,7 @@ describe "ActiveAdmin Question" do
 
       visit admin_questions_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin Question" do
 
       visit admin_question_url(:id => question.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -138,7 +138,7 @@ describe "ActiveAdmin Question" do
       page.driver.delete("/admin/questions/#{question.id}")
       Question.exists?(question).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete question when not logged in" do
@@ -175,7 +175,7 @@ describe "ActiveAdmin Question" do
       page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete predefined answer when not logged in" do
