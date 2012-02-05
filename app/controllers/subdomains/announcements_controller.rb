@@ -12,10 +12,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  before_filter :create_announcement, :only => [:new, :create]
-  authorize_resource
+  authorize_resource :except => [:community]
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_community, :only => [:show]
+  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create]
 
 ###
 # REST Actions
@@ -26,6 +25,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
   end
 
   def community
+    authorize! :index, Announcement 
+    @announcements = current_community.community_announcements
   end
 
   # GET /announcements/:id(.:format)
@@ -108,25 +109,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @announcement.supported_game if @announcement
+    @announcement.supported_game if @announcement and @announcement.persisted?
   end
   helper_method :current_game
-
-###
-# Protected Methods
-###
-protected
-
-###
-# Callback Methods
-###
-  ###
-  # _before_filter_
-  #
-  # This before filter attempts to create @announcement from: announcements.new(params[:announcement]), for the announcement space.
-  ###
-  def create_announcement
-    @announcement_space = DiscussionSpace.find_by_id(params[:announcement_space_id])
-    @announcement = @announcement_space.discussions.new(params[:discussion])
-  end
 end

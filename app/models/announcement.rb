@@ -11,7 +11,7 @@ class Announcement < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game, :supported_game_id
 
 ###
 # Associations
@@ -48,6 +48,7 @@ class Announcement < ActiveRecord::Base
 
   after_create :create_acknowledgements
 
+  scope :non_community, where(Announcement.arel_table[:supported_game_id].not_eq(nil))
 ###
 # Public Methods
 ###

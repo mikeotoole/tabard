@@ -203,12 +203,18 @@ class UserProfile < ActiveRecord::Base
   #   * +view_loggable_item+ -> The view-loggable object to check.
   # [Returns] True if the specified user is the owner of this character, otherwise false.
   def has_seen?(view_loggable_item)
-    user_id = self.id
-    ViewLog.where{(
-      (view_loggable_id.eq view_loggable_item.id) &
-      (view_loggable_type.eq view_loggable_item.class.to_s) &
-      (user_profile_id.eq user_id)
-    )}.exists?
+    if view_loggable_item.class == ViewLog
+      user_id = self.id
+      return ViewLog.where{(
+        (view_loggable_id.eq view_loggable_item.id) &
+        (view_loggable_type.eq view_loggable_item.class.to_s) &
+        (user_profile_id.eq user_id)
+      )}.exists?
+    end
+    if view_loggable_item.class == Announcement
+      return self.read_announcements.include?(view_loggable_item)
+    end
+    return false
   end
 
   ###

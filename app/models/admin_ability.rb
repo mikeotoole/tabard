@@ -39,9 +39,7 @@ class AdminAbility
       can [:read, :destroy, :update], PageSpace
       can [:read, :destroy], Page
       can [:read], DiscussionSpace
-      can [:update, :destroy], DiscussionSpace do |space|
-        space.is_announcement_space != true
-      end
+      can [:update, :destroy], DiscussionSpace
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :update], SupportedGame
       can [:read], SwtorCharacter

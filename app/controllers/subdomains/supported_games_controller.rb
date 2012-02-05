@@ -33,7 +33,8 @@ class Subdomains::SupportedGamesController < SubdomainsController
   end
 
   def announcements
-    @announcements = @supported_game.announcements
+    authorize! :index, Announcement
+    @announcements = @supported_game.announcements.non_community
   end
 
   # GET /supported_games/new

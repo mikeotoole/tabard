@@ -68,7 +68,6 @@ def find_character_mapping(community, application)
     sp = community.supported_games.where(:game_type => proxy.game.class.to_s).first
     mapping[proxy.id.to_s] = sp.id if sp
   end
-  puts "Finished Mapping #{community.name} #{application.user_profile_display_name} #{mapping.to_yaml}"
   return mapping
 end
 

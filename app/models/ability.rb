@@ -139,11 +139,6 @@ class Ability
       (discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked
     end
 
-    # Discussion Space Rules
-    cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement_space == true
-    end
-
     # Messaging Rules
     can :manage, Folder do |folder|
       folder.user_profile_id == user.user_profile_id
@@ -198,6 +193,8 @@ class Ability
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
 
+    can :read, Announcement
+
     can :index, PageSpace
 
     can [:read], Comment do |comment|
@@ -233,9 +230,6 @@ class Ability
     end
 
     can :manage, DiscussionSpace
-    cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement_space == true
-    end
     can :manage, Discussion do |discussion|
       not discussion.is_locked
     end

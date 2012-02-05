@@ -3,7 +3,7 @@
 %h1 New Announcement
 
 .full
-  = simple_form_for [@announcement_space, @announcement], :url => {:action =>:create}, :html => {:novalidate => true} do |f|
+  = simple_form_for @announcement do |f|
     = render 'fields', :f => f
     %p.submit
       = f.button :submit, 'Create Announcement'

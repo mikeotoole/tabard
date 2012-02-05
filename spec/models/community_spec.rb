@@ -237,35 +237,6 @@ describe Community do
     community.email_notice_on_application.should be_true
   end
   
-  it "should create a community announcements discussion space on creation" do
-    community.community_announcement_space.should be_a(DiscussionSpace)
-    community.community_announcement_space.is_announcement_space.should be_true
-  end
-  
-  it "should destroy community announcements discussion space when destroyed" do
-    space = community.community_announcement_space
-    space.should be_a(DiscussionSpace)
-    community.destroy
-    DiscussionSpace.exists?(space).should be_false
-  end
-  
-  describe "game_announcement_spaces" do
-    let(:wow) { DefaultObjects.wow }
-  
-    it "should return empty array when community has no game" do
-      community.games.should be_empty
-      community.game_announcement_spaces.should be_empty
-    end
-    
-    it "should return announcement space for each game the community has" do
-      community.games.should be_empty
-      community.game_announcement_spaces.should be_empty
-      community.supported_games << create(:supported_game, :game => wow)
-      community.games.should eq([wow])
-      community.game_announcement_spaces.count.should eq(1)
-    end
-  end
-  
   describe "destroy" do
     it "should mark community as deleted" do
       community.destroy
@@ -322,17 +293,6 @@ describe Community do
       end
     end
     
-    it "should mark community's game_announcement_spaces as deleted" do
-      community = create(:wow_supported_game).community
-      game_announcement_spaces = community.game_announcement_spaces.all
-      community.destroy
-      game_announcement_spaces.should_not be_empty
-      game_announcement_spaces.each do |game_announcement_space|
-        DiscussionSpace.exists?(game_announcement_space).should be_false
-        DiscussionSpace.with_deleted.exists?(game_announcement_space).should be_true
-      end
-    end
-    
     it "should mark community's custom_forms as deleted" do
       community = create(:custom_form).community
       custom_forms = community.custom_forms.all
@@ -364,26 +324,6 @@ describe Community do
         DiscussionSpace.exists?(discussion_space).should be_false
         DiscussionSpace.with_deleted.exists?(discussion_space).should be_true
       end
-    end
-    
-    it "should mark community's announcement_spaces as deleted" do
-      community = create(:announcement).discussion_space.community
-      announcement_spaces = community.announcement_spaces.all
-      community.destroy
-      announcement_spaces.should_not be_empty
-      announcement_spaces.each do |announcement_space|
-        DiscussionSpace.exists?(announcement_space).should be_false
-        DiscussionSpace.with_deleted.exists?(announcement_space).should be_true
-      end
-    end
-    
-    it "should mark community's community_announcement_space as deleted" do
-      community = DefaultObjects.community
-      community_announcement_space = community.community_announcement_space
-      community.destroy
-      community_announcement_space.should be_a(DiscussionSpace)
-      DiscussionSpace.exists?(community_announcement_space).should be_false
-      DiscussionSpace.with_deleted.exists?(community_announcement_space).should be_true
     end
     
     it "should mark community's page_spaces as deleted" do
@@ -479,17 +419,6 @@ describe Community do
       end
     end
     
-    it "should delete community's game_announcement_spaces" do
-      community = create(:wow_supported_game).community
-      game_announcement_spaces = community.game_announcement_spaces.all
-      community.nuke
-      game_announcement_spaces.should_not be_empty
-      game_announcement_spaces.each do |game_announcement_space|
-        DiscussionSpace.exists?(game_announcement_space).should be_false
-        DiscussionSpace.with_deleted.exists?(game_announcement_space).should be_false
-      end
-    end
-    
     it "should delete community's custom_forms" do
       community = create(:custom_form).community
       custom_forms = community.custom_forms.all
@@ -521,26 +450,6 @@ describe Community do
         DiscussionSpace.exists?(discussion_space).should be_false
         DiscussionSpace.with_deleted.exists?(discussion_space).should be_false
       end
-    end
-    
-    it "should delete community's announcement_spaces" do
-      community = create(:announcement).discussion_space.community
-      announcement_spaces = community.announcement_spaces.all
-      community.nuke
-      announcement_spaces.should_not be_empty
-      announcement_spaces.each do |announcement_space|
-        DiscussionSpace.exists?(announcement_space).should be_false
-        DiscussionSpace.with_deleted.exists?(announcement_space).should be_false
-      end
-    end
-    
-    it "should delete community's community_announcement_space" do
-      community = DefaultObjects.community
-      community_announcement_space = community.community_announcement_space
-      community.nuke
-      community_announcement_space.should be_a(DiscussionSpace)
-      DiscussionSpace.exists?(community_announcement_space).should be_false
-      DiscussionSpace.with_deleted.exists?(community_announcement_space).should be_false
     end
     
     it "should delete community's page_spaces" do

@@ -25,7 +25,6 @@ describe Subdomains::DiscussionSpacesController do
   let(:community) { DefaultObjects.community }
   let(:space) { DefaultObjects.discussion_space }
   let(:discussion) { DefaultObjects.discussion }
-  let(:anouncment_space) { DefaultObjects.announcement_discussion_space }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
@@ -111,13 +110,7 @@ describe Subdomains::DiscussionSpacesController do
       sign_in non_member
       get :edit, :id => space.id.to_s
       response.should be_forbidden
-    end
-    
-    it "should respond forbidden when is_announcement_space is true" do
-      sign_in admin
-      get :edit, :id => anouncment_space.id.to_s
-      response.should be_forbidden
-    end    
+    end 
   end
 
   describe "POST create when authenticated as admin" do
@@ -170,11 +163,6 @@ describe Subdomains::DiscussionSpacesController do
           post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
         }.to change(Activity, :count).by(0)
       end
-    end
-    
-    it "should not allow is_announcement_space to be set to true" do
-      post :create, :discussion_space => attributes_for(:discussion_space, :is_announcement_space => true)
-      assigns(:discussion_space).is_announcement_space.should eq(false)
     end
   end
   
@@ -238,11 +226,6 @@ describe Subdomains::DiscussionSpacesController do
         response.should render_template("edit")
       end
     end
-    
-    it "should respond forbidden when is_announcement_space is true" do
-      put :update, :id => anouncment_space.id, :discussion_space => {:name => "New Name"}
-      response.should be_forbidden
-    end
   end
 
   describe "PUT update" do
@@ -281,12 +264,6 @@ describe Subdomains::DiscussionSpacesController do
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => space.id.to_s
-      response.should be_forbidden
-    end
-    
-    it "should respond forbidden when is_announcement_space is true" do
-      sign_in admin
-      delete :destroy, :id => anouncment_space.id.to_s
       response.should be_forbidden
     end
   end

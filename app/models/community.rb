@@ -36,10 +36,10 @@ class Community < ActiveRecord::Base
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :custom_forms, :dependent => :destroy
+  has_many :community_announcements, :class_name => "Announcement", :conditions => {:supported_game_id => nil}
   has_many :announcements
 
   has_many :supported_games, :dependent => :destroy
-  #has_many :game_announcement_spaces, :through => :supported_games
 
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
@@ -47,9 +47,7 @@ class Community < ActiveRecord::Base
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
 
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
-  #has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
-  #belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
   has_many :page_spaces, :dependent => :destroy

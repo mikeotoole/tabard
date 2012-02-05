@@ -27,6 +27,7 @@ class SupportedGame < ActiveRecord::Base
   belongs_to :game, :polymorphic => true
   belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :roster_assignments
+  has_many :announcements
 
 ###
 # Delegates
@@ -47,6 +48,7 @@ class SupportedGame < ActiveRecord::Base
   validates :name, :presence => true,
                    :length => { :maximum => MAX_NAME_LENGTH },
                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
+  validates :game, :presence => true
 
 ###
 # Callbacks

@@ -23,6 +23,16 @@ class DefaultObjects
       appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
     end
+    unless @user_profile.announcements.size > 0
+      announcement1 = DefaultObjects.community.announcements.new(:name => "Announcement 1", 
+        :body => "Herp Derp")
+      announcement1.user_profile = DefaultObjects.community.admin_profile
+      announcement2 = DefaultObjects.community.announcements.new(:name => "Announcement 2", 
+        :body => "Herp Derp!")
+      announcement2.user_profile = DefaultObjects.community.admin_profile
+      announcement1.save
+      announcement2.save
+    end
     @user_profile
   end
 
@@ -74,11 +84,11 @@ class DefaultObjects
     unless @community.games.include?(DefaultObjects.wow)
       @community.supported_games.create(:name => "Test Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
     end
-    unless @community.community_announcement_space.discussions.size > 0
-      announcement1 = @community.community_announcement_space.discussions.new(:name => "Announcement 1", 
+    unless @community.announcements.size > 0
+      announcement1 = @community.announcements.new(:name => "Announcement 1", 
         :body => "Herp Derp")
       announcement1.user_profile = @community.admin_profile
-      announcement2 = @community.community_announcement_space.discussions.new(:name => "Announcement 2", 
+      announcement2 = @community.announcements.new(:name => "Announcement 2", 
         :body => "Herp Derp!")
       announcement2.user_profile = @community.admin_profile
       announcement1.save
@@ -124,10 +134,6 @@ class DefaultObjects
     @discussion_space ||= FactoryGirl.create(:discussion_space)
   end
   
-  def self.announcement_discussion_space
-    @announcement_discussion_space ||= DefaultObjects.community.community_announcement_space
-  end
-  
   def self.discussion
     @discussion ||= FactoryGirl.create(:discussion)
   end
@@ -157,7 +163,6 @@ class DefaultObjects
     @swtor_character_proxy = nil
     @discussion_space = nil
     @discussion = nil
-    @announcement_discussion_space = nil
     @page_space = nil
     @general_page_space = nil
   end
