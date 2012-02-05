@@ -17,7 +17,8 @@
             = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
           %td.character
             %h3= roster_assignment.character_proxy_name
-            = roster_assignment.is_pending ? "is pending approval to #{roster_assignment.supported_game_smart_name}" : 'is a member'
+            = roster_assignment.is_pending ? 'is pending approval to ' : 'is a member of'
+            = roster_assignment.supported_game_smart_name
           %td.actions
             %div
               - if  can? :mine, RosterAssignment or can? :delete, roster_assignment
@@ -26,11 +27,11 @@
     %tr
       %td
       %td
-        - if @avalible_characters.size > 0
+        - if @available_characters.size > 0
           = simple_form_for @roster_assignment, :wrapper => false do |f|
             .select{ :class => !!f.object.errors.messages[:character_proxy_id] ? 'field_with_errors' : '' }
-              = f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @avalible_characters.collect{|c| c = [raw(image_tag(c.avatar_url(:icon), :class => 'avatar')) + "#{c.name} — #{c.game_name}", c.id]}
+              = f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @available_characters.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + "#{cp.name} — #{cp.game_name}", cp.id]}
             .select{ :class => !!f.object.errors.messages[:supported_game_id] ? 'field_with_errors' : '' }
-              = f.input :supported_game_id, :as => :radio, :label => false, :wrapper => false, :collection => current_community.supported_games.collect{|c| c = ["#{c.name} — #{c.game_name}", c.id]}
+              = f.input :supported_game_id, :as => :radio, :label => false, :wrapper => false, :collection => current_community.supported_games.collect{|sg| sg = [sg.smart_name, sg.id]}
             %button{ :type => 'submit' } Add character
       %td

@@ -51,23 +51,26 @@ describe Subdomains::SupportedGamesController do
   end
 
   describe "GET show" do
-    it "assigns the requested supported_game as @supported_game when authenticated as a member" do
-      sign_in member
-      supported_game
-      get :show, :id => supported_game.id
-      assigns(:supported_game).should eq(supported_game)
+    it "should redirect to status code not found path when authenticated as a member" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in member
+        supported_game
+        get :show, :id => supported_game.id
+      end
     end
     
-    it "should redirected to new user session path when not authenticated as a user" do
-      get :show, :id => supported_game
-      response.should redirect_to(new_user_session_path)
+    it "should redirect to status code not found path when not authenticated as a user" do
+      assert_raises(ActionController::RoutingError) do
+        get :show, :id => supported_game
+      end
     end
     
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :show, :id => supported_game
-      response.should be_forbidden
-    end 
+    it "should redirect to status code not found path when not a member" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in non_member
+        get :show, :id => supported_game
+      end
+    end
   end
 
   describe "GET new" do
@@ -141,7 +144,7 @@ describe Subdomains::SupportedGamesController do
 
       it "redirects to the created supported_game" do
         post :create, :supported_game => valid_attributes
-        response.should redirect_to(SupportedGame.last)
+        response.should redirect_to(supported_games_path)
       end
       
       it "should create an activity" do

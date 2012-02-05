@@ -53,9 +53,8 @@ class Ability
     # Game Rules
     can :read, Game
     # UserProfile Rules
-    can :read, UserProfile do |user_profile|
-      user_profile.publicly_viewable
-    end
+    can :read, UserProfile
+    # User Rules
     can :create, User
   end
 =begin

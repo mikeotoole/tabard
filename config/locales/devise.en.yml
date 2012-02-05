@@ -42,7 +42,7 @@ en:
       destroyed: 'Your account has been deactivated. We hope to see you again soon.'
       not_signed_id: 'You must be signed in to cancel your account.'
       reasons:
-        unconfirmed: 'check your email to confirm your account.'
+        unconfirmed: 'check your email to confirm your account'
     unlocks:
       send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
       unlocked: 'Your account was successfully unlocked. You are now signed in.'

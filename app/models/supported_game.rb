@@ -25,7 +25,6 @@ class SupportedGame < ActiveRecord::Base
 ###
   belongs_to :community
   belongs_to :game, :polymorphic => true
-  belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :roster_assignments
   has_many :announcements
 
@@ -51,10 +50,6 @@ class SupportedGame < ActiveRecord::Base
   validates :game, :presence => true
 
 ###
-# Callbacks
-###
-
-###
 # Public Methods
 ###
 
@@ -76,10 +71,6 @@ class SupportedGame < ActiveRecord::Base
 # Protected Methods
 ###
 protected
-
-###
-# Callback Methods
-###
 
 ###
 # Validator Methods
@@ -106,6 +97,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -115,7 +107,6 @@ end
 #  game_id                    :integer
 #  created_at                 :datetime
 #  updated_at                 :datetime
-#  game_announcement_space_id :integer
 #  name                       :string(255)
 #  game_type                  :string(255)
 #  deleted_at                 :datetime

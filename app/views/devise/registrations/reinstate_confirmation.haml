@@ -1,14 +1,14 @@
 - title 'Reinstate Account'
 
 #body
-  %h1 Enter e-mail to reinstate account
-  - # TODO Doug, Add content to this view. Maybe explane that email is assoucated to a desabled account and user needs to enable account or use diffrent email. -MO
+  %h1 Reinstate Account
+  %p An email will be sent with instructions on how to reinstate your disabled account.
 
   = simple_form_for(@user, :url => send_reinstate_url, :html => { :method => :put }) do |f|
     %fieldset
       %ol
         = f.input :email, :as => :email
-        %li
-          %button{ :type => 'submit' } Send instructions
+      %p
+        %button{ :type => 'submit' } Send instructions
 
   = render "devise/shared/links"

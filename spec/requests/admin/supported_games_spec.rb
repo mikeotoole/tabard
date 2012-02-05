@@ -37,7 +37,7 @@ describe "ActiveAdmin SupportedGame" do
 
       visit admin_supported_games_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -76,7 +76,7 @@ describe "ActiveAdmin SupportedGame" do
 
       visit admin_supported_game_url(:id => supported_game.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -121,7 +121,7 @@ describe "ActiveAdmin SupportedGame" do
 
       visit edit_admin_supported_game_url(:id => supported_game.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -170,7 +170,7 @@ describe "ActiveAdmin SupportedGame" do
                                                                                             :server_name => supported_game.server_name } } )
       SupportedGame.find(supported_game).name.should eql original_name
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update supported_game when not logged in" do
@@ -203,7 +203,7 @@ describe "ActiveAdmin SupportedGame" do
       page.driver.delete("/admin/supported_games/#{supported_game.id}")
       SupportedGame.exists?(supported_game).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -212,7 +212,7 @@ describe "ActiveAdmin SupportedGame" do
       page.driver.delete("/admin/supported_games/#{supported_game.id}")
       SupportedGame.exists?(supported_game).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete supported_game when not logged in" do

@@ -37,7 +37,7 @@ describe "ActiveAdmin UserProfile" do
 
       visit admin_user_profiles_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -76,7 +76,7 @@ describe "ActiveAdmin UserProfile" do
 
       visit admin_user_profile_url(:id => user_profile.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do

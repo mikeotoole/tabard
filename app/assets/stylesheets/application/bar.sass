@@ -306,7 +306,8 @@
     line-height: 30px
     position: absolute
     left: 50%
-    margin: 25px 0 0 110px
+    // margin: 25px 0 0 110px TODO Doug - This is the value needed once the search form gets added
+    margin: 20px 0 0 330px
     text-align: right
     width: 150px
   
@@ -342,48 +343,49 @@
         +box_shadow(0 0 10px #000)
         color: #fff
   
-  form
-    border-left: 2px solid #554863
-    margin: 0 -480px 0 0
-    padding: 5px 0 5px 20px
-    position: absolute
-    right: 50%
-    top: 20px
-  
-    &:before
-      background-image: image-url('bar/icon-search.png')
-      content: ''
-      height: 20px
-      left: 25px
-      +opacity(.3)
-      position: absolute
-      top: 10px
-      width: 20px
-  
-    input
-      +bg_gradient(#cdcdcd,#fdfdfd)
-      border: 1px solid #46345a
-      +border_radius(3)
-      color: #999
-      height: 30px
-      line-height: 30px
-      padding: 0 10px 0 30px
-      width: 140px
-      
-      &:focus
-        color: #333
-      
-    &:hover
-    
-      &:before
-        +opacity(.6)
-      
-      input
-        color: #333
-    
-    button
-      position: absolute
-      top: -5000em
+  // TODO Doug - This commented SASS code is used for the search form once the feature is ready
+  //form
+  //  border-left: 2px solid #554863
+  //  margin: 0 -480px 0 0
+  //  padding: 5px 0 5px 20px
+  //  position: absolute
+  //  right: 50%
+  //  top: 20px
+  //
+  //  &:before
+  //    background-image: image-url('bar/icon-search.png')
+  //    content: ''
+  //    height: 20px
+  //    left: 25px
+  //    +opacity(.3)
+  //    position: absolute
+  //    top: 10px
+  //    width: 20px
+  //
+  //  input
+  //    +bg_gradient(#cdcdcd,#fdfdfd)
+  //    border: 1px solid #46345a
+  //    +border_radius(3)
+  //    color: #999
+  //    height: 30px
+  //    line-height: 30px
+  //    padding: 0 10px 0 30px
+  //    width: 140px
+  //    
+  //    &:focus
+  //      color: #333
+  //    
+  //  &:hover
+  //  
+  //    &:before
+  //      +opacity(.6)
+  //    
+  //    input
+  //      color: #333
+  //  
+  //  button
+  //    position: absolute
+  //    top: -5000em
 
 body.fluid
 

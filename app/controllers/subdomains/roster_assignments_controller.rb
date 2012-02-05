@@ -17,7 +17,8 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :mine, :create]
-  before_filter :find_avalible_characters, :except => [:index]
+  before_filter :get_supported_game, :only => [:index]
+  before_filter :find_available_characters, :only => [:mine]
   authorize_resource :except => [:index]
   skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
@@ -156,7 +157,11 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # This before filter attempts to populate @roster_assignments and @roster_assignment for the current_community and current_user.
   ###
   def load_roster_assignment
-    @roster_assignments = current_community.roster_assignments
+    if @supported_game
+      @roster_assignments = current_community.roster_assignments.where(:supported_game => @supported_game)
+    else
+      @roster_assignments = current_community.roster_assignments
+    end
     @roster_assignment = RosterAssignment.find_by_id(params[:id])
   end
 
@@ -185,10 +190,19 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   ###
   # _before_filter
   #
-  # This before filter gets the characters for the avalible characters drop down.
+  # This before filter gets the supported game by its id.
   ###
-  def find_avalible_characters
-    @avalible_characters = current_user.character_proxies - @community_profile.character_proxies
-    @avalible_characters << @roster_assignment.character_proxy if @roster_assignment and @roster_assignment.character_proxy
+  def get_supported_game
+    @supported_game = SupportedGame.find_by_id(params[:supported_game])
+  end
+
+  ###
+  # _before_filter
+  #
+  # This before filter gets the characters for the available characters drop down.
+  ###
+  def find_available_characters
+    @available_characters = current_user.character_proxies - @community_profile.character_proxies
+    @available_characters << @roster_assignment.character_proxy if @roster_assignment and @roster_assignment.character_proxy
   end
 end

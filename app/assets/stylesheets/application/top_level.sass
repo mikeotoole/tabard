@@ -15,6 +15,10 @@ body
   em,
   strong
     font-family: DinMedium, sans-serif
+    
+    &.omg
+      color: #A33C33
+      text-transform: uppercase
 
 #bar:after
   background: image-url('bar/shadow.png') top center no-repeat
@@ -663,28 +667,19 @@ body.user_profiles.dashboard
           
         .actions
           background: image-url('bar/bg.png') top center repeat-x #3d2753
+          border-top: 1px solid #fff
           +border_radius(0,0,3,3)
           color: #a89db5
           font-size: 13px
-          height: 40px
           padding: 0
           position: relative
           
-          &:before
-            border-top: 1px solid #bbb
-            content: ''
-            left: 0
-            position: absolute
-            right: 0
-            top: -2px
-          
           &:after
-            border-top: 1px solid #fff
+            clear: both
             content: ''
-            left: 0
-            position: absolute
-            right: 0
-            top: -1px
+            display: block
+            height: 0
+            visibility: hidden
           
           li
             display: inline
@@ -699,7 +694,7 @@ body.user_profiles.dashboard
               float: left
               height: 30px
               line-height: 30px
-              margin: 5px 0 0 10px
+              margin: 5px 0 5px 10px
               padding: 0
               position: relative
               text-decoration: none
@@ -772,152 +767,156 @@ body.user_profiles.dashboard
           font: 13px DinMedium
           line-height: 15px
       
-      >dl
+      >article
         float: right
         margin: -10px -10px 0
         padding: 0
         position: relative
         width: 590px
         
-        >dd
-          display: none
-          
-          >h2
-            background: #F0F5F8
-            border-bottom: 1px solid #D9E6EE
-            +border_radius(2,2,0,0)
-            clear: both
-            line-height: 1em
-            margin: 0
-            padding: 10px
-            position: relative
+        >dl
+          margin: 0
+          padding: 0
+        
+          >dd
+            display: none
             
-            a
-              background: #2D7CB4
-              +border_radius(2)
-              color: #fff
-              font: 14px DinLight, sans-serif
-              padding: 3px 9px
-              position: absolute
-              right: 7px
-              text-decoration: none
-              top: 7px
-              
-              &:hover
-                background: #A53E34
-          
-          .characters
-            margin: 0
-            padding: 0
-            
-            >li
-              border-top: 1px solid #D1E1EB
-              float: left
-              margin: -1px 0 10px
-              padding: 20px 0 20px 75px
+            >h2
+              background: #F0F5F8
+              border-bottom: 1px solid #D9E6EE
+              +border_radius(2,2,0,0)
+              clear: both
+              line-height: 1em
+              margin: 0
+              padding: 10px
               position: relative
-              width: 220px
               
-              &:before
-                display: none
-              
-              .avatar
-                background: #eee
-                height: 60px
-                left: 0
+              a
+                background: #2D7CB4
+                +border_radius(2)
+                color: #fff
+                font: 14px DinLight, sans-serif
+                padding: 3px 9px
                 position: absolute
-                top: 20px
-                width: 60px
+                right: 7px
+                text-decoration: none
+                top: 7px
+                
+                &:hover
+                  background: #A53E34
+            
+            .characters
+              margin: 0
+              padding: 0
+              
+              >li
+                border-top: 1px solid #D1E1EB
+                float: left
+                margin: -1px 0 10px
+                padding: 20px 0 20px 75px
+                position: relative
+                width: 220px
                 
                 &:before
-                  background: image-url('application/comment-shadow.png') 0 0 no-repeat
-                  content: ''
-                  height: 101px
+                  display: none
+                
+                .avatar
+                  background: #eee
+                  height: 60px
+                  left: 0
                   position: absolute
-                  right: 0
-                  top: -15px
-                  width: 18px
-              
-              h3
-                color: #56149C
-                line-height: 1em
-                margin: 0 0 10px
-                padding: 0
-                
-                a
-                  color: #56149C
-                  margin: 0 -3px
-                  
-                  &:hover
-                    color: #fff
-              
-              .attributes
-                font-size: 13px
-                line-height: 15px
-                
-                dt
-                  clear: left
-                  float: left
+                  top: 20px
                   width: 60px
+                  
+                  &:before
+                    background: image-url('application/comment-shadow.png') 0 0 no-repeat
+                    content: ''
+                    height: 101px
+                    position: absolute
+                    right: 0
+                    top: -15px
+                    width: 18px
                 
-                dd
-                  float: left
-                  font-family: DinMedium, sans-serif
-                  width: 160px
-        
-        >dt
-          background: #E4E4E4
-          +border_radius(3,3,0,0)
-          +box_shadow(0 -5px 5px rgba(#000,.1))
-          height: 35px
-          overflow: hidden
-          position: absolute
-          text-indent: -500em
-          top: -56px
-          +transition(background .2s linear)
-          width: 40px
-          z-index: 1
+                h3
+                  color: #56149C
+                  line-height: 1em
+                  margin: 0 0 10px
+                  padding: 0
+                  
+                  a
+                    color: #56149C
+                    margin: 0 -3px
+                    
+                    &:hover
+                      color: #fff
+                
+                .attributes
+                  font-size: 13px
+                  line-height: 15px
+                  
+                  dt
+                    clear: left
+                    float: left
+                    width: 60px
+                  
+                  dd
+                    float: left
+                    font-family: DinMedium, sans-serif
+                    width: 160px
           
-          &:before
-            background: image-url('application/icons.png')
-            content: ''
-            +opacity(.3)
-            height: 30px
-            width: 30px
-            left: 5px
+          >dt
+            background: #E4E4E4
+            +border_radius(3,3,0,0)
+            +box_shadow(0 -5px 5px rgba(#000,.1))
+            height: 35px
+            overflow: hidden
             position: absolute
-            top: 5px
-          
-          &.activity
-            right: 41px
+            text-indent: -500em
+            top: -56px
+            +transition(background .2s linear)
+            width: 40px
+            z-index: 1
             
             &:before
-              background-position: -1020px 0
-          
-          &.characters
-            right: 0
+              background: image-url('application/icons.png')
+              content: ''
+              +opacity(.3)
+              height: 30px
+              width: 30px
+              left: 5px
+              position: absolute
+              top: 5px
             
-            &:before
-              background-position: -570px 0
-          
-          &:hover
-            background: #fff
-            cursor: pointer
-            z-index: 3
+            &.activity
+              right: 41px
+              
+              &:before
+                background-position: -1020px 0
             
-            &:before
-              +opacity(.5)
-          
-          &.active
-            background: #fff
-            cursor: default
-            z-index: 2
+            &.characters
+              right: 0
+              
+              &:before
+                background-position: -570px 0
             
-            &:before
-              +opacity(.2)
+            &:hover
+              background: #fff
+              cursor: pointer
+              z-index: 3
+              
+              &:before
+                +opacity(.5)
             
-            + dd
-              display: block
+            &.active
+              background: #fff
+              cursor: default
+              z-index: 2
+              
+              &:before
+                +opacity(.2)
+              
+              + dd
+                display: block
 
 
 @import application/footer

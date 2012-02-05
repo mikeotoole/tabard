@@ -63,7 +63,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # DELETE /community_applications/1.json
   def destroy
     if @community_application.withdraw
-      # TODO Doug Determine this success message, if applicable. -JW BVR-405
+      add_new_flash_message 'Your application has been withdrawn.', 'notice'
     end
     respond_with @community_application
   end

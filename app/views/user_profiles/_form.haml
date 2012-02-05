@@ -7,6 +7,7 @@
       = f.input :display_name
       = f.input :title
       = f.input :description, :label => "About me"
+      = f.input :publicly_viewable, :label => "Let others see my profile?"
       %li.avatar
         = image_tag user_profile.avatar_url :small
         = f.input :avatar, :as => :file
