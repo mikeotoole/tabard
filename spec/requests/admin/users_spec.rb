@@ -38,7 +38,7 @@ describe "ActiveAdmin User" do
 
       visit admin_users_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin User" do
 
       visit admin_user_url(:id => user.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -203,7 +203,7 @@ describe "ActiveAdmin User" do
       page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -212,7 +212,7 @@ describe "ActiveAdmin User" do
       page.driver.delete("/admin/users/#{user.id}/nuke")
       User.exists?(user).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete user when not logged in" do
@@ -274,7 +274,7 @@ describe "ActiveAdmin User" do
 
       page.driver.put("/admin/users/#{user.id}/disable") 
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       User.find(user).admin_disabled_at.should be_nil
     end
     
@@ -322,7 +322,7 @@ describe "ActiveAdmin User" do
 
       page.driver.put("/admin/users/#{user.id}/reinstate")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       User.find(user).admin_disabled_at.should_not be_nil
       User.find(user).user_disabled_at.should_not be_nil
     end
@@ -374,7 +374,7 @@ describe "ActiveAdmin User" do
       page.driver.status_code.should eql 403
       User.find(user).reset_password_token.should be_nil
       User.find(user).encrypted_password.should eql password
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not reset password when not logged in" do
@@ -421,7 +421,7 @@ describe "ActiveAdmin User" do
 
       page.driver.post("/admin/users/reset_all_passwords")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
@@ -433,7 +433,7 @@ describe "ActiveAdmin User" do
 
       page.driver.post("/admin/users/reset_all_passwords")
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
       
       User.all.each do |this_user|
         this_user.reset_password_token.should be_nil
@@ -485,7 +485,7 @@ describe "ActiveAdmin User" do
         this_user.force_logout.should be_false
       end
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -496,7 +496,7 @@ describe "ActiveAdmin User" do
         this_user.force_logout.should be_false
       end
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not set force_logout when not logged in" do

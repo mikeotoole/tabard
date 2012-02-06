@@ -37,7 +37,7 @@ describe "ActiveAdmin WowCharacter" do
 
       visit admin_wow_characters_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -76,7 +76,7 @@ describe "ActiveAdmin WowCharacter" do
 
       visit admin_wow_character_url(:id => character.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -130,7 +130,7 @@ describe "ActiveAdmin WowCharacter" do
       page.driver.delete("/admin/wow_characters/#{character.id}")
       WowCharacter.exists?(character).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -139,7 +139,7 @@ describe "ActiveAdmin WowCharacter" do
       page.driver.delete("/admin/wow_characters/#{character.id}")
       WowCharacter.exists?(character).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete character when not logged in" do

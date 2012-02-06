@@ -1,4 +1,15 @@
-%h1 Community Members
+- if !!@supported_game
+  - title "Members | #{@supported_game.smart_name} Roster | #{current_community.name}"
+  #breadcrumb
+    %ol
+      %li= link_to "Members", roster_assignments_url
+      %li
+        %span= "#{@supported_game.smart_name} Roster}"
+  %h1= "#{@supported_game.smart_name} Roster"
+
+- else
+  - title "Members | #{current_community.name}"
+  %h1 All Community Members
 
 - if @member_profiles.any?
   = form_tag '' do
@@ -20,7 +31,7 @@
               = link_to member_profile.name, member_profile
             %td.characters
               - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
-              - if cp.roster_assignments.delete_if{|ra| ra.is_pending?}.size > 0
+              - if cp.roster_assignments.delete_if{|ra| ra.is_pending? or (!!@supported_game and ra.supported_game != @supported_game)}.size > 0
                 %ul
                   - cp.roster_assignments.each do |ra|
                     %li
@@ -41,10 +52,10 @@
                 - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
                 - if can? :destroy, community_profile
                   =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
-      - if can? :manage, RosterAssignment
-        %tfoot
-          %tr
-            %td{ :colspan => 5, :class => 'batch' }
+      %tfoot
+        %tr
+          %td{ :colspan => 5, :class => 'batch' }
+            - if can? :manage, RosterAssignment
               = button_tag 'Remove selected characters', :action => batch_destroy_roster_assignments_url, :method => :delete, :confirm => 'Are you sure? These characters will be no longer be a part of the community.'
 - else
   %p This community has no current members.

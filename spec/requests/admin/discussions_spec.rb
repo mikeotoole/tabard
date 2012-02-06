@@ -38,7 +38,7 @@ describe "ActiveAdmin Discussion" do
 
       visit admin_discussions_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin Discussion" do
 
       visit admin_discussion_url(:id => discussion.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -138,7 +138,7 @@ describe "ActiveAdmin Discussion" do
       page.driver.delete("/admin/discussions/#{discussion.id}")
       Discussion.exists?(discussion).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete discussion when not logged in" do
@@ -175,7 +175,7 @@ describe "ActiveAdmin Discussion" do
       page.driver.put("/admin/discussions/#{comment.id}/remove_comment")
       Comment.exists?(comment).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete comment when not logged in" do

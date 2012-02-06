@@ -37,7 +37,7 @@ describe "ActiveAdmin Community" do
 
       visit admin_communities_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -76,7 +76,7 @@ describe "ActiveAdmin Community" do
 
       visit admin_community_url(:id => community.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -130,7 +130,7 @@ describe "ActiveAdmin Community" do
       page.driver.delete("/admin/communities/#{community.id}")
       Community.exists?(community).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -139,7 +139,7 @@ describe "ActiveAdmin Community" do
       page.driver.delete("/admin/communities/#{community.id}")
       Community.exists?(community).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete community when not logged in" do

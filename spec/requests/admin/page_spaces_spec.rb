@@ -37,7 +37,7 @@ describe "ActiveAdmin PageSpace" do
 
       visit admin_page_spaces_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -76,7 +76,7 @@ describe "ActiveAdmin PageSpace" do
 
       visit admin_page_space_url(:id => page_space.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -121,7 +121,7 @@ describe "ActiveAdmin PageSpace" do
 
       visit edit_admin_page_space_url(:id => page_space.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -162,7 +162,7 @@ describe "ActiveAdmin PageSpace" do
       page.driver.put("/admin/page_spaces/#{page_space.id}", { :page_space => { :name => "test_case_name" } } )
       PageSpace.find(page_space).name.should eql original_name
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update page_space when not logged in" do
@@ -200,7 +200,7 @@ describe "ActiveAdmin PageSpace" do
       page.driver.delete("/admin/page_spaces/#{page_space.id}")
       PageSpace.exists?(page_space).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete page_space when not logged in" do

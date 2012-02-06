@@ -87,7 +87,7 @@ protected
     if params[:comment]
       @comment = Comment.new(params[:comment])
     else
-      @comment = Comment.new(:commentable_type => params[:commentable_type], :commentable_id => params[:commentable_id]) # HACK Joe talk to Doug about formatiing this better.
+      @comment = Comment.new(:commentable_type => params[:commentable_type], :commentable_id => params[:commentable_id])
     end
     @comment.user_profile = current_user.user_profile
     @comment.form_target = params[:form_target] if params[:form_target]

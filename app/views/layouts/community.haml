@@ -2,7 +2,7 @@
 %html
 
   %head
-    %title= yield_for(:title, "#{@community.name} - Crumblin")
+    %title= yield_for(:title, "#{current_community.name} - Crumblin")
     = stylesheet_link_tag "application/community"
     = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
@@ -25,40 +25,35 @@
     #content
       #header
         .title
-          %strong= @community.name
-          %cite= @community.slogan
+          %strong= current_community.name
+          %cite= current_community.slogan
         .menu
           %li
-            = link_to 'Dashboard', actual_community_url(@community)
+            = link_to 'Dashboard', actual_community_url(current_community)
           - if can? :index, PageSpace
             %li
               = link_to 'Wiki', page_spaces_url
-              - if @community.page_spaces.any?
+              - if current_community.page_spaces.any?
                 %ul
-                  - @community.page_spaces.each do |space|
+                  - current_community.page_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          - if (user_signed_in? and current_user.is_member? @community)
+          - if (user_signed_in? and current_user.is_member? current_community)
             %li
               = link_to 'Discussions', discussion_spaces_url
-              - if @community.discussion_spaces.any?
+              - if current_community.discussion_spaces.any?
                 %ul
-                  - @community.discussion_spaces.each do |space|
+                  - current_community.discussion_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          - if (user_signed_in? and current_user.is_member? @community)
-            %li
-              -#TODO Doug - Hookup link
-              = link_to 'Announcements', announcement_spaces_url
-              - if @community.announcement_spaces.any?
-                %ul
-                  -#TODO Doug - Double check this after BVR-290 is complete
-                  - @community.announcement_spaces.each do |space|
-                    %li= link_to (space.game ? space.game.name : space.name), announcement_space_url(space) if space.persisted?
-          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
-            %li
-              = link_to 'Forms', custom_forms_url
-          - if @community.is_public_roster or (user_signed_in? and current_user.is_member? @community)
+          - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? current_community)
             %li
               = link_to 'Members', roster_assignments_url
+              - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?}
+                %ul
+                  - supported_games.each do |supported_game|
+                    %li= link_to supported_game.smart_name, roster_assignments_url(:supported_game => supported_game)
+          - if user_signed_in? and current_user.is_member? current_community and current_community.custom_forms.published.any?
+            %li
+              = link_to 'Forms', custom_forms_url
           - if user_signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.any?
               %li{ :class => 'special settings' }

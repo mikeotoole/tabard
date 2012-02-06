@@ -25,7 +25,6 @@ class SupportedGame < ActiveRecord::Base
 ###
   belongs_to :community
   belongs_to :game, :polymorphic => true
-  belongs_to :game_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :roster_assignments
 
 ###
@@ -49,11 +48,6 @@ class SupportedGame < ActiveRecord::Base
                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
 
 ###
-# Callbacks
-###
-  after_create :make_game_announcement_space
-
-###
 # Public Methods
 ###
 
@@ -75,31 +69,6 @@ class SupportedGame < ActiveRecord::Base
 # Protected Methods
 ###
 protected
-
-###
-# Callback Methods
-###
-
-  ###
-  # _after_create_
-  #
-  # The method creates the game specific announcement space.
-  ###
-  def make_game_announcement_space
-    if !self.game_announcement_space
-      space = DiscussionSpace.new(:name => "#{self.game_name} | #{self.name}") # TODO Doug, What should this name be? This is very long. -MO
-      if space
-        space.community = self.community
-        space.supported_game = self
-        space.is_announcement_space = true
-        space.save
-        self.game_announcement_space = space
-        self.save
-      else
-        logger.error("Could not create game announcement space for SupportedGame #{self.to_yaml}")
-      end
-    end
-  end
 
 ###
 # Validator Methods
@@ -126,6 +95,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -135,7 +105,6 @@ end
 #  game_id                    :integer
 #  created_at                 :datetime
 #  updated_at                 :datetime
-#  game_announcement_space_id :integer
 #  name                       :string(255)
 #  game_type                  :string(255)
 #  deleted_at                 :datetime

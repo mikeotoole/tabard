@@ -38,7 +38,7 @@ describe "ActiveAdmin CustomForm" do
 
       visit admin_custom_forms_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin CustomForm" do
 
       visit admin_custom_form_url(:id => custom_form.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -146,7 +146,7 @@ describe "ActiveAdmin CustomForm" do
       page.driver.delete("/admin/custom_forms/#{custom_form.id}")
       CustomForm.exists?(custom_form).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete custom_form when not logged in" do
@@ -183,7 +183,7 @@ describe "ActiveAdmin CustomForm" do
       page.driver.put("/admin/custom_forms/#{question.id}/delete_question")
       Question.exists?(question).should be_true
       page.driver.status_code.should eql 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete question when not logged in" do

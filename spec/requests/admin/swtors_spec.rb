@@ -30,7 +30,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_swtors_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -38,7 +38,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_swtors_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
@@ -69,7 +69,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_swtor_url(:id => swtor.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin Wow" do
 
       visit admin_swtor_url(:id => swtor.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -108,7 +108,7 @@ describe "ActiveAdmin Wow" do
 
       visit new_admin_swtor_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -116,7 +116,7 @@ describe "ActiveAdmin Wow" do
 
       visit new_admin_swtor_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end 
     
     it "redirects to login page when not logged in" do
@@ -147,7 +147,7 @@ describe "ActiveAdmin Wow" do
 
       visit edit_admin_swtor_url(:id => swtor.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -155,7 +155,7 @@ describe "ActiveAdmin Wow" do
 
       visit edit_admin_swtor_url(:id => swtor.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -185,7 +185,7 @@ describe "ActiveAdmin Wow" do
         page.driver.post("/admin/swtors", { :swtor => attributes_for(:swtor, :server => "test_server") } )
       }.to change(Swtor, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -194,7 +194,7 @@ describe "ActiveAdmin Wow" do
         page.driver.post("/admin/swtors", { :swtor => attributes_for(:swtor, :server => "test_server") } )
       }.to change(Swtor, :count).by(0)
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not create Swtor when not logged in" do
@@ -226,7 +226,7 @@ describe "ActiveAdmin Wow" do
       page.driver.put("/admin/swtors/#{swtor.id}", { :swtor => { :server_name => "test_case_server" } } )
       Swtor.find(swtor).server_name.should eql orginal_server
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end    
     
     it "returns 403 when logged in as regular User" do
@@ -236,7 +236,7 @@ describe "ActiveAdmin Wow" do
       page.driver.put("/admin/swtors/#{swtor.id}", { :swtor => { :server_name => "test_case_server" } } )
       Swtor.find(swtor).server_name.should eql orginal_server
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update Wow when not logged in" do

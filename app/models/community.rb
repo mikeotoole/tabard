@@ -38,7 +38,6 @@ class Community < ActiveRecord::Base
   has_many :custom_forms, :dependent => :destroy
 
   has_many :supported_games, :dependent => :destroy
-  has_many :game_announcement_spaces, :through => :supported_games
 
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"

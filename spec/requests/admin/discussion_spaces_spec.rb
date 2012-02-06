@@ -38,7 +38,7 @@ describe "ActiveAdmin DiscussionSpace" do
 
       visit admin_discussion_spaces_url
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -77,7 +77,7 @@ describe "ActiveAdmin DiscussionSpace" do
 
       visit admin_discussion_space_url(:id => discussion_space.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -122,7 +122,7 @@ describe "ActiveAdmin DiscussionSpace" do
 
       visit edit_admin_discussion_space_url(:id => discussion_space.id)
       page.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "redirects to login page when not logged in" do
@@ -163,7 +163,7 @@ describe "ActiveAdmin DiscussionSpace" do
       page.driver.put("/admin/discussion_spaces/#{discussion_space.id}", { :discussion_space => { :name => "test_case_name" } } )
       DiscussionSpace.find(discussion_space).name.should eql original_name
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not update discussion_space when not logged in" do
@@ -201,7 +201,7 @@ describe "ActiveAdmin DiscussionSpace" do
       page.driver.delete("/admin/discussion_spaces/#{discussion_space.id}")
       DiscussionSpace.exists?(discussion_space).should be_true
       page.driver.status_code.should == 403
-      page.should have_content('forbidden')
+      page.should have_content('Forbidden')
     end
     
     it "does not delete discussion_space when not logged in" do
