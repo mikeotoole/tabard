@@ -34,8 +34,7 @@ class Answer < ActiveRecord::Base
 # Delegates
 ###
   delegate :user_profile_id, :to => :submission, :allow_nil => true
-  delegate :is_required, :to => :question, :prefix => true, :allow_nil => true
-  delegate :style, :predefined_answers, :explanation, :to => :question, :prefix => true
+  delegate :is_required, :style, :predefined_answers, :explanation, :to => :question, :prefix => true, :allow_nil => true
 
 ###
 # Callbacks

@@ -31,7 +31,7 @@ describe Submission do
   
   it { should respond_to :answers }
   it { should respond_to :community }
-  it { should respond_to :questions }
+  it { should respond_to :form_questions }
   
   describe "community" do
     it "should return custom forms community" do
@@ -67,13 +67,16 @@ describe Submission do
     end
   end
   
-  describe "all_questions" do
-    it "should return all submission questions" do
-      create(:submission_w_answers).all_questions.count.should eq(5)
+  describe "form_questions" do
+    it "should return all custom_form questions" do
+      submission = create(:submission_w_answers)
+      submission.custom_form.questions.count.should eq 5
+      submission.form_questions.count.should eq 5
     end
     
-    it "should return 0 if submission has no answers" do
-      submission.all_questions.count.should eq(0)
+    it "should return 0 if custom_form has no questions" do
+      submission.custom_form.questions.count.should eq 0
+      submission.form_questions.count.should eq 0
     end
   end
 end

@@ -16,6 +16,8 @@ class Question < ActiveRecord::Base
   VALID_STYLES_WITH_PA = %w(check_box_question select_box_question radio_buttons_question)
   # List of vaild question styles that don't have predefined_answers.
   VALID_STYLES_WITHOUT_PA = %w(short_answer_question long_answer_question)
+  # List of all valid styles
+  VALID_STYLES = VALID_STYLES_WITH_PA + VALID_STYLES_WITHOUT_PA
   # Used by validators and view to restrict body length
   MAX_BODY_LENGTH = 60
   # Used by validators and view to restrict explanation length
@@ -39,7 +41,7 @@ class Question < ActiveRecord::Base
                    :length => { :maximum => MAX_BODY_LENGTH }
   validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }
   validates :style,  :presence => true,
-                    :inclusion => { :in => VALID_STYLES_WITH_PA + VALID_STYLES_WITHOUT_PA, :message => "%{value} is not a valid question style." }
+                    :inclusion => { :in => VALID_STYLES, :message => "%{value} is not a valid question style." }
 
   accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
 

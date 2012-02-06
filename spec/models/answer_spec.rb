@@ -20,8 +20,8 @@ describe Answer do
     answer.should be_valid
   end
   
-  it "should require question" do
-    build(:answer, :question => nil).should_not be_valid
+  it "should require question_body" do
+    build(:answer, :question_body => nil).should_not be_valid
   end
 
   it "should not submission" do
@@ -36,30 +36,31 @@ describe Answer do
     build(:answer, :body => nil).should be_valid
   end
   
-  describe "destroy" do
-    it "should destroy question if its only attached to this answer" do
-      question = answer.question
-      question.update_attribute(:custom_form_id, nil)
-      question.custom_form_id.should be_nil
-      question.answers.count.should eq 1
-      answer.destroy
-      Question.exists?(question).should be_false
+  it "should change body into a CSV string if body is an Array" do
+    answer = build(:answer)
+    answer.body = %w(First Second Third)
+    answer.save!
+    answer.body.should eq "First, Second, Third"
+  end
+  
+  describe "question" do
+    it "should return the answers question on built answer" do
+      answer = build(:answer)
+      answer.question.should be_a(Question)
+      answer.question.should eq Question.find(answer.question_id)
     end
     
-    it "should not destroy question if its attached to other answers" do
-      question = answer.question
-      create(:answer, :question_id => question.id)
-      question.answers.count.should eq 2
-      answer.destroy
-      Question.exists?(question).should be_true
+    it "should return nil on existing answer" do
+      db_answer = Answer.find(answer.id)
+      db_answer.question.should be_nil
     end
-    
-    it "should not destroy question if its attached to custom form" do
-      question = create(:short_answer_question)
-      answer = create(:answer, :question_id => question.id)
-      question.answers.count.should eq 1
+  end
+  
+  describe "destroy" do    
+    it "should mark answer as deleted" do
       answer.destroy
-      Question.exists?(question).should be_true
+      Answer.exists?(answer).should be_false
+      Answer.with_deleted.exists?(answer).should be_true
     end
   end
 end
