@@ -74,20 +74,6 @@ ActiveAdmin.register Community do
     end
 
     div do
-      panel("Announcement Spaces") do
-        table_for(community.announcement_spaces) do
-          column "Name" do |announcement_space|
-            link_to announcement_space.name, [:admin, announcement_space]
-          end
-          column "Number Announcements" do |announcement_space|
-            "#{announcement_space.discussions.count}"
-          end
-          column :created_at
-        end
-      end
-    end
-
-    div do
       panel("Page Spaces") do
         table_for(community.page_spaces) do
           column "Name" do |page_space|
