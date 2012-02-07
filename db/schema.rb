@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131022151) do
+ActiveRecord::Schema.define(:version => 20120204200527) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -96,14 +96,13 @@ ActiveRecord::Schema.define(:version => 20120131022151) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
-    t.integer  "question_id"
     t.integer  "submission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string   "question_body"
   end
 
-  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
   add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
 
   create_table "character_proxies", :force => true do |t|
@@ -395,18 +394,17 @@ ActiveRecord::Schema.define(:version => 20120131022151) do
 
   create_table "predefined_answers", :force => true do |t|
     t.text     "body"
-    t.integer  "select_question_id"
+    t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
-  add_index "predefined_answers", ["select_question_id"], :name => "index_predefined_answers_on_select_question_id"
+  add_index "predefined_answers", ["question_id"], :name => "index_predefined_answers_on_select_question_id"
 
   create_table "questions", :force => true do |t|
     t.text     "body"
     t.integer  "custom_form_id"
-    t.string   "type"
     t.string   "style"
     t.datetime "created_at"
     t.datetime "updated_at"

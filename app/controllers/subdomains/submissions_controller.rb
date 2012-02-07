@@ -30,7 +30,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # GET /custom_forms/:custom_form_id/submissions/new(.:format)
   def new
     @submission.custom_form_questions.each do |question|
-      @submission.answers.new :question_id => question.id
+      @submission.answers.new :question_body => question.body, :question_id => question.id
     end
   end
 

@@ -5,7 +5,6 @@
 #  id             :integer         not null, primary key
 #  body           :text
 #  custom_form_id :integer
-#  type           :string(255)
 #  style          :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
@@ -22,82 +21,65 @@ describe Question do
   it "should create a new instance given valid attributes" do
     question.should be_valid
   end
-
-  it "should require body" do
-    build(:long_answer_question, :body => nil).should_not be_valid
-  end
-  
-  subject { @question = question }
   
   it { should respond_to :custom_form }
-  it { should respond_to :answers }
+  it { should respond_to :predefined_answers }
   
-  describe "type" do
-    it "should be set to subclass name" do
-      question.type.should eq("TextQuestion")
+  describe "body" do
+    it "should required" do
+      build(:long_answer_question, :body => nil).should_not be_valid
     end
     
-    it "should be is_required" do
-      build(:long_answer_question, :type => nil).should_not be_valid
-    end
-    
-    it "shouldn't be editable" do
-      question.update_attributes(:type => "SingleSelectQuestion").should be_false
-      Question.find(question).type.should eq("TextQuestion")
-    end
-  end
-
-  describe "type_style" do
-    it "should properly decode this value" do
-      some_question = Question.new(:body => "Herp!", :type_style => Question.all_select_options.first[1])
-      some_question.should be_valid
-    end
-    it "should not be valid if type_style not valid" do
-      some_question = Question.new(:body => "Herp!", :type_style => "lololol|derp")
-      some_question.should_not be_valid
+    it "should validate is within size limit" do
+      build(:long_answer_question, :body => "1234567890123456789012345678901234567890123456789012345678901").should_not be_valid
     end
   end
   
-  describe "new_question" do
-    it "should return a new question instance of each style with nil attributes hash" do
-      question1 = Question.new_question("TextQuestion|long_answer_question", nil)
-      question1.style.should eq("long_answer_question")
-      question1.class.to_s.should eq("TextQuestion")
-      question1 = Question.new_question("MultiSelectQuestion|check_box_question", nil)
-      question1.style.should eq("check_box_question")
-      question1.class.to_s.should eq("MultiSelectQuestion")
-      question1 = Question.new_question("SingleSelectQuestion|select_box_question", nil)
-      question1.style.should eq("select_box_question")
-      question1.class.to_s.should eq("SingleSelectQuestion")
+  describe "explanation" do
+    it "should not required" do
+      build(:long_answer_question, :explanation => nil).should be_valid
     end
     
-    it "should return a valid new question given valid attributes hash" do
-      question1 = Question.new_question("TextQuestion|long_answer_question", attributes_for(:long_answer_question))
-      question1.style.should eq("long_answer_question")
-      question1.class.to_s.should eq("TextQuestion")
-      question1.should be_valid
-      question1.save.should be_true
+    it "should validate is within size limit" do
+      build(:long_answer_question, :explanation => "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901").should_not be_valid
+    end
+  end
+  
+  describe "style" do   
+    it "should be required" do
+      build(:long_answer_question, :style => nil).should_not be_valid
     end
     
-    it "should return nil with invalid class name" do
-      Question.new_question("NotQuestion|long_answer_question").should be_nil
+    it "can be set to valid styles" do
+      Question::VALID_STYLES.count.should eq 5
+      Question::VALID_STYLES.each do |style|
+        build(:long_answer_question, :style => style).should be_valid
+      end
     end
     
-    it "should return nil with nil class_style_string" do
-      Question.new_question(nil, attributes_for(:long_answer_question)).should be_nil
+    it "can not be set to invalid styles" do
+      INVALID_STYLES = %w(no_valid_style)
+      INVALID_STYLES.each do |style|
+        build(:long_answer_question, :style => style).should_not be_valid
+      end
     end
-    
-    it "should return nil with invalid attributes hash" do
-      Question.new_question("TextQuestion|long_answer_question", "Not a hash").should be_nil
+  end
+  
+  describe "select_options" do
+    it "should return all valid types with human readable form" do
+      Question.select_options.count.should eq 5
+      Question.select_options.first.count.should eq 2
     end
-    
-    it "should return nil with invalid class_style_string type" do
-      Question.new_question(100).should be_nil
-    end
+  end
+  
+  it "should not create blank predefined answers" do
+    question = create(:select_box_question, :predefined_answers_attributes => [{:body => "has body"}, {:body => nil}, {:body => ""}])
+    question.predefined_answers.count.should eq 1
+    question.predefined_answers.first.body.should eq "has body"
   end
   
   describe "destroy" do
-    it "should mark question as deleted if it has no answers" do
+    it "should mark question as deleted" do
       question.destroy
       Question.exists?(question).should be_false
       Question.with_deleted.exists?(question).should be_true
@@ -113,14 +95,6 @@ describe Question do
         PredefinedAnswer.exists?(predefined_answer).should be_false
         PredefinedAnswer.with_deleted.exists?(predefined_answer).should be_true
       end
-    end
-    
-    it "should set custom_form_id to nil if has answers" do
-      question = create(:answer).question
-      question.answers.should_not be_empty
-      question.custom_form_id.should_not be_nil
-      question.destroy
-      Question.find(question).custom_form_id.should be_nil
     end
   end
 end

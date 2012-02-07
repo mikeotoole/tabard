@@ -2,12 +2,12 @@
 #
 # Table name: predefined_answers
 #
-#  id                 :integer         not null, primary key
-#  body               :text
-#  select_question_id :integer
-#  created_at         :datetime
-#  updated_at         :datetime
-#  deleted_at         :datetime
+#  id          :integer         not null, primary key
+#  body        :text
+#  question_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  deleted_at  :datetime
 #
 
 require 'spec_helper'

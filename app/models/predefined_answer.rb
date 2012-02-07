@@ -17,12 +17,12 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-   attr_accessible :body, :select_question_id
+   attr_accessible :body, :question_id
 
 ###
 # Associations
 ###
-   belongs_to :question, :foreign_key => :select_question_id, :inverse_of => :predefined_answers
+   belongs_to :question, :inverse_of => :predefined_answers
 
 ###
 # Validators
@@ -34,15 +34,16 @@ class PredefinedAnswer < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: predefined_answers
 #
-#  id                 :integer         not null, primary key
-#  body               :text
-#  select_question_id :integer
-#  created_at         :datetime
-#  updated_at         :datetime
-#  deleted_at         :datetime
+#  id          :integer         not null, primary key
+#  body        :text
+#  question_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  deleted_at  :datetime
 #
 

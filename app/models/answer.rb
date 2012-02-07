@@ -10,35 +10,47 @@ class Answer < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute accessor
+###
+  attr_accessor :question_id
+
+###
 # Attribute accessible
 ###
-  attr_accessible :body, :question_id, :submission_id
+  attr_accessible :body, :question_body, :submission_id, :question_id
 
 ###
 # Associations
 ###
-  belongs_to :question
   belongs_to :submission
 
 ###
 # Validators
 ###
-  validates :question, :presence => true
-  #validates :submission, :presence => true
+  validates :question_body, :presence => true
   validates :body, :presence => true, :if => Proc.new { |answer| answer.question_is_required }
 
 ###
 # Delegates
 ###
   delegate :user_profile_id, :to => :submission, :allow_nil => true
-  delegate :is_required, :to => :question, :prefix => true, :allow_nil => true
-  delegate :body, :style, :type, :predefined_answers, :explanation, :to => :question, :prefix => true
+  delegate :is_required, :style, :predefined_answers, :explanation, :to => :question, :prefix => true, :allow_nil => true
 
 ###
 # Callbacks
 ###
   before_save :try_to_replicate
-  before_destroy :dont_orphan_question
+
+###
+# Public Methods
+###
+
+###
+# Instance Methods
+###
+  def question
+    @question ||= Question.find_by_id(self.question_id)
+  end
 
 ###
 # Protected Methods
@@ -59,19 +71,8 @@ protected
       self.body = self.body.delete_if{|elem| elem.blank?}.join(', ')
     end
   end
-
-  ###
-  # _before_destroy_
-  #
-  # This makes sure that deleting this answer is not orphaning a question.
-  # If it would the question is deleted too.
-  ###
-  def dont_orphan_question
-    if self.question and not self.question.custom_form_id and self.question.answers.count < 2
-      self.question.update_attribute(:deleted_at, Time.now)
-    end
-  end
 end
+
 
 
 
@@ -81,10 +82,10 @@ end
 #
 #  id            :integer         not null, primary key
 #  body          :text
-#  question_id   :integer
 #  submission_id :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime
+#  question_body :string(255)
 #
 
