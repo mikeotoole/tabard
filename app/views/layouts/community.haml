@@ -46,16 +46,16 @@
                     %li= link_to space.name, space if space.persisted?
           - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? current_community)
             %li
-              -#TODO Doug - Hookup link
               = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
-              %ul
-                %li= link_to "#{current_community.name} Announcements", community_announcements_url(:subdomain => current_community.subdomain)
-                - current_community.supported_games.each do |sp|
-                  %li= link_to "#{sp.smart_name} Announcements", announcements_supported_game_url(sp ,:subdomain => current_community.subdomain)
-             
+              - if current_community.supported_games.size > 1
+                %ul
+                  %li= link_to 'Community Announcements', community_announcements_url
+                  - current_community.supported_games.each do |supported_game|
+                    %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
           - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
+            %li
               = link_to 'Members', roster_assignments_url
-              - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?}
+              - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
                 %ul
                   - supported_games.each do |supported_game|
                     %li= link_to supported_game.smart_name, roster_assignments_url(:supported_game => supported_game)

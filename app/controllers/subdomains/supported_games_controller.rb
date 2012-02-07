@@ -15,7 +15,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_supported_game, :except => [:new, :create, :index]
   before_filter :create_supported_game, :only => [:new, :create]
-  authorize_resource :except => [:index, :announcements]
+  authorize_resource :except => [:index]
   skip_before_filter :limit_subdomain_access
   after_filter :create_activity, :only => [:update, :create]
 
@@ -26,12 +26,6 @@ class Subdomains::SupportedGamesController < SubdomainsController
   # GET /supported_games
   def index
     @supported_games = current_community.supported_games
-  end
-
-  # Announcement
-  def announcements
-    authorize! :index, Announcement
-    @announcements = @supported_game.announcements.non_community
   end
 
   # GET /supported_games/new

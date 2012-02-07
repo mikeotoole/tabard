@@ -144,6 +144,7 @@ DaBvRails::Application.routes.draw do
         end
         collection do
           get :community
+          match 'game/:id' => 'announcements#game', :as => :game
         end
       end
 
@@ -153,11 +154,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Supported Games
-      resources :supported_games, :except => [:show] do
-        member do
-          get :announcements
-        end
-      end
+      resources :supported_games, :except => [:show]
     end
   end
 
@@ -180,6 +177,8 @@ DaBvRails::Application.routes.draw do
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
 
+  match '/not_found' => 'status_code#not_found', :as => 'not_found'
+  match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
   match '*route', :to => 'status_code#not_found', :as => 'status_code_not_found'
 
   # The priority is based upon order of creation:

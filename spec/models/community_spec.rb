@@ -14,6 +14,7 @@
 #  member_role_id                  :integer
 #  is_protected_roster             :boolean         default(FALSE)
 #  community_application_form_id   :integer
+#  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
 #  deleted_at                      :datetime
 #  background_image                :string(255)

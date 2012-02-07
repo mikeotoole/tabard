@@ -23,13 +23,11 @@ class Announcement < ActiveRecord::Base
   has_many :acknowledgements
   has_many :comments, :as => :commentable
   has_many :all_comments, :as => :original_commentable, :class_name => "Comment"
-  
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :community, :presence => true
@@ -42,13 +40,14 @@ class Announcement < ActiveRecord::Base
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
   delegate :name, :to => :poster, :prefix => true, :allow_nil => true
-
+  delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
   before_destroy :destroy_all_comments
 
   after_create :create_acknowledgements
 
   scope :non_community, where(Announcement.arel_table[:supported_game_id].not_eq(nil))
+
 ###
 # Public Methods
 ###

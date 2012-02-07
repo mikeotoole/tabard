@@ -5,9 +5,9 @@
   %ol
     %li= link_to "Announcements", announcements_url(:subdomain => current_community.subdomain)
     - if @announcement.supported_game
-      %li= link_to @announcement.context_name, announcements_supported_game_url(@announcement.supported_game)
+      %li= link_to @announcement.supported_game_smart_name, announcements_url(:supported_game => @announcement.supported_game)
     - else
-      %li= link_to @announcement.context_name, community_announcements_url
+      %li= link_to 'Community Announcements', community_announcements_url
     %li
       %span= @announcement.name
 
@@ -18,8 +18,8 @@
     = link_to 'Destroy', @announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove announcement', :class => 'delete'
 
 %article
-  %p
-    = @announcement.body
+  %h1= @announcement.name
+  %p= @announcement.body
 
 - if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments

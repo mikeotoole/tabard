@@ -24,11 +24,6 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @announcements = current_community.announcements
   end
 
-  def community
-    authorize! :index, Announcement 
-    @announcements = current_community.community_announcements
-  end
-
   # GET /announcements/:id(.:format)
   def show
     @announcement.update_viewed(current_user.user_profile)
@@ -80,6 +75,23 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
 # Added Actions
 ###
+
+  # GET /announcements/community(.:format)
+  def community
+    authorize! :index, Announcement
+    @announcements = current_community.community_announcements
+  end
+
+  # GET /announcements/game/:id(.:format)
+  def game
+    @supported_game = current_community.supported_games.find_by_id(params[:id])
+    if !!@supported_game
+      @announcements = @supported_game.announcements.non_community
+    else
+      redirect_to not_found_url
+    end
+  end
+
   # POST /announcements/:id/lock(.:format)
   def lock
     @announcement.is_locked = true
