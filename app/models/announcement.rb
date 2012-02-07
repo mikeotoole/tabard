@@ -21,6 +21,12 @@ class Announcement < ActiveRecord::Base
   belongs_to :community
   belongs_to :supported_game
   has_many :acknowledgements
+  has_many :has_been_viewed_acknowledgements, :class_name => "Acknowledgement", :conditions => {:has_been_viewed => true}
+  has_many :community_profiles_have_seen, :through => :has_been_viewed_acknowledgements, :source => "community_profile"
+  has_many :user_profiles_have_seen, :through => :community_profiles_have_seen, :source => "user_profile"
+  has_many :has_not_been_viewed_acknowledgements, :class_name => "Acknowledgement", :conditions => {:has_been_viewed => false}
+  has_many :community_profiles_have_not_seen, :through => :has_not_been_viewed_acknowledgements, :source => "community_profile"
+  has_many :user_profiles_have_not_seen, :through => :community_profiles_have_not_seen, :source => "user_profile"
   has_many :comments, :as => :commentable
   has_many :all_comments, :as => :original_commentable, :class_name => "Comment"
 
