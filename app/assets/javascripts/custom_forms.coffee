@@ -48,25 +48,6 @@ $(document).ready ->
                   .removeAttr('disabled readonly')
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
-            
-            if val != li.data('qstyle') and li.filter('[question_id]').length
-              oldIdQ = li.attr 'question_id'
-              oldIndexQ = li.attr 'question'
-              li.before '<input name="custom_form[questions_attributes]['+oldIndexQ+'][_destroy]" type="hidden" value="true"><input name="custom_form[questions_attributes]['+oldIndexQ+'][id]" type="hidden" value="'+oldIdQ+'">'
-              li.find('input[type="hidden"]').remove()
-              li.find('>a.remove').remove()
-              $('#custom_form_questions_attributes_'+oldIndexQ+'_id').remove()
-              newIndexQ = new Date().getTime()
-              html = li.html()
-              html = html.replace(/(\[questions_attributes\]\[)\d(\])/g, "$1"+newIndexQ+"$2")
-              html = html.replace(/(custom_form_questions_attributes_)\d/g, "$1"+newIndexQ)
-              html = html.replace(/question=\"\d\"/g, '')
-              li
-                .removeAttr('question_id question_type')
-                .attr('question', newIndexQ)
-                .data('qstyle', val)
-                .html(html)
-                .trigger 'init'
         
         # Add answer link
         right.find('p.add').removeClass('hidden')
@@ -74,10 +55,10 @@ $(document).ready ->
         # Remove answer link
         right.find('.answers').delegate 'li a.remove', 'click', ->
           ali = $(this).closest('li')
-          if ali.attr 'question'
-            answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
           ali.slideUp 400, ->
-            $(this).replaceWith(answer)
+            if ali.attr 'question'
+              answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
+              $(this).replaceWith(answer)
       
       li.find('.select input:checked').trigger 'change'
       
