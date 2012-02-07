@@ -12,9 +12,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  authorize_resource :except => [:community]
+  authorize_resource :except => [:community, :game]
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create]
+  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create, :lock, :unlock]
 
 ###
 # REST Actions
@@ -38,11 +38,6 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcement_spaces/:announcement_space_id/announcements/new(.:format)
   def new
-  end
-
-  # GET /announcements/:id/edit(.:format)
-  def edit
-    respond_with(@announcement)
   end
 
   # POST /announcement_spaces/:announcement_space_id/announcements(.:format)
@@ -85,6 +80,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcements/game/:id(.:format)
   def game
+    authorize! :index, Announcement
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
       @announcements = @supported_game.announcements.non_community

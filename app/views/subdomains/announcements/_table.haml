@@ -19,8 +19,6 @@
             - else
               - if can? :lock, announcement
                 = link_to 'Lock', lock_announcement_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
-            - if (can? :update, announcement)
-              = link_to 'Edit', edit_announcement_url(announcement), :meta => 'Edit announcement', :class => 'edit'
             - if (can? :destroy, announcement)
               = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
   %tfoot

@@ -17,7 +17,6 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :mine, :create]
-  before_filter :get_supported_game, :only => [:index]
   before_filter :find_available_characters, :only => [:mine]
   authorize_resource :except => [:index]
   skip_authorize_resource :only => [:pending]
@@ -41,6 +40,16 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     render :new
   end
   alias :new :mine
+  
+  # GET /roster_assignments/game/:id(.:format)
+  def game
+    @supported_game = current_community.supported_games.find_by_id(params[:id])
+    if !!@supported_game
+      @member_profiles = @supported_game.member_profiles
+    else
+      redirect_to not_found_url
+    end
+  end
 
   # POST /roster_assignments
   # POST /roster_assignments.json
@@ -185,15 +194,6 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     else
       @roster_assignment = @community_profile.roster_assignments.new
     end
-  end
-
-  ###
-  # _before_filter
-  #
-  # This before filter gets the supported game by its id.
-  ###
-  def get_supported_game
-    @supported_game = SupportedGame.find_by_id(params[:supported_game])
   end
 
   ###

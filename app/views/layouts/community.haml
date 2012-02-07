@@ -44,7 +44,7 @@
                 %ul
                   - current_community.discussion_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? current_community)
+          - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
               - if current_community.supported_games.size > 1
@@ -58,7 +58,7 @@
               - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
                 %ul
                   - supported_games.each do |supported_game|
-                    %li= link_to supported_game.smart_name, roster_assignments_url(:supported_game => supported_game)
+                    %li= link_to supported_game.smart_name, game_roster_assignments_url(supported_game)
           - if user_signed_in? and current_user.is_member? current_community and current_community.custom_forms.published.any?
             %li
               = link_to 'Forms', custom_forms_url

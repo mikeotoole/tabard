@@ -2,9 +2,17 @@
 
 #breadcrumb
   %ol
-    %li= link_to "Discussion Spaces", discussion_spaces_path
+    %li= link_to "Discussion Spaces", discussion_spaces_url
     %li
       %span= @discussion_space.name
+
+#actions.actions
+  - if (can? :update, @discussion_space)
+    = link_to 'Edit', edit_discussion_space_url(@discussion_space), :meta => 'Edit discussion space', :class => 'edit'
+  - if (can? :destroy, @discussion_space)
+    = link_to 'Destroy', @discussion_space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion space', :class => 'delete'
+
+%h1= @discussion_space.name
 
 - if @discussion_space.discussions.any?
   = render "subdomains/discussions/table", :discussion_space => @discussion_space
@@ -12,4 +20,4 @@
 -else
   %p This discussion space has no viewable discussions.
   - if (can? :create, @discussion_space.discussions.new)
-    %p= link_to 'Create a Discussion', new_discussion_space_discussion_path(@discussion_space), :class => 'button'
+    %p= link_to 'Create a Discussion', new_discussion_space_discussion_url(@discussion_space), :class => 'button'

@@ -1,0 +1,48 @@
+- if member_profiles.any?
+  = form_tag '' do
+    %input{ :name => '_method', :value => '', :type => 'hidden' }
+    %table
+      %thead
+        %tr
+          %th
+          %th Member
+          %th Characters on the Roster
+          %th Joined
+          %th.actions
+      %tbody
+        - member_profiles.each do |member_profile|
+          %tr
+            %td.cinch
+              = image_tag member_profile.avatar_url(:tiny), :class => 'avatar'
+            %td.cinch
+              = link_to member_profile.name, member_profile
+            %td.characters
+              - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
+              - if cp.roster_assignments.delete_if{|ra| ra.is_pending? or (!!supported_game and ra.supported_game != supported_game)}.size > 0
+                %ul
+                  - cp.roster_assignments.each do |ra|
+                    %li
+                      - if can? :delete, ra
+                        %input{ :id => "roster_assignments_#{ra.id}", :name => 'ids[]', :type => 'checkbox', :value => ra.id }
+                        %label{ :for => "roster_assignments_#{ra.id}" }
+                          = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+                          = ra.character_proxy_name
+                      - else
+                        = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+                        = ra.character_proxy_name
+              - else
+                —
+            %td
+              %time= l member_profile.joined_community_on(current_community), :format => :date_short
+            %td.actions
+              %div
+                - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
+                - if can? :destroy, community_profile
+                  =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
+      %tfoot
+        %tr
+          %td{ :colspan => 5, :class => 'batch' }
+            - if can? :manage, RosterAssignment
+              = button_tag 'Remove selected characters', :action => batch_destroy_roster_assignments_url, :method => :delete, :confirm => 'Are you sure? These characters will be no longer be a part of the community.'
+- else
+  %p No members.

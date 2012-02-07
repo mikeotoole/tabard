@@ -9,10 +9,16 @@
       %span= @discussion.name
 
 #actions.actions
-  - if (can? :update, @discussion)
-    = link_to 'Edit', edit_discussion_path(@discussion), :meta => 'Edit discussion', :class => 'edit'
-  - if (can? :destroy, @discussion)
-    = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
+  - if @discussion.is_locked
+    - if can? :unlock, @discussion
+      = link_to 'Unlock', unlock_discussion_url(@discussion), :method => :post, :meta => 'Unlock discussion', :class => 'unlock'
+  - else
+    - if can? :lock, @discussion
+      = link_to 'Lock', lock_discussion_url(@discussion), :method => :post, :meta => 'Lock discussion', :class => 'lock'
+    - if can? :update, @discussion
+      = link_to 'Edit', edit_discussion_path(@discussion), :meta => 'Edit discussion', :class => 'edit'
+    - if can? :destroy, @discussion
+      = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
 
 %article
   %h1= @discussion.name

@@ -96,6 +96,9 @@ DaBvRails::Application.routes.draw do
           put :approve
           put :reject
         end
+        collection do
+          match 'game/:id' => 'roster_assignments#game', :as => :game
+        end
       end
 
       # Community profiles

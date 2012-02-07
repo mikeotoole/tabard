@@ -12,14 +12,39 @@
       %span= @announcement.name
 
 #actions.actions
-  - if (can? :update, @announcement)
-    = link_to 'Edit', edit_discussion_path(@announcement), :meta => 'Edit announcement', :class => 'edit'
-  - if (can? :destroy, @announcement)
-    = link_to 'Destroy', @announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove announcement', :class => 'delete'
+  - if @announcement.is_locked
+    - if can? :unlock, @announcement
+      = link_to 'Unlock', unlock_announcement_url(@announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
+  - else
+    - if can? :lock, @announcement
+      = link_to 'Lock', lock_announcement_url(@announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
+    - if (can? :update, @announcement)
+      = link_to 'Edit', edit_discussion_path(@announcement), :meta => 'Edit announcement', :class => 'edit'
+    - if (can? :destroy, @announcement)
+      = link_to 'Destroy', @announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove announcement', :class => 'delete'
 
 %article
   %h1= @announcement.name
   %p= @announcement.body
+
+- if can? :create, Announcement
+  %table
+    %thead
+      %tr
+        %th.half Have Seen
+        %th.half Have Not Seen
+    %tbody
+      %tr
+        %td.half
+          - if @announcement.user_profiles_have_seen.any?
+            %ul
+              - @announcement.user_profiles_have_seen.each do |user_profile|
+                %li= link_to user_profile.name, user_profile
+        %td.half
+          - if @announcement.user_profiles_have_not_seen.any?
+            %ul
+              - @announcement.user_profiles_have_not_seen.each do |user_profile|
+                %li= link_to user_profile.name, user_profile
 
 - if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments
