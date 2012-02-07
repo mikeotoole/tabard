@@ -185,24 +185,21 @@ $(document).ready ->
               row.removeClass('busy')
               
         .bind 'ajax:success', (event, data, status, xhr) ->
-          if data.result == true
-            $('#bar .notice a').each ->
-              num = $(this).attr('meta') - 1
-              if num > 0
-                $(this).attr 'meta', num
-              else
-                $(this).removeAttr 'meta'
-            adjustHeaderByFlash(300,-1)
-            $(this)
-              .closest('li')
-              .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-                if data.announcement
-                  $('#flash').prepend data.announcement
-                  $('#flash li:first').trigger 'init'
-                setTimeout adjustHeaderByFlash, 50
-                $(this).remove()
-          else
-            $(this).closest('li').removeClass('busy')
+          $('#bar .notice a').each ->
+            num = $(this).attr('meta') - 1
+            if num > 0
+              $(this).attr 'meta', num
+            else
+              $(this).removeAttr 'meta'
+          adjustHeaderByFlash(300,-1)
+          $(this)
+            .closest('li')
+            .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+              if xhr.responseText
+                $('#flash').prepend xhr.responseText
+                $('#flash li:first').trigger 'init'
+              setTimeout adjustHeaderByFlash, 50
+              $(this).remove()
             
     .each ->
       $(this).trigger 'init'
