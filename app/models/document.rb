@@ -61,7 +61,7 @@ class Document < ActiveRecord::Base
   def title
     case self.type
       when 'TermsOfService'
-        'Terms of Service'
+        'Terms of Service and User Agreement'
       else
         self.type.scan(/[A-Z][a-z0-9]*/).join ' '
     end
