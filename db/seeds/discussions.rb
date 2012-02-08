@@ -104,15 +104,17 @@ unless @dont_run
   create_announcement('Just Another Headshot',
                       'Star Wars is bad ass!',
                       "Raids are super cool. The new vent channel is open for SWTOR.",
-                      'Billy')
+                      'Billy',
+                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
   create_announcement('Just Another Headshot',
                       'This is my favorite supported_game',
                       "LOLOLOLOLOLOLOLOLOL",
                       'Billy',
-                      Community.find_by_name('Just Another Headshot').supported_games.first)
+                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Wow"))
   create_announcement('Jedi Kittens',
                       'Star Wars is mew mew mew!',
                       "Raids are super mew. The new vent channel is open for SWTOR.",
-                      'Tiger')
+                      'Tiger',
+                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
 
 end

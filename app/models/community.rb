@@ -330,6 +330,7 @@ protected
 
     # Officer role
     officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create(subject_class: "Announcement", permission_level: "Create", can_lock: true)
     officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
     officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
