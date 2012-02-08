@@ -162,7 +162,7 @@ DaBvRails::Application.routes.draw do
   end
 
   # Announcements
-  resources :announcements, :only => [:index]
+  resources :announcements, :only => [:index, :show]
   put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Site Actions
