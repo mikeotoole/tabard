@@ -14,7 +14,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   before_filter :ensure_current_user_is_member
   authorize_resource :except => [:community, :game]
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create, :lock, :unlock]
+  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create, :lock, :unlock, :destroy]
 
 ###
 # REST Actions
@@ -43,29 +43,17 @@ class Subdomains::AnnouncementsController < SubdomainsController
   # POST /announcement_spaces/:announcement_space_id/announcements(.:format)
   def create
     @announcement.user_profile = current_user.user_profile
-    @announcement.character_proxy = (character_active? ? current_character.character_proxy : nil)
 
     if @announcement.save
       add_new_flash_message('Announcement was successfully created.','success')
-      next_location = {:location => announcement_url(@announcement)}
-    else
-      next_location = {:render => :new}
-    end
-    respond_with(@announcement, next_location)
-  end
-
-  # PUT /announcements/:id(.:format)
-  def update
-    params[:discussion][:has_been_edited] = true
-    add_new_flash_message('Announcement saved.') if @announcement.update_attributes(params[:discussion])
-
-    respond_with(@announcement, :render => :edit, :location => announcement_url)
+    end 
+    respond_with(@announcement)
   end
 
   # DELETE /announcements/:id(.:format)
   def destroy
     add_new_flash_message('Announcement was successfully removed.') if @announcement.destroy
-    respond_with(@announcement, :location => announcement_space_url(@announcement_space))
+    respond_with(@announcement)
   end
 
 ###

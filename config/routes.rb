@@ -140,7 +140,7 @@ DaBvRails::Application.routes.draw do
       end
 
       # Announcements
-      resources :announcements do
+      resources :announcements, :except => [:edit, :update] do
         member do
           post :lock
           post :unlock

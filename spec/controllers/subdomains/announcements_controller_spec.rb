@@ -1,18 +1,39 @@
 require 'spec_helper'
 
 describe Subdomains::AnnouncementsController do
-  let(:member) { DefaultObjects.user }
-  let(:admin) { DefaultObjects.community_admin }
+  let(:community) { create(:community_with_supported_games) }
+  let(:admin) { community.admin_profile.user }
+  let(:member) { create(:user_profile_with_characters).user }
   let(:non_member) { create(:user_profile).user }
-  let(:community) { DefaultObjects.community }
   let(:announcement) { create(:announcement, :community => community, :user_profile => admin.user_profile) }
   let(:announcement_attr) { attributes_for(:announcement, :community => community, :user_profile => admin.user_profile) }
+  let(:invalid_announcement_attr) { attributes_for(:announcement, :community => community, :name => nil) }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
+    if not member.is_member?(community)
+      application = FactoryGirl.create(:community_application,
+          :community => community,
+          :user_profile => member.user_profile,
+          :submission => FactoryGirl.create(:submission, :custom_form => community.community_application_form, :user_profile => member.user_profile),
+          :character_proxies => member.user_profile.character_proxies
+        )
+      mapping = Hash.new
+      application.character_proxies.each do |proxy|
+        sp = community.supported_games.where(:game_type => proxy.game.class.to_s).first
+        mapping[proxy.id.to_s] = sp.id if sp
+      end
+      application.accept_application(community.admin_profile,mapping)
+    end
   end
 
   describe "GET show" do
+    it "assigns the requested announcement as @announcement when authenticated as a member" do
+      sign_in admin
+      get :show, :id => announcement
+      assigns(:announcement).should eq(announcement)
+    end
+
     it "assigns the requested announcement as @announcement when authenticated as a member" do
       sign_in member
       get :show, :id => announcement
@@ -56,31 +77,6 @@ describe Subdomains::AnnouncementsController do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested announcement as @announcement when authenticated as a admin" do
-      sign_in admin
-      get :edit, :id => announcement
-      assigns(:announcement).should eq(announcement)
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      get :edit, :id => announcement.id.to_s
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      get :edit, :id => announcement
-      response.should be_forbidden
-    end
-    
-    it "should respond forbidden when member" do
-      sign_in member
-      get :edit, :id => announcement
-      response.should be_forbidden
-    end
-  end
-
   describe "POST create when authenticated as admin" do
     before(:each) {
       sign_in admin
@@ -88,7 +84,6 @@ describe Subdomains::AnnouncementsController do
   
     describe "with valid params" do
       it "creates a new Announcement" do
-        space
         expect {
           post :create, :announcement => announcement_attr
         }.to change(Announcement, :count).by(1)
@@ -109,12 +104,12 @@ describe Subdomains::AnnouncementsController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved announcement as @announcement" do
-        post :create, :announcement => announcement_attr
+        post :create, :announcement => invalid_announcement_attr
         assigns(:announcement).should be_a_new(Announcement)
       end
 
       it "re-renders the 'new' template" do
-        post :create, :announcement => announcement_attr
+        post :create, :announcement => invalid_announcement_attr
         response.should render_template("new")
       end
     end
@@ -139,66 +134,6 @@ describe Subdomains::AnnouncementsController do
     end
   end
 
-  describe "PUT update when authenticated as admin" do
-    before(:each) {
-      sign_in admin
-    }
-  
-    describe "with valid params" do
-      it "updates the requested announcement" do
-        announcement
-        put :update, :id => announcement, :announcement => {:name => "New name"}
-        Announcement.find(announcement).name.should eql "New name"
-      end
-
-      it "assigns the requested announcement as @announcement" do
-        put :update, :id => announcement, :announcement => {:name => "New name"}
-        assigns(:announcement).should eq(announcement)
-      end
-
-      it "redirects to the discussion" do
-        put :update, :id => announcement, :announcement => {:name => "New name"}
-        response.should redirect_to(announcement_url(announcement))
-      end
-      
-      it "should set has_been_edit to true" do
-        put :update, :id => announcement, :announcement => {:name => "New name"}
-        Announcement.find(announcement).has_been_edited.should be_true
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the announcement as @announcement" do
-        put :update, :id => announcement, :announcement => {:name => nil}
-        assigns(:announcement).should eq(announcement)
-      end
-
-      it "re-renders the 'edit' template" do
-        put :update, :id => announcement, :announcement => {:name => nil}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    it "should redirect to new user session path when not authenticated as a user" do
-      put :update, :id => announcement, :announcement => {:name => "New name"}
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in non_member
-      put :update, :id => announcement, :announcement => {:name => "New name"}
-      response.should be_forbidden
-    end
-    
-    it "should respond forbidden when a member but not admin" do
-      sign_in member
-      put :update, :id => announcement, :announcement => {:name => "New name"}
-      response.should be_forbidden
-    end
-  end
-
   describe "DELETE destroy" do
     it "destroys the requested discussion when authenticated as admin" do
       announcement
@@ -211,7 +146,7 @@ describe Subdomains::AnnouncementsController do
     it "redirects to the announcements list when authenticated as admin" do
       sign_in admin
       delete :destroy, :id => announcement
-      response.should redirect_to(announcement_index)
+      response.should redirect_to(announcements_url)
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
