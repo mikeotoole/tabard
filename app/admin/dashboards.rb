@@ -50,18 +50,6 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Recent Signed In Users", :priority => 2 do
-    if can?(:read, User)
-      ul do
-        User.order("current_sign_in_at desc").limit(5).collect do |user|
-          if user.current_sign_in_at
-            li link_to "#{user.display_name} - #{user.email} - #{user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
-          end
-        end
-      end
-    end
-  end
-
   section "New Communities", :priority => 2 do
     if can?(:read, Community)
       ul do
