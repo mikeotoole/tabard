@@ -34,7 +34,7 @@ describe Subdomains::PageSpacesController do
       space
       sign_in user
       get :index
-      assigns(:page_spaces).should eq([space])
+      assigns(:page_spaces).should eq([community.home_page.page_space, space])
     end
     
     it "should render the 'index' template when authenticated as a member" do

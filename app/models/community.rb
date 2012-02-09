@@ -25,7 +25,7 @@ class Community < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id
 
 ###
 # Associations
@@ -36,15 +36,12 @@ class Community < ActiveRecord::Base
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :custom_forms, :dependent => :destroy
-
   has_many :supported_games, :dependent => :destroy
-
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
-
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
   has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
   belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
@@ -53,6 +50,7 @@ class Community < ActiveRecord::Base
   has_many :page_spaces, :dependent => :destroy
   has_many :pages, :through => :page_spaces
   belongs_to :theme
+  belongs_to :home_page, :class_name => "Page"
 
   accepts_nested_attributes_for :theme
 
@@ -85,9 +83,9 @@ class Community < ActiveRecord::Base
             :unless => Proc.new{|community| community.background_color.blank? }
   validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.title_color.blank? }
-
   validate :can_not_change_name, :on => :update
   validate :within_owned_communities_limit
+  validate :home_page_owned_by_community
 
 ###
 # Uploaders
@@ -233,6 +231,15 @@ protected
     end
   end
 
+  ###
+  # _validator_
+  #
+  # This will check that the home page is owned by the community.
+  def home_page_owned_by_community
+    return unless home_page_id
+    errors.add(:home_page_id, "is invalid. This page is owned by another community.") unless pages.include?(Page.find_by_id(home_page_id))
+  end
+
 ###
 # Callback Methods
 ###
@@ -365,6 +372,10 @@ protected
       permission_level: "View",
       can_lock: false,
       can_accept: false)
+
+    community_p_space = self.page_spaces.create(name: "General")
+    community_home_page = community_p_space.pages.create(name: "Home", markup: "This is the default home page.")
+    self.update_attributes :home_page_id => community_home_page.id
   end
 
   ###
@@ -394,6 +405,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -417,5 +429,6 @@ end
 #  background_color                :string(255)
 #  theme_id                        :integer
 #  title_color                     :string(255)
+#  home_page_id                    :integer
 #
 

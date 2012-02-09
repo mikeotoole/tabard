@@ -96,6 +96,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: supported_games
@@ -105,6 +106,7 @@ end
 #  game_id                    :integer
 #  created_at                 :datetime
 #  updated_at                 :datetime
+#  game_announcement_space_id :integer
 #  name                       :string(255)
 #  game_type                  :string(255)
 #  deleted_at                 :datetime
