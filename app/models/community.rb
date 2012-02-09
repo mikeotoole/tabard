@@ -102,7 +102,7 @@ class Community < ActiveRecord::Base
 # Class Methods
 ###
   # This is a class method to destory a community. This should be called using delay job and should be the only way communities are destroyed.
-  def self.destory_community(id) # TODO Mike, Test.
+  def self.destory_community(id)
     community = Community.find(id)
     community.community_profiles.destroy_all # First remove all community profiles so no user has permissions.
     community.destroy
@@ -143,7 +143,7 @@ class Community < ActiveRecord::Base
         self.admin_profile == user_profile)
     community_profile = self.community_profiles.find_by_user_profile_id(user_profile.id)
     if not community_profile
-      community_profile = user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+      community_profile = user_profile.community_profiles.create!(:community => self, :roles => [self.member_role])
     end
     return community_profile
   end

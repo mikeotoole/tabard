@@ -52,7 +52,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Class Methods
 ###
-  def self.destory_discussion_space(id) # TODO Mike, Test.
+  def self.destory_discussion_space(id)
     discussion_space = DiscussionSpace.with_deleted.find(id)
     discussion_space.discussions.destroy_all
   end
@@ -92,7 +92,7 @@ class DiscussionSpace < ActiveRecord::Base
   end
 
   # This is a class method to destory a DiscussionSpace using delay job.
-  def delay_destory # TODO Mike, Test.
+  def delay_destory
     self.update_attribute(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
     DiscussionSpace.delay.destory_discussion_space(self.id)
   end

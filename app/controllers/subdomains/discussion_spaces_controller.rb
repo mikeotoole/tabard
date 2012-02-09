@@ -60,7 +60,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   end
 
   # DELETE /discussion_spaces/1
-  def destroy # TODO Mike, Test.
+  def destroy
     add_new_flash_message('Discussion space was successfully removed.') if @discussion_space.delay_destory
     respond_with(@discussion_space)
   end

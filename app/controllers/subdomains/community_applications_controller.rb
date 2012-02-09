@@ -112,6 +112,5 @@ protected
     @community_application.submission ||= Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
     @community_application.submission.custom_form = current_community.community_application_form
     @community_application.submission.user_profile = current_user.user_profile
-    #@community_application.prep(current_user.user_profile, current_community.community_application_form)
   end
 end
