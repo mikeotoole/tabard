@@ -372,7 +372,7 @@ describe UserProfile do
       announcement = DefaultObjects.community.community_announcement_space.discussions.new(:name => "asdf;ajs;lfjasljf", 
         :body => "Herp Derp!")
       announcement.user_profile = DefaultObjects.community.admin_profile
-      announcement.save
+      announcement.save!
       @profile_with_announcements = UserProfile.find(@profile_with_announcements)
       @profile_with_announcements.unread_announcements.size.should_not eq(unread_size)
     end

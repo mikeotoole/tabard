@@ -254,7 +254,7 @@ protected
   def setup_member_role
     mr = self.build_member_role(:name => "Member", :is_system_generated => true)
     mr.community = self
-    mr.save
+    mr.save!
     self.update_attribute(:member_role, mr)
   end
 
@@ -272,37 +272,37 @@ protected
     ca.community = self
 
     # First Question
-    question = Question.create(
+    question = Question.create!(
       :style => "select_box_question",
       :body => "How often do you play?",
       :is_required => true)
     question.custom_form = ca
-    question.save
-    PredefinedAnswer.create(:body => "1-3 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "3-6 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "6-10 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "10-20 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "20+ hours", :question_id => question.id)
+    question.save!
+    PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "3-6 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "6-10 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "10-20 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "20+ hours", :question_id => question.id)
 
     # Second Question
-    question = Question.create(
+    question = Question.create!(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
       :is_required => true)
     question.custom_form = ca
-    question.save
+    question.save!
 
     # Third Question
-    question = Question.create(
+    question = Question.create!(
       :style => "short_answer_question",
       :body => "How did you hear about us?",
       :explanation => "This is a short answer question",
       :is_required => false)
     question.custom_form = ca
-    question.save
+    question.save!
 
-    ca.save
+    ca.save!
   end
 
   ###
@@ -327,7 +327,7 @@ protected
         space.is_announcement_space = true
         space.save!
         self.community_announcement_space = space
-        self.save
+        self.save!
       else
         logger.error("Could not create community announcement space for community #{self.to_yaml}")
       end
@@ -340,18 +340,18 @@ protected
   # The method creates a default community discussion space
   ###
   def setup_default_community_items
-    community_d_space = self.discussion_spaces.create(name: "Community")
+    community_d_space = self.discussion_spaces.create!(name: "Community")
 
     # Member role
-    self.member_role.permissions.create(subject_class: "Comment", can_create: true)
-    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
-    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+    self.member_role.permissions.create!(subject_class: "Comment", can_create: true)
+    self.member_role.permissions.create!(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
+    self.member_role.permissions.create!(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
     self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
-    officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
-    officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
-    officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
+    officer_role = self.roles.create!(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create!(subject_class: "Comment", can_create: true, can_lock: true)
+    officer_role.permissions.create!(subject_class: "CommunityApplication", can_read: true)
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
       can_lock: false,
       can_accept: false,

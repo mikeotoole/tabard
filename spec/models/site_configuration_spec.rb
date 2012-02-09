@@ -25,7 +25,7 @@ describe SiteConfiguration do
 
   describe "destroy" do
     it "should delete SiteConfiguration" do
-      configuration = SiteConfiguration.create
+      configuration = SiteConfiguration.create!
       SiteConfiguration.all.size.should eq 1
       configuration.destroy
       SiteConfiguration.exists?(configuration).should be_false

@@ -343,7 +343,7 @@ describe Subdomains::DiscussionsController do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
       discussion.is_locked = true
-      discussion.save
+      discussion.save!
     }
   
     it "should unlock the discussion when authenticated as community admin" do

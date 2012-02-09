@@ -276,7 +276,7 @@ describe Subdomains::AnnouncementsController do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
       announcement.is_locked = true
-      announcement.save
+      announcement.save!
     }
   
     it "should unlock the announcement when authenticated as community admin" do

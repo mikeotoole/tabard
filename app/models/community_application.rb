@@ -91,9 +91,9 @@ class CommunityApplication < ActiveRecord::Base
     self.character_proxies.each do |proxy|
       next unless proxy_map[proxy.id.to_s]
       if self.community.is_protected_roster
-        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
+        RosterAssignment.create!(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
       else
-        RosterAssignment.create(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
+        RosterAssignment.create!(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
       end
     end
   end
@@ -150,7 +150,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.submission = Submission.create(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
+    self.submission = Submission.create!(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
   end
 
 ###

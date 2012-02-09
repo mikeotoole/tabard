@@ -278,7 +278,7 @@ describe Subdomains::CommentsController do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
       comment.is_locked = true
-      comment.save
+      comment.save!
     }
   
     it "should unlock the comment when authenticated as community admin" do

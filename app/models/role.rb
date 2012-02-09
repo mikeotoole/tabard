@@ -138,7 +138,7 @@ class Role < ActiveRecord::Base
     return unless (template and some_thing.persisted?)
     return if template.defined_empty_permission?
     if template.permission_level.blank?
-      self.permissions.create(subject_class: template.object_class,
+      self.permissions.create!(subject_class: template.object_class,
         id_of_subject: some_thing.id,
         can_read: template.can_read,
         can_update: template.can_update,
@@ -147,7 +147,7 @@ class Role < ActiveRecord::Base
         can_lock: template.can_lock,
         can_accept: template.can_accept)
     else
-      self.permissions.create(subject_class: template.object_class,
+      self.permissions.create!(subject_class: template.object_class,
         id_of_subject: some_thing.id,
         permission_level: template.permission_level,
         can_lock: template.can_lock,
@@ -155,7 +155,7 @@ class Role < ActiveRecord::Base
     end
     if template.is_nested?
       if template.nested_permission_level.blank?
-        self.permissions.create(subject_class: template.nested_object_class,
+        self.permissions.create!(subject_class: template.nested_object_class,
           parent_association_for_subject: template.parent_association_for_subject,
           id_of_parent: some_thing.id,
           can_read: template.can_read_nested,
@@ -165,7 +165,7 @@ class Role < ActiveRecord::Base
           can_lock: template.can_lock_nested,
           can_accept: template.can_accept_nested)
       else
-        self.permissions.create(subject_class: template.nested_object_class,
+        self.permissions.create!(subject_class: template.nested_object_class,
           parent_association_for_subject: template.parent_association_for_subject,
           id_of_parent: some_thing.id,
           permission_level: template.nested_permission_level,
@@ -178,12 +178,12 @@ class Role < ActiveRecord::Base
   # This method sets up the default permissions if they are not defined.
   def setup_permission_defaults
     return if self.permission_defaults.size > 0 or not self.persisted?
-    self.permission_defaults.create(object_class: "CustomForm",
+    self.permission_defaults.create!(object_class: "CustomForm",
           permission_level: "View")
-    self.permission_defaults.create(object_class: "DiscussionSpace",
+    self.permission_defaults.create!(object_class: "DiscussionSpace",
           permission_level: "View",
           can_create_nested: true)
-    self.permission_defaults.create(object_class: "PageSpace",
+    self.permission_defaults.create!(object_class: "PageSpace",
       permission_level: "View")
   end
 end
