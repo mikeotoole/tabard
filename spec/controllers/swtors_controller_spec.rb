@@ -4,8 +4,7 @@ describe SwtorsController do
 
   describe "GET 'index'" do
     it "assigns all communities as @communities that have a swtor game" do
-      DefaultObjects.community
-      community = DefaultObjects.community_two
+      community = DefaultObjects.community
       get :index
       assigns(:communities).should eq([community])
     end

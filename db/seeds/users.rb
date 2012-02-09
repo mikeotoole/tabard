@@ -19,9 +19,9 @@ unless @dont_run
   # Create Admin Users
   ###
   puts "Creating test active admin users"
-#   superadmin = AdminUser.create!(:email => 'superadmin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "superadmin")
-#   moderator = AdminUser.create!(:email => 'moderator@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
-#   admin = AdminUser.create!(:email => 'admin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
+  superadmin = AdminUser.create!(:email => 'superadmin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "superadmin")
+  moderator = AdminUser.create!(:email => 'moderator@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "moderator")
+  admin = AdminUser.create!(:email => 'admin@digitalaugment.com', :password => 'Password', :password_confirmation => 'Password', :role => "admin")
 
   ###
   # Create Regular Users
