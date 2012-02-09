@@ -78,22 +78,25 @@ class CommunityApplication < ActiveRecord::Base
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
+  def accept_application(accepted_by_user_profile, proxy_map = Hash.new) # TODO Joe, this method should be transactional. -MO
     return false if self.accepted?
     self.update_attribute(:status, "Accepted")
     self.update_attribute(:status_changer, accepted_by_user_profile)
     community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-    message = Message.new(:subject => "Application Accepted",
-                          :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
-                          :to => [self.user_profile_id])
-    message.is_system_sent = true
-    message.save
-    self.character_proxies.each do |proxy|
-      next unless proxy_map[proxy.id.to_s]
-      if self.community.is_protected_roster
-        RosterAssignment.create!(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
-      else
-        RosterAssignment.create!(:community_profile => community_profile, :supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
+
+    message = Message.create_system(:subject => "Application Accepted",
+                :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
+                :to => [self.user_profile_id])
+
+    unless community_profile.nil?
+      self.character_proxies.each do |proxy|
+        next unless proxy_map[proxy.id.to_s]
+        if self.community.is_protected_roster 
+          # TODO Joe, right now I'm forcing errors on the roster assignment creation. Talk to me about what this should do. -MO
+          community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
+        else
+          community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
+        end
       end
     end
   end
@@ -102,15 +105,13 @@ class CommunityApplication < ActiveRecord::Base
   # This method rejects this application.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def reject_application(rejected_by_user_profile)
+  def reject_application(rejected_by_user_profile) # TODO Joe, this method should be transactional. -MO
     return false unless self.is_pending?
     self.update_attribute(:status, "Rejected")
     self.update_attribute(:status_changer, rejected_by_user_profile)
-    message = Message.new(:subject => "Application Rejected",
+    message = Message.create_system(:subject => "Application Rejected",
                           :body => "Your application to #{self.community.name} has been rejected.",
                           :to => [self.user_profile_id])
-    message.is_system_sent = true
-    message.save
   end
 
   ###
@@ -199,11 +200,9 @@ protected
   def message_community_admin
     if self.community.email_notice_on_application
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
-      message = Message.new(:subject => "Application Submitted to #{self.community.name}",
+      message = Message.create_system(:subject => "Application Submitted to #{self.community.name}",
                             :body => "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
                             :to => [self.community.admin_profile_id])
-      message.is_system_sent = true
-      message.save
     end
   end
 end

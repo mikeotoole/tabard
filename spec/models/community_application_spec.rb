@@ -105,7 +105,7 @@ describe CommunityApplication do
     it "should automaticaly add and approve the characters used for the application" do
       proxy_map = Hash.new
       community_application.character_proxies.each do |proxy|
-        proxy_map[proxy.id.to_s] = community_application.community.supported_games.where(:game_type => "Wow").first.id
+        proxy_map[proxy.id.to_s] = community_application.community.supported_games.where(:game_type => proxy.game.class.name).first.id
       end
       community_application.accept_application(community.admin_profile, proxy_map).should be_true
       community_profile = user_profile.community_profiles.where(:community == community).first

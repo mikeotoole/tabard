@@ -69,14 +69,14 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   end
 
   # This accepts the specified application.
-  def accept
+  def accept # TODO Joe, This needs to handle errors in the accept_application process. -MO
     params[:proxy_hash] ||= Hash.new
     @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
     redirect_to community_application_url(@community_application)
   end
 
   # This rejects the specified application.
-  def reject
+  def reject  # TODO Joe, This needs to handle errors in the reject_application process. -MO
     @community_application.reject_application(current_user.user_profile)
     redirect_to community_application_url(@community_application)
   end

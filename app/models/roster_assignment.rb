@@ -22,7 +22,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
   validates :community_profile, :presence => true
   validates :character_proxy, :presence => true
-  validates :character_proxy_id, :uniqueness => { :scope => "community_profile_id", :message => "is already rostered to the community."}
+  validates :character_proxy_id, :uniqueness => { :scope => ["community_profile_id", "deleted_at"], :message => "is already rostered to the community."}
   validates :supported_game, :presence => true
   validate :community_valid_for_supported_game
   validate :character_valid_for_supported_game
@@ -58,9 +58,7 @@ class RosterAssignment < ActiveRecord::Base
   def approve
     return false unless self.is_pending
     self.update_attribute(:is_pending, false)
-    message = Message.new(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id])
-    message.is_system_sent = true
-    message.save
+    message = Message.create_system(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id])
   end
 
   # This method rejects this roster assignment, if it is pending.
@@ -68,9 +66,7 @@ class RosterAssignment < ActiveRecord::Base
   def reject
     return false unless self.is_pending
     self.destroy
-    message = Message.new(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id])
-    message.is_system_sent = true
-    message.save
+    message = Message.create_system(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id])
   end
 
 ###
@@ -88,7 +84,7 @@ class RosterAssignment < ActiveRecord::Base
 
   # This method validates that the character is compatable with the supported game
   def character_valid_for_supported_game
-    errors.add(:base, "Character is not compatable with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class != self.supported_game.game.class
+    errors.add(:base, "Character is not compatible with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class != self.supported_game.game.class
   end
 
 ###

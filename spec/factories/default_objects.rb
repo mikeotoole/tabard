@@ -72,7 +72,10 @@ class DefaultObjects
   def self.community
     @community ||= FactoryGirl.create(:community, :name => "LOLOLOLOLOLOL")
     unless @community.games.include?(DefaultObjects.wow)
-      @community.supported_games.create!(:name => "Test Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
+      @community.supported_games.create!(:name => "Test WoW Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
+    end
+    unless @community.games.include?(DefaultObjects.swtor)
+      @community.supported_games.create!(:name => "Test SWTOR Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
     end
     unless @community.community_announcement_space.discussions.size > 0
       announcement1 = @community.community_announcement_space.discussions.new(:name => "Announcement 1", 
