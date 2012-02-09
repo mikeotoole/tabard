@@ -1,1 +1,7 @@
-Default home page.
+- unless !!@page
+  %h1 Home Page
+
+- else
+  %h1= @page.name
+  %section
+    = @page.body

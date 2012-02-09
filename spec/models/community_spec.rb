@@ -14,12 +14,14 @@
 #  member_role_id                  :integer
 #  is_protected_roster             :boolean         default(FALSE)
 #  community_application_form_id   :integer
+#  community_announcement_space_id :integer
 #  is_public_roster                :boolean         default(TRUE)
 #  deleted_at                      :datetime
 #  background_image                :string(255)
 #  background_color                :string(255)
 #  theme_id                        :integer
 #  title_color                     :string(255)
+#  home_page_id                    :integer
 #
 
 require 'spec_helper'
@@ -460,6 +462,28 @@ describe Community do
         PageSpace.exists?(page_space).should be_false
         PageSpace.with_deleted.exists?(page_space).should be_false
       end
+    end
+  end
+
+  describe "home_page" do
+    it "should allow blank" do
+      community.home_page_id = ''
+      community.should be_valid
+    end
+
+    it "should allow a page that belongs to the community" do
+      page_space = create(:page_space, :community_id => community.id)
+      page = create(:page, :page_space_id => page_space.id)
+      community.home_page_id = page.id
+      community.should be_valid
+    end
+
+    it "should not allow a page that belongs to another community" do
+      other_community = create(:community)
+      page_space = create(:page_space, :community_id => other_community.id)
+      page = create(:page, :page_space_id => page_space.id)
+      community.home_page_id = page.id
+      community.should_not be_valid
     end
   end
   
