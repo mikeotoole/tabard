@@ -42,7 +42,7 @@ end
 def generate_application(community, user_last_name)
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "#{user_profile.name} submitting application to #{community.name} Guild"
-  app = community.community_applications.new(:character_proxies => user_profile.character_proxies)
+  app = community.community_applications.new
   app.prep(user_profile, community.community_application_form)
   if user_profile.character_proxies.size > 0
     app.character_proxies << user_profile.character_proxies.first
