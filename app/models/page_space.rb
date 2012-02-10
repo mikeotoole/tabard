@@ -17,7 +17,7 @@ class PageSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :supported_game_id
+  attr_accessible :name, :supported_game_id, :supported_game
 
 ###
 # Associations
