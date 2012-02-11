@@ -19,5 +19,47 @@
 require 'spec_helper'
 
 describe Announcement do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:announcement) { create(:announcement) }
+
+  it "should create a new instance given valid attributes" do
+    announcement.should be_valid
+  end
+
+  describe "name" do
+    it "should required" do
+      build(:announcement, :name => nil).should_not be_valid
+    end
+  end
+
+  describe "body" do
+    it "should required" do
+      build(:announcement, :body => nil).should_not be_valid
+    end
+  end
+
+  describe "user_profile" do
+    it "should required" do
+      build(:announcement, :user_profile => nil).should_not be_valid
+    end
+  end  
+
+  describe "community" do
+    it "should required" do
+      build(:announcement, :community => nil).should_not be_valid
+    end
+  end
+
+  describe "character_is_valid_for_user_profile" do
+    it "should be optional" do
+      build(:announcement, :character_proxy_id => nil).should be_valid
+    end
+  end
+
+  describe "after create" do
+    describe "acknowledgements" do
+      it "should create these" do
+        announcement.acknowledgements.size.should eq(1)
+      end
+    end
+  end
 end
