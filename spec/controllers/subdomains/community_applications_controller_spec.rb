@@ -99,28 +99,28 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "GET 'edit'" do
     it "should throw routing error when a generic user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in generic_user
         get 'edit', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when an owner" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in applicant_user
         get 'edit', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in community_admin_user
         get 'edit', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get 'edit', :id => community_application
         assert_response :missing
       end
@@ -168,28 +168,28 @@ describe Subdomains::CommunityApplicationsController do
 
   describe "PUT 'update'" do
     it "should throw routing error when a generic user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in generic_user
         put 'update', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when an owner" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in applicant_user
         put 'update', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in community_admin_user
         put 'update', :id => community_application
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         put 'update', :id => community_application
         assert_response :missing
       end

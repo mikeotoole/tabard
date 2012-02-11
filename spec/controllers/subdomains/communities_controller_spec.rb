@@ -23,7 +23,7 @@ describe Subdomains::CommunitiesController do
 
   describe "GET 'show'" do
     it "should throw routing error" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get 'show', :id => community
         assert_response :missing
       end
@@ -32,7 +32,7 @@ describe Subdomains::CommunitiesController do
 
   describe "GET 'new'" do
     it "should throw routing error" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get 'new'
         assert_response :missing
       end
@@ -66,7 +66,7 @@ describe Subdomains::CommunitiesController do
 
   describe "POST 'create'" do
     it "should throw routing error" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         post 'create', :community => community_att
         assert_response :missing
       end
@@ -124,7 +124,7 @@ describe Subdomains::CommunitiesController do
     #TODO Joe, Add 404 redirect for all routing errors.
     it "should throw routing error when authenticated as a user" do
       sign_in user
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         delete 'destroy', :id => community
         assert_response :missing
       end
@@ -134,7 +134,7 @@ describe Subdomains::CommunitiesController do
     end
 #
     it "should throw routing error when not authenticated as a user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         delete 'destroy', :id => community
         assert_response :missing
       end

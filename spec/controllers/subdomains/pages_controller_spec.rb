@@ -40,20 +40,17 @@ describe Subdomains::PagesController do
       assert_raises(ActionController::RoutingError) do
         sign_in owner
         get :index, :page_space_id => space.id
-        assert_response :missing
       end
     end
     it "should throw routing error when admin" do
       assert_raises(ActionController::RoutingError) do
         sign_in admin
         get :index, :page_space_id => space.id
-        assert_response :missing
       end
     end
     it "should throw routing error when anon" do
       assert_raises(ActionController::RoutingError) do
         get :index, :page_space_id => space.id
-        assert_response :missing
       end
     end   
   end

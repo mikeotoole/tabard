@@ -1,7 +1,7 @@
 require 'spec_helper'
 include ViewMacros
 
-describe "user_profiles/show.haml" do
+describe "user_profiles/show" do
   before(:each) do
     @activities_count_initial = 20
     @activities_count_increment = 10

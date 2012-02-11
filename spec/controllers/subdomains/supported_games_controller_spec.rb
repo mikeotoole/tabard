@@ -52,7 +52,7 @@ describe Subdomains::SupportedGamesController do
 
   describe "GET show" do
     it "should redirect to status code not found path when authenticated as a member" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in member
         supported_game
         get :show, :id => supported_game.id
@@ -60,13 +60,13 @@ describe Subdomains::SupportedGamesController do
     end
     
     it "should redirect to status code not found path when not authenticated as a user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get :show, :id => supported_game
       end
     end
     
     it "should redirect to status code not found path when not a member" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in non_member
         get :show, :id => supported_game
       end

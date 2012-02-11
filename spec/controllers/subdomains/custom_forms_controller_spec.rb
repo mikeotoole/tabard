@@ -28,21 +28,21 @@ describe Subdomains::CustomFormsController do
 
   describe "GET show" do
     it "should throw routing error when user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in user
         get :show, :id => custom_form.id.to_s
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in admin
         get :show, :id => custom_form.id.to_s
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get :show, :id => custom_form.id.to_s
         assert_response :missing
       end

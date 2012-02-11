@@ -6,7 +6,7 @@ describe SwtorCharactersController do
   
   describe "GET 'show'" do
     it "should throw routing error" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get 'show'
         assert_response :missing
       end

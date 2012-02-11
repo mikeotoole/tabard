@@ -70,21 +70,21 @@ describe Subdomains::RosterAssignmentsController do
 
   describe "GET 'show'" do
     it "should throw routing error when user" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in user
         get 'show', :id => roster_assignment
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         sign_in admin_user
         get 'show', :id => roster_assignment
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
+      assert_raises(AbstractController::ActionNotFound) do
         get 'show', :id => roster_assignment
         assert_response :missing
       end
