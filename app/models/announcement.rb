@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents an actvity.
+###
 class Announcement < ActiveRecord::Base
 	# Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
@@ -75,23 +82,12 @@ class Announcement < ActiveRecord::Base
     end
   end
 
+  #This method finds the correct name.
   def context_name
     if self.supported_game
       return self.supported_game.smart_name
     else
       return "#{self.community_name} Announcements"
-    end
-  end
-
-  def create_acknowledgements
-    if self.supported_game
-      self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
-        community_profile.announcements.create(:announcement => self)
-      end
-    else
-      self.community.community_profiles.each do |community_profile|
-        community_profile.acknowledgements.create(:announcement => self)
-      end
     end
   end
 
@@ -156,6 +152,23 @@ protected
   ###
   def destroy_all_comments
     Comment.where(:original_commentable_id => self.id, :original_commentable_type => 'Discussion').update_all(:deleted_at => Time.now)
+  end
+
+  ###
+  # _after_create_
+  #
+  # Destroys all comments
+  ###
+  def create_acknowledgements
+    if self.supported_game
+      self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
+        community_profile.announcements.create(:announcement => self)
+      end
+    else
+      self.community.community_profiles.each do |community_profile|
+        community_profile.acknowledgements.create(:announcement => self)
+      end
+    end
   end
 end
 

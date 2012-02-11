@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents an actvity.
+###
 class Acknowledgement < ActiveRecord::Base
   belongs_to :community_profile
   belongs_to :announcement

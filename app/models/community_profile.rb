@@ -61,12 +61,18 @@ class CommunityProfile < ActiveRecord::Base
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
 
+  ###
+  # This method determines if this community profile has character that matches supported game.
+  # [Args]
+  #   * +supported_game+ -> The supported game.
+  ###
   def has_character_that_matches_supported_game(supported_game)
     self.character_proxies.each do |proxy|
       return true if proxy.game.class.to_s == supported_game.game_type
     end
     return false
   end
+
 ###
 # Protected Methods
 ###
