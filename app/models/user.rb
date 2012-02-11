@@ -123,19 +123,19 @@ class User < ActiveRecord::Base
   end
 
   # This will reset all passwords for non disabled users.
-  def self.reset_all_passwords # TODO Mike, Test.
+  def self.reset_all_passwords
     User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |user|
       User.delay.reset_user_password(user.id)
     end
   end
 
   # This is a class method to reset a users password.
-  def self.reset_user_password(id) # TODO Mike, Test.
+  def self.reset_user_password(id)
     User.find(id).reset_password
   end
 
   # This is a class method to nuke a user.
-  def self.nuke_user(id) # TODO Mike, Test.
+  def self.nuke_user(id)
     User.find(id).nuke
   end
 

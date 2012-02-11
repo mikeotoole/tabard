@@ -21,6 +21,7 @@
 #  background_color                :string(255)
 #  theme_id                        :integer
 #  title_color                     :string(255)
+#  home_page_id                    :integer
 #
 
 require 'spec_helper'
@@ -171,7 +172,7 @@ describe Community do
     describe "when true" do
       it "should make roster changes pending" do
         community_profile.community.update_attribute(:is_protected_roster, true)        
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => false, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => false, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
         ra.is_pending.should be_true
       end
     end
@@ -179,7 +180,7 @@ describe Community do
     describe "when false" do
       it "should not make roster changes pending" do
         community_profile.community.update_attribute(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create(:character_proxy => new_proxy, :is_pending => true, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => true, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
         ra.community_profile.community.is_protected_roster.should be_true
         RosterAssignment.find_by_id(ra.id).is_pending.should be_true
       end
@@ -461,6 +462,28 @@ describe Community do
         PageSpace.exists?(page_space).should be_false
         PageSpace.with_deleted.exists?(page_space).should be_false
       end
+    end
+  end
+
+  describe "home_page" do
+    it "should allow blank" do
+      community.home_page_id = ''
+      community.should be_valid
+    end
+
+    it "should allow a page that belongs to the community" do
+      page_space = create(:page_space, :community_id => community.id)
+      page = create(:page, :page_space_id => page_space.id)
+      community.home_page_id = page.id
+      community.should be_valid
+    end
+
+    it "should not allow a page that belongs to another community" do
+      other_community = create(:community)
+      page_space = create(:page_space, :community_id => other_community.id)
+      page = create(:page, :page_space_id => page_space.id)
+      community.home_page_id = page.id
+      community.should_not be_valid
     end
   end
   

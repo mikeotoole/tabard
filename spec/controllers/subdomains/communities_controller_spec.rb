@@ -121,7 +121,7 @@ describe Subdomains::CommunitiesController do
   end
 
   describe "DELETE 'destroy'" do
-    #TODO Add 404 redirect for all routing errors
+    #TODO Joe, Add 404 redirect for all routing errors.
     it "should throw routing error when authenticated as a user" do
       sign_in user
       assert_raises(ActionController::RoutingError) do

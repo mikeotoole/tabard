@@ -44,6 +44,19 @@ class Message < ActiveRecord::Base
   default_scope :order => "created_at DESC"
 
 ###
+# Class Methods
+###
+  def self.create_system(message_params)
+    begin
+      message = Message.new(message_params)
+      message.is_system_sent = true
+      message.save!
+    rescue
+      logger.error("Could not send system message #{self.message}") # TODO Mike, This should print a stack trace.
+    end
+  end
+
+###
 # Instance Methods
 ###
   def original_message_id

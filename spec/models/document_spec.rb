@@ -84,7 +84,7 @@ describe Document do
   
   describe "title" do
     it "should return a title with spaces" do
-      create(:terms_of_service).title.should eql "Terms of Service"
+      create(:terms_of_service).title.should eql "Terms of Service and User Agreement"
       create(:privacy_policy).title.should eql "Privacy Policy"
     end
   end

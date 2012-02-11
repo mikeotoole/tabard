@@ -60,7 +60,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   end
 
   # DELETE /discussion_spaces/1
-  def destroy # TODO Mike, Test.
+  def destroy
     add_new_flash_message('Discussion space was successfully removed.') if @discussion_space.delay_destory
     respond_with(@discussion_space)
   end
@@ -104,10 +104,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create( :user_profile => current_user.user_profile,
-                        :community => @discussion_space.community,
-                        :target => @discussion_space,
-                        :action => @action)
+      Activity.create(:user_profile => current_user.user_profile,
+                      :community => @discussion_space.community,
+                      :target => @discussion_space,
+                      :action => @action)
     end
   end
 end

@@ -25,7 +25,7 @@ class Community < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id
 
 ###
 # Associations
@@ -38,21 +38,19 @@ class Community < ActiveRecord::Base
   has_many :custom_forms, :dependent => :destroy
   has_many :community_announcements, :class_name => "Announcement", :conditions => {:supported_game_id => nil}
   has_many :announcements
-
   has_many :supported_games, :dependent => :destroy
-
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
-
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
   has_many :page_spaces, :dependent => :destroy
   has_many :pages, :through => :page_spaces
   belongs_to :theme
+  belongs_to :home_page, :class_name => "Page"
 
   accepts_nested_attributes_for :theme
 
@@ -85,9 +83,9 @@ class Community < ActiveRecord::Base
             :unless => Proc.new{|community| community.background_color.blank? }
   validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.title_color.blank? }
-
   validate :can_not_change_name, :on => :update
   validate :within_owned_communities_limit
+  validate :home_page_owned_by_community
 
 ###
 # Uploaders
@@ -102,7 +100,7 @@ class Community < ActiveRecord::Base
 # Class Methods
 ###
   # This is a class method to destory a community. This should be called using delay job and should be the only way communities are destroyed.
-  def self.destory_community(id) # TODO Mike, Test.
+  def self.destory_community(id)
     community = Community.find(id)
     community.community_profiles.destroy_all # First remove all community profiles so no user has permissions.
     community.destroy
@@ -143,7 +141,7 @@ class Community < ActiveRecord::Base
         self.admin_profile == user_profile)
     community_profile = self.community_profiles.find_by_user_profile_id(user_profile.id)
     if not community_profile
-      community_profile = user_profile.community_profiles.create(:community => self, :roles => [self.member_role])
+      community_profile = user_profile.community_profiles.create!(:community => self, :roles => [self.member_role])
     end
     return community_profile
   end
@@ -233,6 +231,15 @@ protected
     end
   end
 
+  ###
+  # _validator_
+  #
+  # This will check that the home page is owned by the community.
+  def home_page_owned_by_community
+    return unless home_page_id
+    errors.add(:home_page_id, "is invalid. This page is owned by another community.") unless pages.include?(Page.find_by_id(home_page_id))
+  end
+
 ###
 # Callback Methods
 ###
@@ -254,7 +261,7 @@ protected
   def setup_member_role
     mr = self.build_member_role(:name => "Member", :is_system_generated => true)
     mr.community = self
-    mr.save
+    mr.save!
     self.update_attribute(:member_role, mr)
   end
 
@@ -272,37 +279,37 @@ protected
     ca.community = self
 
     # First Question
-    question = Question.create(
+    question = Question.create!(
       :style => "select_box_question",
       :body => "How often do you play?",
       :is_required => true)
     question.custom_form = ca
-    question.save
-    PredefinedAnswer.create(:body => "1-3 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "3-6 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "6-10 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "10-20 hours", :question_id => question.id)
-    PredefinedAnswer.create(:body => "20+ hours", :question_id => question.id)
+    question.save!
+    PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "3-6 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "6-10 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "10-20 hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "20+ hours", :question_id => question.id)
 
     # Second Question
-    question = Question.create(
+    question = Question.create!(
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
       :is_required => true)
     question.custom_form = ca
-    question.save
+    question.save!
 
     # Third Question
-    question = Question.create(
+    question = Question.create!(
       :style => "short_answer_question",
       :body => "How did you hear about us?",
       :explanation => "This is a short answer question",
       :is_required => false)
     question.custom_form = ca
-    question.save
+    question.save!
 
-    ca.save
+    ca.save!
   end
 
   ###
@@ -320,19 +327,19 @@ protected
   # The method creates a default community discussion space
   ###
   def setup_default_community_items
-    community_d_space = self.discussion_spaces.create(name: "Community")
+    community_d_space = self.discussion_spaces.create!(name: "Community")
 
     # Member role
-    self.member_role.permissions.create(subject_class: "Comment", can_create: true)
-    self.member_role.permissions.create(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
-    self.member_role.permissions.create(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+    self.member_role.permissions.create!(subject_class: "Comment", can_create: true)
+    self.member_role.permissions.create!(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
+    self.member_role.permissions.create!(subject_class: "Discussion", permission_level: "Create", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
     self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
-    officer_role = self.roles.create(:name => "Officer", :is_system_generated => false)
-    officer_role.permissions.create(subject_class: "Announcement", permission_level: "Create", can_lock: true)
-    officer_role.permissions.create(subject_class: "Comment", can_create: true, can_lock: true)
-    officer_role.permissions.create(subject_class: "CommunityApplication", can_read: true)
+    officer_role = self.roles.create!(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create!(subject_class: "Announcement", permission_level: "Create", can_lock: true)
+    officer_role.permissions.create!(subject_class: "Comment", can_create: true, can_lock: true)
+    officer_role.permissions.create!(subject_class: "CommunityApplication", can_read: true)
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
       can_lock: false,
       can_accept: false,
@@ -346,6 +353,10 @@ protected
       permission_level: "View",
       can_lock: false,
       can_accept: false)
+
+    community_p_space = self.page_spaces.create(name: "General")
+    community_home_page = community_p_space.pages.create(name: "Home", markup: "This is the default home page.")
+    self.update_attributes :home_page_id => community_home_page.id
   end
 
   ###
@@ -398,5 +409,6 @@ end
 #  background_color                :string(255)
 #  theme_id                        :integer
 #  title_color                     :string(255)
+#  home_page_id                    :integer
 #
 

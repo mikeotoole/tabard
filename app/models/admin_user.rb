@@ -47,14 +47,14 @@ class AdminUser < ActiveRecord::Base
 # Class Methods
 ###
   # This will reset all passwords for admin users.
-  def self.reset_all_passwords # TODO Mike, Test.
+  def self.reset_all_passwords
     AdminUser.all.each do |user|
       AdminUser.delay.reset_admin_user_password(user.id)
     end
   end
 
   # This is a class method to reset a users password.
-  def self.reset_admin_user_password(id) # TODO Mike, Test.
+  def self.reset_admin_user_password(id)
     AdminUser.find(id).reset_password
   end
 

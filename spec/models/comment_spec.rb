@@ -122,13 +122,13 @@ describe Comment do
   
   it "replies_locked? should return true when is_locked is true" do
     comment.is_locked = true
-    comment.save
+    comment.save!
     comment.replies_locked?.should be_true
   end 
 
   it "should not be allowed to be created if what you are commenting on is locked" do
     comment.is_locked = true
-    comment.save
+    comment.save!
     invalid_comment = build(:comment, :commentable_id => comment.id, :commentable_type => comment.class.to_s)
     invalid_comment.valid?.should be_false
   end

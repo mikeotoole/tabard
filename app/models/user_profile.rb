@@ -368,8 +368,8 @@ protected
   # This method creates the user's inbox folder.
   ###
   def create_mailboxes
-    self.folders.create(:name => "Inbox")
-    self.folders.create(:name => "Trash")
+    self.folders.create!(:name => "Inbox")
+    self.folders.create!(:name => "Trash")
   end
 end
 

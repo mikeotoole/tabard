@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207220623) do
+ActiveRecord::Schema.define(:version => 20120208222735) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -167,11 +167,13 @@ ActiveRecord::Schema.define(:version => 20120207220623) do
     t.string   "background_color"
     t.integer  "theme_id"
     t.string   "title_color"
+    t.integer  "home_page_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
+  add_index "communities", ["home_page_id"], :name => "index_communities_on_home_page_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
   add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 

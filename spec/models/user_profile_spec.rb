@@ -313,7 +313,7 @@ describe UserProfile do
     end
     it "should return all approved character proxies for a community" do
       expected_proxies = @community_profile.approved_character_proxies
-      not_expected_proxies = [] # TODO Add this.
+      not_expected_proxies = [] # TODO Joe, Add this.
       available_proxies = @member_profile.available_character_proxies(@community)
       expected_proxies.each do |proxy|
         available_proxies.include?(proxy).should be_true
@@ -373,7 +373,7 @@ describe UserProfile do
       announcement = DefaultObjects.community.announcements.new(:name => "Announcement 2", 
         :body => "Herp Derp!")
       announcement.user_profile = DefaultObjects.community.admin_profile
-      announcement.save
+      announcement.save!
       @profile_with_announcements = UserProfile.find(@profile_with_announcements)
       @profile_with_announcements.unread_announcements.size.should_not eq(unread_size)
     end

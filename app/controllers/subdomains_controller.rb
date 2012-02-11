@@ -34,6 +34,7 @@ class SubdomainsController < ApplicationController
       @activities = Activity.activities({ community_id: @community.id }, nil, @activities_count_initial)
       render :community_dashboard
     else
+      @page = current_community.home_page if !!current_community.home_page
       render :community_home
     end
   end

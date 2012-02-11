@@ -199,7 +199,7 @@ describe UserProfilesController do
   end
 
   describe "DELETE 'destroy'" do
-    #TODO Add 404 redirect for all routing errors
+    #TODO Joe, Add 404 redirect for all routing errors.
     it "should throw routing error when authenticated as owner" do
       sign_in owner
       assert_raises(ActionController::RoutingError) do

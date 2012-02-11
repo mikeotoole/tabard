@@ -104,7 +104,7 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create!( :user_profile => current_user.user_profile,
+      Activity.create( :user_profile => current_user.user_profile,
                         :community => @page.community,
                         :target => @page,
                         :action => @action)
