@@ -31,7 +31,6 @@ describe Subdomains::DiscussionsController do
   let(:discussion) { DefaultObjects.discussion }
   let(:space) { DefaultObjects.discussion_space }
   let(:community_space) { DefaultObjects.community.discussion_spaces.find_by_name("Community")}
-  let(:anouncment_space) { DefaultObjects.announcement_discussion_space }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
@@ -72,18 +71,6 @@ describe Subdomains::DiscussionsController do
       sign_in non_member
       get :new, :discussion_space_id => space.id
       response.should be_forbidden
-    end
-    
-    it "should respond forbidden when discussion space is announcements space and user is member" do
-      sign_in owner
-      get :new, :discussion_space_id => anouncment_space.id
-      response.should be_forbidden
-    end
-    
-    it "assigns a new discussion as @discussion when discussion space is announcements space and user is community admin" do
-      sign_in admin
-      get :new, :discussion_space_id => anouncment_space.id
-      assigns(:discussion).should be_a_new(Discussion)
     end
   end
 
@@ -175,20 +162,6 @@ describe Subdomains::DiscussionsController do
       sign_in non_member
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
       response.should be_forbidden
-    end
-    
-    it "should respond forbidden when discussion space is announcements space and user is member" do
-      sign_in owner
-      post :create, :discussion_space_id => anouncment_space.id, :discussion => attributes_for(:discussion)
-      response.should be_forbidden
-    end
-    
-    it "creates a new Discussion when discussion space is announcements space and user is community admin" do
-      sign_in admin
-      anouncment_space
-      expect {
-        post :create, :discussion_space_id => anouncment_space.id, :discussion => attributes_for(:discussion)
-      }.to change(Discussion, :count).by(1)
     end
   end
 

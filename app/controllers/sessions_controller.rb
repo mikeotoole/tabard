@@ -21,6 +21,7 @@ class SessionsController < Devise::SessionsController
     add_new_flash_message flash[:notice], 'success'
     flash.delete :notice
     session[:hide_announcements] = true
-    respond_with resource, :location => after_sign_in_path_for(resource)
+    after_sign_in_path = after_sign_in_path_for(resource)
+    respond_with resource, :location => after_sign_in_path.match(/\.js$/) ? root_url : after_sign_in_path
   end
 end

@@ -36,15 +36,15 @@ class Community < ActiveRecord::Base
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
   has_many :custom_forms, :dependent => :destroy
+  has_many :community_announcements, :class_name => "Announcement", :conditions => {:supported_game_id => nil}
+  has_many :announcements
   has_many :supported_games, :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => false}, :dependent => :destroy
-  has_many :announcement_spaces, :class_name => "DiscussionSpace", :conditions => {:is_announcement_space => true}, :dependent => :destroy
-  belongs_to :community_announcement_space, :class_name => "DiscussionSpace", :dependent => :destroy
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
   has_many :page_spaces, :dependent => :destroy
@@ -58,7 +58,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :make_community_announcement_space, :setup_default_community_items
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
@@ -324,26 +324,6 @@ protected
   ###
   # _after_create_
   #
-  # The method creates the community announcement space.
-  ###
-  def make_community_announcement_space
-    if !self.community_announcement_space
-      space = DiscussionSpace.new(:name => "Community Announcements")
-      if space
-        space.community = self
-        space.is_announcement_space = true
-        space.save!
-        self.community_announcement_space = space
-        self.save!
-      else
-        logger.error("Could not create community announcement space for community #{self.to_yaml}")
-      end
-    end
-  end
-
-  ###
-  # _after_create_
-  #
   # The method creates a default community discussion space
   ###
   def setup_default_community_items
@@ -357,6 +337,7 @@ protected
 
     # Officer role
     officer_role = self.roles.create!(:name => "Officer", :is_system_generated => false)
+    officer_role.permissions.create!(subject_class: "Announcement", permission_level: "Create", can_lock: true)
     officer_role.permissions.create!(subject_class: "Comment", can_create: true, can_lock: true)
     officer_role.permissions.create!(subject_class: "CommunityApplication", can_read: true)
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
@@ -399,7 +380,6 @@ protected
     end
   end
 end
-
 
 
 

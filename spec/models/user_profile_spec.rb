@@ -350,7 +350,8 @@ describe UserProfile do
       @profile_with_announcements.read_announcements.include?(@unread_announcement).should be_false
     end
     it "should automaticaly get updated when a user reads an announcement" do
-      @profile_with_announcements.update_viewed(@unread_announcement)
+      @unread_announcement.update_viewed(@profile_with_announcements)
+      @profile_with_announcements.reload
       @profile_with_announcements.has_seen?(@unread_announcement).should be_true
       @profile_with_announcements.read_announcements.include?(@unread_announcement).should be_true
       @profile_with_announcements.unread_announcements.include?(@unread_announcement).should be_false
@@ -369,7 +370,7 @@ describe UserProfile do
     end
     it "should automaticaly get updated when an announcement is made" do
       unread_size = @profile_with_announcements.unread_announcements.size
-      announcement = DefaultObjects.community.community_announcement_space.discussions.new(:name => "asdf;ajs;lfjasljf", 
+      announcement = DefaultObjects.community.announcements.new(:name => "Announcement 2", 
         :body => "Herp Derp!")
       announcement.user_profile = DefaultObjects.community.admin_profile
       announcement.save!

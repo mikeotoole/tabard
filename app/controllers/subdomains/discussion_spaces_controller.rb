@@ -14,7 +14,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_discussion_space, :except => [:new, :create, :index]
   before_filter :create_discussion_space, :only => [:new, :create]
-  authorize_resource :except => [:index, :index_announcement_spaces]
+  authorize_resource :except => [:index]
   skip_before_filter :limit_subdomain_access
   after_filter :create_activity, :only => [:update, :create]
 

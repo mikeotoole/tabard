@@ -12,21 +12,26 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_announcement, :except => [:new, :create]
-  before_filter :create_announcement, :only => [:new, :create]
-  authorize_resource
+  authorize_resource :except => [:community, :game]
   skip_before_filter :limit_subdomain_access
+  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create, :lock, :unlock, :destroy]
 
 ###
 # REST Actions
 ###
+  # GET /announcements/
+  def index
+    @announcements = current_community.announcements
+  end
+
   # GET /announcements/:id(.:format)
   def show
     @announcement.update_viewed(current_user.user_profile)
     respond_to do |format|
       format.js {
-        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :discussion => current_user.recent_unread_announcements.first }) : ''
-        render text: "#{params['callback']}({\"result\":#{(current_user.has_seen?(@announcement) ? 'true' : 'false')},\"announcement\":#{announcement.to_json}})", layout: false }
+        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcements.first }) : ''
+        render :text => announcement, :layout => nil
+      }
       format.html
     end
   end
@@ -35,42 +40,43 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def new
   end
 
-  # GET /announcements/:id/edit(.:format)
-  def edit
-    respond_with(@announcement)
-  end
-
   # POST /announcement_spaces/:announcement_space_id/announcements(.:format)
   def create
     @announcement.user_profile = current_user.user_profile
-    @announcement.character_proxy = (character_active? ? current_character.character_proxy : nil)
 
     if @announcement.save
       add_new_flash_message('Announcement was successfully created.','success')
-      next_location = {:location => announcement_url(@announcement)}
-    else
-      next_location = {:render => :new}
-    end
-    respond_with(@announcement, next_location)
-  end
-
-  # PUT /announcements/:id(.:format)
-  def update
-    params[:discussion][:has_been_edited] = true
-    add_new_flash_message('Announcement saved.') if @announcement.update_attributes(params[:discussion])
-
-    respond_with(@announcement, :render => :edit, :location => announcement_url)
+    end 
+    respond_with(@announcement)
   end
 
   # DELETE /announcements/:id(.:format)
   def destroy
     add_new_flash_message('Announcement was successfully removed.') if @announcement.destroy
-    respond_with(@announcement, :location => announcement_space_url(@announcement_space))
+    respond_with(@announcement)
   end
 
 ###
 # Added Actions
 ###
+
+  # GET /announcements/community(.:format)
+  def community
+    authorize! :index, Announcement
+    @announcements = current_community.community_announcements
+  end
+
+  # GET /announcements/game/:id(.:format)
+  def game
+    authorize! :index, Announcement
+    @supported_game = current_community.supported_games.find_by_id(params[:id])
+    if !!@supported_game
+      @announcements = @supported_game.announcements.non_community
+    else
+      redirect_to not_found_url
+    end
+  end
+
   # POST /announcements/:id/lock(.:format)
   def lock
     @announcement.is_locked = true
@@ -100,35 +106,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @announcement.discussion_space_game if @announcement
+    @announcement.supported_game if @announcement and @announcement.persisted?
   end
   helper_method :current_game
-
-###
-# Protected Methods
-###
-protected
-
-###
-# Callback Methods
-###
-  ###
-  # _before_filter_
-  #
-  # This before filter attempts to create @announcement from: announcements.new(params[:announcement]), for the announcement space.
-  ###
-  def create_announcement
-    @announcement_space = DiscussionSpace.find_by_id(params[:announcement_space_id])
-    @announcement = @announcement_space.discussions.new(params[:discussion])
-  end
-
-  ###
-  # _before_filter_
-  #
-  # This before filter attempts attempts to set the announcement variable.
-  ###
-  def load_announcement
-    @announcement = Discussion.find_by_id(params[:id])
-    @announcement_space = @announcement.discussion_space if @announcement
-  end
 end

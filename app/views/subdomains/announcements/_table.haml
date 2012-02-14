@@ -2,37 +2,27 @@
   %thead
     %tr
       %th Name
-      %th Author
       %th Last Reply
       %th Comments?
       %th.actions
   %tbody
-    - announcement_space.discussions.each do |announcement|
+    - announcements.each do |announcement|
       %tr
-        %td= link_to announcement.name, announcement_url(announcement)
-        %td= announcement.poster.name
-        %td
-          - if announcement.comments.size > 0
-            = announcement.comments.last.poster_name
-        %td
-          - if not announcement.is_locked
-            = announcement.number_of_comments
-          - else
-            Closed
+        %td= link_to announcement.name, announcement
+        %td= announcement.comments.last.poster_name if announcement.comments.size > 0
+        %td= announcement.is_locked ? 'Closed' : announcement.number_of_comments
         %td.actions
           %div
             - if announcement.is_locked
               - if can? :unlock, announcement
-                = link_to 'Unlock', unlock_discussion_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
+                = link_to 'Unlock', unlock_announcement_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
             - else
               - if can? :lock, announcement
-                = link_to 'Lock', lock_discussion_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
-            - if (can? :update, announcement)
-              = link_to 'Edit', edit_announcement_path(announcement), :meta => 'Edit announcement', :class => 'edit'
+                = link_to 'Lock', lock_announcement_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
             - if (can? :destroy, announcement)
-              = link_to 'Destroy', announcement_path(announcement), :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
+              = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 5 }
-        - if (can? :create, announcement_space.discussions.new)
-          = link_to 'New Announcement', new_announcement_space_announcement_path(announcement_space), :class => 'button primary'
+      %td{ :colspan => 4 }
+        - if can? :create, Announcement
+          = link_to 'New Announcement', new_announcement_url, :class => 'button primary'

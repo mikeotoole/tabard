@@ -54,6 +54,7 @@ class Subdomains::RolesController < SubdomainsController
       redirect_to roles_path
     else
       add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
+      logger.debug @role.errors.full_messages.to_yaml
       render :index
     end
   end

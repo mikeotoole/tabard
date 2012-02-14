@@ -1,4 +1,4 @@
 %li.announcement
-  = link_to (truncate discussion.body, :length => 100, :separator => ' '), announcement_url(discussion, :subdomain => discussion.subdomain), :class => 'link'
-  %span.meta= "— #{discussion.community_name}"
-  = link_to '✔', discussion_url(discussion, :subdomain => discussion.subdomain), 'data-type' => :jsonp, :remote => true, :class => 'read'
+  = link_to (truncate announcement.body, :length => 100, :separator => ' '), announcement_url(announcement, :subdomain => announcement.subdomain), :class => 'link'
+  %span.meta= "— #{announcement.community_name}"
+  = link_to '✔', announcement_path(announcement, :format => :js), 'data-type' => :text, :remote => true, :class => 'read'

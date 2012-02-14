@@ -72,10 +72,6 @@ DaBvRails::Application.routes.draw do
   get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
-  # Announcements
-  resources :announcements, :only => [:index]
-  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
-
   # Subdomains
   constraints(Subdomain) do
     get "/" => "subdomains#index", :as => 'subdomain_home'
@@ -99,6 +95,9 @@ DaBvRails::Application.routes.draw do
         member do
           put :approve
           put :reject
+        end
+        collection do
+          match 'game/:id' => 'roster_assignments#game', :as => :game
         end
       end
 
@@ -141,12 +140,14 @@ DaBvRails::Application.routes.draw do
       end
 
       # Announcements
-      resources :announcement_spaces, :only => [:index, :show] do
-        resources :announcements, :except => [:index], :shallow => true do
-          member do
-            post :lock
-            post :unlock
-          end
+      resources :announcements, :except => [:edit, :update] do
+        member do
+          post :lock
+          post :unlock
+        end
+        collection do
+          get :community
+          match 'game/:id' => 'announcements#game', :as => :game
         end
       end
 
@@ -159,6 +160,10 @@ DaBvRails::Application.routes.draw do
       resources :supported_games, :except => [:show]
     end
   end
+
+  # Announcements
+  resources :announcements, :only => [:index, :show]
+  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Site Actions
   match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", :as => :toggle_maintenance_mode
@@ -175,6 +180,8 @@ DaBvRails::Application.routes.draw do
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
 
+  match '/not_found' => 'status_code#not_found', :as => 'not_found'
+  match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
   match '*route', :to => 'status_code#not_found', :as => 'status_code_not_found'
 
   # The priority is based upon order of creation:

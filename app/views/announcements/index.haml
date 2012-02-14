@@ -11,7 +11,7 @@
             %th Community
             %th Date
         %tbody
-          - current_user.unread_announcements.each do |announcement|
+          - current_user.unread_announcements.order(:created_at).each do |announcement|
             %tr.unread
               %td.check
                 = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"

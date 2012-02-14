@@ -100,7 +100,7 @@ class Ability
   #   * +user+ -> A user to define permissions on.
   ###
   def site_member_rules(user)
-  can :dashboard, UserProfile do |user_profile|
+    can :dashboard, UserProfile do |user_profile|
       user_profile == user.user_profile
     end
     # Character Rules
@@ -136,11 +136,6 @@ class Ability
     end
     can [:update, :destroy], Discussion do |discussion|
       (discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked
-    end
-
-    # Discussion Space Rules
-    cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement_space == true
     end
 
     # Messaging Rules
@@ -197,18 +192,12 @@ class Ability
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
 
+    can :read, Announcement
+
     can :index, PageSpace
 
     can [:read], Comment do |comment|
       user.user_profile.is_member?(current_community)
-    end
-
-    can [:read], Discussion do |discussion|
-      user.user_profile.is_member?(current_community) and discussion.is_announcement
-    end
-
-    can [:read], DiscussionSpace do |space|
-      user.user_profile.is_member?(current_community) and space.is_announcement_space == true
     end
 
     can :mine, RosterAssignment
@@ -235,10 +224,11 @@ class Ability
       not comment.is_removed
     end
 
-    can :manage, DiscussionSpace
-    cannot [:update, :destroy, :create], DiscussionSpace do |space|
-      space.is_announcement_space == true
+    can :manage, Announcement do |announcement|
+      announcement.community.admin_profile_id == user.user_profile_id
     end
+
+    can :manage, DiscussionSpace
     can :manage, Discussion do |discussion|
       not discussion.is_locked
     end

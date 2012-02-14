@@ -7,7 +7,7 @@
 ###
 class AnnouncementsController < ApplicationController
   before_filter :block_unauthorized_user!
-  respond_to :html
+  respond_to :html, :js
 
 ###
 # REST Actions
@@ -16,6 +16,23 @@ class AnnouncementsController < ApplicationController
   def index
     @hide_announcements = true
     @limit_read_amount = 10
+  end
+
+  # GET /announcements/:id(.:format)
+  def show
+    @announcement = current_user.announcements.find_by_id(params[:id])
+    if @announcement != nil
+      @announcement.update_viewed(current_user.user_profile)
+      respond_to do |format|
+        format.js {
+          announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcements.first }) : ''
+          render :text => announcement, :layout => nil
+        }
+        format.html { redirect_to announcement_url(@announcement, :subdomain => @announcement.subdomain)}
+      end
+    else
+      raise CanCan::AccessDenied
+    end
   end
 
 ###

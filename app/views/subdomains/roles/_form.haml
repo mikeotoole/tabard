@@ -11,6 +11,9 @@
 
   %dl#permissions
     %dt
+      %h2 Announcements
+    %dd= render 'subdomains/roles/permissions/announcements', :f => f, :role => role
+    %dt
       %h2 Comments
     %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
     %dt

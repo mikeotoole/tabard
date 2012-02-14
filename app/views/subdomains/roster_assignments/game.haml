@@ -1,0 +1,11 @@
+- title "#{@supported_game.smart_name} Roster | #{current_community.name}"
+
+#breadcrumb
+  %ol
+    %li= link_to "Members", roster_assignments_url
+    %li
+      %span= "#{@supported_game.smart_name} Roster}"
+
+%h1= "#{@supported_game.smart_name} Roster"
+
+= render 'table', :member_profiles => @member_profiles, :supported_game => @supported_game

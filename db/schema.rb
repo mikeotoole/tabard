@@ -13,6 +13,17 @@
 
 ActiveRecord::Schema.define(:version => 20120208222735) do
 
+  create_table "acknowledgements", :force => true do |t|
+    t.integer  "community_profile_id"
+    t.integer  "announcement_id"
+    t.boolean  "has_been_viewed",      :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "acknowledgements", ["announcement_id"], :name => "index_acknowledgements_on_announcement_id"
+  add_index "acknowledgements", ["community_profile_id"], :name => "index_acknowledgements_on_community_profile_id"
+
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
     t.string   "resource_type", :null => false
@@ -63,6 +74,25 @@ ActiveRecord::Schema.define(:version => 20120208222735) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "announcements", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
+    t.integer  "character_proxy_id"
+    t.integer  "user_profile_id"
+    t.integer  "community_id"
+    t.integer  "supported_game_id"
+    t.boolean  "is_locked",          :default => false
+    t.datetime "deleted_at"
+    t.boolean  "has_been_edited",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "announcements", ["character_proxy_id"], :name => "index_announcements_on_character_proxy_id"
+  add_index "announcements", ["community_id"], :name => "index_announcements_on_community_id"
+  add_index "announcements", ["supported_game_id"], :name => "index_announcements_on_supported_game_id"
+  add_index "announcements", ["user_profile_id"], :name => "index_announcements_on_user_profile_id"
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -496,11 +526,6 @@ ActiveRecord::Schema.define(:version => 20120208222735) do
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                    :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

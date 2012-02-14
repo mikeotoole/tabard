@@ -1,0 +1,11 @@
+- title "#{@supported_game.smart_name} Announcements | #{@community.name}"
+
+#breadcrumb
+  %ol
+    %li= link_to "Announcements", announcements_url(:subdomain => current_community.subdomain)
+    %li
+      %span= "#{@supported_game.smart_name} Announcements"
+
+%h1= "#{@supported_game.smart_name} Announcements"
+
+= render 'table', :announcements => @announcements

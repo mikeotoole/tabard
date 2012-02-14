@@ -26,6 +26,7 @@ class SupportedGame < ActiveRecord::Base
   belongs_to :community
   belongs_to :game, :polymorphic => true
   has_many :roster_assignments
+  has_many :announcements
 
 ###
 # Delegates
@@ -46,6 +47,7 @@ class SupportedGame < ActiveRecord::Base
   validates :name, :presence => true,
                    :length => { :maximum => MAX_NAME_LENGTH },
                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
+  validates :game, :presence => true
 
 ###
 # Public Methods
@@ -63,6 +65,12 @@ class SupportedGame < ActiveRecord::Base
   # Gets the smart name
   def smart_name
     self.full_name
+  end
+
+  # Gets the user_profiles of 
+  def member_profiles
+    #HACK Joe, this needs to be optimized. -JW
+    self.community.community_profiles.reject{|cp| !cp.has_character_that_matches_supported_game(self)}.collect{|cp| cp.user_profile}
   end
 
 ###

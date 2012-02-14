@@ -3,7 +3,14 @@
 %h1 New Announcement
 
 .full
-  = simple_form_for [@announcement_space, @announcement], :url => {:action =>:create}, :html => {:novalidate => true} do |f|
-    = render 'fields', :f => f
+  = simple_form_for @announcement do |f|
+    %fieldset
+      %ol
+        = f.input :name, :input_html => { :maxlength => Discussion::MAX_NAME_LENGTH }
+        = f.input :body, :as => :text
+        - if available_characters.any?
+          = f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(available_characters, current_user.user_profile.display_name), :as => :radio, :wrapper_html => { :class => 'select' }
+        = f.input :supported_game_id, :label => 'Context', :collection => collection_with_blank(current_community.supported_games, 'Community', :smart_name), :as => :radio, :wrapper_html => { :class => 'select' }
+        = f.input :is_locked, :label => 'Comments Enabled', :as => :boolean, :input_html => { :checked => !@announcement.is_locked }
     %p.submit
       = f.button :submit, 'Create Announcement'
