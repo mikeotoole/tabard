@@ -162,7 +162,7 @@ protected
   def create_acknowledgements
     if self.supported_game
       self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
-        community_profile.announcements.create(:announcement => self)
+        community_profile.acknowledgements.create(:announcement => self)
       end
     else
       self.community.community_profiles.each do |community_profile|

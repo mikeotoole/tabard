@@ -73,7 +73,7 @@ describe Question do
   end
   
   it "should not create blank predefined answers" do
-    question = create(:select_box_question, :predefined_answers_attributes => [{:body => "has body"}, {:body => nil}, {:body => ""}])
+    question = create(:select_box_question, :predefined_answers_attributes => [{:body => "has body"}, {:body => ""}])
     question.predefined_answers.count.should eq 1
     question.predefined_answers.first.body.should eq "has body"
   end

@@ -48,7 +48,7 @@ ActiveAdmin.register SupportedGame do
 
   show :title => proc{"#{supported_game.community_name} - #{supported_game.name}"} do
     attributes_table *default_attribute_table_rows
-#     active_admin_comments
+    active_admin_comments
   end
 
   form do |f|

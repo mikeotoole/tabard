@@ -27,14 +27,11 @@ ActiveAdmin.register Page do
   end
 
   show :title => :name do
-#     rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
-#     rows.insert(1, :poster)
-#     attributes_table *rows
     attributes_table *default_attribute_table_rows, :community
 
     div do
       page.body
     end
-#     active_admin_comments
+    active_admin_comments
   end
 end

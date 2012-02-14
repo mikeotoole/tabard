@@ -40,7 +40,7 @@ ActiveAdmin.register Document do
   show :title => :type do
     attributes_table *default_attribute_table_rows, :is_current?, :acceptance_count
     link_to "View Formatted", view_document_admin_document_path(document.id)
-    #     active_admin_comments
+    active_admin_comments
   end
 
   form do |f|

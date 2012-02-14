@@ -57,6 +57,6 @@ ActiveAdmin.register Discussion do
         end
       end
     end
-#     active_admin_comments
+    active_admin_comments
   end
 end

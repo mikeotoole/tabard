@@ -60,6 +60,7 @@ ActiveAdmin.register Question do
         end
       end
     end
+    active_admin_comments
   end
 end
 

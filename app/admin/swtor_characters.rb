@@ -36,6 +36,6 @@ ActiveAdmin.register SwtorCharacter do
 
   show :title => proc{"#{swtor_character.user_profile.display_name} - #{swtor_character.name}"} do
     attributes_table *default_attribute_table_rows, :user_profile
-#     active_admin_comments
+    active_admin_comments
   end
 end

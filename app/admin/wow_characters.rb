@@ -35,6 +35,6 @@ ActiveAdmin.register WowCharacter do
 
   show :title => proc{"#{wow_character.user_profile.name} - #{wow_character.name}"} do
     attributes_table *default_attribute_table_rows, :user_profile
-#     active_admin_comments
+    active_admin_comments
   end
 end

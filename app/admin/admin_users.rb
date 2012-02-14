@@ -72,7 +72,7 @@ ActiveAdmin.register AdminUser do
   show :title => :email do
     rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
     attributes_table *rows
-#     active_admin_comments
+    active_admin_comments
   end
 
   form do |f|
