@@ -50,11 +50,10 @@ def generate_application(community, user_last_name)
   app.save!
   app.submission.custom_form.questions.each do |q|
     if q.is_required
-      case q.type
-        when 'TextQuestion'
-          app.submission.answers.create!(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!')
-        when 'SingleSelectQuestion'
-          app.submission.answers.create!(:question_id => q.id, :body => q.predefined_answers.first.body)
+      if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
+        app.submission.answers.create!(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!', :question_body => q.body)
+      else
+        app.submission.answers.create!(:question_id => q.id, :body => q.predefined_answers.first.body, :question_body => q.body)
       end
     end
   end
