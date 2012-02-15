@@ -16,18 +16,18 @@ class Subdomains::CommunitiesController < SubdomainsController
 ###
 # REST Actions
 ###
-  # GET /communities/:id/edit(.:format)
+  # GET /community_settings(.:format)
   def edit
   end
 
-  # PUT /communities/:id(.:format)
+  # PUT /community_settings(.:format)
   def update
     if @community.update_attributes(params[:community])
       add_new_flash_message 'Your changes have been saved.', 'success'
     else
       add_new_flash_message 'Error. Unable to save changes.', 'alert'
     end
-    respond_with(@community, :location => edit_community_url(@community))
+    respond_with(@community, :location => edit_community_settings_url(@community))
   end
 
 #   # DELETE /communities/:id(.:format)

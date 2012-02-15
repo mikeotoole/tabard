@@ -12,33 +12,6 @@ describe Subdomains::CommunitiesController do
     @request.host = "#{community.subdomain}.example.com"
   end
 
-  describe "GET 'index'" do
-    it "should throw routing error" do
-      assert_raises(ActionController::RoutingError) do
-        get 'index'
-        assert_response :missing
-      end
-    end
-  end
-
-  describe "GET 'show'" do
-    it "should throw routing error" do
-      assert_raises(AbstractController::ActionNotFound) do
-        get 'show', :id => community
-        assert_response :missing
-      end
-    end
-  end
-
-  describe "GET 'new'" do
-    it "should throw routing error" do
-      assert_raises(AbstractController::ActionNotFound) do
-        get 'new'
-        assert_response :missing
-      end
-    end
-  end
-
   describe "GET 'edit'" do
     it "should be unauthorized when authenticated as a non admin user" do
       sign_in user
@@ -61,15 +34,6 @@ describe Subdomains::CommunitiesController do
       sign_in admin_user
       get 'edit', :id => community
       response.should render_template('communities/edit')
-    end
-  end
-
-  describe "POST 'create'" do
-    it "should throw routing error" do
-      assert_raises(AbstractController::ActionNotFound) do
-        post 'create', :community => community_att
-        assert_response :missing
-      end
     end
   end
 
@@ -101,7 +65,7 @@ describe Subdomains::CommunitiesController do
     end
 
     it "should redirect to the community edit view" do
-      response.should redirect_to(edit_community_url(assigns[:community]))
+      response.should redirect_to(edit_community_settings_url(assigns[:community]))
     end
   end
 
@@ -117,30 +81,6 @@ describe Subdomains::CommunitiesController do
 
     it "should not change attributes" do
       assigns[:community].slogan.should_not eq @slogan
-    end
-  end
-
-  describe "DELETE 'destroy'" do
-    #TODO Joe, Add 404 redirect for all routing errors.
-    it "should throw routing error when authenticated as a user" do
-      sign_in user
-      assert_raises(AbstractController::ActionNotFound) do
-        delete 'destroy', :id => community
-        assert_response :missing
-      end
-#       delete 'destroy'
-#       response.code.should == "404"
-#       response.should redirect_to("/404")
-    end
-#
-    it "should throw routing error when not authenticated as a user" do
-      assert_raises(AbstractController::ActionNotFound) do
-        delete 'destroy', :id => community
-        assert_response :missing
-      end
-#       delete 'destroy'
-#       response.code.should == "404"
-#       response.should redirect_to("/404")
     end
   end
 end

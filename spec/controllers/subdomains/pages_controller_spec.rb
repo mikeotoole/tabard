@@ -35,26 +35,6 @@ describe Subdomains::PagesController do
     @request.host = "#{community.subdomain}.example.com"
   end
 
-  describe "GET index" do
-    it "should throw routing error when user" do
-      assert_raises(ActionController::RoutingError) do
-        sign_in owner
-        get :index, :page_space_id => space.id
-      end
-    end
-    it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
-        sign_in admin
-        get :index, :page_space_id => space.id
-      end
-    end
-    it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
-        get :index, :page_space_id => space.id
-      end
-    end   
-  end
-
   describe "GET show" do
     it "assigns the requested discussion as @page when authenticated as a member" do
       sign_in owner

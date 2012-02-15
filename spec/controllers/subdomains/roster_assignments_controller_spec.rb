@@ -91,29 +91,6 @@ describe Subdomains::RosterAssignmentsController do
     end
   end
 
-  describe "GET 'new'" do
-    it "should throw routing error when user" do
-      assert_raises(ActionController::RoutingError) do
-        sign_in user
-        get 'new'
-        assert_response :missing
-      end
-    end
-    it "should throw routing error when admin" do
-      assert_raises(ActionController::RoutingError) do
-        sign_in admin_user
-        get 'new'
-        assert_response :missing
-      end
-    end
-    it "should throw routing error when anon" do
-      assert_raises(ActionController::RoutingError) do
-        get 'new'
-        assert_response :missing
-      end
-    end
-  end
-
   describe "POST 'create' authenticated as non-owner" do
     before(:each) do
       sign_in user
