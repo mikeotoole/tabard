@@ -1,4 +1,4 @@
-- game = SupportedGame.find_by_id(activity.target_id)
+- game = activity.target ? activity.target : SupportedGame.with_deleted.find_by_id(activity.target_id)
 - case activity.action
 - when 'created'
   Added

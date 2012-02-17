@@ -25,8 +25,10 @@ class SupportedGame < ActiveRecord::Base
 ###
   belongs_to :community
   belongs_to :game, :polymorphic => true
-  has_many :roster_assignments
-  has_many :announcements
+  has_many :roster_assignments, :dependent => :destroy
+  has_many :announcements, :dependent => :destroy
+  has_many :discussion_spaces, :dependent => :destroy
+  has_many :page_spaces, :dependent => :destroy
 
 ###
 # Delegates
