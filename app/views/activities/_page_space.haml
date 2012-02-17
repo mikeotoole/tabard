@@ -1,10 +1,10 @@
-- page_space = PageSpace.find_by_id(activity.target_id)
+- page_space = activity.target ? activity.target : PageSpace.with_deleted.find_by_id(activity.target_id)
 - case activity.action
 - when 'created'
   Created a new
 - when 'edited'
   Edited the
-%strong= link_to_if (user_signed_in? and current_user.in_community(activity.community).can? :show, page_space), 'page space', page_space_url(page_space, :subdomain => activity.community_subdomain), :meta => page_space.name
+%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, page_space), 'page space', page_space_url(page_space, :subdomain => activity.community_subdomain), :meta => page_space.name
 - unless defined? current_community and activity.community == current_community
   in
   %strong= link_to activity.community_name, root_url(:subdomain => activity.community_subdomain)

@@ -1,10 +1,10 @@
-- page = Page.find_by_id(activity.target_id)
+- page = activity.target ? activity.target : Page.with_deleted.find_by_id(activity.target_id)
 - case activity.action
 - when 'created'
   Created a
 - when 'edited'
   Edited the
-%strong= link_to_if (user_signed_in? and current_user.in_community(activity.community).can? :show, page), 'page', page_url(page, :subdomain => activity.community_subdomain), :meta => page.name
+%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, page), 'page', page_url(page, :subdomain => activity.community_subdomain), :meta => page.name
 in
 - if defined? current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, page.page_space
   = link_to page.page_space_name, page.page_space
