@@ -12,7 +12,9 @@ body
   min-width: 980px
   padding: 75px 0 0
   
-  em,
+  em
+    font-style: italic
+    
   strong
     font-family: DinMedium, sans-serif
     
@@ -127,6 +129,14 @@ button,
     
   p
     padding: 15px 0
+  
+  blockquote
+    background: #ddd
+    +bg_gradient(#eee,#ddd)
+    border: 1px solid #ccc
+    +border_radius(3)
+    margin: 15px 0
+    padding: 0 20px
     
   ol
     padding: 15px 0
@@ -139,7 +149,7 @@ button,
       &:before
         +border_radius(2)
         content: counter(li)
-        color: #999
+        color: #227FB5
         font-family: DinMedium, sans-serif
         font-size: 11px
         height: 15px
@@ -150,9 +160,6 @@ button,
         text-align: right
         top: 2px
         width: 30px
-      
-      &:hover:before
-        background: #eee
   
   ul
     padding: 15px 0
@@ -171,6 +178,20 @@ button,
         position: absolute
         top: 7px
         width: 0
+    
+  li > p
+    padding: 10px 0 0
+    
+    &:first-child,
+    &:only-child
+      padding-top: 0
+  
+  li > blockquote
+    margin: 10px 0 0
+    
+    &:first-child,
+    &:only-child
+      margin-top: 0
   
   
   // Forms
@@ -468,6 +489,7 @@ button,
     +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
     margin: 0 0 20px
+    padding: 0 0 30px
     
     p
       padding: 20px 20px 0
@@ -475,9 +497,32 @@ button,
     ol,
     ul
       padding: 20px 40px 0
+      
+    ol li
+      margin-top: 20px
+      
+      &:first-child
+        margin-top: 0
     
-    li p
-      padding: 0
+    blockquote
+      margin: 20px 20px 0
+      
+      p
+        padding: 15px 0
+    
+    li > p
+      padding: 10px 0 0
+      
+      &:first-child,
+      &:only-child
+        padding-top: 0
+    
+    li > blockquote
+      margin: 10px 0 0
+      
+      &:first-child,
+      &:only-child
+        margin-top: 0
     
     .scroll
       +bg_gradient(#ddd,#fff)
