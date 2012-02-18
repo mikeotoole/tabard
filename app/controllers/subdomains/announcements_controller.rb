@@ -21,7 +21,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # GET /announcements/
   def index
-    @announcements = current_community.announcements
+    @announcements = current_community.announcements.ordered
   end
 
   # GET /announcements/:id(.:format)
@@ -63,7 +63,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   # GET /announcements/community(.:format)
   def community
     authorize! :index, Announcement
-    @announcements = current_community.community_announcements
+    @announcements = current_community.community_announcements.ordered
   end
 
   # GET /announcements/game/:id(.:format)
@@ -71,7 +71,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     authorize! :index, Announcement
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
-      @announcements = @supported_game.announcements.non_community
+      @announcements = @supported_game.announcements.non_community.ordered
     else
       redirect_to not_found_url
     end
