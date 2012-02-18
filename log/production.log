@@ -157,3 +157,13 @@ Compiled active_admin/base.js  (86ms)  (pid 15285)
 Compiled active_admin.js  (92ms)  (pid 15285)
 Compiled application.js  (536ms)  (pid 15285)
 Compiled active_admin.css  (917ms)  (pid 15285)
+Starting the New Relic Agent.
+Installed New Relic Browser Monitoring middleware
+Compiled jquery.js  (1ms)  (pid 15483)
+Compiled jquery-ui.js  (2ms)  (pid 15483)
+Compiled jquery_ujs.js  (0ms)  (pid 15483)
+Compiled active_admin/application.js  (0ms)  (pid 15483)
+Compiled active_admin/base.js  (65ms)  (pid 15483)
+Compiled active_admin.js  (70ms)  (pid 15483)
+Compiled application.js  (525ms)  (pid 15483)
+Compiled active_admin.css  (889ms)  (pid 15483)

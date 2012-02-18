@@ -2,6 +2,7 @@
 db/*.sqlite3*
 log/*.log
 log/test.log
+log/production.log
 tmp/**/*
 
 .DS_Store
