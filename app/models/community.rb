@@ -43,6 +43,7 @@ class Community < ActiveRecord::Base
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
+  has_many :approved_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy
   has_many :discussions, :through => :discussion_spaces
@@ -158,6 +159,16 @@ class Community < ActiveRecord::Base
     else
       return self.approved_character_proxies
     end
+  end
+
+  ###
+  # This method gets the current members who have at least one character in the supported game.
+  # [Args]
+  #   * +supported_game+ -> The supported game to use as a filter.
+  # [Returns] An array of user_profiles, filtered by supported game.
+  ###
+  def member_profiles_for_supported_game(supported_game)
+    self.community_profiles.approved_roster_assignments.where(:supported_game => supported_game).collect{|ra| ra.user_profile }.uniq
   end
 
   ###
