@@ -39,6 +39,7 @@ class Community < ActiveRecord::Base
   has_many :announcements
   has_many :supported_games, :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
+  has_many :approved_character_proxies, :through => :community_profiles
   has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
@@ -152,18 +153,11 @@ class Community < ActiveRecord::Base
   # [Returns] An array of character_proxies, optionly filtered by game.
   ###
   def get_current_community_roster(game = nil)
-    # TODO Joe Check this for optimization potential.
-    community_roster = Array.new
-    self.community_profiles.each do |profile|
-      if game
-        profile.approved_character_proxies.each do |proxy|
-          community_roster << proxy if proxy.game == game
-        end
-      else
-        community_roster = community_roster + profile.approved_character_proxies
-      end
+    if game
+      return self.approved_character_proxies.reject{|cp| cp.game != game }
+    else
+      return self.approved_character_proxies
     end
-    return community_roster
   end
 
   ###
