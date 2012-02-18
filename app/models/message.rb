@@ -52,7 +52,7 @@ class Message < ActiveRecord::Base
       message.is_system_sent = true
       message.save!
     rescue
-      logger.error("Could not send system message #{self.message}") # TODO Mike, This should print a stack trace.
+      logger.error("Could not send system message #{self.message}. #{message.errors}")
     end
   end
 

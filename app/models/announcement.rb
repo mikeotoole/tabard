@@ -9,7 +9,7 @@ class Announcement < ActiveRecord::Base
 	# Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
-  #default_scope :order => 'created_at DESC' # TODO Mike/Joe, Can't use acts_as_paranoid and default scope. We will need to do this differently. -MO
+  scope :ordered, :order => 'created_at DESC'
 ###
 # Constants
 ###

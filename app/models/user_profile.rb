@@ -97,7 +97,6 @@ class UserProfile < ActiveRecord::Base
     self.wow_characters + self.swtor_characters
   end
 
-  # TODO Mike, Update this and make it better!
   ###
   # This method will return a cancan ability with the passed community's dynamic rules added in.
   # [Args]
@@ -122,21 +121,6 @@ class UserProfile < ActiveRecord::Base
     available_character_proxies.concat community_profile.approved_character_proxies if community_profile
     available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s} if game
     available_character_proxies
-  end
-
-  # TODO Mike, Is this needed?
-  ###
-  # This method will return all of the character proxies for this user profile who's character matches the specified game.
-  # [Args]
-  #   * +game+ -> The game to scope the proxies by.
-  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
-  ###
-  def character_proxies_for_a_game(game)
-    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
-    # FIXME Joe, WTF! Associations why you no work!
-    proxies = CharacterProxy.where(:user_profile_id => self.id)
-
-    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
   end
 
   # This method returns the first name + space + last name
