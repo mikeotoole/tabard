@@ -307,7 +307,8 @@ class Ability
             when "View"
               action.concat([:read])
             else
-              # TODO Joe/Bryan Should this be logged?
+              logger.error "Invalid permission attempting to be decoded."
+              logger.error permisson.to_yaml
           end
         end
         if permission.can_lock

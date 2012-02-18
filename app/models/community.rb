@@ -6,7 +6,6 @@
 # This class represents a community.
 ###
 class Community < ActiveRecord::Base
-# TODO email_notice_on_application attribute needs to be talked about and reevaluated. -MO
 
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid

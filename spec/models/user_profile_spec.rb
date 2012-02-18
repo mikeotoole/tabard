@@ -313,7 +313,7 @@ describe UserProfile do
     end
     it "should return all approved character proxies for a community" do
       expected_proxies = @community_profile.approved_character_proxies
-      not_expected_proxies = [] # TODO Joe, Add this.
+      not_expected_proxies = @community_profile.pending_character_proxies
       available_proxies = @member_profile.available_character_proxies(@community)
       expected_proxies.each do |proxy|
         available_proxies.include?(proxy).should be_true
