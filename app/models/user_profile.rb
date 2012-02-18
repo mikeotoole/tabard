@@ -138,11 +138,6 @@ class UserProfile < ActiveRecord::Base
     return false
   end
 
-  # This method collects all of this user_profile's roles
-  #def roles
-  #  self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
-  #end
-
   ###
   # This method checks if the user is a member of the given community.
   # [Args]
