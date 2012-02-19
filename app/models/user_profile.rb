@@ -24,6 +24,7 @@ class UserProfile < ActiveRecord::Base
 
   has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy
+  has_many :roles, :through => :community_profiles
 
   has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
   has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter'
@@ -96,7 +97,6 @@ class UserProfile < ActiveRecord::Base
     self.wow_characters + self.swtor_characters
   end
 
-  # TODO Mike, Update this and make it better!
   ###
   # This method will return a cancan ability with the passed community's dynamic rules added in.
   # [Args]
@@ -123,21 +123,6 @@ class UserProfile < ActiveRecord::Base
     available_character_proxies
   end
 
-  # TODO Mike, Is this needed?
-  ###
-  # This method will return all of the character proxies for this user profile who's character matches the specified game.
-  # [Args]
-  #   * +game+ -> The game to scope the proxies by.
-  # [Returns] An array that contains all of this user profiles character proxies who's character matches the specified game.
-  ###
-  def character_proxies_for_a_game(game)
-    # OPTIMIZE Joe At some point benchmark this potential hot spot search. We may want to add game_id to character proxies if this is too slow. -JW
-    # FIXME Joe, WTF! Associations why you no work!
-    proxies = CharacterProxy.where(:user_profile_id => self.id)
-
-    proxies.delete_if { |proxy| (proxy.game.class.name != game.class.name) or ((proxy.game.class.name == game.class.name) and (proxy.game.id != game.id)) }
-  end
-
   # This method returns the first name + space + last name
   def full_name
     "#{self.first_name} #{self.last_name}"
@@ -151,11 +136,6 @@ class UserProfile < ActiveRecord::Base
       return true
     end
     return false
-  end
-
-  # This method collects all of this user_profile's roles
-  def roles
-    self.community_profiles.collect{|community_profile| community_profile.roles}.flatten(1) # OPTIMIZE Joe, see if we can push this down to squeel.
   end
 
   ###
@@ -254,33 +234,6 @@ class UserProfile < ActiveRecord::Base
       return (Array.new() << (self)).concat(self.characters)
     end
   end
-
-  ###
-  # This method gets an array of viewed announcements.
-  # [Returns] An array of viewed messages.
-  ###
-  #def read_announcements
-  #  # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
-  #  self.announcements.reject{|announcement| !self.has_seen?(announcement)}
-  #end
-
-  ###
-  # This method gets an array of unviewed announcements.
-  # [Returns] An array of unviewed messages.
-  ###
-  #def unread_announcements
-  #  # HACK Joe - Inefficient MySQL (loops through each item making a new query for each item) - DW
-  #  self.announcements.reject{|announcement| self.has_seen?(announcement)}
-  #end
-
-  ###
-  # This method gets an array of unviewed announcements within the past two weeks
-  # [Returns] An array of unviewed messages within the past two weeks.
-  ###
-  #def recent_unread_announcements(community = nil)
-  #  # TODO Mike, make this better.
-  #  self.unread_announcements.reject{|announcement| announcement.created_at < 2.weeks.ago or (community and announcement.community.id != community.id)}
-  #end
 
   ###
   # This method gets an array of possible active profile options.
