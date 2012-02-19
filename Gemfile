@@ -40,7 +40,7 @@ source 'http://rubygems.org'
   gem 'fog'
   gem 'mini_magick'
   gem 'carrierwave'
-  gem 'asset_sync'
+  #gem 'asset_sync'
 
 # Admin Portal
   gem 'meta_search', '>= 1.1.0.pre'
