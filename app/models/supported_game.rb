@@ -71,8 +71,7 @@ class SupportedGame < ActiveRecord::Base
 
   # Gets the user_profiles of 
   def member_profiles
-    #HACK Joe, this needs to be optimized. -JW
-    self.community.community_profiles.reject{|cp| !cp.has_character_that_matches_supported_game(self)}.collect{|cp| cp.user_profile}
+    self.community.member_profiles_for_supported_game(self)
   end
 
 ###

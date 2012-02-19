@@ -124,26 +124,6 @@ describe UserProfile do
     billy.user_profile.characters.count.should eq(total)
   end
 
-  describe "character_proxies_for_a_game" do
-    it "should return all character proxies for the game" do
-      billy = create(:billy)
-      proxies = billy.user_profile.character_proxies
-      total_wow = 0
-      proxies.each do |proxy|
-        total_wow += 1 if proxy.game == DefaultObjects.wow
-      end
-      billy.user_profile.character_proxies_for_a_game(DefaultObjects.wow).count.should eq(total_wow)
-    end
-
-    it "should only return character proxies for the game" do
-      billy = create(:billy)
-      all_wow_characters = billy.user_profile.character_proxies_for_a_game(DefaultObjects.wow)
-      all_wow_characters.each do |character|
-        character.game.should eq(DefaultObjects.wow)
-      end
-    end
-  end
-
   describe "add_new_role method" do
     it "should add a valid role" do
       valid_roles = []
@@ -313,7 +293,7 @@ describe UserProfile do
     end
     it "should return all approved character proxies for a community" do
       expected_proxies = @community_profile.approved_character_proxies
-      not_expected_proxies = [] # TODO Joe, Add this.
+      not_expected_proxies = @community_profile.pending_character_proxies
       available_proxies = @member_profile.available_character_proxies(@community)
       expected_proxies.each do |proxy|
         available_proxies.include?(proxy).should be_true

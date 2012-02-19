@@ -41,8 +41,7 @@ class SiteConfiguration < ActiveRecord::Base
 protected
   # Gets the first cached site config
   def self.first_cached
-    # TODO Mike, in rails 3.2 change this to first_or_create
-    Rails.cache.fetch('SiteConfiguration.first') { SiteConfiguration.first ? SiteConfiguration.first : SiteConfiguration.create! }
+    Rails.cache.fetch('SiteConfiguration.first') { SiteConfiguration.first_or_create }
   end
 
   # clears the cache for the site configuration
