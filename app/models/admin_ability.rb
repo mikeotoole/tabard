@@ -65,7 +65,7 @@ class AdminAbility
     if user.role? :superadmin # TODO Bryan, Review all these rules -MO
       can [:read, :create, :view_document], [Document, 'Document']
       can [:update], Document do |document|
-        not Document.find(document).is_published
+        not document.is_published
       end
       can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser
