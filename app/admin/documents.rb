@@ -15,10 +15,13 @@ ActiveAdmin.register Document do
 
   member_action :view_document, :method => :get do
     @document = Document.find(params[:id])
-    if @document.is_a?(PrivacyPolicy)
-      render 'app/views/top_level/privacy_policy.haml', :layout => 'application'
-    else
-      render 'app/views/top_level/terms_of_service.haml', :layout => 'application'
+    case @document.type
+      when "PrivacyPolicy"
+        render 'app/views/top_level/privacy_policy.haml', :layout => 'application'
+      when "TermsOfService"
+        render 'app/views/top_level/terms_of_service.haml', :layout => 'application'
+      when "ArtworkAgreement"
+        render 'app/views/top_level/artwork_agreement.haml', :layout => 'application'
     end
   end
 
