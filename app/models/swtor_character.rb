@@ -202,7 +202,7 @@ class SwtorCharacter < BaseCharacter
   # Creates a new swtor character with the given params.
   def self.create_character(params, user)
     if params[:swtor_character]
-      swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:swtor_character][:server_name])
+      swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:server_name])
       params[:swtor_character][:swtor] = swtor
       params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class])
       swtor_character = SwtorCharacter.create(params[:swtor_character])
@@ -212,7 +212,7 @@ class SwtorCharacter < BaseCharacter
         proxy = profile.character_proxies.build(:character => swtor_character)
         swtor_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
-        swtor_character.errors.add(:server_name, "can't be blank") if not params[:swtor_character][:server_name]
+        swtor_character.errors.add(:server_name, "can't be blank") if not params[:server_name]
       end
       return swtor_character
     end

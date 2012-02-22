@@ -39,8 +39,8 @@ class WowCharactersController < ApplicationController
     @wow_character = WowCharacter.find(params[:id])
     authorize!(:update, @wow_character)
 
-    if params[:wow_character] and (params[:wow_character][:faction] or params[:wow_character][:server_name])
-      @wow_character.wow = Wow.game_for_faction_server(params[:wow_character][:faction], params[:wow_character][:server_name])
+    if params[:wow_character] and (params[:faction] or params[:server_name])
+      @wow_character.wow = Wow.game_for_faction_server(params[:faction], params[:server_name])
     end
     add_new_flash_message('Character saved.', 'success') if @wow_character.update_attributes(params[:wow_character])
 

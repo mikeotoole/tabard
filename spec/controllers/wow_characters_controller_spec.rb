@@ -65,7 +65,7 @@ describe WowCharactersController do
   describe "POST 'create' when authenticated as a user" do
     before(:each) do
       sign_in user
-      post 'create', :wow_character => valid_attributes
+      post 'create', :wow_character => valid_attributes, :server_name => DefaultObjects.wow.server_name, :faction => DefaultObjects.wow.faction
     end
     
     it "should add new character" do
@@ -85,7 +85,7 @@ describe WowCharactersController do
     it "should create an activity" do
       sign_in user
       expect {
-        post :create, :wow_character => valid_attributes
+        post :create, :wow_character => valid_attributes, :server_name => DefaultObjects.wow.server_name, :faction => DefaultObjects.wow.faction
       }.to change(Activity, :count).by(1)
       
       activity = Activity.last
