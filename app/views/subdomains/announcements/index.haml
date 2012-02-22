@@ -1,5 +1,6 @@
 - title "Announcements | #{@community.name}"
 
 %h1 Announcements
-
+= paginate @announcements
 = render 'table', :announcements => @announcements
+= paginate @announcements

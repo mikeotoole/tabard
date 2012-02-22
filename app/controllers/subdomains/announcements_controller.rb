@@ -21,7 +21,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # GET /announcements/
   def index
-    @announcements = current_community.announcements.ordered
+    @announcements = current_community.announcements.ordered.page params[:page]
   end
 
   # GET /announcements/:id(.:format)

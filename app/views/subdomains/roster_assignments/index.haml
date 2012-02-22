@@ -2,4 +2,6 @@
 
 %h1 Community Members
 
+= paginate @member_profiles
 = render 'table', :member_profiles => @member_profiles, :supported_game => nil
+= paginate @member_profiles

@@ -29,12 +29,14 @@
   %p
     = @discussion.body
 
-- if @discussion.comments.any? or can? :comment, @discussion
+- if @comments.any? or can? :comment, @discussion
   %aside.comments
-    - if @discussion.comments.any?
+    - if @comments.any?
       %ol
-        - @discussion.comments.each do |comment|
+        - @comments.each do |comment|
+          = paginate @comments
           = render "subdomains/comments/comment", :comment => comment
+          = paginate @comments
     - if can? :comment, @discussion
       #newcomment
         %h3 Post a New Comment
