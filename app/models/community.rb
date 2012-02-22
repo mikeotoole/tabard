@@ -168,7 +168,7 @@ class Community < ActiveRecord::Base
   # [Returns] An array of user_profiles, filtered by supported game.
   ###
   def member_profiles_for_supported_game(supported_game)
-    self.community_profiles.approved_roster_assignments.where(:supported_game => supported_game).collect{|ra| ra.user_profile }.uniq
+    self.approved_roster_assignments.where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq
   end
 
   ###

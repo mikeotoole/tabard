@@ -2,7 +2,7 @@
 
 %h1 Community Settings
 
-= simple_form_for @community, :html => {:novalidate => true} do |f|
+= simple_form_for @community, :url => update_community_settings_url, :html => {:novalidate => true} do |f|
 
   %section.left
     %h2 Configuration
