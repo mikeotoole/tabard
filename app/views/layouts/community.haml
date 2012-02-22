@@ -37,7 +37,7 @@
                 %ul
                   - current_community.page_spaces.each do |space|
                     %li= link_to space.name, space if space.persisted?
-          - if (user_signed_in? and current_user.is_member? current_community)
+          - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Discussions', discussion_spaces_url
               - if current_community.discussion_spaces.any?
