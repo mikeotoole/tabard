@@ -18,7 +18,8 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :comments_enabled
+  attr_accessor :comments_enabled
 
 ###
 # Associations
@@ -34,8 +35,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name,  :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
   validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
@@ -52,8 +52,8 @@ class Discussion < ActiveRecord::Base
   delegate :subdomain, :to => :community, :allow_nil => true
   delegate :name, :to => :poster, :prefix => true, :allow_nil => true
 
-
   before_destroy :destroy_all_comments
+  before_save :update_is_locked_from_comments_enabled
 
 ###
 # Public Methods
@@ -135,6 +135,16 @@ protected
   ###
   def destroy_all_comments
     Comment.where(:original_commentable_id => self.id, :original_commentable_type => 'Discussion').update_all(:deleted_at => Time.now)
+  end
+
+  ###
+  # _before_save_
+  #
+  # Sets the is_locked attribute based on the value of comments_enabled
+  ###
+  def update_is_locked_from_comments_enabled
+    self.is_locked = true if comments_enabled == '0'
+    self.is_locked = false if comments_enabled == '1'
   end
 end
 

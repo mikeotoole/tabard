@@ -18,7 +18,8 @@ class Announcement < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game, :supported_game_id
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game, :supported_game_id, :comments_enabled
+  attr_accessor :comments_enabled
 
 ###
 # Associations
@@ -56,8 +57,8 @@ class Announcement < ActiveRecord::Base
   delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
   before_destroy :destroy_all_comments
-
   after_create :create_acknowledgements
+  before_save :update_is_locked_from_comments_enabled
 
   scope :non_community, where(Announcement.arel_table[:supported_game_id].not_eq(nil))
 
@@ -169,6 +170,16 @@ protected
         community_profile.acknowledgements.create(:announcement => self)
       end
     end
+  end
+
+  ###
+  # _before_save_
+  #
+  # Sets the is_locked attribute based on the value of comments_enabled
+  ###
+  def update_is_locked_from_comments_enabled
+    self.is_locked = true if comments_enabled == '0'
+    self.is_locked = false if comments_enabled == '1'
   end
 end
 

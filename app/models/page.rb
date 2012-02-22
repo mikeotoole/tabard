@@ -35,8 +35,7 @@ class Page < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :name, :presence => true,
-                   :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
   validates :markup, :presence => true
   validates :page_space, :presence => true
 

@@ -4,4 +4,4 @@
     = f.input :body, :as => :text
     - if available_characters.any?
       = f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(available_characters, current_user.user_profile.display_name), :as => :radio, :wrapper_html => { :class => 'select' }
-    = f.input :is_locked, :label => 'Comments Enabled', :as => :boolean, :input_html => { :checked => (!discussion.persisted? or !discussion.is_locked) ? true : false }
+    = f.input :comments_enabled, :label => 'Comments Enabled', :as => :boolean, :input_html => { :checked => !discussion.is_locked }

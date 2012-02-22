@@ -57,9 +57,9 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       case status
       when :forbidden
-        format.html { render "status_code/forbidden", :status => status }
+        format.html { render "status_code/forbidden", :status => status, :layout => 'application' }
       else
-        format.html { render "status_code/index", :status => status }
+        format.html { render "status_code/index", :status => status, :layout => 'application' }
       end
       format.any  { head status } # only return the status code
     end
