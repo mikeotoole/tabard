@@ -48,7 +48,7 @@ class Subdomains::RolesController < SubdomainsController
 
   # PUT /roles/1
   def update
-    params[:role][:community_profile_ids] ||= Array.new
+    params[:role][:community_profile_ids] ||= Array.new unless @role.is_member_role?
     if @role.update_attributes(params[:role])
       add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
       redirect_to roles_path
