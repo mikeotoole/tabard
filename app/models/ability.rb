@@ -200,6 +200,10 @@ class Ability
       user.user_profile.is_member?(current_community)
     end
 
+    can [:comment], Announcement do |announcement|
+      not announcement.is_locked and can? :create, Comment.new(:commentable => announcement, :community => announcement.community)
+    end
+
     can :mine, RosterAssignment
     can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile_id == user.user_profile_id if roster_assignment.community_profile_user_profile
