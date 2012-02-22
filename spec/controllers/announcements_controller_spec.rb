@@ -81,12 +81,14 @@ describe AnnouncementsController do
       admin
       announcement
     end
+
     it "should be successful when authenticated as a non member" do
       sign_in non_member
       put 'batch_mark_as_seen', :ids => [announcement.id]
       redirect_to announcements_path
       admin.read_announcements.include?(announcement).should be_false
     end
+
     it "should be successful when authenticated as a member" do
       sign_in member
       put 'batch_mark_as_seen', :ids => [announcement.id]

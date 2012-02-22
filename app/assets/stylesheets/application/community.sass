@@ -345,6 +345,9 @@ button,
     top: 30px
     right: 30px
     z-index: 8
+    
+    a.button
+      margin-right: 0
   
   #breadcrumb + #actions
     top: 60px
@@ -433,8 +436,15 @@ button,
         &:only-child
           +border_radius(3,3,0,0)
         
-        &.check a
-          text-decoration: none
+        &.check
+          padding: 5px
+          text-align: center
+          
+          a
+            display: block
+            padding: 5px
+            text-align: center
+            text-decoration: none
   
     tbody
       

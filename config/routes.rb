@@ -147,6 +147,7 @@ DaBvRails::Application.routes.draw do
         collection do
           get :community
           match 'game/:id' => 'announcements#game', :as => :game
+          match 'batch_destroy' => "announcements#batch_destroy", :as => "batch_destroy"
         end
       end
 
@@ -162,7 +163,7 @@ DaBvRails::Application.routes.draw do
 
   # Announcements
   resources :announcements, :only => [:index, :show]
-  put 'announcements/batch_mark_as_seen/' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
+  put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Site Actions
   match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", :as => :toggle_maintenance_mode

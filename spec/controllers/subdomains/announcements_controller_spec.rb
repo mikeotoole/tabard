@@ -33,7 +33,7 @@ describe Subdomains::AnnouncementsController do
       get :show, :id => announcement
       assigns(:announcement).should eq(announcement)
     end
-
+  
     it "assigns the requested announcement as @announcement when authenticated as a member" do
       sign_in member
       get :show, :id => announcement
@@ -51,7 +51,7 @@ describe Subdomains::AnnouncementsController do
       response.should be_forbidden
     end   
   end
-
+  
   describe "GET new" do
     it "assigns a new announcement as @announcement when authenticated as a admin" do
       sign_in admin
@@ -76,7 +76,7 @@ describe Subdomains::AnnouncementsController do
       response.should be_forbidden
     end
   end
-
+  
   describe "POST create when authenticated as admin" do
     before(:each) {
       sign_in admin
@@ -88,26 +88,26 @@ describe Subdomains::AnnouncementsController do
           post :create, :announcement => announcement_attr
         }.to change(Announcement, :count).by(1)
       end
-
+  
       it "assigns a newly created announcement as @announcement" do
         post :create, :announcement => announcement_attr
         assigns(:announcement).should be_a(Announcement)
         assigns(:announcement).should be_persisted
       end
-
+  
       it "redirects to the created announcement" do
         post :create, :announcement => announcement_attr
         some_announcement = Announcement.unscoped.last
         response.should redirect_to(announcement_url(some_announcement))
       end
     end
-
+  
     describe "with invalid params" do
       it "assigns a newly created but unsaved announcement as @announcement" do
         post :create, :announcement => invalid_announcement_attr
         assigns(:announcement).should be_a_new(Announcement)
       end
-
+  
       it "re-renders the 'new' template" do
         post :create, :announcement => invalid_announcement_attr
         response.should render_template("new")
@@ -133,7 +133,7 @@ describe Subdomains::AnnouncementsController do
       response.should be_forbidden
     end
   end
-
+  
   describe "DELETE destroy" do
     it "destroys the requested discussion when authenticated as admin" do
       announcement
@@ -142,7 +142,7 @@ describe Subdomains::AnnouncementsController do
         delete :destroy, :id => announcement
       }.to change(Announcement, :count).by(-1)
     end
-
+  
     it "redirects to the announcements list when authenticated as admin" do
       sign_in admin
       delete :destroy, :id => announcement
@@ -166,7 +166,7 @@ describe Subdomains::AnnouncementsController do
       response.should be_forbidden
     end
   end
-
+  
   describe "POST lock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
@@ -246,6 +246,38 @@ describe Subdomains::AnnouncementsController do
       sign_in non_member
       post :unlock, :id => announcement
       response.should be_forbidden
+    end
+  end
+
+  describe "DELETE batch_destroy" do
+    before(:each) do
+      community
+      admin
+      announcement
+    end
+
+    it "should be forbidden when authenticated as a non member" do
+      sign_in non_member
+      post 'batch_destroy', :ids => [announcement.id => 'true']
+      response.should be_forbidden
+    end
+
+    it "should be forbidden when authenticated as a member" do
+      sign_in member
+      post 'batch_destroy', :ids => [announcement.id => 'true']
+      response.should be_forbidden
+    end
+
+    it "should be successful when authenticated as a community admin" do
+      sign_in admin
+      post 'batch_destroy', :ids => [announcement.id => 'true']
+      redirect_to announcements_path
+      admin.read_announcements.include?(announcement).should be_false
+    end
+
+    it "should redirect to user sign_in when not authenticated as a user" do
+      post 'batch_destroy', :ids => [announcement.id => 'true']
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

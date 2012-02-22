@@ -1,28 +1,33 @@
-%table
-  %thead
-    %tr
-      %th Name
-      %th Last Reply
-      %th Comments?
-      %th.actions
-  %tbody
-    - announcements.each do |announcement|
+= form_tag announcements_batch_destroy_url, :method => :delete do
+  %table
+    %thead
       %tr
-        %td= link_to announcement.name, announcement
-        %td= announcement.comments.last.poster_name if announcement.comments.size > 0
-        %td= announcement.is_locked ? 'Closed' : announcement.number_of_comments
-        %td.actions
-          %div
-            - if announcement.is_locked
-              - if can? :unlock, announcement
-                = link_to 'Unlock', unlock_announcement_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
-            - else
-              - if can? :lock, announcement
-                = link_to 'Lock', lock_announcement_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
-            - if (can? :destroy, announcement)
-              = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
-  %tfoot
-    %tr
-      %td{ :colspan => 4 }
-        - if can? :create, Announcement
-          = link_to 'New Announcement', new_announcement_url, :class => 'button primary'
+        %th.check
+        %th Name
+        %th Last Reply
+        %th Comments?
+        %th.actions
+    %tbody
+      - announcements.each do |announcement|
+        %tr
+          %td.check
+            = check_box_tag "ids[#{announcement.id}]", true, false, :id => "announcement_id_#{announcement.id}"
+            %label{ :for => "announcement_id_#{announcement.id}" }
+          %td= link_to announcement.name, announcement
+          %td= announcement.comments.last.poster_name if announcement.comments.size > 0
+          %td= announcement.is_locked ? 'Closed' : announcement.number_of_comments
+          %td.actions
+            %div
+              - if announcement.is_locked
+                - if can? :unlock, announcement
+                  = link_to 'Unlock', unlock_announcement_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
+              - else
+                - if can? :lock, announcement
+                  = link_to 'Lock', lock_announcement_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
+              - if (can? :destroy, announcement)
+                = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
+    %tfoot
+      %tr
+        %td{ :colspan => 5 }
+          - if can? :create, Announcement
+            %button{ :type => :submit } Delete checked announcements

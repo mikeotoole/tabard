@@ -138,6 +138,21 @@ protected
   end
   helper_method :current_game
 
+  ###
+  # This helper method provides access to text helpers such as pluralize within the controller
+  ###
+  def help
+    Helper.instance
+  end
+
+  ###
+  # This helper class provides access to text helpers such as pluralize within the controller
+  ###
+  class Helper
+    include Singleton
+    include ActionView::Helpers::TextHelper
+  end
+
 ###
 # Active Character/Profile
 ###

@@ -45,14 +45,14 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @announcement.user_profile = current_user.user_profile
 
     if @announcement.save
-      add_new_flash_message('Announcement was successfully created.','success')
+      add_new_flash_message 'Announcement was successfully created.','success'
     end 
     respond_with(@announcement)
   end
 
   # DELETE /announcements/:id(.:format)
   def destroy
-    add_new_flash_message('Announcement was successfully removed.') if @announcement.destroy
+    add_new_flash_message 'Announcement was successfully removed.' if @announcement.destroy
     respond_with(@announcement)
   end
 
@@ -81,9 +81,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def lock
     @announcement.is_locked = true
     if @announcement.save
-      add_new_flash_message("Announcement was successfully locked.")
+      add_new_flash_message "Announcement was successfully locked."
     else
-      add_new_flash_message("Announcement was not locked, internal rails error.", 'alert')
+      add_new_flash_message "Announcement was not locked, internal rails error.", 'alert'
     end
     redirect_to :back
     return
@@ -93,12 +93,30 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def unlock
     @announcement.is_locked = false
     if @announcement.save
-      add_new_flash_message("Announcement was successfully unlocked.")
+      add_new_flash_message "Announcement was successfully unlocked."
     else
-      add_new_flash_message("Announcement was not unlocked, internal rails error.", 'alert')
+      add_new_flash_message "Announcement was not unlocked, internal rails error.", 'alert'
     end
     redirect_to :back
     return
+  end
+
+  # DELETE /announcements/batch_destroy/(.:format)
+  def batch_destroy
+    if params[:ids]
+      delete_count = 0
+      params[:ids].each do |id|
+        if announcement = current_community.announcements.find_by_id(id[0].to_i) and can? :delete, announcement
+          delete_count += 1 if announcement.destroy
+        end
+      end
+      if delete_count < params[:ids].size
+        add_new_flash_message "#{help.pluralize(params[:ids].size - delete_count, 'announcement')} could not be located and/or removed at this time.", 'alert'
+      else
+        add_new_flash_message "#{help.pluralize(delete_count, 'announcement')} removed.", 'success'
+      end
+    end
+    redirect_to announcements_url
   end
 
 ###
