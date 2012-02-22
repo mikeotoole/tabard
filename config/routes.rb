@@ -11,7 +11,7 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :confirmations => 'confirmations' }
+  devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :passwords => 'passwords', :confirmations => 'confirmations' }
   devise_scope :user do
     get 'users/disable_confirmation' => 'registrations#disable_confirmation', :as => :disable_confirmation
     get 'users/reinstate' => 'registrations#reinstate_confirmation', :as => :reinstate_confirmation
