@@ -1,0 +1,25 @@
+%h1 Listing artwork_uploads
+
+%table
+  %tr
+    %th Email
+    %th Attribution name
+    %th Attribution url
+    %th Artwork image
+    %th
+    %th
+    %th
+
+  - @artwork_uploads.each do |artwork_upload|
+    %tr
+      %td= artwork_upload.email
+      %td= artwork_upload.attribution_name
+      %td= artwork_upload.attribution_url
+      %td= artwork_upload.artwork_image
+      %td= link_to 'Show', artwork_upload
+      %td= link_to 'Edit', edit_artwork_upload_path(artwork_upload)
+      %td= link_to 'Destroy', artwork_upload, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Artwork upload', new_artwork_upload_path

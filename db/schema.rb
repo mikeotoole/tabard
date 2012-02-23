@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208222735) do
+ActiveRecord::Schema.define(:version => 20120223194535) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -104,6 +104,18 @@ ActiveRecord::Schema.define(:version => 20120208222735) do
   end
 
   add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
+
+  create_table "artwork_uploads", :force => true do |t|
+    t.string   "email"
+    t.string   "attribution_name"
+    t.string   "attribution_url"
+    t.string   "artwork_image"
+    t.integer  "document_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "artwork_uploads", ["document_id"], :name => "index_artwork_uploads_on_document_id"
 
   create_table "character_proxies", :force => true do |t|
     t.integer  "user_profile_id"

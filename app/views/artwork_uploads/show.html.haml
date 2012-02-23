@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Email:
+  = @artwork_upload.email
+%p
+  %b Attribution name:
+  = @artwork_upload.attribution_name
+%p
+  %b Attribution url:
+  = @artwork_upload.attribution_url
+%p
+  %b Artwork image:
+  = @artwork_upload.artwork_image
+
+= link_to 'Edit', edit_artwork_upload_path(@artwork_upload)
+\|
+= link_to 'Back', artwork_uploads_path

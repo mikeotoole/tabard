@@ -1,0 +1,11 @@
+= simple_form_for(@artwork_upload) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :email
+    = f.input :attribution_name
+    = f.input :attribution_url
+    = f.input :artwork_image
+
+  .actions
+    = f.button :submit
