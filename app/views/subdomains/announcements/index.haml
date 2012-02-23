@@ -1,8 +1,9 @@
 - title "Announcements | #{@community.name}"
 
-%h1 Announcements
+#actions.actions
+  - if can? :create, Announcement
+    = link_to 'New Announcement', new_announcement_url, :class => 'new', :meta => 'Create a new announcement'
 
-#actions
-  = link_to 'New Announcement', new_announcement_url, :class => 'button'
+%h1 Announcements
 
 = render 'table', :announcements => @announcements

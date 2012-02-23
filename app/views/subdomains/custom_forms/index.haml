@@ -1,4 +1,9 @@
 - title "Forms | #{current_community.name}"
+
+#actions.actions
+  - if can? :create, CustomForm
+    = link_to 'New', new_custom_form_url, :class => 'new', :meta => 'Add a new custom form'
+
 %h1 Forms
 
 %table
@@ -32,5 +37,5 @@
   %tfoot
     %tr
       %td{ :colspan => 2 }
-        - if (can? :create, current_community.custom_forms.new)
+        - if can? :create, CustomForm
           = link_to 'New form', new_custom_form_url, :class => 'button'

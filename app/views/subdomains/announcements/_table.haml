@@ -30,4 +30,6 @@
       %tr
         %td{ :colspan => 5 }
           - if can? :create, Announcement
-            %button{ :type => :submit } Delete checked announcements
+            %button{ :type => :submit } Remove Selected
+          - if can? :create, Announcement
+            = link_to 'Create New', new_announcement_url, :class => 'button'

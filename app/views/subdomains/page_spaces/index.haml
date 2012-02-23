@@ -1,5 +1,9 @@
 - title "Page Spaces | #{current_community.name}"
 
+#actions.actions
+  - if can? :create, PageSpace
+    = link_to 'Add', new_page_space_path, :class => 'new', :meta => 'Create a new page space'
+
 %h1 Page Spaces
 
 - if @page_spaces.any?
@@ -7,5 +11,5 @@
 
 -else
   %p There are no page spaces.
-  - if can? :create, current_community.page_spaces.new
+  - if can? :create, PageSpace
     %p= link_to 'New Space', new_page_space_path, :class => 'button'

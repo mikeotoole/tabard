@@ -25,5 +25,5 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        - if can? :create, current_community.page_spaces.new
-          = link_to 'New Space', new_page_space_path, :class => 'button primary'
+        - if can? :create, PageSpace
+          = link_to 'New Space', new_page_space_path, :class => 'button'

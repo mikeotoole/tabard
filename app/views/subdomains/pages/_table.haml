@@ -16,5 +16,5 @@
   %tfoot
     %tr
       %td{ :colspan => 3 }
-        - if (can? :create, page_space.pages.new)
+        - if can? :create, Page.new({ page_space: page_space }, :without_protection => true)
           = link_to 'New Page', new_page_space_page_path(page_space), :class => 'button primary'
