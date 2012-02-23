@@ -180,6 +180,7 @@ protected
   def update_is_locked_from_comments_enabled
     self.is_locked = true if comments_enabled == '0'
     self.is_locked = false if comments_enabled == '1'
+    return true
   end
 end
 
