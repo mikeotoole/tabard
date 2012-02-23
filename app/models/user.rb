@@ -161,6 +161,14 @@ class User < ActiveRecord::Base
     has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
 
+  def recent_unread_announcements_for_community(community)
+    if community != nil
+      self.recent_unread_announcements.where(community_id: community.id)
+    else
+      self.recent_unread_announcements
+    end
+  end
+
 
 ###
 # Authentication
