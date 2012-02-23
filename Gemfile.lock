@@ -324,6 +324,7 @@ DEPENDENCIES
   haml-rails
   heroku
   jquery-rails
+  kaminari
   meta_search (>= 1.1.0.pre)
   mini_magick
   newrelic_rpm

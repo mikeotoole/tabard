@@ -18,7 +18,7 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # GET /custom_forms
   def index
-    @custom_forms = current_community.custom_forms.delete_if{ |form| not can?(:read, form) }
+    @custom_forms = current_community.custom_forms
   end
 
   # GET /custom_forms/new

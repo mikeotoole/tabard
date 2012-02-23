@@ -25,10 +25,8 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments
   # GET /roster_assignments.json
   def index
-    #@roster_assignments = RosterAssignment.all
-    #authorize! :index, RosterAssignment
     raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
-    @member_profiles = current_community.member_profiles
+    @member_profiles = current_community.member_profiles.page params[:page]
   end
 
   # GET /roster_assignments
@@ -45,7 +43,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def game
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
-      @member_profiles = @supported_game.member_profiles
+      @member_profiles = @supported_game.member_profiles.page params[:page]
     else
       redirect_to not_found_url
     end

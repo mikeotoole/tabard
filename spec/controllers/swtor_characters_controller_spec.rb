@@ -70,24 +70,24 @@ describe SwtorCharactersController do
 
     it "should add new character" do
       expect {
-          post :create, :swtor_character => valid_attributes
+          post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
         }.to change(SwtorCharacter, :count).by(1)
     end
 
     it "should pass params to swtor_character" do
-      post :create, :swtor_character => valid_attributes
+      post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
       assigns(:swtor_character).should be_a(SwtorCharacter)
       assigns(:swtor_character).should be_persisted
     end
 
     it "should redirect to user profile dashboard" do
-      post :create, :swtor_character => valid_attributes
+      post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
       response.should redirect_to(user_root_url + "#characters")
     end
     
     it "should create an activity" do
       expect {
-        post :create, :swtor_character => valid_attributes
+        post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
       }.to change(Activity, :count).by(1)
       
       activity = Activity.last
@@ -99,7 +99,7 @@ describe SwtorCharactersController do
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = DefaultObjects.swtor
-      post 'create', :swtor_character => valid_attributes
+      post 'create', :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
     end
     
     it "should not create new record" do

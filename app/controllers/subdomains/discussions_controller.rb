@@ -23,7 +23,8 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   # GET /discussions/:id(.:format)
   def show
-    @discussion.update_viewed(current_user.user_profile)
+    @discussion.update_viewed(current_user.user_profile) unless params[:page]
+    @comments = @discussion.comments.page params[:page]
     respond_to do |format|
       format.js {
         announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :discussion => current_user.recent_unread_announcements.first }) : ''

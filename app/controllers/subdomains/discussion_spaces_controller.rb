@@ -23,11 +23,12 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 ###
   # GET /discussion_spaces
   def index
-    @discussion_spaces = current_community.discussion_spaces
+    @discussion_spaces = current_community.discussion_spaces.page params[:page]
   end
 
   # GET /discussion_spaces/1
   def show
+    @discussions = @discussion_space.discussions.page params[:page]
   end
 
   # GET /discussion_spaces/new

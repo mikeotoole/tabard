@@ -7,5 +7,6 @@
       %span= "#{@supported_game.smart_name} Roster}"
 
 %h1= "#{@supported_game.smart_name} Roster"
-
+= paginate @member_profiles
 = render 'table', :member_profiles => @member_profiles, :supported_game => @supported_game
+= paginate @member_profiles

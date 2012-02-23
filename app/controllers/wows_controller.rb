@@ -17,6 +17,6 @@ class WowsController < ApplicationController
 ###
   # GET /wows
   def index
-    @communities = Community.includes(:supported_games).where{supported_games.game_type == "Wow"}
+    @communities = Community.includes(:supported_games).where{supported_games.game_type == "Wow"}.page params[:page]
   end
 end
