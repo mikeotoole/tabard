@@ -1,11 +1,20 @@
-= simple_form_for(@artwork_upload) do |f|
-  = f.error_notification
-
-  .inputs
-    = f.input :email
-    = f.input :attribution_name
-    = f.input :attribution_url
-    = f.input :artwork_image
-
-  .actions
-    = f.button :submit
+= simple_form_for artwork_upload do |f|
+  = f.input :document_id, :as => :hidden
+  = f.input :artwork_image_cache, :as => :hidden
+  %fieldset
+    %ol
+      = f.input :email
+      = f.input :attribution_name
+      = f.input :attribution_url
+      %li.artwork
+        = f.input :artwork_image, :as => :file
+        = f.input :remote_artwork_image_url, :label => ' — or a link to an image'
+      %h2 Artwork Licensing Agreement
+      .document
+        .scroll
+          :markdown
+            #{artwork_upload.document.body}
+        %p.accept
+          = f.input :accepted_current_artwork_agreement, :as => :boolean, :label => 'I have read and accept the "Artwork Licensing Agreement"', :wrapper => false
+      %li
+        %button{ :type => 'submit' } Upload

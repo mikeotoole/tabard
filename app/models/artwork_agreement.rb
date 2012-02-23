@@ -7,11 +7,16 @@
 ###
 class ArtworkAgreement < Document
 ###
+# Associations
+###
+  has_many :artwork_uploads, :as => :document
+
+###
 # Public Methods
 ###
   # Gets the number of times this document has been accepted.
   def acceptance_count
-    0 # TODO Mike, Add this.
+    self.artwork_uploads.count
   end
 
   ###

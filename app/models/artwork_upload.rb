@@ -15,6 +15,7 @@ class ArtworkUpload < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :email, :attribution_name, :attribution_url,
+                  :document_id, :accepted_current_artwork_agreement,
                   :artwork_image, :artwork_image_cache, :remote_artwork_image_url
 
 ###
@@ -32,13 +33,29 @@ class ArtworkUpload < ActiveRecord::Base
       :length => { :within => 5..128 },
       :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
   validates :document, :presence => true
-  validates :accepted_current_artwork_agreement,
-      :acceptance => {:accept => true}
+  validates :accepted_current_artwork_agreement, :acceptance => true
+  validate :document_is_current
 
 ###
 # Uploaders
 ###
   mount_uploader :artwork_image, ArtworkUploader
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Mathods
+###
+  # This validates that the document submitted is the current artwork agreement
+  def document_is_current
+    if self.document_id != ArtworkAgreement.current.id
+      errors.add(:accepted_current_artwork_agreement, "agreement accepted was not current agreement")
+      self.document = ArtworkAgreement.current
+    end
+  end
 end
 
 # == Schema Information
