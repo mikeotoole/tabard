@@ -59,6 +59,7 @@ class AdminAbility
       can [:read, :create, :update], [Wow, 'Wow']
       can [:read, :create, :update], [Swtor, 'Swtor']
       can [:toggle_maintenance_mode], SiteConfigurationController
+      can :manage, ArtworkUpload
     end
 
     # Rules for superadmin user. (Inherits rules from admin).

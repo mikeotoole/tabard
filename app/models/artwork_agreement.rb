@@ -9,7 +9,7 @@ class ArtworkAgreement < Document
 ###
 # Associations
 ###
-  has_many :artwork_uploads, :as => :document
+  has_many :artwork_uploads, :foreign_key => :document_id
 
 ###
 # Public Methods

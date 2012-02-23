@@ -1,5 +1,5 @@
 ActiveAdmin.register Document do
-  menu :if => proc{ can?(:read, Document) }
+  menu :parent => "Crumblin", :if => proc{ can?(:read, Document) }
   controller.load_resource :only => [:edit, :update]
   controller.authorize_resource
 
