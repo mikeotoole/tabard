@@ -3,7 +3,9 @@
 %h1 Page Spaces
 
 - if @page_spaces.any?
+  = paginate @page_spaces
   = render "table", :page_spaces => @page_spaces
+  = paginate @page_spaces
 
 -else
   %p There are no page spaces.

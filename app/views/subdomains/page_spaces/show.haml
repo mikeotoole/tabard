@@ -6,8 +6,10 @@
     %li
       %span= @page_space.name
 
-- if @page_space.pages.size > 0
-  = render "subdomains/pages/table", :page_space => @page_space
+- if @pages.any?
+  = paginate @pages
+  = render "subdomains/pages/table", :page_space => @page_space, :pages => @pages
+  = paginate @pages
 
 -else
   %p This page space has no viewable pages.

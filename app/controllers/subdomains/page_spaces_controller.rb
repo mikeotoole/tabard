@@ -23,11 +23,12 @@ class Subdomains::PageSpacesController < SubdomainsController
 ###
   # GET /page_spaces(.:format)
   def index
-    @page_spaces = current_community.page_spaces
+    @page_spaces = current_community.page_spaces.page params[:page]
   end
 
   # GET /page_spaces/:id(.:format)
   def show
+    @pages = @page_space.pages.page params[:page]
   end
 
   # GET /page_spaces/new(.:format)

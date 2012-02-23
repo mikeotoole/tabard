@@ -17,6 +17,6 @@ class SwtorsController < ApplicationController
 ###
   # GET /swtors
   def index
-    @communities = Community.includes(:supported_games).where{supported_games.game_type == "Swtor"}
+    @communities = Community.includes(:supported_games).where{supported_games.game_type == "Swtor"}.page params[:page]
   end
 end

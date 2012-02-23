@@ -1,7 +1,8 @@
 - title "Community Applications | #{current_community.name}"
 
 %h1 Pending Applications
-- if @pending_community_applications.size > 0
+- if @pending_community_applications.any?
+  = paginate @pending_community_applications, :param_name => :pending_page
   %table
     %thead
       %tr
@@ -25,11 +26,13 @@
     %tfoot
       %tr
         %td{ :colspan => 4 }
+  = paginate @pending_community_applications, :param_name => :pending_page
 - else
   %p There are no pending applications
 
-- if @other_community_applications.size > 0
+- if @other_community_applications.any?
   %h2 Other Applications
+  = paginate @other_community_applications, :param_name => :other_page
   %table
     %thead
       %tr
@@ -57,3 +60,4 @@
     %tfoot
       %tr
         %td{ :colspan => 5 }
+  = paginate @other_community_applications, :param_name => :other_page
