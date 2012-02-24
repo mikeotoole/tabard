@@ -19,146 +19,54 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ArtworkUploadsController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # ArtworkUpload. As you add validations to ArtworkUpload, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-  
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ArtworkUploadsController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
-
-  describe "GET index" do
-    it "assigns all artwork_uploads as @artwork_uploads" do
-      artwork_upload = ArtworkUpload.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:artwork_uploads).should eq([artwork_upload])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested artwork_upload as @artwork_upload" do
-      artwork_upload = ArtworkUpload.create! valid_attributes
-      get :show, {:id => artwork_upload.to_param}, valid_session
-      assigns(:artwork_upload).should eq(artwork_upload)
-    end
-  end
+  let(:valid_attributes) { attributes_for(:artwork_upload_att) }
 
   describe "GET new" do
     it "assigns a new artwork_upload as @artwork_upload" do
-      get :new, {}, valid_session
+      get :new
       assigns(:artwork_upload).should be_a_new(ArtworkUpload)
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested artwork_upload as @artwork_upload" do
-      artwork_upload = ArtworkUpload.create! valid_attributes
-      get :edit, {:id => artwork_upload.to_param}, valid_session
-      assigns(:artwork_upload).should eq(artwork_upload)
-    end
-  end
-
   describe "POST create" do
+    before(:each) do
+      create(:artwork_agreement)
+      ArtworkUploader.enable_processing = true
+    end
+
+    after(:all) do
+      ArtworkUploader.enable_processing = false
+    end
+
     describe "with valid params" do
       it "creates a new ArtworkUpload" do
         expect {
-          post :create, {:artwork_upload => valid_attributes}, valid_session
+          post :create, :artwork_upload => attributes_for(:artwork_upload_att)
         }.to change(ArtworkUpload, :count).by(1)
       end
 
       it "assigns a newly created artwork_upload as @artwork_upload" do
-        post :create, {:artwork_upload => valid_attributes}, valid_session
+        post :create, :artwork_upload => valid_attributes
         assigns(:artwork_upload).should be_a(ArtworkUpload)
         assigns(:artwork_upload).should be_persisted
       end
 
-      it "redirects to the created artwork_upload" do
-        post :create, {:artwork_upload => valid_attributes}, valid_session
-        response.should redirect_to(ArtworkUpload.last)
+      it "redirects to root_url" do
+        post :create, :artwork_upload => valid_attributes
+        response.should redirect_to(root_url)
       end
     end
 
-    describe "with invalid params" do
+    describe "with invalid params" do    
       it "assigns a newly created but unsaved artwork_upload as @artwork_upload" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        ArtworkUpload.any_instance.stub(:save).and_return(false)
-        post :create, {:artwork_upload => {}}, valid_session
+        post :create, :artwork_upload => attributes_for(:artwork_upload_att, :email => nil)
         assigns(:artwork_upload).should be_a_new(ArtworkUpload)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        ArtworkUpload.any_instance.stub(:save).and_return(false)
-        post :create, {:artwork_upload => {}}, valid_session
-        response.should render_template("new")
+        post :create, :artwork_upload => attributes_for(:artwork_upload_att, :email => nil)
+        response.should render_template(:new)
       end
     end
   end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested artwork_upload" do
-        artwork_upload = ArtworkUpload.create! valid_attributes
-        # Assuming there are no other artwork_uploads in the database, this
-        # specifies that the ArtworkUpload created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        ArtworkUpload.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => artwork_upload.to_param, :artwork_upload => {'these' => 'params'}}, valid_session
-      end
-
-      it "assigns the requested artwork_upload as @artwork_upload" do
-        artwork_upload = ArtworkUpload.create! valid_attributes
-        put :update, {:id => artwork_upload.to_param, :artwork_upload => valid_attributes}, valid_session
-        assigns(:artwork_upload).should eq(artwork_upload)
-      end
-
-      it "redirects to the artwork_upload" do
-        artwork_upload = ArtworkUpload.create! valid_attributes
-        put :update, {:id => artwork_upload.to_param, :artwork_upload => valid_attributes}, valid_session
-        response.should redirect_to(artwork_upload)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the artwork_upload as @artwork_upload" do
-        artwork_upload = ArtworkUpload.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        ArtworkUpload.any_instance.stub(:save).and_return(false)
-        put :update, {:id => artwork_upload.to_param, :artwork_upload => {}}, valid_session
-        assigns(:artwork_upload).should eq(artwork_upload)
-      end
-
-      it "re-renders the 'edit' template" do
-        artwork_upload = ArtworkUpload.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        ArtworkUpload.any_instance.stub(:save).and_return(false)
-        put :update, {:id => artwork_upload.to_param, :artwork_upload => {}}, valid_session
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested artwork_upload" do
-      artwork_upload = ArtworkUpload.create! valid_attributes
-      expect {
-        delete :destroy, {:id => artwork_upload.to_param}, valid_session
-      }.to change(ArtworkUpload, :count).by(-1)
-    end
-
-    it "redirects to the artwork_uploads list" do
-      artwork_upload = ArtworkUpload.create! valid_attributes
-      delete :destroy, {:id => artwork_upload.to_param}, valid_session
-      response.should redirect_to(artwork_uploads_url)
-    end
-  end
-
 end
