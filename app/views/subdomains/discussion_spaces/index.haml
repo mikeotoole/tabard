@@ -7,7 +7,9 @@
 %h1 Discussion Spaces
 
 - if @discussion_spaces.any?
+  = paginate @discussion_spaces
   = render "table", :discussion_spaces => @discussion_spaces
+  = paginate @discussion_spaces
 
 -else
   %p There are no discussion spaces.

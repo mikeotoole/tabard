@@ -76,8 +76,8 @@ describe SwtorCharactersController do
 
     it "should pass params to swtor_character" do
       post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
-      assigns[:swtor_character].should be_a(SwtorCharacter)
-      assigns[:swtor_character].should be_persisted
+      assigns(:swtor_character).should be_a(SwtorCharacter)
+      assigns(:swtor_character).should be_persisted
     end
 
     it "should redirect to user profile dashboard" do
@@ -99,7 +99,7 @@ describe SwtorCharactersController do
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
       @game = DefaultObjects.swtor
-      post 'create', :swtor_character => valid_attributes
+      post 'create', :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
     end
     
     it "should not create new record" do

@@ -3,8 +3,10 @@
 #body
   %h1= 'World of Warcraft'
 
-  - if @communities.size > 0
+  - if @communities.any?
+    = paginate @communities
     = render "communities/table", :communities => @communities
+    = paginate @communities
   -else
     %p
       This game has no active communities.

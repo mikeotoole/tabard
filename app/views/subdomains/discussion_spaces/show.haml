@@ -16,8 +16,10 @@
 
 %h1= @discussion_space.name
 
-- if @discussion_space.discussions.any?
-  = render "subdomains/discussions/table", :discussion_space => @discussion_space
+- if @discussions.any?
+  = paginate @discussions
+  = render "subdomains/discussions/table", :discussion_space => @discussion_space, :discussions => @discussions
+  = paginate @discussions
 
 -else
   %p This discussion space has no viewable discussions.

@@ -22,9 +22,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications.json
   def index
     authorize! :index, CommunityApplication
-    @pending_community_applications = @community_applications.where{status == "Pending"}.order{ created_at.desc }
-    @other_community_applications = @community_applications.where{status != "Pending"}.order{ status.asc }.order{ created_at.desc }
-    @community_applications = @community_applications.order{ status.asc }.order{ created_at.desc }
+    @pending_community_applications = @community_applications.where{status == "Pending"}.order{ created_at.desc }.page params[:pending_page]
+    @other_community_applications = @community_applications.where{status != "Pending"}.order{ status.asc }.order{ created_at.desc }.page params[:other_page]
     respond_with @community_applications
   end
 

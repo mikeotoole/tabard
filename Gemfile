@@ -25,6 +25,9 @@ source 'http://rubygems.org'
 # Form Handling
   gem 'simple_form'
   gem 'client_side_validations'
+  
+# Pagination
+  gem 'kaminari' # MIT license
 
 # Filtering
   gem 'profanalyzer' 
