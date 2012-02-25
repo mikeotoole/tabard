@@ -108,11 +108,6 @@ protected
 ###
 # Helper Methods
 ###
-  # This helper method lets the applicaiton layout view know whether or not to display the pitch partial.
-  def show_pitch?
-    !!@show_pitch
-  end
-  helper_method :show_pitch?
 
   # This helper method lets the applicaiton layout view know whether or not to hide announcements within the flash messages partial.
   def hide_announcements?

@@ -11,7 +11,6 @@
   %body{ :class => "#{params[:controller]} #{params[:action]}" }
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
-    = render 'top_level/pitch' if show_pitch?
     #content
       = yield
     = render 'layouts/footer'
