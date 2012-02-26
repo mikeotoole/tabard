@@ -1,5 +1,6 @@
 @import mixins
 @import fonts/din
+@import fonts/eurostyle
 @import application/reset
 @import application/core
 @import application/bar
@@ -68,7 +69,7 @@ body
       >a
         +border_radius(3)
         display: block
-        font-size: 18px
+        font: 16px EurostyleStd, sans-serif
         height: 30px
         line-height: 30px
         margin: 0 0 0 10px
@@ -178,12 +179,6 @@ body
           +border-radius(3,0,3,3)
           left: auto
           right: 10px
-          
-button,
-.button,
-#body button,
-#body .button
-  font: 16px DinMedium, serif
 
 #body
   background: #fff

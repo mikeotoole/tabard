@@ -15,7 +15,7 @@
     border-top: 0
     +box_shadow(inset 0 0 5px rgba(#000,.2))
     color: #251634
-    font: 16px DinMedium
+    font: 16px DinLight, sans-serif
     height: 0
     line-height: 0
     margin: 0 auto
@@ -130,7 +130,8 @@
         top: 0
     
     .meta
-      font: 13px DinLight, sans-serif
+      font: 12px DinMedium, sans-serif
+      +opacity(.7)
     
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
@@ -158,6 +159,7 @@ button,
   border: 1px solid transparent
   +border_radius(3)
   display: inline-block
+  font: 11pt EurostyleStd, sans-serif
   height: 30px
   line-height: 30px !important
   margin: 0 5px 0 0
