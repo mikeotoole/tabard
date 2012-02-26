@@ -3,35 +3,65 @@
 
 #homebox
 
-  %h1 Get your guild on the same page with a powerful tool that simplifies community management.
+  %h1 Organize your guild with a powerful tool that simplifies community management.
   %p
     = link_to 'Learn more', top_level_intro_url
     or
     = link_to 'signup', new_user_registration_url
     for your free account.
 
-  %ul.slideshow
-    %li Derp 1
-    %li Derp 2
-    %li Derp 3
-    %li Derp 4
-    %li Derp 5
+  %dl.slideshow
+    %dt.current= image_tag 'main/slide-spirit.jpg'
+    %dd
+      Customize your guild applications
+      %br
+      and screen applicants.
+      = link_to 'More features', top_level_features_url
+    %dt= image_tag 'main/slide-metropolis.jpg'
+    %dd
+      Create character profiles and join
+      %br
+      communities.
+      = link_to 'More features', top_level_features_url
+    %dt= image_tag 'main/slide-cyborg.jpg'
+    %dd
+      Send announcements and track who
+      %br
+      acknowledges them.
+      = link_to 'More features', top_level_features_url
+    %dt= image_tag 'main/slide-snowtower.jpg'
+    %dd
+      Create roles with fully customizable
+      %br
+      permissions.
+      = link_to 'More features', top_level_features_url
+    %dt= image_tag 'main/slide-station.jpg'
+    %dd
+      Communicate privately using our
+      %br
+      messaging system.
+      = link_to 'More features', top_level_features_url
 
-  = simple_form_for new_user_session_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html_input => { class: 'login' } do |f|
+  = simple_form_for 'user', :url => new_user_session_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'login' } do |f|
     %fieldset
       %ol
         = f.input :email
         = f.input :password
-        = f.input :remember_me, :as => :boolean
         %li
-          %button{ :type => 'submit' } Login
+          = f.input :remember_me, :as => :boolean, :wrapper => false
+          &nbsp;|&nbsp;
+          = link_to 'Password Help', new_user_password_url
+    %button{ :type => 'submit' } Login
 
-  = simple_form_for new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html_input => { class: 'signup' } do |f|
+  = simple_form_for 'user', :url => user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'signup' } do |f|
+    %h2
+      %strong Signup
+      for your
+      %strong FREE
+      account
     %fieldset
       %ol
         = f.input :email, :as => :email
-        = f.simple_fields_for :user_profile do |uf|
-          = uf.input :display_name, :required => false
+        = f.input :display_name, :required => false, :input_html => { name: 'user[user_profile_attributes][display_name]' }
         = f.input :password
-        %li
-          %button{ :type => 'submit' } Sign up
+    %button{ :type => 'submit' } Sign up

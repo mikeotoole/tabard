@@ -5,9 +5,14 @@
   bottom: 0
   left: 0
   margin: 0
+  min-height: 400px
+  min-width: 980px
   position: absolute
   right: 0
   top: 70px
+
+#flash + #content
+  top: 110px
 
 #homebox
   height: 400px
@@ -21,6 +26,7 @@
   > h1
     color: #452a5d
     font: 18px EurostyleBold, sans-serif
+    padding: 15px 0 0
   
   > p
     color: #452a5d
@@ -36,3 +42,358 @@
         background: #2D7CB4
         color: #fff
         text-decoration: none
+  
+  .slideshow
+    background: #999
+    border: 1px solid #333
+    +border_radius(3)
+    +box_shadow(0 -5px 5px rgba(#000,.15))
+    bottom: 30px
+    height: 300px
+    left: 0
+    margin: 0
+    padding: 0
+    position: absolute
+    width: 640px
+    
+    &:before
+      background: image-url('main/slideshow-curl.png') 0 0 no-repeat
+      bottom: 20px
+      content: ''
+      height: 80px
+      left: -11px
+      position: absolute
+      width: 11px
+    
+    dd
+      background: image-url('main/slideshow-arrow.png') 323px 18px no-repeat #422C56
+      background-color: rgba(#422C56,.9)
+      +border_radius(0,3,3,0)
+      bottom: 20px
+      color: #fff
+      font: 11pt EurostyleBold, sans-serif
+      height: 40px
+      left: 0
+      line-height: 20px
+      +opacity(0)
+      overflow: hidden
+      padding: 15px 40px 15px 20px
+      position: absolute
+      +transition(opacity .5s linear, width .3s linear)
+      width: 0
+      white-space: nowrap
+      z-index: 2
+      
+      a
+        color: #a996bc
+        font-family: EurostyleStd, sans-serif
+        text-decoration: underline
+        
+        &:before
+          bottom: 0
+          content: ''
+          left: 0
+          position: absolute
+          right: 0
+          top: 0
+        
+        &:hover
+          color: #fff
+    
+    dt
+      +border_radius(3)
+      height: 300px
+      left: 0
+      +opacity(0)
+      overflow: hidden
+      position: absolute
+      top: 0
+      +transition(opacity .5s linear)
+      width: 640px
+      z-index: 1
+      
+      img
+        +border_radius(3)
+        display: block
+        height: 300px
+        margin: 0 -20px
+        +transition(width .3s linear, margin .3s linear)
+        width: 680px
+      
+      &.current
+        +opacity(1)
+        z-index: 3
+        
+        img
+          margin: 0
+          width: 640px
+        
+        + dd
+          +opacity(1)
+          width: 295px
+          z-index: 4
+  
+  .slideshownav
+    bottom: 0
+    height: 10px
+    left: 0
+    line-height: 10px
+    margin: -3px
+    padding: 10px 0
+    position: absolute
+    
+    a
+      background: #ccc
+      border: 3px solid #fff
+      +border_radius(10)
+      display: block
+      float: left
+      height: 10px
+      width: 10px
+      
+      &:hover
+        background: #CF442C
+      
+      &.current
+        background: #367BB1
+  
+  form
+    +border_radius(3)
+    +box_shadow(0 -5px 5px rgba(#000,.1))
+    font-size: 10pt
+    position: absolute
+    right: 0
+    width: 300px
+    
+    &:before
+      +border_radius(3)
+      bottom: 0
+      content: ''
+      left: 0
+      pointer-events: none
+      position: absolute
+      right: 0
+      top: 0
+      z-index: 1
+    
+    ol
+      left: 15px
+      position: absolute
+      right: 15px
+      
+      > li
+        height: 28px
+        line-height: 28px
+        margin: 0 0 5px
+        position: relative
+          
+        input[type="checkbox"]
+          height: 1px
+          left: 5px
+          position: absolute
+          top: 5px
+          width: 1px
+          z-index: 1
+          
+          + label
+            padding-left: 32px
+          
+            &:before
+              +border_radius(3)
+              content: ''
+              display: block
+              font: 14pt EurostyleBold, sans-serif
+              height: 20px
+              left: 1px
+              line-height: 20px
+              padding: 0
+              position: absolute
+              text-align: center
+              top: 4px
+              width: 20px
+              z-index: 2
+            
+            &:after
+              +border_radius(3)
+              content: ''
+              display: block
+              height: 22px
+              left: 0
+              padding: 0
+              position: absolute
+              top: 3px
+              width: 22px
+              z-index: 2
+          
+          &:checked + label:before
+            content: '\2713'
+      
+      > li.input
+        +border_radius(3)
+        padding: 0
+        
+        label
+          display: none
+          padding: 0 5px
+          position: absolute
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]
+          +border_radius(3)
+          +box_shadow(inset 0 5px 5px rgba(#000,.1))
+          display: block
+          height: 26px
+          padding: 0 5px
+          width: 256px
+          
+          &:focus
+            +box_shadow(inset 0 3px 5px rgba(#000,.1))
+        
+      > li.password
+        width: 175px
+        
+        input[type="password"]
+          width: 163px
+    
+    button
+      border: 0
+      height: 28px
+      line-height: 28px !important
+      padding: 0
+      margin: 0
+      position: absolute
+      right: 16px
+      width: 85px
+      z-index: 2
+      
+      &:focus,
+      &:hover
+        color: #fff
+  
+  .login
+    background: #BACEDC
+    +bg_gradient(#CFDDE7,#A7C1D4)
+    border: 1px solid #6E8B9E
+    bottom: 205px
+    color: #395365
+    height: 125px
+    
+    &:before
+      border: 1px solid #E1EBF1
+    
+    ol
+      top: 15px
+      
+      >li input[type="checkbox"] + label
+        
+        &:before
+          background: #edf2f6
+          +bg_gradient(#dbe6ee,#fff)
+          border: 1px solid #6B889A
+          color: #667c8c
+        
+        &:after
+          border: 1px solid #E1EBF1
+        
+        &:hover
+          color: #000
+      
+      > li.input
+        border: 1px solid #E1EBF1
+        
+        label
+          color: #819bae
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]
+          background: #edf2f6
+          +bg_gradient(#dbe6ee,#fff)
+          border: 1px solid #6B889A
+          color: #25343f
+          
+          &:focus
+            +bg_gradient(#edf2f6,#fff)
+            border-color: #fff
+    
+    a
+      color: #395365
+      
+      &:hover
+        color: #000
+        text-decoration: underline
+    
+    button
+      background: #3576A8
+      +bg_gradient(#4790C8,#245D8A)
+      bottom: 46px
+      color: #cbe5f8
+      
+      &:focus,
+      &:hover
+        background: #3788C7
+        +bg_gradient(#47A2E8,#296EA6)
+  
+  .signup
+    background: #CEBAB7
+    +bg_gradient(#DCCFCC,#C0A5A2)
+    bottom: 30px
+    border: 1px solid #A58984
+    height: 155px
+    
+    &:before
+      border: 1px solid #F5E3E0
+    
+    h2
+      color: #94200a
+      font: 13pt EurostyleStd, sans-serif
+      height: 40px
+      line-height: 40px
+      padding: 0 15px
+      
+      strong
+        font-family: EurostyleBold, sans-serif
+    
+    ol
+      top: 40px
+      
+      >li input[type="checkbox"] + label
+      
+        &:before
+          background: #f4f0ef
+          +bg_gradient(#eae1e0,#fff)
+          border: 1px solid #A18681
+          color: #926f6b
+        
+        &:after
+          border: 1px solid #F5E3E0
+        
+      > li.input
+        border: 1px solid #F5E3E0
+        
+        label
+          color: #aa837f
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"]
+          background: #f4f0ef
+          +bg_gradient(#eae1e0,#fff)
+          border: 1px solid #A18681
+          color: #3a2725
+          
+          &:focus
+            +bg_gradient(#f4f0ef,#fff)
+            border-color: #fff
+    
+    button
+      background: #A3372B
+      +bg_gradient(#CF442C,#782A2A)
+      bottom: 16px
+      color: #f8d5bc
+      
+      &:focus,
+      &:hover
+        background: #C84134
+        +bg_gradient(#F55033,#A43636)

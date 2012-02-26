@@ -1,11 +1,51 @@
 $(document).ready ->
 
-  # Home page community name field
-  $('#homebox .url ins').data 'default', $('#homebox .url ins').html()
-  $('#homebox input')
-    .bind 'keyup change', ->
-      text = $(this).val().toLowerCase().replace /[^a-z0-9]/g, ''
-      $('#homebox .url ins').html text or= $('#homebox .url ins').data 'default'
+  # make labels work like field suggestions
+  $('#homebox form li.input input')
+    .focus ->
+      $(this).siblings('label').hide()
+    .blur ->
+      if $(this).val().length < 1
+        $(this).siblings('label').show()
+    .each ->
+      if $(this).val().length < 1
+        $(this).siblings('label').hide().show()
+  
+  # hope page slide show
+  numberOfSlides = $('#homebox .slideshow img').length
+  if numberOfSlides > 0
+    slideTimeout = ''
+    timeBetweenSlides = 6000
+    $('#homebox .slideshow').after '<div class="slideshownav"></div>'
+    $('#homebox .slideshownav').append('<a href="javascript:;"></a>') for i in [1..numberOfSlides]
+    firstSlide = Math.floor Math.random() * numberOfSlides
+    $('#homebox .slideshow dt')
+      .removeClass('current')
+      .eq(firstSlide)
+      .addClass 'current'
+    $('#homebox .slideshownav a')
+      .click ->
+        clearTimeout slideTimeout
+        link = $(this)
+        $('#homebox .slideshownav a').removeClass 'current'
+        link.addClass 'current'
+        i = $('#homebox .slideshownav a').index($(this))
+        $('#homebox .slideshow dt').removeClass 'current'
+        $('#homebox .slideshow dt:eq('+i+')').addClass 'current'
+        slideTimeout = setTimeout ->
+          if link.next().length
+            link.next().click()
+          else
+            $('#homebox .slideshownav a:first').click()
+        , timeBetweenSlides
+      .eq(firstSlide).addClass 'current'
+    slideTimeout = setTimeout ->
+      link = $('#homebox .slideshownav a').eq(firstSlide)
+      if link.next().length
+        link.next().click()
+      else
+        $('#homebox .slideshownav a:first').click()
+    , timeBetweenSlides
   
   # Enforce document scrolling
   $('.document .scroll')
