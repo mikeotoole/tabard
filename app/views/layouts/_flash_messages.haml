@@ -1,22 +1,22 @@
-%ul#flash
-  - if !hide_announcements? && user_signed_in? && current_user.recent_unread_announcements_for_community(current_community).size > 0 && !session[:hide_announcements]
-    = render 'layouts/flash_message_announcement', :announcement => current_user.recent_unread_announcements_for_community(current_community).first
-  - if !!flash[:alert]
-    %li.alert
-      :markdown
-        #{flash[:alert]}
-  - if !!flash[:error]
-    %li.alert
-      :markdown
-        #{flash[:error]}
-  - if !!flash[:notice]
-    %li.notice
-      :markdown
-        #{flash[:notice]}
-  - if !!flash[:messages]
-    - flash[:messages].each do |message|
-      %li{ :class => message[:class] }
+- if !!flash[:alert] or  !!flash[:error] or !!flash[:notice] or !!flash[:messages] or (!hide_announcements? && user_signed_in? && current_user.recent_unread_announcements_for_community(current_community).size > 0 && !session[:hide_announcements])
+  %ul#flash
+    - if !hide_announcements? && user_signed_in? && current_user.recent_unread_announcements_for_community(current_community).size > 0 && !session[:hide_announcements]
+      = render 'layouts/flash_message_announcement', :announcement => current_user.recent_unread_announcements_for_community(current_community).first
+    - if !!flash[:alert]
+      %li.alert
         :markdown
-          #{message[:body]}
-
-- clear_flash_messages
+          #{flash[:alert]}
+    - if !!flash[:error]
+      %li.alert
+        :markdown
+          #{flash[:error]}
+    - if !!flash[:notice]
+      %li.notice
+        :markdown
+          #{flash[:notice]}
+    - if !!flash[:messages]
+      - flash[:messages].each do |message|
+        %li{ :class => message[:class] }
+          :markdown
+            #{message[:body]}
+  - clear_flash_messages
