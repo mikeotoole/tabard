@@ -285,19 +285,25 @@
     ol
       top: 15px
       
-      >li input[type="checkbox"] + label
+      >li input[type="checkbox"]
+      
+        + label
+          
+          &:before
+            background: #edf2f6
+            +bg_gradient(#dbe6ee,#fff)
+            border: 1px solid #6B889A
+            color: #667c8c
+          
+          &:after
+            border: 1px solid #E1EBF1
+          
+          &:hover
+            color: #000
         
-        &:before
-          background: #edf2f6
-          +bg_gradient(#dbe6ee,#fff)
-          border: 1px solid #6B889A
-          color: #667c8c
-        
-        &:after
-          border: 1px solid #E1EBF1
-        
-        &:hover
-          color: #000
+        &:focus + label:before
+          +bg_gradient(#edf2f6,#fff)
+          border-color: #fff
       
       > li.input
         border: 1px solid #E1EBF1
@@ -358,16 +364,22 @@
     ol
       top: 40px
       
-      >li input[type="checkbox"] + label
+      >li input[type="checkbox"]
       
-        &:before
-          background: #f4f0ef
-          +bg_gradient(#eae1e0,#fff)
-          border: 1px solid #A18681
-          color: #926f6b
+        + label
         
-        &:after
-          border: 1px solid #F5E3E0
+          &:before
+            background: #f4f0ef
+            +bg_gradient(#eae1e0,#fff)
+            border: 1px solid #A18681
+            color: #926f6b
+          
+          &:after
+            border: 1px solid #F5E3E0
+        
+        &:focus + label
+          +bg_gradient(#f4f0ef,#fff)
+          border-color: #fff
         
       > li.input
         border: 1px solid #F5E3E0

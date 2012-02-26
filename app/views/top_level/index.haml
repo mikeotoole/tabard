@@ -45,13 +45,13 @@
   = simple_form_for 'user', :url => new_user_session_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'login' } do |f|
     %fieldset
       %ol
-        = f.input :email
-        = f.input :password
+        = f.input :email, :input_html => { :tabindex => 1 }
+        = f.input :password, :input_html => { :tabindex => 2 }
         %li
-          = f.input :remember_me, :as => :boolean, :wrapper => false
+          = f.input :remember_me, :as => :boolean, :wrapper => false, :input_html => { :tabindex => 3 }
           &nbsp;|&nbsp;
           = link_to 'Password Help', new_user_password_url
-    %button{ :type => 'submit' } Login
+    %button{ :type => 'submit', :tabindex => 4 } Login
 
   = simple_form_for 'user', :url => user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'signup' } do |f|
     %h2
@@ -61,7 +61,7 @@
       account
     %fieldset
       %ol
-        = f.input :email, :as => :email
-        = f.input :display_name, :required => false, :input_html => { name: 'user[user_profile_attributes][display_name]' }
-        = f.input :password
-    %button{ :type => 'submit' } Sign up
+        = f.input :email, :as => :email, :input_html => { :tabindex => 5 }
+        = f.input :display_name, :required => false, :input_html => { name: 'user[user_profile_attributes][display_name]', tabindex: 6 }
+        = f.input :password, :input_html => { :tabindex => 7 }
+    %button{ :type => 'submit', :tabindex => 8 } Sign up
