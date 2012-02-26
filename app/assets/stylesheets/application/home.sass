@@ -1,1 +1,38 @@
 @import mixins
+
+#content
+  background: transparent
+  bottom: 0
+  left: 0
+  margin: 0
+  position: absolute
+  right: 0
+  top: 70px
+
+#homebox
+  height: 400px
+  left: 50%
+  margin: -200px 0 0 -480px
+  position: absolute
+  text-align: left
+  top: 50%
+  width: 960px
+  
+  > h1
+    color: #452a5d
+    font: 18px EurostyleBold, sans-serif
+  
+  > p
+    color: #452a5d
+    font: 14px EurostyleStd, sans-serif
+    
+    a
+      +border_radius(3)
+      color: #9f250a
+      padding: 0 1px
+      text-decoration: underline
+      
+      &:hover
+        background: #2D7CB4
+        color: #fff
+        text-decoration: none
