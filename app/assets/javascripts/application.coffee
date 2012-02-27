@@ -146,7 +146,7 @@ $(document).ready ->
   
   # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
-    if $('body.fluid').length || $('#flash').css('position') != 'relative'
+    if $('body.fluid').length || $('#flash').length
       messageCount = $('#flash li').length or= 0
       amount = (messageCount + rowOffset) * 40
       $('#header')

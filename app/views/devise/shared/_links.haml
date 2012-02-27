@@ -1,6 +1,6 @@
 %ul.accountlinks
   - if controller_name != 'sessions'
-    %li= link_to "Sign in", new_session_url(resource_name, :protocol => "http://", :subdomain => false)
+    %li= link_to "Login", new_session_url(resource_name, :protocol => "http://", :subdomain => false)
   - if devise_mapping.registerable? && controller_name != 'registrations'
     %li= link_to "Sign up", new_registration_url(resource_name, :protocol => "http://", :subdomain => false)
   - if devise_mapping.recoverable? && controller_name != 'passwords'
