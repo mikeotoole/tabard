@@ -22,7 +22,7 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
-    @recent_activity = Community.order{ created_at.desc }.last(5).collect{|community| {type: 'New Community', name: community.name, link: community_url(community), snippet: community.supported_games.collect{|game| game.name}.join(', ')}}
+    # @recent_activity = Community.order{ created_at.desc }.last(5).collect{|community| {type: 'New Community', name: community.name, link: community_url(community), snippet: community.supported_games.collect{|game| game.name}.join(', ')}}
   end
 
   # This method gets the Introduction page.
@@ -38,9 +38,9 @@ class TopLevelController < ApplicationController
   end
 
   # This method gets the Maintenance page.
-  def maintenance # TODO Doug, This page needs content. -MO BVR-396
+  def maintenance
     if SiteConfiguration.is_maintenance?
-      render :layout => false
+      render :layout => 'maintenance'
     else
       redirect_to root_url
     end
