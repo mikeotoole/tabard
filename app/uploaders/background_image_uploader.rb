@@ -3,7 +3,7 @@ require 'carrierwave/processing/mini_magick'
 ###
 # Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Don't Steal Me Bro!
+# License::   Proprietary Closed Source
 #
 # This uploader is for handling the uploading of background images using carrier wave.
 ###

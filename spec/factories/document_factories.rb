@@ -10,4 +10,10 @@ FactoryGirl.define do
     sequence(:version)
     is_published true
   end
+  
+  factory :artwork_agreement do
+    body "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a ligula vitae leo varius consequat id ut nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed egestas mi a lacus accumsan ultrices. Suspendisse egestas ipsum eget erat gravida et aliquet lectus cursus. Fusce egestas porttitor mi. Sed laoreet imperdiet libero, eget semper mi sollicitudin a. In tincidunt pretium tortor convallis bibendum. Curabitur non velit purus. Morbi tincidunt magna id ante lacinia lacinia. Phasellus ullamcorper nibh sed ante gravida non aliquet eros porta. Aliquam auctor rutrum velit at feugiat."
+    sequence(:version)
+    is_published true
+  end
 end

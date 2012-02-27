@@ -33,5 +33,5 @@ FactoryGirl.define do
   factory :swtor_supported_game, :parent => :supported_game do
     game_id { DefaultObjects.swtor.id }
     game_type { DefaultObjects.swtor.class.name }
-  end  
+  end
 end
