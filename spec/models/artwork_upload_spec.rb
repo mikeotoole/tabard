@@ -23,10 +23,8 @@
 require 'spec_helper'
 
 describe ArtworkUpload do
-  let(:artwork_upload) { create(:artwork_upload) }
-
   it "should create a new instance given valid attributes" do
-    artwork_upload.should be_valid
+    build(:artwork_upload).should be_valid
   end
   
   describe "email address" do
