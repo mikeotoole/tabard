@@ -1,5 +1,90 @@
 - title 'Features'
 
 #body
-  %h1 Crumblin Features
-  %p Page needs content.
+  %h1 Features
+  %table.compare
+    %thead
+      %tr
+        %th
+        %th
+          %strong Crumblin
+          %br
+          Free
+        %th
+          %strong GuildPortal
+          %br
+          Bronze Package (Free)
+        %th
+          %strong GuildLaunch
+          %br
+          Ad-Supported Plan (Free)
+        %th
+          %strong Enjin
+          %br
+          Basic Plan (Free)
+    %tbody
+      %tr
+        %th Ad Free
+        %td Yes
+        %td no
+        %td no
+        %td no
+      %tr
+        %th Discussions & Pages
+        %td Unlimited
+        %td 10 posts & no storage space
+        %td 10mb storage
+        %td 20 modules
+      %tr
+        %th Member Applications
+        %td Custom
+        %td no
+        %td no
+        %td no
+      %tr
+        %th Dynamic Roles & Permissions
+        %td Yes
+        %td no
+        %td no
+        %td Yes
+      %tr
+        %th Site Themes
+        %td Customizable
+        %td Static
+        %td Static
+        %td Customizable
+      %tr
+        %th Tracked Announcements
+        %td Yes
+        %td no
+        %td no
+        %td no
+      %tr
+        %th Roster Management
+        %td Yes
+        %td Yes
+        %td no
+        %td Yes
+      %tr
+        %th Cross-guild Private Messaging
+        %td Yes
+        %td no
+        %td no
+        %td no
+      %tr
+        %th Multiple Memberships
+        %td Yes
+        %td no
+        %td no
+        %td no
+      %tr
+        %th Custom Forms
+        %td Yes
+        %td no
+        %td no
+        %td no
+    %tfoot
+      %tr
+        %td
+        %td= link_to 'signup', new_user_registration_url, :class => 'button'
+        %td{ colspan: 4 }

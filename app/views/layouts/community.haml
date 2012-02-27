@@ -16,7 +16,7 @@
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = favicon_link_tag asset_path 'favicon.gif'
+    = favicon_link_tag asset_path 'favicon.png'
 
   %body.theme
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')

@@ -318,6 +318,14 @@ button,
     tbody
     
       tr
+        th
+          background: #bbb
+          +bg_gradient(#ccc,#aaa)
+          border-bottom: 1px solid #999
+          border-right: 1px solid #999
+          border-top: 1px solid #fff
+          font-family: DinMedium, sans-serif
+          padding: 5px 10px
       
         td
           background: #eee
@@ -464,6 +472,16 @@ button,
           
           &:hover
             +box_shadow(0 0 10px #000)
+    
+    &.compare
+      
+      th,
+      td
+        text-align: center
+        width: 20%
+      
+      tbody th
+        text-align: right
   
   .accountlinks
     border-left: 1px solid #ccc

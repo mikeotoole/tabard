@@ -9,7 +9,8 @@
     = favicon_link_tag asset_path 'favicon.png'
 
   %body{ :class => "#{params[:controller]} #{params[:action]}" }
-    = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
+    #bar
+      .logo Crumblin
     = render 'layouts/flash_messages'
     #content
       = yield
