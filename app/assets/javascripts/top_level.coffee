@@ -47,6 +47,23 @@ $(document).ready ->
         $('#homebox .slideshownav a:first').click()
     , timeBetweenSlides
   
+  # videobox player
+  $('#videobox .menu a').click ->
+    link = $(this).attr('href').split /v=/
+    $('#videobox .player iframe').attr 'src', 'http://www.youtube.com/embed/'+link[1]+'?wmode=transparent'
+    $('#videobox .menu li').removeClass 'current'
+    $(this).closest('li').addClass 'current'
+    false
+  $('#videobox .menu li:first').addClass('current').find('a').trigger 'click'
+  $('.videolink').click ->
+    link = $(this).attr('href')
+    videos = $('#videobox .menu a')
+    for video in videos
+      if $(video).attr('href') == link
+        $('html, body').animate { scrollTop: 0 }, 500
+        $(video).trigger 'click'
+        return false
+  
   # Enforce document scrolling
   $('.document .scroll')
     .wrapInner('<div class="pane" />')

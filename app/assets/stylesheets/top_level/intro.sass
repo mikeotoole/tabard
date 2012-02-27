@@ -1,0 +1,156 @@
+@import mixins
+
+#bar:before
+  border-top: 1px solid #999
+
+#content
+  background: transparent
+  top: -25px
+
+#flash + #content
+  padding-top: 40px
+
+#videobox
+  background: #989898
+  +bg_gradient(#B8B8B8,#7B7B7B)
+  height: 600px
+  position: relative
+  z-index: 2
+  
+  &:before
+    background: image-url('bar/shadow.png') top center no-repeat
+    bottom: -71px
+    content: ''
+    height: 70px
+    left: 0
+    pointer-events: none
+    position: absolute
+    right: 0
+
+  &:after
+    +bg_gradient(rgba(#999,.5),rgba(#999,0))
+    border-top: 1px solid rgba(#000,.3)
+    content: ''
+    height: 5px
+    left: 0
+    pointer-events: none
+    position: absolute
+    right: 0
+    bottom: -5px
+
+  h1
+    color: #3d2358
+    font: 18pt DinMedium, sans-serif
+    height: 40px
+    line-height: 40px
+    margin: 0 auto
+    padding: 50px 0 0
+    text-align: left
+    width: 960px
+  
+  .menu
+    background: #251D2C
+    border: 1px solid #000
+    bottom: 0
+    height: 500px
+    left: 50%
+    margin: 0 0 0 -480px
+    position: absolute
+    text-align: left
+    width: 107px
+    
+    a
+      background: #382A46
+      border-bottom: 1px solid #000
+      color: #91869d
+      display: block
+      font: 11pt EurostyleStd, sans-serif
+      height: 91px
+      line-height: 1.2em
+      padding: 8px
+      position: relative
+      +transition(color .2s linear, background .2s linear)
+      width: 91px
+      
+      &:hover
+        background: #AB3A2A
+        color: #fff
+    
+    li.current a
+      background: #367BB1
+      color: #fff
+      cursor: default
+      
+      &:after
+        bottom: 13px
+        content: '\25B6'
+        color: #7FB0D3
+        font-size: 18pt
+        left: 8px
+        position: absolute
+  
+  .player
+    background: #000
+    border: 1px solid #000
+    bottom: 0
+    height: 500px
+    margin: 0 -480px 0 0
+    position: absolute
+    right: 50%
+    width: 850px
+
+#body
+  background: #ddd
+  +bg_gradient(#ccc,#fff)
+  left: auto
+  margin: 0 0 30px
+  padding: 0
+  position: relative
+  width: auto
+  z-index: 1
+  
+  .col3
+    padding: 70px 0 0
+    margin: 0 auto
+    width: 960px
+    
+    &:after
+      clear: both
+      content: '.'
+      display: block
+      height: 0
+      visibility: hidden
+    
+    article
+      background: #fff
+      +border_radius(3,3,0,0)
+      +box_shadow(0 -5px 5px rgba(#000,.1))
+      float: left
+      height: 100%
+      margin: 0 15px
+      min-height: 350px
+      padding: 30px 35px
+      width: 230px
+      
+      &:first-child
+        margin-left: 0
+      
+      &:last-child
+        margin-right: 0
+      
+      h2
+        font-size: 16pt
+        padding: 0 0 10px
+      
+      .imglink
+        background: transparent
+        display: block
+        height: 120px
+        overflow: hidden
+        padding: 0
+        width: 230px
+        
+        img
+          background: #000
+          display: block
+          margin: -27px 1px
