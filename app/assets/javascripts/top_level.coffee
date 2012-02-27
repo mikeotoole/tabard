@@ -1,15 +1,16 @@
 $(document).ready ->
 
   # make labels work like field suggestions
-  $('#homebox form li.input input')
-    .focus ->
+  $('#homebox form li.input')
+    .delegate 'input', 'focus', ->
       $(this).siblings('label').hide()
-    .blur ->
+    .delegate 'input', 'blur change', ->
       if $(this).val().length < 1
         $(this).siblings('label').show()
     .each ->
-      if $(this).val().length < 1
-        $(this).siblings('label').hide().show()
+      input = $(this).find('input')
+      if input.val().length < 1
+        input.siblings('label').hide().show()
   
   # hope page slide show
   numberOfSlides = $('#homebox .slideshow img').length
