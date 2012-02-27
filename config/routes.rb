@@ -1,5 +1,4 @@
 DaBvRails::Application.routes.draw do
-  
   # Admin Users
   devise_for :admin_users do
     get "/admin/login" => "admin/devise/sessions#new"
@@ -164,6 +163,9 @@ DaBvRails::Application.routes.draw do
   # Announcements
   resources :announcements, :only => [:index, :show]
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
+
+  # Artwork Upload
+  resources :artwork_uploads, :only => [:create, :new]
 
   # Site Actions
   match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", :as => :toggle_maintenance_mode

@@ -56,6 +56,8 @@ class Ability
     can :read, UserProfile
     # User Rules
     can :create, User
+    # ArtworkUpload Rules
+    can :create, ArtworkUpload
   end
 =begin
   can :manage, Answer

@@ -12,7 +12,7 @@ class Document < ActiveRecord::Base
 # Constants
 ###
   # The list of vaild game subclass types.
-  VALID_TYPES =  %w(PrivacyPolicy TermsOfService)
+  VALID_TYPES =  %w(PrivacyPolicy TermsOfService ArtworkAgreement)
 
 ###
 # Callbacks
@@ -26,17 +26,25 @@ class Document < ActiveRecord::Base
   attr_accessible :body, :version, :is_published, :type
 
 ###
-# Associations
-###
-  has_many :document_acceptances
-
-###
 # Validators
 ###
   validates :body,  :presence => true
   validates :type,  :presence => true,
                     :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported document type." }
   validates :version, :uniqueness => {:scope => :type}
+
+###
+# Associations
+###
+  has_many :document_acceptances
+
+###
+# Public Methods
+###
+  # Gets the number of times this document has been accepted.
+  def acceptance_count
+    self.document_acceptances.count
+  end
 
 ###
 # Class Methods
@@ -62,14 +70,11 @@ class Document < ActiveRecord::Base
     case self.type
       when 'TermsOfService'
         'Terms of Service and User Agreement'
+      when 'ArtworkAgreement'
+        'Artwork Licensing Agreement'
       else
         self.type.scan(/[A-Z][a-z0-9]*/).join ' '
     end
-  end
-
-  # Gets the number of times this document has been accepted.
-  def acceptance_count
-    self.document_acceptances.count
   end
 
 ###

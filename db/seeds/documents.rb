@@ -13,3 +13,10 @@ PrivacyPolicy.create!(
   body: File.read(File.join(Rails.root, "db/assets/privacy_policy_v1.txt")), 
   version: "1", 
   is_published: true)
+  
+###### SEED AA #####
+puts "Creating Artwork Agreement"
+ArtworkAgreement.create!(
+  body: File.read(File.join(Rails.root, "db/assets/artwork_agreement_v1.txt")), 
+  version: "1", 
+  is_published: true)

@@ -76,6 +76,7 @@ GEM
     coffee-script-source (1.2.0)
     colored (1.2)
     columnize (0.3.6)
+    country_select (0.0.1)
     daemons (1.1.8)
     dalli (1.1.4)
     database_cleaner (0.7.1)
@@ -311,6 +312,7 @@ DEPENDENCIES
   carrierwave
   client_side_validations
   coffee-rails
+  country_select
   dalli
   database_cleaner
   delayed_job_active_record
