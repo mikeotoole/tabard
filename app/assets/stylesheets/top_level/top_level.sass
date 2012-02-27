@@ -21,6 +21,25 @@ body
     &.omg
       color: #A33C33
       text-transform: uppercase
+  
+  .alignleft
+    clear: left
+    float: left
+    margin: 0 10px 10px 0
+  
+  .alignright
+    clear: right
+    float: right
+    margin: 0 0 10px 10px
+  
+  img.alignleft,
+  img.alignright
+    +border_radius(3)
+  
+  hr
+    border-top: 1px solid #ccc
+    margin: 15px 0
+    visibility: visible
 
 #bar:after
   background: image-url('bar/shadow.png') top center no-repeat
@@ -84,7 +103,7 @@ button,
     color: #367BB1
     font-family: DinMedium, serif
     font-size: 30px
-    line-height: 30px
+    line-height: 1em
   
   h1
     font-size: 30px
@@ -93,22 +112,22 @@ button,
   
   h2
     font-size: 24px
-    padding: 15px 0
+    padding: 20px 0 10px 0
     
   h3
     font-size: 18px
-    padding: 15px 0
+    padding: 20px 0 10px 0
     
   p
-    padding: 15px 0
+    padding: 10px 0
   
   blockquote
     background: #ddd
     +bg_gradient(#eee,#ddd)
     border: 1px solid #ccc
     +border_radius(3)
-    margin: 15px 0
-    padding: 0 20px
+    margin: 10px 0
+    padding: 5px 20px
     
   ol
     padding: 15px 0
