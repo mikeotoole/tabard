@@ -2,14 +2,22 @@
 #
 # Table name: artwork_uploads
 #
-#  id               :integer         not null, primary key
-#  email            :string(255)
-#  attribution_name :string(255)
-#  attribution_url  :string(255)
-#  artwork_image    :string(255)
-#  document_id      :integer
-#  created_at       :datetime        not null
-#  updated_at       :datetime        not null
+#  id                       :integer         not null, primary key
+#  owner_name               :string(255)
+#  email                    :string(255)
+#  street                   :string(255)
+#  city                     :string(255)
+#  zipcode                  :string(255)
+#  state                    :string(255)
+#  country                  :string(255)
+#  attribution_name         :string(255)
+#  attribution_url          :string(255)
+#  artwork_image            :string(255)
+#  artwork_description      :string(255)
+#  certify_owner_of_artwork :boolean
+#  document_id              :integer
+#  created_at               :datetime        not null
+#  updated_at               :datetime        not null
 #
 
 require 'spec_helper'
@@ -53,6 +61,34 @@ describe ArtworkUpload do
   
   it "should require acceptance of accepted_current_artwork_agreement" do
     build(:artwork_upload, :accepted_current_artwork_agreement => "0").should_not be_valid
+  end
+  
+  it "should require owner_name" do
+    build(:artwork_upload, :owner_name => nil).should_not be_valid
+  end
+  
+  it "should require artwork_description" do
+    build(:artwork_upload, :artwork_description => nil).should_not be_valid
+  end
+  
+  it "should require street" do
+    build(:artwork_upload, :street => nil).should_not be_valid
+  end
+  
+  it "should require city" do
+    build(:artwork_upload, :city => nil).should_not be_valid
+  end
+  
+  it "should require zipcode" do
+    build(:artwork_upload, :zipcode => nil).should_not be_valid
+  end
+  
+  it "should require country" do
+    build(:artwork_upload, :country => nil).should_not be_valid
+  end
+  
+  it "should require acceptance of certify_owner_of_artwork" do
+    build(:artwork_upload, :certify_owner_of_artwork => "0").should_not be_valid
   end
   
   it "should require document is current artwork_agreement" do

@@ -106,13 +106,21 @@ ActiveRecord::Schema.define(:version => 20120223194535) do
   add_index "answers", ["submission_id"], :name => "index_answers_on_submission_id"
 
   create_table "artwork_uploads", :force => true do |t|
+    t.string   "owner_name"
     t.string   "email"
+    t.string   "street"
+    t.string   "city"
+    t.string   "zipcode"
+    t.string   "state"
+    t.string   "country"
     t.string   "attribution_name"
     t.string   "attribution_url"
     t.string   "artwork_image"
+    t.string   "artwork_description"
+    t.boolean  "certify_owner_of_artwork"
     t.integer  "document_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "artwork_uploads", ["document_id"], :name => "index_artwork_uploads_on_document_id"
@@ -312,6 +320,14 @@ ActiveRecord::Schema.define(:version => 20120223194535) do
   end
 
   add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
+
+  create_table "games", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "pretty_url"
+  end
 
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"

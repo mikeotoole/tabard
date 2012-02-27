@@ -24,7 +24,7 @@ class ArtworkUploadsController < InheritedResources::Base
   # POST /artwork_uploads(.:format)
   def create
     if @artwork_upload.save
-      add_new_flash_message("Your artwork has been uploaded. Thank You!",'success') # TODO Doug, Determine message.
+      add_new_flash_message("Your artwork has been uploaded. Thank You!",'success')
       redirect_to root_url
     else
       respond_with(@artwork_upload)

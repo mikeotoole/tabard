@@ -29,19 +29,10 @@ describe ArtworkUploadsController do
   end
 
   describe "POST create" do
-    before(:each) do
-      create(:artwork_agreement)
-      ArtworkUploader.enable_processing = true
-    end
-
-    after(:all) do
-      ArtworkUploader.enable_processing = false
-    end
-
     describe "with valid params" do
       it "creates a new ArtworkUpload" do
         expect {
-          post :create, :artwork_upload => attributes_for(:artwork_upload_att)
+          post :create, :artwork_upload => valid_attributes
         }.to change(ArtworkUpload, :count).by(1)
       end
 
