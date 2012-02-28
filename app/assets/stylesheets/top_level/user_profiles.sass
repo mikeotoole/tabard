@@ -1,0 +1,367 @@
+@import mixins
+
+#body
+
+  .activities
+    padding: 10px 0
+    
+    a
+      color: #56149C
+      text-decoration: none
+    
+    li
+    
+      &:after
+        border-top-color: #eee
+      
+      &.comment >blockquote
+          
+        >.avatar
+          border-color: #ccc
+          left: 0
+          
+          &:before
+            border-right-color: #fff
+          
+          &:after
+            border-top-color: #fff
+          
+          >img
+            border-color: #fff
+        
+        >.meta
+          border-bottom-color: #eee
+      
+      time
+        color: #3679B3
+  
+    li.activity
+      
+      >a:first-child
+        display: none
+    
+      *[meta]:hover
+        
+        &:before
+          background: #3679B3
+          border-color: #5196CF
+          +box_shadow(0 0 15px rgba(#000,.4))
+          color: #fff
+        
+        &:after
+          border-left-color: #5196CF
+          border-top-color: #5196CF
+
+body.user_profiles.show,
+body.user_profiles.dashboard
+
+  #content
+    background-image: image-url('application/block-2a.png')
+    margin: 100px 0 0
+    
+    #body
+    
+      >header
+        height: 60px
+        margin: -110px 0 50px -30px
+        padding: 0
+        
+        h1
+          color: #A33B31
+          font: 40px DinLight, sans-serif
+          line-height: 40px
+          margin: 0
+          padding: 0
+        
+        p
+          font: 16px DinMedium, sans-serif
+          line-height: 20px
+          margin: 0
+          padding: 0
+      
+      >aside
+        float: left
+        margin: -10px -10px 0
+        width: 260px
+      
+        .avatar
+          background: #ccc
+          border: 10px solid #ddd
+          height: 240px
+          position: relative
+          
+          &:before
+            border: 1px solid #2d7cb4
+            bottom: -2px
+            content: ''
+            left: -2px
+            position: absolute
+            right: -2px
+            top: -2px
+          
+          &:after
+            border: 1px solid #fff
+            bottom: -1px
+            content: ''
+            left: -1px
+            position: absolute
+            right: -1px
+            top: -1px
+          
+          img
+            display: block
+            height: 240px
+            width: 240px
+          
+        .actions
+          background: image-url('bar/bg.png') top center repeat-x #3d2753
+          border-top: 1px solid #fff
+          +border_radius(0,0,3,3)
+          color: #a89db5
+          font-size: 13px
+          padding: 0
+          position: relative
+          
+          &:after
+            clear: both
+            content: ''
+            display: block
+            height: 0
+            visibility: hidden
+          
+          li
+            display: inline
+            
+            &:before
+              display: none
+            
+            a
+              background: none
+              color: #fff
+              display: block
+              float: left
+              height: 30px
+              line-height: 30px
+              margin: 5px 0 5px 10px
+              padding: 0
+              position: relative
+              text-decoration: none
+              text-indent: 30px
+              
+              &:before
+                background: image-url('application/icons.png') no-repeat
+                content: ''
+                height: 30px
+                left: 0
+                +opacity(.7)
+                position: absolute
+                top: 0
+                width: 30px
+              
+              &:hover:before
+                +opacity(1)
+              
+            &.message a:before
+              background-position: -330px -30px
+              
+            &.friend a:before
+              background-position: -570px -30px
+              
+            &.edit a:before
+              background-position: -60px -30px
+              
+            &.settings a:before
+              background-position: -90px -30px
+        
+        h3
+          line-height: 1em
+          padding: 30px 0 0
+
+          + p
+            padding: 5px 0 0
+          
+        ul.communities
+          padding: 5px 0 0
+          
+          li
+            margin: 0
+            
+            &:before
+              margin: 5px 0 0 20px
+            
+            a
+              +bg_gradient(#eee,#fff)
+              border-bottom: 1px solid #ccc
+              +border_radius(0)
+              display: block
+              margin: 0
+              padding: 5px 0 5px 25px
+              text-decoration: none
+              
+              &:hover
+                background: #A23B31
+                color: #fff
+            
+            &:first-child a
+              +border_radius(3,3,0,0)
+              
+            &:last-child a
+              +border_radius(0,0,3,3)
+            
+            &:only-child a
+              +border_radius(3)
+        
+        .stats
+          font: 13px DinMedium
+          line-height: 15px
+      
+      >article
+        float: right
+        margin: -10px -10px 0
+        padding: 0
+        position: relative
+        width: 590px
+        
+        >dl
+          margin: 0
+          padding: 0
+        
+          >dd
+            display: none
+            
+            >h2
+              background: #F0F5F8
+              border-bottom: 1px solid #D9E6EE
+              +border_radius(2,2,0,0)
+              clear: both
+              line-height: 1em
+              margin: 0
+              padding: 10px
+              position: relative
+              
+              a
+                background: #2D7CB4
+                +border_radius(2)
+                color: #fff
+                font: 14px DinLight, sans-serif
+                padding: 3px 9px
+                position: absolute
+                right: 7px
+                text-decoration: none
+                top: 7px
+                
+                &:hover
+                  background: #A53E34
+            
+            .characters
+              margin: 0
+              padding: 0
+              
+              >li
+                border-top: 1px solid #D1E1EB
+                float: left
+                margin: -1px 0 10px
+                padding: 20px 0 20px 75px
+                position: relative
+                width: 220px
+                
+                &:before
+                  display: none
+                
+                .avatar
+                  background: #eee
+                  height: 60px
+                  left: 0
+                  position: absolute
+                  top: 20px
+                  width: 60px
+                  
+                  &:before
+                    background: image-url('application/comment-shadow.png') 0 0 no-repeat
+                    content: ''
+                    height: 101px
+                    position: absolute
+                    right: 0
+                    top: -15px
+                    width: 18px
+                
+                h3
+                  color: #56149C
+                  line-height: 1em
+                  margin: 0 0 10px
+                  padding: 0
+                  
+                  a
+                    color: #56149C
+                    margin: 0 -3px
+                    
+                    &:hover
+                      color: #fff
+                
+                .attributes
+                  font-size: 13px
+                  line-height: 15px
+                  
+                  dt
+                    clear: left
+                    float: left
+                    width: 60px
+                  
+                  dd
+                    float: left
+                    font-family: DinMedium, sans-serif
+                    width: 160px
+          
+          >dt
+            background: #E4E4E4
+            +border_radius(3,3,0,0)
+            +box_shadow(0 -5px 5px rgba(#000,.1))
+            height: 35px
+            overflow: hidden
+            position: absolute
+            text-indent: -500em
+            top: -56px
+            +transition(background .2s linear)
+            width: 40px
+            z-index: 1
+            
+            &:before
+              background: image-url('application/icons.png')
+              content: ''
+              +opacity(.3)
+              height: 30px
+              width: 30px
+              left: 5px
+              position: absolute
+              top: 5px
+            
+            &.activity
+              right: 41px
+              
+              &:before
+                background-position: -1020px 0
+            
+            &.characters
+              right: 0
+              
+              &:before
+                background-position: -570px 0
+            
+            &:hover
+              background: #fff
+              cursor: pointer
+              z-index: 3
+              
+              &:before
+                +opacity(.5)
+            
+            &.active
+              background: #fff
+              cursor: default
+              z-index: 2
+              
+              &:before
+                +opacity(.2)
+              
+              + dd
+                display: block
