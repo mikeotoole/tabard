@@ -200,6 +200,13 @@ protected
     session[:profile_type] = profile_type
   end
 
+  def announcements_to_display
+    return current_user.recent_unread_announcements if user_signed_in?
+    return Array.new
+  end
+  helper_method :announcements_to_display
+
+
 ###
 # Callback Methods
 ###
