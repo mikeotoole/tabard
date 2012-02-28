@@ -68,11 +68,11 @@ class SubdomainsController < ApplicationController
   end
   helper_method :management_navigation_items
 
-  def announcements_to_display
+  def first_announcement_to_display
     return current_user.recent_unread_announcements.where(community_id: current_community.id) if user_signed_in? and current_community
     return Array.new
   end
-  helper_method :announcements_to_display
+  helper_method :first_announcement_to_display
 
 ###
 # Protected Methods

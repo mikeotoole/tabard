@@ -200,11 +200,14 @@ protected
     session[:profile_type] = profile_type
   end
 
-  def announcements_to_display
-    return current_user.recent_unread_announcements if user_signed_in?
-    return Array.new
+  def first_announcement_to_display
+    if user_signed_in?
+      return current_user.unread_announcements.first #.recent_unread_announcements.first
+    else
+      return []
+    end
   end
-  helper_method :announcements_to_display
+  helper_method :first_announcement_to_display
 
 
 ###
