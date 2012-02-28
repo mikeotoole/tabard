@@ -48,10 +48,13 @@
 
 - if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments
-    - if @announcement.comments.any?
+    - if @comments.any?
+      = paginate @comments
       %ol
-        - @announcement.comments.each do |comment|
+        - @comments.each do |comment|
           = render "subdomains/comments/comment", :comment => comment
+      = paginate @comments
     - if can? :comment, @announcement
-      %h3 Post a New Comment
-      = render 'subdomains/comments/form', :comment => @announcement.comments.new
+      .newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @announcement.comments.new

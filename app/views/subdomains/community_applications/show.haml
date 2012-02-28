@@ -46,10 +46,12 @@
     = javascript_include_tag "comments"
     %h2.comments Comments
     %aside.comments
-      - if @community_application.comments.size > 0
+      - if @comments.size > 0
+        = paginate @comments
         %ol
-          - @community_application.comments.each do |comment|
+          - @comments.each do |comment|
             = render "subdomains/comments/comment", :comment => comment
+        = paginate @comments
       - if can? :comment, @community_application
         #newcomment
           %h3= "Post a New Comment — not visible to #{@community_application.user_profile_display_name}"

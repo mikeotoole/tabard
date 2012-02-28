@@ -31,6 +31,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1.json
   def show
     @supported_games = current_community.supported_games
+    @comments = @community_application.comments.page params[:page]
   end
 
   # GET /community_applications/new

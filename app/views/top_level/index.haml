@@ -64,5 +64,5 @@
       %ol
         = f.input :email, :as => :email, :input_html => { tabindex: 5, id: 'signup_email' }
         = f.input :display_name, :required => false, :input_html => { name: 'user[user_profile_attributes][display_name]', tabindex: 6 }
-        = f.input :remember_password, :input_html => { tabindex: 7, id: 'signup_password' }
+        = f.input :remember_password, :label => 'Password', :input_html => { tabindex: 7, id: 'signup_password' }
     %button{ :type => 'submit', :tabindex => 8 } Sign up
