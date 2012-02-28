@@ -43,7 +43,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def game
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
-      @member_profiles = @supported_game.member_profiles.page params[:page]
+      @member_profiles = @supported_game.member_profiles
     else
       redirect_to not_found_url
     end
