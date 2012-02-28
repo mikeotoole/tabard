@@ -10,5 +10,4 @@ class PasswordsController < Devise::PasswordsController
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode
-
 end

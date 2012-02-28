@@ -16,13 +16,20 @@ class RegistrationsController < Devise::RegistrationsController
 
 ###
 # Sign Up
-###
+###]
   # Overriding Devise method to redirect to reinstate_confirmation_url if email belongs to a user disabled account.
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
     if user and user.user_disabled_at
       add_new_flash_message "You need to reinstate your account.", "alert"
       redirect_to reinstate_confirmation_url
+    elsif !!params[:user][:is_partial_request]
+      build_resource
+      resource.save
+      add_new_flash_message "Great! We need a little more information before your account can be created.", "notice"
+      resource.errors.clear
+      #clean_up_passwords resource
+      render :new
     else
       super
     end
