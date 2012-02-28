@@ -344,7 +344,7 @@ protected
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+      root_url_hack_helper(user_root_url(:protocol => "http://", :subdomain => false))
     when :admin_user, AdminUser
       admin_dashboard_url(:protocol => "http://", :subdomain => false).sub('secure.', '')
     else
