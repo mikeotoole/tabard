@@ -17,7 +17,7 @@
           .year= f.input :birth_year, :as => :radio, :label => false, :collection => Time.now.year.downto(Time.now.year-100), :wrapper => false
           - if f.object.errors[:date_of_birth].any?
             %mark.error= f.object.errors[:date_of_birth].first
-        = f.input :password
+        = f.input :password, :input_html => defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
         = f.input :password_confirmation
       -unless @user.has_accepted_current_terms_of_service?
         %h2 Terms of Service and User Agreement
