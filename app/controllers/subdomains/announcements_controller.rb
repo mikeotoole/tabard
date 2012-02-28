@@ -30,7 +30,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @announcement.update_viewed(current_user.user_profile)
     respond_to do |format|
       format.js {
-        announcement = current_user.recent_unread_announcements_for_community(current_community).size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcements_for_community(current_community).first }) : ''
+        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcement.first }) : ''
         render :text => announcement, :layout => nil
       }
       format.html
