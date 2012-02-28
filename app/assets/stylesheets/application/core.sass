@@ -597,6 +597,38 @@ button,
         margin-top: -85px
 
 
+// Pagination
+
+.pagination
+  border-top: 1px solid #ccc
+  font: 10pt EurostyleStd, sans-serif
+  padding: 5px 0 0
+
+  span
+    display: inline-block
+    
+  .current
+    background: #ccc
+    +border_radius(3)
+    padding: 0 5px
+  
+  a
+    text-decoration: none !important
+
+form + .pagination,
+table + .pagination,
+.comments ol + .pagination
+  border-bottom: 1px solid #ccc
+  border-top: 0
+  padding-bottom: 5px
+
+.comments .pagination
+  margin: 0 15px 0 10px
+  
+  + ol
+    margin: 30px 0 20px !important
+
+
 // Comments
 
 #body
@@ -920,6 +952,9 @@ button,
       
       form
         margin: -10px 0 12px 62px
+  
+.newcomment h3
+  padding: 30px 0 10px 10px !important
 
 
 // Activities

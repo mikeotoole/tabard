@@ -28,6 +28,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def show
     current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
     @announcement.update_viewed(current_user.user_profile)
+    @comments = @announcement.comments.page params[:page]
     respond_to do |format|
       format.js {
         announcement = current_user.recent_unread_announcements_for_community(current_community).size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcements_for_community(current_community).first }) : ''

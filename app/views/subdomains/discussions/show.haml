@@ -32,12 +32,12 @@
 - if @comments.any? or can? :comment, @discussion
   %aside.comments
     - if @comments.any?
+      = paginate @comments
       %ol
         - @comments.each do |comment|
-          = paginate @comments
           = render "subdomains/comments/comment", :comment => comment
-          = paginate @comments
+      = paginate @comments
     - if can? :comment, @discussion
-      #newcomment
+      .newcomment
         %h3 Post a New Comment
         = render 'subdomains/comments/form', :comment => @discussion.comments.new
