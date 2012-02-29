@@ -13,6 +13,9 @@ $(document).ready ->
       input = $(this).find('input')
       if input.val().length < 1
         input.siblings('label').hide().show()
+      setTimeout ->
+        input.trigger 'change'
+      ,100
   
   # hope page slide show
   numberOfSlides = $('#homebox .slideshow img').length
