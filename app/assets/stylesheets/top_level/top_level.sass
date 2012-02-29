@@ -535,6 +535,13 @@ button,
     margin: 0 0 20px
     padding: 0 0 30px
     
+    h1,
+    h2,
+    h3
+      color: #251533
+      font-size: 24px
+      padding: 20px 20px 0
+    
     .alignleft,
     .alignright
       clear: none
@@ -631,6 +638,30 @@ button,
         font-family: DinMedium, sans-serif
         padding: 3px 6px
   
+  fieldset
+  
+    h1,
+    h2,
+    h3
+      clear: both
+    
+  form > p.accept,
+  fieldset > p.accept
+    background: #ccc
+    +bg_gradient(#bbb,#ddd)
+    +border_radius(3)
+    margin: 10px 0 20px
+    padding: 10px 10px 10px 45px
+    position: relative
+    
+    label
+      text-indent: 0
+    
+    input,
+    label:before,
+    label:after
+      margin-left: -35px
+    
   p.submit
     +bg_gradient(#eee,#fff)
     border-top: 1px solid #ccc
@@ -653,6 +684,21 @@ button,
       
       .button
         visibility: hidden
+  
+  .col2
+    
+    &:after
+      clear: both
+      content: '.'
+      display: block
+      height: 0
+      visibility: hidden  
+  
+    article
+      float: left
+      
+      &:first-of-type
+        margin-right: 36px
   
   .col3
     padding: 35px 0 0
