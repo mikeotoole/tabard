@@ -1,5 +1,5 @@
 #bar
-  = link_to 'Crumblin', root_url(:subdomain => false), :class => 'logo'
+  = link_to 'Crumblin', user_root_url(:subdomain => false), :class => 'logo'
 
   %ul.menu
     - if current_user.communities.size > 0

@@ -22,6 +22,7 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
+    redirect_to user_root_path if user_signed_in?
     # @recent_activity = Community.order{ created_at.desc }.last(5).collect{|community| {type: 'New Community', name: community.name, link: community_url(community), snippet: community.supported_games.collect{|game| game.name}.join(', ')}}
   end
 
