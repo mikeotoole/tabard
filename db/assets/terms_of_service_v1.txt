@@ -93,7 +93,8 @@ The security of the network through which the Service is provided, as well as th
     b) The slogan "Gaming Communities Done Right" is a trademark owned by the Company and is considered one of the Company's Brand Assets.  The Company does not permit the use of this particular trademarked slogan except as specifically licensed in writing.  
     c) The following logos are trademarks owned by the Company and are considered Company Brand Assets .  The Company does not permit the use of logo Brand Assets except as specifically licensed in writing:
     
-    ![Crumblin Logo](/assets/crumblin-logo.png)
+    <img src="/assets/branding/crumblin-logo.png" alt="Crumblin logo" class="alignleft" />
+    <img src="/assets/branding/digitalaugment-logo.png" alt="DigitalAugment Inc. logo" class="alignleft" />
 11. **Change to these Terms and Conditions.**  The Company may unilaterally change any of the provisions herein if, in its sole discretion, it believes the change to be appropriate.  Upon any change, the new version of this Agreement will be posted on the main website for the Service, furthermore, upon log-in to any of the Service's resources, you will be provided the opportunity to view the new Agreement, and will be required to agree to the changes before being allowed to access such resources.  If you do not agree to any such new agreements, then you will not be permitted to access the Service anymore.
 12. **Termination of Agreement.**
     
