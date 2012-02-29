@@ -8,7 +8,7 @@
         %ol
           = f.input :owner_name, :label => 'Name of owner (and legal entity if applicable)'
           = f.input :email
-          = f.input :country
+          = f.input :country, :priority => ['United States']
           = f.input :street
           = f.input :city
           = f.input :zipcode, :label => 'Zip/Postal Code'
