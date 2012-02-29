@@ -68,7 +68,6 @@ class User < ActiveRecord::Base
   delegate :acknowledgements, :to => :user_profile, :allow_nil => true
   delegate :read_announcements, :to => :user_profile, :allow_nil => true
   delegate :unread_announcements, :to => :user_profile, :allow_nil => true
-  delegate :recent_unread_announcements, :to => :user_profile, :allow_nill => true
   delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :has_seen?, :to => :user_profile, :allow_nil => true
   delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true

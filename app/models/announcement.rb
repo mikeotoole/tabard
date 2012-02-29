@@ -10,6 +10,8 @@ class Announcement < ActiveRecord::Base
   acts_as_paranoid
 
   scope :ordered, :order => 'created_at DESC'
+  scope :recent, lambda { where("acknowledgements.created_at > ?", 2.weeks.ago) }
+
 ###
 # Constants
 ###

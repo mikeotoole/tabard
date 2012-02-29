@@ -125,6 +125,26 @@ protected
   helper_method :current_community
 
   ###
+  # This helper method returns determines what announcements to display
+  ###
+  def announcements_to_display
+    if user_signed_in?
+      @announcements_to_display ||= current_user.unread_announcements.recent.ordered
+      return @announcements_to_display
+    end
+    return Array.new
+  end
+  helper_method :announcements_to_display
+
+  ###
+  # This helper method returns determines if there are any announcements to display
+  ###
+  def any_announcements_to_display?
+    return announcements_to_display.size > 0
+  end
+  helper_method :any_announcements_to_display?
+
+  ###
   # This helper method returns the current game that is in scope.
   # It is defined as nil when not in a game scope.
   ###

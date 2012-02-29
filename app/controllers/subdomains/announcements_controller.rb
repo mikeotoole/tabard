@@ -31,7 +31,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @comments = @announcement.comments.page params[:page]
     respond_to do |format|
       format.js {
-        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.recent_unread_announcement.first }) : ''
+        announcement = any_announcements_to_display? ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => announcements_to_display.first }) : ''
         render :text => announcement, :layout => nil
       }
       format.html
