@@ -9,8 +9,8 @@ unless Rails.env.test?
       require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
     end
   elsif Rails.env.production?
-    puts "Seeding 'bryan.rogers@digitalaugment.com' super admin"
-    AdminUser.create!(:email => 'bryan.rogers@digitalaugment.com', 
+    puts "Seeding 'mike.otoole@digitalaugment.com' super admin"
+    AdminUser.create!(:email => 'mike.otoole@digitalaugment.com', 
                       :password => 'DVqaPP7Ai8Q66K', 
                       :password_confirmation => 'DVqaPP7Ai8Q66K', 
                       :role => "superadmin")
