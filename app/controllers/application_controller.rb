@@ -18,9 +18,6 @@ class ApplicationController < ActionController::Base
   # This before_filter will prevent the actions from taking place in a subdomain.
   before_filter :limit_subdomain_access
 
-  # This before_filter ensures that a profile is active.
-  before_filter :ensure_active_profile_is_valid
-
   # This before_filter checks if user needs to be logged out.
   before_filter :check_force_logout
 
@@ -169,58 +166,6 @@ protected
   end
 
 ###
-# Active Character/Profile
-###
-  # Predicate helper method to test for an active profile.
-  def profile_active?
-    session[:profile_type] =~ /UserProfile/ || character_active?
-  end
-  helper_method :profile_active?
-
-  # Helper method to check for active character.
-  def character_active?
-    session[:profile_type] =~ /Character$/
-  end
-  helper_method :character_active?
-
-  # This helper method returns the currently active character or nil if there isn't one.
-  def current_character
-    return unless character_active?
-    if defined? session[:profile_type].constantize
-      session[:profile_type].constantize.find_by_id(session[:profile_id])
-    end
-  end
-  helper_method :current_character
-
-  # This helper method eturns the currently active user profile or nil if there isn't one.
-  def current_profile
-    return nil unless profile_active?
-    if defined? session[:profile_type].constantize
-      session[:profile_type].constantize.find_by_id(session[:profile_id])
-    end
-  end
-  helper_method :current_profile
-
-  # This helper method returns an Array with the users profile and characters info.
-  def profiles
-    if user_signed_in?
-      profile_collection = current_user.active_profile_helper_collection(self.current_community, self.current_game)
-      profiles = Array.new
-      profile_collection.each do |profile|
-        profiles << { :name => profile.name, :is_current => (profile == current_profile), :profile_id => profile.id, :type => profile.class }
-      end
-      profiles
-    end
-  end
-  helper_method :profiles
-
-  # This method activates a profile, given a profile_id and profile_type.
-  def activate_profile(profile_id, profile_type)
-    session[:profile_id] = profile_id
-    session[:profile_type] = profile_type
-  end
-
-###
 # Callback Methods
 ###
 
@@ -270,31 +215,6 @@ protected
     the_protocol = "http://" if !Rails.env.development? or request.protocol == "https://"
 
     redirect_to [the_protocol, (request.subdomain.blank? ? "" : "#{request.subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
-  end
-
-  ###
-  # _before_filter_
-  #
-  # This method ensures that a profile is active, or it will default to the user_profile
-  ###
-  def ensure_active_profile_is_valid
-    if user_signed_in?
-      unless current_profile
-        activate_profile(current_user.user_profile_id, "UserProfile")
-      end
-      if current_profile != current_user.user_profile and not character_active?
-        activate_profile(current_user.user_profile_id, "UserProfile")
-      end
-      if character_active? and not current_user.available_character_proxies(current_community,current_game).include?(current_character.character_proxy)
-        default_character_proxy = nil
-        default_character_proxy = current_user.default_character_proxy_for_a_game(current_game) if current_game
-        if current_user.available_character_proxies(current_community,current_game).include?(default_character_proxy)
-          activate_profile(default_character_proxy.character_id, default_character_proxy.character_class.to_s)
-        else
-          activate_profile(current_user.user_profile_id, "UserProfile")
-        end
-      end
-    end
   end
 
   ###

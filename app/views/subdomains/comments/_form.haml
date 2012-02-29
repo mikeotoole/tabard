@@ -4,18 +4,12 @@
   = f.input :commentable_type, :as => :hidden, :input_html => { :id => 'comment_commentable_type_'+unique }
   %ul.profile
     %li
-      - if current_profile == current_user.user_profile
-        %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '', :checked => 'checked' }
-      - else
-        %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '' }
+      %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '', :checked => 'checked' }
       %label{ :for => 'comment_character_proxy_id_0_'+unique, :meta => current_user.user_profile.display_name }
         = image_tag current_user.user_profile.avatar_url(:tiny), :class => 'avatar'
     - available_characters.each do |proxy|
       %li
-        - if proxy.character == current_profile
-          %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]',  :value => proxy.id, :checked => 'checked' }
-        - else
-          %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id }
+        %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id }
         %label{ :for => 'comment_character_proxy_id_'+proxy.id.to_s, :meta => proxy.name }
           = image_tag proxy.avatar_url(:tiny), :class => 'avatar'
   = f.input :body, :label => false, :wrapper => false, :input_html => { :id => 'comment_body_'+unique }

@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
   delegate :application_pending?, :to => :user_profile, :allow_nil => true
   delegate :in_community, :to => :user_profile, :allow_nil => true
   delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
+  delegate :avatar_url, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
