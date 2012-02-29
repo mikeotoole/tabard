@@ -12,25 +12,6 @@ module ApplicationHelper
 ###
 
   ###
-  # Gets a profiles avatar in the given size format.
-  # [Args]
-  #   * +size_format+ -> The image size.
-  #   * +profile+ -> The profile with an avatar.
-  # [Returns] image_tag for avatar.
-  ###
-  def get_avatar(size_format, profile = nil)
-    if profile
-      image_tag profile.avatar_url(size_format), :alt => ''
-    else
-      if profile_active?
-        image_tag current_profile.avatar_url(size_format), :alt => ''
-      else
-        image_tag current_user.user_profile.avatar_url(size_format), :alt => ''
-      end
-    end
-  end
-
-  ###
   # Adds a new message to the flash messsages array
   # [Args]
   #   * +message_body+ -> The body of the message.
