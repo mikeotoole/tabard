@@ -1,7 +1,8 @@
 #body
   %h1 My Announcements
 
-  - if current_user.announcements.size > 0
+  - if current_user.announcements.any?
+    = paginate @acknowledgements
     = form_tag announcements_batch_mark_as_seen_url, :method => :put do
       %table
         %thead
@@ -11,39 +12,38 @@
             %th Community
             %th Date
         %tbody
-          - current_user.unread_announcements.ordered.each do |announcement|
-            %tr.unread
-              %td.check
-                = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"
-                %label{ :for => "discussion_id_#{announcement.id}" }
-              %td
-                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
-                %br/
-                = truncate announcement.body, :length => 150, :separator => ' '
-              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
-              %td
-                %time
-                  = l announcement.created_at, :format => :date_short
-                %time
-                  = l announcement.created_at, :format => :time_12
-          - current_user.read_announcements.ordered.limit(@limit_read_amount).each do |announcement|
-            %tr.read
-              %td{ :class => 'check compact' } ✔
-              %td
-                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
-              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
-              %td
-                %time
-                  = l announcement.created_at, :format => :date_short
-                %time
-                  = l announcement.created_at, :format => :time_12
-          - if current_user.read_announcements.size > @limit_read_amount
-            %tr.read
-              %td.check
-              %td{ :colspan => 3 }= "…and #{pluralize (current_user.read_announcements.size - @limit_read_amount), 'older announcement'}."
+          - @acknowledgements.each do |acknowledgement|
+            - announcement = acknowledgement.announcement
+            - if acknowledgement.has_been_viewed?
+              %tr.read
+                %td{ :class => 'check compact' } ✔
+                %td
+                  %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
+                %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
+                %td
+                  %time
+                    = l announcement.created_at, :format => :date_short
+                  %time
+                    = l announcement.created_at, :format => :time_12
+            - else
+              %tr.unread
+                %td.check
+                  = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"
+                  %label{ :for => "discussion_id_#{announcement.id}" }
+                %td
+                  %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
+                  %br/
+                  = truncate announcement.body, :length => 150, :separator => ' '
+                %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
+                %td
+                  %time
+                    = l announcement.created_at, :format => :date_short
+                  %time
+                    = l announcement.created_at, :format => :time_12
         %tfoot
           %tr
             %td{ :colspan => 4 }
               -if current_user.unread_announcements.size > 0
                 %button{ :class => 'read' }
                   %span Mark selected as read
+    = paginate @acknowledgements

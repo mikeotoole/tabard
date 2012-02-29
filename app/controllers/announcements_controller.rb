@@ -15,7 +15,7 @@ class AnnouncementsController < ApplicationController
   # GET /announcements/(.:format)
   def index
     @hide_announcements = true
-    @limit_read_amount = 10
+    @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).page params[:page]
   end
 
   # GET /announcements/:id(.:format)

@@ -33,6 +33,7 @@ class UserProfile < ActiveRecord::Base
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles
   has_many :announcements, :through => :community_profiles
+  has_many :acknowledgements, :through => :community_profiles
   has_many :read_announcements, :through => :community_profiles
   has_many :unread_announcements, :through => :community_profiles
   has_many :recent_unread_announcements, :through => :community_profiles
