@@ -18,7 +18,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :mine, :create]
   before_filter :find_available_characters, :only => [:mine]
-  authorize_resource :except => [:index]
+  authorize_resource :except => [:index, :game]
   skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
 
@@ -41,6 +41,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   
   # GET /roster_assignments/game/:id(.:format)
   def game
+    raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
       @member_profiles = @supported_game.member_profiles

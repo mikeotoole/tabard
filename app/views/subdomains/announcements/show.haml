@@ -1,6 +1,5 @@
 - title "#{@announcement.name} | #{@announcement.context_name} | #{@community.name}"
 = javascript_include_tag "comments"
-
 #breadcrumb
   %ol
     %li= link_to "Announcements", announcements_url(:subdomain => current_community.subdomain)
@@ -10,7 +9,6 @@
       %li= link_to 'Community Announcements', community_announcements_url
     %li
       %span= @announcement.name
-
 #actions.actions
   - if @announcement.is_locked
     - if can? :unlock, @announcement

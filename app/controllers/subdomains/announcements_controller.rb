@@ -73,7 +73,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     authorize! :index, Announcement
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
-      @announcements = @supported_game.announcements.non_community.ordered
+      @announcements = @supported_game.announcements.where(community_id: current_community.id).ordered
     else
       redirect_to not_found_url
     end
