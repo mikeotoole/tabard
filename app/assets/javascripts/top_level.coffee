@@ -7,6 +7,8 @@ $(document).ready ->
     .delegate 'input', 'blur change', ->
       if $(this).val().length < 1
         $(this).siblings('label').show()
+      else
+        $(this).siblings('label').show()
     .each ->
       input = $(this).find('input')
       if input.val().length < 1
