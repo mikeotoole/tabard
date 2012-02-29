@@ -1,7 +1,7 @@
-- if !!flash[:alert] or  !!flash[:error] or !!flash[:notice] or !!flash[:messages] or (user_signed_in? && current_user.recent_unread_announcements.size > 0)
+- if !!flash[:alert] or !!flash[:error] or !!flash[:notice] or !!flash[:messages] or (user_signed_in? && current_user.unread_announcements.recent.ordered.size > 0)
   %ul#flash
-    - if user_signed_in? && current_user.recent_unread_announcements.size > 0
-      = render 'layouts/flash_message_announcement', :announcement => current_user.recent_unread_announcements.first
+    - if user_signed_in? && current_user.unread_announcements.recent.ordered.size > 0
+      = render 'layouts/flash_message_announcement', :announcement => current_user.unread_announcements.recent.ordered.first
     - if !!flash[:alert]
       %li.alert
         :markdown

@@ -24,13 +24,11 @@ class CommunityProfile < ActiveRecord::Base
   belongs_to :user_profile
   has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
   has_many :acknowledgements
-  has_many :unread_acknowledgements, :conditions => {:has_been_viewed => false}, :order => :created_at, :class_name => "Acknowledgement"
-  has_many :recent_unread_acknowledgements, :conditions => {:has_been_viewed => false, :created_at => (2.weeks.ago)..Time.now}, :order => :created_at, :class_name => "Acknowledgement"
-  has_many :read_acknowledgements, :conditions => {:has_been_viewed => true}, :order => :created_at, :class_name => "Acknowledgement"
+  has_many :unread_acknowledgements, :conditions => {:has_been_viewed => false}, :class_name => "Acknowledgement"
+  has_many :read_acknowledgements, :conditions => {:has_been_viewed => true}, :class_name => "Acknowledgement"
   has_many :announcements, :through => :acknowledgements
   has_many :unread_announcements, :through => :unread_acknowledgements, :source => "announcement"
   has_many :read_announcements, :through => :read_acknowledgements, :source => "announcement"
-  has_many :recent_unread_announcements, :through => :recent_unread_acknowledgements, :source => "announcement"
   has_many :roster_assignments, :dependent => :destroy
   has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
   has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => false}

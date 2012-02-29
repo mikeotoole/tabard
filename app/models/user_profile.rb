@@ -35,7 +35,6 @@ class UserProfile < ActiveRecord::Base
   has_many :announcements, :through => :community_profiles
   has_many :read_announcements, :through => :community_profiles
   has_many :unread_announcements, :through => :community_profiles
-  has_many :recent_unread_announcements, :through => :community_profiles
   has_many :community_applications, :dependent => :destroy
   has_many :view_logs, :dependent => :destroy
   has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
