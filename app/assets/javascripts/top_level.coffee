@@ -8,7 +8,7 @@ $(document).ready ->
       if $(this).val().length < 1
         $(this).siblings('label').show()
       else
-        $(this).siblings('label').show()
+        $(this).siblings('label').hide()
     .each ->
       input = $(this).find('input')
       if input.val().length < 1
