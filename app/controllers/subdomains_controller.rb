@@ -124,4 +124,17 @@ protected
     !!@use_default_theme
   end
   helper_method :use_default_theme?
+
+  ###
+  # This helper method returns determines what announcements to display
+  ###
+  def announcements_to_display
+    if user_signed_in?
+      @announcements_to_display ||= current_user.unread_announcements.where(community_id: current_community.id).recent.ordered
+      return @announcements_to_display
+    end
+    return Array.new
+  end
+  helper_method :announcements_to_display
+  
 end

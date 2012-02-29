@@ -26,7 +26,7 @@ class AnnouncementsController < ApplicationController
       @announcement.update_viewed(current_user.user_profile)
       respond_to do |format|
         format.js {
-          announcement = current_user.unread_announcements.recent.ordered.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => current_user.unread_announcements.recent.ordered.first }) : ''
+          announcement = any_announcements_to_display? ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => announcements_to_display.first }) : ''
           render :text => announcement, :layout => nil
         }
         format.html { redirect_to announcement_url(@announcement, :subdomain => @announcement.subdomain)}
