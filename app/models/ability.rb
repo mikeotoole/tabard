@@ -254,7 +254,7 @@ class Ability
     can :manage, Permission
     can [:read, :destroy], Submission
     can :manage, Question
-    can :update, Community
+    can [:update, :remove_confirmation, :destroy], Community
   end
 
   ###

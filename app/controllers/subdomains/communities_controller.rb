@@ -29,11 +29,20 @@ class Subdomains::CommunitiesController < SubdomainsController
     end
     respond_with(@community, :location => edit_community_settings_url(@community))
   end
+  
+  def remove_confirmation
+  end
 
 #   # DELETE /communities/:id(.:format)
-#   def destroy
-#     Community.delay.destory_community(@community.id)
-#     add_new_flash_message('Community is being removed.')
-#     redirect_to root_url
-#   end
+  def destroy # TODO Joe, This needs to use SSL.
+    if current_user.valid_password?(params[:user][:current_password])
+      #Community.delay.destory_community(@community.id) # TODO Mike, change to destory.
+      @community.destroy
+      add_new_flash_message 'Community is being removed.'
+      redirect_to user_root_url
+    else
+      add_new_flash_message 'Password was not valid.', 'alert'
+      redirect_to community_remove_confirmation_url
+    end
+  end
 end

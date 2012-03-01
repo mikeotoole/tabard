@@ -76,9 +76,11 @@ DaBvRails::Application.routes.draw do
     get "/" => "subdomains#index", :as => 'subdomain_home'
     scope :module => "subdomains" do
 
-      # Community edit/update
+      # Community
       get "/community_settings" => "communities#edit", :as => "edit_community_settings"
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
+      get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
+      resources :communities, :only => [:destroy]
 
       # Roles and Permissions
       resources :roles, :except => [:show]
