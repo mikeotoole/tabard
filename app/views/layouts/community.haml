@@ -52,7 +52,7 @@
                   %li= link_to 'Community Announcements', community_announcements_url
                   - current_community.supported_games.each do |supported_game|
                     %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
-          - if user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?
+          - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
             %li
               = link_to 'Members', roster_assignments_url
               - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
