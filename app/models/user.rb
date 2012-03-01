@@ -9,6 +9,12 @@
 ###
 class User < ActiveRecord::Base
 ###
+# Constants
+###
+  # All valid time zones supported
+  VALID_TIME_ZONES =  ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
+
+###
 # Devise configuration information
 ###
   # Include default devise modules. Others available are:
@@ -27,7 +33,8 @@ class User < ActiveRecord::Base
 ###
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
-    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year
+    :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
+    :time_zone
 
 ###
 # Associations
@@ -100,6 +107,8 @@ class User < ActiveRecord::Base
   validates :accepted_current_privacy_policy,
       :acceptance => {:accept => true}
   validates :date_of_birth, :presence => true
+  validates :time_zone, :presence => true,
+                        :inclusion => { :in => VALID_TIME_ZONES, :message => "%{value} is not a valid time zone." }
 
   validate :at_least_13_years_old
 

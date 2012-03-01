@@ -7,6 +7,7 @@ def create_user(first_name, last_name)
   puts "Creating #{first_name} #{last_name}"
   user = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", :password => "Password",
+      :time_zone => "Pacific Time (US & Canada)",
       :user_profile_attributes => {:first_name => first_name, :last_name => last_name, :display_name => "#{first_name} #{last_name}"},
       :date_of_birth => 22.years.ago.to_date)
   user.skip_confirmation!
@@ -61,7 +62,8 @@ unless @dont_run
                   :email => "mpotoole@gmail.com",
                   :password => "Password",
                   :date_of_birth => Date.new(1980,4,17),
-                  :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"})
+                  :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
+                  :time_zone => "Pacific Time (US & Canada)")
   mike.skip_confirmation!
   mike.save!
 

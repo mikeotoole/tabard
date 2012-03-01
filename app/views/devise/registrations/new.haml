@@ -19,6 +19,7 @@
             %mark.error= f.object.errors[:date_of_birth].first
         = f.input :password, :input_html => defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
         = f.input :password_confirmation
+        = f.input :time_zone, :collection => User::VALID_TIME_ZONES, :as => :radio, :wrapper_html => { :class => 'select' }
       -unless @user.has_accepted_current_terms_of_service?
         %h2 Terms of Service and User Agreement
         .document
