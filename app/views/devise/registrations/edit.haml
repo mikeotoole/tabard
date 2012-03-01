@@ -13,4 +13,6 @@
       %p
         %button{ :type => 'submit' } Update
   %p
-    = link_to "Disable my account", disable_confirmation_path
+    = link_to "Disable my account", disable_confirmation_url
+
+  = render 'shared/user_account_links'
