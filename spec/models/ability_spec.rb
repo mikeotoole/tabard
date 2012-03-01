@@ -152,7 +152,7 @@ describe Ability do
       describe "CommunityApplication" do
         before(:each) do
           @community_application = CommunityApplication.new
-          @community_application.user_profile = @user.user_profile
+          @community_application.user_profile_id = @user.user_profile.id
         end
         it "should be able to create an application they own" do
           @ability.should be_able_to(:create, @community_application)
@@ -163,8 +163,8 @@ describe Ability do
         it "should be able to uodate an application they own" do
           @ability.should be_able_to(:update, @community_application)
         end
-        it "should be able to read an application they own" do
-          @ability.should be_able_to(:read, @community_application)
+        it "should not be able to show an application they own" do
+          @ability.should_not be_able_to(:show, @community_application)
         end
       end
 

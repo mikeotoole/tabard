@@ -51,7 +51,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should be successful when authenticated as the application owner" do
       sign_in applicant_user
       get 'show', :id => community_application
-      response.should be_success
+      response.should be_forbidden
     end
     
     it "should be successful when authenticated as a community admin" do
@@ -67,7 +67,7 @@ describe Subdomains::CommunityApplicationsController do
     end
     
     it "should render community_applications/show template when authenticated as a community admin" do
-      sign_in applicant_user
+      sign_in community_admin_user
       get 'show', :id => community_application
       response.should render_template('community_applications/show')
     end
