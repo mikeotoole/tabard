@@ -9,9 +9,9 @@
           - current_user.communities.each do |community|
             %li= link_to community.name, actual_community_url(community)
           %li.extra
-            = link_to 'Join a community', communities_url(:subdomain => false)
+            = link_to 'Find a community', communities_url(:subdomain => false)
     - else
-      %li= link_to 'Join a community', communities_url(:subdomain => false)
+      %li= link_to 'Find a community', communities_url(:subdomain => false)
     -# TODO - Uncomment this section and hookup link once we actually ad the search feature
       %li{ :class => 'icon search' }
         = link_to 'Search', '#'
