@@ -50,7 +50,7 @@ class MessagesController < MailboxController
     authorize!(:update, folder)
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
-    if @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
+    if @message.update_attributes(:folder_id => folder.id, :has_been_read => true)
       add_new_flash_message("Message was moved to #{folder.name}.",'success')
     end
     if params[:return_url]
@@ -68,7 +68,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:folder_id => folder.id, :has_been_read => (folder == current_user.trash ? true : false))
+        @message.update_attributes(:folder_id => folder.id, :has_been_read => true)
       end
     end
     redirect_to inbox_path
