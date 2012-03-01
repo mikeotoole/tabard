@@ -25,8 +25,9 @@
             %li= link_to community.name, community
       - else
         %p No memberships.
-      %h3 About Me
-      %p= @user_profile.description ||= 'No description given.'
+      - if !!@user_profile.description
+        %h3 About Me
+        %p= @user_profile.description
       %h3 Stats
       %p.stats
         = "Crumblin since #{l @user_profile.created_at, :format => :date_short}."

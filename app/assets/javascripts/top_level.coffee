@@ -7,10 +7,15 @@ $(document).ready ->
     .delegate 'input', 'blur change', ->
       if $(this).val().length < 1
         $(this).siblings('label').show()
+      else
+        $(this).siblings('label').hide()
     .each ->
       input = $(this).find('input')
       if input.val().length < 1
         input.siblings('label').hide().show()
+      setTimeout ->
+        input.trigger 'change'
+      ,100
   
   # hope page slide show
   numberOfSlides = $('#homebox .slideshow img').length
