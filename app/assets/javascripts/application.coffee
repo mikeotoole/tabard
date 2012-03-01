@@ -120,8 +120,11 @@ $(document).ready ->
         body: element.data 'confirm'
         action: ->
           element.data 'affirm', yes
-          element.click()
           $('#modal button.cancel').trigger 'click'
+          if element.attr 'data-method'
+            element.click()
+          else
+            window.location = element.attr 'href'
       false
   
   # batch actions

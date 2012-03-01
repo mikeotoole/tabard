@@ -13,6 +13,6 @@
         = f.input :current_password, :hint => "(we need your current password to confirm your changes)"
       %p.submit
         %button{ :type => 'submit' } Save Changes
-        = link_to "Disable my account", disable_confirmation_url
+        = link_to "Disable my account", disable_confirmation_url, :class => 'secondary'
 
   = render 'shared/user_account_links'
