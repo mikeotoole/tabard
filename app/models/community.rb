@@ -390,6 +390,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -414,5 +415,6 @@ end
 #  theme_id                        :integer
 #  title_color                     :string(255)
 #  home_page_id                    :integer
+#  pending_removal                 :boolean         default(FALSE)
 #
 

@@ -93,6 +93,7 @@ protected
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
     if @community
+      redirect_to pending_removal_url if @community.pending_removal
       return true
     else
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join, :alert => "That community does not exist"

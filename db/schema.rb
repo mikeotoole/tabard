@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301214532) do
+ActiveRecord::Schema.define(:version => 20120301235122) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20120301214532) do
     t.integer  "theme_id"
     t.string   "title_color"
     t.integer  "home_page_id"
+    t.boolean  "pending_removal",                 :default => false
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
