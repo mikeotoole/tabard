@@ -69,6 +69,8 @@
                 %ul
                   - management_navigation_items.each do |item|
                     %li= link_to item[:title], item[:link], (item[:meta] and item[:meta] > 0 ? { :meta => item[:meta] } : {})
+                  - unless current_user.user_profile == current_community.admin_profile
+                    %li= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), :method => :delete, :confirm => "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
           - else
             %li{ :class => 'special signup' }
               - if current_community.can_receive_application_from? current_user

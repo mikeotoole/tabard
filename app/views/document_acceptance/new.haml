@@ -5,8 +5,9 @@
 
   = form_tag accept_document_create_path do
     .document
-      :markdown
-        #{@document.body}
+      .scroll
+        :markdown
+          #{@document.body}
       %p.accept
         %input{ :id => "document_#{@document.id}_accept", :name => 'accept', :type => 'checkbox', :value => true }
         %label{ :for => "document_#{@document.id}_accept" } I have read and accept this agreement.

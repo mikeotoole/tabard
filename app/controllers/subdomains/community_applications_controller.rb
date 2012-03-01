@@ -15,7 +15,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
   before_filter :ensure_current_user_is_member, :only => [:index]
-  authorize_resource
+  authorize_resource :except => [:index]
   skip_before_filter :limit_subdomain_access
 
   # GET /community_applications

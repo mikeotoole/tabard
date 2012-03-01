@@ -15,6 +15,7 @@ FactoryGirl.define do
       profile.update_attribute(:community, nil)
     end
   end
+
   factory :community_profile_with_characters, :parent => :community_profile do
     community { FactoryGirl.create(:community_with_supported_games) }
     after_create do |community_profile|
