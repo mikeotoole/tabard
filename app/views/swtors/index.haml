@@ -1,8 +1,8 @@
 - title 'Star Wars: The Old Republic'
 
 #body
-  %h1= 'Star Wars: The Old Republic'
-
+  = render 'communities/submenu'
+  %h1= 'Star Wars: The Old Republic Communities'
   - if @communities.any?
     = paginate @communities
     = render "communities/table", :communities => @communities

@@ -25,7 +25,7 @@
                 %span.game= character_proxy.game_name
             - if @community_application.is_pending? and can? :accept, @community_application
               = f.simple_fields_for @community_application.character_proxies, character_proxy, :index => character_proxy.id do |pf|
-                .select= pf.input :id, :as => :radio, :wrapper => false, :label => false, :input_html => { :name => "proxy_hash[#{character_proxy.id}]" }, :collection => @supported_games.where(:game_type => character_proxy.game.class.to_s).collect {|sg| [ "#{sg.name} — #{sg.game_name}", sg.id ] }
+                .select= pf.input :id, :as => :radio, :wrapper => false, :label => false, :input_html => { :name => "proxy_hash[#{character_proxy.id}]" }, :collection => [['Reject Character','']] + @supported_games.where(:game_type => character_proxy.game.class.to_s).collect {|sg| [sg.smart_name,sg.id] }
 
     - if @community_application.submission.answers.size > 0
       .questions

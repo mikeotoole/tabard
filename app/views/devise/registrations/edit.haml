@@ -10,7 +10,7 @@
         = f.input :password, :label => 'New password'
         = f.input :password_confirmation, :label => 'New password confirmation'
         = f.input :current_password, :hint => "(we need your current password to confirm your changes)"
-        %li
-          %button{ :type => 'submit' } Update
+      %p
+        %button{ :type => 'submit' } Update
   %p
     = link_to "Disable my account", disable_confirmation_path
