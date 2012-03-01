@@ -12,7 +12,7 @@
     %ul.actions
       - if can? :update, @user_profile
         %li.settings= link_to "Settings", edit_user_registration_url
-        %li.edit= link_to 'Edit Profile', edit_user_profile_path(@user_profile)
+        %li.edit= link_to 'Edit Profile', edit_user_profile_url(@user_profile)
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile
           %li.message= link_to 'Message', compose_mail_to_url(@user_profile)
@@ -54,7 +54,7 @@
             %h2
               Star Wars: The Old Republic
               - if user_signed_in? and @user_profile == current_user.user_profile
-                = link_to '+ add new', new_swtor_character_path
+                = link_to '+ add new', new_swtor_character_url
           - if @user_profile.swtor_characters.any?
             = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
           - else
@@ -63,7 +63,7 @@
             %h2
               World of Warcraft
               - if user_signed_in? and @user_profile == current_user.user_profile
-                = link_to '+ add new', new_wow_character_path
+                = link_to '+ add new', new_wow_character_url
           - if @user_profile.wow_characters.any?
             = render 'wow_characters/list', :characters => @user_profile.wow_characters
           - else

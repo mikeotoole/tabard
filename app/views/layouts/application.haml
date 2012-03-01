@@ -8,7 +8,7 @@
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
 
-  %body{ :class => "#{params[:controller]} #{params[:action]}" }
+  %body{ :class => "#{params[:controller].gsub(/\//,' ')} #{params[:action]}" }
     = render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
     #content

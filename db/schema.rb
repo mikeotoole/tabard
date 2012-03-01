@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223194535) do
+ActiveRecord::Schema.define(:version => 20120301214532) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -569,6 +569,7 @@ ActiveRecord::Schema.define(:version => 20120223194535) do
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
     t.integer  "user_profile_id"
+    t.string   "time_zone"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -38,8 +38,8 @@ describe UserProfile do
     Factory.build(:user_profile, :display_name => nil).should_not be_valid
   end
 
-  it "should ensure display names are unique" do
-    Factory.build(:user_profile, :display_name => profile.display_name).should_not be_valid
+  it "should ensure display names are not unique" do
+    Factory.build(:user_profile, :display_name => profile.display_name).should be_valid
   end
   
   it "display name should reject company and administration restricted values" do

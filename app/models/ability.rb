@@ -125,7 +125,7 @@ class Ability
     can :create, Community
 
     # Community Applications
-    can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
+    can [:create, :update, :destroy], CommunityApplication do |community_application|
       community_application.user_profile_id == user.user_profile_id if community_application.user_profile_id
     end
     can [:comment], CommunityApplication do |community_application|
@@ -210,6 +210,10 @@ class Ability
     can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile_id == user.user_profile_id if roster_assignment.community_profile_user_profile
     end
+
+    can [:destroy], CommunityProfile do |community_profile|
+      community_profile.user_profile_id == user.user_profile_id
+    end
   end
 
   ###
@@ -250,7 +254,7 @@ class Ability
     can :manage, Permission
     can [:read, :destroy], Submission
     can :manage, Question
-    can :update, Community
+    can [:update, :remove_confirmation, :destroy], Community
   end
 
   ###
@@ -271,6 +275,10 @@ class Ability
     end
 
     # Cannot Overrides
+    cannot [:show], CommunityApplication do |community_application|
+      community_application.user_profile_id == user.user_profile_id
+    end
+
     cannot [:create], Comment do |comment|
       comment.commentable_has_comments_disabled?
     end

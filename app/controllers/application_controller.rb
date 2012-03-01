@@ -29,6 +29,9 @@ class ApplicationController < ActionController::Base
 
   # This before_filter ensures that ssl mode is not running
   prepend_before_filter :ensure_not_ssl_mode
+  
+  # This before_filter set the time zone to the users given value.
+  before_filter :set_timezone
 
 ###
 # Status Code Rescues
@@ -290,6 +293,15 @@ protected
   def block_unauthorized_user!
     session[:return_to] = request.url
     authenticate_user!
+  end
+  
+  ###
+  # _before_filter_
+  #
+  # This method will set the time zone to the users given value. This will ensure the views disply the correct time.
+  ###
+  def set_timezone
+    Time.zone = current_user.time_zone if current_user
   end
 
 ###

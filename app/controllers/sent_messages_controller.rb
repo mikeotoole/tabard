@@ -43,7 +43,7 @@ class SentMessagesController < MailboxController
     authorize!(:create, @message)
     if @message.save
       add_new_flash_message("Your message has been sent.",'success')
-      redirect_to :action => "index"
+      redirect_to inbox_path
     else
       if @message.to.blank?
         errors = Array.new
