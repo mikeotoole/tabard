@@ -210,6 +210,10 @@ class Ability
     can [:read, :create, :destroy], RosterAssignment do |roster_assignment|
       roster_assignment.community_profile_user_profile_id == user.user_profile_id if roster_assignment.community_profile_user_profile
     end
+
+    can [:destroy], CommunityProfile do |community_profile|
+      community_profile.user_profile_id == user.user_profile_id
+    end
   end
 
   ###

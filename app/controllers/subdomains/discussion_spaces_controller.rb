@@ -66,6 +66,9 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     respond_with(@discussion_space)
   end
 
+###
+# Helper Methods
+###
   # This method returns the current game that is in scope.
   def current_game
     @discussion_space ? @discussion_space.game : nil

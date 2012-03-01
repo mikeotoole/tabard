@@ -21,7 +21,13 @@ class Subdomains::CommunityProfilesController < SubdomainsController
   def destroy
     @community_profile.force_destroy = true
     if @community_profile.destroy
-      add_new_flash_message "#{@community_profile.user_profile_display_name} has been removed from the community.", 'notice'
+      if @community_profile.user_profile == current_user.user_profile
+        add_new_flash_message "You have left the \"#{current_community.name}\" community.", 'success'
+        redirect_to root_url(:subdomain => current_community.subdomain)
+        return
+      else
+        add_new_flash_message "#{@community_profile.user_profile_display_name} has been removed from the community.", 'notice'
+      end
     end
     respond_with @community_profile, :location => roster_assignments_url
   end
