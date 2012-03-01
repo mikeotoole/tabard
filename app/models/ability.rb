@@ -125,7 +125,7 @@ class Ability
     can :create, Community
 
     # Community Applications
-    can [:read, :create, :update, :destroy], CommunityApplication do |community_application|
+    can [:create, :update, :destroy], CommunityApplication do |community_application|
       community_application.user_profile_id == user.user_profile_id if community_application.user_profile_id
     end
     can [:comment], CommunityApplication do |community_application|
@@ -275,6 +275,10 @@ class Ability
     end
 
     # Cannot Overrides
+    cannot [:show], CommunityApplication do |community_application|
+      community_application.user_profile_id == user.user_profile_id
+    end
+
     cannot [:create], Comment do |comment|
       comment.commentable_has_comments_disabled?
     end
