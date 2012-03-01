@@ -112,6 +112,31 @@ protected
   end
   helper_method :hide_announcements?
 
+###
+# Remember Last Poster
+###
+  def set_last_posted_as(profile)
+    session[:poster_type] = profile.class.to_s
+    session[:poster_id] = profile.id.to_s
+  end
+
+  def last_posted_as_character_proxy_id
+    return nil if last_posted_as_user_profile?
+    return session[:poster_id].to_i
+  end
+  helper_method :last_posted_as_character_proxy_id
+
+  def last_posted_as_user_profile?
+    !session[:poster_type] or !session[:poster_id] or !!(session[:poster_type] =~ /UserProfile/)
+  end
+  helper_method :last_posted_as_user_profile?
+
+  def last_posted_as_character_proxy?(proxy)
+    return false if last_posted_as_user_profile?
+    proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s
+  end
+  helper_method :last_posted_as_character_proxy?
+
   ###
   # This helper method returns the current community that is in scope.
   # It is defined as nil when not in a subdomain.
