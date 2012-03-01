@@ -7,6 +7,7 @@
     %fieldset
       %ol
         = f.input :email
+        = f.input :time_zone, :collection => User::VALID_TIME_ZONES, :as => :radio, :wrapper_html => { :class => 'select' }
         = f.input :password, :label => 'New password'
         = f.input :password_confirmation, :label => 'New password confirmation'
         = f.input :current_password, :hint => "(we need your current password to confirm your changes)"
