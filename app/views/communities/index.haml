@@ -1,10 +1,12 @@
 - title "Communities"
 
 #body
-  %h1 Listing communities
-
-  - if @communities.size > 0
+  = render 'submenu'
+  %h1 All Communities
+  - if @communities.any?
+    = paginate @communities
     = render "communities/table", :communities => @communities
+    = paginate @communities
   -else
     %p
       There are no active communities.

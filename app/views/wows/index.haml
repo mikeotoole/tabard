@@ -1,8 +1,8 @@
 - title 'World of Warcraft'
 
 #body
-  %h1= 'World of Warcraft'
-
+  = render 'communities/submenu'
+  %h1= 'World of Warcraft Communities'
   - if @communities.any?
     = paginate @communities
     = render "communities/table", :communities => @communities

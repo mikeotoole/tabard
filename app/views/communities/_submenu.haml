@@ -1,0 +1,6 @@
+#submenu
+  = link_to 'All', communities_url, :class => 'all'
+  = link_to 'WoW', wows_url, :class => 'wow'
+  = link_to 'SW:TOR', swtors_url, :class => 'swtor'
+  - if can? :create, Community
+    = link_to 'New', new_community_url, :class => 'action new', :meta => 'Create a new community'

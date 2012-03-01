@@ -19,6 +19,7 @@ class CommunitiesController < ApplicationController
 ###
   # GET /communities(.:format)
   def index
+    @communities = @communities.page params[:page]
   end
 
   # GET /communities/:id(.:format)
