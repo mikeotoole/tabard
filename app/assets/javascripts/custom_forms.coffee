@@ -38,14 +38,8 @@ $(document).ready ->
                 .attr('readonly',true)
             else
               right.removeClass('hidden')
-              if val == li.data('qstyle')
-                answers.find('input').removeAttr('disabled readonly')
-              else
-                answers.find('input[type="hidden"]')
-                  .attr('disabled',true)
-                  .attr('readonly',true)
-                answers.find('input[type="text"]')
-                  .removeAttr('disabled readonly')
+              answers.find('input')
+                .removeAttr('disabled readonly')
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
         
