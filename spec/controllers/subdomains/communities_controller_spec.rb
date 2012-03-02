@@ -83,4 +83,62 @@ describe Subdomains::CommunitiesController do
       assigns[:community].slogan.should_not eq @slogan
     end
   end
+  
+  describe "GET 'remove_confirmation'" do
+    it "should be unauthorized when authenticated as a non admin user" do
+      sign_in user
+      get 'remove_confirmation', :id => community
+      response.response_code.should == 403
+    end
+
+    it "should be sucess when authenticated as the community admin user" do
+      sign_in admin_user
+      get 'remove_confirmation', :id => community
+      response.should be_success
+    end
+
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'remove_confirmation', :id => community
+      response.should redirect_to(new_user_session_path)
+    end
+
+    it "should render communities/edit template" do
+      sign_in admin_user
+      get 'remove_confirmation', :id => community
+      response.should render_template('communities/remove_confirmation')
+    end
+  end
+  
+  describe "DELETE destroy" do
+    it "destroys the requested community when authenticated as admin" do
+      community
+      sign_in admin_user
+      expect {
+        delete :destroy, :id => community.id.to_s, :current_password => admin_user.password
+      }.to change(Community, :count).by(-1)
+    end
+
+    it "redirects to the admin's user profile when authenticated as admin" do
+      sign_in admin_user
+      delete :destroy, :id => community.id.to_s, :current_password => admin_user.password
+      response.should redirect_to(admin.user_profile)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      delete :destroy, :id => community.id.to_s
+      response.should redirect_to(new_user_session_url)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in user
+      delete :destroy, :id => community.id.to_s, :current_password => user.password
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member but not admin" do
+      sign_in billy
+      delete :destroy, :id => community.id.to_s, :current_password => billy.password
+      response.should be_forbidden
+    end
+  end
 end
