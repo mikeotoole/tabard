@@ -11,8 +11,9 @@ class CommunitiesController < ApplicationController
   # Before Filters
   ###
   before_filter :block_unauthorized_user!, :except => [:show, :index]
-  load_and_authorize_resource
-  skip_load_and_authorize_resource :only => [:create]
+  #skip_before_filter :ensure_not_ssl_mode, :only => [:destroy]
+  #before_filter :ensure_secure_subdomain, :only => [:destroy]
+  load_and_authorize_resource :except => [:create]
 
 ###
 # REST Actions
@@ -41,6 +42,19 @@ class CommunitiesController < ApplicationController
       redirect_to supported_games_url(:subdomain => @community.subdomain)
     else
       respond_with(@community)
+    end
+  end
+  
+  # DELETE /communities/:id(.:format)
+  def destroy
+    if params[:user] and current_user.valid_password?(params[:user][:current_password])
+      Community.delay.destory_community(@community.id)
+      @community.update_attribute(:pending_removal, true)
+      add_new_flash_message 'Community is being removed.', 'notice'
+      redirect_to user_root_url(:subdomain => false)
+    else
+      add_new_flash_message 'Password was not valid.', 'alert'
+      redirect_to community_remove_confirmation_url
     end
   end
 end
