@@ -3,7 +3,7 @@
 #body
   %h1 Change your password
 
-  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { :method => :put }) do |f|
     = f.hidden_field :reset_password_token
     %fieldset
       %ol
