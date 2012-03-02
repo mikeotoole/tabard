@@ -12,7 +12,7 @@ class Swtor < Game
   # All valid factions
   VALID_FACTIONS =  %w(Republic Empire)
   # All valid server types
-  VALID_SERVER_TYPES =  %w(PvP PvE)
+  VALID_SERVER_TYPES =  %w(PvP PvE RP-PvP RP-PvE)
 
 ###
 # Attribute accessible
