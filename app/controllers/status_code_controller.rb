@@ -18,8 +18,4 @@ class StatusCodeController < ApplicationController
   def not_found
     render :not_found, :status => :not_found
   end
-  
-  def pending_removal
-    render
-  end
 end

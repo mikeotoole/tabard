@@ -186,7 +186,6 @@ DaBvRails::Application.routes.draw do
 
   match '/not_found' => 'status_code#not_found', :as => 'not_found'
   match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
-  match '/pending_removal' => 'status_code#pending_removal', :as => 'pending_removal'
   match '*route', :to => 'status_code#not_found', :as => 'status_code_not_found'
 
   # The priority is based upon order of creation:

@@ -11,4 +11,4 @@
     %ol
       = f.input :current_password, :label => "Account Password", :hint => "we need your password to confirm this request"
     %p
-      %button{ :type => 'submit' } Remove Community
+      %button{ :type => 'submit', 'data-confirm' => 'Last chance... Are you sure you want to do this?' } Remove Community
