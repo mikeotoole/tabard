@@ -73,11 +73,13 @@
                     %li= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), :method => :delete, :confirm => "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
           - else
             %li{ :class => 'special signup' }
-              - if current_community.can_receive_application_from? current_user
-                = link_to 'Apply Now', new_community_application_url
-              - elsif user_signed_in? and current_user.application_pending? current_community
-                %a Application Pending
-
+              - if user_signed_in? 
+                - if current_community.can_receive_application_from? current_user
+                  = link_to 'Apply Now', new_community_application_url
+                - elsif current_user.application_pending? current_community
+                  %a Application Pending
+              - else
+                = link_to 'Apply Now', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), :community_id => current_community.id)
       #body
         = yield
 
