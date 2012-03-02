@@ -119,7 +119,13 @@ class UserProfile < ActiveRecord::Base
     available_character_proxies = Array.new
     community_profile = self.community_profiles.where{community_id == community.id}.first
     available_character_proxies.concat community_profile.approved_character_proxies if community_profile
-    available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s} if game
+    if game
+      if game.class == SupportedGame
+        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.game.class.to_s} 
+      else
+        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s} 
+      end
+    end
     available_character_proxies
   end
 
