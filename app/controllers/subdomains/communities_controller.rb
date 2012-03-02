@@ -27,7 +27,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     else
       add_new_flash_message 'Error. Unable to save changes.', 'alert'
     end
-    respond_with(@community, :location => edit_community_settings_url(@community))
+    respond_with(@community, :location => edit_community_settings_url)
   end
   
   def remove_confirmation
@@ -35,7 +35,7 @@ class Subdomains::CommunitiesController < SubdomainsController
 
   # DELETE /communities/:id(.:format)
   def destroy # TODO Joe, This needs to use SSL.
-    if current_user and current_user.valid_password?(params[:user][:current_password])
+    if params[:user] and current_user.valid_password?(params[:user][:current_password])
       Community.delay.destory_community(@community.id)
       @community.update_attribute(:pending_removal, true)
       add_new_flash_message 'Community is being removed.', 'notice'
