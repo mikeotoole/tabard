@@ -55,7 +55,7 @@ class CommunitiesController < ApplicationController
       redirect_to user_root_url(:subdomain => false)
     else
       add_new_flash_message 'Password was not valid.', 'alert'
-      redirect_to community_remove_confirmation_url
+      redirect_to community_remove_confirmation_url(:subdomain => @community.subdomain)
     end
   end
 end
