@@ -123,6 +123,9 @@ class Ability
 
     # Community Rules
     can :create, Community
+    can :destroy, Community do |community|
+      community.admin_profile_id == user.user_profile_id
+    end
 
     # Community Applications
     can [:create, :update, :destroy], CommunityApplication do |community_application|
@@ -254,7 +257,7 @@ class Ability
     can :manage, Permission
     can [:read, :destroy], Submission
     can :manage, Question
-    can [:update, :remove_confirmation, :destroy], Community
+    can [:update, :remove_confirmation], Community
   end
 
   ###

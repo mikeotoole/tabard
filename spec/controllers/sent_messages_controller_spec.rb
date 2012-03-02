@@ -108,7 +108,7 @@ describe SentMessagesController do
 
       it "redirects to the users sent_mailbox" do
         post :create, :message => attributes_for(:message)
-        response.should redirect_to(sent_mailbox_url)
+        response.should redirect_to(inbox_url)
       end
     end
 

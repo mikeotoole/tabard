@@ -44,7 +44,7 @@ class UserProfile < ActiveRecord::Base
   has_many :folders, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
-  has_many :activites, :dependent => :destroy
+  has_many :activities, :dependent => :destroy
 
 ###
 # Delegates

@@ -163,20 +163,36 @@ describe CommunitiesController do
     end
   end
 
-  describe "DELETE 'destroy'" do
-    it "should throw routing error when authenticated as a user" do
-      sign_in user
-      assert_raises(AbstractController::ActionNotFound) do
-        delete 'destroy', :id => community
-        assert_response :missing
-      end
+  describe "DELETE destroy" do
+    it "destroys the requested community when authenticated as admin" do
+      community
+      sign_in admin_user
+      expect {
+        delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
+      }.to change(Community, :count).by(-1)
     end
 
-    it "should throw routing error when not authenticated as a user" do
-      assert_raises(AbstractController::ActionNotFound) do
-        delete 'destroy', :id => community
-        assert_response :missing
-      end
+    it "redirects to the admin's user profile when authenticated as admin" do
+      sign_in admin_user
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
+      response.should redirect_to(user_root_url)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      delete :destroy, :id => community.id.to_s
+      response.should redirect_to(new_user_session_url)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in user
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => user.password}
+      response.should be_forbidden
+    end
+    
+    it "should respond forbidden when a member but not admin" do
+      sign_in billy
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => billy.password}
+      response.should be_forbidden
     end
   end
 end

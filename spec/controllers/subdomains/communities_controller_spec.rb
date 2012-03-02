@@ -65,7 +65,7 @@ describe Subdomains::CommunitiesController do
     end
 
     it "should redirect to the community edit view" do
-      response.should redirect_to(edit_community_settings_url(assigns[:community]))
+      response.should redirect_to edit_community_settings_url
     end
   end
 
@@ -106,39 +106,6 @@ describe Subdomains::CommunitiesController do
       sign_in admin_user
       get 'remove_confirmation', :id => community
       response.should render_template('communities/remove_confirmation')
-    end
-  end
-  
-  describe "DELETE destroy" do
-    it "destroys the requested community when authenticated as admin" do
-      community
-      sign_in admin_user
-      expect {
-        delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
-      }.to change(Community, :count).by(-1)
-    end
-
-    it "redirects to the admin's user profile when authenticated as admin" do
-      sign_in admin_user
-      delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
-      response.should redirect_to(user_root_url)
-    end
-    
-    it "should redirect to new user session path when not authenticated as a user" do
-      delete :destroy, :id => community.id.to_s
-      response.should redirect_to(new_user_session_url)
-    end
-    
-    it "should respond forbidden when not a member" do
-      sign_in user
-      delete :destroy, :id => community.id.to_s, :user => {:current_password => user.password}
-      response.should be_forbidden
-    end
-    
-    it "should respond forbidden when a member but not admin" do
-      sign_in billy
-      delete :destroy, :id => community.id.to_s, :user => {:current_password => billy.password}
-      response.should be_forbidden
     end
   end
 end
