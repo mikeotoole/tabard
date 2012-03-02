@@ -137,5 +137,5 @@ protected
     return Array.new
   end
   helper_method :announcements_to_display
-  
+
 end
