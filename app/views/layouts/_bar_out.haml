@@ -15,9 +15,9 @@
         %li= link_to "Star Wars: The Old Republic", swtors_url(subdomain: false)
 
   %p.signup
-    = link_to 'Login', new_user_session_url(subdomain: false)
+    = link_to 'Login', new_user_session_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
     or
-    = link_to 'Sign up', new_user_registration_url(subdomain: false), :class => 'button'
+    = link_to 'Sign up', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :class => 'button'
 
   -# TODO Connect search to this form once search has been added to the project
     = form_tag('#', :method => "get") do |f|

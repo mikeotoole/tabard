@@ -10,8 +10,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
   skip_before_filter :limit_subdomain_access
-  skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update]
-  before_filter :ensure_secure_subdomain, :only => [:create, :update]
+  skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
+  before_filter :ensure_secure_subdomain, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
 
 ###
