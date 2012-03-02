@@ -26,8 +26,8 @@ describe CustomForm do
     build(:custom_form, :name => nil).should_not be_valid
   end
 
-  it "should require instructions" do
-    build(:custom_form, :instructions => nil).should_not be_valid
+  it "should not require instructions" do
+    build(:custom_form, :instructions => nil).should be_valid
   end
   
   it "should require thankyou" do

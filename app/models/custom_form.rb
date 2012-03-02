@@ -52,6 +52,9 @@ class CustomForm < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
 
+###
+# Callbacks
+###
   after_create :apply_default_permissions
 
 ###
