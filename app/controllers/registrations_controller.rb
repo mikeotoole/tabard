@@ -16,7 +16,13 @@ class RegistrationsController < Devise::RegistrationsController
 
 ###
 # Sign Up
-###]
+###
+  # Overriding Devise method to add a flash if the user is signing up from a community.
+  def new
+    community = Community.find_by_id(params[:community_id])
+    add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin account or login.", "notice" if community
+    super
+  end
   # Overriding Devise method to redirect to reinstate_confirmation_url if email belongs to a user disabled account.
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]

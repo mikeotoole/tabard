@@ -39,8 +39,7 @@ class CustomForm < ActiveRecord::Base
 ###
   validates :name,  :presence => true,
                     :length => { :maximum => MAX_NAME_LENGTH }
-  validates :instructions, :presence => true,
-                           :length => { :maximum => MAX_INSTRUCTIONS_LENGTH }
+  validates :instructions, :length => { :maximum => MAX_INSTRUCTIONS_LENGTH }
   validates :thankyou, :presence => true,
                        :length => { :maximum => MAX_THANKYOU_LENGTH }
   validates :community, :presence => true

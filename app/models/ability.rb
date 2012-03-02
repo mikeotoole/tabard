@@ -303,6 +303,7 @@ class Ability
   #   * +current_community+ -> The current community context.
   ###
   def apply_rules_from_roles(user, current_community)
+    return if user == nil
     return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
     community_profile.roles.each do |role|

@@ -10,4 +10,10 @@ class PasswordsController < Devise::PasswordsController
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode
+  before_filter :ensure_secure_subdomain, :only => [:edit, :update]
+
+   # The path used after sending reset password instructions
+    def after_sending_reset_password_instructions_path_for(resource_name)
+      root_url(subdomain: false)
+    end
 end

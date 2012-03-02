@@ -36,8 +36,9 @@
             = cp.name
         .select.picker= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
-      %h2 Instructions
-      :markdown
-        #{community_application.custom_form_instructions}
+      - unless community_application.custom_form_instructions.empty?
+        %h2 Instructions
+        :markdown
+          #{community_application.custom_form_instructions}
   %p.submit
     %button{ :type => 'submit' } Submit
