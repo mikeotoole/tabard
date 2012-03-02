@@ -20,10 +20,6 @@
           %div
             - if community.can_receive_application_from? current_user
               = link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
-            - if (can? :update, community)
-              = link_to 'Edit', edit_community_path(community), :meta => 'Edit community', :class => 'edit'
-            - if (can? :destroy, community)
-              = link_to 'Destroy', community, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete community', :class => 'delete'
   %tfoot
     %tr
       %td{ :colspan => 4 }

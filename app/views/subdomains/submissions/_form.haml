@@ -26,8 +26,9 @@
                     %mark.error= af.object.errors.full_messages.first
   .sidebar
     .instructions
-      %h2 Instructions
-      :markdown
-        #{submission.custom_form_instructions}
+      - unless submission.custom_form_instructions.empty?
+        %h2 Instructions
+        :markdown
+          #{submission.custom_form_instructions}
   %p.submit
     %button{ :type => 'submit' } Submit
