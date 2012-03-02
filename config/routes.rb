@@ -29,10 +29,6 @@ DaBvRails::Application.routes.draw do
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
   match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
 
-  # Active profile
-  resource :active_profiles, :only => [:create]
-  post 'active_profile/:id/:type' => 'active_profiles#create', :as => :active_profile
-
   # Activity
   resources :activities, :only => [:index]
 
