@@ -45,8 +45,10 @@ class Subdomains::DiscussionsController < SubdomainsController
   # POST /discussion_spaces/:discussion_space_id/discussions(.:format)
   def create
     @discussion.user_profile = current_user.user_profile
-    @discussion.character_proxy = (character_active? ? current_character.character_proxy : nil)
-    add_new_flash_message('Discussion was successfully created.','success') if @discussion.save
+    if @discussion.save
+      add_new_flash_message('Discussion was successfully created.','success') 
+      set_last_posted_as(@discussion.poster)
+    end
     respond_with(@discussion)
   end
 
