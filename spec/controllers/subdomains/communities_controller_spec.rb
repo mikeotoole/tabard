@@ -114,14 +114,14 @@ describe Subdomains::CommunitiesController do
       community
       sign_in admin_user
       expect {
-        delete :destroy, :id => community.id.to_s, :current_password => admin_user.password
+        delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
       }.to change(Community, :count).by(-1)
     end
 
     it "redirects to the admin's user profile when authenticated as admin" do
       sign_in admin_user
-      delete :destroy, :id => community.id.to_s, :current_password => admin_user.password
-      response.should redirect_to(admin.user_profile)
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
+      response.should redirect_to(user_root_url)
     end
     
     it "should redirect to new user session path when not authenticated as a user" do
@@ -131,13 +131,13 @@ describe Subdomains::CommunitiesController do
     
     it "should respond forbidden when not a member" do
       sign_in user
-      delete :destroy, :id => community.id.to_s, :current_password => user.password
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => user.password}
       response.should be_forbidden
     end
     
     it "should respond forbidden when a member but not admin" do
       sign_in billy
-      delete :destroy, :id => community.id.to_s, :current_password => billy.password
+      delete :destroy, :id => community.id.to_s, :user => {:current_password => billy.password}
       response.should be_forbidden
     end
   end
