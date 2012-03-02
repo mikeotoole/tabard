@@ -7,7 +7,7 @@
     %br
     %strong.omg All pages, discussions, comments, and members of communities you administer will be removed.
     %br
-    Are you absolutely sure you want to do this?
+    This cannot be undone, so be absolutely sure that you want to do this.
 
   = simple_form_for(@user, :url => registration_url(@user, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { :method => :delete }) do |f|
     %fieldset

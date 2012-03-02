@@ -323,6 +323,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -348,5 +349,6 @@ end
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
 #  user_profile_id                   :integer
+#  time_zone                         :string(255)
 #
 

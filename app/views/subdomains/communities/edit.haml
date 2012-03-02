@@ -33,7 +33,7 @@
 
   %p.submit
     = f.button :submit, 'Save Changes'
-    = link_to 'Remove community', 'remove_community_confirmation_url', :confirm => 'Removing a community will also remove all content associated to the community. This includes all pages, discussions, announcements, comments, and members. Are you sure you want to do this?'
+    = link_to 'Remove community', community_remove_confirmation_url, :class => 'secondary'
 
 = stylesheet_link_tag "application/colorpicker"
 = javascript_include_tag "colorpicker","community_settings"
