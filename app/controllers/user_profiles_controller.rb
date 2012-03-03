@@ -14,7 +14,7 @@ class UserProfilesController < ApplicationController
   before_filter :set_current_user_as_profile, :only => [:dashboard, :account]
   load_and_authorize_resource :except => [:activities, :characters]
   skip_authorize_resource :only => :account
-  before_filter :load_activities, :only => [:dashboard, :show, :activities, :characters]
+  before_filter :load_activities, :only => [:dashboard, :show, :activities]
 
   # GET /dashboard
   def dashboard
@@ -46,11 +46,14 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/activities(.:format)
   def activities
+    raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     render :partial => 'user_profiles/activities', :locals => { :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment }
   end
 
   # GET /user_profiles/:id/characters(.:format)
   def characters
+    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
+    raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     render :partial => 'user_profiles/characters', :locals => { :user_profile => @user_profile }
   end
 
@@ -70,5 +73,4 @@ class UserProfilesController < ApplicationController
     @activities_count_increment = 10
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, @activities_count_initial)
   end
-
 end
