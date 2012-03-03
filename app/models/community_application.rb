@@ -54,6 +54,7 @@ class CommunityApplication < ActiveRecord::Base
   validate :community_and_submission_match
   validate :user_profile_and_submission_match
   validate :user_profile_not_a_member
+  validate :character_proxies_are_compatable_with_community
 
 ###
 # Delegates
@@ -208,6 +209,13 @@ protected
   def user_profile_not_a_member
     return unless community and user_profile
     errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
+  end
+
+  #This method ensures that the character proxies are compatable with the community.
+  def character_proxies_are_compatable_with_community
+    self.character_proxies.each do |cp|
+      errors.add(:base, "#{cp.name} does not belong to a game that is supported by the community.") unless cp.compatable_with_community?(self.community)
+    end
   end
 
 ###

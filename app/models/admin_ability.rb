@@ -26,7 +26,7 @@ class AdminAbility
   ###
   def bakedInRules(user)
     # Rules for moderator user.
-    if user.role? :moderator # TODO Bryan, Review all these rules -MO
+    if user.role? :moderator
       can [:read], ActiveAdmin::Dashboards::DashboardController
       can [:read, :disable, :reinstate, :reset_password], User
       can [:read], UserProfile
@@ -50,7 +50,7 @@ class AdminAbility
     end
 
     # Rules for admin user. (Inherits rules from moderator).
-    if user.role? :admin # TODO Bryan, Review all these rules -MO
+    if user.role? :admin
       can [:nuke, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
@@ -63,7 +63,7 @@ class AdminAbility
     end
 
     # Rules for superadmin user. (Inherits rules from admin).
-    if user.role? :superadmin # TODO Bryan, Review all these rules -MO
+    if user.role? :superadmin
       can [:read, :create, :view_document], [Document, 'Document']
       can [:update], Document do |document|
         not document.is_published

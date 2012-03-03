@@ -111,6 +111,14 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
+  # This method gets all of character proxies that are compatable with the communities supported games.
+  # [Returns] An array that contains all of the compatable character proxies.
+  ###
+  def compatable_character_proxies(community)
+    self.character_proxies.reject{|cp| !cp.compatable_with_community?(community)}
+  end
+
+  ###
   # This method gets all of the avaliable characters attached to this user profile.
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
   ###

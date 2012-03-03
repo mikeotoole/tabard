@@ -44,8 +44,8 @@ def generate_application(community, user_last_name)
   puts "#{user_profile.name} submitting application to #{community.name} Guild"
   app = community.community_applications.new
   app.prep(user_profile, community.community_application_form)
-  if user_profile.character_proxies.size > 0
-    app.character_proxies << user_profile.character_proxies.first
+  user_profile.character_proxies.each do |cp|
+    app.character_proxies << cp if cp.compatable_with_community?(community)
   end
   app.save!
   app.submission.custom_form.questions.each do |q|
