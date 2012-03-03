@@ -21,6 +21,9 @@ class Subdomains::CommunityProfilesController < SubdomainsController
   def destroy
     @community_profile.force_destroy = true
     if @community_profile.destroy
+      community_application = @community_profile.community_application
+      logger.debug community_application.to_yaml
+      community_application.remove_from_community(current_user.user_profile)
       if @community_profile.user_profile == current_user.user_profile
         add_new_flash_message "You have left the \"#{current_community.name}\" community.", 'success'
         redirect_to root_url(:subdomain => current_community.subdomain)
