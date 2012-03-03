@@ -173,7 +173,7 @@ describe WowCharactersController do
     it "should be successful when authenticated as a user" do
       sign_in user
       delete 'destroy', :id => @character
-      response.should redirect_to(user_profile_url(@character.user_profile))
+      response.should redirect_to(user_profile_url(@character.user_profile) + "#characters")
     end
  
     it "should redirected to new user session path when not authenticated as a user" do

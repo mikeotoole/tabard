@@ -7,7 +7,8 @@
     %fieldset
       %ol
         = render 'fields', :f => f, :swtor_character => @swtor_character
-        %li
-          %button{ :type => 'submit' } Save character
+      %p.submit
+        %button{ :type => 'submit' } Save character
+        = link_to 'Remove Character', @swtor_character, :method => :delete, :confirm => 'This cannot be undone. Are you sure you want to remove this character?', :class => 'secondary'
 
   = render 'shared/user_account_links'

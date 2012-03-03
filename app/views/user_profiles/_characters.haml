@@ -1,0 +1,18 @@
+- if user_profile.swtor_characters.any? or (user_signed_in? and user_profile.id == current_user.user_profile_id)
+  %h2
+    Star Wars: The Old Republic
+    - if user_signed_in? and user_profile == current_user.user_profile
+      = link_to '+ add new', new_swtor_character_url
+- if user_profile.swtor_characters.any?
+  = render 'swtor_characters/list', :characters => user_profile.swtor_characters
+
+- if user_profile.wow_characters.any? or (user_signed_in? and user_profile == current_user.user_profile)
+  %h2
+    World of Warcraft
+    - if user_signed_in? and user_profile == current_user.user_profile
+      = link_to '+ add new', new_wow_character_url
+- if user_profile.wow_characters.any?
+  = render 'wow_characters/list', :characters => user_profile.wow_characters
+
+- unless user_profile.characters.any? or (user_signed_in? and user_profile.id == current_user.user_profile_id)
+  %p No characters.

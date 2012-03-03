@@ -7,9 +7,9 @@
     = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
       %style{:type => "text/css", :media => "screen"}
-        - unless current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
+        - unless !!current_community.title_color and current_community.title_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
-        - unless current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
+        - unless !!current_community.background_color and current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme , body.theme #content { background-color: ##{current_community.background_color}; }"
         - unless current_community.background_image_url == '/assets/application/blank.gif'
           = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}) !important; }"

@@ -41,32 +41,11 @@
         %dt{ :class => 'activity active' } Recent Activity
         %dd
           - if defined? @activities and @activities.any?
-            %ol.activities
-              = render "activities/activities", :activities => @activities, :user_profile => @user_profile
-            - unless @activities.size < @activities_count_initial
-              %p.submit
-                = link_to 'Load more', activities_url('activity[user_profile_id]' => @user_profile.id, :max_items => @activities_count_increment), :remote => true, 'data-type' => :text, :class => 'button more_activites', :initial => @activities_count_initial, :increment => @activities_count_increment
+            = render 'activities', :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment
           - else
             %em No recent activity
         %dt{ :class => 'characters' } Characters
         %dd
-          - if @user_profile.swtor_characters.any? or (user_signed_in? and @user_profile.id == current_user.user_profile_id)
-            %h2
-              Star Wars: The Old Republic
-              - if user_signed_in? and @user_profile == current_user.user_profile
-                = link_to '+ add new', new_swtor_character_url
-          - if @user_profile.swtor_characters.any?
-            = render 'swtor_characters/list', :characters => @user_profile.swtor_characters
-          - else
-            %p No characters.
-          - if @user_profile.wow_characters.any? or (user_signed_in? and @user_profile == current_user.user_profile)
-            %h2
-              World of Warcraft
-              - if user_signed_in? and @user_profile == current_user.user_profile
-                = link_to '+ add new', new_wow_character_url
-          - if @user_profile.wow_characters.any?
-            = render 'wow_characters/list', :characters => @user_profile.wow_characters
-          - else
-            %p No characters.
+          = render 'characters', :user_profile => @user_profile
     - else
       %p This user's profile is private.

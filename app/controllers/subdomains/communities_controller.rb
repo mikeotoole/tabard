@@ -26,7 +26,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     else
       add_new_flash_message 'Error. Unable to save changes.', 'alert'
     end
-    respond_with(@community, :location => edit_community_settings_url)
+    respond_with @community, :location => edit_community_settings_url
   end
   
   def remove_confirmation
