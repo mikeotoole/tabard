@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
   skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
-  skip_before_filter :limit_subdomain_access
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :ensure_secure_subdomain, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
@@ -19,9 +19,14 @@ class RegistrationsController < Devise::RegistrationsController
 ###
   # Overriding Devise method to add a flash if the user is signing up from a community.
   def new
+    @hide_announcements = true
     community = Community.find_by_id(params[:community_id])
     add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin account or login.", "notice" if community
     super
+  end
+
+  def edit
+    @hide_announcements = true
   end
   # Overriding Devise method to redirect to reinstate_confirmation_url if email belongs to a user disabled account.
   def create
@@ -47,6 +52,7 @@ class RegistrationsController < Devise::RegistrationsController
   # GET /users/disable_confirmation
   def disable_confirmation
     @user = current_user
+    @hide_announcements = true
     if not @user
       set_flash_message :alert, :not_signed_id
       redirect_to new_user_session_url
@@ -61,6 +67,7 @@ class RegistrationsController < Devise::RegistrationsController
       add_new_flash_message "Your account has been disabled.", "notice"
       redirect_to root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)),
     else
+      @hide_announcements = true
       render 'disable_confirmation'
     end
   end
@@ -97,7 +104,6 @@ class RegistrationsController < Devise::RegistrationsController
   # PUT /users/reinstate_account
   def reinstate_account
     self.resource = resource_class.reset_password_by_token(params[resource_name])
-
     if resource.errors.empty?
       resource.update_attribute(:user_disabled_at, nil)
       add_new_flash_message "Your account has been reinstated. Welcome back to Crumblin!", "success"

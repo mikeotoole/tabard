@@ -8,7 +8,7 @@
 class PasswordsController < Devise::PasswordsController
   prepend_view_path "app/views/devise"
   skip_before_filter :block_unauthorized_user!
-  skip_before_filter :limit_subdomain_access
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode
   before_filter :ensure_secure_subdomain, :only => [:edit, :update]
 
