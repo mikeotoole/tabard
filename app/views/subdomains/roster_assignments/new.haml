@@ -9,7 +9,7 @@
       %th.cinch
       %th My Characters
       %th.actions
-  - if @roster_assignments.size > 0
+  - if @roster_assignments.any?
     %tbody
       - @roster_assignments.each do |roster_assignment|
         %tr{ roster_assignment.is_pending ? { :class => 'dim' } : {} }
@@ -27,7 +27,7 @@
     %tr
       %td
       %td
-        - if @available_characters.size > 0
+        - if @available_characters.any?
           = simple_form_for @roster_assignment, :wrapper => false do |f|
             .select{ :class => !!f.object.errors.messages[:character_proxy_id] ? 'field_with_errors' : '' }
               = f.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => @available_characters.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), :class => 'avatar')) + "#{cp.name} — #{cp.game_name}", cp.id]}

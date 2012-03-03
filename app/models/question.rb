@@ -26,7 +26,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :is_required, :explanation, :type_style, :predefined_answers_attributes
+  attr_accessible :body, :style, :is_required, :explanation, :predefined_answers_attributes
 
 ###
 # Associations
@@ -49,6 +49,7 @@ class Question < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :mark_blank_predefined_answers_for_removal
+  before_save :remove_predefined_answers_if_needed
 
 ###
 # Delegates
@@ -92,6 +93,17 @@ protected
           errors.add(:base, "requires at least one predefined answer.") 
         end
       end
+    end
+  end
+  
+  ###
+  # _before_save_
+  #
+  # This will remove predefined answers if style does not have use them.
+  ###
+  def remove_predefined_answers_if_needed
+    if VALID_STYLES_WITHOUT_PA.include?(self.style)
+      self.predefined_answers.clear
     end
   end
 end

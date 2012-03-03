@@ -362,8 +362,11 @@ body.index.swtors #submenu .swtor
             text-align: center
             width: 0
             
-            label:before
-              +box_shadow(0 0 10px rgba(#000,.3))
+            label
+              position: absolute
+              
+              &:before
+                +box_shadow(0 0 10px rgba(#000,.3))
           
           &.compact
             padding: 5px 10px
@@ -469,14 +472,6 @@ body.index.swtors #submenu .swtor
         border-top: 1px solid #fff
         padding: 10px
         position: relative
-        
-        &:before
-          border-top: 1px solid #ccc
-          content: ''
-          left: 0
-          position: absolute
-          right: 0
-          top: 0
         
         &:first-child
           +border_radius(0,0,0,3)

@@ -5,7 +5,7 @@ if Rails.env.production?
       :aws_access_key_id      => ENV['BV_S3_KEY'],
       :aws_secret_access_key  => ENV['BV_S3_SECRET']
     }
-    config.fog_directory = 'brutalvenom-production'
+    config.fog_directory = 'crumblin'
   end
 else
   CarrierWave.configure do |config|

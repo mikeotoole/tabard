@@ -151,7 +151,7 @@ $(document).ready ->
       amount = (messageCount + rowOffset) * 40
       $('#header')
         .animate({ paddingTop: amount }, speed)
-      $('body:not(.top_level, .sessions, .user_profiles, .subdomains) #body')
+      $('body:not(.top_level) #body')
         .animate({ marginTop: amount }, speed)
       if $('.sidemenu').length
         $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions')

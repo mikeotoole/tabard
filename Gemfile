@@ -44,11 +44,11 @@ source 'http://rubygems.org'
   gem 'fog'
   gem 'mini_magick'
   gem 'carrierwave'
-  #gem 'asset_sync'
+  gem 'asset_sync'
 
 # Admin Portal
   gem 'meta_search', '>= 1.1.0.pre'
-  gem 'activeadmin'
+  gem 'activeadmin', '>= 0.4.2'
 
 # Asset Specific Gems, Pulled out of Group for Activeadmin
   gem 'sass-rails'
@@ -58,6 +58,9 @@ source 'http://rubygems.org'
   group :assets do
 
   end
+  
+# Seeding Data
+  gem 'timecop'
 
 # Production Specific Gems
   group :production do
@@ -80,7 +83,6 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'factory_girl_rails'
-    gem 'timecop'
   end
 
 # Test Specific Gems

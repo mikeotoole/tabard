@@ -1,8 +1,8 @@
-#AssetSync.configure do |config|
-  #config.fog_provider = 'AWS'
-  #config.aws_access_key_id = ENV['BV_ASSETS_S3_KEY']
-  #config.aws_secret_access_key = ENV['BV_ASSETS_S3_SECRET']
-  #config.fog_directory = ENV['BV_ASSETS_DIRECTORY']
+AssetSync.configure do |config|
+  config.fog_provider = 'AWS'
+  config.aws_access_key_id = ENV['BV_ASSETS_S3_KEY']
+  config.aws_secret_access_key = ENV['BV_ASSETS_S3_SECRET']
+  config.fog_directory = ENV['BV_ASSETS_DIRECTORY']
   
   # Increase upload performance by configuring your region
   # config.fog_region = 'eu-west-1'
@@ -18,5 +18,5 @@
   # config.manifest = true
   #
   # Fail silently.  Useful for environments such as Heroku
-  #config.fail_silently = true
-#end
+  config.fail_silently = true
+end

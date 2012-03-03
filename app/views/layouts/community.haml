@@ -7,12 +7,12 @@
     = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
       %style{:type => "text/css", :media => "screen"}
-        - if current_community.title_color
+        - unless current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
-        - if current_community.background_color
+        - unless current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme , body.theme #content { background-color: ##{current_community.background_color}; }"
         - unless current_community.background_image_url == '/assets/application/blank.gif'
-          = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}); }"
+          = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}) !important; }"
     = yield :controller_css
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -47,11 +47,12 @@
           - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
-              - if current_community.supported_games.size > 1
+              - if current_community.supported_games.any?
                 %ul
                   %li= link_to 'Community Announcements', community_announcements_url
                   - current_community.supported_games.each do |supported_game|
-                    %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
+                    - if supported_game.persisted?
+                      %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
           - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
             %li
               = link_to 'Members', roster_assignments_url

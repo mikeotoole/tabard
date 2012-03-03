@@ -6,11 +6,11 @@
   = simple_form_for(@user, :url => registration_url(@user, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { :method => :put }) do |f|
     %fieldset
       %ol
-        = f.input :email
+        = f.input :email, :required => true
         = f.input :time_zone, :collection => User::VALID_TIME_ZONES, :as => :radio, :wrapper_html => { :class => 'select' }
         = f.input :password, :label => 'New password'
         = f.input :password_confirmation, :label => 'New password confirmation'
-        = f.input :current_password, :hint => "(we need your current password to confirm your changes)"
+        = f.input :current_password, :required => true, :hint => "(we need your current password to confirm your changes)"
       %p.submit
         %button{ :type => 'submit' } Save Changes
         = link_to "Disable my account", disable_confirmation_url, :class => 'secondary'

@@ -19,6 +19,9 @@ DaBvRails::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+  
+  # Added to help with Heroku error -MO
+  config.assets.initialize_on_precompile = false
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
@@ -41,11 +44,10 @@ DaBvRails::Application.configure do
   config.cache_store = :dalli_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  #config.action_controller.asset_host = "https://#{ENV['BV_ASSETS_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "https://#{ENV['BV_ASSETS_DIRECTORY']}.s3.amazonaws.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
-  config.assets.precompile += %w[active_admin.css active_admin.js]
+  config.assets.precompile += %w(active_admin.css active_admin.js application/*.* fonts/*.* themes/*.* top_level/*.* javascripts/*.*)
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

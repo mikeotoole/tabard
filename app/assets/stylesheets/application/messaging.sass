@@ -518,18 +518,22 @@ body
                   color: #3b5a72
                   float: left
                   font: 13px DinMedium
-                  margin: 0 5px 5px 0
-                  padding: 1px 4px
+                  margin: 5px 5px 5px 0
+                  padding: 1px 30px 1px 4px
+                  position: relative
                   white-space: nowrap
                   
                   &:after
                     background: #778a98
                     +border-radius(3)
+                    bottom: 1px
                     color: #fff
                     content: '\2716'
                     float: right
-                    margin: 0 -2px 0 6px
                     padding: 0 3px
+                    position: absolute
+                    right: 1px
+                    top: 1px
                   
                   &:hover
                   
@@ -652,7 +656,7 @@ body
       border-color: #ddd
       +box_shadow(0 0 10px #999)
       +border_radius(6)
-      font-size: 30px
+      font-size: 20px
       height: 67px
       padding: 0
       position: absolute
