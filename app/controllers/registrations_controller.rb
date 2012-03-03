@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
   skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
-  skip_before_filter :limit_subdomain_access
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
   skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :ensure_secure_subdomain, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
@@ -23,6 +23,7 @@ class RegistrationsController < Devise::RegistrationsController
     add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin account or login.", "notice" if community
     super
   end
+
   # Overriding Devise method to redirect to reinstate_confirmation_url if email belongs to a user disabled account.
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
