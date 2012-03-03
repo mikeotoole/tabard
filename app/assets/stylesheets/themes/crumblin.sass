@@ -12,10 +12,15 @@
     border-bottom-color: rgba(#fff,.3)
 
 body
-  background: #fff
-  background-image: none !important
-  +bg_gradient(#eee,#fff)
   color: #251533
+
+body,
+#content
+  +bg_gradient(#ddd,#fff)
+  background-attachment: fixed
+  background-color: #fff
+  background-position: top center
+  background-repeat: no-repeat
 
 #header
   
@@ -423,11 +428,8 @@ button,
       td
         background: #999
         +bg_gradient(#aaa,#888)
-        border-top-color: #fff
+        border-top-color: #888
         color: #fff
-        
-        &:before
-          border-top-color: #888
         
         button,
         .button

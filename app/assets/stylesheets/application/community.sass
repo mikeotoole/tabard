@@ -506,6 +506,9 @@ body
             padding: 5px 32px 5px 5px
             text-align: center
             width: 0
+            
+            label
+              position: absolute
         
         &.dim
         
@@ -522,14 +525,6 @@ body
         border-top: 1px solid
         padding: 10px
         position: relative
-        
-        &:before
-          border-top: 1px solid
-          content: ''
-          left: 0
-          position: absolute
-          right: 0
-          top: 0
         
         &:first-child
           +border_radius(0,0,0,3)
@@ -1240,6 +1235,9 @@ body
     
     .submit
       margin: -35px 0 0
+  
+  #discussion_body
+    width: 880px
 
 
   // ROLES & PERMISSIONS
