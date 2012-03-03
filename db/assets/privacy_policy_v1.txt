@@ -1,4 +1,5 @@
-**Applicability of this Policy**  
+**Applicability of this Policy**
+
 This Policy applies to the *Crumblin* service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts.  This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service.
 
 **Information we Receive about You**
@@ -27,7 +28,8 @@ In order to enhance the value of the Service, to enhance security, and in an eff
 *Cookies*  
 Our use of cookies in provision of the Service is limited to the following: 1) To the extent used by Google Analytics to provide analytics data to Us in order for us to enhance the value of the service and constantly improve the user experience.  Please see the Functionality Data and Connections section for more information about data we collect through Google Analytics.  The cookies set and used by Google Analytics are represented **by Google** as anonymous cookies.  You can learn more about Google Analytics cookies by visiting their website at www.google.com/analytics.  2) Session cookies utilized by the user interface in order to authenticate you as a User, remember your user preferences and to otherwise enhance your user experience.  You may be able to configure your web browser to block cookies, but this **WILL** substantially degrade your user experience.
 
-**Information from Children Under the Age of 13**  
+**Information from Children Under the Age of 13**
+
 None of the Company's services are intended to be available to children under the age of 13 and We never knowingly solicit or collect any information whatsoever from or about children under the age of 13.  If you become aware that your child under the age of 13 has been using the Company's services or has submitted information to Us, please let us know by email at **[Underage@Crumblin.com](mailto:underage@crumblin.com)**.  If we become aware that a child under the age of 13 has been using our services or submitting information to us, We will immediately terminate the child's account and will take reasonable steps to delete the submitted information. 
 
 **When we Will Disclose Your Information**
@@ -38,7 +40,8 @@ We have a policy of cooperating with law enforcement officials if they can provi
 *In Response to Appropriate Legal Process*  
 We will produce any requested data that is lawfully and properly requested by service of proper legal process (subpoena, administrative order, or search warrant) pursuant to the ECPA, SCA or other applicable legal scheme.
 
-**What we Never Do with Information We Collect or Receive**  
+**What we Never Do with Information We Collect or Receive**
+
 We never sell or lend personal information we collect from or about you to any third-party for commercial purposes.  For purposes of this statement, We define "personal information" as information we possess from or about you, that can be readily correlated with you as an individual person.  For example, your address, your individual user habits, or your credit card information, would all constitute personal information.  In contrast, a geographical count of users residing in a certain geographical area (without providing names), aggregate data about how many users have certain user habits, and how many users purchased a certain service using credit cards, would not be personally identifiable with you individually, and therefore would not constitute personal information.
 
 In the case of credit card information necessary for a purchase transaction, we utilize a payment processor gateway that collects all of your information directly onto their secure servers.  None of Our servers or resources keep any of your credit card information at any time.
@@ -57,7 +60,8 @@ In the course of designing improvements, enhancements or value added products fo
 *Public Information*  
 All information or data that is not Personal Information (as defined above) is considered Public Information.  This includes data and information you voluntarily place in your User Profile, in messages or postings intended to be public (such as comments in open forums or contributions to Wiki pages), pages you create and the contents thereto, are considered Public Information and are made public to all Users and may be indexed by and visible via commonly used internet search engines such as Google or Yahoo. We do not manage, moderate or delete Public Information unless they violate Copyright Law, Trademark Law, or violate Our Acceptable Use Policy.  If you decide to cancel your account, while your User Profile will be deactivated and archived and therefore no longer accessible to other users and the public, it will not be deleted.  Furthermore, cached versions of your User Profile may be available throughout the internet from sources other than servers or networks We operate or use.
 
-**Commercial Solicitations**  
+**Commercial Solicitations**
+
 We respect your commercial solicitation preferences (and the provisions of the Can SPAM Act) and will never send unwanted commercial solicitations to you either by messaging functionality built in to the Service, by email, social media messaging or posting, or any other means.
 
 We will only send you commercial solicitations if you have opted in to receive such solicitations.
@@ -72,14 +76,18 @@ For purposes of the Can SPAM Act, our physical address is:
 
 Please contact us immediately by email at **[Spam@Crumblin.com](mailto:spam@crumblin.com)** if you believe that you have either received unwanted commercial solicitations or if you have tried, and have been unable to unsubscribe from commercial solicitations.
 
-**Aggregate Data**  
+**Aggregate Data**
+
 We reserve the right to use Aggregate Data for any legitimate business purpose including business functions that involve sharing such data with other companies, individuals, or organizations.  This may include, but is not limited to, promoting the Service to game platforms, improving security, enhancing the user experience, planning for expansion of service resources, or for enforcement of the Acceptable Use Policy.  For purposes of this section, Aggregate Data is defined as an aggregate compilation of data in an overall, statistical report, detailing actions, characteristics, demographics, or other useful information over a given period of time when the compilation makes no references to individual users and cannot reasonably, even by correlating with other data sources, be used to identify individual users or track their habits.
 
-**Cancellation of your Account**  
+**Cancellation of your Account**
+
 If you decide to cancel your account with the Service, We will continue to abide by this Privacy Policy.  However, since individual user data is almost always heavily ingrained with the framework of the Service as well as the user communities that are based on the Service, none of your personal information will be actually deleted.  Instead, your Personal Information will be archived and your personal account and User Profile will be deactivated.  Once your Personal Information is archived and your personal account and User Profile is deactivated, other users will not be able to access any of your Personal Information but it will remain accessible to Us and our Enterprise Partners.  Please note, however, that even after your User Profile is archived, cached versions of it may still be available throughout the internet from sources other than servers or networks that We operate or use.  Public Information will continue to be available to the public even after you cancel your account. 
 
-**Reports of Privacy Concerns**  
+**Reports of Privacy Concerns**
+
 We take your privacy concerns very seriously.  If you have questions about the policy or a concern about your privacy, or the application of this Privacy Policy, please contact **[Privacy@Crumblin.com](mailto:privacy@crumblin.com)** and We will address your concern immediately.
 
-**Changes to this Privacy Policy**  
+**Changes to this Privacy Policy**
+
 From time to time we may need to change this Privacy Policy.  If this Privacy Policy is changed, then a copy will be immediately posted on the main website for the Service as well as other applicable Websites operated by the Company, and you will also be prompted about the change and presented with a copy of the changed Privacy Policy the next time you log in to your account or access any resources associated with the Service.  Thereupon, you will need to agree to the new Privacy Policy in order to access any resources associated with the Service.  If you choose not to accept the new Privacy Policy, then you will no longer be able to use the Service.
