@@ -27,12 +27,12 @@ en:
             display_name:
               restriced: "is not allowed"
             avatar:
-              size_to_big: "image file size is too large"
+              size_too_big: "image file size is too large"
         swtor_character:
           attributes:
             avatar:
-              size_to_big: "image file size is too large"
+              size_too_big: "image file size is too large"
         wow_character:
           attributes:
             avatar:
-              size_to_big: "image file size is too large"
+              size_too_big: "image file size is too large"
