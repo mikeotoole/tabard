@@ -48,7 +48,7 @@ source 'http://rubygems.org'
 
 # Admin Portal
   gem 'meta_search', '>= 1.1.0.pre'
-  gem 'activeadmin'
+  gem 'activeadmin', '>= 0.4.2'
 
 # Asset Specific Gems, Pulled out of Group for Activeadmin
   gem 'sass-rails'
