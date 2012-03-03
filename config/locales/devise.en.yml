@@ -22,7 +22,7 @@ en:
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
       admin_disabled: 'Your account has been disabled by Crumblin.'
-      user_disabled: 'Your account has been disabled.'
+      user_disabled: 'Your account has been disabled. Please reinstate account first.'
     sessions:
       signed_in: 'Welcome. You are now signed in.'
       user_signed_in: 'Welcome %{display_name}. You are now signed in.'
