@@ -17,7 +17,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :mine, :create]
-  before_filter :find_available_characters, :only => [:mine]
+  before_filter :find_available_characters, :only => [:mine, :create, :new]
   authorize_resource :except => [:index, :game]
   skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
