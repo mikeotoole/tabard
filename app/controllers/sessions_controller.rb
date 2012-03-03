@@ -10,6 +10,11 @@ class SessionsController < Devise::SessionsController
   skip_before_filter :ensure_not_ssl_mode
   before_filter :ensure_secure_subdomain, :only => [:new, :create]
 
+  # Overriding new to hide announcements
+  def new
+    @hide_announcements = true
+    super
+  end
   ###
   # The create is overrided to force the signing out of the admin user if needed.
   ###
