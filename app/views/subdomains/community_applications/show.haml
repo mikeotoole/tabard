@@ -1,10 +1,13 @@
 - title "Community Application | #{current_community.name}"
 
-- unless @community_application.is_pending?
+- unless @community_application.is_pending? or @community_application.left?
   %h2.status
     = "#{@community_application.status} by "
     = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
-
+- if @community_application.left?
+  %h2.status
+    = link_to @community_application.status_changer.name, user_profile_url(@community_application.status_changer)
+    = "has left the community"
 .submission
   = simple_form_for @community_application, :url => accept_community_application_path, :method => :post do |f|
     .sidebar
@@ -35,7 +38,7 @@
             %dt= answer.question_body
             %dd= answer.body
 
-    - unless @community_application.accepted?
+    - unless @community_application.accepted? or @community_application.applicant_is_a_member? or @community_application.no_longer_a_member?
       %p.submit
         - if can? :accept, @community_application
           = submit_tag 'Accept', :class => 'button', :confirm => "Accepting this application will add #{@community_application.user_profile_display_name} to the community. Continue?"

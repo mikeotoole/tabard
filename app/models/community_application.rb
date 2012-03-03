@@ -22,7 +22,7 @@ class CommunityApplication < ActiveRecord::Base
 # Constants
 ###
   # The list of vaild status values.
-  VALID_STATUSES =  %w(Pending Accepted Rejected Withdrawn)
+  VALID_STATUSES =  %w(Pending Accepted Rejected Withdrawn Left Removed)
 
 ###
 # Associations
@@ -30,6 +30,7 @@ class CommunityApplication < ActiveRecord::Base
   belongs_to :community
   belongs_to :user_profile
   belongs_to :submission, :dependent => :destroy
+  has_one :community_profile
   belongs_to :status_changer, :class_name => "UserProfile"
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
@@ -79,10 +80,10 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
-    return false if self.accepted?
+    return false if self.accepted? or self.applicant_is_a_member?
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, :without_protection => true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-
+      community_profile.update_attributes({community_application_id: self.id},:without_protection => true)
       message = Message.create_system(:subject => "Application Accepted",
                   :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
                   :to => [self.user_profile_id])
@@ -109,12 +110,28 @@ class CommunityApplication < ActiveRecord::Base
   # [Returns] True if this action was successful, otherwise false.
   ###
   def reject_application(rejected_by_user_profile)
-    return false unless self.is_pending?
+    return false unless self.is_pending? or self.applicant_is_a_member?
     if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, :without_protection => true)
       message = Message.create_system(:subject => "Application Rejected",
                             :body => "Your application to #{self.community.name} has been rejected.",
                             :to => [self.user_profile_id])
     end
+  end
+
+  ###
+  # This method rejects this application.
+  # [Returns] True if this action was successful, otherwise false.
+  ###
+  def remove_from_community(removed_by_user_profile)
+    if removed_by_user_profile.id == self.user_profile.id
+      self.update_attributes({status: "Left", status_changer: removed_by_user_profile}, :without_protection => true)
+    else
+      self.update_attributes({status: "Removed", status_changer: removed_by_user_profile}, :without_protection => true)
+    end
+  end 
+
+  def applicant_is_a_member?
+    self.user_profile.is_member?(self.community)
   end
 
   ###
@@ -144,6 +161,16 @@ class CommunityApplication < ActiveRecord::Base
   # This method returns true if this application's status is rejected, otherwise false
   def rejected?
     self.status == "Rejected"
+  end
+
+  # This method returns true if this application's status is left, otherwise false
+  def left?
+    self.status == "Left"
+  end
+
+  # This method returns true if this application's status is left or removed, otherwise false
+  def no_longer_a_member?
+    self.status == "Left" or self.status == "Removed"
   end
 
   ###

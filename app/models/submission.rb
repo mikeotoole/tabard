@@ -19,6 +19,7 @@ class Submission < ActiveRecord::Base
   has_many :form_questions, :through => :custom_form, :source => :questions
 
   has_one :community, :through => :custom_form
+  has_one :community_application
 
   accepts_nested_attributes_for :answers, :allow_destroy => true
 

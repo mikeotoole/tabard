@@ -2,12 +2,13 @@
 #
 # Table name: community_profiles
 #
-#  id              :integer         not null, primary key
-#  community_id    :integer
-#  user_profile_id :integer
-#  created_at      :datetime
-#  updated_at      :datetime
-#  deleted_at      :datetime
+#  id                       :integer         not null, primary key
+#  community_id             :integer
+#  user_profile_id          :integer
+#  created_at               :datetime
+#  updated_at               :datetime
+#  deleted_at               :datetime
+#  community_application_id :integer
 #
 
 require 'spec_helper'

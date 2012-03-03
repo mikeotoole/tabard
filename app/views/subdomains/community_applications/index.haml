@@ -38,7 +38,6 @@
       %tr
         %th Status
         %th Submission Date
-        %th Join Date
         %th Appliccant
         %th
 
@@ -48,9 +47,6 @@
           %strong= community_application.status
         %td.cinch
           %time= l community_application.created_at, :format => :date_short
-        %td.cinch
-          - if community_application.accepted?
-            %time= l community_application.user_profile.joined_community_on(current_community), :format => :date_short
         %td
           = link_to community_application.user_profile_display_name, community_application.user_profile
         %td.actions

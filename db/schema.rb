@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301235122) do
+ActiveRecord::Schema.define(:version => 20120302234720) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(:version => 20120301235122) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "community_application_id"
   end
 
   add_index "community_profiles", ["community_id"], :name => "index_community_profiles_on_community_id"
