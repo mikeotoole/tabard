@@ -58,6 +58,9 @@ source 'http://rubygems.org'
   group :assets do
 
   end
+  
+# Seeding Data
+  gem 'timecop'
 
 # Production Specific Gems
   group :production do
@@ -80,7 +83,6 @@ source 'http://rubygems.org'
     gem 'sqlite3'
     gem 'rspec-rails'
     gem 'factory_girl_rails'
-    gem 'timecop'
   end
 
 # Test Specific Gems
