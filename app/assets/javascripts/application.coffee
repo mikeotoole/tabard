@@ -157,8 +157,8 @@ $(document).ready ->
         $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions')
           .animate({ top: (amount + 70) + 'px' }, speed)
 
-  $('#flash li')
-    .live 'init', ->
+  $('body')
+    .delegate '#flash li', 'init', ->
       $(this).append('<a class="dismiss">✕</a>') unless $(this).find('.read').length
       $(this)
         .css({ height: 0, lineHeight: 0 })
@@ -173,17 +173,14 @@ $(document).ready ->
               $(this).remove()
               
       $(this).find('.read')
-      
         .bind 'ajax:beforeSend', ->
           $(this).closest('li').addClass('busy')
-          
         .bind 'ajax:error', (xhr, status, error) ->
           row = $(this).closest('li')
           $.alert
             body: error
             action: ->
               row.removeClass('busy')
-              
         .bind 'ajax:success', (event, data, status, xhr) ->
           $('#bar .notice a').each ->
             num = $(this).attr('meta') - 1
@@ -200,9 +197,7 @@ $(document).ready ->
                 $('#flash li:first').trigger 'init'
               setTimeout adjustHeaderByFlash, 50
               $(this).remove()
-            
-    .each ->
-      $(this).trigger 'init'
+  $('#flash li').trigger 'init'
   
   # tiered form field selection
   $('form .select[affects] input')

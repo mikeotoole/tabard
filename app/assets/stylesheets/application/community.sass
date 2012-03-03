@@ -584,7 +584,7 @@ body
             
     form
       border-right: 22px solid
-      margin: 0 15px 10px 72px
+      margin: 5px 15px 10px 72px
       position: relative
       padding: 5px
       z-index: 3
@@ -653,6 +653,21 @@ body
             &:checked + label
               display: block
               +transition(none)
+              
+              &:after
+                background: transparent
+                border: 0
+                bottom: auto
+                content: 'Posting as ' attr(meta)
+                display: block
+                font: 11px Eurostyle, sans-serif
+                left: 62px
+                line-height: 15px
+                position: absolute
+                right: auto
+                top: -15px
+                white-space: nowrap
+                width: auto
         
         &:hover
           +border_radius(3)
@@ -660,6 +675,9 @@ body
           padding: 10px
           top: -10px
           +transition(padding .2s linear, left .2s linear, top .2s linear)
+          
+          input + label:after
+            content: '' !important
         
           + textarea
             height: 80px
