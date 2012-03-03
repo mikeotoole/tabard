@@ -26,7 +26,7 @@
                     - if af.object_errors.any?
                       %mark.error= af.object.errors.full_messages.first
   .sidebar
-    - if current_user.character_proxies.size > 0
+    - if current_user.compatable_character_proxies(current_community).size > 0
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:
@@ -34,7 +34,7 @@
           %label{ :for => "community_application_character_proxy_ids_#{cp.id}" }
             = image_tag cp.avatar_url(:tiny), :class => 'avatar'
             = cp.name
-        .select.picker= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.character_proxies.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
+        .select.picker= f.input :character_proxy_ids, :as => :check_boxes, :label => false, :wrapper => false, :collection => current_user.compatable_character_proxies(current_community).collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), :class => 'avatar')) + cp.name, cp.id]}
     .instructions
       - unless community_application.custom_form_instructions.empty?
         %h2 Instructions
