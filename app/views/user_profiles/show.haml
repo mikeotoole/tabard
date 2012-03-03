@@ -1,6 +1,6 @@
 - title "Profile: #{@user_profile.display_name}"
 = stylesheet_link_tag "top_level/user_profiles"
-= javascript_include_tag "activities"
+= javascript_include_tag "user_profiles", "activities"
 
 #body
   %header
@@ -38,14 +38,11 @@
   %article
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id)
       %dl#tabs.tabs
-        %dt{ :class => 'activity active' } Recent Activity
+        %dt{ :class => 'activity active' }
+          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, :format => :js), :remote => true, 'data-type' => :text
         %dd
-          - if defined? @activities and @activities.any?
-            = render 'activities', :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment
-          - else
-            %em No recent activity
-        %dt{ :class => 'characters' } Characters
+        %dt{ :class => 'characters' }
+          = link_to 'Characters', characters_user_profile_url(@user_profile, :format => :js), :remote => true, 'data-type' => :text
         %dd
-          = render 'characters', :user_profile => @user_profile
     - else
       %p This user's profile is private.

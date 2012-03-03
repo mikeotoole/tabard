@@ -3,10 +3,11 @@
     %h3 Default Values
   %dd
     - defaults = role.permissions_defaults_for_resource("DiscussionSpace")
-    = f.simple_fields_for :permission_defaults, defaults, :child_index => defaults.id do |pf|
+    - child_index = defaults.persisted? ? defaults.id : Time.now.to_i
+    = f.simple_fields_for :permission_defaults, defaults, :child_index => child_index do |pf|
       = pf.input :object_class, :as => :hidden
       .slider_with_none
-        %input{ type: 'radio', id: 'discussion_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{defaults.id}][permission_level]", value: '', checked: pf.object.permission_level == '' }
+        %input{ type: 'radio', id: 'discussion_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{child_index}][permission_level]", value: '', checked: pf.object.permission_level == '' }
         %label{ for: 'discussion_spaces_default_permission_level' } ×
         = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       = pf.input :can_create_nested, :as => :boolean, :label => 'Add new discussions', :wrapper => false

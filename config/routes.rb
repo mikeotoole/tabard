@@ -24,7 +24,12 @@ DaBvRails::Application.routes.draw do
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :account]
+  resources :user_profiles, :only => [:show, :edit, :update, :account, :load_activities, :load_characters] do
+    member do
+      get :activities
+      get :characters
+    end
+  end
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
   match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
