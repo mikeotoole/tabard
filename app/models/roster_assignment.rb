@@ -78,17 +78,17 @@ class RosterAssignment < ActiveRecord::Base
 ###
   # This method validates that a character and supported game are presenet.
   def character_and_game_must_be_present
-    errors.add(:base, "You must select a game") if supported_game.blank?
-    errors.add(:base, "You must select a character") if character_proxy.blank?
+    errors.add(:base, "You need to select a game.") if supported_game.blank?
+    errors.add(:base, "You need to select a character.") if character_proxy.blank?
   end
   # This method validates that the community is compatable with the supported game
   def community_valid_for_supported_game
-    errors.add(:base, "Community and supported game do not match") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
+    errors.add(:base, "Community and supported game do not match.") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
   end
 
   # This method validates that the character is compatable with the supported game
   def character_valid_for_supported_game
-    errors.add(:base, "Character is not compatible with Supported Game") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class.to_s != self.supported_game.game_type
+    errors.add(:base, "That character is not compatible with #{self.supported_game.game_name}.") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class.to_s != self.supported_game.game_type
   end
 
 ###
