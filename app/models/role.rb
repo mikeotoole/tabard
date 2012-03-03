@@ -30,7 +30,8 @@ class Role < ActiveRecord::Base
 ###
   validates :community, :presence => true
   validates :name,  :uniqueness => {:scope => [:community_id, :deleted_at]},
-                    :length => { :maximum => MAX_NAME_LENGTH }
+                    :length => { :maximum => MAX_NAME_LENGTH },
+                    :presence => true
 
 ###
 # Delegates

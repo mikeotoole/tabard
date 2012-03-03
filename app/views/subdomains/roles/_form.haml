@@ -7,7 +7,9 @@
     - if role.persisted?
       .actions
         = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
-    %p= f.input :name, :wrapper => false, :label => 'Role Name'
+    %fieldset
+      %ol
+        = f.input :name, :label => 'Role Name'
 
   %dl#permissions
     %dt

@@ -54,6 +54,9 @@
 
 body.user_profiles.show,
 body.user_profiles.dashboard
+  
+  a.load
+    visibility: hidden
 
   #content
     background-image: image-url('application/block-2a.png')
@@ -336,6 +339,17 @@ body.user_profiles.dashboard
               left: 5px
               position: absolute
               top: 5px
+            
+            a
+              background: transparent !important
+              bottom: 0
+              left: 0
+              overflow: hidden
+              padding: 0
+              position: absolute
+              right: 0
+              text-indent: -500em
+              top: 0
             
             &.activity
               right: 41px
