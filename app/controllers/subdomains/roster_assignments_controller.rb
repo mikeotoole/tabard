@@ -11,9 +11,9 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :block_unauthorized_user!, :except => [:index]
-  before_filter :ensure_current_user_is_member, :except => [:index]
-  before_filter :get_community_profile, :except => [:index]
+  before_filter :block_unauthorized_user!, :except => [:index, :game]
+  before_filter :ensure_current_user_is_member, :except => [:index, :game]
+  before_filter :get_community_profile, :except => [:index, :game]
   before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
   before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
   before_filter :create_roster_assignment, :only => [:new, :mine, :create]
