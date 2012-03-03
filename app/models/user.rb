@@ -83,6 +83,7 @@ class User < ActiveRecord::Base
   delegate :in_community, :to => :user_profile, :allow_nil => true
   delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
   delegate :avatar_url, :to => :user_profile, :allow_nil => true
+  delegate :compatable_character_proxies, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators
