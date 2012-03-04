@@ -13,6 +13,9 @@ $(document).ready ->
       $.alert { body: 'Error: unable to load characterss.' }
     .delegate 'dt.characters a', 'ajax:success', (event, data, status, xhr) ->
       $('#tabs dt.characters + dd').html xhr.responseText
+  
+  $('#bar .avatar').click ->
+    $('#tabs dt.characters a').trigger 'click'
 
   hash = window.location.hash
   switch hash

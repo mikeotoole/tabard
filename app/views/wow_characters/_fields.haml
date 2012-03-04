@@ -7,7 +7,7 @@
 = f.input :level, :as => :string, :input_html => { :maxlength => 2 }, :wrapper_html => { :class => 'short' }
 = f.input :gender, :as => :radio, :required => true, :collection => WowCharacter::VALID_GENDERS
 = f.input :about, :as => :text, :label => 'Optional Description', :input_html => { :rows => 5 }
-%li.avatar
-  = image_tag(wow_character.avatar_url) if wow_character.avatar_url and wow_character.persisted?
+%li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
+  = image_tag(wow_character.avatar_url :large) + raw('<br>') if wow_character.avatar_url and wow_character.persisted?
   = f.input :avatar, :wrapper => false
   = f.input :remote_avatar_url, :label => "or image URL", :wrapper => false
