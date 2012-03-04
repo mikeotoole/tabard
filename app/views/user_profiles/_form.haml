@@ -8,8 +8,8 @@
       = f.input :title
       = f.input :publicly_viewable, :label => "Let others see my profile?"
       = f.input :description, :label => "About me", :wrapper_tag => :p
-      %li.avatar
-        = image_tag user_profile.avatar_url :small
+      %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
+        = image_tag(user_profile.avatar_url :large) + raw('<br>') if user_profile.avatar_url
         = f.input :avatar, :as => :file
         = f.input :remote_avatar_url, :label => ' — or a link to an image'
     %p.submit
