@@ -133,6 +133,9 @@ $(document).ready ->
         .find('input[name="_method"]')
         .val $(this).attr('method')
   
+  $('body').delegate '.select ul', 'mouseleave', ->
+    $(this).css({ scrollTop: 0 })
+  
   # select box auto-hide after click
   $('body').delegate '.select ul label, form .profile label', 'click', ->
     li = $(this).closest('li')

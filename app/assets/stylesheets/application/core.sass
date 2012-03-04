@@ -331,7 +331,7 @@ button,
           line-height: 20px
           margin: 1px 0 0
           min-height: 20px
-          padding: 5px 10px
+          padding: 5px 30px 5px 10px
           text-indent: 0
           
           em
@@ -383,6 +383,9 @@ button,
   
       &:hover
         height: auto
+        max-height: 224px
+        overflow: scroll
+        overflow-x: hidden
         z-index: 11
         
         &:before
@@ -579,7 +582,7 @@ button,
     .check_boxes + ul + dfn.hint + mark.error
       margin-top: 0
       padding-top: 5px
-  
+        
     &.select,
     .select
       height: 85px
