@@ -14,14 +14,14 @@ class CommunitiesController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode, :only => [:destroy]
   skip_before_filter :limit_subdomain_access, :only => [:destroy]
   before_filter :ensure_secure_subdomain, :only => [:destroy]
-  load_and_authorize_resource :except => [:create]
+  load_and_authorize_resource :except => [:create, :index]
 
 ###
 # REST Actions
 ###
   # GET /communities(.:format)
   def index
-    @communities = @communities.order(:name).page params[:page]
+    @communities = Community.order(:name).page params[:page]
   end
 
   # GET /communities/:id(.:format)
