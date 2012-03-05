@@ -14,6 +14,7 @@ class TopLevelController < ApplicationController
 ###
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_maintenance_mode, :only => [:maintenance]
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => :bar
 
 ###
 # Actions
