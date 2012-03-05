@@ -33,8 +33,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # GET /pages/:id/edit(.:format)
   def edit
-    @use_default_theme = true
-    respond_with(@page)
+    respond_with @page, :layout => 'application'
   end
 
   # POST /page_spaces/:page_space_id/pages(.:format)
@@ -43,7 +42,7 @@ class Subdomains::PagesController < SubdomainsController
       add_new_flash_message 'Page has been created.', 'success'
       @action = 'created'
     end
-    respond_with(@page)
+    respond_with @page
   end
 
   # PUT /pages/:id(.:format)
@@ -59,7 +58,7 @@ class Subdomains::PagesController < SubdomainsController
       add_new_flash_message 'Page has been saved.', 'success'
       @action = is_changed ? 'edited' : nil
     end
-    respond_with(@page)
+    respond_with @page
   end
 
   # DELETE /pages/:id(.:format)
