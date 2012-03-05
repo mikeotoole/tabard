@@ -8,19 +8,17 @@
   %tbody
     - communities.each do |community|
       %tr
-        -cache community do
-          %td
-            %strong= link_to community.name, community
-            %br/
-            = "\"#{community.slogan}\""
-          %td.r
-            = community.community_profiles.size
-          %td.r
-            = community.get_current_community_roster.size
+        %td
+          %strong= link_to community.name, community
+          %br/
+          = "\"#{community.slogan}\""
+        %td.r
+          = community.community_profiles.size
+        %td.r
+          = community.get_current_community_roster.size
         %td.actions
           %div
-            - if community.can_receive_application_from? current_user
-              = link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
+            = link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
   %tfoot
     %tr
       %td{ :colspan => 4 }
