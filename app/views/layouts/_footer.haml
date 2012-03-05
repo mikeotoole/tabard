@@ -1,6 +1,6 @@
 #footer
   © DigitalAugment, Inc.
-  = Time.now.year
+  = "2011-#{Time.now.year}"
   = raw '&nbsp;|&nbsp;'
   - if current_community and current_community.theme_background_author
     = link_to_if current_community.theme_background_author_url, "Art by #{current_community.theme_background_author}", current_community.theme_background_author_url, :target => '_blank'

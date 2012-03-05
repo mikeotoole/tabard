@@ -6,6 +6,7 @@
 # This is the application cotroller.
 ###
 class ApplicationController < ActionController::Base
+  respond_to :js
   # Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
   protect_from_forgery
 

@@ -7,7 +7,7 @@
 ###
 class TopLevelController < ApplicationController
   caches_page :intro, :features, :pricing
-  respond_to :html
+  respond_to :html, :js
 ###
 # Callbacks
 ###
@@ -15,7 +15,7 @@ class TopLevelController < ApplicationController
   skip_before_filter :check_maintenance_mode, :only => [:maintenance]
 
 ###
-# REST Actions
+# Actions
 ###
   ###
   # This method gets the index for home.
@@ -25,6 +25,18 @@ class TopLevelController < ApplicationController
   def index
     redirect_to user_root_path if user_signed_in?
     # @recent_activity = Community.order{ created_at.desc }.last(5).collect{|community| {type: 'New Community', name: community.name, link: community_url(community), snippet: community.supported_games.collect{|game| game.name}.join(', ')}}
+  end
+  
+  ###
+  # This method returns the bar in/out partial for dynamic loading
+  # GET /bar(.:format)
+  ###
+  def bar
+    if user_signed_in?
+      render :partial => "layouts/bar_in"
+    else
+      render :partial => "layouts/bar_out"
+    end
   end
 
   # This method gets the Introduction page.
