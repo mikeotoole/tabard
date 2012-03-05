@@ -11,7 +11,7 @@
   %body{ :class => "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
     #bar
       = render 'layouts/bar_out'
-      = link_to 'load', bar_url(:format => :js), :remote => true, :class => 'dynload', 'data-type' => 'text', 'data-target' => '#bar', 'data-error' => 'Error: Unable to load user bar.'
+      = link_to 'load', bar_url(:format => :js), :remote => true, :class => 'dynload', 'data-type' => 'text', 'data-target' => '#bar'
     = render 'layouts/flash_messages'
     #content
       = yield
