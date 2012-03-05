@@ -175,6 +175,7 @@ DaBvRails::Application.routes.draw do
   # Top level home page
   root :to => 'top_level#index'
   get "top_level/index"
+  get "/bar" => "top_level#bar", :as => "bar"
 
   # Top level pages
   get "/intro" => "top_level#intro", :as => 'top_level_intro'
