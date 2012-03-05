@@ -6,6 +6,7 @@
 # This is the controller for top level pages (http://<domain name>/<page name>)
 ###
 class TopLevelController < ApplicationController
+  caches_page :intro, :features, :pricing
   respond_to :html
 ###
 # Callbacks
