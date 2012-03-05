@@ -38,7 +38,9 @@ DaBvRails::Application.routes.draw do
   resources :activities, :only => [:index]
 
   # Communities
-  resources :communities, :except => [:update, :edit]
+  resources :communities, :except => [:update, :edit] do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'

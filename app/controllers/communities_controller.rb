@@ -6,6 +6,10 @@
 # This controller is for communities.
 ###
 class CommunitiesController < ApplicationController
+  caches_page :index, :show
+  before_filter(only: [:index, :show]) { @page_caching = true }
+  cache_sweeper :community_sweeper
+  
   respond_to :html
   ###
   # Before Filters
