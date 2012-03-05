@@ -6,8 +6,8 @@
 # This is the controller for top level pages (http://<domain name>/<page name>)
 ###
 class TopLevelController < ApplicationController
-  caches_page :intro, :features, :pricing
-  before_filter(only: [:intro, :features, :pricing]) { @page_caching = true }
+  caches_page :intro, :features, :pricing, :privacy_policy, :terms_of_service
+  before_filter(only: [:intro, :features, :pricing, :privacy_policy, :terms_of_service]) { @page_caching = true }
   respond_to :html, :js
 ###
 # Callbacks
