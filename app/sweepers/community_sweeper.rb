@@ -3,7 +3,7 @@ class CommunitySweeper < ActionController::Caching::Sweeper
   
   def sweep(community)
     expire_page communities_path
-    expire_page communities_path(product)
+    expire_page communities_path(community)
     FileUtils.rm_rf "#{page_cache_directory}/communities/page"
   end
   alias_method :after_create, :sweep
