@@ -21,6 +21,8 @@ public/uploads/tmp/
 
 public/assets/
 
+public/*.html
+
 # Visual Paradigm
 *.vpp~*
 

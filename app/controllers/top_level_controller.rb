@@ -7,6 +7,7 @@
 ###
 class TopLevelController < ApplicationController
   caches_page :intro, :features, :pricing
+  before_filter(only: [:intro, :features, :pricing]) { @page_caching = true }
   respond_to :html, :js
 ###
 # Callbacks
