@@ -8,14 +8,15 @@
   %tbody
     - communities.each do |community|
       %tr
-        %td
-          %strong= link_to community.name, community
-          %br/
-          = "\"#{community.slogan}\""
-        %td.r
-          = community.community_profiles.size
-        %td.r
-          = community.get_current_community_roster.size
+        -cache community do
+          %td
+            %strong= link_to community.name, community
+            %br/
+            = "\"#{community.slogan}\""
+          %td.r
+            = community.community_profiles.size
+          %td.r
+            = community.get_current_community_roster.size
         %td.actions
           %div
             - if community.can_receive_application_from? current_user
