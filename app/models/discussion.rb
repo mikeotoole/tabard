@@ -19,6 +19,8 @@ class Discussion < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :comments_enabled
+  
+  # This is a virtual attribute to determine if comments are enabled. 
   attr_accessor :comments_enabled
 
 ###

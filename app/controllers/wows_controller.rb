@@ -6,6 +6,8 @@
 # This controller is for World of Warcraft games.
 ###
 class WowsController < ApplicationController
+  #caches_page :index
+  #before_filter(only: [:index]) { @page_caching = true }
   respond_to :html, :js
 ###
 # Before Filters

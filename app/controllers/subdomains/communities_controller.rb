@@ -29,6 +29,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     respond_with @community, :location => edit_community_settings_url
   end
   
+  # Removes confirmations
   def remove_confirmation
   end
 end

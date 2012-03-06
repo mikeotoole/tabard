@@ -131,6 +131,7 @@ class CommunityApplication < ActiveRecord::Base
     end
   end 
 
+  # This method determines if the applicant is a member of the community.
   def applicant_is_a_member?
     self.user_profile.is_member?(self.community)
   end
