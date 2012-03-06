@@ -31,7 +31,7 @@ module CommentHelper
   def last_action_word(comment)
     if comment.is_removed
       'removed'
-    elsif comment.is_removed
+    elsif comment.has_been_edited
       'edited'
     else
       'posted'
