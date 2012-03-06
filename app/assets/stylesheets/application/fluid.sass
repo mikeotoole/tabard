@@ -139,7 +139,7 @@
     padding: 40px 40px 30px
     position: absolute
     right: 0
-    top: 70px
+    top: 0
     z-index: 3
   
   .sidemenu a,
@@ -169,18 +169,18 @@
       +box_shadow(0 0 20px #ccc)
       +opacity(1)
       
-      &[meta]
-                
+      &[meta],
+      &[title]
+        
         &:before
           background: #A23B31
-          border: 1px solid #CFA893
+          border: 1px solid #CFA893 !important
           +border_radius(3)
           +box_shadow(-5px 0 15px rgba(#000,.7))
           color: #F8D5BB
-          content: attr(meta)
-          font: 13px DinLight
-          height: 30px
-          left: 68px
+          font: 13px EurostyleStd, sans-serif
+          height: 30px !important
+          left: 68px !important
           letter-spacing: 0
           line-height: 30px
           margin: -1px 0 0
@@ -188,6 +188,8 @@
           position: absolute
           text-indent: 0
           text-transform: none
+          top: auto  !important
+          width: auto  !important
           white-space: nowrap
           z-index: 15
         
@@ -201,6 +203,12 @@
           right: -9px
           width: 0
           z-index: 16
+          
+      &[meta]:before
+        content: attr(meta) !important
+      
+      &[title]:before
+        content: attr(title) !important
     
     &.wmd-save
       background-color: #2D7CB4
@@ -210,6 +218,9 @@
       
       &:hover
         border-color: #4594cc
+    
+  .wmd-spacer:before
+    display: none !important
   
   .sidemenu
     background: #444
