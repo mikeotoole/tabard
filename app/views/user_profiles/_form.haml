@@ -9,7 +9,11 @@
       = f.input :publicly_viewable, :label => "Let others see my profile?"
       = f.input :description, :label => "About me", :wrapper_tag => :p
       %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
-        = image_tag(user_profile.avatar_url :large) + raw('<br>') if user_profile.avatar_url
+        - if !user_profile.avatar_url.to_s or f.object.errors.any?
+          = image_tag 'application/avatar@240.png'
+        - else
+          = image_tag(user_profile.avatar_url :large)
+        %br
         = f.input :avatar, :as => :file
         = f.input :remote_avatar_url, :label => ' — or a link to an image'
     %p.submit

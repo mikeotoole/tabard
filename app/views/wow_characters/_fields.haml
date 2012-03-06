@@ -8,6 +8,10 @@
 = f.input :gender, :as => :radio, :required => true, :collection => WowCharacter::VALID_GENDERS
 = f.input :about, :as => :text, :label => 'Optional Description', :input_html => { :rows => 5 }
 %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
-  = image_tag(wow_character.avatar_url :large) + raw('<br>') if wow_character.avatar_url and wow_character.persisted?
+  - if !wow_character.persisted? or !wow_character.avatar_url.to_s or f.object.errors.any?
+    = image_tag 'application/avatar@240.png'
+  - else
+    = image_tag(wow_character.avatar_url :large)
+  %br
   = f.input :avatar, :wrapper => false
   = f.input :remote_avatar_url, :label => "or image URL", :wrapper => false
