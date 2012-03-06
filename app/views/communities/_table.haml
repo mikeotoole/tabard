@@ -12,7 +12,7 @@
           %td
             %strong= link_to community.name, community
             %br/
-            = "\"#{community.slogan}\""
+            = "\"#{community.slogan}\"" unless community.slogan.to_s.strip == ""
           %td.r
             = community.community_profiles.size
           %td.r

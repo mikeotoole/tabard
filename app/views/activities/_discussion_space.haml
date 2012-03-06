@@ -1,9 +1,9 @@
 - discussion_space = activity.target ? activity.target : DiscussionSpace.with_deleted.find_by_id(activity.target_id)
 - case activity.action
 - when 'created'
-  Created a new
+  Created a
 - when 'edited'
-  Edited the
+  Edited a
 %strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, discussion_space), 'discussion space', discussion_space_url(discussion_space, :subdomain => activity.community_subdomain), :meta => discussion_space.name
 - unless defined? current_community and activity.community == current_community
   in

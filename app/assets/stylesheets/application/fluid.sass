@@ -1,12 +1,5 @@
 @import mixins
 
-#flash li
-  +border_radius(0)
-  
-  &:last-child
-    border-bottom-color: #000
-    +border_radius(0)
-
 .fluid
   background: #fff !important
   min-width: 0
@@ -56,6 +49,15 @@
     a.avatar
       margin: 0
       right: 20px
+
+  #flash li
+    border-left: 0
+    border-right: 0
+    +border_radius(0)
+    
+    &:last-child
+      border-bottom-color: #000
+      +border_radius(0)
 
   #body
     +box_shadow(none)
