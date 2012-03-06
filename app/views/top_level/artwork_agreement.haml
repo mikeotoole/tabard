@@ -1,5 +1,6 @@
 - title 'Artwork Licensing Agreement'
 
-#body
-  %h1 Artwork Licensing Agreement
-  .document= render 'document', :document => @document
+- cache @document do
+  #body
+    %h1 Artwork Licensing Agreement
+    .document= render 'document', :document => @document

@@ -25,6 +25,7 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  # Overriding Devise method to to hide announcements on edit.
   def edit
     @hide_announcements = true
   end

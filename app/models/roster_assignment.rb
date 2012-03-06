@@ -12,7 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :community_profile
+  belongs_to :community_profile, touch: true
   belongs_to :character_proxy
   belongs_to :supported_game
   has_one :user_profile, :through => :community_profile

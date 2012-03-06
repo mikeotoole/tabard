@@ -38,7 +38,9 @@ DaBvRails::Application.routes.draw do
   resources :activities, :only => [:index]
 
   # Communities
-  resources :communities, :except => [:update, :edit]
+  resources :communities, :except => [:update, :edit] do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
@@ -175,6 +177,7 @@ DaBvRails::Application.routes.draw do
   # Top level home page
   root :to => 'top_level#index'
   get "top_level/index"
+  get "/bar" => "top_level#bar", :as => "bar"
 
   # Top level pages
   get "/intro" => "top_level#intro", :as => 'top_level_intro'

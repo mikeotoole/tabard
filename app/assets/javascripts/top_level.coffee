@@ -85,11 +85,13 @@ $(document).ready ->
           .find('input')
           .removeAttr('disabled')
           .find('+ label')
-          .unbind 'click'
+          .unbind('click')
   $('.document:has(.scroll) .accept input[type="checkbox"]:not(:checked)')
     .attr('disabled', true)
     .closest('.accept')
     .css({ opacity: .5 })
+    .closest('.document')
+    .after('<dfn class="hint">Scroll before accepting</dfn>')
   $('.document:has(.scroll) .accept label')
     .bind 'click', ->
       if $(this).closest('.accept').find('input:disabled')
