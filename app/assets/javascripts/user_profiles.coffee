@@ -3,6 +3,7 @@ $(document).ready ->
   $('#tabs')
     .delegate 'dt a', 'click', ->
       return false unless !$.trim($(this).closest('dt').find('+ dd').html())
+      $(this).closest('dt').find('+ dd').html 'Loading...'
   
   $('#bar .avatar').click ->
     $('#tabs dt.characters a').trigger 'click'

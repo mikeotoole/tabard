@@ -231,13 +231,14 @@ protected
   end
 
   ###
-  # _before_create_
+  # _after_create_
   #
   # This method send a message to the community admin, if the community settings specify this.
   ###
   def message_community_admin
     if self.community.email_notice_on_application
-      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.crumblin.com" : "#{community.subdomain}.lvh.me:3000"
+      # TODO Mike, Link needs to be changed to crumblin.com when we launch.
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(:subject => "Application Submitted to #{self.community.name}",
                             :body => "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
                             :to => [self.community.admin_profile_id])

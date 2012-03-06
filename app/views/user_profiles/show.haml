@@ -25,7 +25,7 @@
             %li= link_to community.name, community
       - else
         %p No memberships.
-      - if !!@user_profile.description
+      - unless @user_profile.description.to_s.strip == ''
         %h3 About Me
         %p= @user_profile.description
       %h3 Stats
