@@ -51,6 +51,7 @@ class ArtworkUpload < ActiveRecord::Base
 ###
   mount_uploader :artwork_image, ArtworkUploader
 
+  # This gets the uploaded file name
   def upload_file_name
     read_attribute :artwork_image
   end
