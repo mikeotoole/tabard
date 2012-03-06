@@ -14,13 +14,13 @@
                 - when 'long_answer_question'
                   = af.input :body, :as => :text, :wrapper => false, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - when 'select_box_question'
-                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.id]}
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.body]}
                   .select= af.input :body, :as => :radio, :wrapper => false, :label => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - when 'radio_buttons_question'
-                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.id]}
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.body]}
                   = af.input :body, :as => :radio, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                 - when 'check_box_question'
-                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.id]}
+                  - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body,pa.body]}
                   = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => answer.question_body, :required => answer.question_is_required, :hint => answer.question_explanation
                   - if af.object.errors.any?
                     %mark.error= af.object.errors.full_messages.first

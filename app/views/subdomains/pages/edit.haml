@@ -5,20 +5,18 @@
 
 %h1 Editing Page
 
-= simple_form_for @page, :html => {:novalidate => true} do |f|
-
-  .sidemenu
-    %dl
-      %dt Actions
-      %dd.cinch
-        %button{ :class => 'wmd-save', :type => 'submit', :meta => 'Save page' }= @page.persisted? ? 'Save Changes' : 'Create Page'
-      %dd{ :class => 'cinch cancel' }
-        = link_to 'Cancel', page_spaces_path, :method => :get, :meta => 'Cancel changes', :confirm => 'All of your changes will be lost. Are you sure you want to leave this page?'
-      %dt Tools
-      %dd
-        #wmd-button-bar
-
-  .editor
-    = render 'fields', :page => @page, :f => f
-
-  #wmd-preview{ :class => "wmd-panel" "wmd-preview" }
+#body
+  = simple_form_for @page, :html => {:novalidate => true} do |f|
+    .sidemenu
+      %dl
+        %dt Actions
+        %dd.cinch
+          %button{ :class => 'wmd-save', :type => 'submit', :meta => 'Save page' }= @page.persisted? ? 'Save Changes' : 'Create Page'
+        %dd{ :class => 'cinch cancel' }
+          = link_to 'Cancel', page_spaces_path, :method => :get, :meta => 'Cancel changes', :confirm => 'All of your changes will be lost. Are you sure you want to leave this page?'
+        %dt Tools
+        %dd
+          #wmd-button-bar
+    .editor
+      = render 'fields', :page => @page, :f => f
+    #wmd-preview{ :class => "wmd-panel" "wmd-preview" }
