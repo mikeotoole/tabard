@@ -1,6 +1,14 @@
 = javascript_include_tag "activities"
 
-%h2 Recent Activity
+- if current_user.user_profile == current_community.admin_profile and !Page.find_by_id(current_community.home_page_id)
+  %p
+    %strong You do not have a home page setup yet.
+    = (link_to 'Create a wiki page', page_spaces_url) + ','
+    and set it as your home page in
+    = link_to 'community settings', edit_community_settings_url
+    %hr
+
+%h1 Recent Activity
 - if defined? @activities and @activities.any?
   %ol.activities
     = render "activities/activities", :activities => @activities, :user_profile => @user_profile
