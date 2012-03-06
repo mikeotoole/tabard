@@ -24,3 +24,8 @@ $(document).ready ->
     true
   
   editor1.run()
+  
+  $('#wmd-button-bar .wmd-button').each ->
+    $(this)
+      .attr('meta', $(this).attr('title'))
+      .removeAttr('title')
