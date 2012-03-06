@@ -71,7 +71,7 @@ class UserProfile < ActiveRecord::Base
   validates :avatar,
       :if => :avatar?,
       :file_size => {
-        :maximum => 2.megabytes.to_i
+        :maximum => 1.megabytes.to_i
       }
 
 ###
