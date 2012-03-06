@@ -35,7 +35,7 @@
         %h2 Users
         %dd#usercheckboxes
           %ol
-            - current_community.community_profiles.each do |profile|
+            - current_community.ordered_community_profiles.each do |profile|
               %li.boolean
                 = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
                 = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"

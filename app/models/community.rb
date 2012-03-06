@@ -130,6 +130,11 @@ class Community < ActiveRecord::Base
   def games
     self.supported_games.collect { |a| a.game }
   end
+  
+  # This will return a collection of community profiles ordered by the users display name.
+  def ordered_community_profiles
+    self.community_profiles.includes(:user_profile).order('user_profiles.display_name')
+  end
 
   ###
   # This method promotes a user to a member, doing all of the business logic for you.
