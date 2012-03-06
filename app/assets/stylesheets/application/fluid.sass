@@ -1,12 +1,5 @@
 @import mixins
 
-#flash li
-  +border_radius(0)
-  
-  &:last-child
-    border-bottom-color: #000
-    +border_radius(0)
-
 .fluid
   background: #fff !important
   min-width: 0
@@ -57,15 +50,24 @@
       margin: 0
       right: 20px
 
+  #flash li
+    border-left: 0
+    border-right: 0
+    +border_radius(0)
+    
+    &:last-child
+      border-bottom-color: #000
+      +border_radius(0)
+
   #body
     +box_shadow(none)
     position: static
   
   .editor
-    background: #eee
-    +bg_gradient(#ccc,#fff)
-    bottom: 0
-    +box_shadow(0 0 10px rgba(#000,.7))
+    background: #aaa
+    border-right: 1px solid #666
+    bottom: -30px
+    +box_shadow(0 0 30px rgba(#000,.5))
     left: 60px
     overflow: hidden
     padding: 30px
@@ -109,7 +111,7 @@
               left: 0
               position: absolute
               right: 0
-              top: 80px
+              top: 60px
               
               &.field_with_errors
                 bottom: 59px

@@ -549,11 +549,36 @@ body
     h1
       padding-right: 100px
     
-    time
+    &.discussion
+    
+      > h1,
+      > .meta
+        padding-left: 80px
+    
+    > .meta,
+    > .meta *
+      font: 13px EurostyleStd, sans-serif
+    
+    > .meta
       border-bottom: 1px solid
       display: block
       padding: 0 0 5px
+      position: relative
       margin: -10px 0 20px
+      
+      .avatar
+        border: 1px solid
+        bottom: 5px
+        left: 1px
+        outline: 1px solid
+        position: absolute
+    
+      a
+        text-decoration: none
+      
+      a,
+      strong
+        font-family: EurostyleBold, sans-serif
 
 
   // COMMENTS

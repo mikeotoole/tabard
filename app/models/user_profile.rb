@@ -31,7 +31,7 @@ class UserProfile < ActiveRecord::Base
   has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter'
 
   has_many :approved_character_proxies, :through => :community_profiles
-  has_many :communities, :through => :community_profiles
+  has_many :communities, :through => :community_profiles, :order => 'LOWER(name)'
   has_many :announcements, :through => :community_profiles
   has_many :acknowledgements, :through => :community_profiles
   has_many :read_announcements, :through => :community_profiles

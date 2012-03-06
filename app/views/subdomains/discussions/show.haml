@@ -20,12 +20,15 @@
     - if can? :destroy, @discussion
       = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
 
-%article
+%article.discussion
   %h1= @discussion.name
-  - if @discussion.has_been_edited
-    %time= "Edited #{time_ago_in_words(@discussion.updated_at)} ago"
-  - else
-    %time= "Created #{time_ago_in_words(@discussion.created_at)} ago"
+  .meta
+    = image_tag (@discussion.poster_avatar_url :small), :class => 'avatar'
+    = @discussion.has_been_edited ? 'Edited by' : 'Created by'
+    %strong
+      = link_to @discussion.user_profile_name, @discussion.user_profile
+      = "as #{@discussion.poster_name}" unless @discussion.poster == @discussion.user_profile
+    %time= time_ago_in_words(@discussion.has_been_edited ? @discussion.updated_at : @discussion.created_at) + ' ago'
   %p
     = @discussion.body
 

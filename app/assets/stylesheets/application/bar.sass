@@ -273,19 +273,17 @@
   
   a.avatar
     background: #261333
-    border: 1px solid #554863
-    +border_radius(5)
+    border: 1px solid #000
     height: 40px
     margin: 0 -480px 0 0
+    outline: 1px solid #554863
     overflow: hidden
     position: absolute
     right: 50%
     top: 15px
-    +transition(border .2s linear, box-shadow .2s linear)
     width: 40px
     
     img
-      +border_radius(2)
       height: 40px
       left: 0
       position: absolute
@@ -293,7 +291,7 @@
       width: 40px
     
     &:hover
-      border-color: #3679B3
+      outline-color: #3679B3
       +box_shadow(0 0 10px #000)
   
   p.signup
