@@ -50,7 +50,9 @@ class Discussion < ActiveRecord::Base
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :allow_nil => true
+  delegate :name, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :name, :to => :poster, :prefix => true, :allow_nil => true
+  delegate :avatar_url, :to => :poster, :prefix => true, :allow_nil => true
 
   before_destroy :destroy_all_comments
   before_save :update_is_locked_from_comments_enabled
