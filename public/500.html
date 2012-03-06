@@ -3,24 +3,73 @@
 <head>
   <title>We're sorry, but something went wrong (500)</title>
   <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
+    body {
+      font-size: 15px;
+      margin: 0;
+      padding: 0;
     }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+    #body {    
+      background: #DDDDDD;
+      background: -moz-linear-gradient(top, #DDDDDD, #EEEEEE);
+      background: -webkit-gradient(linear, left top, left bottom, from(#DDDDDD), to(#EEEEEE));
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#DDDDDD, endColorstr=#EEEEEE)";
+      bottom: 0;
+      font: 1em sans-serif;
+      left: 0;
+      line-height: 1.4em;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    #box {
+      background: #FFFFFF;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border: 1px solid #999999;
+      border-radius: 3px;
+      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 28em;
+      padding: 3em 4em;
+      margin: 4em auto 0 auto;
+    }
+    h1 {
+      border-top: 1px solid #CCCCCC;
+      color: #D14723;
+      font-size: 1.2em;
+      margin: 1em 0 0;
+      padding: .5em 0;
+    }
+    p {
+      color: #333333;
+      font-size: 1em;
+      margin: 0;
+      padding: .5em 0;
+    }
+    a {
+      color: #56218e;
+      text-decoration: underline;
+    }
+    a:hover {
+      border-bottom: 2px solid #56218e;
+      text-decoration: none;
+    }
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
+  <div id="body">
+    <div id="box">
+      <img src="images/crumblin-logo.png" alt="Crumblin" />
+      <h1>We're sorry, but something went wrong.</h1>
+      <p>
+        <strong>Congratulations</strong> on breaking the system. Please email
+        <a href="mailto:support@crumblin.com?subject=500%20Error">support@crumblin.com</a>
+        and let us know what you were doing when this error happened so that
+        we can get it fixed. Thanks!
+      </p>
+    </div>
   </div>
 </body>
 </html>
