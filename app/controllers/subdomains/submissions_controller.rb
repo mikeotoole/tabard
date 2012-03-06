@@ -63,7 +63,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   # This before filter attempts to populate @submissions from the custom form.
   ###
   def load_submissions
-    @submissions = @form.submissions if @form
+    @submissions = @form.submissions.order('created_at DESC') if @form
   end
 
   ###
