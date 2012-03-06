@@ -285,7 +285,7 @@ protected
     # First Question
     question = Question.create!(
       :style => "select_box_question",
-      :body => "How often do you play?",
+      :body => "How often do you play each week?",
       :is_required => true)
     question.custom_form = ca
     question.save!
