@@ -1,7 +1,7 @@
 #footer
   © DigitalAugment, Inc.
   = raw '&nbsp;|&nbsp;'
-  - if current_community and !current_community.background_image and current_community.theme_background_author
+  - if current_community and !current_community.background_image.to_s and current_community.theme_background_author
     = link_to_if current_community.theme_background_author_url, "Art by #{current_community.theme_background_author}", current_community.theme_background_author_url, :target => '_blank'
     = raw '&nbsp;|&nbsp;'
   = link_to 'Privacy', top_level_privacy_policy_url
