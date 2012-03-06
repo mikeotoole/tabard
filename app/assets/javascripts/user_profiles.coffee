@@ -21,7 +21,9 @@ $(document).ready ->
   switch hash
     when '#characters'
       $('#tabs dt.characters a').trigger 'click'
+      $('#tabs dt.characters + dd').html 'Loading...'
       break
     else
       $('#tabs dt.activity a').trigger 'click'
+      $('#tabs dt.activity + dd').html 'Loading...'
       break
