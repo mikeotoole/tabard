@@ -45,7 +45,7 @@ class BaseCharacter < ActiveRecord::Base
   validates :avatar,
       :if => :avatar?,
       :file_size => {
-        :maximum => 1.megabytes.to_i
+        :maximum => 5.megabytes.to_i
       }
 
 ###
