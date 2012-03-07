@@ -13,5 +13,5 @@
   - else
     = image_tag(wow_character.avatar_url :large)
   %br
-  = f.input :avatar, :wrapper => false
+  = f.input :avatar, :wrapper => false, :hint => 'Maxium file size of 2mb. GIF, JPG, PNG.'
   = f.input :remote_avatar_url, :label => "or image URL", :wrapper => false
