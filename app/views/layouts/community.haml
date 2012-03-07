@@ -33,16 +33,16 @@
           - if can? :index, PageSpace
             %li
               = link_to 'Wiki', page_spaces_url
-              - if current_community.page_spaces.reject{|d| !can? :show, d }.any?
+              - if wiki_items.any?
                 %ul
-                  - current_community.page_spaces.reject{|d| !can? :show, d }.each do |space|
+                  - wiki_items.each do |space|
                     %li= link_to space.name, space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Discussions', discussion_spaces_url
-              - if current_community.discussion_spaces.reject{|d| !can? :show, d }.any?
+              - if discussion_items.any?
                 %ul
-                  - current_community.discussion_spaces.reject{|d| !can? :show, d }.each do |space|
+                  - discussion_items.each do |space|
                     %li= link_to space.name, space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
