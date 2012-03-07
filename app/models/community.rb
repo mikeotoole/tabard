@@ -87,7 +87,11 @@ class Community < ActiveRecord::Base
   validate :can_not_change_name, :on => :update
   validate :within_owned_communities_limit
   validate :home_page_owned_by_community
-
+  validates :background_image,
+      :if => :background_image?,
+      :file_size => {
+        :maximum => 5.megabytes.to_i
+      }
 ###
 # Uploaders
 ###

@@ -45,6 +45,11 @@ class ArtworkUpload < ActiveRecord::Base
   validates :accepted_current_artwork_agreement, :acceptance => true
   validates :certify_owner_of_artwork, :acceptance => {:accept => true}
   validate :document_is_current
+  validates :artwork_image,
+      :if => :artwork_image?,
+      :file_size => {
+        :maximum => 5.megabytes.to_i
+      }
 
 ###
 # Uploaders

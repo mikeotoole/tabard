@@ -15,24 +15,30 @@ en:
         taken: "has already been taken"
     errors:
       models:
+        artwork_upload:
+          attributes:
+            artwork_image:
+              size_too_big: "image file size is too large (should be at most 2MB)"
         community:
           attributes:
             name:
               existing_name: "is too similar to an existing community"
               restricted_name: "is not allowed for a community"
               profanity: "is not allowed"
-              restriced: "is not allowed"  
+              restriced: "is not allowed"
+            background_image:
+              size_too_big: "image file size is too large (should be at most 2MB)"
         user_profile:
           attributes:
             display_name:
               restriced: "is not allowed"
             avatar:
-              size_too_big: "image file size is too large"
+              size_too_big: "image file size is too large (should be at most 2MB)"
         swtor_character:
           attributes:
             avatar:
-              size_too_big: "image file size is too large"
+              size_too_big: "image file size is too large (should be at most 2MB)"
         wow_character:
           attributes:
             avatar:
-              size_too_big: "image file size is too large"
+              size_too_big: "image file size is too large (should be at most 2MB)"
