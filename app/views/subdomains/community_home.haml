@@ -1,7 +1,8 @@
-- unless !!@page
-  %h1 Home Page
-
-- else
+- if @page
   %h1= @page.name
   %section
     = @page.body
+
+- else
+  %h1 Home page
+  %p This community does not have a home page set up yet.
