@@ -18,9 +18,10 @@
         %td.cinch
           %time= l community_application.created_at, :format => :date_short
         %td
-          = link_to community_application.user_profile_display_name, community_application.user_profile
+          = link_to community_application.user_profile_display_name, community_application
         %td.actions
           %div
+            = link_to 'Profile', community_application.user_profile, :class => 'profile', :meta => "#{community_application.user_profile_display_name}'s user profile"
             - if can? :show, community_application
               = link_to 'Review', community_application, :class => 'review', :meta => "Review #{community_application.user_profile_display_name}'s application"
     %tfoot
@@ -48,9 +49,10 @@
         %td.cinch
           %time= l community_application.created_at, :format => :date_short
         %td
-          = link_to community_application.user_profile_display_name, community_application.user_profile
+          = link_to community_application.user_profile_display_name, community_application
         %td.actions
           %div
+            = link_to 'Profile', community_application.user_profile, :class => 'profile', :meta => "#{community_application.user_profile_display_name}'s user profile"
             - if can? :show, community_application
               = link_to 'Review', community_application, :class => 'submission', :meta => "#{community_application.user_profile_display_name}'s application"
     %tfoot
