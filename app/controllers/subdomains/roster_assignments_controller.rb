@@ -193,7 +193,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # This before filter gets the characters for the available characters drop down.
   ###
   def find_available_characters
-    @available_characters = current_user.character_proxies - @community_profile.character_proxies
+    @available_characters = current_user.compatable_character_proxies(current_community) - @community_profile.character_proxies
     @available_characters << @roster_assignment.character_proxy if @roster_assignment and @roster_assignment.character_proxy
   end
 end
