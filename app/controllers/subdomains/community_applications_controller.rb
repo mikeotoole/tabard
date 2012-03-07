@@ -23,7 +23,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def index
     authorize! :index, CommunityApplication
     @pending_community_applications = @community_applications.where{status == "Pending"}.order{ created_at.desc }.page params[:pending_page]
-    @other_community_applications = @community_applications.where{status != "Pending"}.order{ status.asc }.order{ created_at.desc }.page params[:other_page]
+    @other_community_applications = @community_applications.includes(:user_profile).where{status != "Pending"}.order('user_profiles.display_name').page params[:other_page]
     respond_with @community_applications
   end
 

@@ -27,8 +27,8 @@ class UserProfile < ActiveRecord::Base
   has_many :roles, :through => :community_profiles
 
   has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
-  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter'
-  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter'
+  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter', :order => 'LOWER(name)'
+  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter', :order => 'LOWER(name)'
 
   has_many :approved_character_proxies, :through => :community_profiles
   has_many :communities, :through => :community_profiles, :order => 'LOWER(name)'
