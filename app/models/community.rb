@@ -33,21 +33,21 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
   has_many :community_applications, :dependent => :destroy
   has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
-  has_many :custom_forms, :dependent => :destroy
+  has_many :custom_forms, :dependent => :destroy, :order => 'LOWER(name)'
   has_many :community_announcements, :class_name => "Announcement", :conditions => {:supported_game_id => nil}
   has_many :announcements
   has_many :supported_games, :dependent => :destroy
   has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
   has_many :approved_character_proxies, :through => :community_profiles
-  has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile"
+  has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile", :order => 'LOWER(user_profiles.display_name)'
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :approved_roster_assignments, :through => :community_profiles
   has_many :roles, :dependent => :destroy
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy
+  has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy, :order => 'LOWER(name)'
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
-  has_many :page_spaces, :dependent => :destroy
+  has_many :page_spaces, :dependent => :destroy, :order => 'LOWER(name)'
   has_many :pages, :through => :page_spaces
   has_many :activities, :dependent => :destroy
   belongs_to :theme
@@ -85,7 +85,7 @@ class Community < ActiveRecord::Base
   validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.title_color.blank? }
   validate :can_not_change_name, :on => :update
-  validate :within_owned_communities_limit
+  validate :within_owned_communities_limit, :on => :create
   validate :home_page_owned_by_community
   validates :background_image,
       :if => :background_image?,
@@ -177,7 +177,7 @@ class Community < ActiveRecord::Base
   # [Returns] An array of user_profiles, filtered by supported game.
   ###
   def member_profiles_for_supported_game(supported_game)
-    self.approved_roster_assignments.where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq
+    self.approved_roster_assignments.where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
   end
 
   ###

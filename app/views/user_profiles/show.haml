@@ -24,7 +24,9 @@
           - @user_profile.communities.each do |community|
             %li= link_to community.name, community
       - else
-        %p No memberships.
+        %p
+          You don't have any memberships yet.
+          = link_to 'Find a community ›', communities_url
       - unless @user_profile.description.to_s.strip == ''
         %h3 About Me
         %p= @user_profile.description

@@ -28,7 +28,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # GET /discussion_spaces/1
   def show
-    @discussions = Kaminari.paginate_array(@discussion_space.discussions.reject{|d| !can? :show, d }).page params[:page]
+    @discussions = Kaminari.paginate_array(@discussion_space.discussions.ordered.reject{|d| !can? :show, d }).page params[:page]
   end
 
   # GET /discussion_spaces/new

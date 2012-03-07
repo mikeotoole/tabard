@@ -38,7 +38,10 @@
               %div
                 - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
                 - if can? :destroy, community_profile
-                  =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure?', :meta => 'Remove member', :class => 'delete'
+                  - if community_profile.user_profile_id == current_user.user_profile_id
+                    =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure you want to leave this community?', :meta => 'Leave Community', :class => 'delete'
+                  - else
+                    =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure you want to remove member from this community?', :meta => 'Remove member', :class => 'delete'
       %tfoot
         %tr
           %td{ :colspan => 5, :class => 'batch' }

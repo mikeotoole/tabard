@@ -34,7 +34,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def mine
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
     @roster_assignments = Array.new
-    @roster_assignments = community_profile.roster_assignments if community_profile
+    @roster_assignments = community_profile.roster_assignments.sort_by(&:character_proxy_name) if community_profile
     render :new
   end
   alias :new :mine
@@ -95,7 +95,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments/pending
   def pending
     authorize! :pending, RosterAssignment
-    @roster_assignments = current_community.pending_roster_assignments
+    @roster_assignments = current_community.pending_roster_assignments.sort_by(&:character_proxy_name)
   end
 
   # PUT /roster_assignments/1/approve

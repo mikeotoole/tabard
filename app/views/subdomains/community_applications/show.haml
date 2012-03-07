@@ -1,5 +1,11 @@
 - title "Community Application | #{current_community.name}"
 
+#breadcrumb
+  %ol
+    %li= link_to "Community Applications", community_applications_url
+    %li
+      %span= @community_application.user_profile_display_name
+
 - unless @community_application.is_pending? or @community_application.left?
   %h2.status
     = "#{@community_application.status} by "

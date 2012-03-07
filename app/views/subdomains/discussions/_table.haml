@@ -7,7 +7,7 @@
       %th Comments?
       %th.actions
   %tbody
-    - discussions.ordered.each do |discussion|
+    - discussions.each do |discussion|
       %tr
         %td= link_to discussion.name, discussion
         %td= discussion.poster.name
