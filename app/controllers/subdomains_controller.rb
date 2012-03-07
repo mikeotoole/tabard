@@ -68,6 +68,24 @@ class SubdomainsController < ApplicationController
   end
   helper_method :management_navigation_items
 
+  ###
+  # This is the wiki items
+  ###
+  def wiki_items
+    @wiki_items ||= current_community.page_spaces.reject{|d| !can? :show, d }
+    return @wiki_items
+  end
+  helper_method :wiki_items
+
+  ###
+  # This is the wiki items
+  ###
+  def discussion_items
+    @discussion_items ||= current_community.discussion_spaces.reject{|d| !can? :show, d }
+    return @discussion_items
+  end
+  helper_method :discussion_items
+
 ###
 # Protected Methods
 ###
