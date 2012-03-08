@@ -6,7 +6,7 @@
       %label{ :for => "message_id_#{message.id}" }
 
   %time
-    = l message.created_at, :format => (message.created_at >= Time.now.beginning_of_day ? :time_12 : :date_monthday)
+    = l message.created_at, :format => (message.created_at >= Time.zone.now.beginning_of_day ? :time_12 : :date_monthday)
 
   %h3
     = link_to message.subject, (message.respond_to?('folder_name') ? mail_path(message) : sent_mail_path(message))

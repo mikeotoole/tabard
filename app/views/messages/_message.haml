@@ -23,7 +23,7 @@
         - else
           %span= message.author_name
         on
-      %time{ :title => (l Time.now, :format => :date_short) }
+      %time{ :title => (l Time.zone.now, :format => :date_short) }
         = l message.created_at, :format => :date_monthday
       at
       %time

@@ -61,14 +61,18 @@ class Activity < ActiveRecord::Base
     max_items = 50 unless max_items < 50
 
     if updated and updated[:since] and updated[:before]
-      @activities = Activity.ordered.where(activity).where('updated_at < :since AND updated_at > :before', updated).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < :since AND updated_at > :before', updated).first(max_items.to_i)
+      since = Time.zone.parse(updated[:since]).utc
+      before = Time.zone.parse(updated[:before]).utc
+      @activities = Activity.ordered.where(activity).where('updated_at < ? AND updated_at > ?', since, before).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < ? AND updated_at > ?', since, before).first(max_items.to_i)
     elsif updated and updated[:since]
-      @activities = Activity.ordered.where(activity).where('updated_at > :since', updated).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at > :since', updated).first(max_items.to_i)
+      since = Time.zone.parse(updated[:since]).utc
+      @activities = Activity.ordered.where(activity).where('updated_at > ?', since).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at > ?', since).first(max_items.to_i)
     elsif updated and updated[:before]
-      @activities = Activity.ordered.where(activity).where('updated_at < :before', updated).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < :before', updated).first(max_items.to_i)
+      before = Time.zone.parse(updated[:before]).utc
+      @activities = Activity.ordered.where(activity).where('updated_at < ?', before).first(max_items.to_i)
+      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < ?', before).first(max_items.to_i)
     else
       @activities = Activity.ordered.where(activity).first(max_items.to_i)
       @comments = Comment.not_deleted.ordered.where(activity).first(max_items.to_i)
