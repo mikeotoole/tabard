@@ -36,14 +36,19 @@ class CommunitiesController < ApplicationController
 
   # POST /communities(.:format)
   def create
-    @community = Community.new(params[:community])
-    @community.admin_profile = current_user.user_profile
-    authorize! :create, @community
-    if @community.save
-      redirect_to supported_games_url(:subdomain => @community.subdomain)
-    else
-      respond_with(@community)
+    begin
+      @community = Community.new(params[:community])
+      @community.admin_profile = current_user.user_profile
+      authorize! :create, @community
+      add_new_flash_message("Your community has been created.", 'success') if @community.save
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+      logger.error "#{$!}"
+      @community.errors.add :base, "An error has occurred while processing the image."
+    rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
+      logger.error "#{$!}"
+      @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
+    respond_with(@community, location: supported_games_url(:subdomain => @community.subdomain))
   end
   
   # DELETE /communities/:id(.:format)
