@@ -3,7 +3,7 @@
     %h3 Default Values
   %dd
     - defaults = role.permissions_defaults_for_resource("PageSpace")
-    - child_index = defaults.persisted? ? defaults.id : Time.now.to_i
+    - child_index = defaults.persisted? ? defaults.id : Time.zone.now.to_i
     = f.simple_fields_for :permission_defaults, defaults, :child_index => child_index do |pf|
       = pf.input :object_class, :as => :hidden
       %label Space
