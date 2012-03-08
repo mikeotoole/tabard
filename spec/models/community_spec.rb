@@ -23,6 +23,7 @@
 #  title_color                     :string(255)
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
+#  action_items                    :text
 #
 
 require 'spec_helper'

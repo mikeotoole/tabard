@@ -9,6 +9,8 @@ class Community < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
+  store :action_items, accessors: [ :update_home_page, :add_supported_game, :update_settings, :update_application, :create_discussion_space ]
+
 ###
 # Constants
 ###
@@ -400,6 +402,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -425,5 +428,6 @@ end
 #  title_color                     :string(255)
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
+#  action_items                    :text
 #
 
