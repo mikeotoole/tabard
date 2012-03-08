@@ -61,7 +61,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items, :setup_action_items
   after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
@@ -278,6 +278,19 @@ protected
     mr.community = self
     mr.save!
     self.update_attribute(:member_role, mr)
+  end
+  
+  ###
+  # _after_create_
+  #
+  # This method sets all action items as not complete.
+  ###
+  def setup_action_items
+    self.update_attribute(:action_items, { :update_home_page => true, 
+                                           :add_supported_game => true, 
+                                           :update_settings => true, 
+                                           :update_application => true, 
+                                           :create_discussion_space => true })
   end
 
   ###
