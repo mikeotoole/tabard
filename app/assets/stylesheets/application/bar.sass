@@ -47,6 +47,17 @@
       left: 50%
       margin: 0 0 0 -255px
       width: 385px
+        
+      a[meta]
+      
+        &:after
+          content: attr(meta)
+          color: #A8C2D5
+          position: absolute
+          right: 10px
+        
+        &:hover:after
+          color: #fff
     
     &.dashboard
       right: 50%

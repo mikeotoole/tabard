@@ -1,4 +1,3 @@
-= f.hidden_field :avatar_cache
 = f.input :name, :input_html => { :maxlength => WowCharacter::MAX_NAME_LENGTH }
 = f.input :server_name, :as => :radio, :required => true, :label => 'Server', :collection => Wow.all_servers, :wrapper_html => { :class => 'select' }, :input_html => { name: 'server_name' }
 = f.input :faction, :as => :radio, :required => true, :collection => Wow.all_factions, :wrapper_html => { :class => 'faction select', :affects => 'race' }, :input_html => { name: 'faction' }

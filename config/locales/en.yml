@@ -42,3 +42,10 @@ en:
           attributes:
             avatar:
               size_too_big: "image file size is too large (should be at most 2MB)"
+  community:
+    default:
+      page_space:
+        name: "General"
+      home_page:
+        name: "Home"
+        markup: "**This page is displayed to users who visit your community unless they are not logged in or not a member.** It exists within the wiki pages section of your site. You can select which page is set as the home page when editing your community settings. Make sure to edit this page before recruiting your members."

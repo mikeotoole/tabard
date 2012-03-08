@@ -197,12 +197,24 @@ body.user_profiles.dashboard
               +border_radius(0)
               display: block
               margin: 0
-              padding: 5px 0 5px 25px
+              padding: 5px 0 5px 30px
               text-decoration: none
               
               &:hover
                 background: #A23B31
                 color: #fff
+              
+              &[meta]
+                position: relative
+                
+                &:after
+                  color: #999
+                  content: attr(meta)
+                  left: 5px
+                  position: absolute
+                
+                &:hover:after
+                  color: #fff
             
             &:first-child a
               +border_radius(3,3,0,0)

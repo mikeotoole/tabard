@@ -22,7 +22,7 @@
       - if @user_profile.communities.any?
         %ul.communities
           - @user_profile.communities.each do |community|
-            %li= link_to community.name, community
+            %li= link_to community.name, community, (current_user.user_profile == community.admin_profile ? { :meta => '♔' } : {})
       - else
         %p
           You don't have any memberships yet.
