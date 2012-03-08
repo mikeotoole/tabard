@@ -48,7 +48,7 @@ class CommunitiesController < ApplicationController
       logger.error "#{$!}"
       @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with(@community, location: supported_games_url(:subdomain => @community.subdomain))
+    respond_with(@community, location: edit_community_settings_url(:subdomain => @community.subdomain))
   end
   
   # DELETE /communities/:id(.:format)
