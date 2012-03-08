@@ -498,6 +498,7 @@ describe Community do
   end
   
   it "should limit the number of communities a user can own during change of community admin" do
+    pending "Waiting on the admin change feature."
     community2 = create(:community)
     admin_profile = community.admin_profile
     create_list(:community, 2, :admin_profile => admin_profile)

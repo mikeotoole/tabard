@@ -4,7 +4,7 @@ FactoryGirl.define do
     user_profile
     community
     roles { [community.member_role] }
-    community_application { FactoryGirl.create(:community_application, community: community, user_profile: user_profile, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => user_profile.id))}
+    community_application { FactoryGirl.create(:community_application, character_proxies: Array.new, community: community, user_profile: user_profile, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => user_profile.id))}
   end
 
   factory :community_profile_with_supported_games, :parent => :community_profile do

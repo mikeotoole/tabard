@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   validates :time_zone, :presence => true,
                         :inclusion => { :in => VALID_TIME_ZONES, :message => "%{value} is not a valid time zone." }
   validate :at_least_13_years_old
-  with_options :if => Proc.new{ BETA_CODE_REQUIRED } do |user|
+  with_options :if => Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
     user.validates :beta_code, :presence => {:message => "is required for the closed beta"}, :on => :create
     user.validate :valid_beta_key, :on => :create
   end

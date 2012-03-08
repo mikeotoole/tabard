@@ -52,7 +52,7 @@ class DefaultObjects
           :community => DefaultObjects.community_two,
           :user_profile => @additional_community_user_profile,
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @additional_community_user_profile),
-          :character_proxies => @additional_community_user_profile.character_proxies
+          :character_proxies => @additional_community_user_profile.character_proxies.reject{|cp| cp.game_name != "Star Wars: The Old Republic" }
         )
       appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
