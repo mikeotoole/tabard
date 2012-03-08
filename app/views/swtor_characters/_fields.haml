@@ -1,4 +1,3 @@
-= f.hidden_field :avatar_cache
 = f.input :name, :input_html => { :maxlength => SwtorCharacter::MAX_NAME_LENGTH }
 = f.input :server_name, :as => :radio, :label => 'Server', :required => true, :collection => Swtor.all_servers, :wrapper_html => { class: 'select' }, :input_html => { name: 'server_name' }
 = f.input :advanced_class, :as => :radio, :label => 'Class', :collection => SwtorCharacter.all_advanced_classes, :wrapper_html => { class: 'select', affects: 'species' }
