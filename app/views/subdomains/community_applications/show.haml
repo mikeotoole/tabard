@@ -35,7 +35,17 @@
             - if @community_application.is_pending? and can? :accept, @community_application
               = hidden_field_tag "proxy_hash[#{character_proxy.id}]", -1
               = f.simple_fields_for @community_application.character_proxies, character_proxy, :index => character_proxy.id do |pf|
-                .select= pf.input :id, :as => :radio, :wrapper => false, :label => false, :input_html => { :name => "proxy_hash[#{character_proxy.id}]" }, :collection => [['Reject Character','']] + @supported_games.where(:game_type => character_proxy.game.class.to_s).collect {|sg| [sg.smart_name,sg.id] }
+                .select{ class: character_proxy.errors.any? ? 'field_with_errors' : '' }
+                  %ul
+                    %li
+                      = radio_button_tag "proxy_hash[#{character_proxy.id}]", ''
+                      = label_tag "proxy_hash_#{character_proxy.id}_", 'Reject Character'
+                    - @supported_games.where(:game_type => character_proxy.game.class.to_s).each do |sg|
+                      %li
+                        = radio_button_tag "proxy_hash[#{character_proxy.id}]", sg.id, (params[:proxy_hash] and sg.id.to_s == params[:proxy_hash][character_proxy.id.to_s].to_s)
+                        = label_tag "proxy_hash_#{character_proxy.id}_#{sg.id}", sg.smart_name
+                  - if character_proxy.errors.any?
+                    %mark.error= character_proxy.errors.full_messages.first
 
     - if @community_application.submission.answers.size > 0
       .questions
