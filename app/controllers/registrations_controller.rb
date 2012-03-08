@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
     @hide_announcements = true
     community = Community.find_by_id(params[:community_id])
     add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin account or login.", "notice" if community
+    add_new_flash_message "This version of Crumblin is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
     super
   end
 

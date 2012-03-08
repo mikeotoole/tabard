@@ -6,7 +6,7 @@
       %span My Communities
       %ul
         - current_user.communities.each do |community|
-          %li= link_to community.name, actual_community_url(community)
+          %li= link_to community.name, actual_community_url(community), (current_user.user_profile == community.admin_profile ? { :meta => '♔' } : {})
         %li.extra
           = link_to 'Find a community', communities_url(:subdomain => false)
   - else
