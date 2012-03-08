@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120308174339) do
+ActiveRecord::Schema.define(:version => 20120308225154) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -547,8 +547,10 @@ ActiveRecord::Schema.define(:version => 20120308174339) do
     t.datetime "updated_at"
     t.text     "description"
     t.string   "display_name"
-    t.boolean  "publicly_viewable", :default => true
+    t.boolean  "publicly_viewable",        :default => true
     t.string   "title"
+    t.boolean  "is_email_on_message",      :default => true
+    t.boolean  "is_email_on_announcement", :default => true
   end
 
   create_table "users", :force => true do |t|
