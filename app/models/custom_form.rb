@@ -56,6 +56,7 @@ class CustomForm < ActiveRecord::Base
 # Callbacks
 ###
   after_create :apply_default_permissions
+  after_update :remove_action_item
 
 ###
 # Scopes
@@ -123,6 +124,21 @@ protected
           question.errors.add(:base, "requires at least one predefined answer.")
         end
       end
+    end
+  end
+
+###
+# Callback Methods
+###  
+  ###
+  # _after_update_
+  #
+  # This method removes action item from community.
+  ###
+  def remove_action_item
+    if self.community.community_application_form.id == self.id and self.community.action_items.any?
+      self.community.action_items.delete(:update_application)
+      self.community.save
     end
   end
 end

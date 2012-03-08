@@ -33,11 +33,9 @@ class Page < ActiveRecord::Base
   scope :alphabetical, order("name ASC")
 
 ###
-# Validators
+# Callbacks
 ###
-  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :markup, :presence => true
-  validates :page_space, :presence => true
+  after_update :remove_action_item
 
 ###
 # Delegates
@@ -46,6 +44,13 @@ class Page < ActiveRecord::Base
   delegate :game, :to => :page_space, :prefix => true, :allow_nil => true
   delegate :game_name, :to => :page_space, :allow_nil => true
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+
+###
+# Validators
+###
+  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
+  validates :markup, :presence => true
+  validates :page_space, :presence => true
 
 ###
 # Public Methods
@@ -61,6 +66,26 @@ class Page < ActiveRecord::Base
     markdown = RDiscount.new(self.markup, :autolink, :filter_styles, :smart)
     html = markdown.to_html
     Sanitize.clean(html, Sanitize::Config::CUSTOM).html_safe
+  end
+  
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###  
+  ###
+  # _after_update_
+  #
+  # This method removes action item from community.
+  ###
+  def remove_action_item
+    if self.community.home_page and self.community.home_page.id == self.id and self.community.action_items.any?
+      self.community.action_items.delete(:update_home_page)
+      self.community.save
+    end
   end
 end
 

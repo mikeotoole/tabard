@@ -22,6 +22,8 @@ class Subdomains::CommunitiesController < SubdomainsController
   # PUT /community_settings(.:format)
   def update
     if @community.update_attributes(params[:community])
+      @community.action_items.delete(:update_settings)
+      @community.save
       add_new_flash_message 'Your changes have been saved.', 'success'
     else
       add_new_flash_message 'Error. Unable to save changes.', 'alert'

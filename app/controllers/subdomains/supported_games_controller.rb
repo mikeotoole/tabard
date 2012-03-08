@@ -19,7 +19,6 @@ class Subdomains::SupportedGamesController < SubdomainsController
   skip_before_filter :limit_subdomain_access
   after_filter :create_activity, :only => [:update, :create]
 
-
 ###
 # REST Actions
 ###
