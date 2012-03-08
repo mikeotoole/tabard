@@ -27,23 +27,37 @@ class SwtorCharactersController < ApplicationController
 
   # POST /swtor_characters(.:format)
   def create
-    @swtor_character = SwtorCharacter.create_character(params, current_user)
-    add_new_flash_message("\"#{@swtor_character.name}\" has been created.",'success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
-
+    begin
+      @swtor_character = SwtorCharacter.create_character(params, current_user)
+      add_new_flash_message("\"#{@swtor_character.name}\" has been created.",'success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+      logger.error "#{$!}"
+      @swtor_character.errors.add :base, "An error has occurred while processing the image."
+    rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
+      logger.error "#{$!}"
+      @swtor_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
+    end
     respond_with @swtor_character, :location => user_root_url + '#characters'
   end
 
   # PUT /swtor_characters/:id(.:format)
   def update
-    @swtor_character = SwtorCharacter.find(params[:id])
-    authorize!(:update, @swtor_character)
+    begin
+      @swtor_character = SwtorCharacter.find(params[:id])
+      authorize!(:update, @swtor_character)
 
-    if params[:swtor_character] and (params[:swtor_character][:advanced_class] or params[:server_name])
-      @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:server_name])
+      if params[:swtor_character] and (params[:swtor_character][:advanced_class] or params[:server_name])
+        @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:server_name])
+      end
+      params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
+      add_new_flash_message("Details for \"#{@swtor_character.name}\" have been saved.",'success') if @swtor_character.update_attributes(params[:swtor_character])
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+      logger.error "#{$!}"
+      @swtor_character.errors.add :base, "An error has occurred while processing the image."
+    rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
+      logger.error "#{$!}"
+      @swtor_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
-    add_new_flash_message("Details for \"#{@swtor_character.name}\" have been saved.",'success') if @swtor_character.update_attributes(params[:swtor_character])
-
     respond_with @swtor_character, :location => user_root_url + '#characters'
   end
 

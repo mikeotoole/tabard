@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
 ###
 # Constants
 ###
+  # This is the beta code
+  BETA_CODE = "Chuck Norris"
+  # This determines if the beta code is required
+  BETA_CODE_REQUIRED = true
   # All valid time zones supported
   VALID_TIME_ZONES =  ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
 
@@ -26,7 +30,7 @@ class User < ActiveRecord::Base
 ###
 # Attribute accessors
 ###
-  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password
+  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code
 
 ###
 # Attribute accessible
@@ -34,7 +38,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
-    :time_zone
+    :time_zone, :beta_code
 
 ###
 # Associations
@@ -113,8 +117,11 @@ class User < ActiveRecord::Base
   validates :date_of_birth, :presence => true
   validates :time_zone, :presence => true,
                         :inclusion => { :in => VALID_TIME_ZONES, :message => "%{value} is not a valid time zone." }
-
   validate :at_least_13_years_old
+  with_options :if => Proc.new{ BETA_CODE_REQUIRED } do |user|
+    user.validates :beta_code, :presence => {:message => "is required for the closed beta"}, :on => :create
+    user.validate :valid_beta_key, :on => :create
+  end
 
 ###
 # Public Methods
@@ -317,6 +324,10 @@ protected
   # This validation method ensures that the user is 13 years of age according to the date_of_birth.
   def at_least_13_years_old
     errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
+  end
+  # This validates the beta code
+  def valid_beta_key
+    errors.add(:beta_code, "is invalid") if self.beta_code != BETA_CODE
   end
 end
 

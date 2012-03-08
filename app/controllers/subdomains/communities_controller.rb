@@ -21,12 +21,20 @@ class Subdomains::CommunitiesController < SubdomainsController
 
   # PUT /community_settings(.:format)
   def update
-    if @community.update_attributes(params[:community])
-      @community.action_items.delete(:update_settings)
-      @community.save
-      add_new_flash_message 'Your changes have been saved.', 'success'
-    else
-      add_new_flash_message 'Error. Unable to save changes.', 'alert'
+    begin
+      if @community.update_attributes(params[:community])
+		@community.action_items.delete(:update_settings)
+      	@community.save
+        add_new_flash_message 'Your changes have been saved.', 'success'
+      else
+        add_new_flash_message 'Error. Unable to save changes.', 'alert'
+      end
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+      logger.error "#{$!}"
+      @community.errors.add :base, "An error has occurred while processing the image."
+    rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
+      logger.error "#{$!}"
+      @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
     respond_with @community, :location => edit_community_settings_url
   end
