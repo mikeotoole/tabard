@@ -57,7 +57,7 @@ class TopLevelController < ApplicationController
   # This method gets the Maintenance page.
   def maintenance
     if SiteConfiguration.is_maintenance?
-      render :layout => 'maintenance'
+      render 'maintenance', :layout => nil, :status => 503
     else
       redirect_to root_url
     end

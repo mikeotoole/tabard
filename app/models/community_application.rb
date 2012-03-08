@@ -82,6 +82,12 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
     return false if self.accepted? or self.applicant_is_a_member?
+    self.character_proxies.each do |proxy|
+      if proxy_map[proxy.id.to_s] == "-1"
+        proxy.errors.add(:base, "You must select a game or reject the character.")
+        return false
+      end
+    end
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, :without_protection => true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},:without_protection => true)
@@ -93,11 +99,7 @@ class CommunityApplication < ActiveRecord::Base
         self.character_proxies.each do |proxy|
           next unless proxy_map[proxy.id.to_s]
           begin
-            if self.community.is_protected_roster 
-              community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy)
-            else
-              community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
-            end
+            community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end
