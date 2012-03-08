@@ -44,6 +44,7 @@ class DiscussionSpace < ActiveRecord::Base
   delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
   after_create :apply_default_permissions
+  after_create :remove_action_item
 
 ###
 # Public Methods
@@ -85,16 +86,40 @@ class DiscussionSpace < ActiveRecord::Base
     self.discussions.count
   end
 
+  # This is a class method to destory a DiscussionSpace using delay job.
+  def delay_destory
+    self.update_attribute(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
+    DiscussionSpace.delay.destory_discussion_space(self.id)
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
+  ###
+  # _after_create_
+  #
   # This method applys default permissions when this is created.
+  ###
   def apply_default_permissions
     return if self.is_announcement_space
     self.community.apply_default_permissions(self)
   end
 
-  # This is a class method to destory a DiscussionSpace using delay job.
-  def delay_destory
-    self.update_attribute(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
-    DiscussionSpace.delay.destory_discussion_space(self.id)
+  ###
+  # _after_create_
+  #
+  # This method removes action item from community.
+  ### 
+  def remove_action_item
+    if self.community.action_items.any?
+      self.community.action_items.delete(:create_discussion_space)
+      self.community.save
+    end
   end
 end
 

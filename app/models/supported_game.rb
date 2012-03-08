@@ -15,10 +15,15 @@ class SupportedGame < ActiveRecord::Base
   MAX_NAME_LENGTH = 20
 
 ###
+# Attribute accessor
+###
+  attr_accessor :server_name, :faction
+
+###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :game_id, :game_type, :game
+  attr_accessible :name, :game_id, :game_type, :game, :server_name, :faction
 
 ###
 # Associations
@@ -29,6 +34,11 @@ class SupportedGame < ActiveRecord::Base
   has_many :announcements, :dependent => :destroy
   has_many :discussion_spaces, :dependent => :destroy
   has_many :page_spaces, :dependent => :destroy
+
+###
+# Callbacks
+###
+  after_create :remove_action_item
 
 ###
 # Delegates
@@ -97,6 +107,21 @@ protected
       else
         self.errors.add(:game_type, "is not valid")
       end
+    end
+  end
+
+###
+# Callback Methods
+###
+  ###
+  # _after_create_
+  #
+  # This method removes action item from community.
+  ###
+  def remove_action_item
+    if self.community.action_items.any?
+      self.community.action_items.delete(:add_supported_game)
+      self.community.save
     end
   end
 end
