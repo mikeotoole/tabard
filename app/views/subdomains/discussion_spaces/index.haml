@@ -2,7 +2,7 @@
 
 #actions.actions
   - if can? :create, DiscussionSpace
-    = link_to 'New Space', new_discussion_space_path, :class => 'new', :meta => 'Create a new discussion space'
+    = link_to 'New Space', new_discussion_space_url, :class => 'new', :meta => 'Create a new discussion space'
 
 %h1 Discussion Spaces
 
@@ -14,4 +14,4 @@
 -else
   %p There are no discussion spaces.
   - if can? :create, DiscussionSpace
-    %p= link_to 'New Space', new_discussion_space_path, :class => 'button'
+    %p= link_to 'New Space', new_discussion_space_url, :class => 'button'

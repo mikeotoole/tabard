@@ -9,7 +9,8 @@ def create_user(first_name, last_name)
       :email => "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", :password => "Password",
       :time_zone => "Pacific Time (US & Canada)",
       :user_profile_attributes => {:first_name => first_name, :last_name => last_name, :display_name => "#{first_name} #{last_name}"},
-      :date_of_birth => 22.years.ago.to_date)
+      :date_of_birth => 22.years.ago.to_date,
+      :beta_code => 'Chuck Norris')
   user.skip_confirmation!
   user.save!
 end
@@ -63,7 +64,8 @@ unless @dont_run
                   :password => "Password",
                   :date_of_birth => Date.new(1980,4,17),
                   :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
-                  :time_zone => "Pacific Time (US & Canada)")
+                  :time_zone => "Pacific Time (US & Canada)",
+                  :beta_code => 'Chuck Norris')
   mike.skip_confirmation!
   mike.save!
 

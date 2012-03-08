@@ -180,6 +180,107 @@ body
           left: auto
           right: 10px
 
+
+// ACTION ITEMS
+
+body.with_action_items
+  
+  #content
+    padding-top: 350px
+  
+  #header
+    height: 280px
+    
+    .title
+      bottom: 170px
+    
+    .action_items
+      left: 0
+      position: absolute
+      right: 0
+      bottom: 70px
+      
+      p
+        background: #ddd
+        border: 1px solid #ccc
+        border-bottom: 0
+        +border_radius(3,3,0,0)
+        +box_shadow(0 0 10px rgba(#000,.2))
+        color: #251533
+        font: 14px DinLight, sans-serif
+        padding: 10px
+      
+      ol
+        background: #eee
+        +bg_gradient(#fff,#ddd)
+        border: 1px solid #ccc
+        +border_radius(0,0,3,3)
+        +box_shadow(0 0 10px rgba(#000,.2))
+        height: 40px
+        margin: 0
+        padding: 0
+      
+        li
+          border-right: 1px solid #ccc
+          float: left
+          height: 20px
+          line-height: 20px
+          list-style: none
+          padding: 10px
+          
+          &:first-child
+            +border_radius(0,0,0,3)
+          
+          &:before
+            background: #999
+            +border_radius(3)
+            color: #fff
+            content: '\276F'
+            display: block
+            float: left
+            height: 20px
+            line-height: 20px
+            margin: 0 10px 0 0
+            padding: 0
+            text-align: center
+            width: 20px
+          
+          a
+            background: transparent
+            color: #999
+            display: block
+            float: left
+            font: 14px EurostyleStd, sans-serif
+            margin: -10px
+            padding: 10px
+            text-decoration: none
+          
+          &:hover
+            background: #fff
+            +bg_gradient(#fff,#fff)
+            
+            a
+              color: #251533
+          
+          &.current
+            background: #fff
+            +bg_gradient(#fff,#fff)
+            font-family: EurostyleBold, sans-serif
+            
+            &:before
+              background: #9F3831
+              content: '\2193'
+          
+          &.done
+            font-family: EurostyleStd, sans-serif
+          
+            &:before
+              background: #3679B3
+              content: '\2713'
+            
+            a
+              color: #251533
+
 #body
   background: #fff
   margin: 0 auto
