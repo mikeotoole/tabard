@@ -1,6 +1,6 @@
 $(document).ready ->
 
-  $('.user_profiles')
+  $('body')
     .delegate '.more_activites', 'ajax:before', ->
       $(this).closest('.submit').addClass('busy')
       updatedBefore = $('.activities li:last').attr 'created_at'

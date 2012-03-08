@@ -82,17 +82,19 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
     return false if self.accepted? or self.applicant_is_a_member?
+    error_count = 0
     self.character_proxies.each do |proxy|
       if proxy_map[proxy.id.to_s] == "-1"
-        proxy.errors.add(:base, "You must select a game or reject the character.")
-        return false
+        proxy.errors.add :base, "Character must be assigned to a game or rejected."
+        error_count += 1
       end
     end
+    return false if error_count > 0
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, :without_protection => true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},:without_protection => true)
       message = Message.create_system(:subject => "Application Accepted",
-                  :body => "Your application to #{self.community.name} has been accepted. It will now appear in your My Communities section.",
+                  :body => "Your application to #{self.community.name} has been accepted. It will now appear in your communities list.",
                   :to => [self.user_profile_id])
 
       unless community_profile.nil?
