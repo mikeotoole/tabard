@@ -4,6 +4,7 @@ FactoryGirl.define do
     sequence(:first_name) {|n| "First Name #{n}"}
     sequence(:last_name) {|n| "Last Name #{n}"}
     sequence(:display_name) {|n| "GameMaster#{n}"}
+    sequence(:location) {|n| "#{n} Fake St"}
     sequence(:description) {|n| "Von Game Master is number #{n}"}
     after_create do |profile|
       FactoryGirl.create(:user, :user_profile => profile) unless profile.user
