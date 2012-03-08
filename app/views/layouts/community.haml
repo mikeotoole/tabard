@@ -1,3 +1,4 @@
+- has_action_items = user_signed_in? and current_user.user_profile == current_community.admin_profile and current_community.action_items.any?
 !!!
 %html
 
@@ -18,7 +19,7 @@
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
 
-  %body.theme
+  %body{ class: "theme #{has_action_items ? 'with_action_items' : ''}" }
     #bar= render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
 
@@ -27,6 +28,21 @@
         .title
           %strong= current_community.name
           %cite= current_community.slogan
+        - if has_action_items
+          .action_items
+            %p
+              Now that you're community has been created, let's get everything setup:
+            %ol
+              %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
+                = link_to_unless_current 'Edit Settings', edit_community_settings_url
+              %li{ class: "#{request.fullpath == supported_games_path ? 'current' : ''} #{!!current_community.action_items[:add_supported_game] ? '' : 'done'}" }
+                = link_to_unless_current 'Add Games', supported_games_url
+              %li{ class: "#{request.fullpath == edit_page_path(current_community.home_page) ? 'current' : ''} #{!!current_community.action_items[:update_home_page] ? '' : 'done'}" }
+                = link_to_unless_current 'Update Home Page', edit_page_url(current_community.home_page)
+              %li{ class: "#{request.fullpath == new_discussion_space_path ? 'current' : ''} #{!!current_community.action_items[:create_discussion_space] ? '' : 'done'}" }
+                = link_to_unless_current 'Add Discussion Spaces', new_discussion_space_url
+              %li{ class: "#{request.fullpath == edit_custom_form_path(current_community.community_application_form) ? 'current' : ''} #{!!current_community.action_items[:update_application] ? '' : 'done'}" }
+                = link_to_unless_current 'Edit Application Form', edit_custom_form_url(current_community.community_application_form)
         .menu
           %li
             = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
