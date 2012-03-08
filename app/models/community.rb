@@ -382,8 +382,8 @@ protected
       can_lock: false,
       can_accept: false)
 
-    community_p_space = self.page_spaces.create(name: "General")
-    community_home_page = community_p_space.pages.create(name: "Home", markup: "This is the default home page.")
+    community_p_space = self.page_spaces.create(name: I18n.t("community.default.page_space.name"))
+    community_home_page = community_p_space.pages.create(name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup"))
     self.update_attributes :home_page_id => community_home_page.id
   end
 
