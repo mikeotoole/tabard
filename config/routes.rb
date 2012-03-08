@@ -24,7 +24,7 @@ DaBvRails::Application.routes.draw do
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :account, :load_activities, :load_characters] do
+  resources :user_profiles, :only => [:show, :edit, :update] do
     member do
       get :activities
       get :characters

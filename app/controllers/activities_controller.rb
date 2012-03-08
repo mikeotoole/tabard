@@ -6,6 +6,7 @@
 # This controller is for activity stream.
 ###
 class ActivitiesController < ApplicationController
+  respond_to :js
   layout nil
 
 ###
@@ -24,10 +25,10 @@ class ActivitiesController < ApplicationController
   # -> max_items
   ###
   def index
-    if @items = Activity.activities(params[:activity], params[:updated], params[:max_items])
-      render :partial => 'activities', :locals => { :activities => @items }
+    if @activities = Activity.activities(params[:activity], params[:updated], params[:max_items])
+      render :partial => 'activities', :locals => { :activities => @activities }
     else
-      render :text => '', :layout => false
+      render :text => ''
     end
   end
 end
