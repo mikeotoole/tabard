@@ -12,6 +12,7 @@
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
 #  title             :string(255)
+#  location          :string(255)
 #
 
 require 'spec_helper'
@@ -28,6 +29,14 @@ describe UserProfile do
 ###
   it "should not require a first name" do
     Factory.build(:user_profile, :first_name => nil).should be_valid
+  end
+
+  it "should not require a location" do
+    Factory.build(:user_profile, :location => nil).should be_valid
+  end
+  it "should not require a limit location to 30 characters" do
+    Factory.build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should be_valid
+    Factory.build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
   end
 
   it "should not  require a last name" do

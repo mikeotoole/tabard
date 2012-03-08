@@ -9,13 +9,16 @@ class UserProfile < ActiveRecord::Base
 ###
 # Constants
 ###
+  # Max name length
   MAX_NAME_LENGTH = 30
+  # Max location length
+  MAX_LOCATION_LENGTH = 30
 
 ###
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description, :location
 
 ###
 # Associations
@@ -67,6 +70,7 @@ class UserProfile < ActiveRecord::Base
 ###
   validates :display_name, :presence => true,
                            :length => { :maximum => MAX_NAME_LENGTH }
+  validates :location, :length => { :maximum => MAX_LOCATION_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
   validates :avatar,
       :if => :avatar?,
@@ -344,6 +348,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -358,5 +363,6 @@ end
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)
 #  title             :string(255)
+#  location          :string(255)
 #
 
