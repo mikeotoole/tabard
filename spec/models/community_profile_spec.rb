@@ -27,7 +27,7 @@ describe CommunityProfile do
 # Attribute Tests
 ###
   it "should require a user_profile" do
-    Factory.build(:community_profile, :user_profile => nil).should_not be_valid
+    lambda { Factory.build(:community_profile, :user_profile => nil, :community_application => FactoryGirl.create(:community_application, character_proxies: Array.new, community: community, user_profile: nil, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => nil))).should_not be_valid }.should raise_error
   end
 
   it "should require a community" do

@@ -110,7 +110,7 @@ describe Activity do
     end
     
     it "when only since is given only activities that occurred after that date should be returned" do
-      list = Activity.activities(nil, {:since => Time.now})
+      list = Activity.activities(nil, {:since => Time.now.to_s})
       
       list.each do |activity|
         activity.updated_at.should > Time.now
@@ -118,7 +118,7 @@ describe Activity do
     end
     
     it "when only before is given only activities that occurred before that date should be returned" do
-      list = Activity.activities(nil, {:before => Time.now})
+      list = Activity.activities(nil, {:before => Time.now.to_s})
       
       list.each do |activity|
         activity.updated_at.should < Time.now
@@ -126,7 +126,7 @@ describe Activity do
     end
     
     it "when both since and before is given only activities that occurred between those dates should be returned" do
-      list = Activity.activities(nil, {:since => 1.day.ago, :before => 2.day.ago})
+      list = Activity.activities(nil, {:since => 1.day.ago.to_s, :before => 2.day.ago.to_s})
       
       list.each do |activity|
         activity.updated_at.should < 1.day.ago
