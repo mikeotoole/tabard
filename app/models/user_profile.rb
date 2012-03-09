@@ -11,6 +11,8 @@ class UserProfile < ActiveRecord::Base
 ###
   # Max name length
   MAX_NAME_LENGTH = 30
+  # Max title length
+  MAX_TITLE_LENGTH = 30
   # Max location length
   MAX_LOCATION_LENGTH = 30
   # Max description length
@@ -74,6 +76,7 @@ class UserProfile < ActiveRecord::Base
 ###
   validates :display_name, :presence => true,
                            :length => { :maximum => MAX_NAME_LENGTH }
+  validates :title, :length => { :maximum => MAX_TITLE_LENGTH }
   validates :location, :length => { :maximum => MAX_LOCATION_LENGTH }
   validates :description, :length => { :maximum => MAX_ABOUT_ME_LENGTH }
   validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
