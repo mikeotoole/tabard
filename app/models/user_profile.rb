@@ -16,7 +16,7 @@ class UserProfile < ActiveRecord::Base
   # Max location length
   MAX_LOCATION_LENGTH = 30
   # Max description length
-  MAX_DESCRIPTION_LENGTH = 250
+  MAX_DESCRIPTION_LENGTH = 500
 
 ###
 # Attribute accessible
