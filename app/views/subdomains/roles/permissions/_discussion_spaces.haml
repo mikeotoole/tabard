@@ -1,25 +1,32 @@
 %dl
   %dt
     %h3 Default Values
+    %p
+      These are the permissions that will be applied to new discussion spaces and discussions that are created.
+      - if current_community.discussion_spaces.any?
+        You can also set permissions for individual discussion spaces further below.
   %dd
     - defaults = role.permissions_defaults_for_resource("DiscussionSpace")
     - child_index = defaults.persisted? ? defaults.id : Time.zone.now.to_i
     = f.simple_fields_for :permission_defaults, defaults, :child_index => child_index do |pf|
       = pf.input :object_class, :as => :hidden
+      %label For the space itself
       .slider_with_none
         %input{ type: 'radio', id: 'discussion_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{child_index}][permission_level]", value: '', checked: pf.object.permission_level == '' }
         %label{ for: 'discussion_spaces_default_permission_level' } ×
         = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
-      = pf.input :can_create_nested, :as => :boolean, :label => 'Add new discussions', :wrapper => false
-      = pf.input :can_destroy_nested, :as => :boolean, :label => 'Delete discussions', :wrapper => false
-      = pf.input :can_lock_nested, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false
+      = pf.input :can_create_nested, :as => :boolean, :label => 'Add new discussions in the space', :wrapper => false
+      = pf.input :can_destroy_nested, :as => :boolean, :label => 'Delete discussions in the space', :wrapper => false
+      = pf.input :can_lock_nested, :as => :boolean, :label => 'Lock/Unlock discussions in the space', :wrapper => false
   - if current_community.discussion_spaces.any?
+    %hr
     - current_community.discussion_spaces.each do |space|
       %dt
         %h3= space.name
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
           = pf.input :subject_class, :as => :hidden
+          %label For the space itself
           .slider_with_none
             = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
             = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
@@ -27,6 +34,6 @@
           = pf.input :subject_class, :as => :hidden
           = pf.input :id_of_parent, :as => :hidden
           = pf.input :parent_association_for_subject, :as => :hidden
-          = pf.input :can_create, :as => :boolean, :label => 'Add new discussions', :wrapper => false
-          = pf.input :can_destroy, :as => :boolean, :label => 'Delete discussions', :wrapper => false
-          = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock discussions', :wrapper => false
+          = pf.input :can_create, :as => :boolean, :label => 'Add new discussions in the space', :wrapper => false
+          = pf.input :can_destroy, :as => :boolean, :label => 'Delete discussions in the space', :wrapper => false
+          = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock discussions in the space', :wrapper => false

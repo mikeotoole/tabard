@@ -7,6 +7,10 @@
       = pf.input :can_create, :as => :boolean, :label => 'Create new forms', :wrapper => false
   %dt
     %h3 Default Values
+    %p
+      These are the permissions that will be applied to new forms that are created.
+      - if current_community.custom_forms.any?
+        You can also set permissions for individual forms further below.
   %dd
     - defaults = role.permissions_defaults_for_resource("CustomForm")
     - child_index = defaults.persisted? ? defaults.id : Time.zone.now.to_i
@@ -18,6 +22,7 @@
         = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       = pf.input :can_read_nested, :as => :boolean, :label => 'View all submissions', :wrapper => false, :required => false
   - if current_community.custom_forms.any?
+    %hr
     - current_community.custom_forms.each do |form|
       - next if form == current_community.community_application_form
       %dt
