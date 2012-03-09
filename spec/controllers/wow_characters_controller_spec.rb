@@ -76,8 +76,8 @@ describe WowCharactersController do
       WowCharacter.find(1).name.should == "My Test Name"
     end
     
-    it "should redirect to user profile dashboard" do
-      response.should redirect_to(user_root_url + "#characters")
+    it "should redirect to user profile characters tab" do
+      response.should redirect_to(user_profile_url(user.user_profile) + "#characters")
     end
   end
   
@@ -120,8 +120,8 @@ describe WowCharactersController do
       WowCharacter.find(@character).name.should == @new_name
     end
     
-    it "should redirect to user profile dashboard" do
-      response.should redirect_to(user_root_url + "#characters")
+    it "should redirect to user profile characters tab" do
+      response.should redirect_to(user_profile_url(user.user_profile) + "#characters")
     end
     
     it "should create an Activity when attributes change" do

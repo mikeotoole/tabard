@@ -80,9 +80,9 @@ describe SwtorCharactersController do
       assigns(:swtor_character).should be_persisted
     end
 
-    it "should redirect to user profile dashboard" do
+    it "should redirect to user profile characters tab" do
       post :create, :swtor_character => valid_attributes, :server_name => DefaultObjects.swtor.server_name
-      response.should redirect_to(user_root_url + "#characters")
+      response.should redirect_to(user_profile_url(user.user_profile) + "#characters")
     end
     
     it "should create an activity" do
@@ -123,8 +123,8 @@ describe SwtorCharactersController do
       SwtorCharacter.find(1).name.should eq(@new_name)
     end
     
-    it "should redirect user profile dashboard" do
-      response.should redirect_to(user_root_url + "#characters")
+    it "should redirect user profile characters tab" do
+      response.should redirect_to(user_profile_url(user.user_profile) + "#characters")
     end
     
     it "should create an Activity when attributes change" do

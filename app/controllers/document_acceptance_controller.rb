@@ -15,7 +15,7 @@ class DocumentAcceptanceController < ApplicationController
     if current_user.accepted_documents.include?(@document)
       current_user.update_attributes(:accepted_current_terms_of_service => true) if @document == TermsOfService.current
       current_user.update_attributes(:accepted_current_privacy_policy => true) if @document == PrivacyPolicy.current
-      redirect_to user_root_path, :notice => "You have already accepted the document"
+      redirect_to user_profile_url(current_user.user_profile), :notice => "You have already accepted the document"
     end
     add_new_flash_message('You must accept the updated "Terms of Service" to continue to use Crumblin.', "alert") unless current_user.accepted_current_terms_of_service
     add_new_flash_message('You must accept the updated "Privacy Policy" to continue to use Crumblin.', "alert") unless current_user.accepted_current_privacy_policy
@@ -26,7 +26,7 @@ class DocumentAcceptanceController < ApplicationController
     if current_user.accepted_documents.include?(@document)
       current_user.update_attributes(:accepted_current_terms_of_service => true) if @document == TermsOfService.current
       current_user.update_attributes(:accepted_current_privacy_policy => true) if @document == PrivacyPolicy.current
-      redirect_to user_root_path, :notice => "You have already accepted the document."
+      redirect_to user_profile_url(current_user.user_profile), :notice => "You have already accepted the document."
     elsif params[:accept]
       current_user.accepted_documents << @document
       case @document.type
@@ -35,7 +35,7 @@ class DocumentAcceptanceController < ApplicationController
       when "PrivacyPolicy"
         current_user.update_attribute(:accepted_current_privacy_policy, true)
       end
-      redirect_to user_root_path, :notice => "The document has been accepted."
+      redirect_to user_profile_url(current_user.user_profile), :notice => "The document has been accepted."
     else
       ensure_accepted_most_recent_legal_documents
     end

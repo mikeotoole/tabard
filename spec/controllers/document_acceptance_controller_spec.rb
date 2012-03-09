@@ -14,10 +14,10 @@ describe DocumentAcceptanceController do
   end
 
   describe "POST 'create'" do
-    it "redirects_to user_root_url, if user accepts" do
+    it "redirects_to user profile characters tab, if user accepts" do
       sign_in user
       post :create, :id => privacy_policy, :accept => true
-      response.should redirect_to(user_root_url)
+      response.should redirect_to(user_profile_url(user.user_profile))
     end
     it "redirects if they have already accepted it" do
       sign_in user
