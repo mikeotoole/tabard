@@ -13,6 +13,14 @@ class Acknowledgement < ActiveRecord::Base
 ###  
   belongs_to :community_profile
   belongs_to :announcement
+  
+###
+# Delegates
+###
+  delegate :poster, :to => :announcement, :allow_nil => true
+  delegate :display_name, :to => :poster, :prefix => true, :allow_nil => true
+  delegate :community_name, :to => :community_profile, :allow_nil => true
+  delegate :subdomain, :to => :announcement, :allow_nil => true
 end
 
 
