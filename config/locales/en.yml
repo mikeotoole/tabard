@@ -10,6 +10,9 @@ en:
       date_monthday: "%b %e"
   hello: "Hello world"
   activerecord:
+    attributes:
+      announcement:
+        name: Title
     error:
       message:
         taken: "has already been taken"
