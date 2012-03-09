@@ -10,7 +10,7 @@
         %td
           = link_to space.name, space
           - if space.supported_game
-            %rt= space.supported_game.full_name
+            %rt= space.supported_game.smart_name
         %td
           - if space.discussions.size > 0
             = space.discussions.size

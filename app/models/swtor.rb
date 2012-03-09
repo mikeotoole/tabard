@@ -74,9 +74,14 @@ class Swtor < Game
     self.class.all_factions
   end
 
-  # Gets the full name of this game including game type faction and server.
-  def name
+  # Returns the full name of this game including game type faction and server.
+  def full_name
     "Star Wars: The Old Republic (#{self.faction}) #{self.server_name}"
+  end
+
+  # Returns just basic game name
+  def short_name
+    "Star Wars: The Old Republic"
   end
 end
 

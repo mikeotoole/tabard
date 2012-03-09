@@ -88,7 +88,7 @@ class RosterAssignment < ActiveRecord::Base
 
   # This method validates that the character is compatable with the supported game
   def character_valid_for_supported_game
-    errors.add(:base, "That character is not compatible with #{self.supported_game.game_name}.") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class.to_s != self.supported_game.game_type
+    errors.add(:base, "That character is not compatible with #{self.supported_game.game_short_name}.") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class.to_s != self.supported_game.game_type
   end
 
 ###
