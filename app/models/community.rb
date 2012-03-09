@@ -20,12 +20,14 @@ class Community < ActiveRecord::Base
   MAX_SLOGAN_LENGTH = 60
   # Used by validator to limit number of communities a user can own
   MAX_OWNED_COMMUNITIES = 3
+  # Used by validator to limit restrict pitch length
+  MAX_PITCH_LENGTH = 100
 
 ###
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch
 
 ###
 # Associations
@@ -81,6 +83,7 @@ class Community < ActiveRecord::Base
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
+  validates :pitch, :length => { :maximum => MAX_PITCH_LENGTH }
   validates :admin_profile, :presence => true
   validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.background_color.blank? }
@@ -416,6 +419,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -442,5 +446,6 @@ end
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
+#  pitch                           :text
 #
 

@@ -24,6 +24,7 @@
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
+#  pitch                           :text
 #
 
 require 'spec_helper'
@@ -131,6 +132,16 @@ describe Community do
   describe "slogan" do
     it "should be optional" do
       build(:community, :slogan => nil).should be_valid
+    end
+  end
+
+  describe "pitch" do
+    it "should be optional" do
+      build(:community, :pitch => nil).should be_valid
+    end
+    it "should be under 100 characters" do
+      build(:community, :pitch => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should be_valid
+      build(:community, :pitch => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
     end
   end
 
