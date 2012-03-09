@@ -1,0 +1,4 @@
+%p
+  #{@user_profile.display_name}, You have a new #{@acknowledgement.community_profile.community_name} Announcement on Crumblin!
+%p You can view your announcement at the link below:
+%p= link_to 'View Announcement', announcements_url(@acknowledgement.announcement)
