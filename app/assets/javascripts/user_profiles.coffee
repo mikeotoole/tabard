@@ -5,8 +5,13 @@ $(document).ready ->
       return false unless !$.trim($(this).closest('dt').find('+ dd').html())
       $(this).closest('dt').find('+ dd').html 'Loading...'
   
-  $('#bar .avatar').click ->
-    $('#tabs dt.characters a').trigger 'click'
+  $('#bar')
+    .delegate '.avatar .profile a', 'click', ->
+      $('#tabs dt.activities a').trigger 'click'
+      false
+    .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
+      $('#tabs dt.characters a').trigger 'click'
+      false
 
   hash = window.location.hash
   switch hash

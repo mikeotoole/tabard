@@ -1,7 +1,7 @@
-- title 'Account'
+- title 'Account Settings'
 
 #body
-  %h1 Account Details
+  %h1 Account Settings
 
   = simple_form_for(@user, :url => registration_url(@user, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { method: :put, autocomplete: :off }) do |f|
     %fieldset

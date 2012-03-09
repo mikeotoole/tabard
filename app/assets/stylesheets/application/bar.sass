@@ -68,30 +68,7 @@
     
     &.dashboard
       right: 50%
-      margin: 0 -430px 0 0
-      
-      >li
-      
-        >ul
-          +border_radius(3,0,3,3)
-          left: auto
-          right: 0
-          
-          >li
-            display: block
-            position: relative
-            
-            >a
-              text-indent: 20px
-            
-            img
-              background: #164e79
-              border: 1px solid #164e79
-              +border_radius(2)
-              left: 4px
-              position: absolute
-              top: 4px
-              width: 20px
+      margin: 0 -435px 0 0
     
     >li
       float: left
@@ -273,7 +250,7 @@
             +opacity(1)
             
             &[meta]:before
-              background: #367BB1
+              background: #CE442B
               color: #fff
       
       &.search > a
@@ -289,28 +266,81 @@
         background-position: -125px -5px
         margin: 0 15px 0 5px
   
-  a.avatar
+  .avatar
     background: #261333
-    border: 1px solid #000
-    height: 40px
+    border: 1px solid #554863
+    height: 42px
     margin: 0 -480px 0 0
-    outline: 1px solid #554863
-    overflow: hidden
     position: absolute
     right: 50%
     top: 15px
-    width: 40px
+    width: 42px
+    z-index: 90
     
     img
+      border: 1px solid #000
       height: 40px
       left: 0
       position: absolute
       top: 0
       width: 40px
     
+    ul
+      display: none
+    
     &:hover
-      outline-color: #3679B3
-      +box_shadow(0 0 10px #000)
+      border: 10px solid #CF4527
+      +border_radius(3,3,0,0)
+      margin: -9px -489px 0 0
+      
+      img
+        border: 1px solid #D88B5E
+        outline: 1px solid #782A2A
+      
+      ul
+        background: #CF4527
+        +bg_gradient(#CF4527,#A03931)
+        +border_radius(3,0,3,3)
+        +box_shadow(-5px 5px 5px rgba(#000, .3))
+        display: block
+        padding: 10px
+        position: absolute
+        right: -10px
+        text-align: left
+        top: 43px
+        
+        a
+          border-bottom: 1px solid #943430
+          color: #e9d9c4
+          display: block
+          font: 13px EurostyleStd, sans-serif
+          line-height: 15px
+          padding: 10px 50px 10px 30px
+          position: relative
+          white-space: nowrap
+          
+          &:after
+            background: #9F3832
+            color: #d1b188
+            content: attr(icon)
+            height: 25px
+            left: 0
+            line-height: 25px
+            position: absolute
+            text-align: center
+            top: 5px
+            width: 25px
+          
+          &:hover
+            background: #792B29
+            color: #fff
+            
+            &:after
+              background: transparent
+              color: #fff
+              
+        li:last-child a
+          border-bottom: 0
   
   p.signup
     font-size: 13px
