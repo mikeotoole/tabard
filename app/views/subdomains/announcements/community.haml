@@ -6,6 +6,10 @@
     %li
       %span Community Announcements
 
+#actions.actions
+  - if can? :create, Announcement
+    = link_to 'New Announcement', new_announcement_url, :class => 'new', :meta => 'Create a new announcement'
+
 %h1 Community Announcements
 
 = render 'table', :announcements => @announcements
