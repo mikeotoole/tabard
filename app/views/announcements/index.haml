@@ -5,13 +5,8 @@
     = paginate @acknowledgements
     = form_tag announcements_batch_mark_as_seen_url, :method => :put do
       %table
-        %thead
-          %tr
-            %th.check
-            %th Announcement
-            %th Community
-            %th Date
         %tbody
+          - unread_count = 0
           - @acknowledgements.each do |acknowledgement|
             - announcement = acknowledgement.announcement
             - if acknowledgement.has_been_viewed?
@@ -26,6 +21,7 @@
                   %time
                     = l announcement.created_at, :format => :time_12
             - else
+              - unread_count += 1
               %tr.unread
                 %td.check
                   = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"
@@ -40,10 +36,16 @@
                     = l announcement.created_at, :format => :date_short
                   %time
                     = l announcement.created_at, :format => :time_12
+        %thead
+          %tr
+            %th{ class: unread_count > 0 ? 'check' : '' }
+            %th Announcement
+            %th Community
+            %th Date
         %tfoot
           %tr
             %td{ :colspan => 4 }
-              -if current_user.unread_announcements.size > 0
+              -if unread_count > 0
                 %button{ :class => 'read' }
                   %span Mark selected as read
     = paginate @acknowledgements
