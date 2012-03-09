@@ -2,9 +2,9 @@
   %dt
     %h3 Default Values
     %p
-      These are the permissions that will be applied to new pages spaces and pages that are created.
+      These are the permissions that will be applied to new page spaces and pages that are created.
       - if current_community.page_spaces.any?
-        You can also set permissions for individual pages spaces further below.
+        You can also set permissions for individual page spaces further below.
   %dd
     - defaults = role.permissions_defaults_for_resource("PageSpace")
     - child_index = defaults.persisted? ? defaults.id : Time.zone.now.to_i
