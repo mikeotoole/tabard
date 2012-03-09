@@ -30,7 +30,7 @@ class SwtorCharactersController < ApplicationController
     begin
       @swtor_character = SwtorCharacter.create_character(params, current_user)
       add_new_flash_message("\"#{@swtor_character.name}\" has been created.",'success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
@@ -51,7 +51,7 @@ class SwtorCharactersController < ApplicationController
       end
       params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
       add_new_flash_message("Details for \"#{@swtor_character.name}\" have been saved.",'success') if @swtor_character.update_attributes(params[:swtor_character])
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError

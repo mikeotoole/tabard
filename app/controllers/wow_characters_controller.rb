@@ -30,7 +30,7 @@ class WowCharactersController < ApplicationController
     begin
       @wow_character = WowCharacter.create_character(params, current_user)
       add_new_flash_message("\"#{@wow_character.name}\" has been created.", 'success') if @wow_character.character_proxy and @wow_character.character_proxy.valid?
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @wow_character.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
@@ -50,7 +50,7 @@ class WowCharactersController < ApplicationController
         @wow_character.wow = Wow.game_for_faction_server(params[:faction], params[:server_name])
       end
       add_new_flash_message("Details for \"#{@wow_character.name}\" have been saved.", 'success') if @wow_character.update_attributes(params[:wow_character])
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @wow_character.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError

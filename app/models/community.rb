@@ -20,12 +20,14 @@ class Community < ActiveRecord::Base
   MAX_SLOGAN_LENGTH = 60
   # Used by validator to limit number of communities a user can own
   MAX_OWNED_COMMUNITIES = 3
+  # Used by validator to limit restrict pitch length
+  MAX_PITCH_LENGTH = 100
 
 ###
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch
 
 ###
 # Associations
@@ -81,6 +83,7 @@ class Community < ActiveRecord::Base
   validates :name, :not_profanity => true
   validates :name, :not_restricted_name => {:all => true}
   validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
+  validates :pitch, :length => { :maximum => MAX_PITCH_LENGTH }
   validates :admin_profile, :presence => true
   validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
             :unless => Proc.new{|community| community.background_color.blank? }
@@ -382,8 +385,8 @@ protected
       can_lock: false,
       can_accept: false)
 
-    community_p_space = self.page_spaces.create(name: "General")
-    community_home_page = community_p_space.pages.create(name: "Home", markup: "This is the default home page.")
+    community_p_space = self.page_spaces.create(name: I18n.t("community.default.page_space.name"))
+    community_home_page = community_p_space.pages.create(name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup"))
     self.update_attributes :home_page_id => community_home_page.id
   end
 
@@ -408,6 +411,7 @@ protected
     end
   end
 end
+
 
 
 
@@ -442,5 +446,6 @@ end
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
+#  pitch                           :text
 #
 

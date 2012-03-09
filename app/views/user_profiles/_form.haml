@@ -5,6 +5,7 @@
       = f.input :last_name
       = f.input :display_name
       = f.input :title
+      = f.input :location
       = f.input :publicly_viewable, :label => "Let others see my profile?"
       = f.input :description, :label => "About me", :wrapper_tag => :p
       %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }

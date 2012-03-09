@@ -88,7 +88,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should be successful when authenticated as the community admin" do
       sign_in community_admin_user
       get 'new'
-      response.should be_success
+      response.should_not be_success
     end
     
     it "should redirect to new user session path when not authenticated as a user" do

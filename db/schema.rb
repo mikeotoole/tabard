@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120308225154) do
+ActiveRecord::Schema.define(:version => 20120308235947) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20120308225154) do
     t.integer  "home_page_id"
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
+    t.text     "pitch"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -549,8 +550,7 @@ ActiveRecord::Schema.define(:version => 20120308225154) do
     t.string   "display_name"
     t.boolean  "publicly_viewable",        :default => true
     t.string   "title"
-    t.boolean  "is_email_on_message",      :default => true
-    t.boolean  "is_email_on_announcement", :default => true
+    t.string   "location"
   end
 
   create_table "users", :force => true do |t|

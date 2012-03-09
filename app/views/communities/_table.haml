@@ -11,7 +11,7 @@
         %td
           %strong= link_to community.name, community
           %br/
-          = "\"#{community.slogan}\"" unless community.slogan.to_s.strip == ""
+          = community.pitch unless community.pitch.to_s.strip == ""
         %td.r
           = community.community_profiles.size
         %td.r
@@ -20,6 +20,6 @@
           %div= link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
   %tfoot
     %tr
-      %td{ :colspan => 4 }
+      %td{ :colspan => 5 }
         - if (can? :create, Community)
           = link_to 'New Community', new_community_path, :class => 'button primary'
