@@ -8,9 +8,9 @@
     %h2 Configuration
     %fieldset
       %ol
-        = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
-        = f.input :pitch, :input_html => { :maxlength => Community::MAX_PITCH_LENGTH }
-        = f.input :home_page_id, :as => :radio, :label => "Public Home Page", :collection => current_community.pages, :wrapper_html => { :class => 'select' }
+        = f.input :slogan, :hint => "#{Community::MAX_SLOGAN_LENGTH} characters. Optional. This is displayed beneath your community title.", :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
+        = f.input :pitch, :as => :string, :hint => "#{Community::MAX_PITCH_LENGTH} characters. Optional. This is what users will see on community listing pages.", :input_html => { :maxlength => Community::MAX_PITCH_LENGTH }
+        = f.input :home_page_id, :as => :radio, :label => "Public Home Page", :hint => 'This page is displayed to visitors to your community who are not members.', :collection => current_community.pages, :wrapper_html => { :class => 'select' }
         = f.input :is_accepting_members, :label => "Enable new applications."
         = f.input :email_notice_on_application, :label => "Send a notification when an application is received."
         = f.input :is_public_roster, :as => :boolean, :label => "Make the community roster public."
