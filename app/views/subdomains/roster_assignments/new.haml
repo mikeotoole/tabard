@@ -42,10 +42,10 @@
     %strong
       - if current_community.supported_games.any?
         You do not have any characters available to be added to the roster.
+        %p
+          = link_to 'Add Characters', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :class => 'button'
       - else
         This community does not have any supported games, and thus no rosters.
-  %p
-    = link_to 'Add Characters', user_root_url + '#characters', :class => 'button'
-    - if can? :manage, RosterAssignment
-      = raw "or&nbsp;"
-      = link_to 'Add a Game', new_supported_game_url, :class => 'button'
+        %p
+          - if can? :manage, RosterAssignment
+            = link_to 'Add a Game', new_supported_game_url, :class => 'button'

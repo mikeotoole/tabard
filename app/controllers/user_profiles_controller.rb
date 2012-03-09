@@ -11,15 +11,10 @@ class UserProfilesController < ApplicationController
   # Before Filters
   ###
   before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters]
-  before_filter :set_current_user_as_profile, :only => [:dashboard, :account]
+  before_filter :set_current_user_as_profile, :only => :account
   load_and_authorize_resource :except => [:activities, :characters]
   skip_authorize_resource :only => :account
-  before_filter :load_activities, :only => [:dashboard, :show, :activities]
-
-  # GET /dashboard
-  def dashboard
-    render :show
-  end
+  before_filter :load_activities, :only => [:show, :activities]
 
   # GET /user_profiles/1
   def show

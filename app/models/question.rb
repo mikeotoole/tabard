@@ -32,7 +32,7 @@ class Question < ActiveRecord::Base
 # Associations
 ###
   belongs_to :custom_form
-  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true
+  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true, :order => 'id ASC'
 
 ###
 # Validators
