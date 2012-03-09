@@ -6,6 +6,11 @@
 # This class represents an actvity.
 ###
 class Acknowledgement < ActiveRecord::Base
+  scope :ordered, :order => 'created_at DESC'
+
+###
+# Associations
+###  
   belongs_to :community_profile
   belongs_to :announcement
 end

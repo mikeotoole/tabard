@@ -15,7 +15,7 @@ class AnnouncementsController < ApplicationController
   # GET /announcements/(.:format)
   def index
     @hide_announcements = true
-    @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).page params[:page]
+    @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).ordered.page params[:page]
   end
 
   # GET /announcements/:id(.:format)

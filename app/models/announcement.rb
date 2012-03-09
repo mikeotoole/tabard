@@ -46,7 +46,6 @@ class Announcement < ActiveRecord::Base
 # Validators
 ###
   validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :body, :presence => true
   validates :user_profile, :presence => true
   validates :community, :presence => true
   validate :character_is_valid_for_user_profile
