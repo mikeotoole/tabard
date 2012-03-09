@@ -22,7 +22,7 @@ def create_page_space(creator_last_name, community_name, space_name, faction='')
   supported_game = game ? community.supported_games.find_by_game_id_and_game_type(game.id, game.class.name) : nil
   creator = UserProfile.find_by_last_name(creator_last_name)
 
-  puts "With game #{supported_game.game_name}" if supported_game
+  puts "With game #{supported_game.game_full_name}" if supported_game
   ps = community.page_spaces.create!(:name => space_name, :supported_game => supported_game)
   Activity.create!(:user_profile => creator, :community => community, :target => ps, :action => "created")
 end

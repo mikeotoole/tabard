@@ -56,7 +56,7 @@ ActiveAdmin.register Community do
           column "Name" do |supported_game|
             link_to supported_game.name, [:admin, supported_game]
           end
-          column :game_name
+          column :game_full_name
         end
       end
     end

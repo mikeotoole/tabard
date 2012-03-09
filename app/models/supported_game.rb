@@ -43,7 +43,8 @@ class SupportedGame < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :game, :prefix => true
+  delegate :full_name, :to => :game, :prefix => true
+  delegate :short_name, :to => :game, :prefix => true
   delegate :name, :to => :community, :prefix => true
   delegate :faction, :to => :game, :allow_nil => true
   delegate :server_name, :to => :game, :allow_nil => true
@@ -71,12 +72,17 @@ class SupportedGame < ActiveRecord::Base
 
   # Gets the full name of this game with type faction and server
   def full_name
-    "#{self.game_name} \u2014 #{self.name}"
+    "#{self.game_full_name} \u2014 #{self.name}"
   end
 
   # Gets the smart name
   def smart_name
-    self.full_name
+    supported_games_of_same_type = self.community.supported_games.where(:game_type => self.game_type)
+    if supported_games_of_same_type.count == 1
+      self.game_short_name
+    else
+      self.full_name
+    end
   end
 
   # Gets the user_profiles of 

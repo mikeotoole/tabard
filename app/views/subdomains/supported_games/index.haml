@@ -10,7 +10,7 @@
   %tbody
     - @supported_games.each do |supported_game|
       %tr
-        %td= link_to_if (can? :update, supported_game), supported_game.smart_name, edit_supported_game_url(supported_game)
+        %td= link_to_if (can? :update, supported_game), supported_game.full_name, edit_supported_game_url(supported_game)
         %td.actions
           %div
             - if (can? :update, supported_game)

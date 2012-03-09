@@ -32,8 +32,8 @@ describe Announcement do
   end
 
   describe "body" do
-    it "should required" do
-      build(:announcement, :body => nil).should_not be_valid
+    it "should not be required" do
+      build(:announcement, :body => nil).should be_valid
     end
   end
 

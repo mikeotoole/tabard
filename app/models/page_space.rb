@@ -36,7 +36,6 @@ class PageSpace < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :game, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true
   delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
@@ -56,6 +55,10 @@ class PageSpace < ActiveRecord::Base
     else
       nil
     end
+  end
+  
+  def game_name
+    self.supported_game.smart_name
   end
 
   ###

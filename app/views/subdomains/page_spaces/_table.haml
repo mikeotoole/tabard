@@ -10,7 +10,7 @@
         %td
           = link_to space.name, space
           - if space.supported_game
-            %em= "— #{space.supported_game.full_name}"
+            %em= "— #{space.supported_game.smart_name}"
         %td
           - if space.pages.size > 0
             = space.pages.size

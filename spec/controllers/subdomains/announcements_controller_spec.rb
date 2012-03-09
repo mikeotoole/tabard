@@ -268,13 +268,6 @@ describe Subdomains::AnnouncementsController do
       response.should be_forbidden
     end
 
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin
-      post 'batch_destroy', :ids => [announcement.id => 'true']
-      redirect_to announcements_path
-      admin.read_announcements.include?(announcement).should be_false
-    end
-
     it "should redirect to user sign_in when not authenticated as a user" do
       post 'batch_destroy', :ids => [announcement.id => 'true']
       response.should redirect_to(new_user_session_url)
