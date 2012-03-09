@@ -1,0 +1,4 @@
+%p
+  #{@user_profile.display_name}, You have a new message on Crumblin!
+%p You can view your message at the link below:
+%p= link_to 'View Message', mail_url(@message_association)
