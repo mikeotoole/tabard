@@ -18,10 +18,15 @@ class MessagesController < MailboxController
 
   # GET /mail/inbox/:id(.:format)
   def show
-    authorize!(:read, @message.folder)
-    gather_inbox_data @message.folder
-    @mailbox_view_state = @message.folder.name.downcase
-    @message.update_attributes(:has_been_read => true)
+    if @message
+      authorize!(:read, @message.folder)
+      gather_inbox_data @message.folder
+      @mailbox_view_state = @message.folder.name.downcase
+      @message.update_attributes(:has_been_read => true)
+    else
+      add_new_flash_message "Message not found.", 'alert'
+      redirect_to inbox_url
+    end
   end
 
   # POST /mail/mark_read/:id(.:format)
@@ -172,7 +177,7 @@ protected
   # This before filter loads the message from the id params.
   ###
   def load_message
-    @message = current_user.received_messages.find(params[:id]) if current_user
+    @message = current_user.received_messages.find_by_id(params[:id]) if current_user
   end
 
   ###
