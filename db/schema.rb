@@ -551,6 +551,8 @@ ActiveRecord::Schema.define(:version => 20120308235947) do
     t.boolean  "publicly_viewable",        :default => true
     t.string   "title"
     t.string   "location"
+    t.boolean  "is_email_on_message",      :default => true
+    t.boolean  "is_email_on_announcement", :default => true
   end
 
   create_table "users", :force => true do |t|

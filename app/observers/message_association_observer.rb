@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This is an observer for AdminUser.
+# This is an observer for MessageAssociation.
 ###
 class MessageAssociationObserver < ActiveRecord::Observer
   ###
