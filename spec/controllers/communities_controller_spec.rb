@@ -108,7 +108,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new community" do
-      response.should redirect_to(supported_games_url(:subdomain => assigns[:community].subdomain))
+      response.should redirect_to(edit_community_settings_url(:subdomain => assigns[:community].subdomain))
     end
   end
   

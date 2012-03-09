@@ -303,7 +303,7 @@ protected
   def combine_birthday
     if self.date_of_birth.blank? and !self.birth_year.blank? and !self.birth_month.blank? and !self.birth_day.blank?
       begin
-        self.date_of_birth = Date.new(self.birth_year.to_i,self.birth_month.to_i,self.birth_day.to_i)
+        self.date_of_birth = Date.new(self.birth_year.to_i,self.birth_month.to_i,self.birth_day.to_i).to_time_in_current_zone.to_date
       rescue
         self.errors.add(:date_of_birth, "invalid")
       end
@@ -323,7 +323,7 @@ protected
 ###
   # This validation method ensures that the user is 13 years of age according to the date_of_birth.
   def at_least_13_years_old
-    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or 13.years.ago < self.date_of_birth
+    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or (Time.zone.now - 13.years).to_date < self.date_of_birth
   end
   # This validates the beta code
   def valid_beta_key
