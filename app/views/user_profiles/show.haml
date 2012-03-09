@@ -22,11 +22,14 @@
       - if @user_profile.communities.any?
         %ul.communities
           - @user_profile.communities.each do |community|
-            %li= link_to community.name, community, (current_user.user_profile == community.admin_profile ? { :meta => '♔' } : {})
+            %li= link_to community.name, community, (@user_profile == community.admin_profile ? { :meta => '♔' } : {})
       - else
         %p
           You don't have any memberships yet.
           = link_to 'Find a community ›', communities_url
+      - unless @user_profile.location.to_s.strip == ''
+        %h3 Location
+        %p= @user_profile.location
       - unless @user_profile.description.to_s.strip == ''
         %h3 About Me
         %p= @user_profile.description
