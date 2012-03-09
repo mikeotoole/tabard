@@ -37,7 +37,7 @@ class WowCharactersController < ApplicationController
       logger.error "#{$!}"
       @wow_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @wow_character, :location => user_root_url + '#characters'
+    respond_with @wow_character, :location => user_profile_url(@wow_character.user_profile) + '#characters'
   end
 
   # PUT /wow_characters/:id(.:format)
@@ -57,7 +57,7 @@ class WowCharactersController < ApplicationController
       logger.error "#{$!}"
       @wow_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @wow_character, :location => user_root_url + '#characters'
+    respond_with @wow_character, :location => user_profile_url(@wow_character.user_profile) + '#characters'
   end
 
   # DELETE /wow_characters/:id(.:format)

@@ -6,8 +6,8 @@ $(document).ready ->
       $(this).closest('dt').find('+ dd').html 'Loading...'
   
   $('#bar')
-    .delegate '.avatar .profile a', 'click', ->
-      $('#tabs dt.activities a').trigger 'click'
+    .delegate '.avatar .activities a', 'click', ->
+      $('#tabs dt.activity a').trigger 'click'
       false
     .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
       $('#tabs dt.characters a').trigger 'click'

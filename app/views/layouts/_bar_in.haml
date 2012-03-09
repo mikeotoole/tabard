@@ -1,4 +1,4 @@
-= link_to 'Crumblin', user_root_url(:subdomain => false) + '#characters', :class => 'logo'
+= link_to 'Crumblin', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :class => 'logo'
 
 %ul.menu
   - if current_user.communities.size > 0
@@ -25,9 +25,10 @@
     = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
 
 .avatar
-  = link_to image_tag(current_user.avatar_url :tiny), user_root_url(:subdomain => false) + '#characters'
+  = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, :subdomain => false) + '#characters'
   %ul
     %li.settings= link_to 'Account Settings', edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :icon => '✲'
-    %li.characters= link_to 'My Characters', user_root_url(:subdomain => false) + '#characters', :icon => 'Ξ'
-    %li.profile= link_to 'Activity Sream', current_user.user_profile(:subdomain => false), :icon => '༄'
+    %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), :icon => '✎'
+    %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :icon => 'Ξ'
+    %li.activities= link_to 'Activity Stream', current_user.user_profile(:subdomain => false), :icon => '༄'
     %li.logout= link_to 'Logout', destroy_user_session_url, :icon => '✕'
