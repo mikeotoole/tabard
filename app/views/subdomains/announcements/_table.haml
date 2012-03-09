@@ -3,7 +3,8 @@
     %table
       %thead
         %tr
-          %th.check
+          - if can? :destroy, Announcement
+            %th.check
           %th Name
           %th Last Reply
           %th Comments?
@@ -11,9 +12,10 @@
       %tbody
         - announcements.each do |announcement|
           %tr
-            %td.check
-              = check_box_tag "ids[#{announcement.id}]", true, false, :id => "announcement_id_#{announcement.id}"
-              %label{ :for => "announcement_id_#{announcement.id}" }
+            - if can? :destroy, Announcement
+              %td.check
+                = check_box_tag "ids[#{announcement.id}]", true, false, :id => "announcement_id_#{announcement.id}"
+                %label{ :for => "announcement_id_#{announcement.id}" }
             %td= link_to announcement.name, announcement
             %td= announcement.comments.last.poster_name if announcement.comments.size > 0
             %td= announcement.is_locked ? 'Closed' : announcement.number_of_comments
@@ -29,8 +31,8 @@
                   = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
       %tfoot
         %tr
-          %td{ :colspan => 5 }
-            - if can? :create, Announcement
+          %td{ :colspan => (can? :destroy, Announcement) ? 5 : 4 }
+            - if can? :destroy, Announcement
               %button{ :type => :submit } Remove Selected
             - if can? :create, Announcement
               = link_to 'Create New', new_announcement_url, :class => 'button'
