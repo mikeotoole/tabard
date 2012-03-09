@@ -2,6 +2,7 @@
   %thead
     %tr
       %th Community
+      %th
       %th.r Members
       %th.r Characters
       %th.actions
@@ -11,7 +12,10 @@
         %td
           %strong= link_to community.name, community
           %br/
-          = community.pitch unless community.pitch.to_s.strip == ""
+          = "\"#{community.slogan}\"" unless community.slogan.to_s.strip == ""
+        %td.pitch
+          - unless community.pitch.to_s.strip == ""
+            %p= community.pitch
         %td.r
           = community.community_profiles.size
         %td.r
