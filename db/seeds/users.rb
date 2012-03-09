@@ -10,10 +10,10 @@ def create_user(first_name, last_name)
       :time_zone => "Pacific Time (US & Canada)",
       :user_profile_attributes => { :first_name => first_name, 
                                     :last_name => last_name, 
-                                    :display_name => "#{first_name} #{last_name}", 
-                                    :is_email_on_message => false, 
-                                    :is_email_on_announcement => false},
-      :date_of_birth => 22.years.ago.to_date,
+                                    :display_name => "#{first_name} #{last_name}"},
+      :date_of_birth => 22.years.ago.to_date, 
+      :is_email_on_message => false, 
+      :is_email_on_announcement => false,
       :beta_code => 'Chuck Norris')
   user.skip_confirmation!
   user.save!

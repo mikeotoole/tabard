@@ -12,13 +12,13 @@ class MessageAssociationObserver < ActiveRecord::Observer
   def after_create(message_association)
     unless Rails.env.test?
       if message_association.recipient.is_email_on_message
-        MessageAssociationObserver.delay.send_email(message_association.id)
+        MessageAssociationObserver.delay.send_message_email(message_association.id)
       end
     end
   end
   
   # This method is used to send the message. It is built to be used with delay.
-  def self.send_email(message_association_id)
+  def self.send_message_email(message_association_id)
     MessageAssociationMailer.new_message(message_association_id).deliver
   end
 end

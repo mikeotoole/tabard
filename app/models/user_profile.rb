@@ -18,8 +18,7 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description, :location,
-      :is_email_on_message, :is_email_on_announcement
+      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description, :location
 
 ###
 # Associations
@@ -55,6 +54,8 @@ class UserProfile < ActiveRecord::Base
 ###
   delegate :email, :to => :user
   delegate :is_disabled?, :to => :user
+  delegate :is_email_on_message, :to => :user
+  delegate :is_email_on_announcement, :to => :user
 
 ###
 # Callbacks
@@ -350,6 +351,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: user_profiles
@@ -358,8 +360,8 @@ end
 #  first_name        :string(255)
 #  last_name         :string(255)
 #  avatar            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  created_at        :datetime        not null
+#  updated_at        :datetime        not null
 #  description       :text
 #  display_name      :string(255)
 #  publicly_viewable :boolean         default(TRUE)

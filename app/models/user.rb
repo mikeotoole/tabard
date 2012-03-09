@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
-    :time_zone, :beta_code
+    :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement
 
 ###
 # Associations
@@ -338,6 +338,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -354,8 +355,8 @@ end
 #  failed_attempts                   :integer         default(0)
 #  unlock_token                      :string(255)
 #  locked_at                         :datetime
-#  created_at                        :datetime
-#  updated_at                        :datetime
+#  created_at                        :datetime        not null
+#  updated_at                        :datetime        not null
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)
@@ -364,5 +365,7 @@ end
 #  admin_disabled_at                 :datetime
 #  user_profile_id                   :integer
 #  time_zone                         :string(255)
+#  is_email_on_message               :boolean         default(TRUE)
+#  is_email_on_announcement          :boolean         default(TRUE)
 #
 

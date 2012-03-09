@@ -11,14 +11,14 @@ class AcknowledgementObserver < ActiveRecord::Observer
   ###
   def after_create(acknowledgement)
     unless Rails.env.test?
-      if message_association.recipient.is_email_on_announcement
-        AcknowledgementObserver.delay.send_email(acknowledgement.id)
+      if acknowledgement.community_profile.is_email_on_announcement and not acknowledgement.has_been_viewed
+        AcknowledgementObserver.delay.send_acknowledgement_email(acknowledgement.id)
       end
     end
   end
   
   # This method is used to send the message. It is built to be used with delay.
-  def self.send_email(acknowledgement_id)
-    AcknowledgementMailer.new_message(acknowledgement_id).deliver
+  def self.send_acknowledgement_email(acknowledgement_id)
+    AcknowledgementMailer.new_acknowledgement(acknowledgement_id).deliver
   end
 end

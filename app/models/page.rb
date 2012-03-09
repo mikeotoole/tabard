@@ -93,6 +93,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: pages
@@ -101,8 +102,8 @@ end
 #  name          :string(255)
 #  markup        :text
 #  page_space_id :integer
-#  created_at    :datetime
-#  updated_at    :datetime
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
 #  deleted_at    :datetime
 #
 

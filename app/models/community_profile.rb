@@ -59,6 +59,7 @@ class CommunityProfile < ActiveRecord::Base
   delegate :name, :to => :user_profile, :prefix => true
   delegate :display_name, :to => :user_profile, :prefix => true
   delegate :name, :to => :community, :prefix => true
+  delegate :is_email_on_announcement, :to => :user_profile
 
   ###
   # This method determines if this community profile has character that matches supported game.
@@ -136,6 +137,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: community_profiles
@@ -143,8 +145,8 @@ end
 #  id                       :integer         not null, primary key
 #  community_id             :integer
 #  user_profile_id          :integer
-#  created_at               :datetime
-#  updated_at               :datetime
+#  created_at               :datetime        not null
+#  updated_at               :datetime        not null
 #  deleted_at               :datetime
 #  community_application_id :integer
 #

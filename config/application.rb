@@ -27,7 +27,7 @@ module DaBvRails
     # Activate observers that should always be running.
     config.active_record.observers =  :admin_user_observer, :character_observer, :character_proxy_observer, :community_observer,
                                       :community_application_observer, :roster_assignment_observer, :user_profile_observer, :discussion_observer,
-                                      :message_association_observer
+                                      :message_association_observer, :acknowledgement_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
