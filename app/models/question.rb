@@ -110,6 +110,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: questions
@@ -118,8 +119,8 @@ end
 #  body           :text
 #  custom_form_id :integer
 #  style          :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
 #  deleted_at     :datetime

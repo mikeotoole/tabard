@@ -5,7 +5,8 @@ class CreateMessageAssociations < ActiveRecord::Migration
       t.integer :recipient_id
       t.integer :folder_id
       t.boolean :is_removed, :default => false
-      t.datetime :updated_at
+
+      t.timestamps
     end
 
     add_index :message_associations, :message_id

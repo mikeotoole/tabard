@@ -63,13 +63,14 @@ protected
 end
 
 
+
 # == Schema Information
 #
 # Table name: site_configurations
 #
 #  id             :integer         not null, primary key
 #  is_maintenance :boolean         default(FALSE)
-#  created_at     :datetime
-#  updated_at     :datetime
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
 #
 

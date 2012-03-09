@@ -10,9 +10,9 @@ class AcknowledgementMailer < ActionMailer::Base
           :content_type => "text/html"
   
   # Tell user they have a new message
-  def new_message(acknowledgement_id)
+  def new_acknowledgement(acknowledgement_id)
     @acknowledgement = Acknowledgement.find_by_id(acknowledgement_id)
-    if @acknowledgement
+    if !!@acknowledgement
       @user_profile = @acknowledgement.community_profile.user_profile
       mail(:to => @user_profile.email, :subject => "Crumblin - New #{@acknowledgement.community_profile.community_name} Announcement") do |format|
          format.html { render "mailers/new_announcement" }

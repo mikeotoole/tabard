@@ -191,6 +191,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: roles
@@ -199,8 +200,8 @@ end
 #  community_id        :integer
 #  name                :string(255)
 #  is_system_generated :boolean         default(FALSE)
-#  created_at          :datetime
-#  updated_at          :datetime
+#  created_at          :datetime        not null
+#  updated_at          :datetime        not null
 #  deleted_at          :datetime
 #
 

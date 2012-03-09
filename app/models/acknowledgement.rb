@@ -6,9 +6,15 @@
 # This class represents an actvity.
 ###
 class Acknowledgement < ActiveRecord::Base
+  scope :ordered, :order => 'created_at DESC'
+
+###
+# Associations
+###  
   belongs_to :community_profile
   belongs_to :announcement
 end
+
 
 # == Schema Information
 #
@@ -18,7 +24,7 @@ end
 #  community_profile_id :integer
 #  announcement_id      :integer
 #  has_been_viewed      :boolean         default(FALSE)
-#  created_at           :datetime
-#  updated_at           :datetime
+#  created_at           :datetime        not null
+#  updated_at           :datetime        not null
 #
 
