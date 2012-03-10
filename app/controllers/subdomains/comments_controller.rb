@@ -33,7 +33,7 @@ class Subdomains::CommentsController < SubdomainsController
   # POST /comments
   def create
     if @comment.save
-      set_last_posted_as(@comment.poster)
+      set_last_posted_as(@comment.charater_posted? ? @comment.character_proxy : @comment.user_profile)
       render :partial => 'comment', :locals => { :comment => @comment }
     else
       render :text => '', :layout => false

@@ -97,6 +97,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: permissions
@@ -106,8 +107,8 @@ end
 #  permission_level               :string(255)
 #  subject_class                  :string(255)
 #  id_of_subject                  :integer(255)
-#  created_at                     :datetime        not null
-#  updated_at                     :datetime        not null
+#  created_at                     :datetime
+#  updated_at                     :datetime
 #  can_lock                       :boolean         default(FALSE)
 #  can_accept                     :boolean         default(FALSE)
 #  parent_association_for_subject :string(255)

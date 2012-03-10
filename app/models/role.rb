@@ -178,16 +178,27 @@ class Role < ActiveRecord::Base
 
   # This method sets up the default permissions if they are not defined.
   def setup_permission_defaults
-    return if self.permission_defaults.size > 0 or not self.persisted?
-    self.permission_defaults.create!(object_class: "CustomForm",
+    return if self.permission_defaults.size > 0 
+    if not self.persisted?
+      self.permission_defaults.build(object_class: "CustomForm",
+            permission_level: "View")
+      self.permission_defaults.build(object_class: "DiscussionSpace",
+            permission_level: "View",
+            can_create_nested: true)
+      self.permission_defaults.build(object_class: "PageSpace",
+        permission_level: "View")
+    else 
+      self.permission_defaults.create!(object_class: "CustomForm",
           permission_level: "View")
-    self.permission_defaults.create!(object_class: "DiscussionSpace",
-          permission_level: "View",
-          can_create_nested: true)
-    self.permission_defaults.create!(object_class: "PageSpace",
-      permission_level: "View")
+      self.permission_defaults.create!(object_class: "DiscussionSpace",
+            permission_level: "View",
+            can_create_nested: true)
+      self.permission_defaults.create!(object_class: "PageSpace",
+        permission_level: "View")
+    end
   end
 end
+
 
 
 
@@ -200,8 +211,8 @@ end
 #  community_id        :integer
 #  name                :string(255)
 #  is_system_generated :boolean         default(FALSE)
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #  deleted_at          :datetime
 #
 

@@ -12,7 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :community_profile
+  belongs_to :community_profile, touch: true
   belongs_to :character_proxy
   belongs_to :supported_game
   has_one :user_profile, :through => :community_profile
@@ -54,18 +54,18 @@ class RosterAssignment < ActiveRecord::Base
 ###
   # This method approves this roster assignment, if it is pending.
   # [Returns] True if this was approved, otherwise false.
-  def approve
+  def approve(message=true)
     return false unless self.is_pending
     self.update_attribute(:is_pending, false)
-    message = Message.create_system(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id])
+    message = Message.create_system(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id]) if message
   end
 
   # This method rejects this roster assignment, if it is pending.
   # [Returns] True if this was rejected, otherwise false.
-  def reject
+  def reject(message=true)
     return false unless self.is_pending
     self.destroy
-    message = Message.create_system(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id])
+    message = Message.create_system(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id]) if message
   end
 
 ###
@@ -113,6 +113,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: roster_assignments
@@ -121,8 +122,8 @@ end
 #  community_profile_id :integer
 #  character_proxy_id   :integer
 #  is_pending           :boolean         default(TRUE)
-#  created_at           :datetime        not null
-#  updated_at           :datetime        not null
+#  created_at           :datetime
+#  updated_at           :datetime
 #  deleted_at           :datetime
 #  supported_game_id    :integer
 #

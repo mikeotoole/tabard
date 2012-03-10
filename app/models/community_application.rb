@@ -101,7 +101,7 @@ class CommunityApplication < ActiveRecord::Base
         self.character_proxies.each do |proxy|
           next unless proxy_map[proxy.id.to_s]
           begin
-            community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve
+            community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end
@@ -254,6 +254,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: community_applications
@@ -263,8 +264,8 @@ end
 #  user_profile_id   :integer
 #  submission_id     :integer
 #  status            :string(255)
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  created_at        :datetime
+#  updated_at        :datetime
 #  status_changer_id :integer
 #  deleted_at        :datetime
 #

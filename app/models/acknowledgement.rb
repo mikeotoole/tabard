@@ -13,7 +13,17 @@ class Acknowledgement < ActiveRecord::Base
 ###  
   belongs_to :community_profile
   belongs_to :announcement
+  
+###
+# Delegates
+###
+  delegate :user_profile, :to => :community_profile, :allow_nil => true
+  delegate :poster, :to => :announcement, :allow_nil => true
+  delegate :display_name, :to => :poster, :prefix => true, :allow_nil => true
+  delegate :community_name, :to => :community_profile, :allow_nil => true
+  delegate :subdomain, :to => :announcement, :allow_nil => true
 end
+
 
 
 # == Schema Information
@@ -24,7 +34,7 @@ end
 #  community_profile_id :integer
 #  announcement_id      :integer
 #  has_been_viewed      :boolean         default(FALSE)
-#  created_at           :datetime        not null
-#  updated_at           :datetime        not null
+#  created_at           :datetime
+#  updated_at           :datetime
 #
 

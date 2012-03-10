@@ -14,7 +14,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   before_filter :ensure_current_user_is_member
   authorize_resource :except => [:community, :game]
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_community, :only => [:show, :new, :create, :lock, :unlock, :destroy]
+  load_and_authorize_resource :through => :current_community, :only => [:new, :create, :lock, :unlock, :destroy]
 
 ###
 # REST Actions
@@ -26,15 +26,22 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcements/:id(.:format)
   def show
-    current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
-    @announcement.update_viewed(current_user.user_profile)
-    @comments = @announcement.comments.page params[:page]
-    respond_to do |format|
-      format.js {
-        announcement = any_announcements_to_display? ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => announcements_to_display.first }) : ''
-        render :text => announcement, :layout => nil
-      }
-      format.html
+    @announcement = current_community.announcements.find_by_id(params[:id])
+    if @announcement
+      authorize!(:read, @announcement)
+      current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
+      @announcement.update_viewed(current_user.user_profile)
+      @comments = @announcement.comments.page params[:page]
+      respond_to do |format|
+        format.js {
+          announcement = any_announcements_to_display? ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => announcements_to_display.first }) : ''
+          render :text => announcement, :layout => nil
+        }
+        format.html
+      end
+    else
+      add_new_flash_message "Announcement not found.", 'alert'
+      redirect_to community_announcements_url
     end
   end
 

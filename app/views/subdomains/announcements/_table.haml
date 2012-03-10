@@ -38,5 +38,5 @@
               = link_to 'Create New', new_announcement_url, :class => 'button'
 -else
   %p No announcements to display.
-  - if can? :create, DiscussionSpace
+  - if can? :create, Announcement
     %p= link_to 'Create New', new_announcement_url, :class => 'button'

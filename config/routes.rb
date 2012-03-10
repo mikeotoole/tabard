@@ -12,6 +12,9 @@ DaBvRails::Application.routes.draw do
   # Users
   devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :passwords => 'passwords', :confirmations => 'confirmations' }
   devise_scope :user do
+    get 'login' => 'sessions#new', :as => :new_user_session
+    post 'login' => 'sessions#create', :as => :user_session
+    delete 'logout' => 'sessions#destroy', :as => :destroy_user_session
     get 'users/disable_confirmation' => 'registrations#disable_confirmation', :as => :disable_confirmation
     get 'users/reinstate' => 'registrations#reinstate_confirmation', :as => :reinstate_confirmation
     put 'users/reinstate' => 'registrations#send_reinstate', :as => :send_reinstate
@@ -32,7 +35,6 @@ DaBvRails::Application.routes.draw do
   end
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
-  match '/dashboard' => 'user_profiles#dashboard', :as => 'user_root'
 
   # Activity
   resources :activities, :only => [:index]
@@ -83,6 +85,7 @@ DaBvRails::Application.routes.draw do
       get "/community_settings" => "communities#edit", :as => "edit_community_settings"
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
       get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
+      match "/clear_action_items" => "communities#clear_action_items", :as => "clear_action_items"
 
       # Roles and Permissions
       resources :roles, :except => [:show]

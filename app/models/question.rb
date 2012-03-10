@@ -32,7 +32,7 @@ class Question < ActiveRecord::Base
 # Associations
 ###
   belongs_to :custom_form
-  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true
+  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true, :order => 'id ASC'
 
 ###
 # Validators
@@ -111,6 +111,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: questions
@@ -119,8 +120,8 @@ end
 #  body           :text
 #  custom_form_id :integer
 #  style          :string(255)
-#  created_at     :datetime        not null
-#  updated_at     :datetime        not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
 #  deleted_at     :datetime

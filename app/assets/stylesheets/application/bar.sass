@@ -233,7 +233,7 @@
           &[meta]:before
             background: #BC3F2B
             +border_radius(2)
-            color: #F6CFC9
+            color: #e6d3ba
             content: attr(meta)
             font-family: DinMedium, sans-serif
             font-size: 12px
@@ -266,6 +266,104 @@
         background-position: -125px -5px
         margin: 0 15px 0 5px
   
+  .communities
+    margin: 0 -325px 0 0
+    position: absolute
+    right: 50%
+    top: 29px
+    z-index: 95
+    
+    > a,
+    > span
+      +border_radius(2)
+      color: #A5A2A8
+      display: block
+      font: 14px EurostyleStd, sans-serif
+      height: 26px
+      line-height: 26px
+      padding: 0 30px 0 10px
+      position: relative
+        
+    > span:after
+      border: 5px solid transparent
+      border-top-color: #7D7A81
+      content: ''
+      height: 0
+      position: absolute
+      right: 10px
+      top: 11px
+      width: 0
+    
+    ol
+      background: #CF4527
+      +bg_gradient(#CF4527,#A03931)
+      +border_radius(2,0,2,2)
+      +box_shadow(-3px 5px 5px rgba(#000, .3))
+      padding: 10px
+      position: absolute
+      +opacity(0)
+      right: -5px
+      text-align: left
+      top: -500em
+      +transition(opacity .1s linear)
+      
+      a
+        border-bottom: 1px solid #943430
+        color: #e9d9c4
+        display: block
+        font: 13px EurostyleStd, sans-serif
+        line-height: 15px
+        padding: 0 50px 0 30px
+        position: relative
+        +transition(padding .1s linear)
+        white-space: nowrap
+          
+        &:after
+          background: #993528
+          color: #d1b188
+          content: attr(icon)
+          height: 25px
+          left: 0
+          line-height: 25px
+          position: absolute
+          text-align: center
+          top: 5px
+          width: 25px
+        
+        &.current
+          background: #993528
+        
+        &:hover
+          background: #792B29
+          color: #fff
+          
+          &:after
+            background: transparent
+            color: #fff
+            
+      li:last-child a
+        border-bottom: 0
+    
+    &:hover
+    
+      > a,
+      > span
+        background: #CD462A
+        border: 5px solid #CD462A
+        color: #fff
+        margin: -5px
+      
+      > span:after
+        border-top-color: #fff
+    
+      ol
+        +opacity(1)
+        top: 30px
+        
+        a
+          padding-bottom: 10px
+          padding-top: 10px
+  
   .avatar
     background: #261333
     border: 1px solid #554863
@@ -286,61 +384,68 @@
       width: 40px
     
     ul
-      display: none
+      background: #CF4527
+      +bg_gradient(#CF4527,#A03931)
+      +border_radius(2,0,2,2)
+      +box_shadow(-3px 5px 5px rgba(#000, .3))
+      padding: 10px
+      position: absolute
+      +opacity(0)
+      right: -10px
+      text-align: left
+      top: -500em
+      +transition(opacity .1s linear)
+      
+      a
+        border-bottom: 1px solid #943430
+        color: #e9d9c4
+        display: block
+        font: 13px EurostyleStd, sans-serif
+        line-height: 15px
+        padding: 0 50px 0 30px
+        position: relative
+        +transition(padding .1s linear)
+        white-space: nowrap
+          
+        &:after
+          background: #993528
+          color: #d1b188
+          content: attr(icon)
+          height: 25px
+          left: 0
+          line-height: 25px
+          position: absolute
+          text-align: center
+          top: 5px
+          width: 25px
+        
+        &:hover
+          background: #792B29
+          color: #fff
+          
+          &:after
+            background: transparent
+            color: #fff
+            
+      li:last-child a
+        border-bottom: 0
     
     &:hover
       border: 10px solid #CF4527
-      +border_radius(3,3,0,0)
+      +border_radius(2,2,0,0)
       margin: -9px -489px 0 0
       
       img
-        border: 1px solid #D88B5E
+        border: 1px solid #d1b188
         outline: 1px solid #782A2A
       
       ul
-        background: #CF4527
-        +bg_gradient(#CF4527,#A03931)
-        +border_radius(3,0,3,3)
-        +box_shadow(-5px 5px 5px rgba(#000, .3))
-        display: block
-        padding: 10px
-        position: absolute
-        right: -10px
-        text-align: left
+        +opacity(1)
         top: 43px
         
         a
-          border-bottom: 1px solid #943430
-          color: #e9d9c4
-          display: block
-          font: 13px EurostyleStd, sans-serif
-          line-height: 15px
-          padding: 10px 50px 10px 30px
-          position: relative
-          white-space: nowrap
-          
-          &:after
-            background: #9F3832
-            color: #d1b188
-            content: attr(icon)
-            height: 25px
-            left: 0
-            line-height: 25px
-            position: absolute
-            text-align: center
-            top: 5px
-            width: 25px
-          
-          &:hover
-            background: #792B29
-            color: #fff
-            
-            &:after
-              background: transparent
-              color: #fff
-              
-        li:last-child a
-          border-bottom: 0
+          padding-bottom: 10px
+          padding-top: 10px
   
   p.signup
     font-size: 13px

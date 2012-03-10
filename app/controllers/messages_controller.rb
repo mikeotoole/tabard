@@ -18,10 +18,15 @@ class MessagesController < MailboxController
 
   # GET /mail/inbox/:id(.:format)
   def show
-    authorize!(:read, @message.folder)
-    gather_inbox_data @message.folder
-    @mailbox_view_state = @message.folder.name.downcase
-    @message.update_attributes(:has_been_read => true)
+    if !!@message and not @message.is_removed
+      authorize!(:read, @message.folder)
+      gather_inbox_data @message.folder
+      @mailbox_view_state = @message.folder.name.downcase
+      @message.update_attributes(:has_been_read => true)
+    else
+      add_new_flash_message "Message not found.", 'alert'
+      redirect_to inbox_url
+    end
   end
 
   # POST /mail/mark_read/:id(.:format)
@@ -172,7 +177,7 @@ protected
   # This before filter loads the message from the id params.
   ###
   def load_message
-    @message = current_user.received_messages.find(params[:id]) if current_user
+    @message = current_user.received_messages.find_by_id(params[:id]) if current_user
   end
 
   ###
@@ -193,7 +198,7 @@ protected
   # This before filter prepends text to the original message body
   ###
   def setup_message_body
-    @body = "\n\n\u2014Original Message\u2014\n\n#{@original.body}"
+    @body = "\n\n\u2014#{@original.author_name} #{Time.zone.now.strftime("%b %d, %Y %H:%M %p %Z")}\u2014\n\n#{@original.body}"
   end
 
 end

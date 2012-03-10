@@ -10,7 +10,7 @@ class CustomDeviseAuthFailure < Devise::FailureApp
   # This method determines the url to redirect to when a devise not authenticated error happens.
   def redirect_url
     return super unless [:user].include?(scope) #make it specific to a scope
-    new_user_session_url(:protocol => "http://")
+    new_user_session_url(:protocol => (Rails.env.development? ? "http://" : "https://"), :subdomain => 'secure')
   end
 
   # You need to override respond to eliminate recall

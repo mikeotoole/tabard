@@ -6,8 +6,8 @@
 #  user_profile_id :integer
 #  character_id    :integer
 #  character_type  :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  created_at      :datetime
+#  updated_at      :datetime
 #  is_removed      :boolean         default(FALSE)
 #
 

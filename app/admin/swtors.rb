@@ -26,7 +26,7 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
     end
   end
 
-  show :title => :name do
+  show :title => :full_name do
     attributes_table *default_attribute_table_rows
 
     div do
