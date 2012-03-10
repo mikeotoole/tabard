@@ -40,7 +40,7 @@ class DiscussionSpace < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, :to => :community, :prefix => true
-  delegate :full_name, :to => :supported_game, :prefix => true, :allow_nil => true
+  delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
 
   after_create :apply_default_permissions
   after_create :remove_action_item
@@ -70,7 +70,7 @@ class DiscussionSpace < ActiveRecord::Base
   end
   
   def game_name
-    self.supported_game.smart_name
+    self.supported_game_smart_name
   end
 
   ###
