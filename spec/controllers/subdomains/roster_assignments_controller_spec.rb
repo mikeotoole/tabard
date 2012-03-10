@@ -111,7 +111,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -134,7 +134,7 @@ describe Subdomains::RosterAssignmentsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_true
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
   
@@ -259,7 +259,7 @@ describe Subdomains::RosterAssignmentsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'pending'
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 

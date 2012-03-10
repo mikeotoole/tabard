@@ -52,7 +52,7 @@ describe SwtorCharactersController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => @character
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do
@@ -107,7 +107,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end   
 
@@ -160,7 +160,7 @@ describe SwtorCharactersController do
     end
     
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end  
     
     it "should not change attributes" do
@@ -181,7 +181,7 @@ describe SwtorCharactersController do
  
     it "should redirected to new user session path when not authenticated as a user" do
       delete 'destroy', :id => @character
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should respond forbidden when authenticated as an unauthorized user" do

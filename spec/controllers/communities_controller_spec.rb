@@ -60,7 +60,7 @@ describe CommunitiesController do
 
     it "shouldn't be successful when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should render communities/new template" do
@@ -136,7 +136,7 @@ describe CommunitiesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -180,7 +180,7 @@ describe CommunitiesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => community.id.to_s
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should respond forbidden when not a member" do

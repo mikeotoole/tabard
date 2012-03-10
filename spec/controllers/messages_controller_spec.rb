@@ -42,7 +42,7 @@ describe MessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => rec_message
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should raise error when authenticated as not the owner" do
@@ -154,7 +154,7 @@ describe MessagesController do
   describe "PUT move" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :move, :id => rec_message.id, :folder_id => receiver.trash
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should respond forbidden when not owner" do
@@ -294,7 +294,7 @@ describe MessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :reply, :id => rec_message.message_id
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should redirect to inbox when not authenticated" do
@@ -342,7 +342,7 @@ describe MessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :reply_all, :id => create(:message_with_muti_to).message_associations.first.message_id
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should redirect to inbox when not authenticated" do
@@ -385,7 +385,7 @@ describe MessagesController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :forward, :id => rec_message.message_id
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should redirect to inbox when not authenticated" do
@@ -424,7 +424,7 @@ describe MessagesController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => rec_message
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should raise error when authenticated as not the owner" do
@@ -496,7 +496,7 @@ describe MessagesController do
     
     it "should redirected to new user session path when not authenticated as a user" do
       delete :batch_destroy, :ids => rec_message_id_array
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should responded forbidden when authenticated as not the owner" do
