@@ -17,6 +17,7 @@ class Acknowledgement < ActiveRecord::Base
 ###
 # Delegates
 ###
+  delegate :user_profile, :to => :community_profile, :allow_nil => true
   delegate :poster, :to => :announcement, :allow_nil => true
   delegate :display_name, :to => :poster, :prefix => true, :allow_nil => true
   delegate :community_name, :to => :community_profile, :allow_nil => true

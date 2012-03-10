@@ -3,4 +3,4 @@
 %p
   #{@acknowledgement.poster_display_name} created a new #{@acknowledgement.community_name} announcement on Crumblin!
 %p You can view your announcement at the link below:
-%p= link_to 'View Announcement', announcement_url(@acknowledgement.announcement, :subdomin => @acknowledgement.subdomain)
+%p= link_to 'View Announcement', @url

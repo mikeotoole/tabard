@@ -13,8 +13,9 @@ class AcknowledgementMailer < ActionMailer::Base
   def new_acknowledgement(acknowledgement_id)
     @acknowledgement = Acknowledgement.find_by_id(acknowledgement_id)
     if !!@acknowledgement
-      @user_profile = @acknowledgement.community_profile.user_profile
-      mail(:to => @user_profile.email, :subject => "Crumblin - New #{@acknowledgement.community_profile.community_name} Announcement") do |format|
+      @user_profile = @acknowledgement.user_profile
+      @url = announcement_url(@acknowledgement.announcement, :subdomain => @acknowledgement.subdomain)
+      mail(:to => @user_profile.email, :subject => "Crumblin - New #{@acknowledgement.community_name} Announcement") do |format|
          format.html { render "mailers/new_announcement" }
       end
     end

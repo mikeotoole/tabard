@@ -1,0 +1,36 @@
+%tr{ :class => profile_type }
+  %td.cinch
+    = image_tag member_profile.avatar_url(:tiny), :class => 'avatar'
+  %td.cinch
+    - if profile_type == 'admin'
+      %strong
+        = link_to member_profile.name, member_profile
+      %dfn Community Admin
+    - else
+      = link_to member_profile.name, member_profile
+  %td.characters
+    - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
+    - if cp.roster_assignments.delete_if{|ra| ra.is_pending? or (!!supported_game and ra.supported_game != supported_game)}.size > 0
+      %ul
+        - cp.roster_assignments.each do |ra|
+          %li
+            - if can? :delete, ra
+              %input{ :id => "roster_assignments_#{ra.id}", :name => 'ids[]', :type => 'checkbox', :value => ra.id }
+              %label{ :for => "roster_assignments_#{ra.id}" }
+                = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+                = ra.character_proxy_name
+            - else
+              = image_tag ra.character_proxy_avatar_url(:icon), :class => 'avatar icon'
+              = ra.character_proxy_name
+    - else
+      —
+  %td
+    %time= l member_profile.joined_community_on(current_community), :format => :date_short
+  %td.actions
+    %div
+      - community_profile = member_profile.community_profiles.where(:community_id => current_community.id).first
+      - if can? :destroy, community_profile
+        - if community_profile.user_profile_id == current_user.user_profile_id
+          =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure you want to leave this community?', :meta => 'Leave Community', :class => 'delete'
+        - else
+          =link_to 'Remove', community_profile_url(community_profile), :method => :delete, :confirm => 'Are you sure you want to remove member from this community?', :meta => 'Remove member', :class => 'delete'
