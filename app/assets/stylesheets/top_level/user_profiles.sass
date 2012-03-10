@@ -143,38 +143,37 @@ body.user_profiles.dashboard
               color: #fff
               display: block
               float: left
-              height: 30px
-              line-height: 30px
-              margin: 5px 0 5px 10px
+              height: 26px
+              line-height: 26px
+              margin: 5px
               padding: 0
               position: relative
               text-decoration: none
-              text-indent: 30px
               
-              &:before
-                background: image-url('application/icons.png') no-repeat
-                content: ''
-                height: 30px
-                left: 0
-                +opacity(.7)
-                position: absolute
-                top: 0
-                width: 30px
-              
-              &:hover:before
-                +opacity(1)
-              
-            &.message a:before
-              background-position: -330px -30px
-              
-            &.friend a:before
-              background-position: -570px -30px
-              
-            &.edit a:before
-              background-position: -60px -30px
-              
-            &.settings a:before
-              background-position: -90px -30px
+              &[icon]
+                +border_radius(0)
+                padding: 0 10px 0 33px
+                +transition(none)
+                
+                &:before
+                  background: #51415b
+                  content: attr(icon)
+                  color: #B1AEB4
+                  font-size: 15px
+                  height: 26px
+                  left: 0
+                  line-height: 26px
+                  position: absolute
+                  text-align: center
+                  top: 0
+                  width: 26px
+                
+                &:hover
+                  background: #CB472C
+                  
+                  &:before
+                    background: #CB472C
+                    color: #fff
         
         h3
           line-height: 1em
