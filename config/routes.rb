@@ -30,6 +30,7 @@ DaBvRails::Application.routes.draw do
   resources :user_profiles, :only => [:show, :edit, :update] do
     member do
       get :activities
+      get :announcements
       get :characters
     end
   end
@@ -167,7 +168,6 @@ DaBvRails::Application.routes.draw do
   end
 
   # Announcements
-  resources :announcements, :only => [:index, :show]
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Artwork Upload

@@ -1,16 +1,14 @@
 %ul.accountlinks
-  - if controller_name != 'sessions'
-    %li= link_to "Login", new_session_url(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
-  - if devise_mapping.registerable? && controller_name != 'registrations'
-    %li= link_to "Sign up", new_registration_url(resource_name, :protocol => "http://", :subdomain => false)
-  - if devise_mapping.recoverable? && controller_name != 'passwords'
-    %li= link_to "Forgot your password?", new_password_url(resource_name, :protocol => "http://", :subdomain => false)
-  - if devise_mapping.confirmable? && controller_name != 'confirmations'
-    %li= link_to "Didn't receive confirmation instructions?", new_confirmation_url(resource_name, :protocol => "http://", :subdomain => false)
-  - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
-    %li= link_to "Didn't receive unlock instructions?", new_unlock_url(resource_name, :protocol => "http://", :subdomain => false)
+  %li= link_to_unless controller_name == 'sessions', "Login", new_session_url(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
+  - if devise_mapping.registerable?
+    %li= link_to_unless (controller_name == 'registrations' and action_name == 'new'), "Sign up", new_registration_url(resource_name, :protocol => "http://", :subdomain => false)
+  - if devise_mapping.recoverable?
+    %li= link_to_unless controller_name == 'passwords', "Forgot your password?", new_password_url(resource_name, :protocol => "http://", :subdomain => false)
+  - if devise_mapping.confirmable?
+    %li= link_to_unless controller_name == 'confirmations', "Didn't receive confirmation instructions?", new_confirmation_url(resource_name, :protocol => "http://", :subdomain => false)
+  - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email)
+    %li= link_to_unless controller_name == 'unlocks', "Didn't receive unlock instructions?", new_unlock_url(resource_name, :protocol => "http://", :subdomain => false)
   - if devise_mapping.omniauthable?
     - resource_class.omniauth_providers.each do |provider|
       %li= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_url(resource_name, provider, :protocol => "http://", :subdomain => false)
-  - if action_name != 'reinstate_confirmation' and action_name != 'send_reinstate'
-    %li= link_to "Reinstate disabled account", reinstate_confirmation_url(:protocol => "http://", :subdomain => false)    
+  %li= link_to_unless (action_name == 'reinstate_confirmation' or action_name == 'send_reinstate'), "Reinstate disabled account", reinstate_confirmation_url(:protocol => "http://", :subdomain => false)    
