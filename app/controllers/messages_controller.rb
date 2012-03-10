@@ -18,7 +18,7 @@ class MessagesController < MailboxController
 
   # GET /mail/inbox/:id(.:format)
   def show
-    if @message
+    if !!@message and not @message.is_removed
       authorize!(:read, @message.folder)
       gather_inbox_data @message.folder
       @mailbox_view_state = @message.folder.name.downcase
