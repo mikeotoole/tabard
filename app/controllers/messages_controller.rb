@@ -198,7 +198,7 @@ protected
   # This before filter prepends text to the original message body
   ###
   def setup_message_body
-    @body = "\n\n\u2014Original Message\u2014\n\n#{@original.body}"
+    @body = "\n\n\u2014#{@original.author_name} #{Time.zone.now.strftime("%b %d, %Y %H:%M %p %Z")}\u2014\n\n#{@original.body}"
   end
 
 end

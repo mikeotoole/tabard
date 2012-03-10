@@ -24,4 +24,4 @@
     %li.activities= link_to 'Activity Stream', user_profile_url(current_user.user_profile(:subdomain => false)), :icon => '༄'
     %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), :icon => '✎'
     %li.settings= link_to 'Account Settings', edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :icon => '✲'
-    %li.logout= link_to 'Logout', destroy_user_session_url, :icon => '✕'
+    %li.logout= link_to 'Logout', destroy_user_session_url, :method => :delete, :icon => '✕'
