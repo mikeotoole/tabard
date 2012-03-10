@@ -32,6 +32,9 @@ class ApplicationController < ActionController::Base
   
   # This before_filter set the time zone to the users given value.
   before_filter :set_timezone
+  
+  # This before_filter checks browser is supported.
+  before_filter :check_supported_browser
 
 ###
 # Status Code Rescues
@@ -186,6 +189,20 @@ protected
     nil
   end
   helper_method :current_game
+  
+  ###
+  # This helper method that checks current browser is supported.
+  # Returns true if supported.
+  ###
+  def browser_supported?
+    return true if browser.safari? and browser.version.to_i >= 6 
+    return true if browser.chrome? and browser.version.to_i >= 16
+    return true if browser.opera? and browser.version.to_i >= 10
+    return true if browser.ie? and browser.version.to_i >= 9
+    return true if browser.firefox? and browser.version.to_i >= 9
+    return false
+  end
+  helper_method :browser_supported?
 
   ###
   # This helper method provides access to text helpers such as pluralize within the controller
@@ -311,6 +328,20 @@ protected
   ###
   def set_timezone
     Time.zone = current_user.time_zone if current_user
+  end
+  
+  ###
+  # _before_filter_
+  #
+  # This method will check if the users browser is supported. If not it will redirect to explination on why not.
+  ###
+  def check_supported_browser
+    if session[:supported_browser] or browser_supported?
+      session[:supported_browser] = true unless session[:supported_browser]
+    else
+      session[:supported_browser] = false
+      redirect_to unsupported_browser_url
+    end
   end
 
 ###

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 # Constants
 ###
   # This is the beta code
-  BETA_CODE = "Chuck Norris"
+  BETA_CODE = "50DKPMINUS"
   # This determines if the beta code is required
   BETA_CODE_REQUIRED = true
   # All valid time zones supported
@@ -327,7 +327,7 @@ protected
   end
   # This validates the beta code
   def valid_beta_key
-    errors.add(:beta_code, "is invalid") if self.beta_code != BETA_CODE
+    errors.add(:beta_code, "is invalid") if self.beta_code.gsub(/\s+/,"").upcase != BETA_CODE
   end
 end
 

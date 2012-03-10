@@ -12,12 +12,12 @@
       = pf.input :object_class, :as => :hidden
       %label The space itself
       .slider_with_none
-        %input{ type: 'radio', id: 'page_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{child_index}][permission_level]", value: '', checked: pf.object.permission_level == '' }
+        %input{ type: 'radio', id: 'page_spaces_default_permission_level', name: "role[permission_defaults_attributes][#{child_index}][permission_level]", value: '', checked: (pf.object.permission_level == '' ? 'checked' : nil) }
         %label{ for: 'page_spaces_default_permission_level' } ×
         = pf.collection_radio :permission_level, [['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       %label Pages in the space
       .slider_with_none
-        %input{ type: 'radio', id: 'page_spaces_default_nested_permission_level', name: "role[permission_defaults_attributes][#{child_index}][nested_permission_level]", value: '', checked: pf.object.nested_permission_level == '' }
+        %input{ type: 'radio', id: 'page_spaces_default_nested_permission_level', name: "role[permission_defaults_attributes][#{child_index}][nested_permission_level]", value: '', checked: (pf.object.permission_level == '' ? 'checked' : nil) }
         %label{ for: 'page_spaces_default_nested_permission_level' } ×
         = pf.collection_radio :nested_permission_level, [['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
   - if current_community.page_spaces.any?

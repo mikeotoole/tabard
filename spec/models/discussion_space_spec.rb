@@ -45,7 +45,7 @@ describe DiscussionSpace do
   end 
   
   it "game_name should return game name if there is a game" do
-    wow_space.game_name.should eq(DefaultObjects.wow.name)
+    wow_space.game_name.should eq(wow_space.supported_game.full_name)
   end 
   
   it "should respond to is_announcement_space" do

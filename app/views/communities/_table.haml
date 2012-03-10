@@ -8,20 +8,21 @@
       %th.actions
   %tbody
     - communities.each do |community|
-      %tr
-        %td
-          %strong= link_to community.name, community
-          %br/
-          = "\"#{community.slogan}\"" unless community.slogan.to_s.strip == ""
-        %td.pitch
-          - unless community.pitch.to_s.strip == ""
-            %p= community.pitch
-        %td.r
-          = community.community_profiles.size
-        %td.r
-          = community.get_current_community_roster.size
-        %td.actions
-          %div= link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
+      - cache community do
+        %tr
+          %td
+            %strong= link_to community.name, community
+            %br/
+            = "\"#{community.slogan}\"" unless community.slogan.to_s.strip == ""
+          %td.pitch
+            - unless community.pitch.to_s.strip == ""
+              %p= community.pitch
+          %td.r
+            = community.community_profiles.size
+          %td.r
+            = community.get_current_community_roster.size
+          %td.actions
+            %div= link_to 'Apply', new_community_application_url(:subdomain => community.subdomain), :meta => 'Join this community', :class => 'apply'
   %tfoot
     %tr
       %td{ :colspan => 5 }

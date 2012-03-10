@@ -86,6 +86,7 @@ DaBvRails::Application.routes.draw do
       get "/community_settings" => "communities#edit", :as => "edit_community_settings"
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
       get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
+      match "/clear_action_items" => "communities#clear_action_items", :as => "clear_action_items"
 
       # Roles and Permissions
       resources :roles, :except => [:show]
@@ -189,6 +190,8 @@ DaBvRails::Application.routes.draw do
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
   get "/support" => "top_level#support", :as => 'top_level_support'
+  get "/unsupported_browser" => "top_level#unsupported_browser", :as => 'unsupported_browser'
+  match "/ignore_browser" => "top_level#ignore_browser", :as => 'ignore_browser'
 
   match '/not_found' => 'status_code#not_found', :as => 'not_found'
   match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
