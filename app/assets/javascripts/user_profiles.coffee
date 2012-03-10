@@ -7,11 +7,15 @@ $(document).ready ->
   
   $('#bar')
     .delegate '.avatar .activities a', 'click', ->
-      $('#tabs dt.activity a').trigger 'click'
-      false
+      href = $(this).attr 'href'
+      if $.trim(href) == $.trim(window.location)
+        $('#tabs dt.activity a').trigger 'click'
+        return false
     .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
-      $('#tabs dt.characters a').trigger 'click'
-      false
+      href = $(this).attr 'href'
+      if $.trim(href) == $.trim(window.location)
+        $('#tabs dt.characters a').trigger 'click'
+        return false
 
   hash = window.location.hash
   switch hash
