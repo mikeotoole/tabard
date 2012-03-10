@@ -1,24 +1,17 @@
 = link_to 'Crumblin', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :class => 'logo'
 
-%ul.menu
+.communities
   - if current_user.communities.size > 0
-    %li
-      %span My Communities
-      %ul
-        - current_user.communities.each do |community|
-          %li= link_to community.name, actual_community_url(community), (current_user.user_profile == community.admin_profile ? { :meta => '♕' } : {})
-        %li.extra
-          = link_to 'Find a community', communities_url(:subdomain => false)
+    %span= current_community ? current_community.name : 'My Communities'
+    %ol
+      - current_user.communities.each do |community|
+        %li= link_to community.name, actual_community_url(community), :class => current_community == community ? 'current' : '', :icon => current_user.user_profile == community.admin_profile ? '♕' : '◎'
+      %li.extra
+        = link_to 'Find a community', communities_url(:subdomain => false), :icon => '✛'
   - else
-    %li= link_to 'Find a community', communities_url(:subdomain => false)
-  -# TODO - Uncomment this section and hookup link once we actually ad the search feature
-    %li{ :class => 'icon search' }
-      = link_to 'Search', '#'
+    = link_to 'Find a community', communities_url(:subdomain => false)
 
 %ul.dashboard
-  -# Leaving this code in case we want the gear icon back
-    %li{ :class => 'icon gear' }
-      = link_to "Account", edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
   %li{ :class => 'icon notice' }
     = link_to "Announcements", announcements_url(:subdomain => false), (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
   %li{ :class => 'icon envelope' }
@@ -27,8 +20,8 @@
 .avatar
   = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, :subdomain => false) + '#characters'
   %ul
-    %li.settings= link_to 'Account Settings', edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :icon => '✲'
-    %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), :icon => '✎'
     %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :icon => 'Ξ'
     %li.activities= link_to 'Activity Stream', user_profile_url(current_user.user_profile(:subdomain => false)), :icon => '༄'
+    %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), :icon => '✎'
+    %li.settings= link_to 'Account Settings', edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :icon => '✲'
     %li.logout= link_to 'Logout', destroy_user_session_url, :icon => '✕'
