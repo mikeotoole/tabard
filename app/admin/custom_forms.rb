@@ -48,7 +48,6 @@ ActiveAdmin.register CustomForm do
             link_to "View", admin_question_path(question)
           end
           column :body
-          column :type
           column :style
           column "Predefined Answers" do |question|
             if question.respond_to?(:predefined_answers)
