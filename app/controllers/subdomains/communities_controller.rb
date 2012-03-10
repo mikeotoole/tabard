@@ -39,6 +39,12 @@ class Subdomains::CommunitiesController < SubdomainsController
     respond_with @community, :location => edit_community_settings_url
   end
   
+  def clear_action_items
+    @community.action_items = {}
+    @community.save
+    redirect_to subdomain_home_url
+  end
+  
   # Removes confirmations
   def remove_confirmation
   end
