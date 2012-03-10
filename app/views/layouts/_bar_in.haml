@@ -31,4 +31,4 @@
     %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), :icon => '✎'
     %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :icon => 'Ξ'
     %li.activities= link_to 'Activity Stream', user_profile_url(current_user.user_profile(:subdomain => false)), :icon => '༄'
-    %li.logout= link_to 'Logout', destroy_user_session_url, :icon => '✕'
+    %li.logout= link_to 'Logout', destroy_user_session_url, :method => :delete, :icon => '✕'
