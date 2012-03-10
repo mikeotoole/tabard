@@ -120,7 +120,8 @@ protected
 ###
   # This method sets the last poster.
   def set_last_posted_as(profile)
-    session[:poster_type] = profile.class.to_s
+    logger.debug "#{session[:poster_id]} #{session[:poster_type]} ? #{profile.to_yaml}"
+    session[:poster_type] = (profile.class == UserProfile ? profile.class.to_s : profile.character_type.to_s)
     session[:poster_id] = profile.id.to_s
   end
   # This method gets the character proxy id of the last posted character
@@ -131,15 +132,20 @@ protected
   helper_method :last_posted_as_character_proxy_id
 
   # This method determines is a user profile was last used to post.
-  def last_posted_as_user_profile?
-    !session[:poster_type] or !session[:poster_id] or !!(session[:poster_type] =~ /UserProfile/)
+  def last_posted_as_user_profile?(proxies)
+    proxy_found = false
+    logger.debug proxies.to_yaml
+    proxies.each do |proxy|
+      return false if last_posted_as_character_proxy?(proxy)
+    end
+    !session[:poster_type] or !session[:poster_id] or !!(session[:poster_type] =~ /UserProfile/) or not proxy_found
   end
   helper_method :last_posted_as_user_profile?
 
   # This determines if the provided proxy was the one that was used to post last.
   def last_posted_as_character_proxy?(proxy)
-    return false if last_posted_as_user_profile?
-    proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s
+    logger.debug "#{session[:poster_id]} #{session[:poster_type]} ? #{(proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s)}"
+    return (proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s)
   end
   helper_method :last_posted_as_character_proxy?
 
