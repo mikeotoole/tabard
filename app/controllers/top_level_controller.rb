@@ -17,6 +17,7 @@ class TopLevelController < ApplicationController
   skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => :bar
   skip_before_filter :limit_subdomain_access, :only => :bar
   skip_before_filter :ensure_not_ssl_mode, :only => :bar
+  skip_before_filter :check_supported_browser, :only => [:unsupported_browser, :bar]
 
 ###
 # Actions
@@ -71,5 +72,9 @@ class TopLevelController < ApplicationController
   # This method gets the Terms of Service page.
   def terms_of_service
     @document = TermsOfService.current
+  end
+  
+  # This method gets the Unsupported Browser page.
+  def unsupported_browser
   end
 end

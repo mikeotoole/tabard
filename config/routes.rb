@@ -190,6 +190,7 @@ DaBvRails::Application.routes.draw do
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
   get "/support" => "top_level#support", :as => 'top_level_support'
+  get "/unsupported_browser" => "top_level#unsupported_browser", :as => 'unsupported_browser'
 
   match '/not_found' => 'status_code#not_found', :as => 'not_found'
   match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
