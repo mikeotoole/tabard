@@ -78,6 +78,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: page_spaces
@@ -86,8 +87,8 @@ end
 #  name              :string(255)
 #  supported_game_id :integer
 #  community_id      :integer
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  created_at        :datetime
+#  updated_at        :datetime
 #  deleted_at        :datetime
 #
 

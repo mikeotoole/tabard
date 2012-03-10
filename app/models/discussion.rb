@@ -158,6 +158,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: discussions
@@ -169,8 +170,8 @@ end
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
 #  is_locked           :boolean         default(FALSE)
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #  deleted_at          :datetime
 #  has_been_edited     :boolean         default(FALSE)
 #

@@ -30,6 +30,13 @@ class RegistrationsController < Devise::RegistrationsController
   def edit
     @hide_announcements = true
   end
+
+  # Overriding Devise method to to hide announcements on update.
+  def update
+    @hide_announcements = true
+    super
+  end
+
   # Overriding Devise method to redirect to reinstate_confirmation_url if email belongs to a user disabled account.
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
@@ -131,6 +138,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
-    root_url_hack_helper(edit_user_registration_url(:protocol => "http://", :subdomain => false))
+    edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
   end
 end
