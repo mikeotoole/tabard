@@ -6,7 +6,7 @@
     **Our server seems to think that your browser is either too old, or flat out not supported by our system. Bummer!**  
     We've detected that you're using **#{browser.name} #{browser.full_version}**
     ## What's this mean?
-    Well, the easiest solution is to upgrade your browser or user a different one. Here are some popular choices:
+    Well, the easiest solution is to upgrade your browser or use a different one. Here are some popular choices:
   .col3.browsers
     %article
       %h2
@@ -21,6 +21,6 @@
       = link_to image_tag('application/browser-firefox.png'), 'http://www.mozilla.org/firefox/new/', :target => '_blank'
   :markdown
     ---
-    If really have to access the site without upgrading your browser,  
-    you can still [skip this warning](#{ignore_browser_url}), but be warned:  
-    **Many features will most likely not look or work as intended.**
+    If you absolutely must access Crumblin using an unsupported browser,  
+    you can still [skip this message](#{ignore_browser_url}), but be warned:  
+    **Many features will probably not look or work as intended.**
