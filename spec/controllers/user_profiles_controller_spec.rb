@@ -6,20 +6,6 @@ describe UserProfilesController do
   let(:user_profile) { owner.user_profile }
   let(:disabled_user_profile) { create(:disabled_user).user_profile }
 
-	describe "GET 'dashboard'" do
-		it "should show the current user when authenticated as a user" do
-      sign_in owner
-      get 'dashboard'
-      assigns[:user_profile].should eq(owner.user_profile)
-      response.should be_success
-      response.should render_template('user_profiles/show')
-    end
-    it "should redirected to new user session path when not authenticated as a user" do
-      get 'dashboard'
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
-    end
-	end
-
   describe "GET 'account'" do
     it "should show the current user when authenticated as a user" do
       sign_in owner

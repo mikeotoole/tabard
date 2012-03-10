@@ -14,9 +14,10 @@ class TopLevelController < ApplicationController
 ###
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_maintenance_mode, :only => [:maintenance]
-  skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => :bar
-  skip_before_filter :limit_subdomain_access, :only => :bar
-  skip_before_filter :ensure_not_ssl_mode, :only => :bar
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => [:bar, :unsupported_browser, :ignore_browser]
+  skip_before_filter :limit_subdomain_access, :only => [:bar, :unsupported_browser, :ignore_browser]
+  skip_before_filter :ensure_not_ssl_mode, :only => [:bar, :unsupported_browser, :ignore_browser]
+  skip_before_filter :check_supported_browser
 
 ###
 # Actions
@@ -71,5 +72,15 @@ class TopLevelController < ApplicationController
   # This method gets the Terms of Service page.
   def terms_of_service
     @document = TermsOfService.current
+  end
+  
+  # This method gets the Unsupported Browser page.
+  def unsupported_browser
+  end
+  
+  # This method will bypass the supported browser check for the users current session.
+  def ignore_browser 
+    session[:supported_browser] = true
+    redirect_to root_url
   end
 end

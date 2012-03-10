@@ -47,7 +47,8 @@ describe MessagesController do
     
     it "should raise error when authenticated as not the owner" do
       sign_in sender
-      lambda { get :show, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
+      get :show, :id => rec_message
+      response.should redirect_to(inbox_url)
     end
   end
   
@@ -73,7 +74,8 @@ describe MessagesController do
     
     it "should raise error when authenticated as not the owner" do
       sign_in sender
-      lambda { get :show, :id => rec_message, :return_url => inbox_url }.should raise_error(ActiveRecord::RecordNotFound)
+      get :show, :id => rec_message, :return_url => inbox_url
+      response.should redirect_to(inbox_url)
     end
   end
   
@@ -100,7 +102,8 @@ describe MessagesController do
     
     it "should raise error when authenticated as not the owner" do
       sign_in sender
-      lambda { get :show, :id => rec_message, :return_url => inbox_url }.should raise_error(ActiveRecord::RecordNotFound)
+      get :show, :id => rec_message, :return_url => inbox_url
+      response.should redirect_to(inbox_url)
     end
   end
   

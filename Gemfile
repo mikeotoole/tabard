@@ -27,6 +27,9 @@ source 'http://rubygems.org'
   gem 'client_side_validations'
   gem 'country_select'
   
+# Browser Detection
+  gem 'browser'
+  
 # Pagination
   gem 'kaminari' # MIT license
 

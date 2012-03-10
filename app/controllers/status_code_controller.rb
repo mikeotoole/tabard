@@ -8,6 +8,7 @@
 class StatusCodeController < ApplicationController
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
+  skip_before_filter :check_supported_browser
 
   # This is the forbidden method
   def forbidden

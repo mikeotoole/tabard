@@ -30,6 +30,7 @@ DaBvRails::Application.routes.draw do
   resources :user_profiles, :only => [:show, :edit, :update] do
     member do
       get :activities
+      get :announcements
       get :characters
     end
   end
@@ -168,7 +169,6 @@ DaBvRails::Application.routes.draw do
   end
 
   # Announcements
-  resources :announcements, :only => [:index, :show]
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
 
   # Artwork Upload
@@ -190,6 +190,8 @@ DaBvRails::Application.routes.draw do
   get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
   get "/support" => "top_level#support", :as => 'top_level_support'
+  get "/unsupported_browser" => "top_level#unsupported_browser", :as => 'unsupported_browser'
+  match "/ignore_browser" => "top_level#ignore_browser", :as => 'ignore_browser'
 
   match '/not_found' => 'status_code#not_found', :as => 'not_found'
   match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'

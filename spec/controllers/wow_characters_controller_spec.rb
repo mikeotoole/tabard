@@ -22,7 +22,7 @@ describe WowCharactersController do
 
     it "shouldn't be successful when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_path)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should render wow_characters/new template" do

@@ -10,9 +10,9 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters]
+  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters, :announcements]
   before_filter :set_current_user_as_profile, :only => :account
-  load_and_authorize_resource :except => [:activities, :characters]
+  load_and_authorize_resource :except => [:activities, :characters, :announcements]
   skip_authorize_resource :only => :account
   before_filter :load_activities, :only => [:show, :activities]
 
@@ -51,6 +51,14 @@ class UserProfilesController < ApplicationController
   def activities
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     render :partial => 'user_profiles/activities', :locals => { :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment }
+  end
+
+  # GET /user_profiles/:id/activities(.:format)
+  def announcements
+    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
+    raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
+    @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).ordered.page params[:page]
+    render :partial => 'user_profiles/announcements', :locals => { :acknowledgements => @acknowledgements }
   end
 
   # GET /user_profiles/:id/characters(.:format)

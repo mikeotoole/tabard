@@ -3,7 +3,7 @@ $(document).ready ->
   $('body')
     .delegate '.more_activites', 'ajax:before', ->
       $(this).closest('.submit').addClass('busy')
-      updatedBefore = $('.activities li:last').attr 'created_at'
+      updatedBefore = $('#body ol.activities li:last').attr 'created_at'
       if updatedBefore
         if $(this).data 'original-params'
           params = $(this).data 'original-params'
@@ -19,13 +19,13 @@ $(document).ready ->
 
     .delegate '.more_activites', 'ajax:success', (event, data, status, xhr) ->
       $(this).closest('.submit').removeClass('busy')
-      lastLi = $('#body .activities li:last')
+      lastLi = $('#body ol.activities li:last')
       if xhr.responseText
-        $('#body .activities').append xhr.responseText
+        $('#body ol.activities').append xhr.responseText
         lastLi.nextAll('li').hide().slideDown 600, 'swing'
         initialCount = $(this).attr('initial')*1
         incrementCount = $(this).attr('increment')*1
-        baseCount = $('.activities li').length - initialCount
+        baseCount = $('#body ol.activities li').length - initialCount
         while baseCount < incrementCount
           baseCount += incrementCount
         if baseCount % incrementCount

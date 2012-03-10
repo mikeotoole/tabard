@@ -64,7 +64,7 @@ class RegistrationsController < Devise::RegistrationsController
     @hide_announcements = true
     if not @user
       set_flash_message :alert, :not_signed_id
-      redirect_to new_user_session_url
+      redirect_to new_user_session_url(subdomain: 'secure', protocol: "https://")
     end
   end
 

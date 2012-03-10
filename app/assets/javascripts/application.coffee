@@ -247,8 +247,8 @@ $(document).ready ->
   
   # tabs
   $('dl.tabs >dt').click ->
-    $(this).closest('dl.tabs').find('>dt').removeClass('active')
-    $(this).addClass('active')
+    $(this).closest('dl.tabs').find('>dt').removeClass('current')
+    $(this).addClass('current')
   if window.location.hash
     $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
   $('a[href*="#"]').click ->
@@ -296,10 +296,13 @@ $(document).ready ->
   adjustHeaderByFlash(600)
   
   # Global checkbox
-  $('thead th.check')
-    .append('<a>✔</a>')
-    .find('a')
-    .data('checked',false)
-    .click ->
-      $(this).data('checked', !$(this).data('checked'))
-      $(this).closest('table').find('tbody td.check input').attr('checked',$(this).data('checked'))
+  $('body')
+    .delegate 'thead th.check', 'init', ->
+      $(this)
+        .append('<a>✔</a>')
+        .find('a')
+        .data('checked',false)
+        .click ->
+          $(this).data('checked', !$(this).data('checked'))
+          $(this).closest('table').find('tbody td.check input').attr('checked',$(this).data('checked'))
+  $('body thead th.check').trigger 'init'
