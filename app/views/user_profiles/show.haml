@@ -2,7 +2,7 @@
 = stylesheet_link_tag "top_level/user_profiles"
 = javascript_include_tag "user_profiles"
 
-#body{ class: @user_profile == current_user.user_profile ? 'myprofile' : '' }
+#body{ class: @user_profile == (user_signed_in? and current_user.user_profile) ? 'myprofile' : '' }
   %header
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title?
@@ -39,13 +39,17 @@
         %br
         = pluralize(Discussion.where(:user_profile_id => @user_profile.id).size, 'discussion') + ' created.'
         %br
-          = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
+        = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
   %article
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id)
       %dl#tabs.tabs
-        %dt{ :class => 'activity active' }
-          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.activity + dd', 'data-error' => 'Error: unable to load recent activity.'
+        %dt{ :class => 'activities current' }
+          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.activities + dd', 'data-error' => 'Error: unable to load recent activity.'
         %dd
+        - if user_signed_in? and @user_profile == current_user.user_profile
+          %dt{ :class => 'announcements' }
+            = link_to 'Announcements', announcements_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.announcements + dd', 'data-error' => 'Error: unable to load announcements.'
+          %dd
         %dt{ :class => 'characters' }
           = link_to 'Characters', characters_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.characters + dd', 'data-error' => 'Error: unable to load characters.'
         %dd

@@ -13,7 +13,7 @@
 
 %ul.dashboard
   %li{ :class => 'icon notice' }
-    = link_to "Announcements", announcements_url(:subdomain => false), (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
+    = link_to "Announcements", user_profile_url(current_user.user_profile, :subdomain => false) + '#announcements', (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
   %li{ :class => 'icon envelope' }
     = link_to "Messages", inbox_url(:subdomain => false), (current_user.unread_messages.size > 0 ? { :meta => current_user.unread_messages.size } : {})
 
