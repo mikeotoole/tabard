@@ -19,4 +19,8 @@ class StatusCodeController < ApplicationController
   def not_found
     render :not_found, :status => :not_found
   end
+  
+  # This method gets the Unsupported Browser page.
+  def unsupported_browser
+  end
 end

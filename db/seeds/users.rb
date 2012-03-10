@@ -14,7 +14,7 @@ def create_user(first_name, last_name)
       :date_of_birth => 22.years.ago.to_date, 
       :is_email_on_message => false, 
       :is_email_on_announcement => false,
-      :beta_code => 'Chuck Norris')
+      :beta_code => User::BETA_CODE)
   user.skip_confirmation!
   user.save!
 end
@@ -69,7 +69,7 @@ unless @dont_run
                   :date_of_birth => Date.new(1980,4,17),
                   :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
                   :time_zone => "Pacific Time (US & Canada)",
-                  :beta_code => 'Chuck Norris')
+                  :beta_code => User::BETA_CODE)
   mike.skip_confirmation!
   mike.save!
 
