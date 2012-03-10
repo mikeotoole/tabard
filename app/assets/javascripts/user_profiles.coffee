@@ -5,17 +5,14 @@ $(document).ready ->
       return false unless !$.trim($(this).closest('dt').find('+ dd').html())
       $(this).closest('dt').find('+ dd').html 'Loading...'
   
-  $('#bar')
-    .delegate '.avatar .activities a', 'click', ->
-      href = $(this).attr 'href'
-      if $.trim(href) == $.trim(window.location)
+  if $('#body.myprofile').length
+    $('#bar')
+      .delegate '.avatar .activities a', 'click', ->
         $('#tabs dt.activity a').trigger 'click'
-        return false
-    .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
-      href = $(this).attr 'href'
-      if $.trim(href) == $.trim(window.location)
+        false
+      .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
         $('#tabs dt.characters a').trigger 'click'
-        return false
+        false
 
   hash = window.location.hash
   switch hash
