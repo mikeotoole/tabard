@@ -2,7 +2,7 @@
 = stylesheet_link_tag "top_level/user_profiles"
 = javascript_include_tag "user_profiles"
 
-#body
+#body{ class: @user_profile == current_user.user_profile ? 'myprofile' : '' }
   %header
     %h1= @user_profile.display_name.to_s
     - if @user_profile.title?

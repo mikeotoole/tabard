@@ -548,7 +548,7 @@ ActiveRecord::Schema.define(:version => 20120308235947) do
     t.datetime "updated_at"
     t.text     "description"
     t.string   "display_name"
-    t.boolean  "publicly_viewable",        :default => true
+    t.boolean  "publicly_viewable", :default => true
     t.string   "title"
     t.string   "location"
   end
@@ -575,8 +575,8 @@ ActiveRecord::Schema.define(:version => 20120308235947) do
     t.datetime "admin_disabled_at"
     t.integer  "user_profile_id"
     t.string   "time_zone"
-    t.boolean  "is_email_on_message",      :default => true
-    t.boolean  "is_email_on_announcement", :default => true
+    t.boolean  "is_email_on_message",                              :default => true
+    t.boolean  "is_email_on_announcement",                         :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

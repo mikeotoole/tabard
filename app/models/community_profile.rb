@@ -138,6 +138,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: community_profiles
@@ -145,8 +146,8 @@ end
 #  id                       :integer         not null, primary key
 #  community_id             :integer
 #  user_profile_id          :integer
-#  created_at               :datetime        not null
-#  updated_at               :datetime        not null
+#  created_at               :datetime
+#  updated_at               :datetime
 #  deleted_at               :datetime
 #  community_application_id :integer
 #

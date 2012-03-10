@@ -270,6 +270,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: swtor_characters
@@ -278,8 +279,8 @@ end
 #  name           :string(255)
 #  swtor_id       :integer
 #  avatar         :string(255)
-#  created_at     :datetime        not null
-#  updated_at     :datetime        not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #  char_class     :string(255)
 #  advanced_class :string(255)
 #  species        :string(255)

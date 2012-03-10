@@ -6,8 +6,8 @@
 #  community_id        :integer
 #  name                :string(255)
 #  is_system_generated :boolean         default(FALSE)
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #  deleted_at          :datetime
 #
 

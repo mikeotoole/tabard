@@ -189,6 +189,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: announcements
@@ -203,7 +204,7 @@ end
 #  is_locked          :boolean         default(FALSE)
 #  deleted_at         :datetime
 #  has_been_edited    :boolean         default(FALSE)
-#  created_at         :datetime        not null
-#  updated_at         :datetime        not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #
 

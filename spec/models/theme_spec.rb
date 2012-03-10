@@ -3,8 +3,8 @@
 # Table name: themes
 #
 #  id                    :integer         not null, primary key
-#  created_at            :datetime        not null
-#  updated_at            :datetime        not null
+#  created_at            :datetime
+#  updated_at            :datetime
 #  name                  :string(255)
 #  css                   :string(255)
 #  background_author     :string(255)

@@ -26,6 +26,7 @@ class Folder < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: folders
@@ -33,7 +34,7 @@ end
 #  id              :integer         not null, primary key
 #  name            :string(255)
 #  user_profile_id :integer
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 

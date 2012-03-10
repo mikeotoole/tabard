@@ -73,6 +73,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: permission_defaults
@@ -94,8 +95,8 @@ end
 #  can_destroy_nested      :boolean         default(FALSE)
 #  can_lock_nested         :boolean         default(FALSE)
 #  can_accept_nested       :boolean         default(FALSE)
-#  created_at              :datetime        not null
-#  updated_at              :datetime        not null
+#  created_at              :datetime
+#  updated_at              :datetime
 #  deleted_at              :datetime
 #
 
