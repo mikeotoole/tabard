@@ -77,7 +77,7 @@
                 %ul
                   - supported_games.each do |supported_game|
                     %li= link_to supported_game.smart_name, game_roster_assignments_url(supported_game)
-          - if user_signed_in? and current_user.is_member? current_community and current_community.custom_forms.published.any?
+          - if user_signed_in? and current_user.is_member? current_community and (can_manage?(current_community) ? true : current_community.custom_forms.published.size > 1)
             %li
               = link_to 'Forms', custom_forms_url
           - if user_signed_in? and current_user.communities.include?(current_community)
