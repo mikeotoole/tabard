@@ -18,7 +18,6 @@ ActiveAdmin.register Question do
 
   filter :id
   filter :body
-  filter :type
   filter :style
   filter :created_at
   filter :updated_at
@@ -33,7 +32,6 @@ ActiveAdmin.register Question do
     column :custom_form do |question|
       link_to question.custom_form_name , [:admin, question.custom_form]
     end
-    column :type
     column :style
     column :created_at
     column "Destroy" do |question|

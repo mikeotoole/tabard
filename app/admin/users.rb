@@ -76,10 +76,6 @@ ActiveAdmin.register User do
   filter :id
   filter :email
   filter :name
-  filter :current_sign_in_at
-  filter :current_sign_in_ip
-  filter :last_sign_in_at
-  filter :last_sign_in_ip
   filter :sign_in_count
   filter :confirmation_sent_at
   filter :failed_attempts
@@ -97,7 +93,6 @@ ActiveAdmin.register User do
     column "User Profile" do |user|
       link_to user.display_name, [:admin, user.user_profile]
     end
-    column :last_sign_in_at
     column :failed_attempts
     column :locked_at
     column :disabled do |user|
