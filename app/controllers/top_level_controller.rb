@@ -16,6 +16,7 @@ class TopLevelController < ApplicationController
   skip_before_filter :check_maintenance_mode, :only => [:maintenance]
   skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => :bar
   skip_before_filter :limit_subdomain_access, :only => :bar
+  skip_before_filter :ensure_not_ssl_mode, :only => :bar
 
 ###
 # Actions
