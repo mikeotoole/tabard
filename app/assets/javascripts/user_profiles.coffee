@@ -4,10 +4,13 @@ $(document).ready ->
     .delegate 'dt a', 'click', ->
       #return false unless !$.trim($(this).closest('dt').find('+ dd').html())
       $(this).closest('dt').find('+ dd').html 'Loading...'
+
     .delegate 'dt.announcements + dd form', 'ajax:loading', ->
       $('#tabs dt.announcements + dd').html 'Loading...'
+      
     .delegate 'dt.announcements + dd form', 'ajax:error', (xhr, status, error) ->
       $.alert { body: 'Unable to mark announcements as read.' }
+      
     .delegate 'dt.announcements + dd form', 'ajax:complete', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
   
