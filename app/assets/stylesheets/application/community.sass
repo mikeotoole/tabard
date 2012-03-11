@@ -1513,6 +1513,20 @@ body.with_action_items
         color: #251533
         font: 14px DinLight, sans-serif
         padding: 10px
+        position: relative
+        
+        .clear
+          +border_radius(2)
+          color: #A23830
+          display: block
+          padding: 5px
+          position: absolute
+          right: 5px
+          top: 5px
+          
+          &:hover
+            background: #A23830
+            color: #fff
       
       ol
         background: #eee

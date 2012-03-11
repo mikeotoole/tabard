@@ -8,7 +8,7 @@
 class UserMailer < ActionMailer::Base
   default :from => "Crumblin <noreply@crumblin.com>",
           :content_type => "text/html"
-  layout 'crumblin'
+  layout 'mailer'
 
   # Used for resetting a single users password.
   def password_reset(user, password=nil)
