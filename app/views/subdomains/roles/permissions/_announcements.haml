@@ -1,6 +1,4 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("Announcement") do |pf|
   = pf.input :subject_class, :as => :hidden
-  .slider_with_none
-    = pf.input :_destroy, :as => :boolean, :label => '×', :wrapper => false, :input_html => { :checked => !pf.object.persisted? }
-    = pf.collection_radio :permission_level, [['Create', 'Add'], ['Delete', 'Delete']], :first, :last
+  .slider= pf.collection_radio :permission_level, [['','×'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
   = pf.input :can_lock, :as => :boolean, :label => 'Lock/Unlock announcements', :wrapper => false

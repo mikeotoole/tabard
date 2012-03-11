@@ -259,26 +259,10 @@ $(document).ready ->
       return false
   
   # slider input fields
-  $('.slider')
-    .live 'init', ->
+  $('body')
+    .delegate '.slider', 'init', ->
       $(this).css('width', $(this).find('label').length * 70)
-    .trigger 'init'
-  $('.slider_with_none')
-    .live 'init', ->
-      $(this).css('width', $(this).find('li label').length * 70 + 25)
-      unless $(this).find('ul input:checked').length
-        $(this).find('>input').prop 'checked', true
-    .trigger 'init'
-  $('.slider_with_none > input[type="checkbox"]').live 'click', ->
-    $(this).prop 'checked', true
-  $('.slider_with_none > label').live 'click', ->
-    slider = $(this).closest('.slider_with_none')
-    slider.find('> input').removeAttr('disabled readonly')
-    slider.find('ul input').removeAttr 'checked'
-  $('.slider_with_none ul label').live 'click', ->
-    slider = $(this).closest('.slider_with_none')
-    slider.find('>input').prop('disabled',true).prop('readonly',true).prop 'checked', false
-    slider.find('ul input').prop 'checked', true
+  $('.slider').trigger 'init'
   
   # inputs that affect the hidden _destroy field
   $('input[toggle_destroy="true"]').change ->
