@@ -1,6 +1,6 @@
-- if current_user.announcements.any?
+- if acknowledgements
+  = paginate acknowledgements
   = form_tag announcements_batch_mark_as_seen_url, :method => :put, :remote => true do
-    = paginate @acknowledgements
     %table
       %tbody
         - unread_count = 0
@@ -45,14 +45,21 @@
             -if unread_count > 0
               %button{ :class => 'read' }
                 %span Mark selected as read
-    = paginate @acknowledgements
+  = paginate acknowledgements
   %script{ type: 'text/javascript' }
     :plain
       $(document).ready(function(){
         $('#tabs dt.announcements + dd thead th.check').trigger('init');
         totUnreadAnnouncements = #{current_user.unread_announcements.size};
-        if(totUnreadAnnouncements) $('#bar .dashboard .notice a').attr('meta', totUnreadAnnouncements);
+        if(totUnreadAnnouncements) $('#bar .dashboard .notice a').attr('meta',totUnreadAnnouncements);
         else $('#bar .dashboard .notice a').removeAttr('meta');
+        $('#tabs dt.announcements + dd .pagination a')
+          .addClass('dynload')
+          .css({ pointerEvents: 'auto', position: 'static', visibility: 'visible' })
+          .attr('data-remote','true')
+          .attr('data-type','text')
+          .attr('data-error','Unable to load announcements.')
+          .attr('data-target','#tabs dt.announcements + dd');
       });
 - else
   You do not have any announcements.
