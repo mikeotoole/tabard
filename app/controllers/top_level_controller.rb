@@ -6,8 +6,8 @@
 # This is the controller for top level pages (http://<domain name>/<page name>)
 ###
 class TopLevelController < ApplicationController
-  caches_page :intro, :features, :pricing, :privacy_policy, :terms_of_service
-  before_filter(only: [:intro, :features, :pricing, :privacy_policy, :terms_of_service]) { @page_caching = true }
+  caches_page :intro, :features, :pricing, :privacy_policy, :terms_of_service, :support
+  before_filter(only: [:intro, :features, :pricing, :privacy_policy, :terms_of_service, :support]) { @page_caching = true }
   respond_to :html, :js
 ###
 # Callbacks
@@ -53,6 +53,10 @@ class TopLevelController < ApplicationController
 
   # This method gets the Pricing page.
   def pricing
+  end
+
+  # This method gets the Support page.
+  def support
   end
 
   # This method gets the Maintenance page.
