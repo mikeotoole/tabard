@@ -7,7 +7,32 @@
 ###
 class AnnouncementsController < ApplicationController
   before_filter :block_unauthorized_user!
-  respond_to :js
+  respond_to :html, :js
+
+###
+# REST Actions
+###
+  # GET /announcements/:id(.:format)
+  def show
+    current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
+    @announcement = current_user.announcements.find_by_id(params[:id])
+    if @announcement != nil
+      @announcement.update_viewed(current_user.user_profile)
+      respond_to do |format|
+        format.js {
+          announcement = current_user.unread_announcements.where(:community_id => current_community.id).recent.first
+          if !!announcement
+            render :partial => 'layouts/flash_message_announcement', :layout => nil, :locals => { :announcement => announcement }
+          else
+            render :text => '', :layout => nil
+          end
+        }
+        format.html { redirect_to announcement_url(@announcement, :subdomain => @announcement.subdomain)}
+      end
+    else
+      raise CanCan::AccessDenied
+    end
+  end
 
 ###
 # Added Actions
@@ -20,6 +45,6 @@ class AnnouncementsController < ApplicationController
         announcement.update_viewed(current_user.user_profile) if announcement
       end
     end
-    render :text => ''
+    redirect_to announcements_path
   end
 end
