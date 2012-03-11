@@ -8,6 +8,7 @@
 class AcknowledgementMailer < ActionMailer::Base
   default :from => "Crumblin <noreply@crumblin.com>",
           :content_type => "text/html"
+  layout 'crumblin'
   
   # Tell user they have a new message
   def new_acknowledgement(acknowledgement_id)

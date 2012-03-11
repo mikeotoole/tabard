@@ -197,7 +197,6 @@ protected
   def browser_supported?
     return true if browser.safari? and browser.version.to_i >= 4 
     return true if browser.chrome? and browser.version.to_i >= 10
-    return true if browser.opera? and browser.version.to_i >= 11
     return true if browser.ie? and browser.version.to_i >= 9
     return true if browser.firefox? and browser.version.to_i >= 7
     return false
