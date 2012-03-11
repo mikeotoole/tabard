@@ -26,6 +26,31 @@ describe AnnouncementsController do
     end
   end
 
+  describe "GET show" do
+    it "assigns the requested announcement as @announcement when authenticated as a member" do
+      sign_in admin
+      get :show, :id => announcement
+      assigns(:announcement).should eq(announcement)
+    end
+
+    it "assigns the requested announcement as @announcement when authenticated as a member" do
+      sign_in member
+      get :show, :id => announcement
+      assigns(:announcement).should eq(announcement)
+    end
+    
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :show, :id => announcement
+      response.should redirect_to(new_user_session_url)
+    end
+    
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :show, :id => announcement
+      response.should be_forbidden
+    end   
+  end
+
   describe "PUT batch_mark_as_seen" do
     before(:each) do
       community

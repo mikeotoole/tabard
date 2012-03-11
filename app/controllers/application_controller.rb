@@ -129,7 +129,7 @@ protected
   end
   # This method gets the character proxy id of the last posted character
   def last_posted_as_character_proxy_id
-    return nil if last_posted_as_user_profile?
+    return nil if last_posted_as_user_profile?(Array.new)
     return session[:poster_id].to_i
   end
   helper_method :last_posted_as_character_proxy_id
