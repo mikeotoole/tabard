@@ -24,7 +24,7 @@ class AnnouncementsController < ApplicationController
           if !!announcement
             render :partial => 'layouts/flash_message_announcement', :layout => nil, :locals => { :announcement => announcement }
           else
-            render :text => '', :layout => nil
+            render :text => ''
           end
         }
         format.html { redirect_to announcement_url(@announcement, :subdomain => @announcement.subdomain)}
@@ -45,6 +45,6 @@ class AnnouncementsController < ApplicationController
         announcement.update_viewed(current_user.user_profile) if announcement
       end
     end
-    redirect_to announcements_path
+    render :text => ''
   end
 end
