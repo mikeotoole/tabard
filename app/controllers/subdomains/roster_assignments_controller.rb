@@ -54,7 +54,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # POST /roster_assignments.json
   def create
     if @roster_assignment.save
-      @roster_assignment.approve if can? :manage, @roster_assignment
+      @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id) if can? :manage, @roster_assignment
       if @roster_assignment.is_pending
         add_new_flash_message "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent.", 'notice'
       else
@@ -100,7 +100,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 
   # PUT /roster_assignments/1/approve
   def approve
-    @roster_assignment.approve
+    @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
     add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the community roster.", 'success'
     redirect_to pending_roster_assignments_path
   end
@@ -111,7 +111,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       params[:ids].each do |id|
         roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
-          roster_assignment.approve
+          roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
         end
       end
       add_new_flash_message "The roster has been updated.", 'success'
@@ -121,7 +121,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 
   # PUT /roster_assignments/1/reject
   def reject
-    @roster_assignment.reject
+    @roster_assignment.reject(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
     add_new_flash_message "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster.", 'notice'
     redirect_to pending_roster_assignments_path
   end
@@ -132,7 +132,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       params[:ids].each do |id|
         roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
-          roster_assignment.reject
+          roster_assignment.reject(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
         end
       end
       add_new_flash_message "The roster has been updated.", 'success'
