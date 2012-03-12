@@ -24,4 +24,4 @@
 -else
   %p This page space has no viewable pages.
   - if (can? :create, @page_space.pages.new)
-    %p= link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button primary'
+    %p= link_to 'Create a Page', new_page_space_page_path(@page_space), :class => 'button'

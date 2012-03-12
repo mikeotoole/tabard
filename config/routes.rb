@@ -20,6 +20,7 @@ DaBvRails::Application.routes.draw do
     put 'users/reinstate' => 'registrations#send_reinstate', :as => :send_reinstate
     get 'users/reinstate_account' => 'registrations#reinstate_account_edit', :as => :reinstate_account
     put 'users/reinstate_account' => 'registrations#reinstate_account', :as => :reinstate_account
+    match 'account-settings' => 'registrations#edit', :as => :account_settings
   end
 
   # Documents

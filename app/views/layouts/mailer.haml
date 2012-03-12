@@ -27,11 +27,12 @@
               %strong © Crumblin is copyright DigitalAugment Inc.
               — P.O. Box 5279, Pasco, WA 99302
             %p
-              Please remember you can always go to your
-              %strong User Settings
+              Remember, you can always go to your
+              = link_to 'Account Settings', account_settings_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :target => '_blank', :style => 'color: #BE4124'
               page to adjust your
               %br
-              email notification preferences, account preferences, and contact information.
+              %strong email notification preferences
+              , account preferences, and contact information.
             %p
               = link_to 'Privacy Policy', top_level_privacy_policy_url, :target => '_blank', :style => 'color: #BE4124'
               = raw '&nbsp;|&nbsp;'
