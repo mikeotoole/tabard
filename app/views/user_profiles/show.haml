@@ -23,10 +23,13 @@
         %ul.communities
           - @user_profile.communities.each do |community|
             %li= link_to community.name, community, (@user_profile == community.admin_profile ? { :meta => '♕' } : {})
-      - else
+      - elsif user_signed_in? and @user_profile == current_user.user_profile
         %p
           You don't have any memberships yet.
           = link_to 'Find a community ›', communities_url
+      - else
+        %p
+          This user is not a member of any communities.
       - unless @user_profile.location.to_s.strip == ''
         %h3 Location
         %p= @user_profile.location

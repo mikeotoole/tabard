@@ -1499,6 +1499,8 @@ body.with_action_items
       bottom: 170px
     
     .action_items
+      border: 1px solid #fff
+      +border_radius(3)
       left: 0
       position: absolute
       right: 0
@@ -1506,7 +1508,7 @@ body.with_action_items
       
       p
         background: #ddd
-        border: 1px solid #ccc
+        border: 1px solid #aaa
         border-bottom: 0
         +border_radius(3,3,0,0)
         +box_shadow(0 0 10px rgba(#000,.2))
@@ -1519,19 +1521,43 @@ body.with_action_items
           +border_radius(2)
           color: #A23830
           display: block
-          padding: 5px
+          line-height: 28px
+          padding: 0
           position: absolute
           right: 5px
+          text-align: center
           top: 5px
+          white-space: nowrap
+          width: 28px
           
           &:hover
             background: #A23830
             color: #fff
+            
+            &:before
+              border: 5px solid transparent
+              border-left-color: #2D7CB4
+              content: ''
+              height: 0
+              position: absolute
+              top: 8px
+              right: 28px
+              width: 0
+            
+            &:after
+              background: #2D7CB4
+              +border_radius(2)
+              color: #fff
+              content: attr(meta)
+              padding: 0 10px
+              position: absolute
+              right: 38px
       
       ol
         background: #eee
         +bg_gradient(#fff,#ddd)
-        border: 1px solid #ccc
+        border: 1px solid #aaa
+        border-top-color: #ddd
         +border_radius(0,0,3,3)
         +box_shadow(0 0 10px rgba(#000,.2))
         height: 40px

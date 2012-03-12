@@ -1,4 +1,4 @@
-- if acknowledgements
+- if acknowledgements.any?
   = paginate acknowledgements
   = form_tag announcements_batch_mark_as_seen_url, :method => :put, :remote => true do
     %table

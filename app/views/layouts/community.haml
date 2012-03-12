@@ -1,7 +1,6 @@
 - has_action_items = (user_signed_in? and current_user.user_profile == current_community.admin_profile and current_community.action_items.any?)
 !!!
 %html
-
   %head
     %title= yield_for(:title, "#{current_community.name} - Crumblin")
     = stylesheet_link_tag "application/community"
@@ -32,7 +31,7 @@
           .action_items
             %p
               Now that you're community has been created, let's get everything setup:
-              = link_to "I now what I'm doing. Hide this box. ✕", clear_action_items_url, :class => 'clear'
+              = link_to '✕', clear_action_items_url, :class => 'clear', :meta => "I now what I'm doing. Remove this box."
             %ol
               %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
                 = link_to_unless_current 'Edit Settings', edit_community_settings_url
