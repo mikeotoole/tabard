@@ -47,7 +47,7 @@ class Subdomains::DiscussionsController < SubdomainsController
     @discussion.user_profile = current_user.user_profile
     if @discussion.save
       add_new_flash_message('Discussion was successfully created.','success') 
-      set_last_posted_as(@discussion.poster)
+      set_last_posted_as((@discussion.charater_posted? ? @discussion.character_proxy : @discussion.user_profile))
     end
     respond_with(@discussion)
   end

@@ -3,22 +3,26 @@
     - if qf.object.marked_for_destruction?
       = qf.input :_destroy, :as => :hidden
     - else
-      %li{ :question => q, :question_id => (question.id ||= ''), :question_style => (question.style ||= ''), :class => (qf.object.errors.any? ? 'question_with_errors' : '') }
-        .left
-          = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
-          .select
-            = qf.collection_radio :style, Question.select_options, :first, :last
-          .optreq
-            = qf.input :is_required, :as => :boolean, :wrapper => false
-          .explanation
-            = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)', :input_html => { :maxlength => Question::MAX_EXPLANATION_LENGTH }
-        %div{ :class => 'right' + (Question::VALID_STYLES_WITH_PA.include?(question.style) ? '' : ' hidden') }
-          %label Predefined Answers
-          %ol.answers
-            - if Question::VALID_STYLES_WITH_PA.include?(question.style) and question.predefined_answers.any?
-              - question.predefined_answers.each_with_index do |answer,a|
-                = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
-          %p{ :class => 'add hidden' }
-            = add_predefined_answer_link 'Add Answer', qf, question
-        - if qf.object.errors.any?
-          %mark.error= qf.object.errors.full_messages.first
+      %li{ :question => q, :question_id => (question.id ||= ''), :question_style => (question.style ||= ''), :class => "drag #{qf.object.errors.any? ? 'question_with_errors' : ''}" }
+        .container.closed
+          = qf.input :position, :as => :hidden, :input_html => { class: 'position' }
+          .toggle{ :open => '↓', :closed => '↪' }
+          %h3= question.body
+          .left
+            = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
+            .select
+              = qf.collection_radio :style, Question.select_options, :first, :last
+            .optreq
+              = qf.input :is_required, :as => :boolean, :wrapper => false
+            .explanation
+              = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)', :input_html => { :maxlength => Question::MAX_EXPLANATION_LENGTH }
+          %div{ :class => 'right' + (Question::VALID_STYLES_WITH_PA.include?(question.style) ? '' : ' hidden') }
+            %label Predefined Answers
+            %ol.answers
+              - if Question::VALID_STYLES_WITH_PA.include?(question.style) and question.predefined_answers.any?
+                - question.predefined_answers.each_with_index do |answer,a|
+                  = render 'answer', :f => qf, :answer => answer, :q => q, :a => a
+            %p{ :class => 'add hidden' }
+              = add_predefined_answer_link 'Add Answer', qf, question
+          - if qf.object.errors.any?
+            %mark.error= qf.object.errors.full_messages.first
