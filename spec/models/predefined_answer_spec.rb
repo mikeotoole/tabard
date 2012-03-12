@@ -8,6 +8,7 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  deleted_at  :datetime
+#  position    :integer         default(0)
 #
 
 require 'spec_helper'

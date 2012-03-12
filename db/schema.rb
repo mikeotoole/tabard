@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120308235947) do
+ActiveRecord::Schema.define(:version => 20120312183025) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -432,6 +432,7 @@ ActiveRecord::Schema.define(:version => 20120308235947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "position",    :default => 0
   end
 
   add_index "predefined_answers", ["question_id"], :name => "index_predefined_answers_on_select_question_id"
@@ -445,6 +446,7 @@ ActiveRecord::Schema.define(:version => 20120308235947) do
     t.string   "explanation"
     t.boolean  "is_required",    :default => false
     t.datetime "deleted_at"
+    t.integer  "position",       :default => 0
   end
 
   add_index "questions", ["custom_form_id"], :name => "index_questions_on_custom_form_id"

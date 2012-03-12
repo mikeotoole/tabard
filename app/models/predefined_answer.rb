@@ -17,7 +17,7 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-   attr_accessible :body, :question_id
+   attr_accessible :body, :question_id, :position
 
 ###
 # Associations
