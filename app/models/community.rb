@@ -15,7 +15,7 @@ class Community < ActiveRecord::Base
 # Constants
 ###
   # Used by validators and view to restrict name length
-  MAX_NAME_LENGTH = 30
+  MAX_NAME_LENGTH = 25
   # Used by validators and view to restrict slogan length
   MAX_SLOGAN_LENGTH = 50
   # Used by validator to limit number of communities a user can own

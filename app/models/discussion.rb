@@ -14,6 +14,7 @@ class Discussion < ActiveRecord::Base
 # Constants
 ###
   MAX_NAME_LENGTH = 60
+  MAX_BODY_LENGTH = 10000
 
 ###
 # Attribute accessible
@@ -38,7 +39,7 @@ class Discussion < ActiveRecord::Base
 # Validators
 ###
   validates :name,  :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :body, :presence => true
+  validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
   validates :user_profile, :presence => true
   validates :discussion_space, :presence => true
   validate :character_is_valid_for_user_profile

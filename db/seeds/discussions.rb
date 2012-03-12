@@ -24,6 +24,7 @@ def create_discussion_space(creator_last_name, community_name, space_name, facti
   ds = community.discussion_spaces.create!(:name => space_name, :supported_game => supported_game)
   creator = UserProfile.find_by_last_name(creator_last_name)
   Activity.create!(:user_profile => creator, :community => community, :target => ds, :action => "created")
+  return ds
 end
 
 def create_discussion(community_name, space_name, name, body, poster_last_name)

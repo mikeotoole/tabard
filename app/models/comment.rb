@@ -10,6 +10,11 @@ class Comment < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Constants
+###
+  MAX_BODY_LENGTH = 10000
+
+###
 # Attribute accessible
 ###
   attr_accessible :body, :commentable_id, :commentable_type, :is_removed, :has_been_edited, :is_locked, :character_proxy_id, :community
@@ -50,7 +55,7 @@ class Comment < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :body, :presence => true
+  validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
   validates :user_profile, :presence => true
   validates :community, :presence => true
   validates :commentable, :presence => true
