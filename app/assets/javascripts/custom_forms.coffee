@@ -48,6 +48,9 @@ $(document).ready ->
         .addClass('closed')
         .draggable(dragOpts)
         .trigger('init')
+      positionNumber = 0
+      $('form.custom_form .questions input.position').each ->
+        $(this).val ++positionNumber
     
     .delegate '.questions > li.drop', 'dropover', (event, ui) ->
       $(this).addClass('dropover')
