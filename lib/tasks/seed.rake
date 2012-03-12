@@ -65,7 +65,7 @@ namespace :seed do
       require File.expand_path(File.dirname(__FILE__))+"/../../db/seeds/#{part}.rb"
     end
 
-    puts "Creating user max.length@digitalaugment.com"
+    puts "Creating user maxlength@digitalaugment.com"
     max = create_user("Max", "Length", create_w_string(UserProfile::MAX_NAME_LENGTH))
     user_profile = max.user_profile
     user_profile.location = create_w_string(UserProfile::MAX_LOCATION_LENGTH)
