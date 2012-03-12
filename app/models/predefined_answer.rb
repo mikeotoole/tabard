@@ -37,6 +37,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: predefined_answers
@@ -47,5 +48,6 @@ end
 #  created_at  :datetime
 #  updated_at  :datetime
 #  deleted_at  :datetime
+#  position    :integer         default(0)
 #
 
