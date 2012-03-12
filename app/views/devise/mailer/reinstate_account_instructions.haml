@@ -1,5 +1,5 @@
 %p
-  %strong Hello #{@resource.display_name}!
+  %strong= "Hello #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p Someone has requested a link to reinstate your account, and you can do this through the link below.
 %p= link_to 'Reinstate account', reinstate_account_url(:reset_password_token => @resource.reset_password_token), :style => 'color: #BE4124'
 %p If you didn't request this, please ignore this email.
