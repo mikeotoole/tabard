@@ -7,7 +7,7 @@
       %fieldset
         %ul
           %li
-            = f.input :subject, :wrapper => false, :input_html => { :tabindex => 1 }
+            = f.input :subject, :wrapper => false, :input_html => { :tabindex => 1, :maxlength => Message::MAX_SUBJECT_LENGTH }
           %li
             %label{ :for => 'message_to' } To
             %input{ :id => 'message_to', :type => 'text', :tabindex => 2 }
@@ -24,5 +24,5 @@
           %li
             %label{ :for => "message_to_#{profile.id}" }= profile.display_name
 
-    = f.input :body, :as => :text, :label => false, :wrapper_tag => :article, :input_html => { :tabindex => 3 }
+    = f.input :body, :as => :text, :label => false, :wrapper_tag => :article, :input_html => { :tabindex => 3, :maxlength => Message::MAX_BODY_LENGTH }
     %button{ :type => ':submit', :tabindex => 4 } Send

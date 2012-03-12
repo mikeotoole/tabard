@@ -3,13 +3,14 @@
 ###
 
 # Create SWTOR Empire Character
-def create_empire_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male")
+def create_empire_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male", server=nil)
   user_profile = UserProfile.find_by_last_name(user_last_name)
+  server ||= "Atris"
   puts "Creating #{user_profile.name} Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => SwtorCharacter.create!(
         :name => char_name,
-        :swtor => Swtor.find(:first, :conditions => {:faction => "Empire"}),
+        :swtor => Swtor.find(:first, :conditions => {:faction => "Empire", :server_name => server}),
         :char_class => char_class,
         :advanced_class => advanced_class,
         :species => species,
@@ -35,8 +36,9 @@ def create_republic_character(user_last_name, char_name, char_class, advanced_cl
 end
 
 # Create WoW Alliance Character
-def create_alliance_character(user_last_name, char_name, char_class, race, level, gender="Male")
+def create_alliance_character(user_last_name, char_name, char_class, race, level, gender="Male", server=nil)
   user_profile = UserProfile.find_by_last_name(user_last_name)
+  server ||= ""
   puts "Creating #{user_profile.name} Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => WowCharacter.create!(

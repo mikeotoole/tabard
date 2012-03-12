@@ -11,6 +11,7 @@
 #  explanation    :string(255)
 #  is_required    :boolean         default(FALSE)
 #  deleted_at     :datetime
+#  position       :integer         default(0)
 #
 
 require 'spec_helper'

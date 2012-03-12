@@ -12,10 +12,8 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Constants
 ###
-  # Used by the validator. Needs to be extra long to allow announcment spacee names using full game name.
-  MAX_NAME_LENGTH = 150
   # Used buy the view to limit the number of characters a user can enter.
-  MAX_NAME_LENGTH_VIEW = 30
+  MAX_NAME_LENGTH = 30
 
 ###
 # Attribute accessible

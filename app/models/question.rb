@@ -26,7 +26,7 @@ class Question < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :style, :is_required, :explanation, :predefined_answers_attributes
+  attr_accessible :body, :style, :is_required, :explanation, :position, :predefined_answers_attributes
 
 ###
 # Associations

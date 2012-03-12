@@ -7,6 +7,12 @@
 ###
 class Message < ActiveRecord::Base
 ###
+# Constants
+###
+  MAX_SUBJECT_LENGTH = 60
+  MAX_BODY_LENGTH = 10000
+
+###
 # Attribute accessor
 ###
   # This attribute is an array of recipient (user_profile) ids.
@@ -37,8 +43,8 @@ class Message < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :subject, :presence => true
-  validates :body,  :presence => true
+  validates :subject, :presence => true, :length => { :maximum => MAX_SUBJECT_LENGTH }
+  validates :body,  :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
   validates :to,  :presence => true
 
   default_scope :order => "created_at DESC"

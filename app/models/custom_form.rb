@@ -28,7 +28,7 @@ class CustomForm < ActiveRecord::Base
 # Associations
 ###
   has_many :submissions, :dependent => :destroy
-  has_many :questions, :dependent => :destroy, :autosave => true, :order => 'id ASC'
+  has_many :questions, :dependent => :destroy, :autosave => true, :order => 'position ASC'
   accepts_nested_attributes_for :questions, :allow_destroy => true
 
   has_many :submissions, :dependent => :destroy
