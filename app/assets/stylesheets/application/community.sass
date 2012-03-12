@@ -1161,12 +1161,33 @@ body
         padding: 0
         
         >li
+          clear: both
+          list-style: none
+          margin: 0
+          
+          &.drop
+            background: transparent
+            +box-shadow(none)
+            border: 1px dashed
+            +border_radius(3)
+            font-size: 13px
+            height: 6px
+            margin: -10px 0 2px
+            overflow: hidden
+            padding: 0
+            text-align: center
+            
+            + .drop
+              display: none
+            
+          &.dropover
+            border-style: solid
+        
+        >li .container
           border-top: 1px solid
           +border_radius(3)
-          clear: both
           height: auto
-          list-style: none
-          margin: 0 0 20px
+          margin: 0 0 12px
           padding: 20px 10px
           position: relative
           
@@ -1176,6 +1197,59 @@ body
             display: block
             height: 0
             visibility: hidden
+          
+          &.closed
+            border: 1px solid
+            cursor: move
+            height: 0
+            overflow: hidden
+            +transition(box-shadow .2s linear)
+            
+            *
+              position: absolute
+              top: 100px !important
+            
+            .toggle
+              cursor: pointer
+              left: 9px
+              top: 10px !important
+              z-index: 2
+              
+              &:before
+                content: attr(closed)
+            
+            h3
+              display: block
+              left: 0
+              +opacity(1)
+              overflow: hidden
+              padding: 0 0 0 40px
+              position: absolute
+              right: 0
+              top: 5px !important
+              z-index: 1
+          
+          &.ui-draggable-dragging
+            z-index: 99
+          
+          > h3
+            display: none
+          
+          .toggle
+            +border_radius(2)
+            display: block
+            height: 20px
+            left: 10px
+            line-height: 20px
+            padding: 0
+            position: absolute
+            text-align: center
+            text-decoration: none
+            top: 10px
+            width: 20px
+            
+            &:before
+              content: attr(open)
               
           a.remove
             display: block
@@ -1201,6 +1275,7 @@ body
               width: 20px
               
           >div
+            padding: 20px 0 0
             width: 440px
             
             p

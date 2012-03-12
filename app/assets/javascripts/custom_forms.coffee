@@ -1,7 +1,68 @@
+//= require jquery.ui.draggable
+//= require jquery.ui.droppable
+
 $(document).ready ->
+
+  # Drag and Drop sorting
+  dragOpts = { revert: 'invalid', cancel: '.toggle' }
+  dropOpts = { accept: '.drag .container', tolerance: 'touch' }
+
+  $('form.custom_form')
+    .delegate '.questions > li .toggle', 'click', ->
+      container = $(this).closest('.container')
+      qtitle = container.find('input').val()
+      qtitle = '(no title)' unless qtitle
+      container.find('> h3').html qtitle
+      container.toggleClass('closed')
+      if container.hasClass 'closed'
+        container.draggable('enable')
+      else
+        container.draggable('disable')
+
+    .delegate '.questions > li.drag .container', 'dragstart', (event, ui) ->
+      return false unless $(this).hasClass 'closed'
+      $('form.custom_form .questions > li.drop').remove()
+      $('form.custom_form .questions > li.drag:first').before('<li class="drop">&nbsp;</li>')
+      $('form.custom_form .questions > li.drag').after('<li class="drop">&nbsp;</li>')
+      $('form.custom_form .questions > li.drop').droppable(dropOpts)
+      $(this).closest('.drag').prevAll('.drop').first().remove()
+      $(this).closest('.drag').nextAll('.drop').first().remove()
+
+    .delegate '.questions > li.drag .container', 'dragstop', (event, ui) ->
+      $('form.custom_form .questions > li.drop').remove()
+      $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
+
+    .delegate '.questions > li.drop', 'drop', (event, ui) ->
+      html = ui.draggable.html()
+      $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
+      $(this)
+        .html('<div class="container">'+html+'</div>')
+        .removeClass('drop dropover')
+        .css({ height: '' })
+        .addClass('drag')
+      $('form.custom_form .questions > li.drop').remove()
+      ui.draggable.closest('li').remove()
+      $(this)
+        .droppable('destroy')
+        .find('.container')
+        .addClass('closed')
+        .draggable(dragOpts)
+        .trigger('init')
+    
+    .delegate '.questions > li.drop', 'dropover', (event, ui) ->
+      $(this).addClass('dropover')
+      
+    .delegate '.questions > li.drop', 'dropout', (event, ui) ->
+      $(this).removeClass('dropover')
+
+  $('form.custom_form .questions > li.drag .container')
+    .draggable(dragOpts)
+  
+  
+  # Q&A Functionality
   
   $('form.custom_form')
-    .delegate '.questions > li', 'init', ->
+    .delegate '.questions > li .container', 'init', ->
       li = $(this)
       right = $(this).find('.right')
       li.data('qstyle',li.attr('question_style'))
@@ -56,4 +117,4 @@ $(document).ready ->
       
       li.find('.select input:checked').trigger 'change'
       
-  $('form.custom_form .questions > li').trigger 'init'
+  $('form.custom_form .questions > li .container').trigger 'init'

@@ -749,10 +749,20 @@ button,
         
       ul.questions
         
-        >li
+        >li.drop
+          border-color: #CEE1ED !important
+        
+        >li.dropover
+          background: #CEE1ED
+        
+        >li .container
           +bg_gradient(#ECF2F6,#fff)
-          border-top-color: #CEE1ED
-              
+          border-color: #CEE1ED !important
+          
+          &.ui-draggable-dragging
+            +box_shadow(0 0 10px rgba(#23a3d8,.5))
+          
+          .toggle,
           a.remove
             background: #859eb8
             color: #E2EDF5
