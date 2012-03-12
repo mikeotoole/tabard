@@ -313,7 +313,8 @@ protected
     question = Question.create!(
       :style => "select_box_question",
       :body => "How often do you play each week?",
-      :is_required => true)
+      :is_required => true,
+      :position => 0)
     question.custom_form = ca
     question.save!
     PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id)
@@ -327,7 +328,8 @@ protected
       :style => "long_answer_question",
       :body => "Why do you want to join?",
       :explanation => "Let us know why we should game together.",
-      :is_required => true)
+      :is_required => true,
+      :position => 1)
     question.custom_form = ca
     question.save!
 
@@ -336,7 +338,8 @@ protected
       :style => "short_answer_question",
       :body => "How did you hear about us?",
       :explanation => "This is a short answer question",
-      :is_required => false)
+      :is_required => false,
+      :position => 2)
     question.custom_form = ca
     question.save!
 

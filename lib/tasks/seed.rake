@@ -14,7 +14,7 @@ ADJ_LIST = %w(adorable beautiful clean drab elegant fancy glamorous handsome mag
 
 namespace :seed do
   desc "Seeds all data"
-  task :all => [:extra, :comments] do
+  task :all => [:extra, :comments, :max] do
     puts "All data seeded!"
   end
 
