@@ -51,6 +51,7 @@ class Announcement < ActiveRecord::Base
   validates :user_profile, :presence => true
   validates :community, :presence => true
   validate :character_is_valid_for_user_profile
+  validate :character_is_valid_for_supported_game
 
 ###
 # Delegates
@@ -147,6 +148,16 @@ protected
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 
+  ###
+  # This method validates that the selected character is valid for the community.
+  ###
+  def character_is_valid_for_supported_game
+    return unless self.character_proxy
+    unless self.character_proxy.compatable_with_supported_game?(self.supported_game)
+      self.errors.add(:character_proxy_id, "this character is not compatable with the selected context") 
+      self.errors.add(:supported_game_id, "this context is not compatable with the selected character") 
+    end
+  end
 
 ###
 # Callback Methods
