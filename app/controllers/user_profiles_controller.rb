@@ -80,7 +80,7 @@ class UserProfilesController < ApplicationController
   # This method gets a list of activites for the user profile
   def load_activities
     @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
-    @activities_count_initial = 20
+    @activities_count_initial = 10
     @activities_count_increment = 10
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, @activities_count_initial)
   end
