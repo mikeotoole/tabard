@@ -63,24 +63,18 @@ class Activity < ActiveRecord::Base
     if updated and updated[:since] and updated[:before]
       since = Time.zone.parse(updated[:since]).utc
       before = Time.zone.parse(updated[:before]).utc
-      @activities = Activity.ordered.where(activity).where('updated_at < ? AND updated_at > ?', since, before).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < ? AND updated_at > ?', since, before).first(max_items.to_i)
+      activities = Activity.ordered.where(activity).where('updated_at < ? AND updated_at > ?', since, before).first(max_items.to_i)
     elsif updated and updated[:since]
       since = Time.zone.parse(updated[:since]).utc
-      @activities = Activity.ordered.where(activity).where('updated_at > ?', since).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at > ?', since).first(max_items.to_i)
+      activities = Activity.ordered.where(activity).where('updated_at > ?', since).first(max_items.to_i)
     elsif updated and updated[:before]
       before = Time.zone.parse(updated[:before]).utc
-      @activities = Activity.ordered.where(activity).where('updated_at < ?', before).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).where('updated_at < ?', before).first(max_items.to_i)
+      activities = Activity.ordered.where(activity).where('updated_at < ?', before).first(max_items.to_i)
     else
-      @activities = Activity.ordered.where(activity).first(max_items.to_i)
-      @comments = Comment.not_deleted.ordered.where(activity).first(max_items.to_i)
+      activities = Activity.ordered.where(activity).first(max_items.to_i)
     end
 
-    @items = @activities + @comments
-    @items.sort!{|item1, item2| item2.updated_at <=> item1.updated_at}
-    @items[0..max_items.to_i-1]
+    return activities
   end
 end
 
