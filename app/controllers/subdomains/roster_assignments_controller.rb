@@ -11,7 +11,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :block_unauthorized_user!, :except => [:index, :game]
+  prepend_before_filter :block_unauthorized_user!, :except => [:index, :game]
   before_filter :ensure_current_user_is_member, :except => [:index, :game]
   before_filter :get_community_profile, :except => [:index, :game]
   before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
@@ -111,7 +111,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       params[:ids].each do |id|
         roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
-          roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
+          roster_assignment.approve(current_user.user_profile_id != roster_assignment.community_profile_user_profile_id)
         end
       end
       add_new_flash_message "The roster has been updated.", 'success'
@@ -132,7 +132,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
       params[:ids].each do |id|
         roster_assignment = RosterAssignment.find_by_id(id)
         if can? :update, roster_assignment
-          roster_assignment.reject(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
+          roster_assignment.reject(current_user.user_profile_id != roster_assignment.community_profile_user_profile_id)
         end
       end
       add_new_flash_message "The roster has been updated.", 'success'

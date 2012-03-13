@@ -1,0 +1,21 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th.r Location
+      %th.actions
+  %tbody
+    - user_profiles.each do |user_profile|
+      %tr
+        %td
+          %strong= link_to user_profile.display_name, user_profile
+        %td.pitch
+          - unless user_profile.description.to_s.strip == ""
+            %p= user_profile.description
+        %td.r
+          = user_profile.location
+        %td.actions
+          %div= link_to 'Recruit', root_url, :meta => 'Recruit this user'
+  %tfoot
+    %tr

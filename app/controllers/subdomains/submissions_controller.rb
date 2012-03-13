@@ -11,7 +11,7 @@ class Subdomains::SubmissionsController < SubdomainsController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!
+  prepend_before_filter :block_unauthorized_user!
   before_filter :load_custom_form_from_id
   before_filter :load_submissions, :only => [:index]
   before_filter :create_submission, :only => [:new, :create]

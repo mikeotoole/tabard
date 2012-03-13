@@ -41,7 +41,7 @@ describe AnnouncementsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => announcement
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
     
     it "should respond forbidden when not a member" do

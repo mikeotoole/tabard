@@ -39,6 +39,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     respond_with @community, :location => edit_community_settings_url
   end
   
+  # This clears the action items for the community
   def clear_action_items
     @community.action_items = {}
     @community.save

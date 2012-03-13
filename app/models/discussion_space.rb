@@ -58,7 +58,7 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
+  # This gets the game
   def game
     if self.supported_game
       self.supported_game.game
@@ -66,7 +66,8 @@ class DiscussionSpace < ActiveRecord::Base
       nil
     end
   end
-  
+    
+  # This gets the game name
   def game_name
     self.supported_game_smart_name
   end

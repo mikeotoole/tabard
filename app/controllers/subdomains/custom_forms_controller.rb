@@ -10,7 +10,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!
+  prepend_before_filter :block_unauthorized_user!
   before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
   authorize_resource :except => [:index, :thankyou, :publish, :unpublish]
