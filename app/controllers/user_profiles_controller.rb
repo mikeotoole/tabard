@@ -10,11 +10,16 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters, :announcements]
+  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters, :announcements, :index]
   before_filter :set_current_user_as_profile, :only => :account
-  load_and_authorize_resource :except => [:activities, :characters, :announcements]
+  load_and_authorize_resource :except => [:index, :activities, :characters, :announcements]
   skip_authorize_resource :only => :account
   before_filter :load_activities, :only => [:show, :activities]
+
+  def index
+    authorize! :index, UserProfile
+    @user_profiles = UserProfile.where(publicly_viewable: true).order(:display_name).page params[:page]
+  end
 
   # GET /user_profiles/1
   def show
