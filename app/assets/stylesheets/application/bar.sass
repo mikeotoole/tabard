@@ -34,11 +34,11 @@
     width: 207px
   
   >ul
-    height: 26px
+    height: 30px
     padding: 5px 0
     position: absolute
     text-align: left
-    top: 24px
+    top: 22px
     z-index: 93
     
     &.menu
@@ -60,7 +60,6 @@
           position: absolute
           right: 0
           text-align: center
-          top: 0
           width: 29px
         
         &:hover:after
@@ -83,15 +82,15 @@
         float: left
         font: 14px EurostyleStd, sans-serif
         display: block
-        height: 26px
-        line-height: 26px
+        height: 30px
+        line-height: 30px
         margin: 0 0 0 5px
-        padding: 0 10px
+        padding: 0 15px
         position: relative
         z-index: 92
         
         &:not(:only-child)
-          padding: 0 30px 0 10px
+          padding: 0 35px 0 15px
       
           &:after
             border: 5px solid transparent
@@ -100,8 +99,8 @@
             height: 0
             +opacity(.7)
             position: absolute
-            right: 10px
-            top: 11px
+            right: 15px
+            top: 12px
             width: 0
       
       >span
@@ -110,15 +109,15 @@
       >ul
         background: #2d7cb4
         border: 1px solid #4a99d0
-        +border_radius(0,3,3,3)
+        +border_radius(0,2,2,2)
         +box_shadow(0 0 5px rgba(#000, .5))
         left: 5px
         margin: -9000em 0 0
         min-width: 120%
         +opacity(0)
-        padding: 5px 0 0
+        padding: 10px
         position: absolute
-        top: 26px
+        top: 30px
         z-index: 91
         
         >li
@@ -129,7 +128,8 @@
             color: #cceaff
             display: block
             font-size: 13px
-            padding: 0 10px
+            line-height: 15px
+            padding: 0 5px
             white-space: nowrap
             
             &:hover
@@ -139,7 +139,7 @@
           &:last-child
             
             a
-              +border_radius(0,0,3,3)
+              border-bottom: 1px solid #186a9e
       
           &.extra
             
@@ -180,24 +180,23 @@
           &:not(:only-child)
             border-bottom: 0
             +border_radius(3,3,0,0)
-            padding: 0 30px 7px 10px
+            padding: 0 35px 7px 15px
             +transition(background .1s linear, padding .1s linear)
             
             &:after
               +opacity(1)
-              +transition(opacity .2s linear)
         
         >ul
           margin: 0
           +opacity(1)
-          top: 33px
+          top: 37px
           +transition(top .2s ease-in-out, opacity .1s linear)
           z-index: 93
           
           >li
             
             >a
-              padding: 8px 10px
+              padding: 10px 5px
               +transition(padding .1s linear)
       
       >p

@@ -57,13 +57,13 @@ class SubdomainsController < ApplicationController
     management_items = Array.new()
     return management_items unless signed_in?
     #application
-    management_items << {:link => edit_community_settings_url, :title => "Community Settings"} if can_manage?(current_community)
-    management_items << {:link => supported_games_url, :title => "Supported Games"} if can_manage?(current_community.supported_games.new)
-    management_items << {:link => roles_url, :title => "Permissions"} if can_manage?(current_community.roles.new)
-    management_items << {:link => community_applications_url, :title => 'Applications', :meta => current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
-    management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
-    management_items << {:link => my_roster_assignments_url, :title => "My Roster"} if can? :mine, RosterAssignment
-    management_items << {:link => custom_forms_url, :title => "Forms"} if can_manage?(current_community.custom_forms.new)
+    management_items << {:link => edit_community_settings_url, :title => "Community Settings", :class => 'settings'} if can_manage? current_community
+    management_items << {:link => supported_games_url, :title => "Supported Games", :class => 'games'} if can_manage? current_community.supported_games.new
+    management_items << {:link => roles_url, :title => "Permissions", :class => 'roles'} if can_manage? current_community.roles.new
+    management_items << {:link => community_applications_url, :title => 'Applications', :class => 'applications', :meta => current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
+    management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :class => 'roster', :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
+    management_items << {:link => my_roster_assignments_url, :title => "My Roster", :class => 'myroster'} if can? :mine, RosterAssignment
+    management_items << {:link => custom_forms_url, :title => "Forms", :class => 'forms'} if can_manage? current_community.custom_forms.new
     management_items
   end
   helper_method :management_navigation_items
