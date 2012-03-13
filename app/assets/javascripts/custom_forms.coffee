@@ -60,7 +60,7 @@ $(document).ready ->
 
   $('form.custom_form .questions > li.drag .container')
     .draggable(dragOpts)
-  $('form.custom_form .questions > li.drag:not(.closed) .container')
+  $('form.custom_form .questions > li.drag .container:not(.closed)')
     .draggable('disable')
   
   
