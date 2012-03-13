@@ -24,8 +24,11 @@ module CustomFormHelper
         .closest('form')
         .find('.questions')
         .append(question.replace(/newIndexQ/g,newIndexQ))
-        .find('>li:last')
+        .find('>li:last .container')
+        .removeClass('closed')
         .trigger('init')
+        .draggable({ revert: 'invalid', cancel: '.toggle' })
+        .draggable('disable')
         .hide()
         .slideDown(400);
     }
