@@ -17,7 +17,7 @@
     %p.author
       %strong= mailbox_view_state == 'sent' ? 'Me' : message.author_name
       to
-      %strong= mailbox_view_state == 'sent' ? message.author.name : 'me'
+      %strong= mailbox_view_state == 'sent' ? message.recipients.first.name : 'me'
       - if message.recipients.size > 1
         and
         %strong= pluralize(message.recipients.size-1,'other')

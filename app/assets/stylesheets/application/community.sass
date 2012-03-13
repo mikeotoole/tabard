@@ -67,7 +67,7 @@ body
       position: relative
       
       >a
-        +border_radius(3)
+        +border_radius(2)
         display: block
         font: 16px EurostyleStd, sans-serif
         height: 30px
@@ -91,7 +91,7 @@ body
             width: 0
       
       >ul
-        +border_radius(0,3,3,3)
+        +border_radius(0,2,2,2)
         left: 10px
         +opacity(.4)
         min-width: 120%
@@ -106,9 +106,11 @@ body
           padding: 0
         
           >a
+            border-top: 1px solid
             display: block
             font-size: 13px
-            padding: 0 40px 0 10px
+            line-height: 15px
+            padding: 0 40px 0 5px
             position: relative
             white-space: nowrap
             
@@ -122,9 +124,8 @@ body
               right: 5px
               top: 5px
           
-          &:last-child,
           &:last-child >a
-            +border_radius(0,0,3,3)
+            border-bottom: 1px solid
       
       &:hover
         
@@ -133,11 +134,11 @@ body
           
           &:not(:only-child)
             border-bottom: 0
-            +border_radius(3,3,0,0)
+            +border_radius(2,2,0,0)
         
         >ul
           +opacity(1)
-          padding: 5px 0 0
+          padding: 10px
           top: 30px
           +transition(opacity .2s linear, top .2s linear)
           
@@ -145,8 +146,8 @@ body
             height: auto
             
             >a
-              padding-bottom: 7px
-              padding-top: 7px
+              padding-bottom: 10px
+              padding-top: 10px
               +transition(padding .2s linear)
       
       &.special
@@ -155,7 +156,7 @@ body
         >a
           float: right
           font-size: 14px
-          margin: 0 10px 0 0
+          margin: 0 5px 0 0
           padding: 0 40px 0 10px
           +transition(none)
           
@@ -176,9 +177,46 @@ body
             cursor: default
         
         >ul
-          +border-radius(3,0,3,3)
+          +border-radius(2,0,2,2)
           left: auto
-          right: 10px
+          right: 5px
+          
+          >li >a
+            padding-left: 35px
+            
+            &:after
+              display: block
+              height: 25px
+              left: 0
+              line-height: 25px
+              position: absolute
+              text-align: center
+              top: 5px
+              width: 25px
+          
+          >li.settings a:after
+            content: '\2732'
+          
+          >li.roster a:after
+            content: '\22EF'
+          
+          >li.myroster a:after
+            content: '\039E'
+          
+          >li.games a:after
+            content: '\101C'
+          
+          >li.forms a:after
+            content: '\270E'
+          
+          >li.roles a:after
+            content: '\262F'
+          
+          >li.applications a:after
+            content: '\2764'
+          
+          >li.leave a:after
+            content: '\2715'
 
 #body
   background: #fff

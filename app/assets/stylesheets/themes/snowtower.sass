@@ -42,7 +42,7 @@ body,
             border-top-color: #4D9AB8
       
       >ul >li >a
-        border-top: 1px solid #203b60
+        border-color: #203b60 !important
         color: #acd3e6
         
         &[meta]:before
@@ -69,8 +69,20 @@ body,
           border: 1px solid #203b60
           +box_shadow(0 0 5px rgba(#000,.5))
       
-      &.special >a
-        color: #000
+      &.special
+      
+        >a
+          color: #000
+          
+        >ul >li >a
+        
+          &:after
+            background: #203B60
+            color: #9DC3D7
+          
+          &:hover:after
+            background: #4B9BB6
+            color: #fff
       
       &.settings >a:before
         background-position: -90px 0
