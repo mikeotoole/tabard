@@ -122,6 +122,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] A CanCan ability with the community scope.
   ###
   def in_community(context_community)
+    return Ability.new unless self.user
     return Ability.new(self.user) unless context_community
     context_ability = Ability.new(self.user)
     context_ability.dynamicContextRules(self.user, context_community)
