@@ -3,13 +3,13 @@
     - if qf.object.marked_for_destruction?
       = qf.input :_destroy, :as => :hidden
     - else
-      %li{ :question => q, :question_id => (question.id ||= ''), :question_style => (question.style ||= ''), :class => "drag #{qf.object.errors.any? ? 'question_with_errors' : ''}" }
-        .container.closed
+      %li{ question: q, question_id: (question.id ||= ''), question_style: (question.style ||= ''), class: 'drag' }
+        %div{ class: "container #{qf.object.errors.any? ? 'question_with_errors' : 'closed'}" }
           = qf.input :position, :as => :hidden, :input_html => { class: 'position' }
           .toggle{ :open => '↓', :closed => '↪' }
           %h3= question.body
           .left
-            = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :maxlength => Question::MAX_BODY_LENGTH }
+            = qf.input :body, :as => :string, :wrapper_tag => :p, :label => 'Question', :input_html => { :class => 'body', :maxlength => Question::MAX_BODY_LENGTH }
             .select
               = qf.collection_radio :style, Question.select_options, :first, :last
             .optreq
