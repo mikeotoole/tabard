@@ -18,7 +18,7 @@ class UserProfilesController < ApplicationController
 
   def index
     authorize! :index, UserProfile
-    @user_profiles = UserProfile.where(publicly_viewable: true).order(:display_name).page params[:page]
+    @user_profiles = UserProfile.order(:display_name).page params[:page]
   end
 
   # GET /user_profiles/1
