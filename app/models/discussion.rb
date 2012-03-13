@@ -13,7 +13,9 @@ class Discussion < ActiveRecord::Base
 ###
 # Constants
 ###
+  # This is the max name length
   MAX_NAME_LENGTH = 60
+  # This is the max body length
   MAX_BODY_LENGTH = 10000
 
 ###
