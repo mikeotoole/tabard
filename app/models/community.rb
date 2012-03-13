@@ -317,11 +317,11 @@ protected
       :position => 0)
     question.custom_form = ca
     question.save!
-    PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id)
-    PredefinedAnswer.create!(:body => "3-6 hours", :question_id => question.id)
-    PredefinedAnswer.create!(:body => "6-10 hours", :question_id => question.id)
-    PredefinedAnswer.create!(:body => "10-20 hours", :question_id => question.id)
-    PredefinedAnswer.create!(:body => "20+ hours", :question_id => question.id)
+    PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id, :position => 0)
+    PredefinedAnswer.create!(:body => "3-6 hours", :question_id => question.id, :position => 1)
+    PredefinedAnswer.create!(:body => "6-10 hours", :question_id => question.id, :position => 2)
+    PredefinedAnswer.create!(:body => "10-20 hours", :question_id => question.id, :position => 3)
+    PredefinedAnswer.create!(:body => "20+ hours", :question_id => question.id, :position => 4)
 
     # Second Question
     question = Question.create!(

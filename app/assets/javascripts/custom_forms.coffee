@@ -10,7 +10,7 @@ $(document).ready ->
   $('form.custom_form')
     .delegate '.questions > li .toggle', 'click', ->
       container = $(this).closest('.container')
-      qtitle = container.find('input').val()
+      qtitle = container.find('input.body').val()
       qtitle = '(no title)' unless qtitle
       container.find('> h3').html qtitle
       container.toggleClass('closed')
@@ -60,6 +60,8 @@ $(document).ready ->
 
   $('form.custom_form .questions > li.drag .container')
     .draggable(dragOpts)
+  $('form.custom_form .questions > li.drag .container:not(.closed)')
+    .draggable('disable')
   
   
   # Q&A Functionality
