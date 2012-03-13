@@ -63,6 +63,10 @@ unless @dont_run
   s_panda.user.update_attribute(:accepted_current_privacy_policy, false)
   s_panda.user.accepted_documents.destroy_all
 
+  puts "Sleepy Pidgeon is private"
+  s_pidgeon = UserProfile.find_by_last_name("Pidgeon")
+  s_pidgeon.update_attribute(:publicly_viewable, false)
+
   puts "Creating a user for Mike, because he thinks our adjective animals aren't cool enough..."
   mike = User.new(:accepted_current_terms_of_service => true,
                   :accepted_current_privacy_policy => true,
