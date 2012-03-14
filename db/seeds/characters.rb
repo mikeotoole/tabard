@@ -6,7 +6,7 @@
 def create_empire_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male", server=nil)
   user_profile = UserProfile.find_by_last_name(user_last_name)
   server ||= "Atris"
-  puts "Creating #{user_profile.name} Character #{char_name}"
+  puts "Creating #{user_profile.name} SWTOR Empire Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => SwtorCharacter.create!(
         :name => char_name,
@@ -22,7 +22,7 @@ end
 # Create SWTOR Republic Character
 def create_republic_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male")
   user_profile = UserProfile.find_by_last_name(user_last_name)
-  puts "Creating #{user_profile.name} Character #{char_name}"
+  puts "Creating #{user_profile.name} SWTOR Republic Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => SwtorCharacter.create!(
         :name => char_name,
@@ -39,7 +39,7 @@ end
 def create_alliance_character(user_last_name, char_name, char_class, race, level, gender="Male", server=nil)
   user_profile = UserProfile.find_by_last_name(user_last_name)
   server ||= ""
-  puts "Creating #{user_profile.name} Character #{char_name}"
+  puts "Creating #{user_profile.name} WoW Alliance Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => WowCharacter.create!(
         :name => char_name,
@@ -54,7 +54,7 @@ end
 # Create WoW Horde Character
 def create_horde_character(user_last_name, char_name, char_class, race, level, gender="Male")
   user_profile = UserProfile.find_by_last_name(user_last_name)
-  puts "Creating #{user_profile.name} Character #{char_name}"
+  puts "Creating #{user_profile.name} WoW Horde Character #{char_name}"
   user_profile.character_proxies.create!(
       :character => WowCharacter.create!(
         :name => char_name,
@@ -63,6 +63,16 @@ def create_horde_character(user_last_name, char_name, char_class, race, level, g
         :race => race,
         :level => level,
         :gender => gender,
+        :about => ""))
+end
+
+# Create Minecraft Character
+def create_minecraft_character(user_last_name, char_name)
+  user_profile = UserProfile.find_by_last_name(user_last_name)
+  puts "Creating #{user_profile.name} Minecraft Character #{char_name}"
+  user_profile.character_proxies.create!(
+      :character => MinecraftCharacter.create!(
+        :name => char_name,
         :about => ""))
 end
 
@@ -86,5 +96,8 @@ unless @dont_run
   %w(Eliand Blaggarth Drejan).each do |cname|
     create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
   end
-
+  
+  %w(Billy Fox O'Toole Moose).each do |user_last_name|
+    create_minecraft_character(user_last_name, "Boxy #{user_last_name}")
+  end
 end

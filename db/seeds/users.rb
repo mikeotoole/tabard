@@ -4,7 +4,7 @@
 
 # Create user
 def create_user(first_name, last_name, display_name=nil)
-  puts "Creating #{first_name} #{last_name}"
+  puts "Creating User #{first_name} #{last_name}"
   display_name ||= "#{first_name} #{last_name}"
   user = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
       :email => "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", :password => "Password",
