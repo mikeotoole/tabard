@@ -19,15 +19,11 @@ class Minecraft < Game
   attr_accessible :server_type
 
 ###
-# Associations
-###
-  #has_many :minecraft_characters, :dependent => :destroy
-
-###
 # Validators
 ###
   validates :server_type,  :presence => true,
-                    :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." }
+                    :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." },
+                    :uniqueness => {:case_sensitive => false, :message => "A game with this server type exists."}
 
 ###
 # Public Methods
@@ -46,6 +42,10 @@ class Minecraft < Game
     minecraft = Minecraft.find_by_server_type(server_type).first
     return minecraft
   end
+  
+  def self.minecraft_characters
+    MinecraftCharacters.all
+  end
 
 ###
 # Instance Methods
@@ -53,6 +53,10 @@ class Minecraft < Game
   # Calls class method by same name.
   def all_server_types
     self.class.all_server_types
+  end
+  
+  def minecraft_characters
+    self.class.minecraft_characters
   end
 
   # Returns the full name of this game including game type faction and server.
@@ -63,6 +67,14 @@ class Minecraft < Game
   # Returns just basic game name
   def short_name
     "Minecraft"
+  end
+  
+  def server_name
+    nil
+  end
+  
+  def faction
+    nil
   end
 end
 

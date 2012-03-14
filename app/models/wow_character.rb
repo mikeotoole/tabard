@@ -74,7 +74,8 @@ class WowCharacter < BaseCharacter
 ###
 # Validators
 ###
-  validates :name, :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, :presence => true, 
+                   :length => { :maximum => MAX_NAME_LENGTH }
   validate do |wow_character|
     wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
   end

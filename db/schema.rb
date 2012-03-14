@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120313214055) do
+ActiveRecord::Schema.define(:version => 20120313220822) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -358,6 +358,14 @@ ActiveRecord::Schema.define(:version => 20120313214055) do
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
+
+  create_table "minecraft_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "avatar"
+    t.text     "about"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "minecrafts", :force => true do |t|
     t.string   "server_type"

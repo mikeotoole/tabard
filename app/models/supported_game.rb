@@ -17,13 +17,13 @@ class SupportedGame < ActiveRecord::Base
 ###
 # Attribute accessor
 ###
-  attr_accessor :server_name, :faction
+  attr_accessor :server_name, :faction, :server_type
 
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :game_id, :game_type, :game, :server_name, :faction
+  attr_accessible :name, :game_id, :game_type, :game, :server_name, :faction, :server_type
 
 ###
 # Associations
@@ -46,17 +46,20 @@ class SupportedGame < ActiveRecord::Base
   delegate :full_name, :to => :game, :prefix => true
   delegate :short_name, :to => :game, :prefix => true
   delegate :name, :to => :community, :prefix => true
+  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+  
   delegate :faction, :to => :game, :allow_nil => true
   delegate :server_name, :to => :game, :allow_nil => true
-  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+  delegate :server_type, :to => :game, :allow_nil => true
   delegate :all_factions, :to => :game, :allow_nil => true
   delegate :all_servers, :to => :game, :allow_nil => true
+  delegate :all_server_types, :to => :game, :allow_nil => true
 
 ###
 # Validators
 ###
   validates :community, :presence => true
-  validate :game_faction_server_combination
+  validate :game_attributes_valid
   validates :name, :presence => true,
                    :length => { :maximum => MAX_NAME_LENGTH },
                    :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
@@ -69,7 +72,6 @@ class SupportedGame < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
   # Gets the full name of this game with type faction and server
   def full_name
     "#{self.game_full_name} \u2014 #{self.name}"
@@ -98,18 +100,18 @@ protected
 ###
 # Validator Methods
 ###
-
   ###
   # _validator_
   #
-  # Makes sure that there is a game for the given faction server combination.
+  # Makes sure that there is a game for the given game attributes.
   ###
-  def game_faction_server_combination
+  def game_attributes_valid
     if self.game_id.blank?
-      game_class = self.game_type.constantize if self.game_type
-      if game_class and game_class.superclass.name == "Game"
-        self.errors.add(:server_name, "invalid for game type") if not game_class.all_servers.include?(self.server_name)
-        self.errors.add(:faction, "invalid for game type") if not game_class.all_factions.include?(self.faction)
+      if self.game and (self.game_type == "Wow" or self.game_type == "Swtor")
+        self.errors.add(:server_name, "invalid for game type") if not self.all_servers.include?(self.server_name)
+        self.errors.add(:faction, "invalid for game type") if not self.all_factions.include?(self.faction)
+      elsif self.game and self.game_type == "Minecraft"
+        self.errors.add(:server_type, "invalid for game type") if not self.all_server_types.include?(self.server_type)
       else
         self.errors.add(:game_type, "is not valid")
       end

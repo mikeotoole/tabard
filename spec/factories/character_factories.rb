@@ -45,6 +45,15 @@ FactoryGirl.define do
     gender "Male"
   end
   
+  factory :minecraft_character do
+    sequence(:name) {|n| "MC Character #{n}" }
+  end
+  
+   # minecraft character with default user profile
+  factory :minecraft_char_profile, :parent => :minecraft_character do
+    after_create { |c| set_character_proxy(c) }
+  end
+  
   # wow character with default user profile
   factory :wow_char_profile, :parent => :wow_character do
     after_create { |c| set_character_proxy(c) }

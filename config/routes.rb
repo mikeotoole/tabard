@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  resources :minecraft_characters
+
   resources :minecrafts
 
   # Admin Users

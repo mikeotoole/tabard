@@ -6,7 +6,7 @@
 # This is an observer for both SwtorCharacters and WowCharacters.
 ###
 class CharacterObserver < ActiveRecord::Observer
-  observe :wow_character, :swtor_character
+  observe :wow_character, :swtor_character, :minecraft_character
 
   # Creates an activity when a character is updated.
   def after_update(character)

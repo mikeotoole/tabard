@@ -1,0 +1,6 @@
+- if characters.any?
+  %ul.characters
+    - characters.each do |character|
+      %li
+        .avatar= image_tag character.avatar_url :small
+        %h3= link_to_if (can? :update, character), character.name, edit_minecraft_character_path(character)

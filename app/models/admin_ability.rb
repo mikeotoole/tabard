@@ -44,6 +44,7 @@ class AdminAbility
       can [:read, :update], SupportedGame
       can [:read], SwtorCharacter
       can [:read], WowCharacter
+      can [:read], MinecraftCharacter
       can [:update_account, :edit_account], AdminUser do |admin_user|
         admin_user == user
       end
@@ -54,10 +55,12 @@ class AdminAbility
       can [:nuke, :reset_all_passwords, :sign_out_all_users], User
       can [:destroy], SwtorCharacter
       can [:destroy], WowCharacter
+      can [:destroy], MinecraftCharacter
       can [:destroy], Community
       can [:destroy], SupportedGame
       can [:read, :create, :update], [Wow, 'Wow']
       can [:read, :create, :update], [Swtor, 'Swtor']
+      can [:read, :create, :update], [Minecraft, 'Minecraft']
       can [:toggle_maintenance_mode], SiteConfigurationController
       can :manage, ArtworkUpload
     end
