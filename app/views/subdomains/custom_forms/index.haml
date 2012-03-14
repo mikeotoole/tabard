@@ -17,10 +17,10 @@
         %tr
           - if custom_form.application_form?
             %td
-              %strong= link_to custom_form.name, new_community_application_url
+              %strong= link_to shorten_words(custom_form.name, 21), new_community_application_url
           - else
             %td
-              = link_to custom_form.name, new_custom_form_submission_url(custom_form)
+              = link_to shorten_words(custom_form.name, 21), new_custom_form_submission_url(custom_form)
           %td.actions
             %div
               - if can? :update, custom_form

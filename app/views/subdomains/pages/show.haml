@@ -3,9 +3,9 @@
 #breadcrumb
   %ol
     %li= link_to "Page Spaces", page_spaces_path
-    %li= link_to @page.page_space_name, @page.page_space
+    %li= link_to shorten_words(@page.page_space_name, 21), @page.page_space
     %li
-      %span= @page.name
+      %span= shorten_words @page.name, 21
 
 #actions.actions
   - if (can? :update, @page)
@@ -14,4 +14,5 @@
     = link_to 'Destroy', @page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove page', :class => 'delete'
 
 %section
+  %h1= shorten_words @page.name, 21
   = @page.body

@@ -6,7 +6,7 @@
     %li= link_to @form.name, edit_custom_form_url(@form)
     %li= link_to 'Submissions', custom_form_submissions_url(@form)
     %li
-      %span= @submission.user_profile_display_name
+      %span= shorten_words(@submission.user_profile_display_name, 21)
 
 .submission
   .sidebar

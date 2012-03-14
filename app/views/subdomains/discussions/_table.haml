@@ -9,11 +9,11 @@
   %tbody
     - discussions.each do |discussion|
       %tr
-        %td= link_to discussion.name, discussion
-        %td= discussion.poster.name
+        %td= link_to shorten_words(discussion.name, 21), discussion
+        %td= link_to shorten_words(discussion.poster.name), discussion.poster
         %td
-          - if discussion.comments.size > 0
-            = discussion.comments.last.poster_name
+          - if discussion.comments.any?
+            = link_to shorten_words(discussion.comments.last.poster_name), discussion.comments.last.poster
         %td
           - if not discussion.is_locked
             = discussion.number_of_comments

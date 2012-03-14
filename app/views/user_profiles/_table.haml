@@ -1,8 +1,7 @@
 %table
   %thead
     %tr
-      %th Name
-      %th
+      %th User
       %th Communities
       %th.r Characters
       %th.actions
@@ -12,15 +11,12 @@
         %tr
           %td
             .avatar.alignleft= image_tag user_profile.avatar_url :icon
-            %h3= link_to user_profile.display_name, user_profile
-          %td.pitch
-            - unless user_profile.description.to_s.strip == ""
-              %p= user_profile.description
+            %h3= link_to shorten_words(user_profile.display_name), user_profile
           %td
             - if user_profile.owned_communities.any?
               - user_profile.owned_communities.each do |community|
                 = raw '<br>' unless community == user_profile.owned_communities.first
-                = link_to community.name, root_url(:subdomain => community.subdomain)
+                = link_to shorten_words(community.name), root_url(:subdomain => community.subdomain)
               - if user_profile.communities.size > user_profile.owned_communities.size
                 - other_count = user_profile.communities.size - user_profile.owned_communities.size
                 %br
@@ -35,6 +31,6 @@
                 = link_to 'Recruit', '#', :class => 'recruit', :meta => 'Recruit this user'
   %tfoot
     %tr
-      %td{ colspan: 5 }
+      %td{ colspan: 4 }
         = link_to 'Sign up', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :class => 'button'
         add characters, join communities, and be awesome.

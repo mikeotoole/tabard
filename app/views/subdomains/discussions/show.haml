@@ -4,9 +4,9 @@
 #breadcrumb
   %ol
     %li= link_to "Discussion Spaces", discussion_spaces_path
-    %li= link_to @discussion.discussion_space_name, @discussion.discussion_space
+    %li= link_to shorten_words @discussion.discussion_space_name, 21, @discussion.discussion_space
     %li
-      %span= @discussion.name
+      %span= shorten_words @discussion.name, 21
 
 #actions.actions
   - if @discussion.is_locked
@@ -21,7 +21,7 @@
       = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
 
 %article.discussion
-  %h1= @discussion.name
+  %h1= shorten_words @discussion.name, 21
   .meta
     = image_tag (@discussion.poster_avatar_url :small), :class => 'avatar'
     = @discussion.has_been_edited ? 'Edited by' : 'Created by'

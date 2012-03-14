@@ -6,7 +6,7 @@
   %tbody
     - pages.each do |page|
       %tr
-        %td= link_to page.name, page
+        %td= link_to shorten_words(page.name, 21), page
         %td.actions
           %div
             - if (can? :update, page)

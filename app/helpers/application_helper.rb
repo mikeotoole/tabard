@@ -79,4 +79,13 @@ module ApplicationHelper
     current_user.available_character_proxies(current_community,current_game)
   end
 
+  ###
+  # Shortens long words by placing a separator in the middle of them
+  # [Returns] string of shortened words
+  ###
+  def shorten_words(string, max_size=15, separator='...')
+    half_size = (max_size / 2).floor.to_s
+    regex = '([^\s]{'+half_size+'})[^\s]{2,}([^\s]{'+half_size+'})'
+    string.gsub /#{regex}/, '\1'+separator+'\2'
+  end
 end

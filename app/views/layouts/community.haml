@@ -52,14 +52,14 @@
               - if wiki_items.any?
                 %ul
                   - wiki_items.each do |space|
-                    %li= link_to space.name, space if space.persisted?
+                    %li= link_to shorten_words(space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Discussions', discussion_spaces_url
               - if discussion_items.any?
                 %ul
                   - discussion_items.each do |space|
-                    %li= link_to space.name, space if space.persisted?
+                    %li= link_to shorten_words(space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
               = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)

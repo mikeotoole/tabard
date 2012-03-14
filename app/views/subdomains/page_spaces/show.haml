@@ -4,7 +4,7 @@
   %ol
     %li= link_to "Page Spaces", page_spaces_path
     %li
-      %span= @page_space.name
+      %span= shorten_words @page_space.name, 21
 
 #actions.actions
   - if can? :create, Page.new({ page_space: @page_space }, :without_protection => true)
@@ -14,7 +14,7 @@
   - if can? :destroy, @page_space
     = link_to 'Remove', @page_space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove page space', :class => 'delete'
 
-%h1= @page_space.name
+%h1= shorten_words @page_space.name, 21
 
 - if @pages.any?
   = paginate @pages

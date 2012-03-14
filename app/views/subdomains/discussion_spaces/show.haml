@@ -4,7 +4,7 @@
   %ol
     %li= link_to "Discussion Spaces", discussion_spaces_url
     %li
-      %span= @discussion_space.name
+      %span= shorten_words @discussion_space.name, 21
 
 #actions.actions
   - if can? :create, Discussion.new({ discussion_space: @discussion_space }, :without_protection => true)
@@ -14,7 +14,7 @@
   - if (can? :destroy, @discussion_space)
     = link_to 'Destroy', @discussion_space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion space', :class => 'delete'
 
-%h1= @discussion_space.name
+%h1= shorten_words @discussion_space.name, 21
 
 - if @discussions.any?
   = paginate @discussions
