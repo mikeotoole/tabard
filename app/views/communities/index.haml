@@ -1,8 +1,14 @@
 - title "Communities"
-
 #body
   = render 'submenu'
   %h1 All Communities
+  #search
+    = form_tag communities_url, :method => 'get' do
+      = hidden_field_tag :direction, params[:direction]
+      = hidden_field_tag :sort, params[:sort]
+      %p
+        = text_field_tag :search, params[:search]
+        = submit_tag "Search", :name => nil
   - if @communities.any?
     = paginate @communities
     = render "communities/table", :communities => @communities

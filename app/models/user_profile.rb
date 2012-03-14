@@ -347,6 +347,24 @@ protected
   end
 
 ###
+# Class Methods
+###
+  ###
+  # This method returns a search scoped or simply scoped search helper
+  # [Args]
+  #   * +search+ -> The string search for.
+  # [Returns] A scoped query
+  ###
+  def self.search(search)
+    if search
+      search = "%"+search+'%'
+      where{(first_name =~ search) | (last_name =~ search) | (display_name =~ search) | (location =~ search)}
+    else
+      scoped
+    end
+  end
+
+###
 # Callback Methods
 ###
   ###

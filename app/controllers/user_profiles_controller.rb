@@ -18,7 +18,7 @@ class UserProfilesController < ApplicationController
 
   def index
     authorize! :index, UserProfile
-    @user_profiles = UserProfile.order(:display_name).page params[:page]
+    @user_profiles = UserProfile.search(params[:search]).order(sort_column + " " + sort_direction).page params[:page]
   end
 
   # GET /user_profiles/1
@@ -94,5 +94,18 @@ class UserProfilesController < ApplicationController
     updated = !!params[:updated] ? params[:updated] : nil
     count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count)
+  end
+
+###
+# Helper methods
+###
+  helper_method :sort_column, :sort_direction
+private
+  def sort_column
+    UserProfile.column_names.include?(params[:sort]) ? params[:sort] : "display_name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end
