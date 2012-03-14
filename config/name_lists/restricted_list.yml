@@ -5,6 +5,30 @@
   :word: www
 - :domain: true
   :company: false
+  :administration: false
+  :word: wow
+- :domain: true
+  :company: false
+  :administration: false
+  :word: swtor
+- :domain: true
+  :company: false
+  :administration: false
+  :word: minecraft
+- :domain: true
+  :company: false
+  :administration: false
+  :word: worldofwarcraft
+- :domain: true
+  :company: false
+  :administration: false
+  :word: starwars
+- :domain: true
+  :company: false
+  :administration: false
+  :word: starwarstheoldrepublic
+- :domain: true
+  :company: false
   :administration: true
   :word: account
 - :domain: true
