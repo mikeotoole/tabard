@@ -4,8 +4,8 @@
   %li
     %span Find
     %ul
-      %li= link_to 'Communities', communities_url
-      %li= link_to 'Users', user_profiles_url
+      %li= link_to 'Communities', communities_url(:subdomain => false)
+      %li= link_to 'Users', user_profiles_url(:subdomain => false)
 
 .communities
   - if current_user.communities.size > 0

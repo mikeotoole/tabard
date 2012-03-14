@@ -1,7 +1,7 @@
 %table
   %thead
     %tr
-      %th{ class: "sort #{params[:direction] ? params[:direction].downcase : 'asc'}" }= sortable 'name', 'Community' if communities.size > 1
+      %th= sortable 'name', 'Community' if communities.size > 1
       %th
       %th.r Members
       %th.r Characters

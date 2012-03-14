@@ -329,11 +329,8 @@ body.index.swtors #submenu .swtor
         padding: 10px
         
         a
-          background: #1a4e73 !important
-          border: 1px solid #4A99D0
           color: #fff !important
-          padding: 0 7px !important
-          text-decoration: none !important
+          white-space: nowrap
           
           &:hover
             background: #A13A30 !important
@@ -355,13 +352,22 @@ body.index.swtors #submenu .swtor
           &:hover
             background: #A13A30 !important
         
-        &.sort
+        a.sortable
           
-          &.asc a:after
+          &.current
+            background: #1a4e73 !important
+            border: 1px solid #4A99D0
+            padding: 0 7px !important
+            text-decoration: none !important
+          
+          &.asc:after
             content: ' \2193'
           
-          &.desc a:after
+          &.desc:after
             content: ' \2191'
+          
+          &:hover
+            background: #A13A30 !important
   
     tbody
     
