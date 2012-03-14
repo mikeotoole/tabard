@@ -86,7 +86,8 @@ class SwtorCharacter < BaseCharacter
 ###
 # Validators
 ###
-  validates :name, :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, :presence => true,
+                   :length => { :maximum => MAX_NAME_LENGTH }
   validate do |swtor_character|
     swtor_character.errors.add(:game, "not found with this faction server combination") if swtor_character.swtor_id.blank?
   end

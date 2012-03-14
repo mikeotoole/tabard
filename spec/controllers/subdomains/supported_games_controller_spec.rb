@@ -214,7 +214,7 @@ describe Subdomains::SupportedGamesController do
 
       it "redirects to the supported_game" do
         put :update, :id => supported_game.id, :supported_game => valid_attributes
-        response.should redirect_to(supported_game)
+        response.should redirect_to(supported_games_path)
       end
       
       it "should create an Activity when attributes change" do

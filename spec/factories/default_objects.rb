@@ -70,6 +70,10 @@ class DefaultObjects
   def self.swtor
     @swtor ||= FactoryGirl.create(:swtor)
   end
+  
+  def self.minecraft
+    @minecraft ||= FactoryGirl.create(:minecraft)
+  end
 
   def self.wow_character_proxy
     @wow_character_proxy ||= FactoryGirl.create(:character_proxy_with_wow_character)
@@ -86,6 +90,9 @@ class DefaultObjects
     end
     unless @community.games.include?(DefaultObjects.swtor)
       @community.supported_games.create!(:name => "Test SWTOR Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
+    end
+    unless @community.games.include?(DefaultObjects.minecraft)
+      @community.supported_games.create!(:name => "Test Minecraft Game", :game_id => DefaultObjects.minecraft, :game_type => "Minecraft")
     end
     unless @community.announcements.size > 0
       announcement1 = @community.announcements.new(:name => "Announcement 1", 
@@ -156,6 +163,7 @@ class DefaultObjects
     @fresh_user_profile = nil
     @wow = nil
     @swtor = nil
+    @minecraft = nil
     @community = nil
     @community_two = nil
     @general_discussion_space = nil

@@ -13,6 +13,14 @@
       = link_to '+ add new', new_wow_character_url
 - if user_profile.wow_characters.any?
   = render 'wow_characters/list', :characters => user_profile.wow_characters
+  
+- if user_profile.minecraft_characters.any? or (user_signed_in? and user_profile == current_user.user_profile)
+  %h2
+    Minecraft
+    - if user_signed_in? and user_profile == current_user.user_profile
+      = link_to '+ add new', new_minecraft_character_url
+- if user_profile.minecraft_characters.any?
+  = render 'minecraft_characters/list', :characters => user_profile.minecraft_characters
 
 - unless user_profile.characters.any? or (user_signed_in? and user_profile.id == current_user.user_profile_id)
   %p No characters.

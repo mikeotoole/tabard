@@ -25,6 +25,10 @@ def create_community(admin_user_last_name, name, slogan, game_array)
         puts "with the game SWTOR Republic"
         sg = community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Republic"}), :name => "A-Team")
         Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+      when "Minecraft"
+        puts "with the game Minecraft"
+        sg = community.supported_games.create!(:game => Minecraft.find(:first, :conditions => {:server_type => "Survival"}), :name => "A-Team")
+        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
     end
   end
   if Theme.count > 1
@@ -77,7 +81,7 @@ unless @dont_run
   ###
 
   # Two Maidens
-  two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde))
+  two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde Minecraft))
   puts "Two maidens is getting a private roster"
   two_maidens.update_attribute(:is_public_roster, false)
 
@@ -105,7 +109,7 @@ unless @dont_run
   end
 
   # Just Another Headshot
-  headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde))
+  headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
 
   billy = UserProfile.find_by_last_name('Billy')
 

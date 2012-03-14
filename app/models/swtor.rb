@@ -23,7 +23,7 @@ class Swtor < Game
 ###
 # Associations
 ###
-  has_many :characters, :dependent => :destroy
+  has_many :swtor_characters, :dependent => :destroy
 
 ###
 # Validators

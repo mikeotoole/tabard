@@ -36,7 +36,7 @@ ActiveAdmin.register UserProfile do
           column "Name" do |character|
             link_to character.name, [:admin, character]
           end
-          column :game
+          column :game_name
         end
       end
     end

@@ -48,13 +48,13 @@ class CharacterProxy < ActiveRecord::Base
 
   # This method determines if this character proxy is compatable with the provided community.
   def compatable_with_community?(community)
-    community.supported_games.exists?(:game_type => self.game.class.to_s) if community
+    return community.supported_games.exists?(:game_type => self.game.class.to_s) if community
   end
 
-  # This method determines if this character proxy is compatable with the provided community.
+  # This method determines if this character proxy is compatable with the provided supported_game.
   def compatable_with_supported_game?(supported_game)
     return true if supported_game == nil
-    supported_game.game_type == self.game.class.to_s if supported_game
+    return supported_game.game_type == self.game.class.to_s
   end
 
 ###

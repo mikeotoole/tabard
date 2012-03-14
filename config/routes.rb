@@ -1,4 +1,8 @@
 DaBvRails::Application.routes.draw do
+  resources :minecraft_characters
+
+  resources :minecrafts
+
   # Admin Users
   devise_for :admin_users do
     get "/admin/login" => "admin/devise/sessions#new"
@@ -46,6 +50,7 @@ DaBvRails::Application.routes.draw do
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
   get "/world-of-warcraft" => 'wows#index', :as => 'wows'
+  get "/minecraft" => 'minecrafts#index', :as => 'minecrafts'
 
   # Characters
   resources :wow_characters, :except => [:index, :create]
