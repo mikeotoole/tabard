@@ -442,6 +442,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -468,6 +469,6 @@ end
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
-#  pitch                           :text
+#  pitch                           :string(255)
 #
 

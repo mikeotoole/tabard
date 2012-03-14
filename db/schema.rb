@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120313220822) do
+ActiveRecord::Schema.define(:version => 20120314202015) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20120313220822) do
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
   add_index "communities", ["home_page_id"], :name => "index_communities_on_home_page_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
+  add_index "communities", ["name"], :name => "index_communities_on_name"
   add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 
   create_table "community_applications", :force => true do |t|
@@ -568,6 +569,9 @@ ActiveRecord::Schema.define(:version => 20120313220822) do
     t.string   "title"
     t.string   "location"
   end
+
+  add_index "user_profiles", ["display_name"], :name => "index_user_profiles_on_display_name"
+  add_index "user_profiles", ["location"], :name => "index_user_profiles_on_location"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                            :default => "",    :null => false
