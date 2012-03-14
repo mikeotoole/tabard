@@ -37,7 +37,7 @@
           %tr.private
             %td
               .avatar.alignleft= image_tag user_profile.avatar_url :icon
-              %h3= shorten_words(user_profile.display_name)
+              %h3= link_to shorten_words(user_profile.display_name), user_profile
             %td{ colspan: 3 }
             %td.actions
               %div
