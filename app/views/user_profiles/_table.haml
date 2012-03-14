@@ -1,37 +1,52 @@
 %table
   %thead
     %tr
-      %th{ class: "sort #{params[:direction] ? params[:direction].downcase : 'asc'}" }= sortable :display_name, User if user_profiles.size > 1
+      %th{ class: "sort #{params[:direction] ? params[:direction].downcase : 'asc'}" }= sortable 'display_name', 'User' if user_profiles.size > 1
+      %th Location
       %th Communities
       %th.r Characters
       %th.actions
   %tbody
     - user_profiles.each do |user_profile|
       - cache user_profile do
-        %tr
-          %td
-            .avatar.alignleft= image_tag user_profile.avatar_url :icon
-            %h3= link_to shorten_words(user_profile.display_name), user_profile
-          %td
-            - if user_profile.owned_communities.any?
-              - user_profile.owned_communities.each do |community|
-                = raw '<br>' unless community == user_profile.owned_communities.first
-                = link_to shorten_words(community.name), root_url(:subdomain => community.subdomain)
-              - if user_profile.communities.size > user_profile.owned_communities.size
-                - other_count = user_profile.communities.size - user_profile.owned_communities.size
-                %br
-                = "and #{pluralize other_count, 'other'}"
-            - else
-              = user_profile.communities.size
-          %td.r
-            = user_profile.character_proxies.size
-          %td.actions
-            %div
-              -# TODO - add link after we have this feature
-                = link_to 'Recruit', '#', :class => 'recruit', :meta => 'Recruit this user'
+        - if user_profile.publicly_viewable
+          %tr.public
+            %td
+              .avatar.alignleft= image_tag user_profile.avatar_url :icon
+              %h3= link_to shorten_words(user_profile.display_name), user_profile
+            %td
+              = shorten_words user_profile.location if !!user_profile.location
+            %td
+              - if user_profile.owned_communities.any?
+                - user_profile.owned_communities.each do |community|
+                  = raw '<br>' unless community == user_profile.owned_communities.first
+                  = link_to shorten_words(community.name), root_url(:subdomain => community.subdomain)
+                - if user_profile.communities.size > user_profile.owned_communities.size
+                  - other_count = user_profile.communities.size - user_profile.owned_communities.size
+                  %br
+                  = "and #{pluralize other_count, 'other'}"
+              - else
+                = user_profile.communities.size
+            %td.r
+              = user_profile.character_proxies.size
+            %td.actions
+              %div
+                -# TODO - add link after we have this feature
+                  = link_to 'Recruit', '#', :class => 'recruit', :meta => 'Recruit this user'
+        - else
+          %tr.private
+            %td
+              .avatar.alignleft= image_tag user_profile.avatar_url :icon
+              %h3= shorten_words(user_profile.display_name)
+            %td{ colspan: 3 }
+            %td.actions
+              %div
+                -# TODO - add link after we have this feature
+                  = link_to 'Recruit', '#', :class => 'recruit', :meta => 'Recruit this user'
+            
   %tfoot
     %tr
-      %td{ colspan: 4 }
+      %td{ colspan: 5 }
         - unless user_signed_in?
           = link_to 'Sign up', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :class => 'button'
           add characters, join communities, and be awesome.
