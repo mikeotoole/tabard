@@ -9,6 +9,7 @@ class Community < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
+  # This is a store used for the action items community setup bar.
   store :action_items, accessors: [ :update_home_page, :add_supported_game, :update_settings, :update_application, :create_discussion_space ]
 
 ###

@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(:version => 20120313220822) do
     t.integer  "home_page_id"
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
-    t.text     "pitch"
+    t.string   "pitch"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
