@@ -18,7 +18,7 @@ class UserProfilesController < ApplicationController
 
   def index
     authorize! :index, UserProfile
-    @user_profiles = UserProfile.search(params[:search]).order(sort_column + " " + sort_direction).page params[:page]
+    @user_profiles = UserProfile.search(params[:search]).order(sort_column + ' IS NULL, ' + sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
   end
 
   # GET /user_profiles/1
