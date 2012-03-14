@@ -238,7 +238,7 @@ class Ability
     end
 
     can :manage, Announcement do |announcement|
-      announcement.community.admin_profile_id == user.user_profile_id
+      announcement.community_admin_profile_id == user.user_profile_id
     end
 
     can :manage, DiscussionSpace

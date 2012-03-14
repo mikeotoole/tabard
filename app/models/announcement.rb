@@ -6,7 +6,7 @@
 # This class represents an actvity.
 ###
 class Announcement < ActiveRecord::Base
-	# Resource will be marked as deleted with the deleted_at column set to the time of deletion.
+  # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
   scope :ordered, :order => 'created_at DESC'

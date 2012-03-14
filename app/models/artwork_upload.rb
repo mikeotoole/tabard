@@ -50,7 +50,8 @@ class ArtworkUpload < ActiveRecord::Base
       :file_size => {
         :maximum => 5.megabytes.to_i
       }
-
+      
+  delegate :body, :to => :document, :prefix => true
 ###
 # Uploaders
 ###
