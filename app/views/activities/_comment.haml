@@ -5,19 +5,24 @@
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
-        %strong= link_to_unless (controller_name == 'user_profiles' and user_profile == comment.user_profile), comment.poster_name, user_profile_url(comment.user_profile), :meta => comment.user_profile_display_name
+        %strong= link_to_unless (controller_name == 'user_profiles' and user_profile == comment.user_profile), shorten_words(comment.poster_name), user_profile_url(comment.user_profile), :meta => shorten_words(comment.user_profile_display_name)
         = last_action_word(comment)
         a comment —
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
         - case comment.original_commentable_type
+        - when 'Announcement'
+          - announcement = Announcement.find_by_id(comment.original_commentable_id)
+          - if !!announcement
+            in
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, announcement), shorten_words(announcement.name), announcement_url(announcement, :subdomain => comment.community_subdomain)
         - when 'Discussion'
           - discussion = Discussion.find_by_id(comment.original_commentable_id)
-          - if discussion
+          - if !!discussion
             in
-            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, discussion), discussion.name, discussion_url(discussion, :subdomain => comment.community_subdomain)
+            = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, discussion), shorten_words(discussion.name), discussion_url(discussion, :subdomain => comment.community_subdomain)
         - when 'CommunityApplication'
           - community_application = CommunityApplication.find_by_id(comment.original_commentable_id)
-          - if community_application
+          - if !!community_application
             on
             = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, community_application), 'Community Application', community_application_url(community_application, :subdomain => comment.community_subdomain), :meta => community_application.user_profile_display_name
       %p

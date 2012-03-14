@@ -45,7 +45,7 @@
       border-left: 2px solid #554863
       padding: 5px 0 5px 15px
       left: 50%
-      margin: 0 0 0 -255px
+      margin: 0 0 0 -245px
       width: 385px
       
       > li > ul > li > a[meta]
@@ -75,16 +75,14 @@
       
       >a,
       >span
-        background: #251634
-        border: 1px solid #46345a
-        +border_radius(5)
+        border: 1px solid transparent
+        +border_radius(2)
         color: #ccc
         float: left
         font: 14px EurostyleStd, sans-serif
         display: block
         height: 30px
         line-height: 30px
-        margin: 0 0 0 5px
         padding: 0 15px
         position: relative
         z-index: 92
@@ -94,7 +92,7 @@
       
           &:after
             border: 5px solid transparent
-            border-top-color: #A7C3D6
+            border-top-color: #7D7A81
             content: ''
             height: 0
             +opacity(.7)
@@ -111,7 +109,7 @@
         border: 1px solid #4a99d0
         +border_radius(0,2,2,2)
         +box_shadow(0 0 5px rgba(#000, .5))
-        left: 5px
+        left: 0
         margin: -9000em 0 0
         min-width: 120%
         +opacity(0)
@@ -184,6 +182,7 @@
             +transition(background .1s linear, padding .1s linear)
             
             &:after
+              border-top-color: #fff
               +opacity(1)
         
         >ul

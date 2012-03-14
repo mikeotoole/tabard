@@ -36,12 +36,12 @@
           - if @announcement.user_profiles_have_seen.any?
             %ul
               - @announcement.user_profiles_have_seen.each do |user_profile|
-                %li= link_to user_profile.name, user_profile
+                %li= link_to shorten_words(user_profile.name), user_profile
         %td.half
           - if @announcement.user_profiles_have_not_seen.any?
             %ul
               - @announcement.user_profiles_have_not_seen.each do |user_profile|
-                %li= link_to user_profile.name, user_profile
+                %li= link_to shorten_words(user_profile.name), user_profile
 
 - if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments

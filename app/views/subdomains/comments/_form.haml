@@ -5,12 +5,12 @@
   %ul.profile
     %li
       %input{ :id => 'comment_character_proxy_id_0_'+unique, :name => 'comment[character_proxy_id]', :type => 'radio', :value => '', :checked => (last_posted_as_user_profile?(available_characters) ? 'checked' : nil) }
-      %label{ :for => 'comment_character_proxy_id_0_'+unique, :meta => current_user.user_profile.display_name }
+      %label{ :for => 'comment_character_proxy_id_0_'+unique, :meta => shorten_words(current_user.user_profile.display_name) }
         = image_tag current_user.user_profile.avatar_url(:tiny), :class => 'avatar'
     - available_characters.each do |proxy|
       %li
         %input{ :id => 'comment_character_proxy_id_'+proxy.id.to_s, :type => 'radio', :name => 'comment[character_proxy_id]', :value => proxy.id, :checked => (last_posted_as_character_proxy?(proxy) ? 'checked' : nil) }
-        %label{ :for => 'comment_character_proxy_id_'+proxy.id.to_s, :meta => proxy.name }
+        %label{ :for => 'comment_character_proxy_id_'+proxy.id.to_s, :meta => shorten_words(proxy.name) }
           = image_tag proxy.avatar_url(:tiny), :class => 'avatar'
   = f.input :body, :label => false, :wrapper => false, :input_html => { :id => 'comment_body_'+unique, :maxlength => Comment::MAX_BODY_LENGTH }
   %button{ :type => 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'

@@ -1,8 +1,11 @@
 = link_to 'Crumblin', user_profile_url(current_user.user_profile, :subdomain => false) + '#characters', :class => 'logo'
 
 %ul.menu
-  %li= link_to 'Communities', communities_url
-  %li= link_to 'Users', user_profiles_url
+  %li
+    %span Find
+    %ul
+      %li= link_to 'Communities', communities_url
+      %li= link_to 'Users', user_profiles_url
 
 .communities
   - if current_user.communities.size > 0

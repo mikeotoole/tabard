@@ -10,8 +10,8 @@
             %tr.read
               %td{ :class => 'check compact' } ✔
               %td
-                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
-              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
+                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, :subdomain => announcement.subdomain)
+              %td= link_to shorten_words(announcement.community_name), root_url(:subdomain => announcement.subdomain)
               %td
                 %time
                   = l announcement.created_at, :format => :date_short
@@ -24,10 +24,10 @@
                 = check_box_tag "ids[#{announcement.id}]", true, false, :id => "discussion_id_#{announcement.id}"
                 %label{ :for => "discussion_id_#{announcement.id}" }
               %td
-                %strong= link_to announcement.name, announcement_url(announcement, :subdomain => announcement.subdomain)
+                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, :subdomain => announcement.subdomain)
                 %br/
-                = truncate announcement.body, :length => 150, :separator => ' '
-              %td= link_to announcement.community_name, root_url(:subdomain => announcement.subdomain)
+                = truncate shorten_words(announcement.body), :length => 150, :separator => ' '
+              %td= link_to shorten_words(announcement.community_name), root_url(:subdomain => announcement.subdomain)
               %td
                 %time
                   = l announcement.created_at, :format => :date_short
