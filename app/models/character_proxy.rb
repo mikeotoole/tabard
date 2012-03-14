@@ -9,7 +9,7 @@ class CharacterProxy < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user_profile
+  belongs_to :user_profile, touch: true
   belongs_to :character, :polymorphic => true, :dependent => :destroy
   has_many :roster_assignments, :dependent => :destroy
   has_many :community_profiles, :through => :roster_assignments

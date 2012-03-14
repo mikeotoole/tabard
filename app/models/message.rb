@@ -9,7 +9,9 @@ class Message < ActiveRecord::Base
 ###
 # Constants
 ###
+  # This is the max subject length
   MAX_SUBJECT_LENGTH = 60
+  # This is the max body length
   MAX_BODY_LENGTH = 10000
 
 ###

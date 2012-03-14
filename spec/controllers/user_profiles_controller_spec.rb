@@ -6,6 +6,25 @@ describe UserProfilesController do
   let(:user_profile) { owner.user_profile }
   let(:disabled_user_profile) { create(:disabled_user).user_profile }
 
+  describe "GET 'index'" do
+    it "should be successful when authenticated as a user" do
+      sign_in user
+      get 'index'
+      response.should be_success
+    end
+
+    it "should be successful when authenticated as a community admin" do
+      sign_in admin_user
+      get 'index'
+      response.should be_success
+    end
+
+    it "should be successful when not authenticated as a user" do
+      get 'index'
+      response.should be_success
+    end
+  end
+
   describe "GET 'account'" do
     it "should show the current user when authenticated as a user" do
       sign_in owner

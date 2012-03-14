@@ -1,0 +1,11 @@
+- title "Users"
+
+#body
+  %h1 Crumblin Users
+  - if @user_profiles.any?
+    = paginate @user_profiles
+    = render "user_profiles/table", :user_profiles => @user_profiles
+    = paginate @user_profiles
+  -else
+    %p
+      There are no user profiles to display.

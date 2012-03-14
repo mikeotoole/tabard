@@ -22,5 +22,7 @@ class StatusCodeController < ApplicationController
   
   # This method gets the Unsupported Browser page.
   def unsupported_browser
+    # TODO - remove this after the beta test
+    add_new_flash_message "For this beta test, we recommend using Chrome. Support for other browsers is very limited during this test.", "notice"
   end
 end

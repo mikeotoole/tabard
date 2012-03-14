@@ -10,7 +10,7 @@
         - if user_signed_in? and current_user.in_community(activity.community).can? :read, activity.target.original_commentable
           to
           = link_to activity.target.original_commentable_name, activity.target.original_commentable
-        - elsif !defined?(current_community) or activity.community != current_community
+        - elsif !defined?(community) or activity.community != community
           in
           = link_to activity.target.community_name, root_url(:subdomain => activity.target.community_subdomain)
         —

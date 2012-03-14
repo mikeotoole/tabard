@@ -32,7 +32,7 @@ DaBvRails::Application.routes.draw do
   post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update] do
+  resources :user_profiles, :only => [:show, :edit, :update, :index] do
     member do
       get :activities
       get :announcements
@@ -41,9 +41,6 @@ DaBvRails::Application.routes.draw do
   end
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
-
-  # Activity
-  resources :activities, :only => [:index]
 
   # Communities
   resources :communities, :except => [:update, :edit] do
@@ -93,6 +90,7 @@ DaBvRails::Application.routes.draw do
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
       get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
       match "/clear_action_items" => "communities#clear_action_items", :as => "clear_action_items"
+      get "/activities" => "communities#activities", :as => "community_activities"
 
       # Roles and Permissions
       resources :roles, :except => [:show]

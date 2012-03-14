@@ -13,7 +13,7 @@ class ConfirmationsController < Devise::ConfirmationsController
   # The path used after confirmation.
   def after_confirmation_path_for(resource_name, resource)
     if resource.is_a?(User)
-      user_profile_path(resource.user_profile)
+      user_profile_url(resource.user_profile)+"#characters"
     else
       after_sign_in_path_for(resource)
     end
