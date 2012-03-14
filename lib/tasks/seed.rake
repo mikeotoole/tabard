@@ -33,6 +33,7 @@ namespace :seed do
     ANIMAL_NAMES.each do |last_name|
       create_user(ADJ_LIST[rand(ADJ_LIST.length)].capitalize, last_name)
       create_empire_character(last_name, "Darth #{last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+      create_minecraft_character(last_name, "Boxy #{last_name}")
       comm = create_community(last_name, "Sith #{last_name}s", "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{last_name}s will PWN you", %w(Empire))
       generate_application(comm, 'Fox').accept_application(UserProfile.find_by_last_name(last_name))
       generate_application(headshot, last_name).accept_application(billy)
