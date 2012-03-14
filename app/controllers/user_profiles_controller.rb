@@ -55,7 +55,11 @@ class UserProfilesController < ApplicationController
   # GET /user_profiles/:id/activities(.:format)
   def activities
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
-    render :partial => 'user_profiles/activities', :locals => { :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment }
+    unless params[:updated]
+      render :partial => 'user_profiles/activities', :locals => { :user_profile => @user_profile, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment }
+    else
+      render :partial => "activities/activities", :locals => { :activities => @activities, :user_profile => @user_profile }
+    end
   end
 
   # GET /user_profiles/:id/activities(.:format)
@@ -87,6 +91,8 @@ class UserProfilesController < ApplicationController
     @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
     @activities_count_initial = 20
     @activities_count_increment = 10
-    @activities = Activity.activities({ user_profile_id: @user_profile.id }, nil, @activities_count_initial)
+    updated = !!params[:updated] ? params[:updated] : nil
+    count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
+    @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count)
   end
 end

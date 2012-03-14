@@ -38,9 +38,6 @@ DaBvRails::Application.routes.draw do
   get "/account" => "user_profiles#account", :as => "account"
   match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
 
-  # Activity
-  resources :activities, :only => [:index]
-
   # Communities
   resources :communities, :except => [:update, :edit] do
     get 'page/:page', :action => :index, :on => :collection
@@ -88,6 +85,7 @@ DaBvRails::Application.routes.draw do
       match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
       get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
       match "/clear_action_items" => "communities#clear_action_items", :as => "clear_action_items"
+      get "/activities" => "communities#activities", :as => "community_activities"
 
       # Roles and Permissions
       resources :roles, :except => [:show]

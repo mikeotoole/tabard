@@ -9,11 +9,6 @@
     %hr
 
 %h1 Recent Activity
-- if defined? @activities and @activities.any?
-  %ol.activities
-    = render "activities/activities", :activities => @activities, :user_profile => @user_profile
-  - unless @activities.size < @activities_count_initial
-    %p.submit
-      = link_to 'Load more', activities_url(:format => :js, 'activity[community_id]' => current_community.id, :max_items => @activities_count_increment), :remote => true, 'data-type' => :text, :class => 'button more_activites', :initial => @activities_count_initial, :increment => @activities_count_increment
-- else
-  %p No recent activity
+
+.activities
+= link_to 'Recent Activity', community_activities_url(current_community, :format => :js), :remote => true, :class => 'dynload', 'data-type' => :text, 'data-target' => '#body div.activities', 'data-error' => 'Error: unable to load recent activity.'

@@ -1,9 +1,8 @@
-= javascript_include_tag "activities"
-- if defined? @activities and @activities.any?
+- if activities.any?
   %ol.activities
     = render "activities/activities", :activities => activities, :user_profile => user_profile
   - unless activities.size < activities_count_initial
     %p.submit
-      = link_to 'Load more', activities_url(:format => :js, 'activity[user_profile_id]' => user_profile.id, :max_items => activities_count_increment), :remote => true, 'data-type' => :text, :class => 'button more_activites', :initial => activities_count_initial, :increment => activities_count_increment
+      = link_to 'Load more', activities_user_profile_url(:format => :js, 'activity[user_profile_id]' => user_profile, :max_items => activities_count_increment), :remote => true, 'data-type' => :text, :class => 'button more_activites', :initial => activities_count_initial, :increment => activities_count_increment
 - else
   %em No recent activity
