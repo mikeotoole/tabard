@@ -32,5 +32,6 @@
   %tfoot
     %tr
       %td{ colspan: 4 }
-        = link_to 'Sign up', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :class => 'button'
-        add characters, join communities, and be awesome.
+        - unless user_signed_in?
+          = link_to 'Sign up', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :class => 'button'
+          add characters, join communities, and be awesome.
