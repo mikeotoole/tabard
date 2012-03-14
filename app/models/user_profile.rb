@@ -69,6 +69,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  nilify_blanks :only => [:first_name, :last_name, :description, :title, :location]
   after_create :create_mailboxes
 
 ###

@@ -185,6 +185,9 @@ GEM
       net-ssh (>= 1.99.1)
     net-ssh (2.3.0)
     newrelic_rpm (3.3.2)
+    nilify_blanks (1.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     nokogiri (1.5.0)
     orm_adapter (0.0.6)
     pg (0.12.2)
@@ -340,6 +343,7 @@ DEPENDENCIES
   meta_search (>= 1.1.0.pre)
   mini_magick
   newrelic_rpm
+  nilify_blanks
   pg
   profanalyzer
   rails

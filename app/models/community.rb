@@ -63,6 +63,7 @@ class Community < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  nilify_blanks :only => [:pitch, :slogan]
   before_save :update_subdomain
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items, :setup_action_items
   after_destroy :destroy_admin_community_profile_and_member_role
