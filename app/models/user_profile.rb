@@ -360,9 +360,7 @@ protected
     if search
       search = "%"+search+'%'
       where{(display_name =~ search) | 
-            ((location =~ search) & (publicly_viewable == true)) | 
-            ((first_name =~ search) & (publicly_viewable == true)) | 
-            ((last_name =~ search) & (publicly_viewable == true))}
+            ((publicly_viewable == true) & ((location =~ search) | (first_name =~ search) | (last_name =~ search)))}
     else
       scoped
     end
