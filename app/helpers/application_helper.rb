@@ -88,4 +88,19 @@ module ApplicationHelper
     regex = '([^\s]{'+half_size+'})[^\s]{2,}([^\s]{'+half_size+'})'
     string.gsub /#{regex}/, '\1'+separator+'\2'
   end
+
+  ###
+  #
+  # This method provides the view for a sortable column
+  # [Args]
+  #   * +column+ -> The DB column to sort on.
+  #   * +title+ -> The title for the column.
+  # [Returns] the link for the column header.
+  ###
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    css_class = (column == sort_column) ? "current #{sort_direction}" : nil
+    direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
+    link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class}
+  end
 end

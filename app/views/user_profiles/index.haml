@@ -2,6 +2,13 @@
 
 #body
   %h1 Crumblin Users
+  #search
+    = form_tag user_profiles_url, :method => 'get' do
+      = hidden_field_tag :direction, params[:direction]
+      = hidden_field_tag :sort, params[:sort]
+      %p
+        = text_field_tag :search, params[:search]
+        = submit_tag "Search", :name => nil
   - if @user_profiles.any?
     = paginate @user_profiles
     = render "user_profiles/table", :user_profiles => @user_profiles
