@@ -16,7 +16,7 @@ body
 
 body,
 #content
-  background: image-url('themes/backgrounds/station.jpg') top center fixed no-repeat #000
+  background: image-url('themes/backgrounds/wasteland.jpg') top center fixed no-repeat #2a1e1d
 
 #header
   
@@ -25,32 +25,29 @@ body,
     text-shadow: 1px 1px 2px #000
   
   .menu
-    background: #F38D41
-    background: rgba(#F38D41,.9)
+    background: #76584D
+    background: rgba(#76584D,.9)
     +border_radius(3,3,0,0)
     
     >li
       
       >a
         border: 1px solid transparent
-        color: #000
+        color: #FACB63
             
         &:not(:only-child)
           
           &:after
-            border-top-color: #F9E56D
-          
-          &:hover:after
-            border-top-color: #fff
+            border-top-color: #A78373
       
       >ul >li >a
-        border-color: #7b2109 !important
+        border-color: #6D2D16 !important
         color: #fbf0b1
         
         &[meta]:before
-          background: #FCE267
+          background: #FACB63
           +box_shadow(0 0 3px #000)
-          color: #30170a
+          color: #2A1E1D
         
         &:hover
           background: #c43e19
@@ -58,15 +55,17 @@ body,
       
       &:hover
         
+        >a:not(:only-child):after
+          border-top-color: #fff
+        
         >a[href]
-          background: #A2320D
-          border-color: #942c09
+          background: #943918
+          border-color: #6D2D16
           color: #fff !important
         
         >ul
-          background: #A2320D
-          border: 1px solid #C33D1E
-          +box_shadow(0 0 5px rgba(#e7e1a4,.3))
+          background: #943918
+          border: 1px solid #6D2D16
       
       &.special
         
@@ -79,7 +78,7 @@ body,
         >ul >li >a
         
           &:after
-            background: #7B2109
+            background: #6d2d16
             color: #FCE267
           
           &:hover:after
@@ -102,39 +101,39 @@ button,
 .button,
 #body button,
 #body .button
-  +bg_gradient(#fa5e3a,#C33D1E)
-  border-color: #ff8972
-  color: #fff
+  +bg_gradient(#943918,#6D2D16)
+  border-color: #2A1E1D
+  color: #ffe6b0
   
   &:focus,
   &:hover
-    +bg_gradient(#F6E872,#c6b524)
-    +box_shadow(0 0 15px rgba(#F6E872,.2))
+    +bg_gradient(#FACB63,#ecae25)
+    +box_shadow(0 0 15px rgba(#FACB63,.2))
     border-color: #fff
     color: #000
 
 #body
-  background: #30170a
+  background: #2a1e1d
   
   // GENERAL CONTENT
   
   a
-    color: #F6E872
+    color: #FACB63
     
     &:hover
-      background: #F6E872
+      background: #FACB63
       color: #000
   
   h1,
   h2,
   h3
-    color: #F6E872
+    color: #D5703A
   
   h2 + fieldset
-    border-color: #76320f
+    border-color: #78594D
   
   hr
-    border-color: #76320f
+    border-color: #78594D
   
   time
     color: #fbf0b1
@@ -142,108 +141,69 @@ button,
   #breadcrumb
     
     ol
-      background: #8E4F29
-      border: 1px solid #713d1e
+      background: #5A3226
+      border: 1px solid #6C3A2B
       border-left: 0
       border-right: 0
       
       li
         
         a
-          background: #F6E872
-          color: #30170a
+          background: #bb5c22
+          color: #2A1E1D
         
         span
-          background: #dab552
-          color: #30170a
+          background: #8D502B
+          color: #2A1E1D
         
         &:before
-          border-left-color: #713d1e
+          border-left-color: #2A1E1D
         
         &:after
-          border-left-color: #F6E872
+          border-left-color: #bb5c22
         
         &:hover
           
           &:after
-            border-left-color: #C33D1E
+            border-left-color: #FACB63
             
           a
-            background: #C33D1E
-            color: #fff
+            background: #FACB63
+            color: #000
         
         &:last-child
         
           &:after
-            border-left-color: #dab552
+            border-left-color: #8D502B
           
           &:hover
             
             &:after
-              border-left-color: #dab552
+              border-left-color: #FACB63
             
             span
-              background: #dab552
-              color: #30170a
+              background: #FACB63
+              color: #000
   
   
   // ACTIONS
     
   .actions a
-    background-color: #F3EB77
+    background-color: #943918
     
     &:hover
-      background-color: #C23C22
-      +box_shadow(0 0 10px #000)
+      background-color: #FACB63
+      +box_shadow(0 0 10px rgba(#ECAE26,.5))
     
       &[meta]
       
         &:before
-          background: #fbf0b1
-          border-color: #fbf0b1
+          background: #c0a295
+          border-color: #A78373
           color: #000
         
         &:after
-          border-left-color: #fbf0b1
-    
-        &.apply
-          background-position: 0 -30px
-          
-        &.new
-          background-position: 0 -30px
-          
-        &.delete
-          background-position: -30px -30px
-          
-        &.edit
-          background-position: -60px -30px
-      
-        &.approve
-          background-position: -510px -30px
-        
-        &.reject
-          background-position: -540px -30px
-        
-        &.profile
-          background-position: -570px -30px
-          
-        &.review
-          background-position: -120px -30px
-        
-        &.submission
-          background-position: -600px -30px
-        
-        &.lock
-          background-position: -180px -30px
-        
-        &.unlock
-          background-position: -150px -30px
-        
-        &.publish
-          background-position: -420px -30px
-          
-        &.unpublish
-          background-position: -390px -30px
+          border-left-color: #A78373
     
     &.apply
       background-position: 0 0
@@ -295,29 +255,28 @@ button,
   input[type="text"],
   input[type="password"],
   textarea
-    background: #A03016
-    +bg_gradient(#A03016,#C33D1E)
-    border-color: #30170a
+    background: #813317
+    +bg_gradient(#6D2D16,#943918)
+    border-color: #2A1E1D
     +box_shadow(0 0 3px #C23C22)
-    color: #fbf0b1
+    color: #d1b786
     
     &:focus
-      background: #C33D1E
+      background: #A78373
       +box_shadow(0 0 8px #EC8944)
-      +bg_gradient(#C33D1E,#f34d26)
-      color: #fff
+      color: #000
       
   input[type="checkbox"],
   input[type="radio"]
     
     + label:before
-      background: #A03016
-      +bg_gradient(#A03016,#C33D1E)
-      border-color: #30170a
+      background: #813317
+      +bg_gradient(#6D2D16,#943918)
+      border-color: #2A1E1D
       +box_shadow(0 0 3px #C23C22)
     
     &:focus + label:before
-      background: #C33D1E
+      background: #FACB63
       +box_shadow(0 0 8px #EC8944)
       +bg_gradient(#C33D1E,#f34d26)
       
@@ -332,17 +291,20 @@ button,
     &:checked
 
       + label:after
-        background: #F3EB77
-        +bg_gradient(#fff,#F3EB77)
+        background: #FACB63
         border-color: #fff
         +box_shadow(0 0 9px #000)
+    
+    &:checked + label:hover:after,
+    &:checked:focus + label:after
+      background: #fff
   
   .select
   
     ul
-      background: #A03016
-      +bg_gradient(#A03016,#C33D1E)
-      border-color: #30170a
+      background: #813317
+      +bg_gradient(#6D2D16,#943918)
+      border-color: #2A1E1D
       +box_shadow(0 0 3px #C23C22)
           
       &:before
@@ -359,28 +321,26 @@ button,
             background: #F38D41
             border-color: #C33D1E
             +box_shadow(0 0 5px rgba(#000,.5))
+        
+        input:checked + label
+          color: #d1b786
   
       &:hover
-        background: #C33D1E
+        background: #A03016
         +box_shadow(0 0 8px #EC8944)
-        +bg_gradient(#C33D1E,#f34d26)
+        +bg_gradient(#A03016,#C33D1E)
       
-        li
-            
-          input:checked + label
-            color: #fff
-        
-          label
-            color: #fbf0b1
-            
-            &:hover
-              background: #F9E56D
-              color: #000 !important
+        li label
+          color: #fff
+          
+          &:hover
+            background: #F9E56D
+            color: #000 !important
 
   .slider
-    background: #A03016
-    +bg_gradient(#A03016,#C33D1E)
-    border-color: #30170a
+    background: #813317
+    +bg_gradient(#6D2D16,#943918)
+    border-color: #2A1E1D
     +box_shadow(0 0 3px #C23C22)
     color: #fbf0b1
         
@@ -390,15 +350,16 @@ button,
     input
       
       &:checked + label
-        background: #F3EB77
+        background: #FACB63
         border-color: #602213
         +box_shadow(0 0 5px rgba(#000,.5))
         color: #000 !important
   
     &:hover
+      background: #A03016
       background: #C33D1E
       +box_shadow(0 0 8px #EC8944)
-      +bg_gradient(#C33D1E,#f34d26)
+      +bg_gradient(#A03016,#C33D1E)
       
       label:hover
         background: #fbf0b1 !important
@@ -423,7 +384,7 @@ button,
       +box_shadow(0 0 8px #EC8944)
   
   dfn.hint
-    color: #fe9b74
+    color: #A78373
   
   .field_with_errors
   
@@ -441,8 +402,8 @@ button,
     color: #000 !important
     
   .submit
-    +bg_gradient(#A13112,rgba(#30170a,0))
-    border-top-color: #C33D1E
+    +bg_gradient(#4D3126,rgba(#2A1E1D,0))
+    border-top-color: #78594D
   
   
   // TABLES
@@ -452,13 +413,13 @@ button,
     thead
     
       th
-        background: #30170A
-        +bg_gradient(#F38D41,#c77030)
+        background: #2A1E1D
+        +bg_gradient(#705348,#533d34)
         border-bottom-color: #8D502B
-        color: #000
+        color: #ffe6b0
         
         a
-          color: #000
+          color: #ffe6b0
           
           &:hover
             background: #F3EB77
@@ -470,12 +431,12 @@ button,
     
         td
           background: #190D06
-          +bg_gradient(#190D06,#30170a)
+          +bg_gradient(#190D06,#2A1E1D)
           border-bottom-color: #703D20
           border-top-color: #703D20
             
           img.avatar
-            background: #F0EE7C
+            background: #A78373
             border-color: #8B512D
             +box_shadow(0 0 10px rgba(#000,.2))
           
@@ -491,9 +452,9 @@ button,
     tfoot
     
       td
-        background: #8D502B
-        +bg_gradient(#8D502B,#703D20)
-        border-top-color: #703D20
+        background: #59423D
+        +bg_gradient(#593125,#794130)
+        border-top-color: #8D502B
         color: #fff
         
         button,
@@ -503,20 +464,20 @@ button,
   
   // PAGINATION
   .pagination
-    border-color: #76320F
+    border-color: #78594D
     
     .current
-      background: #76320F
+      background: #78594D
 
 
   // PAGES
 
   article > .meta
-    border-bottom-color: #76320f
+    border-bottom-color: #78594D
     
     .avatar
       background: #C33D1E
-      border-color: #30170A
+      border-color: #2A1E1D
       outline-color: #ED8B47
 
 
@@ -530,7 +491,7 @@ button,
       &.activity >a:first-of-type,
       &.activity >strong:first-child >a,
       &.comment >blockquote >.meta >strong:first-of-type a
-        background: #7D482A
+        background: #6E5247
         color: #E7E1A4
               
         &:hover
@@ -538,31 +499,31 @@ button,
           color: #000
 
     li.comment
-      border-bottom-color: #30170a
+      border-bottom-color: #2A1E1D
     
       blockquote
         
         &:before
-          border-bottom-color: #76320f
+          border-bottom-color: #78594D
         
         >.avatar
-          background: #30170a
-          border-color: #EF8A42
+          background: #2A1E1D
+          border-color: #6E5247
           
           &:before
             background-image: image-url('application/comment-glow.png')
-            border-right-color: #30170a
+            border-right-color: #2A1E1D
           
           &:after
-            border-top-color: #30170a
+            border-top-color: #2A1E1D
           
           >img
-            background: #C33D1E
-            border-color: #30170a
+            background: #D5703A
+            border-color: #2A1E1D
         
         .meta
-          background: #30170a
-          border-bottom-color: #76320f
+          background: #2A1E1D
+          border-bottom-color: #443231
           color: #c4815b
             
           .expand
@@ -598,18 +559,18 @@ button,
           color: #000
           
         .reply
-          background: #C33D1E
+          background: #BB5C22
           color: #f6d4cd
           
           &:hover
-            background: #F0EE7C
+            background: #FACB63
             color: #000
         
         &:hover
         
           .avatar
             +box_shadow(0 0 15px rgba(#F3EB77,.5))
-            border-color: #F3EB77
+            border-color: #FACB63
         
     *[meta]:hover
       
@@ -631,11 +592,11 @@ button,
         border-top-color: #7F4F35
       
       .profile
-        background: #ED8B47
+        background: #6E5247
         
         .avatar
-          background: #C33D1E
-          border-color: #30170a !important
+          background: #943918
+          border-color: #2A1E1D !important
           
         input:checked + label:after
           +box_shadow(none)
@@ -660,14 +621,14 @@ button,
               border-color: #A33C2F !important
       
       textarea
-        background: #C23C22
-        border-color: #7A200D
+        background: #A78373
+        border-color: #5A3226
         +box_shadow(none)
         
         &:focus,
         &.open
-          background: #e64526
-          color: #fff
+          background: #A78373
+          color: #000
       
       &.busy:after
         background-color: rgba(#F0EE7C,.5)
@@ -680,12 +641,12 @@ button,
         background-position: -155px -35px !important
       
       button
-        background: #EF8F4A
-        border-color: #30170A
+        background: #BB5C22
+        border-color: #5A3226
         color: #000
         
         &:hover
-          background: #F0EE7C
+          background: #FACB63
   
   
   // ACTIVITIES
@@ -693,13 +654,13 @@ button,
   .activities
     
     >li:after
-      border-color: #76320f
+      border-color: #443231
   
   
   // SUBMISSIONS & COMMUNITY APPLICATIONS
 
   h2.status
-    border-bottom-color: #76320f
+    border-bottom-color: #78594D
     
     a
       color: #fff
@@ -711,7 +672,7 @@ button,
   
     h1,
     h2
-      background: #7E4828
+      background: #8D502B
       color: #fff
       
       &:after
@@ -739,7 +700,7 @@ button,
         color: #000
           
         img.avatar
-          background: #7D482A
+          background: #6E5247
           +box_shadow(0 0 5px rgba(#000,.5))
       
       .submitter a:hover
@@ -749,7 +710,7 @@ button,
       .characters >label
         
         &:after
-          color: #7D482A
+          color: #6E5247
         
         &:hover
           background: #F9E56D
@@ -780,13 +741,16 @@ button,
           background: #000
         
         >li .container
-          +bg_gradient(#4e230d,rgba(#30170A,0))
+          +bg_gradient(#3C2C28,rgba(#2A1E1D,0))
           border-color: #000 !important
           
           &.ui-draggable-dragging
             +box_shadow(0 0 10px rgba(#F0EE7C,.5))
           
-          .toggle,   
+          h3
+            color: #A78373
+          
+          .toggle,
           a.remove
             background: #8D502B
             color: #000
@@ -797,7 +761,7 @@ button,
               color: #000
               
           >div.right .answers li
-            background: #4e230d
+            background: #3C2C28
         
         >li .question_with_errors
           border-color: #fff !important
@@ -817,35 +781,35 @@ button,
   #roles
     
     ul li a
-      background: #7A4426
-      color: #fff
+      background: #5D4539
+      color: #bc9d8f
       
       &:hover
         background: #F9E56D
         color: #000
         
       &.active
-        background: #C33D1E
-        color: #fff
+        background: #943918
+        color: #FBF0B1
           
     &.busy:after
       background: rgba(#F0EE7C,.8)
       +box_shadow(0 0 3px #F0EE7C)
   
   #role
-    background: #30170a
-    border-color: #7A4426
+    background: #2A1E1D
+    border-color: #794130
     +box_shadow(-5px -5px 10px rgba(#000,.2))
     
     .submit
-      background: #8D502B
-      +bg_gradient(#8D502B,#703D20)
+      background: #59423D
+      +bg_gradient(#593125,#794130)
       
       &:before
-        background: #30170a
+        background: #2A1E1D
       
       button
-        border-color: #30170A
+        border-color: #2A1E1D
     
     &.busy
         
@@ -854,14 +818,14 @@ button,
         +box_shadow(0 0 3px #F0EE7C)
   
   #permissions >dt h2
-    background: #F38D41
-    +bg_gradient(#F38D41,#c86e2d)
-    border-bottom-color: #F38D41
-    border-top-color: #a75821
-    color: #30170A
+    background: #7E6153
+    +bg_gradient(#A78373,#5D4539)
+    border-bottom-color: #A78373
+    border-top-color: #5D4539
+    color: #2A1E1D
   
     &:hover
-      background: #F6E872
+      background: #FACB63
       color: #000
   
   #usercheckboxes ol li
@@ -871,7 +835,7 @@ button,
       color: #db9571
       
       &:hover
-        background: #F6E872
+        background: #FACB63
         color: #000
           
         &:after
@@ -882,8 +846,8 @@ button,
       color: #fff
       
       &:after
-        border-color: #30170A
+        border-color: #2A1E1D
     
       &:hover
-        background: #F6E872
+        background: #FACB63
         color: #000

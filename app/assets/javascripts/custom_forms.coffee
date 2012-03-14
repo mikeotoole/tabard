@@ -68,24 +68,22 @@ $(document).ready ->
   
   $('form.custom_form')
     .delegate '.questions > li .container', 'init', ->
-      li = $(this)
-      right = $(this).find('.right')
-      li.data('qstyle',li.attr('question_style'))
+      container = $(this)
+      li = container.closest('li')
+      right = li.find('.right')
       if $(this).find('>a.remove').size() == 0
         # Remove question link
-        li
+        container
           .append('<a class="remove">Remove Question</a>')
           .find('>.remove')
           .click ->
             if li.filter('[question_id]').length
               question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
-              qid = li.attr 'question_id'
-              q = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][id]" type="hidden" value="'+qid+'">'
               li.slideUp 400, ->
-                $(this).replaceWith(question + q)
+                li.replaceWith(question)
             else
               li.slideUp 400, ->
-                $(this).remove()
+                li.remove()
         
         # TypeStyle select change action
         li
