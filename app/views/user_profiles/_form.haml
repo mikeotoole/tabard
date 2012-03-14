@@ -6,7 +6,6 @@
       = f.input :first_name, :input_html => { :maxlength => UserProfile::MAX_FIRST_NAME_LENGTH }
       = f.input :last_name, :input_html => { :maxlength => UserProfile::MAX_LAST_NAME_LENGTH }
       = f.input :location, :hint => "#{UserProfile::MAX_LOCATION_LENGTH} characters max. Optional.", :input_html => { :maxlength => UserProfile::MAX_LOCATION_LENGTH }
-      = f.input :publicly_viewable, :label => "My profile can be viewed by others"
       = f.input :description, :label => "About me", :wrapper_tag => :p, :hint => "#{UserProfile::MAX_DESCRIPTION_LENGTH} characters max. Optional.", :input_html => { :maxlength => UserProfile::MAX_DESCRIPTION_LENGTH }
       %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
         - if !user_profile.avatar_url.to_s or f.object.errors.any?
@@ -16,5 +15,6 @@
         %br
         = f.input :avatar, :as => :file, :hint => 'Maxium file size of 2mb. GIF, JPG, PNG.'
         = f.input :remote_avatar_url, :label => ' — or a link to an image'
+      = f.input :publicly_viewable, :label => "My profile can be viewed by others"
     %p.submit
       %button{ :type => 'submit' } Save

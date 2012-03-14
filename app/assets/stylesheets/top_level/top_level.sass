@@ -328,6 +328,16 @@ body.index.swtors #submenu .swtor
         color: #fff
         padding: 10px
         
+        a
+          background: #1a4e73 !important
+          border: 1px solid #4A99D0
+          color: #fff !important
+          padding: 0 7px !important
+          text-decoration: none !important
+          
+          &:hover
+            background: #A13A30 !important
+        
         &:first-child
           +border_radius(3,0,0,0)
         
@@ -337,15 +347,26 @@ body.index.swtors #submenu .swtor
         &:only-child
           +border_radius(3,3,0,0)
         
-        &.check
+        &.check a
+          background: transparent !important
+          border: none
+          padding: 0 3px !important
           
-          a
-            color: #fff
-            text-decoration: none
+          &:hover
+            background: #A13A30 !important
+        
+        &.sort
+          
+          &.asc a:after
+            content: ' \2193'
+          
+          &.desc a:after
+            content: ' \2191'
   
     tbody
     
       tr
+      
         th
           background: #bbb
           +bg_gradient(#ccc,#aaa)
@@ -481,6 +502,9 @@ body.index.swtors #submenu .swtor
           td,
           th
             +bg_gradient(#fff,#eee)
+        
+        &.private h3 a
+          color: #666
     
     tfoot
     
@@ -800,6 +824,33 @@ body.index.swtors #submenu .swtor
           
       img.icon
         margin: 10px 10px 0 -10px
+  
+  #searchbox
+    background: #51425B
+    +border_radius(3)
+    height: 50px
+    margin: 0 0 10px
+    position: relative  
+    
+    p
+      padding: 0
+      
+    input[type="text"]
+      height: 18px
+      left: 10px
+      line-height: 18px
+      margin: 0
+      position: absolute
+      top: 10px
+      width: 750px
+    
+    button
+      border-color: #302141
+      padding: 0
+      position: absolute
+      right: 10px
+      top: 10px
+      width: 90px
 
 .status_code #body
 
