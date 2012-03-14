@@ -2,7 +2,7 @@
   %thead
     %tr
       %th{ class: "sort #{params[:direction] ? params[:direction].downcase : 'asc'}" }= sortable 'display_name', 'User' if user_profiles.size > 1
-      %th Location
+      %th{ class: "sort #{params[:direction] ? params[:direction].downcase : 'asc'}" }= sortable 'location', 'Location' if user_profiles.size > 1
       %th Communities
       %th.r Characters
       %th.actions
