@@ -123,7 +123,6 @@ protected
 ###
   # This method sets the last poster.
   def set_last_posted_as(profile)
-    logger.debug "#{session[:poster_id]} #{session[:poster_type]} ? #{profile.to_yaml}"
     session[:poster_type] = (profile.class == UserProfile ? profile.class.to_s : profile.character_type.to_s)
     session[:poster_id] = profile.id.to_s
   end

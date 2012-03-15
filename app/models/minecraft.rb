@@ -43,6 +43,7 @@ class Minecraft < Game
     return minecraft
   end
   
+  # Gets all minecraft characters
   def self.minecraft_characters
     MinecraftCharacters.all
   end
@@ -55,6 +56,7 @@ class Minecraft < Game
     self.class.all_server_types
   end
   
+  # gets all minecraft characters
   def minecraft_characters
     self.class.minecraft_characters
   end
@@ -69,10 +71,12 @@ class Minecraft < Game
     "Minecraft"
   end
   
+  # Gets the server name
   def server_name
     nil
   end
   
+  # Gets the faction
   def faction
     nil
   end

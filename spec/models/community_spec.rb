@@ -24,7 +24,7 @@
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
-#  pitch                           :string(255)
+#  pitch                           :text
 #
 
 require 'spec_helper'
