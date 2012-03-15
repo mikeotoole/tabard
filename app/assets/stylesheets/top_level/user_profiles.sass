@@ -211,11 +211,15 @@ body.user_profiles.dashboard
               &[meta]
                 position: relative
                 
+                &:before
+                  display: none
+                
                 &:after
                   color: #999
                   content: attr(meta)
                   left: 5px
                   position: absolute
+                  top: 5px
                 
                 &:hover:after
                   color: #fff
