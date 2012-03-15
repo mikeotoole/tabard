@@ -1,12 +1,15 @@
 - unless comment.is_removed
   %li.comment{ :class => comment_class_names(comment), :created_at => comment.created_at }
     %blockquote
-      %span.avatar
+      %a.avatar{ href: user_profile_url(comment.poster, :subdomain => false) }
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
-        %strong= link_to_unless (controller_name == 'user_profiles' and user_profile == comment.user_profile), shorten_words(comment.poster_name), user_profile_url(comment.user_profile), :meta => shorten_words(comment.user_profile_display_name)
-        = last_action_word(comment)
+        - if controller_name == 'user_profiles' and user_profile == comment.user_profile
+          = last_action_word(comment).capitalize
+        - else
+          %strong= link_to_unless shorten_words(comment.poster_name), user_profile_url(comment.user_profile), :meta => shorten_words(comment.user_profile_display_name)
+          = last_action_word(comment)
         a comment —
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
         - case comment.original_commentable_type
@@ -28,4 +31,4 @@
       %p
         - unless comment.is_removed
           %span.body
-            = comment.body
+            = truncate shorten_words(comment.body), :length => 150, :omission => '…'

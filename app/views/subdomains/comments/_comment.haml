@@ -1,7 +1,7 @@
 - if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
-  %li.comment{ :class => comment_class_names(comment) }
+  %li.comment{ class: comment_class_names(comment) }
     %blockquote
-      %span.avatar
+      %a.avatar{ href: user_profile_url(comment.poster, :subdomain => false) }
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta

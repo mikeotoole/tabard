@@ -2,18 +2,26 @@
   %thead
     %tr
       %th Name
-      %th Author
       %th Last Reply
-      %th Comments?
+      %th Comments
       %th.actions
   %tbody
     - discussions.each do |discussion|
       %tr
-        %td= link_to shorten_words(discussion.name, 21), discussion
-        %td= link_to shorten_words(discussion.poster.name), discussion.poster
+        %td
+          %h3= link_to shorten_words(discussion.name, 21), discussion
+          %time
+            Created by
+            = link_to shorten_words(discussion.poster.name), discussion.poster
+            = time_ago_in_words(discussion.created_at)
+            ago
         %td
           - if discussion.comments.any?
-            = link_to shorten_words(discussion.comments.last.poster_name), discussion.comments.last.poster
+            %time
+              - last_comment = discussion.comments.last
+              = link_to shorten_words(last_comment.poster_name), last_comment.poster
+              = time_ago_in_words(last_comment.created_at)
+              ago
         %td
           - if not discussion.is_locked
             = discussion.number_of_comments
@@ -33,6 +41,6 @@
               = link_to 'Destroy', discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete discussion', :class => 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 5 }
+      %td{ :colspan => 4 }
         - if (can? :create, discussion_space.discussions.new)
           = link_to 'New Discussion', new_discussion_space_discussion_url(discussion_space), :class => 'button'

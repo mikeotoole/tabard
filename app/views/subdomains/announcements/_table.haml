@@ -7,7 +7,7 @@
             %th.check
           %th Announcement
           %th Last Reply
-          %th Comments?
+          %th Comments
           %th.actions
       %tbody
         - announcements.each do |announcement|
@@ -17,7 +17,13 @@
                 = check_box_tag "ids[#{announcement.id}]", true, false, :id => "announcement_id_#{announcement.id}"
                 %label{ :for => "announcement_id_#{announcement.id}" }
             %td= link_to shorten_words(announcement.name, 21), announcement
-            %td= link_to shorten_words(announcement.comments.last.poster_name), announcement.comments.last.poster if announcement.comments.size > 0
+            %td
+              - if announcement.comments.any?
+                %time
+                  - last_comment = announcement.comments.last
+                  = link_to shorten_words(last_comment.poster_name), last_comment.poster
+                  = time_ago_in_words(last_comment.created_at)
+                  ago
             %td= announcement.is_locked ? 'Closed' : announcement.number_of_comments
             %td.actions
               %div

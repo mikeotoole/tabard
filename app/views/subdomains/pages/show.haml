@@ -15,4 +15,4 @@
 
 %section
   %h1= shorten_words @page.name, 21
-  = @page.body
+  = shorten_words @page.body, 21
