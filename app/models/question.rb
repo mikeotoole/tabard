@@ -42,6 +42,7 @@ class Question < ActiveRecord::Base
   validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }
   validates :style,  :presence => true,
                     :inclusion => { :in => VALID_STYLES, :message => "%{value} is not a valid question style." }
+  validate :predefined_answers_are_not_too_similar
 
   accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
 
@@ -104,6 +105,16 @@ protected
   def remove_predefined_answers_if_needed
     if VALID_STYLES_WITHOUT_PA.include?(self.style)
       self.predefined_answers.clear
+    end
+  end
+
+  def predefined_answers_are_not_too_similar
+    self.predefined_answers.each_with_index do |pa, pa_i|
+      self.predefined_answers.each_with_index do |po, po_i|
+        if pa_i != po_i and pa.body_as_id == po.body_as_id
+          pa.errors.add(:body, "is too similar to another predefined answer.") 
+        end
+      end
     end
   end
 end
