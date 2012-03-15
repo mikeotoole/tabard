@@ -14,8 +14,8 @@ class UserProfilesController < ApplicationController
   before_filter :set_current_user_as_profile, :only => :account
   load_and_authorize_resource :except => [:index, :activities, :characters, :announcements]
   skip_authorize_resource :only => :account
+  before_filter :find_user_by_id, :only => [:characters, :activities, :announcements]
   before_filter :load_activities, :only => [:show, :activities]
-  before_filter :find_user_by_id, :only => [:characters, :load_activities, :announcements]
 
   # GET /user_profiles/
   def index
