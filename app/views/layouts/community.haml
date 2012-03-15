@@ -31,7 +31,7 @@
           .action_items
             %p
               Now that you're community has been created, let's get everything setup:
-              = link_to '✕', clear_action_items_url, :class => 'clear', :meta => "I now what I'm doing. Remove this box."
+              = link_to '✕', clear_action_items_url, :class => 'clear', :meta => "I know what I'm doing. Remove this box."
             %ol
               %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
                 = link_to_unless_current 'Edit Settings', edit_community_settings_url
