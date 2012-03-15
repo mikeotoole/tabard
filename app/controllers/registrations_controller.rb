@@ -13,27 +13,16 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :ensure_secure_subdomain, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
+  before_filter :hide_the_announcements, :only => [:new, :edit, :update]
 
 ###
 # Sign Up
 ###
   # Overriding Devise method to add a flash if the user is signing up from a community.
   def new
-    @hide_announcements = true
     community = Community.find_by_id(params[:community_id])
     add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin account or login.", "notice" if community
     add_new_flash_message "This version of Crumblin is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
-    super
-  end
-
-  # Overriding Devise method to to hide announcements on edit.
-  def edit
-    @hide_announcements = true
-  end
-
-  # Overriding Devise method to to hide announcements on update.
-  def update
-    @hide_announcements = true
     super
   end
 
@@ -139,5 +128,10 @@ class RegistrationsController < Devise::RegistrationsController
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
     edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
+  end
+
+  # Hides the announcements.
+  def hide_the_announcements
+    @hide_announcements = true
   end
 end

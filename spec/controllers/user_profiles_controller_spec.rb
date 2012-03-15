@@ -7,14 +7,14 @@ describe UserProfilesController do
   let(:disabled_user_profile) { create(:disabled_user).user_profile }
 
   describe "GET 'index'" do
-    it "should be successful when authenticated as a user" do
-      sign_in user
+    it "should be successful when authenticated as a owner" do
+      sign_in owner
       get 'index'
       response.should be_success
     end
 
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin_user
+    it "should be successful when authenticated as a non_owner" do
+      sign_in non_owner
       get 'index'
       response.should be_success
     end

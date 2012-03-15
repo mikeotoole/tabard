@@ -15,7 +15,9 @@ class UserProfilesController < ApplicationController
   load_and_authorize_resource :except => [:index, :activities, :characters, :announcements]
   skip_authorize_resource :only => :account
   before_filter :load_activities, :only => [:show, :activities]
+  before_filter :find_user_by_id, :only => [:characters, :load_activities, :announcements]
 
+  # GET /user_profiles/
   def index
     authorize! :index, UserProfile
     @user_profiles = UserProfile.search(params[:search]).order(sort_column + ' IS NULL, ' + sort_column + " " + sort_direction).page params[:page]
@@ -37,7 +39,7 @@ class UserProfilesController < ApplicationController
   def update
     begin
       @user_profile.update_attributes(params[:user_profile])
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @user_profile.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
@@ -64,7 +66,6 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/activities(.:format)
   def announcements
-    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).ordered.page params[:page]
     render :partial => 'user_profiles/announcements', :locals => { :acknowledgements => @acknowledgements }
@@ -72,7 +73,6 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/characters(.:format)
   def characters
-    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     render :partial => 'user_profiles/characters', :locals => { :user_profile => @user_profile }
   end
@@ -88,12 +88,16 @@ class UserProfilesController < ApplicationController
 
   # This method gets a list of activites for the user profile
   def load_activities
-    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
     @activities_count_initial = 20
     @activities_count_increment = 10
     updated = !!params[:updated] ? params[:updated] : nil
     count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count)
+  end
+
+  # Gets teh user profile
+  def find_user_by_id
+    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
   end
 
 ###

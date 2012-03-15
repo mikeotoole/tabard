@@ -14,6 +14,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   before_filter :load_custom_form, :except => [:new, :create, :index]
   before_filter :create_custom_form, :only => [:new, :create]
   authorize_resource :except => [:index, :thankyou, :publish, :unpublish]
+  before_filter :ensure_current_user_is_member, :except => [:thankyou]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms

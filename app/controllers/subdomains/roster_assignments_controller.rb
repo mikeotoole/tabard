@@ -21,11 +21,11 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   authorize_resource :except => [:index, :game]
   skip_authorize_resource :only => [:pending]
   skip_before_filter :limit_subdomain_access
+  before_filter :ensure_roster_is_public, :only => [:index, :game]
 
   # GET /roster_assignments
   # GET /roster_assignments.json
   def index
-    raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
     @member_profiles = current_community.member_profiles.page params[:page]
   end
 
@@ -41,7 +41,6 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   
   # GET /roster_assignments/game/:id(.:format)
   def game
-    raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
       @member_profiles = Kaminari.paginate_array(@supported_game.member_profiles).page params[:page]
@@ -195,5 +194,14 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def find_available_characters
     @available_characters = current_user.compatable_character_proxies(current_community) - @community_profile.character_proxies
     @available_characters << @roster_assignment.character_proxy if @roster_assignment and @roster_assignment.character_proxy
+  end
+
+  ###
+  # _before_filter
+  #
+  # This before filter check for public roster
+  ###
+  def ensure_roster_is_public
+    raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
   end
 end
