@@ -142,19 +142,24 @@ $(document).ready ->
         .find('input[name="_method"]')
         .val $(this).attr('method')
   
-  $('body').delegate '.select', 'mouseleave', ->
-    $(this).css({ scrollTop: 0 })
-  
-  # select box auto-hide after click
+  # select box auto-hide and scroll-back actions
+  $('body').delegate '.select', 'mouseenter mouseleave', ->
+    $(this).scrollTop(0)
+    $(this).find('ul').scrollTop(0)
+  $('.select, .select ul').scroll ->
+    $(this).scrollLeft(0)
   $('body').delegate '.select ul label, form .profile label', 'click', ->
-    li = $(this).closest('li')
-    if !li.find('input:checked').length
-      ul = li.closest('ul')
-      ul.animate { opacity: 0 }, 200, ->
-        ul
-          .hide()
-          .animate { opacity: 0 }, 5, ->
-            ul.show().css { opacity: 1 }
+    select = $(this).closest('.select')
+    ul = $(this).closest('ul')
+    ul.animate { opacity: 0 }, 200, ->
+      ul
+        .hide()
+        .animate { opacity: 0 }, 5, ->
+          ul.show().css { opacity: 1 }
+    setTimeout ->
+      select.scrollTop(0)
+      ul.scrollTop(0)
+    , 250
   
   # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
