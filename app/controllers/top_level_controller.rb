@@ -57,7 +57,6 @@ class TopLevelController < ApplicationController
 
   # This method gets the Support page.
   def support
-    render :support, :layout => 'mailer'
   end
 
   # This method gets the Maintenance page.
