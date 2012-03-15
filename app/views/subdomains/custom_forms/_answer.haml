@@ -2,6 +2,6 @@
   - if af.object.marked_for_destruction?
     = af.input :_destroy, :as => :hidden
   - else
-    %li{ :question => q, :answer => a }
+    %li{ question: q, answer: a, class: af.object.errors.any? ? 'field_with_errors' : '' }
       = af.input :body, :as => :string, :label => false, :wrapper => false, :input_html => { :maxlength => PredefinedAnswer::MAX_BODY_LENGTH }
       = link_to 'Remove Answer', 'javascript:;', :class => 'remove'
