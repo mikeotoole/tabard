@@ -23,12 +23,12 @@
                   - c = answer.question_predefined_answers.collect{|pa| pa = [shorten_words(pa.body), pa.body]}
                   = af.input :body, :as => :check_boxes, :wrapper => false, :collection => c, :label => shorten_words(answer.question_body), :required => answer.question_is_required, :hint => shorten_words(answer.question_explanation)
                   - if af.object.errors.any?
-                    %mark.error= af.object.errors.full_messages.first
+                    %mark.error= af.object.errors.full_messages.last
   .sidebar
     .instructions
       - unless submission.custom_form_instructions.empty?
         %h2 Instructions
         :markdown
-          #{submission.custom_form_instructions}
+          #{shorten_words submission.custom_form_instructions}
   %p.submit
     %button{ :type => 'submit' } Submit

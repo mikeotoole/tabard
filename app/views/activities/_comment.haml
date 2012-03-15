@@ -28,4 +28,4 @@
       %p
         - unless comment.is_removed
           %span.body
-            = comment.body
+            = truncate shorten_words(comment.body), :length => 150, :omission => '…'

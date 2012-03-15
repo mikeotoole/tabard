@@ -22,14 +22,14 @@
 
 %article
   %h1= shorten_words @announcement.name, 21
-  %p= @announcement.body
+  %p= shorten_words @announcement.body, 21
 
 - if can? :create, Announcement and (@announcement.user_profiles_have_seen.any? or @announcement.user_profiles_have_not_seen.any?)
   %table
     %thead
       %tr
-        %th.half Have Seen
-        %th.half Have Not Seen
+        %th.half Have Seen This
+        %th.half Have Not Seen This
     %tbody
       %tr
         %td.half

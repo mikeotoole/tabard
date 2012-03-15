@@ -558,26 +558,47 @@ button,
       position: relative
       width: 412px
       z-index: 1
+      
+    mark.error + dfn.hint
+      margin-bottom: 30px
+      margin-top: 0
     
     &.radio > mark.error,
     .check_boxes + ul + mark.error,
-    .check_boxes + ul + dfn.hint + mark.error
+    >.radio + ul + mark.error
       margin-top: 0
+      padding-top: 5px
+    
+    .check_boxes + ul + dfn.hint + mark.error,
+    >.radio + ul + dfn.hint + mark.error
+      margin-bottom: 50px
+      margin-top: -50px
       padding-top: 5px
         
     &.select,
     .select
-      height: 85px
       
       ul
         border-color: #A43D33
+      
+        + mark.error
+          margin-bottom: 20px
+          margin-top: 0
+          padding-top: 40px
+          
+          + dfn.hint
+            margin-bottom: 20px
+            margin-top: -52px
+        
+        + dfn.hint
+          margin-top: 25px
+        
+          + mark.error
+            margin-bottom: 40px
+            margin-top: -83px
         
       > .options
         margin-bottom: -55px
-      
-      > mark.error
-        margin-top: 0
-        padding-top: 40px
       
     &.date
       
@@ -589,7 +610,7 @@ button,
       margin-top: 30px
       
       + mark.error
-        margin-bottom: 30px
+        margin-bottom: 60px
         margin-top: -85px
 
 

@@ -39,6 +39,6 @@
       - unless community_application.custom_form_instructions.empty?
         %h2 Instructions
         :markdown
-          #{community_application.custom_form_instructions}
+          #{shorten_words community_application.custom_form_instructions}
   %p.submit
     %button{ :type => 'submit' } Submit
