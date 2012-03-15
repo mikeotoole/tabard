@@ -686,10 +686,12 @@ table + .pagination,
         
         .avatar
           border: 1px solid
+          +border_radius(2,0,0,2)
           border-right: 0
           height: 62px
           left: 10px
           +opacity(1)
+          padding: 0 !important
           position: absolute
           top: 10px
           +transition(box-shadow .2s linear, opacity 1s linear)

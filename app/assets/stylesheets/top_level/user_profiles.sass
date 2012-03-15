@@ -17,6 +17,7 @@
       &.comment >blockquote
           
         >.avatar
+          background: #efe8de
           border-color: #ccc
           left: 0
           
@@ -34,6 +35,9 @@
       
       time
         color: #3679B3
+    
+    li.comment:hover >blockquote >.avatar
+      +box_shadow(0 0 10px rgba(#000,.2))
   
     li.activity
       
