@@ -24,6 +24,10 @@ describe PredefinedAnswer do
     build(:predefined_answer, :body => nil).should_not be_valid
   end
 
+  it "should not allow the body to be too similar" do
+    build(:predefined_answer, :body => predefined_answer.body.downcase, :question_id => predefined_answer.question.id).should_not be_valid
+  end
+
   it "should require select_question" do
     build(:predefined_answer, :question => nil).should_not be_valid
   end

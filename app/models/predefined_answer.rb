@@ -34,11 +34,11 @@ class PredefinedAnswer < ActiveRecord::Base
   validate :body_not_too_similar_to_others
 
   def body_not_too_similar_to_others
-    return if self.body.blank?
+    return true if self.body.blank? or self.question_id == nil
     only_once = true
     question.predefined_answers.each do |pa|
       if pa.body_as_id == self.body_as_id
-        if only_once
+        if only_once and pa != self and not pa.persisted?
           only_once = false
         else
           self.errors.add(:body, "is too similar to another predefined answer.") 
@@ -46,6 +46,7 @@ class PredefinedAnswer < ActiveRecord::Base
         end
       end
     end
+    return true
   end
 
   def body_as_id
