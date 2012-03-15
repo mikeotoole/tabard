@@ -75,10 +75,6 @@ describe Activity do
       end
     end
     
-    it "should include comments" do
-      Activity.activities[0].should be_a(Comment)
-    end
-    
     it "should return ten items by default" do
       Activity.all.count.should be > 10
       Activity.activities.count.should eql 10
