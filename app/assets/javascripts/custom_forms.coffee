@@ -41,11 +41,14 @@ $(document).ready ->
         .css({ height: '' })
         .addClass('drag')
       $('form.custom_form .questions > li.drop').remove()
+      newClassNames = 'closed'
+      if ui.draggable.hasClass 'question_with_errors'
+        newClassNames += ' question_with_errors'
       ui.draggable.closest('li').remove()
       $(this)
         .droppable('destroy')
         .find('.container')
-        .addClass('closed')
+        .addClass(newClassNames)
         .draggable(dragOpts)
         .trigger('init')
       positionNumber = 0
