@@ -13,7 +13,7 @@
             .select
               = qf.collection_radio :style, Question.select_options, :first, :last
             .optreq
-              = qf.input :is_required, :as => :boolean, :wrapper => false
+              = qf.input :is_required, :as => :boolean, :label => 'Required?', :wrapper => false
             .explanation
               = qf.input :explanation, :wrapper_tag => :p, :label => 'Short Explanation (optional)', :input_html => { :maxlength => Question::MAX_EXPLANATION_LENGTH }
           %div{ :class => 'right' + (Question::VALID_STYLES_WITH_PA.include?(question.style) ? '' : ' hidden') }
