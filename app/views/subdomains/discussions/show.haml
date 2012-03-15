@@ -30,7 +30,7 @@
       = "as #{@discussion.poster_name}" unless @discussion.poster == @discussion.user_profile
     %time= time_ago_in_words(@discussion.has_been_edited ? @discussion.updated_at : @discussion.created_at) + ' ago'
   %p
-    = shorten_words @discussion.body, 21
+    = @discussion.body
 
 - if @comments.any? or can? :comment, @discussion
   %aside.comments
