@@ -33,6 +33,7 @@ $(document).ready ->
       $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
 
     .delegate '.questions > li.drop', 'drop', (event, ui) ->
+      dragLi = ui.draggable.closest('li')
       html = ui.draggable.html()
       $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
       $(this)
@@ -42,15 +43,16 @@ $(document).ready ->
         .addClass('drag')
       $('form.custom_form .questions > li.drop').remove()
       newClassNames = 'closed'
-      if ui.draggable.hasClass 'question_with_errors'
+      if ui.draggable.hasClass('question_with_errors')
         newClassNames += ' question_with_errors'
-      ui.draggable.closest('li').remove()
       $(this)
+        .attr({ question: dragLi.attr('question'), question_id: dragLi.attr('question_id'), question_style: dragLi.attr('question_style') })
         .droppable('destroy')
         .find('.container')
         .addClass(newClassNames)
         .draggable(dragOpts)
         .trigger('init')
+      ui.draggable.closest('li').remove()
       positionNumber = 0
       $('form.custom_form .questions input.position').each ->
         $(this).val ++positionNumber
@@ -72,60 +74,59 @@ $(document).ready ->
   $('form.custom_form')
     .delegate '.questions > li .container', 'init', ->
       container = $(this)
-      li = container.closest('li')
-      right = li.find('.right')
-      if $(this).find('>a.remove').size() == 0
-        # Remove question link
-        container
-          .append('<a class="remove">Remove Question</a>')
-          .find('>.remove')
-          .click ->
-            if li.filter('[question_id]').length
-              question = '<input name="custom_form[questions_attributes]['+li.attr('question')+'][_destroy]" type="hidden" value="true">'
-              li.slideUp 400, ->
-                li.replaceWith(question)
-            else
-              li.slideUp 400, ->
-                li.remove()
-        
-        # TypeStyle select change action
-        li
-          .delegate '.select input', 'change', ->
-            select = $(this).closest('.select')
-            answers = right.find('.answers')
-            checkedInput = select.find('input:checked')
-            val = checkedInput.val()
-            select.find('input').removeAttr 'checked'
-            checkedInput.attr 'checked','checked'
-            if val.match /short_answer_question|long_answer_question/i
-              right.addClass('hidden')
-              answers.find('input')
-                .attr('disabled',true)
-                .attr('readonly',true)
-            else
-              right.removeClass('hidden')
-              answers.find('input')
-                .removeAttr('disabled readonly')
-              if answers.find('li').size() == 0
-                right.find('.add a').trigger 'click'
-            selectUl = select.find('ul')
-            selectUl.animate { opacity: 0 }, 200, ->
-              selectUl
-                .hide()
-                .animate { opacity: 0 }, 5, ->
-                  selectUl.show().css { opacity: 1 }
-        
-        # Add answer link
-        right.find('p.add').removeClass('hidden')
-        
-        # Remove answer link
-        right.find('.answers').delegate 'li a.remove', 'click', ->
-          ali = $(this).closest('li')
-          ali.slideUp 400, ->
-            if ali.attr 'question'
-              answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
-              $(this).replaceWith(answer)
+      qli = container.closest('li')
+      right = qli.find('.right')
+    
+      # Remove question link
+      container
+        .append('<a class="remove">Remove Question</a>')
+        .find('>.remove')
+        .click ->
+          if qli.filter('[question_id]').length
+            question = '<input name="custom_form[questions_attributes]['+qli.attr('question')+'][_destroy]" type="hidden" value="true">'
+            qli.slideUp 400, ->
+              qli.replaceWith(question)
+          else
+            qli.slideUp 400, ->
+              qli.remove()
       
-      li.find('.select input:checked').trigger 'change'
+      # TypeStyle select change action
+      container.delegate 'input', 'change', ->
+        select = $(this).closest('.select')
+        answers = right.find('.answers')
+        checkedInput = select.find('input:checked')
+        val = checkedInput.val()
+        select.find('input').removeAttr 'checked'
+        checkedInput.attr 'checked','checked'
+        if val.match /short_answer_question|long_answer_question/i
+          right.addClass('hidden')
+          answers.find('input')
+            .attr('disabled',true)
+            .attr('readonly',true)
+        else
+          right.removeClass('hidden')
+          answers.find('input')
+            .removeAttr('disabled readonly')
+          if answers.find('li').size() == 0
+            right.find('.add a').trigger 'click'
+        selectUl = select.find('ul')
+        selectUl.animate { opacity: 0 }, 200, ->
+          selectUl
+            .hide()
+            .animate { opacity: 0 }, 5, ->
+              selectUl.show().css { opacity: 1 }
+      
+      # Add answer link
+      right.find('p.add').removeClass('hidden')
+      
+      # Remove answer link
+      right.find('.answers').delegate 'li a.remove', 'click', ->
+        ali = $(this).closest('li')
+        ali.slideUp 400, ->
+          if ali.attr 'question'
+            answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
+            $(this).replaceWith(answer)
+      
+      qli.find('.select input:checked').trigger 'change'
       
   $('form.custom_form .questions > li .container').trigger 'init'
