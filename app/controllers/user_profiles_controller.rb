@@ -95,6 +95,7 @@ class UserProfilesController < ApplicationController
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count)
   end
 
+  # Gets teh user profile
   def find_user_by_id
     @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
   end

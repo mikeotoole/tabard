@@ -33,6 +33,7 @@ class PredefinedAnswer < ActiveRecord::Base
   validates :question, :presence => true
   validate :body_not_too_similar_to_others
 
+  # Validator to ensure the body is not going to override another predefined answer.
   def body_not_too_similar_to_others
     return true if self.body.blank? or self.question_id == nil
     only_once = true
@@ -49,6 +50,7 @@ class PredefinedAnswer < ActiveRecord::Base
     return true
   end
 
+  # Gets the body as an id
   def body_as_id
     self.body.downcase.gsub(/[^0-9a-z]/, '')
   end
