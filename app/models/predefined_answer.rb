@@ -17,20 +17,41 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-   attr_accessible :body, :question_id, :position
+  attr_accessible :body, :question_id, :position
 
 ###
 # Associations
 ###
-   belongs_to :question, :inverse_of => :predefined_answers
+  belongs_to :question, :inverse_of => :predefined_answers
 
 ###
 # Validators
 ###
-   validates :body, :presence => true,
+  validates :body, :presence => true,
                     :length => { :maximum => MAX_BODY_LENGTH },
                     :if => Proc.new {|pa| pa.question and pa.question.valid? }
-   validates :question, :presence => true
+  validates :question, :presence => true
+  validate :body_not_too_similar_to_others
+
+  def body_not_too_similar_to_others
+    return true if self.body.blank? or self.question_id == nil
+    only_once = true
+    question.predefined_answers.each do |pa|
+      if pa.body_as_id == self.body_as_id
+        if only_once and pa != self and not pa.persisted?
+          only_once = false
+        else
+          self.errors.add(:body, "is too similar to another predefined answer.") 
+          return false
+        end
+      end
+    end
+    return true
+  end
+
+  def body_as_id
+    self.body.downcase.gsub(/[^0-9a-z]/, '')
+  end
 end
 
 

@@ -80,7 +80,8 @@ describe Subdomains::CommunitiesController do
     end
 
     it "should not change attributes" do
-      assigns[:community].slogan.should_not eq @slogan
+      community.reload
+      community.slogan.should_not eq @slogan
     end
   end
   

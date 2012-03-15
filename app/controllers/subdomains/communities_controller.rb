@@ -11,7 +11,7 @@ class Subdomains::CommunitiesController < SubdomainsController
   # Before Filters
   ###
   load_and_authorize_resource :except => [:activities]
-  before_filter :block_unauthorized_user!, :except => [:activities]
+  prepend_before_filter :block_unauthorized_user!, :except => [:activities]
   before_filter :load_activities, :only => [:activities]
 
 ###
