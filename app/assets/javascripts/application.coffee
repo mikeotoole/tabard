@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 
-(($) ->
+((jQuery) ->
 
   # alert box
   $.alert = (options) ->
@@ -142,7 +142,7 @@ $(document).ready ->
         .find('input[name="_method"]')
         .val $(this).attr('method')
   
-  $('body').delegate '.select ul', 'mouseleave', ->
+  $('body').delegate '.select', 'mouseleave', ->
     $(this).css({ scrollTop: 0 })
   
   # select box auto-hide after click

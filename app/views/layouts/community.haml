@@ -26,7 +26,8 @@
       #header
         .title
           %strong= current_community.name
-          %cite= shorten_words current_community.slogan
+          - if !!current_community.slogan
+            %cite= shorten_words current_community.slogan
         - if has_action_items
           .action_items
             %p

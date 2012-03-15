@@ -87,8 +87,7 @@ $(document).ready ->
         
         # TypeStyle select change action
         li
-          .find('.select input')
-          .change ->
+          .delegate '.select input', 'change', ->
             select = $(this).closest('.select')
             answers = right.find('.answers')
             checkedInput = select.find('input:checked')
@@ -106,6 +105,12 @@ $(document).ready ->
                 .removeAttr('disabled readonly')
               if answers.find('li').size() == 0
                 right.find('.add a').trigger 'click'
+            selectUl = select.find('ul')
+            selectUl.animate { opacity: 0 }, 200, ->
+              selectUl
+                .hide()
+                .animate { opacity: 0 }, 5, ->
+                  selectUl.show().css { opacity: 1 }
         
         # Add answer link
         right.find('p.add').removeClass('hidden')

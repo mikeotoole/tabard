@@ -20,6 +20,7 @@ module CustomFormHelper
     page = %{
       newIndexQ = new Date().getTime();
       question = "#{escape_javascript question}";
+      positionNumber = 0;
       $(this)
         .closest('form')
         .find('.questions')
@@ -30,7 +31,10 @@ module CustomFormHelper
         .draggable({ revert: 'invalid', cancel: '.toggle' })
         .draggable('disable')
         .hide()
-        .slideDown(400);
+        .slideDown(400)
+        .find('input.position').each(function(){
+          $(this).val(++positionNumber);
+        });
     }
     link_to_function name, page, options
   end
