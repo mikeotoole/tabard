@@ -22,7 +22,7 @@
       - if @user_profile.communities.any?
         %ul.communities
           - @user_profile.communities.each do |community|
-            %li= link_to shorten_words(community.name), community, (@user_profile == community.admin_profile ? { :meta => '♕' } : {})
+            %li= link_to shorten_words(community.name), community, (@user_profile == community.admin_profile ? { :meta => '✭' } : {})
       - elsif user_signed_in? and @user_profile == current_user.user_profile
         %p
           You don't have any memberships yet.
