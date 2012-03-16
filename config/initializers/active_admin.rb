@@ -96,7 +96,6 @@ ActiveAdmin.setup do |config|
   config.skip_before_filter :ensure_accepted_most_recent_legal_documents
 
   ActiveAdmin::Devise::SessionsController.skip_before_filter :check_maintenance_mode
-
   ActiveAdmin::Dashboards::DashboardController.before_filter :authorize_dashboard_index, :only => :index
 
   # == Register Stylesheets & Javascripts
