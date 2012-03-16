@@ -31,7 +31,7 @@ class PredefinedAnswer < ActiveRecord::Base
                     :length => { :maximum => MAX_BODY_LENGTH },
                     :if => Proc.new {|pa| pa.question and pa.question.valid? }
   validates :question, :presence => true
-  validate :body_not_too_similar_to_others
+  #validate :body_not_too_similar_to_others
 
   # Validator to ensure the body is not going to override another predefined answer.
   def body_not_too_similar_to_others
