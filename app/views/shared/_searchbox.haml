@@ -1,0 +1,15 @@
+#searchbox
+  = form_tag action, :method => 'get' do
+    = hidden_field_tag :direction, params[:direction]
+    = hidden_field_tag :sort, params[:sort]
+    %p
+      = text_field_tag :search, params[:search]
+      %button{ type: 'submit' } Search
+- if params[:search]
+  - from_count = resource.default_per_page ? (resource.default_per_page * (resource.current_page - 1)) + 1 : 1
+  - to_count = from_count + resource.length - 1
+  %h2 Search Results
+  %p
+    Viewing
+    %strong= "#{from_count} to #{to_count}"
+    = "of #{resource.total_count} total results"
