@@ -18,7 +18,7 @@ class DocumentAcceptanceController < ApplicationController
       redirect_to user_profile_url(current_user.user_profile), :notice => "You have already accepted the document"
     end
     add_new_flash_message("You must accept the updated \"Terms of Service\" to continue to use Crumblin&trade;.", "alert") unless current_user.accepted_current_terms_of_service
-    add_new_flash_message("You must accept the updated \"Privacy Policy\" to continue to use Crumblin&trade;.', "alert") unless current_user.accepted_current_privacy_policy
+    add_new_flash_message("You must accept the updated \"Privacy Policy\" to continue to use Crumblin&trade;.", "alert") unless current_user.accepted_current_privacy_policy
   end
 
   # POST /accept_document/:id(.:format)
