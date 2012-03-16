@@ -2,7 +2,7 @@
 !!!
 %html
   %head
-    %title= yield_for(:title, "#{current_community.name} - Crumblin")
+    %title= yield_for(:title, "#{current_community.name} - Crumblin™")
     = stylesheet_link_tag "application/community"
     = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color

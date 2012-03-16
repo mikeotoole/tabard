@@ -1,7 +1,7 @@
 %p
   %strong= "Hello #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p
-  Your new Crumblin Admin account has been created.
+  Your new Crumblin&trade; Admin account has been created.
 %p
   Before you start,
   = (link_to 'set your password here', edit_password_url(@resource, :reset_password_token => @resource.reset_password_token), :style => 'color: #BE4124') + '.'

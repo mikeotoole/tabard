@@ -86,11 +86,15 @@ $(document).ready ->
   
   # dynamic loaded content after page load
   $('body')
+    .delegate '.dynload', 'ajax:before', ->
+      $($(this).attr('data-target')).addClass('busy')      
     .delegate '.dynload', 'ajax:error', (xhr, status, error) ->
       errormsg = $(this).attr 'data-error'
       $.alert { body: errormsg } if errormsg
     .delegate '.dynload', 'ajax:success', (event, data, status, xhr) ->
-      $($(this).attr('data-target')).html xhr.responseText
+      $($(this).attr('data-target'))
+        .removeClass('busy')
+        .html(xhr.responseText)
   $('.dynload:not(.wait)').trigger 'click'
   
   # replace derp avatars with default
