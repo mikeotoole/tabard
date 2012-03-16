@@ -1,7 +1,7 @@
 - title 'Sign up'
 
 #body
-  %h1 Sign up for Crumblin
+  %h1 Sign up for Crumblin™
 
   - resource.build_user_profile unless resource.user_profile
   = simple_form_for(resource, :as => resource_name, :url => registration_url(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))) do |f|

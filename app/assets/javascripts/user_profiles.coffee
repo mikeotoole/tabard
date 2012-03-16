@@ -1,6 +1,8 @@
 $(document).ready ->
 
   $('#tabs')
+    .delegate 'dt > a', 'ajax:before', ->
+      $(this).closest('dt').find('+ dd').html ''
     .delegate 'dt.announcements + dd form', 'ajax:error', (xhr, status, error) ->
       $.alert { body: 'Unable to mark announcements as read.' }
     .delegate 'dt.announcements + dd form', 'ajax:complete', (event, data, status, xhr) ->

@@ -27,7 +27,7 @@ class SessionsController < Devise::SessionsController
     flash.delete :notice
     session[:hide_announcements] = true
     after_sign_in_path = after_sign_in_path_for(resource)
-    add_new_flash_message "This version of Crumblin is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
+    add_new_flash_message "This version of Crumblin&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
     respond_with resource, :location => after_sign_in_path.match(/\.js$/) ? root_url : after_sign_in_path
   end
 end

@@ -1,7 +1,7 @@
 - title 'Sign in'
 
 #body
-  %h1 Sign in to Crumblin
+  %h1 Sign in to Crumblin™
 
   = simple_form_for(resource, :as => resource_name, :url => session_url(resource_name, :subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))) do |f|
     %fieldset

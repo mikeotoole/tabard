@@ -1,7 +1,7 @@
 - title "Users"
 
 #body
-  %h1 Crumblin Users
+  %h1 Crumblin™ Users
   - if @user_profiles.any?
     = render 'shared/searchbox', :resource => @user_profiles, :action => user_profiles_url
     = paginate @user_profiles
