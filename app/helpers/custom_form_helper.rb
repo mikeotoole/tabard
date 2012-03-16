@@ -31,8 +31,10 @@ module CustomFormHelper
         .draggable({ revert: 'invalid', cancel: '.toggle' })
         .draggable('disable')
         .hide()
-        .slideDown(400)
-        .find('input.position').each(function(){
+        .slideDown(400);
+      $(this)
+        .closest('form')
+        .find('.questions input.position').each(function(){
           $(this).val(++positionNumber);
         });
     }
