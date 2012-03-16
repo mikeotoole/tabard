@@ -52,7 +52,7 @@ module ApplicationHelper
   # [Returns] :title for the yield.
   ###
   def title(page_title)
-    content_for(:title) { "#{page_title} | Crumblin&trade;" }
+    content_for(:title) { raw "#{page_title} | Crumblin&trade;" }
   end
 
   ###

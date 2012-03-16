@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= yield_for(:title, 'Crumblin™')
+    %title= raw yield_for(:title, 'Crumblin™')
     = stylesheet_link_tag "top_level/top_level"
     = javascript_include_tag "application", "top_level"
     = csrf_meta_tags unless @page_caching
