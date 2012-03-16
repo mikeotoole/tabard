@@ -9,6 +9,8 @@ DaBvRails::Application.routes.draw do
     post "/admin/login" => "admin/devise/sessions#create"
     get "/admin_users/sign_in" => "admin/devise/sessions#new"
     post "/admin_users/sign_in" => "admin/devise/sessions#create"
+    get "/admin_users/password/edit" => "admin/devise/passwords#edit"
+    put "/admin_users/password" => "admin/devise/passwords#update"
   end
   ActiveAdmin.routes(self)
   devise_for :admin_users , ActiveAdmin::Devise.config
