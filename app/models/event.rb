@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :title, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
+  attr_accessible :title, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
 
 ###
 # Associations
@@ -26,8 +26,10 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
-  #has_many :participants, :dependent => :destroy
-  #has_many :invites, :dependent => :destroy
+  has_many :invites
+  has_many :comments, :as => :commentable
+
+  accepts_nested_attributes_for :invites, :allow_destroy => true
 
 ###
 # Validators
@@ -45,7 +47,7 @@ class Event < ActiveRecord::Base
 ###
   delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
   delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
- 
+
 ###
 # Protected Methods
 ###

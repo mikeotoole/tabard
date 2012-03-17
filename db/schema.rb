@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120317175502) do
+ActiveRecord::Schema.define(:version => 20120317181635) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -352,6 +352,20 @@ ActiveRecord::Schema.define(:version => 20120317175502) do
     t.datetime "updated_at", :null => false
     t.string   "pretty_url"
   end
+
+  create_table "invites", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "user_profile_id"
+    t.integer  "character_proxy_id"
+    t.string   "status"
+    t.boolean  "is_viewed",          :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
+  add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
+  add_index "invites", ["event_id"], :name => "index_invites_on_event_id"
+  add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
 
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"

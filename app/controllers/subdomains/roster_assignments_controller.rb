@@ -26,7 +26,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments
   # GET /roster_assignments.json
   def index
-    @member_profiles = current_community.member_profiles.page params[:page]
+    @member_profiles = current_community.member_profiles.except(:order).search(params[:search]).order("LOWER(#{sort_column}) #{sort_direction}").page params[:page]
   end
 
   # GET /roster_assignments
@@ -203,5 +203,14 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   ###
   def ensure_roster_is_public
     raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
+  end
+
+###
+# Helper methods
+###
+  helper_method :sort_column
+private
+  def sort_column
+    UserProfile.column_names.include?(params[:sort]) ? params[:sort] : "display_name"
   end
 end
