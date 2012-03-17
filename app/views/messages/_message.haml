@@ -4,14 +4,14 @@
     %p.actions
       - if mailbox_view_state != 'sent'
         - if current_user.address_book.include?(message.author)
-          = link_to '✎ Reply', mail_reply_path(message.original_message_id), :method => :get, :class => 'reply'
+          = link_to '✎ Reply', mail_reply_url(message.original_message_id), :method => :get, :class => 'reply'
         - if message.recipients.size > 1
-          = link_to('✎ Reply All', mail_reply_all_path(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
-      = link_to '➔ Forward', mail_forward_path(message.original_message_id), :class => 'forward'
+          = link_to('✎ Reply All', mail_reply_all_url(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
+      = link_to '➔ Forward', mail_forward_url(message.original_message_id), :class => 'forward'
       - if mailbox_view_state == 'trash'
-        = link_to '✖ Delete', mail_delete_path(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete forever'
+        = link_to '✖ Remove', mail_delete_url(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => "Can't be undone"
       - elsif mailbox_view_state != 'sent'
-        = link_to '✖ Trash', mail_move_path(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
+        = link_to '✖ Trash', mail_move_url(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
 
     %h2
       - if message.is_system_sent
@@ -19,7 +19,7 @@
       - else
         From:
         - if current_user.address_book.include?(message.author)
-          = link_to message.author_name, compose_mail_to_path(message.author_id)
+          = link_to message.author_name, compose_mail_to_url(message.author_id)
         - else
           %span= message.author_name
         on
@@ -38,7 +38,7 @@
           - if current_user.user_profile == profile
             %span Me
           - elsif current_user.address_book.include?(profile)
-            = link_to "✎ #{profile.name}", compose_mail_to_path(profile.id), :meta => "Send message"
+            = link_to "✎ #{profile.name}", compose_mail_to_url(profile.id), :meta => "Send message"
           - else
             %span= profile.name
 
