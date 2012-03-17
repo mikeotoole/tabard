@@ -9,7 +9,7 @@
           = link_to('✎ Reply All', mail_reply_all_url(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
       = link_to '➔ Forward', mail_forward_url(message.original_message_id), :class => 'forward'
       - if mailbox_view_state == 'trash'
-        = link_to '✖ Delete', mail_delete_url(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete forever'
+        = link_to '✖ Remove', mail_delete_url(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => "Can't be undone"
       - elsif mailbox_view_state != 'sent'
         = link_to '✖ Trash', mail_move_url(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
 
