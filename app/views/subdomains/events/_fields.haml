@@ -1,8 +1,24 @@
+= javascript_include_tag "events"
+
 %fieldset
   %ol
     = f.input :name
     = f.input :body
-    = f.input :start_time
-    = f.input :end_time
+    %li.datetime
+      %label Start
+      = f.input :start_time, :as => :hidden, :wrapper_tag => :span
+      %span
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly' }
+      = f.input :start_time, :as => :radio, :collection => 1..12, :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select hour' }, :input_html => { name: '' }
+      = f.input :start_time, :as => :radio, :collection => ['00','15','30','45'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select minute' }, :input_html => { name: '' }
+      = f.input :start_time, :as => :radio, :collection => ['AM','PM'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select meridian' }, :input_html => { name: '' }
+    %li.datetime
+      %label End
+      = f.input :end_time, :as => :hidden, :wrapper_tag => :span
+      %span
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly' }
+      = f.input :end_time, :as => :radio, :collection => 1..12, :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select hour' }, :input_html => { name: '' }
+      = f.input :end_time, :as => :radio, :collection => (0..60).step(15), :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select minute' }, :input_html => { name: '' }
+      = f.input :end_time, :as => :radio, :collection => ['AM','PM'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select meridian' }, :input_html => { name: '' }
     = f.input :supported_game_id, :label => 'Game', :collection => [['— None —','']].concat(current_community.supported_games.collect {|c| c = [c.smart_name, c.id]}), :as => :radio, :wrapper_html => { :class => 'select' }
-    = f.input :is_public
+    = f.input :is_public, :label => 'Viewable by all members?'

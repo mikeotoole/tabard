@@ -1,6 +1,11 @@
 //= require jquery
 //= require jquery_ujs
 
+
+# global var access
+root = exports ? this
+
+
 ((jQuery) ->
 
   # alert box
@@ -82,6 +87,28 @@
         
 ) jQuery
 
+
+# sets up select box improved functionality
+root.initSelects = ->
+  $('body').delegate '.select', 'mouseenter mouseleave', ->
+    $(this).scrollTop(0)
+    $(this).find('ul').scrollTop(0)
+  $('.select, .select ul').scroll ->
+    $(this).scrollLeft(0)
+  $('body').delegate '.select ul label, form .profile label', 'click', ->
+    select = $(this).closest('.select')
+    ul = $(this).closest('ul')
+    ul.animate { opacity: 0 }, 200, ->
+      ul
+        .hide()
+        .animate { opacity: 0 }, 5, ->
+          ul.show().css { opacity: 1 }
+    setTimeout ->
+      select.scrollTop(0)
+      ul.scrollTop(0)
+    , 250
+
+
 $(document).ready ->
   
   # dynamic loaded content after page load
@@ -145,25 +172,6 @@ $(document).ready ->
         .prop({ action: $(this).attr('action') })
         .find('input[name="_method"]')
         .val $(this).attr('method')
-  
-  # select box auto-hide and scroll-back actions
-  $('body').delegate '.select', 'mouseenter mouseleave', ->
-    $(this).scrollTop(0)
-    $(this).find('ul').scrollTop(0)
-  $('.select, .select ul').scroll ->
-    $(this).scrollLeft(0)
-  $('body').delegate '.select ul label, form .profile label', 'click', ->
-    select = $(this).closest('.select')
-    ul = $(this).closest('ul')
-    ul.animate { opacity: 0 }, 200, ->
-      ul
-        .hide()
-        .animate { opacity: 0 }, 5, ->
-          ul.show().css { opacity: 1 }
-    setTimeout ->
-      select.scrollTop(0)
-      ul.scrollTop(0)
-    , 250
   
   # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
@@ -299,3 +307,5 @@ $(document).ready ->
           $(this).data('checked', !$(this).data('checked'))
           $(this).closest('table').find('tbody td.check input').attr('checked',$(this).data('checked'))
   $('body thead th.check').trigger 'init'
+  
+  initSelects()

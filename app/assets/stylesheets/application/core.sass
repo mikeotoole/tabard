@@ -638,6 +638,85 @@ button,
       right: 10px
       top: 10px
       width: 90px
+  
+  input.nicedate
+    display: block
+    float: left
+    width: 208px
+  
+  button.ui-datepicker-trigger
+    background: image-url('application/icons.png') -1079px 1px no-repeat red
+    border: 0
+    display: block
+    height: 32px
+    float: left
+    margin: 5px 5px 10px 0
+    overflow: hidden
+    padding: 0
+    text-indent: -500em
+    width: 32px
+  
+  .datetime .select
+    float: left
+    min-height: 32px
+    margin: 5px 0 10px 5px
+    width: 64px
+    
+    ul
+      width: 60px
+  
+.ui-datepicker
+  background: blue
+  +border_radius(3)
+  font-size: 14px
+  
+  .ui-datepicker-prev,
+  .ui-datepicker-next
+    background: yellow
+    display: block
+    height: 30px
+    line-height: 30px
+    position: absolute
+    top: 10px
+    width: 50px
+  
+  .ui-datepicker-prev
+    left: 10px
+  
+  .ui-datepicker-next
+    right: 10px
+  
+  .ui-datepicker-title
+    background: green
+    height: 30px
+    line-height: 30px
+    margin: 10px 50px 0
+  
+  table
+    margin: 10px
+  
+  td,
+  th
+    padding: 5px
+    
+    a
+      background: green
+      display: block
+      height: 30px
+      line-height: 30px
+      overflow: hidden
+      margin: -5px
+      width: 30px
+      
+      &:hover
+        background: aqua
+    
+  td.ui-datepicker-today a
+    background: red
+  
+  td.ui-datepicker-current-day a
+    background: pink
+      
 
 
 // Pagination
