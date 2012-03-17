@@ -1,0 +1,8 @@
+- title "Editing Event | #{current_community.name}"
+
+%h1 Editing Event
+
+= simple_form_for @event do |f|
+  = render 'fields', :f => f
+  %p.submit
+    = f.button :submit, 'Save Changes'

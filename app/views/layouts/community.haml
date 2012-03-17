@@ -63,6 +63,9 @@
                     %li= link_to shorten_words(space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
+              = link_to 'Events', events_url(:subdomain => current_community.subdomain)
+          - if user_signed_in? and current_user.is_member? current_community
+            %li
               = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
               - if current_community.supported_games.any?
                 %ul

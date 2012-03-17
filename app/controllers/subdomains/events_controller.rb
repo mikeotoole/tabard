@@ -22,7 +22,7 @@ class Subdomains::EventsController < SubdomainsController
 ###
   # GET /events
   def index
-    @events = current_community.events
+    @events = current_community.events.page params[:page]
   end
 
   # GET /events/1

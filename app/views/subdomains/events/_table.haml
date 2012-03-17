@@ -1,0 +1,25 @@
+%table
+  %thead
+    %tr
+      %th Title
+      %th Start Time
+      %th.actions
+  %tbody
+    - events.each do |event|
+      %tr
+        %td
+          = link_to shorten_words(event.title, 21), event
+          - if event.supported_game
+            %rt= event.supported_game.smart_name
+        %td= event.start_time
+        %td.actions
+          %div
+            - if (can? :update, event)
+              = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
+            - if (can? :destroy, event)
+              = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
+  %tfoot
+    %tr
+      %td{ :colspan => 3 }
+        - if can? :create, Event
+          = link_to 'New Event', new_event_path, :class => 'button'
