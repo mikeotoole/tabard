@@ -15,6 +15,7 @@
         %br
         = f.input :avatar, :as => :file, :hint => 'Maxium file size of 2mb. GIF, JPG, PNG.'
         = f.input :remote_avatar_url, :label => ' — or a link to an image'
+        = f.input :remove_avatar, :as => :boolean, :label => "Remove avatar"
       = f.input :publicly_viewable, :label => "My profile can be viewed by others"
     %p.submit
       %button{ :type => 'submit' } Save
