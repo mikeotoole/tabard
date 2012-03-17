@@ -35,7 +35,7 @@ class Invite < ActiveRecord::Base
 ###
   validates :event,  :presence => true
   validates :status,  :presence => true,
-            :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" }
+            :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" }, :on => :update
   validates :user_profile,  :presence => true
   validate :character_is_valid_for_user_profile
 

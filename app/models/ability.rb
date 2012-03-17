@@ -143,6 +143,16 @@ class Ability
       (discussion.user_profile_id == user.user_profile_id) and not discussion.is_locked
     end
 
+    #Event Rules
+    can :read, Event do |event|
+      user.events_invited_to.include?(event)
+    end
+
+    #Invite Rules
+    can :read, Invite do |invite|
+      invite.user_profile_id == user.user_profile_id
+    end
+
     # Messaging Rules
     can :manage, Folder do |folder|
       folder.user_profile_id == user.user_profile_id

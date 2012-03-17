@@ -2,10 +2,8 @@
 
 FactoryGirl.define do
   factory :invite do
-    event_id 1
-    user_profile_id 1
-    character_proxy_id 1
-    status "MyString"
+    event
+    user_profile
     is_viewed false
   end
   

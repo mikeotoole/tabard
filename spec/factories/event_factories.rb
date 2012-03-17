@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :event do
-    sequence(:title) {|n| "Event #{n}"}
+    sequence(:name) {|n| "Event #{n}"}
     body "Event Body"
     start_time { Time.now + (60 * 60) }
     end_time { Time.now + (120 * 60) }
