@@ -23,9 +23,22 @@ class MessagesController < MailboxController
       gather_inbox_data @message.folder
       @mailbox_view_state = @message.folder.name.downcase
       @message.update_attributes(:has_been_read => true)
+      respond_to do |format|
+        format.html { render :show }
+        format.js {
+          logger.debug @message.to_yaml
+          render :partial => 'messages/message', :locals => { :message => @message }
+        }
+      end
     else
-      add_new_flash_message "Message not found.", 'alert'
-      redirect_to inbox_url
+      errormsg = 'Message not found.'
+      respond_to do |format|
+        format.html {
+          add_new_flash_message errormsg, 'alert'
+          redirect_to inbox_url
+        }
+        format.js { render :text => errormsg }
+      end
     end
   end
 

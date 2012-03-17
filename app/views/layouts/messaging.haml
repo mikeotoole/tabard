@@ -2,7 +2,7 @@
 %html
   %head
     %title= yield_for(:title, 'Crumblin™')
-    = stylesheet_link_tag "top_level/top_level", "application/messaging"
+    = stylesheet_link_tag "top_level/top_level", "top_level/messaging"
     = javascript_include_tag "application", "messaging"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
@@ -67,5 +67,6 @@
             - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
               = render 'messages/row', :message => message
 
-    = yield
+    #message= yield
+
     = render 'layouts/footer'
