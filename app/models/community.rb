@@ -48,7 +48,7 @@ class Community < ActiveRecord::Base
   has_many :roster_assignments, :through => :community_profiles
   has_many :pending_roster_assignments, :through => :community_profiles
   has_many :approved_roster_assignments, :through => :community_profiles
-  has_many :roles, :dependent => :destroy
+  has_many :roles, :dependent => :destroy, :order => :id
   has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy, :order => 'LOWER(name)'
   has_many :discussions, :through => :discussion_spaces
   has_many :comments
