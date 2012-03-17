@@ -23,7 +23,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :community_profiles
   has_many :user_profiles, :through => :community_profiles
   accepts_nested_attributes_for :permission_defaults, :allow_destroy => true
-  accepts_nested_attributes_for :permissions, :reject_if => :is_empty_permission?, :allow_destroy => true
+  accepts_nested_attributes_for :permissions, :allow_destroy => true
 
 ###
 # Validators

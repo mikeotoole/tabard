@@ -6,7 +6,7 @@
   %header
     %h1= shorten_words @user_profile.display_name.to_s, 21
     - if @user_profile.title?
-      %p= "“#{@user_profile.title}”"
+      %p= @user_profile.title
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
