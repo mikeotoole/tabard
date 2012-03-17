@@ -72,7 +72,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def accept
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
-      redirect_to community_application_url(@community_application)
+      add_new_flash_message 'The application has been accepted.', 'success'
+      redirect_to roster_assignments_url
     else
       @supported_games = current_community.supported_games
       @comments = @community_application.comments.page params[:page]
@@ -82,7 +83,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This rejects the specified application.
   def reject
-    @community_application.reject_application(current_user.user_profile)
+    add_new_flash_message 'The application has been rejected.', 'notice' if @community_application.reject_application(current_user.user_profile)
     redirect_to community_application_url(@community_application)
   end
 ###
