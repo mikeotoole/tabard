@@ -5,6 +5,9 @@
     = link_to 'New Event', new_event_url, :class => 'new', :meta => 'Create a new event'
 
 %h1 Events
+= link_to 'List', events_url
+= link_to 'Month', month_events_url(:year => Date.today.year, :month => Date.today.month)
+= link_to 'Week', week_events_url(:year => Date.today.year, :week => Date.today.cweek)
 
 - if @events.any?
   = paginate @events

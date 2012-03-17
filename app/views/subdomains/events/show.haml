@@ -1,4 +1,4 @@
-- title "#{@event.title} | #{current_community.name}"
+- title "#{@event.name} | #{current_community.name}"
 
 #breadcrumb
   %ol
@@ -12,7 +12,7 @@
   - if (can? :destroy, @event)
     = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
 
-%h1= shorten_words @event.title, 21
+%h1= shorten_words @event.name, 21
 %p
   %b Body:
   = @event.body

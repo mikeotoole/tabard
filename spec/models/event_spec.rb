@@ -2,17 +2,18 @@
 #
 # Table name: events
 #
-#  id           :integer         not null, primary key
-#  title        :string(255)
-#  body         :text
-#  start_time   :datetime
-#  end_time     :datetime
-#  creator_id   :integer
-#  game_id      :integer
-#  community_id :integer
-#  invite_only  :boolean         default(FALSE)
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                :integer         not null, primary key
+#  title             :string(255)
+#  body              :text
+#  start_time        :datetime
+#  end_time          :datetime
+#  creator_id        :integer
+#  supported_game_id :integer
+#  community_id      :integer
+#  is_public         :boolean         default(FALSE)
+#  location          :string(255)
+#  created_at        :datetime        not null
+#  updated_at        :datetime        not null
 #
 
 require 'spec_helper'
@@ -24,8 +25,8 @@ describe Event do
     event.should be_valid
   end
 
-  it "should require title" do
-    build(:event, :title => nil).should_not be_valid
+  it "should require name" do
+    build(:event, :name => nil).should_not be_valid
   end
 
   it "should require body" do
