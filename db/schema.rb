@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(:version => 20120317181635) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "title"
+    t.string   "name"
     t.text     "body"
     t.datetime "start_time"
     t.datetime "end_time"

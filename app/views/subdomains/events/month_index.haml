@@ -1,0 +1,15 @@
+- title "Events | #{current_community.name}"
+
+#actions.actions
+  - if can? :create, Event
+    = link_to 'New Event', new_event_url, :class => 'new', :meta => 'Create a new event'
+
+%h1 Events
+
+- if @events.any?
+  = render "table", :events => @events
+
+-else
+  %p There are no events.
+  - if can? :create, Event
+    %p= link_to 'New Event', new_event_url, :class => 'button'

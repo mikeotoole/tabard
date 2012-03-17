@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
 # Constants
 ###
   # This is the max title length
-  MAX_TITLE_LENGTH = 60
+  MAX_NAME_LENGTH = 60
   # This is the max body length
   MAX_BODY_LENGTH = 10000
 
@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :title, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
 
 ###
 # Associations
@@ -34,7 +34,7 @@ class Event < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :title, :presence => true, :length => { :maximum => MAX_TITLE_LENGTH }
+  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
   validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
   validates :start_time, :presence => true
   validates :end_time, :presence => true
@@ -69,12 +69,13 @@ protected
   end
 end
 
+
 # == Schema Information
 #
 # Table name: events
 #
 #  id                :integer         not null, primary key
-#  title             :string(255)
+#  name              :string(255)
 #  body              :text
 #  start_time        :datetime
 #  end_time          :datetime
