@@ -113,7 +113,7 @@ unless @dont_run
 
   billy = UserProfile.find_by_last_name('Billy')
 
-  %w(Moose Turtle Badger).each do |last_name|
+  %w(Moose Turtle Badger O'Toole).each do |last_name|
     application = generate_application(headshot, last_name)
     character_hash_map = find_character_mapping(headshot, application)
     application.accept_application(billy, character_hash_map)

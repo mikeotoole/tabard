@@ -22,6 +22,8 @@ class Acknowledgement < ActiveRecord::Base
   delegate :display_name, :to => :poster, :prefix => true, :allow_nil => true
   delegate :community_name, :to => :community_profile, :allow_nil => true
   delegate :subdomain, :to => :announcement, :allow_nil => true
+  delegate :name, :to => :announcement, :prefix => true, :allow_nil => true
+  delegate :body, :to => :announcement, :prefix => true, :allow_nil => true
 end
 
 
