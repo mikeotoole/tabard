@@ -44,7 +44,13 @@ class Event < ActiveRecord::Base
   validate :starttime_after_endtime
   validates :creator, :presence => true
   validates :community, :presence => true
-  
+ 
+###
+# Delegates
+###
+  delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
+  delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
+ 
 ###
 # Callbacks
 ###

@@ -1,0 +1,34 @@
+- title "#{@event.title} | #{current_community.name}"
+
+#breadcrumb
+  %ol
+    %li= link_to "Events", events_url
+    %li
+      %span= shorten_words @event.title, 21
+
+#actions.actions
+  - if (can? :update, @event)
+    = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
+  - if (can? :destroy, @event)
+    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
+
+%h1= shorten_words @event.title, 21
+%p
+  %b Body:
+  = @event.body
+- if @event.supported_game
+  %p
+    %b Game:
+    = @event.supported_game_smart_name
+%p
+  %b Start Time:
+  = @event.start_time
+%p
+  %b End Time:
+  = @event.end_time
+%p
+  %b Creator:
+  = link_to @event.creator_display_name, @event.creator
+%p
+  %b is_public Only:
+  = @event.is_public
