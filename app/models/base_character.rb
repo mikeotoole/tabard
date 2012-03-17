@@ -11,20 +11,6 @@ class BaseCharacter < ActiveRecord::Base
 ###
 # Attribute accessors
 ###
-  ###
-  # This attribute is the avatar for this SWTOR character. It maps to the AvatarUploader.
-  ###
-  attr_accessor :avatar
-
-  ###
-  # This attribute is the avatar cache for this SWTOR character. It is used by the AvatarUploader.
-  ###
-  attr_accessor :avatar_cache
-
-  ###
-  # This attribute is the avatar removal for this SWTOR character. It is used by the AvatarUploader.
-  ###
-  attr_accessor :remove_avatar
 
 ###
 # Attribute accessible
