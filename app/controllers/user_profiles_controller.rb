@@ -20,7 +20,7 @@ class UserProfilesController < ApplicationController
   # GET /user_profiles/
   def index
     authorize! :index, UserProfile
-    @user_profiles = UserProfile.active.search(params[:search]).order(sort_column + ' IS NULL, ' + sort_column + " " + sort_direction).page params[:page]
+    @user_profiles = UserProfile.active.search(params[:search]).order(sort_column + " IS NULL, LOWER(#{sort_column}) #{sort_direction}").page params[:page]
   end
 
   # GET /user_profiles/1
@@ -103,13 +103,9 @@ class UserProfilesController < ApplicationController
 ###
 # Helper methods
 ###
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column
 private
   def sort_column
     UserProfile.column_names.include?(params[:sort]) ? params[:sort] : "display_name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

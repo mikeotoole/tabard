@@ -188,7 +188,12 @@ protected
     nil
   end
   helper_method :current_game
-  
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+  helper_method :sort_direction
+
   ###
   # This helper method that checks current browser is supported.
   # Returns true if supported.
