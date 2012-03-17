@@ -25,8 +25,8 @@ describe Event do
     event.should be_valid
   end
 
-  it "should require title" do
-    build(:event, :title => nil).should_not be_valid
+  it "should require name" do
+    build(:event, :name => nil).should_not be_valid
   end
 
   it "should require body" do
