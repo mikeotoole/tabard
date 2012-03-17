@@ -93,7 +93,7 @@ describe Subdomains::CommunityApplicationsController do
     
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_registration_url(subdomain: 'secure', protocol: "https://", community_id: community.id))
     end
   end
 

@@ -5,5 +5,7 @@
   You have a new message on Crumblin™!
 - else
   #{@message_association.author_name} sent you a message on Crumblin™!
+%h2
+  #{@message_association.subject}
 %p You can view your message at the link below:
 %p= link_to 'View Message', mail_url(@message_association), :style => 'color: #BE4124'
