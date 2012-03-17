@@ -15,7 +15,7 @@ class Submission < ActiveRecord::Base
   belongs_to :custom_form
   belongs_to :user_profile
 
-  has_many :answers, :dependent => :destroy
+  has_many :answers, :dependent => :destroy, :order => :id
   has_many :form_questions, :through => :custom_form, :source => :questions
 
   has_one :community, :through => :custom_form
