@@ -64,7 +64,7 @@ class SubdomainsController < ApplicationController
     management_items << {:link => community_applications_url, :title => 'Applications', :class => 'applications', :meta => current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
     management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :class => 'roster', :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
     management_items << {:link => my_roster_assignments_url, :title => "My Roster", :class => 'myroster'} if can? :mine, RosterAssignment
-    management_items << {:link => custom_forms_url, :title => "Forms", :class => 'forms'} if can_manage? current_community.custom_forms.new
+    management_items << {:link => custom_forms_url, :title => "Forms", :class => 'forms'} if can? :create, CustomForm or can_manage? current_community.custom_forms.new
     management_items
   end
   helper_method :management_navigation_items
