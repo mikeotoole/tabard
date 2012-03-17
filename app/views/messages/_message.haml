@@ -1,50 +1,48 @@
-#message
+%header
+  %p.actions
+    - if mailbox_view_state != 'sent'
+      - if current_user.address_book.include?(message.author)
+        = link_to '✎ Reply', mail_reply_url(message.original_message_id), :method => :get, :class => 'reply'
+      - if message.recipients.size > 1
+        = link_to('✎ Reply All', mail_reply_all_url(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
+    = link_to '➔ Forward', mail_forward_url(message.original_message_id), :class => 'forward'
+    - if mailbox_view_state == 'trash'
+      = link_to '✖ Remove', mail_delete_url(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => "Can't be undone"
+    - elsif mailbox_view_state != 'sent'
+      = link_to '✖ Trash', mail_move_url(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
 
-  %header
-    %p.actions
-      - if mailbox_view_state != 'sent'
-        - if current_user.address_book.include?(message.author)
-          = link_to '✎ Reply', mail_reply_url(message.original_message_id), :method => :get, :class => 'reply'
-        - if message.recipients.size > 1
-          = link_to('✎ Reply All', mail_reply_all_url(message.original_message_id), :class => 'replyall') if message.recipients.size > 1
-      = link_to '➔ Forward', mail_forward_url(message.original_message_id), :class => 'forward'
-      - if mailbox_view_state == 'trash'
-        = link_to '✖ Remove', mail_delete_url(message.original_message_id), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => "Can't be undone"
-      - elsif mailbox_view_state != 'sent'
-        = link_to '✖ Trash', mail_move_url(:id => message.id, :folder_id => current_user.trash.id, :return_url => inbox_url), :method => :put,   :class => 'delete', :meta => 'Move message to trash'
-
-    %h2
-      - if message.is_system_sent
-        %strong Notification:
-      - else
-        From:
-        - if current_user.address_book.include?(message.author)
-          = link_to message.author_name, compose_mail_to_url(message.author_id)
-        - else
-          %span= message.author_name
-        on
-      %time{ :title => (l Time.zone.now, :format => :date_short) }
-        = l message.created_at, :format => :date_monthday
-      at
-      %time
-        = l message.created_at, :format => :time_12
-
-    %h1= message.subject
-
-    %dl
-      %dt To:
-      - message.recipients.each do |profile|
-        %dd
-          - if current_user.user_profile == profile
-            %span Me
-          - elsif current_user.address_book.include?(profile)
-            = link_to "✎ #{profile.name}", compose_mail_to_url(profile.id), :meta => "Send message"
-          - else
-            %span= profile.name
-
-  %article
+  %h2
     - if message.is_system_sent
-      :markdown
-        #{message.body}
+      %strong Notification:
     - else
-      = simple_format message.body
+      From:
+      - if current_user.address_book.include?(message.author)
+        = link_to message.author_name, compose_mail_to_url(message.author_id)
+      - else
+        %span= message.author_name
+      on
+    %time{ :title => (l Time.zone.now, :format => :date_short) }
+      = l message.created_at, :format => :date_monthday
+    at
+    %time
+      = l message.created_at, :format => :time_12
+
+  %h1= message.subject
+
+  %dl
+    %dt To:
+    - message.recipients.each do |profile|
+      %dd
+        - if current_user.user_profile == profile
+          %span Me
+        - elsif current_user.address_book.include?(profile)
+          = link_to "✎ #{profile.name}", compose_mail_to_url(profile.id), :meta => "Send message"
+        - else
+          %span= profile.name
+
+%article
+  - if message.is_system_sent
+    :markdown
+      #{message.body}
+  - else
+    = simple_format message.body

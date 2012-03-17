@@ -212,6 +212,19 @@ body
   top: 70px
   z-index: 4
   
+  &:after
+    background: image-url('application/busy.gif') center center no-repeat rgba(#2D7CB4,.2)
+    bottom: 0
+    content: ''
+    display: none
+    left: 0
+    position: absolute
+    right: 0
+    top: 0
+  
+  &.busy:after
+    display: block
+  
   header
     position: relative
   

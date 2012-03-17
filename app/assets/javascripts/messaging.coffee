@@ -8,6 +8,29 @@ $(document).ready ->
       else
         $(this).closest('dd').removeClass 'selected'
   
+  # message AJAX load
+  $('#mailbox')
+    .delegate 'dd a[data-remote]', 'ajax:before', ->
+      $('#message').addClass 'busy'
+    .delegate 'dd a[data-remote]', 'ajax:complete', ->
+      $('#message').removeClass 'busy'
+    .delegate 'dd a[data-remote]', 'ajax:error', (xhr, status, error) ->
+      $.alert { body: 'Unable to load message.' }
+    .delegate 'dd a[data-remote]', 'ajax:success', (event, data, status, xhr) ->
+      $('#mailbox dd').removeClass 'open'
+      dd = $(this).closest('dd')
+      if dd.hasClass 'read'
+        dd.addClass 'open'
+      else
+        envelope = $('#bar .envelope a')
+        num = envelope.attr('meta') - 1
+        if num
+          envelope.attr('meta', num)
+        else
+          envelope.removeAttr 'meta'
+        dd.addClass 'read open'
+      $('#message').html xhr.responseText
+  
   # user profile suggestion and selection for the "to" field
   $('#message.compose').each ->
     
