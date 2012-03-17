@@ -11,6 +11,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 ###
 # Before Filters
 ###
+  before_filter :pitch_to_new_user, :only => [:new]
   before_filter :block_unauthorized_user!
   before_filter :load_application, :except => [:new, :create]
   before_filter :create_application, :only => [:new, :create]
@@ -102,6 +103,10 @@ protected
   def load_application
     @community_applications = current_community.community_applications
     @community_application = current_community.community_applications.find_by_id(params[:id])
+  end
+
+  def pitch_to_new_user
+    redirect_to new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in? 
   end
 
   ###
