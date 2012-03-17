@@ -6,7 +6,7 @@
 # This controller is for messages. It handles the users interaction with received messages.
 ###
 class MessagesController < MailboxController
-  respond_to :html
+  respond_to :html, :js
   layout 'messaging'
 ###
 # Callbacks
