@@ -4,12 +4,12 @@
     %thead
       %tr
         %th
-        %th Member
+        %th= sortable 'display_name', 'Member'
         %th Characters on the Roster
         %th Joined
         %th.actions
     %tbody
-      = render 'row', :member_profile => current_community.admin_profile, :supported_game => supported_game, :profile_type => 'admin' unless params[:page]
+      = render 'row', :member_profile => current_community.admin_profile, :supported_game => supported_game, :profile_type => 'admin' unless params[:page] or not member_profiles.include?(current_community.admin_profile)
       - if member_profiles.any?
         - member_profiles.each do |member_profile|
           - next if member_profile == current_community.admin_profile
