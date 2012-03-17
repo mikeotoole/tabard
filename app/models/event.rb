@@ -15,16 +15,10 @@ class Event < ActiveRecord::Base
   MAX_BODY_LENGTH = 10000
 
 ###
-# Attribute accessor
-###
-  # This attribute is an array of recipient (user_profile) ids.
-  attr_accessor  :to
-
-###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :title, :to, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
+  attr_accessible :title, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
 
 ###
 # Associations
@@ -32,7 +26,10 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
+  has_many :invites
   has_many :comments, :as => :commentable
+
+  accepts_nested_attributes_for :invites, :allow_destroy => true
 
 ###
 # Validators
@@ -50,19 +47,11 @@ class Event < ActiveRecord::Base
 ###
   delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
   delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
- 
-###
-# Callbacks
-###
-  after_create :create_invitations_from_ids
 
 ###
 # Protected Methods
 ###
 protected
-    def create_comment_from_body
-    event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
-  end
 
 ###
 # Validation Methods
