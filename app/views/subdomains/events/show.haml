@@ -4,7 +4,7 @@
   %ol
     %li= link_to "Events", events_url
     %li
-      %span= shorten_words @event.title, 21
+      %span= shorten_words @event.name, 21
 
 #actions.actions
   - if (can? :update, @event)

@@ -24,6 +24,12 @@ class Subdomains::EventsController < SubdomainsController
   def index
     @events = current_community.events.page params[:page]
   end
+  
+  # GET /events/:year/:month
+  # GET /events/2012/03
+  def month_index
+    @events = current_community.events
+  end
 
   # GET /events/1
   def show

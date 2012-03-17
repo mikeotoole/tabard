@@ -1,14 +1,14 @@
 %table
   %thead
     %tr
-      %th Title
+      %th Name
       %th Start Time
       %th.actions
   %tbody
     - events.each do |event|
       %tr
         %td
-          = link_to shorten_words(event.title, 21), event
+          = link_to shorten_words(event.name, 21), event
           - if event.supported_game
             %rt= event.supported_game.smart_name
         %td= event.start_time

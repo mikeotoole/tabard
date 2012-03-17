@@ -174,6 +174,7 @@ DaBvRails::Application.routes.draw do
       
       # Events
       resources :events
+      get '/events/:year/:month' => 'events#month_index', :as => "month_events"
     end
   end
 
