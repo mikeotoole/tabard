@@ -14,8 +14,9 @@ class MessageAssociationMailer < ActionMailer::Base
   def new_message(message_association_id)
     @message_association = MessageAssociation.find_by_id(message_association_id)
     if !!@message_association
+      @subject = @message_association.is_system_sent ? "Crumblin - #{@message_association.subject}" : "Crumblin - New Message From #{@message_association.author_name}"
       @user_profile = @message_association.recipient
-      mail(:to => @user_profile.email, :subject => 'Crumblin - New Message') do |format|
+      mail(:to => @user_profile.email, :subject => @subject) do |format|
          format.html { render "mailers/new_message" }
       end
     end

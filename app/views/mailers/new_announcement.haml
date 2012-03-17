@@ -2,5 +2,11 @@
   %strong Hello #{@user_profile.display_name},
 %p
   #{@acknowledgement.poster_display_name} created a new #{@acknowledgement.community_name} announcement on Crumblin™!
-%p You can view your announcement at the link below:
+%p
+  #{@acknowledgement.announcement_name}
+
+- if @acknowledgement.announcement_body.empty?
+  %p Let your community's  leaders know you read this by viwing the announcment at the link below:
+- else
+  %p Read the rest of this announcement at the link below:
 %p= link_to 'View Announcement', @url, :style => 'color: #BE4124'
