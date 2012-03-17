@@ -32,7 +32,7 @@
                 - if can? :approve, roster_assignment
                   = link_to 'Approve', approve_roster_assignment_path(roster_assignment), :method => :put, :class => 'approve', :meta => "Approve #{roster_assignment.character_proxy_name}"
                 - if can? :reject, roster_assignment
-                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), :confirm => 'derp?', :method => :put, :class => 'reject', :meta => "Reject #{roster_assignment.character_proxy_name}"
+                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), :confirm => 'Are you sure you want to reject this character?', :method => :put, :class => 'reject', :meta => "Reject #{roster_assignment.character_proxy_name}"
       %tfoot
         %tr
           %td{ :colspan => 4, :class => 'batch' }
