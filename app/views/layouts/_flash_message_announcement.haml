@@ -1,4 +1,5 @@
 %li.announcement
   = link_to (truncate announcement.name, :length => 100, :separator => ' '), announcement_url(announcement, :subdomain => announcement.subdomain), :class => 'link'
   %span.meta= "— #{announcement.community_name}"
-  = link_to '✔', announcement_url(announcement, :community_id => announcement.community.id, :format => :js), 'data-type' => :text, :remote => true, :class => 'read'
+  - unless !!announcement.body
+    = link_to '✔', announcement_url(announcement, :community_id => announcement.community.id, :format => :js), 'data-type' => :text, :remote => true, :class => 'read'
