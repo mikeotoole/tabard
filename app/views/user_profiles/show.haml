@@ -40,7 +40,7 @@
         %p= shorten_words @user_profile.description
       %h3 Stats
       %p.stats
-        = "user since #{l @user_profile.created_at, :format => :date_short}."
+        = "User since #{l @user_profile.created_at, :format => :date_short}."
         %br
         = pluralize(Discussion.where(:user_profile_id => @user_profile.id).size, 'discussion') + ' created.'
         %br
