@@ -318,6 +318,24 @@ ActiveRecord::Schema.define(:version => 20120317181635) do
     t.boolean  "is_published", :default => false
   end
 
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "creator_id"
+    t.integer  "supported_game_id"
+    t.integer  "community_id"
+    t.boolean  "is_public",         :default => false
+    t.string   "location"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "events", ["community_id"], :name => "index_events_on_community_id"
+  add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
+  add_index "events", ["supported_game_id"], :name => "index_events_on_supported_game_id"
+
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.integer  "user_profile_id"
