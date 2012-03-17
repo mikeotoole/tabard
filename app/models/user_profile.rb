@@ -73,6 +73,13 @@ class UserProfile < ActiveRecord::Base
   after_create :create_mailboxes
 
 ###
+# Scopes
+###
+  scope :active, lambda { 
+    includes(:user).where{(user.admin_disabled_at == nil) & (user.user_disabled_at == nil)}
+  }
+
+###
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
