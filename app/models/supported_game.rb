@@ -34,6 +34,7 @@ class SupportedGame < ActiveRecord::Base
   has_many :announcements, :dependent => :destroy
   has_many :discussion_spaces, :dependent => :destroy
   has_many :page_spaces, :dependent => :destroy
+  has_many :events, :dependent => :destroy
 
 ###
 # Callbacks

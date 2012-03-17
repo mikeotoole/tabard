@@ -217,6 +217,10 @@ class Ability
     can [:destroy], CommunityProfile do |community_profile|
       community_profile.user_profile_id == user.user_profile_id
     end
+    
+    can [:read], Event do |event|
+      event.is_public # TODO Joe/Mike, Need to check if user has invite. -MO
+    end
   end
 
   ###
@@ -258,6 +262,8 @@ class Ability
     can [:read, :destroy], Submission
     can :manage, Question
     can [:update, :remove_confirmation, :clear_action_items], Community
+    
+    can :manage, Event
   end
 
   ###

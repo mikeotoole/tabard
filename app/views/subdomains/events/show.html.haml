@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @event.title
+%p
+  %b Body:
+  = @event.body
+%p
+  %b Start Time:
+  = @event.start_time
+%p
+  %b End Time:
+  = @event.end_time
+%p
+  %b Creator:
+  = @event.creator_id
+%p
+  %b Game:
+  = @event.game_id
+%p
+  %b Community:
+  = @event.community_id
+%p
+  %b Invite Only:
+  = @event.invite_only
+
+= link_to 'Edit', edit_event_path(@event)
+\|
+= link_to 'Back', events_path
