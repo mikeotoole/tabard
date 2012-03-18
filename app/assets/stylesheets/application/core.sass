@@ -653,17 +653,26 @@ button,
     margin: 5px 5px 10px 0
     overflow: hidden
     padding: 0
+    position: relative
     text-indent: -500em
     width: 32px
+    z-index: 2
   
-  .datetime .select
-    float: left
-    min-height: 32px
-    margin: 5px 0 10px 5px
-    width: 64px
+  .datetime
+  
+    .select
+      float: left
+      min-height: 32px
+      margin: 5px 0 10px 5px
+      width: 64px
+      
+      ul
+        width: 60px
     
-    ul
-      width: 60px
+    mark.error
+      margin-top: 5px
+      padding-top: 5px
+      width: 454px
   
 .ui-datepicker
   background: blue
