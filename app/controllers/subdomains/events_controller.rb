@@ -28,7 +28,37 @@ class Subdomains::EventsController < SubdomainsController
   # GET /events/:year/:month
   # GET /events/2012/03
   def month_index
-    @events = current_community.events
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+    valid = (2000 <= @year and @year <= 3000)
+    valid = (1 <= @month and @month <= 12) if valid
+
+    if valid
+      @date = Date.new(@year, @month, 1)
+      end_date = @date.next_month.beginning_of_month
+      @events = current_community.events.find(:all, :conditions=>{:start_time => @date..end_date})
+    else
+      add_new_flash_message('Invalid date.', 'alert')
+      redirect_to month_events_url(:year => Date.today.year, :month => Date.today.month)
+    end
+  end
+  
+  # GET /events/:year/week/:week
+  # GET /events/2012/week/44
+  def week_index
+    @year = params[:year].to_i
+    @week = params[:week].to_i
+    valid = (2000 <= @year and @year <= 3000)
+    valid = (1 <= @week and @week <= 52) if valid
+    
+    if valid
+      @date = Date.commercial(@year, @week, 1)
+      wkEnd = Date.commercial(@year, @week, 7)
+      @events = current_community.events.find(:all, :conditions=>{:start_time => @date..wkEnd})
+    else
+      add_new_flash_message('Invalid date.', 'alert')
+      redirect_to week_events_url(:year => Date.today.year, :week => Date.today.cweek)
+    end
   end
 
   # GET /events/1
