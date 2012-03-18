@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location
 
 ###
 # Associations
@@ -27,6 +27,12 @@ class Event < ActiveRecord::Base
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
   has_many :invites
+  has_many :user_profiles, :through => :invites
+  has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
+  has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
+  has_many :tentative_invites, :class_name => "Invite", :conditions => {:status => "Tentative"}
+  has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Late"}
+  
   has_many :comments, :as => :commentable
 
   accepts_nested_attributes_for :invites, :allow_destroy => true
@@ -47,11 +53,46 @@ class Event < ActiveRecord::Base
 ###
   delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
   delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
+  delegate :subdomain, :to => :community, :prefix => true, :allow_nil => true
+
+###
+# Callbacks
+###
+  before_save :notify_users, :on => :update
 
 ###
 # Protected Methods
 ###
 protected
+
+def notify_users
+  return true unless self.persisted?
+  if name_changed? or body_changed?
+    if name_changed? and body_changed?
+      message_the_invites("had the name and/or body changed")
+    else
+      message_the_invites("had the name changed") if name_changed?
+      message_the_invites("had the body changed") if body_changed?
+    end
+  end
+  if start_time_changed? or end_time_changed? 
+    if start_time_changed? and end_time_changed?
+      message_the_invites("had the starting and ending time changed")
+    else
+      message_the_invites("had the starting time changed") if start_time_changed?
+      message_the_invites("had the ending time changed") if end_time_changed?
+    end
+    self.invites.update_all({is_viewed: false})
+    self.invites.update_all({status: nil})
+  end
+  return true
+end
+
+def message_the_invites(reason)
+  Message.create_system(:subject => "An event you were invited to has changed",
+      :body => "The #{name_was} event you were invited to has #{reason}",
+      :to => self.user_profiles.map{|profile| profile.id})
+end
 
 ###
 # Validation Methods

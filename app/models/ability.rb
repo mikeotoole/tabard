@@ -149,7 +149,7 @@ class Ability
     end
 
     #Invite Rules
-    can :read, Invite do |invite|
+    can [:read, :update], Invite do |invite|
       invite.user_profile_id == user.user_profile_id
     end
 
@@ -229,7 +229,7 @@ class Ability
     end
     
     can [:read], Event do |event|
-      event.is_public # TODO Joe/Mike, Need to check if user has invite. -MO
+      event.is_public
     end
   end
 

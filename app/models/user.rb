@@ -88,6 +88,7 @@ class User < ActiveRecord::Base
   delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
   delegate :avatar_url, :to => :user_profile, :allow_nil => true
   delegate :compatable_character_proxies, :to => :user_profile, :allow_nil => true
+  delegate :invites, :to => :user_profile, :allow_nil => true
   delegate :events_invited_to, :to => :user_profile, :allow_nil => true
 
 ###

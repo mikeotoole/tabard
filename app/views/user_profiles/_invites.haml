@@ -1,0 +1,7 @@
+- if invites.any?
+  %h2 viewed
+  %span=invites.viewed.to_yaml
+  %h2 unviewed
+  %span=invites.unviewed.to_yaml
+- else
+  You do not have any invites.

@@ -10,11 +10,11 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters, :announcements, :index]
+  before_filter :block_unauthorized_user!, :except => [:show, :activities, :characters, :announcements, :invites, :index]
   before_filter :set_current_user_as_profile, :only => :account
-  load_and_authorize_resource :except => [:index, :activities, :characters, :announcements]
+  load_and_authorize_resource :except => [:index, :activities, :characters, :announcements, :invites]
   skip_authorize_resource :only => :account
-  before_filter :find_user_by_id, :only => [:characters, :activities, :announcements]
+  before_filter :find_user_by_id, :only => [:characters, :activities, :announcements, :invites]
   before_filter :load_activities, :only => [:show, :activities]
 
   # GET /user_profiles/
@@ -75,6 +75,13 @@ class UserProfilesController < ApplicationController
   def characters
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
     render :partial => 'user_profiles/characters', :locals => { :user_profile => @user_profile }
+  end
+
+  # GET /user_profiles/:id/invites(.:format)
+  def invites
+    raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
+    @invites = current_user.invites.order(:is_viewed).page params[:page]
+    render :partial => 'user_profiles/invites', :locals => { :invites => @invites }
   end
 
 ###

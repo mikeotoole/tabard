@@ -76,6 +76,7 @@ class Subdomains::EventsController < SubdomainsController
 
   # POST /events
   def create
+    throw "herp"
     # TODO Mike, Need to be able to send one to many invites at creation.
     add_new_flash_message('Event was successfully created.') if @event.save
     respond_with(@event)

@@ -21,7 +21,7 @@ class Invite < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :status, :comment_body
+  attr_accessible :status, :comment_body, :user_profile, :character_proxy
 
 ###
 # Associations
@@ -31,13 +31,22 @@ class Invite < ActiveRecord::Base
   belongs_to :character_proxy
 
 ###
+# Scopes
+###
+  scope :viewed, where{(is_viewed == true)}
+  scope :unviewed, where{(is_viewed != true)}
+
+###
 # Validators
 ###
   validates :event,  :presence => true
   validates :status,  :presence => true,
-            :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" }, :on => :update
+            :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" }, :on => :update, :if => Proc.new{|invite| invite.is_viewed? }
   validates :user_profile,  :presence => true
   validate :character_is_valid_for_user_profile
+
+  delegate :supported_game, :to => :event, :allow_nil => true
+  delegate :community_subdomain, :to => :event, :allow_nil => true
 
 ###
 # Callbacks
@@ -48,6 +57,9 @@ class Invite < ActiveRecord::Base
     event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
   end
 
+  def update_viewed(user_profile)
+    self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
+  end
 ###
 # Validator Methods
 ###

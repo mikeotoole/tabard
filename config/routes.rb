@@ -39,6 +39,7 @@ DaBvRails::Application.routes.draw do
       get :activities
       get :announcements
       get :characters
+      get :invites
     end
   end
   get "/account" => "user_profiles#account", :as => "account"
@@ -176,12 +177,17 @@ DaBvRails::Application.routes.draw do
       resources :events
       get '/events/:year/:month' => 'events#month_index', :as => "month_events"
       get '/events/:year/week/:week' => 'events#week_index', :as => "week_events"
+      # Invites
+      resources :invites, :only => [:edit, :update]
     end
   end
 
   # Announcements
   resources :announcements, :only => [:show]
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
+  # Invites
+  resources :invites, :only => [:show]
+  put 'invites/batch_mark_as_seen' => "invites#batch_mark_as_seen", :as => "invites_batch_mark_as_seen"
 
   # Artwork Upload
   resources :artwork_uploads, :only => [:create, :new]

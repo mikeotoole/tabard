@@ -55,6 +55,9 @@
           %dt{ :class => 'announcements' }
             = link_to 'Announcements', announcements_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.announcements + dd', 'data-error' => 'Error: unable to load announcements.'
           %dd
+          %dt{ :class => 'invites' }
+            = link_to 'Invites', invites_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.invites + dd', 'data-error' => 'Error: unable to load invites.'
+          %dd
         %dt{ :class => 'characters' }
           = link_to 'Characters', characters_user_profile_url(@user_profile, :format => :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.characters + dd', 'data-error' => 'Error: unable to load characters.'
         %dd

@@ -5,7 +5,7 @@ unless Rails.env.test?
   end
 
   if Rails.env.development?
-    %w{ users characters communities roles_permissions discussions pages messages custom_forms }.each do |part|
+    %w{ users characters communities roles_permissions discussions pages messages custom_forms events}.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
     end
   elsif Rails.env.production?
