@@ -39,6 +39,9 @@ class Invite < ActiveRecord::Base
   validates :user_profile,  :presence => true
   validate :character_is_valid_for_user_profile
 
+  delegate :supported_game, :to => :event, :allow_nil => true
+  delegate :community_subdomain, :to => :event, :allow_nil => true
+
 ###
 # Callbacks
 ###
@@ -48,6 +51,9 @@ class Invite < ActiveRecord::Base
     event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
   end
 
+  def update_viewed(user_profile)
+    self.update_attributes({:is_viewed => true}, without_protection: true) if user_profile and user_profile.invites.include?(self)
+  end
 ###
 # Validator Methods
 ###

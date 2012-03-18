@@ -149,7 +149,7 @@ class Ability
     end
 
     #Invite Rules
-    can :read, Invite do |invite|
+    can [:read, :update], Invite do |invite|
       invite.user_profile_id == user.user_profile_id
     end
 
