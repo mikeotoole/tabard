@@ -38,7 +38,7 @@ class Subdomains::EventsController < SubdomainsController
       end_date = @date.next_month.beginning_of_month
       @events = current_community.events.find(:all, :conditions=>{:start_time => @date..end_date})
     else
-      add_new_flash_message('Invalid date.', 'alert')
+      add_new_flash_message 'Invalid date.', 'alert'
       redirect_to month_events_url(:year => Date.today.year, :month => Date.today.month)
     end
   end
@@ -56,7 +56,7 @@ class Subdomains::EventsController < SubdomainsController
       wkEnd = Date.commercial(@year, @week, 7)
       @events = current_community.events.find(:all, :conditions=>{:start_time => @date..wkEnd})
     else
-      add_new_flash_message('Invalid date.', 'alert')
+      add_new_flash_message 'Invalid date.', 'alert'
       redirect_to week_events_url(:year => Date.today.year, :week => Date.today.cweek)
     end
   end
@@ -76,23 +76,22 @@ class Subdomains::EventsController < SubdomainsController
 
   # POST /events
   def create
-    throw "herp"
     # TODO Mike, Need to be able to send one to many invites at creation.
-    add_new_flash_message('Event was successfully created.') if @event.save
+    add_new_flash_message 'Event was successfully created.', 'success' if @event.save
     respond_with(@event)
   end
 
   # PUT /events/1
   def update
     if @event.update_attributes(params[:event])
-      add_new_flash_message('Event was successfully updated.')
+      add_new_flash_message 'Event was successfully updated.', 'success'
     end
     respond_with(@event)
   end
 
   # DELETE /events/1
   def destroy
-    add_new_flash_message('Event was successfully deleted.') if @event.destroy
+    add_new_flash_message 'Event has been removed.', 'notice' if @event.destroy
     respond_with(@event)
   end
   
@@ -103,11 +102,11 @@ class Subdomains::EventsController < SubdomainsController
     participant.user_profile = current_user.user_profile
     participant.character_proxy = (character_active? ? current_character.character_proxy : nil)
     if participant.save
-      add_new_flash_message('Successfully marked event as attending.')
+      add_new_flash_message 'Successfully responded as attending.', 'success'
       redirect_to url_for(@event), :action => :show
       return
     else
-      add_new_flash_message('Unable to marked event as attending.', 'alert')
+      add_new_flash_message 'Unable to respond to event.', 'alert'
       redirect_to url_for(@event), :action => :show
       return
     end
@@ -117,11 +116,11 @@ class Subdomains::EventsController < SubdomainsController
   def invite
     if @event.invites.create(params[:invite])
       # TODO Mike, This should send a message to user. OR Create an observer.
-      add_new_flash_message('Invite was successfully sent.')
+      add_new_flash_message 'Invite was successfully sent.', 'success'
       redirect_to url_for(@event), :action => :show
       return
     else
-      add_new_flash_message('Invite was unable to be sent.', 'alert')
+      add_new_flash_message 'Unable to send invitation.', 'alert'
       redirect_to url_for(@event), :action => :show
       return
     end

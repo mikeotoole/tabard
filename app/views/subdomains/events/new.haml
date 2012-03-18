@@ -3,6 +3,6 @@
 %h1 New Event
 
 = simple_form_for @event do |f|
-  = render 'fields', :f => f
+  = render 'fields', :f => f, :event => @event
   %p.submit
     = f.button :submit, 'Create Event'
