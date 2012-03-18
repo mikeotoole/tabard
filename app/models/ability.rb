@@ -229,7 +229,7 @@ class Ability
     end
     
     can [:read], Event do |event|
-      event.is_public # TODO Joe/Mike, Need to check if user has invite. -MO
+      event.is_public
     end
   end
 

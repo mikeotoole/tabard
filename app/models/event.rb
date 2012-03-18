@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :is_public, :location
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location
 
 ###
 # Associations
