@@ -2,15 +2,14 @@
 
 $(document).ready ->
 
-  $('#event_start_time_date, #event_end_time_date')
-  .each ->
+  $('#event_start_time_date, #event_end_time_date').each ->
     datef = $(this)
     nicef = datef.closest('li').find('input.nicedate')
     datef.datepicker({
       minDate: 0
       dateFormat: 'yy-mm-dd'
       altField: nicef
-      altFormat: 'DD, d MM, yy'
+      altFormat: 'DD, MM d, yy'
       showOn: "button"
     })
     nicef.bind 'click focus', ->
