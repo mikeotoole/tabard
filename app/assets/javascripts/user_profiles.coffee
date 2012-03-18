@@ -13,6 +13,9 @@ $(document).ready ->
       .delegate '.avatar .activities a', 'click', ->
         $('#tabs dt.activities a').trigger 'click'
         false
+      .delegate '.dashboard .calendar a', 'click', ->
+        $('#tabs dt.invites a').trigger 'click'
+        false
       .delegate '.dashboard .notice a', 'click', ->
         $('#tabs dt.announcements a').trigger 'click'
         false
@@ -22,6 +25,9 @@ $(document).ready ->
 
   hash = window.location.hash
   switch hash
+    when '#invites'
+      $('#tabs dt.invites a').trigger 'click'
+      break
     when '#characters'
       $('#tabs dt.characters a').trigger 'click'
       break

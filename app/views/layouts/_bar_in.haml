@@ -19,6 +19,8 @@
         = link_to 'Add a community', new_community_url(:subdomain => false), :icon => '✛'
 
 %ul.dashboard
+  %li{ :class => 'icon calendar' }
+    = link_to "Event Invites", user_profile_url(current_user.user_profile, :subdomain => false) + '#invites', (current_user.invites.size > 0 ? { :meta => current_user.invites.size } : {})
   %li{ :class => 'icon notice' }
     = link_to "Announcements", user_profile_url(current_user.user_profile, :subdomain => false) + '#announcements', (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
   %li{ :class => 'icon envelope' }
