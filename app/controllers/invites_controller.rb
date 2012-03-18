@@ -18,7 +18,7 @@ class InvitesController < ApplicationController
     @invite = current_user.invites.find_by_id(params[:id])
     if @invite != nil
       @invite.update_viewed(current_user.user_profile)
-      redirect_to invites_url(@invite, :subdomain => @invite.community_subdomain)}
+      redirect_to edit_invite_url(@invite, :subdomain => @invite.community_subdomain)
     else
       raise CanCan::AccessDenied
     end

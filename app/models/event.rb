@@ -28,6 +28,11 @@ class Event < ActiveRecord::Base
   belongs_to :community
   has_many :invites
   has_many :user_profiles, :through => :invites
+  has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
+  has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
+  has_many :tentative_invites, :class_name => "Invite", :conditions => {:status => "Tentative"}
+  has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Late"}
+  
   has_many :comments, :as => :commentable
 
   accepts_nested_attributes_for :invites, :allow_destroy => true
@@ -53,13 +58,15 @@ class Event < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :notify_users
+  before_save :notify_users, :on => :update
+
 ###
 # Protected Methods
 ###
 protected
 
 def notify_users
+  return true unless self.persisted?
   if name_changed? or body_changed?
     if name_changed? and body_changed?
       message_the_invites("had the name and/or body changed")
@@ -78,6 +85,7 @@ def notify_users
     self.invites.update_all({is_viewed: false})
     self.invites.update_all({status: nil})
   end
+  return true
 end
 
 def message_the_invites(reason)

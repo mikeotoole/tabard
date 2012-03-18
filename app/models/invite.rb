@@ -31,6 +31,12 @@ class Invite < ActiveRecord::Base
   belongs_to :character_proxy
 
 ###
+# Scopes
+###
+  scope :viewed, where{(is_viewed == true)}
+  scope :unviewed, where{(is_viewed != true)}
+
+###
 # Validators
 ###
   validates :event,  :presence => true
@@ -52,7 +58,7 @@ class Invite < ActiveRecord::Base
   end
 
   def update_viewed(user_profile)
-    self.update_attributes({:is_viewed => true}, without_protection: true) if user_profile and user_profile.invites.include?(self)
+    self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
   end
 ###
 # Validator Methods
