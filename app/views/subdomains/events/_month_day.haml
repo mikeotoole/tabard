@@ -1,0 +1,8 @@
+%td{ class: "day-#{day} #{(Time.zone.now.day == day and date.month == Time.zone.now.month and date.year == Time.zone.now.year) ? 'today' : ''}" }
+  %div
+    %time= day
+    %ol
+      - if events.any?
+        - events.each do |event|
+          %li
+            = link_to shorten_words(event.name), event_url(event, :subdomain => current_community.subdomain)
