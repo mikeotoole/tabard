@@ -50,8 +50,13 @@ class Invite < ActiveRecord::Base
   validate :character_is_valid_for_user_profile
 
   delegate :supported_game, :to => :event, :allow_nil => true
+  delegate :community, :to => :event, :allow_nil => true
   delegate :community_subdomain, :to => :event, :allow_nil => true
+  delegate :community_name, :to => :event, :allow_nil => true
+  delegate :name, :to => :event, :prefix => true, :allow_nil => true
   delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
+  delegate :avatar_url, :to => :user_profile, :prefix => true, :allow_nil => true
+  delegate :avatar_url, :to => :character_proxy, :prefix => true, :allow_nil => true
 
 ###
 # Callbacks
@@ -70,6 +75,7 @@ class Invite < ActiveRecord::Base
   def update_viewed(user_profile)
     self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
   end
+
 ###
 # Validator Methods
 ###

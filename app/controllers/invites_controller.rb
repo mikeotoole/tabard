@@ -27,12 +27,16 @@ class InvitesController < ApplicationController
 ###
 # Added Actions
 ###
-  # PUT /announcements/batch_mark_as_seen/(.:format)
-  def batch_mark_as_seen
+  # PUT /invites/batch_update/(.:format)
+  def batch_update
+    valid_status = params[:status] if params[:status] and Invite::VALID_STATUSES.include? params[:status]
     if params[:ids]
       params[:ids].each do |id|
         invite = current_user.invites.find_by_id(id[0])
-        invite.update_viewed(current_user.user_profile) if invite
+        if invite
+          invite.update_viewed(current_user.user_profile) 
+          invite.update_attribute(:status, valid_status) if valid_status
+        end
       end
     end
     render :text => ''

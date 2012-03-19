@@ -60,6 +60,7 @@ class Event < ActiveRecord::Base
   delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
   delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
   delegate :subdomain, :to => :community, :prefix => true, :allow_nil => true
+  delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :member_profiles, :to => :community, :prefix => true, :allow_nil => true
 
 ###
