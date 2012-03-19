@@ -7,21 +7,21 @@
 ###
 class InvitesController < ApplicationController
   before_filter :block_unauthorized_user!
-  respond_to :html
+  load_and_authorize_resource :through => :current_user
+  respond_to :html, :js
 
 ###
 # REST Actions
 ###
   # GET /announcements/:id(.:format)
   def show
-    current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
-    @invite = current_user.invites.find_by_id(params[:id])
-    if @invite != nil
-      @invite.update_viewed(current_user.user_profile)
-      redirect_to edit_invite_url(@invite, :subdomain => @invite.community_subdomain)
-    else
-      raise CanCan::AccessDenied
-    end
+    @invite.update_viewed(current_user.user_profile)
+    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
+  end
+
+  def update
+    @invite.update_attributes(params[:invite])
+    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
   end
 
 ###
