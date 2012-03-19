@@ -15,11 +15,16 @@ class Event < ActiveRecord::Base
   MAX_BODY_LENGTH = 10000
 
 ###
+# Attribute accessor
+###
+  attr_accessor :start_time_date, :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
+
+###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location, :start_time_date, :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
-  attr_accessor :start_time_date, :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location, :start_time_date, 
+                  :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
 
 ###
 # Associations
@@ -69,11 +74,11 @@ class Event < ActiveRecord::Base
   # Sets start_time and end_time based on individual date/time attributes
   ###
   def update_event_times
-    unless start_time_date == ''
+    unless start_time_date == '' or start_time_hours == '' or start_time_minutes == '' or start_time_meridian == ''
       self.start_time_hours = start_time_hours.to_i + 12 if start_time_meridian == 'PM'
       self.start_time = "#{start_time_date} #{start_time_hours ? sprintf('%02d', start_time_hours) : '00'}:#{start_time_minutes ? start_time_minutes : '00'}".to_datetime
     end
-    unless end_time_date == ''
+    unless end_time_date == '' or end_time_hours == '' or end_time_minutes == '' or end_time_meridian == ''
       self.end_time_hours = end_time_hours.to_i + 12 if end_time_meridian == 'PM'
       self.end_time = "#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}".to_datetime
     end
@@ -84,35 +89,35 @@ class Event < ActiveRecord::Base
 # Public Methods
 ###
   def start_time_date
-    start_time ? start_time.to_date : ''
+    @start_time_date ||= start_time ? start_time.to_date : ''
   end
 
   def start_time_hours
-    start_time ? (start_time.hour <= 12 ? start_time.hour : start_time.hour - 12) : ''
+    @start_time_hours ||= start_time ? (start_time.hour <= 12 ? start_time.hour : start_time.hour - 12) : ''
   end
 
   def start_time_minutes
-   start_time ? (start_time.min > 0 ? start_time.min.to_s : '00') : ''
+   @start_time_minutes ||= start_time ? (start_time.min > 0 ? start_time.min.to_s : '00') : '00'
   end
 
   def start_time_meridian
-    start_time ? (start_time.hour < 12 ? 'AM' : 'PM') : ''
+    @start_time_meridian ||= start_time ? (start_time.hour < 12 ? 'AM' : 'PM') : ''
   end
 
   def end_time_date
-    end_time ? end_time.to_date : ''
+    @end_time_date ||= end_time ? end_time.to_date : ''
   end
 
   def end_time_hours
-    end_time ? (end_time.hour <= 12 ? end_time.hour : end_time.hour - 12) : ''
+    @end_time_hours ||= end_time ? (end_time.hour <= 12 ? end_time.hour : end_time.hour - 12) : ''
   end
 
   def end_time_minutes
-    end_time ? (end_time.min > 0 ? end_time.min.to_s : '00') : ''
+    @end_time_minutes ||= end_time ? (end_time.min > 0 ? end_time.min.to_s : '00') : '00'
   end
 
   def end_time_meridian
-    end_time ? (end_time.hour < 12 ? 'AM' : 'PM') : ''
+    @end_time_meridian ||= end_time ? (end_time.hour < 12 ? 'AM' : 'PM') : ''
   end
 
 ###
