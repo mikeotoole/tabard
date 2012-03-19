@@ -6,7 +6,7 @@
 # This controller is handling invites within the scope of subdomains (communities).
 ###
 class Subdomains::InvitesController < SubdomainsController
-  respond_to :html
+  respond_to :html, :js
 ###
 # Before Filters
 ###
@@ -35,17 +35,19 @@ class Subdomains::InvitesController < SubdomainsController
 ###
   # PUT /invites/batch_update/(.:format)
   def batch_update
+    @invites = []
     valid_status = params[:status] if params[:status] and Invite::VALID_STATUSES.include? params[:status]
     if params[:ids]
       params[:ids].each do |id|
         invite = current_user.invites.find_by_id(id)
         if invite
+          @invites << invite
           invite.update_viewed(current_user.user_profile) 
           invite.update_attribute(:status, valid_status) if valid_status
         end
       end
     end
-    render :text => ''
+    respond_with(@invites, :location => events_url)
   end
 
 ###

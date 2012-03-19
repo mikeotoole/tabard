@@ -1,5 +1,5 @@
 - has_invites = (current_user.events_invited_to & events).size > 0 ? true : false
-= form_tag invites_batch_update_url, :method => :put, :remote => true do
+= form_tag invites_batch_update_url, :method => :put do
   %table
     %thead
       %tr
