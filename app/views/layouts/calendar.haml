@@ -11,7 +11,11 @@
     #bar= render "layouts/bar_in"
     = render "layouts/flash_messages"
 
-  .sidemenu
+  #calendar-menu.sidemenu
+    %dl
+      %dt View
+      %dd.list=link_to 'List', events_url(:subdomain => current_community.subdomain), :meta => 'List View'
+      %dd.week=link_to 'Week', week_events_url(:year => @date.year, :week => @date.cweek), :meta => 'Week View'
 
   #calendar
     %table
@@ -31,11 +35,12 @@
           %th.c Sun
       - day = 0
       %tbody
-        %tr
-          - (1..(@date.beginning_of_month.wday-1)).each do
-            %td.empty
-          - (@date.beginning_of_month.wday..7).each do
-            = render 'month_day', :date => @date, :day => day = day + 1, :events => @sorted_events[day] ||= []
+        - if @date.beginning_of_month.wday > 1
+          %tr
+            - (1..(@date.beginning_of_month.wday-1)).each do
+              %td.empty
+            - (@date.beginning_of_month.wday..7).each do
+              = render 'month_day', :date => @date, :day => day = day + 1, :events => @sorted_events[day] ||= []
         - while day < @date.end_of_month.day
           %tr
             - (1..7).each do
