@@ -6,7 +6,7 @@
 # This controller is for sent messages.
 ###
 class SentMessagesController < MailboxController
-  respond_to :html
+  respond_to :html, :js
   layout 'messaging'
 ###
 # Callbacks
@@ -25,7 +25,13 @@ class SentMessagesController < MailboxController
     @message = current_user.sent_messages.find(params[:id])
     authorize!(:read, @message)
     @mailbox_view_state = 'sent'
-    respond_with(@message)
+    respond_to do |format|
+      format.html { render :show }
+      format.js {
+        logger.debug @message.to_yaml
+        render :partial => 'messages/message', :locals => { :message => @message }
+      }
+    end
   end
 
   # GET /mail/compose(.:format)
