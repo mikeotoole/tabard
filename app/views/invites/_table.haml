@@ -21,4 +21,4 @@
         %td.r
           = invite.status
         %td.actions
-          = link_to 'Update', invite_url(invite), :class => 'update', :meta => 'Update your response'
+          = link_to 'Update', edit_invite_url(invite, :subdomain => invite.community_subdomain), :class => 'update', :meta => 'Update your response'
