@@ -833,3 +833,57 @@ button,
         
         &:hover
           background: #227FB5
+  
+  
+  // DATE/TIME PICKER
+  
+  button.ui-datepicker-trigger
+    background-color: #227FB5
+    background-position: -1079px -29px
+    
+    &:hover,
+    &:focus
+      background-color: #A13A30
+      background-position: -1079px -29px
+  
+.ui-datepicker
+  background: #ddd
+  +bg_gradient(#fff,#ddd)
+  border-color: #fff
+  +box_shadow(0 0 8px rgba(#000,.3))
+  
+  .ui-datepicker-prev,
+  .ui-datepicker-next
+    background: #bbb
+    color: #fff
+    
+    &:hover,
+    &:focus
+      background: #A13A30
+      color: #fff
+  
+  .ui-datepicker-title
+    color: #2D7CB4
+  
+  th
+    color: #52347C
+  
+  td
+    color: #999
+    
+  td.ui-datepicker-today a
+    border-color: #ccc
+  
+  td.ui-datepicker-current-day a
+    background: #2D7CB4
+    color: #fff
+  
+  td a,
+  th a
+    background: #fff
+    color: #52347C
+    
+    &:hover
+      background: #A13A30
+      border-color: #A13A30
+      color: #fff

@@ -8,7 +8,7 @@
       %label Start
       = f.input :start_time_date, :as => :hidden, :wrapper_tag => :span
       %span
-        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time ? event.start_time.strftime("%A, %B %d, %Y") : '' }
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time_date.to_s != '' ? event.start_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
       = f.input :start_time_hours, :as => :radio, :collection => 1..12, :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select hours' }
       = f.input :start_time_minutes, :as => :radio, :collection => ['00','15','30','45'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select minutes' }
       = f.input :start_time_meridian, :as => :radio, :collection => ['AM','PM'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select meridian' }
@@ -17,7 +17,7 @@
       %label End
       = f.input :end_time_date, :as => :hidden, :wrapper_tag => :span
       %span
-        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.end_time ? event.end_time.strftime("%A, %B %d, %Y") : '' }
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.end_time_date.to_s != '' ? event.end_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
       = f.input :end_time_hours, :as => :radio, :collection => 1..12, :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select hours' }
       = f.input :end_time_minutes, :as => :radio, :collection => ['00','15','30','45'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select minutes' }
       = f.input :end_time_meridian, :as => :radio, :collection => ['AM','PM'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select meridian' }
