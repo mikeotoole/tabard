@@ -90,6 +90,7 @@ class User < ActiveRecord::Base
   delegate :compatable_character_proxies, :to => :user_profile, :allow_nil => true
   delegate :invites, :to => :user_profile, :allow_nil => true
   delegate :events_invited_to, :to => :user_profile, :allow_nil => true
+  delegate :invited?, :to => :user_profile, :allow_nil => true
 
 ###
 # Validators

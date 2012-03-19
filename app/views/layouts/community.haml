@@ -18,7 +18,7 @@
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
 
-  %body{ class: "theme #{has_action_items ? 'with_action_items' : ''}" }
+  %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} theme #{has_action_items ? 'with_action_items' : ''}" }
     #bar= render 'layouts/bar_' + (user_signed_in? ? 'in' : 'out')
     = render 'layouts/flash_messages'
 

@@ -177,8 +177,10 @@ DaBvRails::Application.routes.draw do
       resources :events
       get '/events/:year/:month' => 'events#month_index', :as => "month_events"
       get '/events/:year/week/:week' => 'events#week_index', :as => "week_events"
+
       # Invites
       resources :invites, :only => [:edit, :update]
+      put 'invites/batch_update' => "invites#batch_update", :as => "invites_batch_update"
     end
   end
 

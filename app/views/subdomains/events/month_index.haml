@@ -1,18 +1,22 @@
-- title "Events by Month | #{current_community.name}"
+- title "#{@date.strftime '%B %Y'} | Events | #{current_community.name}"
 
-#actions.actions
-  - if can? :create, Event
-    = link_to 'New Event', new_event_url, :class => 'new', :meta => 'Create a new event'
+#breadcrumb
+  %ol
+    %li= link_to "Events", events_url
+    %li
+      %span= shorten_words @date.strftime('%B %Y'), 21
+
+= render 'submenu'
 
 %h1 
-  = @date.strftime("Events %B %Y")
-= link_to 'List', events_url
-= link_to 'Month', month_events_url(:year => @date.year, :month => @date.month)
-= link_to 'Week', week_events_url(:year => @date.year, :week => @date.cweek)
-|
-= link_to 'Today', month_events_url(:year => Date.today.year, :month => Date.today.month)
-= link_to 'Previous Month', month_events_url(:year => @date.prev_month.year, :month => @date.prev_month.month)
-= link_to 'Next Month', month_events_url(:year => @date.next_month.year, :month => @date.next_month.month)
+  = @date.strftime '%B %Y'
+
+%table.calendar
+  %thead
+    %tr
+      %th= link_to 'Previous Month', month_events_url(:year => @date.prev_month.year, :month => @date.prev_month.month)
+      %th.c= @date.strftime '%B'
+      %th.r= link_to 'Next Month', month_events_url(:year => @date.next_month.year, :month => @date.next_month.month)
 
 - if @events.any?
   = render "table", :events => @events

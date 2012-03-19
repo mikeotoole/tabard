@@ -1,8 +1,6 @@
 - title "Events by Week | #{current_community.name}"
 
-#actions.actions
-  - if can? :create, Event
-    = link_to 'New Event', new_event_url, :class => 'new', :meta => 'Create a new event'
+= render 'submenu'
 
 %h1 
   = @date.strftime("Events %Y Week %U")

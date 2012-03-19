@@ -84,6 +84,16 @@ button,
   top: 0
   right: 0
   
+  .button
+    border: 0
+    +border_radius(2)
+    display: inline
+    font-family: inherit
+    font-size: 1em
+    height: auto
+    line-height: 1em
+    padding: 0 6px
+  
 body.index.communities #submenu .all,
 body.index.wows #submenu .wow,
 body.index.swtors #submenu .swtor,
@@ -308,9 +318,6 @@ body.index.minecrafts #submenu .minecraft
     
     td,
     tr
-    
-      &.r
-        text-align: right
       
       &.pitch p
         border-left: 1px solid #ccc
