@@ -1,5 +1,6 @@
 @import mixins
 
+
 // Dynamic loading links
 .dynload
   pointer-events: none
@@ -645,7 +646,7 @@ button,
     width: 208px
   
   button.ui-datepicker-trigger
-    background: image-url('application/icons.png') -1079px 1px no-repeat red
+    background: image-url('application/icons.png') no-repeat
     border: 0
     display: block
     height: 32px
@@ -657,6 +658,10 @@ button,
     text-indent: -500em
     width: 32px
     z-index: 2
+    
+    &:hover,
+    &:focus
+      background: image-url('application/icons.png') no-repeat
   
   .datetime
   
@@ -675,13 +680,12 @@ button,
       width: 454px
   
 .ui-datepicker
-  background: blue
+  border: 1px solid
   +border_radius(3)
   font-size: 14px
   
   .ui-datepicker-prev,
   .ui-datepicker-next
-    background: yellow
     display: block
     height: 30px
     line-height: 30px
@@ -696,7 +700,7 @@ button,
     right: 10px
   
   .ui-datepicker-title
-    background: green
+    font-family: DinMedium, sans-serif
     height: 30px
     line-height: 30px
     margin: 10px 50px 0
@@ -709,23 +713,20 @@ button,
     padding: 5px
     
     a
-      background: green
+      +box_sizing(border-box)
       display: block
       height: 30px
       line-height: 30px
       overflow: hidden
       margin: -5px
       width: 30px
-      
-      &:hover
-        background: aqua
     
   td.ui-datepicker-today a
-    background: red
-  
+    border: 1px solid
+    font-family: DinMedium, sans-serif
+    
   td.ui-datepicker-current-day a
-    background: pink
-      
+    font-family: DinMedium, sans-serif
 
 
 // Pagination
