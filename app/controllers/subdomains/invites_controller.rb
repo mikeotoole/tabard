@@ -13,7 +13,7 @@ class Subdomains::InvitesController < SubdomainsController
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_user
+  load_and_authorize_resource :through => :current_user, :except => [:batch_update]
 
 ###
 # REST Actions
@@ -38,7 +38,7 @@ class Subdomains::InvitesController < SubdomainsController
     valid_status = params[:status] if params[:status] and Invite::VALID_STATUSES.include? params[:status]
     if params[:ids]
       params[:ids].each do |id|
-        invite = current_user.invites.find_by_event_id(id[0])
+        invite = current_user.invites.find_by_id(id)
         if invite
           invite.update_viewed(current_user.user_profile) 
           invite.update_attribute(:status, valid_status) if valid_status
