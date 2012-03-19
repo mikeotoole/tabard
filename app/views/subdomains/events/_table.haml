@@ -1,7 +1,9 @@
+- has_invites = (current_user.events_invited_to & events).size > 0 ? true : false
 %table
   %thead
     %tr
-      %th.check
+      - if has_invites
+        %th.check
       %th Event
       %th Start
       %th
@@ -11,12 +13,11 @@
   %tbody
     - events.each do |event|
       %tr
-        - if current_user.invited? event
+        - if has_invites
           %td.check
-            = check_box_tag "ids[#{event.id}]", true, false, :id => "event_id_#{event.id}"
-            %label{ :for => "event_id_#{event.id}" }
-        - else
-          %td
+            - if current_user.invited? event
+              = check_box_tag "ids[#{event.id}]", true, false, :id => "event_id_#{event.id}"
+              %label{ :for => "event_id_#{event.id}" }
         %td
           = link_to shorten_words(event.name, 21), event
           - if event.supported_game
@@ -37,13 +38,14 @@
               = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 7 }
-        .select.status
-          %ul
-            - Invite::VALID_STATUSES.each do |status|
-              %li
-                %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
-                %label{ for: "batch_status_#{status.downcase}" }= status
-        %button{ type: 'submit' } Update Selected
+      %td{ :colspan => has_invites ? 7 : 6 }
+        - if has_invites
+          .select.status
+            %ul
+              - Invite::VALID_STATUSES.each do |status|
+                %li
+                  %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
+                  %label{ for: "batch_status_#{status.downcase}" }= status
+          %button{ type: 'submit' } Update Selected
         - if can? :create, Event
           = link_to 'Create New', new_event_path, :class => 'button'
