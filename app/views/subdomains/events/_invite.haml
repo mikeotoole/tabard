@@ -1,3 +1,4 @@
 = f.simple_fields_for :invites do |invitef|
-  = invitef.input :_destroy, :as => :boolean, :label => user_profile.display_name
+  = invitef.input :_destroy, :as => :boolean, :label => "Don't invite #{invitef.object.user_profile_display_name}"
   = invitef.input :user_profile_id, :as => :hidden
+  = invitef.input :character_proxy_id, :as => :radio, :collection => collection_with_blank(invitef.object.user_profile.available_character_proxies(community, supported_game), invitef.object.user_profile_display_name), :label => "Invite as:"

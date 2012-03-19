@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
-  has_many :invites
+  has_many :invites, :inverse_of => :event
   has_many :user_profiles, :through => :invites
   has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
@@ -121,6 +121,9 @@ class Event < ActiveRecord::Base
     @end_time_meridian ||= end_time ? (end_time.hour < 12 ? 'AM' : 'PM') : ''
   end
 
+  def update_viewed(user_profile)
+    self.invites.where(user_profile_id: user_profile.id).first.update_attribute(:is_viewed, true) if user_profile and self.invites.where(user_profile_id: user_profile.id).exists?
+  end
 ###
 # Protected Methods
 ###
@@ -128,6 +131,7 @@ protected
 
 def notify_users
   return true unless self.persisted?
+  return true if self.invites.blank?
   if name_changed? or body_changed?
     if name_changed? and body_changed?
       message_the_invites("had the name and/or body changed")
@@ -135,6 +139,7 @@ def notify_users
       message_the_invites("had the name changed") if name_changed?
       message_the_invites("had the body changed") if body_changed?
     end
+    self.invites.update_all({is_viewed: false})
   end
   if start_time_changed? or end_time_changed? 
     if start_time_changed? and end_time_changed?
@@ -143,16 +148,15 @@ def notify_users
       message_the_invites("had the starting time changed") if start_time_changed?
       message_the_invites("had the ending time changed") if end_time_changed?
     end
-    self.invites.update_all({status: nil, expiration: self.end_time}, without_protection: true)
+    self.invites.update_all({status: nil, expiration: self.end_time, is_viewed: false})
   end
-  self.invites.update_all({is_viewed: false})
   return true
 end
 
 def message_the_invites(reason)
   Message.create_system(:subject => "An event you were invited to has changed",
       :body => "The #{name_was} event you were invited to has #{reason}",
-      :to => self.user_profiles.map{|profile| profile.id})
+      :to => self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
 end
 
 ###
