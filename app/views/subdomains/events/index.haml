@@ -2,11 +2,11 @@
 
 = render 'submenu'
 
-%h1 Events
+%h1 Upcoming Events
 
 - if @events.any?
   = paginate @events
-  = render "table", :events => @events
+  = render "table_list", :events => @events
   = paginate @events
 
 -else

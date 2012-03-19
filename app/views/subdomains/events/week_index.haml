@@ -3,17 +3,13 @@
 = render 'submenu'
 
 %h1 
-  = @date.strftime("Events %Y Week %U")
-= link_to 'List', events_url
-= link_to 'Month', month_events_url(:year => @date.year, :month => @date.month)
-= link_to 'Week', week_events_url(:year => @date.year, :week => @date.cweek)
-|
-= link_to 'Today', week_events_url(:year => Date.today.year, :week => Date.today.cweek)
+  = @date.at_beginning_of_week.strftime("%b %e, %Y") + ' — ' + @date.at_end_of_week.strftime("%b %e, %Y")
+
 = link_to 'Previous Week', week_events_url(:year => @date.prev_week.year, :week => @date.prev_week.cweek)
 = link_to 'Next Week', week_events_url(:year => @date.cweek == 52 ? @date.year+1 : @date.year, :week => @date.next_week.cweek)
 
 - if @events.any?
-  = render "table", :events => @events
+  = render "table_week", :events => @events
 
 -else
   %p There are no events.
