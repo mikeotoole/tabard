@@ -136,9 +136,9 @@ def notify_users
       message_the_invites("had the starting time changed") if start_time_changed?
       message_the_invites("had the ending time changed") if end_time_changed?
     end
-    self.invites.update_all({is_viewed: false})
-    self.invites.update_all({status: nil})
+    self.invites.update_all({status: nil, expiration: self.end_time}, without_protection: true)
   end
+  self.invites.update_all({is_viewed: false})
   return true
 end
 

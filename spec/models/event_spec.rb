@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id                :integer         not null, primary key
-#  title             :string(255)
+#  name              :string(255)
 #  body              :text
 #  start_time        :datetime
 #  end_time          :datetime

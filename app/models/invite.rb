@@ -37,6 +37,8 @@ class Invite < ActiveRecord::Base
   scope :unviewed, where{(is_viewed != true)}
   scope :not_responded_to, where{(status.eq "") | (status.eq nil)}
   scope :responded_to, where{status.eq_any VALID_STATUSES}
+  scope :expired, lambda { where{expiration.lteq Time.zone.now} }
+  scope :fresh, lambda { where{expiration.gt Time.zone.now} }
 
 ###
 # Validators
@@ -49,14 +51,20 @@ class Invite < ActiveRecord::Base
 
   delegate :supported_game, :to => :event, :allow_nil => true
   delegate :community_subdomain, :to => :event, :allow_nil => true
+  delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
 
 ###
 # Callbacks
 ###
   after_save :create_comment_from_body
+  after_create :set_expiration_from_event
 
   def create_comment_from_body
     event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
+  end
+
+  def set_expiration_from_event
+    self.update_attribute(:expiration, self.event_end_time) and return true unless self.expiration
   end
 
   def update_viewed(user_profile)
@@ -75,6 +83,7 @@ class Invite < ActiveRecord::Base
 
 end
 
+
 # == Schema Information
 #
 # Table name: invites
@@ -87,5 +96,6 @@ end
 #  is_viewed          :boolean         default(FALSE)
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
+#  expiration         :time
 #
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120317181635) do
+ActiveRecord::Schema.define(:version => 20120319160929) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -361,6 +361,7 @@ ActiveRecord::Schema.define(:version => 20120317181635) do
     t.boolean  "is_viewed",          :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.time     "expiration"
   end
 
   add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
