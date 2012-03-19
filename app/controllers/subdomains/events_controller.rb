@@ -67,6 +67,7 @@ class Subdomains::EventsController < SubdomainsController
 
   # GET /events/new
   def new
+    @event.invites.build if @event.invites.empty?
   end
 
   # GET /events/1/edit
