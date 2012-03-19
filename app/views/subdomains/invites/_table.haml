@@ -1,0 +1,22 @@
+%table
+  %thead
+    %tr
+      %th Who Is Invited
+      %th Has Seen It
+      %th Status
+      %th.actions
+  %tbody
+    - invites.each do |invite|
+      %tr
+        %td
+          -if invite.character_proxy_id?
+            = image_tag(invite.character_proxy_avatar_url(:icon), alt: invite.character_proxy.name)
+          -else
+            = image_tag(invite.user_profile_avatar_url(:icon), alt: invite.user_profile.display_name)
+        %td
+          =invite.is_viewed
+        %td
+          = invite.status
+        %td.actions
+          -if can? :update, invite
+            = link_to 'Update', edit_invite_url(invite), :class => 'update', :meta => 'Update your response'

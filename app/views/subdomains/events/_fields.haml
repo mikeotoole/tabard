@@ -26,7 +26,6 @@
     
     %h2 Invites
     %ul.invites
-      - event.community_member_profiles.each do |user_profile|
-        = render 'invite', :f => f, :event => event, :user_profile => user_profile
+      = render 'invite', :f => f, :event => event, :community => current_community, :supported_game => event.supported_game
 
     = f.input :is_public, :label => 'Viewable by all members?'

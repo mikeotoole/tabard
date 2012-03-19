@@ -14,6 +14,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_event, :except => [:new, :create, :index]
   before_filter :create_event, :only => [:new, :create]
+  before_filter :build_missing_invites, :only => [:new, :edit]
   authorize_resource :except => :index
   skip_before_filter :limit_subdomain_access
 
@@ -71,11 +72,11 @@ class Subdomains::EventsController < SubdomainsController
 
   # GET /events/1
   def show
+    @event.update_viewed(current_user.user_profile)
   end
 
   # GET /events/new
   def new
-    @event.invites.build if @event.invites.empty?
   end
 
   # GET /events/1/edit
@@ -87,7 +88,10 @@ class Subdomains::EventsController < SubdomainsController
   def create
     # TODO Mike, Need to be able to send one to many invites at creation.
     add_new_flash_message 'Event was successfully created.', 'success' if @event.save
-    respond_with(@event)
+    @event.invites.each do |invite|
+      puts invite.errors.to_yaml
+    end
+    respond_with(@event, :location => event_url(@event))
   end
 
   # PUT /events/1
@@ -150,6 +154,17 @@ protected
   ###
   def load_event
     @event = current_community.events.find_by_id(params[:id]) if current_community
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This before filter attempts to populate invites for @event
+  ###
+  def build_missing_invites
+    current_community.member_profiles.each do |profile|
+      @event.invites.build(user_profile_id: profile.id) unless @event.invites.where(user_profile_id: profile.id).exists?
+    end
   end
 
   ###

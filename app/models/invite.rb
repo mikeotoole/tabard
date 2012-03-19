@@ -21,12 +21,12 @@ class Invite < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :status, :comment_body, :user_profile, :character_proxy, :user_profile_id
+  attr_accessible :status, :comment_body, :user_profile, :character_proxy, :user_profile_id, :character_proxy_id, :event_id
 
 ###
 # Associations
 ###
-  belongs_to :event
+  belongs_to :event, :inverse_of => :invites
   belongs_to :user_profile
   belongs_to :character_proxy
 
@@ -55,6 +55,7 @@ class Invite < ActiveRecord::Base
   delegate :community_name, :to => :event, :allow_nil => true
   delegate :name, :to => :event, :prefix => true, :allow_nil => true
   delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
+  delegate :display_name, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :avatar_url, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :avatar_url, :to => :character_proxy, :prefix => true, :allow_nil => true
 
