@@ -35,6 +35,8 @@ class Invite < ActiveRecord::Base
 ###
   scope :viewed, where{(is_viewed == true)}
   scope :unviewed, where{(is_viewed != true)}
+  scope :not_responded_to, where{(status.eq "") | (status.eq nil)}
+  scope :responded_to, where{status.eq_any VALID_STATUSES}
 
 ###
 # Validators

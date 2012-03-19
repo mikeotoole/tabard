@@ -20,7 +20,7 @@
 
 %ul.dashboard
   %li{ :class => 'icon calendar' }
-    = link_to "Event Invites", user_profile_url(current_user.user_profile, :subdomain => false) + '#invites', (current_user.invites.size > 0 ? { :meta => current_user.invites.size } : {})
+    = link_to "Event Invites", user_profile_url(current_user.user_profile, :subdomain => false) + '#invites', (current_user.invites.size > 0 ? { :meta => current_user.invites.not_responded_to.size } : {})
   %li{ :class => 'icon notice' }
     = link_to "Announcements", user_profile_url(current_user.user_profile, :subdomain => false) + '#announcements', (current_user.unread_announcements.size > 0 ? { :meta => current_user.unread_announcements.size } : {})
   %li{ :class => 'icon envelope' }
