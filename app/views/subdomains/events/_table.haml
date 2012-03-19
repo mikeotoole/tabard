@@ -11,9 +11,12 @@
   %tbody
     - events.each do |event|
       %tr
-        %td.check
-          = check_box_tag "ids[#{event.id}]", true, false, :id => "discussion_id_#{event.id}"
-          %label{ :for => "event_id_#{event.id}" }
+        - if current_user.invited? event
+          %td.check
+            = check_box_tag "ids[#{event.id}]", true, false, :id => "event_id_#{event.id}"
+            %label{ :for => "event_id_#{event.id}" }
+        - else
+          %td
         %td
           = link_to shorten_words(event.name, 21), event
           - if event.supported_game

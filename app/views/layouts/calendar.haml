@@ -40,12 +40,12 @@
             - (1..(@date.beginning_of_month.wday-1)).each do
               %td.empty
             - (@date.beginning_of_month.wday..7).each do
-              = render 'month_day', :date => @date, :day => day = day + 1, :events => @sorted_events[day] ||= []
+              = render 'month_day', :date => @date, :day => day = day + 1, :events => @events_by_day[day] ||= []
         - while day < @date.end_of_month.day
           %tr
             - (1..7).each do
               - if day < @date.end_of_month.day
-                = render 'month_day', :date => @date, :day => day = day + 1, :events => @sorted_events[day] ||= []
+                = render 'month_day', :date => @date, :day => day = day + 1, :events => @events_by_day[day] ||= []
               - else
                 %td.empty
       %tfoot

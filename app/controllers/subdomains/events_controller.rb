@@ -38,11 +38,11 @@ class Subdomains::EventsController < SubdomainsController
       @date = Date.new(@year, @month, 1)
       end_date = @date.next_month.beginning_of_month
       @events = current_community.events.find(:all, :conditions=>{:start_time => @date..end_date})
-      @sorted_events = {}
+      @events_by_day = {}
       @events.each do |event|
         (event.start_time.day..event.end_time.day).each do |day|
-          @sorted_events[day] ||= []
-          @sorted_events[day] << event
+          @events_by_day[day] ||= []
+          @events_by_day[day] << event
         end
       end
       render :month_index, :layout => 'calendar'
