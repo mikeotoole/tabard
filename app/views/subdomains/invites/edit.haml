@@ -1,5 +1,15 @@
 - title "Editing Invites | #{@community.name}"
 
 %h1 Editing Invites
-=@invite.to_yaml
+%p=@invite.event.to_yaml
+-if @invite.character_proxy_id?
+  %span{meta: @invite.character_proxy.name}= image_tag(@invite.character_proxy_avatar_url(:small), alt: @invite.character_proxy.name)
+-else
+  %span{meta: @invite.user_profile.display_name}= image_tag(@invite.user_profile_avatar_url(:small), alt: @invite.user_profile.display_name)
+= simple_form_for @invite do |f|
+  %fieldset
+    %ol
+      = f.input :status, :collection => Invite::VALID_STATUSES, :prompt => "I am..."
+    %p.submit
+      %button{ :type => 'submit' }='Save Invite' 
 

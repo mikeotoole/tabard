@@ -1,0 +1,24 @@
+%table
+  %thead
+    %tr
+      %th Community
+      %th Event
+      %th Who Is Invited
+      %th Status
+      %th.actions
+  %tbody
+    - invites.each do |invite|
+      %tr
+        %td
+          = link_to shorten_words(invite.community_name), root_url(:subdomain => invite.community_subdomain)
+        %td
+          = link_to shorten_words(invite.event_name), events_url(invite.event, :subdomain => invite.community_subdomain)
+        %td
+          -if invite.character_proxy_id?
+            %span{meta: invite.character_proxy.name}= image_tag(invite.character_proxy_avatar_url(:icon), alt: invite.character_proxy.name)
+          -else
+            %span{meta: invite.user_profile.display_name}= image_tag(invite.user_profile_avatar_url(:icon), alt: invite.user_profile.display_name)
+        %td.r
+          = invite.status
+        %td.actions
+          = link_to 'Update', invite_url(invite), :class => 'update', :meta => 'Update your response'
