@@ -1,0 +1,156 @@
+@import mixins
+@import application/fluid
+
+html,
+body
+  height: 100%
+  overflow: hidden
+
+#calendar
+  background: #eee
+  +bg_gradient(#fff,#ccc)
+  bottom: 0
+  left: 60px
+  position: fixed
+  right: 0
+  top: 70px
+
+  table
+    height: 100%
+    width: 100%
+    
+    thead
+    
+      th
+        background: #ddd
+        +bg_gradient(#ccc,#eee)
+        border-bottom: 1px solid #ccc
+        color: #666
+        font: 14px EurostyleStd, sans-serif
+        height: 20px
+        line-height: 20px
+        white-space: nowrap
+        
+      tr:first-child th
+        background: #999
+        height: 45px
+        line-height: 45px
+        
+        h1
+          color: #452a61
+          font-size: 20px
+        
+        .prev,
+        .next
+          +bg_gradient(#777,#888)
+          border: 1px solid #aaa
+          +border_radius(3)
+          color: #ddd
+          height: 15px
+          line-height: 15px
+          padding: 5px
+          position: absolute
+          top: 10px
+          +transition(background .2s linear, color .2s linear)
+          
+          &:hover
+            background: #A13A30
+            color: #fff
+        
+        .prev
+          left: 10px
+        
+        .next
+          right: 10px
+    
+    tbody
+      
+      tr
+      
+        td
+          +bg_gradient(rgba(#fff,.5),rgba(#eee,0))
+          border-bottom: 1px solid rgba(#666,.1)
+          border-left: 1px solid rgba(#666,.1)
+          padding: 0
+          text-align: left
+          width: 14%
+          
+          &:before
+            border-bottom: 1px solid rgba(#fff,.5)
+            border-left: 1px solid rgba(#fff,.5)
+            height: 100%
+            position: absolute
+            width: 100%
+            z-index: 1
+          
+          >div
+            height: 100%
+            position: relative
+            text-align: left
+            width: 100%
+            z-index: 2
+            
+            >time
+              background: rgba(#666,.1)
+              +border_radius(0,0,20,0)
+              color: #666
+              font: 12px DinMedium, sans-serif
+              height: 18px
+              left: -1px
+              line-height: 15px
+              padding: 3px 0 0 5px
+              position: absolute
+              top: 0
+              +transition(background .2s linear)
+              width: 20px
+            
+            >ol
+              padding: 20px 10px 10px
+              
+              a
+                background: #57416f
+                +border_radius(3)
+                color: #fff
+                display: block
+                font: 12px DinMedium, sans-serif
+                margin: 2px 0 0
+                padding: 2px 6px
+                +transition(background .3s linear, box-shadow .2s linear)
+                
+                &:hover
+                  background: #A13A31
+                  +box_shadow(0 0 8px rgba(#A13A31,.5))
+          
+          &.today >div
+            outline: 1px solid #2D7CB4
+            
+            >time
+              background: rgba(#2D7CB4,.8)
+              color: #fff
+          
+          &:hover
+            +bg_gradient(rgba(#fff,.7),rgba(#fff,.3))
+            border-bottom: 1px solid rgba(#666,.2)
+            border-left: 1px solid rgba(#666,.2)
+            
+            >div
+              +box_shadow(0 0 20px rgba(#000,.3))
+              outline: 1px solid #A13A30
+              z-index: 3
+              
+              >time
+                background: rgba(#A13A30,.8)
+                color: #fff
+          
+          &.empty
+            background: #ccc
+            border-bottom: 1px solid rgba(#666,.1)
+            border-left: 1px solid rgba(#666,.1)
+        
+        td:first-of-type,
+        td:last-of-type
+          width: 15%
+    
+    tfoot td
+      background: #666
+      height: 22px
