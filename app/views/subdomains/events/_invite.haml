@@ -1,0 +1,3 @@
+= f.simple_fields_for :invites do |invitef|
+  = invitef.input :_destroy, :as => :boolean, :label => user_profile.display_name
+  = invitef.input :user_profile_id, :as => :hidden

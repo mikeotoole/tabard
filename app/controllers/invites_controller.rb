@@ -7,32 +7,36 @@
 ###
 class InvitesController < ApplicationController
   before_filter :block_unauthorized_user!
-  respond_to :html
+  load_and_authorize_resource :through => :current_user
+  respond_to :html, :js
 
 ###
 # REST Actions
 ###
   # GET /announcements/:id(.:format)
   def show
-    current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
-    @invite = current_user.invites.find_by_id(params[:id])
-    if @invite != nil
-      @invite.update_viewed(current_user.user_profile)
-      redirect_to edit_invite_url(@invite, :subdomain => @invite.community_subdomain)
-    else
-      raise CanCan::AccessDenied
-    end
+    @invite.update_viewed(current_user.user_profile)
+    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
+  end
+
+  def update
+    @invite.update_attributes(params[:invite])
+    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
   end
 
 ###
 # Added Actions
 ###
-  # PUT /announcements/batch_mark_as_seen/(.:format)
-  def batch_mark_as_seen
+  # PUT /invites/batch_update/(.:format)
+  def batch_update
+    valid_status = params[:status] if params[:status] and Invite::VALID_STATUSES.include? params[:status]
     if params[:ids]
       params[:ids].each do |id|
         invite = current_user.invites.find_by_id(id[0])
-        invite.update_viewed(current_user.user_profile) if invite
+        if invite
+          invite.update_viewed(current_user.user_profile) 
+          invite.update_attribute(:status, valid_status) if valid_status
+        end
       end
     end
     render :text => ''

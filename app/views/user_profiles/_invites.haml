@@ -1,7 +1,12 @@
 - if invites.any?
-  %h2 viewed
-  %span=invites.viewed.to_yaml
-  %h2 unviewed
-  %span=invites.unviewed.to_yaml
+  -if invites.responded_to.fresh.any?
+    %h2 Responded To
+    = render "invites/table", :invites => invites.responded_to.fresh
+  -if invites.not_responded_to.fresh.any?
+    %h2 Not Responded To
+    = render "invites/table", :invites => invites.not_responded_to.fresh
+  -if invites.expired.any?
+    %h2 Expired Invites
+    = render "invites/table", :invites => invites.expired
 - else
   You do not have any invites.

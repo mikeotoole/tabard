@@ -196,6 +196,11 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+  # Returns true if user is invited to event false otherwise.
+  def invited?(event)
+    self.invites.where(:event_id => event.id).size > 0
+  end
+
   ###
   # This method checks if the user has a pending application with the community.
   # [Args]

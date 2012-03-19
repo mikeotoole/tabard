@@ -187,7 +187,7 @@ DaBvRails::Application.routes.draw do
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
   # Invites
   resources :invites, :only => [:show]
-  put 'invites/batch_mark_as_seen' => "invites#batch_mark_as_seen", :as => "invites_batch_mark_as_seen"
+  put 'invites/batch_update' => "invites#batch_update", :as => "invites_batch_update"
 
   # Artwork Upload
   resources :artwork_uploads, :only => [:create, :new]
