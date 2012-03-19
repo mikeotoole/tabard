@@ -440,9 +440,6 @@ body
     
     td,
     tr
-    
-      &.r
-        text-align: right
       
       &.permission
       
@@ -1635,6 +1632,42 @@ body
     
     + mark.error
       width: 880px
+  
+  .select.status
+    margin-right: 10px
+    min-height: 33px
+    width: 154px
+    
+    ul
+      width: 150px
+    
+    + button
+      clear: none
+
+  #submenu
+    line-height: 30px
+    position: absolute
+    top: 30px
+    right: 30px
+    
+    .button
+      border: 0
+      +border_radius(2)
+      display: inline
+      font-family: inherit
+      font-size: 1em
+      height: auto
+      line-height: 1em
+      padding: 0 6px
+  
+body.events.index #submenu .list,
+body.events.month_index #submenu .month,
+body.events.week_index #submenu .week
+  background: #999
+  color: #fff
+  cursor: default
+  padding: 0 6px
+  text-decoration: none
 
 
 // ACTION ITEMS

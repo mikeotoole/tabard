@@ -1,17 +1,31 @@
 %table
   %thead
     %tr
-      %th Name
-      %th Start Time
+      %th.check
+      %th Event
+      %th Start
+      %th
+      %th End
+      %th
       %th.actions
   %tbody
     - events.each do |event|
       %tr
+        %td.check
+          = check_box_tag "ids[#{event.id}]", true, false, :id => "discussion_id_#{event.id}"
+          %label{ :for => "event_id_#{event.id}" }
         %td
           = link_to shorten_words(event.name, 21), event
           - if event.supported_game
             %rt= event.supported_game.smart_name
-        %td= event.start_time
+        %td
+          %time= event.start_time.strftime("%A - %B %d, %Y")
+        %td
+          %time= event.start_time.strftime("%l:%M %p")
+        %td
+          %time= event.end_time.strftime("%A - %B %d, %Y")
+        %td
+          %time= event.end_time.strftime("%l:%M %p")
         %td.actions
           %div
             - if (can? :update, event)
@@ -20,6 +34,13 @@
               = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 3 }
+      %td{ :colspan => 7 }
+        .select.status
+          %ul
+            - Invite::VALID_STATUSES.each do |status|
+              %li
+                %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
+                %label{ for: "batch_status_#{status.downcase}" }= status
+        %button{ type: 'submit' } Update Selected
         - if can? :create, Event
-          = link_to 'New Event', new_event_path, :class => 'button'
+          = link_to 'Create New', new_event_path, :class => 'button'
