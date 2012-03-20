@@ -23,9 +23,15 @@
       = f.input :end_time_meridian, :as => :radio, :collection => ['AM','PM'], :label => false, :wrapper_tag => :div, :wrapper_html => { class: 'select meridian' }
       %mark.error= f.object.errors[:end_time].first
     = f.input :supported_game_id, :label => 'Game', :collection => [['— None —','']].concat(current_community.supported_games.collect {|c| c = [c.smart_name, c.id]}), :as => :radio, :wrapper_html => { :class => 'select' }
-    
-    %h2 Invites
-    %ul.invites
-      = render 'invite', :f => f, :event => event, :community => current_community, :supported_game => event.supported_game
-
     = f.input :is_public, :label => 'Viewable by all members?'
+%hr
+%table.invites
+  %thead
+    %tr
+      %th Invite Users or Characters to this Event
+      %th.actions
+  %tbody
+    = f.simple_fields_for :invites do |invitef|
+      = render 'invite_row', :invitef => invitef, :event => event, :community => current_community, :supported_game => event.supported_game
+  %tfoot
+    %td{ colspan: 3 }

@@ -12,6 +12,8 @@
   = render "table_week", :events => @events
 
 -else
-  %p There are no events.
+  %hr
+  %p There are no events at this time.
   - if can? :create, Event
+    %hr
     %p= link_to 'New Event', new_event_url, :class => 'button'

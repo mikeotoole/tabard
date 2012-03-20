@@ -562,7 +562,7 @@ body
         &.dim
         
           td
-            +opacity(.5)
+            +opacity(.3)
             +transition(opacity .2s linear)
           
           &:hover td
@@ -587,6 +587,20 @@ body
     td.half,
     th.half
       width: 50%
+    
+    &.invites
+    
+      ul li:first-child
+        float: left
+        height: 100%
+    
+      tr.dim td,
+      tr.dim:hover td
+        +opacity(.2)
+        
+        label,
+        input
+          pointer-events: none
     
     &.roster
     
