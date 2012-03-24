@@ -32,4 +32,6 @@
 %p
   %b is_public Only:
   = @event.is_public
-= render 'subdomains/invites/table', :invites => @event.invites
+
+%hr
+= render 'subdomains/invites/table', :invites => @invites

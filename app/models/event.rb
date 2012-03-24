@@ -124,6 +124,7 @@ class Event < ActiveRecord::Base
   def update_viewed(user_profile)
     self.invites.where(user_profile_id: user_profile.id).first.update_attribute(:is_viewed, true) if user_profile and self.invites.where(user_profile_id: user_profile.id).exists?
   end
+
 ###
 # Protected Methods
 ###
