@@ -174,7 +174,6 @@ DaBvRails::Application.routes.draw do
       resources :supported_games, :except => [:show]
       
       # Events
-      get '/events/new/invites/invite_list/:supported_game_id' => "events#invite_list", :as => 'event_invite_list_from_game'
       resources :events
       get '/events/:year/:month' => 'events#month_index', :as => "month_events"
       get '/events/:year/week/:week' => 'events#week_index', :as => "week_events"

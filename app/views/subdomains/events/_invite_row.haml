@@ -6,7 +6,7 @@
       %ol
         = invitef.input :character_proxy_id, :as => :radio, :label => false, :collection => [[invitef.object.user_profile_display_name, '']]
   %td.characters
-    = invitef.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => invitef.object.user_profile.available_character_proxies(community, supported_game).collect{|cp| cp = [image_tag(cp.character.avatar_url(:icon), :class => 'avatar icon') + cp.character.name, cp.character.id] }
+    = invitef.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => invitef.object.user_profile.available_character_proxies(community, supported_game).collect{|cp| cp = [image_tag(cp.character.avatar_url(:icon), :class => "avatar icon #{cp.roster_assignments.map{|ra| "sg_#{ra.supported_game_id}"}.join(' ')}") + cp.character.name, cp.character.id] }
   %td.actions
     %div
       %a{ class: "toggle #{invitef.object.persisted? ? 'approve' : 'reject'}" } Toggle
