@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
-  has_many :invites, :inverse_of => :event
+  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC'
   has_many :user_profiles, :through => :invites
   has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}

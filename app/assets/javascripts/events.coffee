@@ -2,6 +2,7 @@
 
 $(document).ready ->
 
+  # Date Picker
   $('#event_start_time_date, #event_end_time_date').each ->
     datef = $(this)
     nicef = datef.closest('li').find('input.nicedate')
@@ -16,6 +17,18 @@ $(document).ready ->
       nicef.blur()
       datef.datepicker 'show'
   
+  # Game dropdown character filtering
+  $('label[for="event_supported_game_id"] + ul input[type="radio"]').change ->
+    sgId = $(this).closest('ul').find('input[type="radio"]:checked').val()
+    chars = $('table.invites tbody td.characters ul li')
+    if sgId
+      chars.hide()
+      chars.find('img.sg_'+sgId).closest('li').show()
+    else
+      chars.show()
+    false
+  
+  # Toggle action for rows
   $('table.invites td.actions a.toggle').click ->
     row = $(this).closest('tr')
     if $(this).hasClass('approve')
@@ -28,6 +41,7 @@ $(document).ready ->
       row.find('input[name*="_destroy"]').val(false)
     return false
   
+  # Global checkbox for rows
   $('table.invites thead th:last').each ->
     invitedRows = $(this).closest('table').find('tbody tr')
     if invitedRows.length > 0
