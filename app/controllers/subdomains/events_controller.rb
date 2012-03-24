@@ -6,16 +6,16 @@
 # This controller is handling events within the scope of subdomains (communities).
 ###
 class Subdomains::EventsController < SubdomainsController
-  respond_to :html
+  respond_to :html, :js
 ###
 # Before Filters
 ###
   before_filter :authenticate_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_event, :except => [:new, :create, :index]
+  before_filter :load_event, :except => [:new, :create, :index, :invite_list]
   before_filter :create_event, :only => [:new, :create]
   before_filter :build_missing_invites, :only => [:new, :edit]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index, :invite_list]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -137,6 +137,12 @@ class Subdomains::EventsController < SubdomainsController
       redirect_to url_for(@event), :action => :show
       return
     end
+  end
+
+  # GET /events/new/invite_list/:supported_game_id
+  def invite_list
+    supported_game = current_community.supported_games.find_by_id(:supported_game_id)
+    render 'invite_row', :invitef => invitef, :event => event, :community => current_community, :supported_game => event.supported_game
   end
     
 ###
