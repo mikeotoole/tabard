@@ -73,7 +73,7 @@ class Subdomains::EventsController < SubdomainsController
   # GET /events/1
   def show
     @event.update_viewed(current_user.user_profile)
-    @invites = @event.invites.sort
+    @invites = @event.invites
   end
 
   # GET /events/new
