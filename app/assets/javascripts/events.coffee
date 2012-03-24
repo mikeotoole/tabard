@@ -27,5 +27,27 @@ $(document).ready ->
       row.removeClass 'dim'
       row.find('input[name*="_destroy"]').val(false)
     return false
+  
+  $('table.invites thead th:last').each ->
+    invitedRows = $(this).closest('table').find('tbody tr')
+    if invitedRows.length > 0
+      $(this).html('<a>✔</a>')
+      checka = $(this).find('a')
+      checka.addClass('checked') if invitedRows.find('td.actions a.approve').length == invitedRows.length
+      checka.click ->
+        if invitedRows.find('td.actions a.approve').length == invitedRows.length
+          invitedRows
+            .find('td.actions a.toggle')
+            .removeClass('reject')
+            .addClass('approve')
+            .trigger 'click'
+        else
+          invitedRows
+            .find('td.actions a.toggle')
+            .removeClass('approve')
+            .addClass('reject')
+            .trigger 'click'
+        false
+    false
 
   initSelects()

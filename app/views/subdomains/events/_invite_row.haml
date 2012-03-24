@@ -9,6 +9,6 @@
     = invitef.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => invitef.object.user_profile.available_character_proxies(community, supported_game).collect{|cp| cp = [image_tag(cp.character.avatar_url(:icon), :class => 'avatar icon') + cp.character.name, cp.character.id] }
   %td.actions
     %div
-      %a{ class: "toggle #{invitef.object.persisted? ? 'approve' : 'reject'}" } Toggle
+      %a{ class: "toggle #{invitef.object.persisted? ? 'approve' : 'reject'}", meta: 'Invite/Uninvite' } Toggle
     = invitef.input :_destroy, :as => :hidden, :input_html => { value: invitef.object.persisted? ? false : true }
     = invitef.input :user_profile_id, :as => :hidden

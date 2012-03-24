@@ -30,7 +30,7 @@
     %tr
       %th.cinch{ colspan: 2 } Users
       %th.characters Characters
-      %th.actions
+      %th.check
   %tbody
     = f.simple_fields_for :invites do |invitef|
       = render 'invite_row', :invitef => invitef, :event => event, :community => current_community, :supported_game => event.supported_game
