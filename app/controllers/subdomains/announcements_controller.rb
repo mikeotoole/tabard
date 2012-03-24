@@ -31,6 +31,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
       authorize!(:read, @announcement)
       current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
       @announcement.update_viewed(current_user.user_profile)
+      @user_profiles_have_seen = @announcement.user_profiles_have_seen.order('LOWER(display_name) ASC')
+      @user_profiles_have_not_seen = @announcement.user_profiles_have_not_seen.order('LOWER(display_name) ASC')
       @comments = @announcement.comments.page params[:page]
       respond_to do |format|
         format.js {

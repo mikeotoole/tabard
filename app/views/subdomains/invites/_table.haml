@@ -1,22 +1,25 @@
 %table
   %thead
     %tr
-      %th Who Is Invited
-      %th Has Seen It
-      %th Status
+      %th.cinch{ colspan: 2 } Invitee List
+      %th Has seen it?
+      %th RSVP
       %th.actions
   %tbody
     - invites.each do |invite|
       %tr
+        %td.cinch
+          = image_tag invite.invitee_avatar_url(:icon), alt: invite.invitee_name, class: 'avatar icon'
         %td
-          -if invite.character_proxy_id?
-            = image_tag(invite.character_proxy_avatar_url(:icon), alt: invite.character_proxy.name)
-          -else
-            = image_tag(invite.user_profile_avatar_url(:icon), alt: invite.user_profile.display_name)
+          = invite.invitee_name
         %td
-          =invite.is_viewed
+          = invite.is_viewed ? 'Yes' : ''
         %td
           = invite.status
         %td.actions
-          -if can? :update, invite
-            = link_to 'Update', edit_invite_url(invite), :class => 'update', :meta => 'Update your response'
+          %div
+            -if can? :update, invite
+              = link_to 'Update', edit_invite_url(invite), :class => 'edit', :meta => 'Update your response'
+  %tfoot
+    %tr
+      %td{ colspan: 5 }

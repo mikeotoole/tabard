@@ -55,6 +55,8 @@ class Invite < ActiveRecord::Base
   delegate :community_name, :to => :event, :allow_nil => true
   delegate :name, :to => :event, :prefix => true, :allow_nil => true
   delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
+  delegate :name, :to => :invitee, :prefix => true, :allow_nil => true
+  delegate :avatar_url, :to => :invitee, :prefix => true, :allow_nil => true
   delegate :display_name, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :avatar_url, :to => :user_profile, :prefix => true, :allow_nil => true
   delegate :avatar_url, :to => :character_proxy, :prefix => true, :allow_nil => true
@@ -75,6 +77,23 @@ class Invite < ActiveRecord::Base
 
   def update_viewed(user_profile)
     self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
+  end
+
+###
+# Instance Methods
+###
+  ###
+  # This method gets the invitee of this invite. If character proxy is not nil
+  # the character is returned. Otherwise the user profile is returned. These should
+  # both respond to a common interface for things like display name and avatar.
+  # [Returns] The invitee, A character or user profile.
+  ###
+  def invitee
+    if self.character_proxy
+      self.character_proxy.character
+    else
+      self.user_profile
+    end
   end
 
 ###

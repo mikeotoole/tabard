@@ -24,24 +24,27 @@
   %h1= shorten_words @announcement.name, 21
   %p= @announcement.body
 
-- if can? :create, Announcement and (@announcement.user_profiles_have_seen.any? or @announcement.user_profiles_have_not_seen.any?)
+- if can? :create, Announcement and (@user_profiles_have_seen.any? or @user_profiles_have_not_seen.any?)
   %table
     %thead
       %tr
-        %th.half Have Seen This
         %th.half Have Not Seen This
+        %th.half Have Seen This
+    %tfoot
+      %tr
+        %td{ colspan: 2 }
     %tbody
       %tr
         %td.half
-          - if @announcement.user_profiles_have_seen.any?
+          - if @user_profiles_have_not_seen.any?
             %ul
-              - @announcement.user_profiles_have_seen.each do |user_profile|
-                %li= link_to shorten_words(user_profile.name), user_profile
+              - @user_profiles_have_not_seen.each do |user_profile|
+                %li= link_to shorten_words(user_profile.display_name), user_profile
         %td.half
-          - if @announcement.user_profiles_have_not_seen.any?
+          - if @user_profiles_have_seen.any?
             %ul
-              - @announcement.user_profiles_have_not_seen.each do |user_profile|
-                %li= link_to shorten_words(user_profile.name), user_profile
+              - @user_profiles_have_seen.each do |user_profile|
+                %li= link_to shorten_words(user_profile.display_name), user_profile
 
 - if @announcement.comments.any? or can? :comment, @announcement
   %aside.comments
