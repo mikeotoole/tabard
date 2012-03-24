@@ -6,7 +6,7 @@
 # This controller is handling events within the scope of subdomains (communities).
 ###
 class Subdomains::EventsController < SubdomainsController
-  respond_to :html
+  respond_to :html, :js
 ###
 # Before Filters
 ###
@@ -15,7 +15,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :load_event, :except => [:new, :create, :index]
   before_filter :create_event, :only => [:new, :create]
   before_filter :build_missing_invites, :only => [:new, :edit]
-  authorize_resource :except => :index
+  authorize_resource :except => [:index]
   skip_before_filter :limit_subdomain_access
 
 ###

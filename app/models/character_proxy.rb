@@ -56,7 +56,7 @@ class CharacterProxy < ActiveRecord::Base
     return true if supported_game == nil
     return supported_game.game_type == self.game.class.to_s
   end
-
+  
 ###
 # Instance Methods
 ###
