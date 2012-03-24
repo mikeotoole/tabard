@@ -15,7 +15,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :load_event, :except => [:new, :create, :index]
   before_filter :create_event, :only => [:new, :create]
   before_filter :build_missing_invites, :only => [:new, :edit]
-  authorize_resource :except => [:index]
+  authorize_resource :except => [:index, :invites]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -125,19 +125,11 @@ class Subdomains::EventsController < SubdomainsController
       return
     end
   end
-  
-  # POST /events/:id/invite(.:format)
-  def invite
-    if @event.invites.create(params[:invite])
-      # TODO Mike, This should send a message to user. OR Create an observer.
-      add_new_flash_message 'Invite was successfully sent.', 'success'
-      redirect_to url_for(@event), :action => :show
-      return
-    else
-      add_new_flash_message 'Unable to send invitation.', 'alert'
-      redirect_to url_for(@event), :action => :show
-      return
-    end
+
+  # GET /events/:id/invites(.:format)
+  def invites
+    authorize! :show, @event
+    @invites = @event.invites
   end
     
 ###
