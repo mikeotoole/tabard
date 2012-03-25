@@ -299,13 +299,15 @@ $(document).ready ->
   # Global checkbox
   $('body')
     .delegate 'thead th.check', 'init', ->
+      rowChecks = $(this).closest('table').find('tbody td.check input')
       $(this)
         .append('<a>✔</a>')
         .find('a')
-        .data('checked',false)
         .click ->
-          $(this).data('checked', !$(this).data('checked'))
-          $(this).closest('table').find('tbody td.check input').attr('checked',$(this).data('checked'))
+          if rowChecks.filter(':checked').length == rowChecks.length
+            rowChecks.attr 'checked', false
+          else
+            rowChecks.attr 'checked', true
   $('body thead th.check').trigger 'init'
   
   initSelects()

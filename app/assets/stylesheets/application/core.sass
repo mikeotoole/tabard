@@ -430,6 +430,20 @@ button,
       input:checked + label
         width: 60px
   
+    &.status
+      margin-right: 10px
+      min-height: 33px
+      width: 154px
+      
+      ul
+        width: 150px
+      
+      + button,
+      + button + .button
+        clear: none
+        height: 32px
+        line-height: 32px !important
+  
   .slider
     border: 1px solid transparent
     +border_radius(3)
