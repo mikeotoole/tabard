@@ -78,6 +78,10 @@ class Invite < ActiveRecord::Base
   def update_viewed(user_profile)
     self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
   end
+  # This gets the smart status
+  def smart_status
+    ( is_viewed and status == nil ? "No Response" : status )
+  end
 
 ###
 # Instance Methods
