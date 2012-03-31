@@ -1,12 +1,6 @@
 - if invites.any?
-  -if invites.responded_to.fresh.any?
-    %h2 Responded To
-    = render "invites/table", :invites => invites.responded_to.fresh
-  -if invites.not_responded_to.fresh.any?
-    %h2 Not Responded To
-    = render "invites/table", :invites => invites.not_responded_to.fresh
-  -if invites.expired.any?
-    %h2 Expired Invites
-    = render "invites/table", :invites => invites.expired
+  = paginate invites
+  = render "invites/table", :invites => invites
+  = paginate invites
 - else
   You do not have any invites.
