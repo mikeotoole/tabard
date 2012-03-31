@@ -2,5 +2,6 @@
   %fieldset
     %ol
       = f.input :status, :as => :radio, :label => "#{invite.invitee_name} is…", :collection => Invite::VALID_STATUSES, :wrapper_html => { class: 'select' }
+      = f.input :comment_body, :as => :text, :label => 'Remark'
     %p.submit
       %button{ :type => 'submit' }= 'RSVP'
