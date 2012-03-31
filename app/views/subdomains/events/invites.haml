@@ -1,1 +1,23 @@
+- title "Invitees | #{@event.name} | Events | #{current_community.name}"
+
+#breadcrumb
+  %ol
+    %li= link_to "Events", events_url
+    %li= link_to shorten_words(@event.name, 21), event_url(@event)
+    %li
+      %span Invitees
+
+#actions.actions
+  = link_to "Event Details", event_url(@event), :meta => 'Event details & comments', :class => 'event'
+  - if can? :update, @event
+    = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
+  - if can? :destroy, @event
+    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
+
+%article.event
+  %h1
+    = shorten_words @event.name, 21
+    Invitees
+  = render 'meta', :event => @event
+
 = render 'subdomains/invites/table', :invites => @invites

@@ -40,6 +40,7 @@
             %time= event.end_time.strftime("%l:%M %p")
           %td.actions
             %div
+              = link_to "Attendee List", invites_event_url(event), :meta => 'View invitees', :class => 'invitees'
               - if (can? :update, event)
                 = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
               - if (can? :destroy, event)

@@ -74,6 +74,7 @@ class Subdomains::EventsController < SubdomainsController
   def show
     @event.update_viewed(current_user.user_profile)
     @invites = @event.invites
+    @comments= @event.comments.page params[:page]
   end
 
   # GET /events/new

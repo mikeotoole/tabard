@@ -1,4 +1,5 @@
 - title "#{@event.name} | Events | #{current_community.name}"
+= javascript_include_tag "comments"
 
 #breadcrumb
   %ol
@@ -7,31 +8,32 @@
       %span= shorten_words @event.name, 21
 
 #actions.actions
-  - if (can? :update, @event)
+  = link_to "Attendee List", invites_event_url(@event), :meta => 'View invitees', :class => 'invitees'
+  - if can? :update, @event
     = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
-  - if (can? :destroy, @event)
+  - if can? :destroy, @event
     = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
 
-%h1= shorten_words @event.name, 21
-%p
-  %b Body:
-  = @event.body
+%article.event
+  %h1= shorten_words @event.name, 21
+  = render 'meta', :event => @event
+  - if @event.body
+    %p= @event.body
+
 - if @event.supported_game
   %p
     %b Game:
     = @event.supported_game_smart_name
-%p
-  %b Start Time:
-  = @event.start_time
-%p
-  %b End Time:
-  = @event.end_time
-%p
-  %b Creator:
-  = link_to @event.creator_display_name, @event.creator
-%p
-  %b is_public Only:
-  = @event.is_public
-=link_to "Invites", invites_event_url(@event)
-%hr
-= render 'subdomains/invites/table', :invites => @invites
+
+- if @comments.any? or can? :comment, @event
+  %aside.comments
+    - if @comments.any?
+      = paginate @comments
+      %ol
+        - @comments.each do |comment|
+          = render "subdomains/comments/comment", :comment => comment
+      = paginate @comments
+    - if can? :comment, @event
+      .newcomment
+        %h3 Post a New Comment
+        = render 'subdomains/comments/form', :comment => @event.comments.new

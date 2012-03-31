@@ -13,9 +13,9 @@
         %td
           = invite.invitee_name
         %td
-          = invite.is_viewed ? 'Yes' : ''
+          = invite.is_viewed ? 'Yes' : '—'
         %td
-          = invite.status
+          = invite.status ||= '—'
         %td.actions
           %div
             -if can? :update, invite

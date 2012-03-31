@@ -298,7 +298,7 @@ $(document).ready ->
   
   # Global checkbox
   $('body')
-    .delegate 'thead th.check', 'init', ->
+    .delegate 'thead th.check:not(:has(a))', 'init', ->
       rowChecks = $(this).closest('table').find('tbody td.check input')
       $(this)
         .append('<a>✔</a>')

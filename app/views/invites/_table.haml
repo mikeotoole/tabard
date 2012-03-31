@@ -18,7 +18,7 @@
           = image_tag invite.invitee_avatar_url(:icon)
           = invite.invitee_name
         %td.r
-          = invite.status
+          = invite.status ||= '—'
   %tfoot
     %tr
       %td{ colspan: 4 }
