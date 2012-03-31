@@ -54,6 +54,7 @@ class Invite < ActiveRecord::Base
   delegate :community_subdomain, :to => :event, :allow_nil => true
   delegate :community_name, :to => :event, :allow_nil => true
   delegate :name, :to => :event, :prefix => true, :allow_nil => true
+  delegate :start_time, :to => :event, :prefix => true, :allow_nil => true
   delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
   delegate :name, :to => :invitee, :prefix => true, :allow_nil => true
   delegate :avatar_url, :to => :invitee, :prefix => true, :allow_nil => true

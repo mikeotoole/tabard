@@ -656,8 +656,13 @@ body
       strong
         font-family: EurostyleBold, sans-serif
       
-      time.event
+      .event
         float: right
+        text-align: right
+        white-space: nowrap
+        
+        time
+          display: inline
 
 
   // COMMENTS
@@ -1647,13 +1652,15 @@ body
   #discussion_name,
   #discussion_body,
   #announcement_name,
-  #announcement_body
+  #announcement_body,
+  #invite_comment_body
     width: 878px
     
     + mark.error
       width: 880px
   
-  #event_body
+  #event_body,
+  #invite_comment_body
     height: 100px
 
   #submenu

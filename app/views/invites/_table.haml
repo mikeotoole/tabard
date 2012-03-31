@@ -1,4 +1,4 @@
-= form_tag invites_batch_update_url, :method => :put do
+= form_tag invites_batch_update_url, :method => :put, :remote => true do
   %table
     %thead
       %tr
@@ -15,11 +15,20 @@
           %td
             %h3= link_to shorten_words(invite.event_name), event_url(invite.event, :subdomain => invite.community_subdomain)
             = invite.community_name
+            %time.event
+              %strong.day= l invite.event_start_time, :format => :date_short
+              at
+              %strong.time= l invite.event_start_time, :format => :time_12
+              = '—'
+              - unless invite.event_start_time.day == invite.event_end_time.day
+                %strong.day= l invite.event_end_time, :format => :date_short
+                at
+              %strong.time= l invite.event_end_time, :format => :time_12
           %td.invitee
             = image_tag invite.invitee_avatar_url(:icon)
             = invite.invitee_name
           %td.r
-            = invite.status ||= '—'
+            %strong= invite.status ||= '—'
     %tfoot
       %tr
         %td{ colspan: 4 }
