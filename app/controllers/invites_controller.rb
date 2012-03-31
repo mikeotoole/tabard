@@ -7,7 +7,7 @@
 ###
 class InvitesController < ApplicationController
   before_filter :block_unauthorized_user!
-  load_and_authorize_resource :through => :current_user
+  load_and_authorize_resource :through => :current_user, :except => [:batch_update]
   respond_to :html, :js
 
 ###
@@ -18,7 +18,7 @@ class InvitesController < ApplicationController
     @invite.update_viewed(current_user.user_profile)
     respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
   end
-
+  # Update
   def update
     @invite.update_attributes(params[:invite])
     respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
@@ -29,16 +29,18 @@ class InvitesController < ApplicationController
 ###
   # PUT /invites/batch_update/(.:format)
   def batch_update
+    @invites = []
     valid_status = params[:status] if params[:status] and Invite::VALID_STATUSES.include? params[:status]
     if params[:ids]
       params[:ids].each do |id|
-        invite = current_user.invites.find_by_id(id[0])
+        invite = current_user.invites.find_by_id(id)
         if invite
+          @invites << invite
           invite.update_viewed(current_user.user_profile) 
           invite.update_attribute(:status, valid_status) if valid_status
         end
       end
     end
-    render :text => ''
+    respond_with(@invites, :location => user_profile_url(current_user.user_profile, :anchor => 'invites'))
   end
 end

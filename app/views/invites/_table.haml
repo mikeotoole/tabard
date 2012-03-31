@@ -1,12 +1,6 @@
-%table
-  %thead
-    %tr
-      %th.check
-      %th Event
-      %th Invited as
-      %th Status
-  %tbody
-    - invites.each do |invite|
+= form_tag invites_batch_update_url, :method => :put do
+  %table
+    %thead
       %tr
         %td.check.compact
           = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
@@ -30,8 +24,8 @@
                 %label{ for: "batch_status_#{status.downcase}" }= status
         %button{ type: 'submit' } Update Selected
 
-%script{ type: 'text/javascript' }
-  :plain
-    $(document).ready(function(){
-      $('#tabs dt.invites + dd thead th.check').trigger('init');
-    });
+  %script{ type: 'text/javascript' }
+    :plain
+      $(document).ready(function(){
+        $('#tabs dt.invites + dd thead th.check').trigger('init');
+      });

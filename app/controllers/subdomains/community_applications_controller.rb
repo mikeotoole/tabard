@@ -74,7 +74,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
       add_new_flash_message 'The application has been accepted.', 'success'
-      redirect_to roster_assignments_url
+      redirect_to community_applications_url
     else
       @supported_games = current_community.supported_games
       @comments = @community_application.comments.page params[:page]
@@ -85,7 +85,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # This rejects the specified application.
   def reject
     add_new_flash_message 'The application has been rejected.', 'notice' if @community_application.reject_application(current_user.user_profile)
-    redirect_to community_application_url(@community_application)
+    redirect_to community_applications_url
   end
 ###
 # Protected Methods
@@ -105,6 +105,7 @@ protected
     @community_application = current_community.community_applications.find_by_id(params[:id])
   end
 
+  # This pitches to the new user.
   def pitch_to_new_user
     redirect_to new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in? 
   end

@@ -23,7 +23,7 @@ class Subdomains::EventsController < SubdomainsController
 ###
   # GET /events
   def index
-    @events = current_community.events.page params[:page]
+    @events = Kaminari.paginate_array(current_community.events.delete_if{|event| cannot? :read, event}).page(params[:page])
   end
   
   # GET /events/:year/:month

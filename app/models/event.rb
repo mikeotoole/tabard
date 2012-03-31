@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
-  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC'
+  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC', :dependent => :destroy
   has_many :user_profiles, :through => :invites
   has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
@@ -90,38 +90,39 @@ class Event < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # The start time date
   def start_time_date
     @start_time_date ||= start_time ? start_time.to_date : ''
   end
-
+  # The start time hours
   def start_time_hours
     @start_time_hours ||= start_time ? (start_time.hour <= 12 ? start_time.hour : start_time.hour - 12) : ''
   end
-
+  # The start time minutes
   def start_time_minutes
    @start_time_minutes ||= start_time ? (start_time.min > 0 ? start_time.min.to_s : '00') : '00'
   end
-
+  # The start time meridian
   def start_time_meridian
     @start_time_meridian ||= start_time ? (start_time.hour < 12 ? 'AM' : 'PM') : ''
   end
-
+  # The end time date
   def end_time_date
     @end_time_date ||= end_time ? end_time.to_date : ''
   end
-
+  # The end time hours
   def end_time_hours
     @end_time_hours ||= end_time ? (end_time.hour <= 12 ? end_time.hour : end_time.hour - 12) : ''
   end
-
+  # The end time minutes
   def end_time_minutes
     @end_time_minutes ||= end_time ? (end_time.min > 0 ? end_time.min.to_s : '00') : '00'
   end
-
+  # The end time meridian
   def end_time_meridian
     @end_time_meridian ||= end_time ? (end_time.hour < 12 ? 'AM' : 'PM') : ''
   end
-
+  # This updates viewed for the provided user
   def update_viewed(user_profile)
     self.invites.where(user_profile_id: user_profile.id).first.update_attribute(:is_viewed, true) if user_profile and self.invites.where(user_profile_id: user_profile.id).exists?
   end
@@ -141,7 +142,7 @@ def notify_users
       message_the_invites("had the name changed") if name_changed?
       message_the_invites("had the body changed") if body_changed?
     end
-    self.invites.update_all({is_viewed: false})
+    self.invites.unscoped.update_all({is_viewed: false})
   end
   if start_time_changed? or end_time_changed? 
     if start_time_changed? and end_time_changed?
@@ -150,11 +151,12 @@ def notify_users
       message_the_invites("had the starting time changed") if start_time_changed?
       message_the_invites("had the ending time changed") if end_time_changed?
     end
-    self.invites.update_all({status: nil, expiration: self.end_time, is_viewed: false})
+    self.invites.unscoped.update_all({status: nil, expiration: self.end_time, is_viewed: false})
   end
   return true
 end
 
+# This messages the invited person
 def message_the_invites(reason)
   Message.create_system(:subject => "An event you were invited to has changed",
       :body => "The #{name_was} event you were invited to has #{reason}",
