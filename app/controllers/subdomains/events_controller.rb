@@ -6,6 +6,7 @@
 # This controller is handling events within the scope of subdomains (communities).
 ###
 class Subdomains::EventsController < SubdomainsController
+  include Rails.application.routes.url_helpers
   respond_to :html, :js
 ###
 # Before Filters
@@ -15,6 +16,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :load_event, :except => [:new, :create, :index]
   before_filter :create_event, :only => [:new, :create]
   before_filter :build_missing_invites, :only => [:new, :edit]
+  before_filter :rsvp_flash, :only => [:show, :invites]
   authorize_resource :except => [:index, :invites]
   skip_before_filter :limit_subdomain_access
 
@@ -170,4 +172,10 @@ protected
     @event = current_community.events.new(params[:event]) if current_community
     @event.creator = current_user.user_profile
   end  
+
+  def rsvp_flash
+    default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.brutalvenom.com" : "#{current_community.subdomain}.lvh.me"
+    invite = current_user.invites.find_by_event_id(@event.id)
+    add_new_flash_message "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>", 'notice' if invite != nil and invite.status == nil
+  end
 end
