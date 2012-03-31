@@ -17,6 +17,8 @@
 %article.event
   %h1= shorten_words @event.name, 21
   = render 'meta', :event => @event
+  - if current_user.invited?(@event)
+    = render 'subdomains/invites/form', :invite => current_user.invites.where(:event_id => @event.id).first
   - if @event.body
     %p= @event.body
 
