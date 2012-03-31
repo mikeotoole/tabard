@@ -10,7 +10,6 @@ module ApplicationHelper
 ###
 # Public Methods
 ###
-
   ###
   # Adds a new message to the flash messsages array
   # [Args]

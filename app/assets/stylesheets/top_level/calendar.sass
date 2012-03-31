@@ -14,6 +14,14 @@ body
   position: fixed
   right: 0
   top: 70px
+  
+  .r
+    text-align: right
+
+  time
+    font: 12px DinMedium, sans-serif
+    padding: 5px
+    white-space: nowrap
 
   table
     height: 100%
@@ -73,7 +81,6 @@ body
           border-left: 1px solid rgba(#666,.1)
           padding: 0
           text-align: left
-          width: 14%
           
           &:before
             border-bottom: 1px solid rgba(#fff,.5)
@@ -89,68 +96,152 @@ body
             text-align: left
             width: 100%
             z-index: 2
-            
-            >time
-              background: rgba(#666,.1)
-              +border_radius(0,0,20,0)
-              color: #666
-              font: 12px DinMedium, sans-serif
-              height: 18px
-              left: -1px
-              line-height: 15px
-              padding: 3px 0 0 5px
-              position: absolute
-              top: 0
-              +transition(background .2s linear)
-              width: 20px
-            
-            >ol
-              padding: 20px 10px 10px
-              
-              a
-                background: #57416f
-                +border_radius(3)
-                color: #fff
-                display: block
-                font: 12px DinMedium, sans-serif
-                margin: 2px 0 0
-                padding: 2px 6px
-                +transition(background .3s linear, box-shadow .2s linear)
-                
-                &:hover
-                  background: #A13A31
-                  +box_shadow(0 0 8px rgba(#A13A31,.5))
+    
+    &.month tbody
+    
+      td
+        width: 14%
+        
+        >div
+         
+          >time
+            background: rgba(#666,.1)
+            +border_radius(0,0,20,0)
+            color: #666
+            font: 12px DinMedium, sans-serif
+            height: 18px
+            left: -1px
+            line-height: 15px
+            padding: 3px 0 0 5px
+            position: absolute
+            top: 0
+            +transition(background .2s linear)
+            width: 20px
           
-          &.today >div
-            outline: 1px solid #2D7CB4
+          >ol
+            padding: 20px 10px 10px
             
-            >time
-              background: rgba(#2D7CB4,.8)
+            a
+              background: #57416f
+              +border_radius(3)
               color: #fff
+              display: block
+              font: 12px DinMedium, sans-serif
+              margin: 2px 0 0
+              padding: 2px 6px
+              +transition(background .3s linear, box-shadow .2s linear)
+              
+              &:hover
+                background: #A13A31
+                +box_shadow(0 0 8px rgba(#A13A31,.5))
+        
+        &.today >div
+          outline: 1px solid #2D7CB4
           
-          &:hover
-            +bg_gradient(rgba(#fff,.7),rgba(#fff,.3))
-            border-bottom: 1px solid rgba(#666,.2)
-            border-left: 1px solid rgba(#666,.2)
+          >time
+            background: rgba(#2D7CB4,.8)
+            color: #fff
+        
+        &:hover
+          +bg_gradient(rgba(#fff,.7),rgba(#fff,.3))
+          border-bottom: 1px solid rgba(#666,.2)
+          border-left: 1px solid rgba(#666,.2)
+          
+          >div
+            +box_shadow(0 0 20px rgba(#000,.3))
+            outline: 1px solid #A13A30
+            z-index: 3
+            
+            >time
+              background: rgba(#A13A30,.8)
+              color: #fff
+        
+        &.empty
+          background: #bbb
+          border-bottom: 1px solid rgba(#666,.1)
+          border-left: 1px solid rgba(#666,.1)
+        
+        &.week
+          width: 2%
+          
+          a
+            display: block
+            height: 100%
+            margin: 0 0 -1px -1px
+            padding: 0
+            width: 100%
+            
+            &:hover
+              background: #A13A31
+              outline: 1px solid #A13A31
+          
+          &:hover ~ td.day
+            background: #fff
             
             >div
-              +box_shadow(0 0 20px rgba(#000,.3))
-              outline: 1px solid #A13A30
-              z-index: 3
+              outline: 1px solid #A13A31
               
               >time
                 background: rgba(#A13A30,.8)
                 color: #fff
-          
-          &.empty
-            background: #bbb
-            border-bottom: 1px solid rgba(#666,.1)
-            border-left: 1px solid rgba(#666,.1)
-        
-        td:first-of-type,
-        td:last-of-type
-          width: 15%
     
-    tfoot td
-      background: #666
-      height: 22px
+    &.week tbody
+    
+      td
+        width: 13%
+        
+        &.time
+          width: 9%
+        
+        .event
+          font: 12px DinMedium, sans-serif
+          height: 100%
+          
+          a
+            background: #57416f
+            +border_radius(3)
+            bottom: 3px
+            color: #fff
+            display: block
+            left: 3px
+            line-height: 18px
+            overflow: hidden
+            padding: 0 3px
+            position: absolute
+            right: 3px
+            top: 3px
+            z-index: 999
+          
+          &:hover
+          
+            a
+              background: #A13A31
+              +box_shadow(0 0 8px rgba(#A13A31,.5))
+      
+      tr:hover td
+        background: #fff
+
+#footer
+  padding-right: 5px
+
+#footer,
+table tfoot td
+  background: #666
+  border: 0
+  +box_shadow(none)
+  color: #ccc
+  font-size: 12px
+  height: 22px
+  line-height: 22px
+  +opacity(1)
+  padding: 0 10px
+  text-align: left
+
+  a
+    +border_radius(3)
+    font-family: DinMedium, sans-serif
+    padding: 2px
+    text-decoration: underline
+    
+    &:hover
+      color: #fff

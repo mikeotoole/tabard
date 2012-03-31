@@ -90,6 +90,14 @@ class Event < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # The number of minutes the event lasts for
+  def duration_minutes
+    (end_time.to_time - start_time.to_time) / 60
+  end
+  # The number of hours the event lasts for (rounded up)
+  def duration_hours
+    (duration_minutes / 60).ceil
+  end
   # The start time date
   def start_time_date
     @start_time_date ||= start_time ? start_time.to_date : ''

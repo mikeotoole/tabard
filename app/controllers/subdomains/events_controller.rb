@@ -66,6 +66,14 @@ class Subdomains::EventsController < SubdomainsController
       @date = Date.commercial(@year, @week, 1)
       wkEnd = Date.commercial(@year, @week, 7)
       @events = current_community.events.find(:all, :conditions=>{:start_time => @date..wkEnd})
+      @events_hour_day = {}
+      (0..23).each do |hour|
+        @events_hour_day[hour] = { 7 => [], 1 => [], 2 => [], 3 => [], 4 => [], 5 => [], 6 => [] }
+      end
+      @events.each do |event|
+        @events_hour_day[event.start_time.hour][event.start_time.to_date.cwday] << event
+      end
+      render :week_index, :layout => 'calendar'
     else
       add_new_flash_message 'Invalid date.', 'alert'
       redirect_to week_events_url(:year => Date.today.year, :week => Date.today.cweek)

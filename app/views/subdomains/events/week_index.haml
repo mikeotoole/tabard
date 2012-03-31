@@ -1,19 +1,33 @@
 - title "Events by Week | #{current_community.name}"
 
-= render 'submenu'
-
-%h1 
-  = @date.at_beginning_of_week.strftime("%b %e, %Y") + ' — ' + @date.at_end_of_week.strftime("%b %e, %Y")
-
-= link_to 'Previous Week', week_events_url(:year => @date.prev_week.year, :week => @date.prev_week.cweek)
-= link_to 'Next Week', week_events_url(:year => @date.cweek == 52 ? @date.year+1 : @date.year, :week => @date.next_week.cweek)
-
-- if @events.any?
-  = render "table_week", :events => @events
-
--else
-  %hr
-  %p There are no events at this time.
-  - if can? :create, Event
-    %hr
-    %p= link_to 'New Event', new_event_url, :class => 'button'
+%table.week
+  %thead
+    %tr
+      %th{ colspan: 8 }
+        %h1= @date.at_beginning_of_week.strftime("%b %e#{@date.at_beginning_of_week.year == @date.at_end_of_week.year ? '' : ', %Y'}") + ' - ' + @date.at_end_of_week.strftime("#{(@date.at_beginning_of_week.year == @date.at_end_of_week.year and @date.at_beginning_of_week.month == @date.at_end_of_week.month) ? '' : '%b'} %e, %Y")
+        = link_to '‹ Previous Week', week_events_url(:year => @date.prev_week.year, :week => @date.prev_week.cweek), :class => 'prev'
+        = link_to 'Next Week ›', week_events_url(:year => @date.cweek == 52 ? @date.year+1 : @date.year, :week => @date.next_week.cweek), :class => 'next'
+    %tr
+      %th.time
+      %th.day Monday
+      %th.day Tuesday
+      %th.day Wednesday
+      %th.day Thursday
+      %th.day Friday
+      %th.day Saturday
+      %th.day Sunday
+  %tfoot
+    %td{ colspan: 8 }
+      Week events for
+      = link_to current_community.name, root_url(:subdomain => current_community.subdomain)
+  %tbody
+    - @events_hour_day.each do |hour,days|
+      %tr
+        %td.time.r
+          %time= l Time.at(hour*3600).utc, :format => :time_12
+        - days.each do |day,events|
+          %td.day
+            - events.each do |event|
+              - invite = current_user.invites.find_by_event_id(event.id)
+              .event{ style: "height: #{event.duration_hours}00%" }
+                = link_to shorten_words(event.name), event_url(event), :style => "margin-bottom: -#{event.duration_hours}px"

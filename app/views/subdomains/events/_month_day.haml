@@ -1,4 +1,4 @@
-%td{ class: "day-#{day} #{(Time.zone.now.day == day and date.month == Time.zone.now.month and date.year == Time.zone.now.year) ? 'today' : ''}" }
+%td{ class: "day day-#{day} #{(Time.zone.now.day == day and date.month == Time.zone.now.month and date.year == Time.zone.now.year) ? 'today' : ''}" }
   %div
     %time= day
     %ol

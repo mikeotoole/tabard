@@ -14,4 +14,4 @@
     = render 'layouts/flash_messages' unless @page_caching
     #content
       = yield
-    = render 'layouts/footer'
+    = render 'layouts/footer', :current_layout => 'application'

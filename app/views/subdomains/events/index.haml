@@ -6,7 +6,7 @@
 
 - if @events.any?
   = paginate @events
-  = render "table_list", :events => @events
+  = render "table", :events => @events
   = paginate @events
 
 -else
