@@ -2,30 +2,37 @@
   %table
     %thead
       %tr
-        %td.check.compact
-          = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
-          %label{ for: "invite_id_#{invite.id}" }
-        %td
-          %h3= link_to shorten_words(invite.event_name), event_url(invite.event, :subdomain => invite.community_subdomain)
-          = invite.community_name
-        %td.invitee
-          = image_tag invite.invitee_avatar_url(:icon)
-          = invite.invitee_name
-        %td.r
-          = invite.status ||= '—'
-  %tfoot
-    %tr
-      %td{ colspan: 4 }
-        .select.status
-          %ul
-            - Invite::VALID_STATUSES.each do |status|
-              %li
-                %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
-                %label{ for: "batch_status_#{status.downcase}" }= status
-        %button{ type: 'submit' } Update Selected
+        %th.check
+        %th Event
+        %th Invited as
+        %th Status
+    %tbody
+      - invites.each do |invite|
+        %tr
+          %td.check.compact
+            = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
+            %label{ for: "invite_id_#{invite.id}" }
+          %td
+            %h3= link_to shorten_words(invite.event_name), event_url(invite.event, :subdomain => invite.community_subdomain)
+            = invite.community_name
+          %td.invitee
+            = image_tag invite.invitee_avatar_url(:icon)
+            = invite.invitee_name
+          %td.r
+            = invite.status ||= '—'
+    %tfoot
+      %tr
+        %td{ colspan: 4 }
+          .select.status
+            %ul
+              - Invite::VALID_STATUSES.each do |status|
+                %li
+                  %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
+                  %label{ for: "batch_status_#{status.downcase}" }= status
+          %button{ type: 'submit' } Update Selected
 
-  %script{ type: 'text/javascript' }
-    :plain
-      $(document).ready(function(){
-        $('#tabs dt.invites + dd thead th.check').trigger('init');
-      });
+%script{ type: 'text/javascript' }
+  :plain
+    $(document).ready(function(){
+      $('#tabs dt.invites + dd thead th.check').trigger('init');
+    });
