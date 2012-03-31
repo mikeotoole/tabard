@@ -37,7 +37,7 @@ class Event < ActiveRecord::Base
   has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
   has_many :tentative_invites, :class_name => "Invite", :conditions => {:status => "Tentative"}
-  has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Late"}
+  has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Going to be Late"}
   
   has_many :comments, :as => :commentable
 
