@@ -7,6 +7,7 @@
 ###
 class Subdomains::PagesController < SubdomainsController
   respond_to :html
+  layout 'application'
 
 ###
 # Before Filters
@@ -25,16 +26,17 @@ class Subdomains::PagesController < SubdomainsController
 
   # GET /pages/:id(.:format)
   def show
+    respond_with @page, :layout => 'community'
   end
 
   # GET /page_spaces/:page_space_id/pages/new(.:format)
   def new
-    respond_with @page, :layout => 'application'
+    respond_with @page
   end
 
   # GET /pages/:id/edit(.:format)
   def edit
-    respond_with @page, :layout => 'application'
+    respond_with @page
   end
 
   # POST /page_spaces/:page_space_id/pages(.:format)
@@ -54,7 +56,6 @@ class Subdomains::PagesController < SubdomainsController
       @page.assign_attributes(params[:page])
     end
     is_changed = @page.changed?
-
     if @page.save
       add_new_flash_message 'Page has been saved.', 'success'
       @action = is_changed ? 'edited' : nil
