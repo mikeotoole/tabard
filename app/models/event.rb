@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   belongs_to :supported_game
   belongs_to :creator, :class_name => "UserProfile"
   belongs_to :community
-  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC'
+  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC', :dependent => :destroy
   has_many :user_profiles, :through => :invites
   has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
@@ -141,7 +141,7 @@ def notify_users
       message_the_invites("had the name changed") if name_changed?
       message_the_invites("had the body changed") if body_changed?
     end
-    self.invites.update_all({is_viewed: false})
+    self.invites.unscoped.update_all({is_viewed: false})
   end
   if start_time_changed? or end_time_changed? 
     if start_time_changed? and end_time_changed?
@@ -150,7 +150,7 @@ def notify_users
       message_the_invites("had the starting time changed") if start_time_changed?
       message_the_invites("had the ending time changed") if end_time_changed?
     end
-    self.invites.update_all({status: nil, expiration: self.end_time, is_viewed: false})
+    self.invites.unscoped.update_all({status: nil, expiration: self.end_time, is_viewed: false})
   end
   return true
 end
