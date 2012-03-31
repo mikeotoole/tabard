@@ -180,7 +180,7 @@ $(document).ready ->
 
   $('body')
     .delegate '#flash li', 'init', ->
-      $(this).append('<a class="dismiss">✕</a>') unless $(this).find('.read').length
+      $(this).append('<a class="dismiss">✕</a>')
       $(this)
         .css({ height: 0, lineHeight: 0 })
         .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
