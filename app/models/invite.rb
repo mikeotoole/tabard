@@ -10,7 +10,7 @@ class Invite < ActiveRecord::Base
 # Constants
 ###
   # The list of vaild status values.
-  VALID_STATUSES =  %w(Attending Not\ Attending Tentative Late)
+  VALID_STATUSES =  %w(Attending Not\ Attending Tentative Going\ to\ be\ Late)
 
 ###
 # Attribute accessors
