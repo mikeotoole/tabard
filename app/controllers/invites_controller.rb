@@ -18,7 +18,7 @@ class InvitesController < ApplicationController
     @invite.update_viewed(current_user.user_profile)
     respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
   end
-
+  # Update
   def update
     @invite.update_attributes(params[:invite])
     respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))

@@ -35,14 +35,15 @@ describe Invite do
   end
 
   describe "character_proxy" do
-    it "should be required" do
-      build(:invite, :character_proxy => nil).should_not be_valid
+    it "should not be required" do
+      build(:invite, :character_proxy => nil).should be_valid
     end
   end
 
   describe "status" do
     it "should be required on update" do
-      invite.update_attributes({status: nil}, without_protection: true).should_not be_valid
+      invite.update_viewed(invite.user_profile)
+      invite.update_attributes({status: nil}, without_protection: true).should_not be_true
     end
     it "should not be required on create" do
       build(:invite, :status => nil).should be_valid

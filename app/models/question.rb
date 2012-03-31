@@ -107,7 +107,7 @@ protected
       self.predefined_answers.clear
     end
   end
-
+  # This makes sure the predefined answers are not too similar.
   def predefined_answers_are_not_too_similar
     self.predefined_answers.each_with_index do |pa, pa_i|
       self.predefined_answers.each_with_index do |po, po_i|
