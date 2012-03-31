@@ -31,11 +31,11 @@
     line-height: 0
     margin: 0 auto
     overflow: hidden
-    padding: 0 40px
+    padding: 0 60px 0 40px
     position: relative
     text-align: left
     +transition(color .2s linear, box-shadow .2s linear)
-    width: 878px
+    width: 860px
     z-index: 88
     
     &:before
@@ -117,7 +117,6 @@
       padding: 4px 5px
       position: absolute
       +opacity(.5)
-      right: 10px
       top: 50%
       +transition(opacity .2s linear, box-shadow .2s linear, border .2s linear)
       
@@ -128,6 +127,12 @@
         position: absolute
         right: -10px
         top: -10px
+    
+    .dismiss
+      right: 10px
+    
+    .read
+      right: 35px
     
     .link
       
