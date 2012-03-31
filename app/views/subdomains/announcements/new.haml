@@ -7,7 +7,7 @@
     %fieldset
       %ol
         = f.input :name, :hint => 'This is what is displayed as a popup message to your members.', :input_html => { :maxlength => Announcement::MAX_NAME_LENGTH }
-        = f.input :body, :as => :text, :input_html => { :maxlength => Announcement::MAX_BODY_LENGTH }
+        = f.input :body, :as => :text, :hint => "Optional. Announcements with body text cannot be marked as seen from a user's dropdown message.", :input_html => { :maxlength => Announcement::MAX_BODY_LENGTH }
         - if available_characters.any?
           = f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(available_characters, current_user.user_profile.display_name), :checked => last_posted_as_character_proxy_id, :as => :radio, :wrapper_html => { :class => 'select' }
         = f.input :supported_game_id, :label => 'Context', :collection => collection_with_blank(current_community.supported_games, 'Community', :smart_name), :as => :radio, :wrapper_html => { :class => 'select' }
