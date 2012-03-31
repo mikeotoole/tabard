@@ -134,6 +134,29 @@ namespace :seed do
     create_message('Length2', create_w_string(Message::MAX_SUBJECT_LENGTH), %w(Length), create_w_string(Message::MAX_BODY_LENGTH))
   end
   
+  desc "Seeds content with max length values"
+  task :update_themes => :environment do
+    puts "Updating Cyborg: "
+    success = Theme.find(2).update_attributes(name: "Cyborg", css: "cyborg", background_author: "Mac Rebisz", background_author_url: "http://maciejrebisz.com", thumbnail: "cyborg.jpg")
+    puts success
+    puts Theme.find(2).to_yaml
+    
+    puts "Updating Metropolis: "
+    Theme.find(3).update_attributes(name: "Metropolis", css: "metropolis", background_author: "Igor Vitkovskiy", background_author_url: "http://m3-f.deviantart.com", thumbnail: "metropolis.jpg")
+    puts success
+    puts Theme.find(3).to_yaml
+    
+    puts "Updating Wasteland: "
+    Theme.find(4).update_attributes(name: "Wasteland", css: "wasteland", background_author: "Craig Soulsby", background_author_url: "http://xblitzcraigx.deviantart.com", thumbnail: "wasteland.jpg")
+    puts success
+    puts Theme.find(4).to_yaml
+    
+    puts "Updating Hailstone: "
+    Theme.find(5).update_attributes(name: "Hailstone", css: "hailstone", background_author: "Mac Rebisz", background_author_url: "http://maciejrebisz.com", thumbnail: "hailstone.jpg")
+    puts success
+    puts Theme.find(5).to_yaml
+  end
+  
   def create_w_string(length=1)
     w_string = "" 
     (1..length).each do
