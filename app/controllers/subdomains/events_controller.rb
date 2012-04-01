@@ -70,6 +70,7 @@ class Subdomains::EventsController < SubdomainsController
       (0..23).each do |hour|
         @events_hour_day[hour] = { 7 => [], 1 => [], 2 => [], 3 => [], 4 => [], 5 => [], 6 => [] }
       end
+      logger.debug @events.to_yaml
       @events.each do |event|
         @events_hour_day[event.start_time.hour][event.start_time.to_date.cwday] << event
       end

@@ -5,6 +5,7 @@ en:
   time:
     formats:
       time_12: "%l:%M%p"
+      time_12_short: "%l %p"
       time_24: "%H:%M"
       date_short: "%b %e, %Y"
       date_monthday: "%b %e"
