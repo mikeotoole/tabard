@@ -63,6 +63,7 @@ class Event < ActiveRecord::Base
   delegate :subdomain, :to => :community, :prefix => true, :allow_nil => true
   delegate :name, :to => :community, :prefix => true, :allow_nil => true
   delegate :member_profiles, :to => :community, :prefix => true, :allow_nil => true
+  delegate :id, :to => :creator, :prefix => true
 
 ###
 # Callbacks
