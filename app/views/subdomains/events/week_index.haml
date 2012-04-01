@@ -24,10 +24,9 @@
     - @events_hour_day.each do |hour,days|
       %tr
         %td.time.r
-          %time= l Time.at(hour*3600).utc, :format => :time_12
+          %time= l Time.at(hour*3600).utc, :format => :time_12_short
         - days.each do |day,events|
           %td.day
             - events.each do |event|
-              - invite = current_user.invites.find_by_event_id(event.id)
-              .event{ style: "height: #{event.duration_hours}00%" }
-                = link_to shorten_words(event.name), event_url(event), :style => "margin-bottom: -#{event.duration_hours}px"
+              .event{ style: "height: #{event.duration_hours * 21 - 1}px" }
+                = link_to shorten_words(event.name), event_url(event)

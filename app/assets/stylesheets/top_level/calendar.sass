@@ -2,18 +2,14 @@
 @import application/fluid
 
 html,
-body
-  height: 100%
-  overflow: hidden
+body.fluid
+  background: #666
+  overflow: visible
 
 #calendar
   background: #eee
   +bg_gradient(#fff,#ccc)
-  bottom: 0
-  left: 60px
-  position: fixed
-  right: 0
-  top: 70px
+  margin: -5px 0 0 60px
   
   .r
     text-align: right
@@ -24,7 +20,7 @@ body
     white-space: nowrap
 
   table
-    height: 100%
+    position: relative
     width: 100%
     
     thead
@@ -35,14 +31,19 @@ body
         border-bottom: 1px solid #ccc
         color: #666
         font: 14px EurostyleStd, sans-serif
-        height: 20px
+        height: 70px
         line-height: 20px
+        vertical-align: bottom
         white-space: nowrap
         
       tr:first-child th
         background: #4f7d9d
         height: 45px
+        left: 60px
         line-height: 45px
+        position: fixed
+        right: 0
+        z-index: 5
         
         h1
           color: #fff
@@ -92,6 +93,7 @@ body
           
           >div
             height: 100%
+            min-height: 100px
             position: relative
             text-align: left
             width: 100%
@@ -185,17 +187,29 @@ body
                 background: rgba(#A13A30,.8)
                 color: #fff
     
-    &.week tbody
+    &.week
+    
+      th
+        background: #ddd
     
       td
+        background: #eee
+        height: 20px
+        padding: 0
+        min-width: 80px
         width: 13%
         
         &.time
+          background: #fff
           width: 9%
         
         .event
           font: 12px DinMedium, sans-serif
-          height: 100%
+          min-height: 20px
+          min-width: 88px
+          padding: 0
+          position: absolute
+          width: 13%
           
           a
             background: #57416f
@@ -208,7 +222,7 @@ body
             overflow: hidden
             padding: 0 3px
             position: absolute
-            right: 3px
+            right: 11px
             top: 3px
             z-index: 999
           
@@ -222,19 +236,23 @@ body
         background: #fff
 
 #footer
-  padding-right: 5px
+  bottom: auto !important
+  margin: -25px 0 0 !important
+  position: absolute !important
+  top: auto !important
+  z-index: 2
 
 #footer,
 table tfoot td
-  background: #666
+  background: #666 !important
   border: 0
   +box_shadow(none)
   color: #ccc
   font-size: 12px
-  height: 22px
-  line-height: 22px
+  height: 25px
+  line-height: 25px !important
   +opacity(1)
-  padding: 0 10px
+  padding: 0 10px !important
   text-align: left
 
   a
