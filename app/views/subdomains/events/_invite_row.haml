@@ -1,4 +1,4 @@
-%tr{ class: invitef.object.persisted? ? '' : 'dim' }
+%tr{ class: (invitef.object.persisted? or  not invitef.object.marked_for_destruction?) ? '' : 'dim' }
   %td.cinch
     = image_tag invitef.object.user_profile_avatar_url(:tiny), :class => 'avatar'
   %td.cinch
@@ -9,6 +9,6 @@
     = invitef.input :character_proxy_id, :as => :radio, :label => false, :wrapper => false, :collection => invitef.object.user_profile.available_character_proxies(community, supported_game).collect{|cp| cp = [image_tag(cp.character.avatar_url(:icon), :class => "avatar icon #{cp.roster_assignments.map{|ra| "sg_#{ra.supported_game_id}"}.join(' ')}") + cp.character.name, cp.id] }
   %td.actions
     %div
-      %a{ class: "toggle #{invitef.object.persisted? ? 'approve' : 'reject'}", meta: 'Invite/Uninvite' } Toggle
-    = invitef.input :_destroy, :as => :hidden, :input_html => { value: invitef.object.persisted? ? false : true }
+      %a{ class: "toggle #{(invitef.object.persisted? or not invitef.object.marked_for_destruction?) ? 'approve' : 'reject'}", meta: 'Invite/Uninvite' } Toggle
+    = invitef.input :_destroy, :as => :hidden, :input_html => { value: (invitef.object.persisted? or  not invitef.object.marked_for_destruction?) ? false : true }
     = invitef.input :user_profile_id, :as => :hidden

@@ -27,7 +27,7 @@ class Invite < ActiveRecord::Base
 # Associations
 ###
   belongs_to :event, :inverse_of => :invites
-  belongs_to :user_profile
+  belongs_to :user_profile, :inverse_of => :invites
   belongs_to :character_proxy
 
 ###

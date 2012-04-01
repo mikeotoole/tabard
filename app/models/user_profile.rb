@@ -58,7 +58,7 @@ class UserProfile < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :activities, :dependent => :destroy
   has_many :events, :dependent => :destroy, :foreign_key => "creator_id"
-  has_many :invites, :dependent => :destroy
+  has_many :invites, :dependent => :destroy, :inverse_of => :user_profile
   has_many :events_invited_to, :through => :invites, :source => :event, :class_name => "Event"
 
 ###

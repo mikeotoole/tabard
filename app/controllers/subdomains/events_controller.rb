@@ -15,7 +15,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_event, :except => [:new, :create, :index]
   before_filter :create_event, :only => [:new, :create]
-  before_filter :build_missing_invites, :only => [:new, :edit]
+  before_filter :build_missing_invites, :only => [:new, :create, :edit, :update]
   before_filter :rsvp_flash, :only => [:show, :invites]
   authorize_resource :except => [:index, :invites]
   skip_before_filter :limit_subdomain_access
@@ -167,8 +167,16 @@ protected
   ###
   def build_missing_invites
     current_community.member_profiles.each do |profile|
-      @event.invites.build(user_profile_id: profile.id) unless @event.invites.where(user_profile_id: profile.id).exists?
+      old_thing = false
+      @event.invites.each do |invite|
+        if invite.user_profile_id == profile.id
+          old_thing = true
+          break
+        end
+      end
+      @event.invites.build(user_profile_id: profile.id).mark_for_destruction unless @event.user_profiles.include?(profile) or old_thing
     end
+    @event.invites.sort!{|a,b| a.user_profile_display_name <=> b.user_profile_display_name}
   end
 
   ###
