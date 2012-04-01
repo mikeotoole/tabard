@@ -83,17 +83,9 @@ body.fluid
           padding: 0
           text-align: left
           
-          &:before
-            border-bottom: 1px solid rgba(#fff,.5)
-            border-left: 1px solid rgba(#fff,.5)
-            height: 100%
-            position: absolute
-            width: 100%
-            z-index: 1
-          
           >div
+            display: inline-block
             height: 100%
-            min-height: 100px
             position: relative
             text-align: left
             width: 100%
@@ -131,7 +123,7 @@ body.fluid
               font: 12px DinMedium, sans-serif
               margin: 2px 0 0
               padding: 2px 6px
-              +transition(background .3s linear, box-shadow .2s linear)
+              +transition(box-shadow .2s linear)
               
               &:hover
                 background: #A13A31
@@ -164,6 +156,7 @@ body.fluid
           border-left: 1px solid rgba(#666,.1)
         
         &.week
+          height: 100px
           width: 2%
           
           a
@@ -177,15 +170,13 @@ body.fluid
               background: #A13A31
               outline: 1px solid #A13A31
           
-          &:hover ~ td.day
+          &:hover ~ td.day div
             background: #fff
+            outline: 1px solid #A13A31
             
-            >div
-              outline: 1px solid #A13A31
-              
-              >time
-                background: rgba(#A13A30,.8)
-                color: #fff
+            >time
+              background: rgba(#A13A30,.8)
+              color: #fff
     
     &.week
     

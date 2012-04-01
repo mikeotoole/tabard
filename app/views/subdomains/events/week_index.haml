@@ -9,13 +9,13 @@
         = link_to 'Next Week ›', week_events_url(:year => @date.cweek == 52 ? @date.year+1 : @date.year, :week => @date.next_week.cweek), :class => 'next'
     %tr
       %th.time
-      %th.day Monday
-      %th.day Tuesday
-      %th.day Wednesday
-      %th.day Thursday
-      %th.day Friday
-      %th.day Saturday
-      %th.day Sunday
+      %th.day Mon
+      %th.day Tue
+      %th.day Wed
+      %th.day Thu
+      %th.day Fri
+      %th.day Sat
+      %th.day Sun
   %tfoot
     %td{ colspan: 8 }
       Week events for
