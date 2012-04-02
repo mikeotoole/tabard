@@ -19,84 +19,77 @@ body.fluid
     padding: 5px
     white-space: nowrap
 
+  header,
+  table thead tr:first-child th
+    background: #4f7d9d
+    height: 45px
+    left: 60px
+    line-height: 45px
+    position: fixed
+    right: 0
+    z-index: 5
+    
+    h1
+      color: #fff
+      font-size: 20px
+    
+    .prev,
+    .next
+      +bg_gradient(#356688,#4c7ea2)
+      border: 1px solid #6193b7
+      +border_radius(3)
+      color: #E2EEF7
+      height: 15px
+      line-height: 15px
+      padding: 5px 10px
+      position: absolute
+      top: 10px
+      +transition(background .2s linear, color .2s linear)
+      
+      &:hover
+        background: #A13A30
+        color: #fff
+    
+    .prev
+      left: 10px
+    
+    .next
+      right: 10px
+
   table
     position: relative
+    
+    thead th
+      background: #ddd
+      +bg_gradient(#ccc,#eee)
+      border-bottom: 1px solid #ccc
+      height: 70px
+      line-height: 20px
+      vertical-align: bottom
+      white-space: nowrap
+    
+    tbody td
+      +bg_gradient(rgba(#fff,.5),rgba(#eee,0))
+      border-bottom: 1px solid rgba(#666,.1)
+      border-left: 1px solid rgba(#666,.1)
+      padding: 0
+      text-align: left
+    
+  &.month table
     width: 100%
     
-    thead
-    
-      th
-        background: #ddd
-        +bg_gradient(#ccc,#eee)
-        border-bottom: 1px solid #ccc
-        color: #666
-        font: 14px EurostyleStd, sans-serif
-        height: 70px
-        line-height: 20px
-        vertical-align: bottom
-        white-space: nowrap
-        
-      tr:first-child th
-        background: #4f7d9d
-        height: 45px
-        left: 60px
-        line-height: 45px
-        position: fixed
-        right: 0
-        z-index: 5
-        
-        h1
-          color: #fff
-          font-size: 20px
-        
-        .prev,
-        .next
-          +bg_gradient(#356688,#4c7ea2)
-          border: 1px solid #6193b7
-          +border_radius(3)
-          color: #E2EEF7
-          height: 15px
-          line-height: 15px
-          padding: 5px 10px
-          position: absolute
-          top: 10px
-          +transition(background .2s linear, color .2s linear)
-          
-          &:hover
-            background: #A13A30
-            color: #fff
-        
-        .prev
-          left: 10px
-        
-        .next
-          right: 10px
-    
     tbody
-      
-      tr
-      
-        td
-          +bg_gradient(rgba(#fff,.5),rgba(#eee,0))
-          border-bottom: 1px solid rgba(#666,.1)
-          border-left: 1px solid rgba(#666,.1)
-          padding: 0
-          text-align: left
-          
-          >div
-            display: inline-block
-            height: 100%
-            position: relative
-            text-align: left
-            width: 100%
-            z-index: 2
-    
-    &.month tbody
     
       td
         width: 14%
         
         >div
+          display: inline-block
+          height: 100%
+          position: relative
+          text-align: left
+          width: 100%
+          z-index: 2
          
           >time
             background: rgba(#666,.1)
@@ -177,54 +170,141 @@ body.fluid
             >time
               background: rgba(#A13A30,.8)
               color: #fff
+  
+  &.week
+    background: #666
+    left: 0
+    min-width: 100%
+    overflow: scroll
+    padding: 0 0 50px 50px
+    position: absolute
+    top: 100px
+    white-space: nowrap
     
-    &.week
+    &:before
+      background: #ddd
+      +bg_gradient(#ccc,#ddd)
+      border-bottom: 1px solid rgba(#666,.1)
+      content: ''
+      height: 20px
+      left: 0
+      position: absolute
+      right: 0
+      top: 45px
     
-      th
-        background: #ddd
+    header
+      position: fixed
     
-      td
-        background: #eee
+    dl
+      float: left
+      margin: 65px 0 0
+      position: relative
+      min-width: 100px
+      
+      dd
+        border-bottom: 1px solid rgba(#666,.1)
+        border-right: 1px solid rgba(#666,.1)
         height: 20px
+        +transition(background .2s linear)
+      
+      dt
+        border-bottom: 1px solid rgba(#666,.1)
+        height: 20px
+        margin: -21px 0 0
         padding: 0
-        min-width: 80px
-        width: 13%
         
-        &.time
-          background: #fff
-          width: 9%
+        time
+          +border_radius(0,0,3,3)
+          color: #666
+          display: block
+          font: 14px EurostyleStd, sans-serif
+          height: 23px
+          line-height: 20px
+          margin: 0 3px
+          padding: 0 5px
+          position: relative
+      
+      dd
+        background: #eee
         
-        .event
-          font: 12px DinMedium, sans-serif
-          min-height: 20px
-          min-width: 88px
-          padding: 0
-          position: absolute
-          width: 13%
+        ol
+          white: nowrap
           
-          a
-            background: #57416f
-            +border_radius(3)
-            bottom: 3px
-            color: #fff
-            display: block
-            left: 3px
-            line-height: 18px
-            overflow: hidden
-            padding: 0 3px
-            position: absolute
-            right: 11px
-            top: 3px
-            z-index: 999
-          
-          &:hover
+          li
+            float: left
+            padding: 0
+            padding: 3px
+            width: 146px
+            
+            + li
+              margin-left: -3px
           
             a
-              background: #A13A31
-              +box_shadow(0 0 8px rgba(#A13A31,.5))
+              background: #583E6E
+              +border_radius(3)
+              color: #fff
+              display: block
+              font: 13px DinMedium, sans-serif
+              line-height: 15px
+              padding: 5px
+              position: absolute
+              text-align: left
+              +transition(box-shadow .2s linear)
+              white-space: normal
+              width: 136px
+              
+              &:hover
+                background: #A23831
+                +box_shadow(0 0 20px rgba(#000,.3))
+        
+        &.hover
+          background: #f6f6f6
       
-      tr:hover td
-        background: #fff
+      &.times
+        left: 60px
+        margin-top: 130px
+        min-width: 50px
+        position: fixed
+        text-align: right
+        width: 50px
+        z-index: 2
+        
+        dd
+          background: #eee
+          
+          time
+            background: #fff
+            border: 0
+            +border_radius(0,3,3,0)
+            +box_shadow(0 0 5px rgba(#000,.2))
+            display: block
+            height: 21px
+            line-height: 21px
+            margin: 0 -3px 0 0
+            padding: 0 5px
+          
+          &.hover time
+            background: #A13730
+            color: #fff
+      
+      &:hover
+      
+        dt
+          background: #f6f6f6
+          
+          time
+            background: #A23831
+            +box_shadow(0 0 5px rgba(#000,.2))
+            color: #fff
+        
+        dd
+          background: #f6f6f6
+          
+          &:hover
+            background: #fff
+    
+      &:last-of-type dd:last-child
+        +border_radius(0,0,3,0)
 
 #footer
   bottom: auto !important
