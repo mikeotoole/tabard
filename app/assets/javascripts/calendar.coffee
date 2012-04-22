@@ -7,14 +7,9 @@ $(document).ready ->
         .filter('.times')
         .css({ top: -$(this).scrollTop()*2 })
     .trigger 'scroll'
-    setInterval ->
-      $(window).trigger 'scroll'
-    , 500
 
   $('#calendar.week dd')
-    .on 'mouseover', ->
-      id = $(this).index() + 1
-      $('#calendar.week dd:nth-child('+id+')').addClass 'hover'
-    .on 'mouseout', ->
-      id = $(this).index() + 1
-      $('#calendar.week dd:nth-child('+id+')').removeClass 'hover'
+    .on 'mouseenter', ->
+      $('#calendar.week dl.times dd:nth-child(' + ($(this).index()+1) + ')').addClass 'hover'
+    .on 'mouseleave', ->
+      $('#calendar.week dl.times dd').removeClass 'hover'
