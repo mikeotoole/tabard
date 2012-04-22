@@ -37,14 +37,16 @@ class Subdomains::EventsController < SubdomainsController
     valid = (1 <= @month and @month <= 12) if valid
 
     if valid
-      @date = Date.new(@year, @month, 1)
-      end_date = @date.next_month.beginning_of_month
-      @events = current_community.events.find(:all, :conditions=>{:start_time => @date..end_date})
+      @date = DateTime.civil(@year, @month, 1).utc
+      @events = current_community.events.intersects_with(@date, @date.end_of_month)
+      logger.debug @events.to_yaml
       @events_by_day = {}
       @events.each do |event|
-        (event.start_time.day..event.end_time.day).each do |day|
-          @events_by_day[day] ||= []
-          @events_by_day[day] << event
+        start = event.start_time < @date ? @date : event.start_time.to_datetime
+        stop = event.end_time > @date.end_of_month ? @date.end_of_month : event.end_time.to_datetime
+        start.upto(stop) do |date|
+          @events_by_day[date.day] ||= []
+          @events_by_day[date.day] << event
         end
       end
       render :month_index, :layout => 'calendar'
@@ -63,17 +65,23 @@ class Subdomains::EventsController < SubdomainsController
     valid = (1 <= @week and @week <= 52) if valid
     
     if valid
-      @date = Date.commercial(@year, @week, 1)
-      wkEnd = Date.commercial(@year, @week, 7)
-      @events = current_community.events.find(:all, :conditions => { :start_time => @date..wkEnd })
-      @events_day_hour = Hash[[1,2,3,4,5,6,0].map{|weekday| [weekday, Hash[(0..23).map{|hour| [hour, []] }]] }]
+      @date = DateTime.commercial(@year, @week, 1).utc
+      @events = current_community.events.intersects_with(@date, @date.end_of_week)
+      @events_by_cwday_by_hour = Hash[[1,2,3,4,5,6,7].map{|weekday| [weekday, Hash[(0..23).map{|hour| [hour, []] }]] }]
+
       @events.each do |event|
-        @events_day_hour[event.start_time.to_date.cwday-1][event.start_time.hour] << event
+        @date.upto(@date.end_of_week) do |date|
+          if event.start_time < date.end_of_day and event.end_time > date
+            start = event.start_time < date ? date : event.start_time.to_datetime
+            @events_by_cwday_by_hour[date.cwday][start.hour] << event
+          end
+        end
+        logger.debug @events_by_cwday_by_hour.to_yaml
       end
       render :week_index, :layout => 'calendar'
     else
       add_new_flash_message 'Invalid date.', 'alert'
-      redirect_to week_events_url(:year => Date.today.year, :week => Date.today.cweek)
+      redirect_to week_events_url year: Date.today.year, week: Date.today.cweek
     end
   end
 

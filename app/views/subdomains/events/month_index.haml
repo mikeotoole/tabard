@@ -25,13 +25,13 @@
           Month events for
           = link_to shorten_words(current_community.name), root_url(:subdomain => current_community.subdomain)
     %tbody
-      - if @date.beginning_of_month.wday > 1
+      - if @date.beginning_of_month.cwday > 1
         %tr
           %td.week
             = link_to '', week_events_url(year: @date.year, week: week)
-          - (1..(@date.beginning_of_month.wday-1)).each do
+          - (1..(@date.beginning_of_month.cwday-1)).each do
             %td.empty
-          - (@date.beginning_of_month.wday..7).each do
+          - (@date.beginning_of_month.cwday..7).each do
             = render 'month_day', :date => @date, :day => day = day + 1, :events => @events_by_day[day] ||= []
       - while day < @date.end_of_month.day
         - week = week + 1

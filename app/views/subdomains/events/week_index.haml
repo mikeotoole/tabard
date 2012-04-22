@@ -10,14 +10,18 @@
     - (0..23).each do |hour|
       %dd
         %time= l Time.at(hour*3600).utc, :format => :time_12_short
-  - @events_day_hour.each do |day,hours|
+  - @events_by_cwday_by_hour.each do |cwday,hours|
+    - eventcount = 0
     %dl
       %dt
-        %time= Date::DAYNAMES[day]
+        %time= (@date + (cwday-1).days).strftime "%a - %b %e"
       - hours.each do |hour,events|
         %dd
           - if events.any?
-            %ol
+            %ol{ style: "padding-left: #{eventcount * 149}px" }
               - events.each do |event|
-                %li{ style: "height: #{event.duration_hours * 21 - 7}px" }
-                  = link_to shorten_words(event.name,13), event_url(event), style: "height: #{event.duration_hours * 21 - 17}px"
+                - eventcount = eventcount + 1
+                %li
+                  - max_duration_hours = 24 - hour
+                  - duration_hours = event.duration_hours < max_duration_hours ? event.duration_hours : max_duration_hours
+                  = link_to shorten_words(event.name,13), event_url(event), style: "height: #{(duration_hours * 21) - 17}px"
