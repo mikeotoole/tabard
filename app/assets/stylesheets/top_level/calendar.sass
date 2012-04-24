@@ -25,6 +25,7 @@ body.fluid
     height: 45px
     left: 60px
     line-height: 45px
+    padding: 5px 0 0
     position: fixed
     right: 0
     z-index: 5
@@ -43,7 +44,7 @@ body.fluid
       line-height: 15px
       padding: 5px 10px
       position: absolute
-      top: 10px
+      top: 15px
       +transition(background .2s linear, color .2s linear)
       
       &:hover
@@ -109,7 +110,7 @@ body.fluid
             padding: 20px 10px 10px
             
             a
-              background: #57416f
+              background: rgba(#57416f,.8)
               +border_radius(3)
               color: #fff
               display: block
@@ -119,7 +120,7 @@ body.fluid
               +transition(box-shadow .2s linear)
               
               &:hover
-                background: #A13A31
+                background: #57416f
                 +box_shadow(0 0 8px rgba(#A13A31,.5))
         
         &.today >div
@@ -176,7 +177,7 @@ body.fluid
     left: 0
     min-width: 100%
     overflow: scroll
-    padding: 0 0 50px 50px
+    padding: 0 0 50px 55px
     position: absolute
     top: 100px
     white-space: nowrap
@@ -190,25 +191,26 @@ body.fluid
       left: 0
       position: absolute
       right: 0
-      top: 45px
+      top: 50px
     
     header
       position: fixed
     
     dl
       float: left
-      margin: 65px 0 0
+      margin: 70px 0 0
       position: relative
       min-width: 100px
       
       dd
         border-bottom: 1px solid rgba(#666,.1)
-        border-right: 1px solid rgba(#666,.1)
+        border-right: 2px solid rgba(#000,.1)
         height: 20px
         +transition(background .2s linear)
       
       dt
         border-bottom: 1px solid rgba(#666,.1)
+        border-right: 2px solid rgba(#000,.1)
         height: 20px
         margin: -21px 0 0
         padding: 0
@@ -217,9 +219,9 @@ body.fluid
           +border_radius(0,0,3,3)
           color: #666
           display: block
-          font: 14px EurostyleStd, sans-serif
+          font: 12px EurostyleStd, sans-serif
           height: 23px
-          line-height: 20px
+          line-height: 23px
           margin: 0 3px
           padding: 0 5px
           position: relative
@@ -240,7 +242,7 @@ body.fluid
               margin-left: -3px
           
             a
-              background: #583E6E
+              background: rgba(#583E6E, .8)
               +border_radius(3)
               color: #fff
               display: block
@@ -254,20 +256,26 @@ body.fluid
               width: 136px
               
               &:hover
-                background: #A23831
+                background: #583E6E
                 +box_shadow(0 0 20px rgba(#000,.3))
         
         &.hover
           background: #f6f6f6
       
       &.times
+        background: #eee
         left: 60px
-        margin-top: 130px
+        margin-top: 135px
         min-width: 50px
+        padding: 0 5px 0 0
         position: fixed
         text-align: right
         width: 50px
         z-index: 2
+        
+        dt
+          background: transparent !important
+          border-right: 0
         
         dd
           background: #eee
