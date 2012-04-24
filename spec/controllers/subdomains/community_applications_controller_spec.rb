@@ -218,8 +218,8 @@ describe Subdomains::CommunityApplicationsController do
         community_application.reload
         applicant_user.reload
       end
-      it "should be successful" do
-        response.should redirect_to(roster_assignments_url)
+      it "should be successful and redirect to application index" do
+        response.should redirect_to(community_applications_url)
       end
       it "should make the applicant a member" do
         applicant_user.is_member?(community).should be_true
@@ -256,8 +256,8 @@ describe Subdomains::CommunityApplicationsController do
         community_application.reload
         applicant_user.reload
       end
-      it "should be successful" do
-        response.should redirect_to(community_application_url(community_application))
+      it "should be successful and redirect_to communtiy application index" do
+        response.should redirect_to(community_applications_url)
       end
       it "should not make the applicant a member" do
         applicant_user.is_member?(community).should be_false
