@@ -6,7 +6,42 @@
 
 - if @events.any?
   = paginate @events
-  = render "table", :events => @events
+  = form_tag invites_batch_update_url, :method => :put do
+    %table
+      %thead
+        %tr
+          %th Past Event
+          %th Start
+          %th
+          %th End
+          %th
+          %th.actions
+      %tbody
+        - @events.each do |event|
+          %tr
+            %td
+              = link_to shorten_words(event.name, 21), event
+              - if event.supported_game
+                %dfn.hint= event.supported_game.smart_name
+            %td
+              %time= event.start_time.strftime("%a - %b %d, %Y")
+            %td
+              %time= event.start_time.strftime("%l:%M %p")
+            %td
+              %time= event.end_time.strftime("%a - %b %d, %Y")
+            %td
+              %time= event.end_time.strftime("%l:%M %p")
+            %td.actions
+              %div
+                = link_to "Attendee List", invites_event_url(event), :meta => 'View invitees', :class => 'invitees'
+                - if (can? :update, event)
+                  = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
+                - if (can? :destroy, event)
+                  = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
+      %tfoot
+        %tr
+          %td{ colspan: 6 }
+            = link_to 'Create New', new_event_path, :class => 'button' if can? :create, Event
   = paginate @events
 
 -else

@@ -6,7 +6,66 @@
 
 - if @events.any?
   = paginate @events
-  = render "table", :events => @events
+  - has_invites = (current_user.events_invited_to & @events).size > 0 ? true : false
+  = form_tag invites_batch_update_url, :method => :put do
+    %table
+      %thead
+        %tr
+          - if has_invites
+            %th.check
+          %th Event
+          - if has_invites
+            %th RSVP
+          %th Start
+          %th
+          %th End
+          %th
+          %th.actions
+      %tbody
+        - @events.each do |event|
+          - invite = current_user.invites.find_by_event_id(event.id)
+          %tr
+            - if has_invites
+              %td.check
+                - if current_user.invited? event
+                  = check_box_tag "ids[#{invite.id}]", true, false, :id => "invite_id_#{invite.id}"
+                  %label{ :for => "invite_id_#{invite.id}" }
+            %td
+              = link_to shorten_words(event.name, 21), event
+              - if event.supported_game
+                %dfn.hint= event.supported_game.smart_name
+            - if has_invites
+              %td
+                - if invite.try 'status'
+                  = link_to invite.status, edit_invite_url(invite)
+            %td
+              %time= event.start_time.strftime("%a - %b %d, %Y")
+            %td
+              %time= event.start_time.strftime("%l:%M %p")
+            %td
+              %time= event.end_time.strftime("%a - %b %d, %Y")
+            %td
+              %time= event.end_time.strftime("%l:%M %p")
+            %td.actions
+              %div
+                = link_to "Attendee List", invites_event_url(event), :meta => 'View invitees', :class => 'invitees'
+                - if (can? :update, event)
+                  = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
+                - if (can? :destroy, event)
+                  = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
+      %tfoot
+        %tr
+          %td{ :colspan => has_invites ? 8 : 6 }
+            - if has_invites
+              .select.status
+                %ul
+                  - Invite::VALID_STATUSES.each do |status|
+                    %li
+                      %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
+                      %label{ for: "batch_status_#{status.downcase}" }= status
+              %button{ type: 'submit' } Update Selected
+            - if can? :create, Event
+              = link_to 'Create New', new_event_path, :class => 'button'
   = paginate @events
 
 -else
