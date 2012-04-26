@@ -14,7 +14,12 @@ class Event < ActiveRecord::Base
   # This is the max body length
   MAX_BODY_LENGTH = 10000
 
+###
+# Scopes
+###
   default_scope order(:start_time)
+  scope :not_expired, lambda { where("events.end_time > ?", Time.now) }
+  scope :expired, lambda { where("events.end_time < ?", Time.now) }
 
 ###
 # Attribute accessor
@@ -70,8 +75,9 @@ class Event < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :notify_users, :on => :update
   before_validation :update_event_times
+  before_save :convert_times_to_utc
+  before_save :notify_users, :on => :update
 
 ###
 # Public Methods
@@ -188,7 +194,8 @@ end
 # Convert user entered times for datebase storage.
 ###
 def convert_times_to_utc
-  
+  self.start_time = self.start_time.utc
+  self.end_time = self.end_time.utc
 end
 
 ###
