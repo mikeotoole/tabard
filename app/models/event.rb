@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
 ###
   default_scope order(:start_time)
   scope :not_expired, lambda { where("events.end_time > ?", Time.now) }
-  scope :expired, lambda { where("events.end_time < ?", Time.now) }
+  scope :expired, lambda { where("events.end_time < ?", Time.now).order('events.start_time desc') }
 
 ###
 # Attribute accessor

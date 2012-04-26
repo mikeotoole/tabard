@@ -1,0 +1,17 @@
+- title "Events | #{current_community.name}"
+
+= render 'submenu'
+
+%h1 Past Events
+
+- if @events.any?
+  = paginate @events
+  = render "table", :events => @events
+  = paginate @events
+
+-else
+  %hr
+  %p There are no events at this time.
+  - if can? :create, Event
+    %hr
+    %p= link_to 'Add New Event', new_event_url, :class => 'button'
