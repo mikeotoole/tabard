@@ -178,6 +178,9 @@ DaBvRails::Application.routes.draw do
         member do
           get :invites
         end
+        collection do
+          get :past
+        end
       end
       get '/events/:year/:month' => 'events#month_index', :as => "month_events"
       get '/events/:year/week/:week' => 'events#week_index', :as => "week_events"
