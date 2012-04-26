@@ -30,7 +30,7 @@ class Subdomains::EventsController < SubdomainsController
   
   # GET /events/past
   def past
-    @events = Kaminari.paginate_array(current_community.events.expired.order('events.start_time desc').delete_if{|event| cannot? :read, event}).page(params[:page])
+    @events = Kaminari.paginate_array(current_community.events.expired.delete_if{|event| cannot? :read, event}).page(params[:page])
   end
   
   # GET /events/:year/:month
