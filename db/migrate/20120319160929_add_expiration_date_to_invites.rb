@@ -1,6 +1,5 @@
 class AddExpirationDateToInvites < ActiveRecord::Migration
   def change
-    add_column :invites, :expiration, :date_time
-
+    add_column :invites, :expiration, :datetime
   end
 end
