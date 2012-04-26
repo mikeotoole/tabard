@@ -14,6 +14,8 @@ class Event < ActiveRecord::Base
   # This is the max body length
   MAX_BODY_LENGTH = 10000
 
+  default_scope order(:start_time)
+
 ###
 # Attribute accessor
 ###
@@ -178,6 +180,15 @@ def update_event_times
     self.end_time = "#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}".to_datetime
   end
   return true
+end
+
+###
+# _before_save_
+#
+# Convert user entered times for datebase storage.
+###
+def convert_times_to_utc
+  
 end
 
 ###
