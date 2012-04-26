@@ -9,6 +9,8 @@
 
 #actions.actions
   = link_to "Event Details", event_url(@event), :meta => 'Event details & comments', :class => 'event'
+  = link_to "Month", month_events_url(year: @event.start_time.to_datetime.year, month: @event.start_time.to_datetime.month), :meta => 'Month view', :class => 'month'
+  = link_to "Week", week_events_url(year: @event.start_time.to_datetime.year, week: @event.start_time.to_datetime.cweek), :meta => 'Week view', :class => 'week'
   - if can? :update, @event
     = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
   - if can? :destroy, @event
