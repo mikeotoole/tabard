@@ -11,7 +11,7 @@
         %td.cinch
           = image_tag invite.invitee_avatar_url(:icon), alt: invite.invitee_name, class: 'avatar icon'
         %td
-          = invite.invitee_name
+          = link_to invite.invitee_name, invite.user_profile
         %td
           = invite.is_viewed ? 'Yes' : '—'
         %td
