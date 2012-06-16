@@ -1,6 +1,7 @@
 #submenu
-  = link_to 'List', events_url, :class => 'list'
+  = link_to 'Upcoming', events_url, :class => 'list'
   = link_to 'Week', week_events_url(:year => Date.today.year, :week => Date.today.cweek), :class => 'week'
   = link_to 'Month', month_events_url(:year => Date.today.year, :month => Date.today.month), :class => 'month'
+  = link_to 'Past', past_events_url, :class => 'past'
   - if can? :create, Event
     = link_to '+ New', new_event_url, :class => 'new button', :meta => 'Create a new event'

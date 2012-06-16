@@ -361,7 +361,7 @@ ActiveRecord::Schema.define(:version => 20120319160929) do
     t.boolean  "is_viewed",          :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.time     "expiration"
+    t.datetime "expiration"
   end
 
   add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"

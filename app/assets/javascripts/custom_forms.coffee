@@ -4,8 +4,8 @@
 $(document).ready ->
 
   # Drag and Drop sorting
-  dragOpts = { revert: 'invalid', cancel: '.toggle' }
-  dropOpts = { accept: '.drag .container', tolerance: 'touch' }
+  dragOpts = revert: 'invalid', cancel: '.toggle'
+  dropOpts = accept: '.drag .container', tolerance: 'touch'
 
   $('form.custom_form')
     .delegate '.questions > li .toggle', 'click', ->
@@ -30,17 +30,17 @@ $(document).ready ->
 
     .delegate '.questions > li.drag .container', 'dragstop', (event, ui) ->
       $('form.custom_form .questions > li.drop').remove()
-      $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
+      $('form.custom_form .questions > li.drag .container').stop().animate opacity: 1, 200
 
     .delegate '.questions > li.drop', 'drop', (event, ui) ->
       dragLi = ui.draggable.closest('li')
       html = ui.draggable.html()
-      $('form.custom_form .questions > li.drag .container').stop().animate({ opacity: 1 }, 200)
+      $('form.custom_form .questions > li.drag .container').stop().animate opacity: 1, 200
       $(this)
         .html('<div class="container">'+html+'</div>')
         .removeClass('drop dropover')
-        .css({ height: '' })
         .addClass('drag')
+        .css height: ''
       $('form.custom_form .questions > li.drop').remove()
       newClassNames = 'closed'
       if ui.draggable.hasClass('question_with_errors')
@@ -110,11 +110,11 @@ $(document).ready ->
           if answers.find('li').size() == 0
             right.find('.add a').trigger 'click'
         selectUl = select.find('ul')
-        selectUl.animate { opacity: 0 }, 200, ->
+        selectUl.animate opacity: 0, 200, ->
           selectUl
             .hide()
-            .animate { opacity: 0 }, 5, ->
-              selectUl.show().css { opacity: 1 }
+            .animate opacity: 0, 5, ->
+              selectUl.show().css opacity: 1
       
       # Add answer link
       right.find('p.add').removeClass('hidden')

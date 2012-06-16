@@ -15,6 +15,12 @@ class Event < ActiveRecord::Base
   MAX_BODY_LENGTH = 10000
 
 ###
+# Scopes
+###
+  scope :not_expired, lambda { where("events.end_time > ?", Time.now).order('events.start_time asc') }
+  scope :expired, lambda { where("events.end_time < ?", Time.now).order('events.start_time desc') }
+
+###
 # Attribute accessor
 ###
   attr_accessor :start_time_date, :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
@@ -68,8 +74,8 @@ class Event < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :notify_users, :on => :update
   before_validation :update_event_times
+  before_save :notify_users, :on => :update
 
 ###
 # Public Methods
@@ -171,11 +177,11 @@ end
 def update_event_times
   unless start_time_date == '' or start_time_hours == '' or start_time_minutes == '' or start_time_meridian == ''
     self.start_time_hours = start_time_hours.to_i + 12 if start_time_meridian == 'PM'
-    self.start_time = "#{start_time_date} #{start_time_hours ? sprintf('%02d', start_time_hours) : '00'}:#{start_time_minutes ? start_time_minutes : '00'}".to_datetime
+    self.start_time = Time.zone.parse("#{start_time_date} #{start_time_hours ? sprintf('%02d', start_time_hours) : '00'}:#{start_time_minutes ? start_time_minutes : '00'}")
   end
   unless end_time_date == '' or end_time_hours == '' or end_time_minutes == '' or end_time_meridian == ''
     self.end_time_hours = end_time_hours.to_i + 12 if end_time_meridian == 'PM'
-    self.end_time = "#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}".to_datetime
+    self.end_time = Time.zone.parse("#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}")
   end
   return true
 end

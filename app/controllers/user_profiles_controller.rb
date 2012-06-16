@@ -80,7 +80,7 @@ class UserProfilesController < ApplicationController
   # GET /user_profiles/:id/invites(.:format)
   def invites
     raise CanCan::AccessDenied if not @user_profile.publicly_viewable and !!current_user and not @user_profile.id == current_user.user_profile_id
-    @invites = current_user.invites.order(:is_viewed).page params[:page]
+    @invites = current_user.invites.fresh.order(:is_viewed).page params[:page]
     render :partial => 'user_profiles/invites', :locals => { :invites => @invites }
   end
 
