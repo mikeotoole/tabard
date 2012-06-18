@@ -227,7 +227,7 @@ class Ability
     can [:destroy], CommunityProfile do |community_profile|
       community_profile.user_profile_id == user.user_profile_id
     end
-    
+
     can [:read], Event do |event|
       event.is_public
     end
@@ -275,7 +275,7 @@ class Ability
     can [:read, :destroy], Submission
     can :manage, Question
     can [:update, :remove_confirmation, :clear_action_items], Community
-    
+
     can :manage, Event
   end
 
@@ -407,6 +407,14 @@ class Ability
   def decodeNestedPermission(action, subject_class, parent_relation, parent_id)
     can action, subject_class do |subject_class_instance|
       subject_class_instance.send(parent_relation).id == parent_id
+    end
+    case subject_class.to_s
+    when "Submission"
+      if action.include?(:read) and subject_class != nil and parent_relation != nil and parent_id != nil
+          can :view_submissions, CustomForm do |custom_form|
+            custom_form.id == parent_id
+          end
+        end
     end
   end
 end
