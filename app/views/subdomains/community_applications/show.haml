@@ -32,7 +32,7 @@
                 = image_tag character_proxy.avatar_url(:tiny), :class => 'avatar'
                 %span.name= character_proxy.name
                 %span.game= character_proxy.game_name
-            - if @community_application.is_pending? and can? :accept, @community_application
+            - if @community_application.is_pending? or @community_application.rejected? and can? :accept, @community_application
               = hidden_field_tag "proxy_hash[#{character_proxy.id}]", -1
               = f.simple_fields_for @community_application.character_proxies, character_proxy, :index => character_proxy.id do |pf|
                 .select{ class: character_proxy.errors.any? ? 'field_with_errors' : '' }
