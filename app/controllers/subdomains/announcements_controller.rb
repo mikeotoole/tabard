@@ -21,12 +21,12 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # GET /announcements/
   def index
-    @announcements = current_community.announcements.ordered.page params[:page]
+    @announcements = current_community.announcements.includes(:community).ordered.page params[:page]
   end
 
   # GET /announcements/:id(.:format)
   def show
-    @announcement = current_community.announcements.find_by_id(params[:id])
+    @announcement = current_community.announcements.includes(:community).find_by_id(params[:id])
     if @announcement
       authorize!(:read, @announcement)
       current_community = Community.find_by_id(params[:community_id]) if params[:community_id]
@@ -58,7 +58,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     if @announcement.save
       set_last_posted_as((@announcement.charater_posted? ? @announcement.character_proxy : @announcement.user_profile))
       add_new_flash_message 'Announcement was successfully created.','success'
-    end 
+    end
     respond_with(@announcement)
   end
 

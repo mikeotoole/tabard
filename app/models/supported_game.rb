@@ -48,7 +48,7 @@ class SupportedGame < ActiveRecord::Base
   delegate :short_name, :to => :game, :prefix => true
   delegate :name, :to => :community, :prefix => true
   delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
-  
+
   delegate :faction, :to => :game, :allow_nil => true
   delegate :server_name, :to => :game, :allow_nil => true
   delegate :server_type, :to => :game, :allow_nil => true
@@ -88,7 +88,7 @@ class SupportedGame < ActiveRecord::Base
     end
   end
 
-  # Gets the user_profiles of 
+  # Gets the user_profiles of
   def member_profiles
     self.community.member_profiles_for_supported_game(self)
   end

@@ -28,10 +28,10 @@ DaBvRails::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
-  
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
@@ -48,4 +48,14 @@ DaBvRails::Application.configure do
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = false
+    Bullet.console = false
+    Bullet.growl = false
+    Bullet.xmpp = false
+    Bullet.rails_logger = true
+    Bullet.disable_browser_cache = true
+  end
 end

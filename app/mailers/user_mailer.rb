@@ -33,4 +33,11 @@ class UserMailer < ActionMailer::Base
        format.html { render "devise/mailer/reinstate_account_instructions" }
     end
   end
+
+  def password_changed(user_id)
+    @resource = User.find_by_id(user_id)
+    mail(:to => @resource.email, :subject => 'Crumblin - Password has been changed') do |format|
+       format.html { render "devise/mailer/password_changed" }
+    end
+  end
 end

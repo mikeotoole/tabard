@@ -70,7 +70,7 @@
               - if current_community.supported_games.any?
                 %ul
                   %li= link_to 'Community Announcements', community_announcements_url
-                  - current_community.supported_games.each do |supported_game|
+                  - current_community.supported_games.includes(:community, :game).each do |supported_game|
                     - if supported_game.persisted?
                       %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
           - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
@@ -94,7 +94,7 @@
                     %li.leave= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), :method => :delete, :confirm => "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
           - else
             %li{ :class => 'special signup' }
-              - if user_signed_in? 
+              - if user_signed_in?
                 - if current_community.can_receive_application_from? current_user
                   = link_to 'Apply Now', new_community_application_url
                 - elsif current_user.application_pending? current_community

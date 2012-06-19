@@ -58,6 +58,8 @@ GEM
       sass (>= 3.1)
     browser (0.1.3)
     builder (3.0.0)
+    bullet (4.0.0)
+      uniform_notifier (~> 1.0.0)
     cancan (1.6.7)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -303,6 +305,7 @@ GEM
     uglifier (1.2.3)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    uniform_notifier (1.0.2)
     warden (1.1.1)
       rack (>= 1.0)
     xpath (0.1.4)
@@ -316,6 +319,7 @@ DEPENDENCIES
   annotate
   asset_sync
   browser
+  bullet
   cancan
   capybara
   carrierwave
