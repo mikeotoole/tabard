@@ -34,9 +34,9 @@ describe Subdomains::RosterAssignmentsController do
 
   before(:each) do
     community.update_attribute(:is_public_roster, false)
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me"
   end
-  
+
   describe "GET 'index'" do
     it "should be success when authenticated as a non-member and a public roster" do
       community.update_attribute(:is_public_roster, true)
@@ -115,7 +115,7 @@ describe Subdomains::RosterAssignmentsController do
     end
   end
 
-  describe "DELETE 'destroy'" do 
+  describe "DELETE 'destroy'" do
     before(:each) do
       @roster_assignment = create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2)
     end
@@ -123,7 +123,7 @@ describe Subdomains::RosterAssignmentsController do
       sign_in admin_user
       delete 'destroy', :id => @roster_assignment
       RosterAssignment.exists?(@roster_assignment).should be_false
-      response.should redirect_to(my_roster_assignments_url)
+      response.should redirect_to(my_roster_assignments_url(subdomain: community.subdomain))
     end
     it "should be unauthorized when authenticated as a non-owner" do
       sign_in user
@@ -137,7 +137,7 @@ describe Subdomains::RosterAssignmentsController do
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
-  
+
   describe "PUT 'batch_destroy'" do
     it "should delete all roster assignments when authenticated as admin" do
       sign_in admin_user
@@ -159,51 +159,51 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_url)
+      response.should redirect_to(pending_roster_assignments_url(subdomain: community.subdomain))
     end
   end
-  
+
   describe "PUT 'approve' when authenticated as an owner" do
     it "should create an activity" do
       sign_in admin_user
       roster_assignment.update_attribute(:is_pending, true)
-      
+
       expect {
          put 'approve', :id => roster_assignment
       }.to change(Activity, :count).by(1)
-      
+
       activity = Activity.last
       activity.target_type.should eql "CharacterProxy"
       activity.action.should eql 'accepted'
     end
   end
-  
+
   describe "PUT 'batch_approve'" do
     before(:each) do
       roster_assignment.update_attribute(:is_pending, true)
       roster_assignment2.update_attribute(:is_pending, true)
     end
-    
+
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user
       put :batch_approve, :ids => roster_assignment_id_array
       RosterAssignment.find_by_id(roster_assignment).is_pending.should be_false
       RosterAssignment.find_by_id(roster_assignment2).is_pending.should be_false
     end
-    
+
     it "should be forbidden when authenticated as member" do
       sign_in billy
       put :batch_approve, :ids => roster_assignment_id_array
       response.should be_forbidden
     end
-    
-    it "should create multiple activities" do      
+
+    it "should create multiple activities" do
       sign_in admin_user
-      
+
       expect {
          put :batch_approve, :ids => roster_assignment_id_array
       }.to change(Activity, :count).by(2)
-      
+
       activity = Activity.last
       activity.target_type.should eql "CharacterProxy"
       activity.action.should eql 'accepted'
@@ -222,10 +222,10 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should redirect to pending path" do
-      response.should redirect_to(pending_roster_assignments_url)
+      response.should redirect_to(pending_roster_assignments_url(subdomain: community.subdomain))
     end
   end
-  
+
   describe "PUT 'batch_reject'" do
     before(:each) do
       roster_assignment.update_attribute(:is_pending, true)

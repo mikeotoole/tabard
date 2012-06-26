@@ -44,7 +44,6 @@ class Subdomains::EventsController < SubdomainsController
     if valid
       @date = DateTime.civil(@year, @month, 1).utc
       @events = current_community.events.intersects_with(@date, @date.end_of_month)
-      logger.debug @events.to_yaml
       @events_by_day = {}
       @events.each do |event|
         start = event.start_time < @date ? @date : event.start_time.to_datetime
@@ -81,7 +80,6 @@ class Subdomains::EventsController < SubdomainsController
             @events_by_cwday_by_hour[date.cwday][start.hour] << event
           end
         end
-        logger.debug @events_by_cwday_by_hour.to_yaml
       end
       render :week_index, :layout => 'calendar'
     else
@@ -111,7 +109,6 @@ class Subdomains::EventsController < SubdomainsController
     # TODO Mike, Need to be able to send one to many invites at creation.
     add_new_flash_message 'Event was successfully created.', 'success' if @event.save
     @event.invites.each do |invite|
-      puts invite.errors.to_yaml
     end
     respond_with(@event, :location => event_url(@event))
   end

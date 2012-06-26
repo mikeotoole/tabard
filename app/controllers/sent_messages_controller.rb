@@ -28,7 +28,6 @@ class SentMessagesController < MailboxController
     respond_to do |format|
       format.html { render :show }
       format.js {
-        logger.debug @message.to_yaml
         render :partial => 'messages/message', :locals => { :message => @message }
       }
     end
