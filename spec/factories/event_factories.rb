@@ -2,8 +2,8 @@ FactoryGirl.define do
   factory :event do
     sequence(:name) {|n| "Event #{n}"}
     body "Event Body"
-    start_time { 1.days.from_now }
-    end_time { 2.days.from_now }
+    start_time { 1.days.from_now.to_date }
+    end_time { 2.days.from_now.to_date }
     creator_id { DefaultObjects.community_admin.user_profile_id }
     community_id { DefaultObjects.community.id }
   end

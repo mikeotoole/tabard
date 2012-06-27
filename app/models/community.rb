@@ -54,7 +54,7 @@ class Community < ActiveRecord::Base
   has_many :comments
   has_many :page_spaces, :dependent => :destroy, :order => 'LOWER(name)'
   has_many :pages, :through => :page_spaces
-  has_many :activities, :dependent => :destroy
+  has_many :activities, :dependent => :destroy, inverse_of: :community
   has_many :events, :dependent => :destroy
   belongs_to :theme
   belongs_to :home_page, :class_name => "Page"

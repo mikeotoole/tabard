@@ -20,8 +20,8 @@ class Activity < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user_profile
-  belongs_to :community
+  belongs_to :user_profile, inverse_of: :activities
+  belongs_to :community, inverse_of: :activities
   belongs_to :target, :polymorphic => true
 
 ###
