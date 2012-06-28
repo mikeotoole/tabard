@@ -35,6 +35,9 @@ source 'http://rubygems.org'
 # Pagination
   gem 'kaminari' # MIT license
 
+# Memory Usage
+  gem 'oink'
+
 # Filtering
   gem 'profanalyzer'
 
@@ -81,6 +84,7 @@ source 'http://rubygems.org'
     gem 'rails_best_practices'
     gem 'haml-rails'
     gem 'bullet'
+    gem 'brakeman'
   end
 
 # Development and Test Specific Gems
