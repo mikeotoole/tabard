@@ -50,14 +50,14 @@ class Subdomains::CommunitiesController < SubdomainsController
       render :partial => "activities/activities", :locals => { :activities => @activities, :community => @community }
     end
   end
-  
+
   # This clears the action items for the community
   def clear_action_items
     @community.action_items = {}
     @community.save
     redirect_to subdomain_home_url
   end
-  
+
   # Removes confirmations
   def remove_confirmation
   end

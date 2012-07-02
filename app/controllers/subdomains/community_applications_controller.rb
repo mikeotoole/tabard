@@ -107,7 +107,7 @@ protected
 
   # This pitches to the new user.
   def pitch_to_new_user
-    redirect_to new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in? 
+    redirect_to new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in?
   end
 
   ###

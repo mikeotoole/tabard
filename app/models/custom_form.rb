@@ -129,7 +129,7 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _after_update_
   #

@@ -67,7 +67,7 @@ class Page < ActiveRecord::Base
     html = markdown.to_html
     Sanitize.clean(html, Sanitize::Config::CUSTOM).html_safe
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -75,7 +75,7 @@ protected
 
 ###
 # Callback Methods
-###  
+###
   ###
   # _after_update_
   #

@@ -58,7 +58,7 @@ namespace :seed do
       end
     end
   end
-  
+
   desc "Seeds content with max length values"
   task :max => :environment do
     @dont_run = true
@@ -75,43 +75,43 @@ namespace :seed do
     user_profile.save!
     max2 = create_user("Max2", "Length2", create_w_string(UserProfile::MAX_NAME_LENGTH))
     max3 = create_user("Max3", "Length3", create_w_string(UserProfile::MAX_NAME_LENGTH))
-    
+
     puts "Creating characters with max length attributes"
     create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    
+
     create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    
+
     create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
     create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    
+
     puts "Creating community with max length attributes"
     max_community = create_community("Length", create_w_string(Community::MAX_NAME_LENGTH), create_w_string(Community::MAX_SLOGAN_LENGTH), %w(Alliance Republic))
     max_community.pitch = create_w_string(Community::MAX_PITCH_LENGTH)
     max_community.save!
     max_community.update_attribute(:is_public_roster, false)
-    
+
     application = generate_application(max_community, "Length2")
     character_hash_map = find_character_mapping(max_community, application)
     application.accept_application(user_profile, character_hash_map)
     application = generate_application(max_community, "Length3")
     character_hash_map = find_character_mapping(max_community, application)
-    
+
     discussion_space = create_discussion_space("Length", max_community.name, create_w_string(DiscussionSpace::MAX_NAME_LENGTH), "Republic")
     discussion = create_discussion(max_community.name, discussion_space.name, create_w_string(Discussion::MAX_NAME_LENGTH), create_w_string(Discussion::MAX_BODY_LENGTH), "Length")
-    
+
     comment1 = create_comment(discussion, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
     comment1a = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
     comment1b = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
     comment1b2 = create_comment(comment1b, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
-    
+
     create_announcement(max_community.name,
                     create_w_string(Announcement::MAX_NAME_LENGTH),
                     create_w_string(Announcement::MAX_BODY_LENGTH),
@@ -122,43 +122,43 @@ namespace :seed do
                     create_w_string(Announcement::MAX_BODY_LENGTH),
                     'Length',
                     max_community.supported_games.find_by_game_type("Swtor"))
-                    
+
     page_space = create_page_space('Length', max_community.name, create_w_string(PageSpace::MAX_NAME_LENGTH), "Republic")
     create_page('Length', max_community.name, page_space.name, create_w_string(Page::MAX_NAME_LENGTH), create_w_string(300))
-    
+
     create_max_custom_form(max_community.name, true)
-    
+
     create_role(max_community.name, create_w_string(Role::MAX_NAME_LENGTH), %w(PageSpace), %w(Create), %w(Length2))
-    
+
     create_message('Length', create_w_string(Message::MAX_SUBJECT_LENGTH), %w(Length2), create_w_string(Message::MAX_BODY_LENGTH))
     create_message('Length2', create_w_string(Message::MAX_SUBJECT_LENGTH), %w(Length), create_w_string(Message::MAX_BODY_LENGTH))
   end
-  
+
   desc "Seeds content with max length values"
   task :update_themes => :environment do
     puts "Updating Cyborg: "
     success = Theme.find(2).update_attributes(name: "Cyborg", css: "cyborg", background_author: "Mac Rebisz", background_author_url: "http://maciejrebisz.com", thumbnail: "cyborg.jpg")
     puts success
     puts Theme.find(2).to_yaml
-    
+
     puts "Updating Metropolis: "
     Theme.find(3).update_attributes(name: "Metropolis", css: "metropolis", background_author: "Igor Vitkovskiy", background_author_url: "http://m3-f.deviantart.com", thumbnail: "metropolis.jpg")
     puts success
     puts Theme.find(3).to_yaml
-    
+
     puts "Updating Wasteland: "
     Theme.find(4).update_attributes(name: "Wasteland", css: "wasteland", background_author: "Craig Soulsby", background_author_url: "http://xblitzcraigx.deviantart.com", thumbnail: "wasteland.jpg")
     puts success
     puts Theme.find(4).to_yaml
-    
+
     puts "Updating Hailstone: "
     Theme.find(5).update_attributes(name: "Hailstone", css: "hailstone", background_author: "Mac Rebisz", background_author_url: "http://maciejrebisz.com", thumbnail: "hailstone.jpg")
     puts success
     puts Theme.find(5).to_yaml
   end
-  
+
   def create_w_string(length=1)
-    w_string = "" 
+    w_string = ""
     (1..length).each do
       w_string = w_string + "W"
     end

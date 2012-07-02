@@ -178,7 +178,7 @@ class Role < ActiveRecord::Base
 
   # This method sets up the default permissions if they are not defined.
   def setup_permission_defaults
-    return if self.permission_defaults.size > 0 
+    return if self.permission_defaults.size > 0
     if not self.persisted?
       self.permission_defaults.build(object_class: "CustomForm",
             permission_level: "View")
@@ -187,7 +187,7 @@ class Role < ActiveRecord::Base
             can_create_nested: true)
       self.permission_defaults.build(object_class: "PageSpace",
         permission_level: "View")
-    else 
+    else
       self.permission_defaults.create!(object_class: "CustomForm",
           permission_level: "View")
       self.permission_defaults.create!(object_class: "DiscussionSpace",

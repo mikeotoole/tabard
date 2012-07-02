@@ -16,7 +16,7 @@ class MessageAssociationObserver < ActiveRecord::Observer
       end
     end
   end
-  
+
   # This method is used to send the message. It is built to be used with delay.
   def self.send_message_email(message_association_id)
     MessageAssociationMailer.new_message(message_association_id).deliver

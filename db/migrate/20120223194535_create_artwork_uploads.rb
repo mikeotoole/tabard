@@ -13,15 +13,15 @@ class CreateArtworkUploads < ActiveRecord::Migration
       t.string :artwork_image
       t.string :artwork_description
       t.boolean :certify_owner_of_artwork
-      
+
       t.integer :document_id
 
       t.timestamps
     end
-    
+
     add_index :artwork_uploads, :document_id
   end
-  
+
   def self.down
     drop_table :artwork_uploads
   end

@@ -25,7 +25,7 @@ class Announcement < ActiveRecord::Base
 ###
   attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game, :supported_game_id, :comments_enabled
 
-  # This is a virtual attribute to determine if comments are enabled. 
+  # This is a virtual attribute to determine if comments are enabled.
   attr_accessor :comments_enabled
 
 ###
@@ -156,8 +156,8 @@ protected
   def character_is_valid_for_supported_game
     return unless self.character_proxy
     unless self.character_proxy.compatable_with_supported_game?(self.supported_game)
-      self.errors.add(:character_proxy_id, "this character is not compatable with the selected context") 
-      self.errors.add(:supported_game_id, "this context is not compatable with the selected character") 
+      self.errors.add(:character_proxy_id, "this character is not compatable with the selected context")
+      self.errors.add(:supported_game_id, "this context is not compatable with the selected character")
     end
   end
 

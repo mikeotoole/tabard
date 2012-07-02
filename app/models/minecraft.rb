@@ -42,7 +42,7 @@ class Minecraft < Game
     minecraft = Minecraft.find_by_server_type(server_type).first
     return minecraft
   end
-  
+
   # Gets all minecraft characters
   def self.minecraft_characters
     MinecraftCharacters.all
@@ -55,7 +55,7 @@ class Minecraft < Game
   def all_server_types
     self.class.all_server_types
   end
-  
+
   # gets all minecraft characters
   def minecraft_characters
     self.class.minecraft_characters
@@ -70,12 +70,12 @@ class Minecraft < Game
   def short_name
     "Minecraft"
   end
-  
+
   # Gets the server name
   def server_name
     nil
   end
-  
+
   # Gets the faction
   def faction
     nil

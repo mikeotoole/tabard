@@ -10,10 +10,10 @@ class Acknowledgement < ActiveRecord::Base
 
 ###
 # Associations
-###  
+###
   belongs_to :community_profile
   belongs_to :announcement
-  
+
 ###
 # Delegates
 ###

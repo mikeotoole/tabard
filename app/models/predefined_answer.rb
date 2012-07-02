@@ -42,7 +42,7 @@ class PredefinedAnswer < ActiveRecord::Base
         if only_once and pa != self and not pa.persisted?
           only_once = false
         else
-          self.errors.add(:body, "is too similar to another predefined answer.") 
+          self.errors.add(:body, "is too similar to another predefined answer.")
           return false
         end
       end
