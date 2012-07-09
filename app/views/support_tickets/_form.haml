@@ -1,0 +1,4 @@
+= simple_form_for support_ticket, :html => {:novalidate => true} do |f|
+  = render 'fields', :f => f, :support_ticket => support_ticket
+  %p.submit
+    = f.button :submit, 'Create Support Ticket'

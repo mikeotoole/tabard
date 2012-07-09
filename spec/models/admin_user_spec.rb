@@ -18,6 +18,8 @@
 #  failed_attempts        :integer         default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
+#  display_name           :string(255)
+#  avatar                 :string(255)
 #
 
 require 'spec_helper'

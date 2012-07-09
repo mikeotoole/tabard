@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120319160929) do
+ActiveRecord::Schema.define(:version => 20120709170310) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20120319160929) do
     t.integer  "failed_attempts",                       :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "display_name"
+    t.string   "avatar"
   end
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
@@ -541,6 +543,15 @@ ActiveRecord::Schema.define(:version => 20120319160929) do
 
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
   add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
+
+  create_table "support_tickets", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "admin_user_id"
+    t.string   "status"
+    t.text     "body"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"

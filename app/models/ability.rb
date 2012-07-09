@@ -190,6 +190,10 @@ class Ability
       user_profile.id == user.user_profile_id
     end
 
+    can :manage, SupportTicket do |support_ticket|
+      support_ticket.user_profile_id = user.user_profile_id
+    end
+
     # Supported Game Rules
     can [:read], SupportedGame do |supported_game|
       user.user_profile.is_member?(supported_game.community)

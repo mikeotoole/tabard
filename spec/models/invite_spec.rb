@@ -10,7 +10,7 @@
 #  is_viewed          :boolean         default(FALSE)
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
-#  expiration         :time
+#  expiration         :datetime
 #
 
 require 'spec_helper'

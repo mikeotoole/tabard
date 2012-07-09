@@ -15,7 +15,13 @@ class AdminUser < ActiveRecord::Base
          :recoverable, :trackable, :validatable, :lockable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :role
+  attr_accessible :email, :password, :password_confirmation, :role, :display_name,
+                  :avatar, :remove_avatar, :remote_avatar_url
+
+###
+# Associations
+###
+  has_many :support_tickets, :inverse_of => :admin_user
 
 ###
 # Validators
@@ -38,6 +44,10 @@ class AdminUser < ActiveRecord::Base
         :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       :if => :password_required?
+###
+# Uploaders
+###
+  mount_uploader :avatar, AvatarUploader
 
 ###
 # Public Methods
@@ -93,6 +103,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: admin_users
@@ -113,5 +124,7 @@ end
 #  failed_attempts        :integer         default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
+#  display_name           :string(255)
+#  avatar                 :string(255)
 #
 
