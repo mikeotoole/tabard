@@ -33,6 +33,7 @@ class SupportTicket < ActiveRecord::Base
 
   delegate :display_name, :to => :admin_user, :prefix => true
   delegate :avatar, :to => :admin_user, :prefix => true
+  delegate :email, :to => :admin_user, :prefix => true
 
 ###
 # Validators

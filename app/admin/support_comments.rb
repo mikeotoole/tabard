@@ -13,9 +13,9 @@ ActiveAdmin.register SupportComment do
 
   controller do
     def create
-      @support_ticket = current_admin_user.support_tickets.find_by_id(params[:support_ticket_id])
+      @support_ticket = SupportTicket.find_by_id(params[:support_ticket_id])
       @support_comment = (@support_ticket.blank? ? nil : @support_ticket.support_comments.new(params[:support_comment]))
-      @support_comment.admin_user = current_admin_user
+      @support_comment.admin_user = current_admin_user unless @support_comment.blank?
       if @support_comment.save
         redirect_to [:admin, @support_ticket]
       else

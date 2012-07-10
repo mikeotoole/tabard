@@ -56,6 +56,7 @@ ActiveAdmin.register AdminUser do
     column "View" do |admin_user|
       link_to "View", admin_admin_user_path(admin_user)
     end
+    column :display_name
     column :email
     column :role
     column :current_sign_in_at
@@ -77,6 +78,7 @@ ActiveAdmin.register AdminUser do
 
   form do |f|
     f.inputs "Admin Details" do
+      f.input :display_name, :hint => "This is what end users will see you as."
       f.input :email
       f.input :role, :as => :select, :collection => AdminUser::ROLES
     end

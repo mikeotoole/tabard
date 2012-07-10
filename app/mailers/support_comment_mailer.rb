@@ -17,7 +17,7 @@ class SupportCommentMailer < ActionMailer::Base
       @user_profile = @support_comment.user_profile
       @support_ticket = @support_comment.support_ticket
       @url = admin_support_ticket_url(@support_ticket)
-      mail(:to => "support@crumblin.com", :subject => "Crumblin - New Support Comment") do |format|
+      mail(:to => @support_comment.support_ticket_admin_user_email, :subject => "Crumblin - New Support Comment") do |format|
          format.html { render "mailers/new_support_comment" }
       end
     end

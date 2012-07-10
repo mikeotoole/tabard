@@ -22,10 +22,12 @@ class SupportComment < ActiveRecord::Base
 # Delegates
 ###
   delegate :user_profile_id, :to => :support_ticket, :prefix => true
-
   delegate :admin_user_display_name, :to => :support_ticket, :prefix => true
-
+  delegate :admin_user_email, :to => :support_ticket, :prefix => true
   delegate :id, :to => :support_ticket, :prefix => true
+
+  delegate :display_name, :to => :admin_user, :prefix => true
+  delegate :email, :to => :admin_user, :prefix => true
 
 ###
 # Validators

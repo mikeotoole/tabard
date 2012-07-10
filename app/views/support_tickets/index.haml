@@ -14,12 +14,12 @@
     %h3 Pending Review
     %ul
       -current_user.pending_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
     %h3 In Progress
     %ul
       -current_user.in_progress_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
     %h3 Closed
     %ul
       -current_user.closed_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
