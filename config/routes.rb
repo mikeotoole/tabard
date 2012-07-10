@@ -84,7 +84,9 @@ DaBvRails::Application.routes.draw do
   get 'mail/trash' => "mailbox#trash", :as => "trash"
 
   # Support Tickets
-  resources :support_tickets, :path => :support, :as => :support
+  resources :support_tickets, :path => :support, :as => :support do
+    resources :support_comments, :path => :comment, :as => :comment, only: [:new, :create]
+  end
 
   # Subdomains
   constraints(Subdomain) do

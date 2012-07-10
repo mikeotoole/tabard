@@ -22,6 +22,7 @@ class AdminUser < ActiveRecord::Base
 # Associations
 ###
   has_many :support_tickets, :inverse_of => :admin_user
+  has_many :support_comments, :inverse_of => :admin_user
 
 ###
 # Validators

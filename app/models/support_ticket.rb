@@ -1,9 +1,11 @@
+###
+# Author::    DigitalAugment Inc. (mailto:code@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This is the support ticket class.
+###
 class SupportTicket < ActiveRecord::Base
-  # Statuses
-  # Pending Review
-  #
-  # Closed
-
   # Array of valid roles.
   STATUSES = %w[Pending\ Review In\ Progress Closed]
 
@@ -19,13 +21,15 @@ class SupportTicket < ActiveRecord::Base
 # Associations
 ###
   belongs_to :admin_user, :inverse_of => :support_tickets
-
   belongs_to :user_profile, :inverse_of => :support_tickets
+  has_many :support_comments, :inverse_of => :support_ticket
+
 
 ###
 # Delegates
 ###
   delegate :full_name, :to => :user_profile, :prefix => true
+  delegate :id, :to => :user_profile, :prefix => true
 
   delegate :display_name, :to => :admin_user, :prefix => true
   delegate :avatar, :to => :admin_user, :prefix => true

@@ -2,17 +2,32 @@
 
 #body
   %h1= "Support Ticket ##{@support_ticket.id}"
-  %p= link_to "Support Home", support_index_url(subdomain: false)
+  %span= link_to "Support Home", support_index_url(subdomain: false)
+  %hr
   #admin_user
-    %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
-    -if @support_ticket.admin_user_avatar.blank?
-      %p Mystery Man!
+    -if @support_ticket.admin_user.blank?
+      %p Someone from the crumblin staff will be working on you issue soon.
     -else
-      = image_tag(@support_ticket.admin_user_avatar_url(:small))
+      %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
+      -if @support_ticket.admin_user_avatar.blank?
+        %p Mystery Man!
+      -else
+        = image_tag(@support_ticket.admin_user_avatar_url(:small))
   #support_ticket
     %p= "Current Status: #{@support_ticket.status}"
     %p= @support_ticket.body
+  %hr
   #support_comments
-    %p OMG COMMENtS
+    %h2 Comments
+    -if @support_ticket.support_comments.any?
+      %ol
+        -@support_ticket.support_comments.each do |comment|
+          %li=comment.to_yaml
+    - else
+      %p No comments yet
+
+    %h2 Add a new commnet!
+    = render 'support_comments/form', support_comment: SupportComment.new, support_ticket: @support_ticket
+
 
 

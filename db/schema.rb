@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120709170310) do
+ActiveRecord::Schema.define(:version => 20120710173951) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -544,6 +544,19 @@ ActiveRecord::Schema.define(:version => 20120709170310) do
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
   add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
 
+  create_table "support_comments", :force => true do |t|
+    t.integer  "support_ticket_id"
+    t.integer  "user_profile_id"
+    t.integer  "admin_user_id"
+    t.text     "body"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "support_comments", ["admin_user_id"], :name => "index_support_comments_on_admin_user_id"
+  add_index "support_comments", ["support_ticket_id"], :name => "index_support_comments_on_support_ticket_id"
+  add_index "support_comments", ["user_profile_id"], :name => "index_support_comments_on_user_profile_id"
+
   create_table "support_tickets", :force => true do |t|
     t.integer  "user_profile_id"
     t.integer  "admin_user_id"
@@ -552,6 +565,9 @@ ActiveRecord::Schema.define(:version => 20120709170310) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "support_tickets", ["admin_user_id"], :name => "index_support_tickets_on_admin_user_id"
+  add_index "support_tickets", ["user_profile_id"], :name => "index_support_tickets_on_user_profile_id"
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"

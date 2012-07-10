@@ -66,6 +66,8 @@ class UserProfile < ActiveRecord::Base
   has_many :in_progress_support_tickets, :class_name => "SupportTicket", :conditions => {:status => "In Progress"}
   has_many :closed_support_tickets, :class_name => "SupportTicket", :conditions => {:status => "Closed"}
 
+  has_many :support_comments, :inverse_of => :user_profile
+
 ###
 # Delegates
 ###

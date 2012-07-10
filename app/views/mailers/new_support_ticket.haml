@@ -1,0 +1,9 @@
+%p
+  %strong Hello from #{@user_profile.full_name},
+%p
+  I am having the following support issue:
+%p
+  #{@support_ticket.body}
+%hr
+%p Help this user out by clicking the link below:
+%p= link_to 'View Support Ticket', @url, :style => 'color: #BE4124'
