@@ -80,6 +80,7 @@ ActiveAdmin.register AdminUser do
     f.inputs "Admin Details" do
       f.input :display_name, :hint => "This is what end users will see you as."
       f.input :email
+      f.input :avatar, :as => :file
       f.input :role, :as => :select, :collection => AdminUser::ROLES
     end
     f.buttons

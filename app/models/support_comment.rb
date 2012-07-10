@@ -40,6 +40,13 @@ class SupportComment < ActiveRecord::Base
   def only_admin_or_user
     self.errors.add(:base, "Only a user_profile or admin_user may be associated, not both") unless self.admin_user_id.blank? or self.user_profile_id.blank?
   end
+
+  def admin_created?
+    return not self.admin_user.blank?
+  end
+  def user_created?
+    return not self.user_profile.blank?
+  end
 end
 
 # == Schema Information

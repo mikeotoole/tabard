@@ -32,7 +32,6 @@ class SupportTicket < ActiveRecord::Base
   delegate :id, :to => :user_profile, :prefix => true
 
   delegate :display_name, :to => :admin_user, :prefix => true
-  delegate :avatar, :to => :admin_user, :prefix => true
   delegate :email, :to => :admin_user, :prefix => true
 
 ###

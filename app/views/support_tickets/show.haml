@@ -9,10 +9,10 @@
       %p Someone from the crumblin staff will be working on you issue soon.
     -else
       %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
-      -if @support_ticket.admin_user_avatar.blank?
+      -if @support_ticket.admin_user.avatar.blank?
         %p Mystery Man!
       -else
-        = image_tag(@support_ticket.admin_user_avatar_url(:small))
+        = image_tag(@support_ticket.admin_user.avatar_url(:small))
   #support_ticket
     %p= "Current Status: #{@support_ticket.status}"
     %p= @support_ticket.body
