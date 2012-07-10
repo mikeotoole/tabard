@@ -23,6 +23,14 @@ class SupportTicket < ActiveRecord::Base
   belongs_to :user_profile, :inverse_of => :support_tickets
 
 ###
+# Delegates
+###
+  delegate :full_name, :to => :user_profile, :prefix => true
+
+  delegate :display_name, :to => :admin_user, :prefix => true
+  delegate :avatar, :to => :admin_user, :prefix => true
+
+###
 # Validators
 ###
   validates :user_profile, :presence => true

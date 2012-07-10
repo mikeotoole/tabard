@@ -12,11 +12,14 @@
     %hr
     %h2 Your Support Tickets
     %h3 Pending Review
-    %p
-      =current_user.pending_support_tickets.to_yaml
+    %ul
+      -current_user.pending_support_tickets.each do |ticket|
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket
     %h3 In Progress
-    %p
-      =current_user.in_progress_support_tickets.to_yaml
+    %ul
+      -current_user.in_progress_support_tickets.each do |ticket|
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket
     %h3 Closed
-    %p
-      =current_user.closed_support_tickets.to_yaml
+    %ul
+      -current_user.closed_support_tickets.each do |ticket|
+        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", ticket

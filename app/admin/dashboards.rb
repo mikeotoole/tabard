@@ -21,6 +21,15 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
+  section "Support Tickets", :priority => 1 do
+    strong "Unassigned Tickets"
+    ul do
+      SupportTicket.where{admin_user_id.eq nil}.includes(:user_profile).each do |ticket|
+        li link_to "#{ticket.user_profile_full_name} - #{truncate(ticket.body)}", "#"
+      end
+    end
+  end
+
   section "Recent Signed In Admin Users" do
     if can?(:read, AdminUser)
       ul do
@@ -63,7 +72,7 @@ ActiveAdmin::Dashboards.build do
   section "New Users", :priority => 2 do
     if can?(:read, User)
       ul do
-        User.order("created_at desc").limit(5).collect do |user|
+        User.order("created_at desc").includes(:user_profile).limit(5).collect do |user|
           li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
         end
       end

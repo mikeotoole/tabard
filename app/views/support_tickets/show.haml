@@ -1,0 +1,18 @@
+- title "Support Ticket ##{@support_ticket.id}"
+
+#body
+  %h1= "Support Ticket ##{@support_ticket.id}"
+  %p= link_to "Support Home", support_index_url(subdomain: false)
+  #admin_user
+    %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
+    -if @support_ticket.admin_user_avatar.blank?
+      %p Mystery Man!
+    -else
+      = image_tag(@support_ticket.admin_user_avatar_url(:small))
+  #support_ticket
+    %p= "Current Status: #{@support_ticket.status}"
+    %p= @support_ticket.body
+  #support_comments
+    %p OMG COMMENtS
+
+
