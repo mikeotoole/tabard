@@ -42,10 +42,10 @@ class SupportComment < ActiveRecord::Base
   end
 
   def admin_created?
-    return not self.admin_user.blank?
+    return (not self.admin_user.blank?)
   end
   def user_created?
-    return not self.user_profile.blank?
+    return (not self.user_profile.blank?)
   end
 end
 
