@@ -34,6 +34,7 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  # Notifies the user that their password has changed.
   def password_changed(user_id)
     @resource = User.find_by_id(user_id)
     mail(:to => @resource.email, :subject => 'Crumblin - Password has been changed') do |format|

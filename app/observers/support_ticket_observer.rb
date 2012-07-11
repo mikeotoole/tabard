@@ -14,6 +14,7 @@ class SupportTicketObserver < ActiveRecord::Observer
     end
   end
 
+  # Sends the email
   def self.send_support_email(support_ticket_id)
     SupportTicketMailer.new_support_ticket(support_ticket_id).deliver
   end

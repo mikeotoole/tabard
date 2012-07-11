@@ -13,24 +13,30 @@ class SupportTicketsController < ApplicationController
 ###
 # REST Actions
 ###
+  # Index
   def index
   end
 
+  # Show
   def show
   end
 
+  # New
   def new
   end
 
+  # Create
   def create
     @support_ticket.status = SupportTicket::DEFAULT_STATUS
     add_new_flash_message "Your ticket has been created. Someone will get started on this issue soon.", 'success' if @support_ticket.save
     respond_with @support_ticket, :location => support_index_url
   end
 
+  # Edit
   def edit
   end
 
+  # Update
   def update
   end
 

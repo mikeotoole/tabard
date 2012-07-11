@@ -37,13 +37,16 @@ class SupportComment < ActiveRecord::Base
   validates :admin_user, :presence => true, :if => "user_profile_id.blank?"
   validates :body, :presence => true
 
+  # This method validates that only an admin or an user is the creater, not both.
   def only_admin_or_user
     self.errors.add(:base, "Only a user_profile or admin_user may be associated, not both") unless self.admin_user_id.blank? or self.user_profile_id.blank?
   end
 
+  # Returns true if an admin created this.
   def admin_created?
     return (not self.admin_user.blank?)
   end
+  # Returns true if an user created this.
   def user_created?
     return (not self.user_profile.blank?)
   end

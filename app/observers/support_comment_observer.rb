@@ -22,6 +22,7 @@ class SupportCommentObserver < ActiveRecord::Observer
     end
   end
 
+  # Sends the support email
   def self.send_support_email(support_comment_id)
     SupportCommentMailer.new_support_comment(support_comment_id).deliver
   end

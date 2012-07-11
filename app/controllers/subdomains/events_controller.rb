@@ -196,6 +196,7 @@ protected
     @event.creator = current_user.user_profile
   end
 
+  # This adds a little flash notice to reminde the user to RSVP.
   def rsvp_flash
     default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.brutalvenom.com" : "#{current_community.subdomain}.lvh.me"
     invite = current_user.invites.find_by_event_id(@event.id)

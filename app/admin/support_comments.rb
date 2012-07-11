@@ -12,6 +12,7 @@ ActiveAdmin.register SupportComment do
   actions :new, :create
 
   controller do
+    # This overrides the default create
     def create
       @support_ticket = SupportTicket.find_by_id(params[:support_ticket_id])
       @support_comment = (@support_ticket.blank? ? nil : @support_ticket.support_comments.new(params[:support_comment]))
