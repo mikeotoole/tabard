@@ -38,8 +38,24 @@ ActiveAdmin.register SupportTicket do
     div do
       if ticket.support_comments.any?
         ol do
-          ticket.support_comments.each do |comment|
-            li comment.to_yaml
+          ticket.support_comments.includes(:admin_user, :user_profile).each do |comment|
+            if comment.admin_created?
+              li do
+                blockquote do
+                  div comment.admin_user_display_name
+                  div image_tag(comment.admin_user.avatar_url(:small))
+                end
+                div comment.body
+              end
+            else
+              li do
+                blockquote do
+                  div comment.user_profile_full_name
+                  div image_tag(comment.user_profile.avatar_url(:small))
+                end
+                div comment.body
+              end
+            end
           end
         end
       else

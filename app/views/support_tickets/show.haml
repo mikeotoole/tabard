@@ -9,10 +9,7 @@
       %p Someone from the crumblin staff will be working on you issue soon.
     -else
       %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
-      -if @support_ticket.admin_user.avatar.blank?
-        %p Mystery Man!
-      -else
-        = image_tag(@support_ticket.admin_user.avatar_url(:small))
+      = image_tag(@support_ticket.admin_user.avatar_url(:small))
   #support_ticket
     %p= "Current Status: #{@support_ticket.status}"
     %p= @support_ticket.body
@@ -21,8 +18,22 @@
     %h2 Comments
     -if @support_ticket.support_comments.any?
       %ol
-        -@support_ticket.support_comments.each do |comment|
-          %li=comment.to_yaml
+        -@support_ticket.support_comments.includes(:admin_user).each do |comment|
+          -if comment.admin_created?
+            %li.comment.admin{ id: "comment_#{comment.id}" }
+              %blockquote
+                .avatar
+                  =comment.admin_user_display_name
+                  = image_tag(comment.admin_user.avatar_url(:small))
+              =comment.body
+          -else
+            %li.comment.user{ id: "comment_#{comment.id}" }
+              %blockquote
+                .avatar
+                  =comment.user_profile_full_name
+                  = image_tag(comment.user_profile.avatar_url(:small))
+              =comment.body
+
     - else
       %p No comments yet
 

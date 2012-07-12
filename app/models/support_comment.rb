@@ -29,6 +29,8 @@ class SupportComment < ActiveRecord::Base
   delegate :display_name, :to => :admin_user, :prefix => true
   delegate :email, :to => :admin_user, :prefix => true
 
+  delegate :full_name, :to => :user_profile, :prefix => true
+
 ###
 # Validators
 ###
