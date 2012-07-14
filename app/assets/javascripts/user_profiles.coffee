@@ -2,9 +2,9 @@ $(document).ready ->
 
   $('#tabs')
     .on 'ajax:before', 'dt > a', ->
-      $(this).closest('dt').find('+ dd').html ''
+      $(@).closest('dt').find('+ dd').html ''
     .on 'ajax:error', 'dt.announcements + dd form', (xhr, status, error) ->
-      $.alert { body: 'Unable to mark announcements as read.' }
+      $.alert body: 'Unable to mark announcements as read.'
     .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
   

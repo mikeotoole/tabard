@@ -80,7 +80,7 @@ root = exports ? this
       .css({ opacity: 0, marginLeft: -500 })
       .animate({ opacity: 1, marginLeft: -250 }, 200)
     $('#prompt').focus ->
-      $(this).select()
+      $(@).select()
     $('#modal button.cancel').click dismiss if !require
     $('#modal button.affirm').click ->
       action($('#modal #prompt').val())
@@ -92,13 +92,13 @@ root = exports ? this
 # sets up select box improved functionality
 root.initSelects = ->
   $('body').delegate '.select', 'mouseenter mouseleave', ->
-    $(this).scrollTop(0)
-    $(this).find('ul').scrollTop(0)
+    $(@).scrollTop(0)
+    $(@).find('ul').scrollTop(0)
   $('.select, .select ul').scroll ->
-    $(this).scrollLeft(0)
+    $(@).scrollLeft(0)
   $('body').delegate '.select ul label, form .profile label', 'click', ->
-    select = $(this).closest('.select')
-    ul = $(this).closest('ul')
+    select = $(@).closest('.select')
+    ul = $(@).closest('ul')
     ul.animate { opacity: 0 }, 200, ->
       ul
         .hide()
@@ -114,40 +114,39 @@ $(document).ready ->
   
   # dynamic loaded content after page load
   $('body')
-    .delegate '.dynload', 'ajax:before', ->
-      $($(this).attr('data-target')).addClass('busy')      
-    .delegate '.dynload', 'ajax:error', (xhr, status, error) ->
-      errormsg = $(this).attr 'data-error'
-      $.alert { body: errormsg } if errormsg
-    .delegate '.dynload', 'ajax:success', (event, data, status, xhr) ->
-      $($(this).attr('data-target'))
+    .on 'ajax:before', '.dynload', ->
+      $($(@).attr('data-target')).addClass('busy')      
+    #.on 'ajax:error', '.dynload', (xhr, status, error) ->
+    #  $.alert body: $(@).attr('data-error') if errormsg
+    .on 'ajax:success', '.dynload', (event, data, status, xhr) ->
+      $($(@).attr('data-target'))
         .removeClass('busy')
         .html(xhr.responseText)
   $('.dynload:not(.wait)').trigger 'click'
   
   # replace derp avatars with default
   $('.avatar img, img.avatar').bind 'error', ->
-    if $(this).css('width')
-      width = $(this).css('width').replace /[^\d]/g, ''
+    if $(@).css('width')
+      width = $(@).css('width').replace /[^\d]/g, ''
     else
-      width = $(this).closest('.avatar').width()
-    src = $(this).attr('src')
+      width = $(@).closest('.avatar').width()
+    src = $(@).attr('src')
     avatar = '/assets/application/avatar@'+width+'.png'
-    $(this)
+    $(@)
       .attr('src', avatar)
       .unbind 'error'
   
   # text box suggest
   $('form input').each ->
-    $(this).data 'default', $(this).attr 'title'
-    $(this).removeAttr 'title'
-    $(this).focus ->
-      if $.trim($(this).attr 'value') is $(this).data('default')
-        $(this).val ''
-    $(this).blur ->
-      if $.trim($(this).attr 'value') is ''
-        $(this).val $(this).data 'default'
-    $(this).trigger 'blur'
+    $(@).data 'default', $(@).attr 'title'
+    $(@).removeAttr 'title'
+    $(@).focus ->
+      if $.trim($(@).attr 'value') is $(@).data('default')
+        $(@).val ''
+    $(@).blur ->
+      if $.trim($(@).attr 'value') is ''
+        $(@).val $(@).data 'default'
+    $(@).trigger 'blur'
   
   # override rails allow action (for data-confirm)
   $.rails.allowAction = (element) ->
@@ -168,11 +167,11 @@ $(document).ready ->
   # batch actions
   $('form .batch button, form button.batch')
     .click ->    
-      $(this)
+      $(@)
         .closest('form')
-        .prop({ action: $(this).attr('action') })
+        .prop({ action: $(@).attr('action') })
         .find('input[name="_method"]')
-        .val $(this).attr('method')
+        .val $(@).attr('method')
   
   # flash messages
   adjustHeaderByFlash = (speed,rowOffset=0) ->
@@ -189,50 +188,50 @@ $(document).ready ->
 
   $('body')
     .delegate '#flash li', 'init', ->
-      $(this).append('<a class="dismiss">✕</a>')
-      $(this)
+      $(@).append('<a class="dismiss">✕</a>')
+      $(@)
         .css({ height: 0, lineHeight: 0 })
         .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
       
-      $(this).find('.dismiss')
+      $(@).find('.dismiss')
         .click ->
           adjustHeaderByFlash(300,-1)
-          $(this)
+          $(@)
             .closest('li')
             .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-              $(this).remove()
+              $(@).remove()
               
-      $(this).find('.read')
+      $(@).find('.read')
         .bind 'ajax:beforeSend', ->
-          $(this).closest('li').addClass('busy')
+          $(@).closest('li').addClass('busy')
         .bind 'ajax:error', (xhr, status, error) ->
-          row = $(this).closest('li')
+          row = $(@).closest('li')
           $.alert
             body: error
             action: ->
               row.removeClass('busy')
         .bind 'ajax:success', (event, data, status, xhr) ->
           $('#bar .notice a').each ->
-            num = $(this).attr('meta') - 1
+            num = $(@).attr('meta') - 1
             if num > 0
-              $(this).attr 'meta', num
+              $(@).attr 'meta', num
             else
-              $(this).removeAttr 'meta'
+              $(@).removeAttr 'meta'
           adjustHeaderByFlash(300,-1)
-          $(this)
+          $(@)
             .closest('li')
             .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
               if xhr.responseText
                 $('#flash').prepend xhr.responseText
                 $('#flash li:first').trigger 'init'
               setTimeout adjustHeaderByFlash, 50
-              $(this).remove()
+              $(@).remove()
   $('#flash li').trigger 'init'
   
   # tiered form field selection
   $('form .select[affects] input')
     .change ->
-      select = $(this).closest('.select')
+      select = $(@).closest('.select')
       li = select.closest('li')
       affects_collection = select.attr('affects')
       form = select.closest('form')
@@ -256,7 +255,7 @@ $(document).ready ->
           .show()
           .find('input')
           .each ->
-            $(this)
+            $(@)
               .prop('disabled', false)
               .prop('readonly', false)
         if affected.find('.select[affects]:visible').length
@@ -265,12 +264,12 @@ $(document).ready ->
   
   # tabs
   $('dl.tabs >dt').click ->
-    $(this).closest('dl.tabs').find('>dt').removeClass('current')
-    $(this).addClass('current')
+    $(@).closest('dl.tabs').find('>dt').removeClass('current')
+    $(@).addClass('current')
   if window.location.hash
     $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
   $('a[href*="#"]').click ->
-    link = $(this).attr('href').split('#').pop()
+    link = $(@).attr('href').split('#').pop()
     tab = $('dl.tabs >dt.'+link)
     if(tab.length)
       tab.trigger 'click'
@@ -279,20 +278,20 @@ $(document).ready ->
   # slider input fields
   $('body')
     .delegate '.slider', 'init', ->
-      $(this).css('width', $(this).find('label').length * 70)
+      $(@).css('width', $(@).find('label').length * 70)
   $('.slider').trigger 'init'
   
   # inputs that affect the hidden _destroy field
   $('input[toggle_destroy="true"]').change ->
-    $(this).prevAll('input[name*="_destroy"]:first').attr('checked', !$(this).prop('checked'))
+    $(@).prevAll('input[name*="_destroy"]:first').attr('checked', !$(@).prop('checked'))
   
   # fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
     .filter('[title]')
     .each ->
-      $(this)
-        .attr('meta',$(this).attr('title'))
+      $(@)
+        .attr('meta',$(@).attr('title'))
         .removeAttr 'title'
             
   adjustHeaderByFlash(600)
@@ -300,8 +299,8 @@ $(document).ready ->
   # Global checkbox
   $('body')
     .delegate 'thead th.check:not(:has(a))', 'init', ->
-      rowChecks = $(this).closest('table').find('tbody td.check input')
-      $(this)
+      rowChecks = $(@).closest('table').find('tbody td.check input')
+      $(@)
         .append('<a>✔</a>')
         .find('a')
         .click ->

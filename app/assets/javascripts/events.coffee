@@ -1,5 +1,3 @@
-//= require jquery.ui.datepicker
-
 $(document).ready ->
 
   # Date Picker
