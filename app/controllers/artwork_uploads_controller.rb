@@ -10,7 +10,7 @@ class ArtworkUploadsController < InheritedResources::Base
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, :except => [:new, :create]
+  before_filter :block_unauthorized_user!, except: [:new, :create]
   load_and_authorize_resource
 
 ###

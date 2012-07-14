@@ -1,5 +1,5 @@
 ActiveAdmin.register UserProfile do
-  menu :parent => "User", :priority => 2, :if => proc{ can?(:read, UserProfile) }
+  menu parent: "User", priority: 2, if: proc{ can?(:read, UserProfile) }
   controller.authorize_resource
 
   actions :index, :show
@@ -10,7 +10,7 @@ ActiveAdmin.register UserProfile do
   filter :last_name
   filter :avatar
   filter :description
-  filter :publicly_viewable, :as => :select
+  filter :publicly_viewable, as: :select
   filter :created_at
   filter :updated_at
 
@@ -27,7 +27,7 @@ ActiveAdmin.register UserProfile do
     column :created_at
   end
 
-  show :title => :name do
+  show title: :name do
     attributes_table *default_attribute_table_rows
 
     div do
@@ -54,7 +54,7 @@ ActiveAdmin.register UserProfile do
             link_to comment.commentable_body, [:admin, comment.commentable]
           end
           column "Destroy" do |comment|
-            link_to "Destroy", remove_comment_admin_discussion_path(comment), :method => :put, :confirm => 'Are you sure you want to delete this comment?'
+            link_to "Destroy", remove_comment_admin_discussion_path(comment), method: :put, confirm: 'Are you sure you want to delete this comment?'
           end
         end
       end

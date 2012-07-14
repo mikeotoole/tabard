@@ -11,19 +11,19 @@
 #actions.actions
   - if @discussion.is_locked
     - if can? :unlock, @discussion
-      = link_to 'Unlock', unlock_discussion_url(@discussion), :method => :post, :meta => 'Unlock discussion', :class => 'unlock'
+      = link_to 'Unlock', unlock_discussion_url(@discussion), method: :post, meta: 'Unlock discussion', class: 'unlock'
   - else
     - if can? :lock, @discussion
-      = link_to 'Lock', lock_discussion_url(@discussion), :method => :post, :meta => 'Lock discussion', :class => 'lock'
+      = link_to 'Lock', lock_discussion_url(@discussion), method: :post, meta: 'Lock discussion', class: 'lock'
     - if can? :update, @discussion
-      = link_to 'Edit', edit_discussion_path(@discussion), :meta => 'Edit discussion', :class => 'edit'
+      = link_to 'Edit', edit_discussion_path(@discussion), meta: 'Edit discussion', class: 'edit'
     - if can? :destroy, @discussion
-      = link_to 'Destroy', @discussion, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion', :class => 'delete'
+      = link_to 'Destroy', @discussion, confirm: 'Are you sure?', method: :delete, meta: 'Remove discussion', class: 'delete'
 
 %article.discussion
   %h1= shorten_words @discussion.name, 21
   .meta
-    = image_tag (@discussion.poster_avatar_url :small), :class => 'avatar'
+    = image_tag (@discussion.poster_avatar_url :small), class: 'avatar'
     = @discussion.has_been_edited ? 'Edited by' : 'Created by'
     %strong
       = link_to shorten_words(@discussion.user_profile_name), @discussion.user_profile
@@ -38,9 +38,9 @@
       = paginate @comments
       %ol
         - @comments.each do |comment|
-          = render "subdomains/comments/comment", :comment => comment
+          = render "subdomains/comments/comment", comment: comment
       = paginate @comments
     - if can? :comment, @discussion
       .newcomment
         %h3 Post a New Comment
-        = render 'subdomains/comments/form', :comment => @discussion.comments.new
+        = render 'subdomains/comments/form', comment: @discussion.comments.new

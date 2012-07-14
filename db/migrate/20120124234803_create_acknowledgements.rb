@@ -3,7 +3,7 @@ class CreateAcknowledgements < ActiveRecord::Migration
     create_table :acknowledgements do |t|
       t.integer :community_profile_id
       t.integer :announcement_id
-      t.boolean :has_been_viewed, :default => false
+      t.boolean :has_been_viewed, default: false
 
       t.timestamps
     end

@@ -10,26 +10,26 @@ class CharacterProxy < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile, touch: true
-  belongs_to :character, :polymorphic => true, :dependent => :destroy
-  has_many :roster_assignments, :dependent => :destroy
-  has_many :community_profiles, :through => :roster_assignments
+  belongs_to :character, polymorphic: true, dependent: :destroy
+  has_many :roster_assignments, dependent: :destroy
+  has_many :community_profiles, through: :roster_assignments
   has_and_belongs_to_many :community_applications
 
 ###
 # Validators
 ###
-  validates :user_profile, :presence => true
-  validates :character_id, :presence => true
-  validates :character_type, :presence => true
+  validates :user_profile, presence: true
+  validates :character_id, presence: true
+  validates :character_type, presence: true
 
 ###
 # Delegates
 ###
-  delegate :name, :to => :character
-  delegate :game, :to => :character
-  delegate :game_id, :to => :character
-  delegate :game_name, :to => :character
-  delegate :avatar_url, :to => :character, :allow_nil => true
+  delegate :name, to: :character
+  delegate :game, to: :character
+  delegate :game_id, to: :character
+  delegate :game_name, to: :character
+  delegate :avatar_url, to: :character, allow_nil: true
 
 ###
 # Public Methods
@@ -48,7 +48,7 @@ class CharacterProxy < ActiveRecord::Base
 
   # This method determines if this character proxy is compatable with the provided community.
   def compatable_with_community?(community)
-    return community.supported_games.exists?(:game_type => self.game.class.to_s) if community
+    return community.supported_games.exists?(game_type: self.game.class.to_s) if community
   end
 
   # This method determines if this character proxy is compatable with the provided supported_game.

@@ -1,3 +1,3 @@
 - community = Community.find_by_id(activity.target_id)
 Created a new community:
-%strong= link_to shorten_words(community.name, 21), root_url(:activity => community.subdomain)
+%strong= link_to shorten_words(community.name, 21), root_url(activity: community.subdomain)

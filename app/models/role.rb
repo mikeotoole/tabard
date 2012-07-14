@@ -18,25 +18,25 @@ class Role < ActiveRecord::Base
 # Associations
 ###
   belongs_to :community
-  has_many :permissions, :inverse_of => :role, :dependent => :destroy
-  has_many :permission_defaults, :inverse_of => :role, :dependent => :destroy
+  has_many :permissions, inverse_of: :role, dependent: :destroy
+  has_many :permission_defaults, inverse_of: :role, dependent: :destroy
   has_and_belongs_to_many :community_profiles
-  has_many :user_profiles, :through => :community_profiles
-  accepts_nested_attributes_for :permission_defaults, :allow_destroy => true
-  accepts_nested_attributes_for :permissions, :allow_destroy => true
+  has_many :user_profiles, through: :community_profiles
+  accepts_nested_attributes_for :permission_defaults, allow_destroy: true
+  accepts_nested_attributes_for :permissions, allow_destroy: true
 
 ###
 # Validators
 ###
-  validates :community, :presence => true
-  validates :name,  :uniqueness => {:scope => [:community_id, :deleted_at]},
-                    :length => { :maximum => MAX_NAME_LENGTH },
-                    :presence => true
+  validates :community, presence: true
+  validates :name,  uniqueness: {scope: [:community_id, :deleted_at]},
+                    length: { maximum: MAX_NAME_LENGTH },
+                    presence: true
 
 ###
 # Delegates
 ###
-  delegate :admin_profile_id, :to => :community, :prefix => true
+  delegate :admin_profile_id, to: :community, prefix: true
 
 ###
 # Callbacks

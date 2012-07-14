@@ -9,9 +9,9 @@ class UserProfileObserver < ActiveRecord::Observer
 
   # Creates an activity when a new user joins Brutal Venom.
   def after_create(user_profile)
-    Activity.create!( :user_profile => user_profile,
-                      :target => user_profile,
-                      :action => "joined")
+    Activity.create!( user_profile: user_profile,
+                      target: user_profile,
+                      action: "joined")
   end
 
   # Creates a new activity when a user updates profile display_name, description, or title.
@@ -24,9 +24,9 @@ class UserProfileObserver < ActiveRecord::Observer
       change = change ? "profile" : "avatar" if user_profile.avatar_changed?
       change = change ? change : "profile"
 
-      Activity.create!( :user_profile => user_profile,
-                        :target => user_profile,
-                        :action => change)
+      Activity.create!( user_profile: user_profile,
+                        target: user_profile,
+                        action: change)
     end
   end
 end

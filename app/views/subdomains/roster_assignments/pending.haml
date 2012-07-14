@@ -3,40 +3,40 @@
 
 - if @roster_assignments.size > 0
   = form_tag '' do
-    %input{ :name => '_method', :value => '', :type => 'hidden' }
+    %input{ name: '_method', value: '', type: 'hidden' }
     %table
       %thead
         %tr
           %th.check
-          %th{ :colspan => 2 } Pending Character
+          %th{ colspan: 2 } Pending Character
           %th
       %tbody
         - @roster_assignments.each do |roster_assignment|
           %tr
             %td.check
-              = check_box_tag "ids[#{roster_assignment.id}]", true, false, :id => "roster_assignment_id_#{roster_assignment.id}"
-              %label{ :for => "roster_assignment_id_#{roster_assignment.id}" }
+              = check_box_tag "ids[#{roster_assignment.id}]", true, false, id: "roster_assignment_id_#{roster_assignment.id}"
+              %label{ for: "roster_assignment_id_#{roster_assignment.id}" }
             %td.cinch
-              = image_tag roster_assignment.character_proxy_avatar_url(:tiny), :class => 'avatar'
+              = image_tag roster_assignment.character_proxy_avatar_url(:tiny), class: 'avatar'
             %td.character
               %h3= roster_assignment.character_proxy_name
               %strong= roster_assignment.supported_game_smart_name
               %p.meta
                 Requested by
-                = (link_to roster_assignment.user_profile_display_name, user_profile_url(roster_assignment.user_profile, :subdomain => false) + '#characters') + ', '
+                = (link_to roster_assignment.user_profile_display_name, user_profile_url(roster_assignment.user_profile, subdomain: false) + '#characters') + ', '
                 who has
                 %strong= pluralize roster_assignment.community_profile.approved_character_proxies.size, 'character'
                 on the roster.
             %td.actions
               %div
                 - if can? :approve, roster_assignment
-                  = link_to 'Approve', approve_roster_assignment_path(roster_assignment), :method => :put, :class => 'approve', :meta => "Approve #{roster_assignment.character_proxy_name}"
+                  = link_to 'Approve', approve_roster_assignment_path(roster_assignment), method: :put, class: 'approve', meta: "Approve #{roster_assignment.character_proxy_name}"
                 - if can? :reject, roster_assignment
-                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), :confirm => 'Are you sure you want to reject this character?', :method => :put, :class => 'reject', :meta => "Reject #{roster_assignment.character_proxy_name}"
+                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), confirm: 'Are you sure you want to reject this character?', method: :put, class: 'reject', meta: "Reject #{roster_assignment.character_proxy_name}"
       %tfoot
         %tr
-          %td{ :colspan => 4, :class => 'batch' }
-            = button_tag 'Approve selected', :action => batch_approve_roster_assignments_url, :method => :put, :meta => 'Approve selected characters.'
-            = button_tag 'Reject selected', :action => batch_reject_roster_assignments_url, :method => :put, :meta => 'Reject selected characters.'
+          %td{ colspan: 4, class: 'batch' }
+            = button_tag 'Approve selected', action: batch_approve_roster_assignments_url, method: :put, meta: 'Approve selected characters.'
+            = button_tag 'Reject selected', action: batch_reject_roster_assignments_url, method: :put, meta: 'Reject selected characters.'
 - else
   %p There are no pending requests.

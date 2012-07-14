@@ -20,8 +20,8 @@ class MinecraftCharacter < BaseCharacter
 ###
 # Validators
 ###
-  validates :name, :presence => true,
-                   :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, presence: true,
+                   length: { maximum: MAX_NAME_LENGTH }
 
 ###
 # Public Methods
@@ -37,7 +37,7 @@ class MinecraftCharacter < BaseCharacter
 
       if minecraft_character.valid?
         profile = user.user_profile
-        proxy = profile.character_proxies.build(:character => minecraft_character)
+        proxy = profile.character_proxies.build(character: minecraft_character)
         minecraft_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       end
       return minecraft_character

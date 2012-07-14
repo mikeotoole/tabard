@@ -4,7 +4,7 @@ class CreateMessageAssociations < ActiveRecord::Migration
       t.integer :message_id
       t.integer :recipient_id
       t.integer :folder_id
-      t.boolean :is_removed, :default => false
+      t.boolean :is_removed, default: false
 
       t.timestamps
     end

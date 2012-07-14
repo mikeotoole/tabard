@@ -12,9 +12,9 @@ class MessagesController < MailboxController
 # Callbacks
 ###
   before_filter :block_unauthorized_user!
-  before_filter :load_message, :only => [:show, :mark_read, :mark_unread]
-  before_filter :load_original_message, :setup_message_body, :only => [:reply, :reply_all, :forward]
-  authorize_resource :only => [:show, :mark_read, :mark_unread]
+  before_filter :load_message, only: [:show, :mark_read, :mark_unread]
+  before_filter :load_original_message, :setup_message_body, only: [:reply, :reply_all, :forward]
+  authorize_resource only: [:show, :mark_read, :mark_unread]
 
   # GET /mail/inbox/:id(.:format)
   def show
@@ -22,11 +22,11 @@ class MessagesController < MailboxController
       authorize!(:read, @message.folder)
       gather_inbox_data @message.folder
       @mailbox_view_state = @message.folder.name.downcase
-      @message.update_attributes(:has_been_read => true)
+      @message.update_attributes(has_been_read: true)
       respond_to do |format|
         format.html { render :show }
         format.js {
-          render :partial => 'messages/message', :locals => { :message => @message }
+          render partial: 'messages/message', locals: { message: @message }
         }
       end
     else
@@ -36,16 +36,16 @@ class MessagesController < MailboxController
           add_new_flash_message errormsg, 'alert'
           redirect_to inbox_url
         }
-        format.js { render :text => errormsg }
+        format.js { render text: errormsg }
       end
     end
   end
 
   # POST /mail/mark_read/:id(.:format)
   def mark_read
-    @message.update_attributes(:has_been_read => true)
+    @message.update_attributes(has_been_read: true)
     if params[:return_url]
-      redirect_to params[:return_url], :only_path => true
+      redirect_to params[:return_url], only_path: true
     else
       redirect_to request.referer ? request.referer : root_path
     end
@@ -53,9 +53,9 @@ class MessagesController < MailboxController
 
   # POST /mail/mark_unread/:id(.:format)
   def mark_unread
-    @message.update_attributes(:has_been_read => false)
+    @message.update_attributes(has_been_read: false)
     if params[:return_url]
-      redirect_to params[:return_url], :only_path => true
+      redirect_to params[:return_url], only_path: true
     else
       redirect_to request.referer ? request.referer : root_path
     end
@@ -67,11 +67,11 @@ class MessagesController < MailboxController
     authorize!(:update, folder)
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
-    if @message.update_attributes(:folder_id => folder.id, :has_been_read => true)
+    if @message.update_attributes(folder_id: folder.id, has_been_read: true)
       add_new_flash_message("Message was moved to #{folder.name}.",'success')
     end
     if params[:return_url]
-      redirect_to params[:return_url], :only_path => true
+      redirect_to params[:return_url], only_path: true
     else
       redirect_to request.referer ? request.referer : root_path
     end
@@ -85,7 +85,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:folder_id => folder.id, :has_been_read => true)
+        @message.update_attributes(folder_id: folder.id, has_been_read: true)
       end
     end
     redirect_to inbox_path
@@ -97,7 +97,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:has_been_read => true)
+        @message.update_attributes(has_been_read: true)
       end
     end
     redirect_to inbox_path
@@ -109,7 +109,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:has_been_read => false)
+        @message.update_attributes(has_been_read: false)
       end
     end
     redirect_to inbox_path
@@ -121,7 +121,7 @@ class MessagesController < MailboxController
       redirect_to inbox_path
     else
       subject = "Re: #{@original.subject}"
-      @message = current_user.sent_messages.build(:to => [@original.author.id.to_s], :subject => subject, :body => @body)
+      @message = current_user.sent_messages.build(to: [@original.author.id.to_s], subject: subject, body: @body)
       authorize!(:create, @message)
       render 'sent_messages/new'
     end
@@ -134,7 +134,7 @@ class MessagesController < MailboxController
     else
       recipients = @original.recipients.map(&:id) - [current_user.user_profile_id] + [@original.author.id]
       subject = "Re: #{@original.subject}"
-      @message = current_user.sent_messages.build(:to => recipients.collect{|r| r.to_s}, :subject => subject, :body => @body)
+      @message = current_user.sent_messages.build(to: recipients.collect{|r| r.to_s}, subject: subject, body: @body)
       authorize!(:create, @message)
       render 'sent_messages/new'
     end
@@ -143,7 +143,7 @@ class MessagesController < MailboxController
   # GET /mail/forward/:id(.:format)
   def forward
     subject = "Fwd: #{@original.subject.gsub(/^Fwd:\s*/i, '')}"
-    @message = current_user.sent_messages.build(:to => [-1], :subject => subject, :body => @body)
+    @message = current_user.sent_messages.build(to: [-1], subject: subject, body: @body)
     authorize!(:create, @message)
     render 'sent_messages/new'
   end
@@ -153,14 +153,14 @@ class MessagesController < MailboxController
     if(params[:id])
       @message = current_user.received_messages.find(params[:id])
       authorize!(:update, @message)
-      if @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
+      if @message.update_attributes(is_removed: true, folder_id: nil, has_been_read: true)
         add_new_flash_message('Message was removed.')
       end
       redirect_to trash_path
     else # If a message is not given all messages will be removed from the trash.
       current_user.trash.messages.each do |message|
         authorize!(:update, message)
-        message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
+        message.update_attributes(is_removed: true, folder_id: nil, has_been_read: true)
       end
       redirect_to inbox_path
     end
@@ -172,7 +172,7 @@ class MessagesController < MailboxController
       params[:ids].each do |id|
         @message = current_user.received_messages.find_by_id(id[0])
         authorize!(:update, @message)
-        @message.update_attributes(:is_removed => true, :folder_id => nil, :has_been_read => true)
+        @message.update_attributes(is_removed: true, folder_id: nil, has_been_read: true)
       end
     end
     redirect_to trash_path

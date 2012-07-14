@@ -8,27 +8,27 @@
       %span RSVP
 
 #actions.actions
-  = link_to "Event Details", event_url(@invite.event), :meta => 'Event details & comments', :class => 'event'
-  = link_to "Attendee List", invites_event_url(@invite.event), :meta => 'View other invitees', :class => 'invitees'
+  = link_to "Event Details", event_url(@invite.event), meta: 'Event details & comments', class: 'event'
+  = link_to "Attendee List", invites_event_url(@invite.event), meta: 'View other invitees', class: 'invitees'
   - if can? :update, @event
-    = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
+    = link_to 'Edit', edit_event_url(@event), meta: 'Edit event', class: 'edit'
   - if can? :destroy, @event
-    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
+    = link_to 'Destroy', @event, confirm: 'Are you sure?', method: :delete, meta: 'Remove event', class: 'delete'
 
 %article.event
   %h1= "RSVP to #{shorten_words @invite.event_name}"
   .meta
-    = image_tag @invite.invitee_avatar_url(:small), :class => 'avatar'
+    = image_tag @invite.invitee_avatar_url(:small), class: 'avatar'
     You have been invited as
     %strong= @invite.invitee_name
     %time.event
-      %strong.day= l @invite.event.start_time, :format => :date_short
+      %strong.day= l @invite.event.start_time, format: :date_short
       at
-      %strong.time= l @invite.event.start_time, :format => :time_12
+      %strong.time= l @invite.event.start_time, format: :time_12
       = '—'
       - unless @invite.event.start_time.day == @invite.event.end_time.day
-        %strong.day= l @invite.event.end_time, :format => :date_short
+        %strong.day= l @invite.event.end_time, format: :date_short
         at
-      %strong.time= l @invite.event.end_time, :format => :time_12
+      %strong.time= l @invite.event.end_time, format: :time_12
 
-  = render 'form', :invite => @invite
+  = render 'form', invite: @invite

@@ -16,10 +16,10 @@ module FlashResponder
       if has_errors?
         if options.delete(:error_behavior) == :list or resource.errors.size == 1
           resource.errors.full_messages.map{ |error|
-            controller.flash[:messages] << { :class => 'alert', :title => '', :body => error }
+            controller.flash[:messages] << { class: 'alert', title: '', body: error }
           }
         else
-          controller.flash[:messages] << { :class => 'alert', :title => 'Epic Fail', :body => "Multiple errors were found." }
+          controller.flash[:messages] << { class: 'alert', title: 'Epic Fail', body: "Multiple errors were found." }
         end
       end
     end

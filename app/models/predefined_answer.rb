@@ -22,15 +22,15 @@ class PredefinedAnswer < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :question, :inverse_of => :predefined_answers
+  belongs_to :question, inverse_of: :predefined_answers
 
 ###
 # Validators
 ###
-  validates :body, :presence => true,
-                    :length => { :maximum => MAX_BODY_LENGTH },
-                    :if => Proc.new {|pa| pa.question and pa.question.valid? }
-  validates :question, :presence => true
+  validates :body, presence: true,
+                    length: { maximum: MAX_BODY_LENGTH },
+                    if: Proc.new {|pa| pa.question and pa.question.valid? }
+  validates :question, presence: true
   #validate :body_not_too_similar_to_others
 
   # Validator to ensure the body is not going to override another predefined answer.

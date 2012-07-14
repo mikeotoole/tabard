@@ -16,16 +16,16 @@
           %td.actions
             %div
               - if (can? :update, supported_game)
-                = link_to 'Edit', edit_supported_game_url(supported_game), :meta => 'Edit game', :class => 'edit'
+                = link_to 'Edit', edit_supported_game_url(supported_game), meta: 'Edit game', class: 'edit'
               - if (can? :destroy, supported_game)
-                = link_to 'Destroy', supported_game, :confirm => 'All characters, pages, discussions and comments related to this game will also be removed. Are you absolutely sure you want to do this?', :method => :delete, :meta => 'Remove supported game', :class => 'delete'
+                = link_to 'Destroy', supported_game, confirm: 'All characters, pages, discussions and comments related to this game will also be removed. Are you absolutely sure you want to do this?', method: :delete, meta: 'Remove supported game', class: 'delete'
     %tfoot
       %tr
-        %td{ :colspan => 3 }
+        %td{ colspan: 3 }
           - if can? :create, SupportedGame
-            = link_to 'Add Game', new_supported_game_url, :class => 'button'
+            = link_to 'Add Game', new_supported_game_url, class: 'button'
 
 -else
   %p There are no supported games.
   - if can? :create, SupportedGame
-    %p= link_to 'Add Game', new_supported_game_url, :class => 'button'
+    %p= link_to 'Add Game', new_supported_game_url, class: 'button'

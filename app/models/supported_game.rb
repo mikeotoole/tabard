@@ -29,12 +29,12 @@ class SupportedGame < ActiveRecord::Base
 # Associations
 ###
   belongs_to :community
-  belongs_to :game, :polymorphic => true
-  has_many :roster_assignments, :dependent => :destroy
-  has_many :announcements, :dependent => :destroy
-  has_many :discussion_spaces, :dependent => :destroy
-  has_many :page_spaces, :dependent => :destroy
-  has_many :events, :dependent => :destroy
+  belongs_to :game, polymorphic: true
+  has_many :roster_assignments, dependent: :destroy
+  has_many :announcements, dependent: :destroy
+  has_many :discussion_spaces, dependent: :destroy
+  has_many :page_spaces, dependent: :destroy
+  has_many :events, dependent: :destroy
 
 ###
 # Callbacks
@@ -44,27 +44,27 @@ class SupportedGame < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :full_name, :to => :game, :prefix => true
-  delegate :short_name, :to => :game, :prefix => true
-  delegate :name, :to => :community, :prefix => true
-  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+  delegate :full_name, to: :game, prefix: true
+  delegate :short_name, to: :game, prefix: true
+  delegate :name, to: :community, prefix: true
+  delegate :admin_profile_id, to: :community, prefix: true, allow_nil: true
 
-  delegate :faction, :to => :game, :allow_nil => true
-  delegate :server_name, :to => :game, :allow_nil => true
-  delegate :server_type, :to => :game, :allow_nil => true
-  delegate :all_factions, :to => :game, :allow_nil => true
-  delegate :all_servers, :to => :game, :allow_nil => true
-  delegate :all_server_types, :to => :game, :allow_nil => true
+  delegate :faction, to: :game, allow_nil: true
+  delegate :server_name, to: :game, allow_nil: true
+  delegate :server_type, to: :game, allow_nil: true
+  delegate :all_factions, to: :game, allow_nil: true
+  delegate :all_servers, to: :game, allow_nil: true
+  delegate :all_server_types, to: :game, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :community, :presence => true
+  validates :community, presence: true
   validate :game_attributes_valid
-  validates :name, :presence => true,
-                   :length => { :maximum => MAX_NAME_LENGTH },
-                   :uniqueness => {:case_sensitive => false, :scope => [:community_id, :game_id, :game_type, :deleted_at], :message => "exists for this exact game."}
-  validates :game, :presence => true
+  validates :name, presence: true,
+                   length: { maximum: MAX_NAME_LENGTH },
+                   uniqueness: {case_sensitive: false, scope: [:community_id, :game_id, :game_type, :deleted_at], message: "exists for this exact game."}
+  validates :game, presence: true
 
 ###
 # Public Methods
@@ -80,7 +80,7 @@ class SupportedGame < ActiveRecord::Base
 
   # Gets the smart name
   def smart_name
-    supported_games_of_same_type = self.community.supported_games.where(:game_type => self.game_type)
+    supported_games_of_same_type = self.community.supported_games.where(game_type: self.game_type)
     if supported_games_of_same_type.count == 1
       self.game_short_name
     else

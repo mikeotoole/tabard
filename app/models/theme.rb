@@ -13,15 +13,15 @@ class Theme < ActiveRecord::Base
 ###
 # Associations
 ###
-  has_many :communities, :inverse_of => :theme
+  has_many :communities, inverse_of: :theme
 
 ###
 # Validator
 ###
-  validates :name,  :presence => true, :uniqueness => true
-  validates :css,  :presence => true
-  validates :thumbnail,  :presence => true
-  validates :background_author,  :presence => true, :unless => Proc.new{|theme| theme.background_author_url.blank? }
+  validates :name,  presence: true, uniqueness: true
+  validates :css,  presence: true
+  validates :thumbnail,  presence: true
+  validates :background_author,  presence: true, unless: Proc.new{|theme| theme.background_author_url.blank? }
 
 
   # This method returns the default theme.

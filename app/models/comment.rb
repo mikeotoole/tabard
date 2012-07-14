@@ -25,15 +25,15 @@ class Comment < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :community
-  belongs_to :commentable, :polymorphic => true
-  belongs_to :original_commentable, :polymorphic => true
-  has_many :comments, :as => :commentable
+  belongs_to :commentable, polymorphic: true
+  belongs_to :original_commentable, polymorphic: true
+  has_many :comments, as: :commentable
 
 ###
 # Scopes
 ###
-  scope :not_deleted, where(:is_removed => false)
-  scope :ordered, :order => "updated_at DESC"
+  scope :not_deleted, where(is_removed: false)
+  scope :ordered, order: "updated_at DESC"
 
 ###
 # Callbacks
@@ -44,21 +44,21 @@ class Comment < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :community, :prefix => true
-  delegate :subdomain, :to => :community, :prefix => true
-  delegate :admin_profile_id, :to => :community, :prefix => true
-  delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :created_at, :to => :user_profile, :prefix => true
-  delegate :body, :to => :commentable, :prefix => true, :allow_nil => true
-  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
+  delegate :name, to: :community, prefix: true
+  delegate :subdomain, to: :community, prefix: true
+  delegate :admin_profile_id, to: :community, prefix: true
+  delegate :display_name, to: :user_profile, prefix: true
+  delegate :created_at, to: :user_profile, prefix: true
+  delegate :body, to: :commentable, prefix: true, allow_nil: true
+  delegate :name, to: :poster, prefix: true, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
-  validates :user_profile, :presence => true
-  validates :community, :presence => true
-  validates :commentable, :presence => true
+  validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
+  validates :user_profile, presence: true
+  validates :community, presence: true
+  validates :commentable, presence: true
   validate :character_is_valid_for_user_profile
   validate :replys_enabled
 
@@ -123,7 +123,7 @@ class Comment < ActiveRecord::Base
   # Overrides the default destory
   # This will only delete the comment if it has no comments. If it has comments it will be marked is_removed and it's body will be cleared.
   def destroy
-    if self.comments.where(:is_removed => false).empty?
+    if self.comments.where(is_removed: false).empty?
       self.comments.destroy_all
       self.update_attribute(:deleted_at, Time.now) if Comment.exists?(self)
     else

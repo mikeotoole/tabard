@@ -37,7 +37,7 @@ DaBvRails::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Default mailer url
-  config.action_mailer.default_url_options = { :host => 'lvh.me:3000' }
+  config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
 
   # Mail setting for development
   ActionMailer::Base.smtp_settings = {
@@ -46,7 +46,7 @@ DaBvRails::Application.configure do
     :user_name            => ENV['BV_DEV_EMAIL_USERNAME'],
     :password             => ENV['BV_DEV_EMAIL_PASSWORD'],
     :authentication       => 'plain',
-    :enable_starttls_auto => true
+    enable_starttls_auto: true
   }
   config.after_initialize do
     Bullet.enable = true

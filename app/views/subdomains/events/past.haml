@@ -6,7 +6,7 @@
 
 - if @events.any?
   = paginate @events
-  = form_tag invites_batch_update_url, :method => :put do
+  = form_tag invites_batch_update_url, method: :put do
     %table
       %thead
         %tr
@@ -33,15 +33,15 @@
               %time= event.end_time.strftime("%l:%M %p")
             %td.actions
               %div
-                = link_to "Attendee List", invites_event_url(event), :meta => 'View invitees', :class => 'invitees'
+                = link_to "Attendee List", invites_event_url(event), meta: 'View invitees', class: 'invitees'
                 - if (can? :update, event)
-                  = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
+                  = link_to 'Edit', edit_event_path(event), meta: 'Edit event', class: 'edit'
                 - if (can? :destroy, event)
-                  = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
+                  = link_to 'Delete', event, confirm: 'Are you sure?', method: :delete, meta: 'Delete event', class: 'delete'
       %tfoot
         %tr
           %td{ colspan: 6 }
-            = link_to 'Create New', new_event_path, :class => 'button' if can? :create, Event
+            = link_to 'Create New', new_event_path, class: 'button' if can? :create, Event
   = paginate @events
 
 -else
@@ -49,4 +49,4 @@
   %p There are no events at this time.
   - if can? :create, Event
     %hr
-    %p= link_to 'Add New Event', new_event_url, :class => 'button'
+    %p= link_to 'Add New Event', new_event_url, class: 'button'

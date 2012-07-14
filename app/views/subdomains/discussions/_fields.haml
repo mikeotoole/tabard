@@ -1,6 +1,6 @@
 %fieldset
   %ol
-    = f.input :name, :input_html => { :maxlength => Discussion::MAX_NAME_LENGTH }
-    = f.input :body, :as => :text, :input_html => { :maxlength => Discussion::MAX_BODY_LENGTH }
-    = f.input :character_proxy_id, :label => 'Posted As', :collection => collection_with_blank(available_characters, current_user.user_profile.display_name), :checked => last_posted_as_character_proxy_id, :as => :radio, :wrapper_html => { :class => 'select' }
-    = f.input :comments_enabled, :label => 'Allow Comments?', :as => :boolean, :input_html => { :checked => !discussion.is_locked }
+    = f.input :name, input_html: { maxlength: Discussion::MAX_NAME_LENGTH }
+    = f.input :body, as: :text, input_html: { maxlength: Discussion::MAX_BODY_LENGTH }
+    = f.input :character_proxy_id, label: 'Posted As', collection: collection_with_blank(available_characters, current_user.user_profile.display_name), checked: last_posted_as_character_proxy_id, as: :radio, wrapper_html: { class: 'select' }
+    = f.input :comments_enabled, label: 'Allow Comments?', as: :boolean, input_html: { checked: !discussion.is_locked }

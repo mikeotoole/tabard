@@ -1,5 +1,5 @@
 ActiveAdmin.register Page do
-  menu :parent => "Pages", :if => proc{ can?(:read, Page) }
+  menu parent: "Pages", if: proc{ can?(:read, Page) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -21,12 +21,12 @@ ActiveAdmin.register Page do
     column :created_at
     column "Destroy" do |page|
       if can? :destroy, page
-        link_to "Destroy", [:admin, page], :method => :delete, :confirm => 'Are you sure you want to delete this page?'
+        link_to "Destroy", [:admin, page], method: :delete, confirm: 'Are you sure you want to delete this page?'
       end
     end
   end
 
-  show :title => :name do
+  show title: :name do
     attributes_table *default_attribute_table_rows, :community
 
     div do

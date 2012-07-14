@@ -3,11 +3,11 @@
 #body
   %h1 Forgot your password?
 
-  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     %fieldset
       %ol
-        = f.input :email, :as => :email
+        = f.input :email, as: :email
         %li
-          %button{ :type => 'submit' } Send instructions
+          %button{ type: 'submit' } Send instructions
 
   = render "devise/shared/links"

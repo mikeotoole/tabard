@@ -2,16 +2,16 @@
 
 #actions.actions
   - if can? :create, PageSpace
-    = link_to 'Add', new_page_space_url, :class => 'new', :meta => 'Create a new page space'
+    = link_to 'Add', new_page_space_url, class: 'new', meta: 'Create a new page space'
 
 %h1 Page Spaces
 
 - if @page_spaces.any?
   = paginate @page_spaces
-  = render "table", :page_spaces => @page_spaces
+  = render "table", page_spaces: @page_spaces
   = paginate @page_spaces
 
 -else
   %p There are no page spaces.
   - if can? :create, PageSpace
-    %p= link_to 'New Space', new_page_space_url, :class => 'button'
+    %p= link_to 'New Space', new_page_space_url, class: 'button'

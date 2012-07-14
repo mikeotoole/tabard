@@ -12,11 +12,11 @@ class Subdomains::PageSpacesController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_page_space, :except => [:new, :create, :index]
-  before_filter :create_page_space, :only => [:new, :create]
-  authorize_resource :except => :index
+  before_filter :load_page_space, except: [:new, :create, :index]
+  before_filter :create_page_space, only: [:new, :create]
+  authorize_resource except: :index
   skip_before_filter :limit_subdomain_access
-  after_filter :create_activity, :only => [:update, :create]
+  after_filter :create_activity, only: [:update, :create]
 
 ###
 # REST Actions
@@ -106,10 +106,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create!( :user_profile => current_user.user_profile,
-                        :community => @page_space.community,
-                        :target => @page_space,
-                        :action => @action)
+      Activity.create!( user_profile: current_user.user_profile,
+                        community: @page_space.community,
+                        target: @page_space,
+                        action: @action)
     end
   end
 end

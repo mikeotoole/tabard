@@ -9,6 +9,6 @@ class CreateViewLogs < ActiveRecord::Migration
     end
 
     add_index :view_logs, :user_profile_id
-    add_index :view_logs, [:view_loggable_type, :view_loggable_id], :name => 'index_view_logs_on_view_loggable_type_and_id'
+    add_index :view_logs, [:view_loggable_type, :view_loggable_id], name: 'index_view_logs_on_view_loggable_type_and_id'
   end
 end

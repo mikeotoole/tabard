@@ -11,10 +11,10 @@ class Subdomains::CustomFormsController < SubdomainsController
   # Before Filters
   ###
   prepend_before_filter :block_unauthorized_user!
-  before_filter :load_custom_form, :except => [:new, :create, :index]
-  before_filter :create_custom_form, :only => [:new, :create]
-  authorize_resource :except => [:index, :thankyou, :publish, :unpublish]
-  before_filter :ensure_current_user_is_member, :except => [:thankyou]
+  before_filter :load_custom_form, except: [:new, :create, :index]
+  before_filter :create_custom_form, only: [:new, :create]
+  authorize_resource except: [:index, :thankyou, :publish, :unpublish]
+  before_filter :ensure_current_user_is_member, except: [:thankyou]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
@@ -34,7 +34,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   def create
     if @custom_form.save
       add_new_flash_message "Form \"#{@custom_form.name}\" has been created.", 'success'
-      respond_with @custom_form, :location => custom_forms_url
+      respond_with @custom_form, location: custom_forms_url
     else
       respond_with @custom_form
     end
@@ -49,7 +49,7 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form.update_attributes(params[:custom_form])
       add_new_flash_message "Form \"#{@custom_form.name}\" has been saved.", 'success'
     end
-    respond_with @custom_form, :location => custom_forms_url
+    respond_with @custom_form, location: custom_forms_url
   end
 
   # DELETE /custom_forms/1

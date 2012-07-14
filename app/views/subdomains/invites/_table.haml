@@ -19,7 +19,7 @@
         %td.actions
           %div
             -if can? :update, invite
-              = link_to 'Update', edit_invite_url(invite), :class => 'edit', :meta => 'Update your RSVP'
+              = link_to 'Update', edit_invite_url(invite), class: 'edit', meta: 'Update your RSVP'
   %tfoot
     %tr
       %td{ colspan: 5 }

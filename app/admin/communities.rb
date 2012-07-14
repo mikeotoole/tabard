@@ -1,24 +1,24 @@
 ActiveAdmin.register Community do
-  menu :parent => "Community", :if => proc{ can?(:read, Community) }
+  menu parent: "Community", if: proc{ can?(:read, Community) }
   controller.authorize_resource
 
   actions :index, :show
 
-  member_action :destroy, :method => :delete do
+  member_action :destroy, method: :delete do
     community = Community.find(params[:id])
     authorize!(:destroy, community)
     Community.delay.destory_community(community.id)
     flash[:notice] = 'Community is being removed.'
-    redirect_to :action => :index
+    redirect_to action: :index
   end
 
   filter :id
   filter :name
   filter :slogan
   filter :created_at
-  filter :is_protected_roster, :as => :select
-  filter :is_accepting_members, :as => :select
-  filter :email_notice_on_application, :as => :select
+  filter :is_protected_roster, as: :select
+  filter :is_accepting_members, as: :select
+  filter :email_notice_on_application, as: :select
 
   index do
     column "View" do |community|
@@ -32,12 +32,12 @@ ActiveAdmin.register Community do
     column :created_at
     column "Destroy" do |community|
       if can? :destroy, community
-        link_to "Destroy", [:admin, community], :method => :delete, :confirm => 'Are you sure you want to delete this community?'
+        link_to "Destroy", [:admin, community], method: :delete, confirm: 'Are you sure you want to delete this community?'
       end
     end
   end
 
-  show :title => :name do
+  show title: :name do
     attributes_table *default_attribute_table_rows
 
     div do
@@ -61,13 +61,13 @@ ActiveAdmin.register Community do
       end
     end
 
-    div :id => "discussion_spaces" do
+    div id: "discussion_spaces" do
       panel("Discussion Spaces") do
         table_for(community.discussion_spaces) do
           column "Name" do |discussion_space|
             link_to discussion_space.name, [:admin, discussion_space]
           end
-          column :number_of_discussions, :sortable => false
+          column :number_of_discussions, sortable: false
           column :created_at
         end
      end

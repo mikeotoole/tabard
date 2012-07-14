@@ -4,13 +4,13 @@
   %h1 Reinstate Account
   %p Please select a new password to reinstante your account.
 
-  = simple_form_for(resource, :as => resource_name, :url => reinstate_account_url, :html => { :method => :put }) do |f|
+  = simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
     = f.hidden_field :reset_password_token
     %fieldset
       %ol
         = f.input :password
         = f.input :password_confirmation
       %p
-        %button{ :type => 'submit' } Reinstate account
+        %button{ type: 'submit' } Reinstate account
 
   = render "devise/shared/links"

@@ -9,9 +9,9 @@
 
 #actions.actions
   - if (can? :update, @page)
-    = link_to 'Edit', edit_page_path(@page), :meta => 'Edit page', :class => 'edit'
+    = link_to 'Edit', edit_page_path(@page), meta: 'Edit page', class: 'edit'
   - if (can? :destroy, @page)
-    = link_to 'Destroy', @page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove page', :class => 'delete'
+    = link_to 'Destroy', @page, confirm: 'Are you sure?', method: :delete, meta: 'Remove page', class: 'delete'
 
 %section
   %h1= shorten_words @page.name, 21

@@ -8,8 +8,8 @@
       %tr
         %th{ colspan: 8 }
           %h1= @date.strftime '%B %Y'
-          = link_to "‹ #{Date::MONTHNAMES[@date.prev_month.month]}", month_events_url(:year => @date.prev_month.year, :month => @date.prev_month.month), :class => 'prev'
-          = link_to "#{Date::MONTHNAMES[@date.next_month.month]} ›", month_events_url(:year => @date.next_month.year, :month => @date.next_month.month), :class => 'next'
+          = link_to "‹ #{Date::MONTHNAMES[@date.prev_month.month]}", month_events_url(year: @date.prev_month.year, month: @date.prev_month.month), class: 'prev'
+          = link_to "#{Date::MONTHNAMES[@date.next_month.month]} ›", month_events_url(year: @date.next_month.year, month: @date.next_month.month), class: 'next'
       %tr
         %th
         %th.c Mon
@@ -23,7 +23,7 @@
       %tr
         %td{ colspan: 8 }
           Month events for
-          = link_to shorten_words(current_community.name), root_url(:subdomain => current_community.subdomain)
+          = link_to shorten_words(current_community.name), root_url(subdomain: current_community.subdomain)
     %tbody
       - if @date.beginning_of_month.cwday > 1
         %tr
@@ -32,7 +32,7 @@
           - (1..(@date.beginning_of_month.cwday-1)).each do
             %td.empty
           - (@date.beginning_of_month.cwday..7).each do
-            = render 'month_day', :date => @date, :day => day = day + 1, :events => @events_by_day[day] ||= []
+            = render 'month_day', date: @date, day: day = day + 1, events: @events_by_day[day] ||= []
       - while day < @date.end_of_month.day
         - week = week + 1
         %tr
@@ -40,6 +40,6 @@
             = link_to '', week_events_url(year: @date.year, week: week)
           - (1..7).each do
             - if day < @date.end_of_month.day
-              = render 'month_day', :date => @date, :day => day = day + 1, :events => @events_by_day[day] ||= []
+              = render 'month_day', date: @date, day: day = day + 1, events: @events_by_day[day] ||= []
             - else
               %td.empty

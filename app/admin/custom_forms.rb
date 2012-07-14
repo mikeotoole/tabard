@@ -1,14 +1,14 @@
 ActiveAdmin.register CustomForm do
-  menu :parent => "Custom Forms", :priority => 1, :if => proc{ can?(:read, CustomForm) }
-  controller.load_resource :only => :destroy
+  menu parent: "Custom Forms", priority: 1, if: proc{ can?(:read, CustomForm) }
+  controller.load_resource only: :destroy
   controller.authorize_resource
 
   actions :index, :show, :destroy
 
-  member_action :delete_question, :method => :put do
+  member_action :delete_question, method: :put do
     question = Question.find(params[:id])
     question.destroy
-    redirect_to :action => :show, :id => question.custom_form.id
+    redirect_to action: :show, id: question.custom_form.id
   end
 
   filter :id
@@ -16,7 +16,7 @@ ActiveAdmin.register CustomForm do
   filter :instructions
   filter :thankyou
   filter :created_at
-  filter :is_published, :as => :select
+  filter :is_published, as: :select
 
   index do
     column "View" do |custom_form|
@@ -34,12 +34,12 @@ ActiveAdmin.register CustomForm do
     column :is_published
     column "Destroy" do |custom_form|
       if can? :destroy, custom_form
-        link_to "Destroy", [:admin, custom_form], :method => :delete, :confirm => 'Are you sure you want to delete this custom form?'
+        link_to "Destroy", [:admin, custom_form], method: :delete, confirm: 'Are you sure you want to delete this custom form?'
       end
     end
   end
 
-  show :title => proc{ "#{custom_form.community_name} - #{custom_form.name}" } do
+  show title: proc{ "#{custom_form.community_name} - #{custom_form.name}" } do
     attributes_table *default_attribute_table_rows
     div do
       panel("Questions") do
@@ -60,7 +60,7 @@ ActiveAdmin.register CustomForm do
           end
         column "Destroy" do |question|
           if can? :destroy, question
-            link_to "Destroy", delete_question_admin_custom_form_path(question), :method => :put, :confirm => 'Are you sure you want to delete this question?'
+            link_to "Destroy", delete_question_admin_custom_form_path(question), method: :put, confirm: 'Are you sure you want to delete this question?'
           end
         end
         end

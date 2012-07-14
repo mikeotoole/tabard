@@ -9,13 +9,13 @@ def create_event(community_name, name, body, start_in_days, hours, creator_last_
   start_time = Date.today + start_in_days.days
   end_time = start_time.in(3600 * hours)
   puts "#{user_profile.name} is creating #{community_name} Event #{name}"
-  event = community.events.new(:name => name, :body => body, :start_time => start_time, :end_time => end_time, :supported_game => supported_game)
+  event = community.events.new(name: name, body: body, start_time: start_time, end_time: end_time, supported_game: supported_game)
   event.creator = user_profile
   event.save!
 
-  event.invites.create!(:user_profile => user_profile)
+  event.invites.create!(user_profile: user_profile)
   invite_last_name_array.each do |last_name|
-    event.invites.create!(:user_profile => UserProfile.find_by_last_name(last_name))
+    event.invites.create!(user_profile: UserProfile.find_by_last_name(last_name))
   end
 
   return event

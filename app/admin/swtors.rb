@@ -1,13 +1,13 @@
-ActiveAdmin.register Swtor, :as => "Swtor" do
-  menu :label => "Game Star Wars", :parent => "Game and Character", :if => proc{ can?(:read, Swtor) }
+ActiveAdmin.register Swtor, as: "Swtor" do
+  menu label: "Game Star Wars", parent: "Game and Character", if: proc{ can?(:read, Swtor) }
   controller.authorize_resource
 
   actions :index, :show, :edit, :update, :new, :create
 
   filter :id
-  filter :faction, :as => :select, :collection => Swtor::VALID_FACTIONS
+  filter :faction, as: :select, collection: Swtor::VALID_FACTIONS
   filter :server_name
-  filter :server_type, :as => :select, :collection => Swtor::VALID_SERVER_TYPES
+  filter :server_type, as: :select, collection: Swtor::VALID_SERVER_TYPES
   filter :created_at
   filter :updated_at
 
@@ -26,7 +26,7 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
     end
   end
 
-  show :title => :full_name do
+  show title: :full_name do
     attributes_table *default_attribute_table_rows
 
     div do
@@ -45,9 +45,9 @@ ActiveAdmin.register Swtor, :as => "Swtor" do
 
   form do |f|
     f.inputs "SWTOR Details" do
-      f.input :faction, :as => :select, :collection => Swtor::VALID_FACTIONS
+      f.input :faction, as: :select, collection: Swtor::VALID_FACTIONS
       f.input :server_name
-      f.input :server_type, :as => :select, :collection => Swtor::VALID_SERVER_TYPES
+      f.input :server_type, as: :select, collection: Swtor::VALID_SERVER_TYPES
     end
     f.buttons
   end

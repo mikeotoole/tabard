@@ -28,9 +28,9 @@ class Message < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :author, :class_name => "UserProfile"
-  has_many :message_associations, :dependent => :destroy, :autosave => true
-  has_many :recipients, :through => :message_associations
+  belongs_to :author, class_name: "UserProfile"
+  has_many :message_associations, dependent: :destroy, autosave: true
+  has_many :recipients, through: :message_associations
 
 ###
 # Callbacks
@@ -40,16 +40,16 @@ class Message < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :avatar_url, :name, :to => :author, :prefix => true, :allow_nil => true
+  delegate :avatar_url, :name, to: :author, prefix: true, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :subject, :presence => true, :length => { :maximum => MAX_SUBJECT_LENGTH }
-  validates :body,  :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
-  validates :to,  :presence => true
+  validates :subject, presence: true, length: { maximum: MAX_SUBJECT_LENGTH }
+  validates :body,  presence: true, length: { maximum: MAX_BODY_LENGTH }
+  validates :to,  presence: true
 
-  default_scope :order => "created_at DESC"
+  default_scope order: "created_at DESC"
 
 ###
 # Class Methods
@@ -91,7 +91,7 @@ protected
     to.each do |recipient|
       if !recipient.blank?
         userProfile = UserProfile.find_by_id(recipient)
-        message_associations.build(:recipient_id => userProfile.id, :folder_id => userProfile.inbox.id)
+        message_associations.build(recipient_id: userProfile.id, folder_id: userProfile.inbox.id)
         self.number_recipients += 1
       end
     end

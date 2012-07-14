@@ -21,15 +21,15 @@ class Page < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :markup
-  attr_accessible :name, :markup, :show_in_navigation, :as => :community_admin
+  attr_accessible :name, :markup, :show_in_navigation, as: :community_admin
 
 ###
 # Associations
 ###
   belongs_to :page_space
-  has_one :community, :through => :page_space
+  has_one :community, through: :page_space
 
-  scope :navigation_pages, :conditions => {:show_in_navigation => true}
+  scope :navigation_pages, conditions: {show_in_navigation: true}
   scope :alphabetical, order("name ASC")
 
 ###
@@ -40,17 +40,17 @@ class Page < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :page_space, :prefix => true, :allow_nil => true
-  delegate :game, :to => :page_space, :prefix => true, :allow_nil => true
-  delegate :game_name, :to => :page_space, :allow_nil => true
-  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
+  delegate :name, to: :page_space, prefix: true, allow_nil: true
+  delegate :game, to: :page_space, prefix: true, allow_nil: true
+  delegate :game_name, to: :page_space, allow_nil: true
+  delegate :admin_profile_id, to: :community, prefix: true, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :markup, :presence => true
-  validates :page_space, :presence => true
+  validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
+  validates :markup, presence: true
+  validates :page_space, presence: true
 
 ###
 # Public Methods

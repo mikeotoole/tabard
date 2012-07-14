@@ -17,13 +17,13 @@
         %td.actions
           %div
             - if can? :create, space.discussions.new
-              = link_to 'New', new_discussion_space_discussion_path(space), :meta => 'New discussion', :class => 'new'
+              = link_to 'New', new_discussion_space_discussion_path(space), meta: 'New discussion', class: 'new'
             - if (can? :update, space)
-              = link_to 'Edit', edit_discussion_space_path(space), :meta => 'Edit discussion space', :class => 'edit'
+              = link_to 'Edit', edit_discussion_space_path(space), meta: 'Edit discussion space', class: 'edit'
             - if (can? :destroy, space)
-              = link_to 'Delete', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete discussion space', :class => 'delete'
+              = link_to 'Delete', space, confirm: 'Are you sure?', method: :delete, meta: 'Delete discussion space', class: 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 3 }
+      %td{ colspan: 3 }
         - if can? :create, current_community.discussion_spaces.new
-          = link_to 'New Space', new_discussion_space_path, :class => 'button'
+          = link_to 'New Space', new_discussion_space_path, class: 'button'

@@ -28,30 +28,30 @@ class ArtworkUpload < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :owner_name, :presence => true
-  validates :artwork_description, :presence => true
-  validates :street, :presence => true
-  validates :city, :presence => true
-  validates :zipcode, :presence => true
-  validates :country, :presence => true
-  validates :attribution_name, :if => :attribution_url?, :presence => true
-  validates :attribution_url, :if => :attribution_name?, :presence => true
-  validates :artwork_image, :presence => true
+  validates :owner_name, presence: true
+  validates :artwork_description, presence: true
+  validates :street, presence: true
+  validates :city, presence: true
+  validates :zipcode, presence: true
+  validates :country, presence: true
+  validates :attribution_name, if: :attribution_url?, presence: true
+  validates :attribution_url, if: :attribution_name?, presence: true
+  validates :artwork_image, presence: true
   validates :email,
-      :presence => true,
-      :length => { :within => 5..128 },
-      :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
-  validates :document, :presence => true
-  validates :accepted_current_artwork_agreement, :acceptance => true
-  validates :certify_owner_of_artwork, :acceptance => {:accept => true}
+      presence: true,
+      length: { within: 5..128 },
+      format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+  validates :document, presence: true
+  validates :accepted_current_artwork_agreement, acceptance: true
+  validates :certify_owner_of_artwork, acceptance: {accept: true}
   validate :document_is_current
   validates :artwork_image,
-      :if => :artwork_image?,
-      :file_size => {
-        :maximum => 5.megabytes.to_i
+      if: :artwork_image?,
+      file_size: {
+        maximum: 5.megabytes.to_i
       }
 
-  delegate :body, :to => :document, :prefix => true
+  delegate :body, to: :document, prefix: true
 ###
 # Uploaders
 ###

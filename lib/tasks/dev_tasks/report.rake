@@ -2,13 +2,13 @@ require 'simplecov'
 
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :tests, :brakeman_scan] do
+  task all: [:docs, :notes, :best_practices, :tests, :brakeman_scan] do
     puts "\nReports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end
 
   desc "Create a coverage report for documentation"
-  task :docs => [:ensure_report_dir] do
+  task docs: [:ensure_report_dir] do
     puts "Generateing documentation coverage report..."
     system "rdoc app lib --coverage-report | tee doc/reports/doc_coverage_report.txt"
     #puts "Checking for incorrect style block comments..."
@@ -46,7 +46,7 @@ namespace :reports do
   end
 
   desc "Run brakeman to look for security issues"
-  task :brakeman_scan => [:ensure_report_dir] do
+  task brakeman_scan: [:ensure_report_dir] do
     puts "\nRunning brakeman..."
     system "brakeman -o \"doc/reports/brakeman_report.html\""
   end

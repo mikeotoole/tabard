@@ -10,9 +10,9 @@ class SwtorCharactersController < ApplicationController
 ###
 # Callbacks
 ###
-  prepend_before_filter :block_unauthorized_user!, :except => :show
+  prepend_before_filter :block_unauthorized_user!, except: :show
   load_and_authorize_resource
-  skip_load_and_authorize_resource :only => :update
+  skip_load_and_authorize_resource only: :update
 
 ###
 # REST Actions
@@ -37,7 +37,7 @@ class SwtorCharactersController < ApplicationController
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @swtor_character, :location => user_profile_url(@swtor_character.user_profile) + '#characters'
+    respond_with @swtor_character, location: user_profile_url(@swtor_character.user_profile) + '#characters'
   end
 
   # PUT /swtor_characters/:id(.:format)
@@ -58,13 +58,13 @@ class SwtorCharactersController < ApplicationController
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @swtor_character, :location => user_profile_url(@swtor_character.user_profile) + '#characters'
+    respond_with @swtor_character, location: user_profile_url(@swtor_character.user_profile) + '#characters'
   end
 
   # DELETE /swtor_characters/:id(.:format)
   def destroy
     add_new_flash_message("\"#{@swtor_character.name}\" has been removed.", 'notice') if @swtor_character and @swtor_character.destroy
 
-    respond_with @swtor_character, :location => user_profile_url(@swtor_character.user_profile) + '#characters'
+    respond_with @swtor_character, location: user_profile_url(@swtor_character.user_profile) + '#characters'
   end
 end

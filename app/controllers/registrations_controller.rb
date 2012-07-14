@@ -8,12 +8,12 @@
 class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
-  skip_before_filter :block_unauthorized_user!, :only => [:create, :new]
+  skip_before_filter :block_unauthorized_user!, only: [:create, :new]
   skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
-  skip_before_filter :ensure_not_ssl_mode, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
-  before_filter :ensure_secure_subdomain, :only => [:create, :update, :new, :edit, :disable_confirmation, :destroy]
-  before_filter :block_unauthorized_user!, :only => [:cancel_confirmation]
-  before_filter :hide_the_announcements, :only => [:new, :edit, :update]
+  skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy]
+  before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy]
+  before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
+  before_filter :hide_the_announcements, only: [:new, :edit, :update]
 
 ###
 # Sign Up
@@ -63,7 +63,7 @@ class RegistrationsController < Devise::RegistrationsController
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       add_new_flash_message "Your account has been disabled.", "notice"
-      redirect_to root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)),
+      redirect_to root_url_hack_helper(root_url(protocol: "http://", subdomain: false)),
     else
       @hide_announcements = true
       render 'disable_confirmation'
@@ -117,17 +117,17 @@ class RegistrationsController < Devise::RegistrationsController
 ###
   # Where to redirect to after signing up with devise
   def after_sign_up_path_for(resource)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+    root_url_hack_helper(root_url(protocol: "http://", subdomain: false))
   end
 
   # Where to redirect to after signing up with devise, and the account is inactive.
   def after_inactive_sign_up_path_for(resource)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false))
+    root_url_hack_helper(root_url(protocol: "http://", subdomain: false))
   end
 
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
-    edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"))
+    edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
   end
 
   # Hides the announcements.

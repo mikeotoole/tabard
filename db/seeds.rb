@@ -10,10 +10,10 @@ unless Rails.env.test?
     end
   elsif Rails.env.production?
     puts "Seeding 'mike.otoole@digitalaugment.com' super admin"
-    AdminUser.create!(:email => 'mike.otoole@digitalaugment.com',
-                      :password => 'DVqaPP7Ai8Q66K',
-                      :password_confirmation => 'DVqaPP7Ai8Q66K',
-                      :role => "superadmin")
+    AdminUser.create!(email: 'mike.otoole@digitalaugment.com',
+                      password: 'DVqaPP7Ai8Q66K',
+                      password_confirmation: 'DVqaPP7Ai8Q66K',
+                      role: "superadmin")
   end
 
 end

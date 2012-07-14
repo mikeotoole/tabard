@@ -14,12 +14,12 @@ ADJ_LIST = %w(adorable beautiful clean drab elegant fancy glamorous handsome mag
 
 namespace :seed do
   desc "Seeds all data"
-  task :all => [:extra, :comments, :max] do
+  task all: [:extra, :comments, :max] do
     puts "All data seeded!"
   end
 
   desc "Seeds extra users and communities"
-  task :extra => :environment do
+  task extra: :environment do
     puts "Seeding extra users and communities.."
 
     @dont_run = Rails.env.development?
@@ -41,7 +41,7 @@ namespace :seed do
   end
 
   desc "Seeds extra discussions and comments"
-  task :comments => :environment do
+  task comments: :environment do
     @dont_run = true
      %w{ discussions }.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/../../db/seeds/#{part}.rb"
@@ -60,7 +60,7 @@ namespace :seed do
   end
 
   desc "Seeds content with max length values"
-  task :max => :environment do
+  task max: :environment do
     @dont_run = true
      %w{ users characters communities roles_permissions discussions pages messages custom_forms }.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/../../db/seeds/#{part}.rb"
@@ -135,7 +135,7 @@ namespace :seed do
   end
 
   desc "Seeds content with max length values"
-  task :update_themes => :environment do
+  task update_themes: :environment do
     puts "Updating Cyborg: "
     success = Theme.find(2).update_attributes(name: "Cyborg", css: "cyborg", background_author: "Mac Rebisz", background_author_url: "http://maciejrebisz.com", thumbnail: "cyborg.jpg")
     puts success

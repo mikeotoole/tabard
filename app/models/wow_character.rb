@@ -68,22 +68,22 @@ class WowCharacter < BaseCharacter
 ###
 # Delegates
 ###
-  delegate :faction, :to => :wow, :allow_nil => true
-  delegate :server_name, :to => :wow, :allow_nil => true
+  delegate :faction, to: :wow, allow_nil: true
+  delegate :server_name, to: :wow, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :name, :presence => true,
-                   :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, presence: true,
+                   length: { maximum: MAX_NAME_LENGTH }
   validate do |wow_character|
     wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
   end
-  validates :race, :presence => true
-  validates :char_class, :presence => true
+  validates :race, presence: true
+  validates :char_class, presence: true
   validate :class_is_valid_for_race
-  validates :gender, :presence => true,
-                     :inclusion => {:in => VALID_GENDERS}
+  validates :gender, presence: true,
+                     inclusion: {in: VALID_GENDERS}
 
 ###
 # Public Methods
@@ -140,7 +140,7 @@ class WowCharacter < BaseCharacter
 
       if wow_character.valid?
         profile = user.user_profile
-        proxy = profile.character_proxies.build(:character => wow_character)
+        proxy = profile.character_proxies.build(character: wow_character)
         wow_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
         wow_character.errors.add(:server_name, "can't be blank") if not params[:server_name]

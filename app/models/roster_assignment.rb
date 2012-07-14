@@ -15,13 +15,13 @@ class RosterAssignment < ActiveRecord::Base
   belongs_to :community_profile, touch: true
   belongs_to :character_proxy
   belongs_to :supported_game
-  has_one :user_profile, :through => :community_profile
+  has_one :user_profile, through: :community_profile
 
 ###
 # Validators
 ###
-  validates :community_profile, :presence => true
-  validates :character_proxy_id, :uniqueness => { :scope => ["community_profile_id", "deleted_at"], :message => "is already rostered to the community."}
+  validates :community_profile, presence: true
+  validates :character_proxy_id, uniqueness: { scope: ["community_profile_id", "deleted_at"], message: "is already rostered to the community."}
   validate :character_and_game_must_be_present
   validate :community_valid_for_supported_game
   validate :character_valid_for_supported_game
@@ -29,16 +29,16 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :user_profile, :user_profile_id, :to => :community_profile, :prefix => true, :allow_nil => true
-  delegate :community_admin_profile_id, :to => :community_profile, :allow_nil => true
-  delegate :community, :to => :community_profile, :allow_nil => true
-  delegate :name, :avatar_url, :to => :character_proxy, :prefix => true
-  delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :avatar_url, :to => :user_profile, :prefix => true
-  delegate :name, :to => :character_proxy, :prefix => true
-  delegate :character, :to => :character_proxy
-  delegate :name, :to => :supported_game, :prefix => true
-  delegate :smart_name, :to => :supported_game, :prefix => true
+  delegate :user_profile, :user_profile_id, to: :community_profile, prefix: true, allow_nil: true
+  delegate :community_admin_profile_id, to: :community_profile, allow_nil: true
+  delegate :community, to: :community_profile, allow_nil: true
+  delegate :name, :avatar_url, to: :character_proxy, prefix: true
+  delegate :display_name, to: :user_profile, prefix: true
+  delegate :avatar_url, to: :user_profile, prefix: true
+  delegate :name, to: :character_proxy, prefix: true
+  delegate :character, to: :character_proxy
+  delegate :name, to: :supported_game, prefix: true
+  delegate :smart_name, to: :supported_game, prefix: true
 
 ###
 # Callbacks
@@ -57,7 +57,7 @@ class RosterAssignment < ActiveRecord::Base
   def approve(message=true)
     return false unless self.is_pending
     self.update_attribute(:is_pending, false)
-    message = Message.create_system(:subject => "Character Accepted", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", :to => [self.community_profile_user_profile_id]) if message
+    message = Message.create_system(subject: "Character Accepted", body: "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", to: [self.community_profile_user_profile_id]) if message
   end
 
   # This method rejects this roster assignment, if it is pending.
@@ -65,7 +65,7 @@ class RosterAssignment < ActiveRecord::Base
   def reject(message=true)
     return false unless self.is_pending
     self.destroy
-    message = Message.create_system(:subject => "Character Rejected", :body => "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", :to => [self.community_profile_user_profile_id]) if message
+    message = Message.create_system(subject: "Character Rejected", body: "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", to: [self.community_profile_user_profile_id]) if message
   end
 
 ###

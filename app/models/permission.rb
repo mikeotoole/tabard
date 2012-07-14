@@ -22,24 +22,24 @@ class Permission < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :role, :inverse_of => :permissions
+  belongs_to :role, inverse_of: :permissions
 
 ###
 # Validators
 ###
-  validates :role, :presence => true
+  validates :role, presence: true
 
-  validates :subject_class, :presence => true,
-      :inclusion => { :in => VALID_SUBJECT_CLASSES, :message => "%{value} is not currently a supported permissionable" }
+  validates :subject_class, presence: true,
+      inclusion: { in: VALID_SUBJECT_CLASSES, message: "%{value} is not currently a supported permissionable" }
 
   validates :permission_level,
-      :inclusion => { :in => VALID_PERMISSION_LEVELS, :message => "%{value} is not a valid permission level" },
-      :unless => Proc.new{|permission| permission.permission_level.blank? }
+      inclusion: { in: VALID_PERMISSION_LEVELS, message: "%{value} is not a valid permission level" },
+      unless: Proc.new{|permission| permission.permission_level.blank? }
 
-  validates :parent_association_for_subject, :inclusion => { :in => VALID_PARENT_ASSOCIATIONS, :message => "%{value} is not a valid parent."}, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
+  validates :parent_association_for_subject, inclusion: { in: VALID_PARENT_ASSOCIATIONS, message: "%{value} is not a valid parent."}, unless: Proc.new { |permission| permission.parent_association_for_subject.blank?}
 
-  validates :id_of_parent, :presence => true, :unless => Proc.new { |permission| permission.parent_association_for_subject.blank?}
-  validates :parent_association_for_subject, :presence => true, :unless => Proc.new { |permission| permission.id_of_parent.blank?}
+  validates :id_of_parent, presence: true, unless: Proc.new { |permission| permission.parent_association_for_subject.blank?}
+  validates :parent_association_for_subject, presence: true, unless: Proc.new { |permission| permission.id_of_parent.blank?}
 
   validate :only_subject_id_if_not_nested
 
@@ -48,7 +48,7 @@ class Permission < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :community_admin_profile_id, :to => :role
+  delegate :community_admin_profile_id, to: :role
 
 ###
 # Public Methods

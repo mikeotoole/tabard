@@ -12,12 +12,12 @@ class StatusCodeController < ApplicationController
 
   # This is the forbidden method
   def forbidden
-    render :fobidden, :status => :fobidden
+    render :fobidden, status: :fobidden
   end
 
   # This is the 404 method
   def not_found
-    render :not_found, :status => :not_found
+    render :not_found, status: :not_found
   end
 
   # This method gets the Unsupported Browser page.

@@ -8,17 +8,17 @@
       %span= shorten_words @event.name, 21
 
 #actions.actions
-  = link_to "Attendee List", invites_event_url(@event), :meta => 'View invitees', :class => 'invitees'
-  = link_to "Month", month_events_url(year: @event.start_time.to_datetime.year, month: @event.start_time.to_datetime.month), :meta => 'Month view', :class => 'month'
-  = link_to "Week", week_events_url(year: @event.start_time.to_datetime.year, week: @event.start_time.to_datetime.cweek), :meta => 'Week view', :class => 'week'
+  = link_to "Attendee List", invites_event_url(@event), meta: 'View invitees', class: 'invitees'
+  = link_to "Month", month_events_url(year: @event.start_time.to_datetime.year, month: @event.start_time.to_datetime.month), meta: 'Month view', class: 'month'
+  = link_to "Week", week_events_url(year: @event.start_time.to_datetime.year, week: @event.start_time.to_datetime.cweek), meta: 'Week view', class: 'week'
   - if can? :update, @event
-    = link_to 'Edit', edit_event_url(@event), :meta => 'Edit event', :class => 'edit'
+    = link_to 'Edit', edit_event_url(@event), meta: 'Edit event', class: 'edit'
   - if can? :destroy, @event
-    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove event', :class => 'delete'
+    = link_to 'Destroy', @event, confirm: 'Are you sure?', method: :delete, meta: 'Remove event', class: 'delete'
 
 %article.event
   %h1= shorten_words @event.name, 21
-  = render 'meta', :event => @event
+  = render 'meta', event: @event
   - if @event.body
     %p= @event.body
 
@@ -33,9 +33,9 @@
       = paginate @comments
       %ol
         - @comments.each do |comment|
-          = render "subdomains/comments/comment", :comment => comment
+          = render "subdomains/comments/comment", comment: comment
       = paginate @comments
     - if can? :comment, @event
       .newcomment
         %h3 Post a New Comment
-        = render 'subdomains/comments/form', :comment => @event.comments.new
+        = render 'subdomains/comments/form', comment: @event.comments.new

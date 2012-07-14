@@ -13,13 +13,13 @@ class ViewLog < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :view_loggable, :polymorphic => true
+  belongs_to :view_loggable, polymorphic: true
 
 ###
 # Validators
 ###
-  validates :user_profile, :presence => true
-  validates :view_loggable, :presence => true
+  validates :user_profile, presence: true
+  validates :view_loggable, presence: true
 end
 
 

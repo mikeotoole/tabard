@@ -7,9 +7,9 @@ class CreateAnnouncements < ActiveRecord::Migration
       t.integer :user_profile_id
       t.integer :community_id
       t.integer :supported_game_id
-      t.boolean :is_locked, :default => false
+      t.boolean :is_locked, default: false
       t.datetime :deleted_at
-      t.boolean :has_been_edited, :default => false
+      t.boolean :has_been_edited, default: false
 
       t.timestamps
     end

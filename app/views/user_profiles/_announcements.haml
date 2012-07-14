@@ -1,6 +1,6 @@
 - if acknowledgements.any?
   = paginate acknowledgements
-  = form_tag announcements_batch_mark_as_seen_url, :method => :put, :remote => true do
+  = form_tag announcements_batch_mark_as_seen_url, method: :put, remote: true do
     %table
       %tbody
         - unread_count = 0
@@ -10,13 +10,13 @@
             %tr.read
               %td.check.compact= '✔'
               %td
-                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, :subdomain => announcement.subdomain)
-              %td= link_to shorten_words(announcement.community_name), root_url(:subdomain => announcement.subdomain)
+                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, subdomain: announcement.subdomain)
+              %td= link_to shorten_words(announcement.community_name), root_url(subdomain: announcement.subdomain)
               %td
                 %time
-                  = l announcement.created_at, :format => :date_short
+                  = l announcement.created_at, format: :date_short
                 %time
-                  = l announcement.created_at, :format => :time_12
+                  = l announcement.created_at, format: :time_12
           - else
             - unread_count += 1
             %tr.unread
@@ -24,15 +24,15 @@
                 = check_box_tag "ids[#{announcement.id}]", true, false, id: "discussion_id_#{announcement.id}"
                 %label{ for: "discussion_id_#{announcement.id}" }
               %td
-                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, :subdomain => announcement.subdomain)
+                %strong= link_to shorten_words(announcement.name), announcement_url(announcement, subdomain: announcement.subdomain)
                 %br/
-                = truncate shorten_words(announcement.body), :length => 150, :separator => ' '
-              %td= link_to shorten_words(announcement.community_name), root_url(:subdomain => announcement.subdomain)
+                = truncate shorten_words(announcement.body), length: 150, separator: ' '
+              %td= link_to shorten_words(announcement.community_name), root_url(subdomain: announcement.subdomain)
               %td
                 %time
-                  = l announcement.created_at, :format => :date_short
+                  = l announcement.created_at, format: :date_short
                 %time
-                  = l announcement.created_at, :format => :time_12
+                  = l announcement.created_at, format: :time_12
       %thead
         %tr
           %th{ class: unread_count > 0 ? 'check' : '' }

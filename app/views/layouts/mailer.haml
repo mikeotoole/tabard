@@ -1,6 +1,6 @@
 %html
   %head
-    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8' }
+    %meta{ 'http-equiv' => 'Content-Type', content: 'text/html; charset=UTF-8' }
     %style{ type: 'text/css' }
       :plain
         a { color: #BE4124 }
@@ -33,11 +33,11 @@
                   %p{ align: 'left', style: 'text-align: left' }
                     You are receiving this message because your email address is linked with an active Crumblin&trade; user account.
                     If you have previously canceled your Crumblin&trade; account or have never opened a Crumblin&trade; account, please contact our
-                    = link_to 'Customer Support', top_level_support_url, :style => 'color: #BE4124'
+                    = link_to 'Customer Support', top_level_support_url, style: 'color: #BE4124'
                     team.
                   %p{ align: 'left', style: 'text-align: left' }
                     Remember, you can always go to your
-                    = link_to 'Account Settings', account_settings_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :target => '_blank', :style => 'color: #BE4124'
+                    = link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), target: '_blank', style: 'color: #BE4124'
                     page to adjust your
                     %br
                     %strong email notification preferences
@@ -45,18 +45,18 @@
                   %p{ align: 'left', style: 'text-align: left' }
                     Crumblin&trade; is only for persons age 13 or older and in the U.S.
                     If you receive abusive messages, please contact
-                    = link_to 'abuse@crumblin.com', 'mailto:abuse@crumblin.com', :style => 'color: #BE4124'
+                    = link_to 'abuse@crumblin.com', 'mailto:abuse@crumblin.com', style: 'color: #BE4124'
                   %hr{ noshade: 'noshade', size: 1, style: 'background: #ddd; border: 0; border-top: 1px solid #bbb; height:10px;' }
                   %p
-                    = link_to 'Privacy Policy', top_level_privacy_policy_url, :target => '_blank', :style => 'color: #BE4124'
+                    = link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank', style: 'color: #BE4124'
                     = raw '&nbsp;|&nbsp;'
-                    = link_to 'Terms of Service', top_level_terms_of_service_url, :target => '_blank', :style => 'color: #BE4124'
+                    = link_to 'Terms of Service', top_level_terms_of_service_url, target: '_blank', style: 'color: #BE4124'
                     = raw '&nbsp;|&nbsp;'
-                    = link_to 'Customer Support', top_level_support_url, :target => '_blank', :style => 'color: #BE4124'
+                    = link_to 'Customer Support', top_level_support_url, target: '_blank', style: 'color: #BE4124'
                   %p
                     © Copyright 2012, DigitalAugment Inc., All rights reserved.
                     %br
                     202 N. 3rd Ave., Pasco, WA 99301
                   %p
-                    = link_to image_tag('https://s3.amazonaws.com/crumblin-public/images/icon-twitter.png'), 'http://twitter.com/getcrumblin/', :target => '_blank'
-                    = link_to image_tag('https://s3.amazonaws.com/crumblin-public/images/icon-facebook.png'), 'http://www.facebook.com/pages/Crumblin/164047153669129', :target => '_blank'
+                    = link_to image_tag('https://s3.amazonaws.com/crumblin-public/images/icon-twitter.png'), 'http://twitter.com/getcrumblin/', target: '_blank'
+                    = link_to image_tag('https://s3.amazonaws.com/crumblin-public/images/icon-facebook.png'), 'http://www.facebook.com/pages/Crumblin/164047153669129', target: '_blank'

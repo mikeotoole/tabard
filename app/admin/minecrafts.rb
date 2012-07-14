@@ -1,15 +1,15 @@
 ActiveAdmin.register Minecraft do
-  menu :label => "Game Minecraft", :parent => "Game and Character", :if => proc{ can?(:read, Minecraft) }
+  menu label: "Game Minecraft", parent: "Game and Character", if: proc{ can?(:read, Minecraft) }
   controller.authorize_resource
 
   actions :index, :show, :edit, :update, :new, :create
 
   filter :id
-  filter :server_type, :as => :select, :collection => Minecraft::VALID_SERVER_TYPES
+  filter :server_type, as: :select, collection: Minecraft::VALID_SERVER_TYPES
   filter :created_at
   filter :updated_at
 
-  index :title => "Minecraft" do
+  index title: "Minecraft" do
     column "View" do |minecraft|
       link_to "View", admin_minecraft_path(minecraft)
     end
@@ -22,7 +22,7 @@ ActiveAdmin.register Minecraft do
     end
   end
 
-  show :title => :full_name do
+  show title: :full_name do
     attributes_table *default_attribute_table_rows
 
     div do
@@ -41,7 +41,7 @@ ActiveAdmin.register Minecraft do
 
   form do |f|
     f.inputs "Minecraft Details" do
-      f.input :server_type, :as => :select, :collection => Minecraft::VALID_SERVER_TYPES
+      f.input :server_type, as: :select, collection: Minecraft::VALID_SERVER_TYPES
     end
     f.buttons
   end

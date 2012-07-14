@@ -2,7 +2,7 @@
 
 %h1 Pending Applications
 - if @pending_community_applications.any?
-  = paginate @pending_community_applications, :param_name => :pending_page
+  = paginate @pending_community_applications, param_name: :pending_page
   %table
     %thead
       %tr
@@ -12,28 +12,28 @@
         %th
 
     - @pending_community_applications.each do |community_application|
-      %tr{ community_application.is_pending? ? {} : { :class => 'dim'} }
+      %tr{ community_application.is_pending? ? {} : { class: 'dim'} }
         %td.cinch
           %strong= community_application.status
         %td.cinch
-          %time= l community_application.created_at, :format => :date_short
+          %time= l community_application.created_at, format: :date_short
         %td
           = link_to community_application.user_profile_display_name, community_application
         %td.actions
           %div
             - if can? :show, community_application
-              = link_to 'Review', community_application, :class => 'review', :meta => "Review #{community_application.user_profile_display_name}'s application"
-            = link_to 'Profile', community_application.user_profile, :class => 'profile', :meta => "#{community_application.user_profile_display_name}'s user profile"
+              = link_to 'Review', community_application, class: 'review', meta: "Review #{community_application.user_profile_display_name}'s application"
+            = link_to 'Profile', community_application.user_profile, class: 'profile', meta: "#{community_application.user_profile_display_name}'s user profile"
     %tfoot
       %tr
-        %td{ :colspan => 4 }
-  = paginate @pending_community_applications, :param_name => :pending_page
+        %td{ colspan: 4 }
+  = paginate @pending_community_applications, param_name: :pending_page
 - else
   %p There are no pending applications
 
 - if @other_community_applications.any?
   %h2 Other Applications
-  = paginate @other_community_applications, :param_name => :other_page
+  = paginate @other_community_applications, param_name: :other_page
   %table
     %thead
       %tr
@@ -43,19 +43,19 @@
         %th
 
     - @other_community_applications.each do |community_application|
-      %tr{ community_application.is_pending? ? {} : { :class => 'dim'} }
+      %tr{ community_application.is_pending? ? {} : { class: 'dim'} }
         %td.cinch
           %strong= community_application.status
         %td.cinch
-          %time= l community_application.created_at, :format => :date_short
+          %time= l community_application.created_at, format: :date_short
         %td
           = link_to community_application.user_profile_display_name, community_application
         %td.actions
           %div
             - if can? :show, community_application
-              = link_to 'Review', community_application, :class => 'submission', :meta => "#{community_application.user_profile_display_name}'s application"
-            = link_to 'Profile', community_application.user_profile, :class => 'profile', :meta => "#{community_application.user_profile_display_name}'s user profile"
+              = link_to 'Review', community_application, class: 'submission', meta: "#{community_application.user_profile_display_name}'s application"
+            = link_to 'Profile', community_application.user_profile, class: 'profile', meta: "#{community_application.user_profile_display_name}'s user profile"
     %tfoot
       %tr
-        %td{ :colspan => 5 }
-  = paginate @other_community_applications, :param_name => :other_page
+        %td{ colspan: 5 }
+  = paginate @other_community_applications, param_name: :other_page

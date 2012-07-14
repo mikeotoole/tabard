@@ -15,31 +15,31 @@ class Submission < ActiveRecord::Base
   belongs_to :custom_form
   belongs_to :user_profile
 
-  has_many :answers, :dependent => :destroy, :order => :id
-  has_many :form_questions, :through => :custom_form, :source => :questions
+  has_many :answers, dependent: :destroy, order: :id
+  has_many :form_questions, through: :custom_form, source: :questions
 
-  has_one :community, :through => :custom_form
+  has_one :community, through: :custom_form
   has_one :community_application
 
-  accepts_nested_attributes_for :answers, :allow_destroy => true
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
 ###
 # Validators
 ###
-  validates :custom_form, :presence => true
-  validates :user_profile, :presence => true
+  validates :custom_form, presence: true
+  validates :user_profile, presence: true
   validate :answered_all_required_questions
 
 ###
 # Delegates
 ###
-  delegate :admin_profile_id, :to => :community, :allow_nil => true
-  delegate :name, :to => :custom_form, :prefix => true
-  delegate :is_published, :to => :custom_form, :prefix => true
-  delegate :instructions, :to => :custom_form, :prefix => true
-  delegate :questions, :to => :custom_form, :prefix => true, :allow_nil => true
-  delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :avatar_url, :to => :user_profile, :prefix => true
+  delegate :admin_profile_id, to: :community, allow_nil: true
+  delegate :name, to: :custom_form, prefix: true
+  delegate :is_published, to: :custom_form, prefix: true
+  delegate :instructions, to: :custom_form, prefix: true
+  delegate :questions, to: :custom_form, prefix: true, allow_nil: true
+  delegate :display_name, to: :user_profile, prefix: true
+  delegate :avatar_url, to: :user_profile, prefix: true
 
 ###
 # Public Methods

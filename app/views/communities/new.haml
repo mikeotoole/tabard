@@ -3,12 +3,12 @@
 #body
   %h1 Create a community
 
-  = simple_form_for @community, :html => {:novalidate => true} do |f|
+  = simple_form_for @community, html: {novalidate: true} do |f|
     %fieldset
       %ol
-        = f.input :name, :hint => 'This can never be changed.', :input_html => { :maxlength => Community::MAX_NAME_LENGTH }
-        = f.input :slogan, :input_html => { :maxlength => Community::MAX_SLOGAN_LENGTH }
+        = f.input :name, hint: 'This can never be changed.', input_html: { maxlength: Community::MAX_NAME_LENGTH }
+        = f.input :slogan, input_html: { maxlength: Community::MAX_SLOGAN_LENGTH }
       %p
-        %button{ :type => 'submit' } Create Community
+        %button{ type: 'submit' } Create Community
 
   = render 'shared/user_account_links'

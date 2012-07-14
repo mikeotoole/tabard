@@ -26,8 +26,8 @@ class Invite < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :event, :inverse_of => :invites
-  belongs_to :user_profile, :inverse_of => :invites
+  belongs_to :event, inverse_of: :invites
+  belongs_to :user_profile, inverse_of: :invites
   belongs_to :character_proxy
 
 ###
@@ -43,24 +43,24 @@ class Invite < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :event,  :presence => true
-  validates :status,  :presence => true,
-            :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" }, :on => :update, :if => Proc.new{|invite| invite.is_viewed? }
-  validates :user_profile,  :presence => true
+  validates :event,  presence: true
+  validates :status,  presence: true,
+            inclusion: { in: VALID_STATUSES, message: "%{value} is not a valid status" }, on: :update, if: Proc.new{|invite| invite.is_viewed? }
+  validates :user_profile,  presence: true
   validate :character_is_valid_for_user_profile
 
-  delegate :supported_game, :to => :event, :allow_nil => true
-  delegate :community, :to => :event, :allow_nil => true
-  delegate :community_subdomain, :to => :event, :allow_nil => true
-  delegate :community_name, :to => :event, :allow_nil => true
-  delegate :name, :to => :event, :prefix => true, :allow_nil => true
-  delegate :start_time, :to => :event, :prefix => true, :allow_nil => true
-  delegate :end_time, :to => :event, :prefix => true, :allow_nil => true
-  delegate :name, :to => :invitee, :prefix => true, :allow_nil => true
-  delegate :avatar_url, :to => :invitee, :prefix => true, :allow_nil => true
-  delegate :display_name, :to => :user_profile, :prefix => true, :allow_nil => true
-  delegate :avatar_url, :to => :user_profile, :prefix => true, :allow_nil => true
-  delegate :avatar_url, :to => :character_proxy, :prefix => true, :allow_nil => true
+  delegate :supported_game, to: :event, allow_nil: true
+  delegate :community, to: :event, allow_nil: true
+  delegate :community_subdomain, to: :event, allow_nil: true
+  delegate :community_name, to: :event, allow_nil: true
+  delegate :name, to: :event, prefix: true, allow_nil: true
+  delegate :start_time, to: :event, prefix: true, allow_nil: true
+  delegate :end_time, to: :event, prefix: true, allow_nil: true
+  delegate :name, to: :invitee, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :invitee, prefix: true, allow_nil: true
+  delegate :display_name, to: :user_profile, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :user_profile, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :character_proxy, prefix: true, allow_nil: true
 
 ###
 # Callbacks

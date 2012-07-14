@@ -20,20 +20,20 @@
       - @submissions.each do |submission|
         %tr
           %td.cinch
-            %time= l submission.created_at, :format => :date_short
+            %time= l submission.created_at, format: :date_short
           %td
             = link_to submission.user_profile_display_name, custom_form_submission_url(@form,submission)
           %td.actions
             %div
               - if can? :show, submission
-                = link_to 'Submission', custom_form_submission_url(@form,submission), :class => 'submission', :meta => 'Review submission'
-              = link_to 'Profile', custom_form_submission_url(@form,submission), :class => 'profile', :meta => "#{submission.user_profile_display_name}'s profile"
+                = link_to 'Submission', custom_form_submission_url(@form,submission), class: 'submission', meta: 'Review submission'
+              = link_to 'Profile', custom_form_submission_url(@form,submission), class: 'profile', meta: "#{submission.user_profile_display_name}'s profile"
               - if can? :destroy, submission
-                = link_to 'Delete', submission, :confirm => 'Are you sure?', :method => :delete, :class => 'delete', :meta => 'Delete submission'
+                = link_to 'Delete', submission, confirm: 'Are you sure?', method: :delete, class: 'delete', meta: 'Delete submission'
     %tfoot
       %tr
-        %td{ :colspan => 3 }
-          = link_to 'New Submission', new_custom_form_submission_url(@form), :class => 'button'
+        %td{ colspan: 3 }
+          = link_to 'New Submission', new_custom_form_submission_url(@form), class: 'button'
 - else
   %p
     There are no submissions.

@@ -1,5 +1,5 @@
 ActiveAdmin.register PageSpace do
-  menu :parent => "Pages", :if => proc{ can?(:read, PageSpace) }
+  menu parent: "Pages", if: proc{ can?(:read, PageSpace) }
   controller.authorize_resource
 
   actions :index, :show, :update, :edit, :destroy
@@ -17,11 +17,11 @@ ActiveAdmin.register PageSpace do
       link_to page_space.community_name, [:admin, page_space.community]
     end
     column :name
-    column :supported_game, :sortable => :supported_game_id
+    column :supported_game, sortable: :supported_game_id
     column :created_at
   end
 
-  show :title => proc{"#{page_space.community_name} - #{page_space.name}"} do
+  show title: proc{"#{page_space.community_name} - #{page_space.name}"} do
     attributes_table *default_attribute_table_rows
     div do
       panel("Pages") do
@@ -37,7 +37,7 @@ ActiveAdmin.register PageSpace do
 
   form do |f|
     f.inputs "Page Space Details" do
-      f.input :supported_game, :collection => f.object.community.supported_games
+      f.input :supported_game, collection: f.object.community.supported_games
       f.input :name
     end
     f.buttons

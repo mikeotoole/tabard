@@ -20,14 +20,14 @@ class AnnouncementsController < ApplicationController
       @announcement.update_viewed(current_user.user_profile)
       respond_to do |format|
         format.js {
-          announcement = current_user.unread_announcements.where(:community_id => current_community.id).recent.first
+          announcement = current_user.unread_announcements.where(community_id: current_community.id).recent.first
           if !!announcement
-            render :partial => 'layouts/flash_message_announcement', :layout => nil, :locals => { :announcement => announcement }
+            render partial: 'layouts/flash_message_announcement', layout: nil, locals: { announcement: announcement }
           else
-            render :text => ''
+            render text: ''
           end
         }
-        format.html { redirect_to announcement_url(@announcement, :subdomain => @announcement.subdomain)}
+        format.html { redirect_to announcement_url(@announcement, subdomain: @announcement.subdomain)}
       end
     else
       raise CanCan::AccessDenied
@@ -45,6 +45,6 @@ class AnnouncementsController < ApplicationController
         announcement.update_viewed(current_user.user_profile) if announcement
       end
     end
-    render :text => ''
+    render text: ''
   end
 end

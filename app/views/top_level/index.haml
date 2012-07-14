@@ -41,19 +41,19 @@
       messaging system.
       = link_to 'More features', top_level_features_url
 
-  = simple_form_for 'user', :url => new_user_session_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'login' } do |f|
+  = simple_form_for 'user', url: new_user_session_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { class: 'login' } do |f|
     %fieldset
       %ol
-        = f.input :email, :input_html => { tabindex: 1, id: 'login_email' }
-        = f.input :password, :input_html => { tabindex: 2 }
+        = f.input :email, input_html: { tabindex: 1, id: 'login_email' }
+        = f.input :password, input_html: { tabindex: 2 }
         %li
-          = f.input :remember_me, :as => :boolean, :wrapper => false, :input_html => { :tabindex => 3 }
+          = f.input :remember_me, as: :boolean, wrapper: false, input_html: { tabindex: 3 }
           &nbsp;|&nbsp;
           = link_to 'Password Help', new_user_password_url
-    %button{ :type => 'submit', :tabindex => 4 } Login
+    %button{ type: 'submit', tabindex: 4 } Login
 
-  = simple_form_for 'user', :url => user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :html => { class: 'signup', autocomplete: 'off' } do |f|
-    = f.input :is_partial_request, :as => :hidden, :input_html => { value: true }
+  = simple_form_for 'user', url: user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { class: 'signup', autocomplete: 'off' } do |f|
+    = f.input :is_partial_request, as: :hidden, input_html: { value: true }
     %h2
       %strong Signup
       for your
@@ -61,7 +61,7 @@
       account
     %fieldset
       %ol
-        = f.input :email, :as => :email, :input_html => { tabindex: 5, id: 'signup_email' }
-        = f.input :display_name, :input_html => { name: 'user[user_profile_attributes][display_name]', tabindex: 6 }
-        = f.input :remember_password, :label => 'Password', :input_html => { tabindex: 7, id: 'signup_password' }
-    %button{ :type => 'submit', :tabindex => 8 } Sign up
+        = f.input :email, as: :email, input_html: { tabindex: 5, id: 'signup_email' }
+        = f.input :display_name, input_html: { name: 'user[user_profile_attributes][display_name]', tabindex: 6 }
+        = f.input :remember_password, label: 'Password', input_html: { tabindex: 7, id: 'signup_password' }
+    %button{ type: 'submit', tabindex: 8 } Sign up
