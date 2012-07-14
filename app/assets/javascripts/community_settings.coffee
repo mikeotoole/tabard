@@ -2,7 +2,7 @@ $(document).ready ->
 
   # change theme
   $('label[for="community_theme_id"] + ul input').change ->
-    theme = $(this).find('+ label img').attr 'theme'
+    theme = $(@).find('+ label img').attr 'theme'
     $('head link.theme').attr 'href', '/assets/themes/' + theme + '.css'
 
   # background color

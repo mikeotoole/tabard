@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'EurostyleStd';
+  src: url("/fonts/eurostyle-std.eot");
+  src: url("/fonts/eurostyle-std.eot?#iefix") format('embedded-opentype'),
+       url("/fonts/eurostyle-std.woff") format('woff'),
+       url("/fonts/eurostyle-std.ttf") format('truetype'),
+       url("/fonts/eurostyle-std.svg#EurostyleStd") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EurostyleBold';
+  src: url("/fonts/eurostyle-bold.eot");
+  src: url("/fonts/eurostyle-bold.eot?#iefix") format('embedded-opentype'),
+       url("/fonts/eurostyle-bold.woff") format('woff'),
+       url("/fonts/eurostyle-bold.ttf") format('truetype'),
+       url("/fonts/eurostyle-bold.svg#EurostyleBold") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -9,7 +9,6 @@ source 'http://rubygems.org'
 
 # Javascript Library
   gem 'jquery-rails'
-  gem 'jquery-ui-rails'
 
 # Meta Languages
   gem 'haml'
@@ -72,7 +71,6 @@ source 'http://rubygems.org'
 
 # Production Specific Gems
   group :production do
-    gem 'heroku'
     gem 'thin'
     gem 'pg'
     gem 'newrelic_rpm'

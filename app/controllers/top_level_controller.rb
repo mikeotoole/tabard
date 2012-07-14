@@ -44,8 +44,8 @@ class TopLevelController < ApplicationController
   end
 
   # This method gets the Introduction page.
-  def intro
-  end
+  #def intro
+  #end
 
   # This method gets the Features page.
   def features

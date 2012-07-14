@@ -2,7 +2,10 @@
 %html
   %head
     %title= yield_for(:title, 'Crumblin™')
-    = stylesheet_link_tag "top_level/top_level", "top_level/calendar"
+    = stylesheet_link_tag "/stylesheets/din.css"
+    = stylesheet_link_tag "/stylesheets/eurostyle.css"
+    = stylesheet_link_tag "top_level/top_level"
+    = stylesheet_link_tag "top_level/calendar"
     = javascript_include_tag "application", "calendar"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'

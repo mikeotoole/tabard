@@ -3,10 +3,10 @@ $(document).ready ->
   # mailbox checkbox select (for visual enhancement)
   $('#mailbox .meta input[type="checkbox"]')
     .bind 'click change', ->
-      if $(this).filter(':checked').length
-        $(this).closest('dd').addClass 'selected'
+      if $(@).filter(':checked').length
+        $(@).closest('dd').addClass 'selected'
       else
-        $(this).closest('dd').removeClass 'selected'
+        $(@).closest('dd').removeClass 'selected'
   
   # message AJAX load
   $('#mailbox')
@@ -18,7 +18,7 @@ $(document).ready ->
       $.alert { body: 'Unable to load message.' }
     .delegate 'dd a[data-remote]', 'ajax:success', (event, data, status, xhr) ->
       $('#mailbox dd').removeClass 'open'
-      dd = $(this).closest('dd')
+      dd = $(@).closest('dd')
       if dd.hasClass 'read'
         dd.addClass 'open'
       else
@@ -36,17 +36,17 @@ $(document).ready ->
     
     $('#message_to')
       .bind 'focus blur keyup change', ->
-        text = $.trim $(this).val().toLowerCase()
+        text = $.trim $(@).val().toLowerCase()
         $('aside ul, aside label').hide()
         if text.length
           showcount = 0
           $('aside label').each ->
-            id = $(this).attr 'for'
+            id = $(@).attr 'for'
             display = 'none'
-            if showcount < 5 && !$('#'+id+':checked').length && $(this).html().toLowerCase().match(text)
+            if showcount < 5 && !$('#'+id+':checked').length && $(@).html().toLowerCase().match(text)
               showcount++
               display = 'block'
-              $(this).css('display', display)
+              $(@).css('display', display)
           if showcount > 0
             $('aside ul').show()
             updateMessageListClasses()
@@ -68,7 +68,7 @@ $(document).ready ->
     
     $('mark')
       .click ->
-        $(this).animate({ opacity: 0}, 200, 'linear')
+        $(@).animate({ opacity: 0}, 200, 'linear')
     
     updateMessageHeaderHeight()
     
@@ -87,8 +87,8 @@ $(document).ready ->
     .find('.toggle button')
     .data('checked',false)
     .click ->
-      $(this).data('checked',!$(this).data('checked'))
-      $('#mailbox dd .meta input').attr('checked',$(this).data('checked'))
+      $(@).data('checked',!$(@).data('checked'))
+      $('#mailbox dd .meta input').attr('checked',$(@).data('checked'))
     
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })
