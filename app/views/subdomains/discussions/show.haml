@@ -1,5 +1,6 @@
 - title "#{@discussion.name} | #{@discussion.discussion_space_name} | #{@community.name}"
-= javascript_include_tag "comments"
+- content_for :header do
+  = javascript_include_tag "comments"
 
 #breadcrumb
   %ol

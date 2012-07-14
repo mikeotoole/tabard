@@ -9,6 +9,7 @@
     = javascript_include_tag "application", "calendar"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
+    = yield :header
 
   %body.fluid
     #bar= render "layouts/bar_in"
@@ -28,3 +29,4 @@
 
   = yield
   = render 'layouts/footer', current_layout: 'calendar'
+  = yield :footer

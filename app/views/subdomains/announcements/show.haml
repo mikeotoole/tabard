@@ -1,5 +1,7 @@
 - title "#{@announcement.name} | #{@announcement.context_name} | #{@community.name}"
-= javascript_include_tag "comments"
+- content_for :header do
+  = javascript_include_tag "comments"
+
 #breadcrumb
   %ol
     %li= link_to "Announcements", announcements_url(subdomain: current_community.subdomain)
