@@ -6,7 +6,7 @@ $(document).ready ->
 
   $('form.custom_form')
     .delegate '.questions > li .toggle', 'click', ->
-      container = $(this).closest('.container')
+      container = $(@).closest('.container')
       qtitle = container.find('input.body').val()
       qtitle = '(no title)' unless qtitle
       container.find('> h3').html qtitle
@@ -17,13 +17,13 @@ $(document).ready ->
         container.draggable('disable')
 
     .delegate '.questions > li.drag .container', 'dragstart', (event, ui) ->
-      return false unless $(this).hasClass 'closed'
+      return false unless $(@).hasClass 'closed'
       $('form.custom_form .questions > li.drop').remove()
       $('form.custom_form .questions > li.drag:first').before('<li class="drop">&nbsp;</li>')
       $('form.custom_form .questions > li.drag').after('<li class="drop">&nbsp;</li>')
       $('form.custom_form .questions > li.drop').droppable(dropOpts)
-      $(this).closest('.drag').prevAll('.drop').first().remove()
-      $(this).closest('.drag').nextAll('.drop').first().remove()
+      $(@).closest('.drag').prevAll('.drop').first().remove()
+      $(@).closest('.drag').nextAll('.drop').first().remove()
 
     .delegate '.questions > li.drag .container', 'dragstop', (event, ui) ->
       $('form.custom_form .questions > li.drop').remove()
@@ -33,7 +33,7 @@ $(document).ready ->
       dragLi = ui.draggable.closest('li')
       html = ui.draggable.html()
       $('form.custom_form .questions > li.drag .container').stop().animate opacity: 1, 200
-      $(this)
+      $(@)
         .html('<div class="container">'+html+'</div>')
         .removeClass('drop dropover')
         .addClass('drag')
@@ -42,7 +42,7 @@ $(document).ready ->
       newClassNames = 'closed'
       if ui.draggable.hasClass('question_with_errors')
         newClassNames += ' question_with_errors'
-      $(this)
+      $(@)
         .attr({ question: dragLi.attr('question'), question_id: dragLi.attr('question_id'), question_style: dragLi.attr('question_style') })
         .droppable('destroy')
         .find('.container')
@@ -52,13 +52,13 @@ $(document).ready ->
       ui.draggable.closest('li').remove()
       positionNumber = 0
       $('form.custom_form .questions input.position').each ->
-        $(this).val ++positionNumber
+        $(@).val ++positionNumber
     
     .delegate '.questions > li.drop', 'dropover', (event, ui) ->
-      $(this).addClass('dropover')
+      $(@).addClass('dropover')
       
     .delegate '.questions > li.drop', 'dropout', (event, ui) ->
-      $(this).removeClass('dropover')
+      $(@).removeClass('dropover')
 
   $('form.custom_form .questions > li.drag .container')
     .draggable(dragOpts)
@@ -70,7 +70,7 @@ $(document).ready ->
   
   $('form.custom_form')
     .delegate '.questions > li .container', 'init', ->
-      container = $(this)
+      container = $(@)
       qli = container.closest('li')
       right = qli.find('.right')
     
@@ -89,7 +89,7 @@ $(document).ready ->
       
       # TypeStyle select change action
       container.delegate 'input', 'change', ->
-        select = $(this).closest('.select')
+        select = $(@).closest('.select')
         answers = right.find('.answers')
         checkedInput = select.find('input:checked')
         val = checkedInput.val()
@@ -118,11 +118,11 @@ $(document).ready ->
       
       # Remove answer link
       right.find('.answers').delegate 'li a.remove', 'click', ->
-        ali = $(this).closest('li')
+        ali = $(@).closest('li')
         ali.slideUp 400, ->
           if ali.attr 'question'
             answer = '<input name="custom_form[questions_attributes]['+ali.attr('question')+'][predefined_answers_attributes]['+ali.attr('answer')+'][_destroy]" type="hidden" value="true">'
-            $(this).replaceWith(answer)
+            $(@).replaceWith(answer)
       
       qli.find('.select input:checked').trigger 'change'
       

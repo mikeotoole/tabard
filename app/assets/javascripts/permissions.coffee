@@ -3,7 +3,7 @@ $(document).ready ->
   $('#roles')
     .delegate 'a', 'click', ->
       if $('#role').data 'changed'
-        link = $(this)
+        link = $(@)
         $.confirm {
           title: 'Discard Changes?'
           body: 'Your changes will be lost if you switch roles without saving first. Are you sure you want to discard your changes to this role?'
@@ -23,7 +23,7 @@ $(document).ready ->
       $.alert { body: 'Error: unable to load role.' }
     .delegate 'a', 'ajax:success', (event, data, status, xhr) ->
       $('#roles a').removeClass('active')
-      $(this).addClass('active')
+      $(@).addClass('active')
       $('#roles, #role').removeClass('busy')
       $('#role')
         .data('changed', false)
@@ -35,7 +35,7 @@ $(document).ready ->
     .delegate 'input, textarea', 'change', ->
       $('#role').data 'changed', true
     .delegate '#permissions > dt h2', 'click', ->
-      dd = $(this).closest('dt').find('+ dd')
+      dd = $(@).closest('dt').find('+ dd')
       dd.find('input').hide()
       dd.slideToggle 200, ->
         dd.find('input').show()

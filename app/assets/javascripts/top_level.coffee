@@ -3,14 +3,14 @@ $(document).ready ->
   # make labels work like field suggestions
   $('#homebox form li.input')
     .delegate 'input', 'focus', ->
-      $(this).siblings('label').hide()
+      $(@).siblings('label').hide()
     .delegate 'input', 'blur change', ->
-      if $(this).val().length < 1
-        $(this).siblings('label').show()
+      if $(@).val().length < 1
+        $(@).siblings('label').show()
       else
-        $(this).siblings('label').hide()
+        $(@).siblings('label').hide()
     .each ->
-      input = $(this).find('input')
+      input = $(@).find('input')
       if input.val().length < 1
         input.siblings('label').hide().show()
       setTimeout ->
@@ -32,10 +32,10 @@ $(document).ready ->
     $('#homebox .slideshownav a')
       .click ->
         clearTimeout slideTimeout
-        link = $(this)
+        link = $(@)
         $('#homebox .slideshownav a').removeClass 'current'
         link.addClass 'current'
-        i = $('#homebox .slideshownav a').index($(this))
+        i = $('#homebox .slideshownav a').index($(@))
         $('#homebox .slideshow dt').removeClass 'current'
         $('#homebox .slideshow dt:eq('+i+')').addClass 'current'
         slideTimeout = setTimeout ->
@@ -55,14 +55,14 @@ $(document).ready ->
   
   # videobox player
   $('#videobox .menu a').click ->
-    link = $(this).attr('href').split /v=/
+    link = $(@).attr('href').split /v=/
     $('#videobox .player iframe').attr 'src', 'http://www.youtube.com/embed/'+link[1]+'?wmode=transparent'
     $('#videobox .menu li').removeClass 'current'
-    $(this).closest('li').addClass 'current'
+    $(@).closest('li').addClass 'current'
     false
   $('#videobox .menu li:first').addClass('current').find('a').trigger 'click'
   $('.videolink').click ->
-    link = $(this).attr('href')
+    link = $(@).attr('href')
     videos = $('#videobox .menu a')
     for video in videos
       if $(video).attr('href') == link
@@ -75,10 +75,10 @@ $(document).ready ->
     .wrapInner('<div class="pane" />')
     .css('height', 190)
     .bind 'scroll', ->
-      boxH = $(this).height()
-      paneH = $(this).find('.pane').height()
-      if paneH <= boxH || $(this).scrollTop() >= paneH - boxH
-        $(this)
+      boxH = $(@).height()
+      paneH = $(@).find('.pane').height()
+      if paneH <= boxH || $(@).scrollTop() >= paneH - boxH
+        $(@)
           .closest('.document')
           .find('.accept')
           .css({ opacity: 1 })
@@ -94,7 +94,7 @@ $(document).ready ->
     .after('<dfn class="hint">Scroll before accepting</dfn>')
   $('.document:has(.scroll) .accept label')
     .bind 'click', ->
-      if $(this).closest('.accept').find('input:disabled')
+      if $(@).closest('.accept').find('input:disabled')
         $.alert { body: "Make sure that you read and <b>scroll to the end</b> of each document before accepting the terms." }
         false
       else
