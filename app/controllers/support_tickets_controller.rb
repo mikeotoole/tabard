@@ -32,12 +32,4 @@ class SupportTicketsController < ApplicationController
     respond_with @support_ticket, location: support_index_url
   end
 
-  # Edit
-  def edit
-  end
-
-  # Update
-  def update
-  end
-
 end

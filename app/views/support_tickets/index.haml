@@ -2,24 +2,26 @@
 
 #body
   %h1 Customer Support
-  -unless user_signed_in?
+  - unless user_signed_in?
     %p
-      For now, please direct all support issues to
-      = link_to 'support@crumblin.com', 'mailto:support@crumblin.com'
-  -else
-    %h2 Create A New Ticket
-    = render 'form', support_ticket: SupportTicket.new
-    %hr
-    %h2 Your Support Tickets
-    %h3 Pending Review
-    %ul
-      -current_user.pending_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
-    %h3 In Progress
-    %ul
-      -current_user.in_progress_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
-    %h3 Closed
-    %ul
-      -current_user.closed_support_tickets.each do |ticket|
-        %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
+      Please
+      = link_to 'log into Crumblin', new_user_session_url
+      to create or update your support tickets.
+  - else
+    %article
+      %h2 New request
+      = render 'form', support_ticket: SupportTicket.new
+    %aside
+      %h2 Your Tickets
+      %h3 Pending Review
+      %ul
+        -current_user.pending_support_tickets.each do |ticket|
+          %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
+      %h3 In Progress
+      %ul
+        -current_user.in_progress_support_tickets.each do |ticket|
+          %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)
+      %h3 Closed
+      %ul
+        -current_user.closed_support_tickets.each do |ticket|
+          %li=link_to "##{ticket.id} - #{truncate(ticket.body)}", support_url(ticket)

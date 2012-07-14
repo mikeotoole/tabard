@@ -1,4 +1,4 @@
 = simple_form_for support_ticket, url: support_url(subdomain: false), html: {novalidate: true} do |f|
-  = render 'fields', f: f, support_ticket: support_ticket
-  %p.submit
-    = f.button :submit, 'Create Support Ticket'
+  = f.input :body, wrapper_tag: :p, label: 'Describe your issue in detail'
+  %p
+    %button{ type: 'submit' } Create Support Ticket
