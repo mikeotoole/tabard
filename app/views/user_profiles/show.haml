@@ -11,18 +11,18 @@
     .avatar= image_tag @user_profile.avatar_url :large
     %ul.actions
       - if can? :update, @user_profile
-        %li= link_to "Settings", edit_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://")), :icon => '✲'
-        %li= link_to 'Edit Profile', edit_user_profile_url(@user_profile), :icon => '✎'
+        %li= link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
+        %li= link_to 'Edit Profile', edit_user_profile_url(@user_profile), icon: '✎'
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile
-          %li.message= link_to 'Message', compose_mail_to_url(@user_profile), :icon => '✉'
-          -#%li.message= link_to 'Recruit', '#', :icon => '✍'
+          %li.message= link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
+          -#%li.message= link_to 'Recruit', '#', icon: '✍'
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile == current_user.user_profile)
       %h3 My Communities
       - if @user_profile.communities.any?
         %ul.communities
           - @user_profile.communities.each do |community|
-            %li= link_to shorten_words(community.name), community, (@user_profile == community.admin_profile ? { :meta => '✭' } : {})
+            %li= link_to shorten_words(community.name), community, (@user_profile == community.admin_profile ? { meta: '✭' } : {})
       - elsif user_signed_in? and @user_profile == current_user.user_profile
         %p
           You don't have any memberships yet.
@@ -40,26 +40,26 @@
         %p= shorten_words @user_profile.description
       %h3 Stats
       %p.stats
-        = "User since #{l @user_profile.created_at, :format => :date_short}."
+        = "User since #{l @user_profile.created_at, format: :date_short}."
         %br
-        = pluralize(Discussion.where(:user_profile_id => @user_profile.id).size, 'discussion') + ' created.'
+        = pluralize(Discussion.where(user_profile_id: @user_profile.id).size, 'discussion') + ' created.'
         %br
-        = pluralize(Comment.where(:user_profile_id => @user_profile.id).size, 'comment') + ' made.'
+        = pluralize(Comment.where(user_profile_id: @user_profile.id).size, 'comment') + ' made.'
   %article
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id)
       %dl#tabs.tabs
-        %dt{ :class => 'activities current' }
-          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: false, format: :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.activities + dd', 'data-error' => 'Error: unable to load recent activity.'
+        %dt{ class: 'activities current' }
+          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.activities + dd', 'data-error' => 'Error: unable to load recent activity.'
         %dd
         - if user_signed_in? and @user_profile == current_user.user_profile
-          %dt{ :class => 'announcements' }
-            = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: false, format: :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.announcements + dd', 'data-error' => 'Error: unable to load announcements.'
+          %dt{ class: 'announcements' }
+            = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.announcements + dd', 'data-error' => 'Error: unable to load announcements.'
           %dd
-          %dt{ :class => 'invites' }
-            = link_to 'Invites', invites_user_profile_url(@user_profile, subdomain: false, format: :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.invites + dd', 'data-error' => 'Error: unable to load invites.'
+          %dt{ class: 'invites' }
+            = link_to 'Invites', invites_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.invites + dd', 'data-error' => 'Error: unable to load invites.'
           %dd
-        %dt{ :class => 'characters' }
-          = link_to 'Characters', characters_user_profile_url(@user_profile, subdomain: false, format: :js), :remote => true, :class => 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.characters + dd', 'data-error' => 'Error: unable to load characters.'
+        %dt{ class: 'characters' }
+          = link_to 'Characters', characters_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', 'data-type' => :text, 'data-target' => '#tabs dt.characters + dd', 'data-error' => 'Error: unable to load characters.'
         %dd
     - else
       %p This user's profile is private.

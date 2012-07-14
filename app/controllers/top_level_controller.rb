@@ -13,10 +13,10 @@ class TopLevelController < ApplicationController
 # Callbacks
 ###
   skip_before_filter :block_unauthorized_user!
-  skip_before_filter :check_maintenance_mode, :only => [:maintenance]
-  skip_before_filter :ensure_accepted_most_recent_legal_documents, :only => [:bar, :ignore_browser]
-  skip_before_filter :limit_subdomain_access, :only => [:bar, :ignore_browser]
-  skip_before_filter :ensure_not_ssl_mode, :only => [:bar, :ignore_browser]
+  skip_before_filter :check_maintenance_mode, only: [:maintenance]
+  skip_before_filter :ensure_accepted_most_recent_legal_documents, only: [:bar, :ignore_browser]
+  skip_before_filter :limit_subdomain_access, only: [:bar, :ignore_browser]
+  skip_before_filter :ensure_not_ssl_mode, only: [:bar, :ignore_browser]
   skip_before_filter :check_supported_browser
 
 ###
@@ -28,7 +28,7 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
-    redirect_to user_profile_url(current_user.user_profile, :subdomain => false) + '#characters' if user_signed_in?
+    redirect_to user_profile_url(current_user.user_profile, subdomain: false) + '#characters' if user_signed_in?
   end
 
   ###
@@ -37,9 +37,9 @@ class TopLevelController < ApplicationController
   ###
   def bar
     if user_signed_in?
-      render :partial => "layouts/bar_in"
+      render partial: "layouts/bar_in"
     else
-      render :partial => "layouts/bar_out"
+      render partial: "layouts/bar_out"
     end
   end
 
@@ -58,7 +58,7 @@ class TopLevelController < ApplicationController
   # This method gets the Maintenance page.
   def maintenance
     if SiteConfiguration.is_maintenance?
-      render 'maintenance', :layout => nil, :status => 503
+      render 'maintenance', layout: nil, status: 503
     else
       redirect_to root_url
     end

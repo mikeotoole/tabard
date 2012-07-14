@@ -8,7 +8,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :creator_id
       t.integer :supported_game_id
       t.integer :community_id
-      t.boolean :is_public, :default => false
+      t.boolean :is_public, default: false
       t.string :location
 
       t.timestamps

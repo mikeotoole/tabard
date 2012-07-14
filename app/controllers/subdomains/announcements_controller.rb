@@ -12,9 +12,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  authorize_resource :except => [:community, :game]
+  authorize_resource except: [:community, :game]
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_community, :only => [:new, :create, :lock, :unlock, :destroy]
+  load_and_authorize_resource through: :current_community, only: [:new, :create, :lock, :unlock, :destroy]
 
 ###
 # REST Actions
@@ -36,8 +36,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
       @comments = @announcement.comments.page params[:page]
       respond_to do |format|
         format.js {
-          announcement = any_announcements_to_display? ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :announcement => announcements_to_display.first }) : ''
-          render :text => announcement, :layout => nil
+          announcement = any_announcements_to_display? ? render_to_string(partial: 'layouts/flash_message_announcement', locals: { announcement: announcements_to_display.first }) : ''
+          render text: announcement, layout: nil
         }
         format.html
       end

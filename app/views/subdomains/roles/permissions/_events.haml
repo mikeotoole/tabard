@@ -1,3 +1,3 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("Event") do |pf|
-  = pf.input :subject_class, :as => :hidden
+  = pf.input :subject_class, as: :hidden
   .slider= pf.collection_radio :permission_level, [['','×'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last

@@ -21,25 +21,25 @@ class BaseCharacter < ActiveRecord::Base
 # Associations
 ###
   #The character_proxy that associates this character to a user.
-  has_one :character_proxy, :as => :character, :foreign_key => :character_id
+  has_one :character_proxy, as: :character, foreign_key: :character_id
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => 100 }
+  validates :name,  presence: true,
+                    length: { maximum: 100 }
   validates :avatar,
-      :if => :avatar?,
-      :file_size => {
-        :maximum => 5.megabytes.to_i
+      if: :avatar?,
+      file_size: {
+        maximum: 5.megabytes.to_i
       }
 
 ###
 # Delegates
 ###
-  delegate :user_profile, :to => :character_proxy, :allow_nil => true
-  delegate :roster_assignments, :to => :character_proxy, :allow_nil => true
-  delegate :is_removed, :to => :character_proxy, :allow_nil => true
+  delegate :user_profile, to: :character_proxy, allow_nil: true
+  delegate :roster_assignments, to: :character_proxy, allow_nil: true
+  delegate :is_removed, to: :character_proxy, allow_nil: true
 
 ###
 # Uploaders

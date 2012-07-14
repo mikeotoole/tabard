@@ -6,16 +6,16 @@
 def create_user(first_name, last_name, display_name=nil)
   puts "Creating User #{first_name} #{last_name}"
   display_name ||= "#{first_name} #{last_name}"
-  user = User.new(:accepted_current_terms_of_service => true, :accepted_current_privacy_policy => true,
-      :email => "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", :password => "Password",
-      :time_zone => "Pacific Time (US & Canada)",
-      :user_profile_attributes => { :first_name => first_name,
-                                    :last_name => last_name,
-                                    :display_name => display_name},
-      :date_of_birth => 22.years.ago.to_date,
-      :is_email_on_message => false,
-      :is_email_on_announcement => false,
-      :beta_code => User::BETA_CODE)
+  user = User.new(accepted_current_terms_of_service: true, accepted_current_privacy_policy: true,
+      email: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", password: "Password",
+      time_zone: "Pacific Time (US & Canada)",
+      user_profile_attributes: { first_name: first_name,
+                                    last_name: last_name,
+                                    display_name: display_name},
+      date_of_birth: 22.years.ago.to_date,
+      is_email_on_message: false,
+      is_email_on_announcement: false,
+      beta_code: User::BETA_CODE)
   user.skip_confirmation!
   user.save!
   return user
@@ -27,15 +27,15 @@ unless @dont_run
   # Create Admin Users
   ###
   puts "Creating test active admin users"
-  superadmin = AdminUser.create!(:email => 'superadmin@digitalaugment.com', :role => "superadmin", display_name: "Super Admin")
+  superadmin = AdminUser.create!(email: 'superadmin@digitalaugment.com', role: "superadmin", display_name: "Super Admin")
   superadmin.password = 'Password'
   superadmin.password_confirmation = 'Password'
   superadmin.save!
-  moderator = AdminUser.create!(:email => 'moderator@digitalaugment.com', :role => "moderator", display_name: "Moderator")
+  moderator = AdminUser.create!(email: 'moderator@digitalaugment.com', role: "moderator", display_name: "Moderator")
   moderator.password = 'Password'
   moderator.password_confirmation = 'Password'
   moderator.save!
-  admin = AdminUser.create!(:email => 'admin@digitalaugment.com', :role => "admin", display_name: "Admin")
+  admin = AdminUser.create!(email: 'admin@digitalaugment.com', role: "admin", display_name: "Admin")
   admin.password = 'Password'
   admin.password_confirmation = 'Password'
   admin.save!
@@ -68,14 +68,14 @@ unless @dont_run
   s_pidgeon.update_attribute(:publicly_viewable, false)
 
   puts "Creating a user for Mike, because he thinks our adjective animals aren't cool enough..."
-  mike = User.new(:accepted_current_terms_of_service => true,
-                  :accepted_current_privacy_policy => true,
-                  :email => "mpotoole@gmail.com",
-                  :password => "Password",
-                  :date_of_birth => Date.new(1980,4,17),
-                  :user_profile_attributes => {:first_name => "Mike", :last_name => "O'Toole", :display_name => "Subfighter13"},
-                  :time_zone => "Pacific Time (US & Canada)",
-                  :beta_code => User::BETA_CODE)
+  mike = User.new(accepted_current_terms_of_service: true,
+                  accepted_current_privacy_policy: true,
+                  email: "mpotoole@gmail.com",
+                  password: "Password",
+                  date_of_birth: Date.new(1980,4,17),
+                  user_profile_attributes: {first_name: "Mike", last_name: "O'Toole", display_name: "Subfighter13"},
+                  time_zone: "Pacific Time (US & Canada)",
+                  beta_code: User::BETA_CODE)
   mike.skip_confirmation!
   mike.save!
 

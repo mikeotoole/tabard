@@ -12,12 +12,12 @@ class PermissionDefault < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :role, :inverse_of => :permission_defaults
+  belongs_to :role, inverse_of: :permission_defaults
 
 ###
 # Validators
 ###
-  validates :object_class,  :uniqueness => {:scope => [:role_id, :deleted_at]}
+  validates :object_class,  uniqueness: {scope: [:role_id, :deleted_at]}
 
 ###
 # Instance Methods

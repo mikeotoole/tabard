@@ -25,7 +25,7 @@ class SupportCommentsController < ApplicationController
     @support_comment.user_profile = current_user.user_profile
     authorize! :create, @support_comment
     add_new_flash_message "Your comment has been added.", 'success' if @support_comment.save
-    respond_with @support_comment, :location => support_url(@support_ticket)
+    respond_with @support_comment, location: support_url(@support_ticket)
   end
 
   # Loads the models for cancan.

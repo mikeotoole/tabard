@@ -13,10 +13,10 @@ class Subdomains::SubmissionsController < SubdomainsController
   ###
   prepend_before_filter :block_unauthorized_user!
   before_filter :load_custom_form_from_id
-  before_filter :load_submissions, :only => [:index]
-  before_filter :create_submission, :only => [:new, :create]
-  load_and_authorize_resource :except => [:index, :new, :create]
-  authorize_resource :only => [:index, :new, :create]
+  before_filter :load_submissions, only: [:index]
+  before_filter :create_submission, only: [:new, :create]
+  load_and_authorize_resource except: [:index, :new, :create]
+  authorize_resource only: [:index, :new, :create]
   skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms/:custom_form_id/submissions(.:format)
@@ -30,14 +30,14 @@ class Subdomains::SubmissionsController < SubdomainsController
   # GET /custom_forms/:custom_form_id/submissions/new(.:format)
   def new
     @submission.custom_form_questions.each do |question|
-      @submission.answers.new :question_body => question.body, :question_id => question.id
+      @submission.answers.new question_body: question.body, question_id: question.id
     end
   end
 
   # POST /custom_forms/:custom_form_id/submissions(.:format)
   def create
     add_new_flash_message 'Your submission was successful.', 'success' if @submission.save
-    respond_with @submission, :location => custom_form_thankyou_url(@submission.custom_form)
+    respond_with @submission, location: custom_form_thankyou_url(@submission.custom_form)
   end
 
   # DELETE /submissions/:id(.:format)

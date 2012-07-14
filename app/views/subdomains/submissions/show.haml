@@ -12,8 +12,8 @@
   .sidebar
     .submitter
       %h2 Submitted by
-      %a{ :href => user_profile_url(@submission.user_profile, :subdomain => false) }
-        = image_tag @submission.user_profile_avatar_url(:tiny), :class => 'avatar'
+      %a{ href: user_profile_url(@submission.user_profile, subdomain: false) }
+        = image_tag @submission.user_profile_avatar_url(:tiny), class: 'avatar'
         = @submission.user_profile_display_name
   - if @submission.answers.size > 0
     .questions
@@ -25,4 +25,4 @@
 
   - if can? :destroy, @submission
     %p.submit
-      = link_to 'Delete Submission', @submission, :confirm => 'Are you sure?', :method => :delete, :class => 'button'
+      = link_to 'Delete Submission', @submission, confirm: 'Are you sure?', method: :delete, class: 'button'

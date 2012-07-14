@@ -37,7 +37,7 @@ class Ability
     # The third argument is an optional hash of conditions to further filter the objects.
     # For example, here the user can only update published articles.
     #
-    #   can :update, Article, :published => true
+    #   can :update, Article, published: true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
   end
@@ -132,7 +132,7 @@ class Ability
       community_application.user_profile_id == user.user_profile_id if community_application.user_profile_id
     end
     can [:comment], CommunityApplication do |community_application|
-      can? :create, Comment.new({ :commentable => community_application, :community => community_application.community }, :without_protection => true)
+      can? :create, Comment.new({ commentable: community_application, community: community_application.community }, without_protection: true)
     end
 
     # Discussion Rules
@@ -223,7 +223,7 @@ class Ability
     end
 
     can [:comment], Announcement do |announcement|
-      not announcement.is_locked and can? :create, Comment.new({ :commentable => announcement, :community => announcement.community }, :without_protection => true)
+      not announcement.is_locked and can? :create, Comment.new({ commentable: announcement, community: announcement.community }, without_protection: true)
     end
 
     can :mine, RosterAssignment

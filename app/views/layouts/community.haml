@@ -6,9 +6,9 @@
     = stylesheet_link_tag "/stylesheets/din.css"
     = stylesheet_link_tag "/stylesheets/eurostyle.css"
     = stylesheet_link_tag "application/community"
-    = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", :class => 'theme'
+    = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", class: 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
-      %style{:type => "text/css", :media => "screen"}
+      %style{type: "text/css", media: "screen"}
         - unless !!current_community.title_color and current_community.title_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
         - unless !!current_community.background_color and current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
@@ -34,7 +34,7 @@
           .action_items
             %p
               Now that you're community has been created, let's get everything setup:
-              = link_to '✕', clear_action_items_url, :class => 'clear', :meta => "I know what I'm doing. Remove this box."
+              = link_to '✕', clear_action_items_url, class: 'clear', meta: "I know what I'm doing. Remove this box."
             %ol
               %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
                 = link_to_unless_current 'Edit Settings', edit_community_settings_url
@@ -65,10 +65,10 @@
                     %li= link_to shorten_words(space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
-              = link_to 'Events', events_url(:subdomain => current_community.subdomain)
+              = link_to 'Events', events_url(subdomain: current_community.subdomain)
           - if user_signed_in? and current_user.is_member? current_community
             %li
-              = link_to 'Announcements', announcements_url(:subdomain => current_community.subdomain)
+              = link_to 'Announcements', announcements_url(subdomain: current_community.subdomain)
               - if current_community.supported_games.any?
                 %ul
                   %li= link_to 'Community Announcements', community_announcements_url
@@ -87,23 +87,23 @@
               = link_to 'Forms', custom_forms_url
           - if user_signed_in? and current_user.communities.include?(current_community)
             - if management_navigation_items.any?
-              %li{ :class => 'special settings' }
+              %li{ class: 'special settings' }
                 = link_to 'Manage', can_manage?(current_community) ? edit_community_settings_url : my_roster_assignments_url
                 %ul
                   - management_navigation_items.each do |item|
-                    %li{ :class => item[:class] }= link_to item[:title], item[:link],  :meta => (item[:meta] and item[:meta] > 0 ? item[:meta] : nil)
+                    %li{ class: item[:class] }= link_to item[:title], item[:link],  meta: (item[:meta] and item[:meta] > 0 ? item[:meta] : nil)
                   - unless current_user.user_profile == current_community.admin_profile
-                    %li.leave= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), :method => :delete, :confirm => "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
+                    %li.leave= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), method: :delete, confirm: "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
           - else
-            %li{ :class => 'special signup' }
+            %li{ class: 'special signup' }
               - if user_signed_in?
                 - if current_community.can_receive_application_from? current_user
                   = link_to 'Apply Now', new_community_application_url
                 - elsif current_user.application_pending? current_community
                   %a Application Pending
               - else
-                = link_to 'Apply Now', new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), :community_id => current_community.id)
+                = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id)
       #body
         = yield
 
-    = render 'layouts/footer', :current_layout => 'community'
+    = render 'layouts/footer', current_layout: 'community'

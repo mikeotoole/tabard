@@ -23,17 +23,17 @@ class Swtor < Game
 ###
 # Associations
 ###
-  has_many :swtor_characters, :dependent => :destroy
+  has_many :swtor_characters, dependent: :destroy
 
 ###
 # Validators
 ###
-  validates :faction,  :presence => true,
-                    :inclusion => { :in => VALID_FACTIONS, :message => "%{value} is not a valid faction." }
-  validates :server_type,  :presence => true,
-                    :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." }
-  validates :server_name, :presence => true,
-                    :uniqueness => {:case_sensitive => false, :scope => [:faction, :server_type], :message => "A game with this faction, server name, server type exists."}
+  validates :faction,  presence: true,
+                    inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
+  validates :server_type,  presence: true,
+                    inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
+  validates :server_name, presence: true,
+                    uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
 
 ###
 # Public Methods
@@ -55,8 +55,8 @@ class Swtor < Game
 
   # Gets a game instance for given faction server combination
   def self.game_for_faction_server(faction, server)
-    swtor = Swtor.find(:first, :conditions => {:faction => faction, :server_name => server})
-    swtor = Swtor.new(:server_name => server) unless swtor
+    swtor = Swtor.find(:first, conditions: {faction: faction, server_name: server})
+    swtor = Swtor.new(server_name: server) unless swtor
     return swtor
   end
 

@@ -21,14 +21,14 @@
 #++
 
 Sanitize::Config::CUSTOM = {
-      :elements => %w[
+      elements: %w[
         a abbr address b bdo blockquote br caption cite code col colgroup dd
         del details dfn dl dt em figcaption figure h2 h3 i img ins kbd li mark
         ol p pre q rp rt s samp strong sub sup table tbody td
         tfoot th thead time tr ul var wbr
       ],
 
-      :attributes => {
+      attributes: {
         :all         => ['lang', 'title'],
         'a'          => ['href'],
         'blockquote' => ['cite'],
@@ -46,7 +46,7 @@ Sanitize::Config::CUSTOM = {
         'ul'         => ['type']
       },
 
-      :protocols => {
+      protocols: {
         'a'          => {'href' => ['ftp', 'http', 'https', 'mailto', :relative]},
         'blockquote' => {'cite' => ['http', 'https', :relative]},
         'del'        => {'cite' => ['http', 'https', :relative]},

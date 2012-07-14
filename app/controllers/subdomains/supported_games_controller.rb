@@ -13,11 +13,11 @@ class Subdomains::SupportedGamesController < SubdomainsController
 ###
   before_filter :authenticate_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_supported_game, :except => [:new, :create, :index]
-  before_filter :create_supported_game, :only => [:new, :create]
-  authorize_resource :except => [:index]
+  before_filter :load_supported_game, except: [:new, :create, :index]
+  before_filter :create_supported_game, only: [:new, :create]
+  authorize_resource except: [:index]
   skip_before_filter :limit_subdomain_access
-  after_filter :create_activity, :only => [:update, :create]
+  after_filter :create_activity, only: [:update, :create]
 
 ###
 # REST Actions
@@ -66,7 +66,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
       @action = is_changed ? 'edited' : nil
     end
 
-    respond_with(@supported_game, :location => supported_games_url)
+    respond_with(@supported_game, location: supported_games_url)
   end
 
   # DELETE /supported_games/1
@@ -108,10 +108,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create( :user_profile => current_user.user_profile,
-                        :community => @supported_game.community,
-                        :target => @supported_game,
-                        :action => @action)
+      Activity.create( user_profile: current_user.user_profile,
+                        community: @supported_game.community,
+                        target: @supported_game,
+                        action: @action)
     end
   end
 end

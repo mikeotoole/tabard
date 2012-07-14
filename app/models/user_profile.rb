@@ -31,55 +31,55 @@ class UserProfile < ActiveRecord::Base
 ###
 # Associations
 ###
-  has_one :user, :inverse_of => :user_profile
+  has_one :user, inverse_of: :user_profile
 
-  has_many :owned_communities, :class_name => "Community", :foreign_key => "admin_profile_id", :dependent => :destroy
-  has_many :community_profiles, :dependent => :destroy
-  has_many :roles, :through => :community_profiles
+  has_many :owned_communities, class_name: "Community", foreign_key: "admin_profile_id", dependent: :destroy
+  has_many :community_profiles, dependent: :destroy
+  has_many :roles, through: :community_profiles
 
-  has_many :character_proxies, :dependent => :destroy, :conditions => {:is_removed => false}
-  has_many :swtor_characters, :through => :character_proxies, :source => :character, :source_type => 'SwtorCharacter', :order => 'LOWER(name)'
-  has_many :wow_characters, :through => :character_proxies, :source => :character, :source_type => 'WowCharacter', :order => 'LOWER(name)'
-  has_many :minecraft_characters, :through => :character_proxies, :source => :character, :source_type => 'MinecraftCharacter', :order => 'LOWER(name)'
+  has_many :character_proxies, dependent: :destroy, conditions: {is_removed: false}
+  has_many :swtor_characters, through: :character_proxies, source: :character, source_type: 'SwtorCharacter', order: 'LOWER(name)'
+  has_many :wow_characters, through: :character_proxies, source: :character, source_type: 'WowCharacter', order: 'LOWER(name)'
+  has_many :minecraft_characters, through: :character_proxies, source: :character, source_type: 'MinecraftCharacter', order: 'LOWER(name)'
 
-  has_many :approved_character_proxies, :through => :community_profiles
-  has_many :communities, :through => :community_profiles, :order => 'LOWER(name)'
-  has_many :announcements, :through => :community_profiles
-  has_many :acknowledgements, :through => :community_profiles
-  has_many :read_announcements, :through => :community_profiles
-  has_many :unread_announcements, :through => :community_profiles
-  has_many :community_applications, :dependent => :destroy
-  has_many :view_logs, :dependent => :destroy
-  has_many :sent_messages, :class_name => "Message", :foreign_key => "author_id", :dependent => :destroy
-  has_many :received_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :dependent => :destroy
-  has_many :unread_messages, :class_name => "MessageAssociation", :foreign_key => "recipient_id", :conditions => {:has_been_read => false, :is_removed => false}
-  has_many :folders, :dependent => :destroy
-  has_many :discussions, :dependent => :destroy
-  has_many :comments, :dependent => :destroy
-  has_many :activities, :dependent => :destroy, inverse_of: :user_profile
-  has_many :events, :dependent => :destroy, :foreign_key => "creator_id"
-  has_many :invites, :dependent => :destroy, :inverse_of => :user_profile
-  has_many :events_invited_to, :through => :invites, :source => :event, :class_name => "Event"
+  has_many :approved_character_proxies, through: :community_profiles
+  has_many :communities, through: :community_profiles, order: 'LOWER(name)'
+  has_many :announcements, through: :community_profiles
+  has_many :acknowledgements, through: :community_profiles
+  has_many :read_announcements, through: :community_profiles
+  has_many :unread_announcements, through: :community_profiles
+  has_many :community_applications, dependent: :destroy
+  has_many :view_logs, dependent: :destroy
+  has_many :sent_messages, class_name: "Message", foreign_key: "author_id", dependent: :destroy
+  has_many :received_messages, class_name: "MessageAssociation", foreign_key: "recipient_id", dependent: :destroy
+  has_many :unread_messages, class_name: "MessageAssociation", foreign_key: "recipient_id", conditions: {has_been_read: false, is_removed: false}
+  has_many :folders, dependent: :destroy
+  has_many :discussions, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :activities, dependent: :destroy, inverse_of: :user_profile
+  has_many :events, dependent: :destroy, foreign_key: "creator_id"
+  has_many :invites, dependent: :destroy, inverse_of: :user_profile
+  has_many :events_invited_to, through: :invites, source: :event, class_name: "Event"
 
-  has_many :support_tickets, :inverse_of => :user_profile
-  has_many :pending_support_tickets, :class_name => "SupportTicket", :conditions => {:status => SupportTicket::DEFAULT_STATUS}
-  has_many :in_progress_support_tickets, :class_name => "SupportTicket", :conditions => {:status => "In Progress"}
-  has_many :closed_support_tickets, :class_name => "SupportTicket", :conditions => {:status => "Closed"}
+  has_many :support_tickets, inverse_of: :user_profile
+  has_many :pending_support_tickets, class_name: "SupportTicket", conditions: {status: SupportTicket::DEFAULT_STATUS}
+  has_many :in_progress_support_tickets, class_name: "SupportTicket", conditions: {status: "In Progress"}
+  has_many :closed_support_tickets, class_name: "SupportTicket", conditions: {status: "Closed"}
 
-  has_many :support_comments, :inverse_of => :user_profile
+  has_many :support_comments, inverse_of: :user_profile
 
 ###
 # Delegates
 ###
-  delegate :email, :to => :user
-  delegate :is_disabled?, :to => :user
-  delegate :is_email_on_message, :to => :user
-  delegate :is_email_on_announcement, :to => :user
+  delegate :email, to: :user
+  delegate :is_disabled?, to: :user
+  delegate :is_email_on_message, to: :user
+  delegate :is_email_on_announcement, to: :user
 
 ###
 # Callbacks
 ###
-  nilify_blanks :only => [:first_name, :last_name, :description, :title, :location]
+  nilify_blanks only: [:first_name, :last_name, :description, :title, :location]
   after_create :create_mailboxes
 
 ###
@@ -97,18 +97,18 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name, :presence => true,
-                           :length => { :maximum => MAX_NAME_LENGTH }
-  validates :first_name, :length => { :maximum => MAX_FIRST_NAME_LENGTH }
-  validates :last_name, :length => { :maximum => MAX_LAST_NAME_LENGTH }
-  validates :title, :length => { :maximum => MAX_TITLE_LENGTH }
-  validates :location, :length => { :maximum => MAX_LOCATION_LENGTH }
-  validates :description, :length => { :maximum => MAX_DESCRIPTION_LENGTH }
-  validates :display_name, :not_restricted_name => {:domain => false, :company => true, :administration => true}
+  validates :display_name, presence: true,
+                           length: { maximum: MAX_NAME_LENGTH }
+  validates :first_name, length: { maximum: MAX_FIRST_NAME_LENGTH }
+  validates :last_name, length: { maximum: MAX_LAST_NAME_LENGTH }
+  validates :title, length: { maximum: MAX_TITLE_LENGTH }
+  validates :location, length: { maximum: MAX_LOCATION_LENGTH }
+  validates :description, length: { maximum: MAX_DESCRIPTION_LENGTH }
+  validates :display_name, not_restricted_name: {domain: false, company: true, administration: true}
   validates :avatar,
-      :if => :avatar?,
-      :file_size => {
-        :maximum => 5.megabytes.to_i
+      if: :avatar?,
+      file_size: {
+        maximum: 5.megabytes.to_i
       }
 
 ###
@@ -205,7 +205,7 @@ class UserProfile < ActiveRecord::Base
 
   # Returns true if user is invited to event false otherwise.
   def invited?(event)
-    self.invites.where(:event_id => event.id).size > 0
+    self.invites.where(event_id: event.id).size > 0
   end
 
   ###
@@ -397,8 +397,8 @@ protected
   # This method creates the user's inbox folder.
   ###
   def create_mailboxes
-    self.folders.create!(:name => "Inbox")
-    self.folders.create!(:name => "Trash")
+    self.folders.create!(name: "Inbox")
+    self.folders.create!(name: "Trash")
   end
 end
 

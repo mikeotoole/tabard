@@ -9,9 +9,9 @@ class SupportComment < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :support_ticket, :inverse_of => :support_comments
-  belongs_to :admin_user, :inverse_of => :support_comments
-  belongs_to :user_profile, :inverse_of => :support_comments
+  belongs_to :support_ticket, inverse_of: :support_comments
+  belongs_to :admin_user, inverse_of: :support_comments
+  belongs_to :user_profile, inverse_of: :support_comments
 
 ###
 # Attribute accessible
@@ -21,23 +21,23 @@ class SupportComment < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :user_profile_id, :to => :support_ticket, :prefix => true
-  delegate :admin_user_display_name, :to => :support_ticket, :prefix => true
-  delegate :admin_user_email, :to => :support_ticket, :prefix => true
-  delegate :id, :to => :support_ticket, :prefix => true
+  delegate :user_profile_id, to: :support_ticket, prefix: true
+  delegate :admin_user_display_name, to: :support_ticket, prefix: true
+  delegate :admin_user_email, to: :support_ticket, prefix: true
+  delegate :id, to: :support_ticket, prefix: true
 
-  delegate :display_name, :to => :admin_user, :prefix => true
-  delegate :email, :to => :admin_user, :prefix => true
+  delegate :display_name, to: :admin_user, prefix: true
+  delegate :email, to: :admin_user, prefix: true
 
-  delegate :full_name, :to => :user_profile, :prefix => true
+  delegate :full_name, to: :user_profile, prefix: true
 
 ###
 # Validators
 ###
   validate :only_admin_or_user
-  validates :user_profile, :presence => true, :if => "admin_user_id.blank?"
-  validates :admin_user, :presence => true, :if => "user_profile_id.blank?"
-  validates :body, :presence => true
+  validates :user_profile, presence: true, if: "admin_user_id.blank?"
+  validates :admin_user, presence: true, if: "user_profile_id.blank?"
+  validates :body, presence: true
 
   # This method validates that only an admin or an user is the creater, not both.
   def only_admin_or_user

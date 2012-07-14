@@ -4,7 +4,7 @@
   Created a
 - when 'edited'
   Edited a
-%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, discussion_space), 'discussion space', discussion_space_url(discussion_space, :subdomain => activity.community_subdomain), :meta => shorten_words(discussion_space.name)
+%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, discussion_space), 'discussion space', discussion_space_url(discussion_space, subdomain: activity.community_subdomain), meta: shorten_words(discussion_space.name)
 - unless defined? current_community and activity.community == current_community
   in
-  %strong= link_to shorten_words(activity.community_name), root_url(:subdomain => activity.community_subdomain)
+  %strong= link_to shorten_words(activity.community_name), root_url(subdomain: activity.community_subdomain)

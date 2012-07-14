@@ -1,27 +1,27 @@
 ActiveAdmin::Dashboards.build do
 
-  section "Site Actions", :priority => 1 do
+  section "Site Actions", priority: 1 do
     if can?(:toggle_maintenance_mode, SiteConfigurationController)
       strong SiteConfiguration.is_maintenance? ? "Maintenance Mode is ON" : "Maintenance Mode is OFF"
       div do
-        button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, :method => :post, :confirm => 'Are you sure you want to toggle maintenance mode?'
+        button_to "Toggle Maintenance Mode", toggle_maintenance_mode_path, method: :post, confirm: 'Are you sure you want to toggle maintenance mode?'
       end
       div br
     end
     if can?(:sign_out_all_users, User)
       div do
-        button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, :method => :post, :confirm => 'Are you sure you want to sign out ALL users?'
+        button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, method: :post, confirm: 'Are you sure you want to sign out ALL users?'
       end
       div br
     end
     if can?(:update_account, current_admin_user)
       div do
-        link_to "Update My Account", edit_account_admin_admin_users_path, :method => :get
+        link_to "Update My Account", edit_account_admin_admin_users_path, method: :get
       end
     end
   end
 
-  section "Support Tickets", :priority => 1 do
+  section "Support Tickets", priority: 1 do
     strong "Unassigned Tickets"
     ul do
       SupportTicket.where{admin_user_id.eq nil}.includes(:user_profile).each do |ticket|
@@ -40,7 +40,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "New SWTOR Characters", :priority => 3 do
+  section "New SWTOR Characters", priority: 3 do
     if can?(:read, SwtorCharacter)
       ul do
         SwtorCharacter.order("created_at desc").limit(5).collect do |character|
@@ -49,7 +49,7 @@ ActiveAdmin::Dashboards.build do
       end
     end
   end
-  section "New WoW Characters", :priority => 3 do
+  section "New WoW Characters", priority: 3 do
     if can?(:read, WowCharacter)
       ul do
         WowCharacter.order("created_at desc").limit(5).collect do |character|
@@ -59,7 +59,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "New Communities", :priority => 2 do
+  section "New Communities", priority: 2 do
     if can?(:read, Community)
       ul do
         Community.order("created_at desc").limit(5).collect do |community|
@@ -69,7 +69,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "New Users", :priority => 2 do
+  section "New Users", priority: 2 do
     if can?(:read, User)
       ul do
         User.order("created_at desc").includes(:user_profile).limit(5).collect do |user|
@@ -109,8 +109,8 @@ ActiveAdmin::Dashboards.build do
   # bottom right. The default priority is 10. By giving a section numerically lower
   # priority it will be sorted higher. For example:
   #
-  #   section "Recent Posts", :priority => 10
-  #   section "Recent User", :priority => 1
+  #   section "Recent Posts", priority: 10
+  #   section "Recent User", priority: 1
   #
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
 

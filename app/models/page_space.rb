@@ -24,20 +24,20 @@ class PageSpace < ActiveRecord::Base
 ###
   belongs_to :supported_game
   belongs_to :community
-  has_many :pages, :dependent => :destroy, :order => 'LOWER(name)'
+  has_many :pages, dependent: :destroy, order: 'LOWER(name)'
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => MAX_NAME_LENGTH }
-  validates :community, :presence => true
+  validates :name,  presence: true,
+                    length: { maximum: MAX_NAME_LENGTH }
+  validates :community, presence: true
 
 ###
 # Delegates
 ###
-  delegate :name, :to => :community, :prefix => true
-  delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
+  delegate :name, to: :community, prefix: true
+  delegate :smart_name, to: :supported_game, prefix: true, allow_nil: true
 
   after_create :apply_default_permissions
 

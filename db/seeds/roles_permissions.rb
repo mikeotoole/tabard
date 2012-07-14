@@ -14,11 +14,11 @@
 ###
 def create_role(community_name, role_name, subject_class_array, permission_level_array, to_users_array)
   puts "#{community_name} is creating a #{role_name} role..."
-  role = Community.find_by_name(community_name).roles.create!(:name => role_name)
+  role = Community.find_by_name(community_name).roles.create!(name: role_name)
 
   subject_class_array.each do |sub_class|
     permission_level_array.each do |level|
-      role.permissions.create!(:subject_class => sub_class, :permission_level => level)
+      role.permissions.create!(subject_class: sub_class, permission_level: level)
     end
   end
 

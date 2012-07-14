@@ -6,8 +6,8 @@
 # This class is a mailer used by the SupportTicket to send emails.
 ###
 class SupportTicketMailer < ActionMailer::Base
-  default :from => "Crumblin <noreply@crumblin.com>",
-          :content_type => "text/html"
+  default from: "Crumblin <noreply@crumblin.com>",
+          content_type: "text/html"
   layout 'mailer'
 
   # Tell user they have a new message
@@ -16,7 +16,7 @@ class SupportTicketMailer < ActionMailer::Base
     if !!@support_ticket
       @user_profile = @support_ticket.user_profile
       @url = admin_support_ticket_url(@support_ticket)
-      mail(:to => "support@crumblin.com", :subject => "Crumblin - New Support Ticket") do |format|
+      mail(to: "support@crumblin.com", subject: "Crumblin - New Support Ticket") do |format|
          format.html { render "mailers/new_support_ticket" }
       end
     end

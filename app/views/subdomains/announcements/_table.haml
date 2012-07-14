@@ -1,5 +1,5 @@
 - if announcements.any?
-  = form_tag batch_destroy_announcements_url, :method => :delete do
+  = form_tag batch_destroy_announcements_url, method: :delete do
     %table
       %thead
         %tr
@@ -14,8 +14,8 @@
           %tr
             - if can? :destroy, Announcement
               %td.check
-                = check_box_tag "ids[#{announcement.id}]", true, false, :id => "announcement_id_#{announcement.id}"
-                %label{ :for => "announcement_id_#{announcement.id}" }
+                = check_box_tag "ids[#{announcement.id}]", true, false, id: "announcement_id_#{announcement.id}"
+                %label{ for: "announcement_id_#{announcement.id}" }
             %td= link_to shorten_words(announcement.name, 21), announcement
             %td
               - if announcement.comments.any?
@@ -29,20 +29,20 @@
               %div
                 - if announcement.is_locked
                   - if can? :unlock, announcement
-                    = link_to 'Unlock', unlock_announcement_url(announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
+                    = link_to 'Unlock', unlock_announcement_url(announcement), method: :post, meta: 'Unlock announcement', class: 'unlock'
                 - else
                   - if can? :lock, announcement
-                    = link_to 'Lock', lock_announcement_url(announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
+                    = link_to 'Lock', lock_announcement_url(announcement), method: :post, meta: 'Lock announcement', class: 'lock'
                 - if (can? :destroy, announcement)
-                  = link_to 'Destroy', announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete announcement', :class => 'delete'
+                  = link_to 'Destroy', announcement, confirm: 'Are you sure?', method: :delete, meta: 'Delete announcement', class: 'delete'
       %tfoot
         %tr
-          %td{ :colspan => (can? :destroy, Announcement) ? 5 : 4 }
+          %td{ colspan: (can? :destroy, Announcement) ? 5 : 4 }
             - if can? :destroy, Announcement
-              %button{ :type => :submit } Remove Selected
+              %button{ type: :submit } Remove Selected
             - if can? :create, Announcement
-              = link_to 'Create New', new_announcement_url, :class => 'button'
+              = link_to 'Create New', new_announcement_url, class: 'button'
 -else
   %p No announcements to display.
   - if can? :create, Announcement
-    %p= link_to 'Create New', new_announcement_url, :class => 'button'
+    %p= link_to 'Create New', new_announcement_url, class: 'button'

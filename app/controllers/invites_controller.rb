@@ -7,7 +7,7 @@
 ###
 class InvitesController < ApplicationController
   before_filter :block_unauthorized_user!
-  load_and_authorize_resource :through => :current_user, :except => [:batch_update]
+  load_and_authorize_resource through: :current_user, except: [:batch_update]
   respond_to :html, :js
 
 ###

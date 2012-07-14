@@ -1,4 +1,4 @@
-= simple_form_for [support_ticket, support_comment], :method => :post, :as => :support_comment, :url => support_comment_index_url(support_ticket), :html => {:novalidate => true} do |f|
-  = render 'fields', :f => f, :support_comment => support_comment
+= simple_form_for [support_ticket, support_comment], method: :post, as: :support_comment, url: support_comment_index_url(support_ticket), html: {novalidate: true} do |f|
+  = render 'fields', f: f, support_comment: support_comment
   %p.submit
     = f.button :submit, 'Create Comment'

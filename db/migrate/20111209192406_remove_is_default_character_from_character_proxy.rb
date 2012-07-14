@@ -4,6 +4,6 @@ class RemoveIsDefaultCharacterFromCharacterProxy < ActiveRecord::Migration
   end
 
   def down
-    add_column(:character_proxies, :is_default_character, :boolean, :default => false)
+    add_column(:character_proxies, :is_default_character, :boolean, default: false)
   end
 end

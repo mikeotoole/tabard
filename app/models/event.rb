@@ -36,46 +36,46 @@ class Event < ActiveRecord::Base
 # Associations
 ###
   belongs_to :supported_game
-  belongs_to :creator, :class_name => "UserProfile"
+  belongs_to :creator, class_name: "UserProfile"
   belongs_to :community
-  has_many :invites, :inverse_of => :event, :include => :user_profile, :order => 'LOWER(user_profiles.display_name) ASC', :dependent => :destroy
-  has_many :user_profiles, :through => :invites
-  has_many :attending_invites, :class_name => "Invite", :conditions => {:status => "Attending"}
-  has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
-  has_many :tentative_invites, :class_name => "Invite", :conditions => {:status => "Tentative"}
-  has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Going to be Late"}
+  has_many :invites, inverse_of: :event, include: :user_profile, order: 'LOWER(user_profiles.display_name) ASC', dependent: :destroy
+  has_many :user_profiles, through: :invites
+  has_many :attending_invites, class_name: "Invite", conditions: {status: "Attending"}
+  has_many :not_attending_invites, class_name: "Invite", conditions: {status: "Not Attending"}
+  has_many :tentative_invites, class_name: "Invite", conditions: {status: "Tentative"}
+  has_many :late_invites, class_name: "Invite", conditions: {status: "Going to be Late"}
 
-  has_many :comments, :as => :commentable
+  has_many :comments, as: :commentable
 
-  accepts_nested_attributes_for :invites, :allow_destroy => true
+  accepts_nested_attributes_for :invites, allow_destroy: true
 
 ###
 # Validators
 ###
-  validates :name, :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
-  validates :start_time, :presence => true
-  validates :end_time, :presence => true
+  validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
+  validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
+  validates :start_time, presence: true
+  validates :end_time, presence: true
   validate :starttime_after_endtime
-  validates :creator, :presence => true
-  validates :community, :presence => true
+  validates :creator, presence: true
+  validates :community, presence: true
 
 ###
 # Delegates
 ###
-  delegate :display_name, :to => :creator, :prefix => true, :allow_nil => true
-  delegate :avatar_url, :to => :creator, :prefix => true, :allow_nil => true
-  delegate :smart_name, :to => :supported_game, :prefix => true, :allow_nil => true
-  delegate :subdomain, :to => :community, :prefix => true, :allow_nil => true
-  delegate :name, :to => :community, :prefix => true, :allow_nil => true
-  delegate :member_profiles, :to => :community, :prefix => true, :allow_nil => true
-  delegate :id, :to => :creator, :prefix => true
+  delegate :display_name, to: :creator, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :creator, prefix: true, allow_nil: true
+  delegate :smart_name, to: :supported_game, prefix: true, allow_nil: true
+  delegate :subdomain, to: :community, prefix: true, allow_nil: true
+  delegate :name, to: :community, prefix: true, allow_nil: true
+  delegate :member_profiles, to: :community, prefix: true, allow_nil: true
+  delegate :id, to: :creator, prefix: true
 
 ###
 # Callbacks
 ###
   before_validation :update_event_times
-  before_save :notify_users, :on => :update
+  before_save :notify_users, on: :update
 
 ###
 # Public Methods
@@ -164,9 +164,9 @@ end
 
 # This messages the invited person
 def message_the_invites(reason)
-  Message.create_system(:subject => "An event you were invited to has changed",
-      :body => "The #{name_was} event you were invited to has #{reason}",
-      :to => self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
+  Message.create_system(subject: "An event you were invited to has changed",
+      body: "The #{name_was} event you were invited to has #{reason}",
+      to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
 end
 
 ###

@@ -43,9 +43,9 @@ class User < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :user_profile, :inverse_of => :user, :dependent => :destroy
-  has_many :document_acceptances, :dependent => :destroy
-  has_many :accepted_documents, :through => :document_acceptances, :class_name => "Document", :source => "document"
+  belongs_to :user_profile, inverse_of: :user, dependent: :destroy
+  has_many :document_acceptances, dependent: :destroy
+  has_many :accepted_documents, through: :document_acceptances, class_name: "Document", source: "document"
   accepts_nested_attributes_for :user_profile
 
 ###
@@ -57,77 +57,77 @@ class User < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :first_name, :to => :user_profile, :allow_nil => true
-  delegate :last_name, :to => :user_profile, :allow_nil => true
-  delegate :display_name, :to => :user_profile, :allow_nil => true
-  delegate :description, :to => :user_profile, :allow_nil => true
-  delegate :owned_communities, :to => :user_profile, :allow_nil => true
-  delegate :community_profiles, :to => :user_profile, :allow_nil => true
-  delegate :add_new_role, :to => :user_profile, :allow_nil => true
-  delegate :roles, :to => :user_profile, :allow_nil => true
-  delegate :character_proxies, :to => :user_profile, :allow_nil => true
-  delegate :communities, :to => :user_profile, :allow_nil => true
-  delegate :active_profile_helper_collection, :to => :user_profile, :allow_nil => true
-  delegate :inbox, :to => :user_profile, :allow_nil => true
-  delegate :trash, :to => :user_profile, :allow_nil => true
-  delegate :address_book, :to => :user_profile, :allow_nil => true
-  delegate :sent_messages, :to => :user_profile, :allow_nil => true
-  delegate :unread_messages, :to => :user_profile, :allow_nil => true
-  delegate :received_messages, :to => :user_profile, :allow_nil => true
-  delegate :folders, :to => :user_profile, :allow_nil => true
-  delegate :announcements, :to => :user_profile, :allow_nil => true
-  delegate :acknowledgements, :to => :user_profile, :allow_nil => true
-  delegate :read_announcements, :to => :user_profile, :allow_nil => true
-  delegate :unread_announcements, :to => :user_profile, :allow_nil => true
-  delegate :available_character_proxies, :to => :user_profile, :allow_nil => true
-  delegate :has_seen?, :to => :user_profile, :allow_nil => true
-  delegate :default_character_proxy_for_a_game, :to => :user_profile, :allow_nil => true
-  delegate :is_member?, :to => :user_profile, :allow_nil => true
-  delegate :application_pending?, :to => :user_profile, :allow_nil => true
-  delegate :in_community, :to => :user_profile, :allow_nil => true
-  delegate :remove_all_avatars, :to => :user_profile, :allow_nil => true
-  delegate :avatar_url, :to => :user_profile, :allow_nil => true
-  delegate :compatable_character_proxies, :to => :user_profile, :allow_nil => true
-  delegate :invites, :to => :user_profile, :allow_nil => true
-  delegate :events_invited_to, :to => :user_profile, :allow_nil => true
-  delegate :invited?, :to => :user_profile, :allow_nil => true
-  delegate :support_tickets, :to => :user_profile, :allow_nil => true
-  delegate :pending_support_tickets, :to => :user_profile, :allow_nil => true
-  delegate :in_progress_support_tickets, :to => :user_profile, :allow_nil => true
-  delegate :closed_support_tickets, :to => :user_profile, :allow_nil => true
+  delegate :first_name, to: :user_profile, allow_nil: true
+  delegate :last_name, to: :user_profile, allow_nil: true
+  delegate :display_name, to: :user_profile, allow_nil: true
+  delegate :description, to: :user_profile, allow_nil: true
+  delegate :owned_communities, to: :user_profile, allow_nil: true
+  delegate :community_profiles, to: :user_profile, allow_nil: true
+  delegate :add_new_role, to: :user_profile, allow_nil: true
+  delegate :roles, to: :user_profile, allow_nil: true
+  delegate :character_proxies, to: :user_profile, allow_nil: true
+  delegate :communities, to: :user_profile, allow_nil: true
+  delegate :active_profile_helper_collection, to: :user_profile, allow_nil: true
+  delegate :inbox, to: :user_profile, allow_nil: true
+  delegate :trash, to: :user_profile, allow_nil: true
+  delegate :address_book, to: :user_profile, allow_nil: true
+  delegate :sent_messages, to: :user_profile, allow_nil: true
+  delegate :unread_messages, to: :user_profile, allow_nil: true
+  delegate :received_messages, to: :user_profile, allow_nil: true
+  delegate :folders, to: :user_profile, allow_nil: true
+  delegate :announcements, to: :user_profile, allow_nil: true
+  delegate :acknowledgements, to: :user_profile, allow_nil: true
+  delegate :read_announcements, to: :user_profile, allow_nil: true
+  delegate :unread_announcements, to: :user_profile, allow_nil: true
+  delegate :available_character_proxies, to: :user_profile, allow_nil: true
+  delegate :has_seen?, to: :user_profile, allow_nil: true
+  delegate :default_character_proxy_for_a_game, to: :user_profile, allow_nil: true
+  delegate :is_member?, to: :user_profile, allow_nil: true
+  delegate :application_pending?, to: :user_profile, allow_nil: true
+  delegate :in_community, to: :user_profile, allow_nil: true
+  delegate :remove_all_avatars, to: :user_profile, allow_nil: true
+  delegate :avatar_url, to: :user_profile, allow_nil: true
+  delegate :compatable_character_proxies, to: :user_profile, allow_nil: true
+  delegate :invites, to: :user_profile, allow_nil: true
+  delegate :events_invited_to, to: :user_profile, allow_nil: true
+  delegate :invited?, to: :user_profile, allow_nil: true
+  delegate :support_tickets, to: :user_profile, allow_nil: true
+  delegate :pending_support_tickets, to: :user_profile, allow_nil: true
+  delegate :in_progress_support_tickets, to: :user_profile, allow_nil: true
+  delegate :closed_support_tickets, to: :user_profile, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :user_profile, :presence => true
+  validates :user_profile, presence: true
   validates :email,
-      :uniqueness => true,
-      :length => { :within => 5..128 },
-      :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+      uniqueness: true,
+      length: { within: 5..128 },
+      format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
 
   validates :password,
-      :confirmation => true,
-      :length => { :within => 8..30 },
-      :presence => true,
-      :format => {
-        :with => %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
-        :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
+      confirmation: true,
+      length: { within: 8..30 },
+      presence: true,
+      format: {
+        with: %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
+        message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
-      :if => :password_required?
+      if: :password_required?
 
   validates :accepted_current_terms_of_service,
-      :acceptance => {:accept => true},
-      :on => :create
+      acceptance: {accept: true},
+      on: :create
   validates :accepted_current_privacy_policy,
-      :acceptance => {:accept => true},
-      :on => :create
-  validates :date_of_birth, :presence => true
-  validates :time_zone, :presence => true,
-                        :inclusion => { :in => VALID_TIME_ZONES, :message => "%{value} is not a valid time zone." }
+      acceptance: {accept: true},
+      on: :create
+  validates :date_of_birth, presence: true
+  validates :time_zone, presence: true,
+                        inclusion: { in: VALID_TIME_ZONES, message: "%{value} is not a valid time zone." }
   validate :at_least_13_years_old
-  with_options :if => Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
-    user.validates :beta_code, :presence => {:message => "is required for the closed beta"}, :on => :create
-    user.validate :valid_beta_key, :on => :create
+  with_options if: Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
+    user.validates :beta_code, presence: {message: "is required for the closed beta"}, on: :create
+    user.validate :valid_beta_key, on: :create
   end
 
 ###
@@ -146,12 +146,12 @@ class User < ActiveRecord::Base
 
   # This will set force_logout to true on all users.
   def self.force_active_users_to_sign_out
-    User.update_all(:force_logout => true)
+    User.update_all(force_logout: true)
   end
 
   # This will reset all passwords for non disabled users.
   def self.reset_all_passwords
-    User.where(:admin_disabled_at => nil, :user_disabled_at => nil).find_each do |user|
+    User.where(admin_disabled_at: nil, user_disabled_at: nil).find_each do |user|
       User.delay.reset_user_password(user.id)
     end
   end
@@ -239,7 +239,7 @@ class User < ActiveRecord::Base
     self.password_confirmation = random_password if random_password
     self.reset_password_token = User.reset_password_token
     self.reset_password_sent_at = Time.now
-    self.save(:validate => false)
+    self.save(validate: false)
     UserMailer.password_reset(self, random_password).deliver
   end
 
@@ -295,7 +295,7 @@ class User < ActiveRecord::Base
       self.password_confirmation = random_password
       self.reset_password_token = User.reset_password_token
       self.reset_password_sent_at = Time.now
-      self.save(:validate => false)
+      self.save(validate: false)
       UserMailer.reinstate_account(self, random_password).deliver
     else
       false

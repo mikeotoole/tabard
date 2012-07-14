@@ -33,38 +33,38 @@ class Community < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :admin_profile, :class_name => "UserProfile"
-  belongs_to :member_role, :class_name => "Role"
-  belongs_to :community_application_form, :dependent => :destroy, :class_name => "CustomForm"
-  has_many :community_applications, :dependent => :destroy
-  has_many :pending_applications, :class_name => "CommunityApplication", :conditions => {:status => "Pending"}
-  has_many :custom_forms, :dependent => :destroy, :order => 'LOWER(name)'
-  has_many :community_announcements, :class_name => "Announcement", :conditions => {:supported_game_id => nil}
+  belongs_to :admin_profile, class_name: "UserProfile"
+  belongs_to :member_role, class_name: "Role"
+  belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm"
+  has_many :community_applications, dependent: :destroy
+  has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
+  has_many :custom_forms, dependent: :destroy, order: 'LOWER(name)'
+  has_many :community_announcements, class_name: "Announcement", conditions: {supported_game_id: nil}
   has_many :announcements
-  has_many :supported_games, :dependent => :destroy
-  has_many :community_profiles, :dependent => :destroy, :inverse_of => :community
-  has_many :approved_character_proxies, :through => :community_profiles
-  has_many :member_profiles, :through => :community_profiles, :class_name => "UserProfile", :source => "user_profile", :order => 'LOWER(user_profiles.display_name)'
-  has_many :roster_assignments, :through => :community_profiles
-  has_many :pending_roster_assignments, :through => :community_profiles
-  has_many :approved_roster_assignments, :through => :community_profiles
-  has_many :roles, :dependent => :destroy, :order => :id
-  has_many :discussion_spaces, :class_name => "DiscussionSpace", :dependent => :destroy, :order => 'LOWER(name)'
-  has_many :discussions, :through => :discussion_spaces
+  has_many :supported_games, dependent: :destroy
+  has_many :community_profiles, dependent: :destroy, inverse_of: :community
+  has_many :approved_character_proxies, through: :community_profiles
+  has_many :member_profiles, through: :community_profiles, class_name: "UserProfile", source: "user_profile", order: 'LOWER(user_profiles.display_name)'
+  has_many :roster_assignments, through: :community_profiles
+  has_many :pending_roster_assignments, through: :community_profiles
+  has_many :approved_roster_assignments, through: :community_profiles
+  has_many :roles, dependent: :destroy, order: :id
+  has_many :discussion_spaces, class_name: "DiscussionSpace", dependent: :destroy, order: 'LOWER(name)'
+  has_many :discussions, through: :discussion_spaces
   has_many :comments
-  has_many :page_spaces, :dependent => :destroy, :order => 'LOWER(name)'
-  has_many :pages, :through => :page_spaces
-  has_many :activities, :dependent => :destroy, inverse_of: :community
-  has_many :events, :dependent => :destroy
+  has_many :page_spaces, dependent: :destroy, order: 'LOWER(name)'
+  has_many :pages, through: :page_spaces
+  has_many :activities, dependent: :destroy, inverse_of: :community
+  has_many :events, dependent: :destroy
   belongs_to :theme
-  belongs_to :home_page, :class_name => "Page"
+  belongs_to :home_page, class_name: "Page"
 
   accepts_nested_attributes_for :theme
 
 ###
 # Callbacks
 ###
-  nilify_blanks :only => [:pitch, :slogan]
+  nilify_blanks only: [:pitch, :slogan]
   before_save :update_subdomain
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items, :setup_action_items
   after_destroy :destroy_admin_community_profile_and_member_role
@@ -72,33 +72,33 @@ class Community < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :css, :to => :theme, :prefix => true
-  delegate :background_author, :to => :theme, :prefix => true, :allow_nil => true
-  delegate :background_author_url, :to => :theme, :prefix => true, :allow_nil => true
+  delegate :css, to: :theme, prefix: true
+  delegate :background_author, to: :theme, prefix: true, allow_nil: true
+  delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :format => { :with => /\A[a-zA-Z0-9 \-]+\z/, :message => "Only letters, numbers, dashes and spaces are allowed" },
-                    :length => { :maximum => MAX_NAME_LENGTH }
-  validates :name, :community_name => true, :on => :create
-  validates :name, :not_profanity => true
-  validates :name, :not_restricted_name => {:all => true}
-  validates :slogan, :length => { :maximum => MAX_SLOGAN_LENGTH }
-  validates :pitch, :length => { :maximum => MAX_PITCH_LENGTH }
-  validates :admin_profile, :presence => true
-  validates :background_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
-            :unless => Proc.new{|community| community.background_color.blank? }
-  validates :title_color, :format => { :with => /^[0-9a-fA-F]{6}$/, :message => "Only valid HEX colors are allowed." },
-            :unless => Proc.new{|community| community.title_color.blank? }
-  validate :can_not_change_name, :on => :update
-  validate :within_owned_communities_limit, :on => :create
+  validates :name,  presence: true,
+                    format: { with: /\A[a-zA-Z0-9 \-]+\z/, message: "Only letters, numbers, dashes and spaces are allowed" },
+                    length: { maximum: MAX_NAME_LENGTH }
+  validates :name, community_name: true, on: :create
+  validates :name, not_profanity: true
+  validates :name, not_restricted_name: {all: true}
+  validates :slogan, length: { maximum: MAX_SLOGAN_LENGTH }
+  validates :pitch, length: { maximum: MAX_PITCH_LENGTH }
+  validates :admin_profile, presence: true
+  validates :background_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
+            unless: Proc.new{|community| community.background_color.blank? }
+  validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
+            unless: Proc.new{|community| community.title_color.blank? }
+  validate :can_not_change_name, on: :update
+  validate :within_owned_communities_limit, on: :create
   validate :home_page_owned_by_community
   validates :background_image,
-      :if => :background_image?,
-      :file_size => {
-        :maximum => 5.megabytes.to_i
+      if: :background_image?,
+      file_size: {
+        maximum: 5.megabytes.to_i
       }
 ###
 # Uploaders
@@ -159,7 +159,7 @@ class Community < ActiveRecord::Base
         self.admin_profile == user_profile)
     community_profile = self.community_profiles.find_by_user_profile_id(user_profile.id)
     if not community_profile
-      community_profile = user_profile.community_profiles.create!(:community => self, :roles => [self.member_role])
+      community_profile = user_profile.community_profiles.create!(community: self, roles: [self.member_role])
     end
     return community_profile
   end
@@ -185,7 +185,7 @@ class Community < ActiveRecord::Base
   # [Returns] An array of user_profiles, filtered by supported game.
   ###
   def member_profiles_for_supported_game(supported_game)
-    self.approved_roster_assignments.includes(:user_profile).where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
+    self.approved_roster_assignments.includes(:user_profile).where(supported_game_id: supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
   end
 
   ###
@@ -295,7 +295,7 @@ protected
   # This method creates the default member role.
   ###
   def setup_member_role
-    mr = self.build_member_role(:name => "Member", :is_system_generated => true)
+    mr = self.build_member_role(name: "Member", is_system_generated: true)
     mr.community = self
     mr.save!
     self.update_attribute(:member_role, mr)
@@ -307,11 +307,11 @@ protected
   # This method sets all action items as not complete.
   ###
   def setup_action_items
-    self.update_attribute(:action_items, { :update_home_page => true,
-                                           :add_supported_game => true,
-                                           :update_settings => true,
-                                           :update_application => true,
-                                           :create_discussion_space => true })
+    self.update_attribute(:action_items, { update_home_page: true,
+                                           add_supported_game: true,
+                                           update_settings: true,
+                                           update_application: true,
+                                           create_discussion_space: true })
   end
 
   ###
@@ -321,43 +321,43 @@ protected
   ###
   def setup_community_application_form
     ca = self.build_community_application_form(
-      :name => "Application Form",
-      :instructions => "You want to join us? Awesome! Please answer these short questions, and don't forget to let us know if someone recommended you.",
-      :thankyou => "Your submission has been sent. Thank you!",
-      :is_published => true)
+      name: "Application Form",
+      instructions: "You want to join us? Awesome! Please answer these short questions, and don't forget to let us know if someone recommended you.",
+      thankyou: "Your submission has been sent. Thank you!",
+      is_published: true)
     ca.community = self
 
     # First Question
     question = Question.create!(
-      :style => "select_box_question",
-      :body => "How often do you play each week?",
-      :is_required => true,
-      :position => 0)
+      style: "select_box_question",
+      body: "How often do you play each week?",
+      is_required: true,
+      position: 0)
     question.custom_form = ca
     question.save!
-    PredefinedAnswer.create!(:body => "1-3 hours", :question_id => question.id, :position => 0)
-    PredefinedAnswer.create!(:body => "3-6 hours", :question_id => question.id, :position => 1)
-    PredefinedAnswer.create!(:body => "6-10 hours", :question_id => question.id, :position => 2)
-    PredefinedAnswer.create!(:body => "10-20 hours", :question_id => question.id, :position => 3)
-    PredefinedAnswer.create!(:body => "20+ hours", :question_id => question.id, :position => 4)
+    PredefinedAnswer.create!(body: "1-3 hours", question_id: question.id, position: 0)
+    PredefinedAnswer.create!(body: "3-6 hours", question_id: question.id, position: 1)
+    PredefinedAnswer.create!(body: "6-10 hours", question_id: question.id, position: 2)
+    PredefinedAnswer.create!(body: "10-20 hours", question_id: question.id, position: 3)
+    PredefinedAnswer.create!(body: "20+ hours", question_id: question.id, position: 4)
 
     # Second Question
     question = Question.create!(
-      :style => "long_answer_question",
-      :body => "Why do you want to join?",
-      :explanation => "Let us know why we should game together.",
-      :is_required => true,
-      :position => 1)
+      style: "long_answer_question",
+      body: "Why do you want to join?",
+      explanation: "Let us know why we should game together.",
+      is_required: true,
+      position: 1)
     question.custom_form = ca
     question.save!
 
     # Third Question
     question = Question.create!(
-      :style => "short_answer_question",
-      :body => "How did you hear about us?",
-      :explanation => "This is a short answer question",
-      :is_required => false,
-      :position => 2)
+      style: "short_answer_question",
+      body: "How did you hear about us?",
+      explanation: "This is a short answer question",
+      is_required: false,
+      position: 2)
     question.custom_form = ca
     question.save!
 
@@ -388,7 +388,7 @@ protected
     self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
-    officer_role = self.roles.create!(:name => "Officer", :is_system_generated => false)
+    officer_role = self.roles.create!(name: "Officer", is_system_generated: false)
     officer_role.permissions.create!(subject_class: "Announcement", permission_level: "Create", can_lock: true)
     officer_role.permissions.create!(subject_class: "Comment", can_create: true, can_lock: true)
     officer_role.permissions.create!(subject_class: "CommunityApplication", can_read: true)
@@ -408,7 +408,7 @@ protected
 
     community_p_space = self.page_spaces.create(name: I18n.t("community.default.page_space.name"))
     community_home_page = community_p_space.pages.create(name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup"))
-    self.update_attributes :home_page_id => community_home_page.id
+    self.update_attributes home_page_id: community_home_page.id
   end
 
   ###
@@ -417,8 +417,8 @@ protected
   # The method will destory the admin_community_profile and member role. This is necessary becouse of the community_profile validators.
   ###
   def destroy_admin_community_profile_and_member_role
-    roles = Role.where(:community_id => self.id)
-    admin_community_profile = self.community_profiles.where(:user_profile_id => self.admin_profile.id).first
+    roles = Role.where(community_id: self.id)
+    admin_community_profile = self.community_profiles.where(user_profile_id: self.admin_profile.id).first
     if Community.with_deleted.exists?(self)
       admin_community_profile.destroy if admin_community_profile
       roles.each do |role|

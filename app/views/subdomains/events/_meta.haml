@@ -1,19 +1,19 @@
 .meta
-  = image_tag (event.creator_avatar_url :small), :class => 'avatar'
+  = image_tag (event.creator_avatar_url :small), class: 'avatar'
   Created by
   %strong
     = link_to shorten_words(event.creator_display_name), event.creator
   %time= time_ago_in_words(event.created_at) + ' ago'
   .event
     %time
-      %strong.day= l event.start_time, :format => :date_short
+      %strong.day= l event.start_time, format: :date_short
       from
-      %strong.time= l event.start_time, :format => :time_12
+      %strong.time= l event.start_time, format: :time_12
       until
       - unless event.start_time.day == event.end_time.day
-        %strong.day= l event.end_time, :format => :date_short
+        %strong.day= l event.end_time, format: :date_short
         at
-      %strong.time= l event.end_time, :format => :time_12
+      %strong.time= l event.end_time, format: :time_12
     - if current_user.invited?(event)
       - invite = current_user.invites.find_by_event_id(event.id)
       &nbsp;|&nbsp;

@@ -11,7 +11,7 @@ class Subdomains::CommunityProfilesController < SubdomainsController
 ###
 # Before Filters
 ###
-  load_and_authorize_resource :only => [:destroy]
+  load_and_authorize_resource only: [:destroy]
 
 ###
 # REST Actions
@@ -25,12 +25,12 @@ class Subdomains::CommunityProfilesController < SubdomainsController
       community_application.remove_from_community(current_user.user_profile)
       if @community_profile.user_profile == current_user.user_profile
         add_new_flash_message "You have left the \"#{current_community.name}\" community.", 'success'
-        redirect_to root_url(:subdomain => current_community.subdomain)
+        redirect_to root_url(subdomain: current_community.subdomain)
         return
       else
         add_new_flash_message "#{@community_profile.user_profile_display_name} has been removed from the community.", 'notice'
       end
     end
-    respond_with @community_profile, :location => roster_assignments_url
+    respond_with @community_profile, location: roster_assignments_url
   end
 end

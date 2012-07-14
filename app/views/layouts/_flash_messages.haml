@@ -1,7 +1,7 @@
 - if !!flash[:alert] or !!flash[:error] or !!flash[:notice] or !!flash[:messages] or (!hide_announcements? && user_signed_in? && any_announcements_to_display? && !session[:hide_announcements])
   %ul#flash
     - if !hide_announcements? && user_signed_in? && any_announcements_to_display? && !session[:hide_announcements]
-      = render 'layouts/flash_message_announcement', :announcement => announcements_to_display.first
+      = render 'layouts/flash_message_announcement', announcement: announcements_to_display.first
     - if !!flash[:alert]
       %li.alert
         :markdown
@@ -16,7 +16,7 @@
           #{flash[:notice]}
     - if !!flash[:messages]
       - flash[:messages].each do |message|
-        %li{ :class => message[:class] }
+        %li{ class: message[:class] }
           :markdown
             #{message[:body]}
   - clear_flash_messages

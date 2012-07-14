@@ -29,12 +29,12 @@ class CommunityApplication < ActiveRecord::Base
 ###
   belongs_to :community
   belongs_to :user_profile
-  belongs_to :submission, :dependent => :destroy
+  belongs_to :submission, dependent: :destroy
   has_one :community_profile
-  belongs_to :status_changer, :class_name => "UserProfile"
+  belongs_to :status_changer, class_name: "UserProfile"
   accepts_nested_attributes_for :submission
   has_and_belongs_to_many :character_proxies
-  has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
 ###
 # Callbacks
@@ -45,12 +45,12 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :community,  :presence => true
-  validates :user_profile,  :presence => true
-  validates :submission,  :presence => true
-  validates :status,  :presence => true,
-                    :inclusion => { :in => VALID_STATUSES, :message => "%{value} is not a valid status" },
-                    :on => :update
+  validates :community,  presence: true
+  validates :user_profile,  presence: true
+  validates :submission,  presence: true
+  validates :status,  presence: true,
+                    inclusion: { in: VALID_STATUSES, message: "%{value} is not a valid status" },
+                    on: :update
   validate :community_and_submission_match
   validate :user_profile_and_submission_match
   validate :user_profile_not_a_member
@@ -59,15 +59,15 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :admin_profile_id, :to => :community, :prefix => true
-  delegate :custom_form, :to => :submission, :allow_nil => true
-  delegate :answers, :to => :submission, :allow_nil => true, :prefix => true
-  delegate :instructions, :to => :custom_form, :allow_nil => true, :prefix => true
-  delegate :thankyou, :to => :custom_form, :allow_nil => true, :prefix => true
-  delegate :questions, :to => :custom_form, :allow_nil => true, :prefix => true
-  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
-  delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :avatar_url, :to => :user_profile, :prefix => true
+  delegate :admin_profile_id, to: :community, prefix: true
+  delegate :custom_form, to: :submission, allow_nil: true
+  delegate :answers, to: :submission, allow_nil: true, prefix: true
+  delegate :instructions, to: :custom_form, allow_nil: true, prefix: true
+  delegate :thankyou, to: :custom_form, allow_nil: true, prefix: true
+  delegate :questions, to: :custom_form, allow_nil: true, prefix: true
+  delegate :name, to: :custom_form, prefix: true, allow_nil: true
+  delegate :display_name, to: :user_profile, prefix: true
+  delegate :avatar_url, to: :user_profile, prefix: true
 
 ###
 # Public Methods
@@ -90,18 +90,18 @@ class CommunityApplication < ActiveRecord::Base
       end
     end
     return false if error_count > 0
-    if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, :without_protection => true)
+    if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, without_protection: true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
-      community_profile.update_attributes({community_application_id: self.id},:without_protection => true)
-      message = Message.create_system(:subject => "Application Accepted",
-                  :body => "Your application to #{self.community.name} has been accepted. It will now appear in your communities list.",
-                  :to => [self.user_profile_id])
+      community_profile.update_attributes({community_application_id: self.id},without_protection: true)
+      message = Message.create_system(subject: "Application Accepted",
+                  body: "Your application to #{self.community.name} has been accepted. It will now appear in your communities list.",
+                  to: [self.user_profile_id])
 
       unless community_profile.nil?
         self.character_proxies.each do |proxy|
           next unless proxy_map[proxy.id.to_s]
           begin
-            community_profile.roster_assignments.create!(:supported_game_id => proxy_map[proxy.id.to_s], :character_proxy => proxy).approve(false)
+            community_profile.roster_assignments.create!(supported_game_id: proxy_map[proxy.id.to_s], character_proxy: proxy).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end
@@ -116,10 +116,10 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def reject_application(rejected_by_user_profile)
     return false unless self.is_pending? or self.applicant_is_a_member?
-    if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, :without_protection => true)
-      message = Message.create_system(:subject => "Application Rejected",
-                            :body => "Your application to #{self.community.name} has been rejected.",
-                            :to => [self.user_profile_id])
+    if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, without_protection: true)
+      message = Message.create_system(subject: "Application Rejected",
+                            body: "Your application to #{self.community.name} has been rejected.",
+                            to: [self.user_profile_id])
     end
   end
 
@@ -129,9 +129,9 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def remove_from_community(removed_by_user_profile)
     if removed_by_user_profile.id == self.user_profile.id
-      self.update_attributes({status: "Left", status_changer: removed_by_user_profile}, :without_protection => true)
+      self.update_attributes({status: "Left", status_changer: removed_by_user_profile}, without_protection: true)
     else
-      self.update_attributes({status: "Removed", status_changer: removed_by_user_profile}, :without_protection => true)
+      self.update_attributes({status: "Removed", status_changer: removed_by_user_profile}, without_protection: true)
     end
   end
 
@@ -187,7 +187,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.submission = Submission.create!(:custom_form => custom_form, :user_profile => user_profile) unless self.submission
+    self.submission = Submission.create!(custom_form: custom_form, user_profile: user_profile) unless self.submission
   end
 
 ###
@@ -244,9 +244,9 @@ protected
     if self.community.email_notice_on_application
       # TODO Mike, Link needs to be changed to crumblin.com when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
-      message = Message.create_system(:subject => "Application Submitted to #{self.community.name}",
-                            :body => "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
-                            :to => [self.community.admin_profile_id])
+      message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
+                            body: "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
+                            to: [self.community.admin_profile_id])
     end
   end
 end

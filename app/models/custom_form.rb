@@ -27,30 +27,30 @@ class CustomForm < ActiveRecord::Base
 ###
 # Associations
 ###
-  has_many :submissions, :dependent => :destroy
-  has_many :questions, :dependent => :destroy, :autosave => true, :order => 'position ASC'
-  accepts_nested_attributes_for :questions, :allow_destroy => true
+  has_many :submissions, dependent: :destroy
+  has_many :questions, dependent: :destroy, autosave: true, order: 'position ASC'
+  accepts_nested_attributes_for :questions, allow_destroy: true
 
-  has_many :submissions, :dependent => :destroy
+  has_many :submissions, dependent: :destroy
   belongs_to :community
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true,
-                    :length => { :maximum => MAX_NAME_LENGTH }
-  validates :instructions, :length => { :maximum => MAX_INSTRUCTIONS_LENGTH }
-  validates :thankyou, :presence => true,
-                       :length => { :maximum => MAX_THANKYOU_LENGTH }
-  validates :community, :presence => true
+  validates :name,  presence: true,
+                    length: { maximum: MAX_NAME_LENGTH }
+  validates :instructions, length: { maximum: MAX_INSTRUCTIONS_LENGTH }
+  validates :thankyou, presence: true,
+                       length: { maximum: MAX_THANKYOU_LENGTH }
+  validates :community, presence: true
   validate :cant_unpublish_application_form
   validate :question_have_predefined_answers
 
 ###
 # Delegates
 ###
-  delegate :admin_profile_id, :to => :community, :allow_nil => true
-  delegate :name, :to => :community, :prefix => true, :allow_nil => true
+  delegate :admin_profile_id, to: :community, allow_nil: true
+  delegate :name, to: :community, prefix: true, allow_nil: true
 
 ###
 # Callbacks
@@ -61,7 +61,7 @@ class CustomForm < ActiveRecord::Base
 ###
 # Scopes
 ###
-  scope :published, where(:is_published => true)
+  scope :published, where(is_published: true)
 
 ###
 # Public Methods

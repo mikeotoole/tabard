@@ -21,9 +21,9 @@ class Minecraft < Game
 ###
 # Validators
 ###
-  validates :server_type,  :presence => true,
-                    :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." },
-                    :uniqueness => {:case_sensitive => false, :message => "A game with this server type exists."}
+  validates :server_type,  presence: true,
+                    inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." },
+                    uniqueness: {case_sensitive: false, message: "A game with this server type exists."}
 
 ###
 # Public Methods

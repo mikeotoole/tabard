@@ -23,17 +23,17 @@ class Wow < Game
 ###
 # Associations
 ###
-  has_many :wow_characters, :dependent => :destroy
+  has_many :wow_characters, dependent: :destroy
 
 ###
 # Validators
 ###
-  validates :faction,  :presence => true,
-                    :inclusion => { :in => VALID_FACTIONS, :message => "%{value} is not a valid faction." }
-  validates :server_type,  :presence => true,
-                    :inclusion => { :in => VALID_SERVER_TYPES, :message => "%{value} is not a valid server type." }
-  validates :server_name, :presence => true,
-                    :uniqueness => {:case_sensitive => false, :scope => [:faction, :server_type], :message => "A game with this faction, server name, server type exists."}
+  validates :faction,  presence: true,
+                    inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
+  validates :server_type,  presence: true,
+                    inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
+  validates :server_name, presence: true,
+                    uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
 
 ###
 # Public Methods
@@ -55,8 +55,8 @@ class Wow < Game
 
   # Gets a game instance for given faction server combination
   def self.game_for_faction_server(faction, server)
-    wow = Wow.find(:first, :conditions => {:faction => faction, :server_name => server})
-    wow = Wow.new(:faction => faction, :server_name => server) unless wow
+    wow = Wow.find(:first, conditions: {faction: faction, server_name: server})
+    wow = Wow.new(faction: faction, server_name: server) unless wow
     return wow
   end
 

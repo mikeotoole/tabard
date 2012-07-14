@@ -2,16 +2,16 @@
 
 %h1 Editing Supported Game
 
-= simple_form_for @supported_game, :html => {:novalidate => true} do |f|
+= simple_form_for @supported_game, html: {novalidate: true} do |f|
   = f.error_notification
   %fieldset
     %ol
-      = f.input :name, :input_html => { :maxlength => SupportedGame::MAX_NAME_LENGTH }
+      = f.input :name, input_html: { maxlength: SupportedGame::MAX_NAME_LENGTH }
       - if @supported_game.game.respond_to?(:all_factions)
-        = f.input :faction, :as => :radio, :collection => @supported_game.all_factions, :wrapper_html => { class: 'select' }
+        = f.input :faction, as: :radio, collection: @supported_game.all_factions, wrapper_html: { class: 'select' }
       - if @supported_game.game.respond_to?(:all_servers)
-        = f.input :server_name, :as => :radio, :label => 'Server', :collection => @supported_game.all_servers, :wrapper_html => { class: 'select' }
+        = f.input :server_name, as: :radio, label: 'Server', collection: @supported_game.all_servers, wrapper_html: { class: 'select' }
       - if @supported_game.game.respond_to?(:all_server_types)
-        = f.input :server_type, :as => :radio, :collection => @supported_game.all_server_types, :wrapper_html => { class: 'select' }
+        = f.input :server_type, as: :radio, collection: @supported_game.all_server_types, wrapper_html: { class: 'select' }
       %li
-        %button{ :type => 'submit' } Save changes
+        %button{ type: 'submit' } Save changes

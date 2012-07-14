@@ -13,11 +13,11 @@ class Subdomains::EventsController < SubdomainsController
 ###
   before_filter :authenticate_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_event, :except => [:new, :create, :index]
-  before_filter :create_event, :only => [:new, :create]
-  before_filter :build_missing_invites, :only => [:new, :create, :edit, :update]
-  before_filter :rsvp_flash, :only => [:show, :invites]
-  authorize_resource :except => [:index, :invites]
+  before_filter :load_event, except: [:new, :create, :index]
+  before_filter :create_event, only: [:new, :create]
+  before_filter :build_missing_invites, only: [:new, :create, :edit, :update]
+  before_filter :rsvp_flash, only: [:show, :invites]
+  authorize_resource except: [:index, :invites]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -53,10 +53,10 @@ class Subdomains::EventsController < SubdomainsController
           @events_by_day[date.day] << event
         end
       end
-      render :month_index, :layout => 'calendar'
+      render :month_index, layout: 'calendar'
     else
       add_new_flash_message 'Invalid date.', 'alert'
-      redirect_to month_events_url(:year => Date.today.year, :month => Date.today.month)
+      redirect_to month_events_url(year: Date.today.year, month: Date.today.month)
     end
   end
 
@@ -81,7 +81,7 @@ class Subdomains::EventsController < SubdomainsController
           end
         end
       end
-      render :week_index, :layout => 'calendar'
+      render :week_index, layout: 'calendar'
     else
       add_new_flash_message 'Invalid date.', 'alert'
       redirect_to week_events_url year: Date.today.year, week: Date.today.cweek
@@ -110,7 +110,7 @@ class Subdomains::EventsController < SubdomainsController
     add_new_flash_message 'Event was successfully created.', 'success' if @event.save
     @event.invites.each do |invite|
     end
-    respond_with(@event, :location => event_url(@event))
+    respond_with(@event, location: event_url(@event))
   end
 
   # PUT /events/1
@@ -135,11 +135,11 @@ class Subdomains::EventsController < SubdomainsController
     participant.character_proxy = (character_active? ? current_character.character_proxy : nil)
     if participant.save
       add_new_flash_message 'Successfully responded as attending.', 'success'
-      redirect_to url_for(@event), :action => :show
+      redirect_to url_for(@event), action: :show
       return
     else
       add_new_flash_message 'Unable to respond to event.', 'alert'
-      redirect_to url_for(@event), :action => :show
+      redirect_to url_for(@event), action: :show
       return
     end
   end

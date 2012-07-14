@@ -16,7 +16,7 @@ module CustomFormHelper
   # [Returns] A link that uses JavaScript to add new question html to the desired form
   ###
   def add_question_link(name, f, options={})
-    question = render :partial => 'subdomains/custom_forms/question', :locals => { :f => f, :question => Question.new, :q => 'newIndexQ' }
+    question = render partial: 'subdomains/custom_forms/question', locals: { f: f, question: Question.new, q: 'newIndexQ' }
     page = %{
       newIndexQ = new Date().getTime();
       question = "#{escape_javascript question}";
@@ -51,7 +51,7 @@ module CustomFormHelper
   # [Returns] A link that uses JavaScript to add new predefined answer html to the desired form question
   ###
   def add_predefined_answer_link(name, f, question, options={})
-    answer = render :partial => 'subdomains/custom_forms/answer', :locals => { :f => f, :answer => question.predefined_answers.new, :q => 'indexQ', :a => 'newIndexA' }
+    answer = render partial: 'subdomains/custom_forms/answer', locals: { f: f, answer: question.predefined_answers.new, q: 'indexQ', a: 'newIndexA' }
     page = %{
       newIndexA = new Date().getTime();
       answers = $(this).closest('div').find('.answers');

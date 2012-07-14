@@ -22,34 +22,34 @@ class Activity < ActiveRecord::Base
 ###
   belongs_to :user_profile, inverse_of: :activities
   belongs_to :community, inverse_of: :activities
-  belongs_to :target, :polymorphic => true
+  belongs_to :target, polymorphic: true
 
 ###
 # Delegates
 ###
-  delegate :name, :to => :community, :prefix => true
-  delegate :subdomain, :to => :community, :prefix => true
-  delegate :display_name, :to => :user_profile, :prefix => true
+  delegate :name, to: :community, prefix: true
+  delegate :subdomain, to: :community, prefix: true
+  delegate :display_name, to: :user_profile, prefix: true
 
 ###
 # Validators
 ###
-  validates :user_profile, :presence => true
-  validates :target, :presence => true
-  validates :action, :presence => true
+  validates :user_profile, presence: true
+  validates :target, presence: true
+  validates :action, presence: true
 
 ###
 # Scopes
 ###
-  scope :ordered, :order => "updated_at DESC"
+  scope :ordered, order: "updated_at DESC"
 
   ###
   # Used to retrive an array of activities.
   # [Args]
-  #   * +activity+ An optinal hash containg :user_profile_id and/or :community_id. For example: {:user_profile_id => 1, :community_id => 4}
+  #   * +activity+ An optinal hash containg :user_profile_id and/or :community_id. For example: {user_profile_id: 1, community_id: 4}
   #   * +updated+ An optinal hash containg :since and/or :before. These are both dates.
   #                   If only since is given activities that occurred after that date will be returned.
-  #                     For example: {:since => 2.day.ago} will return all activiies that happend from now till 2 days ago.
+  #                     For example: {since: 2.day.ago} will return all activiies that happend from now till 2 days ago.
   #                   If only before is given activities that occurred before that date will be returned.
   #                   If both since and before is given activities that occurred between those dates will be returned.
   #   * +max_items+ An optinal number of items to return.

@@ -6,8 +6,8 @@
 # This class is a mailer used by the Acknowledgement to send emails.
 ###
 class AcknowledgementMailer < ActionMailer::Base
-  default :from => "Crumblin <noreply@crumblin.com>",
-          :content_type => "text/html"
+  default from: "Crumblin <noreply@crumblin.com>",
+          content_type: "text/html"
   layout 'mailer'
 
   # Tell user they have a new message
@@ -15,8 +15,8 @@ class AcknowledgementMailer < ActionMailer::Base
     @acknowledgement = Acknowledgement.find_by_id(acknowledgement_id)
     if !!@acknowledgement
       @user_profile = @acknowledgement.user_profile
-      @url = announcement_url(@acknowledgement.announcement, :subdomain => @acknowledgement.subdomain)
-      mail(:to => @user_profile.email, :subject => "Crumblin - New #{@acknowledgement.community_name} Announcement") do |format|
+      @url = announcement_url(@acknowledgement.announcement, subdomain: @acknowledgement.subdomain)
+      mail(to: @user_profile.email, subject: "Crumblin - New #{@acknowledgement.community_name} Announcement") do |format|
          format.html { render "mailers/new_announcement" }
       end
     end

@@ -2,9 +2,9 @@
 = javascript_include_tag "comments"
 #breadcrumb
   %ol
-    %li= link_to "Announcements", announcements_url(:subdomain => current_community.subdomain)
+    %li= link_to "Announcements", announcements_url(subdomain: current_community.subdomain)
     - if @announcement.supported_game
-      %li= link_to @announcement.supported_game_smart_name, announcements_url(:supported_game => @announcement.supported_game)
+      %li= link_to @announcement.supported_game_smart_name, announcements_url(supported_game: @announcement.supported_game)
     - else
       %li= link_to 'Community Announcements', community_announcements_url
     %li
@@ -13,12 +13,12 @@
 #actions.actions
   - if @announcement.is_locked
     - if can? :unlock, @announcement
-      = link_to 'Unlock', unlock_announcement_url(@announcement), :method => :post, :meta => 'Unlock announcement', :class => 'unlock'
+      = link_to 'Unlock', unlock_announcement_url(@announcement), method: :post, meta: 'Unlock announcement', class: 'unlock'
   - else
     - if can? :lock, @announcement
-      = link_to 'Lock', lock_announcement_url(@announcement), :method => :post, :meta => 'Lock announcement', :class => 'lock'
+      = link_to 'Lock', lock_announcement_url(@announcement), method: :post, meta: 'Lock announcement', class: 'lock'
     - if (can? :destroy, @announcement)
-      = link_to 'Destroy', @announcement, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove announcement', :class => 'delete'
+      = link_to 'Destroy', @announcement, confirm: 'Are you sure?', method: :delete, meta: 'Remove announcement', class: 'delete'
 
 %article
   %h1= shorten_words @announcement.name, 21
@@ -52,9 +52,9 @@
       = paginate @comments
       %ol
         - @comments.each do |comment|
-          = render "subdomains/comments/comment", :comment => comment
+          = render "subdomains/comments/comment", comment: comment
       = paginate @comments
     - if can? :comment, @announcement
       .newcomment
         %h3 Post a New Comment
-        = render 'subdomains/comments/form', :comment => @announcement.comments.new
+        = render 'subdomains/comments/form', comment: @announcement.comments.new

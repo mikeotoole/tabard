@@ -10,11 +10,11 @@
         %td.actions
           %div
             - if (can? :update, page)
-              = link_to 'Edit', edit_page_path(page), :meta => 'Edit page', :class => 'edit'
+              = link_to 'Edit', edit_page_path(page), meta: 'Edit page', class: 'edit'
             - if (can? :destroy, page)
-              = link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page', :class => 'delete'
+              = link_to 'Destroy', page, confirm: 'Are you sure?', method: :delete, meta: 'Delete page', class: 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 3 }
-        - if can? :create, Page.new({ page_space: page_space }, :without_protection => true)
-          = link_to 'New Page', new_page_space_page_path(page_space), :class => 'button'
+      %td{ colspan: 3 }
+        - if can? :create, Page.new({ page_space: page_space }, without_protection: true)
+          = link_to 'New Page', new_page_space_page_path(page_space), class: 'button'

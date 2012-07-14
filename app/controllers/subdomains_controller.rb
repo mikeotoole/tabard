@@ -16,8 +16,8 @@ class SubdomainsController < ApplicationController
 ###
   before_filter :find_community_by_subdomain
   before_filter :apply_dynamic_permissions
-  before_filter :block_unauthorized_user!, :except => [:index]
-  before_filter :ensure_current_user_is_member, :except => [:index]
+  before_filter :block_unauthorized_user!, except: [:index]
+  before_filter :ensure_current_user_is_member, except: [:index]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -58,13 +58,13 @@ class SubdomainsController < ApplicationController
     management_items = Array.new()
     return management_items unless signed_in?
     #application
-    management_items << {:link => edit_community_settings_url, :title => "Community Settings", :class => 'settings'} if can_manage? current_community
-    management_items << {:link => supported_games_url, :title => "Supported Games", :class => 'games'} if can_manage? current_community.supported_games.new
-    management_items << {:link => roles_url, :title => "Permissions", :class => 'roles'} if can_manage? current_community.roles.new
-    management_items << {:link => community_applications_url, :title => 'Applications', :class => 'applications', :meta => current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
-    management_items << {:link => pending_roster_assignments_url, :title => "Roster Requests", :class => 'roster', :meta => current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
-    management_items << {:link => my_roster_assignments_url, :title => "My Roster", :class => 'myroster'} if can? :mine, RosterAssignment
-    management_items << {:link => custom_forms_url, :title => "Forms", :class => 'forms'} if can? :create, CustomForm or can_manage? current_community.custom_forms.new
+    management_items << {link: edit_community_settings_url, title: "Community Settings", class: 'settings'} if can_manage? current_community
+    management_items << {link: supported_games_url, title: "Supported Games", class: 'games'} if can_manage? current_community.supported_games.new
+    management_items << {link: roles_url, title: "Permissions", class: 'roles'} if can_manage? current_community.roles.new
+    management_items << {link: community_applications_url, title: 'Applications', class: 'applications', meta: current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
+    management_items << {link: pending_roster_assignments_url, title: "Roster Requests", class: 'roster', meta: current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
+    management_items << {link: my_roster_assignments_url, title: "My Roster", class: 'myroster'} if can? :mine, RosterAssignment
+    management_items << {link: custom_forms_url, title: "Forms", class: 'forms'} if can? :create, CustomForm or can_manage? current_community.custom_forms.new
     management_items
   end
   helper_method :management_navigation_items
@@ -113,10 +113,10 @@ protected
   def find_community_by_subdomain
     @community = Community.find_by_subdomain(request.subdomain.downcase)
     if @community
-      render 'status_code/pending_removal', :layout => 'application' if @community.pending_removal
+      render 'status_code/pending_removal', layout: 'application' if @community.pending_removal
       return true
     else
-      redirect_to [request.protocol, request.domain, request.port_string, request.path].join, :alert => "That community does not exist"
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join, alert: "That community does not exist"
       return false
     end
   end

@@ -7,11 +7,11 @@
     %br
     to reinstate your disabled account.
 
-  = simple_form_for(@user, :url => send_reinstate_url, :html => { :method => :put }) do |f|
+  = simple_form_for(@user, url: send_reinstate_url, html: { method: :put }) do |f|
     %fieldset
       %ol
-        = f.input :email, :as => :email
+        = f.input :email, as: :email
       %p
-        %button{ :type => 'submit' } Send instructions
+        %button{ type: 'submit' } Send instructions
 
   = render "devise/shared/links"

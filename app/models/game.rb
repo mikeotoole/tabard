@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
 # Associations
 ###
   has_many :supported_games
-  has_many :communities, :through => :supported_games
+  has_many :communities, through: :supported_games
 
 ###
 # Class Methods
@@ -57,11 +57,11 @@ class Game < ActiveRecord::Base
       game_class = type.constantize
       game = game_class.game_for_faction_server(faction, server_name)
       return game if game
-      return game_class.new(:faction => faction, :server_name => server_name) if game_class and game_class.superclass.name == "Game"
+      return game_class.new(faction: faction, server_name: server_name) if game_class and game_class.superclass.name == "Game"
     elsif type == "Minecraft"
-      game = Minecraft.find(:first, :conditions => {:server_type => server_type})
+      game = Minecraft.find(:first, conditions: {server_type: server_type})
       return game if game
-      return Minecraft.new(:server_type => server_type)
+      return Minecraft.new(server_type: server_type)
     end
     return nil
   end

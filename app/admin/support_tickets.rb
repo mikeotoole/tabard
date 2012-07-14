@@ -1,13 +1,13 @@
 ActiveAdmin.register SupportTicket do
-  menu :parent => "Crumblin"
+  menu parent: "Crumblin"
   controller.authorize_resource
 
   actions :index, :show, :edit, :update
 
   form do |f|
     f.inputs "Support Ticket Details" do
-      f.input :admin_user, :member_label => :display_name
-      f.input :status, :as => :select, :include_blank => false, :collection => SupportTicket::STATUSES
+      f.input :admin_user, member_label: :display_name
+      f.input :status, as: :select, include_blank: false, collection: SupportTicket::STATUSES
       f.buttons
     end
   end

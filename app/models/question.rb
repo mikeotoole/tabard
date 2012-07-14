@@ -32,19 +32,19 @@ class Question < ActiveRecord::Base
 # Associations
 ###
   belongs_to :custom_form
-  has_many :predefined_answers, :dependent => :destroy, :inverse_of => :question, :autosave => true, :order => 'id ASC'
+  has_many :predefined_answers, dependent: :destroy, inverse_of: :question, autosave: true, order: 'id ASC'
 
 ###
 # Validators
 ###
-  validates :body, :presence => true,
-                   :length => { :maximum => MAX_BODY_LENGTH }
-  validates :explanation, :length => { :maximum => MAX_EXPLANATION_LENGTH }
-  validates :style,  :presence => true,
-                    :inclusion => { :in => VALID_STYLES, :message => "%{value} is not a valid question style." }
+  validates :body, presence: true,
+                   length: { maximum: MAX_BODY_LENGTH }
+  validates :explanation, length: { maximum: MAX_EXPLANATION_LENGTH }
+  validates :style,  presence: true,
+                    inclusion: { in: VALID_STYLES, message: "%{value} is not a valid question style." }
   validate :predefined_answers_are_not_too_similar
 
-  accepts_nested_attributes_for :predefined_answers, :allow_destroy => true
+  accepts_nested_attributes_for :predefined_answers, allow_destroy: true
 
 ###
 # Callbacks
@@ -55,7 +55,7 @@ class Question < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :name, :to => :custom_form, :prefix => true, :allow_nil => true
+  delegate :name, to: :custom_form, prefix: true, allow_nil: true
 
 ###
 # Public Methods

@@ -2,10 +2,10 @@
   © DigitalAugment, Inc.
   = raw '&nbsp;|&nbsp;'
   - if current_layout == 'community' and !current_community.background_image.to_s and current_community.theme_background_author
-    = link_to_if current_community.theme_background_author_url, "Art by #{current_community.theme_background_author}", current_community.theme_background_author_url, :target => '_blank'
+    = link_to_if current_community.theme_background_author_url, "Art by #{current_community.theme_background_author}", current_community.theme_background_author_url, target: '_blank'
     = raw '&nbsp;|&nbsp;'
   = link_to 'Privacy', top_level_privacy_policy_url
   = raw '&nbsp;|&nbsp;'
   = link_to 'Terms', top_level_terms_of_service_url
   = raw '&nbsp;|&nbsp;'
-  = link_to 'Support', support_index_url(:subdomain => false)
+  = link_to 'Support', support_index_url(subdomain: false)

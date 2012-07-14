@@ -2,9 +2,9 @@
 
 #actions.actions
   - if can? :create, Announcement
-    = link_to 'New Announcement', new_announcement_url, :class => 'new', :meta => 'Create a new announcement'
+    = link_to 'New Announcement', new_announcement_url, class: 'new', meta: 'Create a new announcement'
 
 %h1 Announcements
 = paginate @announcements
-= render 'table', :announcements => @announcements
+= render 'table', announcements: @announcements
 = paginate @announcements

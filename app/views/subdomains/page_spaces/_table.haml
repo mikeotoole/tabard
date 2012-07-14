@@ -17,13 +17,13 @@
         %td.actions
           %div
             - if can? :create, space.pages.new
-              = link_to 'New', new_page_space_page_path(space), :meta => 'New page', :class => 'new'
+              = link_to 'New', new_page_space_page_path(space), meta: 'New page', class: 'new'
             - if can? :update, space
-              = link_to 'Edit', edit_page_space_path(space), :meta => 'Edit page space', :class => 'edit'
+              = link_to 'Edit', edit_page_space_path(space), meta: 'Edit page space', class: 'edit'
             - if can? :destroy, space
-              = link_to 'Destroy', space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete page space', :class => 'delete'
+              = link_to 'Destroy', space, confirm: 'Are you sure?', method: :delete, meta: 'Delete page space', class: 'delete'
   %tfoot
     %tr
-      %td{ :colspan => 3 }
+      %td{ colspan: 3 }
         - if can? :create, PageSpace
-          = link_to 'New Space', new_page_space_path, :class => 'button'
+          = link_to 'New Space', new_page_space_path, class: 'button'

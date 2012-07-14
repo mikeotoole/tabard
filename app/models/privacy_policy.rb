@@ -13,7 +13,7 @@ class PrivacyPolicy < Document
   # Gets the current Privacy Policy
   ###
   def self.current
-    PrivacyPolicy.find(:first, :conditions => { :is_published => true })
+    PrivacyPolicy.find(:first, conditions: { is_published: true })
   end
 
   ###

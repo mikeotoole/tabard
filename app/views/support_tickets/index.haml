@@ -8,7 +8,7 @@
       = link_to 'support@crumblin.com', 'mailto:support@crumblin.com'
   -else
     %h2 Create A New Ticket
-    = render 'form', :support_ticket => SupportTicket.new
+    = render 'form', support_ticket: SupportTicket.new
     %hr
     %h2 Your Support Tickets
     %h3 Pending Review

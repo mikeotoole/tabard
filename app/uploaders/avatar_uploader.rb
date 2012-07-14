@@ -18,7 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #storage :file
   storage :fog
 
-  process :convert => 'png'
+  process convert: 'png'
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -49,7 +49,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process scale: [200, 300]
   #
   # def scale(width, height)
   #   # do something
@@ -57,19 +57,19 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   # version :thumb do
-  #   process :scale => [50, 50]
+  #   process scale: [50, 50]
   # end
   version :large do
-    process :resize_to_fill => [240,240]
+    process resize_to_fill: [240,240]
   end
   version :small do
-    process :resize_to_fill => [60,60]
+    process resize_to_fill: [60,60]
   end
   version :tiny do
-    process :resize_to_fill => [40,40]
+    process resize_to_fill: [40,40]
   end
   version :icon do
-    process :resize_to_fill => [20,20]
+    process resize_to_fill: [20,20]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

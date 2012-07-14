@@ -14,11 +14,11 @@ class Subdomains::PagesController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  load_and_authorize_resource :except => [:new, :create, :index]
-  before_filter :create_page, :only => [:new, :create]
-  authorize_resource :only => [:new, :create]
+  load_and_authorize_resource except: [:new, :create, :index]
+  before_filter :create_page, only: [:new, :create]
+  authorize_resource only: [:new, :create]
   skip_before_filter :limit_subdomain_access
-  after_filter :create_activity, :only => [:update, :create]
+  after_filter :create_activity, only: [:update, :create]
 
 ###
 # REST Actions
@@ -26,7 +26,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # GET /pages/:id(.:format)
   def show
-    respond_with @page, :layout => 'community'
+    respond_with @page, layout: 'community'
   end
 
   # GET /page_spaces/:page_space_id/pages/new(.:format)
@@ -51,7 +51,7 @@ class Subdomains::PagesController < SubdomainsController
   # PUT /pages/:id(.:format)
   def update
     if current_user.user_profile == current_community.admin_profile
-      @page.assign_attributes(params[:page], :as => :community_admin)
+      @page.assign_attributes(params[:page], as: :community_admin)
     else
       @page.assign_attributes(params[:page])
     end
@@ -66,7 +66,7 @@ class Subdomains::PagesController < SubdomainsController
   # DELETE /pages/:id(.:format)
   def destroy
     add_new_flash_message('Page was successfully removed.') if @page.destroy
-    respond_with(@page, :location => page_space_url(@page.page_space))
+    respond_with(@page, location: page_space_url(@page.page_space))
   end
 
   # This method returns the current game that is in scope.
@@ -91,7 +91,7 @@ protected
   def create_page
     page_space = current_community.page_spaces.find_by_id(params[:page_space_id])
     if current_user.user_profile == current_community.admin_profile
-      @page = page_space.pages.new(params[:page], :as => :community_admin)
+      @page = page_space.pages.new(params[:page], as: :community_admin)
     else
       @page = page_space.pages.new(params[:page])
     end
@@ -104,10 +104,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create( :user_profile => current_user.user_profile,
-                        :community => @page.community,
-                        :target => @page,
-                        :action => @action)
+      Activity.create( user_profile: current_user.user_profile,
+                        community: @page.community,
+                        target: @page,
+                        action: @action)
     end
   end
 end

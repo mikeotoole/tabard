@@ -16,25 +16,25 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users, :controllers => { :sessions => 'sessions', :registrations => 'registrations', :passwords => 'passwords', :confirmations => 'confirmations' }
+  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations', passwords: 'passwords', confirmations: 'confirmations' }
   devise_scope :user do
-    get 'login' => 'sessions#new', :as => :new_user_session
-    post 'login' => 'sessions#create', :as => :user_session
-    delete 'logout' => 'sessions#destroy', :as => :destroy_user_session
-    get 'users/disable_confirmation' => 'registrations#disable_confirmation', :as => :disable_confirmation
-    get 'users/reinstate' => 'registrations#reinstate_confirmation', :as => :reinstate_confirmation
-    put 'users/reinstate' => 'registrations#send_reinstate', :as => :send_reinstate
-    get 'users/reinstate_account' => 'registrations#reinstate_account_edit', :as => :reinstate_account
-    put 'users/reinstate_account' => 'registrations#reinstate_account', :as => :reinstate_account
-    match 'account-settings' => 'registrations#edit', :as => :account_settings
+    get 'login' => 'sessions#new', as: :new_user_session
+    post 'login' => 'sessions#create', as: :user_session
+    delete 'logout' => 'sessions#destroy', as: :destroy_user_session
+    get 'users/disable_confirmation' => 'registrations#disable_confirmation', as: :disable_confirmation
+    get 'users/reinstate' => 'registrations#reinstate_confirmation', as: :reinstate_confirmation
+    put 'users/reinstate' => 'registrations#send_reinstate', as: :send_reinstate
+    get 'users/reinstate_account' => 'registrations#reinstate_account_edit', as: :reinstate_account
+    put 'users/reinstate_account' => 'registrations#reinstate_account', as: :reinstate_account
+    match 'account-settings' => 'registrations#edit', as: :account_settings
   end
 
   # Documents
-  get "users/accept_document/:id" => "document_acceptance#new", :as => "accept_document"
-  post "users/accept_document/:id" => "document_acceptance#create", :as => "accept_document_create"
+  get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
+  post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, :only => [:show, :edit, :update, :index] do
+  resources :user_profiles, only: [:show, :edit, :update, :index] do
     member do
       get :activities
       get :announcements
@@ -42,88 +42,88 @@ DaBvRails::Application.routes.draw do
       get :invites
     end
   end
-  get "/account" => "user_profiles#account", :as => "account"
-  match "/account/update" => "user_profiles#update", :as => "update_account", :via => :put
+  get "/account" => "user_profiles#account", as: "account"
+  match "/account/update" => "user_profiles#update", as: "update_account", via: :put
 
   # Communities
-  resources :communities, :except => [:update, :edit] do
-    get 'page/:page', :action => :index, :on => :collection
+  resources :communities, except: [:update, :edit] do
+    get 'page/:page', action: :index, on: :collection
   end
 
   # Games
-  get "/star-wars-the-old-republic" => 'swtors#index', :as => 'swtors'
-  get "/world-of-warcraft" => 'wows#index', :as => 'wows'
-  get "/minecraft" => 'minecrafts#index', :as => 'minecrafts'
+  get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
+  get "/world-of-warcraft" => 'wows#index', as: 'wows'
+  get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
 
   # Characters
-  resources :wow_characters, :except => [:index, :create]
-  post 'wow_characters/new' => 'wow_characters#create', :as => :wow_characters
-  resources :swtor_characters, :except => [:index, :create]
-  post 'swtor_characters/new' => 'swtor_characters#create', :as => :swtor_characters
+  resources :wow_characters, except: [:index, :create]
+  post 'wow_characters/new' => 'wow_characters#create', as: :wow_characters
+  resources :swtor_characters, except: [:index, :create]
+  post 'swtor_characters/new' => 'swtor_characters#create', as: :swtor_characters
 
   # Messaging
-  resources :sent_messages, :only => [:create]
-  get 'mail/sent/:id' => "sent_messages#show", :as => "sent_mail"
-  get 'mail/sent' => "sent_messages#index", :as => "sent_mailbox"
-  get 'mail/compose' => "sent_messages#new", :as => "compose_mail"
-  get 'mail/compose/:id' => "sent_messages#new", :as => "compose_mail_to"
-  get 'mail/inbox/:id' => "messages#show", :as => "mail"
-  post 'mail/mark_read/:id' => "messages#mark_read", :as => "mail_mark_read"
-  post 'mail/mark_unread/:id' => "messages#mark_unread", :as => "mail_mark_unread"
-  put 'mail/:id/move/:folder_id' => "messages#move", :as => "mail_move"
-  put 'mail/batch_move/:folder_id' => "messages#batch_move", :as => "mail_batch_move"
-  put 'mail/batch_mark_read/' => "messages#batch_mark_read", :as => "mail_batch_mark_read"
-  put 'mail/batch_mark_unread/' => "messages#batch_mark_unread", :as => "mail_batch_mark_unread"
-  get 'mail/reply/:id' => "messages#reply", :as => "mail_reply"
-  get 'mail/reply-all/:id' => "messages#reply_all", :as => "mail_reply_all"
-  get 'mail/forward/:id' => "messages#forward", :as => "mail_forward"
-  delete 'mail/delete/:id' => "messages#destroy", :as => "mail_delete"
-  delete 'mail/delete' => "messages#destroy", :as => "mail_delete_all"
-  delete 'mail/batch_delete' => "messages#batch_destroy", :as => "mail_batch_delete"
-  get 'mail/inbox' => "mailbox#inbox", :as => "inbox"
-  get 'mail/trash' => "mailbox#trash", :as => "trash"
+  resources :sent_messages, only: [:create]
+  get 'mail/sent/:id' => "sent_messages#show", as: "sent_mail"
+  get 'mail/sent' => "sent_messages#index", as: "sent_mailbox"
+  get 'mail/compose' => "sent_messages#new", as: "compose_mail"
+  get 'mail/compose/:id' => "sent_messages#new", as: "compose_mail_to"
+  get 'mail/inbox/:id' => "messages#show", as: "mail"
+  post 'mail/mark_read/:id' => "messages#mark_read", as: "mail_mark_read"
+  post 'mail/mark_unread/:id' => "messages#mark_unread", as: "mail_mark_unread"
+  put 'mail/:id/move/:folder_id' => "messages#move", as: "mail_move"
+  put 'mail/batch_move/:folder_id' => "messages#batch_move", as: "mail_batch_move"
+  put 'mail/batch_mark_read/' => "messages#batch_mark_read", as: "mail_batch_mark_read"
+  put 'mail/batch_mark_unread/' => "messages#batch_mark_unread", as: "mail_batch_mark_unread"
+  get 'mail/reply/:id' => "messages#reply", as: "mail_reply"
+  get 'mail/reply-all/:id' => "messages#reply_all", as: "mail_reply_all"
+  get 'mail/forward/:id' => "messages#forward", as: "mail_forward"
+  delete 'mail/delete/:id' => "messages#destroy", as: "mail_delete"
+  delete 'mail/delete' => "messages#destroy", as: "mail_delete_all"
+  delete 'mail/batch_delete' => "messages#batch_destroy", as: "mail_batch_delete"
+  get 'mail/inbox' => "mailbox#inbox", as: "inbox"
+  get 'mail/trash' => "mailbox#trash", as: "trash"
 
   # Support Tickets
-  resources :support_tickets, :path => :support, :as => :support do
-    resources :support_comments, :path => :comment, :as => :comment, only: [:new, :create]
+  resources :support_tickets, path: :support, as: :support do
+    resources :support_comments, path: :comment, as: :comment, only: [:new, :create]
   end
 
   # Subdomains
   constraints(Subdomain) do
-    get "/" => "subdomains#index", :as => 'subdomain_home'
-    scope :module => "subdomains" do
+    get "/" => "subdomains#index", as: 'subdomain_home'
+    scope module: "subdomains" do
 
       # Community
-      get "/community_settings" => "communities#edit", :as => "edit_community_settings"
-      match "/community_settings" => "communities#update", :as => "update_community_settings", :via => :put
-      get "/remove_confirmation" => "communities#remove_confirmation", :as => "community_remove_confirmation"
-      match "/clear_action_items" => "communities#clear_action_items", :as => "clear_action_items"
-      get "/activities" => "communities#activities", :as => "community_activities"
+      get "/community_settings" => "communities#edit", as: "edit_community_settings"
+      match "/community_settings" => "communities#update", as: "update_community_settings", via: :put
+      get "/remove_confirmation" => "communities#remove_confirmation", as: "community_remove_confirmation"
+      match "/clear_action_items" => "communities#clear_action_items", as: "clear_action_items"
+      get "/activities" => "communities#activities", as: "community_activities"
 
       # Roles and Permissions
-      resources :roles, :except => [:show]
+      resources :roles, except: [:show]
 
       # Roster assignments
-      get '/roster_assignments/pending' => 'roster_assignments#pending', :as => "pending_roster_assignments"
-      get '/my_roster_assignments' => 'roster_assignments#mine', :as => "my_roster_assignments"
-      put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", :as => "batch_approve_roster_assignments"
-      put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", :as => "batch_reject_roster_assignments"
-      delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", :as => "batch_destroy_roster_assignments"
-      resources :roster_assignments, :except => [:show, :new, :edit, :update] do
+      get '/roster_assignments/pending' => 'roster_assignments#pending', as: "pending_roster_assignments"
+      get '/my_roster_assignments' => 'roster_assignments#mine', as: "my_roster_assignments"
+      put '/roster_assignments/batch_approve' => "roster_assignments#batch_approve", as: "batch_approve_roster_assignments"
+      put '/roster_assignments/batch_reject' => "roster_assignments#batch_reject", as: "batch_reject_roster_assignments"
+      delete '/roster_assignments/batch_remove' => "roster_assignments#batch_destroy", as: "batch_destroy_roster_assignments"
+      resources :roster_assignments, except: [:show, :new, :edit, :update] do
         member do
           put :approve
           put :reject
         end
         collection do
-          match 'game/:id' => 'roster_assignments#game', :as => :game
+          match 'game/:id' => 'roster_assignments#game', as: :game
         end
       end
 
       # Community profiles
-      resources :community_profiles, :only => [:destroy]
+      resources :community_profiles, only: [:destroy]
 
       # Community applications
-      resources :community_applications, :except => [:edit, :update] do
+      resources :community_applications, except: [:edit, :update] do
         member do
           post :accept
           post :reject
@@ -131,25 +131,25 @@ DaBvRails::Application.routes.draw do
       end
 
       # Custom Forms
-      resources :custom_forms, :except => :show do
-        resources :submissions, :shallow => true, :only => [:index, :destroy]
-        resources :submissions, :except => [:update, :edit, :destroy]
+      resources :custom_forms, except: :show do
+        resources :submissions, shallow: true, only: [:index, :destroy]
+        resources :submissions, except: [:update, :edit, :destroy]
         member do
           put :publish
           put :unpublish
         end
       end
-      get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', :as => :custom_form_thankyou
+      get "/custom_forms/:id/thankyou" => 'custom_forms#thankyou', as: :custom_form_thankyou
 
       # Discussions
-      resources :comments, :except => [:index, :show] do
+      resources :comments, except: [:index, :show] do
         member do
           post :lock
           post :unlock
         end
       end
       resources :discussion_spaces do
-        resources :discussions, :except => [:index], :shallow => true do
+        resources :discussions, except: [:index], shallow: true do
           member do
             post :lock
             post :unlock
@@ -158,25 +158,25 @@ DaBvRails::Application.routes.draw do
       end
 
       # Announcements
-      resources :announcements, :except => [:edit, :update] do
+      resources :announcements, except: [:edit, :update] do
         member do
           post :lock
           post :unlock
         end
         collection do
           get :community
-          match 'game/:id' => 'announcements#game', :as => :game
-          match 'batch_destroy' => "announcements#batch_destroy", :as => "batch_destroy"
+          match 'game/:id' => 'announcements#game', as: :game
+          match 'batch_destroy' => "announcements#batch_destroy", as: "batch_destroy"
         end
       end
 
       # Pages
       resources :page_spaces do
-        resources :pages, :shallow => true, :except => [:index]
+        resources :pages, shallow: true, except: [:index]
       end
 
       # Supported Games
-      resources :supported_games, :except => [:show]
+      resources :supported_games, except: [:show]
 
       # Events
       resources :events do
@@ -187,46 +187,46 @@ DaBvRails::Application.routes.draw do
           get :past
         end
       end
-      get '/events/:year/:month' => 'events#month_index', :as => "month_events"
-      get '/events/:year/week/:week' => 'events#week_index', :as => "week_events"
+      get '/events/:year/:month' => 'events#month_index', as: "month_events"
+      get '/events/:year/week/:week' => 'events#week_index', as: "week_events"
 
       # Invites
-      put 'invites/batch_update' => "invites#batch_update", :as => "invites_batch_update"
-      resources :invites, :only => [:edit, :update]
+      put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
+      resources :invites, only: [:edit, :update]
     end
   end
 
   # Announcements
-  resources :announcements, :only => [:show]
-  put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", :as => "announcements_batch_mark_as_seen"
+  resources :announcements, only: [:show]
+  put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", as: "announcements_batch_mark_as_seen"
   # Invites
-  resources :invites, :only => [:show]
-  put 'invites/batch_update' => "invites#batch_update", :as => "invites_batch_update"
+  resources :invites, only: [:show]
+  put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
 
   # Artwork Upload
-  resources :artwork_uploads, :only => [:create, :new]
+  resources :artwork_uploads, only: [:create, :new]
 
   # Site Actions
-  match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", :as => :toggle_maintenance_mode
+  match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", as: :toggle_maintenance_mode
 
   # Top level home page
-  root :to => 'top_level#index'
+  root to: 'top_level#index'
   get "top_level/index"
-  get "/bar" => "top_level#bar", :as => "bar"
+  get "/bar" => "top_level#bar", as: "bar"
 
   # Top level pages
-  #get "/intro" => "top_level#intro", :as => 'top_level_intro'
-  get "/features" => "top_level#features", :as => 'top_level_features'
-  get "/pricing" => "top_level#pricing", :as => 'top_level_pricing'
-  get "/maintenance" => "top_level#maintenance", :as => 'top_level_maintenance'
-  get "/privacy-policy" => "top_level#privacy_policy", :as => 'top_level_privacy_policy'
-  get "/terms-of-service" => "top_level#terms_of_service", :as => 'top_level_terms_of_service'
-  match "/ignore_browser" => "top_level#ignore_browser", :as => 'ignore_browser'
+  #get "/intro" => "top_level#intro", as: 'top_level_intro'
+  get "/features" => "top_level#features", as: 'top_level_features'
+  get "/pricing" => "top_level#pricing", as: 'top_level_pricing'
+  get "/maintenance" => "top_level#maintenance", as: 'top_level_maintenance'
+  get "/privacy-policy" => "top_level#privacy_policy", as: 'top_level_privacy_policy'
+  get "/terms-of-service" => "top_level#terms_of_service", as: 'top_level_terms_of_service'
+  match "/ignore_browser" => "top_level#ignore_browser", as: 'ignore_browser'
 
-  get "/unsupported_browser" => "status_code#unsupported_browser", :as => 'unsupported_browser'
-  match '/not_found' => 'status_code#not_found', :as => 'not_found'
-  match '/forbidden' => 'status_code#forbidden', :as => 'forbidden'
-  match '*route', :to => 'status_code#not_found', :as => 'status_code_not_found'
+  get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
+  match '/not_found' => 'status_code#not_found', as: 'not_found'
+  match '/forbidden' => 'status_code#forbidden', as: 'forbidden'
+  match '*route', to: 'status_code#not_found', as: 'status_code_not_found'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -236,8 +236,8 @@ DaBvRails::Application.routes.draw do
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  #   match 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # This route can be invoked with purchase_url(id: product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -264,7 +264,7 @@ DaBvRails::Application.routes.draw do
   #   resources :products do
   #     resources :comments
   #     resources :sales do
-  #       get 'recent', :on => :collection
+  #       get 'recent', on: :collection
   #     end
   #   end
 
@@ -277,7 +277,7 @@ DaBvRails::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root to: "welcome#index"
 
   # See how all your routes lay out with "rake routes"
 

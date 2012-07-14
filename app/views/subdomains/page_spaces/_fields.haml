@@ -1,4 +1,4 @@
 %fieldset
   %ol
-    = f.input :name, :input_html => { :maxlength => PageSpace::MAX_NAME_LENGTH }
-    = f.input :supported_game_id, :label => 'Game', :collection => [['— None —','']].concat(current_community.supported_games.includes(:community).collect {|c| c = [c.smart_name, c.id]}), :as => :radio, :wrapper_html => { :class => 'select' }
+    = f.input :name, input_html: { maxlength: PageSpace::MAX_NAME_LENGTH }
+    = f.input :supported_game_id, label: 'Game', collection: [['— None —','']].concat(current_community.supported_games.includes(:community).collect {|c| c = [c.smart_name, c.id]}), as: :radio, wrapper_html: { class: 'select' }

@@ -20,28 +20,28 @@ class SupportTicket < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :admin_user, :inverse_of => :support_tickets
-  belongs_to :user_profile, :inverse_of => :support_tickets
-  has_many :support_comments, :inverse_of => :support_ticket
+  belongs_to :admin_user, inverse_of: :support_tickets
+  belongs_to :user_profile, inverse_of: :support_tickets
+  has_many :support_comments, inverse_of: :support_ticket
 
 
 ###
 # Delegates
 ###
-  delegate :full_name, :to => :user_profile, :prefix => true
-  delegate :id, :to => :user_profile, :prefix => true
+  delegate :full_name, to: :user_profile, prefix: true
+  delegate :id, to: :user_profile, prefix: true
 
-  delegate :display_name, :to => :admin_user, :prefix => true
-  delegate :email, :to => :admin_user, :prefix => true
+  delegate :display_name, to: :admin_user, prefix: true
+  delegate :email, to: :admin_user, prefix: true
 
 ###
 # Validators
 ###
-  validates :user_profile, :presence => true
+  validates :user_profile, presence: true
   validates :status,
-            :presence => true,
-            :inclusion => { :in => STATUSES, :message => "%{value} is not currently a supported status" }
-  validates :body, :presence => true
+            presence: true,
+            inclusion: { in: STATUSES, message: "%{value} is not currently a supported status" }
+  validates :body, presence: true
 end
 
 # == Schema Information

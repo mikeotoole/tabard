@@ -1,19 +1,19 @@
-%dd{ :class => message_class_names(message) }
+%dd{ class: message_class_names(message) }
 
   - if message.respond_to?('is_removed') && !message.is_removed?
     %p.meta
-      = check_box_tag "ids[#{message.id}]", true, false, :id => "message_id_#{message.id}"
-      %label{ :for => "message_id_#{message.id}" }
+      = check_box_tag "ids[#{message.id}]", true, false, id: "message_id_#{message.id}"
+      %label{ for: "message_id_#{message.id}" }
 
   %time
-    = l message.created_at, :format => (message.created_at >= Time.zone.now.beginning_of_day ? :time_12 : :date_monthday)
+    = l message.created_at, format: (message.created_at >= Time.zone.now.beginning_of_day ? :time_12 : :date_monthday)
 
   %h3
-    = link_to message.subject, (message.respond_to?('folder_name') ? mail_url(message, :format => :js) : sent_mail_url(message, :format => :js)), :remote => true, 'data-type' => :text
+    = link_to message.subject, (message.respond_to?('folder_name') ? mail_url(message, format: :js) : sent_mail_url(message, format: :js)), remote: true, 'data-type' => :text
 
   - if message.is_system_sent
   - else
-    = image_tag(message.author_avatar_url(:tiny), :class => 'avatar')
+    = image_tag(message.author_avatar_url(:tiny), class: 'avatar')
     %p.author
       %strong= mailbox_view_state == 'sent' ? 'Me' : message.author_name
       to
@@ -23,4 +23,4 @@
         %strong= pluralize(message.recipients.size-1,'other')
 
   %p.body
-    = truncate message.body, :length => 100, :separator => ' '
+    = truncate message.body, length: 100, separator: ' '

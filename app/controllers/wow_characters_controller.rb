@@ -10,9 +10,9 @@ class WowCharactersController < ApplicationController
 ###
 # Before Filters
 ###
-  prepend_before_filter :block_unauthorized_user!, :except => :show
+  prepend_before_filter :block_unauthorized_user!, except: :show
   load_and_authorize_resource
-  skip_load_and_authorize_resource :only => :update
+  skip_load_and_authorize_resource only: :update
 
 ###
 # REST Actions
@@ -37,7 +37,7 @@ class WowCharactersController < ApplicationController
       logger.error "#{$!}"
       @wow_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @wow_character, :location => user_profile_url(@wow_character.user_profile) + '#characters'
+    respond_with @wow_character, location: user_profile_url(@wow_character.user_profile) + '#characters'
   end
 
   # PUT /wow_characters/:id(.:format)
@@ -57,13 +57,13 @@ class WowCharactersController < ApplicationController
       logger.error "#{$!}"
       @wow_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @wow_character, :location => user_profile_url(@wow_character.user_profile) + '#characters'
+    respond_with @wow_character, location: user_profile_url(@wow_character.user_profile) + '#characters'
   end
 
   # DELETE /wow_characters/:id(.:format)
   def destroy
     add_new_flash_message("\"#{@wow_character.name}\" has been removed.", 'notice') if @wow_character and @wow_character.destroy
 
-    respond_with @wow_character, :location => user_profile_url(@wow_character.user_profile) + '#characters'
+    respond_with @wow_character, location: user_profile_url(@wow_character.user_profile) + '#characters'
   end
 end

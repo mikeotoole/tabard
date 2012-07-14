@@ -8,8 +8,8 @@
   %dd
     - defaults = role.permissions_defaults_for_resource("PageSpace")
     - child_index = 'pagespace' + (defaults.persisted? ? defaults.id : Time.zone.now.to_i).to_s
-    = f.simple_fields_for :permission_defaults, defaults, :child_index => child_index do |pf|
-      = pf.input :object_class, :as => :hidden
+    = f.simple_fields_for :permission_defaults, defaults, child_index: child_index do |pf|
+      = pf.input :object_class, as: :hidden
       %label The space itself
       .slider= pf.collection_radio :permission_level, [['','×'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
       %label Pages in the space
@@ -21,12 +21,12 @@
         %h3= space.name
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
-          = pf.input :subject_class, :as => :hidden
+          = pf.input :subject_class, as: :hidden
           %label The space itself
           .slider= pf.collection_radio :permission_level, [['','×'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
         = f.simple_fields_for :permissions, role.nested_permissions_for_resource(space) do |pf|
-          = pf.input :subject_class, :as => :hidden
-          = pf.input :id_of_parent, :as => :hidden
-          = pf.input :parent_association_for_subject, :as => :hidden
+          = pf.input :subject_class, as: :hidden
+          = pf.input :id_of_parent, as: :hidden
+          = pf.input :parent_association_for_subject, as: :hidden
           %label Pages in the space
           .slider= pf.collection_radio :permission_level, [['','×'], ['Update', 'Edit'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last

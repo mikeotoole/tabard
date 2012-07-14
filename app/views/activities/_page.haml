@@ -4,9 +4,9 @@
   Created a
 - when 'edited'
   Edited a
-%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, page), 'page', page_url(page, :subdomain => activity.community_subdomain), :meta => shorten_words(page.name)
+%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, page), 'page', page_url(page, subdomain: activity.community_subdomain), meta: shorten_words(page.name)
 in
-- if defined? current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, page_space_url(page.page_space, :subdomain => activity.community_subdomain)
+- if defined? current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, page_space_url(page.page_space, subdomain: activity.community_subdomain)
   = link_to shorten_words(page.page_space_name), page.page_space
 - else
-  = link_to shorten_words(activity.community_name), root_url(:subdomain => activity.community_subdomain)
+  = link_to shorten_words(activity.community_name), root_url(subdomain: activity.community_subdomain)

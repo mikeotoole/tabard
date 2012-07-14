@@ -13,7 +13,7 @@ class Subdomains::InvitesController < SubdomainsController
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
   skip_before_filter :limit_subdomain_access
-  load_and_authorize_resource :through => :current_user, :except => [:batch_update]
+  load_and_authorize_resource through: :current_user, except: [:batch_update]
 
 ###
 # REST Actions
@@ -27,7 +27,7 @@ class Subdomains::InvitesController < SubdomainsController
   # POST /invites(.:format)
   def update
     add_new_flash_message 'Invite was successfully created.','success' if @invite.update_attributes(params[:invite])
-    respond_with(@invite, :location => event_url(@invite.event))
+    respond_with(@invite, location: event_url(@invite.event))
   end
 
 ###
@@ -47,7 +47,7 @@ class Subdomains::InvitesController < SubdomainsController
         end
       end
     end
-    respond_with(@invites, :location => events_url)
+    respond_with(@invites, location: events_url)
   end
 
 ###

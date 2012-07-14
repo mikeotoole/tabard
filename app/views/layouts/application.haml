@@ -9,11 +9,11 @@
     = csrf_meta_tags unless @page_caching
     = favicon_link_tag asset_path 'favicon.png'
 
-  %body{ :class => "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
+  %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
     #bar
-      = link_to 'Crumblin™', root_url(:subdomain => false), :class => 'logo'
-      = link_to 'load', bar_url(subdomain: false, format: :js), :remote => true, :class => 'dynload', 'data-type' => 'text', 'data-target' => '#bar'
+      = link_to 'Crumblin™', root_url(subdomain: false), class: 'logo'
+      = link_to 'load', bar_url(subdomain: false, format: :js), remote: true, class: 'dynload', 'data-type' => 'text', 'data-target' => '#bar'
     = render 'layouts/flash_messages' unless @page_caching
     #content
       = yield
-    = render 'layouts/footer', :current_layout => 'application'
+    = render 'layouts/footer', current_layout: 'application'
