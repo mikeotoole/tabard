@@ -1,25 +1,25 @@
 $(document).ready ->
 
   $('#tabs')
-    .delegate 'dt > a', 'ajax:before', ->
+    .on 'ajax:before', 'dt > a', ->
       $(this).closest('dt').find('+ dd').html ''
-    .delegate 'dt.announcements + dd form', 'ajax:error', (xhr, status, error) ->
+    .on 'ajax:error', 'dt.announcements + dd form', (xhr, status, error) ->
       $.alert { body: 'Unable to mark announcements as read.' }
-    .delegate 'dt.announcements + dd form', 'ajax:complete', (event, data, status, xhr) ->
+    .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
   
   if $('#body.myprofile').length
     $('#bar')
-      .delegate '.avatar .activities a', 'click', ->
+      .on 'click', '.avatar .activities a', ->
         $('#tabs dt.activities a').trigger 'click'
         false
-      .delegate '.dashboard .calendar a', 'click', ->
+      .on 'click','.dashboard .calendar a',  ->
         $('#tabs dt.invites a').trigger 'click'
         false
-      .delegate '.dashboard .notice a', 'click', ->
+      .on 'click','.dashboard .notice a', ->
         $('#tabs dt.announcements a').trigger 'click'
         false
-      .delegate '.logo, .avatar > a, .avatar .characters a', 'click', ->
+      .on 'click','.logo, .avatar > a, .avatar .characters a', ->
         $('#tabs dt.characters a').trigger 'click'
         false
 
@@ -27,13 +27,19 @@ $(document).ready ->
   switch hash
     when '#invites'
       $('#tabs dt.invites a').trigger 'click'
-      break
     when '#characters'
       $('#tabs dt.characters a').trigger 'click'
-      break
     when '#announcements'
       $('#tabs dt.announcements a').trigger 'click'
-      break
     else
       $('#tabs dt.activities a').trigger 'click'
-      break
+
+  $('#body')
+    .on 'ajax:error', '#invites_batch', (xhr, status, error) ->
+      $.alert body: error
+    .on 'ajax:success', '#invites_batch', (event, data, status, xhr) ->
+      response = $.parseJSON xhr.responseText
+      if response.success
+        $("#invites_batch tr[invite='#{invite.id}'] td.status strong").text invite.status for invite in response.invites
+      else
+        $.alert body: response.message

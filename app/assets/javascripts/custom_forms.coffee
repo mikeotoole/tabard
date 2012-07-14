@@ -1,6 +1,3 @@
-//= require jquery.ui.draggable
-//= require jquery.ui.droppable
-
 $(document).ready ->
 
   # Drag and Drop sorting

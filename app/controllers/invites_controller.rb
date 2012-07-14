@@ -16,12 +16,12 @@ class InvitesController < ApplicationController
   # GET /announcements/:id(.:format)
   def show
     @invite.update_viewed(current_user.user_profile)
-    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
+    respond_with(@invite, location: edit_invite_url(@invite, subdomain: @invite.community_subdomain))
   end
   # Update
   def update
     @invite.update_attributes(params[:invite])
-    respond_with(@invite, location: edit_invite_url(@invite, :subdomain => @invite.community_subdomain))
+    respond_with(@invite, location: edit_invite_url(@invite, subdomain: @invite.community_subdomain))
   end
 
 ###
@@ -41,6 +41,9 @@ class InvitesController < ApplicationController
         end
       end
     end
-    respond_with(@invites, :location => user_profile_url(current_user.user_profile, :anchor => 'invites'))
+    respond_to do |format|
+      format.html { respond_with(@invites, location: user_profile_url(current_user.user_profile, anchor: 'invites')) }
+      format.js { render json: { success: true, invites: @invites } }
+    end
   end
 end

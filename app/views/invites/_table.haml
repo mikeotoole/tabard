@@ -1,4 +1,4 @@
-= form_tag invites_batch_update_url, :method => :put, :remote => true do
+= form_tag invites_batch_update_url(format: :js), method: :put, remote: true, id: 'invites_batch', 'data-type' => :text do
   %table
     %thead
       %tr
@@ -8,26 +8,26 @@
         %th Status
     %tbody
       - invites.each do |invite|
-        %tr
+        %tr{ invite: invite.id }
           %td.check.compact
             = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
             %label{ for: "invite_id_#{invite.id}" }
           %td
-            %h3= link_to shorten_words(invite.event_name), event_url(invite.event, :subdomain => invite.community_subdomain)
+            %h3= link_to shorten_words(invite.event_name), event_url(invite.event, subdomain: invite.community_subdomain)
             = invite.community_name
             %time.event
-              %strong.day= l invite.event_start_time, :format => :date_short
+              %strong.day= l invite.event_start_time, format: :date_short
               at
-              %strong.time= l invite.event_start_time, :format => :time_12
+              %strong.time= l invite.event_start_time, format: :time_12
               = '—'
               - unless invite.event_start_time.day == invite.event_end_time.day
-                %strong.day= l invite.event_end_time, :format => :date_short
+                %strong.day= l invite.event_end_time, format: :date_short
                 at
-              %strong.time= l invite.event_end_time, :format => :time_12
+              %strong.time= l invite.event_end_time, format: :time_12
           %td.invitee
             = image_tag invite.invitee_avatar_url(:icon)
             = invite.invitee_name
-          %td.r
+          %td.r.status
             %strong= invite.status ||= '—'
     %tfoot
       %tr

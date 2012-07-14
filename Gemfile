@@ -9,7 +9,6 @@ source 'http://rubygems.org'
 
 # Javascript Library
   gem 'jquery-rails'
-  gem 'jquery-ui-rails'
 
 # Meta Languages
   gem 'haml'
