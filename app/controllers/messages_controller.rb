@@ -26,7 +26,6 @@ class MessagesController < MailboxController
       respond_to do |format|
         format.html { render :show }
         format.js {
-          logger.debug @message.to_yaml
           render :partial => 'messages/message', :locals => { :message => @message }
         }
       end
@@ -46,7 +45,7 @@ class MessagesController < MailboxController
   def mark_read
     @message.update_attributes(:has_been_read => true)
     if params[:return_url]
-      redirect_to params[:return_url]
+      redirect_to params[:return_url], :only_path => true
     else
       redirect_to request.referer ? request.referer : root_path
     end
@@ -56,7 +55,7 @@ class MessagesController < MailboxController
   def mark_unread
     @message.update_attributes(:has_been_read => false)
     if params[:return_url]
-      redirect_to params[:return_url]
+      redirect_to params[:return_url], :only_path => true
     else
       redirect_to request.referer ? request.referer : root_path
     end
@@ -72,7 +71,7 @@ class MessagesController < MailboxController
       add_new_flash_message("Message was moved to #{folder.name}.",'success')
     end
     if params[:return_url]
-      redirect_to params[:return_url]
+      redirect_to params[:return_url], :only_path => true
     else
       redirect_to request.referer ? request.referer : root_path
     end

@@ -56,7 +56,7 @@ class UserProfile < ActiveRecord::Base
   has_many :folders, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
-  has_many :activities, :dependent => :destroy
+  has_many :activities, :dependent => :destroy, inverse_of: :user_profile
   has_many :events, :dependent => :destroy, :foreign_key => "creator_id"
   has_many :invites, :dependent => :destroy, :inverse_of => :user_profile
   has_many :events_invited_to, :through => :invites, :source => :event, :class_name => "Event"
@@ -78,7 +78,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Scopes
 ###
-  scope :active, lambda { 
+  scope :active, lambda {
     includes(:user).where{(user.admin_disabled_at == nil) & (user.user_disabled_at == nil)}
   }
 
@@ -146,7 +146,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that contains all of the compatable character proxies.
   ###
   def compatable_character_proxies(community)
-    self.character_proxies.reject{|cp| !cp.compatable_with_community?(community)}
+    self.character_proxies.includes(:character).reject{|cp| !cp.compatable_with_community?(community)}
   end
 
   ###
@@ -157,12 +157,12 @@ class UserProfile < ActiveRecord::Base
     return self.character_proxies unless community
     available_character_proxies = Array.new
     community_profile = self.community_profiles.where{community_id == community.id}.first
-    available_character_proxies.concat community_profile.approved_character_proxies if community_profile
+    available_character_proxies.concat community_profile.approved_character_proxies.includes(:character) if community_profile
     if game
       if game.class == SupportedGame
-        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.game.class.to_s} 
+        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.game.class.to_s}
       else
-        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s} 
+        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s}
       end
     end
     available_character_proxies
@@ -290,7 +290,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that user profile + all of their characters.
   ###
   def address_book
-    comm_profiles = self.communities.collect{|community| community.community_profiles}.flatten(1)
+    comm_profiles = self.communities.includes(:community_profiles).collect{|community| community.community_profiles}.flatten(1)
     comm_profiles.collect{|comm_profile| comm_profile.user_profile}.uniq.delete_if{|user_profile| user_profile == self}
   end
 
@@ -374,7 +374,7 @@ protected
   def self.search(search)
     if search
       search = "%"+search+'%'
-      where{(display_name =~ search) | 
+      where{(display_name =~ search) |
             ((publicly_viewable == true) & ((location =~ search) | (first_name =~ search) | (last_name =~ search)))}
     else
       scoped

@@ -19,7 +19,7 @@ DaBvRails::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
-  
+
   # Added to help with Heroku error -MO
   config.assets.initialize_on_precompile = false
 

@@ -5,7 +5,7 @@
 # Create a new message with Lorem Ipsum body
 def create_message(from_user_last_name, subject, to_last_name_array, body=nil)
   body ||= "Phasellus ornare lacus eu neque hendrerit iaculis in in neque. Phasellus dolor velit, ultrices tempor porttitor eget, lacinia id risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi nibh nulla, consectetur ut consequat ac, lobortis ut lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum cursus iaculis turpis, vestibulum aliquam tortor pretium non. Phasellus leo mi, suscipit eget facilisis imperdiet, egestas sit amet sapien."
-  
+
   user_profile = UserProfile.find_by_last_name(from_user_last_name)
   puts "#{user_profile.name} is creating a message"
 

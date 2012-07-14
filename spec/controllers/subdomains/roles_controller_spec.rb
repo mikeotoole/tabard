@@ -7,11 +7,11 @@ describe Subdomains::RolesController do
   let(:community) { admin_user.user_profile.owned_communities.first }
   let(:role) { create(:role, :community => community) }
   let(:role_att) { attributes_for(:role, :name => "TestName", :community_id => community.id) }
-  
+
   before(:each) do
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me"
   end
-  
+
   describe "GET 'index'" do
     it "should be unauthorized when authenticated as a non admin user" do
       sign_in user
@@ -24,7 +24,7 @@ describe Subdomains::RolesController do
       get 'index'
       response.should be_success
     end
-    
+
     it "should render roles/index template when authenticated as a community admin" do
       sign_in admin_user
       get 'index'
@@ -66,13 +66,13 @@ describe Subdomains::RolesController do
       get 'new'
       response.response_code.should == 403
     end
-    
+
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       get 'new'
       response.should be_success
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -101,7 +101,7 @@ describe Subdomains::RolesController do
   describe "POST 'create' authenticated as community admin" do
     before(:each) do
       sign_in admin_user
-      post 'create', :role => role_att  
+      post 'create', :role => role_att
     end
 
     it "should create role" do
@@ -113,14 +113,14 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      response.should redirect_to(roles_url)
+      response.should redirect_to(roles_url(subdomain: community.subdomain))
     end
   end
-  
+
   describe "POST 'create' authenticated as a nonadmin user" do
     before(:each) do
       sign_in user
-      post 'create', :role => role_att  
+      post 'create', :role => role_att
     end
     it "should not create new record" do
       Role.exists?(role_att).should_not be_true
@@ -132,7 +132,7 @@ describe Subdomains::RolesController do
 
   describe "POST 'create' when not authenticated as a user" do
     before(:each) do
-      post 'create', :role => role_att  
+      post 'create', :role => role_att
     end
     it "should not create new record" do
       Role.exists?(role_att).should_not be_true
@@ -154,7 +154,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to role" do
-      response.should redirect_to(roles_url)
+      response.should redirect_to(roles_url(subdomain: community.subdomain))
     end
   end
 
@@ -189,25 +189,25 @@ describe Subdomains::RolesController do
     end
   end
 
-  describe "DELETE 'destroy'" do 
+  describe "DELETE 'destroy'" do
     before(:each) do
       @role = create(:role, :community => community)
     end
-    
+
     it "should be successful when authenticated as a community admin" do
       sign_in admin_user
       delete 'destroy', :id => @role
-      response.should redirect_to(roles_url)
+      response.should redirect_to(roles_url(subdomain: community.subdomain))
       Role.exists?(@role).should be_false
     end
-    
+
     it "should be unauthorized when authenticated as a nonadmin user" do
       sign_in user
       delete 'destroy', :id => @role
       Role.exists?(@role).should be_true
       response.response_code.should == 403
     end
-    
+
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @role
       Role.exists?(@role).should be_true

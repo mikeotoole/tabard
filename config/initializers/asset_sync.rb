@@ -3,7 +3,7 @@ AssetSync.configure do |config|
   config.aws_access_key_id = ENV['BV_ASSETS_S3_KEY']
   config.aws_secret_access_key = ENV['BV_ASSETS_S3_SECRET']
   config.fog_directory = ENV['BV_ASSETS_DIRECTORY']
-  
+
   # Increase upload performance by configuring your region
   # config.fog_region = 'eu-west-1'
   #
@@ -13,7 +13,7 @@ AssetSync.configure do |config|
   # Automatically replace files with their equivalent gzip compressed version
   # config.gzip_compression = true
   #
-  # Use the Rails generated 'manifest.yml' file to produce the list of files to 
+  # Use the Rails generated 'manifest.yml' file to produce the list of files to
   # upload instead of searching the assets directory.
   # config.manifest = true
   #

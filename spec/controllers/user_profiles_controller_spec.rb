@@ -6,6 +6,10 @@ describe UserProfilesController do
   let(:user_profile) { owner.user_profile }
   let(:disabled_user_profile) { create(:disabled_user).user_profile }
 
+  before(:each) do
+    @request.host = "lvh.me"
+  end
+
   describe "GET 'index'" do
     it "should be successful when authenticated as a owner" do
       sign_in owner
@@ -64,12 +68,12 @@ describe UserProfilesController do
       it "show should be successful when authenticated as a non-owner" do
         sign_in non_owner
         get 'show', :id => disabled_user_profile
-        response.should redirect_to(root_path)
+        response.should redirect_to(root_path(subdomain: false))
       end
 
       it "show should be successful when not authenticated as a user" do
         get 'show', :id => disabled_user_profile
-        response.should redirect_to(root_path)
+        response.should redirect_to(root_path(subdomain: false))
       end
     end
   end
@@ -152,18 +156,18 @@ describe UserProfilesController do
     it "should redirect to show" do
       response.should redirect_to(user_profile_url(assigns[:user_profile]))
     end
-    
+
     it "should create an Activity when attributes change" do
       activity = Activity.last
       activity.target.should eql user_profile
       activity.action.should eql 'profile'
     end
   end
-  
+
   describe "PUT 'update' when authenticated as owner" do
     it "should not create an Activity when attributes don't change" do
       sign_in owner
-      
+
       expect {
         put 'update', :id => user_profile, :user_profile => nil
       }.to change(Activity, :count).by(0)

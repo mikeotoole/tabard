@@ -19,7 +19,7 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # GET /custom_forms
   def index
-    @custom_forms = current_community.custom_forms
+    @custom_forms = current_community.custom_forms.includes(:community)
   end
 
   # GET /custom_forms/new

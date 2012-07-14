@@ -12,12 +12,12 @@ def create_event(community_name, name, body, start_in_days, hours, creator_last_
   event = community.events.new(:name => name, :body => body, :start_time => start_time, :end_time => end_time, :supported_game => supported_game)
   event.creator = user_profile
   event.save!
-  
+
   event.invites.create!(:user_profile => user_profile)
   invite_last_name_array.each do |last_name|
     event.invites.create!(:user_profile => UserProfile.find_by_last_name(last_name))
   end
-  
+
   return event
 end
 

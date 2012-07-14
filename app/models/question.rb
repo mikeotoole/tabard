@@ -71,7 +71,7 @@ class Question < ActiveRecord::Base
   def self.select_options
     [['short_answer_question','Short Answer'],['long_answer_question','Long Answer'],['check_box_question','Checkboxes'],['radio_buttons_question','Radio Buttons'],['select_box_question','Dropdown']]
   end
-  
+
 ###
 # Protected Methods
 ###
@@ -87,16 +87,16 @@ protected
   ###
   def mark_blank_predefined_answers_for_removal
     predefined_answers.each do |panswer|
-      if panswer.body.blank? 
+      if panswer.body.blank?
         if self.predefined_answers.reject{|answer| answer.marked_for_destruction?}.count >= 1
-          panswer.mark_for_destruction 
+          panswer.mark_for_destruction
         else
-          errors.add(:base, "requires at least one predefined answer.") 
+          errors.add(:base, "requires at least one predefined answer.")
         end
       end
     end
   end
-  
+
   ###
   # _before_save_
   #
@@ -112,7 +112,7 @@ protected
     self.predefined_answers.each_with_index do |pa, pa_i|
       self.predefined_answers.each_with_index do |po, po_i|
         if pa_i != po_i and pa.body_as_id == po.body_as_id
-          pa.errors.add(:body, "is too similar to another predefined answer.") 
+          pa.errors.add(:body, "is too similar to another predefined answer.")
         end
       end
     end

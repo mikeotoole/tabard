@@ -7,7 +7,7 @@
 ###
 class DocumentSweeper < ActionController::Caching::Sweeper
   observe Document
-  
+
   # Sweeps the document
   def sweep(document)
     expire_page top_level_privacy_policy_path

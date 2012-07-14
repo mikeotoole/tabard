@@ -66,7 +66,7 @@ class DiscussionSpace < ActiveRecord::Base
       nil
     end
   end
-    
+
   # This gets the game name
   def game_name
     self.supported_game_smart_name
@@ -116,7 +116,7 @@ protected
   # _after_create_
   #
   # This method removes action item from community.
-  ### 
+  ###
   def remove_action_item
     if self.community.action_items.any?
       self.community.action_items.delete(:create_discussion_space)

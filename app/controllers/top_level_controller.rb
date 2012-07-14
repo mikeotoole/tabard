@@ -30,7 +30,7 @@ class TopLevelController < ApplicationController
   def index
     redirect_to user_profile_url(current_user.user_profile, :subdomain => false) + '#characters' if user_signed_in?
   end
-  
+
   ###
   # This method returns the bar in/out partial for dynamic loading
   # GET /bar(.:format)
@@ -77,9 +77,9 @@ class TopLevelController < ApplicationController
   def terms_of_service
     @document = TermsOfService.current
   end
-  
+
   # This method will bypass the supported browser check for the users current session.
-  def ignore_browser 
+  def ignore_browser
     session[:supported_browser] = true
     redirect_to root_url
   end

@@ -9,7 +9,7 @@ class MessageAssociationMailer < ActionMailer::Base
   default :from => "Crumblin <noreply@crumblin.com>",
           :content_type => "text/html"
   layout 'mailer'
-  
+
   # Tell user they have a new message
   def new_message(message_association_id)
     @message_association = MessageAssociation.find_by_id(message_association_id)

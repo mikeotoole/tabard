@@ -23,26 +23,26 @@ describe Subdomains::SupportedGamesController do
   let(:admin) { DefaultObjects.community_admin }
   let(:non_member) { create(:user_profile).user }
   let(:community) { DefaultObjects.community }
-  
+
   let(:supported_game) { create(:supported_game) }
   let(:valid_attributes) { attributes_for(:supported_game_att) }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me"
   end
 
   describe "GET index" do
     it "assigns all supported_games as @supported_games when authenticated as a member" do
       sign_in member
       get :index
-      assigns(:supported_games).should eq(community.supported_games)
+      assigns(:supported_games).should eq(community.supported_games.includes(:community))
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :index
@@ -58,13 +58,13 @@ describe Subdomains::SupportedGamesController do
         get :show, :id => supported_game.id
       end
     end
-    
+
     it "should redirect to status code not found path when not authenticated as a user" do
       assert_raises(AbstractController::ActionNotFound) do
         get :show, :id => supported_game
       end
     end
-    
+
     it "should redirect to status code not found path when not a member" do
       assert_raises(AbstractController::ActionNotFound) do
         sign_in non_member
@@ -79,18 +79,18 @@ describe Subdomains::SupportedGamesController do
       get :new
       assigns(:supported_game).should be_a_new(SupportedGame)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
-    end 
-    
+    end
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member without permissions" do
       sign_in member
       get :new
@@ -105,18 +105,18 @@ describe Subdomains::SupportedGamesController do
       get :edit, :id => supported_game.id
       assigns(:supported_game).should eq(supported_game)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => supported_game.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => supported_game.id.to_s
       response.should be_forbidden
-    end 
-    
+    end
+
     it "should respond forbidden when a member without permissions" do
       sign_in member
       get :edit, :id => supported_game.id.to_s
@@ -128,7 +128,7 @@ describe Subdomains::SupportedGamesController do
     before(:each) {
       sign_in admin
     }
-    
+
     describe "with valid params" do
       it "creates a new SupportedGame" do
         expect {
@@ -144,14 +144,14 @@ describe Subdomains::SupportedGamesController do
 
       it "redirects to the created supported_game" do
         post :create, :supported_game => valid_attributes
-        response.should redirect_to(supported_games_path)
+        response.should redirect_to(supported_games_path(subdomain: community.subdomain))
       end
-      
+
       it "should create an activity" do
         expect {
           post :create, :supported_game => valid_attributes
         }.to change(Activity, :count).by(1)
-        
+
         activity = Activity.last
         activity.target_type.should eql "SupportedGame"
         activity.action.should eql 'created'
@@ -168,7 +168,7 @@ describe Subdomains::SupportedGamesController do
         post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
         response.should render_template("new")
       end
-      
+
       it "should not create an activity" do
         expect {
           post :create, :supported_game => {:game_type => DefaultObjects.wow.class.name}
@@ -176,31 +176,31 @@ describe Subdomains::SupportedGamesController do
       end
     end
   end
-  
+
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :supported_game => valid_attributes
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :supported_game => valid_attributes
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member without permissions" do
       sign_in member
       post :create, :supported_game => valid_attributes
       response.should be_forbidden
-    end   
+    end
   end
 
   describe "PUT update when authenticated as community admin" do
     before(:each) {
       sign_in admin
     }
-    
+
     describe "with valid params" do
       it "updates the requested supported_game" do
         put :update, :id => supported_game.id, :supported_game => {:name => "New Name", :faction => supported_game.faction, :server_name => supported_game.server_name}
@@ -214,17 +214,17 @@ describe Subdomains::SupportedGamesController do
 
       it "redirects to the supported_game" do
         put :update, :id => supported_game.id, :supported_game => valid_attributes
-        response.should redirect_to(supported_games_path)
+        response.should redirect_to(supported_games_path(subdomain: community.subdomain))
       end
-      
+
       it "should create an Activity when attributes change" do
         put :update, :id => supported_game.id, :supported_game => valid_attributes
         activity = Activity.last
         activity.target_type.should eql "SupportedGame"
         activity.action.should eql 'edited'
       end
-      
-      it "should not create an Activity when attributes don't change" do        
+
+      it "should not create an Activity when attributes don't change" do
         supported_game
         expect {
           put :update, :id => supported_game.id, :supported_game => {:name => supported_game.name, :faction => supported_game.faction, :server_name => supported_game.server_name}
@@ -250,18 +250,18 @@ describe Subdomains::SupportedGamesController do
       put :update, :id => supported_game.id, :supported_game => valid_attributes
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => supported_game.id, :supported_game => valid_attributes
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member without permissions" do
       sign_in member
       put :update, :id => supported_game.id, :supported_game => valid_attributes
       response.should be_forbidden
-    end   
+    end
   end
 
   describe "DELETE destroy" do
@@ -278,18 +278,18 @@ describe Subdomains::SupportedGamesController do
       delete :destroy, :id => supported_game.id
       response.should redirect_to(supported_games_url)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => supported_game.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => supported_game.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member without permissions" do
       sign_in member
       delete :destroy, :id => supported_game.id.to_s

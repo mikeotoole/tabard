@@ -13,7 +13,7 @@
       = link_to '+ add new', new_wow_character_url
 - if user_profile.wow_characters.any?
   = render 'wow_characters/list', :characters => user_profile.wow_characters
-  
+
 - if user_profile.minecraft_characters.any? or (user_signed_in? and user_profile == current_user.user_profile)
   %h2
     Minecraft

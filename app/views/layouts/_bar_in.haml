@@ -10,7 +10,7 @@
 .communities
   %span= (current_community and current_user.communities.include? current_community) ? shorten_words(current_community.name) : 'My Communities'
   %ol
-    - current_user.communities.each do |community|
+    - current_user.communities.includes(:admin_profile).each do |community|
       %li= link_to shorten_words(community.name), actual_community_url(community), :class => current_community == community ? 'current' : '', :icon => current_user.user_profile == community.admin_profile ? '✭' : '◎'
     - unless current_user.communities.any?
       = link_to 'Find a community', communities_url(:subdomain => false), :icon => '◎'

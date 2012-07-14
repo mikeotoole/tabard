@@ -29,10 +29,10 @@ class ApplicationController < ActionController::Base
 
   # This before_filter ensures that ssl mode is not running
   prepend_before_filter :ensure_not_ssl_mode
-  
+
   # This before_filter set the time zone to the users given value.
   before_filter :set_timezone
-  
+
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
@@ -136,7 +136,6 @@ protected
   # This method determines is a user profile was last used to post.
   def last_posted_as_user_profile?(proxies)
     proxy_found = false
-    logger.debug proxies.to_yaml
     proxies.each do |proxy|
       return false if last_posted_as_character_proxy?(proxy)
     end
@@ -202,7 +201,7 @@ protected
   # Returns true if supported.
   ###
   def browser_supported?
-    return true if browser.safari? and browser.version.to_i >= 5 
+    return true if browser.safari? and browser.version.to_i >= 5
     return true if browser.chrome? and browser.version.to_i >= 17
     # return true if browser.ie? and browser.version.to_i >= 9
     return true if browser.firefox? and browser.version.to_i >= 10
@@ -326,7 +325,7 @@ protected
     session[:return_to] = request.url
     authenticate_user!
   end
-  
+
   ###
   # _before_filter_
   #
@@ -335,7 +334,7 @@ protected
   def set_timezone
     Time.zone = current_user.time_zone if current_user
   end
-  
+
   ###
   # _before_filter_
   #

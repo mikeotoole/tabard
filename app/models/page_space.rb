@@ -57,7 +57,7 @@ class PageSpace < ActiveRecord::Base
     end
   end
 
-  # This is the game name 
+  # This is the game name
   def game_name
     self.supported_game_smart_name
   end

@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe Subdomains::DiscussionsController do
   let(:owner) { DefaultObjects.user }
-  let(:non_owner) { 
+  let(:non_owner) {
     profile = create(:user_profile)
     DefaultObjects.community.promote_user_profile_to_member(profile)
     profile.user
@@ -42,17 +42,17 @@ describe Subdomains::DiscussionsController do
       get :show, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :show, :id => discussion.id.to_s
       response.should be_forbidden
-    end   
+    end
   end
 
   describe "GET new" do
@@ -61,12 +61,12 @@ describe Subdomains::DiscussionsController do
       get :new, :discussion_space_id => space.id
       assigns(:discussion).should be_a_new(Discussion)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :discussion_space_id => space.id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new, :discussion_space_id => space.id
@@ -80,18 +80,18 @@ describe Subdomains::DiscussionsController do
       get :edit, :id => discussion.id.to_s
       assigns(:discussion).should eq(discussion)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => discussion.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not owner" do
       sign_in non_owner
       get :edit, :id => discussion.id.to_s
@@ -103,7 +103,7 @@ describe Subdomains::DiscussionsController do
     before(:each) {
       sign_in owner
     }
-  
+
     describe "with valid params" do
       it "creates a new Discussion" do
         expect {
@@ -121,12 +121,12 @@ describe Subdomains::DiscussionsController do
         post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
         response.should redirect_to(Discussion.unscoped.last)
       end
-      
+
       it "should create an activity" do
         expect {
           post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion)
         }.to change(Activity, :count).by(1)
-        
+
         activity = Activity.last
         activity.target_type.should eql "Discussion"
         activity.action.should eql 'created'
@@ -143,7 +143,7 @@ describe Subdomains::DiscussionsController do
         post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
         response.should render_template("new")
       end
-      
+
       it "should not create an activity" do
         expect {
           post :create, :discussion_space_id => community_space.id, :discussion => attributes_for(:discussion, :name => nil)
@@ -151,13 +151,13 @@ describe Subdomains::DiscussionsController do
       end
     end
   end
-  
+
   describe "POST create" do
     it "should redirect to new user session path when not authenticated as a user" do
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :discussion_space_id => space.id, :discussion => attributes_for(:discussion)
@@ -169,7 +169,7 @@ describe Subdomains::DiscussionsController do
     before(:each) {
       sign_in owner
     }
-  
+
     describe "with valid params" do
       it "updates the requested discussion" do
         discussion
@@ -186,15 +186,15 @@ describe Subdomains::DiscussionsController do
         put :update, :id => discussion.id, :discussion => {:name => "New name"}
         response.should redirect_to(discussion)
       end
-      
+
       it "should create an Activity when attributes change" do
         put :update, :id => discussion.id, :discussion => {:name => "New name"}
         activity = Activity.last
         activity.target_type.should eql "Discussion"
         activity.action.should eql 'edited'
       end
-      
-      it "should not create an Activity when attributes don't change" do        
+
+      it "should not create an Activity when attributes don't change" do
         discussion
         expect {
           put 'update', :id =>  discussion.id, :discussion => { :name => discussion.name }
@@ -225,13 +225,13 @@ describe Subdomains::DiscussionsController do
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member but not owner" do
       sign_in non_owner
       put :update, :id => discussion.id, :discussion => {:name => "New name"}
@@ -253,18 +253,18 @@ describe Subdomains::DiscussionsController do
       delete :destroy, :id => discussion.id.to_s
       response.should redirect_to(discussion.discussion_space)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => discussion.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => discussion.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member but not owner" do
       sign_in non_owner
       delete :destroy, :id => discussion.id.to_s
@@ -276,77 +276,77 @@ describe Subdomains::DiscussionsController do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
     }
-  
+
     it "should lock the discussion when authenticated as community admin" do
       sign_in admin
       post :lock, :id => discussion.id.to_s
       Discussion.find(discussion).is_locked.should be_true
     end
-    
+
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :lock, :id => discussion.id.to_s
       response.should redirect_to("/")
     end
-    
+
     it "should not lock the discussion when authenticated as a member" do
       sign_in owner
       post :lock, :id => discussion.id.to_s
-      Discussion.find(discussion).is_locked.should be_false    
+      Discussion.find(discussion).is_locked.should be_false
     end
-    
+
     it "should not lock the discussion when not authenticated as a user" do
       post :lock, :id => discussion.id.to_s
-      Discussion.find(discussion).is_locked.should be_false 
+      Discussion.find(discussion).is_locked.should be_false
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://")) 
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :lock, :id => discussion.id.to_s
       response.should be_forbidden
     end
   end
-  
+
   describe "POST unlock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
       discussion.is_locked = true
       discussion.save!
     }
-  
+
     it "should unlock the discussion when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => discussion.id.to_s
       Discussion.find(discussion).is_locked.should be_false
     end
-    
+
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => discussion.id.to_s
       response.should redirect_to("/")
     end
-    
+
     it "should not unlock the discussion when authenticated as a member" do
       sign_in owner
       post :unlock, :id => discussion.id.to_s
-      Discussion.find(discussion).is_locked.should be_true    
+      Discussion.find(discussion).is_locked.should be_true
     end
-    
+
     it "should not unlock the discussion when not authenticated as a user" do
       post :unlock, :id => discussion.id.to_s
-      Discussion.find(discussion).is_locked.should be_true 
+      Discussion.find(discussion).is_locked.should be_true
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => discussion.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://")) 
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :unlock, :id => discussion.id.to_s

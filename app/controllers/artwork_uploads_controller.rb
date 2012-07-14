@@ -20,7 +20,7 @@ class ArtworkUploadsController < InheritedResources::Base
   def new
     @artwork_upload.document = ArtworkAgreement.current
   end
-  
+
   # POST /artwork_uploads(.:format)
   def create
     begin

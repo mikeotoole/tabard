@@ -50,7 +50,7 @@ class CommunitiesController < ApplicationController
     end
     respond_with(@community, location: edit_community_settings_url(:subdomain => @community.subdomain))
   end
-  
+
   # DELETE /communities/:id(.:format)
   def destroy
     if params[:user] and current_user.valid_password?(params[:user][:current_password])

@@ -2,7 +2,7 @@ require 'simplecov'
 
 namespace :reports do
   desc "Run all of the reports"
-  task :all => [:docs, :notes, :best_practices, :tests] do
+  task :all => [:docs, :notes, :best_practices, :tests, :brakeman_scan] do
     puts "\nReports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
   end
@@ -43,6 +43,12 @@ namespace :reports do
     puts "Moving diagrams to reports/diagrams..."
     mkdir "doc/reports/diagrams" unless File.exists?("doc/reports/diagrams")
     system "mv doc/*.svg doc/reports/diagrams/"
+  end
+
+  desc "Run brakeman to look for security issues"
+  task :brakeman_scan => [:ensure_report_dir] do
+    puts "\nRunning brakeman..."
+    system "brakeman -o \"doc/reports/brakeman_report.html\""
   end
 
   desc "Create a report on tests"

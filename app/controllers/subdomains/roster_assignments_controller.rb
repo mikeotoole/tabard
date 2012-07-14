@@ -38,7 +38,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     render :new
   end
   alias :new :mine
-  
+
   # GET /roster_assignments/game/:id(.:format)
   def game
     @supported_game = current_community.supported_games.find_by_id(params[:id])

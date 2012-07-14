@@ -112,10 +112,10 @@ class User < ActiveRecord::Base
       :if => :password_required?
 
   validates :accepted_current_terms_of_service,
-      :acceptance => {:accept => true}, 
+      :acceptance => {:accept => true},
       :on => :create
   validates :accepted_current_privacy_policy,
-      :acceptance => {:accept => true}, 
+      :acceptance => {:accept => true},
       :on => :create
   validates :date_of_birth, :presence => true
   validates :time_zone, :presence => true,
@@ -207,6 +207,17 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  # This method overrides devise to add a password changed hook.
+  def update_with_password(params, *options)
+    if valid_password?(params[:current_password])
+      unless params[:password].blank? or params[:password_confirmation].blank?
+        #send out some emails, user is changing password
+        UserMailer.delay.password_changed(self.id)
+      end
+    end
+    super
   end
 
   ###

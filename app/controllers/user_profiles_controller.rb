@@ -27,7 +27,7 @@ class UserProfilesController < ApplicationController
   def show
     if @user_profile.is_disabled?
       add_new_flash_message 'The user profile you requested is no longer active.', 'alert'
-      redirect_to root_url
+      redirect_to root_url(subdomain: false)
     end
   end
 

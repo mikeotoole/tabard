@@ -172,7 +172,7 @@ DaBvRails::Application.routes.draw do
 
       # Supported Games
       resources :supported_games, :except => [:show]
-      
+
       # Events
       resources :events do
         member do

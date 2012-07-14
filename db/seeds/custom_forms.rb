@@ -50,9 +50,9 @@ def create_max_custom_form(community_name, published)
                                               :instructions => create_w_string(CustomForm::MAX_INSTRUCTIONS_LENGTH),
                                               :thankyou => create_w_string(CustomForm::MAX_THANKYOU_LENGTH))
 
-  checkboxQ = Question.create!(:style => "check_box_question", 
-                               :body => create_w_string(Question::MAX_BODY_LENGTH), 
-                               :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH), 
+  checkboxQ = Question.create!(:style => "check_box_question",
+                               :body => create_w_string(Question::MAX_BODY_LENGTH),
+                               :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH),
                                :is_required => true)
   checkboxQ.custom_form = test_form
   checkboxQ.save!
@@ -65,8 +65,8 @@ def create_max_custom_form(community_name, published)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => checkboxQ.id)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => checkboxQ.id)
 
-  selectboxQ = Question.create!(:style => "select_box_question", 
-                                :body => create_w_string(Question::MAX_BODY_LENGTH), 
+  selectboxQ = Question.create!(:style => "select_box_question",
+                                :body => create_w_string(Question::MAX_BODY_LENGTH),
                                 :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH))
   selectboxQ.custom_form = test_form
   selectboxQ.save!
@@ -79,8 +79,8 @@ def create_max_custom_form(community_name, published)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => selectboxQ.id)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => selectboxQ.id)
 
-  radioQ = Question.create!(:style => "radio_buttons_question", 
-                            :body => create_w_string(Question::MAX_BODY_LENGTH), 
+  radioQ = Question.create!(:style => "radio_buttons_question",
+                            :body => create_w_string(Question::MAX_BODY_LENGTH),
                             :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH))
   radioQ.custom_form = test_form
   radioQ.save!
@@ -93,14 +93,14 @@ def create_max_custom_form(community_name, published)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => radioQ.id)
   PredefinedAnswer.create!(:body => create_w_string(PredefinedAnswer::MAX_BODY_LENGTH), :question_id => radioQ.id)
 
-  longQ = Question.create!(:style => "long_answer_question", 
-                           :body => create_w_string(Question::MAX_BODY_LENGTH), 
+  longQ = Question.create!(:style => "long_answer_question",
+                           :body => create_w_string(Question::MAX_BODY_LENGTH),
                            :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH))
   longQ.custom_form = test_form
   longQ.save!
 
-  shortQ = Question.create!(:style => "short_answer_question", 
-                            :body => create_w_string(Question::MAX_BODY_LENGTH), 
+  shortQ = Question.create!(:style => "short_answer_question",
+                            :body => create_w_string(Question::MAX_BODY_LENGTH),
                             :explanation => create_w_string(Question::MAX_EXPLANATION_LENGTH))
   shortQ.custom_form = test_form
   shortQ.save!

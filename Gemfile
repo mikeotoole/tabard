@@ -28,18 +28,21 @@ source 'http://rubygems.org'
   gem 'simple_form'
   gem 'client_side_validations'
   gem 'country_select'
-  
+
 # Browser Detection
   gem 'browser'
-  
+
 # Pagination
   gem 'kaminari' # MIT license
 
+# Memory Usage
+  gem 'oink'
+
 # Filtering
-  gem 'profanalyzer' 
-  
+  gem 'profanalyzer'
+
 # Background jobs
-  gem 'delayed_job_active_record' 
+  gem 'delayed_job_active_record'
 
 # Markup
   gem 'rdiscount'
@@ -59,11 +62,11 @@ source 'http://rubygems.org'
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
-  
+
   group :assets do
 
   end
-  
+
 # Seeding Data
   gem 'timecop'
 
@@ -80,6 +83,8 @@ source 'http://rubygems.org'
     gem 'annotate'
     gem 'rails_best_practices'
     gem 'haml-rails'
+    gem 'bullet'
+    gem 'brakeman'
   end
 
 # Development and Test Specific Gems

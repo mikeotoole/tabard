@@ -25,14 +25,14 @@ class Subdomains::EventsController < SubdomainsController
 ###
   # GET /events
   def index
-    @events = Kaminari.paginate_array(current_community.events.not_expired.delete_if{|event| cannot? :read, event}).page(params[:page])
+    @events = Kaminari.paginate_array(current_community.events.includes(:supported_game).not_expired.delete_if{|event| cannot? :read, event}).page(params[:page])
   end
-  
+
   # GET /events/past
   def past
-    @events = Kaminari.paginate_array(current_community.events.expired.delete_if{|event| cannot? :read, event}).page(params[:page])
+    @events = Kaminari.paginate_array(current_community.events.includes(:supported_game).expired.delete_if{|event| cannot? :read, event}).page(params[:page])
   end
-  
+
   # GET /events/:year/:month
   # GET /events/2012/03
   def month_index
@@ -44,7 +44,6 @@ class Subdomains::EventsController < SubdomainsController
     if valid
       @date = DateTime.civil(@year, @month, 1).utc
       @events = current_community.events.intersects_with(@date, @date.end_of_month)
-      logger.debug @events.to_yaml
       @events_by_day = {}
       @events.each do |event|
         start = event.start_time < @date ? @date : event.start_time.to_datetime
@@ -60,7 +59,7 @@ class Subdomains::EventsController < SubdomainsController
       redirect_to month_events_url(:year => Date.today.year, :month => Date.today.month)
     end
   end
-  
+
   # GET /events/:year/week/:week
   # GET /events/2012/week/44
   def week_index
@@ -68,7 +67,7 @@ class Subdomains::EventsController < SubdomainsController
     @week = params[:week].to_i
     valid = (2000 <= @year and @year <= 3000)
     valid = (1 <= @week and @week <= 52) if valid
-    
+
     if valid
       @date = DateTime.commercial(@year, @week, 1).utc
       @events = current_community.events.intersects_with(@date, @date.end_of_week)
@@ -81,7 +80,6 @@ class Subdomains::EventsController < SubdomainsController
             @events_by_cwday_by_hour[date.cwday][start.hour] << event
           end
         end
-        logger.debug @events_by_cwday_by_hour.to_yaml
       end
       render :week_index, :layout => 'calendar'
     else
@@ -111,7 +109,6 @@ class Subdomains::EventsController < SubdomainsController
     # TODO Mike, Need to be able to send one to many invites at creation.
     add_new_flash_message 'Event was successfully created.', 'success' if @event.save
     @event.invites.each do |invite|
-      puts invite.errors.to_yaml
     end
     respond_with(@event, :location => event_url(@event))
   end
@@ -129,7 +126,7 @@ class Subdomains::EventsController < SubdomainsController
     add_new_flash_message 'Event has been removed.', 'notice' if @event.destroy
     respond_with(@event)
   end
-  
+
   # POST /events/:id/attend(.:format)
   def attend
     # TODO Mike, the admin needs to be able to add one to many attendees at anytime.
@@ -152,7 +149,7 @@ class Subdomains::EventsController < SubdomainsController
     authorize! :show, @event
     @invites = @event.invites
   end
-    
+
 ###
 # Protected Methods
 ###
@@ -197,7 +194,7 @@ protected
   def create_event
     @event = current_community.events.new(params[:event]) if current_community
     @event.creator = current_user.user_profile
-  end  
+  end
 
   def rsvp_flash
     default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.brutalvenom.com" : "#{current_community.subdomain}.lvh.me"

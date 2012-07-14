@@ -13,7 +13,7 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :events, :creator_id
     add_index :events, :supported_game_id
     add_index :events, :community_id

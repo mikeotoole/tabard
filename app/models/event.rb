@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location, :start_time_date, 
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location, :start_time_date,
                   :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
 
 ###
@@ -44,7 +44,7 @@ class Event < ActiveRecord::Base
   has_many :not_attending_invites, :class_name => "Invite", :conditions => {:status => "Not Attending"}
   has_many :tentative_invites, :class_name => "Invite", :conditions => {:status => "Tentative"}
   has_many :late_invites, :class_name => "Invite", :conditions => {:status => "Going to be Late"}
-  
+
   has_many :comments, :as => :commentable
 
   accepts_nested_attributes_for :invites, :allow_destroy => true
@@ -59,7 +59,7 @@ class Event < ActiveRecord::Base
   validate :starttime_after_endtime
   validates :creator, :presence => true
   validates :community, :presence => true
- 
+
 ###
 # Delegates
 ###
@@ -150,7 +150,7 @@ def notify_users
     end
     self.invites.unscoped.update_all({is_viewed: false})
   end
-  if start_time_changed? or end_time_changed? 
+  if start_time_changed? or end_time_changed?
     if start_time_changed? and end_time_changed?
       message_the_invites("had the starting and ending time changed")
     else
@@ -175,11 +175,11 @@ end
 # Sets start_time and end_time based on individual date/time attributes
 ###
 def update_event_times
-  unless start_time_date == '' or start_time_hours == '' or start_time_minutes == '' or start_time_meridian == ''
+  unless start_time_date.blank? or start_time_hours.blank? or start_time_minutes.blank? or start_time_meridian.blank?
     self.start_time_hours = start_time_hours.to_i + 12 if start_time_meridian == 'PM'
     self.start_time = Time.zone.parse("#{start_time_date} #{start_time_hours ? sprintf('%02d', start_time_hours) : '00'}:#{start_time_minutes ? start_time_minutes : '00'}")
   end
-  unless end_time_date == '' or end_time_hours == '' or end_time_minutes == '' or end_time_meridian == ''
+  unless end_time_date.blank? or end_time_hours.blank? or end_time_minutes.blank? or end_time_meridian.blank?
     self.end_time_hours = end_time_hours.to_i + 12 if end_time_meridian == 'PM'
     self.end_time = Time.zone.parse("#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}")
   end
@@ -196,9 +196,9 @@ end
         self.errors[:end_time] << "End time must be after start time"
         return false
       else
-        return true  
+        return true
       end
-    end     
+    end
   end
 end
 

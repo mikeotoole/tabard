@@ -96,7 +96,7 @@ unless @dont_run
   %w(Eliand Blaggarth Drejan).each do |cname|
     create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
   end
-  
+
   %w(Billy Fox O'Toole Moose).each do |user_last_name|
     create_minecraft_character(user_last_name, "Boxy #{user_last_name}")
   end

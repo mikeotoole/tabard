@@ -24,7 +24,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
 ###
   # GET /supported_games
   def index
-    @supported_games = current_community.supported_games
+    @supported_games = current_community.supported_games.includes(:community)
   end
 
   # GET /supported_games/new
@@ -37,9 +37,9 @@ class Subdomains::SupportedGamesController < SubdomainsController
 
   # POST /supported_games
   def create
-    @supported_game.game = Game.get_game(params[:supported_game][:game_type], 
-                                         params[:supported_game][:faction], 
-                                         params[:supported_game][:server_name], 
+    @supported_game.game = Game.get_game(params[:supported_game][:game_type],
+                                         params[:supported_game][:faction],
+                                         params[:supported_game][:server_name],
                                          params[:supported_game][:server_type])
 
     if @supported_game.save
@@ -53,9 +53,9 @@ class Subdomains::SupportedGamesController < SubdomainsController
 
   # PUT /supported_games/1
   def update
-    @supported_game.game = Game.get_game(@supported_game.game_type, 
-                                         params[:supported_game][:faction], 
-                                         params[:supported_game][:server_name], 
+    @supported_game.game = Game.get_game(@supported_game.game_type,
+                                         params[:supported_game][:faction],
+                                         params[:supported_game][:server_name],
                                          params[:supported_game][:server_type])
 
     @supported_game.assign_attributes(params[:supported_game])

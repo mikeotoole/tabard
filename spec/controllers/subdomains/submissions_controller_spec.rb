@@ -8,7 +8,7 @@ describe Subdomains::SubmissionsController do
   let(:submission) { create(:submission) }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me"
   end
 
   describe "GET index" do
@@ -18,7 +18,7 @@ describe Subdomains::SubmissionsController do
       get :index, :custom_form_id => custom_form.id
       assigns(:submissions).should eq([submission])
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :index, :custom_form_id => custom_form.id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -32,7 +32,7 @@ describe Subdomains::SubmissionsController do
       get :show, :custom_form_id => custom_form.id, :id => submission.id.to_s
       assigns(:submission).should eq(submission)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :custom_form_id => custom_form.id, :id => submission.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -45,7 +45,7 @@ describe Subdomains::SubmissionsController do
       get :new, :custom_form_id => custom_form.id
       assigns(:submission).should be_a_new(Submission)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :new, :custom_form_id => custom_form.id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -73,7 +73,7 @@ describe Subdomains::SubmissionsController do
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
         response.should redirect_to(custom_form_thankyou_url(assigns(:submission).custom_form))
       end
-      
+
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
         response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -93,9 +93,9 @@ describe Subdomains::SubmissionsController do
     it "redirects to the submissions list" do
       sign_in user
       delete :destroy, :id => submission.id.to_s
-      response.should redirect_to(custom_form_submissions_url(submission.custom_form))
+      response.should redirect_to(custom_form_submissions_url(submission.custom_form, subdomain: community.subdomain))
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => submission.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))

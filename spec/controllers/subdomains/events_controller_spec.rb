@@ -37,23 +37,23 @@ describe Subdomains::EventsController do
       get :index
       assigns(:events).should eq([event])
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :index
       response.should be_forbidden
     end
-    
+
     it "renders the 'index' template when authenticated as a member" do
       sign_in member
       get :index
       response.should render_template("index")
-    end    
+    end
   end
 
   describe "GET show" do
@@ -62,18 +62,18 @@ describe Subdomains::EventsController do
       get :show, :id => event
       assigns(:event).should eq(event)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => event
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :show, :id => event
       response.should be_forbidden
     end
-    
+
     it "renders the 'show' template when authenticated as a member" do
       sign_in member
       get :show, :id => event
@@ -87,29 +87,29 @@ describe Subdomains::EventsController do
       get :new
       assigns(:event).should be_a_new(Event)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
-    end 
-    
+    end
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not admin" do
       sign_in member
       get :new
       response.should be_forbidden
-    end  
-    
+    end
+
     it "renders the 'new' template when authenticated as community admin" do
       sign_in admin
       post :new
       response.should render_template("new")
-    end  
+    end
   end
 
   describe "GET edit" do
@@ -118,30 +118,30 @@ describe Subdomains::EventsController do
       get :edit, :id => event.id.to_s
       assigns(:event).should eq(event)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => event.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => event.id.to_s
       response.should be_forbidden
     end
-    
+
     it "renders the 'edit' template when authenticated as community admin" do
       sign_in admin
       get :edit, :id => event.id.to_s
       response.should render_template("edit")
-    end   
+    end
   end
 
   describe "POST create when authenticated as admin" do
     before(:each) {
       sign_in admin
     }
-  
+
     describe "with valid params" do
       it "creates a new Event" do
         expect {
@@ -173,31 +173,31 @@ describe Subdomains::EventsController do
       end
     end
   end
-  
+
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :event => attributes_for(:event)
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :event => attributes_for(:event)
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not admin" do
       sign_in member
       post :create, :event => attributes_for(:event)
       response.should be_forbidden
-    end         
+    end
   end
 
   describe "PUT update when authenticated as owner" do
     before(:each) {
       sign_in admin
     }
-  
+
     describe "with valid params" do
       it "updates the requested event" do
         event
@@ -234,12 +234,12 @@ describe Subdomains::EventsController do
       put :update, :id => event.id, :event => {:body => "New Body"}
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => event.id, :event => {:body => "New Body"}
       response.should be_forbidden
-    end    
+    end
   end
 
   describe "DELETE destroy" do
@@ -256,23 +256,23 @@ describe Subdomains::EventsController do
       delete :destroy, :id => event.id.to_s
       response.should redirect_to(events_url)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => event.id.to_s
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => event.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not admin" do
       sign_in member
       delete :destroy, :id => event.id.to_s
       response.should be_forbidden
-    end    
+    end
   end
 
 #   describe "POST attend" do
@@ -282,30 +282,30 @@ describe Subdomains::EventsController do
 #       post :attend, :id => event.id.to_s
 #       User.find(member).user_profile.attending_events.should eq([event])
 #     end
-#     
+#
 #     it "should redirect to event when authenticated as community member" do
 #       sign_in member
 #       post :attend, :id => event.id.to_s
 #       response.should redirect_to(event)
 #     end
-#     
+#
 #     it "should redirect to new user session path when not authenticated as a user" do
 #       post :attend, :id => event.id.to_s
-#       response.should redirect_to(new_user_session_path) 
+#       response.should redirect_to(new_user_session_path)
 #     end
-#     
+#
 #     it "should respond forbidden when not a member" do
 #       sign_in non_member
 #       post :attend, :id => event.id.to_s
 #       response.should be_forbidden
 #     end
-#     
+#
 #     it "should respond forbidden when invite only and member does not have invite" do
 #       sign_in member
 #       post :attend, :id => invite_only.id.to_s
 #       response.should be_forbidden
 #     end
-#     
+#
 #     it "should mark user as attending when invite only and member does have invite" do
 #       sign_in member
 #       member.user_profile.attending_events.should be_empty
@@ -313,7 +313,7 @@ describe Subdomains::EventsController do
 #       post :attend, :id => invite_only.id.to_s
 #       User.find(member).user_profile.attending_events.should eq([invite_only])
 #     end
-#     
+#
 #     it "should respond forbidden when event is in the past" do
 #       sign_in member
 #       past_event = create(:event, :start_time => Time.now - (120 * 60), :end_time => Time.now - (60 * 60))
@@ -322,7 +322,7 @@ describe Subdomains::EventsController do
 #       response.should be_forbidden
 #     end
 #   end
-# 
+#
 #   describe "POST invite" do
 #     it "should create invite when authenticated as community admin" do
 #       sign_in admin
@@ -330,24 +330,24 @@ describe Subdomains::EventsController do
 #       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
 #       User.find(member).user_profile.invited_events.should eq([event])
 #     end
-#     
+#
 #     it "should redirect to event when authenticated as community admin" do
 #       sign_in admin
 #       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
 #       response.should redirect_to(event)
 #     end
-#     
+#
 #     it "should redirect to new user session path when not authenticated as a user" do
 #       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       response.should redirect_to(new_user_session_path) 
+#       response.should redirect_to(new_user_session_path)
 #     end
-#     
+#
 #     it "should respond forbidden when not a member" do
 #       sign_in non_member
 #       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
 #       response.should be_forbidden
 #     end
-# 
+#
 #     it "should respond forbidden when not admin" do
 #       sign_in member
 #       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}

@@ -54,7 +54,7 @@ class Community < ActiveRecord::Base
   has_many :comments
   has_many :page_spaces, :dependent => :destroy, :order => 'LOWER(name)'
   has_many :pages, :through => :page_spaces
-  has_many :activities, :dependent => :destroy
+  has_many :activities, :dependent => :destroy, inverse_of: :community
   has_many :events, :dependent => :destroy
   belongs_to :theme
   belongs_to :home_page, :class_name => "Page"
@@ -185,7 +185,7 @@ class Community < ActiveRecord::Base
   # [Returns] An array of user_profiles, filtered by supported game.
   ###
   def member_profiles_for_supported_game(supported_game)
-    self.approved_roster_assignments.where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
+    self.approved_roster_assignments.includes(:user_profile).where(:supported_game_id => supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
   end
 
   ###
@@ -300,17 +300,17 @@ protected
     mr.save!
     self.update_attribute(:member_role, mr)
   end
-  
+
   ###
   # _after_create_
   #
   # This method sets all action items as not complete.
   ###
   def setup_action_items
-    self.update_attribute(:action_items, { :update_home_page => true, 
-                                           :add_supported_game => true, 
-                                           :update_settings => true, 
-                                           :update_application => true, 
+    self.update_attribute(:action_items, { :update_home_page => true,
+                                           :add_supported_game => true,
+                                           :update_settings => true,
+                                           :update_application => true,
                                            :create_discussion_space => true })
   end
 

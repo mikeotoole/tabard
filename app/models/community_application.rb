@@ -133,7 +133,7 @@ class CommunityApplication < ActiveRecord::Base
     else
       self.update_attributes({status: "Removed", status_changer: removed_by_user_profile}, :without_protection => true)
     end
-  end 
+  end
 
   # This method determines if the applicant is a member of the community.
   def applicant_is_a_member?

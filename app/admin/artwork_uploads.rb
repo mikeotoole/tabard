@@ -30,13 +30,13 @@ ActiveAdmin.register ArtworkUpload do
 
   show :title => :email do |artwork_upload|
     rows = default_attribute_table_rows
-    
+
     attributes_table *rows do
       row :artwork_image do
         image_tag artwork_upload.artwork_image_url
       end
     end
-    
+
     active_admin_comments
   end
 end
