@@ -1,5 +1,6 @@
 - title "#{@event.name} | Events | #{current_community.name}"
-= javascript_include_tag "comments"
+- content_for :header do
+  = javascript_include_tag "comments"
 
 #breadcrumb
   %ol

@@ -1,5 +1,6 @@
 - title "Roles & Permissions | #{current_community.name}"
-= javascript_include_tag "permissions"
+- content_for :header do
+  = javascript_include_tag "permissions"
 
 %h1 User Roles & Permissions
 

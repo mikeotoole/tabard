@@ -8,6 +8,7 @@
     = javascript_include_tag "application", "top_level"
     = csrf_meta_tags unless @page_caching
     = favicon_link_tag asset_path 'favicon.png'
+    = yield :header
 
   %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
     #bar
@@ -17,3 +18,4 @@
     #content
       = yield
     = render 'layouts/footer', current_layout: 'application'
+    = yield :footer
