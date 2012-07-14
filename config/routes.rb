@@ -210,7 +210,7 @@ DaBvRails::Application.routes.draw do
   get "/bar" => "top_level#bar", :as => "bar"
 
   # Top level pages
-  get "/intro" => "top_level#intro", :as => 'top_level_intro'
+  #get "/intro" => "top_level#intro", :as => 'top_level_intro'
   get "/features" => "top_level#features", :as => 'top_level_features'
   get "/pricing" => "top_level#pricing", :as => 'top_level_pricing'
   get "/maintenance" => "top_level#maintenance", :as => 'top_level_maintenance'
