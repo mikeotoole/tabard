@@ -15,35 +15,35 @@
     = render "layouts/flash_messages"
 
     = form_tag '' do
-      %input{ :name => '_method', :value => '', :type => 'hidden' }
+      %input{ name: '_method', value: '', type: 'hidden' }
 
       #mailbox-menu.sidemenu
         %dl
 
           %dt.mail Mail
-          %dd{ :class => 'inbox' + (mailbox_view_state == 'inbox' ? ' current' : '') }
-            = link_to 'Inbox', inbox_url, :meta => "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
-          %dd{ :class => 'compose' + (mailbox_view_state == 'compose' ? ' current' : '') }
-            = link_to 'Compose', compose_mail_url, :meta => 'New message'
-          %dd{ :class => 'sent' + (mailbox_view_state == 'sent' ? ' current' : '') }
-            = link_to 'Sent', sent_mailbox_url, :meta => "Sent messages"
-          %dd{ :class => 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
-            = link_to 'Trash', trash_url, :meta => "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
+          %dd{ class: 'inbox' + (mailbox_view_state == 'inbox' ? ' current' : '') }
+            = link_to 'Inbox', inbox_url, meta: "Inbox - #{pluralize(current_user.inbox.messages.size, 'message') + (current_user.inbox.messages.size > 0 ? ', ' + current_user.unread_messages.size.to_s + ' new' : '')}"
+          %dd{ class: 'compose' + (mailbox_view_state == 'compose' ? ' current' : '') }
+            = link_to 'Compose', compose_mail_url, meta: 'New message'
+          %dd{ class: 'sent' + (mailbox_view_state == 'sent' ? ' current' : '') }
+            = link_to 'Sent', sent_mailbox_url, meta: "Sent messages"
+          %dd{ class: 'trash' + (mailbox_view_state == 'trash' ? ' current' : '') }
+            = link_to 'Trash', trash_url, meta: "Trash - #{pluralize(current_user.trash.messages.size, 'message')}"
 
           - unless ['compose','sent'].include?(mailbox_view_state)
             %dt.actions Actions
             - if mailbox_view_state == 'trash'
-              %dd{ :class => 'batch action move' }
-                = button_tag 'Move to inbox', :action => mail_batch_move_url(current_user.inbox), :method => :put, :meta => 'Move selected messages to the inbox.'
-              %dd{ :class => 'batch action destroy' }
-                = button_tag 'Delete forever', :action => mail_batch_delete_url, :method => :delete, :confirm => 'Are you sure?', :meta => 'Delete selected messages for forever.'
+              %dd{ class: 'batch action move' }
+                = button_tag 'Move to inbox', action: mail_batch_move_url(current_user.inbox), method: :put, meta: 'Move selected messages to the inbox.'
+              %dd{ class: 'batch action destroy' }
+                = button_tag 'Delete forever', action: mail_batch_delete_url, method: :delete, confirm: 'Are you sure?', meta: 'Delete selected messages for forever.'
             - else
-              %dd{ :class => 'batch action move' }
-                = button_tag 'Move to trash', :action => mail_batch_move_url(current_user.trash), :method => :put, :meta => 'Move selected messages to the trash.'
-              %dd{ :class => 'batch action read' }
-                = button_tag 'Mark as read', :action => mail_batch_mark_read_url, :method => :put, :meta => 'Mark selected messages as read.'
-              %dd{ :class => 'batch action unread' }
-                = button_tag 'Mark as unread', :action => mail_batch_mark_unread_url, :method => :put, :meta => 'Mark selected messages as unread.'
+              %dd{ class: 'batch action move' }
+                = button_tag 'Move to trash', action: mail_batch_move_url(current_user.trash), method: :put, meta: 'Move selected messages to the trash.'
+              %dd{ class: 'batch action read' }
+                = button_tag 'Mark as read', action: mail_batch_mark_read_url, method: :put, meta: 'Mark selected messages as read.'
+              %dd{ class: 'batch action unread' }
+                = button_tag 'Mark as unread', action: mail_batch_mark_unread_url, method: :put, meta: 'Mark selected messages as unread.'
 
       #mailbox
         - if (@todays_messages && @todays_messages.size > 0) || (@older_messages && @older_messages.size > 0)
@@ -51,16 +51,16 @@
             - if @todays_messages.size > 0
               %dt Today
               - @todays_messages.each do |message|
-                = render 'messages/row', :message => message
+                = render 'messages/row', message: message
               - if @older_messages.size > 0
                 %dt Older
             - @older_messages.each do |message|
-              = render 'messages/row', :message => message
+              = render 'messages/row', message: message
 
         - elsif @messages && @messages.size > 0
           %dl
             - @messages.each do |message|
-              = render 'messages/row', :message => message
+              = render 'messages/row', message: message
 
         - elsif @folder
           %p= "#{@folder.name} is empty."
@@ -68,8 +68,8 @@
         - elsif @current_user.sent_messages.size > 0 && (!@message || @message.id)
           %dl
             - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
-              = render 'messages/row', :message => message
+              = render 'messages/row', message: message
 
     #message= yield
 
-    = render 'layouts/footer', :current_layout => 'messaging'
+    = render 'layouts/footer', current_layout: 'messaging'

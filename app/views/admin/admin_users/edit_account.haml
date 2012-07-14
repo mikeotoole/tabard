@@ -1,4 +1,4 @@
-= simple_form_for @admin_user, :url => { :action =>:update_account } do |f|
-  = render 'fields', :f => f
+= simple_form_for @admin_user, url: { action: :update_account } do |f|
+  = render 'fields', f: f
   %p.submit
     = f.button :submit, 'Update'

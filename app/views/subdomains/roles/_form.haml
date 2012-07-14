@@ -6,33 +6,33 @@
   - else
     - if role.persisted?
       .actions
-        = link_to 'Delete', role_url(role), :method => :delete, :confirm => 'Are you sure?', :class => 'delete', :meta => 'Delete role'
+        = link_to 'Delete', role_url(role), method: :delete, confirm: 'Are you sure?', class: 'delete', meta: 'Delete role'
     %fieldset
       %ol
-        = f.input :name, :label => 'Role Name'
+        = f.input :name, label: 'Role Name'
 
   %dl#permissions
     %dt
       %h2 Announcements
-    %dd= render 'subdomains/roles/permissions/announcements', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/announcements', f: f, role: role
     %dt
       %h2 Comments
-    %dd= render 'subdomains/roles/permissions/comments', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/comments', f: f, role: role
     %dt
       %h2 Community Applications
-    %dd= render 'subdomains/roles/permissions/community_applications', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/community_applications', f: f, role: role
     %dt
       %h2 Custom Forms
-    %dd= render 'subdomains/roles/permissions/custom_forms', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/custom_forms', f: f, role: role
     %dt
       %h2 Discussion Spaces
-    %dd= render 'subdomains/roles/permissions/discussion_spaces', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/discussion_spaces', f: f, role: role
     %dt
       %h2 Events
-    %dd= render 'subdomains/roles/permissions/events', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/events', f: f, role: role
     %dt
       %h2 Page Spaces
-    %dd= render 'subdomains/roles/permissions/page_spaces', :f => f, :role => role
+    %dd= render 'subdomains/roles/permissions/page_spaces', f: f, role: role
     - unless role.is_system_generated and current_community.member_profiles.any?
       %dt
         %h2 Users
@@ -40,7 +40,7 @@
           %ol
             - current_community.ordered_community_profiles.each do |profile|
               %li.boolean
-                = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), :id => dom_id(profile)
-                = label_tag dom_id(profile), profile.user_profile_name, :class => "check_box_label"
+                = check_box_tag 'role[community_profile_ids][]', profile.id, role.community_profiles.include?(profile), id: dom_id(profile)
+                = label_tag dom_id(profile), profile.user_profile_name, class: "check_box_label"
   %p.submit
-    %button{ :type => 'submit' } Save Changes
+    %button{ type: 'submit' } Save Changes

@@ -10,9 +10,9 @@ class MinecraftCharactersController < ApplicationController
 ###
 # Before Filters
 ###
-  prepend_before_filter :block_unauthorized_user!, :except => :show
+  prepend_before_filter :block_unauthorized_user!, except: :show
   load_and_authorize_resource
-  skip_load_and_authorize_resource :only => :update
+  skip_load_and_authorize_resource only: :update
 
 ###
 # REST Actions
@@ -37,7 +37,7 @@ class MinecraftCharactersController < ApplicationController
       logger.error "#{$!}"
       @minecraft_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @minecraft_character, :location => user_profile_url(@minecraft_character.user_profile) + '#characters'
+    respond_with @minecraft_character, location: user_profile_url(@minecraft_character.user_profile) + '#characters'
   end
 
   # PUT /minecraft_characters/:id(.:format)
@@ -53,13 +53,13 @@ class MinecraftCharactersController < ApplicationController
       logger.error "#{$!}"
       @minecraft_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @minecraft_character, :location => user_profile_url(@minecraft_character.user_profile) + '#characters'
+    respond_with @minecraft_character, location: user_profile_url(@minecraft_character.user_profile) + '#characters'
   end
 
   # DELETE /minecraft_characters/:id(.:format)
   def destroy
     add_new_flash_message("\"#{@minecraft_character.name}\" has been removed.", 'notice') if @minecraft_character and @minecraft_character.destroy
 
-    respond_with @minecraft_character, :location => user_profile_url(@minecraft_character.user_profile) + '#characters'
+    respond_with @minecraft_character, location: user_profile_url(@minecraft_character.user_profile) + '#characters'
   end
 end

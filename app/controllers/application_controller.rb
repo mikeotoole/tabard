@@ -60,9 +60,9 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       case status
       when :forbidden
-        format.html { render "status_code/forbidden", :status => status, :layout => 'application' }
+        format.html { render "status_code/forbidden", status: status, layout: 'application' }
       else
-        format.html { render "status_code/index", :status => status, :layout => 'application' }
+        format.html { render "status_code/index", status: status, layout: 'application' }
       end
       format.any  { head status } # only return the status code
     end
@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
   ###
   def add_new_flash_message(message_body, message_class="notice", message_title="")
     flash[:messages] = Array.new unless flash[:messages]
-    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+    flash[:messages] << { class: message_class, title: message_title, body: message_body }
   end
 
 ###
@@ -240,7 +240,7 @@ protected
   def limit_subdomain_access
     if request.subdomain.present?
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
-      #redirect_to root_url(:subdomain => false), :alert => "Invalid action on a subdomain."
+      #redirect_to root_url(subdomain: false), alert: "Invalid action on a subdomain."
     end
   end
 
@@ -357,9 +357,9 @@ protected
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      root_url_hack_helper(user_profile_url(current_user.user_profile, :protocol => "http://", :subdomain => false) + '#characters')
+      root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: false) + '#characters')
     when :admin_user, AdminUser
-      admin_dashboard_url(:protocol => "http://", :subdomain => false).sub('secure.', '')
+      admin_dashboard_url(protocol: "http://", subdomain: false).sub('secure.', '')
     else
       user_root_url(current_user)
     end
@@ -367,14 +367,14 @@ protected
 
   # This method overrides the default devise method to set the proper protocol and subdomain
   def after_sign_out_path_for(resource_or_scope)
-    root_url_hack_helper(root_url(:protocol => "http://", :subdomain => false)) if resource and resource.kind_of?(User)
+    root_url_hack_helper(root_url(protocol: "http://", subdomain: false)) if resource and resource.kind_of?(User)
     return root_url
   end
 
 ###
 # System Hacks
 ###
-  # This method replaces the default url_for in rails because they think that url_for(:subdomain => false) is ambiguous.
+  # This method replaces the default url_for in rails because they think that url_for(subdomain: false) is ambiguous.
   def root_url_hack_helper(the_broken_url)
     return the_broken_url.sub('secure.', '')
     return stored_location_for(resource)

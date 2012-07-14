@@ -7,7 +7,7 @@
 - if @events.any?
   = paginate @events
   - has_invites = (current_user.events_invited_to & @events).size > 0 ? true : false
-  = form_tag invites_batch_update_url, :method => :put do
+  = form_tag invites_batch_update_url, method: :put do
     %table
       %thead
         %tr
@@ -28,8 +28,8 @@
             - if has_invites
               %td.check
                 - if current_user.invited? event
-                  = check_box_tag "ids[#{invite.id}]", true, false, :id => "invite_id_#{invite.id}"
-                  %label{ :for => "invite_id_#{invite.id}" }
+                  = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
+                  %label{ for: "invite_id_#{invite.id}" }
             %td
               = link_to shorten_words(event.name, 21), event
               - if event.supported_game
@@ -48,14 +48,14 @@
               %time= event.end_time.strftime("%l:%M %p")
             %td.actions
               %div
-                = link_to "Attendee List", invites_event_url(event), :meta => 'View invitees', :class => 'invitees'
+                = link_to "Attendee List", invites_event_url(event), meta: 'View invitees', class: 'invitees'
                 - if (can? :update, event)
-                  = link_to 'Edit', edit_event_path(event), :meta => 'Edit event', :class => 'edit'
+                  = link_to 'Edit', edit_event_path(event), meta: 'Edit event', class: 'edit'
                 - if (can? :destroy, event)
-                  = link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete, :meta => 'Delete event', :class => 'delete'
+                  = link_to 'Delete', event, confirm: 'Are you sure?', method: :delete, meta: 'Delete event', class: 'delete'
       %tfoot
         %tr
-          %td{ :colspan => has_invites ? 8 : 6 }
+          %td{ colspan: has_invites ? 8 : 6 }
             - if has_invites
               .select.status
                 %ul
@@ -65,7 +65,7 @@
                       %label{ for: "batch_status_#{status.downcase}" }= status
               %button{ type: 'submit' } Update Selected
             - if can? :create, Event
-              = link_to 'Create New', new_event_path, :class => 'button'
+              = link_to 'Create New', new_event_path, class: 'button'
   = paginate @events
 
 -else
@@ -73,4 +73,4 @@
   %p There are no events at this time.
   - if can? :create, Event
     %hr
-    %p= link_to 'Add New Event', new_event_url, :class => 'button'
+    %p= link_to 'Add New Event', new_event_url, class: 'button'

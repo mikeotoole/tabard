@@ -64,12 +64,12 @@ DaBvRails::Application.configure do
   config.active_support.deprecation = :notify
 
   # Default mailer url
-  config.action_mailer.default_url_options = { :host => 'brutalvenom.com' }
+  config.action_mailer.default_url_options = { host: 'brutalvenom.com' }
 
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
-    :authentication => :plain,
+    authentication: :plain,
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => 'heroku.com'

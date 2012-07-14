@@ -1,3 +1,3 @@
 - title @message.subject + (@message.respond_to?('folder_name') ? " | #{@message.folder_name}" : '') + " | Mail | #{current_user.display_name}"
 
-= render "message", :message => @message
+= render "message", message: @message

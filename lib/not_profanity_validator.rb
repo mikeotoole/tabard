@@ -19,7 +19,7 @@ class NotProfanityValidator < ActiveModel::EachValidator
     return unless value.present?
     Profanalyzer.tolerance = 5
     if Profanalyzer.profane? value
-      object.errors.add(attribute, :profanity, options.merge(:value => value))
+      object.errors.add(attribute, :profanity, options.merge(value: value))
     end
   end
 end

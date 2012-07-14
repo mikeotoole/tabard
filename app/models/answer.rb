@@ -27,14 +27,14 @@ class Answer < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :question_body, :presence => true
-  validates :body, :presence => true, :if => Proc.new { |answer| answer.question_is_required }
+  validates :question_body, presence: true
+  validates :body, presence: true, if: Proc.new { |answer| answer.question_is_required }
 
 ###
 # Delegates
 ###
-  delegate :user_profile_id, :to => :submission, :allow_nil => true
-  delegate :is_required, :style, :predefined_answers, :explanation, :to => :question, :prefix => true, :allow_nil => true
+  delegate :user_profile_id, to: :submission, allow_nil: true
+  delegate :is_required, :style, :predefined_answers, :explanation, to: :question, prefix: true, allow_nil: true
 
 ###
 # Callbacks

@@ -11,12 +11,12 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 ###
 # Before Filters
 ###
-  before_filter :pitch_to_new_user, :only => [:new]
+  before_filter :pitch_to_new_user, only: [:new]
   before_filter :block_unauthorized_user!
-  before_filter :load_application, :except => [:new, :create]
-  before_filter :create_application, :only => [:new, :create]
-  before_filter :ensure_current_user_is_member, :only => [:index]
-  authorize_resource :except => [:index]
+  before_filter :load_application, except: [:new, :create]
+  before_filter :create_application, only: [:new, :create]
+  before_filter :ensure_current_user_is_member, only: [:index]
+  authorize_resource except: [:index]
   skip_before_filter :limit_subdomain_access
 
   # GET /community_applications
@@ -43,10 +43,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
       redirect_to my_roster_assignments_path
     elsif current_user.application_pending? current_community
       add_new_flash_message "You have already applied to this community. Your application is pending review.", 'notice'
-      redirect_to root_url(:subdomain => current_community.subdomain)
+      redirect_to root_url(subdomain: current_community.subdomain)
     else
       @community_application.submission.custom_form.questions.each do |question|
-        @community_application.submission.answers.new :question_body => question.body, :question_id => question.id
+        @community_application.submission.answers.new question_body: question.body, question_id: question.id
       end
     end
   end
@@ -57,7 +57,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     if @community_application.save
       add_new_flash_message @community_application.custom_form_thankyou, 'success'
     end
-    respond_with @community_application, :location => custom_form_thankyou_url(@community_application.custom_form), :error_behavior => :list
+    respond_with @community_application, location: custom_form_thankyou_url(@community_application.custom_form), error_behavior: :list
   end
 
   # DELETE /community_applications/1
@@ -107,7 +107,7 @@ protected
 
   # This pitches to the new user.
   def pitch_to_new_user
-    redirect_to new_user_registration_url(:subdomain => "secure", :protocol => (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in?
+    redirect_to new_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id) and return false unless user_signed_in?
   end
 
   ###
@@ -121,7 +121,7 @@ protected
     end
     @community_application = current_community.community_applications.new(params[:community_application])
     @community_application.user_profile = current_user.user_profile
-    @community_application.submission ||= Submission.new(:custom_form => current_community.community_application_form, :user_profile => current_user.user_profile)
+    @community_application.submission ||= Submission.new(custom_form: current_community.community_application_form, user_profile: current_user.user_profile)
     @community_application.submission.custom_form = current_community.community_application_form
     @community_application.submission.user_profile = current_user.user_profile
   end

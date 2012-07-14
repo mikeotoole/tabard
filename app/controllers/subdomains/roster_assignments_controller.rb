@@ -11,17 +11,17 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  prepend_before_filter :block_unauthorized_user!, :except => [:index, :game]
-  before_filter :ensure_current_user_is_member, :except => [:index, :game]
-  before_filter :get_community_profile, :except => [:index, :game]
-  before_filter :load_roster_assignment, :except => [:new, :mine, :create, :approve, :reject]
-  before_filter :load_pending_roster_assignment, :only => [:approve, :reject]
-  before_filter :create_roster_assignment, :only => [:new, :mine, :create]
-  before_filter :find_available_characters, :only => [:mine, :create, :new]
-  authorize_resource :except => [:index, :game]
-  skip_authorize_resource :only => [:pending]
+  prepend_before_filter :block_unauthorized_user!, except: [:index, :game]
+  before_filter :ensure_current_user_is_member, except: [:index, :game]
+  before_filter :get_community_profile, except: [:index, :game]
+  before_filter :load_roster_assignment, except: [:new, :mine, :create, :approve, :reject]
+  before_filter :load_pending_roster_assignment, only: [:approve, :reject]
+  before_filter :create_roster_assignment, only: [:new, :mine, :create]
+  before_filter :find_available_characters, only: [:mine, :create, :new]
+  authorize_resource except: [:index, :game]
+  skip_authorize_resource only: [:pending]
   skip_before_filter :limit_subdomain_access
-  before_filter :ensure_roster_is_public, :only => [:index, :game]
+  before_filter :ensure_roster_is_public, only: [:index, :game]
 
   # GET /roster_assignments
   # GET /roster_assignments.json
@@ -63,7 +63,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
     @roster_assignments = Array.new
     @roster_assignments = community_profile.roster_assignments if community_profile
-    respond_with @roster_assignment, :location => my_roster_assignments_path
+    respond_with @roster_assignment, location: my_roster_assignments_path
   end
 
   # DELETE /roster_assignments/1
@@ -146,7 +146,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   ###
   def get_community_profile
     return false unless current_user.community_profiles # This means that they are not a member of this community
-    @community_profile = current_user.community_profiles.where(:community_id => current_community.id).first
+    @community_profile = current_user.community_profiles.where(community_id: current_community.id).first
     return false unless @community_profile #this means that they are nit a member of this community
   end
 
@@ -157,7 +157,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   ###
   def load_roster_assignment
     if @supported_game
-      @roster_assignments = current_community.roster_assignments.where(:supported_game => @supported_game)
+      @roster_assignments = current_community.roster_assignments.where(supported_game: @supported_game)
     else
       @roster_assignments = current_community.roster_assignments
     end

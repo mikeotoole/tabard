@@ -4,7 +4,7 @@ source 'http://rubygems.org'
   gem 'rails'
 
 # ActiveRecord extensions
-  gem 'rails3_acts_as_paranoid', :git => 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git'
+  gem 'rails3_acts_as_paranoid', git: 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git'
   gem "nilify_blanks"
 
 # Javascript Library

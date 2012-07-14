@@ -12,18 +12,18 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  before_filter :load_discussion_space, :except => [:new, :create, :index]
-  before_filter :create_discussion_space, :only => [:new, :create]
-  authorize_resource :except => [:index]
+  before_filter :load_discussion_space, except: [:new, :create, :index]
+  before_filter :create_discussion_space, only: [:new, :create]
+  authorize_resource except: [:index]
   skip_before_filter :limit_subdomain_access
-  after_filter :create_activity, :only => [:update, :create]
+  after_filter :create_activity, only: [:update, :create]
 
 ###
 # REST Actions
 ###
   # GET /discussion_spaces
   def index
-    @discussion_spaces = Kaminari.paginate_array(current_community.discussion_spaces.includes(:supported_game => [:community]).reject{|d| !can? :show, d }).page params[:page]
+    @discussion_spaces = Kaminari.paginate_array(current_community.discussion_spaces.includes(supported_game: [:community]).reject{|d| !can? :show, d }).page params[:page]
   end
 
   # GET /discussion_spaces/1
@@ -108,10 +108,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create(:user_profile => current_user.user_profile,
-                      :community => @discussion_space.community,
-                      :target => @discussion_space,
-                      :action => @action)
+      Activity.create(user_profile: current_user.user_profile,
+                      community: @discussion_space.community,
+                      target: @discussion_space,
+                      action: @action)
     end
   end
 end

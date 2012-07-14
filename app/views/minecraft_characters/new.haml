@@ -3,11 +3,11 @@
 #body
   %h1 New Minecraft Character
 
-  = simple_form_for @minecraft_character, :html => {:novalidate => true} do |f|
+  = simple_form_for @minecraft_character, html: {novalidate: true} do |f|
     %fieldset
       %ol
-        = render 'fields', :f => f, :minecraft_character => @minecraft_character
+        = render 'fields', f: f, minecraft_character: @minecraft_character
         %li
-          %button{ :type => 'submit' } Create character
+          %button{ type: 'submit' } Create character
 
   = render 'shared/user_account_links'

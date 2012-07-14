@@ -10,19 +10,19 @@ class DiscussionObserver < ActiveRecord::Observer
 
   # Creates an activity when a new discussion is created.
   def after_create(discussion)
-    Activity.create!( :user_profile => discussion.user_profile,
-                        :community => discussion.community,
-                        :target => discussion,
-                        :action => "created")
+    Activity.create!( user_profile: discussion.user_profile,
+                        community: discussion.community,
+                        target: discussion,
+                        action: "created")
   end
 
   # Creates an activity when a discussion is updated.
   def after_update(discussion)
     if discussion.changed?
-      Activity.create!( :user_profile => discussion.user_profile,
-                        :community => discussion.community,
-                        :target => discussion,
-                        :action => "edited")
+      Activity.create!( user_profile: discussion.user_profile,
+                        community: discussion.community,
+                        target: discussion,
+                        action: "edited")
     end
   end
 end

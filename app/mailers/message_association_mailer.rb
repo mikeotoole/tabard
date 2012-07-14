@@ -6,8 +6,8 @@
 # This class is a mailer used by the MessageAssociationObserver to send emails.
 ###
 class MessageAssociationMailer < ActionMailer::Base
-  default :from => "Crumblin <noreply@crumblin.com>",
-          :content_type => "text/html"
+  default from: "Crumblin <noreply@crumblin.com>",
+          content_type: "text/html"
   layout 'mailer'
 
   # Tell user they have a new message
@@ -16,7 +16,7 @@ class MessageAssociationMailer < ActionMailer::Base
     if !!@message_association
       @subject = @message_association.is_system_sent ? "Crumblin - #{@message_association.subject}" : "Crumblin - New Message From #{@message_association.author_name}"
       @user_profile = @message_association.recipient
-      mail(:to => @user_profile.email, :subject => @subject) do |format|
+      mail(to: @user_profile.email, subject: @subject) do |format|
          format.html { render "mailers/new_message" }
       end
     end

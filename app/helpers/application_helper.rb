@@ -19,7 +19,7 @@ module ApplicationHelper
   ###
   def add_new_flash_message(message_body, message_class="notice", message_title="")
     flash[:messages] = Array.new unless flash[:messages]
-    flash[:messages] << { :class => message_class, :title => message_title, :body => message_body }
+    flash[:messages] << { class: message_class, title: message_title, body: message_body }
   end
 
   # Removes all flash messages
@@ -99,6 +99,6 @@ module ApplicationHelper
     title ||= column.titleize
     css_class = 'sortable' + (column == sort_column ? " current #{sort_direction}" : '')
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-    link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class}
+    link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class}
   end
 end

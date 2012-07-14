@@ -10,19 +10,19 @@ class CommentObserver < ActiveRecord::Observer
 
   # Creates an activity when a new comment is created.
   def after_create(comment)
-    Activity.create!( :user_profile => comment.user_profile,
-                        :community => comment.community,
-                        :target => comment,
-                        :action => "created")
+    Activity.create!( user_profile: comment.user_profile,
+                        community: comment.community,
+                        target: comment,
+                        action: "created")
   end
 
   # Creates an activity when a comment is updated.
   def after_update(comment)
     if comment.changed?
-      Activity.create!( :user_profile => comment.user_profile,
-                        :community => comment.community,
-                        :target => comment,
-                        :action => "edited")
+      Activity.create!( user_profile: comment.user_profile,
+                        community: comment.community,
+                        target: comment,
+                        action: "edited")
     end
   end
 end

@@ -9,7 +9,7 @@ class Discussion < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
-  scope :ordered, :order => 'created_at DESC'
+  scope :ordered, order: 'created_at DESC'
 ###
 # Constants
 ###
@@ -32,32 +32,32 @@ class Discussion < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :discussion_space
-  has_many :comments, :as => :commentable
-  has_many :all_comments, :as => :original_commentable, :class_name => "Comment"
-  has_one :community, :through => :discussion_space
-  has_many :view_logs, :as => :view_loggable, :dependent => :destroy
+  has_many :comments, as: :commentable
+  has_many :all_comments, as: :original_commentable, class_name: "Comment"
+  has_one :community, through: :discussion_space
+  has_many :view_logs, as: :view_loggable, dependent: :destroy
 
 ###
 # Validators
 ###
-  validates :name,  :presence => true, :length => { :maximum => MAX_NAME_LENGTH }
-  validates :body, :presence => true, :length => { :maximum => MAX_BODY_LENGTH }
-  validates :user_profile, :presence => true
-  validates :discussion_space, :presence => true
+  validates :name,  presence: true, length: { maximum: MAX_NAME_LENGTH }
+  validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
+  validates :user_profile, presence: true
+  validates :discussion_space, presence: true
   validate :character_is_valid_for_user_profile
 
 ###
 # Delegates
 ###
-  delegate :name, :to => :discussion_space, :prefix => true, :allow_nil => true
-  delegate :game, :to => :discussion_space, :prefix => true, :allow_nil => true
-  delegate :game_name, :to => :discussion_space, :allow_nil => true
-  delegate :admin_profile_id, :to => :community, :prefix => true, :allow_nil => true
-  delegate :name, :to => :community, :prefix => true, :allow_nil => true
-  delegate :subdomain, :to => :community, :allow_nil => true
-  delegate :name, :to => :user_profile, :prefix => true, :allow_nil => true
-  delegate :name, :to => :poster, :prefix => true, :allow_nil => true
-  delegate :avatar_url, :to => :poster, :prefix => true, :allow_nil => true
+  delegate :name, to: :discussion_space, prefix: true, allow_nil: true
+  delegate :game, to: :discussion_space, prefix: true, allow_nil: true
+  delegate :game_name, to: :discussion_space, allow_nil: true
+  delegate :admin_profile_id, to: :community, prefix: true, allow_nil: true
+  delegate :name, to: :community, prefix: true, allow_nil: true
+  delegate :subdomain, to: :community, allow_nil: true
+  delegate :name, to: :user_profile, prefix: true, allow_nil: true
+  delegate :name, to: :poster, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :poster, prefix: true, allow_nil: true
 
   before_destroy :destroy_all_comments
   before_save :update_is_locked_from_comments_enabled
@@ -141,7 +141,7 @@ protected
   # Destroys all comments
   ###
   def destroy_all_comments
-    Comment.where(:original_commentable_id => self.id, :original_commentable_type => 'Discussion').update_all(:deleted_at => Time.now)
+    Comment.where(original_commentable_id: self.id, original_commentable_type: 'Discussion').update_all(deleted_at: Time.now)
   end
 
   ###

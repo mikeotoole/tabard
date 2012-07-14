@@ -80,34 +80,34 @@ class SwtorCharacter < BaseCharacter
 ###
 # Delegates
 ###
-  delegate :faction, :to => :swtor, :allow_nil => true
-  delegate :server_name, :to => :swtor, :allow_nil => true
+  delegate :faction, to: :swtor, allow_nil: true
+  delegate :server_name, to: :swtor, allow_nil: true
 
 ###
 # Validators
 ###
-  validates :name, :presence => true,
-                   :length => { :maximum => MAX_NAME_LENGTH }
+  validates :name, presence: true,
+                   length: { maximum: MAX_NAME_LENGTH }
   validate do |swtor_character|
     swtor_character.errors.add(:game, "not found with this faction server combination") if swtor_character.swtor_id.blank?
   end
-  validates :char_class,  :presence => true
+  validates :char_class,  presence: true
   validate do |swtor_character|
     if not SwtorCharacter.classes(swtor_character.faction).include?(swtor_character.char_class)
       swtor_character.errors.add(:class, "is not valid for given faction")
     end
   end
-  validates :advanced_class,  :presence => true,
-                              :inclusion => { :in => VALID_ADVANCED_CLASSES, :message => "%{value} is not a valid advanced class." }
+  validates :advanced_class,  presence: true,
+                              inclusion: { in: VALID_ADVANCED_CLASSES, message: "%{value} is not a valid advanced class." }
   validate do |swtor_character|
     if SwtorCharacter.char_class(swtor_character.advanced_class) != swtor_character.char_class
       swtor_character.errors.add(:advanced_class, "is not valid for given class")
     end
   end
-  validates :species,  :presence => true
+  validates :species,  presence: true
   validate :species_is_valid_for_advanced_class
-  validates :gender, :presence => true,
-                     :inclusion => {:in => VALID_GENDERS}
+  validates :gender, presence: true,
+                     inclusion: {in: VALID_GENDERS}
 
 ###
 # Public Methods
@@ -210,7 +210,7 @@ class SwtorCharacter < BaseCharacter
 
       if swtor_character.valid?
         profile = user.user_profile
-        proxy = profile.character_proxies.build(:character => swtor_character)
+        proxy = profile.character_proxies.build(character: swtor_character)
         swtor_character.errors.add(:error, "could not add character to user profile") unless proxy.save
       else
         swtor_character.errors.add(:server_name, "can't be blank") if not params[:server_name]

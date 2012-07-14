@@ -2,13 +2,13 @@
 - case activity.action
 - when 'edited'
   Edited character
-  %strong{ :meta => "#{character.game_name} character" }= shorten_words character.name, 17
+  %strong{ meta: "#{character.game_name} character" }= shorten_words character.name, 17
 - when 'avatar'
   = image_tag character.avatar_url :tiny
   Changed their
   %strong avatar
   for
-  %strong{ :meta => "#{character.game_name} character" }= shorten_words character.name, 17
+  %strong{ meta: "#{character.game_name} character" }= shorten_words character.name, 17
 - when 'created'
   Created a
   %strong= character.game_name
@@ -16,6 +16,6 @@
   %strong= shorten_words character.name, 17
 - when 'accepted'
   Added
-  %strong{ :meta => "#{character.game_name} character" }= shorten_words character.name, 17
+  %strong{ meta: "#{character.game_name} character" }= shorten_words character.name, 17
   to
-  %strong= link_to shorten_words(activity.community_name), root_url(:subdomain => activity.community_subdomain)
+  %strong= link_to shorten_words(activity.community_name), root_url(subdomain: activity.community_subdomain)

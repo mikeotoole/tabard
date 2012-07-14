@@ -3,12 +3,12 @@
 #body
   %h1 Editing Minecraft Character
 
-  = simple_form_for @minecraft_character, :html => {:novalidate => true}  do |f|
+  = simple_form_for @minecraft_character, html: {novalidate: true}  do |f|
     %fieldset
       %ol
-        = render 'fields', :f => f, :minecraft_character => @minecraft_character
+        = render 'fields', f: f, minecraft_character: @minecraft_character
       %p.submit
-        %button{ :type => 'submit' } Save character
-        = link_to 'Remove Character', @minecraft_character, :method => :delete, :confirm => 'This cannot be undone. Are you sure you want to remove this character?', :class => 'secondary'
+        %button{ type: 'submit' } Save character
+        = link_to 'Remove Character', @minecraft_character, method: :delete, confirm: 'This cannot be undone. Are you sure you want to remove this character?', class: 'secondary'
 
   = render 'shared/user_account_links'

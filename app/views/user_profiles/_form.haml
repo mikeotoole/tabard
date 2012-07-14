@@ -1,21 +1,21 @@
-= simple_form_for user_profile, :html => {:multipart => true} do |f|
+= simple_form_for user_profile, html: {multipart: true} do |f|
   %fieldset
     %ol
-      = f.input :display_name, :hint => "What other users see. #{UserProfile::MAX_NAME_LENGTH} characters max. Required.", :input_html => { :maxlength => UserProfile::MAX_NAME_LENGTH }
-      = f.input :title, :hint => "Displayed below your name. #{UserProfile::MAX_TITLE_LENGTH} characters max. Optional.", :input_html => { :maxlength => UserProfile::MAX_TITLE_LENGTH }
-      = f.input :first_name, :input_html => { :maxlength => UserProfile::MAX_FIRST_NAME_LENGTH }
-      = f.input :last_name, :input_html => { :maxlength => UserProfile::MAX_LAST_NAME_LENGTH }
-      = f.input :location, :hint => "#{UserProfile::MAX_LOCATION_LENGTH} characters max. Optional.", :input_html => { :maxlength => UserProfile::MAX_LOCATION_LENGTH }
-      = f.input :description, :label => "About me", :wrapper_tag => :p, :hint => "#{UserProfile::MAX_DESCRIPTION_LENGTH} characters max. Optional.", :input_html => { :maxlength => UserProfile::MAX_DESCRIPTION_LENGTH }
-      %li.avatar{ :class => f.object.errors.any? ? 'field_with_errors' : '' }
+      = f.input :display_name, hint: "What other users see. #{UserProfile::MAX_NAME_LENGTH} characters max. Required.", input_html: { maxlength: UserProfile::MAX_NAME_LENGTH }
+      = f.input :title, hint: "Displayed below your name. #{UserProfile::MAX_TITLE_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_TITLE_LENGTH }
+      = f.input :first_name, input_html: { maxlength: UserProfile::MAX_FIRST_NAME_LENGTH }
+      = f.input :last_name, input_html: { maxlength: UserProfile::MAX_LAST_NAME_LENGTH }
+      = f.input :location, hint: "#{UserProfile::MAX_LOCATION_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_LOCATION_LENGTH }
+      = f.input :description, label: "About me", wrapper_tag: :p, hint: "#{UserProfile::MAX_DESCRIPTION_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_DESCRIPTION_LENGTH }
+      %li.avatar{ class: f.object.errors.any? ? 'field_with_errors' : '' }
         - if !user_profile.avatar_url.to_s or f.object.errors.any?
           = image_tag 'application/avatar@240.png'
         - else
           = image_tag(user_profile.avatar_url :large)
         %br
-        = f.input :avatar, :as => :file, :hint => 'Maxium file size of 2mb. GIF, JPG, PNG.'
-        = f.input :remote_avatar_url, :label => ' — or a link to an image'
-        = f.input :remove_avatar, :as => :boolean, :label => "Remove avatar"
-      = f.input :publicly_viewable, :label => "My profile can be viewed by others"
+        = f.input :avatar, as: :file, hint: 'Maxium file size of 2mb. GIF, JPG, PNG.'
+        = f.input :remote_avatar_url, label: ' — or a link to an image'
+        = f.input :remove_avatar, as: :boolean, label: "Remove avatar"
+      = f.input :publicly_viewable, label: "My profile can be viewed by others"
     %p.submit
-      %button{ :type => 'submit' } Save
+      %button{ type: 'submit' } Save

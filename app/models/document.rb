@@ -6,7 +6,7 @@
 # This class represents a Document that the user must accept to use the service.
 ###
 class Document < ActiveRecord::Base
-  default_scope :order => "version DESC"
+  default_scope order: "version DESC"
 
 ###
 # Constants
@@ -28,10 +28,10 @@ class Document < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :body,  :presence => true
-  validates :type,  :presence => true,
-                    :inclusion => { :in => VALID_TYPES, :message => "%{value} is not currently a supported document type." }
-  validates :version, :uniqueness => {:scope => :type}
+  validates :body,  presence: true
+  validates :type,  presence: true,
+                    inclusion: { in: VALID_TYPES, message: "%{value} is not currently a supported document type." }
+  validates :version, uniqueness: {scope: :type}
 
 ###
 # Associations
@@ -109,11 +109,11 @@ protected
     case self.type
       when 'TermsOfService'
         if self.id == TermsOfService.current.id
-          User.update_all(:accepted_current_terms_of_service => false)
+          User.update_all(accepted_current_terms_of_service: false)
         end
       when 'PrivacyPolicy'
         if self.id == PrivacyPolicy.current.id
-          User.update_all(:accepted_current_privacy_policy => false)
+          User.update_all(accepted_current_privacy_policy: false)
         end
     end
   end

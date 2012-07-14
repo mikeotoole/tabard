@@ -5,7 +5,7 @@ class CreateInvites < ActiveRecord::Migration
       t.integer :user_profile_id
       t.integer :character_proxy_id
       t.string :status
-      t.boolean :is_viewed, :default => :false
+      t.boolean :is_viewed, default: :false
 
       t.timestamps
     end

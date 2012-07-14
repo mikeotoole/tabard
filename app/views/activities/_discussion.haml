@@ -4,10 +4,10 @@
   Created a
 - when 'edited'
   Edited a
-%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, discussion), 'discussion', discussion_url(discussion, :subdomain => activity.community_subdomain), :meta => shorten_words(discussion.name)
+%strong= link_to_if (user_signed_in? and activity.target and current_user.in_community(activity.community).can? :show, discussion), 'discussion', discussion_url(discussion, subdomain: activity.community_subdomain), meta: shorten_words(discussion.name)
 in
 %strong
-  - if defined? current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, discussion_space_url(discussion.discussion_space, :subdomain => activity.community_subdomain)
+  - if defined? current_community and user_signed_in? and current_user.in_community(activity.community).can? :show, discussion_space_url(discussion.discussion_space, subdomain: activity.community_subdomain)
     = link_to shorten_words(discussion.discussion_space_name), discussion.discussion_space
   - else
-    = link_to shorten_words(activity.community_name), root_url(:subdomain => activity.community_subdomain)
+    = link_to shorten_words(activity.community_name), root_url(subdomain: activity.community_subdomain)

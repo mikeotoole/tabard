@@ -1,5 +1,5 @@
 ActiveAdmin.register WowCharacter do
-  menu :parent => "Game and Character", :if => proc{ can?(:read, WowCharacter) }
+  menu parent: "Game and Character", if: proc{ can?(:read, WowCharacter) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -7,8 +7,8 @@ ActiveAdmin.register WowCharacter do
   filter :id
   filter :name
   filter :wow
-  filter :char_class, :as => :select, :collection => WowCharacter.all_classes
-  filter :race, :as => :select, :collection => WowCharacter.all_races
+  filter :char_class, as: :select, collection: WowCharacter.all_classes
+  filter :race, as: :select, collection: WowCharacter.all_races
   filter :level
   filter :about
   filter :avatar
@@ -21,19 +21,19 @@ ActiveAdmin.register WowCharacter do
     end
     column :id
     column :name
-    column :wow, :sortable => false
+    column :wow, sortable: false
     column "User Profile" do |character|
       link_to character.user_profile.display_name, [:admin, character.user_profile]
     end
     column :created_at
     column "Destroy" do |character|
       if can? :destroy, character
-        link_to "Destroy", [:admin, character], :method => :delete, :confirm => 'Are you sure you want to delete this character?'
+        link_to "Destroy", [:admin, character], method: :delete, confirm: 'Are you sure you want to delete this character?'
       end
     end
   end
 
-  show :title => proc{"#{wow_character.user_profile.name} - #{wow_character.name}"} do
+  show title: proc{"#{wow_character.user_profile.name} - #{wow_character.name}"} do
     attributes_table *default_attribute_table_rows, :user_profile
     active_admin_comments
   end

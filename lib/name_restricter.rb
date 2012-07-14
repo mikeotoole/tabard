@@ -30,10 +30,10 @@ class NameRestricter
   ADMINISTRATION = FULL.select {|w| w[:administration]} # :nodoc:
 
 
-  DEFAULT_SETTINGS = {:domain => :forbidden,
-                      :company => :forbidden,
-                      :administration => :forbidden,
-                      :custom_subs => {}} # :nodoc:
+  DEFAULT_SETTINGS = {domain: :forbidden,
+                      company: :forbidden,
+                      administration: :forbidden,
+                      custom_subs: {}} # :nodoc:
 
   # Makes this a singleton
   def self.singleton_class
@@ -58,12 +58,12 @@ class NameRestricter
   # :nodoc:
   DEFAULT_INSTANCE = new
 
-  DEFAULT_OPTS = {:domain => true, :company => false, :administration => false} # :nodoc:
+  DEFAULT_OPTS = {domain: true, company: false, administration: false} # :nodoc:
 
   # Used to add word to the in memory list.
   def add_word(text, opts={})
     opts = DEFAULT_OPTS.merge(opts)
-    word = {:word => text}.merge(opts)
+    word = {word: text}.merge(opts)
     DOMAIN << word   if word[:domain]
     COMPANY << word if word[:company]
     ADMINISTRATION << word if word[:administration]
@@ -105,7 +105,7 @@ class NameRestricter
   #    Profanalyzer.restriced?("www") #==> false
   #
   # You can pass options to the method itself:
-  #    Profanalyzer.restriced?("www", :domain => false) #==> false
+  #    Profanalyzer.restriced?("www", domain: false) #==> false
   #
   # Available options:
   #

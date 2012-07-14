@@ -5,34 +5,34 @@
 # Create a community
 def create_community(admin_user_last_name, name, slogan, game_array)
   admin_user = UserProfile.find_by_last_name(admin_user_last_name)
-  community = admin_user.owned_communities.create!(:name => name, :slogan => slogan, :theme => Theme.default_theme)
+  community = admin_user.owned_communities.create!(name: name, slogan: slogan, theme: Theme.default_theme)
   puts "#{admin_user.name} is creating #{name} Community"
   game_array.each do |game_name|
     case game_name
       when "Horde"
         puts "with the game WoW Horde"
-        sg = community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Horde"}), :name => "A-Team")
-        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+        sg = community.supported_games.create!(game: Wow.find(:first, conditions: {faction: "Horde"}), name: "A-Team")
+        Activity.create!(user_profile: admin_user, community: community, target: sg, action: "created")
       when "Alliance"
         puts "with the game WoW Alliance"
-        sg = community.supported_games.create!(:game => Wow.find(:first, :conditions => {:faction => "Alliance"}), :name => "A-Team")
-        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+        sg = community.supported_games.create!(game: Wow.find(:first, conditions: {faction: "Alliance"}), name: "A-Team")
+        Activity.create!(user_profile: admin_user, community: community, target: sg, action: "created")
       when "Empire"
         puts "with the game SWTOR Empire"
-        sg = community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Empire"}), :name => "A-Team")
-        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+        sg = community.supported_games.create!(game: Swtor.find(:first, conditions: {faction: "Empire"}), name: "A-Team")
+        Activity.create!(user_profile: admin_user, community: community, target: sg, action: "created")
       when "Republic"
         puts "with the game SWTOR Republic"
-        sg = community.supported_games.create!(:game => Swtor.find(:first, :conditions => {:faction => "Republic"}), :name => "A-Team")
-        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+        sg = community.supported_games.create!(game: Swtor.find(:first, conditions: {faction: "Republic"}), name: "A-Team")
+        Activity.create!(user_profile: admin_user, community: community, target: sg, action: "created")
       when "Minecraft"
         puts "with the game Minecraft"
-        sg = community.supported_games.create!(:game => Minecraft.find(:first, :conditions => {:server_type => "Survival"}), :name => "A-Team")
-        Activity.create!(:user_profile => admin_user, :community => community, :target => sg, :action => "created")
+        sg = community.supported_games.create!(game: Minecraft.find(:first, conditions: {server_type: "Survival"}), name: "A-Team")
+        Activity.create!(user_profile: admin_user, community: community, target: sg, action: "created")
     end
   end
   if Theme.count > 1
-    theme = Theme.find(:first, :offset =>rand(Theme.count))
+    theme = Theme.find(:first, offset:rand(Theme.count))
   else
     theme = Theme.first
   end
@@ -55,9 +55,9 @@ def generate_application(community, user_last_name)
   app.submission.custom_form.questions.each do |q|
     if q.is_required
       if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
-        app.submission.answers.create!(:question_id => q.id, :body => 'Because you guys are awesome, and I want to be awesome too!', :question_body => q.body)
+        app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
       else
-        app.submission.answers.create!(:question_id => q.id, :body => q.predefined_answers.first.body, :question_body => q.body)
+        app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
       end
     end
   end
@@ -68,7 +68,7 @@ end
 def find_character_mapping(community, application)
   mapping = Hash.new
   application.character_proxies.each do |proxy|
-    sp = community.supported_games.where(:game_type => proxy.game.class.to_s).first
+    sp = community.supported_games.where(game_type: proxy.game.class.to_s).first
     mapping[proxy.id.to_s] = sp.id if sp
   end
   return mapping

@@ -15,9 +15,9 @@ def create_message(from_user_last_name, subject, to_last_name_array, body=nil)
   end
 
   user_profile.sent_messages.create!(
-    :to => to_user_profile_ids,
-    :subject => subject,
-    :body => body)
+    to: to_user_profile_ids,
+    subject: subject,
+    body: body)
 end
 
 unless @dont_run

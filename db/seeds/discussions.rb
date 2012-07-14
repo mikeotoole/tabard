@@ -8,22 +8,22 @@ def create_discussion_space(creator_last_name, community_name, space_name, facti
 
   case faction
     when 'Horde'
-      game = Wow.find(:first, :conditions => {:faction => "Horde"})
+      game = Wow.find(:first, conditions: {faction: "Horde"})
     when 'Alliance'
-      game = Wow.find(:first, :conditions => {:faction => "Alliance"})
+      game = Wow.find(:first, conditions: {faction: "Alliance"})
     when 'Empire'
-      game = Swtor.find(:first, :conditions => {:faction => "Empire"})
+      game = Swtor.find(:first, conditions: {faction: "Empire"})
     when 'Republic'
-      game = Swtor.find(:first, :conditions => {:faction => "Republic"})
+      game = Swtor.find(:first, conditions: {faction: "Republic"})
     else
       game = nil
   end
   supported_game = game ? community.supported_games.find_by_game_id_and_game_type(game.id, game.class.name) : nil
 
   puts "With game #{supported_game.game_full_name}" if supported_game
-  ds = community.discussion_spaces.create!(:name => space_name, :supported_game => supported_game)
+  ds = community.discussion_spaces.create!(name: space_name, supported_game: supported_game)
   creator = UserProfile.find_by_last_name(creator_last_name)
-  Activity.create!(:user_profile => creator, :community => community, :target => ds, :action => "created")
+  Activity.create!(user_profile: creator, community: community, target: ds, action: "created")
   return ds
 end
 
@@ -32,7 +32,7 @@ def create_discussion(community_name, space_name, name, body, poster_last_name)
   user_profile = UserProfile.find_by_last_name(poster_last_name)
 
   puts "#{user_profile.name} is creating #{community_name} #{space_name} Space Discussion #{name}"
-  discussion = community.discussion_spaces.find_by_name(space_name).discussions.new(:name => name, :body => body)
+  discussion = community.discussion_spaces.find_by_name(space_name).discussions.new(name: name, body: body)
   discussion.user_profile = user_profile
   discussion.save!
   return discussion
@@ -40,7 +40,7 @@ end
 
 def create_comment(commentable, body, poster_last_name)
   user_profile = UserProfile.find_by_last_name(poster_last_name)
-  comment = commentable.comments.new(:body => body)
+  comment = commentable.comments.new(body: body)
   comment.user_profile = user_profile
   comment.save!
   return comment
@@ -51,7 +51,7 @@ def create_announcement(community_name, name, body, poster_last_name, supported_
   user_profile = UserProfile.find_by_last_name(poster_last_name)
 
   puts "#{user_profile.name} is creating #{community_name} Announcement #{name}"
-  announcement = community.announcements.new(:name => name, :body => body, :supported_game => supported_game)
+  announcement = community.announcements.new(name: name, body: body, supported_game: supported_game)
   announcement.user_profile = user_profile
   announcement.save!
   return announcement
@@ -82,7 +82,7 @@ unless @dont_run
   comment1b = create_comment(comment1, "You guys are weird.", 'Badger')
   comment1b2 = create_comment(comment1b, "No, you are.", 'Moose')
   comment2 = create_comment(jahc_gd, "Herp a derp.", 'Billy')
-  comment2.update_attributes!(:has_been_edited => true)
+  comment2.update_attributes!(has_been_edited: true)
 
   puts "Time: 3 weeks ago"
   Timecop.freeze(3.weeks.ago)

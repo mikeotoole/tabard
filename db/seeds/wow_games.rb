@@ -248,6 +248,6 @@ VALID_WOW_SERVERS = [
 
 puts "Creating WoW Games..."
 VALID_WOW_SERVERS.each do |server_name, server_type|
-  Wow.create!(:faction => "Alliance", :server_name => server_name, :server_type => server_type)
-  Wow.create!(:faction => "Horde", :server_name => server_name, :server_type => server_type)
+  Wow.create!(faction: "Alliance", server_name: server_name, server_type: server_type)
+  Wow.create!(faction: "Horde", server_name: server_name, server_type: server_type)
 end

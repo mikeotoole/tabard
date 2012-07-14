@@ -10,9 +10,9 @@ class Subdomains::CommunitiesController < SubdomainsController
   ###
   # Before Filters
   ###
-  load_and_authorize_resource :except => [:activities]
-  prepend_before_filter :block_unauthorized_user!, :except => [:activities]
-  before_filter :load_activities, :only => [:activities]
+  load_and_authorize_resource except: [:activities]
+  prepend_before_filter :block_unauthorized_user!, except: [:activities]
+  before_filter :load_activities, only: [:activities]
 
 ###
 # REST Actions
@@ -38,16 +38,16 @@ class Subdomains::CommunitiesController < SubdomainsController
       logger.error "#{$!}"
       @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @community, :location => edit_community_settings_url
+    respond_with @community, location: edit_community_settings_url
   end
 
   # GET /activities(.:format)
   def activities
     raise CanCan::AccessDenied unless user_signed_in? and current_user.is_member? @community
     unless params[:updated]
-      render :partial => 'subdomains/communities/activities', :locals => { :community => @community, :activities => @activities, :activities_count_initial => @activities_count_initial, :activities_count_increment => @activities_count_increment }
+      render partial: 'subdomains/communities/activities', locals: { community: @community, activities: @activities, activities_count_initial: @activities_count_initial, activities_count_increment: @activities_count_increment }
     else
-      render :partial => "activities/activities", :locals => { :activities => @activities, :community => @community }
+      render partial: "activities/activities", locals: { activities: @activities, community: @community }
     end
   end
 

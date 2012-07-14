@@ -1,47 +1,47 @@
 ActiveAdmin.register AdminUser do
-  menu :parent => "User", :priority => 11, :if => proc{ can?(:read, AdminUser) }
-  controller.authorize_resource :except => [:edit_account, :update_account]
+  menu parent: "User", priority: 11, if: proc{ can?(:read, AdminUser) }
+  controller.authorize_resource except: [:edit_account, :update_account]
 
-  action_item :only => :show do
+  action_item only: :show do
     if can? :reset_password, admin_user
-      link_to "Reset Password", reset_password_admin_admin_user_path(admin_user), :method => :put, :confirm => 'Are you sure you want to reset user password?'
+      link_to "Reset Password", reset_password_admin_admin_user_path(admin_user), method: :put, confirm: 'Are you sure you want to reset user password?'
     end
   end
 
-  action_item :only => :index do
+  action_item only: :index do
     if can? :reset_all_passwords, AdminUser.new
-      link_to "Reset All Passwords", reset_all_passwords_admin_admin_users_path, :method => :post, :confirm => 'Are you sure you want to reset ALL admin user passwords?'
+      link_to "Reset All Passwords", reset_all_passwords_admin_admin_users_path, method: :post, confirm: 'Are you sure you want to reset ALL admin user passwords?'
     end
   end
 
-  member_action :reset_password, :method => :put do
+  member_action :reset_password, method: :put do
     admin_user = AdminUser.find(params[:id])
     admin_user.reset_password
-    redirect_to :action => :show
+    redirect_to action: :show
   end
 
-  collection_action :edit_account, :method => :get do
+  collection_action :edit_account, method: :get do
     authorize!(:edit_account, current_admin_user)
     @admin_user = current_admin_user
   end
 
-  collection_action :update_account, :method => :put do
+  collection_action :update_account, method: :put do
     authorize!(:update_account, current_admin_user)
     params[:admin_user].delete(:role)
     if current_admin_user.update_with_password(params[:admin_user])
-      sign_in(current_admin_user, :bypass => true)
+      sign_in(current_admin_user, bypass: true)
       flash[:notice] = 'Account updated.'
       redirect_to admin_dashboard_url
     else
       @admin_user = current_admin_user
-      render :action => :edit_account
+      render action: :edit_account
     end
   end
 
-  collection_action :reset_all_passwords, :method => :post do
+  collection_action :reset_all_passwords, method: :post do
     AdminUser.delay.reset_all_passwords
     flash[:message] = "Password resets in progress."
-    redirect_to :action => :index
+    redirect_to action: :index
   end
 
   filter :id
@@ -64,12 +64,12 @@ ActiveAdmin.register AdminUser do
     column :created_at
     column "Destroy" do |admin_user|
       if can? :destroy, admin_user
-        link_to "Destroy", [:admin, admin_user], :method => :delete, :confirm => 'Are you sure you want to delete this user?'
+        link_to "Destroy", [:admin, admin_user], method: :delete, confirm: 'Are you sure you want to delete this user?'
       end
     end
   end
 
-  show :title => :email do
+  show title: :email do
     rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
     attributes_table *rows
     active_admin_comments
@@ -78,7 +78,7 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs "Admin Details" do
       f.input :email
-      f.input :role, :as => :select, :collection => AdminUser::ROLES
+      f.input :role, as: :select, collection: AdminUser::ROLES
     end
     f.buttons
   end

@@ -1,26 +1,26 @@
-= simple_form_for artwork_upload, :html => {:novalidate => true, :multipart => true} do |f|
-  = f.input :document_id, :as => :hidden
-  = f.input :artwork_image_cache, :as => :hidden
+= simple_form_for artwork_upload, html: {novalidate: true, multipart: true} do |f|
+  = f.input :document_id, as: :hidden
+  = f.input :artwork_image_cache, as: :hidden
   %h2 Artwork Owner Identification Form
   .col2
     %article
       %fieldset
         %ol
-          = f.input :owner_name, :label => 'Name of owner (and legal entity if applicable)'
+          = f.input :owner_name, label: 'Name of owner (and legal entity if applicable)'
           = f.input :email
-          = f.input :country, :priority => ['United States']
+          = f.input :country, priority: ['United States']
           = f.input :street
           = f.input :city
-          = f.input :zipcode, :label => 'Zip/Postal Code'
+          = f.input :zipcode, label: 'Zip/Postal Code'
           = f.input :state
     %article
       %fieldset
         %ol
-          = f.input :artwork_description, :label => "Description of artwork"
-          = f.input :artwork_image, :as => :file
-          = f.input :remote_artwork_image_url, :label => ' — or a link to an image'
-          = f.input :attribution_name, :hint => 'The name that you want us to attribute the artwork to.'
-          = f.input :attribution_url, :hint => 'Where you would like us to link to.'
+          = f.input :artwork_description, label: "Description of artwork"
+          = f.input :artwork_image, as: :file
+          = f.input :remote_artwork_image_url, label: ' — or a link to an image'
+          = f.input :attribution_name, hint: 'The name that you want us to attribute the artwork to.'
+          = f.input :attribution_url, hint: 'Where you would like us to link to.'
       %ul
         %li
           Uploading artwork does not necessarily mean it will get used.
@@ -33,7 +33,7 @@
       :markdown
         #{artwork_upload.document_body}
     %p.accept
-      = f.input :accepted_current_artwork_agreement, :as => :boolean, :label => 'I have read and accept the "Artwork Licensing Agreement"', :wrapper => false
+      = f.input :accepted_current_artwork_agreement, as: :boolean, label: 'I have read and accept the "Artwork Licensing Agreement"', wrapper: false
   %p.accept
-    = f.input :certify_owner_of_artwork, :as => :boolean, :wrapper => false, :label => 'I certify that I own the referenced artwork or otherwise have the legal authority to grant the license contemplated by the attached Licensing Agreement'
-  %button{ :type => 'submit' } Accept &amp; Upload
+    = f.input :certify_owner_of_artwork, as: :boolean, wrapper: false, label: 'I certify that I own the referenced artwork or otherwise have the legal authority to grant the license contemplated by the attached Licensing Agreement'
+  %button{ type: 'submit' } Accept &amp; Upload

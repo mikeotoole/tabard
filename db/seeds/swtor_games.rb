@@ -220,6 +220,6 @@ VALID_SWTOR_SERVERS = [
 
 puts "Creating SWTOR Games..."
 VALID_SWTOR_SERVERS.each do |server_name, server_type|
-  Swtor.create!(:faction => "Republic", :server_name => server_name, :server_type => server_type)
-  Swtor.create!(:faction => "Empire", :server_name => server_name, :server_type => server_type)
+  Swtor.create!(faction: "Republic", server_name: server_name, server_type: server_type)
+  Swtor.create!(faction: "Empire", server_name: server_name, server_type: server_type)
 end

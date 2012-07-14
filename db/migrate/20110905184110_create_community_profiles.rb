@@ -12,7 +12,7 @@ class CreateCommunityProfiles < ActiveRecord::Migration
     add_index :community_profiles, :community_id
     add_index :community_profiles, :user_profile_id
 
-    create_table :community_profiles_roles, :id => false do |t|
+    create_table :community_profiles_roles, id: false do |t|
       t.references :community_profile
       t.references :role
 

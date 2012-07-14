@@ -1,4 +1,4 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("CommunityApplication") do |pf|
-  = pf.input :subject_class, :as => :hidden
-  = pf.input :can_read, :as => :boolean, :label => 'View and comment on applications', :wrapper => false
-  = pf.input :can_accept, :as => :boolean, :label => 'Accept or reject applicants', :wrapper => false
+  = pf.input :subject_class, as: :hidden
+  = pf.input :can_read, as: :boolean, label: 'View and comment on applications', wrapper: false
+  = pf.input :can_accept, as: :boolean, label: 'Accept or reject applicants', wrapper: false

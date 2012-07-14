@@ -6,7 +6,7 @@ class CreatePages < ActiveRecord::Migration
       t.integer :character_proxy_id
       t.integer :user_profile_id
       t.integer :page_space_id
-      t.boolean :show_in_navigation, :default => false
+      t.boolean :show_in_navigation, default: false
 
       t.timestamps
     end

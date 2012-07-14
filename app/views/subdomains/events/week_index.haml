@@ -3,13 +3,13 @@
 #calendar.week
   %header
     %h1= @date.at_beginning_of_week.strftime("%b %e#{@date.at_beginning_of_week.year == @date.at_end_of_week.year ? '' : ', %Y'}") + ' - ' + @date.at_end_of_week.strftime("#{(@date.at_beginning_of_week.year == @date.at_end_of_week.year and @date.at_beginning_of_week.month == @date.at_end_of_week.month) ? '' : '%b'} %e, %Y")
-    = link_to '‹ Previous Week', week_events_url(:year => @date.prev_week.year, :week => @date.prev_week.cweek), :class => 'prev'
-    = link_to 'Next Week ›', week_events_url(:year => @date.cweek == 52 ? @date.year+1 : @date.year, :week => @date.next_week.cweek), :class => 'next'
+    = link_to '‹ Previous Week', week_events_url(year: @date.prev_week.year, week: @date.prev_week.cweek), class: 'prev'
+    = link_to 'Next Week ›', week_events_url(year: @date.cweek == 52 ? @date.year+1 : @date.year, week: @date.next_week.cweek), class: 'next'
   %dl.times
     %dt &nbsp;
     - (0..23).each do |hour|
       %dd
-        %time= l Time.at(hour*3600).utc, :format => :time_12_short
+        %time= l Time.at(hour*3600).utc, format: :time_12_short
   - @events_by_cwday_by_hour.each do |cwday,hours|
     - eventcount = 0
     %dl

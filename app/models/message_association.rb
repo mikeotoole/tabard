@@ -15,23 +15,23 @@ class MessageAssociation < ActiveRecord::Base
 # Associations
 ###
   belongs_to :message
-  belongs_to :recipient, :class_name => "UserProfile"
+  belongs_to :recipient, class_name: "UserProfile"
   belongs_to :folder
 
 ###
 # Delegates
 ###
-  delegate :author, :subject, :body, :recipients, :author_avatar_url, :is_system_sent, :to => :message
-  delegate :name, :id, :to => :author, :prefix => true, :allow_nil => true
-  delegate :name, :to => :folder, :prefix => true
+  delegate :author, :subject, :body, :recipients, :author_avatar_url, :is_system_sent, to: :message
+  delegate :name, :id, to: :author, prefix: true, allow_nil: true
+  delegate :name, to: :folder, prefix: true
 
 ###
 # Validators
 ###
-  validates :message, :presence => true
-  validates :recipient, :presence => true
+  validates :message, presence: true
+  validates :recipient, presence: true
 
-  default_scope :order => "created_at DESC"
+  default_scope order: "created_at DESC"
 
 ###
 # Callbacks

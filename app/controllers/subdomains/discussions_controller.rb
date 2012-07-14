@@ -12,10 +12,10 @@ class Subdomains::DiscussionsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  load_and_authorize_resource :except => [:new, :create, :index]
-  before_filter :create_discussion, :only => [:new, :create]
+  load_and_authorize_resource except: [:new, :create, :index]
+  before_filter :create_discussion, only: [:new, :create]
   before_filter :find_discussion_space_from_params
-  authorize_resource :only => [:new, :create]
+  authorize_resource only: [:new, :create]
   skip_before_filter :limit_subdomain_access
 
 ###
@@ -27,7 +27,7 @@ class Subdomains::DiscussionsController < SubdomainsController
     @comments = @discussion.comments.page params[:page]
     respond_to do |format|
       format.js {
-        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(:partial => 'layouts/flash_message_announcement', :locals => { :discussion => current_user.recent_unread_announcements.first }) : ''
+        announcement = current_user.recent_unread_announcements.size > 0 ? render_to_string(partial: 'layouts/flash_message_announcement', locals: { discussion: current_user.recent_unread_announcements.first }) : ''
         render text: "#{params['callback']}({\"result\":#{(current_user.has_seen?(@discussion) ? 'true' : 'false')},\"announcement\":#{announcement.to_json}})", layout: false }
       format.html
     end
@@ -65,7 +65,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   # DELETE /discussions/:id(.:format)
   def destroy
     add_new_flash_message('Discussion was successfully removed.') if @discussion.destroy
-    respond_with(@discussion, :location => discussion_space_url(@discussion.discussion_space))
+    respond_with(@discussion, location: discussion_space_url(@discussion.discussion_space))
   end
 
 ###

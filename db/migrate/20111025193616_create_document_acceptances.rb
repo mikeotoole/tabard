@@ -6,7 +6,7 @@ class CreateDocumentAcceptances < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_column(:users, :accepted_current_terms_of_service, :boolean, {:default => false})
-    add_column(:users, :accepted_current_privacy_policy, :boolean, {:default => false})
+    add_column(:users, :accepted_current_terms_of_service, :boolean, {default: false})
+    add_column(:users, :accepted_current_privacy_policy, :boolean, {default: false})
   end
 end

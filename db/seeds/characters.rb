@@ -8,15 +8,15 @@ def create_empire_character(user_last_name, char_name, char_class, advanced_clas
   server ||= "Atris"
   puts "Creating #{user_profile.name} SWTOR Empire Character #{char_name}"
   user_profile.character_proxies.create!(
-      :character => SwtorCharacter.create!(
-        :name => char_name,
-        :swtor => Swtor.find(:first, :conditions => {:faction => "Empire", :server_name => server}),
-        :char_class => char_class,
-        :advanced_class => advanced_class,
-        :species => species,
-        :level => level,
-        :gender => gender,
-        :about => ""))
+      character: SwtorCharacter.create!(
+        name: char_name,
+        swtor: Swtor.find(:first, conditions: {faction: "Empire", server_name: server}),
+        char_class: char_class,
+        advanced_class: advanced_class,
+        species: species,
+        level: level,
+        gender: gender,
+        about: ""))
 end
 
 # Create SWTOR Republic Character
@@ -24,15 +24,15 @@ def create_republic_character(user_last_name, char_name, char_class, advanced_cl
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} SWTOR Republic Character #{char_name}"
   user_profile.character_proxies.create!(
-      :character => SwtorCharacter.create!(
-        :name => char_name,
-        :swtor => Swtor.find(:first, :conditions => {:faction => "Republic"}),
-        :char_class => char_class,
-        :advanced_class => advanced_class,
-        :species => species,
-        :level => level,
-        :gender => gender,
-        :about => ""))
+      character: SwtorCharacter.create!(
+        name: char_name,
+        swtor: Swtor.find(:first, conditions: {faction: "Republic"}),
+        char_class: char_class,
+        advanced_class: advanced_class,
+        species: species,
+        level: level,
+        gender: gender,
+        about: ""))
 end
 
 # Create WoW Alliance Character
@@ -41,14 +41,14 @@ def create_alliance_character(user_last_name, char_name, char_class, race, level
   server ||= ""
   puts "Creating #{user_profile.name} WoW Alliance Character #{char_name}"
   user_profile.character_proxies.create!(
-      :character => WowCharacter.create!(
-        :name => char_name,
-        :wow => Wow.find(:first, :conditions => {:faction => "Alliance"}),
-        :char_class => char_class,
-        :race => race,
-        :level => level,
-        :gender => gender,
-        :about => ""))
+      character: WowCharacter.create!(
+        name: char_name,
+        wow: Wow.find(:first, conditions: {faction: "Alliance"}),
+        char_class: char_class,
+        race: race,
+        level: level,
+        gender: gender,
+        about: ""))
 end
 
 # Create WoW Horde Character
@@ -56,14 +56,14 @@ def create_horde_character(user_last_name, char_name, char_class, race, level, g
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} WoW Horde Character #{char_name}"
   user_profile.character_proxies.create!(
-      :character => WowCharacter.create!(
-        :name => char_name,
-        :wow => Wow.find(:first, :conditions => {:faction => "Horde"}),
-        :char_class => char_class,
-        :race => race,
-        :level => level,
-        :gender => gender,
-        :about => ""))
+      character: WowCharacter.create!(
+        name: char_name,
+        wow: Wow.find(:first, conditions: {faction: "Horde"}),
+        char_class: char_class,
+        race: race,
+        level: level,
+        gender: gender,
+        about: ""))
 end
 
 # Create Minecraft Character
@@ -71,9 +71,9 @@ def create_minecraft_character(user_last_name, char_name)
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} Minecraft Character #{char_name}"
   user_profile.character_proxies.create!(
-      :character => MinecraftCharacter.create!(
-        :name => char_name,
-        :about => ""))
+      character: MinecraftCharacter.create!(
+        name: char_name,
+        about: ""))
 end
 
 unless @dont_run

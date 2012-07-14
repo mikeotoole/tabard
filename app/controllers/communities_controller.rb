@@ -10,11 +10,11 @@ class CommunitiesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, :except => [:show, :index]
-  skip_before_filter :ensure_not_ssl_mode, :only => [:destroy]
-  skip_before_filter :limit_subdomain_access, :only => [:destroy]
-  before_filter :ensure_secure_subdomain, :only => [:destroy]
-  load_and_authorize_resource :except => [:create, :index]
+  before_filter :block_unauthorized_user!, except: [:show, :index]
+  skip_before_filter :ensure_not_ssl_mode, only: [:destroy]
+  skip_before_filter :limit_subdomain_access, only: [:destroy]
+  before_filter :ensure_secure_subdomain, only: [:destroy]
+  load_and_authorize_resource except: [:create, :index]
 
 ###
 # REST Actions
@@ -26,7 +26,7 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/:id(.:format)
   def show
-    redirect_to root_url(:subdomain => @community.subdomain)
+    redirect_to root_url(subdomain: @community.subdomain)
   end
 
   # GET /communities/new(.:format)
@@ -48,7 +48,7 @@ class CommunitiesController < ApplicationController
       logger.error "#{$!}"
       @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with(@community, location: edit_community_settings_url(:subdomain => @community.subdomain))
+    respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain))
   end
 
   # DELETE /communities/:id(.:format)
@@ -57,10 +57,10 @@ class CommunitiesController < ApplicationController
       Community.delay.destory_community(@community.id)
       @community.update_attribute(:pending_removal, true)
       add_new_flash_message 'Community is being removed.', 'notice'
-      redirect_to user_profile_url(current_user.user_profile, :subdomain => false)
+      redirect_to user_profile_url(current_user.user_profile, subdomain: false)
     else
       add_new_flash_message 'Password was not valid.', 'alert'
-      redirect_to community_remove_confirmation_url(:subdomain => @community.subdomain)
+      redirect_to community_remove_confirmation_url(subdomain: @community.subdomain)
     end
   end
 ###

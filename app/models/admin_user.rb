@@ -21,23 +21,23 @@ class AdminUser < ActiveRecord::Base
 # Validators
 ###
   validates :role,
-            :presence => true,
-            :inclusion => { :in => ROLES, :message => "%{value} is not currently a supported role" }
+            presence: true,
+            inclusion: { in: ROLES, message: "%{value} is not currently a supported role" }
 
   validates :email,
-      :uniqueness => true,
-      :length => { :within => 5..128 },
-      :format => { :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+      uniqueness: true,
+      length: { within: 5..128 },
+      format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
 
   validates :password,
-      :confirmation => true,
-      :length => { :within => 8..30 },
-      :presence => true,
-      :format => {
-        :with => %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
-        :message => "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
+      confirmation: true,
+      length: { within: 8..30 },
+      presence: true,
+      format: {
+        with: %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
+        message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
-      :if => :password_required?
+      if: :password_required?
 
 ###
 # Public Methods
@@ -68,7 +68,7 @@ class AdminUser < ActiveRecord::Base
     self.password_confirmation = random_password if random_password
     self.reset_password_token = AdminUser.reset_password_token
     self.reset_password_sent_at = Time.now
-    self.save(:validate => false)
+    self.save(validate: false)
     UserMailer.password_reset(self, random_password).deliver
   end
 

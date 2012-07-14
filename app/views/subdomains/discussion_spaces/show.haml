@@ -7,21 +7,21 @@
       %span= shorten_words @discussion_space.name, 21
 
 #actions.actions
-  - if can? :create, Discussion.new({ discussion_space: @discussion_space }, :without_protection => true)
-    = link_to 'Add', new_discussion_space_discussion_url(@discussion_space), :class => 'new', :meta => 'Add a discussion to this space'
+  - if can? :create, Discussion.new({ discussion_space: @discussion_space }, without_protection: true)
+    = link_to 'Add', new_discussion_space_discussion_url(@discussion_space), class: 'new', meta: 'Add a discussion to this space'
   - if (can? :update, @discussion_space)
-    = link_to 'Edit', edit_discussion_space_url(@discussion_space), :meta => 'Edit discussion space', :class => 'edit'
+    = link_to 'Edit', edit_discussion_space_url(@discussion_space), meta: 'Edit discussion space', class: 'edit'
   - if (can? :destroy, @discussion_space)
-    = link_to 'Destroy', @discussion_space, :confirm => 'Are you sure?', :method => :delete, :meta => 'Remove discussion space', :class => 'delete'
+    = link_to 'Destroy', @discussion_space, confirm: 'Are you sure?', method: :delete, meta: 'Remove discussion space', class: 'delete'
 
 %h1= shorten_words @discussion_space.name, 21
 
 - if @discussions.any?
   = paginate @discussions
-  = render "subdomains/discussions/table", :discussion_space => @discussion_space, :discussions => @discussions
+  = render "subdomains/discussions/table", discussion_space: @discussion_space, discussions: @discussions
   = paginate @discussions
 
 -else
   %p This discussion space has no viewable discussions.
-  - if can? :create, Discussion.new({ discussion_space: @discussion_space }, :without_protection => true)
-    %p= link_to 'Create new discussion', new_discussion_space_discussion_url(@discussion_space), :class => 'button'
+  - if can? :create, Discussion.new({ discussion_space: @discussion_space }, without_protection: true)
+    %p= link_to 'Create new discussion', new_discussion_space_discussion_url(@discussion_space), class: 'button'

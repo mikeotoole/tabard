@@ -14,7 +14,7 @@ class SiteConfiguration < ActiveRecord::Base
 ###
 # Validators
 ###
-  validate :there_can_be_only_one, :on => :create
+  validate :there_can_be_only_one, on: :create
 
 ###
 # Callbacks

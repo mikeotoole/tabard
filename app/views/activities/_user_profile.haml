@@ -21,4 +21,4 @@
 - when 'accepted'
   Joined
   - unless defined? current_community and activity.community == current_community
-    %strong= link_to shorten_words(activity.community_name), root_url(:subdomain => activity.community_subdomain)
+    %strong= link_to shorten_words(activity.community_name), root_url(subdomain: activity.community_subdomain)

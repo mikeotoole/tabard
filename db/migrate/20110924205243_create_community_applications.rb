@@ -13,13 +13,13 @@ class CreateCommunityApplications < ActiveRecord::Migration
     add_index :community_applications, :user_profile_id
     add_index :community_applications, :submission_id
 
-    create_table :character_proxies_community_applications, :id => false do |t|
+    create_table :character_proxies_community_applications, id: false do |t|
       t.integer :character_proxy_id
       t.integer :community_application_id
     end
 
-    add_index :character_proxies_community_applications, :character_proxy_id, :name => "habtm_cproxy_app_proxy_id"
-    add_index :character_proxies_community_applications, :community_application_id, :name => "habtm_cproxy_app_app_id"
+    add_index :character_proxies_community_applications, :character_proxy_id, name: "habtm_cproxy_app_proxy_id"
+    add_index :character_proxies_community_applications, :community_application_id, name: "habtm_cproxy_app_app_id"
 
     add_column :communities, :community_application_form_id, :integer
     add_index :communities, :community_application_form_id

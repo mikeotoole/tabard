@@ -5,7 +5,7 @@ class CreateMessages < ActiveRecord::Migration
       t.text :body
       t.integer :author_id
       t.integer :number_recipients
-      t.boolean :is_system_sent, :default => false
+      t.boolean :is_system_sent, default: false
 
       t.timestamps
     end

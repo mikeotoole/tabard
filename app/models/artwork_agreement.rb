@@ -9,7 +9,7 @@ class ArtworkAgreement < Document
 ###
 # Associations
 ###
-  has_many :artwork_uploads, :foreign_key => :document_id
+  has_many :artwork_uploads, foreign_key: :document_id
 
 ###
 # Public Methods
@@ -23,7 +23,7 @@ class ArtworkAgreement < Document
   # Gets the current Artwork Agreement
   ###
   def self.current
-    ArtworkAgreement.find(:first, :conditions => { :is_published => true })
+    ArtworkAgreement.find(:first, conditions: { is_published: true })
   end
 
   ###

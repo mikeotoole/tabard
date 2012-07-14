@@ -1,5 +1,5 @@
 #wmd-fields
   %fieldset
     %ol
-      = f.input :name, :label => false, :input_html => { :maxlength => Page::MAX_NAME_LENGTH }
-      = f.input :markup, :as => :text, :label => false, :input_html => { :id => "wmd-input", :class => "wmd-input" }, :wrapper_html => { :class => "wmd-panel" }
+      = f.input :name, label: false, input_html: { maxlength: Page::MAX_NAME_LENGTH }
+      = f.input :markup, as: :text, label: false, input_html: { id: "wmd-input", class: "wmd-input" }, wrapper_html: { class: "wmd-panel" }

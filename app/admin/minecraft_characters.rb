@@ -1,5 +1,5 @@
 ActiveAdmin.register MinecraftCharacter do
-  menu :parent => "Game and Character", :if => proc{ can?(:read, MinecraftCharacter) }
+  menu parent: "Game and Character", if: proc{ can?(:read, MinecraftCharacter) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -23,12 +23,12 @@ ActiveAdmin.register MinecraftCharacter do
     column :created_at
     column "Destroy" do |character|
       if can? :destroy, character
-        link_to "Destroy", [:admin, character], :method => :delete, :confirm => 'Are you sure you want to delete this character?'
+        link_to "Destroy", [:admin, character], method: :delete, confirm: 'Are you sure you want to delete this character?'
       end
     end
   end
 
-  show :title => proc{"#{minecraft_character.user_profile.display_name} - #{minecraft_character.name}"} do
+  show title: proc{"#{minecraft_character.user_profile.display_name} - #{minecraft_character.name}"} do
     attributes_table *default_attribute_table_rows, :user_profile
     active_admin_comments
   end

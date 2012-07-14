@@ -6,7 +6,7 @@
 # This is an ActiveAdmin resource definition for managing Artwork Uploads.
 ###
 ActiveAdmin.register ArtworkUpload do
-  menu :parent => "Crumblin", :if => proc{ can?(:read, ArtworkUpload) }
+  menu parent: "Crumblin", if: proc{ can?(:read, ArtworkUpload) }
   controller.authorize_resource
 
   actions :index, :show, :destroy
@@ -24,11 +24,11 @@ ActiveAdmin.register ArtworkUpload do
     column :email
     column :attribution_name
     column :attribution_url
-    column :document, :sortable => :document_id
+    column :document, sortable: :document_id
     column :created_at
   end
 
-  show :title => :email do |artwork_upload|
+  show title: :email do |artwork_upload|
     rows = default_attribute_table_rows
 
     attributes_table *rows do

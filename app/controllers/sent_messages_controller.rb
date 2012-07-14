@@ -28,7 +28,7 @@ class SentMessagesController < MailboxController
     respond_to do |format|
       format.html { render :show }
       format.js {
-        render :partial => 'messages/message', :locals => { :message => @message }
+        render partial: 'messages/message', locals: { message: @message }
       }
     end
   end
@@ -36,7 +36,7 @@ class SentMessagesController < MailboxController
   # GET /mail/compose(.:format)
   def new
     to = [((params[:id] && current_user.address_book.collect{ |p| p.id.to_s }.flatten.include?(params[:id])) ? params[:id] : -1)]
-    @message = current_user.sent_messages.build(:to => to)
+    @message = current_user.sent_messages.build(to: to)
     authorize!(:create, @message)
     @mailbox_view_state = 'compose'
     respond_with(@message)
@@ -52,8 +52,8 @@ class SentMessagesController < MailboxController
     else
       if @message.to.blank?
         errors = Array.new
-        @message.errors.each{|attr,msg| errors << {:attr => attr, :msg => msg}}
-        @message = current_user.sent_messages.build(:to => [-1])
+        @message.errors.each{|attr,msg| errors << {attr: attr, msg: msg}}
+        @message = current_user.sent_messages.build(to: [-1])
         errors.each{ |error| @message.errors.add(error[:attr],error[:msg]) }
       end
       render 'new'

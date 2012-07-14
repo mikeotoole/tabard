@@ -2,14 +2,14 @@
 
 #breadcrumb
   %ol
-    %li= link_to "Announcements", announcements_url(:subdomain => current_community.subdomain)
+    %li= link_to "Announcements", announcements_url(subdomain: current_community.subdomain)
     %li
       %span= "#{@supported_game.smart_name} Announcements"
 
 #actions.actions
   - if can? :create, Announcement
-    = link_to 'New Announcement', new_announcement_url, :class => 'new', :meta => 'Create a new announcement'
+    = link_to 'New Announcement', new_announcement_url, class: 'new', meta: 'Create a new announcement'
 
 %h1= "#{@supported_game.smart_name} Announcements"
 
-= render 'table', :announcements => @announcements
+= render 'table', announcements: @announcements

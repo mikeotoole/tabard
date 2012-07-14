@@ -4,12 +4,12 @@
   = render 'communities/submenu'
   %h1= 'World of Warcraft Communities'
   - if @communities.any?
-    = render 'shared/searchbox', :resource => @communities, :action => wows_url
+    = render 'shared/searchbox', resource: @communities, action: wows_url
     = paginate @communities
-    = render "communities/table", :communities => @communities
+    = render "communities/table", communities: @communities
     = paginate @communities
   -else
     %p
       This game has no active communities.
       - if (can? :create, Community)
-        = link_to 'Create a community', new_community_url(:subdomain => false)
+        = link_to 'Create a community', new_community_url(subdomain: false)

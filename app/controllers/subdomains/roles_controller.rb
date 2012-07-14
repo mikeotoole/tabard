@@ -13,7 +13,7 @@ class Subdomains::RolesController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :load_roles
-  before_filter :create_role, :only => [:new, :create]
+  before_filter :create_role, only: [:new, :create]
   before_filter
   authorize_resource
   skip_before_filter :limit_subdomain_access
@@ -27,12 +27,12 @@ class Subdomains::RolesController < SubdomainsController
   # GET /roles/new
   def new
     @role.setup_permission_defaults
-    render :partial => 'form', :locals => { :role => @role }
+    render partial: 'form', locals: { role: @role }
   end
 
   # GET /roles/edit
   def edit
-    render :partial => 'form', :locals => { :role => @role }
+    render partial: 'form', locals: { role: @role }
   end
 
   # POST /roles
