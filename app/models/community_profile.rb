@@ -20,22 +20,22 @@ class CommunityProfile < ActiveRecord::Base
 # Associations
 ###
   # TODO Joe/Bryan We need to evaluate the eager loading of associations and inverse_of to optimize our memory footprints and speed. -JW
-  belongs_to :community, :inverse_of => :community_profiles, touch: true
+  belongs_to :community, inverse_of: :community_profiles, touch: true
   belongs_to :user_profile, touch: true
   belongs_to :community_application
-  has_and_belongs_to_many :roles, :before_add => :ensure_that_role_community_matches, :before_remove => :ensure_that_member_role_stays
+  has_and_belongs_to_many :roles, before_add: :ensure_that_role_community_matches, before_remove: :ensure_that_member_role_stays
   has_many :acknowledgements
-  has_many :unread_acknowledgements, :conditions => {:has_been_viewed => false}, :class_name => "Acknowledgement"
-  has_many :read_acknowledgements, :conditions => {:has_been_viewed => true}, :class_name => "Acknowledgement"
-  has_many :announcements, :through => :acknowledgements
-  has_many :unread_announcements, :through => :unread_acknowledgements, :source => "announcement"
-  has_many :read_announcements, :through => :read_acknowledgements, :source => "announcement"
-  has_many :roster_assignments, :dependent => :destroy
-  has_many :character_proxies, :through => :roster_assignments, :before_add => :ensure_that_character_proxy_user_matches
-  has_many :approved_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => false}
-  has_many :approved_character_proxies, :through => :approved_roster_assignments, :source => "character_proxy"
-  has_many :pending_roster_assignments, :class_name => "RosterAssignment", :conditions => {:is_pending => true}
-  has_many :pending_character_proxies, :through => :pending_roster_assignments, :source => "character_proxy"
+  has_many :unread_acknowledgements, conditions: {has_been_viewed: false}, class_name: "Acknowledgement"
+  has_many :read_acknowledgements, conditions: {has_been_viewed: true}, class_name: "Acknowledgement"
+  has_many :announcements, through: :acknowledgements
+  has_many :unread_announcements, through: :unread_acknowledgements, source: "announcement"
+  has_many :read_announcements, through: :read_acknowledgements, source: "announcement"
+  has_many :roster_assignments, dependent: :destroy
+  has_many :character_proxies, through: :roster_assignments, before_add: :ensure_that_character_proxy_user_matches
+  has_many :approved_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: false}
+  has_many :approved_character_proxies, through: :approved_roster_assignments, source: "character_proxy"
+  has_many :pending_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: true}
+  has_many :pending_character_proxies, through: :pending_roster_assignments, source: "character_proxy"
 
 ###
 # Callbacks
@@ -45,21 +45,21 @@ class CommunityProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :community, :presence => true
-  validates :user_profile, :presence => true
-  validates :user_profile_id, :uniqueness => {:scope => [:community_id, :deleted_at]},
-                                :unless => Proc.new { |community_profile| community_profile.user_profile.blank? }
+  validates :community, presence: true
+  validates :user_profile, presence: true
+  validates :user_profile_id, uniqueness: {scope: [:community_id, :deleted_at]},
+                                unless: Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
   validate :has_at_least_the_default_member_role
 
 ###
 # Delegates
 ###
-  delegate :id, :to => :user_profile, :prefix => true
-  delegate :name, :to => :user_profile, :prefix => true
-  delegate :display_name, :to => :user_profile, :prefix => true
-  delegate :name, :to => :community, :prefix => true
-  delegate :is_email_on_announcement, :to => :user_profile
+  delegate :id, to: :user_profile, prefix: true
+  delegate :name, to: :user_profile, prefix: true
+  delegate :display_name, to: :user_profile, prefix: true
+  delegate :name, to: :community, prefix: true
+  delegate :is_email_on_announcement, to: :user_profile
 
   ###
   # This method determines if this community profile has character that matches supported game.
