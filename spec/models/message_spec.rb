@@ -8,8 +8,8 @@
 #  author_id         :integer
 #  number_recipients :integer
 #  is_system_sent    :boolean         default(FALSE)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  created_at        :datetime        not null
+#  updated_at        :datetime        not null
 #
 
 require 'spec_helper'

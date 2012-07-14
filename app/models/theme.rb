@@ -38,13 +38,14 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: themes
 #
 #  id                    :integer         not null, primary key
-#  created_at            :datetime
-#  updated_at            :datetime
+#  created_at            :datetime        not null
+#  updated_at            :datetime        not null
 #  name                  :string(255)
 #  css                   :string(255)
 #  background_author     :string(255)

@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710173951) do
+ActiveRecord::Schema.define(:version => 20120714180027) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
     t.integer  "announcement_id"
     t.boolean  "has_been_viewed",      :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "acknowledgements", ["announcement_id"], :name => "index_acknowledgements_on_announcement_id"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "author_id"
     t.string   "author_type"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "namespace"
   end
 
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "target_id"
     t.string   "action"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "activities", ["community_id"], :name => "index_activities_on_community_id"
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "role"
     t.integer  "failed_attempts",                       :default => 0
     t.string   "unlock_token"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.boolean  "is_locked",          :default => false
     t.datetime "deleted_at"
     t.boolean  "has_been_edited",    :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "announcements", ["character_proxy_id"], :name => "index_announcements_on_character_proxy_id"
@@ -99,8 +99,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "answers", :force => true do |t|
     t.text     "body"
     t.integer  "submission_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.datetime "deleted_at"
     t.string   "question_body"
   end
@@ -131,8 +131,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "user_profile_id"
     t.integer  "character_id"
     t.string   "character_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.boolean  "is_removed",      :default => false
   end
 
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.boolean  "is_removed",                :default => false
     t.boolean  "has_been_edited",           :default => false
     t.boolean  "is_locked",                 :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.integer  "original_commentable_id"
     t.string   "original_commentable_type"
     t.datetime "deleted_at"
@@ -176,8 +176,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.boolean  "is_accepting_members",            :default => true
     t.boolean  "email_notice_on_application",     :default => true
     t.string   "subdomain"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
     t.boolean  "is_protected_roster",             :default => false
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "home_page_id"
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
-    t.text     "pitch"
+    t.string   "pitch"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -208,8 +208,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "user_profile_id"
     t.integer  "submission_id"
     t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "status_changer_id"
     t.datetime "deleted_at"
   end
@@ -222,8 +222,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"
     t.integer  "user_profile_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.datetime "deleted_at"
     t.integer  "community_application_id"
   end
@@ -233,10 +233,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   add_index "community_profiles", ["user_profile_id"], :name => "index_community_profiles_on_user_profile_id"
 
   create_table "community_profiles_roles", :id => false, :force => true do |t|
-    t.integer  "community_profile_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "community_profile_id"
+    t.integer "role_id"
   end
 
   add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
@@ -248,8 +246,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "thankyou"
     t.boolean  "is_published", :default => false
     t.integer  "community_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.datetime "deleted_at"
   end
 
@@ -265,8 +263,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -275,8 +273,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "name"
     t.integer  "supported_game_id"
     t.integer  "community_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.boolean  "is_announcement_space", :default => false
     t.datetime "deleted_at"
   end
@@ -291,8 +289,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "character_proxy_id"
     t.integer  "user_profile_id"
     t.boolean  "is_locked",           :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
     t.boolean  "has_been_edited",     :default => false
   end
@@ -304,8 +302,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "document_acceptances", :force => true do |t|
     t.integer  "user_id"
     t.integer  "document_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "document_acceptances", ["document_id"], :name => "index_document_acceptances_on_document_id"
@@ -314,8 +312,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "documents", :force => true do |t|
     t.string   "type"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "version"
     t.boolean  "is_published", :default => false
   end
@@ -341,19 +339,11 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.integer  "user_profile_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
-
-  create_table "games", :force => true do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "pretty_url"
-  end
 
   create_table "invites", :force => true do |t|
     t.integer  "event_id"
@@ -375,9 +365,9 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "recipient_id"
     t.integer  "folder_id"
     t.boolean  "is_removed",    :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.boolean  "has_been_read", :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "message_associations", ["folder_id"], :name => "index_message_associations_on_folder_id"
@@ -390,8 +380,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "author_id"
     t.integer  "number_recipients"
     t.boolean  "is_system_sent",    :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
@@ -414,8 +404,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "name"
     t.integer  "supported_game_id"
     t.integer  "community_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.datetime "deleted_at"
   end
 
@@ -426,8 +416,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "name"
     t.text     "markup"
     t.integer  "page_space_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.datetime "deleted_at"
   end
 
@@ -450,8 +440,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.boolean  "can_destroy_nested",      :default => false
     t.boolean  "can_lock_nested",         :default => false
     t.boolean  "can_accept_nested",       :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.datetime "deleted_at"
   end
 
@@ -462,8 +452,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "permission_level"
     t.string   "subject_class"
     t.integer  "id_of_subject",                  :limit => 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
     t.boolean  "can_lock",                                      :default => false
     t.boolean  "can_accept",                                    :default => false
     t.string   "parent_association_for_subject"
@@ -480,8 +470,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "predefined_answers", :force => true do |t|
     t.text     "body"
     t.integer  "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.datetime "deleted_at"
     t.integer  "position",    :default => 0
   end
@@ -492,8 +482,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.text     "body"
     t.integer  "custom_form_id"
     t.string   "style"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "explanation"
     t.boolean  "is_required",    :default => false
     t.datetime "deleted_at"
@@ -506,8 +496,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "community_id"
     t.string   "name"
     t.boolean  "is_system_generated", :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
   end
 
@@ -517,8 +507,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "community_profile_id"
     t.integer  "character_proxy_id"
     t.boolean  "is_pending",           :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
     t.integer  "supported_game_id"
   end
@@ -529,15 +519,15 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
 
   create_table "site_configurations", :force => true do |t|
     t.boolean  "is_maintenance", :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"
     t.integer  "user_profile_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.datetime "deleted_at"
   end
 
@@ -572,8 +562,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"
     t.integer  "game_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.integer  "game_announcement_space_id"
     t.string   "name"
     t.string   "game_type"
@@ -588,8 +578,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "name"
     t.integer  "swtor_id"
     t.string   "avatar"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "char_class"
     t.string   "advanced_class"
     t.string   "species"
@@ -604,13 +594,13 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "faction"
     t.string   "server_name"
     t.string   "server_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "themes", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "name"
     t.string   "css"
     t.string   "background_author"
@@ -622,8 +612,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "avatar"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.text     "description"
     t.string   "display_name"
     t.boolean  "publicly_viewable", :default => true
@@ -646,8 +636,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "failed_attempts",                                  :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.boolean  "accepted_current_terms_of_service",                :default => false
     t.boolean  "accepted_current_privacy_policy",                  :default => false
     t.boolean  "force_logout",                                     :default => false
@@ -670,8 +660,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "user_profile_id"
     t.integer  "view_loggable_id"
     t.string   "view_loggable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.datetime "deleted_at"
   end
 
@@ -684,8 +674,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.integer  "level"
     t.integer  "wow_id"
     t.string   "avatar"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "char_class"
     t.text     "about"
     t.string   "gender"
@@ -697,8 +687,8 @@ ActiveRecord::Schema.define(:version => 20120710173951) do
     t.string   "faction"
     t.string   "server_name"
     t.string   "server_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

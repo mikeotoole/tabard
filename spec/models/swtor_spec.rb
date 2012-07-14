@@ -6,8 +6,8 @@
 #  faction     :string(255)
 #  server_name :string(255)
 #  server_type :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
 #
 
 require 'spec_helper'
