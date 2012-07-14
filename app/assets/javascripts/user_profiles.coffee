@@ -41,5 +41,6 @@ $(document).ready ->
       response = $.parseJSON xhr.responseText
       if response.success
         $("#invites_batch tr[invite='#{invite.id}'] td.status strong").text invite.status for invite in response.invites
+        $("#invites_batch td.check input").removeAttr 'checked'
       else
         $.alert body: response.message
