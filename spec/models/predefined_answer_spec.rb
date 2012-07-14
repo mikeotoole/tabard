@@ -5,8 +5,8 @@
 #  id          :integer         not null, primary key
 #  body        :text
 #  question_id :integer
-#  created_at  :datetime
-#  updated_at  :datetime
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
 #  deleted_at  :datetime
 #  position    :integer         default(0)
 #

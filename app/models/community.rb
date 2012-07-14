@@ -445,6 +445,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: communities
@@ -455,8 +456,8 @@ end
 #  is_accepting_members            :boolean         default(TRUE)
 #  email_notice_on_application     :boolean         default(TRUE)
 #  subdomain                       :string(255)
-#  created_at                      :datetime
-#  updated_at                      :datetime
+#  created_at                      :datetime        not null
+#  updated_at                      :datetime        not null
 #  admin_profile_id                :integer
 #  member_role_id                  :integer
 #  is_protected_roster             :boolean         default(FALSE)
@@ -471,6 +472,6 @@ end
 #  home_page_id                    :integer
 #  pending_removal                 :boolean         default(FALSE)
 #  action_items                    :text
-#  pitch                           :text
+#  pitch                           :string(255)
 #
 

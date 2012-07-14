@@ -7,9 +7,9 @@
 #  recipient_id  :integer
 #  folder_id     :integer
 #  is_removed    :boolean         default(FALSE)
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
 #  has_been_read :boolean         default(FALSE)
-#  created_at    :datetime
-#  updated_at    :datetime
 #
 
 require 'spec_helper'

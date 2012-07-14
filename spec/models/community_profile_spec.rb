@@ -5,8 +5,8 @@
 #  id                       :integer         not null, primary key
 #  community_id             :integer
 #  user_profile_id          :integer
-#  created_at               :datetime
-#  updated_at               :datetime
+#  created_at               :datetime        not null
+#  updated_at               :datetime        not null
 #  deleted_at               :datetime
 #  community_application_id :integer
 #

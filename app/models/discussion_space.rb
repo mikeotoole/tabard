@@ -130,6 +130,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: discussion_spaces
@@ -138,8 +139,8 @@ end
 #  name                  :string(255)
 #  supported_game_id     :integer
 #  community_id          :integer
-#  created_at            :datetime
-#  updated_at            :datetime
+#  created_at            :datetime        not null
+#  updated_at            :datetime        not null
 #  is_announcement_space :boolean         default(FALSE)
 #  deleted_at            :datetime
 #

@@ -354,6 +354,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -370,8 +371,8 @@ end
 #  failed_attempts                   :integer         default(0)
 #  unlock_token                      :string(255)
 #  locked_at                         :datetime
-#  created_at                        :datetime
-#  updated_at                        :datetime
+#  created_at                        :datetime        not null
+#  updated_at                        :datetime        not null
 #  accepted_current_terms_of_service :boolean         default(FALSE)
 #  accepted_current_privacy_policy   :boolean         default(FALSE)
 #  force_logout                      :boolean         default(FALSE)

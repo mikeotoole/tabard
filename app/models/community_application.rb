@@ -255,6 +255,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: community_applications
@@ -264,8 +265,8 @@ end
 #  user_profile_id   :integer
 #  submission_id     :integer
 #  status            :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  created_at        :datetime        not null
+#  updated_at        :datetime        not null
 #  status_changer_id :integer
 #  deleted_at        :datetime
 #
