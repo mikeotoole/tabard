@@ -69,6 +69,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: character_proxies
@@ -77,8 +78,8 @@ end
 #  user_profile_id :integer
 #  character_id    :integer
 #  character_type  :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
 #  is_removed      :boolean         default(FALSE)
 #
 

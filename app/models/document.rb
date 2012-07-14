@@ -123,6 +123,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: documents
@@ -130,8 +131,8 @@ end
 #  id           :integer         not null, primary key
 #  type         :string(255)
 #  body         :text
-#  created_at   :datetime
-#  updated_at   :datetime
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
 #  version      :integer
 #  is_published :boolean         default(FALSE)
 #
