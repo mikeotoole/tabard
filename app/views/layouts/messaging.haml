@@ -2,7 +2,10 @@
 %html
   %head
     %title= yield_for(:title, 'Crumblin™')
-    = stylesheet_link_tag "top_level/top_level", "top_level/messaging"
+    = stylesheet_link_tag "/stylesheets/din.css"
+    = stylesheet_link_tag "/stylesheets/eurostyle.css"
+    = stylesheet_link_tag "top_level/top_level"
+    = stylesheet_link_tag "top_level/messaging"
     = javascript_include_tag "application", "messaging"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
