@@ -87,6 +87,7 @@ DaBvRails::Application.routes.draw do
   resources :support_tickets, path: :support, as: :support, only: [:index, :show, :new, :create] do
     resources :support_comments, path: :comment, as: :comment, only: [:new, :create]
   end
+  put 'support/:id/status/:status' => 'support_tickets#status', as: :support_status
 
   # Subdomains
   constraints(Subdomain) do
