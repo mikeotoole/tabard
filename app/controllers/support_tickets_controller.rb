@@ -15,6 +15,7 @@ class SupportTicketsController < ApplicationController
 ###
   # Index
   def index
+    @support_tickets = current_user.support_tickets.order('status DESC').order('updated_at DESC').includes(:support_comments).page(params[:page]).per(10) if user_signed_in?
   end
 
   # Show
@@ -28,8 +29,19 @@ class SupportTicketsController < ApplicationController
   # Create
   def create
     @support_ticket.status = SupportTicket::DEFAULT_STATUS
-    add_new_flash_message "Your ticket has been created. Someone will get started on this issue soon.", 'success' if @support_ticket.save
+    flash[:success] = "Your ticket has been created. Someone will get started on this issue soon." if @support_ticket.save
     respond_with @support_ticket, location: support_index_url
+  end
+
+  # Close ticket
+  # PUT /support/:id/status/:status
+  def status
+    if @support_ticket.update_attributes(status: params[:status])
+      flash[:success] = 'The ticket has been closed.'
+    else
+      flash[:alert] = 'An error prevented us from closing the ticket.'
+    end
+    redirect_to support_index_url
   end
 
 end

@@ -85,12 +85,13 @@ button,
   .button
     border: 0
     +border_radius(2)
-    display: inline
+    display: inline-block
     font-family: inherit
     font-size: 1em
     height: auto
     line-height: 1em
-    padding: 0 6px
+    margin: 0 0 0 5px
+    padding: 0 10px
   
 body.index.communities #submenu .all,
 body.index.wows #submenu .wow,
@@ -467,6 +468,12 @@ body.index.minecrafts #submenu .minecraft
                 
                 &.apply
                   background-position: -120px -30px
+                
+                &.close
+                  background-position: -30px -30px
+                
+                &.comment
+                  background-position: -1170px -30px
                   
                 &.delete
                   background-position: -30px -30px
@@ -518,6 +525,19 @@ body.index.minecrafts #submenu .minecraft
         
         &.private h3 a
           color: #666
+        
+        &.pendingreview td
+        
+        &.inprogress td
+          background: #eee
+          +bg_gradient(#fff,#eee)
+        
+        &.closed td
+          background: #bbb
+          border-bottom-color: #aaa
+          color: #888
+          a
+            color: #888
     
     tfoot
     
@@ -544,6 +564,9 @@ body.index.minecrafts #submenu .minecraft
           
           &:hover
             +box_shadow(0 0 10px #000)
+      
+    &.tickets blockquote
+      font-size: .8em
     
     &.compare
       
