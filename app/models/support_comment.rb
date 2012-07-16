@@ -28,8 +28,10 @@ class SupportComment < ActiveRecord::Base
 
   delegate :display_name, to: :admin_user, prefix: true
   delegate :email, to: :admin_user, prefix: true
+  delegate :avatar_url, to: :admin_user, prefix: true
 
   delegate :full_name, to: :user_profile, prefix: true
+  delegate :avatar_url, to: :user_profile, prefix: true
 
 ###
 # Validators
@@ -61,7 +63,7 @@ class SupportComment < ActiveRecord::Base
   end
 
   # Returns the correct avatar
-  def avatar(options)
+  def avatar_url(options)
     return self.user_profile_avatar_url(options) if user_created?
     return self.admin_user_avatar_url(options) if admin_created?
     nil

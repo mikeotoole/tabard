@@ -1,4 +1,6 @@
 - title 'Crubmlin Support'
+- content_for :header do
+  = stylesheet_link_tag 'top_level/support'
 
 #body
   %h1 Crumblin Support
@@ -11,7 +13,12 @@
   
   - else
     #submenu
-      = link_to '+ New issue', new_support_url, class: 'button'
+      = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown().find('textarea').focus();$(this).hide();return false;"
+    
+    = simple_form_for @support_ticket, url: support_url(subdomain: false), html: {novalidate: true} do |f|
+      = f.input :body, wrapper_tag: :p, label: 'Describe your issue in detail'
+      %p.submit
+        %button{ type: 'submit' } Create Support Ticket
   
     - if current_user.support_tickets.any?
       %table.tickets
@@ -24,12 +31,13 @@
           - @support_tickets.each do |ticket|
             %tr{ class: ticket.status.downcase().gsub(/[^a-z]/, '') }
               %td
-                = link_to truncate(ticket.body, length: 70, separator: ' '), support_url(ticket)
+                = link_to truncate(ticket.body, length: 80, separator: ' ', omission: '…'), support_url(ticket)
                 - if ticket.support_comments.any? and ticket.status != 'Closed'
                   - comment = ticket.support_comments.last
                   %blockquote
-                    = image_tag comment.avatar_url(:tiny)
-                    = truncate(comment.body, length: 70, separator: ' ')
+                    = image_tag comment.avatar_url(:icon)
+                    = truncate(comment.body, length: 80, separator: ' ', omission: '…')
+                    = link_to 'reply', support_url(ticket, anchor: 'new_support_comment')
               %td
                 - case ticket.status
                 - when 'Pending Review'
@@ -41,6 +49,6 @@
               %td.actions
                 - unless ticket.status == 'Closed'
                   %div
-                    %a.comment= 'Add a comment'
+                    = link_to 'Add a comment', support_url(ticket, anchor: 'new_support_comment'), class: 'comment'
                     = link_to 'Close ticket', support_status_url(ticket, 'Closed'), class: 'close', method: :put, confirm: 'Really close this ticket?'
       = paginate @support_tickets

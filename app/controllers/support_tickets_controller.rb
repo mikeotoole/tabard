@@ -15,22 +15,24 @@ class SupportTicketsController < ApplicationController
 ###
   # Index
   def index
-    @support_tickets = current_user.support_tickets.order('status DESC').order('updated_at DESC').includes(:support_comments).page(params[:page]).per(10) if user_signed_in?
+    @support_ticket = SupportTicket.new()
+    @support_tickets = current_user.support_tickets.order('status DESC').order('updated_at DESC').includes(support_comments: [:admin_user, :user_profile]).page(params[:page]).per(10) if user_signed_in?
   end
 
   # Show
   def show
   end
 
-  # New
-  def new
-  end
-
   # Create
   def create
     @support_ticket.status = SupportTicket::DEFAULT_STATUS
-    flash[:success] = "Your ticket has been created. Someone will get started on this issue soon." if @support_ticket.save
-    respond_with @support_ticket, location: support_index_url
+    if @support_ticket.save
+      flash[:success] = "Your ticket has been created. Someone will get started on this issue soon."
+      redirect_to support_url(@support_ticket)
+    else
+      flash[:error] = "The description was blank, so a support ticket could not be created."
+      redirect_to support_index_url
+    end
   end
 
   # Close ticket

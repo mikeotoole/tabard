@@ -1,0 +1,26 @@
+@import mixins
+
+#body
+
+  table tr
+    &.pendingreview td,
+    &.inprogress td
+      background: #eee
+      +bg_gradient(#fff,#eee)
+    &.closed td
+      background: #ccc
+      border-bottom-color: #aaa
+      color: #888
+      a
+        color: #888
+    blockquote
+      font-size: .8em
+      img
+        float: left
+        margin: 0 10px 0 -15px
+  
+  #new_support_ticket
+    display: none
+    textarea
+      margin-bottom: -30px
+      width: 878px
