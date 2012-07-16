@@ -22,13 +22,13 @@
     You have been invited as
     %strong= @invite.invitee_name
     %time.event
-      %strong.day= l @invite.event.start_time, format: :date_short
+      %strong.day= l @invite.event_start_time, format: :date_short
       at
-      %strong.time= l @invite.event.start_time, format: :time_12
+      %strong.time= l @invite.event_start_time, format: :time_12
       = '—'
-      - unless @invite.event.start_time.day == @invite.event.end_time.day
-        %strong.day= l @invite.event.end_time, format: :date_short
+      - unless @invite.event_start_time.day == @invite.event_end_time.day
+        %strong.day= l @invite.event_end_time, format: :date_short
         at
-      %strong.time= l @invite.event.end_time, format: :time_12
+      %strong.time= l @invite.event_end_time, format: :time_12
 
   = render 'form', invite: @invite
