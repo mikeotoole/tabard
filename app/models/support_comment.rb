@@ -52,6 +52,21 @@ class SupportComment < ActiveRecord::Base
   def user_created?
     return (not self.user_profile.blank?)
   end
+
+  # Returns the correct name
+  def author_name
+    return self.user_profile_full_name if user_created?
+    return self.admin_user_display_name if admin_created?
+    "Anonymous"
+  end
+
+  # Returns the correct avatar
+  def avatar(options)
+    return self.user_profile_avatar_url(options) if user_created?
+    return self.admin_user_avatar_url(options) if admin_created?
+    nil
+  end
+
 end
 
 # == Schema Information
