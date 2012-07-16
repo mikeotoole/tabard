@@ -28,7 +28,7 @@ module CustomFormHelper
         .find('>li:last .container')
         .removeClass('closed')
         .trigger('init')
-        .draggable({ revert: 'invalid', cancel: '.toggle' })
+        .draggable(qDragOpts)
         .draggable('disable')
         .hide()
         .slideDown(400);
