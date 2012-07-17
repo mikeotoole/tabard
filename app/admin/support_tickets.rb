@@ -12,7 +12,7 @@ ActiveAdmin.register SupportTicket do
   end
   
   action_item :only => :show do
-    if can? :update, resource
+    if can?(:update, resource) and resource.admin_user != current_admin_user
       link_to "Take", take_admin_support_ticket_path(resource), :method => :put
     end
   end
@@ -52,44 +52,45 @@ ActiveAdmin.register SupportTicket do
       link_to "Edit", edit_admin_support_ticket_url(support_ticket)
     end
     column "Take" do |support_ticket|
-      link_to "Take", take_admin_support_ticket_path(support_ticket), :method => :put
+      link_to "Take", take_admin_support_ticket_path(support_ticket), :method => :put unless support_ticket.admin_user == current_admin_user
     end
   end
 
   show do |ticket|
     attributes_table *default_attribute_table_rows
 
-    h3 "Support Comments"
-    div do
-      if ticket.support_comments.any?
-        ol do
+    if ticket.support_comments.any?
+      div do
+        h3 "Support Comments"
+        ol class: 'comments' do
           ticket.support_comments.includes(:admin_user, :user_profile).each do |comment|
-            if comment.admin_created?
-              li do
-                blockquote do
-                  div comment.admin_user_display_name
-                  div image_tag(comment.admin_user.avatar_url(:small))
+            li do
+              blockquote do
+                cite comment.author_name
+                span class: 'avatar' do
+                  image_tag(comment.avatar_url(:small), class: 'avatar')
                 end
-                div comment.body
-              end
-            else
-              li do
-                blockquote do
-                  div comment.user_profile_full_name
-                  div image_tag(comment.user_profile.avatar_url(:small))
+                span class: 'body' do
+                  simple_format(comment.body)
                 end
-                div comment.body
               end
             end
           end
         end
-      else
-        p "No comments yet"
       end
-      div do
-        link_to "New Comment", new_admin_support_ticket_support_comment_url(ticket)
+    else
+      p "No comments yet"
+    end
+
+    panel('New Comment') do
+      active_admin_form_for [:admin, ticket, SupportComment.new] do |f|
+        f.inputs do
+          f.input :body, label: false
+        end
+        f.buttons
       end
     end
+
     h3 "Active Admin Comments"
     active_admin_comments
   end
