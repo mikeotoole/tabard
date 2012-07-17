@@ -31,7 +31,6 @@ class Subdomains::PagesController < SubdomainsController
 
   # GET /page_spaces/:page_space_id/pages/new(.:format)
   def new
-    respond_with @page
   end
 
   # GET /pages/:id/edit(.:format)

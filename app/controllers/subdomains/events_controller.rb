@@ -36,8 +36,8 @@ class Subdomains::EventsController < SubdomainsController
   # GET /events/:year/:month
   # GET /events/2012/03
   def month_index
-    @year = params[:year].to_i
     @month = params[:month].to_i
+    @year = params[:year].to_i
     valid = (2000 <= @year and @year <= 3000)
     valid = (1 <= @month and @month <= 12) if valid
 

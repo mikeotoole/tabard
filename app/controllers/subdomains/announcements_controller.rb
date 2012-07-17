@@ -12,6 +12,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
+  before_filter :authorize_community_and_game, only: [:community, :game]
   authorize_resource except: [:community, :game]
   skip_before_filter :limit_subdomain_access
   load_and_authorize_resource through: :current_community, only: [:new, :create, :lock, :unlock, :destroy]
@@ -74,13 +75,11 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcements/community(.:format)
   def community
-    authorize! :index, Announcement
     @announcements = current_community.community_announcements.ordered
   end
 
   # GET /announcements/game/:id(.:format)
   def game
-    authorize! :index, Announcement
     @supported_game = current_community.supported_games.find_by_id(params[:id])
     if !!@supported_game
       @announcements = @supported_game.announcements.where(community_id: current_community.id).ordered
@@ -129,6 +128,11 @@ class Subdomains::AnnouncementsController < SubdomainsController
       end
     end
     redirect_to announcements_url
+  end
+
+  #Before Filter
+  def authorize_community_and_game
+    authorize! :index, Announcement
   end
 
 ###
