@@ -1,44 +1,32 @@
 - title "Support Ticket ##{@support_ticket.id}"
+- content_for :header do
+  = stylesheet_link_tag 'top_level/support'
 
 #body
-  %h1= "Support Ticket ##{@support_ticket.id}"
-  %span= link_to "Support Home", support_index_url(subdomain: false)
-  %hr
-  #admin_user
-    -if @support_ticket.admin_user.blank?
-      %p Someone from the crumblin staff will be working on you issue soon.
-    -else
-      %p= "#{@support_ticket.admin_user_display_name} is working on your issue!"
-      = image_tag(@support_ticket.admin_user.avatar_url(:small))
-  #support_ticket
-    %p= "Current Status: #{@support_ticket.status}"
-    %p= @support_ticket.body
-  %hr
-  #support_comments
-    %h2 Comments
-    -if @support_ticket.support_comments.any?
+  %h1
+    = link_to "Crumblin Support", support_index_url(subdomain: false)
+    = " / Ticket ##{@support_ticket.id}"
+  %p.status{ class: @support_ticket.status.downcase().gsub(/[^a-z]/, '') }= @support_ticket.status
+
+  %blockquote= simple_format @support_ticket.body
+
+  -if @support_ticket.support_comments.any?
+    .comments
+      %h2 Comments
       %ol
-        -@support_ticket.support_comments.includes(:admin_user).each do |comment|
-          -if comment.admin_created?
-            %li.comment.admin{ id: "comment_#{comment.id}" }
-              %blockquote
-                .avatar
-                  =comment.admin_user_display_name
-                  = image_tag(comment.admin_user.avatar_url(:small))
-              =comment.body
-          -else
-            %li.comment.user{ id: "comment_#{comment.id}" }
-              %blockquote
-                .avatar
-                  =comment.user_profile_full_name
-                  = image_tag(comment.user_profile.avatar_url(:small))
-              =comment.body
+        - @support_ticket.support_comments.each do |comment|
+          %li.comment{ id: "comment_#{comment.id}", class: comment.admin_created? ? 'admin' : 'user' }
+            %blockquote
+              .avatar= image_tag comment.avatar_url(:small)
+              %span.meta
+                Posted
+                = raw("by <strong>#{comment.author_name}</strong>") if comment.admin_created?
+                %time= "#{time_ago_in_words(comment.updated_at)} ago"
+              %p
+                %span.body= shorten_words(comment.body)
 
-    - else
-      %p No comments yet
-
-    %h2 Add a new commnet!
-    = render 'support_comments/form', support_comment: SupportComment.new, support_ticket: @support_ticket
-
-
-
+  %h2 Add a comment
+  = simple_form_for [@support_ticket, SupportComment.new], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
+    = f.input :body, wrapper_tag: :p, label: false
+    %p.submit
+      %button{ type: :submit } Add comment

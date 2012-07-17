@@ -24,7 +24,7 @@ class SupportCommentsController < ApplicationController
     @support_comment = (@support_ticket.blank? ? nil : @support_ticket.support_comments.new(params[:support_comment]))
     @support_comment.user_profile = current_user.user_profile
     authorize! :create, @support_comment
-    add_new_flash_message "Your comment has been added.", 'success' if @support_comment.save
+    flash[:success] = "Your comment has been posted." if @support_comment.save
     respond_with @support_comment, location: support_url(@support_ticket)
   end
 

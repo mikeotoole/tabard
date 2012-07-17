@@ -21,13 +21,19 @@ class SupportTicketsController < ApplicationController
 
   # Show
   def show
+    unless @support_ticket.status == 'Closed'
+      if @support_ticket.admin_user
+        flash.now[:success] = "#{@support_ticket.admin_user_display_name} is working to resolve this issue. You're in good hands!"
+      else
+        flash.now[:notice] = "The next available Crumblin agent will begin working to resolve your issue soon."
+      end
+    end
   end
 
   # Create
   def create
     @support_ticket.status = SupportTicket::DEFAULT_STATUS
     if @support_ticket.save
-      flash[:success] = "Your ticket has been created. Someone will get started on this issue soon."
       redirect_to support_url(@support_ticket)
     else
       flash[:error] = "The description was blank, so a support ticket could not be created."
