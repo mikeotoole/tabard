@@ -1,0 +1,80 @@
+@import mixins
+
+#body
+
+  table tr
+    &.pendingreview td,
+    &.inprogress td
+      background: #eee
+      +bg_gradient(#fff,#eee)
+    &.closed td
+      background: #ccc
+      border-bottom-color: #aaa
+      color: #888
+      a
+        color: #888
+    blockquote
+      font-size: .8em
+      img
+        float: left
+        margin: 0 10px 0 -15px
+  
+  p.status
+    background: green
+    +border_radius(3)
+    color: #fff
+    padding: 5px 10px
+    position: absolute
+    right: 0
+    top: 0
+    &.pendingreview
+      background: #D98C00
+    &.inprogress
+      background: #3E87BB
+    &.closed
+      background: #999
+  
+  #new_support_ticket
+    display: none
+    textarea
+      margin-bottom: -30px
+      width: 878px
+  
+  #new_support_comment
+    textarea
+      margin-bottom: -30px
+      width: 878px
+  
+  .comments
+    ol
+      padding: 0
+    li.comment
+      border-bottom-color: #ccc
+      margin: 0 0 20px
+      &:before,
+      &:after
+        display: none
+      blockquote
+        &:before
+          display: none
+        .avatar
+          border-color: #ccc
+          &:before
+            border-right-color: #fff
+          &:after
+            border-top-color: #fff
+          img
+            border-color: #fff
+        .meta
+          border-bottom-color: #ccc
+          color: #888
+        p
+          font-size: 1em
+          padding-bottom: 12px
+    li.admin blockquote
+      .avatar
+        border-color: #BD4023
+        img
+          background: #e6bbb2
+      .meta
+        color: #BD4023

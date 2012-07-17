@@ -26,7 +26,7 @@ class UserProfile < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
-      :avatar, :remove_avatar, :avatar_cache, :remote_avatar_url, :description, :location
+      :avatar, :remove_avatar, :remote_avatar_url, :description, :location
 
 ###
 # Associations
@@ -60,6 +60,13 @@ class UserProfile < ActiveRecord::Base
   has_many :events, dependent: :destroy, foreign_key: "creator_id"
   has_many :invites, dependent: :destroy, inverse_of: :user_profile
   has_many :events_invited_to, through: :invites, source: :event, class_name: "Event"
+
+  has_many :support_tickets, inverse_of: :user_profile
+  has_many :pending_support_tickets, class_name: "SupportTicket", conditions: {status: SupportTicket::DEFAULT_STATUS}
+  has_many :in_progress_support_tickets, class_name: "SupportTicket", conditions: {status: "In Progress"}
+  has_many :closed_support_tickets, class_name: "SupportTicket", conditions: {status: "Closed"}
+
+  has_many :support_comments, inverse_of: :user_profile
 
 ###
 # Delegates

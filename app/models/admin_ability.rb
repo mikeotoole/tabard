@@ -63,6 +63,8 @@ class AdminAbility
       can [:read, :create, :update], [Minecraft, 'Minecraft']
       can [:toggle_maintenance_mode], SiteConfigurationController
       can :manage, ArtworkUpload
+      can [:read, :update], SupportTicket
+      can [:read, :create], SupportComment
     end
 
     # Rules for superadmin user. (Inherits rules from admin).

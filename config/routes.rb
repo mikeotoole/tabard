@@ -83,6 +83,12 @@ DaBvRails::Application.routes.draw do
   get 'mail/inbox' => "mailbox#inbox", as: "inbox"
   get 'mail/trash' => "mailbox#trash", as: "trash"
 
+  # Support Tickets
+  resources :support_tickets, path: :support, as: :support, only: [:index, :show, :new, :create] do
+    resources :support_comments, path: :comment, as: :comment, only: [:new, :create]
+  end
+  put 'support/:id/status/:status' => 'support_tickets#status', as: :support_status
+
   # Subdomains
   constraints(Subdomain) do
     get "/" => "subdomains#index", as: 'subdomain_home'
@@ -216,7 +222,6 @@ DaBvRails::Application.routes.draw do
   get "/maintenance" => "top_level#maintenance", as: 'top_level_maintenance'
   get "/privacy-policy" => "top_level#privacy_policy", as: 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", as: 'top_level_terms_of_service'
-  get "/support" => "top_level#support", as: 'top_level_support'
   match "/ignore_browser" => "top_level#ignore_browser", as: 'ignore_browser'
 
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'

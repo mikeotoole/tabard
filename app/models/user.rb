@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
   delegate :invites, to: :user_profile, allow_nil: true
   delegate :events_invited_to, to: :user_profile, allow_nil: true
   delegate :invited?, to: :user_profile, allow_nil: true
+  delegate :support_tickets, to: :user_profile, allow_nil: true
+  delegate :pending_support_tickets, to: :user_profile, allow_nil: true
+  delegate :in_progress_support_tickets, to: :user_profile, allow_nil: true
+  delegate :closed_support_tickets, to: :user_profile, allow_nil: true
 
 ###
 # Validators

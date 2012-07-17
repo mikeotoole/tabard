@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20120714180027) do
     t.integer  "failed_attempts",                       :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "display_name"
+    t.string   "avatar"
   end
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
@@ -531,6 +533,31 @@ ActiveRecord::Schema.define(:version => 20120714180027) do
 
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
   add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
+
+  create_table "support_comments", :force => true do |t|
+    t.integer  "support_ticket_id"
+    t.integer  "user_profile_id"
+    t.integer  "admin_user_id"
+    t.text     "body"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "support_comments", ["admin_user_id"], :name => "index_support_comments_on_admin_user_id"
+  add_index "support_comments", ["support_ticket_id"], :name => "index_support_comments_on_support_ticket_id"
+  add_index "support_comments", ["user_profile_id"], :name => "index_support_comments_on_user_profile_id"
+
+  create_table "support_tickets", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "admin_user_id"
+    t.string   "status"
+    t.text     "body"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "support_tickets", ["admin_user_id"], :name => "index_support_tickets_on_admin_user_id"
+  add_index "support_tickets", ["user_profile_id"], :name => "index_support_tickets_on_user_profile_id"
 
   create_table "supported_games", :force => true do |t|
     t.integer  "community_id"

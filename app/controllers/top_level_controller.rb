@@ -55,10 +55,6 @@ class TopLevelController < ApplicationController
   def pricing
   end
 
-  # This method gets the Support page.
-  def support
-  end
-
   # This method gets the Maintenance page.
   def maintenance
     if SiteConfiguration.is_maintenance?
