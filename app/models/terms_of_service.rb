@@ -6,6 +6,7 @@
 # This class represents a TermsOfService Document.
 ###
 class TermsOfService < Document
+  validates_lengths_from_database
 ###
 # Public Methods
 ###

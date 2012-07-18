@@ -6,6 +6,7 @@
 # This class represents the Star Wars the Old Republic game.
 ###
 class Minecraft < Game
+  validates_lengths_from_database
 ###
 # Constants
 ###

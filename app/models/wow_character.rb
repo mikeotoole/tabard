@@ -6,6 +6,7 @@
 # This class represents a World of Warcraft character.
 ###
 class WowCharacter < BaseCharacter
+  validates_lengths_from_database except: [:name]
 ###
 # Constants
 ###

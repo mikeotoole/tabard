@@ -6,6 +6,7 @@
 # This class represents a folder.
 ###
 class Folder < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Attribute accessible
 ###

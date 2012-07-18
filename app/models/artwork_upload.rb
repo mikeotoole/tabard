@@ -6,6 +6,7 @@
 # This class represents an uploaded artwork submission.
 ###
 class ArtworkUpload < ActiveRecord::Base
+  validates_lengths_from_database except: [:email, :artwork_image]
 ###
 # Attribute accessor
 ###

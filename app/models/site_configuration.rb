@@ -6,6 +6,7 @@
 # This class represents the Site Configuration.
 ###
 class SiteConfiguration < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Attribute accessible
 ###

@@ -6,8 +6,9 @@
 # This class represents an application to a community.
 ###
 class CommunityApplication < ActiveRecord::Base
+  validates_lengths_from_database
   # Used by mailer to add links to application.
-  include Rails.application.routes.url_helpers
+  include Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
 
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid

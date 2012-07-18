@@ -6,6 +6,7 @@
 # This class represents a site form.
 ###
 class CustomForm < ActiveRecord::Base
+  validates_lengths_from_database except: [:name, :instructions, :thankyou]
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 

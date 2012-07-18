@@ -6,6 +6,7 @@
 # This class represents an AdminUser used for Admin Panel.
 ###
 class AdminUser < ActiveRecord::Base
+  validates_lengths_from_database except: [:email, :password]
   # Array of valid roles.
   ROLES = %w[moderator admin superadmin]
 

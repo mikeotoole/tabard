@@ -6,6 +6,7 @@
 # This is the support comment class.
 ###
 class SupportComment < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Associations
 ###

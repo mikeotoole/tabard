@@ -8,6 +8,7 @@
 # This class is configured to work with devise to provide us authentication capabilities.
 ###
 class User < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Constants
 ###

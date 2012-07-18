@@ -6,6 +6,7 @@
 # This class represents a discussion space.
 ###
 class DiscussionSpace < ActiveRecord::Base
+  validates_lengths_from_database except: [:name]
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 

@@ -14,6 +14,9 @@ source 'http://rubygems.org'
   gem 'haml'
   gem 'squeel'
 
+# Database Protection
+  gem 'validates_lengths_from_database'
+
 # User Authentication
   gem 'devise'
 

@@ -19,7 +19,7 @@ describe AvatarUploader do
   end
 
   it "should reject invalid file types" do
-    badFilenames = %w{ badAvatarFileType1.tiff } # TESTING Invalid avatar file type for testing  
+    badFilenames = %w{ badAvatarFileType1.tiff } # TESTING Invalid avatar file type for testing
     badFilenames.each do |filename|
       build(:user_profile, :avatar => File.open("#{Rails.root}/spec/testing_files/#{filename}")).should_not be_valid
     end

@@ -6,6 +6,7 @@
 # This is the support ticket class.
 ###
 class SupportTicket < ActiveRecord::Base
+  validates_lengths_from_database
   # Array of valid roles.
   STATUSES = %w[Pending\ Review In\ Progress Closed]
 

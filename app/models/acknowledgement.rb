@@ -6,6 +6,7 @@
 # This class represents an actvity.
 ###
 class Acknowledgement < ActiveRecord::Base
+  validates_lengths_from_database
   scope :ordered, order: 'created_at DESC'
 
 ###

@@ -6,6 +6,7 @@
 # This class represents a user's profile.
 ###
 class UserProfile < ActiveRecord::Base
+  validates_lengths_from_database except: [:name, :first_name, :last_name, :title, :location, :description, :avatar]
 ###
 # Constants
 ###
