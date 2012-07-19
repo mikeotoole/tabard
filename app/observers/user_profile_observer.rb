@@ -29,4 +29,10 @@ class UserProfileObserver < ActiveRecord::Observer
                         action: change)
     end
   end
+
+  # removes activity
+  def after_destroy(user_profile)
+    target = user_profile
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end

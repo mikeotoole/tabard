@@ -29,6 +29,7 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :original_commentable, polymorphic: true
   has_many :comments, as: :commentable
+  has_many :activites, as: :target
 
 ###
 # Scopes

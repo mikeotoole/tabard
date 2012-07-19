@@ -14,4 +14,10 @@ class CommunityObserver < ActiveRecord::Observer
                       target: community,
                       action: "created")
   end
+
+  # removes activites
+  def after_destroy(community)
+    target = community
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end

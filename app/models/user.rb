@@ -188,7 +188,7 @@ class User < ActiveRecord::Base
   def has_accepted_all_documents?
     has_accepted_current_terms_of_service? and has_accepted_current_privacy_policy?
   end
-
+  #Updates documment acceptance cache.
   def update_acceptance_of_documents(document)
     self.update_attributes(accepted_current_terms_of_service: true) if document == TermsOfService.current
     self.update_attributes(accepted_current_privacy_policy: true) if document == PrivacyPolicy.current

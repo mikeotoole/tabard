@@ -25,4 +25,10 @@ class DiscussionObserver < ActiveRecord::Observer
                         action: "edited")
     end
   end
+
+  # removes activity
+  def after_destroy(discussion)
+    target = discussion
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end

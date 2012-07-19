@@ -13,4 +13,10 @@ class CharacterProxyObserver < ActiveRecord::Observer
                       target: character_proxy.is_a?(CharacterProxy) ? character_proxy : character_proxy.character,
                       action: "created")
   end
+
+  #removes activity
+  def after_destroy(character_proxy)
+    target = (character_proxy.is_a?(CharacterProxy) ? character_proxy : character_proxy.character)
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end

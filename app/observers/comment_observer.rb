@@ -25,4 +25,10 @@ class CommentObserver < ActiveRecord::Observer
                         action: "edited")
     end
   end
+
+  # removes activity with comment
+  def after_destroy(comment)
+    target = comment
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end
