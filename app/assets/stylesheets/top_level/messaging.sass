@@ -342,8 +342,9 @@ body
       
       time,
       span
-        color: #A33C32
         font: 14px DinMedium
+      time
+        color: #A33C32
     
     dl
       background: #eee
@@ -357,17 +358,20 @@ body
         color: #644b83
         display: inline
         font: 14px DinLight
-              
+        
         a,
         span
           +bg_gradient(#ccc,#ddd)
           border: 1px solid #ccc
           +border-radius(3)
-          color: #644b83
           font: 13px DinMedium
           padding: 1px 4px
           position: relative
           +transition(background .2s linear)
+        a
+          color: #644b83
+        span
+          color: #888
           
         a:hover
           background: #A33C32

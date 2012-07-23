@@ -1,4 +1,4 @@
-%header
+%header{ message_id: message.id, slug: request.fullpath.gsub(/\..*/, "") }
   %p.actions
     - if mailbox_view_state != 'sent'
       - if current_user.address_book.include?(message.author)
@@ -17,9 +17,9 @@
     - else
       From:
       - if current_user.address_book.include?(message.author)
-        = link_to message.author_name, compose_mail_to_url(message.author_id)
+        = link_to message.author_name, user_profile_url(message.author)
       - else
-        %span= message.author_name
+        %span Me
       on
     %time{ title: (l Time.zone.now, format: :date_short) }
       = l message.created_at, format: :date_monthday
@@ -34,9 +34,9 @@
     - message.recipients.each do |profile|
       %dd
         - if current_user.user_profile == profile
-          %span Me
+          = link_to 'Me', user_profile_url(profile), meta: "My profile"
         - elsif current_user.address_book.include?(profile)
-          = link_to "✎ #{profile.name}", compose_mail_to_url(profile.id), meta: "Send message"
+          = link_to profile.name, user_profile_url(profile), meta: "View profile"
         - else
           %span= profile.name
 
