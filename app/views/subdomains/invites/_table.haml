@@ -3,7 +3,7 @@
     %tr
       %th.cinch{ colspan: 2 } Invitee List
       %th Has seen it?
-      %th RSVP
+      %th.rsvp RSVP
       %th.actions
   %tbody
     - invites.each do |invite|
@@ -14,7 +14,7 @@
           = link_to invite.invitee_name, invite.user_profile
         %td
           = invite.is_viewed ? 'Yes' : '—'
-        %td
+        %td.rsvp
           = invite.status ||= '—'
         %td.actions
           %div
