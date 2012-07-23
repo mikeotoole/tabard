@@ -40,8 +40,8 @@
                     = link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), target: '_blank', style: 'color: #BE4124'
                     page to adjust your
                     %br
-                    %strong email notification preferences
-                    , account preferences, and contact information.
+                    = raw('<strong>email notification preferences</strong>') + ','
+                    account preferences, and contact information.
                   %p{ align: 'left', style: 'text-align: left' }
                     Crumblin&trade; is only for persons age 13 or older and in the U.S.
                     If you receive abusive messages, please contact
