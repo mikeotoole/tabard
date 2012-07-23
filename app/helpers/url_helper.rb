@@ -12,16 +12,18 @@ module UrlHelper
   #   * +options+ -> Options for url_for
   ###
   def url_for(options = nil)
-    if options.kind_of?(Hash) && options.has_key?(:subdomain)
-      options[:host] = with_subdomain(options.delete(:subdomain))
-      options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
-      options[:only_path] ||= false
-      options[:protocol] ||= 'http://'
-    elsif (options.kind_of?(Hash) and defined?(current_community) != nil and not current_community.blank? and current_community.respond_to?("subdomain"))
-      options[:host] = with_subdomain(current_community.subdomain)
-      options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
-      options[:only_path] ||= false
-      options[:protocol] ||= 'http://'
+    if options.kind_of?(Hash)
+      if options.has_key?(:subdomain)
+        options[:host] = with_subdomain(options.delete(:subdomain))
+        options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
+        options[:only_path] ||= false
+        options[:protocol] ||= 'http://'
+      elsif defined?(current_community) and not current_community.blank? and current_community.respond_to?("subdomain")
+        options[:host] = with_subdomain(current_community.subdomain)
+        options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
+        options[:only_path] ||= false
+        options[:protocol] ||= 'http://'
+      end
     end
     super
   end

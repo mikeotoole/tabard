@@ -5,4 +5,4 @@
       - if events.any?
         - events.each do |event|
           %li
-            = link_to shorten_words(event.name), event_url(event, subdomain: current_community.subdomain), class: "event-#{event.id}"
+            = link_to shorten_words(event.name), event_url(event), class: "event-#{event.id}"

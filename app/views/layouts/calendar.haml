@@ -18,7 +18,7 @@
   #calendar-menu.sidemenu
     %dl
       %dt View
-      %dd.list=link_to 'List', events_url(subdomain: current_community.subdomain), meta: 'Return to list view'
+      %dd.list=link_to 'List', events_url, meta: 'Return to list view'
       - unless params[:action] == 'week_index'
         %dd.week=link_to 'Week', week_events_url(year: @date.year, week: @date.beginning_of_month.cweek), meta: 'Switch to week view'
       - unless params[:action] == 'month_index'

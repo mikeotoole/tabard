@@ -80,10 +80,10 @@
                     %li= link_to shorten_words(space.name), space if space.persisted?
           - if user_signed_in? and current_user.is_member? current_community
             %li
-              = link_to 'Events', events_url(subdomain: current_community.subdomain)
+              = link_to 'Events', events_url
           - if user_signed_in? and current_user.is_member? current_community
             %li
-              = link_to 'Announcements', announcements_url(subdomain: current_community.subdomain)
+              = link_to 'Announcements', announcements_url
               - if current_community.supported_games.any?
                 %ul
                   %li= link_to 'Community Announcements', community_announcements_url

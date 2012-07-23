@@ -4,7 +4,7 @@
 
 #breadcrumb
   %ol
-    %li= link_to "Announcements", announcements_url(subdomain: current_community.subdomain)
+    %li= link_to "Announcements", announcements_url
     - if @announcement.supported_game
       %li= link_to @announcement.supported_game_smart_name, announcements_url(supported_game: @announcement.supported_game)
     - else
