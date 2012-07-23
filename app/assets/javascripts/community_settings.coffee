@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # change theme
   $('label[for="community_theme_id"] + ul input').change ->

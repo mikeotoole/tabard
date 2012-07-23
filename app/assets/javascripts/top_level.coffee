@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # make labels work like field suggestions
   $('#homebox form li.input')

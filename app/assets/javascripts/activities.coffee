@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   $('body')
     .delegate '.more_activites', 'ajax:before', ->

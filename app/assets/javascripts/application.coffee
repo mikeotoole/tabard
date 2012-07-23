@@ -128,7 +128,7 @@ root.initSelects = ->
     , 250
 
 
-$(document).ready ->
+jQuery(document).ready ($) ->
   
   # dynamic loaded content after page load
   $('body')

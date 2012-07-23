@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # mailbox checkbox select (for visual enhancement)
   $('#mailbox .meta input[type="checkbox"]')

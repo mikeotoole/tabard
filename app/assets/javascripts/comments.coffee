@@ -10,7 +10,7 @@ jQuery.fn.collapsable = ->
     .bind 'click', ->
       $(@).closest('li').removeClass('collapsed')
 
-$(document).ready ->
+jQuery(document).ready ($) ->
   
   # Keeps the comment box open if it has data
   $('.comments textarea')
