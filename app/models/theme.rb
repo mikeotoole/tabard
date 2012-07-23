@@ -6,6 +6,7 @@
 # This class represents a theme.
 ###
 class Theme < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Attribute accessible
 ###

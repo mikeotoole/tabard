@@ -6,6 +6,7 @@
 # This class represents a Character Proxy.
 ###
 class CharacterProxy < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Associations
 ###

@@ -6,6 +6,7 @@
 # This class represents an event.
 ###
 class Invite < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Constants
 ###

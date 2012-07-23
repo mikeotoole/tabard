@@ -6,6 +6,7 @@
 # This class represents a comment.
 ###
 class Comment < ActiveRecord::Base
+  validates_lengths_from_database except: [:body]
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
@@ -28,6 +29,7 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :original_commentable, polymorphic: true
   has_many :comments, as: :commentable
+  has_many :activites, as: :target
 
 ###
 # Scopes

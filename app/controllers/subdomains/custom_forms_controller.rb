@@ -13,6 +13,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   prepend_before_filter :block_unauthorized_user!
   before_filter :load_custom_form, except: [:new, :create, :index]
   before_filter :create_custom_form, only: [:new, :create]
+  before_filter :authorize_publish_and_unpublish, only: [:publish, :unpublish]
   authorize_resource except: [:index, :thankyou, :publish, :unpublish]
   before_filter :ensure_current_user_is_member, except: [:thankyou]
   skip_before_filter :limit_subdomain_access
@@ -62,7 +63,6 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # PUT /custom_forms/:id/publish
   def publish
-    authorize! :update, @custom_form
     @custom_form.is_published = true
     if @custom_form.save
       add_new_flash_message "Form \"#{@custom_form.name}\" has been published.", 'success'
@@ -74,7 +74,6 @@ class Subdomains::CustomFormsController < SubdomainsController
 
   # PUT /custom_forms/:id/unpublish
   def unpublish
-    authorize! :update, @custom_form
     @custom_form.is_published = false
     if @custom_form.save
       add_new_flash_message "Form \"#{@custom_form.name}\" has been unpublished.", 'success'
@@ -108,5 +107,14 @@ protected
   ###
   def create_custom_form
     @custom_form = current_community.custom_forms.new(params[:custom_form]) if current_community
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This before filter authorizes the publish and unpublish actions.
+  ###
+  def authorize_publish_and_unpublish
+    authorize! :update, @custom_form
   end
 end

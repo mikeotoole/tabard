@@ -6,6 +6,7 @@
 # This class represents a Document that the user must accept to use the service.
 ###
 class Document < ActiveRecord::Base
+  validates_lengths_from_database
   default_scope order: "version DESC"
 
 ###

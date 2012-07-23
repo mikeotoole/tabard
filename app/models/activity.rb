@@ -6,6 +6,7 @@
 # This class represents an actvity.
 ###
 class Activity < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Constants
 ###

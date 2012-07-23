@@ -6,6 +6,7 @@
 # This class represents a message association to a mssage, its recipient and the folder it is in.
 ###
 class MessageAssociation < ActiveRecord::Base
+  validates_lengths_from_database
 ###
 # Attribute accessible
 ###

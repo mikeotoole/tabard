@@ -6,6 +6,7 @@
 # This class represents an event.
 ###
 class Event < ActiveRecord::Base
+  validates_lengths_from_database except: [:name, :body]
 ###
 # Constants
 ###

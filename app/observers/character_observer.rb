@@ -18,4 +18,9 @@ class CharacterObserver < ActiveRecord::Observer
                         action: change)
     end
   end
+
+  # removes comment
+  def after_destroy(character)
+    Activity.where(target_type: character.character_proxy.class.to_s, target_id: character.character_proxy.id).destroy_all
+  end
 end

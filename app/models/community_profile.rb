@@ -6,6 +6,7 @@
 # This model represents a community profile.
 ###
 class CommunityProfile < ActiveRecord::Base
+  validates_lengths_from_database
   include Exceptions
 
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.

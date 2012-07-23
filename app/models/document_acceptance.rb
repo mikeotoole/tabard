@@ -6,6 +6,7 @@
 # This class represents the assocation between a message and a user of the acceptance of a document.
 ###
 class DocumentAcceptance < ActiveRecord::Base
+  validates_lengths_from_database
   belongs_to :user
   belongs_to :document
 end

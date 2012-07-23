@@ -6,6 +6,7 @@
 # This class represents a message.
 ###
 class Message < ActiveRecord::Base
+  validates_lengths_from_database except: [:subject, :body]
 ###
 # Constants
 ###

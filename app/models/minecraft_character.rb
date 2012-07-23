@@ -6,6 +6,7 @@
 # This class represents a Minecraft character.
 ###
 class MinecraftCharacter < BaseCharacter
+  validates_lengths_from_database except: [:name]
 ###
 # Constants
 ###

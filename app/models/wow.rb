@@ -6,6 +6,7 @@
 # This class represents the World of Warcraft game.
 ###
 class Wow < Game
+  validates_lengths_from_database
 ###
 # Constants
 ###

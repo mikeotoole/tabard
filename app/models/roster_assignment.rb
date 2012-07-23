@@ -6,6 +6,7 @@
 # This class represents an assignment of a character_proxy to a community profile.
 ###
 class RosterAssignment < ActiveRecord::Base
+  validates_lengths_from_database
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 

@@ -6,6 +6,7 @@
 # This class represents a discussion.
 ###
 class Discussion < ActiveRecord::Base
+  validates_lengths_from_database except: [:name, :body]
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 

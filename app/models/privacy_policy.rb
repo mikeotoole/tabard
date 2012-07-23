@@ -6,6 +6,7 @@
 # This class represents a PrivacyPolicy Document.
 ###
 class PrivacyPolicy < Document
+  validates_lengths_from_database
 ###
 # Public Methods
 ###

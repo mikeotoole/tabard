@@ -16,4 +16,10 @@ class RosterAssignmentObserver < ActiveRecord::Observer
                         action: "accepted")
     end
   end
+
+  # removes activity
+  def after_destroy(roster_assignment)
+    target = roster_assignment
+    Activity.where(target_type: target.class.to_s, target_id: target.id).destroy_all
+  end
 end

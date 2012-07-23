@@ -6,6 +6,7 @@
 # This class represents an Artwork Agreement Document.
 ###
 class ArtworkAgreement < Document
+  validates_lengths_from_database
 ###
 # Associations
 ###
