@@ -53,9 +53,22 @@ class Subdomains::CommunitiesController < SubdomainsController
 
   # This clears the action items for the community
   def clear_action_items
+    authorize! :update, @community
     @community.action_items = {}
-    @community.save
-    redirect_to subdomain_home_url
+    if @community.save
+      success = true
+      message = ''
+    else
+      success = false
+      message = 'Unable to clear action items.'
+    end
+    respond_to do |format|
+      format.html {
+        flash[:error] = message unless success
+        redirect_to subdomain_home_url
+      }
+      format.js { render json: { success: success, message: message } }
+    end
   end
 
   # Removes confirmations

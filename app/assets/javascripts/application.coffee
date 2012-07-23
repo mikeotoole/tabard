@@ -85,9 +85,27 @@ root = exports ? this
     $('#modal button.affirm').click ->
       action($('#modal #prompt').val())
       dismiss()
-        
+
+  $.flash = (type, html) ->
+    $('<ul id="flash">').insertAfter '#bar' unless $('#flash').length
+    $('<li>').addClass(type).html(html).appendTo('#flash').trigger 'init'
+    adjustHeaderByFlash()
+
 ) jQuery
 
+
+# Adjust page to accomodate flash messages
+adjustHeaderByFlash = (speed,rowOffset=0) ->
+  if $('body.fluid').length or $('#flash').length
+    messageCount = $('#flash li').length ? 0
+    amount = (messageCount + rowOffset) * 40
+    $('#header')
+      .animate({ paddingTop: amount }, speed)
+    $('body:not(.top_level) #body')
+      .animate({ marginTop: amount }, speed)
+    if $('.sidemenu').length
+      $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions, #calendar')
+        .animate({ top: (amount + 70) + 'px' }, speed)
 
 # sets up select box improved functionality
 root.initSelects = ->
@@ -172,60 +190,47 @@ $(document).ready ->
         .prop({ action: $(@).attr('action') })
         .find('input[name="_method"]')
         .val $(@).attr('method')
-  
-  # flash messages
-  adjustHeaderByFlash = (speed,rowOffset=0) ->
-    if $('body.fluid').length || $('#flash').length
-      messageCount = $('#flash li').length or= 0
-      amount = (messageCount + rowOffset) * 40
-      $('#header')
-        .animate({ paddingTop: amount }, speed)
-      $('body:not(.top_level) #body')
-        .animate({ marginTop: amount }, speed)
-      if $('.sidemenu').length
-        $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions, #calendar')
-          .animate({ top: (amount + 70) + 'px' }, speed)
 
-  $('body')
-    .delegate '#flash li', 'init', ->
-      $(@).append('<a class="dismiss">✕</a>')
-      $(@)
-        .css({ height: 0, lineHeight: 0 })
-        .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
-      
-      $(@).find('.dismiss')
-        .click ->
-          adjustHeaderByFlash(300,-1)
-          $(@)
-            .closest('li')
-            .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-              $(@).remove()
-              
-      $(@).find('.read')
-        .bind 'ajax:beforeSend', ->
-          $(@).closest('li').addClass('busy')
-        .bind 'ajax:error', (xhr, status, error) ->
-          row = $(@).closest('li')
-          $.alert
-            body: error
-            action: ->
-              row.removeClass('busy')
-        .bind 'ajax:success', (event, data, status, xhr) ->
-          $('#bar .notice a').each ->
-            num = $(@).attr('meta') - 1
-            if num > 0
-              $(@).attr 'meta', num
-            else
-              $(@).removeAttr 'meta'
-          adjustHeaderByFlash(300,-1)
-          $(@)
-            .closest('li')
-            .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-              if xhr.responseText
-                $('#flash').prepend xhr.responseText
-                $('#flash li:first').trigger 'init'
-              setTimeout adjustHeaderByFlash, 50
-              $(@).remove()
+  # Setup flash message events
+  $('body').on 'init', '#flash li', ->
+    $(@).append('<a class="dismiss">✕</a>')
+    $(@)
+      .css({ height: 0, lineHeight: 0 })
+      .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
+    
+    $(@).find('.dismiss')
+      .click ->
+        adjustHeaderByFlash(300,-1)
+        $(@)
+          .closest('li')
+          .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+            $(@).remove()
+            
+    $(@).find('.read')
+      .bind 'ajax:beforeSend', ->
+        $(@).closest('li').addClass('busy')
+      .bind 'ajax:error', (xhr, status, error) ->
+        row = $(@).closest('li')
+        $.alert
+          body: error
+          action: ->
+            row.removeClass('busy')
+      .bind 'ajax:success', (event, data, status, xhr) ->
+        $('#bar .notice a').each ->
+          num = $(@).attr('meta') - 1
+          if num > 0
+            $(@).attr 'meta', num
+          else
+            $(@).removeAttr 'meta'
+        adjustHeaderByFlash(300,-1)
+        $(@)
+          .closest('li')
+          .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+            if xhr.responseText
+              $('#flash').prepend xhr.responseText
+              $('#flash li:first').trigger 'init'
+            setTimeout adjustHeaderByFlash, 50
+            $(@).remove()
   $('#flash li').trigger 'init'
   
   # tiered form field selection
