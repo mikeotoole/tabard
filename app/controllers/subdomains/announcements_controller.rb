@@ -50,6 +50,8 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcement_spaces/:announcement_space_id/announcements/new(.:format)
   def new
+    @announcement = current_community.announcements.new()
+    @announcement.supported_game_id = params[:game].to_i if params.has_key? 'game'
   end
 
   # POST /announcement_spaces/:announcement_space_id/announcements(.:format)
