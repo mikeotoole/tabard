@@ -63,7 +63,8 @@
           = link_to 'Reject', reject_community_application_path, method: :post, class: 'button', confirm: "Are you sure you want to reject #{@community_application.user_profile_display_name}'s application?"
 
   - if @community_application.comments.any? or can? :comment, @community_application
-    = javascript_include_tag "comments"
+    - content_for :header do
+      = javascript_include_tag "comments"
     %h2.comments Comments
     %aside.comments
       - if @comments.size > 0
