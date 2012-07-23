@@ -17,6 +17,11 @@ module UrlHelper
       options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
       options[:only_path] ||= false
       options[:protocol] ||= 'http://'
+    elsif defined?(current_community) == nil
+      options[:host] = with_subdomain(current_community.subdomain)
+      options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
+      options[:only_path] ||= false
+      options[:protocol] ||= 'http://'
     end
     super
   end
