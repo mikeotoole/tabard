@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
   
   $('body').addClass 'fluid'
 

@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # mailbox checkbox select (for visual enhancement)
   $('#mailbox .meta input[type="checkbox"]')
@@ -30,6 +30,7 @@ $(document).ready ->
           envelope.removeAttr 'meta'
         dd.addClass 'read open'
       $('#message').html xhr.responseText
+      window.history.replaceState {}, $('#message h1').text(), $('#message header').attr 'slug'
   
   # user profile suggestion and selection for the "to" field
   $('#message.compose').each ->

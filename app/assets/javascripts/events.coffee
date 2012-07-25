@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # Date Picker
   $('#event_start_time_date, #event_end_time_date').each ->

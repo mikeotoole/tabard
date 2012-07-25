@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   # Character selections
   $('form.community_application .sidebar .characters .select label')

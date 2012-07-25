@@ -1,4 +1,4 @@
-$(document).ready ->
+jQuery(document).ready ($) ->
 
   $('#tabs')
     .on 'ajax:before', 'dt > a', ->
