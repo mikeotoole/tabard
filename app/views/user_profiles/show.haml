@@ -1,7 +1,8 @@
 - title "Profile: #{@user_profile.display_name}"
 - content_for :header do
   = stylesheet_link_tag "top_level/user_profiles"
-  = javascript_include_tag "user_profiles", "activities"
+  = javascript_include_tag "user_profiles"
+  = javascript_include_tag "activities"
 
 #body{ class: @user_profile == (user_signed_in? and current_user.user_profile) ? 'myprofile' : '' }
   %header

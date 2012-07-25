@@ -34,7 +34,7 @@
     - message.recipients.each do |profile|
       %dd
         - if current_user.user_profile == profile
-          = link_to 'Me', user_profile_url(profile), meta: "My profile"
+          = link_to 'Me', user_profile_url(profile), meta: "My profile", class: 'me'
         - elsif current_user.address_book.include?(profile)
           = link_to profile.name, user_profile_url(profile), meta: "View profile"
         - else

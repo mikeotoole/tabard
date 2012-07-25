@@ -1,7 +1,18 @@
-=bg_gradient($color1, $color2)
-  background: -moz-linear-gradient(top, $color1, $color2)
-  background: -webkit-gradient(linear, left top, left bottom, from($color1), to($color2))
+=animation($value)
+  -moz-animation: $value
+  -webkit-animation: $value
+  animation: $value
+
+=bg_gradient($color1, $color2, $pos1: left top, $pos2: left bottom, $type: linear, $extra: "")
+  background: -moz-linear-gradient(top, $color1, $color2) #{$extra}
+  background: -webkit-gradient($type, $pos1, $pos2, from($color1), to($color2)) #{$extra}
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$color1}, endColorstr=#{$color2})"
+
+=border_image($value)
+  -moz-border-image: $value
+  -o-border-image: $value
+  -webkit-border-image: $value
+  border-image: $value
 
 =border_radius($top_left, $top_right: $top_left, $bottom_right: $top_left, $bottom_left: $top_left)
   @if unitless($top_left)
@@ -35,15 +46,30 @@
     border-bottom-right-radius: $bottom_right
     border-bottom-left-radius: $bottom_left
 
-=box_shadow($value)
-  -moz-box-shadow: $value
-  -webkit-box-shadow: $value
-  box-shadow: $value
+=box_shadow($v1, $v2: "", $v3: "")
+  @if $v3 != ""
+    -moz-box-shadow: $v1, $v2, $v3
+    -webkit-box-shadow: $v1, $v2, $v3
+    box-shadow: $v1, $v2, $v3
+  @else if $v2 != ""
+    -moz-box-shadow: $v1, $v2
+    -webkit-box-shadow: $v1, $v2
+    box-shadow: $v1, $v2
+  @else
+    -moz-box-shadow: $v1
+    -webkit-box-shadow: $v1
+    box-shadow: $v1
 
 =box_sizing($value)
   -moz-box-sizing: $value
   -webkit-box-sizing: $value
   box-sizing: $value
+
+=cursor_grab
+  cursor: all-scroll
+  cursor: -moz-grab
+  cursor: -webkit-grab
+  cursor: grab
 
 =opacity($opacity)
   -moz-opacity: $opacity
@@ -51,8 +77,54 @@
   opacity: $opacity
   filter: alpha(opacity = $opacity * 100)
 
-=transition($t1, $t2: "", $t3: "")
-  @if $t3 != ""
+=select($value)
+  -webkit-touch-callout: $value
+  -webkit-user-select: $value
+  -khtml-user-select: $value
+  -moz-user-select: $value
+  -ms-user-select: $value
+  user-select: $value
+
+=selection($background, $color: "", $nested: 0)
+  @if $nested == 0
+    ::-moz-selection
+      background: $background
+      @if $color != ""
+        color: $color
+    ::-webkit-selection
+      background: $background
+      @if $color != ""
+        color: $color
+    ::selection
+      background: $background
+      @if $color != ""
+        color: $color
+  @else
+    &::-moz-selection
+      background: $background
+      @if $color != ""
+        color: $color
+    &::-webkit-selection
+      background: $background
+      @if $color != ""
+        color: $color
+    &::selection
+      background: $background
+      @if $color != ""
+        color: $color
+
+=transition($t1, $t2: "", $t3: "", $t4: "", $t5: "")
+  @if $t5 != ""
+    -moz-transition: $t1, $t2, $t3, $t4, $t5
+    -o-transition: $t1, $t2, $t3, $t4, $t5
+    -webkit-transition: $t1, $t2, $t3, $t4, $t5
+    transition: $t1, $t2, $t3, $t4, $t5
+  @else if $t4 != ""
+    -moz-transition: $t1, $t2, $t3, $t4
+    -o-transition: $t1, $t2, $t3, $t4
+    -webkit-transition: $t1, $t2, $t3, $t4
+    transition: $t1, $t2, $t3, $t4
+  @else if $t3 != ""
     -moz-transition: $t1, $t2, $t3
     -o-transition: $t1, $t2, $t3
     -webkit-transition: $t1, $t2, $t3
