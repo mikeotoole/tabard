@@ -3,12 +3,12 @@
   = stylesheet_link_tag 'top_level/support'
 
 #body
-  %h1 Crumblin Support
+  %h1 Guild.io Support
 
   - unless user_signed_in?
     %p
       Please
-      = link_to 'log into Crumblin', new_user_session_url
+      = link_to 'log into Guild.io', new_user_session_url
       to create or update your support tickets.
   
   - else

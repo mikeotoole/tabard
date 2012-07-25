@@ -17,7 +17,7 @@ FactoryGirl.define do
     certify_owner_of_artwork true
     
     factory :artwork_upload_att do
-      remote_artwork_image_url "http://crumblin.com/images/crumblin-logo.png" # TOOD Mike, This will need to be updated when the site is launched.
+      remote_artwork_image_url "http://guild.io/images/guild.io-logo.png" # TOOD Mike, This will need to be updated when the site is launched.
     end
   end
 end

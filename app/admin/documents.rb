@@ -1,5 +1,5 @@
 ActiveAdmin.register Document do
-  menu parent: "Crumblin", if: proc{ can?(:read, Document) }
+  menu parent: "Guild.io", if: proc{ can?(:read, Document) }
   controller.load_resource only: [:edit, :update]
   controller.authorize_resource
   controller.cache_sweeper :document_sweeper

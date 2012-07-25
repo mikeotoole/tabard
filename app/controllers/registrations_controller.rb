@@ -21,8 +21,8 @@ class RegistrationsController < Devise::RegistrationsController
   # Overriding Devise method to add a flash if the user is signing up from a community.
   def new
     community = Community.find_by_id(params[:community_id])
-    add_new_flash_message "Before you can apply to #{community.name} you need to create a Crumblin&trade; account or login.", "notice" if community
-    add_new_flash_message "This version of Crumblin&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
+    add_new_flash_message "Before you can apply to #{community.name} you need to create a Guild.io&trade; account or login.", "notice" if community
+    add_new_flash_message "This version of Guild.io&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
     super
   end
 
@@ -104,7 +104,7 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.reset_password_by_token(params[resource_name])
     if resource.errors.empty?
       resource.update_attribute(:user_disabled_at, nil)
-      add_new_flash_message "Your account has been reinstated. Welcome back to Crumblin&trade;!", "success"
+      add_new_flash_message "Your account has been reinstated. Welcome back to Guild.io&trade;!", "success"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
     else

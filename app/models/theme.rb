@@ -27,7 +27,7 @@ class Theme < ActiveRecord::Base
 
   # This method returns the default theme.
   def self.default_theme
-    Theme.find_by_name("Crumblin")
+    Theme.find_by_name("Guild.io")
   end
 end
 
