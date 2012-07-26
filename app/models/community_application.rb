@@ -60,6 +60,7 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Delegates
 ###
+  delegate :subdomain, to: :community, prefix: true
   delegate :admin_profile_id, to: :community, prefix: true
   delegate :custom_form, to: :submission, allow_nil: true
   delegate :answers, to: :submission, allow_nil: true, prefix: true
@@ -94,8 +95,10 @@ class CommunityApplication < ActiveRecord::Base
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, without_protection: true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
+      # TODO Mike, Link needs to be changed to crumblin.com when we launch.
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Accepted",
-                  body: "Your application to #{self.community.name} has been accepted. It will now appear in your communities list.",
+                  body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted. It will now appear in your communities list.",
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
@@ -118,8 +121,10 @@ class CommunityApplication < ActiveRecord::Base
   def reject_application(rejected_by_user_profile)
     return false unless self.is_pending? or self.applicant_is_a_member?
     if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, without_protection: true)
+      # TODO Mike, Link needs to be changed to crumblin.com when we launch.
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Rejected",
-                            body: "Your application to #{self.community.name} has been rejected.",
+                            body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been rejected.",
                             to: [self.user_profile_id])
     end
   end
@@ -246,7 +251,7 @@ protected
       # TODO Mike, Link needs to be changed to crumblin.com when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
-                            body: "#{self.user_profile.name} has submitted their application to #{self.community.name}. [Review Application](#{community_application_url(self)})",
+                            body: "[#{self.user_profile.name}](#{user_profile_url(self.user_profile)}) has submitted their application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}). [Review Application](#{community_application_url(self)})",
                             to: [self.community.admin_profile_id])
     end
   end

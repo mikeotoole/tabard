@@ -33,6 +33,9 @@ module DaBvRails
                                       :message_association_observer, :acknowledgement_observer, :comment_observer,
                                       :support_ticket_observer, :support_comment_observer
 
+    # This protects attributes automatically
+    config.active_record.whitelist_attributes = true
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = "Pacific Time (US & Canada)"
