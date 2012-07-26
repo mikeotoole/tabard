@@ -6,7 +6,7 @@
 # This class is a mailer used by the MessageAssociationObserver to send emails.
 ###
 class MessageAssociationMailer < ActionMailer::Base
-  default from: "Crumblin <noreply@crumblin.com>",
+  default from: "Guild.io <noreply@guild.io>",
           content_type: "text/html"
   layout 'mailer'
 
@@ -14,7 +14,7 @@ class MessageAssociationMailer < ActionMailer::Base
   def new_message(message_association_id)
     @message_association = MessageAssociation.find_by_id(message_association_id)
     if !!@message_association
-      @subject = @message_association.is_system_sent ? "Crumblin - #{@message_association.subject}" : "Crumblin - New Message From #{@message_association.author_name}"
+      @subject = @message_association.is_system_sent ? "Guild.io - #{@message_association.subject}" : "Guild.io - New Message From #{@message_association.author_name}"
       @user_profile = @message_association.recipient
       mail(to: @user_profile.email, subject: @subject) do |format|
          format.html { render "mailers/new_message" }

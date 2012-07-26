@@ -1,5 +1,5 @@
 ActiveAdmin.register SupportTicket do
-  menu parent: "Crumblin"
+  menu parent: "Guild.io"
   controller.authorize_resource except: :take
 
   actions :index, :show, :edit, :update

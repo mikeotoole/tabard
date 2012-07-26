@@ -6,7 +6,7 @@
 # This class is a mailer used by the SupportComment to send emails.
 ###
 class SupportCommentMailer < ActionMailer::Base
-  default from: "Crumblin <noreply@crumblin.com>",
+  default from: "Guild.io <noreply@guild.io>",
           content_type: "text/html"
   layout 'mailer'
 
@@ -17,7 +17,7 @@ class SupportCommentMailer < ActionMailer::Base
       @user_profile = @support_comment.user_profile
       @support_ticket = @support_comment.support_ticket
       @url = admin_support_ticket_url(@support_ticket)
-      mail(to: @support_comment.support_ticket_admin_user_email, subject: "Crumblin - New Support Comment") do |format|
+      mail(to: @support_comment.support_ticket_admin_user_email, subject: "Guild.io - New Support Comment") do |format|
          format.html { render "mailers/new_support_comment" }
       end
     end

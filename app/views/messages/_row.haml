@@ -23,4 +23,4 @@
         %strong= pluralize(message.recipients.size-1,'other')
 
   %p.body
-    = truncate message.body, length: 100, separator: ' '
+    = truncate strip_tags(RDiscount.new(message.body).to_html), length: 100, separator: ' '

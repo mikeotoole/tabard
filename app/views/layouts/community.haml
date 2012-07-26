@@ -2,10 +2,10 @@
 !!!
 %html
   %head
-    %title= yield_for(:title, "#{current_community.name} - Crumblin™")
+    %title= yield_for(:title, "#{current_community.name} - Guild.io™")
     %link{ href: "/stylesheets/fonts.css", media: "screen", rel: "stylesheet", type: "text/css" }
     = stylesheet_link_tag "application/community"
-    = stylesheet_link_tag use_default_theme? ? "themes/crumblin" : "themes/#{current_community.theme_css}", class: 'theme'
+    = stylesheet_link_tag use_default_theme? ? "themes/guild.io" : "themes/#{current_community.theme_css}", class: 'theme'
     - if current_community.background_color or current_community.background_image or current_community.title_color
       %style{type: "text/css", media: "screen"}
         - unless !!current_community.title_color and current_community.title_color.gsub(/[^a-f0-9]/i, '') == ''

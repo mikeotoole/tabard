@@ -6,6 +6,8 @@
 # This class represents an event.
 ###
 class Event < ActiveRecord::Base
+  include Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
+
   validates_lengths_from_database except: [:name, :body]
 ###
 # Constants
@@ -71,6 +73,8 @@ class Event < ActiveRecord::Base
   delegate :name, to: :community, prefix: true, allow_nil: true
   delegate :member_profiles, to: :community, prefix: true, allow_nil: true
   delegate :id, to: :creator, prefix: true
+
+  delegate :url_helpers, to: 'Rails.application.routes'
 
 ###
 # Callbacks
@@ -143,30 +147,20 @@ def notify_users
   return true unless self.persisted?
   return true if self.invites.blank?
   if name_changed? or body_changed?
-    if name_changed? and body_changed?
-      message_the_invites("had the name and/or body changed")
-    else
-      message_the_invites("had the name changed") if name_changed?
-      message_the_invites("had the body changed") if body_changed?
-    end
     self.invites.unscoped.update_all({is_viewed: false})
-  end
-  if start_time_changed? or end_time_changed?
-    if start_time_changed? and end_time_changed?
-      message_the_invites("had the starting and ending time changed")
-    else
-      message_the_invites("had the starting time changed") if start_time_changed?
-      message_the_invites("had the ending time changed") if end_time_changed?
-    end
+    message_the_invites
+  elsif start_time_changed? or end_time_changed?
     self.invites.unscoped.update_all({status: nil, expiration: self.end_time, is_viewed: false})
+    message_the_invites('Please update your RSVP status.')
   end
   return true
 end
 
 # This messages the invited person
-def message_the_invites(reason)
-  Message.create_system(subject: "An event you were invited to has changed",
-      body: "The #{name_was} event you were invited to has #{reason}",
+def message_the_invites(text='')
+  default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.guild.io" : "#{community.subdomain}.lvh.me:3000"
+  Message.create_system(subject: "Event Changed",
+      body: "The event, [#{name}](#{event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
       to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
 end
 

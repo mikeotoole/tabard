@@ -69,14 +69,15 @@ class Subdomains::EventsController < SubdomainsController
     valid = (1 <= @week and @week <= 52) if valid
 
     if valid
-      @date = DateTime.commercial(@year, @week, 1).utc
+      @date = DateTime.commercial(@year, @week, 1, 0, 0, 0, "#{Time.current.utc_offset / 3600}")
       @events = current_community.events.intersects_with(@date, @date.end_of_week)
       @events_by_cwday_by_hour = Hash[[1,2,3,4,5,6,7].map{|weekday| [weekday, Hash[(0..23).map{|hour| [hour, []] }]] }]
-
       @events.each do |event|
+        event_start = event.start_time.to_datetime
+        event_end = event.end_time.to_datetime
         @date.upto(@date.end_of_week) do |date|
-          if event.start_time < date.end_of_day and event.end_time > date
-            start = event.start_time < date ? date : event.start_time.to_datetime
+          if event_start < date.end_of_day and event_end > date
+            start = event_start < date ? date : event_start
             @events_by_cwday_by_hour[date.cwday][start.hour] << event
           end
         end
@@ -198,7 +199,7 @@ protected
 
   # This adds a little flash notice to reminde the user to RSVP.
   def rsvp_flash
-    default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.brutalvenom.com" : "#{current_community.subdomain}.lvh.me"
+    default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.guild.io" : "#{current_community.subdomain}.lvh.me"
     invite = current_user.invites.find_by_event_id(@event.id)
     add_new_flash_message "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>", 'notice' if invite != nil and invite.status == nil
   end

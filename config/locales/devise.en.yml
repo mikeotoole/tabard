@@ -21,7 +21,7 @@ en:
       invalid_token: 'Invalid authentication token.'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
-      admin_disabled: 'Your account has been disabled by Crumblin.'
+      admin_disabled: 'Your account has been disabled by Guild.io.'
       user_disabled: 'Your account has been disabled. Please reinstate account first.'
     sessions:
       signed_in: 'Welcome. You are now signed in.'
@@ -52,8 +52,8 @@ en:
       failure: 'Could not authorize you from %{kind} because "%{reason}".'
     mailer:
       confirmation_instructions:
-        subject: 'Crumblin - Account confirmation instructions'
+        subject: 'Guild.io - Account confirmation instructions'
       reset_password_instructions:
-        subject: 'Crumblin - Reset password instructions'
+        subject: 'Guild.io - Reset password instructions'
       unlock_instructions:
-        subject: 'Crumblin - Unlock instructions'
+        subject: 'Guild.io - Unlock instructions'
