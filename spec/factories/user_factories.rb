@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
   
   factory :disabled_user, :parent => :user do
-    after_create do |u|
+    after(:create) do |u|
       u.disable_by_admin
     end
   end
@@ -29,13 +29,13 @@ FactoryGirl.define do
     accepted_current_terms_of_service true
     accepted_current_privacy_policy true
     date_of_birth 35.years.ago.to_date
-    after_create do |u|
+    after(:create) do |u|
       FactoryGirl.create(:character_proxy_with_swtor_character, :user_profile => u.user_profile)
     end
   end
 
   factory :community_admin, :parent => :user do
-    after_create do |u|
+    after(:create) do |u|
       FactoryGirl.create(:community, :admin_profile_id => u.user_profile_id)
     end
   end

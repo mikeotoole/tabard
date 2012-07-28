@@ -8,11 +8,11 @@ FactoryGirl.define do
   end
   
   factory :custom_form_w_questions, :parent => :custom_form do
-    after_create { |form| create_questions(form) }
+    after(:create) { |form| create_questions(form) }
   end
   
   factory :full_custom_form, :parent => :custom_form_w_questions do
-    after_create { |form| create_submissions(form) }
+    after(:create) { |form| create_submissions(form) }
   end
 
   factory :long_answer_question, :class => Question do
@@ -77,7 +77,7 @@ FactoryGirl.define do
   factory :submission_w_answers, :parent => :submission do
     user_profile_id { DefaultObjects.user_profile.id }
     custom_form_id { FactoryGirl.create(:custom_form_w_questions).id }
-    after_create { |submission| create_answers(submission) }
+    after(:create) { |submission| create_answers(submission) }
   end
 end
 
