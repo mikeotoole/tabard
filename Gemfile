@@ -2,6 +2,7 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
 source 'http://rubygems.org'#                                                               LICENSE - URL
+ruby '1.9.3'
 
 # Rails Gem
   gem 'rails'#                                                                              MIT - https://github.com/rails/rails

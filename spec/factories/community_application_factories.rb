@@ -7,7 +7,7 @@ FactoryGirl.define do
     character_proxies { DefaultObjects.fresh_user_profile.character_proxies }
     
     factory :community_application_with_comment do
-      after_create { |community_application| FactoryGirl.create(:comment, :commentable_id => community_application.id, :commentable_type => "CommunityApplication") }
+      after(:create) { |community_application| FactoryGirl.create(:comment, :commentable_id => community_application.id, :commentable_type => "CommunityApplication") }
     end
   end
 end

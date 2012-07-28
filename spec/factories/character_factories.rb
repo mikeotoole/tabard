@@ -51,17 +51,17 @@ FactoryGirl.define do
   
    # minecraft character with default user profile
   factory :minecraft_char_profile, :parent => :minecraft_character do
-    after_create { |c| set_character_proxy(c) }
+    after(:create) { |c| set_character_proxy(c) }
   end
   
   # wow character with default user profile
   factory :wow_char_profile, :parent => :wow_character do
-    after_create { |c| set_character_proxy(c) }
+    after(:create) { |c| set_character_proxy(c) }
   end
   
   # swtor character with default user profile
   factory :swtor_char_profile, :parent => :swtor_character do
-    after_create { |c| set_character_proxy(c) }
+    after(:create) { |c| set_character_proxy(c) }
   end
   
   factory :character_proxy do
