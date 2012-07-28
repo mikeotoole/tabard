@@ -108,10 +108,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create( user_profile: current_user.user_profile,
+      Activity.create( {user_profile: current_user.user_profile,
                         community: @supported_game.community,
                         target: @supported_game,
-                        action: @action)
+                        action: @action}, without_protection: true)
     end
   end
 end
