@@ -182,11 +182,11 @@ protected
   def create_acknowledgements
     if self.supported_game
       self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
-        community_profile.acknowledgements.create(announcement: self, has_been_viewed: community_profile.user_profile_id == self.user_profile_id ? true : false)
+        community_profile.acknowledgements.create({announcement: self, has_been_viewed: community_profile.user_profile_id == self.user_profile_id ? true : false}, without_protection: true)
       end
     else
       self.community.community_profiles.each do |community_profile|
-        community_profile.acknowledgements.create(announcement: self, has_been_viewed: community_profile.user_profile_id == self.user_profile_id ? true : false)
+        community_profile.acknowledgements.create({announcement: self, has_been_viewed: community_profile.user_profile_id == self.user_profile_id ? true : false}, without_protection: true)
       end
     end
   end
