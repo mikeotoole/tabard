@@ -4,7 +4,7 @@ Encoding.default_internal = Encoding::UTF_8
 source 'http://rubygems.org'#																LICENSE - URL
 
 # Rails Gem
-  gem 'rails' # https://github.com/rails/rails - MIT
+  gem 'rails'#																				MIT - https://github.com/rails/rails
 
 # ActiveRecord extensions
   gem 'rails3_acts_as_paranoid'#															MIT - https://github.com/goncalossilva/rails3_acts_as_paranoid
