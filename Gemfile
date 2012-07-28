@@ -1,111 +1,111 @@
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
-source 'http://rubygems.org'
+source 'http://rubygems.org'#																LICENSE - URL
 
 # Rails Gem
-  gem 'rails'
+  gem 'rails' # https://github.com/rails/rails - MIT
 
 # ActiveRecord extensions
-  gem 'rails3_acts_as_paranoid', git: 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git'
-  gem "nilify_blanks"
+  gem 'rails3_acts_as_paranoid'#															MIT - https://github.com/goncalossilva/rails3_acts_as_paranoid
+  gem 'nilify_blanks'#																		MIT - https://github.com/rubiety/nilify_blanks
 
 # Javascript Library
-  gem 'jquery-rails'
+  gem 'jquery-rails'#																		MIT - https://github.com/rails/jquery-rails
 
 # Meta Languages
-  gem 'haml'
-  gem 'squeel'
+  gem 'haml'#																				MIT - https://github.com/haml/haml
+  gem 'squeel'#																				MIT - https://github.com/ernie/squeel
 
 # Database Protection
-  gem 'validates_lengths_from_database'
+  gem 'validates_lengths_from_database'#													MIT - https://github.com/rubiety/validates_lengths_from_database
 
 # User Authentication
-  gem 'devise'
+  gem 'devise'#																				MIT - https://github.com/plataformatec/devise
 
 # Permissions/AC
-  gem 'cancan'
+  gem 'cancan'#																				MIT - https://github.com/ryanb/cancan
 
 # Caching
-  gem 'dalli'
+  gem 'dalli'#																				MIT - https://github.com/mperham/dalli
 
 # Form Handling
-  gem 'simple_form', git: 'git://github.com/dw2/simple_form.git'
-  gem 'client_side_validations'
-  gem 'country_select'
+  gem 'simple_form', git: 'git://github.com/dw2/simple_form.git'#							MIT - https://github.com/plataformatec/simple_form
+  gem 'client_side_validations'#															MIT - https://github.com/bcardarella/client_side_validations
+  gem 'country_select'#																		MIT - https://github.com/stefanpenner/country_select
 
 # Browser Detection
-  gem 'browser'
+  gem 'browser'#																			MIT - https://github.com/fnando/browser
 
 # Pagination
-  gem 'kaminari' # MIT license
+  gem 'kaminari'#																			MIT - https://github.com/amatsuda/kaminari
 
 # Memory Usage
-  gem 'oink'
+  gem 'oink'#																				MIT - https://github.com/noahd1/oink
 
 # Filtering
-  gem 'profanalyzer'
+  gem 'profanalyzer'#																		MIT - http://profanalyzer.rubyforge.org
 
 # Background jobs
-  gem 'delayed_job_active_record'
+  gem 'delayed_job_active_record'#															MIT - https://github.com/collectiveidea/delayed_job_active_record
 
 # Markup
-  gem 'rdiscount'
-  gem 'sanitize'
+  gem 'rdiscount'#																			BSD - https://github.com/rtomayko/rdiscount
+  gem 'sanitize'#																			MIT - https://github.com/rgrove/sanitize
 
 # Image Storage and Manipulation
-  gem 'fog'
-  gem 'mini_magick'
-  gem 'carrierwave'
-  gem 'asset_sync'
+  gem 'fog'#																				MIT - https://github.com/fog/fog
+  gem 'mini_magick'#																		MIT - https://github.com/probablycorey/mini_magick
+  gem 'carrierwave'#																		MIT - https://github.com/jnicklas/carrierwave
+  gem 'asset_sync'#																			MIT - https://github.com/rumblelabs/asset_sync
 
 # Admin Portal
-  gem 'meta_search', '>= 1.1.0.pre'
-  gem 'activeadmin', '>= 0.4.2'
+  gem 'meta_search'#																		MIT - https://github.com/ernie/meta_search
+  gem 'activeadmin'#																		MIT - https://github.com/gregbell/active_admin
 
 # Asset Specific Gems, Pulled out of Group for Activeadmin
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
+  gem 'sass-rails'#																			MIT - https://github.com/rails/sass-rails
+  gem 'coffee-rails'#																		MIT - https://github.com/rails/coffee-rails
+  gem 'uglifier'#																			MIT - https://github.com/lautis/uglifier
 
   group :assets do
 
   end
 
 # Seeding Data
-  gem 'timecop'
+  gem 'timecop'#																			MIT - https://github.com/jtrupiano/timecop
 
 # Production Specific Gems
   group :production do
-    gem 'thin'
-    gem 'pg'
-    gem 'newrelic_rpm'
+    gem 'thin'#																				Ruby - https://github.com/macournoyer/thin/
+    gem 'pg'#																				Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
+    gem 'newrelic_rpm'#																		MIT - https://github.com/newrelic/rpm
   end
 
 # Development Specific Gems
   group :development do
-    gem 'annotate'
-    gem 'rails_best_practices'
-    gem 'haml-rails'
-    gem 'bullet'
-    gem 'brakeman'
+    gem 'annotate'#																			Ruby - https://github.com/ctran/annotate_models
+    gem 'rails_best_practices'#																MIT - https://github.com/railsbp/rails_best_practices
+    gem 'haml-rails'#																		MIT - https://github.com/indirect/haml-rails
+    gem 'bullet'#																			MIT - https://github.com/flyerhzm/bullet
+    gem 'brakeman'#																			MIT - https://github.com/presidentbeef/brakeman
   end
 
 # Development and Test Specific Gems
   group :development, :test do
-    gem 'sqlite3'
-    gem 'rspec-rails'
-    gem 'factory_girl_rails'
+    gem 'sqlite3'#																			Custom - https://github.com/luislavena/sqlite3-ruby
+    gem 'rspec-rails'#																		MIT - https://github.com/rspec/rspec-rails
+    gem 'factory_girl_rails'#																MIT - https://github.com/thoughtbot/factory_girl_rails
   end
 
 # Test Specific Gems
   group :test do
-    gem 'capybara'
-    gem 'database_cleaner'
-    gem 'rb-fsevent'
-    gem 'guard-rspec'
-    gem 'guard-livereload'
-    gem 'growl_notify'
-    gem 'simplecov'
-    gem 'ruby-debug19'
+    gem 'capybara'#																			MIT - https://github.com/jnicklas/capybara
+    gem 'database_cleaner'#																	MIT - https://github.com/bmabey/database_cleaner
+    gem 'rb-fsevent'#																		MIT - https://github.com/thibaudgg/rb-fsevent
+    gem 'guard-rspec'#																		MIT - https://github.com/guard/guard-rspec
+    gem 'guard-livereload'#																	MIT - https://github.com/guard/guard-livereload
+    gem 'growl_notify'#																		MIT - https://github.com/scottdavis/growl_notify
+    gem 'simplecov'#																		MIT - https://github.com/colszowka/simplecov
+    gem 'ruby-debug19'#																		LGPL - http://rubyforge.org/projects/ruby-debug19
   end
