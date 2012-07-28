@@ -1,7 +1,6 @@
-spec
-log
-lib/tasks/dev_tasks
-vedor
-tmp
-public/uploads
 doc
+lib/tasks/dev_tasks
+log
+public/uploads
+spec
+tmp
