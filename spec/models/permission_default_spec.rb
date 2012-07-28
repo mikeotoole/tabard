@@ -27,7 +27,7 @@
 require 'spec_helper'
 
 describe PermissionDefault do
-  let(:some_new_role) { Factory.create(:role) }
+  let(:some_new_role) { create(:role) }
   
   describe "should be autocreated for a role" do
     describe "for custom form" do

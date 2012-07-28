@@ -28,9 +28,7 @@ class Theme < ActiveRecord::Base
 
 
   # This method returns the default theme.
-  def self.default_theme
-#     Theme.create!({name: "Guild.io", css: "guild.io", thumbnail: "guild.io.jpg"}, without_protection: true)
-  
+  def self.default_theme  
     Theme.find_or_create_by_name_and_css_and_thumbnail("Guild.io", "guild.io", "guild.io.jpg")
   end
 end

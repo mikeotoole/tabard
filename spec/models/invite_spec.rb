@@ -16,7 +16,7 @@
 require 'spec_helper'
 
 describe Invite do
-  let(:invite) { Factory.create(:invite) }
+  let(:invite) { create(:invite) }
 
   it "should create a new instance given valid attributes" do
     invite.should be_valid

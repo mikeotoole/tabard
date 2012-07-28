@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe CommunityProfile do
-  let(:profile) { Factory.create(:community_profile, :community => FactoryGirl.create(:community_with_supported_games)) }
+  let(:profile) { create(:community_profile, :community => FactoryGirl.create(:community_with_supported_games)) }
   let(:community) { profile.community }
   let(:profile_with_characters) { create(:community_profile_with_characters) }
   let(:some_other_community) { create(:community) }
@@ -27,19 +27,19 @@ describe CommunityProfile do
 # Attribute Tests
 ###
   it "should require a user_profile" do
-    lambda { Factory.build(:community_profile, :user_profile => nil, :community_application => FactoryGirl.create(:community_application, character_proxies: Array.new, community: community, user_profile: nil, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => nil))).should_not be_valid }.should raise_error
+    lambda { build(:community_profile, :user_profile => nil, :community_application => FactoryGirl.create(:community_application, character_proxies: Array.new, community: community, user_profile: nil, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => nil))).should_not be_valid }.should raise_error
   end
 
   it "should require a community" do
-    Factory.build(:community_profile_with_nil_community).should_not be_valid
+    build(:community_profile_with_nil_community).should_not be_valid
   end
   describe "roles" do
     it "should not be empty" do
-      Factory.build(:community_profile, :roles => Array.new).should_not be_valid
+      build(:community_profile, :roles => Array.new).should_not be_valid
     end
 
     it "should not allow excluding the member role" do
-      Factory.build(:community_profile, :roles => []).should_not be_valid
+      build(:community_profile, :roles => []).should_not be_valid
     end
 
     describe "adding" do
@@ -73,7 +73,7 @@ describe CommunityProfile do
 
   describe "character_proxies" do
     it "should be allowed empty" do
-      Factory.build(:community_profile, :character_proxies => Array.new).should be_valid
+      build(:community_profile, :character_proxies => Array.new).should be_valid
     end
 
     describe "Conditional finders" do

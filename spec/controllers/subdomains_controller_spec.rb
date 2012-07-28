@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SubdomainsController do
   let(:user_profile) { create(:user_profile)}
   let(:user) { user_profile.user }
-  let(:community) { Factory.create(:community) }
+  let(:community) { create(:community) }
 
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"

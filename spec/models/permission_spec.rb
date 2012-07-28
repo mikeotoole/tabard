@@ -23,7 +23,7 @@
 require 'spec_helper'
 
 describe Permission do
-  let(:permission) { Factory.create(:permission) }
+  let(:permission) { create(:permission) }
   
   it "should create a new instance given valid attributes" do
     permission.should be_valid

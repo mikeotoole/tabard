@@ -13,7 +13,7 @@
 require 'spec_helper'
 
 describe Game do
-  let(:swtor) { Factory.create(:swtor) }
+  let(:swtor) { create(:swtor) }
 
   it "should not allow new instance of base class" do
     assert_raises(ActiveRecord::StatementInvalid) do

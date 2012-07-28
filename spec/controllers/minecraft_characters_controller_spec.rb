@@ -34,7 +34,7 @@ describe MinecraftCharactersController do
   
   describe "GET 'edit'" do
     before(:each) do
-      @character = Factory.create(:minecraft_char_profile)
+      @character = create(:minecraft_char_profile)
     end
   
     it "should be successful when authenticated as an authorized user" do
@@ -146,7 +146,7 @@ describe MinecraftCharactersController do
   end
   
   it "PUT 'update' should respond forbidden when authenticated as an unauthorized user" do
-    @character = Factory.create(:minecraft_char_profile)
+    @character = create(:minecraft_char_profile)
     some_user_profile = create(:user_profile)
     sign_in some_user_profile.user
     put 'update', :id => @character, :minecraft_character => { :name => "My New Name" }
@@ -155,7 +155,7 @@ describe MinecraftCharactersController do
   
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
-      @character = Factory.create(:minecraft_char_profile)
+      @character = create(:minecraft_char_profile)
       put 'update', :id => @character, :minecraft_character => { :name => 'My new name.' }
     end
     
@@ -170,7 +170,7 @@ describe MinecraftCharactersController do
 
   describe "DELETE 'destroy'" do
     before(:each) do
-      @character = Factory.create(:minecraft_char_profile)
+      @character = create(:minecraft_char_profile)
     end
   
     it "should be successful when authenticated as a user" do
