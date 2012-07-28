@@ -66,7 +66,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/activities(.:format)
   def announcements
-    @acknowledgements = current_user.acknowledgements.order(:has_been_viewed).ordered.page params[:page]
+    @acknowledgements = current_user.acknowledgements.includes(announcement: [:community]).order(:has_been_viewed).ordered.page params[:page]
     render partial: 'user_profiles/announcements', locals: { acknowledgements: @acknowledgements }
   end
 
@@ -77,7 +77,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/invites(.:format)
   def invites
-    @invites = current_user.invites.fresh.order(:is_viewed).page params[:page]
+    @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character_proxy, event: [:community]).page params[:page]
     render partial: 'user_profiles/invites', locals: { invites: @invites }
   end
 
@@ -96,7 +96,7 @@ class UserProfilesController < ApplicationController
     @activities_count_increment = 10
     updated = !!params[:updated] ? params[:updated] : nil
     count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
-    @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count)
+    @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count).includes(:user_profile, :target, community: [:member_role])
   end
 
   # Gets teh user profile

@@ -84,6 +84,6 @@ class Subdomains::CommunitiesController < SubdomainsController
     @activities_count_increment = 10
     updated = !!params[:updated] ? params[:updated] : nil
     count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
-    @activities = Activity.activities({ community_id: @community.id }, updated, count)
+    @activities = Activity.activities({ community_id: @community.id }, updated, count).includes(:user_profile, community: [:member_role])
   end
 end
