@@ -4,105 +4,105 @@ source 'http://rubygems.org'
   gem 'rails' # https://github.com/rails/rails - MIT
 
 # ActiveRecord extensions
-  gem 'rails3_acts_as_paranoid', git: 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git' # https://github.com/digitalaugment/rails3_acts_as_paranoid - MIT
-  gem 'nilify_blanks' # https://github.com/rubiety/nilify_blanks - MIT
+  gem 'rails3_acts_as_paranoid', git: 'git@github.com:digitalaugment/rails3_acts_as_paranoid.git'#				MIT - https://github.com/digitalaugment/rails3_acts_as_paranoid
+  gem 'nilify_blanks'#																							MIT - https://github.com/rubiety/nilify_blanks
 
 # Javascript Library
-  gem 'jquery-rails' # https://github.com/rails/jquery-rails - MIT
+  gem 'jquery-rails'#																							MIT - https://github.com/rails/jquery-rails
 
 # Meta Languages
-  gem 'haml' # https://github.com/haml/haml - MIT
-  gem 'squeel' # https://github.com/ernie/squeel - MIT
+  gem 'haml'#																									MIT - https://github.com/haml/haml
+  gem 'squeel'#																									MIT - https://github.com/ernie/squeel
 
 # Database Protection
-  gem 'validates_lengths_from_database' # https://github.com/rubiety/validates_lengths_from_database - MIT
+  gem 'validates_lengths_from_database'#																		MIT - https://github.com/rubiety/validates_lengths_from_database
 
 # User Authentication
-  gem 'devise' # https://github.com/plataformatec/devise - MIT
+  gem 'devise'#																									MIT - https://github.com/plataformatec/devise
 
 # Permissions/AC
-  gem 'cancan' # https://github.com/ryanb/cancan - MIT
+  gem 'cancan'#																									MIT - https://github.com/ryanb/cancan
 
 # Caching
-  gem 'dalli' # https://github.com/mperham/dalli - MIT
+  gem 'dalli'#																									MIT - https://github.com/mperham/dalli
 
 # Form Handling
-  gem 'simple_form' # https://github.com/plataformatec/simple_form - MIT
-  gem 'client_side_validations' # https://github.com/bcardarella/client_side_validations - MIT
-  gem 'country_select' # https://github.com/stefanpenner/country_select - MIT
+  gem 'simple_form'#																							MIT - https://github.com/plataformatec/simple_form
+  gem 'client_side_validations'#																				MIT - https://github.com/bcardarella/client_side_validations
+  gem 'country_select'#																							MIT - https://github.com/stefanpenner/country_select
 
 # Browser Detection
-  gem 'browser' # URL - LICENSE
+  gem 'browser'#																								MIT - https://github.com/fnando/browser
 
 # Pagination
-  gem 'kaminari' # URL - MIT
+  gem 'kaminari'#																								MIT - https://github.com/amatsuda/kaminari
 
 # Memory Usage
-  gem 'oink' # URL - LICENSE
+  gem 'oink'#																									MIT - https://github.com/noahd1/oink
 
 # Filtering
-  gem 'profanalyzer' # URL - LICENSE
+  gem 'profanalyzer'#																							MIT - http://profanalyzer.rubyforge.org
 
 # Background jobs
-  gem 'delayed_job_active_record' # URL - LICENSE
+  gem 'delayed_job_active_record'#																				MIT - https://github.com/collectiveidea/delayed_job_active_record
 
 # Markup
-  gem 'rdiscount' # URL - LICENSE
-  gem 'sanitize' # URL - LICENSE
+  gem 'rdiscount'#																								BSD - https://github.com/rtomayko/rdiscount
+  gem 'sanitize'#																								MIT - https://github.com/rgrove/sanitize
 
 # Image Storage and Manipulation
-  gem 'fog' # URL - LICENSE
-  gem 'mini_magick' # URL - LICENSE
-  gem 'carrierwave' # URL - LICENSE
-  gem 'asset_sync' # URL - LICENSE
+  gem 'fog'#																									LICENSE - URL
+  gem 'mini_magick'#																							LICENSE - URL
+  gem 'carrierwave'#																							LICENSE - URL
+  gem 'asset_sync'#																								LICENSE - URL
 
 # Admin Portal
-  gem 'meta_search', '>= 1.1.0.pre' # URL - LICENSE
-  gem 'activeadmin', '>= 0.4.2' # URL - LICENSE
+  gem 'meta_search', '>= 1.1.0.pre'#																			LICENSE - URL
+  gem 'activeadmin', '>= 0.4.2'#																				LICENSE - URL
 
 # Asset Specific Gems, Pulled out of Group for Activeadmin
-  gem 'sass-rails' # URL - LICENSE
-  gem 'coffee-rails' # URL - LICENSE
-  gem 'uglifier' # URL - LICENSE
+  gem 'sass-rails'#																								LICENSE - URL
+  gem 'coffee-rails'#																							LICENSE - URL
+  gem 'uglifier'#																								LICENSE - URL
 
   group :assets do
 
   end
 
 # Seeding Data
-  gem 'timecop' # URL - LICENSE
+  gem 'timecop'#																								LICENSE - URL
 
 # Production Specific Gems
   group :production do
-    gem 'thin' # URL - LICENSE
-    gem 'pg' # URL - LICENSE
-    gem 'newrelic_rpm' # URL - LICENSE
+    gem 'thin'#																									LICENSE - URL
+    gem 'pg'#																									LICENSE - URL
+    gem 'newrelic_rpm'#																							LICENSE - URL
   end
 
 # Development Specific Gems
   group :development do
-    gem 'annotate' # URL - LICENSE
-    gem 'rails_best_practices' # URL - LICENSE
-    gem 'haml-rails' # URL - LICENSE
-    gem 'bullet' # URL - LICENSE
-    gem 'brakeman' # URL - LICENSE
+    gem 'annotate'#																								LICENSE - URL
+    gem 'rails_best_practices'#																					LICENSE - URL
+    gem 'haml-rails'#																							LICENSE - URL
+    gem 'bullet'#																								LICENSE - URL
+    gem 'brakeman'#																								LICENSE - URL
   end
 
 # Development and Test Specific Gems
   group :development, :test do
-    gem 'sqlite3' # URL - LICENSE
-    gem 'rspec-rails' # URL - LICENSE
-    gem 'factory_girl_rails' # URL - LICENSE
+    gem 'sqlite3'#																								LICENSE - URL
+    gem 'rspec-rails'#																							LICENSE - URL
+    gem 'factory_girl_rails'#																					LICENSE - URL
   end
 
 # Test Specific Gems
   group :test do
-    gem 'capybara' # URL - LICENSE
-    gem 'database_cleaner' # URL - LICENSE
-    gem 'rb-fsevent' # URL - LICENSE
-    gem 'guard-rspec' # URL - LICENSE
-    gem 'guard-livereload' # URL - LICENSE
-    gem 'growl_notify' # URL - LICENSE
-    gem 'simplecov' # URL - LICENSE
-    gem 'ruby-debug19' # URL - LICENSE
+    gem 'capybara'#																								LICENSE - URL
+    gem 'database_cleaner'#																						LICENSE - URL
+    gem 'rb-fsevent'#																							LICENSE - URL
+    gem 'guard-rspec'#																							LICENSE - URL
+    gem 'guard-livereload'#																						LICENSE - URL
+    gem 'growl_notify'#																							LICENSE - URL
+    gem 'simplecov'#																							LICENSE - URL
+    gem 'ruby-debug19'#																							LICENSE - URL
   end
