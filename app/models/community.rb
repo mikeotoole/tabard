@@ -296,7 +296,7 @@ protected
   # This method creates the default member role.
   ###
   def setup_member_role
-    mr = self.build_member_role(name: "Member", is_system_generated: true)
+    mr = self.build_member_role({name: "Member", is_system_generated: true}, without_protection: true)
     mr.community = self
     mr.save!
     self.update_attribute(:member_role, mr)
@@ -389,7 +389,7 @@ protected
     self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
-    officer_role = self.roles.create!(name: "Officer", is_system_generated: false)
+    officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)
     officer_role.permissions.create!({subject_class: "Announcement", permission_level: "Create", can_lock: true}, without_protection: true)
     officer_role.permissions.create!({subject_class: "Comment", can_create: true, can_lock: true}, without_protection: true)
     officer_role.permissions.create!({subject_class: "CommunityApplication", can_read: true}, without_protection: true)

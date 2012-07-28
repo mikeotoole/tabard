@@ -23,7 +23,7 @@ def create_discussion_space(creator_last_name, community_name, space_name, facti
   puts "With game #{supported_game.game_full_name}" if supported_game
   ds = community.discussion_spaces.create!(name: space_name, supported_game: supported_game)
   creator = UserProfile.find_by_last_name(creator_last_name)
-  Activity.create!(user_profile: creator, community: community, target: ds, action: "created")
+  Activity.create!({user_profile: creator, community: community, target: ds, action: "created"}, without_protection: true)
   return ds
 end
 
