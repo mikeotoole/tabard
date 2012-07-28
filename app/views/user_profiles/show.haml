@@ -23,7 +23,7 @@
       %h3 My Communities
       - if @user_profile.communities.any?
         %ul.communities
-          - @user_profile.communities.each do |community|
+          - @user_profile.communities.includes(:admin_profile).each do |community|
             %li= link_to shorten_words(community.name), community, (@user_profile == community.admin_profile ? { meta: '✭' } : {})
       - elsif user_signed_in? and @user_profile == current_user.user_profile
         %p

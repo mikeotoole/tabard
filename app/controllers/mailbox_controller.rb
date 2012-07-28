@@ -39,8 +39,8 @@ protected
 
   # This method loads the messages for a given folder, grouped by today's messages and all older messages
   def gather_inbox_data(folder)
-    @todays_messages = folder.messages.includes(:folder).joins{message}.where{(message.created_at >= Time.zone.now.beginning_of_day)}
-    @older_messages = folder.messages.includes(:folder).joins{message}.where{(message.created_at < Time.zone.now.beginning_of_day)}
+    @todays_messages = folder.messages.includes(:folder, message: [:author]).joins{message}.where{(message.created_at >= Time.zone.now.beginning_of_day)}
+    @older_messages = folder.messages.includes(:folder, message: [:author]).joins{message}.where{(message.created_at < Time.zone.now.beginning_of_day)}
   end
 
   # This method will determine a string value for the current view in the mailbox
