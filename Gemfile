@@ -86,6 +86,7 @@ source 'http://rubygems.org'
     gem 'haml-rails'
     gem 'bullet'
     gem 'brakeman'
+    gem 'quiet_assets'
   end
 
 # Development and Test Specific Gems
