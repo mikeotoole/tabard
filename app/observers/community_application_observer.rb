@@ -15,10 +15,10 @@ class CommunityApplicationObserver < ActiveRecord::Observer
                                 target_type: "UserProfile",
                                 target_id: community_application.user_profile_id).first
 
-      Activity.create!( user_profile: community_application.user_profile,
+      Activity.create!( {user_profile: community_application.user_profile,
                         community: community_application.community,
                         target: community_application.user_profile,
-                        action: "accepted") unless activity
+                        action: "accepted"}, without_protection: true) unless activity
     end
   end
 
