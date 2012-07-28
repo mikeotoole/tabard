@@ -61,5 +61,5 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
 
   # Lets you write create(:factroy_name) instead of Factory.create(:factroy_name)
-  config.include Factory::Syntax::Methods
+  config.include FactoryGirl::Syntax::Methods
 end
