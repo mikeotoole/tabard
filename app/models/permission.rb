@@ -11,6 +11,12 @@ class Permission < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute Accessible
+###
+  attr_accessible :role, :subject_class, :parent_association_for_subject, :id_of_parent, :permission_level,
+                  :can_lock, :can_create, :can_read, :can_accept, :can_destroy
+
+###
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.

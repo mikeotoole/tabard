@@ -109,12 +109,12 @@ adjustHeaderByFlash = (speed,rowOffset=0) ->
 
 # sets up select box improved functionality
 root.initSelects = ->
-  $('body').delegate '.select', 'mouseenter mouseleave', ->
+  $('body').on 'mouseenter mouseleave', '.select', ->
     $(@).scrollTop(0)
     $(@).find('ul').scrollTop(0)
   $('.select, .select ul').scroll ->
     $(@).scrollLeft(0)
-  $('body').delegate '.select ul label, form .profile label', 'click', ->
+  $('body').on 'click', '.select ul label, form .profile label', ->
     select = $(@).closest('.select')
     ul = $(@).closest('ul')
     ul.animate { opacity: 0 }, 200, ->
@@ -281,9 +281,7 @@ jQuery(document).ready ($) ->
       return false
   
   # slider input fields
-  $('body')
-    .delegate '.slider', 'init', ->
-      $(@).css('width', $(@).find('label').length * 70)
+  $('body').on 'init', '.slider', -> $(@).css('width', $(@).find('label').length * 70)
   $('.slider').trigger 'init'
   
   # inputs that affect the hidden _destroy field
@@ -303,7 +301,7 @@ jQuery(document).ready ($) ->
   
   # Global checkbox
   $('body')
-    .delegate 'thead th.check:not(:has(a))', 'init', ->
+    .on 'init', 'thead th.check:not(:has(a))', ->
       rowChecks = $(@).closest('table').find('tbody td.check input')
       $(@)
         .append('<a>✔</a>')
@@ -313,6 +311,6 @@ jQuery(document).ready ($) ->
             rowChecks.attr 'checked', false
           else
             rowChecks.attr 'checked', true
-  $('body thead th.check').trigger 'init'
+    .trigger 'init'
   
   initSelects()

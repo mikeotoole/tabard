@@ -10,13 +10,13 @@ jQuery(document).ready ($) ->
   
   # message AJAX load
   $('#mailbox')
-    .delegate 'dd a[data-remote]', 'ajax:before', ->
+    .on 'ajax:before', 'dd a[data-remote]', ->
       $('#message').addClass 'busy'
-    .delegate 'dd a[data-remote]', 'ajax:complete', ->
+    .on 'ajax:complete', 'dd a[data-remote]', ->
       $('#message').removeClass 'busy'
-    .delegate 'dd a[data-remote]', 'ajax:error', (xhr, status, error) ->
+    .on 'ajax:error', 'dd a[data-remote]', (xhr, status, error) ->
       $.alert { body: 'Unable to load message.' }
-    .delegate 'dd a[data-remote]', 'ajax:success', (event, data, status, xhr) ->
+    .on 'ajax:success', 'dd a[data-remote]', (event, data, status, xhr) ->
       $('#mailbox dd').removeClass 'open'
       dd = $(@).closest('dd')
       if dd.hasClass 'read'

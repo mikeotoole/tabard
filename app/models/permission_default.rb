@@ -11,6 +11,19 @@ class PermissionDefault < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute Accessible
+###
+  attr_accessible :object_class,
+                  :permission_level, :nested_permission_level,
+                  :can_read,         :can_read_nested,
+                  :can_update,       :can_update_nested,
+                  :can_create,       :can_create_nested,
+                  :can_destroy,      :can_destroy_nested,
+                  :can_lock,         :can_lock_nested,
+                  :can_accept,       :can_accept_nested
+
+
+###
 # Associations
 ###
   belongs_to :role, inverse_of: :permission_defaults
