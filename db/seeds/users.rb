@@ -27,15 +27,15 @@ unless @dont_run
   # Create Admin Users
   ###
   puts "Creating test active admin users"
-  superadmin = AdminUser.create!(email: 'superadmin@digitalaugment.com', role: "superadmin", display_name: "Super Admin")
+  superadmin = AdminUser.create!({email: 'superadmin@digitalaugment.com', role: "superadmin", display_name: "Super Admin"}, without_protection: true)
   superadmin.password = 'Password'
   superadmin.password_confirmation = 'Password'
   superadmin.save!
-  moderator = AdminUser.create!(email: 'moderator@digitalaugment.com', role: "moderator", display_name: "Moderator")
+  moderator = AdminUser.create!({email: 'moderator@digitalaugment.com', role: "moderator", display_name: "Moderator"}, without_protection: true)
   moderator.password = 'Password'
   moderator.password_confirmation = 'Password'
   moderator.save!
-  admin = AdminUser.create!(email: 'admin@digitalaugment.com', role: "admin", display_name: "Admin")
+  admin = AdminUser.create!({email: 'admin@digitalaugment.com', role: "admin", display_name: "Admin"}, without_protection: true)
   admin.password = 'Password'
   admin.password_confirmation = 'Password'
   admin.save!
