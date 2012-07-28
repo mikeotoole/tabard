@@ -154,15 +154,15 @@ class Role < ActiveRecord::Base
         can_lock: template.can_lock,
         can_accept: template.can_accept)
     else
-      self.permissions.create!(subject_class: template.object_class,
+      self.permissions.create!({subject_class: template.object_class,
         id_of_subject: some_thing.id,
         permission_level: template.permission_level,
         can_lock: template.can_lock,
-        can_accept: template.can_accept)
+        can_accept: template.can_accept}, without_protection: true)
     end
     if template.is_nested?
       if template.nested_permission_level.blank?
-        self.permissions.create!(subject_class: template.nested_object_class,
+        self.permissions.create!({subject_class: template.nested_object_class,
           parent_association_for_subject: template.parent_association_for_subject,
           id_of_parent: some_thing.id,
           can_read: template.can_read_nested,
@@ -170,14 +170,14 @@ class Role < ActiveRecord::Base
           can_create: template.can_create_nested,
           can_destroy: template.can_destroy_nested,
           can_lock: template.can_lock_nested,
-          can_accept: template.can_accept_nested)
+          can_accept: template.can_accept_nested}, without_protection: true)
       else
-        self.permissions.create!(subject_class: template.nested_object_class,
+        self.permissions.create!({subject_class: template.nested_object_class,
           parent_association_for_subject: template.parent_association_for_subject,
           id_of_parent: some_thing.id,
           permission_level: template.nested_permission_level,
           can_lock: template.can_lock_nested,
-          can_accept: template.can_accept_nested)
+          can_accept: template.can_accept_nested}, without_protection: true)
       end
     end
   end
