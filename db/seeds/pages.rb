@@ -24,7 +24,7 @@ def create_page_space(creator_last_name, community_name, space_name, faction='')
 
   puts "With game #{supported_game.game_full_name}" if supported_game
   ps = community.page_spaces.create!(name: space_name, supported_game: supported_game)
-  Activity.create!(user_profile: creator, community: community, target: ps, action: "created")
+  Activity.create!({user_profile: creator, community: community, target: ps, action: "created"}, without_protection: true)
   return ps
 end
 
@@ -36,7 +36,7 @@ def create_page(creator_last_name, community_name, space_name, page_name, markup
   community = Community.find_by_name(community_name)
   page = community.page_spaces.find_by_name(space_name).pages.create!(name: page_name,
     markup: markup)
-  Activity.create!(user_profile: creator, community: community, target: page, action: "created")
+  Activity.create!({user_profile: creator, community: community, target: page, action: "created"}, without_protection: true)
 end
 
 unless @dont_run

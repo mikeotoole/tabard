@@ -105,7 +105,7 @@ class CommunityApplication < ActiveRecord::Base
         self.character_proxies.each do |proxy|
           next unless proxy_map[proxy.id.to_s]
           begin
-            community_profile.roster_assignments.create!(supported_game_id: proxy_map[proxy.id.to_s], character_proxy: proxy).approve(false)
+            community_profile.roster_assignments.create!({supported_game_id: proxy_map[proxy.id.to_s], character_proxy: proxy}, without_protection: true).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end
@@ -193,7 +193,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def prep(user_profile, custom_form)
     self.user_profile = user_profile
-    self.submission = Submission.create!(custom_form: custom_form, user_profile: user_profile) unless self.submission
+    self.submission = Submission.create!({custom_form: custom_form, user_profile: user_profile}, without_protection: true) unless self.submission
   end
 
 ###

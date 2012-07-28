@@ -106,10 +106,10 @@ protected
   ###
   def create_activity
     if @action
-      Activity.create!( user_profile: current_user.user_profile,
+      Activity.create!( {user_profile: current_user.user_profile,
                         community: @page_space.community,
                         target: @page_space,
-                        action: @action)
+                        action: @action}, without_protection: true)
     end
   end
 end

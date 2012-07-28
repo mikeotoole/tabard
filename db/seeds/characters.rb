@@ -7,8 +7,8 @@ def create_empire_character(user_last_name, char_name, char_class, advanced_clas
   user_profile = UserProfile.find_by_last_name(user_last_name)
   server ||= "Atris"
   puts "Creating #{user_profile.name} SWTOR Empire Character #{char_name}"
-  user_profile.character_proxies.create!(
-      character: SwtorCharacter.create!(
+  user_profile.character_proxies.create!({
+      character: SwtorCharacter.create!({
         name: char_name,
         swtor: Swtor.find(:first, conditions: {faction: "Empire", server_name: server}),
         char_class: char_class,
@@ -16,15 +16,15 @@ def create_empire_character(user_last_name, char_name, char_class, advanced_clas
         species: species,
         level: level,
         gender: gender,
-        about: ""))
+        about: ""}, without_protection: true)}, without_protection: true)
 end
 
 # Create SWTOR Republic Character
 def create_republic_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male")
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} SWTOR Republic Character #{char_name}"
-  user_profile.character_proxies.create!(
-      character: SwtorCharacter.create!(
+  user_profile.character_proxies.create!({
+      character: SwtorCharacter.create!({
         name: char_name,
         swtor: Swtor.find(:first, conditions: {faction: "Republic"}),
         char_class: char_class,
@@ -32,7 +32,7 @@ def create_republic_character(user_last_name, char_name, char_class, advanced_cl
         species: species,
         level: level,
         gender: gender,
-        about: ""))
+        about: ""}, without_protection: true)}, without_protection: true)
 end
 
 # Create WoW Alliance Character
@@ -40,40 +40,40 @@ def create_alliance_character(user_last_name, char_name, char_class, race, level
   user_profile = UserProfile.find_by_last_name(user_last_name)
   server ||= ""
   puts "Creating #{user_profile.name} WoW Alliance Character #{char_name}"
-  user_profile.character_proxies.create!(
-      character: WowCharacter.create!(
+  user_profile.character_proxies.create!({
+      character: WowCharacter.create!({
         name: char_name,
         wow: Wow.find(:first, conditions: {faction: "Alliance"}),
         char_class: char_class,
         race: race,
         level: level,
         gender: gender,
-        about: ""))
+        about: ""}, without_protection: true)}, without_protection: true)
 end
 
 # Create WoW Horde Character
 def create_horde_character(user_last_name, char_name, char_class, race, level, gender="Male")
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} WoW Horde Character #{char_name}"
-  user_profile.character_proxies.create!(
-      character: WowCharacter.create!(
+  user_profile.character_proxies.create!({
+      character: WowCharacter.create!({
         name: char_name,
         wow: Wow.find(:first, conditions: {faction: "Horde"}),
         char_class: char_class,
         race: race,
         level: level,
         gender: gender,
-        about: ""))
+        about: ""}, without_protection: true)}, without_protection: true)
 end
 
 # Create Minecraft Character
 def create_minecraft_character(user_last_name, char_name)
   user_profile = UserProfile.find_by_last_name(user_last_name)
   puts "Creating #{user_profile.name} Minecraft Character #{char_name}"
-  user_profile.character_proxies.create!(
-      character: MinecraftCharacter.create!(
+  user_profile.character_proxies.create!({
+      character: MinecraftCharacter.create!({
         name: char_name,
-        about: ""))
+        about: ""}, without_protection: true)}, without_protection: true)
 end
 
 unless @dont_run

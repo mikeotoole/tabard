@@ -13,9 +13,9 @@ class CharacterObserver < ActiveRecord::Observer
     if character.changed?
       change = character.changed == ["avatar", "updated_at"] ? "avatar" : "edited"
 
-      Activity.create!( user_profile: character.user_profile,
+      Activity.create!({user_profile: character.user_profile,
                         target: character.character_proxy,
-                        action: change)
+                        action: change}, without_protection: true)
     end
   end
 

@@ -160,7 +160,7 @@ class Community < ActiveRecord::Base
         self.admin_profile == user_profile)
     community_profile = self.community_profiles.find_by_user_profile_id(user_profile.id)
     if not community_profile
-      community_profile = user_profile.community_profiles.create!(community: self, roles: [self.member_role])
+      community_profile = user_profile.community_profiles.create!({community: self, roles: [self.member_role]}, without_protection: true)
     end
     return community_profile
   end
@@ -296,7 +296,7 @@ protected
   # This method creates the default member role.
   ###
   def setup_member_role
-    mr = self.build_member_role(name: "Member", is_system_generated: true)
+    mr = self.build_member_role({name: "Member", is_system_generated: true}, without_protection: true)
     mr.community = self
     mr.save!
     self.update_attribute(:member_role, mr)
@@ -383,17 +383,17 @@ protected
     community_d_space = self.discussion_spaces.create!(name: "Community")
 
     # Member role
-    self.member_role.permissions.create!(subject_class: "Comment", can_create: true)
-    self.member_role.permissions.create!(subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id)
-    self.member_role.permissions.create!(subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space")
+    self.member_role.permissions.create!({subject_class: "Comment", can_create: true}, without_protection: true)
+    self.member_role.permissions.create!({subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id}, without_protection: true)
+    self.member_role.permissions.create!({subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space"}, without_protection: true)
     self.update_attribute(:theme, Theme.default_theme)
 
     # Officer role
-    officer_role = self.roles.create!(name: "Officer", is_system_generated: false)
-    officer_role.permissions.create!(subject_class: "Announcement", permission_level: "Create", can_lock: true)
-    officer_role.permissions.create!(subject_class: "Comment", can_create: true, can_lock: true)
-    officer_role.permissions.create!(subject_class: "CommunityApplication", can_read: true)
-    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes(permission_level: "View",
+    officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)
+    officer_role.permissions.create!({subject_class: "Announcement", permission_level: "Create", can_lock: true}, without_protection: true)
+    officer_role.permissions.create!({subject_class: "Comment", can_create: true, can_lock: true}, without_protection: true)
+    officer_role.permissions.create!({subject_class: "CommunityApplication", can_read: true}, without_protection: true)
+    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes({permission_level: "View",
       can_lock: false,
       can_accept: false,
       can_read_nested: false,
@@ -401,14 +401,14 @@ protected
       can_create_nested: true,
       can_destroy_nested: true,
       can_lock_nested: true,
-      can_accept_nested: false)
-    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes(permission_level: "View",
+      can_accept_nested: false}, without_protection: true)
+    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes({permission_level: "View",
       permission_level: "View",
       can_lock: false,
-      can_accept: false)
+      can_accept: false}, without_protection: true)
 
-    community_p_space = self.page_spaces.create(name: I18n.t("community.default.page_space.name"))
-    community_home_page = community_p_space.pages.create(name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup"))
+    community_p_space = self.page_spaces.create!({name: I18n.t("community.default.page_space.name")}, without_protection: true)
+    community_home_page = community_p_space.pages.create!({name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup")}, without_protection: true)
     self.update_attributes home_page_id: community_home_page.id
   end
 

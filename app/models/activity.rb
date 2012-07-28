@@ -14,11 +14,6 @@ class Activity < ActiveRecord::Base
   DEFAULT_MAX_ITEMS = 10
 
 ###
-# Attribute accessible
-###
-  attr_accessible :target_type, :target_id, :target, :action, :user_profile, :user_profile_id, :community
-
-###
 # Associations
 ###
   belongs_to :user_profile, inverse_of: :activities
