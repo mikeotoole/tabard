@@ -95,7 +95,7 @@ class CommunityApplication < ActiveRecord::Base
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, without_protection: true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
-      # TODO Mike, Link needs to be changed to crumblin.com when we launch.
+      # TODO Mike, Link needs to be changed to guild.io when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Accepted",
                   body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted. It will now appear in your communities list.",
@@ -121,7 +121,7 @@ class CommunityApplication < ActiveRecord::Base
   def reject_application(rejected_by_user_profile)
     return false unless self.is_pending? or self.applicant_is_a_member?
     if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, without_protection: true)
-      # TODO Mike, Link needs to be changed to crumblin.com when we launch.
+      # TODO Mike, Link needs to be changed to guild.io when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Rejected",
                             body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been rejected.",

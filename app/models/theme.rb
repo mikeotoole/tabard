@@ -10,6 +10,7 @@ class Theme < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
+  attr_accessible :name, :css, :thumbnail, :background_author, :background_author_url
 
 ###
 # Associations

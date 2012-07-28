@@ -11,6 +11,11 @@ class Role < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute Accessible
+###
+  attr_accessible :name, :is_system_generated
+
+###
 # Constants
 ###
   MAX_NAME_LENGTH = 30

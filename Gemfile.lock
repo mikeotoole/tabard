@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/dw2/simple_form.git
+  revision: cb59268a500ea812fa806cb2c3c2656bf143d3b4
+  specs:
+    simple_form (2.1.0.dev)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+
+GIT
   remote: git@github.com:digitalaugment/rails3_acts_as_paranoid.git
   revision: a7a0adf042893f8c9db1166a18de037a2bfcac6a
   specs:
@@ -298,9 +306,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     sexp_processor (3.2.0)
-    simple_form (2.0.2)
-      actionpack (~> 3.0)
-      activemodel (~> 3.0)
     simplecov (0.6.4)
       multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
@@ -383,7 +388,7 @@ DEPENDENCIES
   ruby-debug19
   sanitize
   sass-rails
-  simple_form
+  simple_form!
   simplecov
   sqlite3
   squeel

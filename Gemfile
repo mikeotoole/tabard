@@ -1,3 +1,6 @@
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 source 'http://rubygems.org'
 
 # Rails Gem
@@ -27,7 +30,7 @@ source 'http://rubygems.org'
   gem 'dalli'
 
 # Form Handling
-  gem 'simple_form'
+  gem 'simple_form', git: 'git://github.com/dw2/simple_form.git'
   gem 'client_side_validations'
   gem 'country_select'
 
