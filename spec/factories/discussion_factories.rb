@@ -35,7 +35,7 @@ FactoryGirl.define do
     commentable_type "Discussion"
     
     factory :comment_with_comment do
-      after_create { |comment| FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment") }
+      after(:create) { |comment| FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment") }
     end
   end
 

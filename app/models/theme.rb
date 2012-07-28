@@ -9,6 +9,11 @@ class Theme < ActiveRecord::Base
   validates_lengths_from_database
 
 ###
+# Attribute accessible
+###
+  attr_accessible :name, :css, :thumbnail
+
+###
 # Associations
 ###
   has_many :communities, inverse_of: :theme
@@ -24,7 +29,9 @@ class Theme < ActiveRecord::Base
 
   # This method returns the default theme.
   def self.default_theme
-    Theme.find_by_name("Guild.io")
+#     Theme.create!({name: "Guild.io", css: "guild.io", thumbnail: "guild.io.jpg"}, without_protection: true)
+  
+    Theme.find_or_create_by_name_and_css_and_thumbnail("Guild.io", "guild.io", "guild.io.jpg")
   end
 end
 

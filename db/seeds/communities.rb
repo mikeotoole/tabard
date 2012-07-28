@@ -83,7 +83,7 @@ unless @dont_run
   # Two Maidens
   two_maidens = create_community('Fox', 'Two Maidens', 'One Chalice', %w(Horde Minecraft))
   puts "Two maidens is getting a private roster"
-  two_maidens.update_attribute(:is_public_roster, false)
+  two_maidens.update_column(:is_public_roster, false)
 
   fox = UserProfile.find_by_last_name('Fox')
 
@@ -97,7 +97,7 @@ unless @dont_run
 
   # Jedi Kittens
   jedi_kittens = create_community('Tiger', 'Jedi Kittens', 'Nya nya nya nya', %w(Empire))
-  jedi_kittens.update_attribute(:is_protected_roster, true)
+  jedi_kittens.update_column(:is_protected_roster, true)
 
   tiger = UserProfile.find_by_last_name('Tiger')
 

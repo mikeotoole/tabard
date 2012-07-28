@@ -91,7 +91,7 @@ class DiscussionSpace < ActiveRecord::Base
 
   # This is a class method to destory a DiscussionSpace using delay job.
   def delay_destory
-    self.update_attribute(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
+    self.update_column(:deleted_at, Time.now) # Set deleted_at to current time so space is not visable.
     DiscussionSpace.delay.destory_discussion_space(self.id)
   end
 

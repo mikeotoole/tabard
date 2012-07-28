@@ -67,7 +67,8 @@ class Community < ActiveRecord::Base
 ###
   nilify_blanks only: [:pitch, :slogan]
   before_save :update_subdomain
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items, :setup_action_items
+  before_create :setup_action_items
+  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
@@ -299,20 +300,20 @@ protected
     mr = self.build_member_role({name: "Member", is_system_generated: true}, without_protection: true)
     mr.community = self
     mr.save!
-    self.update_attribute(:member_role, mr)
+    self.update_column(:member_role_id, mr.id)
   end
 
   ###
-  # _after_create_
+  # _before_create_
   #
   # This method sets all action items as not complete.
   ###
   def setup_action_items
-    self.update_attribute(:action_items, { update_home_page: true,
-                                           add_supported_game: true,
-                                           update_settings: true,
-                                           update_application: true,
-                                           create_discussion_space: true })
+    self.action_items = { update_home_page: true,
+                          add_supported_game: true,
+                          update_settings: true,
+                          update_application: true,
+                          create_discussion_space: true }
   end
 
   ###
@@ -386,7 +387,7 @@ protected
     self.member_role.permissions.create!({subject_class: "Comment", can_create: true}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space"}, without_protection: true)
-    self.update_attribute(:theme, Theme.default_theme)
+    self.update_column(:theme_id, Theme.default_theme.id)
 
     # Officer role
     officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)

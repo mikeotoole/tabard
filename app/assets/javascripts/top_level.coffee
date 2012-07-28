@@ -2,9 +2,9 @@ jQuery(document).ready ($) ->
 
   # make labels work like field suggestions
   $('#homebox form li.input')
-    .delegate 'input', 'focus', ->
+    .on 'focus', 'input', ->
       $(@).siblings('label').hide()
-    .delegate 'input', 'blur change', ->
+    .on 'blur change', 'input', ->
       if $(@).val().length < 1
         $(@).siblings('label').show()
       else

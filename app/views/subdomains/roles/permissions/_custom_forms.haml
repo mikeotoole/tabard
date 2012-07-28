@@ -16,7 +16,7 @@
     - child_index = 'customforms' + (defaults.persisted? ? defaults.id : Time.zone.now.to_i).to_s
     = f.simple_fields_for :permission_defaults, defaults, child_index: child_index do |pf|
       = pf.input :object_class, as: :hidden
-      .slider= pf.collection_radio :permission_level, [['','×'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+      = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
       = pf.input :can_read_nested, as: :boolean, label: 'View all submissions', wrapper: false, required: false
   - if current_community.custom_forms.any?
     %hr
@@ -27,7 +27,7 @@
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(form) do |pf|
           = pf.input :subject_class, as: :hidden
-          .slider= pf.collection_radio :permission_level, [['','×'], ['View', 'View'], ['Update', 'Edit'], ['Delete', 'Delete']], :first, :last
+          = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
         = f.simple_fields_for :permissions, role.nested_permissions_for_resource(form) do |pf|
           = pf.input :subject_class, as: :hidden
           = pf.input :id_of_parent, as: :hidden

@@ -1,7 +1,7 @@
 - content_for :header do
   = javascript_include_tag "custom_forms"
 
-= simple_form_for custom_form, html: {novalidate: true} do |f|
+= simple_form_for custom_form, html: {novalidate: true, class: 'custom_form'} do |f|
   %fieldset
     %ol
       = f.input :name, input_html: { maxlength: CustomForm::MAX_NAME_LENGTH }

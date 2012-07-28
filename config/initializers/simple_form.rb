@@ -7,12 +7,18 @@ SimpleForm.setup do |config|
     b.use :readonly
 
     b.use :label_input
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
-    b.use :error, wrap_with: { tag: :span, class: :error }
+    b.use :hint,  wrap_with: { tag: :dfn, class: :hint }
+    b.use :error, wrap_with: { tag: :mark, class: :error }
   end
 
   config.wrappers :hidden, tag: false do |b|
     b.use :input, class: 'hidden input'
+  end
+
+  config.wrappers :slider, tag: :div, class: :slider, hint_class: :fieldWithHint, error_class: :fieldWithErrors do |b|
+    b.use :input
+    b.use :hint,  wrap_with: { tag: :dfn, class: :hint }
+    b.use :error, wrap_with: { tag: :mark, class: :error }
   end
 
   config.default_wrapper = :default
@@ -35,7 +41,7 @@ SimpleForm.setup do |config|
   config.error_notification_tag = :div
 
   # CSS class to add for error notification helper.
-  config.error_notification_class = 'alert alert-error'
+  config.error_notification_class = 'alert error'
 
   # ID to add for error notification helper.
   # config.error_notification_id = nil
@@ -64,10 +70,10 @@ SimpleForm.setup do |config|
   # config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  config.label_class = 'control-label'
+  # config.label_class = :control
 
   # You can define the class to use on all forms. Default is simple_form.
-  # config.form_class = :simple_form
+  config.form_class = nil
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]

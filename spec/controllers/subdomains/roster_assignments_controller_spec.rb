@@ -33,13 +33,13 @@ describe Subdomains::RosterAssignmentsController do
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 
   before(:each) do
-    community.update_attribute(:is_public_roster, false)
+    community.update_column(:is_public_roster, false)
     @request.host = "#{community.subdomain}.lvh.me"
   end
 
   describe "GET 'index'" do
     it "should be success when authenticated as a non-member and a public roster" do
-      community.update_attribute(:is_public_roster, true)
+      community.update_column(:is_public_roster, true)
       sign_in user
       get 'index'
       response.should be_success
@@ -58,7 +58,7 @@ describe Subdomains::RosterAssignmentsController do
     end
 
     it "should be successful as an anon and public roster" do
-      community.update_attribute(:is_public_roster, true)
+      community.update_column(:is_public_roster, true)
       get 'index'
       response.should be_success
     end
@@ -150,7 +150,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'approve' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
       put 'approve', :id => roster_assignment
     end
 
@@ -166,7 +166,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'approve' when authenticated as an owner" do
     it "should create an activity" do
       sign_in admin_user
-      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
 
       expect {
          put 'approve', :id => roster_assignment
@@ -180,8 +180,8 @@ describe Subdomains::RosterAssignmentsController do
 
   describe "PUT 'batch_approve'" do
     before(:each) do
-      roster_assignment.update_attribute(:is_pending, true)
-      roster_assignment2.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
+      roster_assignment2.update_column(:is_pending, true)
     end
 
     it "should mark all roster assignments as approved when authenticated as admin" do
@@ -213,7 +213,7 @@ describe Subdomains::RosterAssignmentsController do
   describe "PUT 'reject' when authenticated as an owner" do
     before(:each) do
       sign_in admin_user
-      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
       put 'reject', :id => roster_assignment
     end
 
@@ -228,8 +228,8 @@ describe Subdomains::RosterAssignmentsController do
 
   describe "PUT 'batch_reject'" do
     before(:each) do
-      roster_assignment.update_attribute(:is_pending, true)
-      roster_assignment2.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
+      roster_assignment2.update_column(:is_pending, true)
     end
     it "should mark all roster assignments as approved when authenticated as admin" do
       sign_in admin_user

@@ -104,7 +104,7 @@ describe Comment do
     nodeComment = create(:comment)
     nodeComment.comments << leafComment
     comment.comments << nodeComment
-    nodeComment.update_attribute(:is_removed, true)
+    nodeComment.update_column(:is_removed, true)
     comment.number_of_comments.should eq(2)
   end
   
@@ -145,7 +145,7 @@ describe Comment do
       comment = create(:comment_with_comment)
       comment.comments.count.should eq 1
       subcomment = comment.comments.first
-      subcomment.update_attribute(:is_removed, true)
+      subcomment.update_column(:is_removed, true)
       
       comment.destroy
       Comment.exists?(comment).should be_false

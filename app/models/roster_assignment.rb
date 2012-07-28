@@ -57,7 +57,7 @@ class RosterAssignment < ActiveRecord::Base
   # [Returns] True if this was approved, otherwise false.
   def approve(message=true)
     return false unless self.is_pending
-    self.update_attribute(:is_pending, false)
+    self.update_column(:is_pending, false)
     message = Message.create_system(subject: "Character Accepted", body: "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", to: [self.community_profile_user_profile_id]) if message
   end
 

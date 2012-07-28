@@ -15,5 +15,4 @@ jQuery(document).ready ($) ->
         select.show()
     .filter(':first')
     .trigger 'change'
-  $('form.community_application .sidebar').delegate '.characters > label', 'click', ->
-    $(@).hide()
+  $('form.community_application .sidebar').on 'click', '.characters > label', -> $(@).hide()

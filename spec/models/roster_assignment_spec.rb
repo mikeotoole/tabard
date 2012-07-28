@@ -45,7 +45,7 @@ describe RosterAssignment do
 
   describe "approve" do
     before(:each) do
-      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
     end
     
     it "should remove the pending status" do
@@ -62,7 +62,7 @@ describe RosterAssignment do
 
   describe "reject" do
     before(:each) do
-      roster_assignment.update_attribute(:is_pending, true)
+      roster_assignment.update_column(:is_pending, true)
     end
     
     it "should remove the roster assignment" do

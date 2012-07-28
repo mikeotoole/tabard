@@ -74,11 +74,11 @@ class Invite < ActiveRecord::Base
   end
   # This sets the expiration date from the event.
   def set_expiration_from_event
-    self.update_attribute(:expiration, self.event_end_time) and return true unless self.expiration
+    self.update_column(:expiration, self.event_end_time) and return true unless self.expiration
   end
   # This updates viewed for the specified user profile.
   def update_viewed(user_profile)
-    self.update_attribute(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
+    self.update_column(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
   end
   # This gets the smart status
   def smart_status

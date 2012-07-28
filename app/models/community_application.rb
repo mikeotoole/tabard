@@ -152,7 +152,7 @@ class CommunityApplication < ActiveRecord::Base
   ###
   def withdraw
     return false unless self.is_pending?
-    self.update_attribute(:status, "Withdrawn")
+    self.update_column(:status, "Withdrawn")
   end
 
   # This method returns true if this application's status is pending, otherwise false
