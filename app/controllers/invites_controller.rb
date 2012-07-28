@@ -37,7 +37,7 @@ class InvitesController < ApplicationController
         if invite
           @invites << invite
           invite.update_viewed(current_user.user_profile)
-          invite.update_attribute(:status, valid_status) if valid_status
+          invite.update_column(:status, valid_status) if valid_status
         end
       end
     end

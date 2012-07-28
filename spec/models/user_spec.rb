@@ -194,13 +194,13 @@ describe User do
     end
     
     it "should return true if admin_disabled_at is not nil" do
-      user.update_attribute(:admin_disabled_at, Time.now)
+      user.update_column(:admin_disabled_at, Time.now)
       user.reload.admin_disabled_at.should_not be_nil
       user.is_disabled?.should be_true
     end
     
     it "should return true if user_disabled_at is not nil" do
-      user.update_attribute(:user_disabled_at, Time.now)
+      user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       user.is_disabled?.should be_true
     end
@@ -328,14 +328,14 @@ describe User do
   
   describe "reinstate_by_admin" do
     it "should set admin_disabled_at to nil" do
-      user.update_attribute(:admin_disabled_at, Time.now)
+      user.update_column(:admin_disabled_at, Time.now)
       user.reload.admin_disabled_at.should_not be_nil
       user.reinstate_by_admin
       user.reload.admin_disabled_at.should be_nil
     end
     
     it "should set user_disabled_at to nil" do
-      user.update_attribute(:user_disabled_at, Time.now)
+      user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       user.reinstate_by_admin
       user.reload.user_disabled_at.should be_nil
@@ -348,7 +348,7 @@ describe User do
     end
     
     it "should set password to new random password" do
-      user.update_attribute(:user_disabled_at, Time.now)
+      user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       org_password = user.encrypted_password      
       user.reinstate_by_user.should be_true
@@ -356,7 +356,7 @@ describe User do
     end
     
     it "should set reset_password_token" do
-      user.update_attribute(:user_disabled_at, Time.now)
+      user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       user.reset_password_token.should be_nil
       user.reinstate_by_user.should be_true
@@ -364,7 +364,7 @@ describe User do
     end
     
     it "should set reset_password_sent_at" do
-      user.update_attribute(:user_disabled_at, Time.now)
+      user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       user.reset_password_sent_at.should be_nil
       user.reinstate_by_user.should be_true

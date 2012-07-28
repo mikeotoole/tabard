@@ -55,7 +55,7 @@ class CommunitiesController < ApplicationController
   def destroy
     if params[:user] and current_user.valid_password?(params[:user][:current_password])
       Community.delay.destory_community(@community.id)
-      @community.update_attribute(:pending_removal, true)
+      @community.update_column(:pending_removal, true)
       add_new_flash_message 'Community is being removed.', 'notice'
       redirect_to user_profile_url(current_user.user_profile, subdomain: false)
     else

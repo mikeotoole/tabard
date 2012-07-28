@@ -25,9 +25,9 @@ class SiteConfigurationController < ApplicationController
   def toggle_maintenance_mode
     if can?(:toggle_maintenance_mode, SiteConfigurationController)
       if SiteConfiguration.is_maintenance?
-        SiteConfiguration.current_configuration.update_attribute(:is_maintenance, false)
+        SiteConfiguration.current_configuration.update_column(:is_maintenance, false)
       else
-        SiteConfiguration.current_configuration.update_attribute(:is_maintenance, true)
+        SiteConfiguration.current_configuration.update_column(:is_maintenance, true)
       end
       notice = (SiteConfiguration.is_maintenance? ? "Maintenance Mode ON" : "Maintenance Mode OFF")
       redirect_to admin_dashboard_url, notice: notice

@@ -206,7 +206,7 @@ describe MessagesController do
       rec_message.folder.should_not eq(receiver.trash)
       rec_message_2.folder.should_not eq(receiver.trash)
       rec_message_id_array.each do |id|
-        MessageAssociation.find_by_id(id).update_attribute(:has_been_read, false)
+        MessageAssociation.find_by_id(id).update_column(:has_been_read, false)
       end
       rec_message_id_array.each do |id|
         MessageAssociation.find_by_id(id).has_been_read.should be_false
@@ -238,7 +238,7 @@ describe MessagesController do
       rec_message.folder.should_not eq(receiver.trash)
       rec_message_2.folder.should_not eq(receiver.trash)
       rec_message_id_array.each do |id|
-        MessageAssociation.find_by_id(id).update_attribute(:has_been_read, true)
+        MessageAssociation.find_by_id(id).update_column(:has_been_read, true)
       end
       rec_message_id_array.each do |id|
         MessageAssociation.find_by_id(id).has_been_read.should be_true

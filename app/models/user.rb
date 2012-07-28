@@ -275,7 +275,7 @@ class User < ActiveRecord::Base
 
   # Used by the admin panel to disable a user.
   def disable_by_admin
-    if self.update_attribute(:admin_disabled_at, Time.now)
+    if self.update_column(:admin_disabled_at, Time.now)
       self.remove_from_all_communities
       self.remove_all_avatars
     end
@@ -289,8 +289,8 @@ class User < ActiveRecord::Base
 
   # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
   def reinstate_by_admin
-    self.update_attribute(:admin_disabled_at, nil)
-    self.update_attribute(:user_disabled_at, nil)
+    self.update_column(:admin_disabled_at, nil)
+    self.update_column(:user_disabled_at, nil)
   end
 
   # This will send an email for a user to reactivate their account.

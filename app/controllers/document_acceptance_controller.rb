@@ -29,9 +29,9 @@ class DocumentAcceptanceController < ApplicationController
       current_user.accepted_documents << @document
       case @document.type
       when "TermsOfService"
-        current_user.update_attribute(:accepted_current_terms_of_service, true)
+        current_user.update_column(:accepted_current_terms_of_service, true)
       when "PrivacyPolicy"
-        current_user.update_attribute(:accepted_current_privacy_policy, true)
+        current_user.update_column(:accepted_current_privacy_policy, true)
       end
       redirect_to user_profile_url(current_user.user_profile), notice: "The document has been accepted."
     else

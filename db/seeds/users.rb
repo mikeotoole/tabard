@@ -59,13 +59,13 @@ unless @dont_run
 
   puts "Removing Panda accepted documents"
   s_panda = UserProfile.find_by_last_name("Panda")
-  s_panda.user.update_attribute(:accepted_current_terms_of_service, false)
-  s_panda.user.update_attribute(:accepted_current_privacy_policy, false)
+  s_panda.user.update_column(:accepted_current_terms_of_service, false)
+  s_panda.user.update_column(:accepted_current_privacy_policy, false)
   s_panda.user.accepted_documents.destroy_all
 
   puts "Sleepy Pidgeon is private"
   s_pidgeon = UserProfile.find_by_last_name("Pidgeon")
-  s_pidgeon.update_attribute(:publicly_viewable, false)
+  s_pidgeon.update_column(:publicly_viewable, false)
 
   puts "Creating a user for Mike, because he thinks our adjective animals aren't cool enough..."
   mike = User.new(accepted_current_terms_of_service: true,

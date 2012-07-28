@@ -96,7 +96,7 @@ namespace :seed do
     max_community = create_community("Length", create_w_string(Community::MAX_NAME_LENGTH), create_w_string(Community::MAX_SLOGAN_LENGTH), %w(Alliance Republic))
     max_community.pitch = create_w_string(Community::MAX_PITCH_LENGTH)
     max_community.save!
-    max_community.update_attribute(:is_public_roster, false)
+    max_community.update_column(:is_public_roster, false)
 
     application = generate_application(max_community, "Length2")
     character_hash_map = find_character_mapping(max_community, application)

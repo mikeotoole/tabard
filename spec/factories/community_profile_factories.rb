@@ -13,7 +13,7 @@ FactoryGirl.define do
 
   factory :community_profile_with_nil_community, :parent => :community_profile do
     after(:build) do |profile|
-      profile.update_attribute(:community, nil)
+      profile.update_column(:community_id, nil)
     end
   end
 
