@@ -16,8 +16,7 @@ class AdminUser < ActiveRecord::Base
          :recoverable, :trackable, :validatable, :lockable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :role, :display_name,
-                  :avatar, :remove_avatar, :remote_avatar_url
+  attr_accessible :email, :password, :password_confirmation, :display_name, :avatar, :remove_avatar, :remote_avatar_url
 
 ###
 # Associations

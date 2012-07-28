@@ -11,11 +11,6 @@ class PermissionDefault < ActiveRecord::Base
   acts_as_paranoid
 
 ###
-# Attribute Accessible
-###
-  attr_accessible :object_class, :permission_level, :can_create_nested
-
-###
 # Associations
 ###
   belongs_to :role, inverse_of: :permission_defaults

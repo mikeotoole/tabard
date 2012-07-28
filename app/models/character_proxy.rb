@@ -9,11 +9,6 @@ class CharacterProxy < ActiveRecord::Base
   validates_lengths_from_database
 
 ###
-# Attribute accessible
-###
-  attr_accessible :character
-
-###
 # Associations
 ###
   belongs_to :user_profile, touch: true
