@@ -89,6 +89,7 @@ source 'http://rubygems.org'#																LICENSE - URL
     gem 'haml-rails'#																		MIT - https://github.com/indirect/haml-rails
     gem 'bullet'#																			MIT - https://github.com/flyerhzm/bullet
     gem 'brakeman'#																			MIT - https://github.com/presidentbeef/brakeman
+    gem 'quiet_assets'#																		MIT - https://github.com/evrone/quiet_assets
   end
 
 # Development and Test Specific Gems

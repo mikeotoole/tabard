@@ -298,7 +298,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] An array that user profile + all of their characters.
   ###
   def address_book
-    comm_profiles = self.communities.includes(:community_profiles).collect{|community| community.community_profiles}.flatten(1)
+    comm_profiles = self.communities.includes(community_profiles: [:user_profile]).collect{|community| community.community_profiles}.flatten(1)
     comm_profiles.collect{|comm_profile| comm_profile.user_profile}.uniq.delete_if{|user_profile| user_profile == self}
   end
 
