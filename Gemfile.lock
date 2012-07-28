@@ -205,6 +205,8 @@ GEM
     polyglot (0.3.3)
     profanalyzer (1.2.0)
     progressbar (0.10.0)
+    quiet_assets (1.0.1)
+      railties (~> 3.1)
     rack (1.4.1)
     rack-cache (1.1)
       rack (>= 0.4)
@@ -359,6 +361,7 @@ DEPENDENCIES
   oink
   pg
   profanalyzer
+  quiet_assets
   rails
   rails3_acts_as_paranoid!
   rails_best_practices
