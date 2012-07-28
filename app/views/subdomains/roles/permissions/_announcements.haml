@@ -1,4 +1,4 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("Announcement") do |pf|
   = pf.input :subject_class, as: :hidden
-  .slider= pf.collection_radio :permission_level, [['','×'], ['Create', 'Add'], ['Delete', 'Delete']], :first, :last
+  = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['Add','Create'], ['Delete','Delete']]
   = pf.input :can_lock, as: :boolean, label: 'Lock/Unlock announcements', wrapper: false

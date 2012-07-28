@@ -1,7 +1,7 @@
 jQuery(document).ready ($) ->
 
   $('body')
-    .delegate '.more_activites', 'ajax:before', ->
+    .on 'ajax:before', '.more_activites', ->
       $(@).closest('.submit').addClass('busy')
       updatedBefore = $('#body ol.activities li:last').attr 'created_at'
       if updatedBefore
@@ -13,11 +13,11 @@ jQuery(document).ready ($) ->
         params = '' unless params
         $(@).data 'params', params + '&updated[before]=' + updatedBefore
 
-    .delegate '.more_activites', 'ajax:error', (xhr, status, error) ->
+    .on 'ajax:error', '.more_activites', (xhr, status, error) ->
       $(@).closest('.submit').removeClass('busy')
       $.alert { body: 'Error: unable to load recent activity.' }
 
-    .delegate '.more_activites', 'ajax:success', (event, data, status, xhr) ->
+    .on 'ajax:success', '.more_activites', (event, data, status, xhr) ->
       $(@).closest('.submit').removeClass('busy')
       lastLi = $('#body ol.activities li:last')
       if xhr.responseText

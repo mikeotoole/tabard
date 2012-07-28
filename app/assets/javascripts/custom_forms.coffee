@@ -64,23 +64,19 @@ jQuery(document).ready ($) ->
   
   # Q&A Functionality
   $('form.custom_form').on 'init', '.questions > li .container', ->
-    container = $(@)
-    qEl = container.closest('li')
+    qEl = $(@).closest('li')
     right = qEl.find('.right')
   
     # Remove question link
-    container
-      .append('<a class="remove">Remove Question</a>')
-      .find('>.remove')
-      .click ->
-        if qEl.filter('[question_id]').length
-          question = "<input name='custom_form[questions_attributes][#{qEl.attr('question')}][_destroy]' type='hidden' value='true'>"
-          qEl.slideUp 400, -> qEl.replaceWith question
-        else
-          qEl.slideUp 400, -> qEl.remove()
+    $('<a class="remove">Remove Question</a>').appendTo(@).click ->
+      if qEl.filter('[question_id]').length
+        question = "<input name='custom_form[questions_attributes][#{qEl.attr('question')}][_destroy]' type='hidden' value='true'>"
+        qEl.slideUp 400, -> qEl.replaceWith question
+      else
+        qEl.slideUp 400, -> qEl.remove()
     
     # TypeStyle select change action
-    container.on 'change', 'input', ->
+    $(@).on 'change', 'input', ->
       select = $(@).closest('.select')
       answers = right.find('.answers')
       checkedInput = select.find('input:checked')

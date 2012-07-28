@@ -70,7 +70,11 @@ class Question < ActiveRecord::Base
   # [Returns] An alphabetised array of subclasses as strings.
   ###
   def self.select_options
-    [['short_answer_question','Short Answer'],['long_answer_question','Long Answer'],['check_box_question','Checkboxes'],['radio_buttons_question','Radio Buttons'],['select_box_question','Dropdown']]
+    [['Short Answer','short_answer_question'],
+    ['Long Answer','long_answer_question'],
+    ['Checkboxes','check_box_question'],
+    ['Radio Buttons','radio_buttons_question'],
+    ['Dropdown','select_box_question']]
   end
 
 ###

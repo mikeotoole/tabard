@@ -1,7 +1,7 @@
 jQuery(document).ready ($) ->
 
   $('#roles')
-    .delegate 'a', 'click', ->
+    .on 'click', 'a', ->
       if $('#role').data 'changed'
         link = $(@)
         $.confirm {
@@ -15,13 +15,13 @@ jQuery(document).ready ($) ->
         }
         return false
       return true
-    .delegate 'a', 'ajax:beforeSend', ->
+    .on 'ajax:beforeSend', 'a', ->
       $('#roles, #role').addClass('busy')
       $('#permissions > dd').slideUp 200
-    .delegate 'a', 'ajax:error', (xhr, status, error) ->
+    .on 'ajax:error', 'a', (xhr, status, error) ->
       $('#roles, #role').removeClass('busy')
       $.alert { body: 'Error: unable to load role.' }
-    .delegate 'a', 'ajax:success', (event, data, status, xhr) ->
+    .on 'ajax:success', 'a', (event, data, status, xhr) ->
       $('#roles a').removeClass('active')
       $(@).addClass('active')
       $('#roles, #role').removeClass('busy')
@@ -32,9 +32,9 @@ jQuery(document).ready ($) ->
         .trigger 'init'
   
   $('#role')
-    .delegate 'input, textarea', 'change', ->
+    .on 'change', 'input, textarea', ->
       $('#role').data 'changed', true
-    .delegate '#permissions > dt h2', 'click', ->
+    .on 'click', '#permissions > dt h2', ->
       dd = $(@).closest('dt').find('+ dd')
       dd.find('input').hide()
       dd.slideToggle 200, ->
