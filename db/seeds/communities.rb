@@ -36,9 +36,8 @@ def create_community(admin_user_last_name, name, slogan, game_array)
   else
     theme = Theme.first
   end
-  puts "#{admin_user.name} is applying #{theme.name} theme to #{name} Community"
-  community.theme = theme
-  community.save!
+  puts "#{admin_user.name} is applying #{theme.name} theme to #{community.name} Community"
+  community.update_column(:theme_id, theme.id)
   return community
 end
 

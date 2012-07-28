@@ -94,7 +94,7 @@ class Community < ActiveRecord::Base
             unless: Proc.new{|community| community.background_color.blank? }
   validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.title_color.blank? }
-  validate :can_not_change_name, on: :update
+  #validate :can_not_change_name, on: :update
   validate :within_owned_communities_limit, on: :create
   validate :home_page_owned_by_community
   validates :background_image,
