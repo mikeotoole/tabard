@@ -5,11 +5,11 @@ FactoryGirl.define do
   end
   
   factory :discussion_space_for_wow, :parent => :discussion_space do
-    supported_game_id { Factory.create(:wow_supported_game).id }
+    supported_game_id { create(:wow_supported_game).id }
   end
   
   factory :discussion_space_for_swtor, :parent => :discussion_space do
-    supported_game_id { Factory.create(:swtor_supported_game).id }
+    supported_game_id { create(:swtor_supported_game).id }
   end
   
   factory :discussion do
@@ -20,11 +20,11 @@ FactoryGirl.define do
   end
   
   factory :discussion_by_wow_character, :parent => :discussion do
-    character_proxy_id { Factory.create(:character_proxy_with_wow_character).id }
+    character_proxy_id { create(:character_proxy_with_wow_character).id }
   end
   
   factory :discussion_by_swtor_character, :parent => :discussion do
-    character_proxy_id { Factory.create(:character_proxy_with_swtor_character).id }
+    character_proxy_id { create(:character_proxy_with_swtor_character).id }
   end
   
   factory :comment do
@@ -35,15 +35,15 @@ FactoryGirl.define do
     commentable_type "Discussion"
     
     factory :comment_with_comment do
-      after(:create) { |comment| FactoryGirl.create(:comment, :commentable_id => comment.id, :commentable_type => "Comment") }
+      after(:create) { |comment| create(:comment, :commentable_id => comment.id, :commentable_type => "Comment") }
     end
   end
 
   factory :comment_by_wow_character, :parent => :comment do
-    character_proxy_id { Factory.create(:character_proxy_with_wow_character).id }
+    character_proxy_id { create(:character_proxy_with_wow_character).id }
   end
 
   factory :comment_by_swtor_character, :parent => :comment do
-    character_proxy_id { Factory.create(:character_proxy_with_swtor_character).id }
+    character_proxy_id { create(:character_proxy_with_swtor_character).id }
   end   
 end

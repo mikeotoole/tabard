@@ -17,7 +17,7 @@
 require 'spec_helper'
 
 describe UserProfile do
-  let(:profile) { Factory.create(:user_profile) }
+  let(:profile) { create(:user_profile) }
 
   it "should create a new instance given valid attributes" do
     profile.should be_valid
@@ -27,27 +27,27 @@ describe UserProfile do
 # Attribute Tests
 ###
   it "should not require a first name" do
-    Factory.build(:user_profile, :first_name => nil).should be_valid
+    build(:user_profile, :first_name => nil).should be_valid
   end
 
   it "should not require a location" do
-    Factory.build(:user_profile, :location => nil).should be_valid
+    build(:user_profile, :location => nil).should be_valid
   end
   it "should not require a limit location to 30 characters" do
-    Factory.build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should be_valid
-    Factory.build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
+    build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should be_valid
+    build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
   end
 
   it "should not  require a last name" do
-    Factory.build(:user_profile, :last_name => nil).should be_valid
+    build(:user_profile, :last_name => nil).should be_valid
   end
 
   it "should require a display name" do
-    Factory.build(:user_profile, :display_name => nil).should_not be_valid
+    build(:user_profile, :display_name => nil).should_not be_valid
   end
 
   it "should ensure display names are not unique" do
-    Factory.build(:user_profile, :display_name => profile.display_name).should be_valid
+    build(:user_profile, :display_name => profile.display_name).should be_valid
   end
   
   it "display name should reject company and administration restricted values" do
@@ -65,7 +65,7 @@ describe UserProfile do
   end
 
   it "should set publicly viewable to true by default" do
-    Factory.build(:user_profile).publicly_viewable.should be_true
+    build(:user_profile).publicly_viewable.should be_true
   end
   
   it "should create an activity when created" do
@@ -88,7 +88,7 @@ describe UserProfile do
     it "should reject invalid file sizes" do
       badFilenames = %w{ tooBigAvatar1.jpg } # TESTING Invalid avatar file size for testing
       badFilenames.each do |filename|
-        Factory.build(:user_profile, :avatar => File.open("#{Rails.root}/spec/testing_files/#{filename}")).should_not be_valid
+        build(:user_profile, :avatar => File.open("#{Rails.root}/spec/testing_files/#{filename}")).should_not be_valid
       end
     end
   end

@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe Role do
-  let(:role) { Factory.create(:role) }
+  let(:role) { create(:role) }
   
   it "should create a new instance given valid attributes" do
     role.should be_valid

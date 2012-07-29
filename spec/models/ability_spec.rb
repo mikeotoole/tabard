@@ -59,10 +59,10 @@ describe Ability do
       end
       describe "UserProfile" do
         it "should be able to read public profiles" do
-          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => true))
+          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => true))
         end
         it "should be able to read non public profiles" do
-          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => false))
+          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => false))
         end
       end
     end
@@ -75,7 +75,7 @@ describe Ability do
         FactoryGirl.create(:privacy_policy)
         FactoryGirl.create(:terms_of_service)
       end
-      @user = Factory.create(:user_profile).user
+      @user = create(:user_profile).user
       @ability = Ability.new(@user)
     end
     it "should be a valid user" do
@@ -103,10 +103,10 @@ describe Ability do
       end
       describe "UserProfile" do
         it "should be able to read public profiles" do
-          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => true))
+          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => true))
         end
         it "should be able to read non public profiles" do
-          @ability.should be_able_to(:read, Factory.create(:user_profile, :publicly_viewable => false))
+          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => false))
         end
       end
     end
@@ -122,10 +122,10 @@ describe Ability do
     
       describe "Discussion" do
         it "should be able to update a owned discussion" do
-          @ability.should be_able_to(:update, Factory.build(:discussion, :user_profile_id => @user.user_profile_id))
+          @ability.should be_able_to(:update, build(:discussion, :user_profile_id => @user.user_profile_id))
         end
         it "should be able to destroy a owned discussion" do
-          @ability.should be_able_to(:destroy, Factory.build(:discussion, :user_profile_id => @user.user_profile_id))
+          @ability.should be_able_to(:destroy, build(:discussion, :user_profile_id => @user.user_profile_id))
         end
       end
 

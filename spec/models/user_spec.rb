@@ -45,7 +45,7 @@ describe User do
   end
   
   it "should require a user_profile" do
-    Factory.build(:user, :user_profile_attributes => {}).should_not be_valid
+    build(:user, :user_profile_attributes => {}).should_not be_valid
   end
   
   describe "email address" do
