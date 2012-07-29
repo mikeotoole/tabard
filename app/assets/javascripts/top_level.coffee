@@ -95,7 +95,7 @@ jQuery(document).ready ($) ->
   $('.document:has(.scroll) .accept label')
     .bind 'click', ->
       if $(@).closest('.accept').find('input:disabled')
-        $.alert { body: "Make sure that you read and <b>scroll to the end</b> of each document before accepting the terms." }
+        $.alert body: "Make sure that you read and <b>scroll to the end</b> of each document before accepting the terms."
         false
       else
         true

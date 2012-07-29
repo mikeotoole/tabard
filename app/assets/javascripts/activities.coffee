@@ -15,7 +15,7 @@ jQuery(document).ready ($) ->
 
     .on 'ajax:error', '.more_activites', (xhr, status, error) ->
       $(@).closest('.submit').removeClass('busy')
-      $.alert { body: 'Error: unable to load recent activity.' }
+      $.alert body: 'Error: unable to load recent activity.'
 
     .on 'ajax:success', '.more_activites', (event, data, status, xhr) ->
       $(@).closest('.submit').removeClass('busy')
@@ -32,8 +32,7 @@ jQuery(document).ready ($) ->
           $(@).closest('.submit').animate { opacity: 0 }, 300
       else
         submitNode = $(@).closest('.submit')
-        $.alert {
+        $.alert
           body: 'No more history available to display.'
           action: ->
             submitNode.animate { opacity: 0 }, 300
-        }

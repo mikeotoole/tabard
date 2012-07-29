@@ -5,10 +5,10 @@ jQuery.fn.collapsable = ->
     .prepend('<a class="collapse" title="Hide comments">←</a><a class="expand" title="Show comments">↪</a> ')
     .find('.collapse')
     .bind 'click', ->
-      $(@).closest('li').addClass('collapsed')
+      $(@).closest('li').addClass 'collapsed'
     .siblings('.expand')
     .bind 'click', ->
-      $(@).closest('li').removeClass('collapsed')
+      $(@).closest('li').removeClass 'collapsed'
 
 jQuery(document).ready ($) ->
   
@@ -16,25 +16,25 @@ jQuery(document).ready ($) ->
   $('.comments textarea')
     .live 'keypress change blur', (e) ->
       if $.trim($(@).val()) == ''
-        $(@).removeClass('open')
+        $(@).removeClass 'open'
       else
-        $(@).addClass('open')
+        $(@).addClass 'open'
     .live 'focus', (e) ->
-      li = $(@).closest('li')
+      li = $(@).closest 'li'
       lis = $(@).closest('.comments').find('ol >li').not(li)
       lis.each ->
-        bq = $(@).find('>blockquote')
+        bq = $(@).find '>blockquote'
         if $.trim(bq.find('>form textarea').val()) == ''
-          $(@).removeClass('editing replying')
+          $(@).removeClass 'editing replying'
           bq.find('>form').remove()
   
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert { body: 'Unable to make comment.' }
+      $.alert body: 'Unable to make comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
-      li = $(@).closest('li')
-      bq = li.find('>blockquote')
+      li = $(@).closest 'li'
+      bq = li.find '>blockquote'
       bq.find('>form').remove()
       li
         .addClass('replying')
@@ -50,24 +50,24 @@ jQuery(document).ready ($) ->
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert { body: 'Unable to edit comment.' }
+      $.alert body: 'Unable to edit comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
-      li = $(@).closest('li')
-      bq = li.find('>blockquote')
-      p = bq.find('>p')
-      li.addClass('editing')
+      li = $(@).closest 'li'
+      bq = li.find '>blockquote'
+      p = bq.find '>p'
+      li.addClass 'editing'
       bq.find('>form').remove()
       p.after(xhr.responseText)
-      bq.find('>form').trigger('init')
+      bq.find('>form').trigger 'init'
   
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
-      $.alert { body: 'Unable to delete comment.' }
+      $.alert body: 'Unable to delete comment.'
     .live 'ajax:success', (xhr, status, error) ->
-      li = $(@).closest('li')
-      bq = li.find('>blockquote')
-      li.addClass('removed')
+      li = $(@).closest 'li'
+      bq = li.find '>blockquote'
+      li.addClass 'removed'
       bq
         .find('.reply[data-remote]')
         .after('<em>Comment was removed</em>')
@@ -87,19 +87,19 @@ jQuery(document).ready ($) ->
   # Locks a comment and updates the DOM
   $('.comments .lock[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert { body: 'Unable to lock comment.' }
+      $.alert body: 'Unable to lock comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
-      li = $(@).closest('li')
+      li = $(@).closest 'li'
       li
         .addClass('locked')
         .find('.reply[data-remote]')
         .after('<em>Comment is locked</em>')
-      li.find('>ol >li').addClass('collapsed')
+      li.find('>ol >li').addClass 'collapsed'
   
   # Unlocks a comment and updates the DOM
   $('.comments .unlock[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert { body: 'Unable to unlock comment.' }
+      $.alert body: 'Unable to unlock comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(@).closest('li')
       li.before(xhr.responseText)
@@ -114,32 +114,32 @@ jQuery(document).ready ($) ->
     .live 'init', ->
       $(@)
         .bind 'ajax:beforeSend', ->
-          $(@).addClass('busy')
+          $(@).addClass 'busy'
         .bind 'ajax:error', (xhr, status, error) ->
-          $(@).removeClass('busy')
-          $.alert { body: 'Error: unable to post comment.' }
+          $(@).removeClass 'busy'
+          $.alert body: 'Error: unable to post comment.'
           $(@).find('textarea').focus()
         .bind 'ajax:success', (event, data, status, xhr) ->
           if $(@).parents('li').length
             is_inline = true
-            container = $(@).closest('li')
+            container = $(@).closest 'li'
           else
             is_inline = false
-            container = $(@).closest('.comments')
+            container = $(@).closest '.comments'
           if !container.find('>ol').length
             if is_inline
-              container.append('<ol></ol>')
+              container.append '<ol></ol>'
             else
-              container.prepend('<ol></ol>')
+              container.prepend '<ol></ol>'
           $(@)
             .removeClass('busy')
             .find('textarea')
             .removeClass('open')
             .val('')
             .blur()
-          if container.hasClass('replying')
-            container.removeClass('replying')
-          if container.hasClass('editing')
+          if container.hasClass 'replying'
+            container.removeClass 'replying'
+          if container.hasClass 'editing'
             container.before(xhr.responseText)
             container = container.prev()
             container.next().remove()
@@ -170,4 +170,4 @@ jQuery(document).ready ($) ->
   $('.comments li').collapsable()
   $('.comments li').each ->
     unless ($(@).parents('li').length + 6) % 5
-      $(@).find('>blockquote >.meta .collapse').trigger('click')
+      $(@).find('>blockquote >.meta .collapse').trigger 'click'

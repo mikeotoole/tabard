@@ -11,6 +11,11 @@ class Submission < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute Accessible
+###
+  attr_accessible :custom_form, :user_profile
+
+###
 # Associations
 ###
   belongs_to :custom_form
