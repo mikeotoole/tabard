@@ -87,7 +87,7 @@ class UserProfile < ActiveRecord::Base
 # Scopes
 ###
   scope :active, lambda {
-    includes(:user).where{(user.admin_disabled_at == nil) & (user.user_disabled_at == nil)}
+    includes(:user).joins{:user}.where{(user.admin_disabled_at == nil) & (user.user_disabled_at == nil)}
   }
 
 ###
