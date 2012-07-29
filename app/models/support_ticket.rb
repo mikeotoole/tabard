@@ -49,12 +49,12 @@ end
 #
 # Table name: support_tickets
 #
-#  id              :integer         not null, primary key
+#  id              :integer          not null, primary key
 #  user_profile_id :integer
 #  admin_user_id   :integer
 #  status          :string(255)
 #  body            :text
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 

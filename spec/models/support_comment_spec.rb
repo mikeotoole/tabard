@@ -2,13 +2,13 @@
 #
 # Table name: support_comments
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  support_ticket_id :integer
 #  user_profile_id   :integer
 #  admin_user_id     :integer
 #  body              :text
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 require 'spec_helper'

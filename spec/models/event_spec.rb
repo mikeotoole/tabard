@@ -2,7 +2,7 @@
 #
 # Table name: events
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  name              :string(255)
 #  body              :text
 #  start_time        :datetime
@@ -10,10 +10,10 @@
 #  creator_id        :integer
 #  supported_game_id :integer
 #  community_id      :integer
-#  is_public         :boolean         default(FALSE)
+#  is_public         :boolean          default(FALSE)
 #  location          :string(255)
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 require 'spec_helper'

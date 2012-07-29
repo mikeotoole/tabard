@@ -2,18 +2,18 @@
 #
 # Table name: announcements
 #
-#  id                 :integer         not null, primary key
+#  id                 :integer          not null, primary key
 #  name               :string(255)
 #  body               :text
 #  character_proxy_id :integer
 #  user_profile_id    :integer
 #  community_id       :integer
 #  supported_game_id  :integer
-#  is_locked          :boolean         default(FALSE)
+#  is_locked          :boolean          default(FALSE)
 #  deleted_at         :datetime
-#  has_been_edited    :boolean         default(FALSE)
-#  created_at         :datetime        not null
-#  updated_at         :datetime        not null
+#  has_been_edited    :boolean          default(FALSE)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 
 require 'spec_helper'

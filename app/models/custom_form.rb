@@ -144,23 +144,17 @@ protected
   end
 end
 
-
-
-
-
-
 # == Schema Information
 #
 # Table name: custom_forms
 #
-#  id           :integer         not null, primary key
+#  id           :integer          not null, primary key
 #  name         :string(255)
 #  instructions :text
 #  thankyou     :string(255)
-#  is_published :boolean         default(FALSE)
+#  is_published :boolean          default(FALSE)
 #  community_id :integer
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
-#  deleted_at   :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 

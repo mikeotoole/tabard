@@ -2,7 +2,7 @@
 #
 # Table name: artwork_uploads
 #
-#  id                       :integer         not null, primary key
+#  id                       :integer          not null, primary key
 #  owner_name               :string(255)
 #  email                    :string(255)
 #  street                   :string(255)
@@ -16,8 +16,8 @@
 #  artwork_description      :string(255)
 #  certify_owner_of_artwork :boolean
 #  document_id              :integer
-#  created_at               :datetime        not null
-#  updated_at               :datetime        not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
 #
 
 require 'spec_helper'

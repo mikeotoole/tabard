@@ -124,25 +124,18 @@ protected
   end
 end
 
-
-
-
-
-
-
 # == Schema Information
 #
 # Table name: questions
 #
-#  id             :integer         not null, primary key
+#  id             :integer          not null, primary key
 #  body           :text
 #  custom_form_id :integer
+#  type           :string(255)
 #  style          :string(255)
-#  created_at     :datetime        not null
-#  updated_at     :datetime        not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #  explanation    :string(255)
-#  is_required    :boolean         default(FALSE)
-#  deleted_at     :datetime
-#  position       :integer         default(0)
+#  is_required    :boolean          default(FALSE)
 #
 

@@ -26,17 +26,14 @@ class Folder < ActiveRecord::Base
   validates :user_profile,  presence: true
 end
 
-
-
-
 # == Schema Information
 #
 # Table name: folders
 #
-#  id              :integer         not null, primary key
+#  id              :integer          not null, primary key
 #  name            :string(255)
 #  user_profile_id :integer
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
