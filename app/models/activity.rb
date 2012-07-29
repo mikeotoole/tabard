@@ -74,22 +74,18 @@ class Activity < ActiveRecord::Base
   end
 end
 
-
-
-
-
 # == Schema Information
 #
 # Table name: activities
 #
-#  id              :integer         not null, primary key
+#  id              :integer          not null, primary key
 #  user_profile_id :integer
 #  community_id    :integer
 #  target_type     :string(255)
 #  target_id       :integer
 #  action          :string(255)
 #  deleted_at      :datetime
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 

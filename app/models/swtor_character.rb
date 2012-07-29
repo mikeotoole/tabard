@@ -266,29 +266,16 @@ class SwtorCharacter < BaseCharacter
   end
 end
 
-
-
-
-
-
-
-
-
 # == Schema Information
 #
 # Table name: swtor_characters
 #
-#  id             :integer         not null, primary key
-#  name           :string(255)
-#  swtor_id       :integer
-#  avatar         :string(255)
-#  created_at     :datetime        not null
-#  updated_at     :datetime        not null
-#  char_class     :string(255)
-#  advanced_class :string(255)
-#  species        :string(255)
-#  level          :string(255)
-#  about          :string(255)
-#  gender         :string(255)
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  server     :string(255)
+#  game_id    :integer
+#  avatar     :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 

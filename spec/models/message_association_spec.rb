@@ -2,14 +2,14 @@
 #
 # Table name: message_associations
 #
-#  id            :integer         not null, primary key
+#  id            :integer          not null, primary key
 #  message_id    :integer
 #  recipient_id  :integer
 #  folder_id     :integer
-#  is_removed    :boolean         default(FALSE)
-#  created_at    :datetime        not null
-#  updated_at    :datetime        not null
-#  has_been_read :boolean         default(FALSE)
+#  is_removed    :boolean          default(FALSE)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  has_been_read :boolean          default(FALSE)
 #
 
 require 'spec_helper'

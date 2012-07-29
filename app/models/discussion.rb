@@ -157,27 +157,18 @@ protected
   end
 end
 
-
-
-
-
-
-
-
 # == Schema Information
 #
 # Table name: discussions
 #
-#  id                  :integer         not null, primary key
+#  id                  :integer          not null, primary key
 #  name                :string(255)
 #  body                :text
 #  discussion_space_id :integer
 #  character_proxy_id  :integer
 #  user_profile_id     :integer
-#  is_locked           :boolean         default(FALSE)
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
-#  deleted_at          :datetime
-#  has_been_edited     :boolean         default(FALSE)
+#  is_locked           :boolean          default(FALSE)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 

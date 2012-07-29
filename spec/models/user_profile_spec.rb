@@ -2,17 +2,16 @@
 #
 # Table name: user_profiles
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
+#  user_id           :integer
 #  first_name        :string(255)
 #  last_name         :string(255)
 #  avatar            :string(255)
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #  description       :text
 #  display_name      :string(255)
-#  publicly_viewable :boolean         default(TRUE)
-#  title             :string(255)
-#  location          :string(255)
+#  publicly_viewable :boolean          default(TRUE)
 #
 
 require 'spec_helper'

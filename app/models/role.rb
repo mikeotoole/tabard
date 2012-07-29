@@ -205,21 +205,16 @@ class Role < ActiveRecord::Base
   end
 end
 
-
-
-
-
-
 # == Schema Information
 #
 # Table name: roles
 #
-#  id                  :integer         not null, primary key
+#  id                  :integer          not null, primary key
 #  community_id        :integer
 #  name                :string(255)
-#  is_system_generated :boolean         default(FALSE)
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
+#  is_system_generated :boolean          default(FALSE)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #  deleted_at          :datetime
 #
 

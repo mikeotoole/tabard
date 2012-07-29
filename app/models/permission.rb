@@ -98,33 +98,25 @@ class Permission < ActiveRecord::Base
   end
 end
 
-
-
-
-
-
-
-
-
 # == Schema Information
 #
 # Table name: permissions
 #
-#  id                             :integer         not null, primary key
+#  id                             :integer          not null, primary key
 #  role_id                        :integer
 #  permission_level               :string(255)
 #  subject_class                  :string(255)
-#  id_of_subject                  :integer(255)
-#  created_at                     :datetime        not null
-#  updated_at                     :datetime        not null
-#  can_lock                       :boolean         default(FALSE)
-#  can_accept                     :boolean         default(FALSE)
+#  id_of_subject                  :integer
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  can_lock                       :boolean          default(FALSE)
+#  can_accept                     :boolean          default(FALSE)
 #  parent_association_for_subject :string(255)
 #  id_of_parent                   :integer
-#  can_read                       :boolean         default(FALSE)
-#  can_create                     :boolean         default(FALSE)
-#  can_update                     :boolean         default(FALSE)
-#  can_destroy                    :boolean         default(FALSE)
+#  can_read                       :boolean          default(FALSE)
+#  can_create                     :boolean          default(FALSE)
+#  can_update                     :boolean          default(FALSE)
+#  can_destroy                    :boolean          default(FALSE)
 #  deleted_at                     :datetime
 #
 

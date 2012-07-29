@@ -2,14 +2,14 @@
 #
 # Table name: messages
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  subject           :string(255)
 #  body              :text
 #  author_id         :integer
 #  number_recipients :integer
-#  is_system_sent    :boolean         default(FALSE)
-#  created_at        :datetime        not null
-#  updated_at        :datetime        not null
+#  is_system_sent    :boolean          default(FALSE)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 require 'spec_helper'

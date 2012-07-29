@@ -27,18 +27,15 @@ class Acknowledgement < ActiveRecord::Base
   delegate :body, to: :announcement, prefix: true, allow_nil: true
 end
 
-
-
-
 # == Schema Information
 #
 # Table name: acknowledgements
 #
-#  id                   :integer         not null, primary key
+#  id                   :integer          not null, primary key
 #  community_profile_id :integer
 #  announcement_id      :integer
-#  has_been_viewed      :boolean         default(FALSE)
-#  created_at           :datetime        not null
-#  updated_at           :datetime        not null
+#  has_been_viewed      :boolean          default(FALSE)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 

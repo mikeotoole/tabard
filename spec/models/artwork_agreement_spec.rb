@@ -2,13 +2,13 @@
 #
 # Table name: documents
 #
-#  id           :integer         not null, primary key
+#  id           :integer          not null, primary key
 #  type         :string(255)
 #  body         :text
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #  version      :integer
-#  is_published :boolean         default(FALSE)
+#  is_published :boolean          default(FALSE)
 #
 
 require 'spec_helper'

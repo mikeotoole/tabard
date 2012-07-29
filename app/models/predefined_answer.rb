@@ -57,22 +57,16 @@ class PredefinedAnswer < ActiveRecord::Base
   end
 end
 
-
-
-
-
-
-
 # == Schema Information
 #
 # Table name: predefined_answers
 #
-#  id          :integer         not null, primary key
+#  id          :integer          not null, primary key
 #  body        :text
 #  question_id :integer
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #  deleted_at  :datetime
-#  position    :integer         default(0)
+#  position    :integer          default(0)
 #
 

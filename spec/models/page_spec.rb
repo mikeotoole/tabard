@@ -2,13 +2,15 @@
 #
 # Table name: pages
 #
-#  id            :integer         not null, primary key
-#  name          :string(255)
-#  markup        :text
-#  page_space_id :integer
-#  created_at    :datetime        not null
-#  updated_at    :datetime        not null
-#  deleted_at    :datetime
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  markup             :text
+#  character_proxy_id :integer
+#  user_profile_id    :integer
+#  page_space_id      :integer
+#  show_in_navigation :boolean          default(FALSE)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 
 require 'spec_helper'
