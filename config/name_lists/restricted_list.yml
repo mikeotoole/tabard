@@ -85,6 +85,18 @@
   :word: Guild.io
 - :domain: true
   :company: true
+  :administration: true
+  :word: guild.io
+- :domain: true
+  :company: true
+  :administration: true
+  :word: Guildio
+- :domain: true
+  :company: true
+  :administration: true
+  :word: guildio
+- :domain: true
+  :company: true
   :administration: false
   :word: digitalaugment
 - :domain: true
