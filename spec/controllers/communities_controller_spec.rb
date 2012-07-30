@@ -72,21 +72,21 @@ describe CommunitiesController do
 
   describe "GET 'edit'" do
     it "should throw routing error when user" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         sign_in user
         get :edit, :id => community
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         sign_in admin_user
         get :edit, :id => community
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         get :edit, :id => community
         assert_response :missing
       end
@@ -142,21 +142,21 @@ describe CommunitiesController do
 
   describe "PUT 'update' when authenticated as a non admin user" do
     it "should throw routing error when user" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         sign_in user
         put :update, :id => community
         assert_response :missing
       end
     end
     it "should throw routing error when admin" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         sign_in admin_user
         put :update, :id => community
         assert_response :missing
       end
     end
     it "should throw routing error when anon" do
-      assert_raises(AbstractController::ActionNotFound) do
+      assert_raises(ActionController::RoutingError) do
         put :update, :id => community
         assert_response :missing
       end

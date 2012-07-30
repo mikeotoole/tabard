@@ -61,15 +61,13 @@ describe AnnouncementsController do
     it "shouldn't be successful when authenticated as a non member" do
       sign_in non_member
       put 'batch_mark_as_seen', :ids => [announcement.id]
-      redirect_to announcements_user_profile_path
       non_member.read_announcements.include?(announcement).should be_false
     end
 
     it "should be successful when authenticated as a member" do
-      sign_in member
+      sign_in admin
       put 'batch_mark_as_seen', :ids => [announcement.id]
-      redirect_to announcements_user_profile_path
-      member.read_announcements.include?(announcement).should be_true
+      admin.read_announcements.include?(announcement).should be_true
     end
 
     it "should redirect to user sign_in when not authenticated as a user" do
