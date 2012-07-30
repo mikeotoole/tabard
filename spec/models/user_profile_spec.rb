@@ -49,14 +49,14 @@ describe UserProfile do
   it "should ensure display names are not unique" do
     build(:user_profile, :display_name => profile.display_name).should be_valid
   end
-  
+
   it "display name should reject company and administration restricted values" do
     excluded_names = %w{ guild.io Guild.io Guildio guildio admin da }
     excluded_names.each do |name|
       build(:user_profile, :display_name => name).should_not be_valid
     end
   end
-  
+
   it "display name should not reject domain restricted values" do
     ok_names = %w{ www wwW wWw wWW Www WwW WWw WWW m blog mobile }
     ok_names.each do |name|
@@ -67,10 +67,10 @@ describe UserProfile do
   it "should set publicly viewable to true by default" do
     build(:user_profile).publicly_viewable.should be_true
   end
-  
+
   it "should create an activity when created" do
     user_profile = create(:user_profile)
-    
+
     activity = Activity.last
     activity.target.should eql user_profile
     activity.action.should eql 'joined'
@@ -96,23 +96,23 @@ describe UserProfile do
   it "should respond to view_logs" do
     profile.should respond_to(:view_logs)
   end
-  
+
   it "should respond to sent_messages" do
     profile.should respond_to(:sent_messages)
   end
-  
+
   it "should respond to received_messages" do
     profile.should respond_to(:received_messages)
   end
-  
+
   it "should respond to folders" do
     profile.should respond_to(:folders)
   end
-  
+
   it "should respond to inbox" do
     profile.should respond_to(:inbox)
   end
-  
+
   it "should respond to trash" do
     profile.should respond_to(:trash)
   end
@@ -170,7 +170,7 @@ describe UserProfile do
       billy.user_profile.roles.should eq(all_roles)
     end
   end
-  
+
   describe "address_book" do
     it "should return the user profiles of all users in the same communities" do
       profile
@@ -179,17 +179,17 @@ describe UserProfile do
       new_profile.address_book.should include(DefaultObjects.community_admin.user_profile)
       new_profile.address_book.should include(DefaultObjects.community_two.admin_profile)
     end
-    
+
     it "should be empty if the user is in no communities" do
       profile.address_book.should be_empty
     end
-    
+
     it "should not contain the users user profile" do
       new_profile = DefaultObjects.user_profile
       new_profile.address_book.count.should eq(2)
       new_profile.address_book.should_not include(profile)
     end
-    
+
     it "should not contain duplicate user profiles" do
       profile
       profile_one = DefaultObjects.user_profile
@@ -202,7 +202,7 @@ describe UserProfile do
       profile_one.address_book.should include(profile_two)
     end
   end
-  
+
   describe "sent_messages" do
     it "should return all the users sent messages" do
       message = create(:message)
@@ -216,7 +216,7 @@ describe UserProfile do
       profile.sent_messages.should be_empty
     end
   end
-  
+
   describe "received_messages" do
     it "should return all the users received messages" do
       new_profile = DefaultObjects.additional_community_user_profile
@@ -225,7 +225,7 @@ describe UserProfile do
       message.recipients.first.should eq(new_profile)
       new_profile.received_messages.count.should eq(startCount + 1)
     end
-    
+
     it "should return messages marked as is_removed" do
       new_profile = DefaultObjects.additional_community_user_profile
       startCount = new_profile.received_messages.count
@@ -237,8 +237,8 @@ describe UserProfile do
       new_profile.received_messages.find(message).is_removed.should be_true
     end
   end
-  
-    
+
+
   describe "unread_messages" do
     it "should return all the users unread messages" do
       new_profile = DefaultObjects.additional_community_user_profile
@@ -247,7 +247,7 @@ describe UserProfile do
       message.recipients.first.should eq(new_profile)
       new_profile.unread_messages.count.should eq(startCount + 1)
     end
-    
+
     it "should not return unread messages marked as is_removed" do
       new_profile = DefaultObjects.additional_community_user_profile
       startCount = new_profile.unread_messages.count
@@ -258,39 +258,39 @@ describe UserProfile do
       new_profile.unread_messages.count.should eq(startCount)
     end
   end
-  
+
   describe "folders" do
     it "should return all the users folders" do
       profile.folders.count.should eq(2)
     end
-    
+
     it "should contain the users inbox folder" do
       profile.folders.first.name.should eq("Inbox")
     end
-    
+
     it "should contain the users trash folder" do
       profile.folders.last.name.should eq("Trash")
     end
   end
-  
+
   describe "inbox" do
     it "should be created with user profile" do
       profile.inbox.should be_a(Folder)
-    end  
-  
+    end
+
     it "should return the users inbox folder" do
       profile.inbox.name.should eq("Inbox")
     end
   end
-  
+
   describe "trash" do
     it "should be created with user profile" do
       profile.trash.should be_a(Folder)
     end
-      
+
     it "should return the users trash folder" do
       profile.trash.name.should eq("Trash")
-    end  
+    end
   end
 
   describe "available_character_proxies" do
@@ -358,7 +358,7 @@ describe UserProfile do
     end
     it "should automaticaly get updated when an announcement is made" do
       unread_size = @profile_with_announcements.unread_announcements.size
-      announcement = DefaultObjects.community.announcements.new(:name => "Announcement 2", 
+      announcement = DefaultObjects.community.announcements.new(:name => "Announcement 2",
         :body => "Herp Derp!")
       announcement.user_profile = DefaultObjects.community.admin_profile
       announcement.save!
@@ -366,13 +366,13 @@ describe UserProfile do
       @profile_with_announcements.unread_announcements.size.should_not eq(unread_size)
     end
   end
-  
+
   describe "remove_all_avatars" do
     it "should call remove_avatar! on self" do
       profile.should_receive(:remove_avatar!)
       profile.remove_all_avatars
     end
-    
+
     it "should call remove_avatar! on all characters" do
       character = create(:wow_char_profile)
       profile = character.user_profile
@@ -381,13 +381,13 @@ describe UserProfile do
       profile.remove_all_avatars
     end
   end
-  
+
   describe "destroy" do
     it "should delete user_profile" do
       profile.destroy
       UserProfile.exists?(profile).should be_false
     end
-    
+
     it "should mark user_profile's owned_communities as deleted" do
       profile = DefaultObjects.community_admin.user_profile
       owned_communities = profile.owned_communities.all
@@ -398,7 +398,7 @@ describe UserProfile do
         Community.with_deleted.exists?(owned_community).should be_true
       end
     end
-    
+
     it "should mark user_profile's community_profiles as deleted" do
       profile = DefaultObjects.user_profile
       community_profiles = profile.community_profiles.all
@@ -409,7 +409,7 @@ describe UserProfile do
         CommunityProfile.with_deleted.exists?(community_profile).should be_true
       end
     end
-    
+
     it "should mark user_profile's character_proxies as is_removed" do
       profile = create(:wow_char_profile).user_profile
       character_proxies = profile.character_proxies.all
@@ -419,7 +419,7 @@ describe UserProfile do
         character_proxy.reload.is_removed.should be_true
       end
     end
-    
+
     it "should mark user_profile's community_applications as deleted" do
       profile = DefaultObjects.user_profile
       community_applications = profile.community_applications.all
@@ -430,7 +430,7 @@ describe UserProfile do
         CommunityApplication.with_deleted.exists?(community_application).should be_true
       end
     end
-    
+
     it "should mark user_profile's view_logs as deleted" do
       profile = create(:view_log).user_profile
       view_logs = profile.view_logs.all
@@ -441,7 +441,7 @@ describe UserProfile do
         ViewLog.with_deleted.exists?(view_log).should be_true
       end
     end
-    
+
     it "should delete user_profile's sent_messages" do
       profile = create(:message).author
       sent_messages = profile.sent_messages.all
@@ -451,7 +451,7 @@ describe UserProfile do
         Message.exists?(message).should be_false
       end
     end
-    
+
     it "should delete user_profile's received_messages" do
       profile = create(:message).message_associations.first.recipient
       received_messages = profile.received_messages.all
@@ -461,7 +461,7 @@ describe UserProfile do
         MessageAssociation.exists?(message).should be_false
       end
     end
-    
+
     it "should delete user_profile's folders" do
       folders = profile.folders.all
       profile.destroy
@@ -470,7 +470,7 @@ describe UserProfile do
         Folder.exists?(folder).should be_false
       end
     end
-    
+
     it "should mark user_profile's discussions as deleted" do
       profile = create(:discussion).user_profile
       discussions = profile.discussions.all
@@ -481,7 +481,7 @@ describe UserProfile do
         Discussion.with_deleted.exists?(discussion).should be_true
       end
     end
-    
+
     it "should mark user_profile's comments as deleted" do
       profile = create(:comment).user_profile
       comments = profile.comments.all
@@ -493,7 +493,7 @@ describe UserProfile do
       end
     end
   end
-  
+
   describe "nuke" do
     it "should delete user_profile's swtor_characters" do
       profile = create(:swtor_char_profile).user_profile
@@ -514,7 +514,7 @@ describe UserProfile do
         WowCharacter.exists?(wow_character).should be_false
       end
     end
-    
+
     it "should delete user_profile's character_proxies" do
       profile = create(:wow_char_profile).user_profile
       character_proxies = profile.character_proxies.all
@@ -524,7 +524,7 @@ describe UserProfile do
         CharacterProxy.exists?(character_proxy).should be_false
       end
     end
-    
+
     it "should call nuke on user_profile's owned_communities" do
       profile = DefaultObjects.community_admin.user_profile
       owned_communities = profile.owned_communities.all
@@ -535,7 +535,7 @@ describe UserProfile do
         Community.with_deleted.exists?(owned_community).should be_false
       end
     end
-    
+
     it "should delete user_profile's community_applications" do
       profile = DefaultObjects.user_profile
       community_applications = profile.community_applications.all
@@ -546,7 +546,7 @@ describe UserProfile do
         CommunityApplication.with_deleted.exists?(community_application).should be_false
       end
     end
-    
+
     it "should delete user_profile's community_profiles" do
       profile = DefaultObjects.user_profile
       community_profiles = profile.community_profiles.all
@@ -557,7 +557,7 @@ describe UserProfile do
         CommunityProfile.with_deleted.exists?(community_profile).should be_false
       end
     end
-    
+
     it "should delete user_profile's view_logs" do
       profile = create(:view_log).user_profile
       view_logs = profile.view_logs.all
@@ -568,7 +568,7 @@ describe UserProfile do
         ViewLog.with_deleted.exists?(view_log).should be_false
       end
     end
-    
+
     it "should delete user_profile's discussions" do
       profile = create(:discussion).user_profile
       discussions = profile.discussions.all
@@ -579,7 +579,7 @@ describe UserProfile do
         Discussion.with_deleted.exists?(discussion).should be_false
       end
     end
-    
+
     it "should delete user_profile's comments" do
       profile = create(:comment).user_profile
       comments = profile.comments.all

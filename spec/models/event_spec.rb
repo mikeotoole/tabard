@@ -42,7 +42,7 @@ describe Event do
   end
 
   it "should require start_time is before end_time" do
-    build(:event, :end_time => Time.now).should_not be_valid
+    build(:event, :end_time => 1.days.ago.to_date).should_not be_valid
   end
 
   it "should require creator" do

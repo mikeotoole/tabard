@@ -66,7 +66,7 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   nilify_blanks only: [:pitch, :slogan]
-  before_save :update_subdomain
+  before_create :update_subdomain
   before_create :setup_action_items
   after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
@@ -282,7 +282,7 @@ protected
 # Callback Methods
 ###
   ###
-  # _before_save_
+  # _before_create_
   #
   # This method automatically updates this community's subdomain from this community's name.
   # [Returns] False if an error occured, otherwise true.

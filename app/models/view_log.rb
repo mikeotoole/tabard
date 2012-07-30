@@ -11,6 +11,11 @@ class ViewLog < ActiveRecord::Base
   acts_as_paranoid
 
 ###
+# Attribute accessible
+###
+  attr_accessible :user_profile, :view_loggable
+
+###
 # Associations
 ###
   belongs_to :user_profile
