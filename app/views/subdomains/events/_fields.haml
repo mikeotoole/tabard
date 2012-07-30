@@ -1,4 +1,5 @@
 - content_for :header do
+  = javascript_include_tag "moment.min"
   = javascript_include_tag "events"
 
 %fieldset
@@ -10,22 +11,19 @@
       = f.input :start_time_date, as: :hidden, wrapper_tag: :span
       %span
         %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time_date.to_s != '' ? event.start_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
-      = f.input :start_time_hours, as: :radio, collection: 1..12, label: false, wrapper_tag: :div, wrapper_html: { class: 'select hours' }
-      = f.input :start_time_minutes, as: :radio, collection: ['00','15','30','45'], label: false, wrapper_tag: :div, wrapper_html: { class: 'select minutes' }
-      = f.input :start_time_meridian, as: :radio, collection: ['AM','PM'], label: false, wrapper_tag: :div, wrapper_html: { class: 'select meridian' }
+      = f.input :start_time_hm, as: :string, label: false, placeholder: 'Time', wrapper_tag: :span, wrapper_html: { class: 'time' }
       %mark.error= f.object.errors[:start_time].first
     %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'field_with_errors' : ''}" }
       %label End
       = f.input :end_time_date, as: :hidden, wrapper_tag: :span
       %span
         %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.end_time_date.to_s != '' ? event.end_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
-      = f.input :end_time_hours, as: :radio, collection: 1..12, label: false, wrapper_tag: :div, wrapper_html: { class: 'select hours' }
-      = f.input :end_time_minutes, as: :radio, collection: ['00','15','30','45'], label: false, wrapper_tag: :div, wrapper_html: { class: 'select minutes' }
-      = f.input :end_time_meridian, as: :radio, collection: ['AM','PM'], label: false, wrapper_tag: :div, wrapper_html: { class: 'select meridian' }
+      = f.input :end_time_hm, as: :string, label: false, placeholder: 'Time', wrapper_tag: :span, wrapper_html: { class: 'time' }
       %mark.error= f.object.errors[:end_time].first
     = f.input :supported_game_id, label: 'Game', collection: [['— None —','']].concat(current_community.supported_games.includes(:community, :game).collect {|c| c = [c.smart_name, c.id]}), as: :radio, wrapper_html: { class: 'select' }
     = f.input :is_public, label: 'Viewable by all members?'
 %hr
+%h2 Invitee list
 %table.invites
   %thead
     %tr

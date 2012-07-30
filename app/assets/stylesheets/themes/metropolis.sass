@@ -289,6 +289,15 @@ button,
               
         &:after
           +box_shadow(0 0 10px #000)
+
+  input:-moz-placeholder
+    color: #578c8e
+  input:focus:-moz-placeholder
+    color: #aacecf
+  input::-webkit-input-placeholder
+    color: #578c8e
+  input:focus::-webkit-input-placeholder
+    color: #aacecf
   
   .select
   

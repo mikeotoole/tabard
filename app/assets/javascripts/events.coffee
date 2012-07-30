@@ -14,7 +14,13 @@ jQuery(document).ready ($) ->
     nicef.bind 'click focus', ->
       nicef.blur()
       datef.datepicker 'show'
-  
+
+  # Hour/min field
+  $('#event').on 'change blur', '.time input', ->
+    val = $(@).val()
+    val += 'pm' unless val.match /a|p\.*m/i
+    $(@).val moment(val,'h:mm a').format 'h:mm a'
+
   # Game dropdown character filtering
   $('label[for="event_supported_game_id"] + ul input[type="radio"]').change ->
     sgId = $(@).closest('ul').find('input[type="radio"]:checked').val()

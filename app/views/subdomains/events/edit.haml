@@ -2,7 +2,7 @@
 
 %h1 Editing Event
 
-= simple_form_for @event do |f|
+= simple_form_for @event, html: { id: 'event' } do |f|
   = render 'fields', f: f, event: @event
   %p.submit
     = f.button :submit, 'Save Changes'
