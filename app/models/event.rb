@@ -26,14 +26,14 @@ class Event < ActiveRecord::Base
 ###
 # Attribute accessor
 ###
-  attr_accessor :start_time_date, :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
+  attr_accessor :start_time_date, :start_time_hm, :end_time_date, :end_time_hm
 
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location, :start_time_date,
-                  :start_time_hours, :start_time_minutes, :start_time_meridian, :end_time_date, :end_time_hours, :end_time_minutes, :end_time_meridian
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location,
+                  :start_time_date, :start_time_hm, :end_time_date, :end_time_hm
 
 ###
 # Associations
@@ -93,38 +93,25 @@ class Event < ActiveRecord::Base
   def duration_hours
     (duration_minutes / 60).ceil
   end
+
   # The start time date
   def start_time_date
     @start_time_date ||= start_time ? start_time.to_date : ''
   end
-  # The start time hours
-  def start_time_hours
-    @start_time_hours ||= start_time ? (start_time.hour <= 12 ? start_time.hour : start_time.hour - 12) : ''
+  # The start time hours and minutes
+  def start_time_hm
+    @start_time_hm ||= start_time ? start_time.strftime('%l:%M %p') : ''
   end
-  # The start time minutes
-  def start_time_minutes
-   @start_time_minutes ||= start_time ? (start_time.min > 0 ? start_time.min.to_s : '00') : '00'
-  end
-  # The start time meridian
-  def start_time_meridian
-    @start_time_meridian ||= start_time ? (start_time.hour < 12 ? 'AM' : 'PM') : ''
-  end
+
   # The end time date
   def end_time_date
     @end_time_date ||= end_time ? end_time.to_date : ''
   end
   # The end time hours
-  def end_time_hours
-    @end_time_hours ||= end_time ? (end_time.hour <= 12 ? end_time.hour : end_time.hour - 12) : ''
+  def end_time_hm
+    @end_time_hm ||= end_time ? end_time.strftime('%l:%M %p') : ''
   end
-  # The end time minutes
-  def end_time_minutes
-    @end_time_minutes ||= end_time ? (end_time.min > 0 ? end_time.min.to_s : '00') : '00'
-  end
-  # The end time meridian
-  def end_time_meridian
-    @end_time_meridian ||= end_time ? (end_time.hour < 12 ? 'AM' : 'PM') : ''
-  end
+
   # This updates viewed for the provided user
   def update_viewed(user_profile)
     self.invites.where(user_profile_id: user_profile.id).first.update_column(:is_viewed, true) if user_profile and self.invites.where(user_profile_id: user_profile.id).exists?
@@ -170,13 +157,11 @@ end
 # Sets start_time and end_time based on individual date/time attributes
 ###
 def update_event_times
-  unless start_time_date.blank? or start_time_hours.blank? or start_time_minutes.blank? or start_time_meridian.blank?
-    self.start_time_hours = start_time_hours.to_i + 12 if start_time_meridian == 'PM'
-    self.start_time = Time.zone.parse("#{start_time_date} #{start_time_hours ? sprintf('%02d', start_time_hours) : '00'}:#{start_time_minutes ? start_time_minutes : '00'}")
+  unless start_time_date.blank? or start_time_hm.blank?
+    self.start_time = Time.zone.parse "#{start_time_date} #{start_time_hm}"
   end
-  unless end_time_date.blank? or end_time_hours.blank? or end_time_minutes.blank? or end_time_meridian.blank?
-    self.end_time_hours = end_time_hours.to_i + 12 if end_time_meridian == 'PM'
-    self.end_time = Time.zone.parse("#{end_time_date} #{end_time_hours ? sprintf('%02d', end_time_hours) : '00'}:#{end_time_minutes ? end_time_minutes : '00'}")
+  unless end_time_date.blank? or end_time_hm.blank?
+    self.end_time = Time.zone.parse "#{end_time_date} #{end_time_hm}"
   end
   return true
 end
