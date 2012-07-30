@@ -7,12 +7,12 @@ describe TopLevelController do
       response.should be_success
     end
   end
-  describe "GET 'intro'" do
-    it "should be successful" do
-      get 'intro'
-      response.should be_success
-    end
-  end
+#   describe "GET 'intro'" do
+#     it "should be successful" do
+#       get 'intro'
+#       response.should be_success
+#     end
+#   end
   describe "GET 'features'" do
     it "should be successful" do
       get 'features'
