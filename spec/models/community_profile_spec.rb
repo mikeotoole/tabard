@@ -101,19 +101,20 @@ describe CommunityProfile do
       end
     end
   end
-  
+
   describe "destroy" do
     it "should mark community_profile as deleted" do
       profile.destroy
       CommunityProfile.exists?(profile).should be_false
       CommunityProfile.with_deleted.exists?(profile).should be_true
     end
-    
+
     it "should mark roster assignments as deleted" do
+      puts profile_with_characters.community.supported_games.to_yaml
       roster = profile_with_characters.roster_assignments.first
       roster.should be_a(RosterAssignment)
       RosterAssignment.exists?(roster).should be_true
-      
+
       profile_with_characters.destroy
       RosterAssignment.exists?(roster).should be_false
       RosterAssignment.with_deleted.exists?(roster).should be_true

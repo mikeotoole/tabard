@@ -126,7 +126,7 @@ class Announcement < ActiveRecord::Base
   def update_viewed(some_user_profile)
     community_profile = some_user_profile.community_profiles.where(community_id: self.community.id).first
     acknowledgment = self.acknowledgements.where(community_profile_id: community_profile.id).first if community_profile
-    acknowledgment.update_attributes({has_been_viewed: true}) if acknowledgment
+    acknowledgment.update_column(:has_been_viewed, true) if acknowledgment
   end
 
   # This will destroy forever this discussion and all its comments.

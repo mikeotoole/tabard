@@ -174,7 +174,7 @@ describe Community do
 
     describe "when true" do
       it "should make roster changes pending" do
-        community_profile.community.update_column(:is_protected_roster, true)        
+        community_profile.community.update_column(:is_protected_roster, true)
         ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => false, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
         ra.is_pending.should be_true
       end
@@ -240,14 +240,14 @@ describe Community do
   it "should email on application by default" do
     community.email_notice_on_application.should be_true
   end
-  
+
   describe "destroy" do
     it "should mark community as deleted" do
       community.destroy
       Community.exists?(community).should be_false
       Community.with_deleted.exists?(community).should be_true
     end
-    
+
     it "should mark community's community_application_form as deleted" do
       community_application_form = community.community_application_form
       community.destroy
@@ -255,7 +255,7 @@ describe Community do
       CustomForm.exists?(community_application_form).should be_false
       CustomForm.with_deleted.exists?(community_application_form).should be_true
     end
-    
+
     it "should mark community's community_applications as deleted" do
       community = create(:community_application).community
       community_applications = community.community_applications.all
@@ -266,7 +266,7 @@ describe Community do
         CommunityApplication.with_deleted.exists?(community_application).should be_true
       end
     end
-    
+
     it "should mark community's roles as deleted" do
       community = create(:role).community
       roles = community.roles.all
@@ -277,7 +277,7 @@ describe Community do
         Role.with_deleted.exists?(role).should be_true
       end
     end
-    
+
     it "should mark community's member_role as deleted" do
       member_role = community.member_role
       community.destroy
@@ -285,7 +285,7 @@ describe Community do
       Role.exists?(member_role).should be_false
       Role.with_deleted.exists?(member_role).should be_true
     end
-    
+
     it "should mark community's supported_games as deleted" do
       community = create(:wow_supported_game).community
       supported_games = community.supported_games.all
@@ -296,7 +296,7 @@ describe Community do
         SupportedGame.with_deleted.exists?(supported_game).should be_true
       end
     end
-    
+
     it "should mark community's custom_forms as deleted" do
       community = create(:custom_form).community
       custom_forms = community.custom_forms.all
@@ -307,7 +307,7 @@ describe Community do
         CustomForm.with_deleted.exists?(custom_form).should be_true
       end
     end
-    
+
     it "should mark community's community_profiles as deleted" do
       community = create(:community_profile).community
       community_profiles = community.community_profiles.all
@@ -318,7 +318,7 @@ describe Community do
         CommunityProfile.with_deleted.exists?(community_profile).should be_true
       end
     end
-    
+
     it "should mark community's discussion_spaces as deleted" do
       community = create(:discussion_space).community
       discussion_spaces = community.discussion_spaces.all
@@ -329,7 +329,7 @@ describe Community do
         DiscussionSpace.with_deleted.exists?(discussion_space).should be_true
       end
     end
-    
+
     it "should mark community's page_spaces as deleted" do
       community = create(:page_space).community
       page_spaces = community.page_spaces.all
@@ -341,14 +341,14 @@ describe Community do
       end
     end
   end
-  
-  describe "nuke" do    
+
+  describe "nuke" do
     it "should delete community" do
       community.nuke
       Community.exists?(community).should be_false
       Community.with_deleted.exists?(community).should be_false
     end
-    
+
     it "should delete community applications comments" do
       community_application = create(:community_application)
       create(:comment, :commentable_id => community_application.id, :commentable_type => community_application.class.name)
@@ -361,7 +361,7 @@ describe Community do
         Comment.with_deleted.exists?(community_application_comment).should be_false
       end
     end
-    
+
     it "should delete community's discussions" do
       discussion_space = create(:discussion).discussion_space
       community = discussion_space.community
@@ -373,7 +373,7 @@ describe Community do
         Discussion.with_deleted.exists?(discussion).should be_false
       end
     end
-    
+
     it "should delete community's community_application_form" do
       community_application_form = community.community_application_form
       community.nuke
@@ -381,7 +381,7 @@ describe Community do
       CustomForm.exists?(community_application_form).should be_false
       CustomForm.with_deleted.exists?(community_application_form).should be_false
     end
-    
+
     it "should delete community's community_applications" do
       community = create(:community_application).community
       community_applications = community.community_applications.all
@@ -392,7 +392,7 @@ describe Community do
         CommunityApplication.with_deleted.exists?(community_application).should be_false
       end
     end
-    
+
     it "should delete community's roles" do
       community = create(:role).community
       roles = community.roles.all
@@ -403,7 +403,7 @@ describe Community do
         Role.with_deleted.exists?(role).should be_false
       end
     end
-    
+
     it "should delete community's member_role" do
       member_role = community.member_role
       community.nuke
@@ -411,7 +411,7 @@ describe Community do
       Role.exists?(member_role).should be_false
       Role.with_deleted.exists?(member_role).should be_false
     end
-    
+
     it "should delete community's supported_games" do
       community = create(:wow_supported_game).community
       supported_games = community.supported_games.all
@@ -422,7 +422,7 @@ describe Community do
         SupportedGame.with_deleted.exists?(supported_game).should be_false
       end
     end
-    
+
     it "should delete community's custom_forms" do
       community = create(:custom_form).community
       custom_forms = community.custom_forms.all
@@ -433,7 +433,7 @@ describe Community do
         CustomForm.with_deleted.exists?(custom_form).should be_false
       end
     end
-    
+
     it "should delete community's community_profiles" do
       community = create(:community_profile).community
       community_profiles = community.community_profiles.all
@@ -444,7 +444,7 @@ describe Community do
         CommunityProfile.with_deleted.exists?(community_profile).should be_false
       end
     end
-    
+
     it "should delete community's discussion_spaces" do
       community = create(:discussion_space).community
       discussion_spaces = community.discussion_spaces.all
@@ -455,7 +455,7 @@ describe Community do
         DiscussionSpace.with_deleted.exists?(discussion_space).should be_false
       end
     end
-    
+
     it "should delete community's page_spaces" do
       community = create(:page_space).community
       page_spaces = community.page_spaces.all
@@ -489,7 +489,7 @@ describe Community do
       community.should_not be_valid
     end
   end
-  
+
   it "should limit the number of communities a user can own during creation of community" do
     community = create(:community)
     admin_profile = community.admin_profile
@@ -497,7 +497,7 @@ describe Community do
     admin_profile.reload.owned_communities.size.should eq 3
     build(:community, :admin_profile => admin_profile).should_not be_valid
   end
-  
+
   it "should limit the number of communities a user can own during change of community admin" do
     pending "Waiting on the admin change feature."
     community2 = create(:community)

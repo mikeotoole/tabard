@@ -56,7 +56,7 @@ class Event < ActiveRecord::Base
 # Validators
 ###
   validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
-  validates :body, length: { maximum: MAX_BODY_LENGTH }
+  validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
   validates :start_time, presence: true
   validates :end_time, presence: true
   validate :starttime_after_endtime
