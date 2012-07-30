@@ -12,7 +12,7 @@
           = "body.theme #header .title { color: ##{current_community.title_color}; text-shadow: none; }"
         - unless !!current_community.background_color and current_community.background_color.gsub(/[^a-f0-9]/i, '') == ''
           = "body.theme , body.theme #content { background-color: ##{current_community.background_color}; }"
-        - unless current_community.background_image_url == '/assets/application/blank.gif'
+        - unless current_community.background_image_url == '/assets/application/blank.png'
           = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}) !important; }"
     = yield :controller_css
     = javascript_include_tag "application"

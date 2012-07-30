@@ -28,9 +28,9 @@
           = f.association :theme, as: :radio, collection: Theme.all.collect{|theme| theme = [raw(image_tag("themes/thumbnails/#{theme.thumbnail}", class: 'big', theme: theme.css)) + ' ' + theme.name, theme.id]}, wrapper: false
         %li
           %label Custom Background Image
-          = image_tag(@community.background_image_url :thumbnail) unless @community.background_image_url == '/assets/application/blank.gif'
+          = image_tag(@community.background_image_url :thumbnail) unless @community.background_image_url == '/assets/application/blank.png'
           = f.input :background_image, as: :file, label: false
-        - unless @community.background_image_url == '/assets/application/blank.gif'
+        - unless @community.background_image_url == '/assets/application/blank.png'
           = f.input :remove_background_image, as: :boolean, label: 'Remove image'
         = f.input :background_color, as: :string, label: 'Optional Background Color', input_html: { maxlength: 6 }, wrapper_html: { class: 'color' }
         = f.input :title_color, as: :string, label: 'Optional Title Text Color', input_html: { maxlength: 6 }, wrapper_html: { class: 'color' }
