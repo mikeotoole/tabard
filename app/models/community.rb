@@ -387,7 +387,7 @@ protected
     self.member_role.permissions.create!({subject_class: "Comment", can_create: true}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space"}, without_protection: true)
-    self.update_column(:theme_id, Theme.default_theme.id)
+    self.update_attributes theme_id: Theme.default_theme.id
 
     # Officer role
     officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)

@@ -9,6 +9,10 @@ class RosterAssignment < ActiveRecord::Base
   validates_lengths_from_database
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
+###
+# Attribute accessible
+###
+  attr_accessible :community_profile, :character_proxy, :supported_game
 
 ###
 # Associations
