@@ -13,7 +13,7 @@ class Role < ActiveRecord::Base
 ###
 # Attribute Accessible
 ###
-  attr_accessible :permissions_attributes, :permission_defaults_attributes
+  attr_accessible :name, :community_id, :permissions_attributes, :permission_defaults_attributes
 
 ###
 # Constants

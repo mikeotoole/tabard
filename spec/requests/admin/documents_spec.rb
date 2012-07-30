@@ -7,35 +7,35 @@ describe "ActiveAdmin Document" do
   let(:user) { DefaultObjects.user }
 
   let(:privacy_policy) { create(:privacy_policy) }
-  let(:unpublished_privacy_policy) { create(:privacy_policy, :is_published => false) } 
+  let(:unpublished_privacy_policy) { create(:privacy_policy, :is_published => false) }
   let(:privacy_policy) { create(:privacy_policy) }
   let(:unpublished_terms_of_service) { create(:terms_of_service, :is_published => false) }
- 
-  describe "#index" do 
+
+  describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
       visit admin_documents_url
       page.status_code.should == 200
       current_url.should == admin_documents_url
-    end 
-    
+    end
+
     it "returns 403 when logged in as admin" do
       login_as admin
 
       visit admin_documents_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
       visit admin_documents_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
@@ -50,31 +50,30 @@ describe "ActiveAdmin Document" do
     end
   end
 
-  describe "#show" do 
+  describe "#show" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
-
-      visit admin_document_url(:id => privacy_policy.id)
+      visit view_document_admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 200
-      current_url.should == admin_document_url(:id => privacy_policy.id)
-    end 
-    
+      current_url.should == view_document_admin_document_url(:id => privacy_policy.id)
+    end
+
     it "returns 403 when logged in as admin" do
       login_as admin
 
       visit admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
       visit admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
@@ -82,60 +81,60 @@ describe "ActiveAdmin Document" do
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "redirects to login page when not logged in" do
       visit admin_document_url(:id => privacy_policy.id)
       current_path.should == new_admin_user_session_path
-    end    
+    end
   end
-  
-  describe "#new" do 
+
+  describe "#new" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
       visit new_admin_document_url
       page.status_code.should == 200
       current_url.should == new_admin_document_url
-    end 
-    
+    end
+
     it "returns 403 when logged in as admin" do
       login_as admin
 
       visit new_admin_document_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
       visit new_admin_document_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
       visit new_admin_document_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end 
-    
+    end
+
     it "redirects to login page when not logged in" do
       visit new_admin_document_url
       current_path.should == new_admin_user_session_path
-    end   
+    end
   end
 
-  describe "#edit" do 
+  describe "#edit" do
     it "returns 200 when logged in as superadmin and document has not been is_published" do
       login_as superadmin
 
       visit edit_admin_document_url(:id => unpublished_privacy_policy.id)
       page.status_code.should == 200
       current_url.should == edit_admin_document_url(:id => unpublished_privacy_policy.id)
-    end 
+    end
 
     it "returns 403 when logged in as superadmin and document has been is_published" do
       login_as superadmin
@@ -144,23 +143,23 @@ describe "ActiveAdmin Document" do
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "returns 403 when logged in as admin" do
       login_as admin
 
       visit edit_admin_document_url(:id => unpublished_privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
       visit edit_admin_document_url(:id => unpublished_privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
@@ -168,11 +167,11 @@ describe "ActiveAdmin Document" do
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "redirects to login page when not logged in" do
       visit edit_admin_document_url(:id => unpublished_privacy_policy.id)
       current_path.should == new_admin_user_session_path
-    end        
+    end
   end
 
   describe "#create" do
@@ -181,8 +180,8 @@ describe "ActiveAdmin Document" do
       expect {
         page.driver.post("/admin/documents", { :document => attributes_for(:privacy_policy, :type => "PrivacyPolicy") } )
       }.to change(Document, :count).by(1)
-    end 
-    
+    end
+
     it "returns 403 when logged in as admin" do
       login_as admin
       expect {
@@ -190,8 +189,8 @@ describe "ActiveAdmin Document" do
       }.to change(Document, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
       expect {
@@ -199,8 +198,8 @@ describe "ActiveAdmin Document" do
       }.to change(Document, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
       expect {
@@ -209,20 +208,20 @@ describe "ActiveAdmin Document" do
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "does not create Document when not logged in" do
       expect {
         page.driver.post("/admin/documents", { :document => attributes_for(:privacy_policy, :type => "PrivacyPolicy") } )
       }.to change(Document, :count).by(0)
-    end    
+    end
   end
 
-  describe "#update" do 
+  describe "#update" do
     it "updates Document when logged in as superadmin and document has not been is_published" do
       login_as superadmin
       page.driver.put("/admin/documents/#{unpublished_privacy_policy.id}", { :document => { :body => "test_case_body" } } )
       Document.find(unpublished_privacy_policy).body.should eql "test_case_body"
-    end 
+    end
 
     it "returns 403 when logged in as superadmin and document has been is_published" do
       login_as superadmin
@@ -233,17 +232,17 @@ describe "ActiveAdmin Document" do
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "returns 403 when logged in as admin" do
       login_as admin
-      
+
       orginal_body = unpublished_privacy_policy.body
       page.driver.put("/admin/documents/#{unpublished_privacy_policy.id}", { :document => { :body => "test_case_body" } } )
       Document.find(unpublished_privacy_policy).body.should eql orginal_body
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
@@ -252,8 +251,8 @@ describe "ActiveAdmin Document" do
       Document.find(unpublished_privacy_policy).body.should eql orginal_body
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
@@ -263,20 +262,20 @@ describe "ActiveAdmin Document" do
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "does not update Document when not logged in" do
       orginal_body = unpublished_privacy_policy.body
       page.driver.put("/admin/documents/#{unpublished_privacy_policy.id}", { :document => { :body => "test_case_body" } } )
       Document.find(unpublished_privacy_policy).body.should eql orginal_body
-    end   
+    end
   end
- 
-  describe "#destroy" do 
+
+  describe "#destroy" do
     it "raises error ActionNotFound" do
       lambda { page.driver.delete("/admin/documents/#{privacy_policy.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end  
+    end
   end
-  
+
   describe "#view_document" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
@@ -284,24 +283,24 @@ describe "ActiveAdmin Document" do
       visit view_document_admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 200
       current_url.should == view_document_admin_document_url(:id => privacy_policy.id)
-    end 
-    
+    end
+
     it "returns 403 when logged in as admin" do
       login_as admin
 
       visit view_document_admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
       visit view_document_admin_document_url(:id => privacy_policy.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
@@ -309,10 +308,10 @@ describe "ActiveAdmin Document" do
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "redirects to login page when not logged in" do
       visit view_document_admin_document_url(:id => privacy_policy.id)
       current_path.should == new_admin_user_session_path
-    end 
+    end
   end
 end
