@@ -74,8 +74,7 @@ describe CustomForm do
       community = community.reload
       app = community.community_application_form
       app.destroy
-      app.valid?
-      app.should_not be_valid
+      CustomForm.exists?(app).should be_true
     end
   end
 end
