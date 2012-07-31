@@ -110,7 +110,6 @@ describe CommunityProfile do
     end
 
     it "should mark roster assignments as deleted" do
-      puts profile_with_characters.community.supported_games.to_yaml
       roster = profile_with_characters.roster_assignments.first
       roster.should be_a(RosterAssignment)
       RosterAssignment.exists?(roster).should be_true
