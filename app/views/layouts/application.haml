@@ -9,6 +9,7 @@
     = csrf_meta_tags unless @page_caching
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
+    = render 'layouts/ie'
 
   %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
     #bar

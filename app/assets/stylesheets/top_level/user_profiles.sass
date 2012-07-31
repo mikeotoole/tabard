@@ -135,49 +135,43 @@ body.user_profiles.dashboard
             display: block
             height: 0
             visibility: hidden
-          
-          li
-            display: inline
             
-            &:before
-              display: none
+          a
+            background: none
+            color: #fff
+            display: block
+            float: left
+            height: 26px
+            line-height: 26px
+            margin: 5px
+            padding: 0
+            position: relative
+            text-decoration: none
             
-            a
-              background: none
-              color: #fff
-              display: block
-              float: left
-              height: 26px
-              line-height: 26px
-              margin: 5px
-              padding: 0
-              position: relative
-              text-decoration: none
+            &[icon]
+              +border_radius(0)
+              padding: 0 10px 0 33px
+              +transition(none)
               
-              &[icon]
-                +border_radius(0)
-                padding: 0 10px 0 33px
-                +transition(none)
+              &:before
+                background: #51415b
+                content: attr(icon)
+                color: #B1AEB4
+                font-size: 15px
+                height: 26px
+                left: 0
+                line-height: 26px
+                position: absolute
+                text-align: center
+                top: 0
+                width: 26px
+              
+              &:hover
+                background: #CB472C
                 
                 &:before
-                  background: #51415b
-                  content: attr(icon)
-                  color: #B1AEB4
-                  font-size: 15px
-                  height: 26px
-                  left: 0
-                  line-height: 26px
-                  position: absolute
-                  text-align: center
-                  top: 0
-                  width: 26px
-                
-                &:hover
                   background: #CB472C
-                  
-                  &:before
-                    background: #CB472C
-                    color: #fff
+                  color: #fff
         
         h3
           line-height: 1em
