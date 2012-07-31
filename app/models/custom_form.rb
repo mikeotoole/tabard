@@ -23,17 +23,17 @@ class CustomForm < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes
+  attr_accessible :name, :instructions, :thankyou, :is_published, :questions_attributes, :community, :community_id
 
 ###
 # Associations
 ###
   has_many :submissions, dependent: :destroy
-  has_many :questions, dependent: :destroy, autosave: true, order: 'position ASC'
+  has_many :questions, dependent: :destroy, autosave: true, order: 'position ASC', inverse_of: :custom_form
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   has_many :submissions, dependent: :destroy
-  belongs_to :community
+  belongs_to :community, inverse_of: :custom_forms
 
 ###
 # Validators

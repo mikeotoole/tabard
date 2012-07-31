@@ -36,10 +36,10 @@ class Community < ActiveRecord::Base
 ###
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
-  belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm"
+  belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
-  has_many :custom_forms, dependent: :destroy, order: 'LOWER(name)'
+  has_many :custom_forms, dependent: :destroy, order: 'LOWER(name)', inverse_of: :community
   has_many :community_announcements, class_name: "Announcement", conditions: {supported_game_id: nil}
   has_many :announcements
   has_many :supported_games, dependent: :destroy
@@ -68,7 +68,9 @@ class Community < ActiveRecord::Base
   nilify_blanks only: [:pitch, :slogan]
   before_create :update_subdomain
   before_create :setup_action_items
-  after_create :setup_member_role, :make_admin_a_member, :setup_community_application_form, :setup_default_community_items
+  after_create :setup_community_application_form
+  after_create :setup_member_role, :make_admin_a_member
+  after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
 
 ###
@@ -94,7 +96,7 @@ class Community < ActiveRecord::Base
             unless: Proc.new{|community| community.background_color.blank? }
   validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.title_color.blank? }
-  #validate :can_not_change_name, on: :update
+  validate :can_not_change_name, on: :update
   validate :within_owned_communities_limit, on: :create
   validate :home_page_owned_by_community
   validates :background_image,
@@ -317,7 +319,7 @@ protected
   end
 
   ###
-  # _after_create_
+  # _before_create_
   #
   # This method creates the community application form with some default questions.
   ###
@@ -326,43 +328,36 @@ protected
       name: "Application Form",
       instructions: "You want to join us? Awesome! Please answer these short questions, and don't forget to let us know if someone recommended you.",
       thankyou: "Your submission has been sent. Thank you!",
-      is_published: true)
-    ca.community = self
+      is_published: true,
+      community: self)
 
     # First Question
-    question = Question.create!(
+    question1 = ca.questions.build(
       style: "select_box_question",
       body: "How often do you play each week?",
       is_required: true,
       position: 0)
-    question.custom_form = ca
-    question.save!
-    PredefinedAnswer.create!(body: "1-3 hours", question_id: question.id, position: 0)
-    PredefinedAnswer.create!(body: "3-6 hours", question_id: question.id, position: 1)
-    PredefinedAnswer.create!(body: "6-10 hours", question_id: question.id, position: 2)
-    PredefinedAnswer.create!(body: "10-20 hours", question_id: question.id, position: 3)
-    PredefinedAnswer.create!(body: "20+ hours", question_id: question.id, position: 4)
+    question1.predefined_answers.build(body: "1-3 hours", position: 0)
+    question1.predefined_answers.build(body: "3-6 hours", position: 1)
+    question1.predefined_answers.build(body: "6-10 hours", position: 2)
+    question1.predefined_answers.build(body: "10-20 hours", position: 3)
+    question1.predefined_answers.build(body: "20+ hours", position: 4)
 
     # Second Question
-    question = Question.create!(
+    question2 = ca.questions.build(
       style: "long_answer_question",
       body: "Why do you want to join?",
       explanation: "Let us know why we should game together.",
       is_required: true,
       position: 1)
-    question.custom_form = ca
-    question.save!
 
     # Third Question
-    question = Question.create!(
+    question3 = ca.questions.build(
       style: "short_answer_question",
       body: "How did you hear about us?",
       explanation: "This is a short answer question",
       is_required: false,
       position: 2)
-    question.custom_form = ca
-    question.save!
-
     ca.save!
   end
 
@@ -387,7 +382,7 @@ protected
     self.member_role.permissions.create!({subject_class: "Comment", can_create: true}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id}, without_protection: true)
     self.member_role.permissions.create!({subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space"}, without_protection: true)
-    self.update_attributes theme_id: Theme.default_theme.id
+    self.update_column :theme_id, Theme.default_theme.id
 
     # Officer role
     officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)
@@ -410,7 +405,7 @@ protected
 
     community_p_space = self.page_spaces.create!({name: I18n.t("community.default.page_space.name")}, without_protection: true)
     community_home_page = community_p_space.pages.create!({name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup")}, without_protection: true)
-    self.update_attributes home_page_id: community_home_page.id
+    self.update_column :home_page_id, community_home_page.id
   end
 
   ###
