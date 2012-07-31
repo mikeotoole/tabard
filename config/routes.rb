@@ -222,6 +222,7 @@ DaBvRails::Application.routes.draw do
   get "/maintenance" => "top_level#maintenance", as: 'top_level_maintenance'
   get "/privacy-policy" => "top_level#privacy_policy", as: 'top_level_privacy_policy'
   get "/terms-of-service" => "top_level#terms_of_service", as: 'top_level_terms_of_service'
+  get "/trademark-disclaimer" => "top_level#trademark_disclaimer", as: 'top_level_trademark_disclaimer'
   match "/ignore_browser" => "top_level#ignore_browser", as: 'ignore_browser'
 
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
