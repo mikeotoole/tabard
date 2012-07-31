@@ -43,3 +43,4 @@
               = render 'month_day', date: @date, day: day = day + 1, events: @events_by_day[day] ||= []
             - else
               %td.empty
+  = render 'layouts/footer', current_layout: 'calendar'
