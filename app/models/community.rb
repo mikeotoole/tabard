@@ -452,5 +452,15 @@ end
 #  is_protected_roster             :boolean          default(FALSE)
 #  community_application_form_id   :integer
 #  community_announcement_space_id :integer
+#  is_public_roster                :boolean          default(TRUE)
+#  deleted_at                      :datetime
+#  background_image                :string(255)
+#  background_color                :string(255)
+#  theme_id                        :integer
+#  title_color                     :string(255)
+#  home_page_id                    :integer
+#  pending_removal                 :boolean          default(FALSE)
+#  action_items                    :text
+#  pitch                           :string(255)
 #
 

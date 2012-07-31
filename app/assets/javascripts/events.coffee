@@ -4,13 +4,12 @@ jQuery(document).ready ($) ->
   $('#event_start_time_date, #event_end_time_date').each ->
     datef = $(@)
     nicef = datef.closest('li').find('input.nicedate')
-    datef.datepicker({
+    datef.datepicker
       minDate: 0
       dateFormat: 'yy-mm-dd'
       altField: nicef
       altFormat: 'DD, MM d, yy'
       showOn: "button"
-    })
     nicef.bind 'click focus', ->
       nicef.blur()
       datef.datepicker 'show'

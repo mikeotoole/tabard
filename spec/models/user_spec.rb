@@ -8,11 +8,6 @@
 #  reset_password_token              :string(255)
 #  reset_password_sent_at            :datetime
 #  remember_created_at               :datetime
-#  sign_in_count                     :integer          default(0)
-#  current_sign_in_at                :datetime
-#  last_sign_in_at                   :datetime
-#  current_sign_in_ip                :string(255)
-#  last_sign_in_ip                   :string(255)
 #  confirmation_token                :string(255)
 #  confirmed_at                      :datetime
 #  confirmation_sent_at              :datetime
@@ -24,7 +19,14 @@
 #  updated_at                        :datetime         not null
 #  accepted_current_terms_of_service :boolean          default(FALSE)
 #  accepted_current_privacy_policy   :boolean          default(FALSE)
-#  user_active                       :boolean          default(TRUE)
+#  force_logout                      :boolean          default(FALSE)
+#  date_of_birth                     :date
+#  user_disabled_at                  :datetime
+#  admin_disabled_at                 :datetime
+#  user_profile_id                   :integer
+#  time_zone                         :string(255)
+#  is_email_on_message               :boolean          default(TRUE)
+#  is_email_on_announcement          :boolean          default(TRUE)
 #
 
 require 'spec_helper'

@@ -2,13 +2,15 @@
 #
 # Table name: community_applications
 #
-#  id              :integer          not null, primary key
-#  community_id    :integer
-#  user_profile_id :integer
-#  submission_id   :integer
-#  status          :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                :integer          not null, primary key
+#  community_id      :integer
+#  user_profile_id   :integer
+#  submission_id     :integer
+#  status            :string(255)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  status_changer_id :integer
+#  deleted_at        :datetime
 #
 
 require 'spec_helper'
