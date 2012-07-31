@@ -29,7 +29,7 @@ describe CustomForm do
   it "should not require instructions" do
     build(:custom_form, :instructions => nil).should be_valid
   end
-  
+
   it "should require thankyou" do
     build(:custom_form, :thankyou => nil).should_not be_valid
   end
@@ -37,37 +37,45 @@ describe CustomForm do
   it "should require community" do
     build(:custom_form, :community => nil).should_not be_valid
   end
-  
+
   describe "community_name" do
     it "should return community name string" do
       form.community_name.should eq(DefaultObjects.community.name)
     end
   end
-  
+
   describe "destroy" do
     it "should mark custom_form as deleted" do
       form.destroy
       CustomForm.exists?(form).should be_false
       CustomForm.with_deleted.exists?(form).should be_true
     end
-    
+
     it "should mark custom_form's submissions as deleted" do
       submission = create(:submission)
       custom_form = submission.custom_form
       custom_form.submissions.count.should eq 1
-      
+
       custom_form.destroy
       Submission.exists?(submission).should be_false
       Submission.with_deleted.exists?(submission).should be_true
     end
-    
+
     it "should mark custom_form's questions as deleted" do
       question = create(:short_answer_question)
       custom_form = question.custom_form
-      
+
       custom_form.destroy
       Question.exists?(question).should be_false
       Question.with_deleted.exists?(question).should be_true
+    end
+    it "should not allow community application for to be deleted" do
+      community = create(:community)
+      community = community.reload
+      app = community.community_application_form
+      app.destroy
+      app.valid?
+      app.should_not be_valid
     end
   end
 end

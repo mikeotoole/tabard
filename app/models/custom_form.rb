@@ -51,6 +51,7 @@ class CustomForm < ActiveRecord::Base
 # Delegates
 ###
   delegate :admin_profile_id, to: :community, allow_nil: true
+  delegate :community_application_form, to: :community, prefix: true, allow_nil: true
   delegate :name, to: :community, prefix: true, allow_nil: true
 
 ###
@@ -58,6 +59,7 @@ class CustomForm < ActiveRecord::Base
 ###
   after_create :apply_default_permissions
   after_update :remove_action_item
+  before_destroy :ensure_community_application_stays
 
 ###
 # Scopes
@@ -85,7 +87,7 @@ class CustomForm < ActiveRecord::Base
   # [Returns] True is this form is the community application form, otherwise false.
   ###
   def application_form?
-    self.community.community_application_form == self
+    return (self.community != nil and self.community.community_application_form != nil and self.community.community_application_form.id == self.id)
   end
 
   # This method applys default permissions when this is created.
@@ -141,6 +143,19 @@ protected
       self.community.action_items.delete(:update_application)
       self.community.save
     end
+  end
+
+  ###
+  # _before_destroy_
+  #
+  # This method ensures that the community's application can't be destroyed
+  ###
+  def ensure_community_application_stays
+    if self.application_form?
+      self.errors.add(:base, "Can't remove current application form.")
+      return false
+    end
+    return true
   end
 end
 

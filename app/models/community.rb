@@ -39,7 +39,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
-  has_many :custom_forms, dependent: :destroy, order: 'LOWER(name)', inverse_of: :community
+  has_many :custom_forms, dependent: :delete_all, order: 'LOWER(name)', inverse_of: :community
   has_many :community_announcements, class_name: "Announcement", conditions: {supported_game_id: nil}
   has_many :announcements
   has_many :supported_games, dependent: :destroy
@@ -359,6 +359,7 @@ protected
       is_required: false,
       position: 2)
     ca.save!
+    self.update_column :community_application_form_id, ca.id
   end
 
   ###
