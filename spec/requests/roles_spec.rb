@@ -4,7 +4,7 @@ describe "Roles" do
   before(:each) do
     @admin = create(:user)
     @admin_profile = create(:user_profile, :user => @admin)
-    @theme = create :theme, :name => 'Guild.io'
+    @theme = Theme.default_theme
     @community = create(:community, :admin_profile => @admin_profile)
   end
   describe "GET /roles" do
