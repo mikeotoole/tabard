@@ -213,14 +213,14 @@ body
   z-index: 4
   
   &:after
-    background: image-url('application/busy.gif') center center no-repeat rgba(#2D7CB4,.2)
+    background: image-url('application/busy.gif') center center no-repeat rgba(#2D7CB4,.3)
     bottom: 0
     content: ''
     display: none
-    left: 0
-    position: absolute
+    left: 380px
+    position: fixed
     right: 0
-    top: 0
+    top: 70px
   
   &.busy:after
     display: block
@@ -690,3 +690,10 @@ body
       &:focus
         border-color: #fff
         +box_shadow(0 0 20px #333)
+
+footer
+  bottom: auto
+  left: auto
+  margin: 30px -40px
+  position: relative
+  width: auto
