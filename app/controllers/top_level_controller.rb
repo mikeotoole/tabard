@@ -22,14 +22,6 @@ class TopLevelController < ApplicationController
 ###
 # Actions
 ###
-  ###
-  # This method gets the index for home.
-  # If no match constraints(Subdomain)
-  # GET /
-  ###
-  def index
-    redirect_to user_profile_url(current_user.user_profile, subdomain: false) + '#characters' if user_signed_in?
-  end
 
   ###
   # This method returns the bar in/out partial for dynamic loading
@@ -51,8 +43,28 @@ class TopLevelController < ApplicationController
   def features
   end
 
+  # This method will bypass the supported browser check for the users current session.
+  def ignore_browser
+    session[:supported_browser] = true
+    redirect_to root_url
+  end
+
+  ###
+  # This method gets the index for home.
+  # If no match constraints(Subdomain)
+  # GET /
+  ###
+  def index
+    redirect_to user_profile_url(current_user.user_profile, subdomain: false) + '#characters' if user_signed_in?
+  end
+
   # This method gets the Pricing page.
   def pricing
+  end
+
+  # This method gets the Privacy Policy page.
+  def privacy_policy
+    @document = PrivacyPolicy.current
   end
 
   # This method gets the Maintenance page.
@@ -64,19 +76,12 @@ class TopLevelController < ApplicationController
     end
   end
 
-  # This method gets the Privacy Policy page.
-  def privacy_policy
-    @document = PrivacyPolicy.current
-  end
-
   # This method gets the Terms of Service page.
   def terms_of_service
     @document = TermsOfService.current
   end
 
-  # This method will bypass the supported browser check for the users current session.
-  def ignore_browser
-    session[:supported_browser] = true
-    redirect_to root_url
+  # This method gets the Trademark Usage Disclaimer page
+  def trademark_disclaimer
   end
 end
