@@ -81,11 +81,12 @@ end
 #
 # Table name: page_spaces
 #
-#  id           :integer          not null, primary key
-#  name         :string(255)
-#  game_id      :integer
-#  community_id :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                :integer          not null, primary key
+#  name              :string(255)
+#  supported_game_id :integer
+#  community_id      :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  deleted_at        :datetime
 #
 

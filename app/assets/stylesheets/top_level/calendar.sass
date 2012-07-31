@@ -10,6 +10,7 @@ body.fluid
   background: #eee
   +bg_gradient(#fff,#ccc)
   margin: -5px 0 0 60px
+  position: relative
   
   .r
     text-align: right
@@ -76,101 +77,107 @@ body.fluid
       padding: 0
       text-align: left
     
-  &.month table
-    width: 100%
+  &.month
     
-    tbody
-    
-      td
-        width: 14%
-        
-        >div
-          display: inline-block
-          height: 100%
-          position: relative
-          text-align: left
-          width: 100%
-          z-index: 2
-         
-          >time
-            background: rgba(#666,.1)
-            +border_radius(0,0,20,0)
-            color: #666
-            font: 12px DinMedium, sans-serif
-            height: 18px
-            left: -1px
-            line-height: 15px
-            padding: 3px 0 0 5px
-            position: absolute
-            top: 0
-            +transition(background .2s linear)
-            width: 20px
-          
-          >ol
-            padding: 20px 10px 10px
-            
-            a
-              background: rgba(#57416f,.8)
-              +border_radius(3)
-              color: #fff
-              display: block
-              font: 12px DinMedium, sans-serif
-              margin: 2px 0 0
-              padding: 2px 6px
-              +transition(box-shadow .2s linear)
-              
-              &:hover
-                background: #57416f
-                +box_shadow(0 0 8px rgba(#A13A31,.5))
-        
-        &.today >div
-          outline: 1px solid #2D7CB4
-          
-          >time
-            background: rgba(#2D7CB4,.8)
-            color: #fff
-        
-        &:hover
-          +bg_gradient(rgba(#fff,.7),rgba(#fff,.3))
-          border-bottom: 1px solid rgba(#666,.2)
-          border-left: 1px solid rgba(#666,.2)
+    table
+      width: 100%
+      
+      tbody
+      
+        td
+          width: 14%
           
           >div
-            +box_shadow(0 0 20px rgba(#000,.3))
-            outline: 1px solid #A13A30
-            z-index: 3
-            
-            >time
-              background: rgba(#A13A30,.8)
-              color: #fff
-        
-        &.empty
-          background: #bbb
-          border-bottom: 1px solid rgba(#666,.1)
-          border-left: 1px solid rgba(#666,.1)
-        
-        &.week
-          height: 100px
-          width: 2%
-          
-          a
-            display: block
+            display: inline-block
             height: 100%
-            margin: 0 0 -1px -1px
-            padding: 0
+            position: relative
+            text-align: left
             width: 100%
+            z-index: 2
+           
+            >time
+              background: rgba(#666,.1)
+              +border_radius(0,0,20,0)
+              color: #666
+              font: 12px DinMedium, sans-serif
+              height: 18px
+              left: -1px
+              line-height: 15px
+              padding: 3px 0 0 5px
+              position: absolute
+              top: 0
+              +transition(background .2s linear)
+              width: 20px
             
-            &:hover
-              background: #A13A31
-              outline: 1px solid #A13A31
+            >ol
+              padding: 20px 10px 10px
+              
+              a
+                background: rgba(#57416f,.8)
+                +border_radius(3)
+                color: #fff
+                display: block
+                font: 12px DinMedium, sans-serif
+                margin: 2px 0 0
+                padding: 2px 6px
+                +transition(box-shadow .2s linear)
+                
+                &:hover
+                  background: #57416f
+                  +box_shadow(0 0 8px rgba(#A13A31,.5))
           
-          &:hover ~ td.day div
-            background: #fff
-            outline: 1px solid #A13A31
+          &.today >div
+            outline: 1px solid #2D7CB4
             
             >time
-              background: rgba(#A13A30,.8)
+              background: rgba(#2D7CB4,.8)
               color: #fff
+          
+          &:hover
+            +bg_gradient(rgba(#fff,.7),rgba(#fff,.3))
+            border-bottom: 1px solid rgba(#666,.2)
+            border-left: 1px solid rgba(#666,.2)
+            
+            >div
+              +box_shadow(0 0 20px rgba(#000,.3))
+              outline: 1px solid #A13A30
+              z-index: 3
+              
+              >time
+                background: rgba(#A13A30,.8)
+                color: #fff
+          
+          &.empty
+            background: #bbb
+            border-bottom: 1px solid rgba(#666,.1)
+            border-left: 1px solid rgba(#666,.1)
+          
+          &.week
+            height: 100px
+            width: 2%
+            
+            a
+              display: block
+              height: 100%
+              margin: 0 0 -1px -1px
+              padding: 0
+              width: 100%
+              
+              &:hover
+                background: #A13A31
+                outline: 1px solid #A13A31
+            
+            &:hover ~ td.day div
+              background: #fff
+              outline: 1px solid #A13A31
+              
+              >time
+                background: rgba(#A13A30,.8)
+                color: #fff
+    footer
+      height: 50px
+      margin: 10px 0 0
+      padding: 10px
   
   &.week
     background: #ccc
@@ -179,7 +186,7 @@ body.fluid
     margin: 0
     min-width: 100%
     overflow: hidden
-    padding: 0
+    padding: 0 0 100px
     position: fixed
     right: 0
     top: 70px
@@ -305,14 +312,14 @@ body.fluid
       &:last-of-type dd:last-child
         +border_radius(0,0,3,0)
 
-#footer
-  bottom: auto !important
-  margin: -25px 0 0 !important
-  position: absolute !important
-  top: auto !important
-  z-index: 2
+footer
+  bottom: 0
+  left: -60px
+  margin: 0
+  right: 0
+  top: 100%
+  width: auto
 
-#footer,
 table tfoot td
   background: #666 !important
   border: 0

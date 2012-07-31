@@ -9,7 +9,7 @@ body
   font-family: DinLight, sans-serif
   min-width: 980px
   padding: 75px 0 0
-  
+
   em
     font-style: italic
     
@@ -38,17 +38,6 @@ body
     border-top: 1px solid #ccc
     margin: 15px 0
     visibility: visible
-
-#bar:after
-  background: image-url('bar/shadow.png') top center no-repeat
-  content: ''
-  height: 70px
-  left: 0
-  pointer-events: none
-  position: absolute
-  right: 0
-  top: 71px
-  z-index: 92
   
 button,
 .button,
@@ -107,7 +96,7 @@ body.index.minecrafts #submenu .minecraft
   left: 50%
   line-height: 20px
   margin: 40px 0 0 -450px
-  padding: 0 0 35px
+  padding: 0 0 135px
   position: absolute
   text-align: left
   width: 900px
@@ -379,152 +368,154 @@ body.index.minecrafts #submenu .minecraft
   
     tbody
     
-      tr
+      tr th
+        background: #bbb
+        +bg_gradient(#ccc,#aaa)
+        border-bottom: 1px solid #999
+        border-right: 1px solid #999
+        border-top: 1px solid #fff
+        font-family: DinMedium, sans-serif
+        padding: 5px 10px
       
-        th
-          background: #bbb
-          +bg_gradient(#ccc,#aaa)
-          border-bottom: 1px solid #999
-          border-right: 1px solid #999
-          border-top: 1px solid #fff
-          font-family: DinMedium, sans-serif
-          padding: 5px 10px
+      tr td
+        background: #eee
+        border-bottom: 1px solid #ddd
+        border-top: 1px solid #fff
+        padding: 5px 10px
+        width: 100%
       
-        td
-          background: #eee
-          +bg_gradient(#eee,#ddd)
-          border-bottom: 1px solid #ccc
-          border-top: 1px solid #fff
+      tr:nth-child(even) td
+        background: #fff
+
+      tr td
+        
+        &.check
+          border-right: 1px #ccc solid
+          padding: 5px 32px 5px 5px
+          text-align: center
+          width: 0
+          
+          label
+            position: absolute
+            
+            &:before
+              +box_shadow(0 0 10px rgba(#000,.3))
+      
+        &.compact
           padding: 5px 10px
-          width: 100%
-          
-          &.check
-            border-right: 1px #ccc solid
-            padding: 5px 32px 5px 5px
-            text-align: center
-            width: 0
-            
-            label
-              position: absolute
-              
-              &:before
-                +box_shadow(0 0 10px rgba(#000,.3))
-          
-          &.compact
-            padding: 5px 10px
-            text-align: center
-            width: 0
-          
-          &.actions
-            padding: 5px
-            white-space: nowrap
-            
-            div
-              position: relative
-            
-              a
-                background: image-url('application/icons.png') no-repeat #aaa
-                +border_radius(3)
-                display: block
-                float: left
-                height: 30px
-                overflow: hidden
-                padding: 0
-                margin: 0 0 0 5px
-                text-indent: -500em
-                +transition(background-color .2s linear, box-shadow .2s linear)
-                width: 30px
-                
-                &:hover
-                  background: image-url('application/icons.png') no-repeat #be4124
-                  +box_shadow(0 0 10px #333)
-                
-                  &[meta]
-                  
-                    &:before
-                      background: rgba(#251634,.8)
-                      +border_radius(3)
-                      color: #fff
-                      content: attr(meta)
-                      font-size: 13px
-                      height: 30px
-                      line-height: 30px
-                      margin: 0 5px 0 0
-                      padding: 0 10px
-                      position: absolute
-                      right: 100%
-                      text-indent: 0
-                      white-space: nowrap
-                    
-                    &:after
-                      border: 5px solid transparent
-                      border-left: 5px solid rgba(#251634,.8)
-                      content: ''
-                      height: 0
-                      left: -5px
-                      position: absolute
-                      top: 10px
-                      width: 0
-                
-                &.apply
-                  background-position: -120px -30px
-                
-                &.close
-                  background-position: -30px -30px
-                
-                &.comment
-                  background-position: -1170px -30px
-                  
-                &.delete
-                  background-position: -30px -30px
-                  
-                &.edit
-                  background-position: -60px -30px
-                
-                &.recruit
-                  background-position: -960px -30px
-          
-          a
-            white-space: nowrap
-            
-          time
-            display: block
-            font: 12px DinMedium, sans-serif
-            white-space: nowrap
-          
-          h3
-            padding: 0 15px 0 0
-          
-          ol,
-          ul
-            padding-bottom: 0
-            padding-top: 0
+          text-align: center
+          width: 0
         
-        &.read
-        
-          td,
-          th
-            +bg_gradient(#ddd,#ccc)
-            border-bottom-color: #bbb
-            
-            &.check
-              border-right-color: #bbb
-            
+        &.actions
+          padding: 5px
+          white-space: nowrap
+          
+          div
+            position: relative
+          
             a
-              color: #261232
+              background: image-url('application/icons.png') no-repeat #aaa
+              +border_radius(3)
+              display: block
+              float: left
+              height: 30px
+              overflow: hidden
+              padding: 0
+              margin: 0 0 0 5px
+              text-indent: -500em
+              +transition(background-color .2s linear, box-shadow .2s linear)
+              width: 30px
               
               &:hover
-                background: #BD4028
-                color: #fff
+                background: image-url('application/icons.png') no-repeat #be4124
+                +box_shadow(0 0 10px #333)
+              
+                &[meta]
+                
+                  &:before
+                    background: rgba(#251634,.8)
+                    +border_radius(3)
+                    color: #fff
+                    content: attr(meta)
+                    font-size: 13px
+                    height: 30px
+                    line-height: 30px
+                    margin: 0 5px 0 0
+                    padding: 0 10px
+                    position: absolute
+                    right: 100%
+                    text-indent: 0
+                    white-space: nowrap
+                  
+                  &:after
+                    border: 5px solid transparent
+                    border-left: 5px solid rgba(#251634,.8)
+                    content: ''
+                    height: 0
+                    left: -5px
+                    position: absolute
+                    top: 10px
+                    width: 0
+              
+              &.apply
+                background-position: -120px -30px
+              
+              &.close
+                background-position: -30px -30px
+              
+              &.comment
+                background-position: -1170px -30px
+                
+              &.delete
+                background-position: -30px -30px
+                
+              &.edit
+                background-position: -60px -30px
+              
+              &.recruit
+                background-position: -960px -30px
+        
+        a
+          white-space: nowrap
+          
+        time
+          display: block
+          font: 12px DinMedium, sans-serif
+          white-space: nowrap
+        
+        h3
+          padding: 0 15px 0 0
+        
+        ol,
+        ul
+          padding-bottom: 0
+          padding-top: 0
       
-        &.unread
-        
-          td,
-          th
-            +bg_gradient(#fff,#eee)
-        
-        &.private h3 a
-          color: #666
+      &.read
+      
+        td,
+        th
+          +bg_gradient(#ddd,#ccc)
+          border-bottom-color: #bbb
+          
+          &.check
+            border-right-color: #bbb
+          
+          a
+            color: #261232
+            
+            &:hover
+              background: #BD4028
+              color: #fff
+    
+      &.unread
+      
+        td,
+        th
+          +bg_gradient(#fff,#eee)
+      
+      &.private h3 a
+        color: #666
     
     tfoot
     
@@ -906,3 +897,13 @@ body.intro
 
 
 @import application/footer
+
+footer
+  color: #999 !important
+  a
+    background: transparent !important
+    color: #999 !important
+    &:hover
+      background: transparent !important
+      color: #BE4124 !important
+      text-decoration: underline !important

@@ -22,3 +22,4 @@
               - duration_hours = event.duration_hours < max_duration_hours ? event.duration_hours : max_duration_hours
               - data = { start_hour: hour, end_hour: hour + duration_hours }
               = link_to shorten_words(event.name,13), event_url(event), data: data, style: "height: #{(duration_hours * 25) - 17}px#{(duration_hours==1)?';padding-top:0;padding-bottom:10px':''}"
+    = render 'layouts/footer', current_layout: 'calendar'

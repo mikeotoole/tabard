@@ -11,14 +11,14 @@
       %p= @user_profile.title
   %aside
     .avatar= image_tag @user_profile.avatar_url :large
-    %ul.actions
+    .actions
       - if can? :update, @user_profile
-        %li= link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
-        %li= link_to 'Edit Profile', edit_user_profile_url(@user_profile), icon: '✎'
+        = link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
+        = link_to 'Edit Profile', edit_user_profile_url(@user_profile), icon: '✎'
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile
-          %li.message= link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
-          -#%li.message= link_to 'Recruit', '#', icon: '✍'
+          = link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
+          -#= link_to 'Recruit', '#', icon: '✍'
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile == current_user.user_profile)
       %h3 My Communities
       - if @user_profile.communities.any?

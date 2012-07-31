@@ -11,6 +11,10 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :mark, class: :error }
   end
 
+  config.wrappers :none, tag: false do |b|
+    b.use :input, class: 'input'
+  end
+
   config.wrappers :hidden, tag: false do |b|
     b.use :input, class: 'hidden input'
   end

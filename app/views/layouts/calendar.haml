@@ -11,6 +11,7 @@
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
+    = render 'layouts/ie'
 
   %body.fluid
     #bar= render "layouts/bar_in"
@@ -29,5 +30,4 @@
         %dd.new= link_to 'New', new_event_url, meta: "Create a new event in #{shorten_words(current_community.name)}"
 
   = yield
-  = render 'layouts/footer', current_layout: 'calendar'
   = yield :footer

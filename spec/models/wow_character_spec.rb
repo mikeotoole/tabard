@@ -4,14 +4,15 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
-#  faction    :string(255)
 #  race       :string(255)
 #  level      :integer
-#  server     :string(255)
-#  game_id    :integer
+#  wow_id     :integer
 #  avatar     :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  char_class :string(255)
+#  about      :text
+#  gender     :string(255)
 #
 
 require 'spec_helper'

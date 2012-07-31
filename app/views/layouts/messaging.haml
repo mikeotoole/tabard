@@ -10,6 +10,7 @@
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
+    = render 'layouts/ie'
 
   %body.fluid
     #bar= render "layouts/bar_in"
@@ -71,7 +72,8 @@
             - current_user.sent_messages.sort_by!{|m| m.created_at}.reverse!.each do |message|
               = render 'messages/row', message: message
 
-    #message= yield
+    #message
+      = yield
+      = render 'layouts/footer', current_layout: 'messaging' unless !!@message # Messages contain the footer already
 
-    = render 'layouts/footer', current_layout: 'messaging'
     = yield :footer
