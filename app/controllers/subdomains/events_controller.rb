@@ -107,11 +107,8 @@ class Subdomains::EventsController < SubdomainsController
 
   # POST /events
   def create
-    # TODO Mike, Need to be able to send one to many invites at creation.
     add_new_flash_message 'Event was successfully created.', 'success' if @event.save
-    @event.invites.each do |invite|
-    end
-    respond_with(@event, location: event_url(@event))
+    respond_with(@event)
   end
 
   # PUT /events/1
@@ -130,7 +127,6 @@ class Subdomains::EventsController < SubdomainsController
 
   # POST /events/:id/attend(.:format)
   def attend
-    # TODO Mike, the admin needs to be able to add one to many attendees at anytime.
     participant = @event.participants.new()
     participant.user_profile = current_user.user_profile
     participant.character_proxy = (character_active? ? current_character.character_proxy : nil)
