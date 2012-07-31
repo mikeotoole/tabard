@@ -1,29 +1,28 @@
 @import mixins
 
-#footer
-  background: #fff
-  border: 1px solid #ccc
-  border-bottom: 0
-  border-right: 0
-  +border_radius(3,0,0,0)
+footer
   bottom: 0
-  +box_shadow(0 0 10px rgba(#000,.2))
-  color: #666
-  font-family: DinMedium, sans-serif
-  font-size: 11px
-  +opacity(.8)
-  padding: 5px 30px 5px 5px
-  position: fixed
-  right: 0
-  +transition(opacity .2s linear)
-  z-index: 99
-  
-  &:hover
-    margin: 0
-    +opacity(1)
-  
+  clear: both
+  font: 11px DinLight, sans-serif
+  left: 50%
+  margin: 0 0 0 -480px
+  padding: 20px 0
+  position: absolute
+  text-align: center
+  width: 960px
+  &:before
+    background: image-url('bar/shadow.png') 50% 0 no-repeat transparent
+    bottom: 0
+    content: ''
+    left: 0
+    +opacity(.2)
+    position: absolute
+    right: 0
+    top: 0
+    z-index: 1
+  p
+    padding: 0 !important
+    position: relative
+    z-index: 2
   a
     text-decoration: underline
-    
-    &:hover
-      color: #BE4124

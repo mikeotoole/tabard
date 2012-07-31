@@ -1,5 +1,14 @@
 jQuery(document).ready ($) ->
 
+  # Adjust body and content heights dynamically
+  $('#body')
+    .on 'DOMNodeInserted', ->
+      bodyPadTop = parseInt $('#body').css 'padding-top'
+      bodyPadBottom = parseInt $('#body').css 'padding-bottom'
+      diffOffset = $('#body').offset().top - $('#content').offset().top
+      $('#content').height $('#body').height() + bodyPadTop + bodyPadBottom + diffOffset
+    .trigger 'DOMNodeInserted'
+
   # make labels work like field suggestions
   $('#homebox form li.input')
     .delegate 'input', 'focus', ->
