@@ -27,7 +27,7 @@ describe TopLevelController do
   end
   describe "GET 'trademark-disclaimer'" do
     it "should be successful" do
-      get 'trademark-disclaimer'
+      get 'trademark_disclaimer'
       response.should be_success
     end
   end
