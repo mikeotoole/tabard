@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714180027) do
+ActiveRecord::Schema.define(:version => 20120803181418) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -218,6 +218,14 @@ ActiveRecord::Schema.define(:version => 20120714180027) do
   add_index "community_applications", ["status_changer_id"], :name => "index_community_applications_on_status_changer_id"
   add_index "community_applications", ["submission_id"], :name => "index_community_applications_on_submission_id"
   add_index "community_applications", ["user_profile_id"], :name => "index_community_applications_on_user_profile_id"
+
+  create_table "community_invites", :force => true do |t|
+    t.integer  "applicant_id"
+    t.integer  "sponsor_id"
+    t.integer  "community_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"

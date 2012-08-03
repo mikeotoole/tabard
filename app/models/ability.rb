@@ -135,6 +135,11 @@ class Ability
       can? :create, Comment.new({ commentable: community_application, community: community_application.community }, without_protection: true)
     end
 
+    # Community Invites
+    can [:read], CommunityInvite do |invite|
+      invite.applicant = user.user_profile
+    end
+
     # Discussion Rules
     can [:comment], Discussion do |discussion|
       can? :read, discussion and not discussion.is_locked
@@ -253,6 +258,7 @@ class Ability
     can :destroy, CommunityProfile do |community_profile|
       community_profile.user_profile != community_profile.community.admin_profile
     end
+    can :create, CommunityInvite
     can :manage, RosterAssignment
     can [:read, :accept, :reject], CommunityApplication
     can [:manage], Page
@@ -332,7 +338,7 @@ class Ability
     return if user == nil
     return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
-    community_profile.roles.each do |role|
+    community_profile.roles.includes(:permissions).each do |role|
       role.permissions.each do |permission|
         action = Array.new
         if not permission.permission_level?

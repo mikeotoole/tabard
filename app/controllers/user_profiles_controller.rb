@@ -30,6 +30,18 @@ class UserProfilesController < ApplicationController
       add_new_flash_message 'The user profile you requested is no longer active.', 'alert'
       redirect_to root_url(subdomain: false)
     end
+    if user_signed_in?
+      @potential_communitys_to_invite_to = (current_user.communities - @user_profile.communities)
+      @communitys_to_invite_to = Array.new
+      @potential_communitys_to_invite_to.each do |community|
+        temp_ability = Ability.new(current_user)
+        temp_ability.dynamicContextRules(current_user, community)
+        @communitys_to_invite_to << community if temp_ability.can? :create, @user_profile.community_invite_applications.new({community: community, sponsor: current_user.user_profile}, without_protection: true)
+      end
+    else
+      @communitys_to_invite_to = nil
+    end
+
   end
 
   # GET /user_profiles/1/edit

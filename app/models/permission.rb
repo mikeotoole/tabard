@@ -13,14 +13,14 @@ class Permission < ActiveRecord::Base
 ###
 # Attribute Accessible
 ###
-  attr_accessible :role, :subject_class, :parent_association_for_subject, :id_of_parent, :permission_level,
+  attr_accessible :role, :subject_class, :parent_association_for_subject, :id_of_subject, :id_of_parent, :permission_level,
                   :can_lock, :can_create, :can_read, :can_accept, :can_destroy
 
 ###
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.
-  VALID_SUBJECT_CLASSES = %w( Announcement Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication Submission Event )
+  VALID_SUBJECT_CLASSES = %w( Announcement Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication CommunityInvite Submission Event )
   # This is a collection of strings that are valid for parent associations.
   VALID_PARENT_ASSOCIATIONS = %w( discussion_space page_space custom_form )
   # This is a collection of strings that are valid for permission levels.

@@ -37,6 +37,8 @@ class UserProfile < ActiveRecord::Base
   has_many :owned_communities, class_name: "Community", foreign_key: "admin_profile_id", dependent: :destroy
   has_many :community_profiles, dependent: :destroy
   has_many :roles, through: :community_profiles
+  has_many :community_invite_applications, class_name: "CommunityInvite", foreign_key: "applicant_id", inverse_of: :applicant, dependent: :destroy
+  has_many :community_invite_sponsors, class_name: "CommunityInvite", foreign_key: "sponsor_id", inverse_of: :sponsor, dependent: :destroy
 
   has_many :character_proxies, dependent: :destroy, conditions: {is_removed: false}
   has_many :swtor_characters, through: :character_proxies, source: :character, source_type: 'SwtorCharacter', order: 'LOWER(name)'

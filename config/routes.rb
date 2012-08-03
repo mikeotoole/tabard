@@ -50,6 +50,9 @@ DaBvRails::Application.routes.draw do
     get 'page/:page', action: :index, on: :collection
   end
 
+  # CommuntiyInvites
+  resources :community_invites, only: [:create]
+
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
   get "/world-of-warcraft" => 'wows#index', as: 'wows'
