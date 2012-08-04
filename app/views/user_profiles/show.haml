@@ -18,13 +18,12 @@
       - else
         - if user_signed_in? and current_user.address_book.include? @user_profile
           = link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
-          -#= link_to 'Recruit', '#', icon: '✍'
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile == current_user.user_profile)
       -if user_signed_in? and @communitys_to_invite_to.any?
-        %h3= "Invite #{@user_profile.display_name} to:"
+        %h3= "Recruit #{@user_profile.display_name} to:"
         %ul
           - @communitys_to_invite_to.each do |community|
-            %li= button_to community.name, community_invites_url(community_invite: {applicant_id: @user_profile.id, community_id: community.id, sponsor_id: current_user.user_profile_id}), method: :post
+            %li= link_to community.name, community_invites_url(community_invite: {applicant_id: @user_profile.id, community_id: community.id, sponsor_id: current_user.user_profile_id}), method: :post, icon: '✍'
       %h3 My Communities
       - if @user_profile.communities.any?
         %ul.communities

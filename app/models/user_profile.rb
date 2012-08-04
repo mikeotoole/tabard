@@ -38,6 +38,7 @@ class UserProfile < ActiveRecord::Base
   has_many :community_profiles, dependent: :destroy
   has_many :roles, through: :community_profiles
   has_many :community_invite_applications, class_name: "CommunityInvite", foreign_key: "applicant_id", inverse_of: :applicant, dependent: :destroy
+  has_many :invited_to_communities, through: :community_invite_applications, class_name: "Community", source: :community
   has_many :community_invite_sponsors, class_name: "CommunityInvite", foreign_key: "sponsor_id", inverse_of: :sponsor, dependent: :destroy
 
   has_many :character_proxies, dependent: :destroy, conditions: {is_removed: false}

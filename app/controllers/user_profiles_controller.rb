@@ -31,7 +31,8 @@ class UserProfilesController < ApplicationController
       redirect_to root_url(subdomain: false)
     end
     if user_signed_in?
-      @potential_communitys_to_invite_to = (current_user.communities - @user_profile.communities)
+      current_sponsor_id = current_user.user_profile_id
+      @potential_communitys_to_invite_to = (current_user.communities - (@user_profile.communities + @user_profile.community_invite_applications.where{sponsor_id == current_sponsor_id}.map{|i| i.community}))
       @communitys_to_invite_to = Array.new
       @potential_communitys_to_invite_to.each do |community|
         temp_ability = Ability.new(current_user)
