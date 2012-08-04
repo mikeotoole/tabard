@@ -390,6 +390,7 @@ protected
     officer_role.permissions.create!({subject_class: "Announcement", permission_level: "Create", can_lock: true}, without_protection: true)
     officer_role.permissions.create!({subject_class: "Comment", can_create: true, can_lock: true}, without_protection: true)
     officer_role.permissions.create!({subject_class: "CommunityApplication", can_read: true}, without_protection: true)
+    officer_role.permissions.create!({subject_class: "CommunityInvite", can_create: true}, without_protection: true)
     officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes({permission_level: "View",
       can_lock: false,
       can_accept: false,
