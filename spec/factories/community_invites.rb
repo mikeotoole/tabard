@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :community_invite do
-    applicant_id 1
-    sponser_id 1
-    community_id 1
+    applicant { FactoryGirl.create(:user_profile) }
+    sponsor { DefaultObjects.community.admin_profile }
+    community { DefaultObjects.community }
   end
 end
