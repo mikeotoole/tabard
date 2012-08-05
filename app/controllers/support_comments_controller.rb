@@ -24,8 +24,13 @@ class SupportCommentsController < ApplicationController
     @support_comment = (@support_ticket.blank? ? nil : @support_ticket.support_comments.new(params[:support_comment]))
     @support_comment.user_profile = current_user.user_profile
     authorize! :create, @support_comment
-    flash[:success] = "Your comment has been posted." if @support_comment.save
-    respond_with @support_comment, location: support_url(@support_ticket)
+    if @support_comment.save
+      flash[:success] = "Your comment has been posted."
+      respond_with @support_comment, location: support_url(@support_ticket)
+    else
+      flash[:alert] = "Your comment was unable to be posted."
+      render "support_tickets/show"
+    end
   end
 
   # Loads the models for cancan.

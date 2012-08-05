@@ -15,6 +15,7 @@
       %h2 Comments
       %ol
         - @support_ticket.support_comments.each do |comment|
+          -next unless comment.valid?
           %li.comment{ id: "comment_#{comment.id}", class: comment.admin_created? ? 'admin' : 'user' }
             %blockquote
               .avatar= image_tag comment.avatar_url(:small)
@@ -26,7 +27,7 @@
                 %span.body= shorten_words(comment.body)
 
   %h2 Add a comment
-  = simple_form_for [@support_ticket, SupportComment.new], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
+  = simple_form_for [@support_ticket, @support_comment], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
     = f.input :body, wrapper_tag: :p, label: false
     %p.submit
       %button{ type: :submit } Add comment
