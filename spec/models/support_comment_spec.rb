@@ -42,5 +42,8 @@ describe SupportComment do
     it "should be required" do
       build(:support_comment, :body => nil).should_not be_valid
     end
+    it "should not be allowed to be blank" do
+      build(:support_comment, :body => "").should_not be_valid
+    end
   end
 end

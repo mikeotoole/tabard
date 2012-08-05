@@ -7,5 +7,8 @@ class CreateCommunityInvites < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :community_invites, :applicant_id
+    add_index :community_invites, :sponsor_id
+    add_index :community_invites, :community_id
   end
 end
