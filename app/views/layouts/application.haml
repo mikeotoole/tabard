@@ -10,6 +10,7 @@
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
     = render 'layouts/ie'
+    = render 'layouts/analytics'
 
   %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'}" }
     #bar
