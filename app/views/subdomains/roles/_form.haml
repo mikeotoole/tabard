@@ -19,11 +19,9 @@
       %h2 Comments
     %dd= render 'subdomains/roles/permissions/comments', f: f, role: role
     %dt
-      %h2 Community Applications
-    %dd= render 'subdomains/roles/permissions/community_applications', f: f, role: role
-    %dt
-      %h2 Community Invites
-    %dd= render 'subdomains/roles/permissions/community_invites', f: f, role: role
+      %h2 Community
+    %dd
+      = render 'subdomains/roles/permissions/community', f: f, role: role
     %dt
       %h2 Custom Forms
     %dd= render 'subdomains/roles/permissions/custom_forms', f: f, role: role
