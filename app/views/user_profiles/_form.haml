@@ -9,9 +9,9 @@
       = f.input :description, label: "About me", wrapper_tag: :p, hint: "#{UserProfile::MAX_DESCRIPTION_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_DESCRIPTION_LENGTH }
       %li.avatar{ class: f.object.errors.any? ? 'field_with_errors' : '' }
         - if !user_profile.avatar_url.to_s or f.object.errors.any?
-          = image_tag 'application/avatar@240.png'
+          = image_tag 'application/avatar@240.png', width: 240, height: 240
         - else
-          = image_tag(user_profile.avatar_url :large)
+          = image_tag user_profile.avatar_url(:large), width: 240, height: 240
         %br
         = f.input :avatar, as: :file, hint: 'Maxium file size of 2mb. GIF, JPG, PNG.'
         = f.input :remote_avatar_url, label: ' — or a link to an image'
