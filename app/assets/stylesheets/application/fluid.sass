@@ -70,7 +70,7 @@
   #body
     +box_shadow(none)
     position: static
-  
+    
   .editor
     background: #aaa
     border-right: 1px solid #666
@@ -262,148 +262,125 @@
       padding: 10px 0 5px !important
     
     #wmd-button-bar
-      
       ul
         height: 100%
         padding: 0
-        
         li
           list-style: none
-        
           &.wmd-button
             cursor: pointer
             height: 30px
             margin-top: -5px
-            
             &#wmd-bold-button
               background-position: -630px -30px
-            
             &#wmd-italic-button
               background-position: -660px -30px
               display: none
-            
             &#wmd-link-button
               background-position: -690px -30px
-            
             &#wmd-quote-button
               background-position: -750px -30px
-            
             &#wmd-code-button
               background-position: -780px -30px
               display: none
-            
             &#wmd-image-button
               background-position: -810px -30px
-            
             &#wmd-ulist-button
               background-position: -840px -30px
-            
             &#wmd-olist-button
               background-position: -870px -30px
-            
             &#wmd-heading-button
               background-position: -900px -30px
-            
             &#wmd-hr-button
               display: none
-            
             &#wmd-undo-button
               background-position: -930px -30px
               display: none
-            
             &#wmd-redo-button
               background-position: -960px -30px
               display: none
-            
             &#wmd-help-button
               background-position: -990px -30px
       
     dd
       padding: 0 !important
-      
       &.cinch
-      
         a,
         button
           margin: -5px 14px 15px
-    
       &.toggle
-        
         a,
         button
           background-position: -480px -30px !important
-    
       &.cancel
-        
         a,
         button
           background-position: -930px -30px !important
-          
       &.inbox
-      
         a,
         button
           background-position: -270px -30px
-      
       &.sent
-      
         a,
         button
           background-position: -300px -30px
-      
       &.trash
-      
         a,
         button
           background-position: -240px -30px
-    
       &.compose
-      
         a,
         button
           background-position: -120px -30px
-      
       &.move
-      
         a,
         button
           background-position: -210px -30px
-      
       &.unread
-      
         a,
         button
           background-position: -420px -30px
-      
       &.read
-      
         a,
         button
           background-position: -390px -30px
-      
       &.destroy
-      
         a,
         button
           background-position: -360px -30px
-      
       &.current
-      
         a,
         button
           background-color: #2D7CB4
           border-color: #5099cc
           +box_shadow(0 0 20px #ccc)
           +opacity(1)
-      
       &.list a
         background-position: -930px -30px
-      
       &.new a
         background-position: 0 -30px
-      
       &.week a
         background-position: -1110px -30px
-      
       &.month a
         background-position: -1140px -30px
+
+  &.subdomains.pages
+    #wmd-fields
+      bottom: 30px
+    footer
+      bottom: 0
+      left: 60px
+      margin: 0
+      padding: 10px 5px
+      position: fixed
+      right: 45%
+      width: auto
+      z-index: 999
+      &:before
+        display: none
+      p
+        color: #666
+        a
+          color: #666 !important
+          &:hover
+            color: #A1392D !important
