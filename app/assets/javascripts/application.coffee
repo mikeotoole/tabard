@@ -107,28 +107,23 @@ adjustHeaderByFlash = (speed,rowOffset=0) ->
       $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions, #calendar')
         .animate({ top: (amount + 70) + 'px' }, speed)
 
-# Improved select box functionality
-root.initSelects = ->
-  $('body').on 'mouseenter mouseleave', '.select', ->
-    $(@).scrollTop(0)
-    $(@).find('ul').scrollTop(0)
-  $('.select, .select ul').scroll ->
-    $(@).scrollLeft(0)
-  $('body').on 'click', '.select ul label, form .profile label', ->
-    select = $(@).closest('.select')
-    ul = $(@).closest('ul')
-    ul.animate { opacity: 0 }, 200, ->
-      ul
-        .hide()
-        .animate { opacity: 0 }, 5, ->
-          ul.show().css { opacity: 1 }
-    setTimeout ->
-      select.scrollTop(0)
-      ul.scrollTop(0)
-    , 250
-
 
 jQuery(document).ready ($) ->
+
+  # Improved select box functionality
+  $('body')
+    .on 'mouseenter mouseleave', '.select', ->
+      $(@).scrollTop 0
+      $(@).find('ul').scrollTop 0
+    .on 'scroll', '.select, .select ul', ->
+      $(@).scrollLeft 0
+    .on 'click', '.select ul label, form .profile label', ->
+      select = $(@).closest '.select'
+      select.scrollTop 0
+      ul = $(@).closest 'ul'
+      ul.scrollTop(0).animate opacity: 0, 200, ->
+        ul.hide().animate opacity: 0, 50, ->
+          ul.show().css opacity: 1
   
   # dynamic loaded content after page load
   $('body')
@@ -312,5 +307,3 @@ jQuery(document).ready ($) ->
           else
             rowChecks.attr 'checked', true
     .trigger 'init'
-  
-  initSelects()

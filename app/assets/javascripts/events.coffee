@@ -66,5 +66,3 @@ jQuery(document).ready ($) ->
             .trigger 'click'
         false
     false
-
-  initSelects()
