@@ -57,7 +57,7 @@ class CommunitiesController < ApplicationController
       Community.delay.destory_community(@community.id)
       @community.update_column(:pending_removal, true)
       add_new_flash_message 'Community is being removed.', 'notice'
-      redirect_to user_profile_url(current_user.user_profile, subdomain: false)
+      redirect_to user_profile_url(current_user.user_profile, subdomain: false, protocol: "http://")
     else
       add_new_flash_message 'Password was not valid.', 'alert'
       redirect_to community_remove_confirmation_url(subdomain: @community.subdomain)
