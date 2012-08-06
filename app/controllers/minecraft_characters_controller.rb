@@ -37,7 +37,7 @@ class MinecraftCharactersController < ApplicationController
       logger.error "#{$!}"
       @minecraft_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @minecraft_character, location: user_profile_url(@minecraft_character.user_profile) + '#characters'
+    respond_with @minecraft_character, location: user_profile_url(current_user.user_profile) + '#characters'
   end
 
   # PUT /minecraft_characters/:id(.:format)

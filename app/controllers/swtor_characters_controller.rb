@@ -37,7 +37,7 @@ class SwtorCharactersController < ApplicationController
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
-    respond_with @swtor_character, location: user_profile_url(@swtor_character.user_profile) + '#characters'
+    respond_with @swtor_character, location: user_profile_url(current_user.user_profile) + '#characters'
   end
 
   # PUT /swtor_characters/:id(.:format)
