@@ -30,7 +30,7 @@ ActiveAdmin.register SupportTicket do
     f.inputs "Support Ticket Details" do
       f.input :admin_user, member_label: :display_name
       f.input :status, as: :select, include_blank: false, collection: SupportTicket::STATUSES
-      f.buttons
+      f.actions
     end
   end
 
