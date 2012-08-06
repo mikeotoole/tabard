@@ -43,6 +43,6 @@ ActiveAdmin.register Minecraft do
     f.inputs "Minecraft Details" do
       f.input :server_type, as: :select, collection: Minecraft::VALID_SERVER_TYPES
     end
-    f.buttons
+    f.actions
   end
 end

@@ -54,6 +54,6 @@ ActiveAdmin.register Document do
       f.input :body
       f.input :is_published
     end
-    f.buttons
+    f.actions
   end
 end
