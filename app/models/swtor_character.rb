@@ -6,7 +6,7 @@
 # This class represents a Star Wars the Old Republic character.
 ###
 class SwtorCharacter < BaseCharacter
-  validates_lengths_from_database except: [:name]
+  validates_lengths_from_database except: [:name, :avatar]
 ###
 # Constants
 ###
