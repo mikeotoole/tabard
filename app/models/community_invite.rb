@@ -10,6 +10,7 @@ class CommunityInvite < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :applicant_id, :community_id, :sponsor_id
+
 ###
 # Associations
 ###
@@ -26,6 +27,7 @@ class CommunityInvite < ActiveRecord::Base
   validates :community, presence: true
   validate :applicant_cant_be_the_same_as_sponsor
   validate :sponsor_must_be_member_of_community
+
 ###
 # Delegates
 ###
@@ -33,6 +35,7 @@ class CommunityInvite < ActiveRecord::Base
   delegate :subdomain, to: :community, prefix: true
   delegate :display_name, to: :sponsor, prefix: true
   delegate :display_name, to: :applicant, prefix: true
+
 ###
 # Validator Methods
 ###
