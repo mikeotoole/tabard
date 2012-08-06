@@ -49,6 +49,6 @@ ActiveAdmin.register Wow, as: "Wow" do
       f.input :server_name
       f.input :server_type, as: :select, collection: Wow::VALID_SERVER_TYPES
     end
-    f.buttons
+    f.actions
   end
 end

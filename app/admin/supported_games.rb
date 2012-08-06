@@ -57,6 +57,6 @@ ActiveAdmin.register SupportedGame do
       f.input :server_name, label: 'Server', collection: f.object.game.all_servers
       f.input :name
     end
-    f.buttons
+    f.actions
   end
 end
