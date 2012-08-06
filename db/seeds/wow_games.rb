@@ -1,7 +1,7 @@
 VALID_WOW_SERVERS = [
   ["Aegwynn", 'PvP', 'US'],
   ["Aerie Peak", 'PvE', 'US'],
-  ["Agamagga", 'PvP', 'US'],
+  ["Agamaggan", 'PvP', 'US'],
   ["Aggramar", 'PvE', 'US'],
   ["Akama", 'PvP', 'US'],
   ["Alexstrasza", 'PvE', 'US'],
@@ -23,7 +23,7 @@ VALID_WOW_SERVERS = [
   ["Auchindoun", 'PvP', 'US'],
   ["Azgalor", 'PvP', 'US'],
   ["Azjol-Nerub", 'PvE', 'US'],
-  ["Azralon", 'PvE', 'Brazil'],
+  ["Azralon", 'PvP', 'Brazil'],
   ["Azshara", 'PvP', 'US'],
   ["Azuremyst", 'PvE', 'US'],
   ["Baelgun", 'PvE', 'US'],
@@ -100,6 +100,7 @@ VALID_WOW_SERVERS = [
   ["Frostmourne", 'PvP', 'Oceanic'],
   ["Frostwolf", 'PvP', 'US'],
   ["Galakrond", 'PvE', 'US'],
+  ["Gallywix", 'PvE', 'Brazil'],
   ["Garithos", 'PvP', 'US'],
   ["Garona", 'PvE', 'US'],
   ["Garrosh", 'PvE', 'US'],
@@ -128,8 +129,8 @@ VALID_WOW_SERVERS = [
   ["Kargath", 'PvE', 'US'],
   ["Kel'Thuzad", 'PvP', 'US'],
   ["Khadgar", 'PvE', 'US'],
-  ["Khaz Modan", 'PvE', 'US'],
   ["Khaz'goroth", 'PvE', 'Oceanic'],
+  ["Khaz Modan", 'PvE', 'US'],
   ["Kil'jaeden", 'PvP', 'US'],
   ["Kilrogg", 'PvE', 'US'],
   ["Kirin Tor", 'RP', 'US'],
@@ -220,8 +221,8 @@ VALID_WOW_SERVERS = [
   ["Thunderhorn", 'PvE', 'US'],
   ["Thunderlord", 'PvP', 'US'],
   ["Tichondrius", 'PvP', 'US'],
-  ["Tortheldrin", 'PvP', 'US'],
   ["Tol Barad", 'PvP', 'Brazil'],
+  ["Tortheldrin", 'PvP', 'US'],
   ["Trollbane", 'PvE', 'US'],
   ["Turalyon", 'PvE', 'US'],
   ["Twisting Nether", 'RP PvP', 'US'],
@@ -243,7 +244,7 @@ VALID_WOW_SERVERS = [
   ["Ysondre", 'PvP', 'US'],
   ["Zangarmarsh", 'PvE', 'US'],
   ["Zul'jin", 'PvE', 'US'],
-  ["Zuluhed", 'PvP']
+  ["Zuluhed", 'PvP', 'US']
 ]
 
 puts "Creating WoW Games..."
