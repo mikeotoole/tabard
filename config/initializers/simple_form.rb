@@ -1,6 +1,6 @@
 SimpleForm.setup do |config|
 
-  config.wrappers :default, tag: :li, class: :input, hint_class: :fieldWithHint, error_class: :fieldWithErrors do |b|
+  config.wrappers :default, tag: :li, class: :input, hint_class: :field_with_hint, error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
     b.use :maxlength
@@ -19,7 +19,7 @@ SimpleForm.setup do |config|
     b.use :input, class: 'hidden input'
   end
 
-  config.wrappers :slider, tag: :div, class: :slider, hint_class: :fieldWithHint, error_class: :fieldWithErrors do |b|
+  config.wrappers :slider, tag: :div, class: :slider, hint_class: :field_with_hint, error_class: :field_with_errors do |b|
     b.use :input
     b.use :hint,  wrap_with: { tag: :dfn, class: :hint }
     b.use :error, wrap_with: { tag: :mark, class: :error }

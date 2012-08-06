@@ -10,12 +10,12 @@
 
   %blockquote= simple_format @support_ticket.body
 
-  -if @support_ticket.support_comments.any?
+  - if @support_ticket.support_comments.keep_if{|c| c.valid?}.any?
     .comments
       %h2 Comments
       %ol
         - @support_ticket.support_comments.each do |comment|
-          -next unless comment.valid?
+          - next unless comment.valid?
           %li.comment{ id: "comment_#{comment.id}", class: comment.admin_created? ? 'admin' : 'user' }
             %blockquote
               .avatar= image_tag comment.avatar_url(:small)
