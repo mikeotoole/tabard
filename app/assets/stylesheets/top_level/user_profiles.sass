@@ -136,7 +136,8 @@ body.user_profiles.dashboard
             height: 0
             visibility: hidden
             
-          a
+          >a,
+          >div
             background: none
             color: #fff
             display: block
@@ -172,6 +173,43 @@ body.user_profiles.dashboard
                 &:before
                   background: #CB472C
                   color: #fff
+            
+            >ul
+              background: #CC4728
+              +bg_gradient(#CC4728,#A1392F)
+              +border_radius(0,3,3,3)
+              display: none
+              left: 0
+              position: absolute
+              top: 25px
+              z-index: 2
+            
+            &.recruit:hover
+              +border_radius(0,3,0,0)
+              >ul
+                display: block
+                padding: 5px
+                >li
+                  display: inline
+                  margin: 0
+                  padding: 0
+                  &:before
+                    display: none
+                  a
+                    +border_radius(0)
+                    border-top: 1px solid rgba(#792B27,.5)
+                    color: #E9D9C4
+                    display: block
+                    line-height: 15px
+                    min-width: 100px
+                    padding: 10px
+                    text-decoration: none
+                    white-space: nowrap
+                    &:hover
+                      background: #792B27
+                      color: #fff
+                  &:first-child a
+                    border-top: 0
         
         h3
           line-height: 1em

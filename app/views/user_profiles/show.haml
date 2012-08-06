@@ -15,15 +15,16 @@
       - if can? :update, @user_profile
         = link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
         = link_to 'Edit Profile', edit_user_profile_url(@user_profile), icon: '✎'
-      - else
-        - if user_signed_in? and current_user.address_book.include? @user_profile
+      - elsif user_signed_in?
+        - if current_user.address_book.include? @user_profile
           = link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
+        - if @communitys_to_invite_to.any?
+          .recruit{ icon: '✍' }
+            Recruit to&hellip;
+            %ul
+              - @communitys_to_invite_to.each do |community|
+                %li= link_to community.name, community_invites_url(community_invite: {applicant_id: @user_profile.id, community_id: community.id, sponsor_id: current_user.user_profile_id}), method: :post
     - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile == current_user.user_profile)
-      -if user_signed_in? and @communitys_to_invite_to.any?
-        %h3= "Recruit #{@user_profile.display_name} to:"
-        %ul
-          - @communitys_to_invite_to.each do |community|
-            %li= link_to community.name, community_invites_url(community_invite: {applicant_id: @user_profile.id, community_id: community.id, sponsor_id: current_user.user_profile_id}), method: :post, icon: '✍'
       %h3 My Communities
       - if @user_profile.communities.any?
         %ul.communities
