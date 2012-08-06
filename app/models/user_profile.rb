@@ -324,8 +324,10 @@ class UserProfile < ActiveRecord::Base
   # This will remove this user profile's avatar and all character's avatars.
   def remove_all_avatars
     self.remove_avatar!
+    self.update_column(:avatar, nil)
     characters.each do |character|
       character.remove_avatar!
+      character.update_column(:avatar, nil)
     end
   end
 
