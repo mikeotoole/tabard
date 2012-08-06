@@ -13,7 +13,7 @@
 
   - else
     #submenu
-      = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown().find('textarea').focus();$(this).hide();return false;"
+      = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown(200,function(){$('#body').trigger('DOMNodeInserted');}).find('textarea').focus();$(this).hide();return false;"
 
     = simple_form_for @support_ticket, url: {action: :create}, html: {novalidate: true} do |f|
       = f.input :body, wrapper_tag: :p, label: 'Describe your issue in detail'
