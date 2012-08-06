@@ -12,7 +12,7 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :community_profile, :character_proxy, :supported_game
+  attr_accessible :community_profile, :character_proxy, :supported_game, :character_proxy_id, :supported_game_id
 
 ###
 # Associations

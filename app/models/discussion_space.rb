@@ -119,7 +119,7 @@ protected
   # This method removes action item from community.
   ###
   def remove_action_item
-    if self.community.action_items.any?
+    if self.community.action_items.any? and self.community.discussion_spaces.size > 1
       self.community.action_items.delete(:create_discussion_space)
       self.community.save
     end
