@@ -107,7 +107,7 @@ adjustHeaderByFlash = (speed,rowOffset=0) ->
       $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions, #calendar')
         .animate({ top: (amount + 70) + 'px' }, speed)
 
-# sets up select box improved functionality
+# Improved select box functionality
 root.initSelects = ->
   $('body').on 'mouseenter mouseleave', '.select', ->
     $(@).scrollTop(0)
@@ -154,7 +154,7 @@ jQuery(document).ready ($) ->
       .attr('src', avatar)
       .unbind 'error'
   
-  # text box suggest
+  # Text box suggest
   $('form input').each ->
     $(@).data 'default', $(@).attr 'title'
     $(@).removeAttr 'title'
@@ -166,7 +166,7 @@ jQuery(document).ready ($) ->
         $(@).val $(@).data 'default'
     $(@).trigger 'blur'
   
-  # override rails allow action (for data-confirm)
+  # Override rails allow action (for data-confirm)
   $.rails.allowAction = (element) ->
     message = element.data("confirm")
     return true unless message
@@ -182,7 +182,7 @@ jQuery(document).ready ($) ->
           $('#modal button.cancel').trigger 'click'
       false
   
-  # batch actions
+  # Batch actions
   $('form .batch button, form button.batch')
     .click ->    
       $(@)
@@ -191,7 +191,7 @@ jQuery(document).ready ($) ->
         .find('input[name="_method"]')
         .val $(@).attr('method')
 
-  # Setup flash message events
+  # Flash message events
   $('body').on 'init', '#flash li', ->
     $(@).append('<a class="dismiss">✕</a>')
     $(@)
@@ -233,7 +233,7 @@ jQuery(document).ready ($) ->
             $(@).remove()
   $('#flash li').trigger 'init'
   
-  # tiered form field selection
+  # Tiered form field selection
   $('form .select[affects] input')
     .change ->
       select = $(@).closest('.select')
@@ -267,7 +267,7 @@ jQuery(document).ready ($) ->
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
   
-  # tabs
+  # Tabs
   $('dl.tabs >dt').click ->
     $(@).closest('dl.tabs').find('>dt').removeClass('current')
     $(@).addClass('current')
@@ -280,15 +280,15 @@ jQuery(document).ready ($) ->
       tab.trigger 'click'
       return false
   
-  # slider input fields
+  # Slider input fields
   $('body').on 'init', '.slider', -> $(@).css('width', $(@).find('label').length * 70)
   $('.slider').trigger 'init'
   
-  # inputs that affect the hidden _destroy field
+  # Inputs that affect the hidden _destroy field
   $('input[toggle_destroy="true"]').change ->
     $(@).prevAll('input[name*="_destroy"]:first').attr('checked', !$(@).prop('checked'))
   
-  # fluid sidebar menu
+  # Fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
     .filter('[title]')
