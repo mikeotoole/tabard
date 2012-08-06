@@ -40,7 +40,7 @@ class UserProfilesController < ApplicationController
         @communitys_to_invite_to << community if temp_ability.can? :create, @user_profile.community_invite_applications.new({community: community, sponsor: current_user.user_profile}, without_protection: true)
       end
     else
-      @communitys_to_invite_to = nil
+      @communitys_to_invite_to = Array.new
     end
 
   end

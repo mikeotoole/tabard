@@ -6,13 +6,14 @@ describe "user_profiles/show" do
     @activities_count_initial = 20
     @activities_count_increment = 10
     @activities = {}
+    @communitys_to_invite_to = Array.new
   end
 
   describe "when user_profile is publicly viewable" do
     before(:each) do
       @user_profile = create(:user_profile, :publicly_viewable => true)
     end
-  
+
     it "should show activities when authenticated as the owner" do
       login_user @user_profile.user
       render
@@ -24,7 +25,7 @@ describe "user_profiles/show" do
       render
       rendered.should include("Recent Activity")
     end
-    
+
     it "should show activities when not authenticated" do
       login_user nil
       render
@@ -36,7 +37,7 @@ describe "user_profiles/show" do
     before(:each) do
       @user_profile = create(:user_profile, :publicly_viewable => false)
     end
-    
+
     it "should show activities when authenticated as the owner" do
       login_user @user_profile.user
       render
@@ -48,7 +49,7 @@ describe "user_profiles/show" do
       render
       rendered.should_not include("Recent Activity")
     end
-    
+
     it "should not show activities when not authenticated" do
       login_user nil
       render
