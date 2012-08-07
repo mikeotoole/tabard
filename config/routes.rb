@@ -40,6 +40,7 @@ DaBvRails::Application.routes.draw do
       get :announcements
       get :characters
       get :invites
+      get :roles
     end
   end
   get "/account" => "user_profiles#account", as: "account"

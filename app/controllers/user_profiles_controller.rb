@@ -10,9 +10,9 @@ class UserProfilesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, except: [:show, :activities, :characters, :announcements, :invites, :index]
+  before_filter :block_unauthorized_user!, except: [:show, :activities, :characters, :index]
   before_filter :set_current_user_as_profile, only: :account
-  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites]
+  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites, :roles]
   skip_authorize_resource only: :account
   before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites]
   before_filter :load_activities, only: [:show, :activities]
@@ -92,6 +92,12 @@ class UserProfilesController < ApplicationController
   def invites
     @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character_proxy, event: [:community]).page params[:page]
     render partial: 'user_profiles/invites', locals: { invites: @invites }
+  end
+
+  # GET /user_profiles/:id/roles(.:format)
+  def roles
+    @roles = current_user.roles.order(:community_id)
+    render partial: 'user_profiles/roles', locals: { invites: @roles }
   end
 
 ###
