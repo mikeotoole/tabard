@@ -58,7 +58,7 @@
         %dt{ class: 'activities current' }
           = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
         %dd
-        - if user_signed_in? and (@user_profile == current_user.user_profile or true) # TODO - Joe, replace 'true' with the check for if the current user can assign roles to this user
+        - if user_signed_in? and (@user_profile == current_user.user_profile or @communities_with_roles_to_assign.any?)
           %dt{ class: 'roles' }
             = link_to 'User Roles', roles_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.roles + dd', error: 'Error: unable to load user roles.' }
           %dd
