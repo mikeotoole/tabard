@@ -436,6 +436,46 @@ body.user_profiles.dashboard
                   
                   &:hover
                     +box_shadow(0 0 10px #4486BA)
+            
+            .checkboxes li
+              color: #aaa
+              height: 25px
+              line-height: 25px
+              margin: 0
+              padding: 0 10px 0 35px
+              position: relative
+              &:before
+                +bg_gradient(#B2CADA,#DAE7EE)
+                border: 1px solid #fff
+                +box_shadow(0 0 5px #B2CADA)
+                content: ''
+                height: 20px
+                left: 0
+                line-height: 20px
+                position: absolute
+                text-align: center
+                top: 0
+                width: 20px
+              a
+                color: #aaa
+                display: block
+                float: left
+                font-family: DinMedium, sans-serif
+                margin: 0 -10px 0 -35px
+                padding: 0 10px 0 35px
+                position: relative
+                text-decoration: none
+                z-index: 2
+                &:hover
+                  background: transparent
+                  color: #CF4527 !important
+              &.checked
+                color: #251533
+                a
+                  color: #251533
+                &:before
+                  color: #251533 !important
+                  content: '\2714'
           
           >dt
             background: #E4E4E4
