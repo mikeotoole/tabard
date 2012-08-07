@@ -42,6 +42,7 @@ DaBvRails::Application.routes.draw do
       get :invites
       get :roles
     end
+    resources :roles, only: [:update]
   end
   get "/account" => "user_profiles#account", as: "account"
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put

@@ -36,6 +36,7 @@ jQuery(document).ready ($) ->
     else
       $('#tabs dt.activities a').trigger 'click'
 
+  # Batch invites action
   $('#body')
     .on 'ajax:error', '#invites_batch', (xhr, status, error) ->
       $.alert body: error
@@ -46,3 +47,8 @@ jQuery(document).ready ($) ->
         $("#invites_batch td.check input").removeAttr 'checked'
       else
         $.alert body: response.message
+
+  # Role assignment toggling
+  $('#body')
+    .on 'ajax:success', '#invites_batch', (event, data, status, xhr) ->
+      console.log 'TODO - stuff'

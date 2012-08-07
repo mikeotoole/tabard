@@ -1,15 +1,18 @@
-%h1 LOLOLOL ROLES
-%ul
-  -@roles.group_by{|r| r.community }.each do |community, roles|
-    -temp_ability = Ability.new(current_user)
-    -temp_ability.dynamicContextRules(current_user, community)
-    %h2=community
-    -community.roles.each do |role|
-      - if not role.is_member_role? and temp_ability.can? :can_accept, Role
-        %span="MAGIC EDIT LINK"
-        %span="Has? #{roles.include?(role).to_s}"
-        %li=role.to_yaml
+- if roles.any?
+  - roles.group_by{|r| r.community }.each do |community, roles|
+    %h2= "#{community.name} roles"
+    %ul.checkboxes
+      - if community.admin_profile == user_profile
+        %li
+          %strong Community Leader
       - else
-        %span="MAGIC NOTEDIT LINK"
-        %span="Has? #{roles.include?(role).to_s}"
-        %li=role.to_yaml
+        %li Member
+        - temp_ability = Ability.new(current_user)
+        - temp_ability.dynamicContextRules(current_user, community)
+        - community.roles.each do |role|
+          - next if role.is_member_role?
+          %li{ class: roles.include?(role) ? 'checked' : ''}
+            - if temp_ability.can? :can_accept, Role
+              = link_to role.name, user_profile_role_url(user_profile, role), method: :put, remote: :true
+            - else
+              = role.name
