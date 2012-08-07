@@ -194,6 +194,16 @@ class UserProfile < ActiveRecord::Base
     return false
   end
 
+  # This method attepts to remove the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
+  def remove_role(role)
+    correct_community_profile = self.community_profiles.find_by_community_id(role.community_id)
+    if correct_community_profile
+      correct_community_profile.roles.delete(role)
+      return true
+    end
+    return false
+  end
+
   ###
   # This method checks if the user is a member of the given community.
   # [Args]
