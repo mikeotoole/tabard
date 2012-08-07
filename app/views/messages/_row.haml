@@ -9,7 +9,7 @@
     = l message.created_at, format: (message.created_at >= Time.zone.now.beginning_of_day ? :time_12 : :date_monthday)
 
   %h3
-    = link_to message.subject, (message.respond_to?('folder_name') ? mail_url(message, format: :js, subdomain: false) : sent_mail_url(message, format: :js, subdomain: false)), remote: true, 'data-type' => :text
+    = link_to message.subject, (message.respond_to?('folder_name') ? mail_url(message, format: :js, subdomain: false) : sent_mail_url(message, format: :js, subdomain: false)), remote: true, data: { type: :text }
 
   - if message.is_system_sent
   - else

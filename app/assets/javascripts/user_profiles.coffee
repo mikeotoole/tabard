@@ -31,6 +31,8 @@ jQuery(document).ready ($) ->
       $('#tabs dt.characters a').trigger 'click'
     when '#announcements'
       $('#tabs dt.announcements a').trigger 'click'
+    when '#roles'
+      $('#tabs dt.roles a').trigger 'click'
     else
       $('#tabs dt.activities a').trigger 'click'
 
