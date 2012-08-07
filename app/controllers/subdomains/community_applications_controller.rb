@@ -73,8 +73,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def accept
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
-      add_new_flash_message 'The application has been accepted.', 'success'
-      redirect_to community_applications_url
+      add_new_flash_message 'The application has been accepted to #{@community_application.community_name}. You can set roles now.', 'success'
+      redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
     else
       @supported_games = current_community.supported_games
       @comments = @community_application.comments.page params[:page]

@@ -67,6 +67,7 @@ class CommunityApplication < ActiveRecord::Base
   delegate :instructions, to: :custom_form, allow_nil: true, prefix: true
   delegate :thankyou, to: :custom_form, allow_nil: true, prefix: true
   delegate :questions, to: :custom_form, allow_nil: true, prefix: true
+  delegate :name, to: :community, prefix: true, allow_nil: true
   delegate :name, to: :custom_form, prefix: true, allow_nil: true
   delegate :display_name, to: :user_profile, prefix: true
   delegate :avatar_url, to: :user_profile, prefix: true
