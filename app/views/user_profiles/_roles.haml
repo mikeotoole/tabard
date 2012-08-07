@@ -7,7 +7,7 @@
     - else
       - temp_ability = Ability.new(current_user)
       - temp_ability.dynamicContextRules(current_user, community)
-      - if temp_ability.can? :can_accept, Role
+      - if temp_ability.can? :accept, Role
         %ul.checkboxes
           %li.checked Member
           - community.roles.each do |role|

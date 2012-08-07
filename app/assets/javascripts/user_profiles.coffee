@@ -50,5 +50,15 @@ jQuery(document).ready ($) ->
 
   # Role assignment toggling
   $('#body')
-    .on 'ajax:success', '#invites_batch', (event, data, status, xhr) ->
-      console.log 'TODO - stuff'
+    .on 'ajax:before', '#tabs dd .checkboxes a', ->
+      $(@).closest('li').addClass 'busy'
+    .on 'ajax:success', '#tabs dd .checkboxes a', (event, data, status, xhr) ->
+      $(@).closest('li').removeClass 'busy'
+      response = $.parseJSON xhr.responseText
+      if response.success
+        if response.assigned
+          $(@).closest('li').addClass 'checked'
+        else
+          $(@).closest('li').removeClass 'checked'
+      else
+        $.alert body: 'Error. Unable to assign role.'

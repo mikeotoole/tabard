@@ -14,22 +14,21 @@ class RolesController < ApplicationController
     unless @user_profile.blank? or @role.blank?
       temp_ability = Ability.new(current_user)
       temp_ability.dynamicContextRules(current_user, @role.community)
-      raise CanCan::AccessDenied unless temp_ability.can? :can_accept, @role and @user_profile.is_member?(@role.community)
+      raise CanCan::AccessDenied unless temp_ability.can? :accept, @role and @user_profile.is_member?(@role.community)
       if @user_profile.roles.include?(@role)
         if @user_profile.remove_role(@role)
-          # Removed new role success
+          return render json: { success: true, assigned: false }
         else
-          # Failure
+          return render json: { success: false }
         end
       else
         if @user_profile.add_new_role(@role)
-          # Added new role success
+          return render json: { success: true, assigned: true }
         else
-          # Failure
+          return render json: { success: false }
         end
       end
-    else
-      # Oh Noes! Wrong info!
     end
+    render json: { success: false }
   end
 end
