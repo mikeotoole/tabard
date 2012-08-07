@@ -30,7 +30,8 @@ jQuery(document).ready ($) ->
           envelope.removeAttr 'meta'
         dd.addClass 'read open'
       $('#message').html xhr.responseText
-      window.history.replaceState {}, $('#message h1').text(), $('#message header').attr 'slug'
+      if typeof(history.replaceState) is typeof(Function)
+        history.replaceState {}, $('#message h1').text(), $('#message header').attr 'slug'
   
   # user profile suggestion and selection for the "to" field
   $('#message.compose').each ->

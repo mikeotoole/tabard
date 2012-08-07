@@ -14,10 +14,7 @@ jQuery(document).ready ($) ->
     return unless events.length > 1
     for event1, e1Idx in events
       for event2 in events.slice e1Idx + 1
-        console.log "#{$(event1).data('col')} #{$(event2).data('start-hour')} >= #{$(event1).data('end-hour')} = #{$(event2).data('start-hour') >= $(event1).data('end-hour') ? 'T' : 'F'} or #{$(event1).data('col')} != #{$(event2).data('col')} is #{$(event1).data('col') != $(event2).data('col') ? 'T' : 'F'}"
-        if $(event2).data('start-hour') >= $(event1).data('end-hour') or $(event1).data('col') != $(event2).data('col')
-          console.log 'break!'
-          break
+        break if $(event2).data('start-hour') >= $(event1).data('end-hour') or $(event1).data('col') != $(event2).data('col')
         col = $(event1).data('col') + 1
         $(event2)
           .data('col', col)
