@@ -96,7 +96,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/roles(.:format)
   def roles
-    @roles = current_user.roles.order(:community_id)
+    @roles = current_user.roles.includes(:community).order(:community_id)
     render partial: 'user_profiles/roles', locals: { invites: @roles }
   end
 

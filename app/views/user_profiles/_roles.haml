@@ -1,2 +1,6 @@
 %h1 LOLOLOL ROLES
-%p=@roles.to_yaml
+%ul
+  -@roles.group_by{|r| r.community }.each do |community, roles|
+    %h2=community
+    -roles.each do |role|
+      %li=role.to_yaml
