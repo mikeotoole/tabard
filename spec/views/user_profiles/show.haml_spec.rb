@@ -7,6 +7,7 @@ describe "user_profiles/show" do
     @activities_count_increment = 10
     @activities = {}
     @communitys_to_invite_to = Array.new
+    @communities_with_roles_to_assign = Array.new
   end
 
   describe "when user_profile is publicly viewable" do

@@ -14,7 +14,7 @@ class UserProfilesController < ApplicationController
   before_filter :set_current_user_as_profile, only: :account
   load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites, :roles]
   skip_authorize_resource only: :account
-  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites]
+  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites, :roles]
   before_filter :load_activities, only: [:show, :activities]
   before_filter :authorize_custom_actions, only: [:activites, :announcements, :characters, :invites]
 
@@ -30,19 +30,23 @@ class UserProfilesController < ApplicationController
       add_new_flash_message 'The user profile you requested is no longer active.', 'alert'
       redirect_to root_url(subdomain: false)
     end
+    @communitys_to_invite_to = Array.new
+    @communities_with_roles_to_assign = Array.new
     if user_signed_in?
       current_sponsor_id = current_user.user_profile_id
       @potential_communitys_to_invite_to = (current_user.communities - (@user_profile.communities + @user_profile.community_invite_applications.where{sponsor_id == current_sponsor_id}.map{|i| i.community}))
-      @communitys_to_invite_to = Array.new
       @potential_communitys_to_invite_to.each do |community|
         temp_ability = Ability.new(current_user)
         temp_ability.dynamicContextRules(current_user, community)
         @communitys_to_invite_to << community if temp_ability.can? :create, @user_profile.community_invite_applications.new({community: community, sponsor: current_user.user_profile}, without_protection: true)
       end
-    else
-      @communitys_to_invite_to = Array.new
-    end
 
+      @user_profile.roles.includes(:community).order(:community_id).group_by{|r| r.community }.each do |community, roles|
+        temp_ability = Ability.new(current_user)
+        temp_ability.dynamicContextRules(current_user, community)
+        @communities_with_roles_to_assign << community if temp_ability.can? :can_accept, Role
+      end
+    end
   end
 
   # GET /user_profiles/1/edit
@@ -96,7 +100,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/roles(.:format)
   def roles
-    @roles = current_user.roles.includes(:community).order(:community_id)
+    @roles = @user_profile.roles.includes(community: [:roles, :member_role]).order(:community_id)
     render partial: 'user_profiles/roles', locals: { invites: @roles }
   end
 
