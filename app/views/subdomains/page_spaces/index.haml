@@ -1,10 +1,10 @@
-- title "Page Spaces | #{current_community.name}"
+- title "Wiki Page Spaces | #{current_community.name}"
 
 #actions.actions
   - if can? :create, PageSpace
     = link_to 'Add', new_page_space_url, class: 'new', meta: 'Create a new page space'
 
-%h1 Page Spaces
+%h1 Wiki Page Spaces
 
 - if @page_spaces.any?
   = paginate @page_spaces
