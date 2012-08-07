@@ -6,3 +6,7 @@
 = f.simple_fields_for :permissions, role.permissions_for_resource("CommunityInvite") do |pf|
   = pf.input :subject_class, as: :hidden
   = pf.input :can_create, as: :boolean, label: 'Invite New Members', wrapper: false
+
+= f.simple_fields_for :roles, role.permissions_for_resource("Role") do |pf|
+  = pf.input :subject_class, as: :hidden
+  = pf.input :can_accept, as: :boolean, label: "Add and remove users' roles", wrapper: false

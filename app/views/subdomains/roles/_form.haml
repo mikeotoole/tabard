@@ -34,9 +34,6 @@
     %dt
       %h2 Page Spaces
     %dd= render 'subdomains/roles/permissions/page_spaces', f: f, role: role
-    %dt
-      %h2 Roles
-    %dd= render 'subdomains/roles/permissions/roles', f: f, role: role
     - unless role.is_system_generated and current_community.member_profiles.any?
       %dt
         %h2 Users
