@@ -44,7 +44,7 @@ class UserProfilesController < ApplicationController
       @user_profile.roles.includes(:community).order(:community_id).group_by{|r| r.community }.each do |community, roles|
         temp_ability = Ability.new(current_user)
         temp_ability.dynamicContextRules(current_user, community)
-        @communities_with_roles_to_assign << community if temp_ability.can? :can_accept, Role
+        @communities_with_roles_to_assign << community if temp_ability.can? :accept, Role
       end
     end
   end
