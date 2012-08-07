@@ -1,2 +1,6 @@
+%meta{ content: 'chrome=1', 'http-equiv' => 'X-UA-Compatible' }
 /[if IE]
   = stylesheet_link_tag "application/ie"
+  = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js'
+  :javascript
+    window.attachEvent("onload", function(){ CFInstall.check({mode:'overlay'}); });
