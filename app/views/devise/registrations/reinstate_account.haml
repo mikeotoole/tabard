@@ -7,6 +7,22 @@
   = simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
     = f.hidden_field :reset_password_token
     %fieldset
+      -unless @user.has_accepted_current_terms_of_service?
+        %h2 Terms of Service and User Agreement
+        .document
+          .scroll
+            :markdown
+              #{TermsOfService.current.body}
+          %p.accept
+            = f.input :accepted_current_terms_of_service, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
+      -unless @user.has_accepted_current_privacy_policy?
+        %h2 Privacy Policy
+        .document
+          .scroll
+            :markdown
+              #{PrivacyPolicy.current.body}
+          %p.accept
+            = f.input :accepted_current_privacy_policy, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
       %ol
         = f.input :password
         = f.input :password_confirmation
