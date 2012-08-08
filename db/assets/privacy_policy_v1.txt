@@ -30,7 +30,7 @@ Our use of cookies in provision of the Service is limited to the following: 1) T
 
 **Information from Children Under the Age of 13**
 
-None of the Company's services are intended to be available to children under the age of 13 and We never knowingly solicit or collect any information whatsoever from or about children under the age of 13.  If you become aware that your child under the age of 13 has been using the Company's services or has submitted information to Us, please let Us know by email at **[Underage@guild.io](mailto:underage@guild.io)**.  If We become aware that a child under the age of 13 has been using our services or submitting information to us, We will immediately terminate the child's account and will take reasonable steps to delete the submitted information. 
+None of the Company's services are intended to be available to children under the age of 13 and We never knowingly solicit or collect any information whatsoever from or about children under the age of 13.  If you become aware that your child under the age of 13 has been using the Company's services or has submitted information to Us, please let Us know by email at **[Underage@guild.io](mailto:underage@guild.io)**.  If We become aware that a child under the age of 13 has been using our services or submitting information to us, We will immediately terminate the child's account and will take reasonable steps to delete the submitted information.
 
 **When We Will Disclose Your Information**
 
@@ -70,6 +70,8 @@ If you decide to unsubscribe from commercial solicitations, We will remove you f
 
 For purposes of the Can SPAM Act, our physical address is:
 
+> Attn: SPAM Notice  
+> &#8453; Daniel Boyd, CPA  
 > DigitalAugment Inc.  
 > 202 N 3rd Ave  
 > Pasco, WA 99301
@@ -82,7 +84,7 @@ We reserve the right to use Aggregate Data for any legitimate business purpose i
 
 **Deactivation of Your Account**
 
-If you decide to deactivate your account with the Service, We will continue to abide by this Privacy Policy.  However, since individual user data is almost always heavily ingrained with the framework of the Service as well as the user communities that are based on the Service, none of your personal information will be actually deleted.  Instead, your Personal Information will be archived and your personal account and User Profile will be deactivated.  Once your Personal Information is archived and your personal account and User Profile is deactivated, other users will not be able to access any of your Personal Information but it will remain accessible to Us and our Enterprise Partners.  Please note, however, that even after your User Profile is archived, cached versions of it may still be available throughout the internet from sources other than servers or networks that We operate or use.  Public Information will continue to be available to the public even after you deactivate your account. 
+If you decide to deactivate your account with the Service, We will continue to abide by this Privacy Policy.  However, since individual user data is almost always heavily ingrained with the framework of the Service as well as the user communities that are based on the Service, none of your personal information will be actually deleted.  Instead, your Personal Information will be archived and your personal account and User Profile will be deactivated.  Once your Personal Information is archived and your personal account and User Profile is deactivated, other users will not be able to access any of your Personal Information but it will remain accessible to Us and our Enterprise Partners.  Please note, however, that even after your User Profile is archived, cached versions of it may still be available throughout the internet from sources other than servers or networks that We operate or use.  Public Information will continue to be available to the public even after you deactivate your account.
 
 **Reports of Privacy Concerns**
 
