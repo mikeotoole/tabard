@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803181418) do
+ActiveRecord::Schema.define(:version => 20120808172622) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -227,10 +227,6 @@ ActiveRecord::Schema.define(:version => 20120803181418) do
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "community_invites", ["applicant_id"], :name => "index_community_invites_on_applicant_id"
-  add_index "community_invites", ["community_id"], :name => "index_community_invites_on_community_id"
-  add_index "community_invites", ["sponsor_id"], :name => "index_community_invites_on_sponsor_id"
-
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"
     t.integer  "user_profile_id"
@@ -314,8 +310,9 @@ ActiveRecord::Schema.define(:version => 20120803181418) do
   create_table "document_acceptances", :force => true do |t|
     t.integer  "user_id"
     t.integer  "document_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_current",  :default => true
   end
 
   add_index "document_acceptances", ["document_id"], :name => "index_document_acceptances_on_document_id"

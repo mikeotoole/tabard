@@ -192,6 +192,8 @@ class User < ActiveRecord::Base
   def update_acceptance_of_documents(document)
     self.update_attributes(accepted_current_terms_of_service: true) if document == TermsOfService.current
     self.update_attributes(accepted_current_privacy_policy: true) if document == PrivacyPolicy.current
+    doc_acceptance = self.document_acceptances.find_by_document_id(document.id)
+    doc_acceptance.update_column(:is_current, true) unless doc_acceptance == nil
   end
 
 ###
@@ -264,8 +266,7 @@ class User < ActiveRecord::Base
       params[:user][:user_disabled_at] = Time.now
       success = self.update_with_password(params[:user])
       if success
-        self.remove_from_all_communities
-        self.remove_all_avatars
+        disable_user
       end
       return success
     else
@@ -276,9 +277,19 @@ class User < ActiveRecord::Base
   # Used by the admin panel to disable a user.
   def disable_by_admin
     if self.update_column(:admin_disabled_at, Time.now)
-      self.remove_from_all_communities
-      self.remove_all_avatars
+      disable_user
     end
+  end
+
+  def disable_user
+    self.remove_from_all_communities
+    self.remove_all_avatars
+    self.update_column(:accepted_current_terms_of_service, false)
+    self.update_column(:accepted_current_privacy_policy, false)
+    tos = self.document_acceptances.find_by_document_id(TermsOfService.current.id)
+    pp = self.document_acceptances.find_by_document_id(PrivacyPolicy.current.id)
+    tos.update_column(:is_current, false) unless tos == nil
+    pp.update_column(:is_current, false) unless pp == nil
   end
 
   # Removes user from all communities.
