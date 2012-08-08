@@ -62,7 +62,7 @@ class RegistrationsController < Devise::RegistrationsController
     success = resource ? resource.disable_by_user(params) : false
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      add_new_flash_message "Your account has been disabled.", "notice"
+      add_new_flash_message "Your account has been deactivated.", "notice"
       redirect_to root_url_hack_helper(root_url(protocol: "http://", subdomain: false))
     else
       @hide_announcements = true
@@ -82,12 +82,11 @@ class RegistrationsController < Devise::RegistrationsController
   def send_reinstate
     user = User.find_by_email(params[:user][:email]) if params[:user]
     success = user ? user.reinstate_by_user : false
+    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with instructions about how to reinstate your account in a few minutes.", "notice"
     if success
-      add_new_flash_message "You will receive an email with instructions about how to reinstate your account in a few minutes.", "notice"
       redirect_to root_url
     else
       @user = User.new(email: params[:user][:email])
-      add_new_flash_message "Could not find disabled user with that email.", "alert"
       render :reinstate_confirmation
     end
   end

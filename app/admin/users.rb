@@ -6,7 +6,7 @@ ActiveAdmin.register User do
 
   action_item only: :show do
     if not user.admin_disabled_at and can? :disable, user
-      link_to "Disable User", disable_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to disable this user?' }
+      link_to "Disable User", disable_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to deactivate this user?' }
     end
   end
 
@@ -37,7 +37,7 @@ ActiveAdmin.register User do
   member_action :disable, method: :put do
     user = User.find(params[:id])
     user.disable_by_admin if user
-    flash[:message] = "User disabled."
+    flash[:message] = "User deactivated."
     redirect_to action: :show
   end
 

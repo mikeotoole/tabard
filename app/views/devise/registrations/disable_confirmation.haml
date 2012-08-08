@@ -1,7 +1,7 @@
-- title 'Disable Confirmation'
+- title 'Confirm Deactivation of your Account'
 
 #body
-  %h1 Are you sure you want to disable your account?
+  %h1 Are you sure you want to deactivate your account?
   %p
     %strong Your profile will no longer be visible to other users and any communites you administer will be removed.
     %br
@@ -14,4 +14,4 @@
       %ol
         = f.input :current_password, label: "Account Password", hint: "we need your password to confirm this request"
       %p
-        %button{ type: 'submit' } Disable Account
+        %button{ type: 'submit' } Deactivate Account
