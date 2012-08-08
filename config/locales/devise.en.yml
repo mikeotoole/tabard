@@ -22,7 +22,7 @@ en:
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
       admin_disabled: 'Your account has been deactivated by Guild.io.'
-      user_disabled: 'Your account has been deactivated. Please reinstate account first.'
+      user_disabled: 'Your account has been deactivated. Please reactivate your account first.'
     sessions:
       signed_in: 'Welcome. You are now signed in.'
       user_signed_in: 'Welcome %{display_name}. You are now signed in.'

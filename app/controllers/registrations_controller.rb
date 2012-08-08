@@ -30,7 +30,7 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
     if user and user.user_disabled_at
-      add_new_flash_message "You need to reinstate your account.", "alert"
+      add_new_flash_message "You need to reactivate your account.", "alert"
       redirect_to reinstate_confirmation_url
     elsif !!params[:user][:is_partial_request]
       build_resource
@@ -82,7 +82,7 @@ class RegistrationsController < Devise::RegistrationsController
   def send_reinstate
     user = User.find_by_email(params[:user][:email]) if params[:user]
     success = user ? user.reinstate_by_user : false
-    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with instructions about how to reinstate your account in a few minutes.", "notice"
+    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with instructions about how to reactivate your account in a few minutes.", "notice"
     if success
       redirect_to root_url
     else
@@ -103,7 +103,7 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.reset_password_by_token(params[resource_name])
     if resource.errors.empty?
       resource.update_column(:user_disabled_at, nil)
-      add_new_flash_message "Your account has been reinstated. Welcome back to Guild.io&trade;!", "success"
+      add_new_flash_message "Your account has been reactivated. Welcome back to Guild.io&trade;!", "success"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
     else

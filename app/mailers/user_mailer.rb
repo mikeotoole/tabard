@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
   # Used for reinstating an account.
   def reinstate_account(user, password=nil)
     @resource = user
-    mail(to: @resource.email, subject: 'Guild.io - Reinstate Account Notification', tag: 'password-reset') do |format|
+    mail(to: @resource.email, subject: 'Guild.io - Reactivate Account Notification', tag: 'password-reset') do |format|
        format.html { render "devise/mailer/reinstate_account_instructions" }
     end
   end

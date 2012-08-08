@@ -287,7 +287,7 @@ class User < ActiveRecord::Base
     self.community_profiles.clear if self.community_profiles
   end
 
-  # User by the admin panel to reinstate a user. This will set both is_admin_disabled and is_user_disabled to false.
+  # User by the admin panel to reactivate a user. This will set both is_admin_disabled and is_user_disabled to false.
   def reinstate_by_admin
     self.update_column(:admin_disabled_at, nil)
     self.update_column(:user_disabled_at, nil)

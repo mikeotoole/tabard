@@ -1,11 +1,11 @@
-- title 'Reinstate Account'
+- title 'Reactivate Account'
 
 #body
-  %h1 Reinstate Account
+  %h1 Reactivate Account
   %p
     An email will be sent with instructions on how
     %br
-    to reinstate your deactivated account.
+    to reactivate your deactivated account.
 
   = simple_form_for(@user, url: send_reinstate_url, html: { method: :put }) do |f|
     %fieldset

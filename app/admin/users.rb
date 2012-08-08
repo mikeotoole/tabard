@@ -12,7 +12,7 @@ ActiveAdmin.register User do
 
   action_item only: :show do
     if (user.admin_disabled_at or user.user_disabled_at) and can? :reinstate, user
-      link_to "Reinstate User", reinstate_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reinstate this user?' }
+      link_to "Reactivate User", reinstate_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reactivate this user?' }
     end
   end
 
@@ -51,7 +51,7 @@ ActiveAdmin.register User do
   member_action :reinstate, method: :put do
     user = User.find(params[:id])
     user.reinstate_by_admin if user
-    flash[:notice] = "User reinstated."
+    flash[:notice] = "User reactivated."
     redirect_to action: :show
   end
 

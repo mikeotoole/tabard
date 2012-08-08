@@ -1,8 +1,8 @@
 - title 'Change Password'
 
 #body
-  %h1 Reinstate Account
-  %p Please select a new password to reinstante your account.
+  %h1 Reactivate Account
+  %p Please select a new password to reactivate your account.
 
   = simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
     = f.hidden_field :reset_password_token
@@ -11,6 +11,6 @@
         = f.input :password
         = f.input :password_confirmation
       %p
-        %button{ type: 'submit' } Reinstate account
+        %button{ type: 'submit' } Reactivate account
 
   = render "devise/shared/links"
