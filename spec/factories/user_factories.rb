@@ -9,7 +9,7 @@ FactoryGirl.define do
     accepted_current_privacy_policy true
     date_of_birth 35.years.ago.to_date
     user_profile_attributes { FactoryGirl.attributes_for(:user_profile) }
-    time_zone "Pacific Time (US & Canada)"
+    time_zone -8
   end
   
   factory :disabled_user, :parent => :user do
@@ -22,7 +22,7 @@ FactoryGirl.define do
   factory :billy, :class => User do
     password "Password"
     password_confirmation "Password"
-    time_zone "Pacific Time (US & Canada)"
+    time_zone -8
     confirmed_at { 1.day.ago }
     email "billy@robo.com"
     user_profile_attributes { FactoryGirl.attributes_for(:user_profile, :display_name => "Robobilly", :first_name => "Robo", :last_name => "Billy") }

@@ -15,6 +15,7 @@
         - unless current_community.background_image_url == '/assets/application/blank.png'
           = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}) !important; }"
     = yield :controller_css
+    = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = javascript_include_tag "application"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'

@@ -16,8 +16,6 @@ class User < ActiveRecord::Base
   BETA_CODE = "50DKPMINUS"
   # This determines if the beta code is required
   BETA_CODE_REQUIRED = true
-  # All valid time zones supported
-  VALID_TIME_ZONES =  ["Pacific Time (US & Canada)", "Mountain Time (US & Canada)", "Central Time (US & Canada)", "Eastern Time (US & Canada)"]
 
 ###
 # Devise configuration information
@@ -123,8 +121,7 @@ class User < ActiveRecord::Base
       acceptance: {accept: true},
       on: :create
   validates :date_of_birth, presence: true
-  validates :time_zone, presence: true,
-                        inclusion: { in: VALID_TIME_ZONES, message: "%{value} is not a valid time zone." }
+  validates :time_zone, presence: true, inclusion: { in: (-11..13).to_a, message: 'is not valid.' }
   validate :at_least_13_years_old
   with_options if: Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
     user.validates :beta_code, presence: {message: "is required for the closed beta"}, on: :create
@@ -392,7 +389,7 @@ end
 #  user_disabled_at                  :datetime
 #  admin_disabled_at                 :datetime
 #  user_profile_id                   :integer
-#  time_zone                         :string(255)
+#  time_zone                         :integer          default(-8)
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
 #

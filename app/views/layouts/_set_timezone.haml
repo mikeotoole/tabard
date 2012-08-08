@@ -1,0 +1,6 @@
+:javascript
+  date = new Date();
+  date.setTime(date.getTime() + 86400000000);
+  expires = "; expires=" + date.toGMTString();
+  offset = -(new Date('1/1/2012').getTimezoneOffset() / 60);
+  document.cookie = "timezone=" + offset + expires + "; path=/";

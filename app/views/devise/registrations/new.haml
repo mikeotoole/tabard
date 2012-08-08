@@ -21,8 +21,11 @@
             %mark.error= f.object.errors[:date_of_birth].first
         = f.input :password, input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
         = f.input :password_confirmation
-        = f.input :time_zone, required: false, collection: User::VALID_TIME_ZONES, as: :radio, wrapper_html: { class: 'select' }
-      -unless @user.has_accepted_current_terms_of_service?
+        - unless !!cookies[:timezone]
+          = f.input :time_zone, required: false, collection: timezone_collection_hash, as: :radio, wrapper_html: { class: 'select' }
+      - if !!cookies[:timezone]
+        = f.input :time_zone, as: :hidden, input_html: { value: cookies[:timezone].to_s }
+      - unless @user.has_accepted_current_terms_of_service?
         %h2 Terms of Service and User Agreement
         .document
           .scroll
@@ -30,7 +33,7 @@
               #{TermsOfService.current.body}
           %p.accept
             = f.input :accepted_current_terms_of_service, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
-      -unless @user.has_accepted_current_privacy_policy?
+      - unless @user.has_accepted_current_privacy_policy?
         %h2 Privacy Policy
         .document
           .scroll
