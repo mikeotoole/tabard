@@ -101,8 +101,13 @@ class RegistrationsController < Devise::RegistrationsController
   # PUT /users/reinstate_account
   def reinstate_account
     self.resource = resource_class.reset_password_by_token(params[resource_name])
-    resource.validate_reinstate if resource.respond_to?('validate_reinstate')
-    resource.valid?
+    # TODO Mike this is not working
+    #if resource.class.to_s == "User"
+    #  resource.errors.add(:password, "can't be blank") if self.password.blank?
+    #  resource.errors.add(:password_confirmation, "can't be blank") if self.password_confirmation.blank?
+    #  resource.errors.add(:accepted_current_terms_of_service, "must be accepted") unless self.accepted_current_terms_of_service
+    #  resource.errors.add(:accepted_current_privacy_policy, "must be accepted") unless self.accepted_current_privacy_policy
+    #end
     if resource.errors.empty?
       resource.update_column(:user_disabled_at, nil)
       add_new_flash_message "Your account has been reactivated. Welcome back to Guild.io&trade;!", "success"
