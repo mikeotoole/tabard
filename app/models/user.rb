@@ -170,6 +170,13 @@ class User < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  # This is for validation during reinstating
+  def validate_reinstate
+    self.errors.add(:password, "can't be blank") if self.password.blank?
+    self.errors.add(:password_confirmation, "can't be blank") if self.password_confirmation.blank?
+    self.errors.add(:accepted_current_terms_of_service, "must be accepted") unless self.accepted_current_terms_of_service
+    self.errors.add(:accepted_current_privacy_policy, "must be accepted") unless self.accepted_current_privacy_policy
+  end
 
 ###
 # Doc Acceptance

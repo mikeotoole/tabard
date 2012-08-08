@@ -101,13 +101,13 @@ class RegistrationsController < Devise::RegistrationsController
   # PUT /users/reinstate_account
   def reinstate_account
     self.resource = resource_class.reset_password_by_token(params[resource_name])
+    resource.validate_reinstate if resource.respond_to?('validate_reinstate')
     if resource.errors.empty?
       resource.update_column(:user_disabled_at, nil)
       add_new_flash_message "Your account has been reactivated. Welcome back to Guild.io&trade;!", "success"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
     else
-      add_new_flash_message "#{resource.errors.to_yaml}", "error"
       render :reinstate_account
     end
   end
