@@ -74,7 +74,7 @@ The security of the network through which the Service is provided, as well as th
 9. **Digital Millennium Copyright Act ("DMCA") Notices.**  The Company respects the intellectual property rights of everyone.  If you believe that your intellectual property rights have been violated by copyrighted material posted by a third party on or through the Service, then the Company will take prompt action to investigate your allegation and take appropriate action so long as you provide notice to the Company's designated agent:
     
     > Attn: DMCA Notice  
-    > ℅ Daniel Boyd, CPA  
+    > &#8453; Daniel Boyd, CPA  
     > DigitalAugment Inc.  
     > 202 N 3rd Ave  
     > Pasco, WA 99301
