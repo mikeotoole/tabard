@@ -12,7 +12,7 @@ class DocumentAcceptanceController < ApplicationController
 
   # GET /accept_document/:id(.:format)
   def new
-    if current_user.accepted_documents.include?(@document) and current_user.accepted_documents.find_by_id(@document).is_current
+    if current_user.accepted_documents.include?(@document) and current_user.document_acceptances.find_by_document_id(@document.id).is_current
       current_user.update_acceptance_of_documents(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document"
     end
@@ -22,7 +22,7 @@ class DocumentAcceptanceController < ApplicationController
 
   # POST /accept_document/:id(.:format)
   def create
-    if current_user.accepted_documents.include?(@document) and current_user.accepted_documents.find_by_id(@document).is_current
+    if current_user.accepted_documents.include?(@document) and current_user.document_acceptances.find_by_document_id(@document.id).is_current
       current_user.update_acceptance_of_documents(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document."
     elsif params[:accept]
