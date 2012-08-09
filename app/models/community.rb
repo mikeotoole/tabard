@@ -381,8 +381,8 @@ protected
 
     # Member role
     self.member_role.permissions.create!({subject_class: "Comment", can_create: true}, without_protection: true)
-    self.member_role.permissions.create!({subject_class: "DiscussionSpace", permission_level: "View", id_of_subject: community_d_space.id}, without_protection: true)
-    self.member_role.permissions.create!({subject_class: "Discussion", can_create: true, id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space"}, without_protection: true)
+    self.member_role.permissions.where(subject_class: "DiscussionSpace", id_of_subject: community_d_space.id).first.update_column(:permission_level, "View")
+    self.member_role.permissions.where(subject_class: "Discussion", id_of_parent: community_d_space.id, parent_association_for_subject: "discussion_space").first.update_column(:can_create, true)
     self.update_column :theme_id, Theme.default_theme.id
 
     # Officer role

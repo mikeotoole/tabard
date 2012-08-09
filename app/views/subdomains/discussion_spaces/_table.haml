@@ -16,7 +16,7 @@
             = space.discussions.size
         %td.actions
           %div
-            - if can? :create, space.discussions.new
+            - if can? :create, Discussion.new({discussion_space: space}, without_protection: true)
               = link_to 'New', new_discussion_space_discussion_path(space), meta: 'New discussion', class: 'new'
             - if (can? :update, space)
               = link_to 'Edit', edit_discussion_space_path(space), meta: 'Edit discussion space', class: 'edit'

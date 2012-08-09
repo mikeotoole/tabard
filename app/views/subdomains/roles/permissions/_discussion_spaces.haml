@@ -23,6 +23,7 @@
       %dd
         = f.simple_fields_for :permissions, role.permissions_for_resource(space) do |pf|
           = pf.input :subject_class, as: :hidden
+          = pf.input :id_of_subject, as: :hidden
           %label For the space itself
           = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
         = f.simple_fields_for :permissions, role.nested_permissions_for_resource(space) do |pf|

@@ -79,7 +79,7 @@ class SubdomainsController < ApplicationController
   helper_method :wiki_items
 
   ###
-  # This is the wiki items
+  # This is the discussion items
   ###
   def discussion_items
     @discussion_items ||= current_community.discussion_spaces.reject{|d| !can? :show, d }
@@ -87,6 +87,14 @@ class SubdomainsController < ApplicationController
   end
   helper_method :discussion_items
 
+  ###
+  # This is the form items
+  ###
+  def form_items
+    @form_items ||= current_community.custom_forms.published.reject{|d| !can? :show, d }
+    return @form_items
+  end
+  helper_method :form_items
 ###
 # Protected Methods
 ###
