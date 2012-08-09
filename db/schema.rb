@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808172622) do
+ActiveRecord::Schema.define(:version => 20120808182226) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -226,6 +226,10 @@ ActiveRecord::Schema.define(:version => 20120808172622) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "community_invites", ["applicant_id"], :name => "index_community_invites_on_applicant_id"
+  add_index "community_invites", ["community_id"], :name => "index_community_invites_on_community_id"
+  add_index "community_invites", ["sponsor_id"], :name => "index_community_invites_on_sponsor_id"
 
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"
@@ -634,8 +638,8 @@ ActiveRecord::Schema.define(:version => 20120808172622) do
   add_index "user_profiles", ["location"], :name => "index_user_profiles_on_location"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                             :default => "",    :null => false
-    t.string   "encrypted_password",                :default => "",    :null => false
+    t.string   "email",                                            :default => "",    :null => false
+    t.string   "encrypted_password",                               :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -643,21 +647,21 @@ ActiveRecord::Schema.define(:version => 20120808172622) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                   :default => 0
+    t.integer  "failed_attempts",                                  :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.boolean  "accepted_current_terms_of_service", :default => false
-    t.boolean  "accepted_current_privacy_policy",   :default => false
-    t.boolean  "force_logout",                      :default => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
+    t.boolean  "accepted_current_terms_of_service",                :default => false
+    t.boolean  "accepted_current_privacy_policy",                  :default => false
+    t.boolean  "force_logout",                                     :default => false
     t.date     "date_of_birth"
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
     t.integer  "user_profile_id"
-    t.string   "time_zone"
-    t.boolean  "is_email_on_message",               :default => true
-    t.boolean  "is_email_on_announcement",          :default => true
+    t.integer  "time_zone",                         :limit => 255, :default => -8
+    t.boolean  "is_email_on_message",                              :default => true
+    t.boolean  "is_email_on_announcement",                         :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -118,6 +118,15 @@ protected
   end
   helper_method :hide_announcements?
 
+  def timezone_collection_hash
+    [
+      [[ActiveSupport::TimeZone[-11].to_s, -11]],
+      (-11..-4).to_a.map{|z| z = [ActiveSupport::TimeZone.us_zones[z+10].to_s, z]},
+      (-4..13).to_a.map{|z| z = [ActiveSupport::TimeZone[z].to_s, z]}
+    ].flatten(1)
+  end
+  helper_method :timezone_collection_hash
+
 ###
 # Remember Last Poster
 ###
@@ -332,7 +341,11 @@ protected
   # This method will set the time zone to the users given value. This will ensure the views disply the correct time.
   ###
   def set_timezone
-    Time.zone = current_user.time_zone if current_user
+    if current_user and defined? current_user.time_zone
+      Time.zone = cookies[:timezone] = current_user.time_zone
+    elsif !!cookies[:timezone]
+      Time.zone = cookies[:timezone].to_i
+    end
   end
 
   ###

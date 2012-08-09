@@ -119,7 +119,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     if params[:ids]
       delete_count = 0
       params[:ids].each do |id|
-        if announcement = current_community.announcements.find_by_id(id[0].to_i) and can? :delete, announcement
+        if announcement = current_community.announcements.find_by_id(id[0].to_i) and can? :destroy, announcement
           delete_count += 1 if announcement.destroy
         end
       end

@@ -9,7 +9,9 @@
       - temp_ability.dynamicContextRules(current_user, community)
       - if temp_ability.can? :accept, Role
         %ul.checkboxes
-          %li.checked Member
+          %li.checked
+            %strong Member
+            (required)
           - community.roles.each do |role|
             - next if role.is_member_role?
             %li{ class: roles.include?(role) ? 'checked' : ''}

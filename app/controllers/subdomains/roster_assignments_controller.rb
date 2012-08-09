@@ -82,7 +82,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     if params[:ids]
       params[:ids].each do |id|
         roster_assignment = RosterAssignment.find_by_id(id)
-        if can? :delete, roster_assignment
+        if can? :destroy, roster_assignment
           roster_assignment.destroy
         end
       end

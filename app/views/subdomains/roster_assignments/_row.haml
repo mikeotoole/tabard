@@ -14,7 +14,7 @@
       %ul
         - cp.roster_assignments.includes(:supported_game, character_proxy: [:character]).each do |ra|
           %li
-            - if can? :delete, ra
+            - if can? :destroy, ra
               %input{ id: "roster_assignments_#{ra.id}", name: 'ids[]', type: 'checkbox', value: ra.id }
               %label{ for: "roster_assignments_#{ra.id}" }
                 = image_tag ra.character_proxy_avatar_url(:icon), class: 'avatar icon'
