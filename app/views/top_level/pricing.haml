@@ -1,27 +1,32 @@
 - title 'Pricing'
+- content_for :header do
+  = stylesheet_link_tag 'top_level/pricing'
 
 #body
   %h1 Pricing
   %blockquote
     %strong Guild.io&trade; is currently free of charge!
-  = image_tag 'main/cyborg.jpg', class: 'alignright', width: 200
   %h3
     Why launch for free? 
   %p
-    Several reasons.  We want an opportunity to work with our community of users to make this service the best it can be.
-    During these early times we will be working largely off the input of the community and want to get things settled before charging for the service.
-    Also, we aren't 100% set on the monetization scheme we will be implementing and want to take this time to get it right.
-    Our goal here is to keep as many people using the service as possible, with the maximum benefit to each user as possible while being able to continue development of the service.
+    We want an opportunity to get as much feedback from as many users as possible so that we can make Guild.io the best choice for gaming communities.
+    Also, our team has not settled on a payment model yet. However, rest easy in knowing that all options we are considering do include a level of free access.
+  %p
+    Whether we decide to charge based on community size, feature set, or other factor will largely depend on the information and feedback we gather during this free period.
   %h3
     When is this going to happen?
   %p
-    We haven't set a date yet, but you can expect an early heads up from us when the time comes near.  Our priority is on improving Guild.io&trade; every day so that when this takes place, you can feel confident this is a service worth supporting.
+    We haven't set a date yet, but you can expect an early heads up from us when the time comes near.
+    Our priority is on improving Guild.io&trade; every day so that when this takes place, you can feel confident this is a service worth supporting.
   %h3
     How will this impact existing communities?
   %p
-    Our goal here is as little as possible.  The last thing we want is to bring in a user base just to later chase them away.
-    Our plan is to always have some level of the service be free, but this will largely be determined by the monetization scheme that fits best.
-    As it stands, having a user account will remain free, and having a community of a certain size will remain free.
-    Whether we charge based on community size, feature set, or some other factor will largely depend on the information we gather during this free period and the input we receive from our community.
-    We want this change to be as seamless as possible for everyone.
+    %strong As little as possible.
+    Our plan is to always have a free option for using the service.
+    This will in no way is a bait and switch scheme; the last thing we want is to bring in a user base just to later chase them away.
+    Our early adopters mean a lot to us, and we intend to do right by you all.
+    Thank you for supporting Guild.io.
   = render 'salutation'
+
+#sidebar
+  = image_tag 'main/sidebar-pricing.jpg', class: 'alignright', width: 200, height: 400
