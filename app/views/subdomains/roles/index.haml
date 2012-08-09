@@ -12,7 +12,7 @@
   %ul
     - @roles.each do |role|
       - if role.persisted?
-        %li= link_to shorten_words(role.name), edit_role_path(role), remote: true, data: { type: :text }, class: ((@role and role == @role) or (!@role and role == @roles.first) ? 'active' : '')
+        %li= link_to shorten_words(role.name), edit_role_path(role), data: { remote: true, type: :text, id: role.id }, class: ((@role and role == @role) or (!@role and role == @roles.first) ? 'active' : '')
   - if (can? :create, @community.roles.new)
     = link_to 'Add a role', new_role_path, remote: true, data: { type: :text }, class: 'button'
 #role

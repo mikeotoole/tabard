@@ -1,4 +1,4 @@
-= simple_form_for role do |f|
+= simple_form_for role, url: (role.persisted? ? role_path(role, format: :js) : roles_path(format: :js)), remote: true, html: { data: { type: :text }} do |f|
   - if role.is_system_generated
     %h2= "#{role.name} Role"
     - if role.name == 'Member'

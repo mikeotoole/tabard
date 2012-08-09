@@ -202,7 +202,7 @@ jQuery(document).ready ($) ->
             $(@).remove()
             
     $(@).find('.read')
-      .bind 'ajax:beforeSend', ->
+      .bind 'ajax:before', ->
         $(@).closest('li').addClass('busy')
       .bind 'ajax:error', (xhr, status, error) ->
         row = $(@).closest('li')
