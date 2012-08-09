@@ -307,13 +307,10 @@ class User < ActiveRecord::Base
   # This will send an email for a user to reactivate their account.
   def reinstate_by_user
     if self.user_disabled_at
-      random_password = User.send(:generate_token, 'encrypted_password').slice(0, 8)
-      self.password = random_password
-      self.password_confirmation = random_password
       self.reset_password_token = User.reset_password_token
       self.reset_password_sent_at = Time.now
       self.save(validate: false)
-      UserMailer.reinstate_account(self, random_password).deliver
+      UserMailer.reinstate_account(self).deliver
     else
       false
     end
