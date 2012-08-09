@@ -881,7 +881,6 @@ body.index.minecrafts #submenu .minecraft
       
       &:hover
         background: #ccc
-  
 
 body.features,
 body.intro
@@ -897,6 +896,124 @@ body.intro
     
     h1
       padding-top: 40px
+
+body.pricing
+  
+  #body
+    width: 640px
+  
+  #sidebar
+    margin: 95px -450px 0 0
+    position: absolute
+    right: 50%
+    width: 200px
+
+body.sessions
+
+  #content
+    background: transparent
+  
+  #body
+    background: #227FB5
+    +bg_gradient(#227fb5,#0368a2)
+    border: 1px solid #0368a2
+    +border_radius(3)
+    +box_shadow(0 0 30px #999)
+    color: #C0DAEB
+    height: 198px
+    margin: -130px 0 0 -200px
+    overflow: hidden
+    padding: 30px
+    position: fixed
+    top: 50%
+    +transition(border .3s linear)
+    width: 338px
+    z-index: 2
+    h1
+      color: #fff
+      text-shadow: 1px 1px 1px #00446c
+    form
+      width: auto
+      input
+        color: #444
+        width: 316px
+        &:-moz-placeholder
+          color: #999
+        &::-webkit-input-placeholder
+          color: #999
+      .boolean
+        input,
+        label
+          width: auto
+        label
+          float: left
+          &:hover
+            color: #fff
+      input,
+      .boolean label:before
+        +box_shadow(0 0 5px #00446c !important)
+      button
+        border-color: #7A2C27
+        +box_shadow(0 0 20px #559BC6)
+        bottom: 0
+        margin: 0
+        position: absolute
+        right: 0
+      a.help
+        color: #C0DAEB
+        float: right
+        font-size: 13px
+        &:hover
+          background: #fff
+          color: #00446c
+    div.help
+      background: #ddd
+      +bg_gradient(#eeeeee,#cccccc)
+      border: 1px solid #aaa
+      +border_radius(3)
+      bottom: -1px
+      left: 400px
+      padding: 30px
+      position: absolute
+      top: -1px
+      +transition(left .3s linear)
+      z-index: 3
+      width: 338px
+      h1
+        color: #367BB1
+        padding: 0 0 20px
+        text-shadow: 1px 1px 1px #fff
+      a.close
+        background: image-url('application/icons.png') -30px -30px no-repeat #aaa
+        +border_radius(3)
+        height: 30px
+        overflow: hidden
+        padding: 0
+        position: absolute
+        right: 10px
+        text-indent: -500em
+        top: 10px
+        width: 30px
+        &:hover
+          background-color: #BF4220
+          color: #fff
+      .accountlinks
+        border: 0
+        padding: 0
+        position: static
+        li:before
+          border-left-color: #aaa
+        li:first-child
+          display: none
+    &.with-help
+      border-color: #aaa
+      div.help
+        left: -1px
+    
+  footer
+    bottom: 0
+    position: fixed
+    z-index: 1
 
 form.new_user,
 form.new_user_profile,
