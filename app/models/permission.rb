@@ -45,6 +45,8 @@ class Permission < ActiveRecord::Base
 
   validates :parent_association_for_subject, inclusion: { in: VALID_PARENT_ASSOCIATIONS, message: "%{value} is not a valid parent."}, unless: Proc.new { |permission| permission.parent_association_for_subject.blank?}
 
+  validates :id_of_subject, uniqueness: {scope: [:role_id, :subject_class]}, unless: Proc.new { |permission| id_of_subject.blank?}
+
   validates :id_of_parent, presence: true, unless: Proc.new { |permission| permission.parent_association_for_subject.blank?}
   validates :parent_association_for_subject, presence: true, unless: Proc.new { |permission| permission.id_of_parent.blank?}
 
