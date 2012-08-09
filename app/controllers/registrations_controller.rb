@@ -82,7 +82,7 @@ class RegistrationsController < Devise::RegistrationsController
   def send_reinstate
     user = User.find_by_email(params[:user][:email]) if params[:user]
     success = user ? user.reinstate_by_user : false
-    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with instructions about how to reactivate your account in a few minutes.", "notice"
+    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with reactivation instructions in a few minutes.", "notice"
     if success
       redirect_to root_url
     else
