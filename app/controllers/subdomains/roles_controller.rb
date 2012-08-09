@@ -38,11 +38,25 @@ class Subdomains::RolesController < SubdomainsController
   # POST /roles
   def create
     if @role.save
-      add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
-      redirect_to roles_path
+      respond_to do |format|
+        format.html {
+          add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
+          redirect_to roles_path
+        }
+        format.js {
+          render json: { success: true, role: @role }
+        }
+      end
     else
-      add_new_flash_message "Unable to create role.", 'alert'
-      render :index
+      respond_to do |format|
+        format.html {
+          add_new_flash_message "Unable to create role.", 'alert'
+          render :index
+        }
+        format.js {
+          render json: { success: false, role: @role }
+        }
+      end
     end
   end
 
@@ -50,11 +64,25 @@ class Subdomains::RolesController < SubdomainsController
   def update
     params[:role][:community_profile_ids] ||= Array.new unless @role.is_member_role?
     if @role.update_attributes(params[:role])
-      add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
-      redirect_to roles_path
+      respond_to do |format|
+        format.html {
+          add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
+          redirect_to roles_path
+        }
+        format.js {
+          render json: { success: true, role: @role }
+        }
+      end
     else
-      add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
-      render :index
+      respond_to do |format|
+        format.html {
+          add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
+          render :index
+        }
+        format.js {
+          render json: { success: false, role: @role }
+        }
+      end
     end
   end
 

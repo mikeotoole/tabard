@@ -113,7 +113,7 @@ jQuery(document).ready ($) ->
   $('.comments form[data-remote]')
     .live 'init', ->
       $(@)
-        .bind 'ajax:beforeSend', ->
+        .bind 'ajax:before', ->
           $(@).addClass 'busy'
         .bind 'ajax:error', (xhr, status, error) ->
           $(@).removeClass 'busy'
