@@ -348,14 +348,6 @@ describe User do
       user.reinstate_by_user.should be_false
     end
     
-    it "should set password to new random password" do
-      user.update_column(:user_disabled_at, Time.now)
-      user.reload.user_disabled_at.should_not be_nil
-      org_password = user.encrypted_password      
-      user.reinstate_by_user.should be_true
-      user.reload.encrypted_password.should_not eq org_password
-    end
-    
     it "should set reset_password_token" do
       user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
