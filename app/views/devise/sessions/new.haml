@@ -2,15 +2,17 @@
 
 #body
   %h1 Login to Guild.io
-
   = simple_form_for(resource, as: resource_name, url: session_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))) do |f|
     %fieldset
       %ol
-        = f.input :email
-        = f.input :password
+        = f.input :email, label: false, placeholder: 'Email'
+        = f.input :password, label: false, placeholder: 'Password'
         - if devise_mapping.rememberable?
           = f.input :remember_me, as: :boolean
         %li
           %button{ type: 'submit' } Login
-
-  = render "devise/shared/links"
+    %a.help{ onclick: "javascript:$('#body').addClass('with-help');" } Need help?
+  .help
+    %h1 Account Assitance
+    %a.close{ onclick: "javascript:$('#body').removeClass('with-help');" } Close
+    = render "devise/shared/links"
