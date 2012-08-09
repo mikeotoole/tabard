@@ -13,7 +13,7 @@ class Submission < ActiveRecord::Base
 ###
 # Attribute Accessible
 ###
-  attr_accessible :custom_form, :user_profile
+  attr_accessible :custom_form, :user_profile, :answers_attributes
 
 ###
 # Associations
