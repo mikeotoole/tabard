@@ -83,12 +83,7 @@ class RegistrationsController < Devise::RegistrationsController
     user = User.find_by_email(params[:user][:email]) if params[:user]
     success = user ? user.reinstate_by_user : false
     add_new_flash_message "If a deactivated account with that address exists, you will receive an email with reactivation instructions in a few minutes.", "notice"
-    if success
-      redirect_to root_url
-    else
-      @user = User.new(email: params[:user][:email])
-      render :reinstate_confirmation
-    end
+    redirect_to root_url
   end
 
   # GET /users/reinstate_account?reset_password_token=abcdef
@@ -99,17 +94,35 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /users/reinstate_account
-  def reinstate_account
-    self.resource = resource_class.reset_password_by_token(params[resource_name])
-    # TODO Mike this is not working
-    #if resource.class.to_s == "User"
-    #  resource.errors.add(:password, "can't be blank") if self.password.blank?
-    #  resource.errors.add(:password_confirmation, "can't be blank") if self.password_confirmation.blank?
-    #  resource.errors.add(:accepted_current_terms_of_service, "must be accepted") unless self.accepted_current_terms_of_service
-    #  resource.errors.add(:accepted_current_privacy_policy, "must be accepted") unless self.accepted_current_privacy_policy
-    #end
+  def reinstate_account    
+    self.resource = User.find_or_initialize_with_error_by(:reset_password_token, params[resource_name][:reset_password_token])
+    if resource.reset_password_period_valid?
+
+      resource.password = params[resource_name][:password]
+      resource.password_confirmation = params[resource_name][:password_confirmation]
+      resource.valid?
+
+      if params[resource_name][:accepted_current_terms_of_service] == "1"
+        resource.accepted_current_terms_of_service = true
+      else
+        resource.errors.add(:accepted_current_terms_of_service, "must be accepted")
+      end
+      
+      if params[resource_name][:accepted_current_privacy_policy] == "1"
+        resource.accepted_current_privacy_policy = true
+      else
+        resource.errors.add(:accepted_current_privacy_policy, "must be accepted")
+      end
+    else
+      add_new_flash_message 'Account reactivation token has expired, please request a new one.', 'alert'
+      resource.errors.add(:base, "Account reactivation token has expired, please request a new one")
+    end
+
     if resource.errors.empty?
-      resource.update_column(:user_disabled_at, nil)
+      resource.user_disabled_at = nil
+      resource.reset_password_token = nil
+      resource.reset_password_sent_at = nil
+      resource.save!
       add_new_flash_message "Your account has been reactivated. Welcome back to Guild.io&trade;!", "success"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
