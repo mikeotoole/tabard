@@ -11,16 +11,16 @@ describe Subdomains::CommunityApplicationsController do
   let(:community_admin_profile) { community.admin_profile }
   let(:community_admin_user) { community_admin_profile.user }
   let(:community_application_attr) {{
-    :submission_attributes => {:custom_form_id => DefaultObjects.community.community_application_form.id, 
+    :submission_attributes => {:custom_form_id => DefaultObjects.community.community_application_form.id,
     :user_profile_id => DefaultObjects.fresh_user_profile.id},
     :character_proxy_ids => [DefaultObjects.fresh_user_profile.character_proxies.first.id]
     }
   }
-  
+
   before(:each) do
     @request.host = "#{community.subdomain}.example.com"
   end
-  
+
   describe "GET 'index'" do
     it "should be unauthorized when authenticated as application owner" do
       sign_in applicant_user
@@ -34,7 +34,7 @@ describe Subdomains::CommunityApplicationsController do
       get 'index'
       response.should be_success
     end
-    
+
     it "should render community_applications/index template when authenticated as a community admin" do
       sign_in community_admin_user
       get 'index'
@@ -53,7 +53,7 @@ describe Subdomains::CommunityApplicationsController do
       get 'show', :id => community_application
       response.should be_forbidden
     end
-    
+
     it "should be successful when authenticated as a community admin" do
       sign_in community_admin_user
       get 'show', :id => community_application
@@ -65,13 +65,13 @@ describe Subdomains::CommunityApplicationsController do
       get 'show', :id => community_application
       response.response_code.should == 403
     end
-    
+
     it "should render community_applications/show template when authenticated as a community admin" do
       sign_in community_admin_user
       get 'show', :id => community_application
       response.should render_template('community_applications/show')
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => community_application
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -84,13 +84,13 @@ describe Subdomains::CommunityApplicationsController do
       get 'new'
       response.should redirect_to(root_url(:subdomain => community.subdomain))
     end
-    
+
     it "should be successful when authenticated as the community admin" do
       sign_in community_admin_user
       get 'new'
       response.should_not be_success
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
       response.should redirect_to(new_user_registration_url(subdomain: 'secure', protocol: "https://", community_id: community.id))
@@ -145,7 +145,7 @@ describe Subdomains::CommunityApplicationsController do
       response.should redirect_to(custom_form_thankyou_url(assigns[:community_application].custom_form))
     end
   end
-  
+
   describe "POST 'create' authenticated as a current member" do
     before(:each) do
       sign_in additional_community_user
@@ -219,7 +219,7 @@ describe Subdomains::CommunityApplicationsController do
         applicant_user.reload
       end
       it "should be successful and redirect to application index" do
-        response.should redirect_to(community_applications_url)
+        response.should redirect_to(user_profile_url(community_application.user_profile, anchor: 'roles', subdomain: false))
       end
       it "should make the applicant a member" do
         applicant_user.is_member?(community).should be_true
@@ -270,25 +270,25 @@ describe Subdomains::CommunityApplicationsController do
 
   end
 
-  describe "DELETE 'destroy'" do 
+  describe "DELETE 'destroy'" do
     before(:each) do
       @community_application = community_application
     end
-    
+
     it "should be  when authenticated as application owner" do
       sign_in applicant_user
       delete 'destroy', :id => @community_application
       response.should redirect_to(community_application_url)
       CommunityApplication.find(@community_application).withdrawn?.should be_true
     end
-    
+
     it "should be unauthorized when authenticated as a community admin" do
       sign_in community_admin_user
       delete 'destroy', :id => @community_application
       response.response_code.should == 403
       CommunityApplication.exists?(@community_application).should be_true
     end
-    
+
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
       CommunityApplication.exists?(@community_application).should be_true
