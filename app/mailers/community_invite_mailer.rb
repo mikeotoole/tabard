@@ -13,7 +13,7 @@ class CommunityInviteMailer < ActionMailer::Base
   # Tell a non guild.io user they have been invited to join a community.
   def new_community_invite(invite_id)
     @invite = CommunityInvite.find_by_id(invite_id)
-    if !!@invite
+    if !!@invite and @invite.email.present?
       mail(to: @invite.email, subject: "Guild.io - #{@invite.sponsor_display_name} invited you to join thier community") do |format|
          format.html { render "mailers/new_community_invite" }
       end
