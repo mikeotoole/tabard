@@ -1,8 +1,4 @@
 DaBvRails::Application.routes.draw do
-  get "community_invites_controller/index"
-
-  get "community_invites_controller/create"
-
   resources :minecraft_characters
 
   resources :minecrafts
@@ -203,6 +199,8 @@ DaBvRails::Application.routes.draw do
       # Invites
       put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
       resources :invites, only: [:edit, :update]
+      
+      resources :community_invites, only: [:index, :create]
     end
   end
 
