@@ -37,6 +37,16 @@ class CommunityInvite < ActiveRecord::Base
   delegate :display_name, to: :applicant, prefix: true
 
 ###
+# Callbacks
+###  
+  after_create :remove_action_item
+
+###
+# Protected Methods
+###
+protected
+
+###
 # Validator Methods
 ###
   ###
@@ -53,6 +63,21 @@ class CommunityInvite < ActiveRecord::Base
   def sponsor_must_be_member_of_community
     return false if sponsor.blank? or community.blank?
     self.errors.add(:base, "The sponsor must be a member of the community") unless self.sponsor.is_member?(self.community)
+  end
+ 
+###
+# Callback Methods
+### 
+  ###
+  # _after_create_
+  #
+  # This method removes action item from community.
+  ###
+  def remove_action_item
+    if self.community.action_items.any? and self.community.discussion_spaces.size > 1
+      self.community.action_items.delete(:send_invites)
+      self.community.save
+    end
   end
 end
 

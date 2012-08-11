@@ -64,7 +64,7 @@
               %li{ class: "#{request.fullpath == edit_custom_form_path(current_community.community_application_form) ? 'current' : ''} #{!!current_community.action_items[:update_application] ? '' : 'done'}" }
                 = link_to_unless_current 'Edit Application Form', edit_custom_form_url(current_community.community_application_form)
               %li{ class: "#{request.fullpath == community_invites_path ? 'current' : ''} #{!!current_community.action_items[:send_invites] ? '' : 'done'}" }
-                = link_to_unless_current 'Invite', community_invites_path
+                = link_to_unless_current 'Send Invites', community_invites_path
         .menu
           %li
             = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
