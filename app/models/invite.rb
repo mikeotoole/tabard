@@ -68,22 +68,6 @@ class Invite < ActiveRecord::Base
 ###
   after_save :create_comment_from_body
   after_create :set_expiration_from_event
-  # This creates a comment from the body.
-  def create_comment_from_body
-    event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
-  end
-  # This sets the expiration date from the event.
-  def set_expiration_from_event
-    self.update_column(:expiration, self.event_end_time) and return true unless self.expiration
-  end
-  # This updates viewed for the specified user profile.
-  def update_viewed(user_profile)
-    self.update_column(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
-  end
-  # This gets the smart status
-  def smart_status
-    ( is_viewed and status == nil ? "No Response" : status )
-  end
 
 ###
 # Instance Methods
@@ -101,6 +85,21 @@ class Invite < ActiveRecord::Base
       self.user_profile
     end
   end
+  
+  # This updates viewed for the specified user profile.
+  def update_viewed(user_profile)
+    self.update_column(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
+  end
+
+  # This gets the smart status
+  def smart_status
+    ( is_viewed and status == nil ? "No Response" : status )
+  end
+
+###
+# Protected Methods
+###
+protected
 
 ###
 # Validator Methods
@@ -113,6 +112,18 @@ class Invite < ActiveRecord::Base
     self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
   end
 
+###
+# Callbacks
+###
+  # This creates a comment from the body.
+  def create_comment_from_body
+    event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
+  end
+
+  # This sets the expiration date from the event.
+  def set_expiration_from_event
+    self.update_column(:expiration, self.event_end_time) and return true unless self.expiration
+  end
 end
 
 # == Schema Information
