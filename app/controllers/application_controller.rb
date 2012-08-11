@@ -154,7 +154,6 @@ protected
 
   # This determines if the provided proxy was the one that was used to post last.
   def last_posted_as_character_proxy?(proxy)
-    logger.debug "#{session[:poster_id]} #{session[:poster_type]} ? #{(proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s)}"
     return (proxy.character_type.to_s == session[:poster_type].to_s and proxy.id.to_s == session[:poster_id].to_s)
   end
   helper_method :last_posted_as_character_proxy?

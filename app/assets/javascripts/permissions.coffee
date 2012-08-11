@@ -29,6 +29,7 @@ jQuery(document).ready ($) ->
         .html(xhr.responseText)
         .find('.slider')
         .trigger 'init'
+      $('#role_name').focus()
   
   $('#role')
     .on 'change', 'input, textarea', ->
@@ -45,13 +46,11 @@ jQuery(document).ready ($) ->
       $.alert body: 'Error: unable to save role.'
     .on 'ajax:success', 'form', (event, data, status, xhr) ->
       $('#roles, #role').removeClass 'busy'
-      console.log xhr.responseText
       response = $.parseJSON xhr.responseText
-      console.log response
       if response.success
         role = response.role
         $('#role').removeData 'changed'
-        $.flash 'success', "The \"#{role.name}\" roles has been deleted." unless $('#flash .success').length
+        $.flash 'success', "The \"#{role.name}\" role has been saved." unless $('#flash .success').length
         unless $("#roles a[data-id=#{role.id}]").length
           $('#roles a').removeClass 'active'
           $('<li>').appendTo('#roles ul').append("<a href='/roles/#{role.id}/edit'>#{role.name}</a>").find('a').attr
@@ -59,6 +58,8 @@ jQuery(document).ready ($) ->
             'data-id': role.id
             'data-type': 'text'
             'data-remote': 'true'
-          $("<div class='actions'><a href='/roles/#{role.id}' class='delete' data-confirm='Are you sure?' data-method='delete' meta='Delete role' rel='nofollow'>Delete</a></div>").appendTo '#role form'
+        $('#role').html(response.form).find('.slider').trigger('init') if response.form?
+      else if response.error?
+        $.alert body: response.error
       else
         $(@).trigger 'ajax:error'
