@@ -21,11 +21,13 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}
-  validates :applicant, presence: true
+  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}, if: Proc.new{|ci| ci.email.blank? }
+  validates :applicant, presence: true, if: Proc.new{|ci| ci.email.blank? }
+  validates :email, presence: true, if: Proc.new{|ci| ci.applicant.blank? }
   validates :sponsor, presence: true
   validates :community, presence: true
   validate :applicant_cant_be_the_same_as_sponsor
+  validate :applicant_and_email_cant_both_be_set
   validate :sponsor_must_be_member_of_community
 
 ###
@@ -38,7 +40,7 @@ class CommunityInvite < ActiveRecord::Base
 
 ###
 # Callbacks
-###  
+###
   after_create :remove_action_item
 
 ###
@@ -58,16 +60,23 @@ protected
   end
 
   ###
+  # This method validates that the applicant can't also be the sponsor.
+  ###
+  def applicant_and_email_cant_both_be_set
+    self.errors.add(:base, "Email and applicant can't both be set") if not self.applicant.blank? and not self.email.blank?
+  end
+
+  ###
   # This method validates that sponsor must be in the community.
   ###
   def sponsor_must_be_member_of_community
     return false if sponsor.blank? or community.blank?
     self.errors.add(:base, "The sponsor must be a member of the community") unless self.sponsor.is_member?(self.community)
   end
- 
+
 ###
 # Callback Methods
-### 
+###
   ###
   # _after_create_
   #

@@ -26,12 +26,21 @@ describe CommunityInvite do
   end
 
   describe "applicant" do
-    it "should be required" do
-      build(:community_invite, applicant: nil).should_not be_valid
+    it "should be required if email is blank" do
+      build(:community_invite, applicant: nil, email: nil).should_not be_valid
+    end
+    it "should not be required if email is not blank" do
+      build(:community_invite, applicant: nil, email: "robobilly@digitalaugment.com").should be_valid
     end
     it "can't be the same as the sponsor" do
       user_profile = DefaultObjects.community.admin_profile
       build(:community_invite, applicant: user_profile, sponsor: user_profile, community: DefaultObjects.community).should_not be_valid
+    end
+  end
+
+  describe "email" do
+    it "should be not be allowed if applicant is set" do
+      build(:community_invite, email: "robobilly@digitalaugment.com").should_not be_valid
     end
   end
 
