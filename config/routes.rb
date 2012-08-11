@@ -1,4 +1,8 @@
 DaBvRails::Application.routes.draw do
+  get "community_invites_controller/index"
+
+  get "community_invites_controller/create"
+
   resources :minecraft_characters
 
   resources :minecrafts
