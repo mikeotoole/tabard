@@ -310,6 +310,10 @@ class Ability
       submission.custom_form_is_published and can? :read, submission.custom_form
     end
 
+    can [:read], CommunityInvite do |invite|
+      can? :create, CommunityInvite
+    end
+
     # Cannot Overrides
     cannot [:show], CommunityApplication do |community_application|
       community_application.user_profile_id == user.user_profile_id
