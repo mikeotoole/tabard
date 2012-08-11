@@ -9,7 +9,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :applicant_id, :community_id, :sponsor_id
+  attr_accessible :applicant_id, :community_id, :sponsor_id, :email
 
 ###
 # Associations
@@ -21,7 +21,8 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}, if: Proc.new{|ci| ci.email.blank? }
+  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}, unless: Proc.new{|ci| ci.applicant_id.blank? }
+  validates :email, uniqueness: {scope: [:sponsor_id, :community_id], case_sensitive: true, message: "has aleady been sent an invite"}, unless: Proc.new{|ci| ci.email.blank? }
   validates :applicant, presence: true, if: Proc.new{|ci| ci.email.blank? }
   validates :email, presence: true, if: Proc.new{|ci| ci.applicant.blank? }
   validates :sponsor, presence: true
@@ -97,11 +98,12 @@ protected
   ###
   def try_to_find_user
     unless self.email.blank? or not self.valid?
-      the_user = User.find_by_email(self.email.downcase)
-      unless user.blank?
-        self.applicant = user.user_profile
-        self.email = nil
-      end
+      user = User.find_by_email(self.email.downcase)
+      return true if user.blank?
+      self.errors.add(:base, "The sponsor can't be the applicant") and return false if self.sponsor == user.user_profile
+      self.errors.add(:email, "has aleady been sent an invite") and return false unless CommunityInvite.find_by_sponsor_id_and_community_id_and_applicant_id(self.sponsor.id, self.community.id, user.user_profile_id).blank?
+      self.applicant = user.user_profile
+      self.email = nil
     end
   end
 end

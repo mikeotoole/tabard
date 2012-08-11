@@ -25,6 +25,11 @@ describe CommunityInvite do
     build(:community_invite, applicant: community_invite.applicant, sponsor: community_invite.sponsor, community: community_invite.community).should_not be_valid
   end
 
+  it "should only allow one invite per sponsor/email/community combo" do
+    some_invite = create(:community_invite, :applicant => nil, email: "robobilly@digitalaugment.com")
+    build(:community_invite, email: some_invite.email, sponsor: some_invite.sponsor, community: some_invite.community).should_not be_valid
+  end
+
   describe "applicant" do
     it "should be required if email is blank" do
       build(:community_invite, applicant: nil, email: nil).should_not be_valid

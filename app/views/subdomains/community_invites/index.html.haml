@@ -1,3 +1,8 @@
 %h1 Subdomains::CommunityInvitesController#index
 %p Find me in app/views/subdomains/community_invites_controller/index.html.haml
+%p=@community_invite.errors.to_yaml
+= simple_form_for @community_invite, html: {novalidate: true} do |f|
+  = f.input :email
+  %p.submit
+    = f.button :submit, 'Send Invite'
 %p= @community_invites.to_yaml
