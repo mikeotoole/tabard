@@ -59,6 +59,7 @@ class SubdomainsController < ApplicationController
     return management_items unless signed_in?
     #application
     management_items << {link: edit_community_settings_url, title: "Community Settings", class: 'settings'} if can_manage? current_community
+    management_items << {link: community_invites_url, title: "Invites", class: 'recruit'} if can? :create, CommunityInvite
     management_items << {link: supported_games_url, title: "Supported Games", class: 'games'} if can_manage? current_community.supported_games.new
     management_items << {link: roles_url, title: "Permissions", class: 'roles'} if can_manage? current_community.roles.new
     management_items << {link: community_applications_url, title: 'Applications', class: 'applications', meta: current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication

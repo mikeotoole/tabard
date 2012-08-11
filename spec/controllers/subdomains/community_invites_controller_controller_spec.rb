@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Subdomains::CommunityInvitesControllerController do
+describe Subdomains::CommunityInvitesController do
 
   describe "GET 'index'" do
     it "returns http success" do
