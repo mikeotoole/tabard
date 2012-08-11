@@ -13,7 +13,7 @@ class CommunityInviteObserver < ActiveRecord::Observer
   def after_create(community_invite)
     unless Rails.env.test?
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "guild.io" : "lvh.me:3000"
-      
+
       if community_invite.applicant.blank?
         CommunityInviteObserver.delay.send_community_invite_email(community_invite.id)
       else
@@ -23,7 +23,7 @@ class CommunityInviteObserver < ActiveRecord::Observer
       end
     end
   end
-  
+
   # This method is used to send the message. It is built to be used with delay jobs.
   def self.send_community_invite_email(community_invite_id)
     CommunityInviteMailer.new_community_invite(community_invite_id).deliver

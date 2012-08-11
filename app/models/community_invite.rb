@@ -41,6 +41,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  before_save :try_to_find_user
   after_create :remove_action_item
 
 ###
@@ -86,6 +87,21 @@ protected
     if self.community.action_items.any? and self.community.discussion_spaces.size > 1
       self.community.action_items.delete(:send_invites)
       self.community.save
+    end
+  end
+
+  ###
+  # _before_save_
+  #
+  # This method trys to find a user with the email
+  ###
+  def try_to_find_user
+    unless self.email.blank? or not self.valid?
+      the_user = User.find_by_email(self.email.downcase)
+      unless user.blank?
+        self.applicant = user.user_profile
+        self.email = nil
+      end
     end
   end
 end
