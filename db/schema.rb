@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808182226) do
+ActiveRecord::Schema.define(:version => 20120811200813) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20120808182226) do
     t.integer  "community_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "email"
   end
 
   add_index "community_invites", ["applicant_id"], :name => "index_community_invites_on_applicant_id"

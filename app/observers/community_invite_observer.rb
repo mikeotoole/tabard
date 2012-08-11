@@ -13,9 +13,19 @@ class CommunityInviteObserver < ActiveRecord::Observer
   def after_create(community_invite)
     unless Rails.env.test?
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "guild.io" : "lvh.me:3000"
-      Message.create_system(subject: "You have been invited to #{community_invite.community_name}",
-                    body: "#{community_invite.sponsor_display_name} has invited you to [join the \"#{community_invite.community_name}\" community](#{new_community_application_url(subdomain: community_invite.community_subdomain)}).",
-                    to: [community_invite.applicant_id])
+      
+      if community_invite.applicant.blank?
+        CommunityInviteObserver.delay.send_community_invite_email(community_invite.id)
+      else
+        Message.create_system(subject: "You have been invited to #{community_invite.community_name}",
+                      body: "#{community_invite.sponsor_display_name} has invited you to [join the \"#{community_invite.community_name}\" community](#{new_community_application_url(subdomain: community_invite.community_subdomain)}).",
+                      to: [community_invite.applicant_id])
+      end
     end
+  end
+  
+  # This method is used to send the message. It is built to be used with delay jobs.
+  def self.send_community_invite_email(community_invite_id)
+    CommunityInviteMailer.new_community_invite(community_invite_id).deliver
   end
 end
