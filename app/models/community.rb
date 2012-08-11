@@ -315,7 +315,8 @@ protected
                           add_supported_game: true,
                           update_settings: true,
                           update_application: true,
-                          create_discussion_space: true }
+                          create_discussion_space: true,
+                          send_invites: true }
   end
 
   ###
