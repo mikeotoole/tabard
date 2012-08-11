@@ -1,4 +1,4 @@
-class Subdomains::CommunityInvitesController < ApplicationController
+class Subdomains::CommunityInvitesController < SubdomainsController
 respond_to :html
   ###
   # Before Filters

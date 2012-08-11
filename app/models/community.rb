@@ -42,6 +42,7 @@ class Community < ActiveRecord::Base
   has_many :custom_forms, dependent: :delete_all, order: 'LOWER(name)', inverse_of: :community
   has_many :community_announcements, class_name: "Announcement", conditions: {supported_game_id: nil}
   has_many :announcements
+  has_many :community_invites, inverse_of: :community
   has_many :supported_games, dependent: :destroy
   has_many :community_profiles, dependent: :destroy, inverse_of: :community
   has_many :approved_character_proxies, through: :community_profiles

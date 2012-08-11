@@ -16,7 +16,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
   belongs_to :applicant, class_name: "UserProfile", inverse_of: :community_invite_applications
   belongs_to :sponsor, class_name: "UserProfile", inverse_of: :community_invite_sponsors
-  belongs_to :community
+  belongs_to :community, inverse_of: :community_invites
 
 ###
 # Validators

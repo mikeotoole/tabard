@@ -52,9 +52,6 @@ DaBvRails::Application.routes.draw do
     get 'page/:page', action: :index, on: :collection
   end
 
-  # CommuntiyInvites
-  resources :community_invites, only: [:create]
-
   # Games
   get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
   get "/world-of-warcraft" => 'wows#index', as: 'wows'
@@ -199,7 +196,7 @@ DaBvRails::Application.routes.draw do
       # Invites
       put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
       resources :invites, only: [:edit, :update]
-      
+
       resources :community_invites, only: [:index, :create]
     end
   end
@@ -207,6 +204,10 @@ DaBvRails::Application.routes.draw do
   # Announcements
   resources :announcements, only: [:show]
   put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", as: "announcements_batch_mark_as_seen"
+
+  # CommuntiyInvites
+  resources :community_invites, only: [:create]
+
   # Invites
   resources :invites, only: [:show]
   put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
