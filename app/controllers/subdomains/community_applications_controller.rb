@@ -33,6 +33,12 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def show
     @supported_games = current_community.supported_games
     @comments = @community_application.comments.page params[:page]
+    params[:proxy_hash] ||= Hash.new
+    @community_application.character_proxies.each do |character_proxy|
+      if @supported_games.where(game_type: character_proxy.game.class.to_s).size == 1
+        params[:proxy_hash][character_proxy.id.to_s] = @supported_games.where(game_type: character_proxy.game.class.to_s).first.id
+      end
+    end
   end
 
   # GET /community_applications/new
