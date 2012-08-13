@@ -1,4 +1,5 @@
 - is_my_profile = (user_signed_in? and @user_profile == current_user.user_profile)
+- is_private = !(@user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id))
 - title "Profile: #{@user_profile.display_name}"
 - content_for :header do
   = stylesheet_link_tag "top_level/user_profiles"
@@ -54,7 +55,7 @@
         %br
         = pluralize(Comment.where(user_profile_id: @user_profile.id).size, 'comment') + ' made.'
   %article
-    - if @user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id)
+    - if !is_private or @communities_with_roles_to_assign.any?
       %dl#tabs.tabs
         - if @user_profile.communities.any?
           - if is_my_profile
@@ -68,11 +69,12 @@
             %dt{ class: 'roles' }
               = link_to 'User Roles', roles_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.roles + dd', error: 'Error: unable to load user roles.' }
             %dd
-        %dt{ class: 'activities current' }
-          = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
-        %dd
-        %dt{ class: 'characters' }
-          = link_to 'Characters', characters_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.characters + dd', error: 'Error: unable to load characters.' }
-        %dd
+        - unless is_private
+          %dt{ class: 'activities current' }
+            = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
+          %dd
+          %dt{ class: 'characters' }
+            = link_to 'Characters', characters_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.characters + dd', error: 'Error: unable to load characters.' }
+          %dd
     - else
       %p This user's profile is private.
