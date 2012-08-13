@@ -1,0 +1,7 @@
+- title "Recruit New Members | #{current_community.name}"
+%h1 Recruit New Members
+%p= "Enter the email addresses of your friends and we'll send them an invitation to join \"#{current_community.name}\"."
+= simple_form_for @community_invite, html: {novalidate: true} do |f|
+  %input{ id: 'recruit_email', type: 'text', placeholder: 'Email address' }
+  %p.submit
+    %button{ type: 'submit' } Recruit

@@ -30,6 +30,6 @@
   = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters')
   %ul
     %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), icon: 'Ξ'
-    %li.profile= link_to 'Edit User Profile', edit_user_profile_url(current_user.user_profile), icon: '✎'
+    %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile), icon: '✎'
     %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
     %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete, icon: '✕'
