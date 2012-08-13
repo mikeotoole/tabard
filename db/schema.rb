@@ -228,6 +228,10 @@ ActiveRecord::Schema.define(:version => 20120811200813) do
     t.string   "email"
   end
 
+  add_index "community_invites", ["applicant_id"], :name => "index_community_invites_on_applicant_id"
+  add_index "community_invites", ["community_id"], :name => "index_community_invites_on_community_id"
+  add_index "community_invites", ["sponsor_id"], :name => "index_community_invites_on_sponsor_id"
+
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"
     t.integer  "user_profile_id"

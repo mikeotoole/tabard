@@ -252,7 +252,7 @@ protected
       # TODO Mike, Link needs to be changed to guild.io when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.guild.io" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
-                            body: "[#{self.user_profile.name}](#{user_profile_url(self.user_profile)}) has submitted their application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}). [Review Application](#{community_application_url(self)})",
+                            body: "[#{self.user_profile.name}](#{user_profile_url(self.user_profile)}) has submitted [their application](#{community_application_url(self)}) to #{self.community.name}.",
                             to: [self.community.admin_profile_id])
     end
   end
