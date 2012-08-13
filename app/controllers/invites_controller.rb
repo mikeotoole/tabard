@@ -43,7 +43,7 @@ class InvitesController < ApplicationController
     end
     respond_to do |format|
       format.html { respond_with(@invites, location: user_profile_url(current_user.user_profile, anchor: 'invites')) }
-      format.js { render json: { success: true, invites: @invites } }
+      format.js { render json: { success: true, invites: @invites, fresh_invites_count: current_user.invites.not_responded_to.fresh.size } }
     end
   end
 end

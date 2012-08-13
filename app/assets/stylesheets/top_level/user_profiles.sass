@@ -501,7 +501,6 @@ body.user_profiles.dashboard
             +transition(background .2s linear)
             width: 40px
             z-index: 1
-            
             &:before
               background: image-url('application/icons.png')
               content: ''
@@ -511,7 +510,18 @@ body.user_profiles.dashboard
               left: 5px
               position: absolute
               top: 5px
-            
+
+            &:nth-child(1)
+              right: 0
+            &:nth-child(3)
+              right: 41px
+            &:nth-child(5)
+              right: 82px
+            &:nth-child(7)
+              right: 123px
+            &:nth-child(9)
+              right: 164px
+                        
             a
               background: transparent !important
               bottom: 0
@@ -525,47 +535,27 @@ body.user_profiles.dashboard
               top: 0
               visibility: visible
               z-index: 1
-            
-            &.invites
-              right: 164px
-              &:before
-                background-position: -1080px 0
-            
-            &.announcements
-              right: 123px
-              &:before
-                background-position: -450px 0
-            
-            &.activities
-              right: 41px
-              &:before
-                background-position: -1020px 0
-            
-            &.characters
-              right: 0
-              &:before
-                background-position: -570px 0
-            
-            &.roles
-              right: 82px
-              &:before
-                background-position: -150px 0
-            
+            &.invites:before
+              background-position: -1080px 0
+            &.announcements:before
+              background-position: -450px 0
+            &.activities:before
+              background-position: -1020px 0
+            &.characters:before
+              background-position: -570px 0
+            &.roles:before
+              background-position: -150px 0
             &:hover
               background: #fff
               cursor: pointer
               z-index: 3
-              
               &:before
                 +opacity(.5)
-            
             &.current
               background: #fff
               cursor: default
               z-index: 2
-              
               &:before
                 +opacity(.2)
-              
               + dd
                 display: block
