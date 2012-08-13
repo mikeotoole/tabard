@@ -45,6 +45,10 @@ jQuery(document).ready ($) ->
       if response.success
         $("#invites_batch tr[invite='#{invite.id}'] td.status strong").text invite.status for invite in response.invites
         $("#invites_batch td.check input").removeAttr 'checked'
+        if response.fresh_invites_count > 0
+          $('#bar .dashboard .calendar a').attr 'meta', response.fresh_invites_count
+        else
+          $('#bar .dashboard .calendar a').removeAttr 'meta'
       else
         $.alert body: response.message
 
