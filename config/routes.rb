@@ -198,6 +198,7 @@ DaBvRails::Application.routes.draw do
       resources :invites, only: [:edit, :update]
 
       resources :community_invites, only: [:index, :create]
+      post "/community_invites/mass_create" => "communities#mass_create"
     end
   end
 

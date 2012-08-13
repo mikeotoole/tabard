@@ -27,6 +27,19 @@ respond_to :html
     render :index
   end
 
+  # POST /community_invites/mass_create(.:format)
+  def mass_create
+    authorize! :create, @community_invite
+    if params[:emails].blank? or not params[:emails].any?
+      #Bad Stuff
+    else
+      params[:emails].each do |email|
+        invite = current_community.community_invites.new({sponsor: current_user.user_profile, email: email}, without_protection: true)
+        invite.save
+      end
+    end
+  end
+
   def load_community_invites
     @community_invites = current_community.community_invites
   end

@@ -47,6 +47,19 @@ describe CommunityInvite do
     it "should be not be allowed if applicant is set" do
       build(:community_invite, email: "robobilly@digitalaugment.com").should_not be_valid
     end
+    it "should accept valid format and length" do
+      ok_emails = %w{ a@b.us vaild@email.com } # TESTING Valid emails for testing.
+      ok_emails.each do |email|
+        user = build(:community_invite, :applicant => nil, :email => email).should be_valid
+      end
+    end
+
+    it "should reject invalid format" do
+      bad_emails = %w{ not_a_email no_domain@.com no_com@me } # TESTING Invalid emails for testing.
+      bad_emails.each do |email|
+        build(:community_invite, :applicant => nil, :email => email).should_not be_valid
+      end
+    end
   end
 
   describe "sponsor" do

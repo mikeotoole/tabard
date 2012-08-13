@@ -22,9 +22,13 @@ class CommunityInvite < ActiveRecord::Base
 # Validators
 ###
   validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}, unless: Proc.new{|ci| ci.applicant_id.blank? }
-  validates :email, uniqueness: {scope: [:sponsor_id, :community_id], case_sensitive: true, message: "has aleady been sent an invite"}, unless: Proc.new{|ci| ci.email.blank? }
+  validates :email, uniqueness: {scope: [:sponsor_id, :community_id], case_sensitive: true, message: "has aleady been sent an invite"},
+            length: { within: 5..128 },
+            format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i },
+            unless: Proc.new{|ci| ci.email.blank? }
   validates :applicant, presence: true, if: Proc.new{|ci| ci.email.blank? }
   validates :email, presence: true, if: Proc.new{|ci| ci.applicant.blank? }
+
   validates :sponsor, presence: true
   validates :community, presence: true
   validate :applicant_cant_be_the_same_as_sponsor
