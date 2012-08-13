@@ -44,7 +44,7 @@ class Subdomains::RolesController < SubdomainsController
           redirect_to roles_path
         }
         format.js {
-          render json: { success: true, role: @role }
+          render json: { success: true, role: @role, form: render_to_string(partial: 'form', locals: { role: @role }) }
         }
       end
     else
@@ -54,7 +54,7 @@ class Subdomains::RolesController < SubdomainsController
           render :index
         }
         format.js {
-          render json: { success: false, role: @role }
+          render json: { success: false, role: @role, error: @role.errors.full_messages.first }
         }
       end
     end
@@ -80,7 +80,7 @@ class Subdomains::RolesController < SubdomainsController
           render :index
         }
         format.js {
-          render json: { success: false, role: @role }
+          render json: { success: false, role: @role, error: @role.errors.full_messages.first }
         }
       end
     end
