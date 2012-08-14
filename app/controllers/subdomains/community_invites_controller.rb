@@ -5,6 +5,7 @@ respond_to :html
   ###
   before_filter :block_unauthorized_user!
   before_filter :load_community_invites
+  before_filter :ensure_current_user_is_member
 
 ###
 # REST Actions
