@@ -33,38 +33,7 @@
           %strong= current_community.name
           - if !!current_community.slogan
             %cite= shorten_words current_community.slogan
-        - if has_action_items
-          .action_items
-            %p
-              Now that you're community has been created, let's get everything setup:
-              = link_to '✕', clear_action_items_url(format: :js), class: 'clear', meta: "I know what I'm doing. Remove this box.", remote: true, data: { type: :text }
-              :javascript
-                jQuery(document).ready(function($){
-                  $('.action_items').on('ajax:success', function(event, data, status, xhr){
-                    response = $.parseJSON(xhr.responseText);
-                    if(response.success){
-                      $('.action_items').fadeOut(300, function(){
-                        $('body').removeClass('with_action_items');
-                        $(this).remove();
-                      });
-                    } else {
-                      $.flash('alert', response.message);
-                    }
-                  });
-                });
-            %ol
-              %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
-                = link_to_unless_current 'Edit Settings', edit_community_settings_url
-              %li{ class: "#{request.fullpath == new_supported_game_path ? 'current' : ''} #{!!current_community.action_items[:add_supported_game] ? '' : 'done'}" }
-                = link_to_unless_current 'Add Games', new_supported_game_url
-              %li{ class: "#{request.fullpath == edit_page_path(current_community.home_page) ? 'current' : ''} #{!!current_community.action_items[:update_home_page] ? '' : 'done'}" }
-                = link_to_unless_current 'Update Home Page', edit_page_url(current_community.home_page)
-              %li{ class: "#{request.fullpath == new_discussion_space_path ? 'current' : ''} #{!!current_community.action_items[:create_discussion_space] ? '' : 'done'}" }
-                = link_to_unless_current 'Add Discussion Spaces', new_discussion_space_url
-              %li{ class: "#{request.fullpath == edit_custom_form_path(current_community.community_application_form) ? 'current' : ''} #{!!current_community.action_items[:update_application] ? '' : 'done'}" }
-                = link_to_unless_current 'Edit Application Form', edit_custom_form_url(current_community.community_application_form)
-              %li{ class: "#{request.fullpath == community_invites_path ? 'current' : ''} #{!!current_community.action_items[:send_invites] ? '' : 'done'}" }
-                = link_to_unless_current 'Send Invites', community_invites_path
+        = render 'layouts/action_items' if has_action_items
         .menu
           %li
             = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
