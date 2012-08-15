@@ -1,9 +1,9 @@
 jQuery(document).ready ($) ->
 
   # change theme
-  $('label[for="community_theme_id"] + ul input').change ->
+  $('input[id^="community_theme_id"]').change ->
     theme = $(@).find('+ label img').attr 'theme'
-    $('head link.theme').attr 'href', '/assets/themes/' + theme + '.css'
+    $('head link.theme').attr 'href', "/assets/themes/#{theme}.css"
 
   # background color
   $('#community_background_color').closest('.color').each ->
@@ -21,8 +21,8 @@ jQuery(document).ready ($) ->
     input_bg_color.ColorPicker
       color: color
       onChange: (hsb, hex, rgb) ->
-        $('body, #content').css 'background-color', '#' + hex
-        input_bg_color.val(hex).next('.preview').css 'background', '#' + hex
+        $('body, #content').css 'background-color', "##{hex}"
+        input_bg_color.val(hex).next('.preview').css 'background', "##{hex}"
 
   # title color
   $('#community_title_color').closest('.color').each ->
@@ -40,5 +40,5 @@ jQuery(document).ready ($) ->
     input_title_color.ColorPicker
       color: color
       onChange: (hsb, hex, rgb) ->
-        $('#header .title').css { color: '#' + hex, textShadow: 'none' }
-        input_title_color.val(hex).next('.preview').css 'background', '#' + hex
+        $('#header .title').css { color: "##{hex}", textShadow: 'none' }
+        input_title_color.val(hex).next('.preview').css 'background', "##{hex}"
