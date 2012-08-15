@@ -15,8 +15,7 @@
     - unless current_user.communities.any?
       = link_to 'Find a community', communities_url(subdomain: false), icon: '◎'
     - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-      %li.extra
-        = link_to 'Add a community', new_community_url(subdomain: false), icon: '✛'
+      %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
 
 %ul.dashboard
   %li{ class: 'icon calendar' }
