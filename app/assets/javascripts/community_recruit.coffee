@@ -14,7 +14,7 @@ jQuery(document).ready ($) ->
       return if emails.indexOf(recruit) > -1
       emails.push recruit
       elId = "email_#{(new Date()).getTime()}"
-      li = $('<li>').prependTo '#new_community_invite fieldset ol'
+      li = $('<li>').prependTo '#recruits fieldset ol'
       $("<input id='#{elId}' name='emails[]' type='checkbox' value='#{recruit}' checked='checked'>").appendTo(li).attr
       $("<label for='#{elId}'>").appendTo(li).text recruit
 
@@ -49,7 +49,7 @@ jQuery(document).ready ($) ->
         console.log e, ui
         
 
-  $('#new_community_invite').on 'change', 'input[type="checkbox"]', ->
+  $('#recruits').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length
     recruit = $(@).val()
     recruits = $('#recruit_input').data $(@).attr('name').replace(/[^a-z]/gi,'')
