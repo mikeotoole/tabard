@@ -61,12 +61,16 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
     number_to_fetch = 10
-    return Array.new if param[:term].blank? or param[:term].to_s.length <= 2
-    result_1_argument = "#{param[:term]}%"
-    results_1 = UserProfile.where{display_name =~ result_1_argument}.limit(10)
-    result_2_argument = "%#{param[:term]}%"
-    results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(results_1.size)
-    return results_1 + results_2
+    if param[:term].blank? or param[:term].to_s.length <= 2
+      #render some stuffs (nothing)
+    else
+      result_1_argument = "#{param[:term]}%"
+      results_1 = UserProfile.where{display_name =~ result_1_argument}.limit(number_to_fetch)
+      result_2_argument = "%#{param[:term]}%"
+      results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(number_to_fetch)
+      @user_profiles = (results_1 + results_2).uniq[0,number_to_fetch]
+      #render more stuffs
+    end
   end
 
   def load_community_invites
