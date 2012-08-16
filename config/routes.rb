@@ -199,7 +199,7 @@ DaBvRails::Application.routes.draw do
 
       resources :community_invites, only: [:index, :create]
       post "/community_invites/mass_create" => "community_invites#mass_create"
-      put "/community_invites/auto_complete" => "community_invites#auto_complete"
+      put "/community_invites/autocomplete" => "community_invites#autocomplete"
     end
   end
 

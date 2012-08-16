@@ -57,14 +57,14 @@ class Subdomains::CommunityInvitesController < SubdomainsController
   end
 
   # PUT /community_invites/mass_create(.:format)
-  def auto_complete
+  def autocomplete
     @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
     number_to_fetch = 10
-    return Array.new if param[:display_name].blank? or param[:display_name].to_s.length <= 2
-    result_1_argument = "#{param[:display_name]}%"
+    return Array.new if param[:term].blank? or param[:term].to_s.length <= 2
+    result_1_argument = "#{param[:term]}%"
     results_1 = UserProfile.where{display_name =~ result_1_argument}.limit(10)
-    result_2_argument = "%#{param[:display_name]}"
+    result_2_argument = "%#{param[:term]}%"
     results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(results_1.size)
     return results_1 + results_2
   end

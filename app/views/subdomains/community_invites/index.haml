@@ -4,7 +4,7 @@
 
 %h1 Recruit New Members
 %p
-  %input{ id: 'recruit_input', type: 'text', placeholder: 'Username or email address' }
+  %input{ id: 'recruit_input', type: 'text', placeholder: 'Username or email address', data: {url: community_invites_autocomplete_url(format: :js)} }
 = form_tag community_invites_mass_create_url, method: :post, id: 'recruits' do |f|
   %fieldset
     %ol

@@ -1,5 +1,7 @@
 jQuery(document).ready ($) ->
 
+  acCache = []
+
   $('#recruit_input')
 
     .keypress (e) ->
@@ -11,7 +13,7 @@ jQuery(document).ready ($) ->
       $(@).val ''
       $(@).data 'emails', [] unless $(@).data 'emails'
       emails = $(@).data 'emails'
-      return if emails.indexOf(recruit) > -1
+      return if recruit in emails
       emails.push recruit
       elId = "email_#{(new Date()).getTime()}"
       li = $('<li>').prependTo '#recruits fieldset ol'
@@ -20,7 +22,7 @@ jQuery(document).ready ($) ->
 
     .autocomplete
       autoFocus: true
-      delay: 300
+      delay: 500
       minLength: 2
       open: ->
         $(@).addClass('with-avatars').autocomplete('widget').width $(@).width() + 8
@@ -29,25 +31,14 @@ jQuery(document).ready ($) ->
         at: 'left bottom'
         offset: '0, -3'
         collision: 'none'
-      source:
-        [
-          'accredit'
-          'ace'
-          'Acer'
-          'acetone'
-          'achoo'
-          'acorn'
-          'acre'
-          'action'
-          'actor'
-          'actress'
-          'zoink'
-          'zoo'
-          'zorg'
-        ]
       select: (e, ui) ->
         console.log e, ui
-        
+      source: (request, response) ->
+        term = request.term
+        return response acCache[term] if acCache[term]?
+        lastXhr = $.getJSON $('#recruit_input').data('url'), request, (data, status, xhr) ->
+          acCache[term] = data
+          response data if xhr is lastXhr
 
   $('#recruits').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length
