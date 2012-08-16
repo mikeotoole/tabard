@@ -22,10 +22,12 @@ jQuery(document).ready ($) ->
 
     .autocomplete
       autoFocus: true
+      create: (e, ui) ->
+        $('ul.ui-autocomplete').addClass 'with-avatars'
       delay: 500
       minLength: 2
-      open: ->
-        $(@).addClass('with-avatars').autocomplete('widget').width $(@).width() + 8
+      open: (e, ui) ->
+        $(@).autocomplete('widget').width $(@).width() + 8
       position:
         my: 'left top'
         at: 'left bottom'
@@ -33,12 +35,13 @@ jQuery(document).ready ($) ->
         collision: 'none'
       select: (e, ui) ->
         console.log e, ui
-      source: (request, response) ->
-        term = request.term
-        return response acCache[term] if acCache[term]?
-        lastXhr = $.getJSON $('#recruit_input').data('url'), request, (data, status, xhr) ->
-          acCache[term] = data
-          response data if xhr is lastXhr
+      source: ['apple','application','apart']
+      #source: (request, response) ->
+      #  term = request.term
+      #  return response acCache[term] if acCache[term]?
+      #  lastXhr = $.getJSON $('#recruit_input').data('url'), request, (data, status, xhr) ->
+      #    acCache[term] = data
+      #    response data if xhr is lastXhr
 
   $('#recruits').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length

@@ -1856,12 +1856,26 @@ body.with_action_items
   border-top: 0
   +border_radius(0,0,3,3)
   font-size: 13px
-  padding: 6px
+  padding: 4px 6px
   text-align: left
+  li
+    position: relative
   a
     +border_radius(2)
     display: block
-    padding: 4px
+    height: 20px
+    line-height: 20px
+    margin: 2px 0
+    padding: 0 4px
+  &.with-avatars
+    li
+      background: image-url('application/avatar@20.png') 0 0 no-repeat
+    a
+      margin-left: 26px
+      img
+        left: 0
+        position: absolute
+        top: 0
 
 
 @import application/footer

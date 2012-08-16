@@ -1,5 +1,5 @@
 class Subdomains::CommunityInvitesController < SubdomainsController
-  respond_to :html
+  respond_to :html, :js
   ###
   # Before Filters
   ###
@@ -56,7 +56,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
 
   end
 
-  # PUT /community_invites/mass_create(.:format)
+  # GET /community_invites/autocomplete(.:format)
   def autocomplete
     @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
