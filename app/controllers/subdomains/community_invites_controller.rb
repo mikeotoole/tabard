@@ -30,10 +30,11 @@ class Subdomains::CommunityInvitesController < SubdomainsController
 
   # POST /community_invites/mass_create(.:format)
   def mass_create
+    @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
     @number_created = 0
-    unless (params[:emails].blank? and not params[:emails].any?)
-      params[:emails].each do |emails|
+    unless (params[:emails].blank? or not params[:emails].any?)
+      params[:emails].each do |email|
         invite = current_community.community_invites.new({sponsor: current_user.user_profile, email: email}, without_protection: true)
         if invite.save
           @number_created = @number_created + 1
@@ -42,7 +43,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         end
       end
     end
-    unless (params[:users].blank? and not params[:users].any?)
+    unless (params[:users].blank? or not params[:users].any?)
       params[:users].each do |user|
         invite = current_community.community_invites.new({sponsor: current_user.user_profile, applicant_id: user}, without_protection: true)
         if invite.save
@@ -57,6 +58,8 @@ class Subdomains::CommunityInvitesController < SubdomainsController
 
   # PUT /community_invites/mass_create(.:format)
   def auto_complete
+    @community_invite = current_community.community_invites.new
+    authorize! :create, @community_invite
     number_to_fetch = 10
     return Array.new if param[:display_name].blank? or param[:display_name].to_s.length <= 2
     result_1_argument = "#{param[:display_name]}%"
