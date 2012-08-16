@@ -4,8 +4,7 @@
 
 %h1 Recruit New Members
 %p
-  %label Add usernames &amp; email addresses of your friends.
-  %input{ id: 'recruit_email', type: 'text', placeholder: 'Email address' }
+  %input{ id: 'recruit_input', type: 'text', placeholder: 'Username or email address' }
   %dfn.hint Tap enter to after each username/email
 = simple_form_for @community_invite, html: {novalidate: true} do |f|
   %fieldset

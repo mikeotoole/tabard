@@ -1,6 +1,6 @@
 jQuery(document).ready ($) ->
 
-  $('#recruit_email')
+  $('#recruit_input')
 
     .keypress (e) ->
       key = e.keyCode ? e.which
@@ -15,7 +15,7 @@ jQuery(document).ready ($) ->
       $('<ol>').prependTo '#new_community_invite fieldset' unless $('#new_community_invite fieldset ol').length
       li = $('<li>').prependTo '#new_community_invite fieldset ol'
       rId = "recruit_#{(new Date()).getTime()}"
-      $("<input id='#{rId}' name='emails[]' type='checkbox' value='#{recruit}' checked='checked'>").appendTo(li).attr
+      $("<input id='#{rId}' name='recruits[]' type='checkbox' value='#{recruit}' checked='checked'>").appendTo(li).attr
       $("<label for='#{rId}'>").appendTo(li).text recruit
 
     .autocomplete
@@ -43,6 +43,6 @@ jQuery(document).ready ($) ->
   $('#new_community_invite').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length
     recruit = $(@).val()
-    recruits = $('#recruit_email').data 'recruits'
+    recruits = $('#recruit_input').data 'recruits'
     recruits.splice recruits.indexOf(recruit), 1
     $(@).closest('li').remove()
