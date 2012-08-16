@@ -23,13 +23,6 @@ describe Subdomains::CommunityInvitesController do
     end
   end
 
-  describe "GET 'create'" do
-    it "returns http success for someone with permissions" do
-      sign_in admin
-      get 'create'
-      response.should be_success
-    end
-  end
   it "fail for someone without permissions" do
     sign_in non_member
     get 'index'

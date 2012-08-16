@@ -28,7 +28,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         if invite.save
           @number_created = @number_created + 1
         else
-          @number_failed = @number_failed + 1
+          @number_failed = @number_failed + 1 unless invite.is_a_duplicate?
         end
       end
     end
@@ -38,7 +38,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         if invite.save
           @number_created = @number_created + 1
         else
-          @number_failed = @number_failed + 1
+          @number_failed = @number_failed + 1 unless invite.is_a_duplicate?
         end
       end
     end
@@ -60,7 +60,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
       result_2_argument = "%#{params[:term]}%"
       results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(number_to_fetch)
       @user_profiles = (results_1 + results_2).uniq[0,number_to_fetch]
-      render json: @user_profiles.map{|p| p = {label: p.display_name, value: p.id, avatar: p.avatar_url(:icon)}}
+      render json: @user_profiles.map{|p| p = {label: p.display_name, value: p.id, avatar: p.avatar.icon.url}}
     end
   end
 

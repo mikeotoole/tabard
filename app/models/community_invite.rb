@@ -21,7 +21,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id]}, unless: Proc.new{|ci| ci.applicant_id.blank? }
+  validates :applicant_id, uniqueness: {scope: [:sponsor_id, :community_id], message: "has aleady been sent an invite"}, unless: Proc.new{|ci| ci.applicant_id.blank? }
   validates :email, uniqueness: {scope: [:sponsor_id, :community_id], case_sensitive: true, message: "has aleady been sent an invite"},
             length: { within: 5..128 },
             format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i },
@@ -48,6 +48,17 @@ class CommunityInvite < ActiveRecord::Base
 ###
   before_save :try_to_find_user
   after_create :remove_action_item
+
+  # Checks to see if this is a duplicate
+  def is_a_duplicate?
+    unless self.errors[:email].blank?
+      return true if self.errors[:email].include?("has aleady been sent an invite")
+    end
+    unless self.errors[:applicant_id].blank?
+      return true if self.errors[:applicant_id].include?("has aleady been sent an invite")
+    end
+    return false
+  end
 
 ###
 # Protected Methods

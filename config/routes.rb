@@ -197,7 +197,7 @@ DaBvRails::Application.routes.draw do
       put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
       resources :invites, only: [:edit, :update]
 
-      resources :community_invites, only: [:index, :create]
+      resources :community_invites, only: [:index]
       post "/community_invites/mass_create" => "community_invites#mass_create"
       get "/community_invites/autocomplete" => "community_invites#autocomplete"
     end
