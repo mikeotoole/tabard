@@ -11,6 +11,7 @@ root = exports ? this
 
   # alert box
   $.alert = (options) ->
+    document.activeElement.blur()
     title = options['title'] or= ''
     body = options['body'] or= ''
     button = options['button'] or= 'Ok'
@@ -30,6 +31,11 @@ root = exports ? this
       $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
       $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
         $('#mask, .wmd-prompt-background, #modal').remove()
+    setTimeout ->
+      $(document).on 'keypress', ->
+        $('#modal button').trigger 'click'
+        $(document).off 'keypress'
+    , 300
         
   # confirm box
   $.confirm = (options) ->
