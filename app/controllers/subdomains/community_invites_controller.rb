@@ -16,18 +16,6 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     @community_invite = current_community.community_invites.new
   end
 
-  # POST /communities(.:format)
-  def create
-    @community_invite = current_community.community_invites.new(params[:community_invite])
-    authorize! :create, @community_invite
-    @community_invite.sponsor = current_user.user_profile
-    if @community_invite.save
-      add_new_flash_message 'Invite was successfully created.','success'
-      @community_invite = current_community.community_invites.new
-    end
-    render :index
-  end
-
   # POST /community_invites/mass_create(.:format)
   def mass_create
     @community_invite = current_community.community_invites.new
@@ -53,7 +41,6 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         end
       end
     end
-
   end
 
   # GET /community_invites/autocomplete(.:format)
@@ -61,15 +48,15 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
     number_to_fetch = 10
-    if param[:term].blank? or param[:term].to_s.length <= 2
-      #render some stuffs (nothing)
+    if params[:term].blank? or params[:term].to_s.length < 2
+      render json: { results: [] }
     else
-      result_1_argument = "#{param[:term]}%"
+      result_1_argument = "#{params[:term]}%"
       results_1 = UserProfile.where{display_name =~ result_1_argument}.limit(number_to_fetch)
-      result_2_argument = "%#{param[:term]}%"
+      result_2_argument = "%#{params[:term]}%"
       results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(number_to_fetch)
       @user_profiles = (results_1 + results_2).uniq[0,number_to_fetch]
-      #render more stuffs
+      render json: @user_profiles.map{|p| p = {label: p.display_name, value: p.id, avatar: p.avatar_url(:icon)}}
     end
   end
 

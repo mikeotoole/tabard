@@ -109,6 +109,11 @@ button,
     background: #FFFF69
     +box_shadow(0 0 15px rgba(#FDCC53,.5))
     color: #000
+  
+  &.disabled
+    +bg_gradient(#fdf084,#FDCC53)
+    color: #fffdec
+    text-shadow: 0 -1px #f1be3e
 
 #body
   background: #0A0C0B
@@ -349,6 +354,7 @@ button,
               
         &:after
           +box_shadow(0 0 9px #000)
+          color: #000
 
   input:-moz-placeholder
     color: #527359

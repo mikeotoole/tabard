@@ -101,6 +101,11 @@ button,
     +bg_gradient(#e3efc6,#c7d3a1)
     +box_shadow(0 0 15px #235A69)
     color: #183C47
+  
+  &.disabled
+    +bg_gradient(#c7d3a1,#9ea985)
+    color: #d9e1bf
+    text-shadow: 0 -1px #9ea985
 
 #body
   background: #06161f
@@ -286,6 +291,7 @@ button,
       &:focus + label,
       &:hover + label,
       + label:hover
+        color: #fff
               
         &:after
           +box_shadow(0 0 10px #000)
