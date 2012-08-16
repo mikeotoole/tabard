@@ -32,22 +32,21 @@ class Subdomains::CommunityInvitesController < SubdomainsController
   def mass_create
     authorize! :create, @community_invite
     @number_created = 0
-    unless params[:emails].blank? and not params[:emails].any?
+    unless (params[:emails].blank? and not params[:emails].any?)
       params[:emails].each do |emails|
         invite = current_community.community_invites.new({sponsor: current_user.user_profile, email: email}, without_protection: true)
         if invite.save
-          @number_created++
+          @number_created = @number_created + 1
         else
           logger.debug "!!! #{invite.errors.to_yaml}"
         end
       end
-      end
     end
-    unless params[:users].blank? and not params[:users].any?
+    unless (params[:users].blank? and not params[:users].any?)
       params[:users].each do |user|
         invite = current_community.community_invites.new({sponsor: current_user.user_profile, applicant_id: user}, without_protection: true)
         if invite.save
-          @number_created++
+          @number_created = @number_created + 1
         else
           logger.debug "!!! #{invite.errors.to_yaml}"
         end
@@ -61,9 +60,9 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     number_to_fetch = 10
     return Array.new if param[:display_name].blank? or param[:display_name].to_s.length <= 2
     result_1_argument = "#{param[:display_name]}%"
-    results_1 = UserProfile.where{display_name =~ result_1_argument).limit(10)
+    results_1 = UserProfile.where{display_name =~ result_1_argument}.limit(10)
     result_2_argument = "%#{param[:display_name]}"
-    results_2 = UserProfile.where{display_name =~ result_2_argument).limit(results_1.size)
+    results_2 = UserProfile.where{display_name =~ result_2_argument}.limit(results_1.size)
     return results_1 + results_2
   end
 

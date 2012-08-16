@@ -5,7 +5,7 @@
 %h1 Recruit New Members
 %p
   %input{ id: 'recruit_input', type: 'text', placeholder: 'Username or email address' }
-= simple_form_for @community_invite, html: {novalidate: true} do |f|
+= form_tag community_invites_mass_create_url, method: :post, html: {novalidate: true} do |f|
   %fieldset
     %ol
   %p.submit
