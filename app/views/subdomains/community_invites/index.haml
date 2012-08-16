@@ -3,8 +3,11 @@
   = javascript_include_tag 'community_recruit'
 
 %h1 Recruit New Members
-%p= "Enter the email addresses of your friends and we'll send them an invitation to join \"#{current_community.name}\"."
-= simple_form_for @community_invite, html: {novalidate: true} do |f|
+%p
+  %label Add usernames &amp; email addresses of your friends.
   %input{ id: 'recruit_email', type: 'text', placeholder: 'Email address' }
+  %dfn.hint Tap enter to after each username/email
+= simple_form_for @community_invite, html: {novalidate: true} do |f|
+  %fieldset
   %p.submit
     %button{ type: 'submit' } Recruit

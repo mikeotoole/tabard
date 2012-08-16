@@ -1,5 +1,5 @@
 class Subdomains::CommunityInvitesController < SubdomainsController
-respond_to :html
+  respond_to :html
   ###
   # Before Filters
   ###
