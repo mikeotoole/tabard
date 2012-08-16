@@ -28,7 +28,11 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         if invite.save
           @number_created = @number_created + 1
         else
-          @number_failed = @number_failed + 1 unless invite.is_a_duplicate?
+          if invite.is_a_duplicate?
+            @number_created = @number_created + 1
+          else
+            @number_failed = @number_failed + 1
+          end
         end
       end
     end
@@ -38,11 +42,15 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         if invite.save
           @number_created = @number_created + 1
         else
-          @number_failed = @number_failed + 1 unless invite.is_a_duplicate?
+          if invite.is_a_duplicate?
+            @number_created = @number_created + 1
+          else
+            @number_failed = @number_failed + 1
+          end
         end
       end
     end
-    flash[:sucess] = "#{@number_created} recruit invitation#{@number_failed > 1 ? 's' : ''} sent!" if @number_created > 0
+    flash[:sucess] = "#{@number_created} recruit invitation#{@number_created > 1 ? 's' : ''} sent!" if @number_created > 0
     flash[:error] = "#{@number_failed} recruit invitation#{@number_failed > 1 ? 's' : ''} failed to be sent." if @number_failed > 0
     redirect_to community_invites_url
   end
