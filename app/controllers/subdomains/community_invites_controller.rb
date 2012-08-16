@@ -21,13 +21,14 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     @community_invite = current_community.community_invites.new
     authorize! :create, @community_invite
     @number_created = 0
+    @number_failed = 0
     unless (params[:emails].blank? or not params[:emails].any?)
       params[:emails].each do |email|
         invite = current_community.community_invites.new({sponsor: current_user.user_profile, email: email}, without_protection: true)
         if invite.save
           @number_created = @number_created + 1
         else
-          logger.debug "!!! #{invite.errors.to_yaml}"
+          @number_failed = @number_failed + 1
         end
       end
     end
@@ -37,10 +38,13 @@ class Subdomains::CommunityInvitesController < SubdomainsController
         if invite.save
           @number_created = @number_created + 1
         else
-          logger.debug "!!! #{invite.errors.to_yaml}"
+          @number_failed = @number_failed + 1
         end
       end
     end
+    flash[:sucess] = "#{@number_created} recruit invitation#{@number_failed > 1 ? 's' : ''} sent!" if @number_created > 0
+    flash[:error] = "#{@number_failed} recruit invitation#{@number_failed > 1 ? 's' : ''} failed to be sent." if @number_failed > 0
+    redirect_to community_invites_url
   end
 
   # GET /community_invites/autocomplete(.:format)
