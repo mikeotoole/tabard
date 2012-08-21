@@ -1,5 +1,4 @@
 DaBvRails::Application.routes.draw do
-  get "search/index"
 
   resources :minecraft_characters
 
@@ -236,6 +235,7 @@ DaBvRails::Application.routes.draw do
   get "/terms-of-service" => "top_level#terms_of_service", as: 'top_level_terms_of_service'
   get "/trademark-disclaimer" => "top_level#trademark_disclaimer", as: 'top_level_trademark_disclaimer'
   match "/ignore_browser" => "top_level#ignore_browser", as: 'ignore_browser'
+  get "search" => "search#index", as: 'search'
 
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'

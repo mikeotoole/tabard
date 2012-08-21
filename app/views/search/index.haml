@@ -1,0 +1,9 @@
+%h1 Search#index
+#searchbox
+  = form_tag search_url(subdomain: false), method: 'get' do
+    %p
+      = text_field_tag :search, params[:search]
+      %button{ type: 'submit' } Search
+  %h2 Search Results
+  %p= @results.to_yaml
+%p Find me in app/views/search/index.haml
