@@ -1,4 +1,6 @@
 DaBvRails::Application.routes.draw do
+  get "search/index"
+
   resources :minecraft_characters
 
   resources :minecrafts
