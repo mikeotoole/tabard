@@ -278,6 +278,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Disables the user
   def disable_user
     self.remove_from_all_communities
     self.remove_all_avatars

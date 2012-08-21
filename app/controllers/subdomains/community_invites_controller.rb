@@ -72,6 +72,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
     end
   end
 
+  # Loads the current invites
   def load_community_invites
     @community_invites = current_community.community_invites
   end

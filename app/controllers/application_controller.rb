@@ -118,6 +118,7 @@ protected
   end
   helper_method :hide_announcements?
 
+  # This gets a timezone collection hash
   def timezone_collection_hash
     [
       [[ActiveSupport::TimeZone[-11].to_s, -11]],

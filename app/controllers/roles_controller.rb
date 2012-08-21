@@ -7,6 +7,8 @@
 ###
 class RolesController < ApplicationController
   before_filter :block_unauthorized_user!
+
+  # This updates roles
   def update
     @user_profile = UserProfile.find_by_id(params[:user_profile_id])
     @role = Role.find_by_id(params[:id])
