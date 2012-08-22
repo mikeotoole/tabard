@@ -106,6 +106,7 @@
         color: #fff
     
     .dismiss,
+    .view,
     .read
       background: #fff
       border: 1px solid rgba(#000,.5)
@@ -113,13 +114,16 @@
       +box_shadow(0 0 5px rgba(#000,.2))
       color: #000
       font-size: 12px
-      line-height: 12px
+      height: 20px
+      line-height: 20px
       margin: -11px 0 0
-      padding: 4px 5px
+      padding: 0
       position: absolute
       +opacity(.5)
+      text-align: center
       top: 50%
       +transition(opacity .2s linear, box-shadow .2s linear, border .2s linear)
+      width: 20px
       
       &:before
         bottom: -10px
@@ -129,11 +133,12 @@
         right: -10px
         top: -10px
     
-    .dismiss
+    .dismiss,
+    .view
       right: 10px
     
     .read
-      right: 35px
+      right: 40px
     
     .link
       
@@ -158,6 +163,7 @@
         +opacity(1)
       
       .dismiss,
+      .view,
       .read
         +opacity(.7)
       

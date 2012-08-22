@@ -194,29 +194,37 @@ jQuery(document).ready ($) ->
 
   # Flash message events
   $('body').on 'init', '#flash li', ->
-    $(@).append('<a class="dismiss">✕</a>')
+    if $(@).hasClass 'announcement'
+      $('<a class="view">▸</a>')
+        .appendTo(@)
+        .click ->
+          adjustHeaderByFlash(300,-1)
+          $(@)
+            .closest('li')
+            .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+              $(@).remove()
+    else
+      $('<a class="dismiss">✕</a>')
+        .appendTo(@)
+        .click ->
+          adjustHeaderByFlash(300,-1)
+          $(@)
+            .closest('li')
+            .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
+              $(@).remove()
     $(@)
       .css({ height: 0, lineHeight: 0 })
       .animate({ height: 40 + 'px', lineHeight: 40 + 'px' }, 600)
-    
-    $(@).find('.dismiss')
-      .click ->
-        adjustHeaderByFlash(300,-1)
-        $(@)
-          .closest('li')
-          .animate { height: 0, lineHeight: 0 + 'px' }, 300, ->
-            $(@).remove()
-            
     $(@).find('.read')
-      .bind 'ajax:before', ->
+      .on 'ajax:before', ->
         $(@).closest('li').addClass('busy')
-      .bind 'ajax:error', (xhr, status, error) ->
+      .on 'ajax:error', (xhr, status, error) ->
         row = $(@).closest('li')
         $.alert
           body: error
           action: ->
             row.removeClass('busy')
-      .bind 'ajax:success', (event, data, status, xhr) ->
+      .on 'ajax:success', (event, data, status, xhr) ->
         $('#bar .notice a').each ->
           num = $(@).attr('meta') - 1
           if num > 0
