@@ -1,7 +1,7 @@
-- title "Users"
+- title "Players"
 
 #body
-  %h1 Guild.io&trade; Users
+  %h1 Guild.io&trade; Players
   - if @user_profiles.any?
     = render 'shared/searchbox', resource: @user_profiles, action: user_profiles_url
     = paginate @user_profiles
