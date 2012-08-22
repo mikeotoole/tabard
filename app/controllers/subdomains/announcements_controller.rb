@@ -12,6 +12,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
+  before_filter :hide_all_annoucements
   before_filter :authorize_community_and_game, only: [:community, :game]
   authorize_resource except: [:community, :game]
   skip_before_filter :limit_subdomain_access
@@ -130,6 +131,15 @@ class Subdomains::AnnouncementsController < SubdomainsController
       end
     end
     redirect_to announcements_url
+  end
+
+  ###
+  # _before_filter
+  #
+  # This before filter tells the view to hide the display of announcements in the flash messages, which happens by default.
+  ###
+  def hide_all_annoucements
+    @hide_announcements = true
   end
 
   #Before Filter
