@@ -6,8 +6,8 @@
 # This controller is handling support tickets
 ###
 class SupportCommentsController < ApplicationController
-  before_filter :block_unauthorized_user!
   respond_to :html, :js
+  before_filter :block_unauthorized_user!
   before_filter :load_models
   load_and_authorize_resource :support_ticket
 

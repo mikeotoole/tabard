@@ -6,8 +6,8 @@
 # This controller is handling support tickets
 ###
 class SupportTicketsController < ApplicationController
-  before_filter :block_unauthorized_user!, except: [:index]
   respond_to :html, :js
+  before_filter :block_unauthorized_user!, except: [:index]
   load_and_authorize_resource through: :current_user, except: [:index]
 
 ###
