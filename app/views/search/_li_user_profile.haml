@@ -1,0 +1,5 @@
+%li.user_profile
+  %h3= link_to user_profile.display_name, user_profile_url(user_profile)
+  = link_to image_tag(user_profile.avatar_url :small), user_profile_url(user_profile)
+  - unless user_profile.description.blank?
+    %q= user_profile.description

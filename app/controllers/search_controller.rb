@@ -16,16 +16,16 @@ class SearchController < ApplicationController
           logger.debug r.class
           case r.class.to_s
             when 'Community' then {
-                label: r.name,
-                value: r.name,
-                url: root_url(subdomain: r.subdomain)
-              }
+              label: r.name,
+              value: r.name,
+              url: root_url(subdomain: r.subdomain)
+            }
             when 'UserProfile' then {
-                label: r.display_name,
-                value: r.display_name,
-                url: user_profile_url(r),
-                avatar: view_context.image_path(r.avatar_url(:icon))
-              }
+              label: r.display_name,
+              value: r.display_name,
+              url: user_profile_url(r),
+              avatar: view_context.image_path(r.avatar_url(:icon))
+            }
           end
         }
       }

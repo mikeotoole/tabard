@@ -1,9 +1,9 @@
 jQuery(document).ready ($) ->
 
   cache = []
-  
+
   $('#search').autocomplete
-    autoFocus: true
+    autoFocus: false
     create: (e, ui) ->
       $('ul.ui-autocomplete li:has(img)').addClass 'with-avatar'
     delay: 300
@@ -23,6 +23,7 @@ jQuery(document).ready ($) ->
       lastXhr = $.getJSON $('#search').data('url'), request, (data, status, xhr) ->
         cache[term] = data
         response data if xhr is lastXhr
+
   $('#search').data('autocomplete')._renderItem = (ul, item) ->
     li = $('<li>').data('item.autocomplete', item).appendTo ul
     html = '<a>'

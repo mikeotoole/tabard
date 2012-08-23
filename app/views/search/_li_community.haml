@@ -1,0 +1,4 @@
+%li.community
+  %h3= link_to community.name, root_url(subdomain: community.subdomain)
+  - unless community.slogan.blank?
+    %q= community.slogan

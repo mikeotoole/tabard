@@ -12,5 +12,14 @@
         %button{ type: 'submit' } Search
 
   %h2 Search Results
-  %p
-    %pre= @results.to_yaml
+  - if @results.any?
+    %ol
+      - @results.each do |result|
+        - case result.class.to_s
+        - when 'Community'
+          = render 'li_community', community: result
+        - when 'UserProfile'
+          = render 'li_user_profile', user_profile: result
+    = paginate @results
+  - else
+    %p We did not find any players or communities that matched your request.
