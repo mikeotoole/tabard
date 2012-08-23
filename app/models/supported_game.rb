@@ -71,6 +71,19 @@ class SupportedGame < ActiveRecord::Base
 # Public Methods
 ###
 
+  def self.attempt_to_match_type(term)
+    swtor_array = ["swtor", "star", "star wars"]
+    return "Swtor" if swtor_array.include?(term.downcase)
+
+    minecraft_array = ["minecraft"]
+    return "Minecraft" if minecraft_array.include?(term.downcase)
+
+    wow_array = ["wow", "world", "world of warcraft"]
+    return "Wow" if wow_array.include?(term.downcase)
+
+    return term
+  end
+
 ###
 # Instance Methods
 ###
