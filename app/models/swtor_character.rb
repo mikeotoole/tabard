@@ -7,6 +7,9 @@
 ###
 class SwtorCharacter < BaseCharacter
   validates_lengths_from_database except: [:name, :avatar]
+
+  has_one :character_proxy, as: :character
+
 ###
 # Constants
 ###
@@ -247,6 +250,20 @@ class SwtorCharacter < BaseCharacter
     "SWTOR Character"
   end
 
+  ###
+  # This method returns a search scoped or simply scoped search helper
+  # [Args]
+  #   * +search+ -> The string search for.
+  # [Returns] An array of characters
+  ###
+  def self.search(search)
+    if search
+      search = "%"+search+'%'
+      where{(name =~ search) | (about =~ search)}
+    else
+      scoped
+    end
+  end
 ###
 # Validator Methods
 ###

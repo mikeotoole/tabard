@@ -8,7 +8,8 @@ class SearchController < ApplicationController
     else
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
-      @results = @communities + @users
+      @character_proxies = CharacterProxy.search params[:term]
+      @results = @communities + @users + @character_proxies
     end
 
     respond_to do |format|
@@ -28,6 +29,12 @@ class SearchController < ApplicationController
               label: r.display_name,
               value: r.display_name,
               url: user_profile_url(r),
+              avatar: view_context.image_path(r.avatar_url(:icon))
+            }
+          when 'CharacterProxy' then {
+              label: r.name,
+              value: r.name,
+              url: user_profile_url(r.user_profile, anchor: 'characters'),
               avatar: view_context.image_path(r.avatar_url(:icon))
             }
           end

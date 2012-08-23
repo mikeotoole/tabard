@@ -64,6 +64,16 @@ class CharacterProxy < ActiveRecord::Base
     return supported_game.game_type == self.game.class.to_s
   end
 
+  ###
+  # This method returns a search scoped or simply scoped search helper
+  # [Args]
+  #   * +search+ -> The string search for.
+  # [Returns] A scoped query
+  ###
+  def self.search(search)
+    MinecraftCharacter.search(search).map{|c| c.character_proxy } + SwtorCharacter.search(search).map{|c| c.character_proxy } + WowCharacter.search(search).map{|c| c.character_proxy }
+  end
+
 ###
 # Instance Methods
 ###
