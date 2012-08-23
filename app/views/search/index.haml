@@ -23,6 +23,8 @@
             = render 'li_community', community: result
           - when 'UserProfile'
             = render 'li_user_profile', user_profile: result
+          - when 'CharacterProxy'
+            = render 'li_character_proxy', character_proxy: result
       = paginate @results
     - else
       %p We did not find any players or communities that matched your request.
