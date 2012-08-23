@@ -238,10 +238,12 @@ protected
   ###
   def self.search(search)
     if search
+      game = "%"+search.capitalize+"%"
       search = "%"+search+'%'
-      where{(name =~ search) | (slogan =~ search) | (pitch =~ search)}
+      correct_supported_games = SupportedGame.where{(name =~ search) | (game_type =~ game)}
+      return where{(name =~ search) | (slogan =~ search) | (pitch =~ search) | (id.in(correct_supported_games.select{community_id}))}
     else
-      scoped
+      return scoped
     end
   end
 
