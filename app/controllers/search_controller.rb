@@ -3,13 +3,17 @@ class SearchController < ApplicationController
   skip_before_filter :block_unauthorized_user!, only: [:index]
 
   def index
-    @communities = Community.search params[:term]
-    @users = UserProfile.active.search params[:term]
-    @results = @communities + @users
+    if params[:term].blank?
+      @results = []
+    else
+      @communities = Community.search params[:term]
+      @users = UserProfile.active.search params[:term]
+      @results = @communities + @users
+    end
 
     respond_to do |format|
       format.html {
-        Kaminari.paginate_array(@results).page params[:page]
+        @results = Kaminari.paginate_array(@results).page(params[:page]).per 10 if @results.any?
       }
       format.js {
         render json: @results.map{|r|

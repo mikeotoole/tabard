@@ -1,5 +1,6 @@
 - title 'Search'
 - content_for :header do
+  = stylesheet_link_tag 'top_level/search'
   = javascript_include_tag 'search'
 
 #body
@@ -11,15 +12,17 @@
         = text_field_tag :term, params[:term], id: 'search', data: {url: search_url}
         %button{ type: 'submit' } Search
 
-  %h2 Search Results
-  - if @results.any?
-    %ol
-      - @results.each do |result|
-        - case result.class.to_s
-        - when 'Community'
-          = render 'li_community', community: result
-        - when 'UserProfile'
-          = render 'li_user_profile', user_profile: result
-    = paginate @results
-  - else
-    %p We did not find any players or communities that matched your request.
+  - unless params[:term].blank?
+    %h2 Search Results
+    %hr
+    - if @results.any?
+      %ol.results
+        - @results.each do |result|
+          - case result.class.to_s
+          - when 'Community'
+            = render 'li_community', community: result
+          - when 'UserProfile'
+            = render 'li_user_profile', user_profile: result
+      = paginate @results
+    - else
+      %p We did not find any players or communities that matched your request.

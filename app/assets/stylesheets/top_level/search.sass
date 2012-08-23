@@ -1,0 +1,49 @@
+@import mixins
+
+#body
+
+  ol.results
+    li
+      clear: both
+      margin: 0
+      padding: 0 0 30px
+      &:before
+        display: none !important
+      &:after
+        content: '.'
+        clear: both
+        display: block
+        height: 0
+        visibility: hidden
+      h3
+        font-size: 16px
+        margin-left: -2px
+        padding: 0 0 10px
+      &.user_profile
+        >a
+          +box_shadow(0 0 10px rgba(#000,.2))
+          +border_radius(0)
+          display: block
+          float: left
+          height: 42px
+          margin: 0 5px 0 0
+          padding: 0
+          width: 42px
+          img
+            border: 1px solid #fff
+            display: block
+            float: left
+            height: 40px
+            width: 40px
+        .communities
+          display: block
+          a
+            background: #e3e3e3
+            color: #666
+            font-size: 12px
+            text-decoration: none
+            &:hover
+              background: #BE4124
+              color: #fff
+        q
+          font-size: 14px

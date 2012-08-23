@@ -10,25 +10,6 @@ describe UserProfilesController do
     @request.host = "lvh.me"
   end
 
-  describe "GET 'index'" do
-    it "should be successful when authenticated as a owner" do
-      sign_in owner
-      get 'index'
-      response.should be_success
-    end
-
-    it "should be successful when authenticated as a non_owner" do
-      sign_in non_owner
-      get 'index'
-      response.should be_success
-    end
-
-    it "should be successful when not authenticated as a user" do
-      get 'index'
-      response.should be_success
-    end
-  end
-
   describe "GET 'account'" do
     it "should show the current user when authenticated as a user" do
       sign_in owner

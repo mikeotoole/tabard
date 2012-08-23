@@ -18,12 +18,6 @@ class UserProfilesController < ApplicationController
   before_filter :load_activities, only: [:show, :activities]
   before_filter :authorize_custom_actions, only: [:activites, :announcements, :characters, :invites]
 
-  # GET /user_profiles/
-  def index
-    authorize! :index, UserProfile
-    @user_profiles = UserProfile.active.search(params[:search]).order(sort_column + " IS NULL, LOWER(#{sort_column}) #{sort_direction}").page params[:page]
-  end
-
   # GET /user_profiles/1
   def show
     if @user_profile.is_disabled?
