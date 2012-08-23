@@ -24,8 +24,6 @@ jQuery(document).ready ($) ->
 
     .autocomplete
       autoFocus: true
-      create: (e, ui) ->
-        $('ul.ui-autocomplete').addClass 'with-avatars'
       delay: 300
       focus: (e, ui) ->
         $(@).val ui.item.label
@@ -57,7 +55,16 @@ jQuery(document).ready ($) ->
         lastXhr = $.getJSON $('#recruit_input').data('url'), request, (data, status, xhr) ->
           cache[term] = data
           response data if xhr is lastXhr
-          results = $.parseJSON xhr.responseText
+
+  $('#recruit_input').data('autocomplete')._renderItem = (ul, item) ->
+    li = $('<li>').data('item.autocomplete', item).appendTo ul
+    html = '<a>'
+    if item.avatar?
+      li.addClass 'with-avatar'
+      html += "<img src='#{item.avatar}' alt=''>"
+    html += "#{item.label}</a>"
+    li.html html
+    return li
 
   $('#recruits').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length
