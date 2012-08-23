@@ -38,6 +38,9 @@ ruby '1.9.3'
 # Pagination
   gem 'kaminari'#                                                                           MIT - https://github.com/amatsuda/kaminari
 
+# Stripe
+  gem 'stripe'
+
 # Memory Usage
   gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink
 

@@ -7,8 +7,10 @@
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = javascript_include_tag "application"
     = javascript_include_tag "top_level"
+    = javascript_include_tag "https://js.stripe.com/v1/", "application"
     = csrf_meta_tags unless @page_caching
     = favicon_link_tag asset_path 'favicon.png'
+    = tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
     = yield :header
     = render 'layouts/ie'
     = render 'layouts/analytics'
