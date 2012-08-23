@@ -72,14 +72,11 @@ class SupportedGame < ActiveRecord::Base
 ###
 
   def self.attempt_to_match_type(term)
-    swtor_array = ["swtor", "star", "star wars"]
-    return "Swtor" if swtor_array.include?(term.downcase)
-
-    minecraft_array = ["minecraft"]
-    return "Minecraft" if minecraft_array.include?(term.downcase)
-
-    wow_array = ["wow", "world", "world of warcraft"]
-    return "Wow" if wow_array.include?(term.downcase)
+    regex = Regexp.new(term.downcase.gsub(/\s+/, "|"))
+    logger.debug "Some regex!!!! #{regex}"
+    return "Swtor" if regex =~ "swtor" or regex =~ "star wars the old republic"
+    return "Minecraft" if regex =~ "minecraft"
+    return "Wow" if regex =~ "wow" or regex =~ "world of warcraft"
 
     return term
   end
