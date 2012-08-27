@@ -1,7 +1,5 @@
 %li.character_proxy
-  %h3
-    = link_to character.name, user_profile_url(user_profile)
-    = "(#{user_profile.display_name})"
+  %h3= character.name
   = link_to image_tag(character.avatar_url :tiny), user_profile_url(user_profile), anchor: 'character'
   %span.communities
     - user_profile.communities.each do |community|

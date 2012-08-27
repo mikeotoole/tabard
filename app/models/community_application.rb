@@ -99,7 +99,7 @@ class CommunityApplication < ActiveRecord::Base
       # TODO Mike, Link needs to be changed to guild.io when we launch.
       default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.brutalvenom.com" : "#{community.subdomain}.lvh.me:3000"
       message = Message.create_system(subject: "Application Accepted",
-                  body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted. It will now appear in your communities list.",
+                  body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted.",
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
