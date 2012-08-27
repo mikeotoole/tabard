@@ -10,15 +10,15 @@ class MinecraftsController < ApplicationController
 ###
 # Before Filters
 ###
-  skip_before_filter :block_unauthorized_user!, only: [:index]
+  #skip_before_filter :block_unauthorized_user!, only: [:index]
 
 ###
 # REST Actions
 ###
   # GET /minecrafts
-  def index
-    @communities = Community.search(params[:search]).includes(:supported_games).where{supported_games.game_type == "Minecraft"}.order("communities."+sort_column + " " + sort_direction).page params[:page]
-  end
+  #def index
+  #  @communities = Community.search(params[:search]).includes(:supported_games).where{supported_games.game_type == "Minecraft"}.order("communities."+sort_column + " " + sort_direction).page params[:page]
+  #end
 
 ###
 # Helper methods

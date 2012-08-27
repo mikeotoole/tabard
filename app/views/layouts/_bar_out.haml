@@ -1,19 +1,8 @@
 = link_to 'Guild.io™', root_url(subdomain: false), class: 'logo'
 %ul.menu
-  %li
-    = link_to 'Explore', top_level_features_url(subdomain: false)
-    %ul
-      -#%li= link_to 'Introduction', top_level_intro_url(subdomain: false)
-      %li= link_to 'Features', top_level_features_url(subdomain: false)
-      %li= link_to 'Pricing', top_level_pricing_url(subdomain: false)
-  %li
-    = link_to 'Communities', communities_url
-    %ul
-      %li= link_to "World of Warcraft", wows_url(subdomain: false)
-      %li= link_to "Star Wars: The Old Republic", swtors_url(subdomain: false)
-      %li= link_to "Minecraft", minecrafts_url(subdomain: false)
-  %li
-    = link_to 'Search', search_url
+  %li= link_to 'Features', top_level_features_url(subdomain: false)
+  %li= link_to 'Pricing', top_level_pricing_url(subdomain: false)
+  %li= link_to 'Search', search_url
 
 %p.signup
   = link_to 'Login', new_user_session_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))

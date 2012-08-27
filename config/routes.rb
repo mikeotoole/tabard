@@ -54,9 +54,9 @@ DaBvRails::Application.routes.draw do
   end
 
   # Games
-  get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
-  get "/world-of-warcraft" => 'wows#index', as: 'wows'
-  get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
+  #get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
+  #get "/world-of-warcraft" => 'wows#index', as: 'wows'
+  #get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
 
   # Characters
   resources :wow_characters, except: [:index, :create]

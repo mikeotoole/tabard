@@ -2,3 +2,7 @@
   %li.minecraft.character
     %h3= link_to_if (can? :update, character), character.name, edit_minecraft_character_path(character)
     .avatar= image_tag character.avatar_url :small
+    - if defined? show_game and !!show_game
+      %dl.attributes
+        %dt Game
+        %dd= character.game_name
