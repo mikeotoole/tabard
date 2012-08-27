@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811200813) do
+ActiveRecord::Schema.define(:version => 20120827204016) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20120811200813) do
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
     t.string   "pitch"
+    t.integer  "community_plan_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -231,6 +232,15 @@ ActiveRecord::Schema.define(:version => 20120811200813) do
   add_index "community_invites", ["applicant_id"], :name => "index_community_invites_on_applicant_id"
   add_index "community_invites", ["community_id"], :name => "index_community_invites_on_community_id"
   add_index "community_invites", ["sponsor_id"], :name => "index_community_invites_on_sponsor_id"
+
+  create_table "community_plans", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "price_per_month_in_cents"
+    t.boolean  "is_available",             :default => true
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
 
   create_table "community_profiles", :force => true do |t|
     t.integer  "community_id"

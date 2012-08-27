@@ -37,6 +37,7 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
+  belongs_to :community_plan
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
   has_many :custom_forms, dependent: :delete_all, order: 'LOWER(name)', inverse_of: :community
@@ -93,6 +94,7 @@ class Community < ActiveRecord::Base
   validates :slogan, length: { maximum: MAX_SLOGAN_LENGTH }
   validates :pitch, length: { maximum: MAX_PITCH_LENGTH }
   validates :admin_profile, presence: true
+  validates :community_plan, presence: true
   validates :background_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.background_color.blank? }
   validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
@@ -461,5 +463,6 @@ end
 #  pending_removal                 :boolean          default(FALSE)
 #  action_items                    :text
 #  pitch                           :string(255)
+#  community_plan_id               :integer
 #
 

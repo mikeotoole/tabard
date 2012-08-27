@@ -25,6 +25,7 @@
 #  pending_removal                 :boolean          default(FALSE)
 #  action_items                    :text
 #  pitch                           :string(255)
+#  community_plan_id               :integer
 #
 
 require 'spec_helper'
@@ -34,6 +35,12 @@ describe Community do
 
   it "should create a new instance given valid attributes" do
     community.should be_valid
+  end
+
+  describe "Community Plan" do
+    it "should not be blank" do
+      build(:community, community_plan: nil).should_not be_valid
+    end
   end
 
   describe "after creation" do
