@@ -2,10 +2,10 @@
 
 %ul.menu
   %li
-    %span Find
-    %ul
-      %li= link_to 'Communities', communities_url(subdomain: false)
-      %li= link_to 'Users', user_profiles_url(subdomain: false)
+    = link_to 'Search', search_url
+    -#%ul
+    -#  %li= link_to 'Communities', communities_url(subdomain: false)
+    -#  %li= link_to 'Players', user_profiles_url(subdomain: false)
 
 .communities
   %span= (current_community and current_user.communities.include? current_community) ? shorten_words(current_community.name) : 'My Communities'

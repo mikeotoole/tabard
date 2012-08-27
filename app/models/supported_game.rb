@@ -71,6 +71,15 @@ class SupportedGame < ActiveRecord::Base
 # Public Methods
 ###
 
+  def self.attempt_to_match_type(term)
+    regex = Regexp.new(term.downcase.gsub(/\s+/, "|"))
+    return "Swtor" if regex =~ "swtor" or regex =~ "sw:tor" or regex =~ "star wars the old republic" or regex =~ "star wars: the old republic"
+    return "Minecraft" if regex =~ "minecraft"
+    return "Wow" if regex =~ "wow" or regex =~ "world of warcraft"
+
+    return term
+  end
+
 ###
 # Instance Methods
 ###

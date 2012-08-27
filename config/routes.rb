@@ -1,4 +1,5 @@
 DaBvRails::Application.routes.draw do
+
   resources :minecraft_characters
 
   resources :minecrafts
@@ -34,7 +35,7 @@ DaBvRails::Application.routes.draw do
   post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, only: [:show, :edit, :update, :index] do
+  resources :user_profiles, only: [:show, :edit, :update] do
     member do
       get :activities
       get :announcements
@@ -234,6 +235,8 @@ DaBvRails::Application.routes.draw do
   get "/terms-of-service" => "top_level#terms_of_service", as: 'top_level_terms_of_service'
   get "/trademark-disclaimer" => "top_level#trademark_disclaimer", as: 'top_level_trademark_disclaimer'
   match "/ignore_browser" => "top_level#ignore_browser", as: 'ignore_browser'
+  get "/search" => "search#index", as: 'search'
+  get "/search/autocomplete" => "search#autocomplete", as: 'search_autocomplete'
 
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'

@@ -36,7 +36,7 @@
     %dd= render 'subdomains/roles/permissions/page_spaces', f: f, role: role
     - unless role.is_system_generated and current_community.member_profiles.any?
       %dt
-        %h2 Users
+        %h2 Members
         %dd#usercheckboxes
           %ol
             - current_community.ordered_community_profiles.each do |profile|

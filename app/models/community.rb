@@ -242,10 +242,12 @@ protected
   ###
   def self.search(search)
     if search
+      corrected_game_type = SupportedGame.attempt_to_match_type(search)
       search = "%"+search+'%'
-      where{(name =~ search) | (slogan =~ search) | (pitch =~ search)}
+      correct_supported_games = SupportedGame.where{(name =~ search) | (game_type =~ corrected_game_type)}
+      return where{(name =~ search) | (slogan =~ search) | (pitch =~ search) | (id.in(correct_supported_games.select{community_id}))}
     else
-      scoped
+      return scoped
     end
   end
 

@@ -1,7 +1,7 @@
 = simple_form_for user_profile, html: {multipart: true} do |f|
   %fieldset
     %ol
-      = f.input :display_name, hint: "What other users see. #{UserProfile::MAX_NAME_LENGTH} characters max. Required.", input_html: { maxlength: UserProfile::MAX_NAME_LENGTH }
+      = f.input :display_name, hint: "What others see. #{UserProfile::MAX_NAME_LENGTH} characters max. Required.", input_html: { maxlength: UserProfile::MAX_NAME_LENGTH }
       = f.input :title, hint: "Displayed below your name. #{UserProfile::MAX_TITLE_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_TITLE_LENGTH }
       = f.input :first_name, input_html: { maxlength: UserProfile::MAX_FIRST_NAME_LENGTH }
       = f.input :last_name, input_html: { maxlength: UserProfile::MAX_LAST_NAME_LENGTH }

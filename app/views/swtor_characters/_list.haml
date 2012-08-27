@@ -1,13 +1,11 @@
-- if characters.any?
-  %ul.characters
-    - characters.each do |character|
-      %li
-        .avatar= image_tag character.avatar_url :small
-        %h3= link_to_if (can? :update, character), shorten_words(character.name,11), edit_swtor_character_path(character)
-        %dl.attributes
-          %dt Level
-          %dd= character.level
-          %dt Species
-          %dd= character.species
-          %dt Class
-          %dd= character.advanced_class
+- characters.each do |character|
+  %li.swtor.character
+    %h3= link_to_if (can? :update, character), shorten_words(character.name,11), edit_swtor_character_path(character)
+    .avatar= image_tag character.avatar_url :small
+    %dl.attributes
+      %dt Level
+      %dd= character.level
+      %dt Species
+      %dd= character.species
+      %dt Class
+      %dd= character.advanced_class

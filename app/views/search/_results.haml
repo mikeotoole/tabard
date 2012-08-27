@@ -1,0 +1,14 @@
+- results.each do |result|
+  - case result.class.to_s
+  - when 'Community'
+    = render 'li_community', community: result
+  - when 'UserProfile'
+    = render 'li_user_profile', user_profile: result
+  - when 'CharacterProxy'
+    - case result.character_type
+    - when 'MinecraftCharacter'
+      = render 'minecraft_characters/list', characters: [result.character]
+    - when 'SwtorCharacter'
+      = render 'swtor_characters/list', characters: [result.character]
+    - when 'WowCharacter'
+      = render 'wow_characters/list', characters: [result.character]

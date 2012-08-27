@@ -52,4 +52,4 @@ en:
         name: "General"
       home_page:
         name: "Home"
-        markup: "**This page is displayed to users who visit your community if they are not logged in or not a member.** It exists within the wiki pages section of your site. You can select which page is set as the home page when editing your community settings. Make sure to edit this page before recruiting your members."
+        markup: "**This page is displayed to visitors if they are not logged in or not a member.** It exists within the wiki pages section of your site. You can select which page is set as the home page when editing your community settings. Make sure to edit this page before recruiting your members."

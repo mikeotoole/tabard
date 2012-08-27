@@ -13,7 +13,7 @@
       %li= link_to "Star Wars: The Old Republic", swtors_url(subdomain: false)
       %li= link_to "Minecraft", minecrafts_url(subdomain: false)
   %li
-    = link_to 'Users', user_profiles_url
+    = link_to 'Search', search_url
 
 %p.signup
   = link_to 'Login', new_user_session_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))

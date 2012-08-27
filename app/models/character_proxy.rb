@@ -20,6 +20,7 @@ class CharacterProxy < ActiveRecord::Base
   belongs_to :character, polymorphic: true, dependent: :destroy
   has_many :roster_assignments, dependent: :destroy
   has_many :community_profiles, through: :roster_assignments
+  has_many :communities, through: :community_profiles
   has_and_belongs_to_many :community_applications
 
 ###
@@ -36,7 +37,9 @@ class CharacterProxy < ActiveRecord::Base
   delegate :game, to: :character
   delegate :game_id, to: :character
   delegate :game_name, to: :character
+  delegate :about, to: :character
   delegate :avatar_url, to: :character, allow_nil: true
+  delegate :community, to: :roster_assignments, prefix: true
 
 ###
 # Public Methods
@@ -62,6 +65,16 @@ class CharacterProxy < ActiveRecord::Base
   def compatable_with_supported_game?(supported_game)
     return true if supported_game == nil
     return supported_game.game_type == self.game.class.to_s
+  end
+
+  ###
+  # This method returns a search scoped or simply scoped search helper
+  # [Args]
+  #   * +search+ -> The string search for.
+  # [Returns] A scoped query
+  ###
+  def self.search(search)
+    MinecraftCharacter.search(search).map{|c| c.character_proxy } + SwtorCharacter.search(search).map{|c| c.character_proxy } + WowCharacter.search(search).map{|c| c.character_proxy }
   end
 
 ###
