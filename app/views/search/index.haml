@@ -24,7 +24,7 @@
           - when 'UserProfile'
             = render 'li_user_profile', user_profile: result
           - when 'CharacterProxy'
-            = render 'li_user_profile', user_profile: result.user_profile, character: result
+            = render 'li_character_proxy', user_profile: result.user_profile, character: result
       = paginate @results
     - else
       %p We did not find any players or communities that matched your request.
