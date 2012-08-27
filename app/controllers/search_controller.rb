@@ -18,13 +18,14 @@ class SearchController < ApplicationController
       end
       @users_and_characters = @users_and_characters.flatten
       @results = @communities + @users + @users_and_characters
+      @results = Kaminari.paginate_array(@results).page(params[:page]).per 10 if @results.any?
     end
 
     respond_to do |format|
-      format.html {
-        @results = Kaminari.paginate_array(@results).page(params[:page]).per 10 if @results.any?
-      }
+      format.html {}
       format.js {
+        html = render_to_string partial: 'results', locals: { results: @results }
+        render json: { success: true, html: html }
       }
     end
   end

@@ -9,17 +9,20 @@
     next_page = current_page + 1
     if next_page <= node.attr 'last_page'
       $.ajax
-        url: node.attr('action') + '?page=' + next_page
+        url: node.attr 'action'
+        data:
+          format: 'js'
+          page: next_page
         dataType: 'text'
         complete: ->
           setTimeout (-> node.removeClass 'busy'), 100
         success: (data, status, xhr) ->
-          response = $.parseJSON xhr.responseText
-          return unless response.success and response.items?
+          response = $.parseJSON data
+          return unless response.success and response.html?
           node
             .attr('current_page', next_page)
             .find(node.attr('target'))
-            .append response.items
+            .append response.html
 
   # Finds elements that need endless scrolling and initialize them
   $.endlessPageInit = ->

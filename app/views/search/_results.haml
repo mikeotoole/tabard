@@ -1,0 +1,8 @@
+- results.each do |result|
+  - case result.class.to_s
+  - when 'Community'
+    = render 'li_community', community: result
+  - when 'UserProfile'
+    = render 'li_user_profile', user_profile: result
+  - when 'CharacterProxy'
+    = render 'li_character_proxy', user_profile: result.user_profile, character: result

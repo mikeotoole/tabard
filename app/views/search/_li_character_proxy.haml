@@ -2,7 +2,7 @@
   %h3= character.name
   = link_to image_tag(character.avatar_url :tiny), user_profile_url(user_profile), anchor: 'character'
   %span.communities
-    - user_profile.communities.each do |community|
+    - character.communities.each do |community|
       = link_to shorten_words(community.name), root_url(subdomain: community.subdomain)
-  - unless user_profile.description.blank?
+  - unless character.about.blank?
     %q= character.about
