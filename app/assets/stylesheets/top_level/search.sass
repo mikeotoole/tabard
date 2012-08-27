@@ -32,6 +32,7 @@ body:not(.qstring)
       clear: both
       margin: 0
       padding: 0 0 30px
+      position: relative
       &:before
         display: none !important
       &:after
@@ -78,6 +79,24 @@ body:not(.qstring)
             &:hover
               background: #BE4124
               color: #fff
+      &.user_profile + .character_proxy
+        margin-top: -10px
+      &.character_proxy
+        padding: 0 0 20px 40px
+        &:before
+          border: 1px dotted #ccc
+          border-right: 0
+          border-top: 0
+          display: block !important
+          height: 25px
+          content: ''
+          left: 18px
+          position: absolute
+          top: -18px
+          width: 7px
+        + .character_proxy:before
+          top: -83px
+          height: 90px
       &.community
         q
           display: block
