@@ -1,0 +1,6 @@
+%li.character_proxy
+  %h3= link_to character_proxy.name, user_profile_url(character_proxy.user_profile, anchor: "characters")
+  = link_to image_tag(character_proxy.avatar_url :tiny), user_profile_url(character_proxy.user_profile, anchor: "characters")
+  %span.user_profile
+    = link_to character_proxy.user_profile.display_name, user_profile_url(character_proxy.user_profile)
+    = link_to image_tag(character_proxy.user_profile.avatar_url :icon), user_profile_url(character_proxy.user_profile)
