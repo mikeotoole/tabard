@@ -9,7 +9,15 @@ class SearchController < ApplicationController
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
       @character_proxies = CharacterProxy.search params[:term]
-      @results = @communities + @users + @character_proxies
+      @character_proxies_users = @character_proxies.map{|p| p.user_profile}.uniq
+      @users = @users - @character_proxies_users
+      @users_and_characters = Array.new
+      @character_proxies.group_by(&:user_profile).each do |user,proxies|
+        @users_and_characters << user
+        @users_and_characters << proxies
+      end
+      @users_and_characters = @users_and_characters.flatten
+      @results = @communities + @users + @users_and_characters
     end
 
     respond_to do |format|
