@@ -14,8 +14,6 @@ body:not(.qstring)
       width: 500px
       #search
         width: 370px
-      button
-        width: 80px
     footer
       bottom: 0
       left: 0
@@ -28,8 +26,11 @@ body:not(.qstring)
 
 #body
   ol.results
+    border-top: 1px solid #ccc
+    padding: 30px 0 0
     li
       clear: both
+      font-size: 14px
       margin: 0
       padding: 0 0 30px
       position: relative
@@ -47,26 +48,27 @@ body:not(.qstring)
         margin-left: -2px
         padding: 0 0 10px
       q
-        font-size: 14px
+        display: block
       &.user_profile,
-      &.character_proxy
-        >a
+      &.character
+        >a,
+        .avatar
           background: transparent !important
           +box_shadow(0 0 10px rgba(#000,.2))
           +border_radius(0)
           display: block
           float: left
-          height: 42px
-          margin: 0 5px 0 0
+          height: 62px
+          margin: 0 10px 0 0
           padding: 0
           +transition(box-shadow .2s linear)
-          width: 42px
+          width: 62px
           img
             border: 1px solid #fff
             display: block
             float: left
-            height: 40px
-            width: 40px
+            height: 60px
+            width: 60px
           &:hover
             +box_shadow(0 0 15px rgba(#000,.3))
         .communities
@@ -79,10 +81,10 @@ body:not(.qstring)
             &:hover
               background: #BE4124
               color: #fff
-      &.user_profile + .character_proxy
+      &.user_profile + .character
         margin-top: -10px
-      &.character_proxy
-        padding: 0 0 20px 40px
+      &.character
+        padding: 0 0 20px 62px
         &:before
           border: 1px dotted #ccc
           border-right: 0
@@ -90,14 +92,41 @@ body:not(.qstring)
           display: block !important
           height: 25px
           content: ''
-          left: 18px
+          left: 31px
           position: absolute
           top: -18px
-          width: 7px
-        + .character_proxy:before
-          top: -83px
-          height: 90px
+          width: 20px
+        + .character:before
+          top: -103px
+          height: 110px
+        .attributes
+          float: left
+          font-size: 13px
+          line-height: 15px
+          dt
+            clear: left
+            float: left
+            width: 60px
+          dd
+            float: left
+            font-family: DinMedium, sans-serif
+            width: 160px
       &.community
         q
           display: block
           margin: -5px 0 0
+
+.endless_scrolling
+  &:after
+    background: image-url('application/busy.gif') center center no-repeat #ccc
+    +border_radius(3)
+    bottom: 80px
+    display: none
+    height: 50px
+    left: 0
+    +opacity(.5)
+    position: absolute
+    right: 0
+  &.busy:after
+    content: ''
+    display: block

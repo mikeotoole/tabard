@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   respond_to :html, :js
-  skip_before_filter :block_unauthorized_user!, only: [:index]
+  skip_before_filter :block_unauthorized_user!, only: [:index,:autocomplete]
   before_filter :basic_search_collection
 
   def index
@@ -30,11 +30,9 @@ class SearchController < ApplicationController
   end
 
   def autocomplete
-    unless params[:term].blank?
-      @results = @communities + @users + @character_proxies
-    end
+    @results = @communities + @users + @character_proxies unless params[:term].blank?
+
     render json: @results.map{|r|
-      logger.debug r.class
       case r.class.to_s
         when 'Community' then {
           label: r.name,

@@ -10,12 +10,11 @@
   #searchbox
     = form_tag search_url(subdomain: false), method: 'get' do
       %p
-        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community name, player, or game', data: {url: search_url}
+        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community name, player, or game', data: {url: search_autocomplete_url}
         %button{ type: 'submit' } Search
 
   - unless params[:term].blank?
     %h2 Search Results
-    %hr
     - if @results.any?
       .endless_scrolling{ action: request.fullpath, target: 'ol.results', current_page: @results.current_page, last_page: @results.num_pages }
         %ol.results
