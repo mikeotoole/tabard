@@ -20,6 +20,7 @@ class CharacterProxy < ActiveRecord::Base
   belongs_to :character, polymorphic: true, dependent: :destroy
   has_many :roster_assignments, dependent: :destroy
   has_many :community_profiles, through: :roster_assignments
+  has_many :communities, through: :community_profiles
   has_and_belongs_to_many :community_applications
 
 ###
@@ -38,6 +39,7 @@ class CharacterProxy < ActiveRecord::Base
   delegate :game_name, to: :character
   delegate :about, to: :character
   delegate :avatar_url, to: :character, allow_nil: true
+  delegate :community, to: :roster_assignments, prefix: true
 
 ###
 # Public Methods
