@@ -51,7 +51,9 @@ class CommunityProfile < ActiveRecord::Base
   validates :user_profile_id, uniqueness: {scope: [:community_id, :deleted_at]},
                                 unless: Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
-  validate :has_at_least_the_default_member_role
+  validates_each :community do |community_profile, attr, value|
+    community_profile.errors.add attr, "too many members for community" if not community_profile.community.blank? and community_profile.community.community_profiles.count > community_profile.community.max_number_of_users
+  end
 
 ###
 # Delegates

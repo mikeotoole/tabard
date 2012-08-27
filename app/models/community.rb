@@ -142,9 +142,17 @@ class Community < ActiveRecord::Base
     end
   end
 
-  # HACK Fix this with real method
+
   def is_paid_community?
-    not self.community_plan.title("Free")
+    not self.community_plan.title == "Free"
+  end
+
+  def max_number_of_users
+    if self.is_paid_community?
+      return 100
+    else
+      return 20
+    end
   end
 
   # Returns all games that this community supports

@@ -61,6 +61,47 @@ describe Community do
     end
   end
 
+  describe "max number of users" do
+    it "should allow up to max number of users" do
+      while community.community_profiles.count < community.max_number_of_users do
+        user_profile = create(:user_profile)
+        app = community.community_applications.new
+        app.prep(user_profile, community.community_application_form)
+        user_profile.character_proxies.each do |cp|
+          app.character_proxies << cp if cp.compatable_with_community?(community)
+        end
+        app.save!
+        app.submission.custom_form.questions.each do |q|
+          if q.is_required
+            if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
+              app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
+            else
+              app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
+            end
+          end
+        end
+        app.accept_application(community.admin_profile).should be true
+      end
+      user_profile = create(:user_profile)
+        app = community.community_applications.new
+        app.prep(user_profile, community.community_application_form)
+        user_profile.character_proxies.each do |cp|
+          app.character_proxies << cp if cp.compatable_with_community?(community)
+        end
+        app.save!
+        app.submission.custom_form.questions.each do |q|
+          if q.is_required
+            if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
+              app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
+            else
+              app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
+            end
+          end
+        end
+        app.accept_application(community.admin_profile).should be false
+    end
+  end
+
   describe "background_color" do
     it "should allow blank" do
       build(:community, :background_color => "").should be_valid

@@ -92,7 +92,7 @@ class CommunityApplication < ActiveRecord::Base
         error_count += 1
       end
     end
-    return false if error_count > 0
+    return false if error_count > 0 or community.community_profiles.count >= community.max_number_of_users
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, without_protection: true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
@@ -112,6 +112,7 @@ class CommunityApplication < ActiveRecord::Base
           end
         end
       end
+     return true
     end
   end
 
