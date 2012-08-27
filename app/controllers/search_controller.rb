@@ -35,18 +35,18 @@ class SearchController < ApplicationController
     render json: @results.map{|r|
       case r.class.to_s
         when 'Community' then {
-          label: r.name,
+          label: "<strong>#{r.name}</strong>",
           value: r.name,
           url: root_url(subdomain: r.subdomain)
         }
         when 'UserProfile' then {
-          label: r.display_name,
+          label: "<strong>#{r.display_name}</strong>",
           value: r.display_name,
           url: user_profile_url(r),
           avatar: view_context.image_path(r.avatar_url(:icon))
         }
       when 'CharacterProxy' then {
-          label: "#{r.name} (#{r.user_profile.name})",
+          label: "<strong>#{r.name}</strong> (#{r.user_profile.name})",
           value: r.name,
           url: user_profile_url(r.user_profile, anchor: 'characters'),
           avatar: view_context.image_path(r.avatar_url(:icon))
