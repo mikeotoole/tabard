@@ -1,5 +1,7 @@
 jQuery(document).ready ($) ->
 
+  $('#search').focus()
+
   cache = []
 
   $('#search').autocomplete
@@ -33,3 +35,5 @@ jQuery(document).ready ($) ->
     html += "#{item.label}</a>"
     li.html html
     return li
+
+  $.endlessPageInit() if $('ol.results li').length

@@ -1,6 +1,7 @@
 - title 'Search'
 - content_for :header do
   = stylesheet_link_tag 'top_level/search'
+  = javascript_include_tag 'endless_scrolling'
   = javascript_include_tag 'search'
 
 #body
@@ -16,15 +17,16 @@
     %h2 Search Results
     %hr
     - if @results.any?
-      %ol.results
-        - @results.each do |result|
-          - case result.class.to_s
-          - when 'Community'
-            = render 'li_community', community: result
-          - when 'UserProfile'
-            = render 'li_user_profile', user_profile: result
-          - when 'CharacterProxy'
-            = render 'li_character_proxy', user_profile: result.user_profile, character: result
-      = paginate @results
+      .endless_scrolling{ action: search_url(format: :js), target: 'ol.results', current_page: @results.current_page, last_page: @results.num_pages }
+        %ol.results
+          - @results.each do |result|
+            - case result.class.to_s
+            - when 'Community'
+              = render 'li_community', community: result
+            - when 'UserProfile'
+              = render 'li_user_profile', user_profile: result
+            - when 'CharacterProxy'
+              = render 'li_character_proxy', user_profile: result.user_profile, character: result
+        = paginate @results
     - else
       %p We did not find any players or communities that matched your request.
