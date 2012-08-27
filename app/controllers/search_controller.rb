@@ -32,7 +32,7 @@ class SearchController < ApplicationController
               avatar: view_context.image_path(r.avatar_url(:icon))
             }
           when 'CharacterProxy' then {
-              label: r.name,
+              label: "#{r.name} (#{r.user_profile.name})",
               value: r.name,
               url: user_profile_url(r.user_profile, anchor: 'characters'),
               avatar: view_context.image_path(r.avatar_url(:icon))

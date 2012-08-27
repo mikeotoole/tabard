@@ -13,7 +13,7 @@ jQuery(document).ready ($) ->
     position:
       my: 'left top'
       at: 'left bottom'
-      offset: '0, -3'
+      offset: (if $('body').hasClass('qstring') then '0, -3' else '0, 2')
       collision: 'none'
     select: (e, ui) ->
       window.location = ui.item.url

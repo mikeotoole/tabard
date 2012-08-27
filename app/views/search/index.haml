@@ -9,7 +9,7 @@
   #searchbox
     = form_tag search_url(subdomain: false), method: 'get' do
       %p
-        = text_field_tag :term, params[:term], id: 'search', data: {url: search_url}
+        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community name, player, or game', data: {url: search_url}
         %button{ type: 'submit' } Search
 
   - unless params[:term].blank?
@@ -23,6 +23,8 @@
             = render 'li_community', community: result
           - when 'UserProfile'
             = render 'li_user_profile', user_profile: result
+          - when 'CharacterProxy'
+            = render 'li_user_profile', user_profile: result.user_profile, character: result
       = paginate @results
     - else
       %p We did not find any players or communities that matched your request.
