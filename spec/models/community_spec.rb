@@ -62,43 +62,50 @@ describe Community do
   end
 
   describe "max number of users" do
+    def add_a_user
+      user_profile = create(:user_profile)
+      app = community.community_applications.new
+      app.prep(user_profile, community.community_application_form)
+      user_profile.character_proxies.each do |cp|
+        app.character_proxies << cp if cp.compatable_with_community?(community)
+      end
+      app.save!
+      app.submission.custom_form.questions.each do |q|
+        if q.is_required
+          if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
+            app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
+          else
+            app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
+          end
+        end
+      end
+      return app
+    end
     it "should allow up to max number of users" do
       while community.community_profiles.count < community.max_number_of_users do
-        user_profile = create(:user_profile)
-        app = community.community_applications.new
-        app.prep(user_profile, community.community_application_form)
-        user_profile.character_proxies.each do |cp|
-          app.character_proxies << cp if cp.compatable_with_community?(community)
-        end
-        app.save!
-        app.submission.custom_form.questions.each do |q|
-          if q.is_required
-            if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
-              app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
-            else
-              app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
-            end
-          end
-        end
-        app.accept_application(community.admin_profile).should be true
+        add_a_user.accept_application(community.admin_profile).should be true
       end
-      user_profile = create(:user_profile)
-        app = community.community_applications.new
-        app.prep(user_profile, community.community_application_form)
-        user_profile.character_proxies.each do |cp|
-          app.character_proxies << cp if cp.compatable_with_community?(community)
-        end
-        app.save!
-        app.submission.custom_form.questions.each do |q|
-          if q.is_required
-            if Question::VALID_STYLES_WITHOUT_PA.include?(q.style)
-              app.submission.answers.create!(question_id: q.id, body: 'Because you guys are awesome, and I want to be awesome too!', question_body: q.body)
-            else
-              app.submission.answers.create!(question_id: q.id, body: q.predefined_answers.first.body, question_body: q.body)
-            end
-          end
-        end
-        app.accept_application(community.admin_profile).should be false
+      add_a_user.accept_application(community.admin_profile).should be false
+    end
+    it "should be 20 for free" do
+      while community.community_profiles.count < 20 do
+        add_a_user.accept_application(community.admin_profile).should be true
+      end
+      add_a_user.accept_application(community.admin_profile).should be false
+    end
+    it "should be 100 for pro" do
+      pro_plan = CommunityPlan.create({
+        title: "Pro",
+        description: "This is the default Pro plan.",
+        price_per_month_in_cents: 1000,
+        is_available: true
+        }, without_protection: true)
+      community.community_plan = pro_plan
+      community.save!
+      while community.community_profiles.count < 100 do
+        add_a_user.accept_application(community.admin_profile).should be true
+      end
+      add_a_user.accept_application(community.admin_profile).should be false
     end
   end
 
