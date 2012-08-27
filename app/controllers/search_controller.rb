@@ -1,11 +1,10 @@
 class SearchController < ApplicationController
   respond_to :html, :js
   skip_before_filter :block_unauthorized_user!, only: [:index]
+  before_filter :basic_search_collection
 
   def index
-    if params[:term].blank?
-      @results = []
-    else
+    unless params[:term].blank?
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
       @character_proxies = CharacterProxy.search params[:term]
@@ -30,8 +29,9 @@ class SearchController < ApplicationController
   end
 
   def autocomplete
-    # OMG JOE PUT SEARCH CODE HERE
-
+    unless params[:term].blank?
+      @results = @communities + @users + @character_proxies
+    end
     render json: @results.map{|r|
       logger.debug r.class
       case r.class.to_s
@@ -54,5 +54,15 @@ class SearchController < ApplicationController
         }
       end
     }
+  end
+
+  def basic_search_collection
+    if params[:term].blank?
+      @results = []
+    else
+      @communities = Community.search params[:term]
+      @users = UserProfile.active.search params[:term]
+      @character_proxies = CharacterProxy.search params[:term]
+    end
   end
 end
