@@ -281,16 +281,30 @@ class Ability
     cannot :delete, CustomForm do |form|
       form.application_form?
     end
-    can :manage, Role
-    cannot :destroy, Role do |role|
-      role.is_system_generated
-    end
+    can [:read, :update], Role
     can :manage, Permission
     can [:read, :destroy], Submission
     can :manage, Question
     can [:update, :remove_confirmation, :clear_action_items], Community
 
     can :manage, Event
+  end
+
+  ###
+  # This method defines the dynamic permission for a user given payment levels.
+  # [Args]
+  #   * +user+ -> A user to define permissions on.
+  #   * +current_community+ -> The current community context.
+  ###
+  def community_subscription_level_rules(user, current_community)
+    return unless current_community.admin_profile_id == user.user_profile_id
+    if current_community.is_paid_community?
+      #PAID LEVEL
+      can [:manage], Role
+    else
+      #FREE LEVEL
+      can [:read, :update, :pay_for], Role
+    end
   end
 
   ###
@@ -303,6 +317,8 @@ class Ability
     if user
       community_member_rules(user, current_community) if user.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
+      community_subscription_level_rules(user, current_community)
+      # TODO add create + destroy to role if pro community
     end
 
     # Special context rules
@@ -330,6 +346,9 @@ class Ability
     end
     cannot :update, Discussion do |discussion|
       (discussion.user_profile_id != user.user_profile_id)
+    end
+    cannot :destroy, Role do |role|
+      role.is_system_generated
     end
   end
 

@@ -142,9 +142,11 @@ class Community < ActiveRecord::Base
     end
   end
 
-###
-# Instance Methods
-###
+  # HACK Fix this with real method
+  def is_paid_community?
+    not self.community_plan.title("Free")
+  end
+
   # Returns all games that this community supports
   def games
     self.supported_games.collect { |a| a.game }
@@ -390,24 +392,24 @@ protected
     self.update_column :theme_id, Theme.default_theme.id
 
     # Officer role
-    officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)
-    officer_role.permissions.create!({subject_class: "Announcement", permission_level: "Create", can_lock: true}, without_protection: true)
-    officer_role.permissions.create!({subject_class: "Comment", can_create: true, can_lock: true}, without_protection: true)
-    officer_role.permissions.create!({subject_class: "CommunityApplication", can_read: true}, without_protection: true)
-    officer_role.permissions.create!({subject_class: "CommunityInvite", can_create: true}, without_protection: true)
-    officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes({permission_level: "View",
-      can_lock: false,
-      can_accept: false,
-      can_read_nested: false,
-      can_update_nested: false,
-      can_create_nested: true,
-      can_destroy_nested: true,
-      can_lock_nested: true,
-      can_accept_nested: false}, without_protection: true)
-    officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes({permission_level: "View",
-      permission_level: "View",
-      can_lock: false,
-      can_accept: false}, without_protection: true)
+    #officer_role = self.roles.create!({name: "Officer", is_system_generated: false}, without_protection: true)
+    #officer_role.permissions.create!({subject_class: "Announcement", permission_level: "Create", can_lock: true}, without_protection: true)
+    #officer_role.permissions.create!({subject_class: "Comment", can_create: true, can_lock: true}, without_protection: true)
+    #officer_role.permissions.create!({subject_class: "CommunityApplication", can_read: true}, without_protection: true)
+    #officer_role.permissions.create!({subject_class: "CommunityInvite", can_create: true}, without_protection: true)
+    #officer_role.permission_defaults.find_by_object_class("DiscussionSpace").update_attributes({permission_level: "View",
+    #  can_lock: false,
+    #  can_accept: false,
+    #  can_read_nested: false,
+    #  can_update_nested: false,
+    #  can_create_nested: true,
+    #  can_destroy_nested: true,
+    #  can_lock_nested: true,
+    #  can_accept_nested: false}, without_protection: true)
+    #officer_role.permission_defaults.find_by_object_class("PageSpace").update_attributes({permission_level: "View",
+    #  permission_level: "View",
+    #  can_lock: false,
+    #  can_accept: false}, without_protection: true)
 
     community_p_space = self.page_spaces.create!({name: I18n.t("community.default.page_space.name")}, without_protection: true)
     community_home_page = community_p_space.pages.create!({name: I18n.t("community.default.home_page.name"), markup: I18n.t("community.default.home_page.markup")}, without_protection: true)

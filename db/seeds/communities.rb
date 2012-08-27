@@ -109,6 +109,7 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
+  # TODO upgrade to pro community
 
   billy = UserProfile.find_by_last_name('Billy')
 

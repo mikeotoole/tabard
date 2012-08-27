@@ -39,7 +39,8 @@ unless @dont_run
   create_role('Two Maidens', 'n00b', %w(PageSpace), %w(Create), %w(Moose))
 
   # Joe's Workaround. Don't kill me Mike
-  puts "Promoting DMoose to officer in JAH..."
-  UserProfile.find_by_last_name("Moose").add_new_role(Community.find_by_name("Just Another Headshot").roles.find_by_name("Officer"))
+  # TODO upgrade to pro community first
+  #puts "Promoting DMoose to officer in JAH..."
+  #UserProfile.find_by_last_name("Moose").add_new_role(Community.find_by_name("Just Another Headshot").roles.find_by_name("Officer"))
 
 end
