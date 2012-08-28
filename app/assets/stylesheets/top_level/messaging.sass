@@ -476,7 +476,7 @@ body
       
       >fieldset
       
-        >ul
+        >ol
           background: #eee
           border-bottom: 1px solid #888
           +border_radius(0,0,10,10)
@@ -521,7 +521,6 @@ body
             ul
               margin: 0 -195px -5px 0
               padding: 0 0 0 80px
-            
               &:after
                 clear: both
                 content: ' '
@@ -529,44 +528,45 @@ body
                 height: 0
                 visibility: hidden
             
-              li
-              
-                label
-                  display: none
-                  +bg_gradient(#cddae4,#b1bfcb)
-                  border: 1px solid #bacbd8
+              li a
+                display: none
+                +bg_gradient(#cddae4,#b1bfcb)
+                border: 1px solid #bacbd8
+                +border-radius(3)
+                color: #3b5a72
+                display: block
+                float: left
+                font: 13px DinMedium
+                margin: 5px 5px 5px 0
+                padding: 1px 30px 1px 4px
+                position: relative
+                white-space: nowrap
+                &:hover
+                  background: #227FB5
+                  border-color: #227FB5
+                  color: #fff
+                span.close
+                  background: #fff
                   +border-radius(3)
-                  color: #3b5a72
-                  float: left
-                  font: 13px DinMedium
-                  margin: 5px 5px 5px 0
-                  padding: 1px 30px 1px 4px
-                  position: relative
-                  white-space: nowrap
-                  
-                  &:after
-                    background: #778a98
-                    +border-radius(3)
-                    bottom: 1px
-                    color: #fff
-                    content: '\2716'
-                    float: right
-                    padding: 0 3px
-                    position: absolute
-                    right: 1px
-                    top: 1px
-                  
-                  &:hover
-                  
-                    &:after
-                      background: #A33C32
-                
-                input
-                  left: -500em
+                  bottom: 1px
+                  color: #778a98
+                  float: right
+                  padding: 0 3px
                   position: absolute
-                  
-                  &:checked + label
-                    display: block
+                  right: 1px
+                  text-indent: -500em
+                  top: 1px
+                  width: 10px
+                  &:before
+                    content: '\2716'
+                    left: 0
+                    position: absolute
+                    right: 0
+                    text-align: center
+                    text-indent: 0
+                    top: 0
+                  &:hover
+                    color: #A33C32
     
     article
       background: #fff
@@ -623,56 +623,6 @@ body
           + mark
             +opacity(1)
     
-    aside
-    
-      ul
-        background: #327BB4
-        +bg_gradient(#2c70a5,#3e8ac5)
-        +border_radius(0,0,5,5)
-        +box_shadow(0 0 15px rgba(#000,.5))
-        display: none
-        left: 90px
-        position: absolute
-        right: 108px
-        top: 83px
-        z-index: 3
-        
-        &:before
-          +bg_gradient(rgba(#000,.7),rgba(#327BB4,0))
-          content: ''
-          height: 20px
-          left: 0
-          pointer-events: none
-          position: absolute
-          right: 0
-          top: 0
-      
-        li
-        
-          label
-            border-top: 1px solid #1F699E
-            color: #CCEAFF
-            cursor: pointer
-            display: none
-            font: 13px DinLight, sans-serif
-            padding: 5px 10px
-            
-            &:hover
-              background: #4E98D0
-              color: #fff
-          
-          &.first,
-          &:first-child
-            
-            label
-              padding: 15px 10px 5px
-          
-          &.last,
-          &:last-child
-            
-            label
-              +border_radius(0,0,5,5)
-    
     button
       border-color: #ddd
       +box_shadow(0 0 10px #999)
@@ -697,3 +647,15 @@ footer
   margin: 30px -40px
   position: relative
   width: auto
+
+.ui-autocomplete
+  border-color: #ccc
+  &:before
+    +bg_gradient(#FFFFFF,#D6EAF8)
+    content: ''
+    height: 10px
+    left: 0
+    padding-top: 10px
+    position: absolute
+    right: 0
+    top: 0

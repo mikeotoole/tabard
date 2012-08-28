@@ -1,28 +1,17 @@
 - title "Compose Mail | #{current_user.display_name}"
 
-= simple_form_for @message, url: { controller: "sent_messages", action: "create" }, html: { novalidate: true, autocomplete: 'off' } do |f|
+= simple_form_for @message, url: { controller: "sent_messages", action: "create" }, html: { novalidate: true } do |f|
   #message.compose
 
     %header
       %fieldset
-        %ul
-          %li
-            = f.input :subject, wrapper: false, input_html: { tabindex: 1, maxlength: Message::MAX_SUBJECT_LENGTH }
+        %ol
           %li
             %label{ for: 'message_to' } To
-            %input{ id: 'message_to', type: 'text', tabindex: 2 }
+            = text_field_tag 'term', '', id: 'message_to', tabindex: 2, placeholder: 'Player or character name', data: { url: sent_autocomplete_url }
           %li
-            %ul
-              - current_user.address_book.each do |profile|
-                %li
-                  %input{ id: "message_to_#{profile.id}", type: 'checkbox', name: 'message[to][]', value: profile.id, checked: (@message.to.include?(profile.id.to_s) ?  'checked' : false) }
-                  %label{ for: "message_to_#{profile.id}" }= profile.display_name
-
-    %aside.suggestions
-      %ul
-        - current_user.address_book.each do |profile|
-          %li
-            %label{ for: "message_to_#{profile.id}" }= profile.display_name
+            = f.input :subject, wrapper: false, input_html: { tabindex: 1, maxlength: Message::MAX_SUBJECT_LENGTH }
+          %li.to_list
 
     = f.input :body, as: :text, label: false, wrapper_tag: :article, input_html: { tabindex: 3 }
     %button{ type: ':submit', tabindex: 4 } Send
