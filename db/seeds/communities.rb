@@ -120,6 +120,7 @@ unless @dont_run
     application.accept_application(billy, character_hash_map)
     puts "Accepted application"
   end
+  # TODO add 15 more users
   generate_application(headshot, 'Fox')
 
 end
