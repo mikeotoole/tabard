@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CommunitySubscriptionsController do
+describe SubscriptionsController do
 
   describe "GET 'index'" do
     it "returns http success" do
