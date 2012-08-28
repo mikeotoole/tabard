@@ -149,9 +149,9 @@ class Community < ActiveRecord::Base
 
   def max_number_of_users
     if self.is_paid_community?
-      return 100
+      return 1
     else
-      return 20
+      return 1
     end
   end
 
