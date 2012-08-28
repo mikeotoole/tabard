@@ -299,7 +299,7 @@ button,
     &:before
       content: '\27A5\00A0'
   
-  .radio >ul
+  .radio_buttons >ul
     padding: 0
     
     >li:last-child
@@ -555,7 +555,7 @@ button,
             white-space: pre
         
         .check_boxes + ul,
-        .radio + ul
+        .radio_buttons + ul
           padding-bottom: 0
         
         &:before
@@ -594,14 +594,14 @@ button,
       margin-bottom: 30px
       margin-top: 0
     
-    &.radio > mark.error,
+    &.radio_buttons > mark.error,
     .check_boxes + ul + mark.error,
-    >.radio + ul + mark.error
+    >.radio_buttons + ul + mark.error
       margin-top: 0
       padding-top: 5px
     
     .check_boxes + ul + dfn.hint + mark.error,
-    >.radio + ul + dfn.hint + mark.error
+    >.radio_buttons + ul + dfn.hint + mark.error
       margin-bottom: 50px
       margin-top: -50px
       padding-top: 5px
