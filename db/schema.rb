@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827204016) do
+ActiveRecord::Schema.define(:version => 20120828182901) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -233,6 +233,16 @@ ActiveRecord::Schema.define(:version => 20120827204016) do
   add_index "community_invites", ["community_id"], :name => "index_community_invites_on_community_id"
   add_index "community_invites", ["sponsor_id"], :name => "index_community_invites_on_sponsor_id"
 
+  create_table "community_plan_upgrades", :force => true do |t|
+    t.integer  "community_plan_id"
+    t.integer  "community_upgrade_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "community_plan_upgrades", ["community_plan_id"], :name => "index_community_plan_upgrades_on_community_plan_id"
+  add_index "community_plan_upgrades", ["community_upgrade_id"], :name => "index_community_plan_upgrades_on_community_upgrade_id"
+
   create_table "community_plans", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -262,6 +272,26 @@ ActiveRecord::Schema.define(:version => 20120827204016) do
 
   add_index "community_profiles_roles", ["community_profile_id"], :name => "index_community_profiles_roles_on_community_profile_id"
   add_index "community_profiles_roles", ["role_id"], :name => "index_community_profiles_roles_on_role_id"
+
+  create_table "community_upgrades", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "price_per_month_in_cents"
+    t.integer  "max_number_of_upgrades"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "current_community_upgrades", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "community_upgrade_id"
+    t.integer  "number_in_use"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "current_community_upgrades", ["community_id"], :name => "index_current_community_upgrades_on_community_id"
+  add_index "current_community_upgrades", ["community_upgrade_id"], :name => "index_current_community_upgrades_on_community_upgrade_id"
 
   create_table "custom_forms", :force => true do |t|
     t.string   "name"

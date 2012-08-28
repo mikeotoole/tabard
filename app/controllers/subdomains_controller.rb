@@ -15,6 +15,7 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
+  before_filter :enforce_community_user_limit
   before_filter :apply_dynamic_permissions
   before_filter :block_unauthorized_user!, except: [:index]
   before_filter :ensure_current_user_is_member, except: [:index]
@@ -143,6 +144,23 @@ protected
   def ensure_current_user_is_member
     if not current_user or not current_user.communities.include?(current_community)
       raise CanCan::AccessDenied
+    end
+  end
+
+  def enforce_community_user_limit
+    if current_community.community_profiles.count  > current_community.max_number_of_users
+      if user_signed_in? and current_user.is_member? current_community
+        if current_user.owned_communities.include?(current_community)
+          # TODO UPGRADE OR BOOT
+          add_new_flash_message "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users!", 'alert'
+          redirect_to subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+          return
+        else
+          # TODO YELL AT ADMIN
+          add_new_flash_message "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Your admin needs to update this community.", 'alert'
+          raise CanCan::AccessDenied
+        end
+      end
     end
   end
 
