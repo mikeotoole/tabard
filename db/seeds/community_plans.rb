@@ -6,7 +6,7 @@ unless @dont_run
 
   CommunityPlan.create!({title: "Pro",
         description: "DOUG FIX THIS IN THE SEED!",
-        price_per_month_in_cents: 133700,
+        price_per_month_in_cents: 1337,
         is_available: true
         }, without_protection: true)
 end

@@ -2,16 +2,20 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_variables
+  before_filter :load_variables, only: [:edit, :update]
 
   def index
+    @owned_communities = current_user.owned_communities
+    @user = current_user
   end
 
   def edit
+    if @community.blank?
+      redirect_to forbidden_url
+    end
   end
 
   def update
-    @community = current_user.owned_communities.find_by_id(params[:id])
     if @community.blank? or params[:community].blank?
       redirect_to forbidden_url
     else
@@ -23,7 +27,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def load_variables
-    @owned_communities = current_user.owned_communities
+    @community = current_user.owned_communities.find_by_id(params[:id])
     @available_plans = CommunityPlan.available
   end
 end
