@@ -28,7 +28,7 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :community_plan_id,
     :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :current_community_upgrades_attributes
 
 ###
@@ -66,7 +66,8 @@ class Community < ActiveRecord::Base
   belongs_to :theme
   belongs_to :home_page, class_name: "Page"
 
-  accepts_nested_attributes_for :theme, :current_community_upgrades
+  accepts_nested_attributes_for :theme
+  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true
 
 ###
 # Callbacks

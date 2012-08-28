@@ -14,7 +14,7 @@ class SubscriptionsController < ApplicationController
       redirect_to forbidden_url
     end
     @community.community_plan.community_upgrades.each do |upgrade|
-      @community.current_community_upgrades.new(community_upgrade_id: upgrade, number_in_use: 0) unless @community.community_upgrades.include?(upgrade)
+      @community.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.community_upgrades.include?(upgrade)
     end
   end
 
@@ -22,9 +22,7 @@ class SubscriptionsController < ApplicationController
     if @community.blank? or params[:community].blank?
       redirect_to forbidden_url
     else
-      @plan = CommunityPlan.available.find_by_id(params[:community][:community_plan_id])
-      @community.community_plan = @plan
-      add_new_flash_message("Your plan has been changed",'success') if @community.save!
+      add_new_flash_message("Your plan has been changed",'success') if @community.update_attributes(params[:community])
       respond_with(@community, location: edit_subscription_url(@community))
     end
   end
