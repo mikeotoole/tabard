@@ -1,6 +1,6 @@
 unless Rails.env.test?
 
-  %w{ wow_games swtor_games minecraft_games documents themes}.each do |part|
+  %w{ wow_games swtor_games minecraft_games documents themes community_plans}.each do |part|
     require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
   end
 

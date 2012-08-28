@@ -1,5 +1,7 @@
 DaBvRails::Application.routes.draw do
 
+  resources :community_subscriptions, only: [:index, :update]
+
   resources :minecraft_characters
 
   resources :minecrafts

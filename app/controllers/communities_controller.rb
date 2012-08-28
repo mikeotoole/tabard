@@ -39,6 +39,7 @@ class CommunitiesController < ApplicationController
     begin
       @community = Community.new(params[:community])
       @community.admin_profile = current_user.user_profile
+      @community.community_plan = CommunityPlan.default_plan
       authorize! :create, @community
       add_new_flash_message("Your community has been created.", 'success') if @community.save
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound

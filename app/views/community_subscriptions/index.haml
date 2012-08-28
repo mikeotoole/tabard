@@ -1,0 +1,10 @@
+%h1 CommunitySubscriptions#index
+-if @owned_communities.size > 0
+  %ul
+    -@owned_communities.each do |community|
+      %li
+        = simple_form_for community, url: community_subscription_url(community), html: {novalidate: true} do |f|
+          %h2=community.name
+          =f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan"
+          %p.submit
+            = f.button :submit, 'Save Changes'

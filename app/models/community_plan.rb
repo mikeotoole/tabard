@@ -1,5 +1,14 @@
 class CommunityPlan < ActiveRecord::Base
+
   has_many :communities
+
+###
+# Scopes
+###
+  scope :available, lambda {
+    where{(is_available == true)}
+  }
+
   def self.default_plan
     plan = CommunityPlan.find_by_title("Free")
     if plan == nil
