@@ -39,6 +39,7 @@ class CharacterProxy < ActiveRecord::Base
   delegate :game_name, to: :character
   delegate :about, to: :character
   delegate :avatar_url, to: :character, allow_nil: true
+  delegate :display_name, to: :user_profile, prefix: true
   delegate :community, to: :roster_assignments, prefix: true
 
 ###

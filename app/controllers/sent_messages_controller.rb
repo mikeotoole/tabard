@@ -44,6 +44,7 @@ class SentMessagesController < MailboxController
 
   # POST /sent(.:format)
   def create
+    params[:message][:to].uniq!
     @message = current_user.sent_messages.build(params[:message])
     authorize!(:create, @message)
     if @message.save
@@ -66,18 +67,16 @@ class SentMessagesController < MailboxController
     @character_proxies = CharacterProxy.search params[:term]
     render json:
       @user_profiles.map{|up| {
-        id: up.id,
-        label: up.display_name,
+        label: "<a>#{view_context.image_tag(view_context.image_path(up.avatar_url(:icon)))} <strong>#{up.display_name}</strong></a>",
         value: up.id,
-        url: user_profile_url(up),
-        avatar: view_context.image_path(up.avatar_url(:icon))
+        html: render_to_string(partial: 'to', locals: {user_profile: up}),
+        display_name: up.display_name
       }} +
       @character_proxies.map{|cp| {
-        id: cp.id,
-        label: cp.name,
+        label: "<a>#{view_context.image_tag(view_context.image_path(cp.avatar_url(:icon)))} <strong>#{cp.name}</strong> (#{cp.user_profile_display_name})</a>",
         value: cp.user_profile_id,
-        url: user_profile_url(cp.user_profile),
-        avatar: view_context.image_path(cp.avatar_url(:icon))
+        html: render_to_string(partial: 'to', locals: {user_profile: cp.user_profile}),
+        display_name: cp.user_profile_display_name
       }}
   end
 

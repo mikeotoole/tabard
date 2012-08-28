@@ -38,6 +38,8 @@ jQuery(document).ready ($) ->
   # user profile suggestion and selection for the "to" field
   $('#message.compose').each ->
     cache = []
+    to_list = []
+    $('.to_list li input').each -> to_list.push parseInt $(@).val()
 
     $('#message_to').autocomplete
       autoFocus: true
@@ -45,7 +47,7 @@ jQuery(document).ready ($) ->
         $('ul.ui-autocomplete li:has(img)').addClass 'with-avatar'
       delay: 300
       focus: (e, ui) ->
-        $(@).val ui.item.label
+        $(@).val ui.item.display_name
         return false
       minLength: 2
       open: (e, ui) ->
@@ -56,19 +58,12 @@ jQuery(document).ready ($) ->
         offset: '0, -3'
         collision: 'none'
       select: (e, ui) ->
-        $('<ul>').appendTo '.to_list' unless $('.to_list ul').length
-        $('.to_list ul').append """
-          <li>
-            <a target='_blank' href='#{ui.item.url}'>
-              #{ui.item.label}
-              <span class='close'></span>
-            </a>
-            <input type='hidden' name='message[to][]' value='#{ui.item.value}'>
-          </li>
-        """
         $(@).val ''
+        return false if ui.item.value in to_list
+        to_list.push ui.item.value
+        $('<ul>').appendTo '.to_list' unless $('.to_list ul').length
+        $('.to_list ul').append ui.item.html
         updateMessageHeaderHeight()
-        removeToListDuplicates()
         return false
       source: (request, response) ->
         term = request.term
@@ -78,14 +73,7 @@ jQuery(document).ready ($) ->
           response data if xhr is lastXhr
 
     $('#message_to').data('autocomplete')._renderItem = (ul, item) ->
-      li = $('<li>').data('item.autocomplete', item).appendTo ul
-      html = '<a>'
-      if item.avatar?
-        li.addClass 'with-avatar'
-        html += "<img src='#{item.avatar}' alt=''>"
-      html += "#{item.label}</a>"
-      li.html html
-      return li
+      $('<li class="with-avatar">').html(item.label).data('item.autocomplete', item).appendTo ul
 
     $('.to_list').on 'click', '.close', ->
       $(@).closest('li').remove()
@@ -93,11 +81,10 @@ jQuery(document).ready ($) ->
       return false
 
     $('#message_subject, #message_body').on 'focus keypress', ->
-      updateMessageListClasses()
-      $('aside ul, aside label').hide()
+      $(@).siblings('mark').trigger 'click'
 
     $('mark').click ->
-      $(@).animate opacity: 0, 200, 'linear'
+      $(@).animate opacity: 0, 200, 'linear', -> $(@).remove()
 
     updateMessageHeaderHeight()
 
@@ -119,16 +106,3 @@ jQuery(document).ready ($) ->
 
 updateMessageHeaderHeight = ->
   $('#message.compose article').css({ top: $('header').height() + 35 })
-
-updateMessageListClasses = ->
-  $('aside li').removeClass 'first last'
-  visible = $('aside li:has(label:visible)')
-  visible.filter(':first').addClass 'first'
-  visible.filter(':last').addClass 'last'
-
-removeToListDuplicates = ->
-  seen = {}
-  $($('.to_list li').get().reverse()).each ->
-    txt = $(@).text()
-    $(@).remove() if seen[txt]
-    seen[txt] = true
