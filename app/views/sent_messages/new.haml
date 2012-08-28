@@ -8,14 +8,14 @@
         %ol
           %li
             %label{ for: 'message_to' } To
-            = text_field_tag 'term', '', id: 'message_to', tabindex: 1, placeholder: 'Player or character name', data: { url: sent_autocomplete_url }
+            = text_field_tag 'term', '', id: 'message_to', tabindex: 1, placeholder: 'Player or character name', data: { url: sent_autocomplete_url, autocomplete: 'off' }
           %li
             = f.input :subject, wrapper: false, placeholder: 'Required', input_html: { tabindex: 2, maxlength: Message::MAX_SUBJECT_LENGTH }
           %li.to_list
             - if @message.to
               %ul
                 - @message.to.each do |to|
-                  = render 'to', user_profile: UserProfile.find(to)
+                  = render 'to', user_profile: user_profile if user_profile = UserProfile.find_by_id(to)
 
     = f.input :body, as: :text, label: false, wrapper_tag: :article, input_html: { tabindex: 3 }
     %button{ type: ':submit', tabindex: 4 } Send
