@@ -13,7 +13,7 @@
   #searchbox
     = form_tag search_url(subdomain: false), method: 'get' do
       %p
-        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', data: {url: search_autocomplete_url}
+        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', data: {url: search_autocomplete_url, autocomplete: 'off'}
         %button{ type: 'submit' } Search
 
   - unless params[:term].blank?
