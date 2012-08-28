@@ -42,7 +42,7 @@ jQuery(document).ready ($) ->
     $('.to_list li input').each -> to_list.push parseInt $(@).val()
 
     $('#message_to').autocomplete
-      autoFocus: true
+      autoFocus: false
       create: (e, ui) ->
         $('ul.ui-autocomplete li:has(img)').addClass 'with-avatar'
       delay: 300
