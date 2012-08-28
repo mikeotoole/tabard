@@ -8,4 +8,4 @@
   %br
   = f.input :avatar, wrapper: false, hint: 'Maxium file size of 2mb. GIF, JPG, PNG.'
   = f.input :remote_avatar_url, label: "or image URL", wrapper: false
-  = f.input :remove_avatar, as: :boolean, label: "Remove avatar"
+  = f.input :remove_avatar, as: :boolean, label: "Remove avatar" unless minecraft_character[:avatar].blank?
