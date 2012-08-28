@@ -10,8 +10,8 @@ unless @dont_run
         is_available: true
         }, without_protection: true)
   plan.community_upgrades.create!({
-    title: "20 User Pack"
-    description: "DOUG FIX THIS IN THE SEED!"
+    title: "20 User Pack",
+    description: "DOUG FIX THIS IN THE SEED!",
     price_per_month_in_cents: 1337,
     max_number_of_upgrades: nil
     }, without_protection: true)

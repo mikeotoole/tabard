@@ -1,16 +1,17 @@
 # == Schema Information
 #
-# Table name: community_plan_upgrades
+# Table name: current_community_upgrades
 #
 #  id                   :integer          not null, primary key
-#  community_plan_id    :integer
+#  community_id         :integer
 #  community_upgrade_id :integer
+#  number_in_use        :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
 
 require 'spec_helper'
 
-describe CommunityPlanUpgrades do
+describe CurrentCommunityUpgrade do
   pending "add some examples to (or delete) #{__FILE__}"
 end

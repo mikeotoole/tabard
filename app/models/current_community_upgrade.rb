@@ -1,4 +1,5 @@
-class CurrentCommunityUpgrades < ActiveRecord::Base
+class CurrentCommunityUpgrade < ActiveRecord::Base
+  attr_accessible :community_upgrade_id, :number_in_use
   belongs_to :community
   belongs_to :community_upgrade
 end

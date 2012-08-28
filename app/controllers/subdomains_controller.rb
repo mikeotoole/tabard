@@ -152,7 +152,7 @@ protected
       if user_signed_in? and current_user.is_member? current_community
         if current_user.owned_communities.include?(current_community)
           # TODO UPGRADE OR BOOT
-          add_new_flash_message "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}.", 'alert'
+          add_new_flash_message "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}.", 'alert'
           redirect_to roster_assignments_url(subdomain:current_community.subdomain)
           return
         else

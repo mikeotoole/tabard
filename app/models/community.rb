@@ -29,7 +29,7 @@ class Community < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :current_community_upgrades_attributes
 
 ###
 # Associations
@@ -37,7 +37,11 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
+
   belongs_to :community_plan
+  has_many :current_community_upgrades
+  has_many :community_upgrades, through: :current_community_upgrades
+
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
   has_many :custom_forms, dependent: :delete_all, order: 'LOWER(name)', inverse_of: :community
@@ -62,7 +66,7 @@ class Community < ActiveRecord::Base
   belongs_to :theme
   belongs_to :home_page, class_name: "Page"
 
-  accepts_nested_attributes_for :theme
+  accepts_nested_attributes_for :theme, :current_community_upgrades
 
 ###
 # Callbacks
@@ -150,9 +154,9 @@ class Community < ActiveRecord::Base
 
   def max_number_of_users
     if self.is_paid_community?
-      return 1
+      return 100
     else
-      return 1
+      return 20
     end
   end
 

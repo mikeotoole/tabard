@@ -1,4 +1,4 @@
-class CommunityPlanUpgrades < ActiveRecord::Base
+class CommunityPlanUpgrade < ActiveRecord::Base
   belongs_to :community_plan
   belongs_to :community_upgrade
 end

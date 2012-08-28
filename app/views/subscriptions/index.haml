@@ -25,4 +25,4 @@
       %tfoot
         %tr
           %td{ colspan: 4 }
-            = "Total #{number_to_currency(@user.total_price_per_month_in_dollars)}"
+            = "Total #{number_to_currency(current_user.total_price_per_month_in_dollars)}"

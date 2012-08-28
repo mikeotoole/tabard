@@ -6,5 +6,10 @@
   = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true} do |f|
     %h2=@community.name
     =f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan", as: :radio_buttons
+    =f.simple_fields_for :current_community_upgrades do |cuf|
+      %p=cuf.object.community_upgrade.to_yaml
+      =cuf.input :community_upgrade_id, as: :hidden
+      =cuf.input :number_in_use
+
     %p.submit
       = f.button :submit, 'Save Changes'
