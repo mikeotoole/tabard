@@ -75,7 +75,7 @@ class CharacterProxy < ActiveRecord::Base
   # [Returns] A scoped query
   ###
   def self.search(search)
-    MinecraftCharacter.search(search).map{|c| c.character_proxy } + SwtorCharacter.search(search).map{|c| c.character_proxy } + WowCharacter.search(search).map{|c| c.character_proxy }
+    MinecraftCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy } + SwtorCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy } + WowCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy }
   end
 
 ###
