@@ -363,6 +363,7 @@ class Ability
     return if user.community_profiles.empty? or not user.community_profiles.find_by_community_id(current_community.id)
     community_profile = user.community_profiles.find_by_community_id(current_community.id)
     community_profile.roles.includes(:permissions).each do |role|
+      next unless role.is_member_role? or current_community.is_paid_community?
       role.permissions.each do |permission|
         action = Array.new
         if not permission.permission_level?
