@@ -168,6 +168,20 @@ class User < ActiveRecord::Base
 # Instance Methods
 ###
 
+  # Returns the total cost for all users owned communities in cents.
+  def total_price_per_month_in_cents
+    cost = 0
+    self.owned_communities.each do |community|
+      cost = cost + community.total_price_per_month_in_cents
+    end
+    cost
+  end
+
+  # Returns the total cost for all users owned communities in dollars.
+  def total_price_per_month_in_dollars
+    self.total_price_per_month_in_cents/100.0
+  end
+
 ###
 # Doc Acceptance
 ###

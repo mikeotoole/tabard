@@ -81,6 +81,7 @@ class Community < ActiveRecord::Base
   delegate :css, to: :theme, prefix: true
   delegate :background_author, to: :theme, prefix: true, allow_nil: true
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
+  delegate :title, to: :community_plan, prefix: true, allow_nil: true
 
 ###
 # Validators
@@ -153,6 +154,14 @@ class Community < ActiveRecord::Base
     else
       return 1
     end
+  end
+
+  def total_price_per_month_in_cents
+    self.community_plan.price_per_month_in_cents
+  end
+
+  def total_price_per_month_in_dollars
+    self.total_price_per_month_in_cents/100.0
   end
 
   # Returns all games that this community supports
