@@ -1,7 +1,7 @@
 class CommunityUpgrade < ActiveRecord::Base
-  has_many :community_plan_upgrades
+  has_many :community_plan_upgrades, inverse_of: :community_upgrade
   has_many :community_plans, through: :community_plan_upgrades
-  has_many :current_community_upgrades
+  has_many :current_community_upgrades, inverse_of: :community_upgrade
   has_many :communities, through: :current_community_upgrades
 end
 

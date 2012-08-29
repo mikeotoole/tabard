@@ -39,7 +39,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
 
   belongs_to :community_plan
-  has_many :current_community_upgrades
+  has_many :current_community_upgrades, inverse_of: :community
   has_many :community_upgrades, through: :current_community_upgrades
 
   has_many :community_applications, dependent: :destroy
@@ -67,7 +67,7 @@ class Community < ActiveRecord::Base
   belongs_to :home_page, class_name: "Page"
 
   accepts_nested_attributes_for :theme
-  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true
+  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
 
 ###
 # Callbacks
@@ -79,6 +79,8 @@ class Community < ActiveRecord::Base
   after_create :setup_member_role, :make_admin_a_member
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
+
+  before_save :remove_incompatible_upgrades
 
 ###
 # Delegates
@@ -147,6 +149,14 @@ class Community < ActiveRecord::Base
       self.is_accepting_members and !user.is_member? self and !user.application_pending? self
     else
       true
+    end
+  end
+
+  def remove_incompatible_upgrades
+    if self.community_plan_id_changed?
+      self.current_community_upgrades.each do |current_upgrade|
+        current_upgrade.mark_for_destruction unless current_upgrade.community_upgrade.community_plans.include? self.community_plan
+      end
     end
   end
 

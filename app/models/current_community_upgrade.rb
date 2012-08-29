@@ -1,7 +1,7 @@
 class CurrentCommunityUpgrade < ActiveRecord::Base
   attr_accessible :community_upgrade_id, :number_in_use
-  belongs_to :community
-  belongs_to :community_upgrade
+  belongs_to :community, inverse_of: :current_community_upgrades
+  belongs_to :community_upgrade, inverse_of: :current_community_upgrades
 end
 
 # == Schema Information
