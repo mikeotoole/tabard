@@ -166,11 +166,17 @@ class Community < ActiveRecord::Base
   end
 
   def max_number_of_users
+    base_number_of_users = 0
     if self.is_paid_community?
-      return 100
+      base_number_of_users = 100
     else
-      return 20
+      base_number_of_users = 20
     end
+    return base_number_of_users + self.user_pack_upgrade_amount
+  end
+
+  def user_pack_upgrade_amount
+    self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.current_community_upgrades.to_yaml
   end
 
   def total_price_per_month_in_cents

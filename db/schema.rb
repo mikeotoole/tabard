@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829184423) do
+ActiveRecord::Schema.define(:version => 20120829215519) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -281,14 +281,17 @@ ActiveRecord::Schema.define(:version => 20120829184423) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
     t.string   "type"
+    t.text     "upgrade_options"
   end
 
   create_table "current_community_upgrades", :force => true do |t|
     t.integer  "community_id"
     t.integer  "community_upgrade_id"
     t.integer  "number_in_use"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.date     "current_plan_expiration_date"
+    t.integer  "subcription_amount"
   end
 
   add_index "current_community_upgrades", ["community_id"], :name => "index_current_community_upgrades_on_community_id"

@@ -1,10 +1,14 @@
 class CommunityUpgrade < ActiveRecord::Base
-
 ###
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.
   VALID_TYPES = %w( CommunityUserPackUpgrade )
+
+###
+# Attribute accessible
+###
+  store :upgrade_options, accessors: [:number_of_users]
 
 ###
 # Associations
@@ -42,5 +46,6 @@ end
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  type                     :string(255)
+#  upgrade_options          :text
 #
 
