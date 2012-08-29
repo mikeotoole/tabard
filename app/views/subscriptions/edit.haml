@@ -1,15 +1,24 @@
+= javascript_include_tag "subscriptions"
+
 - title 'Edit Subscription'
 
 #body
   %h1 Subscriptions#edit
 
-  = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true} do |f|
+  #stripe_error
+
+  = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true, id: "edit_subscription"} do |f|
     %h2=@community.name
-    =f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan", as: :radio_buttons
-    =f.simple_fields_for :current_community_upgrades do |cuf|
+    = f.hidden_field :stripe_card_token
+    = f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan", as: :radio_buttons
+    = f.simple_fields_for :current_community_upgrades do |cuf|
       %p=cuf.object.community_upgrade.to_yaml
       =cuf.input :community_upgrade_id, as: :hidden
       =cuf.input :number_in_use
-
+    - if @community.stripe_card_token.present? or current_user.stripe_customer_token.present?
+      - # TODO Should add the abillity to change payment method.
+      Credit card has been provided
+    - else
+      = render partial: 'credit_card_form'
     %p.submit
-      = f.button :submit, 'Save Changes'
+      = f.button :submit, 'Update Subscription'

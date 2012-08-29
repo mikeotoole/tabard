@@ -23,8 +23,10 @@ class SubscriptionsController < ApplicationController
       redirect_to forbidden_url
     else
       @plan = CommunityPlan.available.find_by_id(params[:community][:community_plan_id])
+      @community.stripe_card_token = params[:community][:stripe_card_token]
       @community.community_plan = @plan
-      add_new_flash_message("Your plan has been changed",'success') if @community.save!
+
+      add_new_flash_message("Your plan has been changed",'success') if @community.save_with_payment
       respond_with(@community, location: edit_subscription_url(@community))
     end
   end

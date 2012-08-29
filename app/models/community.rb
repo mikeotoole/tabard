@@ -25,6 +25,8 @@ class Community < ActiveRecord::Base
   # Used by validator to limit restrict pitch length
   MAX_PITCH_LENGTH = 100
 
+  attr_accessor :stripe_card_token
+
 ###
 # Attribute accessible
 ###
@@ -86,6 +88,8 @@ class Community < ActiveRecord::Base
   delegate :background_author, to: :theme, prefix: true, allow_nil: true
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :title, to: :community_plan, prefix: true, allow_nil: true
+  delegate :email, to: :admin_profile, prefix: true, allow_nil: true
+  delegate :user, to: :admin_profile, prefix: true, allow_nil: true
 
 ###
 # Validators
@@ -166,6 +170,30 @@ class Community < ActiveRecord::Base
 
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
+  end
+
+  def save_with_payment
+    if valid?
+      plan_id = self.community_plan_id # Will need to get Stripe plan for all users communites.
+      if self.admin_profile_user.stripe_customer_token.present?
+        c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
+        if self.stripe_card_token.present?
+          # TODO Update credit card info and subscription
+          c.update_subscription(plan: plan_id, prorate: true, card: self.stripe_card_token)
+        else
+          # Update subscription
+          c.update_subscription(plan: plan_id, prorate: true)
+        end
+      else
+        # Create new Stripe customer for community admin and subscribe to Stripe plan.
+        customer = Stripe::Customer.create(description: "User ID: #{self.admin_profile_user.id}", email: self.admin_profile_email, plan: plan_id, card: self.stripe_card_token)
+        self.admin_profile_user.stripe_customer_token = customer.id
+        self.admin_profile_user.save!
+      end
+      self.save!
+    else
+      false
+    end
   end
 
   # Returns all games that this community supports
