@@ -9,14 +9,14 @@
 
   = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true, id: "edit_subscription"} do |f|
     %h2=@community.name
-    = f.hidden_field :stripe_card_token
+    = hidden_field_tag :stripe_card_token
     = f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan", as: :radio_buttons
     = f.simple_fields_for :current_community_upgrades do |cuf|
       %p=cuf.object.community_upgrade.to_yaml
       =cuf.input :community_upgrade_id, as: :hidden
       =cuf.input :number_in_use
       =cuf.input :_destroy, as: :boolean
-    - if @community.stripe_card_token.present? or current_user.stripe_customer_token.present?
+    - if @stripe_card_token.present? or current_user.stripe_customer_token.present?
       - # TODO Should add the abillity to change payment method.
       Credit card has been provided
     - else

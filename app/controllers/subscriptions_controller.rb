@@ -3,7 +3,7 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_variables
+  before_filter :load_variables, only: [:edit, :update]
 
   def index
     @owned_communities = current_user.owned_communities
@@ -22,13 +22,8 @@ class SubscriptionsController < ApplicationController
     if @community.blank? or params[:community].blank?
       redirect_to forbidden_url
     else
-      @plan = CommunityPlan.available.find_by_id(params[:community][:community_plan_id])
-      @community.stripe_card_token = params[:community][:stripe_card_token]
-      @community.community_plan = @plan
-
-      # TODO: Need to fix what I broke for Joe Upgrades implementation.
-      #@community.update_attributes(params[:community])
-      add_new_flash_message("Your plan has been changed",'success') if @community.save_with_payment
+      @stripe_card_token = params[:stripe_card_token]
+      add_new_flash_message("Your plan has been changed",'success') if @community.update_with_payment(params[:community], @stripe_card_token)
       respond_with(@community, location: edit_subscription_url(@community))
     end
   end

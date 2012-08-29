@@ -25,8 +25,6 @@ class Community < ActiveRecord::Base
   # Used by validator to limit restrict pitch length
   MAX_PITCH_LENGTH = 100
 
-  attr_accessor :stripe_card_token
-
 ###
 # Attribute accessible
 ###
@@ -173,25 +171,38 @@ class Community < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
-  def save_with_payment
+  def update_with_payment(attributes, stripe_card_token)
+    self.attributes = attributes
+    # set attributes
     if valid?
-      plan_id = self.community_plan_id # Will need to get Stripe plan for all users communites.
-      if self.admin_profile_user.stripe_customer_token.present?
-        c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
-        if self.stripe_card_token.present?
-          # TODO Update credit card info and subscription
-          c.update_subscription(plan: plan_id, prorate: true, card: self.stripe_card_token)
-        else
-          # Update subscription
-          c.update_subscription(plan: plan_id, prorate: true)
-        end
+      if self.community_plan.is_free_plan?
+        puts "################ FREE"
+        # Need to cancel current plan
+        return self.save!
       else
-        # Create new Stripe customer for community admin and subscribe to Stripe plan.
-        customer = Stripe::Customer.create(description: "User ID: #{self.admin_profile_user.id}", email: self.admin_profile_email, plan: plan_id, card: self.stripe_card_token)
-        self.admin_profile_user.stripe_customer_token = customer.id
-        self.admin_profile_user.save!
+        # Find plan on strip with this total cost.
+        # If it does not exist create it.
+        plan_id = 1 # Will need to set Stripe plan.
+        if self.admin_profile_user.stripe_customer_token.present?
+          c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
+          if stripe_card_token.present?
+            # Update credit card info and subscription
+            c.update_subscription(plan: plan_id, prorate: true, card: stripe_card_token)
+          else
+            # Update subscription
+            c.update_subscription(plan: plan_id, prorate: true)
+          end
+        else
+          # Create new Stripe customer for community admin and subscribe to Stripe plan.
+          customer = Stripe::Customer.create(description: "User ID: #{self.admin_profile_user.id}",
+                                                   email: self.admin_profile_email,
+                                                   plan: plan_id,
+                                                   card: stripe_card_token)
+          self.admin_profile_user.stripe_customer_token = customer.id
+          self.admin_profile_user.save!
+        end
+        return self.save!
       end
-      self.save!
     else
       false
     end

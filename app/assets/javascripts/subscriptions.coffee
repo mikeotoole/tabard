@@ -22,7 +22,7 @@ subscription =
 
   handleStripeResponse: (status, response) ->
     if status is 200
-      $('#community_stripe_card_token').val(response.id)
+      $('#stripe_card_token').val(response.id)
       $('#edit_subscription')[0].submit()
     else
       $('#stripe_error').text(response.error.message)

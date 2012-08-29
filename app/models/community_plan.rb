@@ -1,4 +1,6 @@
 class CommunityPlan < ActiveRecord::Base
+  FREE_PLAN_TITLE = "Free"
+
 
   has_many :communities
   has_many :community_plan_upgrades
@@ -12,7 +14,7 @@ class CommunityPlan < ActiveRecord::Base
   }
 
   def self.default_plan
-    plan = CommunityPlan.find_by_title("Free")
+    plan = CommunityPlan.find_by_title(FREE_PLAN_TITLE)
     if plan == nil
       return CommunityPlan.create({
         title: "Free",
@@ -23,6 +25,10 @@ class CommunityPlan < ActiveRecord::Base
     else
       return plan
     end
+  end
+
+  def is_free_plan?
+    return self.title == FREE_PLAN_TITLE
   end
 end
 
