@@ -80,7 +80,7 @@ class Community < ActiveRecord::Base
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
 
-  before_save :remove_incompatible_upgrades
+  before_validation :remove_incompatible_upgrades
 
 ###
 # Delegates
@@ -180,47 +180,29 @@ class Community < ActiveRecord::Base
   end
 
   def total_price_per_month_in_cents
-    self.community_plan.price_per_month_in_cents
+    price = self.community_plan.price_per_month_in_cents
+    self.current_community_upgrades.each do |current_community_upgrade|
+      price = price + current_community_upgrade.total_price_per_month_in_cents
+    end
+    price
   end
 
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
   end
 
-  def update_with_payment(attributes, stripe_card_token)
-    self.attributes = attributes
-    # set attributes
-    if valid?
-      if self.community_plan.is_free_plan?
-        puts "################ FREE"
-        # Need to cancel current plan
+  def update_attributes_with_payment(community_attributes, stripe_card_token)
+    self.attributes = community_attributes
+    if self.valid?
+      new_total_cost = self.admin_profile_user.new_total_price_per_month_in_cents(self)
+      if self.admin_profile_user.update_stripe(stripe_card_token, new_total_cost)
         return self.save!
       else
-        # Find plan on strip with this total cost.
-        # If it does not exist create it.
-        plan_id = 1 # Will need to set Stripe plan.
-        if self.admin_profile_user.stripe_customer_token.present?
-          c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
-          if stripe_card_token.present?
-            # Update credit card info and subscription
-            c.update_subscription(plan: plan_id, prorate: true, card: stripe_card_token)
-          else
-            # Update subscription
-            c.update_subscription(plan: plan_id, prorate: true)
-          end
-        else
-          # Create new Stripe customer for community admin and subscribe to Stripe plan.
-          customer = Stripe::Customer.create(description: "User ID: #{self.admin_profile_user.id}",
-                                                   email: self.admin_profile_email,
-                                                   plan: plan_id,
-                                                   card: stripe_card_token)
-          self.admin_profile_user.stripe_customer_token = customer.id
-          self.admin_profile_user.save!
-        end
-        return self.save!
+        self.errors.add :base, "There was a problem with your credit card"
+        return false
       end
     else
-      false
+      return false
     end
   end
 
