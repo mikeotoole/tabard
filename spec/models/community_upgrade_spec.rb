@@ -9,6 +9,7 @@
 #  max_number_of_upgrades   :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  type                     :string(255)
 #
 
 require 'spec_helper'

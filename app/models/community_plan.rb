@@ -5,7 +5,12 @@ class CommunityPlan < ActiveRecord::Base
   has_many :communities
   has_many :community_plan_upgrades
   has_many :community_upgrades, through: :community_plan_upgrades
-
+###
+# Validators
+###
+  validates :title, presence: true
+  validates :description, presence: true
+  validates :price_per_month_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
 ###
 # Scopes
 ###
