@@ -5,6 +5,6 @@ FactoryGirl.define do
     title "MyString"
     description "MyText"
     price_per_month_in_cents 1
-    is_available? false
+    is_available false
   end
 end
