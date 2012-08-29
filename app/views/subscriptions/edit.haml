@@ -15,6 +15,7 @@
       %p=cuf.object.community_upgrade.to_yaml
       =cuf.input :community_upgrade_id, as: :hidden
       =cuf.input :number_in_use
+      =cuf.input :_destroy, as: :boolean
     - if @community.stripe_card_token.present? or current_user.stripe_customer_token.present?
       - # TODO Should add the abillity to change payment method.
       Credit card has been provided
