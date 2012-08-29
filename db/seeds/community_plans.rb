@@ -6,13 +6,13 @@ unless @dont_run
 
   plan = CommunityPlan.create!({title: "Pro",
         description: "DOUG FIX THIS IN THE SEED!",
-        price_per_month_in_cents: 1337,
+        price_per_month_in_cents: 1000,
         is_available: true
         }, without_protection: true)
   plan.community_upgrades.create!({
     title: "20 User Pack",
     description: "DOUG FIX THIS IN THE SEED!",
-    price_per_month_in_cents: 1337,
+    price_per_month_in_cents: 200,
     max_number_of_upgrades: nil
     }, without_protection: true)
 end

@@ -164,25 +164,32 @@ class Community < ActiveRecord::Base
   end
 
   def total_price_per_month_in_cents
-    self.community_plan.price_per_month_in_cents
+    price = self.community_plan.price_per_month_in_cents
+    self.current_community_upgrades.each do |current_community_upgrade|
+      price = price + current_community_upgrade.total_price_per_month_in_cents
+    end
+    price
   end
 
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
   end
 
-  def update_with_payment(attributes, stripe_card_token)
-    self.attributes = attributes
-    # set attributes
-    if valid?
-      if self.community_plan.is_free_plan?
-        puts "################ FREE"
+  def save_with_payment(stripe_card_token)
+    if self.valid?
+      new_total_cost = self.admin_profile_user.new_total_price_per_month_in_cents(self)
+
+      if self.community_plan.is_free_plan? # TODO: Needs to check if now total cost for all users plans is zero.
+        if self.admin_profile_user.stripe_customer_token.present?
+          c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
+          s = c.cancel_subscription
+        end
         # Need to cancel current plan
         return self.save!
       else
         # Find plan on strip with this total cost.
         # If it does not exist create it.
-        plan_id = 1 # Will need to set Stripe plan.
+        plan_id = 1 # TODO: Will need to set Stripe plan.
         if self.admin_profile_user.stripe_customer_token.present?
           c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
           if stripe_card_token.present?

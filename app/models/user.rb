@@ -182,6 +182,14 @@ class User < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
+  def new_total_price_per_month_in_cents(community)
+    cost = community.total_price_per_month_in_cents
+    self.owned_communities.all(:conditions => ["id != ?", community.id]).each do |community|
+      cost = cost + community.total_price_per_month_in_cents
+    end
+    cost
+  end
+
 ###
 # Doc Acceptance
 ###
