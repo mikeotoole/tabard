@@ -190,6 +190,41 @@ class User < ActiveRecord::Base
     cost
   end
 
+  def update_stripe(stripe_card_token, new_total_cost)
+    if new_total_cost == 0
+      # Need to cancel subscription
+      if self.stripe_customer_token.present?
+        c = Stripe::Customer.retrieve(self.stripe_customer_token)
+        s = c.cancel_subscription if c.subscription.present?
+      end
+      return true
+    else
+      # Find plan on strip with this total cost.
+#       Stripe::Plan.retrieve("#{new_total_cost}")
+      # If it does not exist create it.
+      plan_id = 1 # TODO: Will need to set Stripe plan.
+      if self.stripe_customer_token.present?
+        c = Stripe::Customer.retrieve(self.stripe_customer_token)
+        if stripe_card_token.present?
+          # Update credit card info and subscription
+          c.update_subscription(plan: plan_id, prorate: true, card: stripe_card_token)
+        else
+          # Update subscription
+          c.update_subscription(plan: plan_id, prorate: true)
+        end
+      else
+        # Create new Stripe customer for community admin and subscribe to Stripe plan.
+        customer = Stripe::Customer.create(description: "User ID: #{self.id}",
+                                                 email: self.admin_profile_email,
+                                                 plan: plan_id,
+                                                 card: stripe_card_token)
+        self.stripe_customer_token = customer.id
+        self.save!
+      end
+      return true
+    end
+  end
+
 ###
 # Doc Acceptance
 ###
@@ -412,5 +447,6 @@ end
 #  time_zone                         :integer          default(-8)
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
+#  stripe_customer_token             :string(255)
 #
 

@@ -39,7 +39,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
 
   belongs_to :community_plan
-  has_many :current_community_upgrades
+  has_many :current_community_upgrades, inverse_of: :community
   has_many :community_upgrades, through: :current_community_upgrades
 
   has_many :community_applications, dependent: :destroy
@@ -67,7 +67,7 @@ class Community < ActiveRecord::Base
   belongs_to :home_page, class_name: "Page"
 
   accepts_nested_attributes_for :theme
-  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true
+  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
 
 ###
 # Callbacks
@@ -79,6 +79,8 @@ class Community < ActiveRecord::Base
   after_create :setup_member_role, :make_admin_a_member
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
+
+  before_validation :remove_incompatible_upgrades
 
 ###
 # Delegates
@@ -150,6 +152,14 @@ class Community < ActiveRecord::Base
     end
   end
 
+  def remove_incompatible_upgrades
+    if self.community_plan_id_changed?
+      self.current_community_upgrades.each do |current_upgrade|
+        current_upgrade.mark_for_destruction unless current_upgrade.community_upgrade.community_plans.include? self.community_plan
+      end
+    end
+  end
+
 
   def is_paid_community?
     not self.community_plan.title == "Free"
@@ -175,43 +185,18 @@ class Community < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
-  def save_with_payment(stripe_card_token)
+  def update_attributes_with_payment(community_attributes, stripe_card_token)
+    self.attributes = community_attributes
     if self.valid?
       new_total_cost = self.admin_profile_user.new_total_price_per_month_in_cents(self)
-
-      if self.community_plan.is_free_plan? # TODO: Needs to check if now total cost for all users plans is zero.
-        if self.admin_profile_user.stripe_customer_token.present?
-          c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
-          s = c.cancel_subscription
-        end
-        # Need to cancel current plan
+      if self.admin_profile_user.update_stripe(stripe_card_token, new_total_cost)
         return self.save!
       else
-        # Find plan on strip with this total cost.
-        # If it does not exist create it.
-        plan_id = 1 # TODO: Will need to set Stripe plan.
-        if self.admin_profile_user.stripe_customer_token.present?
-          c = Stripe::Customer.retrieve(self.admin_profile_user.stripe_customer_token)
-          if stripe_card_token.present?
-            # Update credit card info and subscription
-            c.update_subscription(plan: plan_id, prorate: true, card: stripe_card_token)
-          else
-            # Update subscription
-            c.update_subscription(plan: plan_id, prorate: true)
-          end
-        else
-          # Create new Stripe customer for community admin and subscribe to Stripe plan.
-          customer = Stripe::Customer.create(description: "User ID: #{self.admin_profile_user.id}",
-                                                   email: self.admin_profile_email,
-                                                   plan: plan_id,
-                                                   card: stripe_card_token)
-          self.admin_profile_user.stripe_customer_token = customer.id
-          self.admin_profile_user.save!
-        end
-        return self.save!
+        self.errors.add :base, "There was a problem with your credit card"
+        return false
       end
     else
-      false
+      return false
     end
   end
 

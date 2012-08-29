@@ -23,11 +23,15 @@ class SubscriptionsController < ApplicationController
       redirect_to forbidden_url
     else
       @stripe_card_token = params[:stripe_card_token]
-      puts "######### Before #{current_user.total_price_per_month_in_cents}"
-      @community.attributes = params[:community]
-      puts "######### After #{current_user.new_total_price_per_month_in_cents(@community)}"
 
-      add_new_flash_message("Your plan has been changed",'success') if @community.save_with_payment(@stripe_card_token)
+      begin
+        add_new_flash_message("Your plan has been changed",'success') if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
+      rescue Stripe::StripeError => e
+        logger.error e.message
+        @community.errors.add :base, "There was a problem with your credit card"
+        @stripe_card_token = nil
+      end
+
       respond_with(@community, location: edit_subscription_url(@community))
     end
   end
