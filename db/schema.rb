@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829215519) do
+ActiveRecord::Schema.define(:version => 20120829222330) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -579,6 +579,12 @@ ActiveRecord::Schema.define(:version => 20120829215519) do
     t.boolean  "is_maintenance", :default => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "stripe_plans", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "submissions", :force => true do |t|
