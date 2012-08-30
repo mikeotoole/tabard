@@ -179,7 +179,7 @@ class Community < ActiveRecord::Base
     number_of_bonus_users = 0
     self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
       if upgrade.is_a? CommunityUserPackUpgrade
-        number_of_bonus_users = number_of_bonus_users + upgrade.number_of_bonus_users
+        number_of_bonus_users = number_of_bonus_users + upgrade.number_of_bonus_users(self)
       end
     end
     return number_of_bonus_users
