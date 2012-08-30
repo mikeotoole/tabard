@@ -219,9 +219,10 @@ class User < ActiveRecord::Base
         # Create new Stripe customer for community admin and subscribe to Stripe plan.
         customer = Stripe::Customer.create(description: "User ID: #{self.id}",
                                                  email: self.email,
-                                                 plan: plan.strip_id,
-                                                 card: stripe_card_token)
+                                                  plan: plan.strip_id,
+                                                  card: stripe_card_token)
         self.stripe_customer_token = customer.id
+        self.stripe_subscription_date = DateTime.now.utc
         self.save!
       end
       return true
@@ -451,5 +452,6 @@ end
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
+#  stripe_subscription_date          :date
 #
 
