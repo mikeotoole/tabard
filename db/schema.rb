@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829222330) do
+ActiveRecord::Schema.define(:version => 20120830230422) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(:version => 20120829222330) do
     t.text     "action_items"
     t.string   "pitch"
     t.integer  "community_plan_id"
+    t.date     "community_subscription_date"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -288,9 +289,8 @@ ActiveRecord::Schema.define(:version => 20120829222330) do
     t.integer  "community_id"
     t.integer  "community_upgrade_id"
     t.integer  "number_in_use"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.date     "current_plan_expiration_date"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.integer  "subcription_amount"
   end
 
