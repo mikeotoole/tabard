@@ -12,6 +12,11 @@ class StripePlan < ActiveRecord::Base
   attr_accessible :amount
 
 ###
+# Read only attributes
+###
+  attr_readonly :amount
+
+###
 # Callbacks
 ###
   before_create :create_plan_on_stripe
@@ -25,7 +30,7 @@ class StripePlan < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
+  # The id used to store plan on stripe.
   def strip_id
     "pro-#{self.amount}"
   end
@@ -38,7 +43,7 @@ class StripePlan < ActiveRecord::Base
 ###
 # Callback Methods
 ###
-
+  # Create a plan on stripe for this amount.
   def create_plan_on_stripe
     begin
       Stripe::Plan.create(

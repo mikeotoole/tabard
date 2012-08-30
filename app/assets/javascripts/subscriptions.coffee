@@ -6,7 +6,7 @@ subscription =
   setupForm: ->
     $('#edit_subscription').submit ->
       if $('#card_number').length
-        $(@).find('input[type=submit]').attr 'disabled', true
+        $(@).find('input[type=submit]').prop 'disabled', true
         subscription.processCard()
         false
       else
@@ -26,4 +26,4 @@ subscription =
       $('#edit_subscription')[0].submit()
     else
       $('#stripe_error').text(response.error.message)
-      $('input[type=submit]').attr 'disabled', false
+      $('input[type=submit]').prop 'disabled', false
