@@ -176,7 +176,13 @@ class Community < ActiveRecord::Base
   end
 
   def user_pack_upgrade_amount
-    self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.current_community_upgrades.to_yaml
+    number_of_bonus_users = 0
+    self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
+      if upgrade.is_a? CommunityUserPackUpgrade
+        number_of_bonus_users = number_of_bonus_users + upgrade.number_of_bonus_users
+      end
+    end
+    return number_of_bonus_users
   end
 
   def total_price_per_month_in_cents

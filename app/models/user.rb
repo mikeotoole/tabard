@@ -215,7 +215,7 @@ class User < ActiveRecord::Base
       else
         # Create new Stripe customer for community admin and subscribe to Stripe plan.
         customer = Stripe::Customer.create(description: "User ID: #{self.id}",
-                                                 email: self.admin_profile_email,
+                                                 email: self.email,
                                                  plan: plan_id,
                                                  card: stripe_card_token)
         self.stripe_customer_token = customer.id
