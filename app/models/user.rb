@@ -198,7 +198,7 @@ class User < ActiveRecord::Base
       # Need to cancel subscription
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
-        s = c.cancel_subscription if c.subscription.present?
+        s = c.cancel_subscription(at_period_end: true) if c.subscription.present?
       end
       return true
     else
