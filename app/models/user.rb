@@ -200,7 +200,7 @@ class User < ActiveRecord::Base
       return true
     else
       # Find plan with this total cost.
-      plan = StripePlan.find_or_create_by_amount(new_total_cost) #TODO Handel any errors in creation.
+      plan = StripePlan.find_or_create_by_amount(new_total_cost) #TODO Handle any errors in creation.
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         if stripe_card_token.present?
