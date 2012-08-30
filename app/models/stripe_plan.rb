@@ -40,14 +40,17 @@ class StripePlan < ActiveRecord::Base
 ###
 
   def create_plan_on_stripe
-    Stripe::Plan.create(
-      :amount => self.amount,
-      :interval => 'month',
-      :name => self.strip_id,
-      :currency => 'usd',
-      :id => self.strip_id
-    )
-    # TODO Handle errors.
+    begin
+      Stripe::Plan.create(
+        :amount => self.amount,
+        :interval => 'month',
+        :name => self.strip_id,
+        :currency => 'usd',
+        :id => self.strip_id
+      )
+    rescue Stripe::InvalidRequestError => e
+      throw e unless e.message == "Plan already exists."
+    end
   end
 end
 
