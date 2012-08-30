@@ -52,7 +52,7 @@ class CommunityProfile < ActiveRecord::Base
                                 unless: Proc.new { |community_profile| community_profile.user_profile.blank? }
   validate :has_at_least_the_default_member_role
   validates_each :community do |community_profile, attr, value|
-    community_profile.errors.add attr, "too many members for community" if not community_profile.community.blank? and community_profile.community.community_profiles.count > community_profile.community.max_number_of_users
+    community_profile.errors.add attr, "too many members for community" if not community_profile.community.blank? and community_profile.community.current_number_of_users > community_profile.community.max_number_of_users
   end
 
 ###
