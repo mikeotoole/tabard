@@ -204,8 +204,8 @@ class Community < ActiveRecord::Base
   def update_attributes_with_payment(community_attributes, stripe_card_token)
     self.attributes = community_attributes
     if self.valid?
-      new_total_cost = self.admin_profile_user.new_total_price_per_month_in_cents(self)
-      if self.admin_profile_user.update_stripe(stripe_card_token, new_total_cost)
+      new_total_price = self.admin_profile_user.new_total_price_per_month_in_cents(self)
+      if self.admin_profile_user.update_stripe(stripe_card_token, new_total_price)
         return self.save!
       else
         self.errors.add :base, "There was a problem with your credit card"

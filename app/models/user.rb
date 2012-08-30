@@ -170,11 +170,11 @@ class User < ActiveRecord::Base
 
   # Returns the total cost for all users owned communities in cents.
   def total_price_per_month_in_cents
-    cost = 0
+    price = 0
     self.owned_communities.each do |community|
-      cost = cost + community.total_price_per_month_in_cents
+      price = price + community.total_price_per_month_in_cents
     end
-    cost
+    price
   end
 
   # Returns the total cost for all users owned communities in dollars.
@@ -183,18 +183,19 @@ class User < ActiveRecord::Base
   end
 
   def new_total_price_per_month_in_cents(community)
-    cost = community.total_price_per_month_in_cents
-    self.owned_communities.all(:conditions => ["id != ?", community.id]).each do |community|
-      cost = cost + community.total_price_per_month_in_cents
+    price = community.total_price_per_month_in_cents
+    community_id = community.id
+    self.owned_communities.where{id != community_id}.each do |community|
+      price = price + community.total_price_per_month_in_cents
     end
-    cost
+    price
   end
 
-  def update_stripe(stripe_card_token, new_total_cost)
-    current_total_cost = self.total_price_per_month_in_cents
-    if current_total_cost == new_total_cost
+  def update_stripe(stripe_card_token, new_total_price)
+    current_total_price = self.total_price_per_month_in_cents
+    if current_total_price == new_total_price
       return true
-    elsif new_total_cost == 0
+    elsif new_total_price == 0
       # Need to cancel subscription
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
@@ -203,10 +204,10 @@ class User < ActiveRecord::Base
       return true
     else
       # Find plan with this total cost.
-      plan = StripePlan.find_or_create_by_amount(new_total_cost) #TODO Handle any errors in creation.
+      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO Handle any errors in creation.
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
-        is_prorated = current_total_cost < new_total_cost
+        is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
           # Update credit card info and subscription
           c.update_subscription(plan: plan.strip_id, prorate: is_prorated, card: stripe_card_token)

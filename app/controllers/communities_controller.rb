@@ -15,6 +15,7 @@ class CommunitiesController < ApplicationController
   skip_before_filter :limit_subdomain_access, only: [:destroy]
   before_filter :ensure_secure_subdomain, only: [:destroy]
   load_and_authorize_resource except: [:create, :index]
+  before_filter :load_plans, only: [:new, :create]
 
 ###
 # REST Actions
@@ -32,16 +33,17 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     @community.admin_profile = current_user.user_profile
+    @community.community_plan = CommunityPlan.default_plan
   end
 
   # POST /communities(.:format)
   def create
     begin
-      @community = Community.new(params[:community])
+      @stripe_card_token = params[:stripe_card_token]
+      @community = Community.new
       @community.admin_profile = current_user.user_profile
-      @community.community_plan = CommunityPlan.default_plan
       authorize! :create, @community
-      add_new_flash_message("Your community has been created.", 'success') if @community.save
+      add_new_flash_message("Your community has been created.", 'success') if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @community.errors.add :base, "An error has occurred while processing the image."
@@ -64,6 +66,13 @@ class CommunitiesController < ApplicationController
       redirect_to community_remove_confirmation_url(subdomain: @community.subdomain)
     end
   end
+
+protected
+
+  def load_plans
+    @available_plans = CommunityPlan.available
+  end
+
 ###
 # Helper methods
 ###
