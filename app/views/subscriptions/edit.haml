@@ -12,10 +12,19 @@
     = hidden_field_tag :stripe_card_token
     = f.association :community_plan, :collection => @available_plans, :prompt => "Choose a Plan", as: :radio_buttons
     = f.simple_fields_for :current_community_upgrades do |cuf|
-      %p=cuf.object.community_upgrade.to_yaml
-      =cuf.input :community_upgrade_id, as: :hidden
-      =cuf.input :number_in_use
-      =cuf.input :_destroy, as: :boolean
+      .community_upgrade
+        =cuf.input :community_upgrade_id, as: :hidden
+        .upgrade_information
+          %h3=cuf.object.community_upgrade.title
+          .description=cuf.object.community_upgrade.description
+          .cost="#{number_to_currency(cuf.object.community_upgrade.price_per_month_in_dollars)} per upgrade."
+        -if cuf.object.persisted?
+          =cuf.input :number_in_use, collection: 1..(cuf.object.community_upgrade.max_number_of_upgrades), include_blank: false, label: "Number of upgrades"
+          =cuf.input :_destroy, as: :boolean, label: "Remove this upgrade"
+          .current_cost="Current Cost: #{number_to_currency(cuf.object.total_price_per_month_in_dollars)}"
+        -else
+          =cuf.input :number_in_use, collection: 0..(cuf.object.community_upgrade.max_number_of_upgrades), include_blank: false, label: "Number of upgrades"
+    %hr
     - if @stripe_card_token.present? or current_user.stripe_customer_token.present?
       - # TODO Should add the abillity to change payment method.
       Credit card has been provided

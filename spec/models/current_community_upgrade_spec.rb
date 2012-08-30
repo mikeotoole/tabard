@@ -15,5 +15,8 @@
 require 'spec_helper'
 
 describe CurrentCommunityUpgrade do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:current_community_upgrade) { create(:current_community_upgrade) }
+  it "should create a new instance given valid attributes" do
+    current_community_upgrade.should be_valid
+  end
 end

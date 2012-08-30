@@ -11,7 +11,6 @@
 
 require 'spec_helper'
 
-describe CommunityPlanUpgrade
- do
+describe CommunityPlanUpgrade do
   pending "add some examples to (or delete) #{__FILE__}"
 end
