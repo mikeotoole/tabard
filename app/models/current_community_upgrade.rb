@@ -10,6 +10,9 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
       0
     end
   end
+  def total_price_per_month_in_dollars
+    self.total_price_per_month_in_cents/100.0
+  end
 end
 
 # == Schema Information
