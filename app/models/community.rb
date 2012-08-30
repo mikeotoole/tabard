@@ -175,6 +175,10 @@ class Community < ActiveRecord::Base
     return base_number_of_users + self.user_pack_upgrade_amount
   end
 
+  def current_number_of_users
+    self.community_profiles.count
+  end
+
   def user_pack_upgrade_amount
     number_of_bonus_users = 0
     self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
