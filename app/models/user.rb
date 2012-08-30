@@ -191,7 +191,10 @@ class User < ActiveRecord::Base
   end
 
   def update_stripe(stripe_card_token, new_total_cost)
-    if new_total_cost == 0
+    current_total_cost = self.total_price_per_month_in_cents
+    if current_total_cost == new_total_cost
+      return true
+    elsif new_total_cost == 0
       # Need to cancel subscription
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
@@ -203,12 +206,13 @@ class User < ActiveRecord::Base
       plan = StripePlan.find_or_create_by_amount(new_total_cost) #TODO Handle any errors in creation.
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
+        is_prorated = current_total_cost < new_total_cost
         if stripe_card_token.present?
           # Update credit card info and subscription
-          c.update_subscription(plan: plan.strip_id, prorate: true, card: stripe_card_token)
+          c.update_subscription(plan: plan.strip_id, prorate: is_prorated, card: stripe_card_token)
         else
           # Update subscription
-          c.update_subscription(plan: plan.strip_id, prorate: true)
+          c.update_subscription(plan: plan.strip_id, prorate: is_prorated)
         end
       else
         # Create new Stripe customer for community admin and subscribe to Stripe plan.

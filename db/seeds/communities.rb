@@ -109,7 +109,16 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
-  headshot.community_plan = CommunityPlan.find_by_title("Pro")
+  community_plan = CommunityPlan.find_by_title("Pro")
+  token = Stripe::Token.create(
+      :card => {
+      :number => "4242424242424242",
+      :exp_month => 8,
+      :exp_year => 2023,
+      :cvc => 314
+    },
+  )
+  headshot.update_attributes_with_payment({community_plan_id: community_plan.id}, token.id)
   headshot.save!
 
   billy = UserProfile.find_by_last_name('Billy')
