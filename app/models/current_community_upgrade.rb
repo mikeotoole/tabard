@@ -18,8 +18,8 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
   end
 
   def current_amount
-    return number_in_use if current_plan_expiration_date.blank?
-    if current_plan_expiration_date > Time.now
+    return number_in_use if community.community_subscription_date.blank?
+    if community.community_subscription_date > Time.now
       return number_in_use
     else
       return subcription_amount
@@ -43,13 +43,12 @@ end
 #
 # Table name: current_community_upgrades
 #
-#  id                           :integer          not null, primary key
-#  community_id                 :integer
-#  community_upgrade_id         :integer
-#  number_in_use                :integer
-#  created_at                   :datetime         not null
-#  updated_at                   :datetime         not null
-#  current_plan_expiration_date :date
-#  subcription_amount           :integer
+#  id                   :integer          not null, primary key
+#  community_id         :integer
+#  community_upgrade_id :integer
+#  number_in_use        :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  subcription_amount   :integer
 #
 
