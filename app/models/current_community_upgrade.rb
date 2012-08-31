@@ -7,10 +7,10 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
 
   def update_amounts
     if number_in_use_changed?
-      if number_in_use_was > number_in_use
-        subcription_amount = number_in_use_was
+      if not number_in_use_was.blank? and number_in_use_was > number_in_use
+        self.subcription_amount = number_in_use_was
       else
-        subcription_amount = number_in_use
+        self.subcription_amount = number_in_use
       end
     else
       return true
