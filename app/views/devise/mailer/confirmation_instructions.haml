@@ -1,4 +1,4 @@
 %p
-  %strong= "Welcome to Guild.io™, #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
+  %strong= "Welcome to Tabard™, #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p You can confirm your account through the link below:
 %p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token), style: 'color: #BE4124'

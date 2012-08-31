@@ -25,7 +25,7 @@ class SupportTicketsController < ApplicationController
       if @support_ticket.admin_user
         flash.now[:success] = "#{@support_ticket.admin_user_display_name} is working to resolve this issue. You're in good hands!"
       else
-        flash.now[:notice] = "The next available Guild.io agent will begin working to resolve your issue soon."
+        flash.now[:notice] = "The next available Tabard agent will begin working to resolve your issue soon."
       end
     end
     @support_comment = @support_ticket.support_comments.new

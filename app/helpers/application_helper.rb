@@ -45,13 +45,13 @@ module ApplicationHelper
   end
 
   ###
-  # Provides a clean way to set the page title within a view and adds the text " | Guild.io".
+  # Provides a clean way to set the page title within a view and adds the text " | Tabard".
   # [Args]
   #   * +page_title+ -> The page title.
   # [Returns] :title for the yield.
   ###
   def title(page_title)
-    content_for(:title) { raw "#{page_title} | Guild.io&trade;" }
+    content_for(:title) { raw "#{page_title} | Tabard&trade;" }
   end
 
   ###

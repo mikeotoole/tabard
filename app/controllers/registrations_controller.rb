@@ -21,8 +21,8 @@ class RegistrationsController < Devise::RegistrationsController
   # Overriding Devise method to add a flash if the user is signing up from a community.
   def new
     community = Community.find_by_id(params[:community_id])
-    add_new_flash_message "Before you can apply to #{community.name} you need to create a Guild.io&trade; account or login.", "notice" if community
-    add_new_flash_message "This version of Guild.io&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
+    add_new_flash_message "Before you can apply to #{community.name} you need to create a Tabard&trade; account or login.", "notice" if community
+    add_new_flash_message "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
     super
   end
 
@@ -123,7 +123,7 @@ class RegistrationsController < Devise::RegistrationsController
       resource.reset_password_token = nil
       resource.reset_password_sent_at = nil
       resource.save!
-      add_new_flash_message "Your account has been reactivated. Welcome back to Guild.io&trade;!", "success"
+      add_new_flash_message "Your account has been reactivated. Welcome back to Tabard&trade;!", "success"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
     else
