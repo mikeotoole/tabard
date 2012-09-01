@@ -21,7 +21,6 @@
   = simple_form_for 'user', url: user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { class: 'signup' } do |f|
     %h2 Sign up
     %p.subtext for your free account
-    = f.input :is_partial_request, as: :hidden, input_html: { value: true }
     %fieldset
       %ol
         = f.input :display_name, label: false, placeholder: 'Player name', hint: 'You can change this later', input_html: { name: 'user[user_profile_attributes][display_name]', tabindex: 1 }
