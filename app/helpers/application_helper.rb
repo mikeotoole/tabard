@@ -55,6 +55,18 @@ module ApplicationHelper
   end
 
   ###
+  # Gives an array of classes to help view/css rendering on the body tag
+  # [Returns] Array of strings (class names)
+  ###
+  def body_classes
+    classes = [params[:controller].gsub(/\//,' '), params[:action]]
+    classes.push 'signed_in' if user_signed_in?
+    classes.push 'top_level' if current_community
+    classes.push 'qstring' unless request.query_string.blank?
+    return classes
+  end
+
+  ###
   # _before_filter_
   #
   # This before filter attempts to create a collection based on an array of objects.
