@@ -1,0 +1,13 @@
+.community_upgrade
+  =form.input :community_upgrade_id, as: :hidden
+  .upgrade_information
+    %h3=upgrade.title
+    .description=upgrade.description
+    .cost="#{number_to_currency(upgrade.price_per_month_in_dollars)} per upgrade."
+  -if current_community_upgrade.persisted?
+    =form.input :number_in_use, collection: 1..(upgrade.max_number_of_upgrades), include_blank: false, label: "Number of upgrades"
+    =form.input :_destroy, as: :boolean, label: "Remove this upgrade"
+    .current_cost="Current Cost: #{number_to_currency(current_community_upgrade.total_price_per_month_in_dollars)}"
+    .additional_users="Additional Users: #{upgrade.number_of_bonus_users(community)}"
+  -else
+    =form.input :number_in_use, collection: 0..(upgrade.max_number_of_upgrades), include_blank: false, label: "Number of upgrades"
