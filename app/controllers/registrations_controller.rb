@@ -32,13 +32,13 @@ class RegistrationsController < Devise::RegistrationsController
     if user and user.user_disabled_at
       add_new_flash_message "You need to reactivate your account.", "alert"
       redirect_to reinstate_confirmation_url
-    elsif !!params[:user][:is_partial_request]
-      build_resource
-      resource.save
-      add_new_flash_message "Great! We need a little more information before your account can be created.", "notice"
-      resource.errors.clear
-      #clean_up_passwords resource
-      render :new
+#     elsif !!params[:user][:is_partial_request]
+#       build_resource
+#       resource.save
+#       add_new_flash_message "Great! We need a little more information before your account can be created.", "notice"
+#       resource.errors.clear
+#       #clean_up_passwords resource
+#       render :new
     else
       super
     end
@@ -94,7 +94,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /users/reinstate_account
-  def reinstate_account    
+  def reinstate_account
     self.resource = User.find_or_initialize_with_error_by(:reset_password_token, params[resource_name][:reset_password_token])
     if resource.reset_password_period_valid?
 
@@ -107,7 +107,7 @@ class RegistrationsController < Devise::RegistrationsController
       else
         resource.errors.add(:accepted_current_terms_of_service, "must be accepted")
       end
-      
+
       if params[resource_name][:accepted_current_privacy_policy] == "1"
         resource.accepted_current_privacy_policy = true
       else
