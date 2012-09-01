@@ -123,8 +123,8 @@ body
       
       h3
         color: #3f2656
-        font-size: 17px
-        padding: 0 50px
+        font-size: 18px
+        padding: 0 50px 10px
         
         a:before
           bottom: 0
@@ -177,12 +177,14 @@ body
           background: #3D2454 !important
       
       p.author
-        color: #327BB4
-        font-size: 13px
+        color: #333
+        font-size: 12px
         padding: 0 0 10px 50px
+        strong
+          color: #327BB4
       
       p.body
-        color: #666
+        color: #777
         font-size: 13px
       
       &.sent
@@ -194,6 +196,9 @@ body
       &:hover
         +box_shadow(0 0 50px rgba(#000,.5))
         z-index: 3
+        
+        p.body
+          color: #555
 
 #message
   background: image-url('main/bg.png') 0 0 repeat-x #fff

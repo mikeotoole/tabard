@@ -44,7 +44,6 @@ button,
 #body .button
   background: #A23826
   +bg_gradient(#d24723,#792b28)
-  border-color: #eee
   color: #f8d5bb
   
   &.read span:before
@@ -71,7 +70,6 @@ button,
   right: 0
   
   .button
-    border: 0
     +border_radius(2)
     display: inline-block
     font-family: inherit
@@ -213,7 +211,7 @@ body.index.minecrafts #submenu .minecraft
       background: #d7eaf8
       +box_shadow(0 0 8px #2d7cb4)
       +bg_gradient(#f2f8fd,#d7eaf8)
-      color: #09558a
+      color: #333
   
   textarea
     height: 200px
@@ -531,12 +529,9 @@ body.index.minecrafts #submenu .minecraft
         &:only-child
           +border_radius(0,0,3,3)
         
-        button,
-        .button
-          border-color: #1e102c
-          
-          &:hover
-            +box_shadow(0 0 10px #000)
+        button:hover,
+        .button:hover
+          +box_shadow(0 0 10px #000)
   
   .accountlinks
     border-left: 1px solid #ccc
@@ -794,9 +789,7 @@ body.index.minecrafts #submenu .minecraft
   
   #searchbox
     background: #51425B
-    
     button
-      border-color: #302141
       margin: 0 0 10px
 
 .status_code #body
@@ -867,73 +860,72 @@ body.sessions
     background: transparent
   
   #body
-    background: #227FB5
-    +bg_gradient(#227fb5,#0368a2)
-    border: 1px solid #0368a2
+    background: #6a5c73
     +border_radius(3)
     +box_shadow(0 0 30px #999)
     color: #C0DAEB
-    height: 198px
+    height: 200px
     margin: -130px 0 0 -200px
     overflow: hidden
     padding: 30px
     position: fixed
     top: 50%
     +transition(border .3s linear)
-    width: 338px
+    width: 340px
     z-index: 2
     h1
       color: #fff
-      text-shadow: 1px 1px 1px #00446c
+      font-size: 30px
+      padding: 0
+      text-shadow: 0 -2px 1px #000
     form
       width: auto
       input
         color: #444
-        width: 316px
+        width: 318px
         &:-moz-placeholder
-          color: #999
+          color: #aaa
         &::-webkit-input-placeholder
-          color: #999
+          color: #aaa
       .boolean
         input,
         label
           width: auto
         label
+          color: #fff
           float: left
-          &:hover
-            color: #fff
+          text-shadow: 0 -1px 1px #000
       input,
       .boolean label:before
-        +box_shadow(0 0 5px #00446c !important)
+        +box_shadow(0 0 5px #000 !important)
       button
-        border-color: #7A2C27
-        +box_shadow(0 0 20px #559BC6)
+        +box_shadow(0 0 5px #504758)
         bottom: 0
         margin: 0
         position: absolute
         right: 0
       a.help
-        color: #C0DAEB
+        background: transparent
+        color: #ccc1d4
         float: right
         font-size: 13px
+        text-decoration: underline
+        text-shadow: 0 -1px 1px #504758
         &:hover
-          background: #fff
-          color: #00446c
+          color: #fff
     div.help
-      background: #ddd
-      +bg_gradient(#eeeeee,#cccccc)
-      border: 1px solid #aaa
-      +border_radius(3)
-      bottom: -1px
+      background: #fff
+      +border_radius(2)
+      bottom: 0
       left: 400px
       padding: 30px
       position: absolute
-      top: -1px
+      top: 0
       +transition(left .3s linear)
       z-index: 3
-      width: 338px
+      width: 340px
       h1
-        color: #367BB1
+        color: #5a3971
         padding: 0 0 20px
         text-shadow: 1px 1px 1px #fff
       a.close
@@ -958,10 +950,8 @@ body.sessions
           border-left-color: #aaa
         li:first-child
           display: none
-    &.with-help
-      border-color: #aaa
-      div.help
-        left: -1px
+    &.with-help div.help
+      left: 0
     
   footer
     bottom: 0

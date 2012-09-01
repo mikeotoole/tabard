@@ -23,22 +23,59 @@
     width: 229px
     
   .dashboard
+    position: absolute
     right: 50%
-    margin: -2px -419px 0 0
-    a[meta]
-      padding-right: 40px
-      position: relative
-      &:after
-        content: attr(meta)
-        color: #A8C2D5
-        height: 29px
-        line-height: 29px
-        position: absolute
-        right: 0
-        text-align: center
-        width: 29px
-      &:hover:after
-        color: #fff
+    margin: 0 -410px 0 0
+    top: 0
+    width: 150px
+    >li
+      list-style: inline
+      a
+        display: block
+        float: left
+        height: 60px
+        overflow: hidden
+        padding: 0
+        position: relative
+        text-indent: -500em
+        width: 50px
+        &:before
+          background: image-url('bar/icons.png') no-repeat
+          bottom: 0
+          content: ''
+          left: 0
+          +opacity(.55)
+          position: absolute
+          right: 0
+          top: 10px
+        &[meta]:after
+          background: #B23D22
+          +border_radius(8)
+          content: attr(meta)
+          color: #eeddcb
+          font-size: 11px
+          height: 16px
+          line-height: 16px
+          min-width: 8px
+          padding: 0 5px
+          position: absolute
+          right: 5px
+          text-align: center
+          text-indent: 0
+          text-shadow: 0 -1px 1px #8D0700
+          top: 7px
+        &:hover
+          &:before
+            +opacity(1)
+          &:after
+            background: #e45431
+            color: #fff
+      &.calendar a:before
+        background-position: 0 0
+      &.notice a:before
+        background-position: 0 -50px
+      &.envelope a:before
+        background-position: 0 -100px
   
   .menu
     height: 30px
@@ -47,8 +84,7 @@
     position: absolute
     right: 50%
     text-align: right
-    top: 17px
-    width: 480px
+    top: 20px
     z-index: 93
     >li
       display: inline
@@ -56,76 +92,78 @@
       >a,
       >span
         color: #ccc
+        display: block
+        float: left
+        height: 30px
         font-size: 14px
-        padding: 0 15px
+        line-height: 30px
+        margin: 0 5px
+        padding: 0 10px
         position: relative
         text-shadow: 0 -1px 1px #000
         z-index: 92
       >span
+        +border_radius(2,2,0,0)
         cursor: default
+
       >ul
-        background: #2d7cb4
-        border: 1px solid #4a99d0
-        +border_radius(0,2,2,2)
-        +box_shadow(0 0 5px rgba(#000, .5))
-        left: 0
-        margin: -9000em 0 0
-        min-width: 120%
-        +opacity(0)
+        background: #CF4527
+        +bg_gradient(#CF4527,#A03931)
+        +border_radius(2,0,2,2)
+        +box_shadow(-3px 5px 5px rgba(#000, .3))
         padding: 10px
         position: absolute
-        top: 30px
-        z-index: 91
-        >li
-          display: inline
-          >a
-            border-top: 1px solid #186a9e
-            color: #cceaff
-            display: block
-            font-size: 13px
-            line-height: 15px
-            padding: 0 5px
-            white-space: nowrap
-            &:hover
-              background: #4a99d0
+        +opacity(0)
+        right: 5px
+        text-align: left
+        top: -500em
+        +transition(opacity .1s linear)
+        a
+          border-bottom: 1px solid #943430
+          color: #e9d9c4
+          display: block
+          font-size: 13px
+          line-height: 15px
+          padding: 0 50px 0 30px
+          position: relative
+          +transition(padding .1s linear)
+          white-space: nowrap
+          &:after
+            background: #993528
+            color: #d1b188
+            content: attr(icon)
+            height: 25px
+            left: 0
+            line-height: 25px
+            position: absolute
+            text-align: center
+            top: 5px
+            width: 25px
+          &.current
+            background: #993528
+          &:hover
+            background: #792B29
+            color: #fff
+            &:after
+              background: transparent
               color: #fff
-          &:last-child > a
-            border-bottom: 1px solid #186a9e
-          &.extra > a
-            background: rgba(#000,.1)
-            +bg_gradient(rgba(#000,.1),rgba(#000,.2))
-            position: relative
-            text-indent: 10px
-            white-space: nowrap
-            &:before
-              color: #5eaae1
-              content: '+'
-              left: 0
-              position: absolute
-              top: 7px
-              text-align: right
-              text-indent: 0
-              width: 15px
-            &:hover
-              background: #4a99d0
-              color: #fff
-              &:before
-                color: #fff
+        li:last-child a
+          border-bottom: 0
+
       &:hover
         >a,
         >span
           color: #fff
           +transition(background .1s linear)
           z-index: 94
+        >span
+          background: #CF4527
         >ul
-          margin: 0
           +opacity(1)
-          top: 37px
-          +transition(top .2s ease-in-out, opacity .1s linear)
-          z-index: 93
-          >li > a
-            padding: 10px 5px
-            +transition(padding .1s linear)
+          top: 30px
+          a
+            padding-bottom: 10px
+            padding-top: 10px
     
       .button
         background: #3F7696
@@ -176,109 +214,27 @@
       &.envelope > a
         background-position: -125px -5px
   
-  .communities
-    margin: 0 -285px 0 0
-    position: absolute
-    right: 50%
-    top: 24px
-    z-index: 95
-    > a,
-    > span
-      +border_radius(2)
-      color: #A5A2A8
-      display: block
-      font-size: 14px
-      height: 26px
-      line-height: 26px
-      padding: 0 10px
-      position: relative
-    > span
-      padding-right: 30px
-      &:after
-        border: 5px solid transparent
-        border-top-color: #7D7A81
-        content: ''
-        height: 0
-        position: absolute
-        right: 10px
-        top: 11px
-        width: 0
-    ol
-      background: #CF4527
-      +bg_gradient(#CF4527,#A03931)
-      +border_radius(2,0,2,2)
-      +box_shadow(-3px 5px 5px rgba(#000, .3))
-      padding: 10px
-      position: absolute
-      +opacity(0)
-      right: -5px
-      text-align: left
-      top: -500em
-      +transition(opacity .1s linear)
-      a
-        border-bottom: 1px solid #943430
-        color: #e9d9c4
-        display: block
-        font-size: 13px
-        line-height: 15px
-        padding: 0 50px 0 30px
-        position: relative
-        +transition(padding .1s linear)
-        white-space: nowrap
-        &:after
-          background: #993528
-          color: #d1b188
-          content: attr(icon)
-          height: 25px
-          left: 0
-          line-height: 25px
-          position: absolute
-          text-align: center
-          top: 5px
-          width: 25px
-        &.current
-          background: #993528
-        &:hover
-          background: #792B29
-          color: #fff
-          &:after
-            background: transparent
-            color: #fff
-      li:last-child a
-        border-bottom: 0
-    &:hover
-      > a,
-      > span
-        background: #CD462A
-        border: 5px solid #CD462A
-        color: #fff
-        margin: -5px
-      > span:after
-        border-top-color: #fff
-      ol
-        +opacity(1)
-        top: 30px
-        a
-          padding-bottom: 10px
-          padding-top: 10px
-  
   .avatar
-    background: #261333
-    border: 1px solid #554863
+    background: #000
+    border: 9px solid #000
+    +border_radius(2,2,0,0)
     height: 42px
     margin: 0 -480px 0 0
     position: absolute
     right: 50%
-    top: 13px
+    top: 9px
     width: 42px
     z-index: 95
     img
+      background: #666
       border: 1px solid #000
+      +box_shadow(0 0 5px #666)
       height: 40px
       left: 0
       position: absolute
       top: 0
       width: 40px
+      z-index: 2
     ul
       background: #CF4527
       +bg_gradient(#CF4527,#A03931)
@@ -287,10 +243,11 @@
       padding: 10px
       position: absolute
       +opacity(0)
-      right: -10px
+      right: -9px
       text-align: left
       top: -500em
       +transition(opacity .1s linear)
+      z-index: 1
       a
         border-bottom: 1px solid #943430
         color: #e9d9c4
@@ -313,7 +270,7 @@
           top: 5px
           width: 25px
         &:hover
-          background: #792B29
+          background: #862d23
           color: #fff
           &:after
             background: transparent
@@ -321,18 +278,19 @@
       li:last-child a
         border-bottom: 0
     &:hover
-      border: 10px solid #CF4527
-      +border_radius(2,2,0,0)
-      margin: -9px -489px 0 0
+      border-color: #CF4527
       img
         border: 1px solid #d1b188
         outline: 1px solid #782A2A
       ul
         +opacity(1)
-        top: 43px
+        top: 35px
         a
           padding-bottom: 10px
           padding-top: 10px
+
+body.signed_in #bar .menu
+  margin: 0 -250px 0 0
 
 body.top_level.index #bar .menu .signup
   display: none

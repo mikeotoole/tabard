@@ -15,7 +15,7 @@
     = render 'layouts/ie'
     = render 'layouts/analytics'
 
-  %body.fluid
+  %body{ class: [body_classes, 'fluid'].flatten.join(' ') }
     #bar= render "layouts/bar_in"
     = render "layouts/flash_messages"
 
