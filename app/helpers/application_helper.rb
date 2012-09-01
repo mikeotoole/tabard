@@ -63,7 +63,16 @@ module ApplicationHelper
     classes.push 'signed_in' if user_signed_in?
     classes.push 'top_level' if current_community
     classes.push 'qstring' unless request.query_string.blank?
+    classes.push 'with_action_items' if has_action_items?
     return classes
+  end
+
+  ###
+  # Checks to see if the page is going to render action items for the community
+  # [Returns] True or False
+  ###
+  def has_action_items?
+    current_community and user_signed_in? and current_user.user_profile == current_community.admin_profile and current_community.action_items.any?
   end
 
   ###

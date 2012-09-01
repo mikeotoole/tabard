@@ -1,4 +1,3 @@
-- has_action_items = (user_signed_in? and current_user.user_profile == current_community.admin_profile and current_community.action_items.any?)
 !!!
 %html
   %head
@@ -23,7 +22,7 @@
     = render 'layouts/ie'
     = render 'layouts/analytics'
 
-  %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} theme #{has_action_items ? 'with_action_items' : ''}" }
+  %body{ class: [body_classes,'theme'].flatten.join(' ') }
     #bar= render "layouts/bar_#{user_signed_in? ? 'in' : 'out'}"
     = render 'layouts/flash_messages'
 
@@ -33,7 +32,7 @@
           %strong= current_community.name
           - if !!current_community.slogan
             %cite= shorten_words current_community.slogan
-        = render 'layouts/action_items' if has_action_items
+        = render 'layouts/action_items' if has_action_items?
         .menu
           %li
             = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
