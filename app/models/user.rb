@@ -200,12 +200,13 @@ class User < ActiveRecord::Base
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         s = c.cancel_subscription(at_period_end: true) if c.subscription.present?
+        # TODO: Need to make sure stripe_subscription_date is set to nil when subscription expires.
       end
       return true
     else
       # Find plan with this total cost.
-      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO Handle any errors in creation.
-      if self.stripe_customer_token.present?
+      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO: Handle any errors in creation.
+      if self.stripe_customer_token.present? # TODO: Just becouse the user has a stripe token does not mean they still have a subscription.
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
