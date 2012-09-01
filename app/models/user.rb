@@ -29,13 +29,13 @@ class User < ActiveRecord::Base
 ###
 # Attribute accessors
 ###
-  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code
+  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code, :email_confirmation
 
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
     :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement
 

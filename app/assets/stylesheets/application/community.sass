@@ -13,11 +13,7 @@ body
 
 body
   background: #1E0F28
-  font-family: DinLight, sans-serif
   min-width: 980px
-  
-  strong
-    font-family: DinMedium, sans-serif
 
 #content
   background: center 70px fixed no-repeat
@@ -42,7 +38,6 @@ body
     
     strong
       display: block
-      font-family: EurostyleStd, sans-serif
       font-size: 36px
       letter-spacing: -2px
     
@@ -67,7 +62,7 @@ body
       >a
         +border_radius(2)
         display: block
-        font: 16px EurostyleStd, sans-serif
+        font-size: 16px
         height: 30px
         line-height: 30px
         margin: 0 0 0 10px
@@ -115,7 +110,7 @@ body
             &[meta]:before
               +border_radius(2)
               content: attr(meta)
-              font: 12px DinMedium, sans-serif
+              font-size: 12px
               line-height: 12px
               padding: 3px
               position: absolute
@@ -243,7 +238,6 @@ body
   h1,
   h2,
   h3
-    font-family: EurostyleStd, serif
     letter-spacing: -1px
     line-height: 30px
     padding: 0 0 15px
@@ -288,7 +282,7 @@ body
     overflow: hidden
     
     ol
-      font: 12px DinMedium, serif
+      font-size: 12px
       line-height: 30px
       padding: 0 15px
       margin: 0
@@ -365,14 +359,13 @@ body
   dl
     
     dt
-      font-family: DinMedium, sans-serif
       padding: 10px 0 0
     
     dd
       padding: 10px 0
 
   time
-    font: 12px DinMedium, sans-serif
+    font-size: 12px
     white-space: nowrap
   
   
@@ -453,7 +446,6 @@ body
     
       th
         border-bottom: 1px solid
-        font-family: DinMedium, serif
         padding: 10px
         white-space: nowrap
         
@@ -499,7 +491,6 @@ body
             white-space: nowrap
           
           h3
-            font-family: EurostyleStd, serif
             padding: 0
           
           fieldset > ol
@@ -543,7 +534,7 @@ body
             
               li
                 display: inline-block
-                font: 13px DinLight, sans-serif
+                font-size: 13px
                 line-height: 20px
                 padding: 0 0 3px
                 width: 180px
@@ -637,7 +628,7 @@ body
     
     > .meta,
     > .meta *
-      font: 13px EurostyleStd, sans-serif
+      font-size: 13px
     
     > .meta
       border-bottom: 1px solid
@@ -655,10 +646,6 @@ body
     
       a
         text-decoration: none
-      
-      a,
-      strong
-        font-family: EurostyleBold, sans-serif
       
       .event
         float: right
@@ -773,7 +760,7 @@ body
                 bottom: auto
                 content: 'Posting as ' attr(meta)
                 display: block
-                font: 11px Eurostyle, sans-serif
+                font-size: 11px
                 left: 62px
                 line-height: 15px
                 pointer-events: none
@@ -893,7 +880,7 @@ body
         +border_radius(0)
         display: none
         float: none
-        font: 12px DinMedium, sans-serif
+        font-size: 12px
         height: auto
         line-height: 20px !important
         margin: 5px 0 0
@@ -902,7 +889,7 @@ body
       >label
         bottom: 5px
         display: none
-        font: 12px DinMedium, sans-serif
+        font-size: 12px
         line-height: 20px
         margin: 0
         padding: 0 5px 0 0
@@ -961,7 +948,6 @@ body
     padding: 30px
     
     a
-      font-family: DinMedium, sans-serif
       text-decoration: none
     
     >li
@@ -1020,7 +1006,7 @@ body
     h1,
     h2
       +border_radius(3)
-      font: 20px EurostyleStd, serif
+      font-size: 20px
       height: 40px
       line-height: 40px
       margin: 30px 0 15px
@@ -1105,7 +1091,7 @@ body
       
       .submitter a
         height: auto
-        font: 14px DinMedium, sans-serif
+        font-size: 14px
         line-height: 48px
         min-height: 48px
         padding: 0 8px 0 50px
@@ -1141,10 +1127,10 @@ body
               line-height: 16px
           
               &.name
-                font: 14px DinMedium, sans-serif
+                font-size: 14px
                 
               &.game
-                font: 12px DinLight, sans-serif
+                font-size: 12px
           
           + ul,
           + .select,
@@ -1169,7 +1155,7 @@ body
       
         >label,
         .select >label
-          font: 18px DinMedium, serif
+          font-size: 18px
         
         >input,
         >textarea
@@ -1358,7 +1344,7 @@ body
             
             &:before
               content: '\00D7'
-              font: 17px DinLight, sans-serif
+              font-size: 17px
               height: 20px
               right: 0
               line-height: 17px
@@ -1445,7 +1431,6 @@ body
             bottom: -15px
             clear: both
             display: block
-            font-family: DinMedium, sans-serif
             height: 15px
             left: 9px
             line-height: 15px
@@ -1470,7 +1455,7 @@ body
         
         &:before
           content: '\002B'
-          font: 17px DinLight, sans-serif
+          font-size: 17px
           height: 20px
           right: 0
           line-height: 17px
@@ -1605,7 +1590,7 @@ body
         +border_radius(3)
         border-right: 0
         border-top: 1px solid
-        font: 20px DinLight, serif
+        font-size: 20px
         height: 40px
         line-height: 40px
         margin: 1px 2px 0
@@ -1641,7 +1626,7 @@ body
         
         label
           +border_radius(3)
-          font: 13px DinMedium, sans-serif
+          font-size: 13px
           height: 17px
           line-height: 16px
           margin: 0 6px 5px 1px
@@ -1689,7 +1674,6 @@ body
       border: 0
       +border_radius(2)
       display: inline
-      font-family: inherit
       font-size: 1em
       height: auto
       line-height: 1em
@@ -1735,7 +1719,7 @@ body.with_action_items
         +border_radius(3,3,0,0)
         +box_shadow(0 0 10px rgba(#000,.2))
         color: #251533
-        font: 14px DinLight, sans-serif
+        font-size: 14px
         padding: 10px
         position: relative
         
@@ -1817,7 +1801,7 @@ body.with_action_items
             color: #999
             display: block
             float: left
-            font: 14px EurostyleStd, sans-serif
+            font-size: 14px
             margin: -10px
             padding: 10px
             text-decoration: none
@@ -1825,26 +1809,20 @@ body.with_action_items
           &:hover
             background: #fff
             +bg_gradient(#ffffff,#ffffff)
-            
             a
               color: #251533
           
           &.current
             background: #fff
             +bg_gradient(#ffffff,#ffffff)
-            font-family: EurostyleBold, sans-serif
-            
             &:before
               background: #9F3831
               content: '\2193'
           
-          &.done
-            font-family: EurostyleStd, sans-serif
-          
+          &.done          
             &:before
               background: #3679B3
               content: '\2713'
-            
             a
               color: #251533
 
@@ -1871,7 +1849,6 @@ body.with_action_items
   &.with-avatars li
     background: image-url('application/avatar@20.png') 0 0 no-repeat
     a
-      font-family: DinMedium, sans-serif
       margin-left: 25px
       img
         left: 0

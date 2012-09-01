@@ -3,7 +3,6 @@
 #bar
   background: image-url('bar/bg.png') top center repeat-x #000
   color: #a89db4
-  font-family: DinLight, sans-serif
   height: 70px
   left: 0
   min-width: 980px
@@ -11,87 +10,59 @@
   right: 0
   top: 0
   z-index: 91
-  
+
   .logo
     background: image-url('bar/logo.png') 0 100% no-repeat
     height: 66px
     left: 50%
+    overflow: hidden
     margin: 0 0 0 -480px
     position: absolute
+    text-indent: -500em
     top: 0
     width: 229px
-  
-  >ul
-    height: 30px
-    padding: 5px 0
-    position: absolute
-    text-align: left
-    top: 17px
-    z-index: 93
     
-    &.menu
-      border-left: 2px solid #554863
-      padding: 5px 0 5px 15px
-      left: 50%
-      margin: 0 0 0 -320px
-      width: 385px
-      
-      > li > ul > li > a[meta]
-        padding-right: 40px
-        position: relative
-      
-        &:after
-          content: attr(meta)
-          color: #A8C2D5
-          height: 29px
-          line-height: 29px
-          position: absolute
-          right: 0
-          text-align: center
-          width: 29px
-        
-        &:hover:after
-          color: #fff
-    
-    &.dashboard
-      right: 50%
-      margin: -2px -419px 0 0
-    
-    >li
-      float: left
+  .dashboard
+    right: 50%
+    margin: -2px -419px 0 0
+    a[meta]
+      padding-right: 40px
       position: relative
-      
+      &:after
+        content: attr(meta)
+        color: #A8C2D5
+        height: 29px
+        line-height: 29px
+        position: absolute
+        right: 0
+        text-align: center
+        width: 29px
+      &:hover:after
+        color: #fff
+  
+  .menu
+    height: 30px
+    line-height: 30px
+    margin: 0 -480px 0 0
+    position: absolute
+    right: 50%
+    text-align: right
+    top: 17px
+    width: 480px
+    z-index: 93
+    >li
+      display: inline
+      position: relative
       >a,
       >span
-        border: 1px solid transparent
-        +border_radius(2)
         color: #ccc
-        float: left
-        font: 14px EurostyleStd, sans-serif
-        display: block
-        height: 30px
-        line-height: 30px
+        font-size: 14px
         padding: 0 15px
         position: relative
+        text-shadow: 0 -1px 1px #000
         z-index: 92
-        
-        &:not(:only-child)
-          padding: 0 35px 0 15px
-      
-          &:after
-            border: 5px solid transparent
-            border-top-color: #7D7A81
-            content: ''
-            height: 0
-            +opacity(.7)
-            position: absolute
-            right: 15px
-            top: 12px
-            width: 0
-      
       >span
         cursor: default
-      
       >ul
         background: #2d7cb4
         border: 1px solid #4a99d0
@@ -105,10 +76,8 @@
         position: absolute
         top: 30px
         z-index: 91
-        
         >li
           display: inline
-          
           >a
             border-top: 1px solid #186a9e
             color: #cceaff
@@ -117,95 +86,61 @@
             line-height: 15px
             padding: 0 5px
             white-space: nowrap
-            
             &:hover
               background: #4a99d0
               color: #fff
-          
-          &:last-child
-            
-            a
-              border-bottom: 1px solid #186a9e
-      
-          &.extra
-            
-            >a
-              background: rgba(#000,.1)
-              +bg_gradient(rgba(#000,.1),rgba(#000,.2))
-              position: relative
-              text-indent: 10px
-              white-space: nowrap
-              
+          &:last-child > a
+            border-bottom: 1px solid #186a9e
+          &.extra > a
+            background: rgba(#000,.1)
+            +bg_gradient(rgba(#000,.1),rgba(#000,.2))
+            position: relative
+            text-indent: 10px
+            white-space: nowrap
+            &:before
+              color: #5eaae1
+              content: '+'
+              left: 0
+              position: absolute
+              top: 7px
+              text-align: right
+              text-indent: 0
+              width: 15px
+            &:hover
+              background: #4a99d0
+              color: #fff
               &:before
-                color: #5eaae1
-                content: '+'
-                left: 0
-                position: absolute
-                top: 7px
-                text-align: right
-                text-indent: 0
-                width: 15px
-            
-              &:hover
-                background: #4a99d0
                 color: #fff
-                
-                &:before
-                  color: #fff
-      
       &:hover
-        
         >a,
         >span
-          background: #2d7cb4
-          border-color: #4a99d0
           color: #fff
           +transition(background .1s linear)
           z-index: 94
-
-          &:not(:only-child)
-            border-bottom: 0
-            +border_radius(3,3,0,0)
-            padding: 0 35px 7px 15px
-            +transition(background .1s linear, padding .1s linear)
-            
-            &:after
-              border-top-color: #fff
-              +opacity(1)
-        
         >ul
           margin: 0
           +opacity(1)
           top: 37px
           +transition(top .2s ease-in-out, opacity .1s linear)
           z-index: 93
-          
-          >li
-            
-            >a
-              padding: 10px 5px
-              +transition(padding .1s linear)
-      
-      >p
-        font-size: 13px
-        padding: 0 0 0 5px
-        
-        a
-          +border_radius(2)
-          color: #a89db4
-          line-height: 30px
-          padding: 0 3px
-          text-decoration: underline
-          
-          &:hover
-            background: #2D7CB4
-            color: #fff
-            text-decoration: none
+          >li > a
+            padding: 10px 5px
+            +transition(padding .1s linear)
+    
+      .button
+        background: #3F7696
+        border: 0
+        +box_shadow(0 1px 2px #000)
+        color: #fff
+        font-size: 16px
+        margin: 0 0 0 15px
+        text-shadow: 0 -1px 1px #22506b
+        &:hover
+          background: #5288a8
       
       &.icon
         margin: -5px 5px
         padding: 5px 0
-        
         >a
           background: image-url('bar/icons.png') no-repeat
           border-color: transparent
@@ -215,13 +150,11 @@
           text-indent: -500em
           +transition(opacity .1s linear)
           width: 30px
-        
           &[meta]:before
             background: #BC3F2B
             +border_radius(2)
             color: #e6d3ba
             content: attr(meta)
-            font-family: DinMedium, sans-serif
             font-size: 11px
             height: 11px
             right: 0
@@ -231,23 +164,15 @@
             text-align: right
             text-indent: 0
             top: -16px
-          
           &:hover
             +opacity(1)
-            
             &[meta]:before
               background: #CE442B
               color: #fff
-      
-      &.search > a
-        background-position: -5px -5px
-        
       &.calendar > a
         background-position: -45px -5px
-      
       &.notice > a
         background-position: -85px -5px
-      
       &.envelope > a
         background-position: -125px -5px
   
@@ -257,21 +182,18 @@
     right: 50%
     top: 24px
     z-index: 95
-    
     > a,
     > span
       +border_radius(2)
       color: #A5A2A8
       display: block
-      font: 14px EurostyleStd, sans-serif
+      font-size: 14px
       height: 26px
       line-height: 26px
       padding: 0 10px
       position: relative
-        
     > span
       padding-right: 30px
-      
       &:after
         border: 5px solid transparent
         border-top-color: #7D7A81
@@ -281,7 +203,6 @@
         right: 10px
         top: 11px
         width: 0
-    
     ol
       background: #CF4527
       +bg_gradient(#CF4527,#A03931)
@@ -294,18 +215,16 @@
       text-align: left
       top: -500em
       +transition(opacity .1s linear)
-      
       a
         border-bottom: 1px solid #943430
         color: #e9d9c4
         display: block
-        font: 13px EurostyleStd, sans-serif
+        font-size: 13px
         line-height: 15px
         padding: 0 50px 0 30px
         position: relative
         +transition(padding .1s linear)
         white-space: nowrap
-          
         &:after
           background: #993528
           color: #d1b188
@@ -317,37 +236,28 @@
           text-align: center
           top: 5px
           width: 25px
-        
         &.current
           background: #993528
-        
         &:hover
           background: #792B29
           color: #fff
-          
           &:after
             background: transparent
             color: #fff
-            
       li:last-child a
         border-bottom: 0
-    
     &:hover
-    
       > a,
       > span
         background: #CD462A
         border: 5px solid #CD462A
         color: #fff
         margin: -5px
-      
       > span:after
         border-top-color: #fff
-    
       ol
         +opacity(1)
         top: 30px
-        
         a
           padding-bottom: 10px
           padding-top: 10px
@@ -362,7 +272,6 @@
     top: 13px
     width: 42px
     z-index: 95
-    
     img
       border: 1px solid #000
       height: 40px
@@ -370,7 +279,6 @@
       position: absolute
       top: 0
       width: 40px
-    
     ul
       background: #CF4527
       +bg_gradient(#CF4527,#A03931)
@@ -383,18 +291,16 @@
       text-align: left
       top: -500em
       +transition(opacity .1s linear)
-      
       a
         border-bottom: 1px solid #943430
         color: #e9d9c4
         display: block
-        font: 13px EurostyleStd, sans-serif
+        font-size: 13px
         line-height: 15px
         padding: 0 50px 0 30px
         position: relative
         +transition(padding .1s linear)
         white-space: nowrap
-          
         &:after
           background: #993528
           color: #d1b188
@@ -406,115 +312,27 @@
           text-align: center
           top: 5px
           width: 25px
-        
         &:hover
           background: #792B29
           color: #fff
-          
           &:after
             background: transparent
             color: #fff
-            
       li:last-child a
         border-bottom: 0
-    
     &:hover
       border: 10px solid #CF4527
       +border_radius(2,2,0,0)
       margin: -9px -489px 0 0
-      
       img
         border: 1px solid #d1b188
         outline: 1px solid #782A2A
-      
       ul
         +opacity(1)
         top: 43px
-        
         a
           padding-bottom: 10px
           padding-top: 10px
-  
-  p.signup
-    font-size: 13px
-    height: 30px
-    line-height: 30px
-    position: absolute
-    left: 50%
-    // margin: 25px 0 0 110px TODO Doug - This is the value needed once the search form gets added
-    margin: 20px 0 0 330px
-    text-align: right
-    width: 150px
-  
-    a
-      color: #fff
-      text-decoration: underline
-      
-      &:hover
-        color: #f26443
-    
-    .button
-      +bg_gradient(#d24723,#792b28)
-      border-color: #1e102c
-      +border_radius(3)
-      color: #f8d5bb
-      float: right
-      font: 11pt EurostyleStd, serif
-      height: 30px
-      line-height: 30px
-      padding: 0
-      margin: 0 0 0 5px
-      text-align: center
-      text-decoration: none
-      width: 75px
-      white-space: nowrap
-      
-      &:focus,
-      &:hover
-        +bg_gradient(#e05c2e,#9e3834)
-        +box_shadow(0 0 10px #000)
-        color: #fff
-  
-  // TODO Doug - This commented SASS code is used for the search form once the feature is ready
-  //form
-  //  border-left: 2px solid #554863
-  //  margin: 0 -480px 0 0
-  //  padding: 5px 0 5px 20px
-  //  position: absolute
-  //  right: 50%
-  //  top: 20px
-  //
-  //  &:before
-  //    background-image: image-url('bar/icon-search.png')
-  //    content: ''
-  //    height: 20px
-  //    left: 25px
-  //    +opacity(.3)
-  //    position: absolute
-  //    top: 10px
-  //    width: 20px
-  //
-  //  input
-  //    +bg_gradient(#cdcdcd,#fdfdfd)
-  //    border: 1px solid #46345a
-  //    +border_radius(3)
-  //    color: #999
-  //    height: 30px
-  //    line-height: 30px
-  //    padding: 0 10px 0 30px
-  //    width: 140px
-  //    
-  //    &:focus
-  //      color: #333
-  //    
-  //  &:hover
-  //  
-  //    &:before
-  //      +opacity(.6)
-  //    
-  //    input
-  //      color: #333
-  //  
-  //  button
-  //    position: absolute
-  //    top: -5000em
+
+body.top_level.index #bar .menu .signup
+  display: none

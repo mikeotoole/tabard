@@ -1,5 +1,8 @@
 - title @document.title
 
+- content_for :header do
+  = javascript_include_tag 'documents'
+
 #body
   %h1= @document.title
 

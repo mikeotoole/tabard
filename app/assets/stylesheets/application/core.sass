@@ -1,5 +1,10 @@
 @import mixins
 
+*
+  font-family: MuseoSans500, sans-serif
+body
+  font-size: 15px
+
 
 // Dynamic loading links
 
@@ -27,7 +32,7 @@
     border-top: 0
     +box_shadow(inset 0 0 5px rgba(#000,.2))
     color: #251634
-    font: 16px DinLight, sans-serif
+    font-size: 16px
     height: 0
     line-height: 0
     margin: 0 auto
@@ -152,7 +157,7 @@
         top: 0
     
     .meta
-      font: 12px DinMedium, sans-serif
+      font-size: 12px
       +opacity(.7)
     
     &:hover
@@ -182,7 +187,7 @@ button,
   border: 1px solid transparent
   +border_radius(3)
   display: inline-block
-  font: 11pt EurostyleStd, sans-serif
+  font-size: 16px
   height: 30px
   line-height: 30px !important
   margin: 0 5px 0 0
@@ -210,36 +215,27 @@ button,
     cursor: not-allowed
 
 #body tfoot .select
-    
   + .select
     clear: both
     margin-top: -15px   
-  
   + button
     clear: both
     display: block
     float: left
   
 #body
-
   .hidden
     display: none
-
-  label
-    font-family: DinMedium, sans-serif
-    
-    + img
-      margin: 5px 0 0
-  
+  label + img
+    margin: 5px 0 0
   input,
   textarea
     position: relative
     z-index: 2
-  
   input[type="file"]
     display: block
     margin: 5px 0
-  
+
   input[type="url"],
   input[type="email"],
   input[type="text"],
@@ -253,7 +249,7 @@ button,
     padding: 5px 10px
     +transition(box-shadow .2s linear)
     width: 410px
-  
+
   input[type="checkbox"],
   input[type="radio"]
     height: 1px
@@ -261,7 +257,6 @@ button,
     position: absolute
     width: 1px
     z-index: 1
-    
     + label
       display: block
       line-height: 24px
@@ -269,7 +264,6 @@ button,
       position: relative
       text-indent: 34px
       z-index: 3
-      
       &:before
         border: 1px solid transparent
         +border_radius(3)
@@ -279,7 +273,6 @@ button,
         position: absolute
         top: 0
         width: 24px
-        
       &:after
         border: 1px solid transparent
         +border_radius(2)
@@ -290,18 +283,14 @@ button,
         top: 5px
         width: 14px
         z-index: 2
-
   dfn.hint
     display: block
-    font: 12px DinMedium, sans-serif
+    font-size: 12px
     padding: 5px
-    
     &:before
       content: '\27A5\00A0'
-  
   .radio_buttons >ul
     padding: 0
-    
     >li:last-child
       padding-bottom: 5px
 
@@ -309,15 +298,12 @@ button,
     float: left
     margin: 0 5px 0 0
     width: 435px
-      
   .select
     min-height: 55px
     position: relative
-    
     >label
       display: block
       padding-bottom: 5px
-  
     ul
       +border_radius(3)
       border: 1px solid transparent
@@ -330,7 +316,6 @@ button,
       +transition(box-shadow .2s linear)
       width: 428px
       z-index: 9
-          
       &:before
         border: 5px solid transparent
         content: ''
@@ -340,53 +325,40 @@ button,
         top: 13px
         width: 0
         z-index: 10
-      
       li
         display: inline
         margin: 0
         padding: 0
         position: static
-        
         label
           +border_radius(3)
           border-top: 1px solid transparent
           display: none
-          font-family: DinMedium, sans-serif
           line-height: 20px
           margin: 1px 0 0
           min-height: 20px
           padding: 5px 30px 5px 10px
           text-indent: 0
-          
-          em
-            font-family: DinLight, sans-serif
-          
           &:before,
           &:after
             display: none
-        
           .avatar
             border: 1px solid transparent
             +border_radius(2)
             float: left
             margin: -1px 6px 3px -6px
-        
         img.avatar
           width: 20px
-        
         img.big
           border: 1px solid
           +border_radius(3)
-        
         input
           left: -500em
           position: absolute
-          
           &:checked + label
             background: transparent
             border-top-color: transparent
             display: block
-            font-family: DinLight, sans-serif
             height: 28px
             line-height: 28px
             overflow: hidden
@@ -395,70 +367,53 @@ button,
             top: 0
             width: 388px
             z-index: 3
-        
             .avatar
               margin: 3px 5px 3px -5px
-            
             .big
               float: left
               height: 20px
               margin: 3px 10px 0 0
               width: 30px
-  
       &:hover
         height: auto
         max-height: 224px
         overflow: scroll
         overflow-x: hidden
         z-index: 11
-        
         &:before
           z-index: 12
-      
-        li
-        
-          label
-            display: block
-            position: static
-
+        li label
+          display: block
+          position: static
     dfn.hint
       padding-top: 39px
-      
     .day ul
       left: 170px
       width: 80px
-      
       input:checked + label
         width: 40px
-    
     .month ul
       left: 0
       width: 150px
-      
       input:checked + label
         width: 110px
-    
     .year ul
       left: 270px
       width: 100px
-      
       input:checked + label
         width: 60px
-  
     &.status
       margin-right: 10px
       min-height: 33px
       width: 174px
-      
       ul
         width: 170px
-      
       + button,
       + button + .button
         clear: none
         height: 32px
         line-height: 32px !important
-  
+
   .slider
     border: 1px solid transparent
     +border_radius(3)
@@ -468,11 +423,10 @@ button,
     position: relative
     +transition(box-shadow .2s linear)
     width: 280px
-        
     label
       border: 1px solid transparent
       +border_radius(2)
-      font: 12px DinMedium, sans-serif
+      font-size: 12px
       height: 24px
       left: 2px
       line-height: 24px
@@ -488,184 +442,136 @@ button,
       &:before,
       &:after
         display: none
-
     input
       margin: 0 0 0 -500em
-    
     ul
       padding: 0
-      
       li
         padding: 0
         display: inline
-    
         &:nth-child(1)
-        
           label
             width: 55px
             z-index: 5
-          
           input[value=""] + label
             padding: 0 !important
             text-align: center !important
             width: 25px
-        
         &:nth-child(2) label
           width: 125px
           z-index: 4
-          
         &:nth-child(3) label
           width: 195px
           z-index: 3
-          
         &:nth-child(4) label
           width: 265px
           z-index: 2
-  
   fieldset
-    
     &.full
-      
       input[type="url"],
       input[type="email"],
       input[type="password"],
       input[type="text"],
       textarea
         width: 880px
-    
     >ol
       padding: 0
-      
       >li
         clear: both
         list-style: none
         margin: 15px 0
-        
         > ul
           padding-left: 0
-          
           > li
             list-style: none
-
-        >label,
-        .select >label
-        
-          &:after
-            content: '\A'
-            white-space: pre
-        
+        >label:after,
+        .select >label:after
+          content: '\A'
+          white-space: pre
         .check_boxes + ul,
         .radio_buttons + ul
           padding-bottom: 0
-        
         &:before
           display: none
-        
-        &.short
-          
-          input
-            width: 50px
-        
+        &.short input
+          width: 50px
         &.affected
           display: none
-          
           .input
             display: none
-  
+
   .field_with_errors
-      
     > input,
     > textarea
       border-color: #A43D33 !important
-    
     mark.error
       background: #A43D33
       +border_radius(4,4,3,3)
       color: #fff
       display: block
-      font-family: DinMedium, sans-serif
       margin: -32px 0 0
       padding: 40px 10px 5px
       position: relative
       width: 412px
       z-index: 1
-      
     mark.error + dfn.hint
       margin-bottom: 30px
       margin-top: 0
-    
     &.radio_buttons > mark.error,
     .check_boxes + ul + mark.error,
     >.radio_buttons + ul + mark.error
       margin-top: 0
       padding-top: 5px
-    
     .check_boxes + ul + dfn.hint + mark.error,
     >.radio_buttons + ul + dfn.hint + mark.error
       margin-bottom: 50px
       margin-top: -50px
       padding-top: 5px
-        
     &.select,
     .select
-      
       ul
         border-color: #A43D33
-      
       ul + mark.error,
       .select + mark.error
         margin-bottom: 20px
         margin-top: 0
         padding-top: 40px
-        
         + dfn.hint
           margin-bottom: 20px
           margin-top: -52px
-      
       ul + dfn.hint,
       .select + dfn.hint
         margin-top: 25px
-      
         + mark.error
           margin-bottom: 40px
           margin-top: -83px
-        
       > .options
         margin-bottom: -55px
-      
     &.date
-      
       > mark.error
         margin-top: 0
         width: 354px
-    
     dfn.hint
       margin-top: 30px
-      
       + mark.error
         margin-bottom: 60px
         margin-top: -85px
-  
+
   table
-  
     td,
     th
-      
       &.r
         text-align: right
-      
       &.c
         text-align: center
-  
+
   #searchbox
     +border_radius(3)
     height: 50px
     margin: 0 0 10px
     position: relative  
-    
     p
       padding: 0
-      
     input[type="text"]
       height: 18px
       left: 10px
@@ -674,19 +580,16 @@ button,
       position: absolute
       top: 10px
       width: 770px
-    
     button
       padding: 0
       position: absolute
       right: 10px
       top: 10px
       width: 77px
-  
   input.nicedate
     display: block
     float: left
     width: 208px
-  
   button.ui-datepicker-trigger
     background: image-url('application/icons.png') no-repeat
     border: 0
@@ -700,22 +603,17 @@ button,
     text-indent: -500em
     width: 32px
     z-index: 2
-    
     &:hover,
     &:focus
       background: image-url('application/icons.png') no-repeat
-  
   .datetime
-  
     .select
       float: left
       min-height: 32px
       margin: 5px 0 10px 5px
       width: 64px
-      
       ul
         width: 60px
-    
     mark.error
       margin-top: 5px
       padding-top: 5px
@@ -725,7 +623,6 @@ button,
   border: 1px solid
   +border_radius(3)
   font-size: 14px
-  
   .ui-datepicker-prev,
   .ui-datepicker-next
     display: block
@@ -734,26 +631,19 @@ button,
     position: absolute
     top: 10px
     width: 50px
-  
   .ui-datepicker-prev
     left: 10px
-  
   .ui-datepicker-next
     right: 10px
-  
   .ui-datepicker-title
-    font-family: DinMedium, sans-serif
     height: 30px
     line-height: 30px
     margin: 10px 50px 0
-  
   table
     margin: 10px
-  
   td,
   th
     padding: 5px
-    
     a
       +box_sizing(border-box)
       display: block
@@ -762,34 +652,25 @@ button,
       overflow: hidden
       margin: -5px
       width: 30px
-    
   td.ui-datepicker-today a
     border: 1px solid
-    font-family: DinMedium, sans-serif
-    
-  td.ui-datepicker-current-day a
-    font-family: DinMedium, sans-serif
 
 
 // Pagination
 
 .pagination
   border-top: 1px solid #ccc
-  font: 10pt EurostyleStd, sans-serif
+  font-size: 10px
   padding: 5px 0 0
-  
   + form,
   + table
     margin-top: 20px !important
-
   span
     display: inline-block
-    
   .current
     background: #ccc
     +border_radius(3)
     padding: 0 5px
-  
   a
     text-decoration: none !important
 
@@ -799,10 +680,8 @@ table + .pagination,
   border-bottom: 1px solid #ccc
   border-top: 0
   padding-bottom: 5px
-
 .comments .pagination
   margin: 0 15px 0 10px
-  
   + ol
     margin: 30px 0 20px !important
 
@@ -891,7 +770,6 @@ table + .pagination,
           z-index: 4
           
           a
-            font-family: DinMedium, sans-serif
             position: relative
             text-decoration: none
             
@@ -945,7 +823,7 @@ table + .pagination,
         .reply
           display: block
           float: left
-          font: 12px DinMedium, sans-serif
+          font-size: 12px
           line-height: 20px
           padding: 0 5px
           margin: 10px 0 0
@@ -1109,7 +987,7 @@ table + .pagination,
         border: 1px solid
         +border_radius(2)
         content: attr(meta)
-        font: 12px DinMedium, sans-serif
+        font-size: 12px
         height: 20px
         left: 0
         line-height: 20px
@@ -1250,7 +1128,7 @@ table + .pagination,
   .wmd-prompt-question p b
     color: #367BB1
     display: block
-    font: 20px EurostyleStd, sans-serif
+    font-size: 25px
     margin: 20px 20px 0
     padding: 0
     
@@ -1259,13 +1137,12 @@ table + .pagination,
   
   p
     color: #4B385C
-    font: 16px DinLight, sans-serif
+    font-size: 15px
     margin: 20px 20px 30px
     padding: 0
     
     a
       +border_radius(2)
-      font-family: DinMedium, sans-serif
       padding: 0 3px
       text-decoration: underline
       
@@ -1309,7 +1186,6 @@ table + .pagination,
       color: #f8d5bb
       display: inline-block
       float: left
-      font: 11pt EurostyleStd, serif
       height: 30px
       line-height: 30px
       margin: 0 0 0 5px

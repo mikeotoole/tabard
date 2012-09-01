@@ -4,21 +4,17 @@
 @import application/bar
 
 body
-  background: image-url('main/bg.png') 0 70px repeat-x #fff
-  color: #251533
-  font-family: DinLight, sans-serif
+  background: image-url('main/bg.png') 50% 70px repeat-x #fff
+  color: #666
   min-width: 980px
-  padding: 75px 0 0
+  padding: 70px 0 0
 
   em
     font-style: italic
     
-  strong
-    font-family: DinMedium, sans-serif
-    
-    &.omg
-      color: #A33C33
-      text-transform: uppercase
+  strong.omg
+    color: #A33C33
+    text-transform: uppercase
   
   .alignleft
     clear: left
@@ -117,8 +113,6 @@ body.index.minecrafts #submenu .minecraft
   h2,
   h3
     color: #367BB1
-    font-family: EurostyleStd, serif
-    font-size: 30px
     line-height: 1em
   
   h1
@@ -158,7 +152,6 @@ body.index.minecrafts #submenu .minecraft
         +border_radius(2)
         content: counter(li)
         color: #227FB5
-        font-family: DinMedium, sans-serif
         font-size: 11px
         height: 15px
         line-height: 15px
@@ -375,7 +368,6 @@ body.index.minecrafts #submenu .minecraft
         border-bottom: 1px solid #999
         border-right: 1px solid #999
         border-top: 1px solid #fff
-        font-family: DinMedium, sans-serif
         padding: 5px 10px
       
       tr td
@@ -481,7 +473,7 @@ body.index.minecrafts #submenu .minecraft
           
         time
           display: block
-          font: 12px DinMedium, sans-serif
+          font-size: 12px
           white-space: nowrap
         
         h3
@@ -543,48 +535,6 @@ body.index.minecrafts #submenu .minecraft
           
           &:hover
             +box_shadow(0 0 10px #000)
-    
-    &.compare
-      
-      th,
-      td
-        text-align: center
-        width: 20%
-        
-        &.highlight
-          border-left: 1px solid #C48F6F
-          border-right: 1px solid #C48F6F
-      
-      thead th
-        border-left: 1px solid #4F91C1
-        line-height: 1em
-        padding: 20px 10px
-        
-        strong
-          font-size: 16pt
-      
-        &.highlight
-          background: #A23826
-          +bg_gradient(#d24723,#792b28)
-      
-      tbody
-      
-        th
-          text-align: right
-        
-        td
-          border-left: 1px solid #ccc
-          padding-bottom: 20px
-          
-          &.highlight
-            background: #F3D5BB
-            +bg_gradient(#fae6d4,#dec2aa)
-            border-bottom-color: #C48F6F
-            font-family: DinMedium, sans-serif
-      
-      tfoot .button
-        display: block
-        margin: 0 -10px
   
   .accountlinks
     border-left: 1px solid #ccc
@@ -710,7 +660,6 @@ body.index.minecrafts #submenu .minecraft
         +border_radius(3)
         color: #fff
         float: right
-        font-family: DinMedium, sans-serif
         padding: 3px 6px
   
     + dfn.hint
@@ -820,7 +769,7 @@ body.index.minecrafts #submenu .minecraft
         margin-right: 0
       
       h2
-        font: 16pt EurostyleStd, sans-serif
+        font-size: 16px
       
       .imglink
         background: transparent
