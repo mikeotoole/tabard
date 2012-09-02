@@ -1,4 +1,4 @@
-= simple_form_for [submission.custom_form,submission], html: {novalidate: true} do |f|
+= simple_form_for [submission.custom_form,submission], html: {novalidate: true, class: 'custom_form submission'} do |f|
   .questions
     %h1= shorten_words submission.custom_form_name, 21
     %fieldset

@@ -3,15 +3,16 @@
 %ul.menu
   %li
     = link_to 'Search', search_url
-  %li
-    %span= (current_community and current_user.communities.include? current_community) ? shorten_words(current_community.name) : 'My Communities'
-    %ul
-      - current_user.communities.includes(:admin_profile).each do |community|
-        %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : '', icon: current_user.user_profile == community.admin_profile ? '✭' : '◎'
-      - unless current_user.communities.any?
-        = link_to 'Find a community', communities_url(subdomain: false), icon: '◎'
-      - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-        %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
+  - if current_user.communities.any?
+    %li
+      %span My Communities
+      %ul
+        - current_user.communities.includes(:admin_profile).each do |community|
+          %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : '', icon: current_user.user_profile == community.admin_profile ? '✭' : '◎'
+        - unless current_user.communities.any?
+          = link_to 'Find a community', communities_url(subdomain: false), icon: '◎'
+        - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
+          %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
 
 %ul.dashboard
   %li.notice
