@@ -102,7 +102,7 @@ root = exports ? this
 
 # Adjust page to accomodate flash messages
 adjustHeaderByFlash = (speed,rowOffset=0) ->
-  if $('body.fluid').length or $('#flash').length
+  if $('body').hasClass('fluid') and $('#flash').length
     messageCount = $('#flash li').length ? 0
     amount = (messageCount + rowOffset) * 40
     $('#header')

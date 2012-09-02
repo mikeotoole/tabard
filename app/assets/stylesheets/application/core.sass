@@ -19,10 +19,9 @@ body
 
 #flash
   left: 0
-  margin: -5px 0 20px
+  margin: -1px 0 20px
   position: relative
   right: 0
-  
   li
     background: #eee
     +bg_gradient(#dddddd,#ffffff)
@@ -43,70 +42,59 @@ body
     +transition(color .2s linear, box-shadow .2s linear)
     width: 860px
     z-index: 88
-    
     &:before
       background: image-url('application/icons.png') no-repeat
       content: ''
       height: 30px
       left: 5px
-      margin: -15px 0 0
+      margin: -15px 0 0 5px
       +opacity(.9)
       position: absolute
       top: 50%
       width: 30px
-    
-    &.busy
       
-      &:after
-        background: image-url('application/busy.gif') center center no-repeat rgba(#000,.5)
-        bottom: 0
-        content: ''
-        left: 0
-        position: absolute
-        right: 0
-        top: 0
+    &.busy:after
+      background: image-url('application/busy.gif') center center no-repeat rgba(#000,.5)
+      bottom: 0
+      content: ''
+      left: 0
+      position: absolute
+      right: 0
+      top: 0
     
     &:last-child
       +border_radius(0,0,3,3)
       border-bottom: 1px solid #fff
-      
       &:after
         +border_radius(0,0,3,3)
     
     &.alert
-      +bg_gradient(#d73c31,#A13A32)
+      background: #AB361E
       color: #F6EAE9
-      
       &:before
         background-position: -1050px -30px
     
     &.success
       +bg_gradient(#4a95ca,#266c9e)
       color: #CDEAFF
-      
       &:before
         background-position: -480px -30px
-        
       &:hover
         color: #fff
     
     &.notice
       +bg_gradient(#f19c00,#c07c00)
       color: #fcf5e7
-      
       &:before
         background-position: -60px -30px
-        
       &:hover
         color: #fff
     
     &.announcement
       +bg_gradient(#74548e,#5f4078)
       color: #eae1f2
-      
       &:before
         background-position: -450px -30px
-      
       &:hover
         color: #fff
     
@@ -145,16 +133,14 @@ body
     .read
       right: 40px
     
-    .link
-      
-      &:before
-        bottom: 0
-        content: ''
-        display: block
-        left: 0
-        position: absolute
-        right: 40px
-        top: 0
+    .link:before
+      bottom: 0
+      content: ''
+      display: block
+      left: 0
+      position: absolute
+      right: 40px
+      top: 0
     
     .meta
       font-size: 12px
@@ -163,15 +149,12 @@ body
     &:hover
       +box_shadow(inset 0 0 25px rgba(#fff,.2))
       z-index: 89
-      
       &:before
         +opacity(1)
-      
       .dismiss,
       .view,
       .read
         +opacity(.7)
-      
         &:hover
           border-color: #fff
           +box_shadow(0 0 15px rgba(#000,.4))
@@ -502,9 +485,9 @@ button,
   .field_with_errors
     > input,
     > textarea
-      border-color: #A43D33 !important
+      border-color: #AA381D !important
     mark.error
-      background: #A43D33
+      background: #AA381D
       +border_radius(4,4,3,3)
       color: #fff
       display: block
@@ -553,8 +536,8 @@ button,
     dfn.hint
       margin-top: 30px
       + mark.error
-        margin-bottom: 60px
-        margin-top: -85px
+        margin-bottom: 30px
+        margin-top: -90px
 
   table
     td,

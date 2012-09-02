@@ -34,8 +34,8 @@
         Why is my birthday required?
       %p.terms
         By clicking "Sign up", you agree to our
-        = link_to 'Terms', top_level_terms_of_service_url
+        = link_to 'Terms', top_level_terms_of_service_url, target: '_blank'
         and that you have read our
-        = (link_to 'Privacy Policy', top_level_privacy_policy_url) + '.'
+        = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
       %p.submit
         %button{ type: 'submit', tabindex: 8 } Sign up

@@ -4,8 +4,8 @@
 @import application/bar
 
 body
-  background: image-url('main/bg.png') 50% 70px repeat-x #fff
-  color: #666
+  background: image-url('main/bg.png') 50% 71px repeat-x #fff
+  color: #777
   min-width: 980px
   padding: 70px 0 0
 
@@ -100,15 +100,10 @@ body.index.minecrafts #submenu .minecraft
   
   a:not(.button)
     +border_radius(2)
-    color: #be4124
-    padding: 0 3px
+    color: #3E7797
     text-decoration: underline
-    +transition(background .2s linear, color .2s linear)
-    
     &:hover
-      background: #be4124
-      color: #fff
-      text-decoration: none
+      color: #AA391F
   
   h1
     color: #5a3971
@@ -116,6 +111,7 @@ body.index.minecrafts #submenu .minecraft
     letter-spacing: -1px
     line-height: 40px
     padding: 0 0 15px
+    text-shadow: 0 1px 1px #fff
   
   h2
     color: #367BB1
@@ -196,6 +192,10 @@ body.index.minecrafts #submenu .minecraft
   
   
   // Forms
+  
+  label
+    color: #000
+    font-size: 16px
   
   input[type="url"],
   input[type="email"],
@@ -290,6 +290,23 @@ body.index.minecrafts #submenu .minecraft
             &:hover
               background: #3679B3
               color: #fff
+  
+  fieldset
+  
+    .help
+      margin: -10px 0 20px
+      padding: 0
+      text-decoration: underline
+      &:hover
+        color: #AA391F
+    
+    .terms
+      background: #c9d6df
+      +border_radius(3)
+      color: #333
+      font-size: 13px
+      margin: 10px 0
+      padding: 15px 20px
   
   // Tables
   
