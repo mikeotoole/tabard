@@ -10,19 +10,19 @@
         -if User::BETA_CODE_REQUIRED
           = f.input :beta_code
         = f.simple_fields_for :user_profile do |uf|
-          = uf.input :display_name, label: "Player name", required: false, hint: "You can change this later. #{UserProfile::MAX_NAME_LENGTH} characters max."
+          = uf.input :display_name, label: "Player Name", required: false, hint: "You can change this later. #{UserProfile::MAX_NAME_LENGTH} characters max."
         = f.input :email, as: :email
-        = f.input :email_confirmation, as: :email, label: 'Re-enter email'
-        %li{ class: "date select #{f.object.errors[:date_of_birth].any? ? 'field_with_errors' : ''}"}
+        = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
+        = f.input :password, label: 'New Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
+        %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'field_with_errors' : ''}" }
           %label Birthday
-          .month= f.input :birth_month, as: :radio, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper: false
-          .day= f.input :birth_day, as: :radio, label: false, collection: 1..31, wrapper: false
-          .year= f.input :birth_year, as: :radio, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper: false
+          = f.input :birth_month, as: :radio, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: :div, wrapper_html: {class: 'select month', data: {placeholder: 'Month'}}
+          = f.input :birth_day, as: :radio, label: false, collection: 1..31, wrapper_tag: :div, wrapper_html: {class: 'select day', data: {placeholder: 'Day'}}
+          = f.input :birth_year, as: :radio, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: :div, wrapper_html: {class: 'select year', data: {placeholder: 'Year'}}
           - if f.object.errors[:date_of_birth].any?
             %mark.error= f.object.errors[:date_of_birth].first
         %li.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligable for an account."})' }
           Why is my birthday required?
-        = f.input :password, input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
         - unless !!cookies[:timezone]
           = f.input :time_zone, required: false, collection: timezone_collection_hash, as: :radio, wrapper_html: { class: 'select' }
       - if !!cookies[:timezone]

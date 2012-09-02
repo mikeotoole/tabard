@@ -247,55 +247,47 @@ body.index.minecrafts #submenu .minecraft
           +bg_gradient(#CD462A,#A03932)
   
   .select
-  
-    ul
-      background: #eee
-      +bg_gradient(#dddddd,#eeeeee)
+    background: #eee
+    +bg_gradient(#dddddd,#eeeeee)
+    border-color: #fff
+    +box_shadow(0 0 3px rgba(#000,.2))
+    &:before
+      color: #aaa
+    &:after
+      border-top-color: #aaa
+    ul > li
+      label
+        border-top-color: #ddd
+        color: #666
+        .avatar
+          background: #C7B2A3
+          border-color: #fff
+          +box_shadow(0 0 5px rgba(#000,.2))
+        &:hover
+          background: #5C98B9
+          +bg_gradient(#6AA6C8,#5189A9)
+          border-top-color: #5189A9
+          color: #fff
+          text-shadow: 0 -1px 1px #22506b
+      input:checked + label
+        background: #eee
+        +bg_gradient(#dddddd,#eeeeee)
+        color: #666
+    &:hover ul
+      background: #fff
       border-color: #fff
-      +box_shadow(0 0 3px rgba(#000,.2))
-          
-      &:before
-        border-top-color: #bbb
-      
-      li
-        
-        label
-          background: #d7eaf8
-          +bg_gradient(#f2f8fd,#d7eaf8)
-          border-top-color: #3679B3
-          color: #1a5a87
-        
-          .avatar
-            background: #C7B2A3
-            border-color: #fff
-            +box_shadow(0 0 5px rgba(#000,.2))
-        
-        input:checked + label
-          color: inherit
-  
-      &:hover
-        background: #d7eaf8
-        +box_shadow(0 0 8px #2d7cb4)
-        +bg_gradient(#f2f8fd,#d7eaf8)
-          
-        &:before
-          border-top-color: #2D7CB4
-      
-        li
-        
-          label,
-          input:checked + label
-            color: #1a5a87
-            
-            &:hover
-              background: #3679B3
-              color: #fff
+      +box_shadow(0 0 5px rgba(0,0,0,.2))
+
+  #new_user .password input
+    width: 269px
   
   fieldset
   
     .help
-      margin: -10px 0 20px
-      padding: 0
+      clear: both
+      cursor: pointer
+      display: inline-block
+      margin: 0 0 10px
       text-decoration: underline
       &:hover
         color: #AA391F
@@ -303,6 +295,7 @@ body.index.minecrafts #submenu .minecraft
     .terms
       background: #c9d6df
       +border_radius(3)
+      clear: both
       color: #333
       font-size: 13px
       margin: 10px 0

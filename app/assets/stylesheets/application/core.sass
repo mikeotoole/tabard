@@ -170,8 +170,8 @@ button,
   +border_radius(3)
   display: inline-block
   font-size: 16px
-  height: 30px
-  line-height: 30px !important
+  height: 32px
+  line-height: 32px !important
   margin: 0 5px 0 0
   padding: 0 15px
   position: relative
@@ -276,50 +276,56 @@ button,
     >li:last-child
       padding-bottom: 5px
 
-  div.select
-    float: left
-    margin: 0 5px 0 0
-    width: 435px
   .select
-    min-height: 55px
+    +border_radius(3)
+    border: 1px solid
+    margin: 0
+    min-height: 30px
+    padding: 0 25px 0 10px
     position: relative
-    >label
+    z-index: 3
+    &:before
+      content: attr(data-placeholder)
       display: block
-      padding-bottom: 5px
-    ul
-      +border_radius(3)
-      border: 1px solid transparent
-      display: block
-      height: 0
+      height: 30px
       line-height: 30px
-      overflow: hidden
-      padding: 30px 1px 1px
+    &:after
+      border: 5px solid transparent
+      content: ''
       position: absolute
-      +transition(box-shadow .2s linear)
-      width: 428px
-      z-index: 9
-      &:before
-        border: 5px solid transparent
-        content: ''
-        height: 0
-        position: absolute
-        right: 10px
-        top: 13px
-        width: 0
-        z-index: 10
-      li
+      right: 8px
+      top: 12px
+      z-index: 1
+    ul
+      background: transparent
+      border: 1px solid transparent
+      +border_radius(0,0,3,3)
+      border-top: 0
+      bottom: 0
+      left: -1px
+      margin: 0
+      max-height: 170px
+      overflow: hidden
+      padding: 0
+      position: absolute
+      right: -1px
+      top: 0
+      >li
         display: inline
         margin: 0
         padding: 0
-        position: static
+        position: relative
+        text-overflow: ellipsis
+        input
+          left: -500em
+          position: absolute
         label
-          +border_radius(3)
-          border-top: 1px solid transparent
+          border-top: 1px solid
           display: none
+          font-size: 15px
           line-height: 20px
-          margin: 1px 0 0
-          min-height: 20px
-          padding: 5px 30px 5px 10px
+          margin: 0
+          padding: 5px 10px
           text-indent: 0
           &:before,
           &:after
@@ -329,72 +335,47 @@ button,
             +border_radius(2)
             float: left
             margin: -1px 6px 3px -6px
-        img.avatar
-          width: 20px
-        img.big
-          border: 1px solid
-          +border_radius(3)
-        input
-          left: -500em
-          position: absolute
-          &:checked + label
-            background: transparent
-            border-top-color: transparent
-            display: block
-            height: 28px
-            line-height: 28px
-            overflow: hidden
-            padding: 0 30px 0 10px
-            position: absolute
-            top: 0
-            width: 388px
-            z-index: 3
-            .avatar
-              margin: 3px 5px 3px -5px
-            .big
-              float: left
-              height: 20px
-              margin: 3px 10px 0 0
-              width: 30px
-      &:hover
-        height: auto
-        max-height: 224px
-        overflow: scroll
-        overflow-x: hidden
-        z-index: 11
-        &:before
-          z-index: 12
-        li label
+        input:checked + label
+          border-top: 0
+          cursor: default
           display: block
-          position: static
-    dfn.hint
-      padding-top: 39px
-    .day ul
-      left: 170px
-      width: 80px
-      input:checked + label
-        width: 40px
-    .month ul
-      left: 0
-      width: 150px
-      input:checked + label
-        width: 110px
-    .year ul
-      left: 270px
-      width: 100px
-      input:checked + label
-        width: 60px
-    &.status
-      margin-right: 10px
-      min-height: 33px
-      width: 174px
-      ul
-        width: 170px
-      + button,
-      + button + .button
-        clear: none
-        height: 32px
-        line-height: 32px !important
+          left: 1px
+          position: absolute
+          right: 25px
+          top: 0
+          text-shadow: 0 1px 1px #fff
+          .avatar
+            margin: 3px 5px 3px -5px
+          .big
+            float: left
+            height: 20px
+            margin: 3px 10px 0 0
+            width: 30px
+        &:last-child label
+          +border_radius(0,0,2,2)
+    &:hover ul
+      bottom: auto
+      overflow: scroll
+      overflow-x: hidden
+      top: 100%
+      z-index: 11
+      >li label
+        display: block
+      >li:first-child label
+        border-top-width: 0 !important
+      >li input:checked + label
+        border-top: 1px solid #ccc
+        color: #999
+        position: static
+    &.month
+      width: 85px
+    &.day
+      width: 30px
+    &.year
+      width: 45px
+  .selects .select
+    float: left
+    margin: 5px 10px 5px 0
 
   .slider
     border: 1px solid transparent
@@ -489,6 +470,7 @@ button,
     mark.error
       background: #AA381D
       +border_radius(4,4,3,3)
+      clear: both
       color: #fff
       display: block
       margin: -32px 0 0
@@ -511,8 +493,9 @@ button,
       padding-top: 5px
     &.select,
     .select
-      ul
-        border-color: #A43D33
+      border-color: #A43D33
+      &:hover ul
+        border-color: #A43D33 !important
       ul + mark.error,
       .select + mark.error
         margin-bottom: 20px
@@ -529,10 +512,12 @@ button,
           margin-top: -83px
       > .options
         margin-bottom: -55px
-    &.date
-      > mark.error
-        margin-top: 0
-        width: 354px
+    &.selects > mark.error
+      display: block
+      float: left
+      margin-top: -37px
+    &.date > mark.error
+      width: 271px
     dfn.hint
       margin-top: 30px
       + mark.error
