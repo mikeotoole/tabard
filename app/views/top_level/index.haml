@@ -10,13 +10,13 @@
     %ul
       %li.current
         = image_tag 'main/slide-explosion.jpg'
-        %p Customize guild applications and screen applicants.
+        %p Spend your time playing the game instead of managing guildmates.
       %li
         = image_tag 'main/slide-wasteland.jpg'
-        %p Create character profiles and join communities.
+        %p Create character profiles and join multiple communities.
       %li
-        = image_tag 'main/slide-snowtower.jpg'
-        %p Send announcements and track who acknowledges them.
+        = image_tag 'main/slide-snowbase.jpg'
+        %p Customize member applications and screen applicants.
 
   = simple_form_for 'user', url: user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { class: 'signup' } do |f|
     %h2 Sign up
