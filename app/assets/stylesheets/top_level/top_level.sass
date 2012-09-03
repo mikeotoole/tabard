@@ -897,6 +897,8 @@ body.sessions
       text-shadow: 0 -2px 1px #000
     form
       width: auto
+      fieldset li
+        padding: 5px 0 0
       input
         color: #444
         width: 318px
@@ -905,6 +907,7 @@ body.sessions
         &::-webkit-input-placeholder
           color: #aaa
       .boolean
+        margin-top: 3px
         input,
         label
           width: auto
@@ -917,15 +920,16 @@ body.sessions
         +box_shadow(0 0 5px #000 !important)
       button
         +box_shadow(0 0 5px #504758)
-        bottom: 0
-        margin: 0
+        bottom: 100%
         position: absolute
-        right: 0
+        right: -5px
       a.help
         background: transparent
+        bottom: 20px
         color: #ccc1d4
-        float: right
         font-size: 13px
+        position: absolute
+        right: 30px
         text-decoration: underline
         text-shadow: 0 -1px 1px #504758
         &:hover
