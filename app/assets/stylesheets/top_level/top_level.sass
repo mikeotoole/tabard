@@ -273,13 +273,14 @@ body.index.minecrafts #submenu .minecraft
         background: #eee
         +bg_gradient(#dddddd,#eeeeee)
         color: #666
+        text-shadow: 0 1px 1px #fff
     &:hover ul
       background: #fff
       border-color: #fff
-      +box_shadow(0 0 5px rgba(0,0,0,.2))
-
-  #new_user .password input
-    width: 269px
+      +box_shadow(0 0 5px rgba(0,0,0,.2), -5px 0 10px rgba(0,0,0,.5) inset)
+      >li input:checked + label
+        border-top-color: #ccc
+        color: #999
   
   fieldset
   
@@ -863,6 +864,12 @@ body.pricing
     position: absolute
     right: 50%
     width: 200px
+
+body.registrations #new_user .password
+  input
+    width: 269px
+  mark.error
+    width: 271px
 
 body.sessions
 

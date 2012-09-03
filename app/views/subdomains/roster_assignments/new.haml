@@ -5,7 +5,7 @@
 
 
 - if @roster_assignments.any? or @available_characters.any?
-  %table
+  %table.my_roster
     %thead
       %tr
         %th.cinch
@@ -31,10 +31,8 @@
         %td
           - if @available_characters.any?
             = simple_form_for @roster_assignment, wrapper: false do |f|
-              .select{ class: !!f.object.errors.messages[:character_proxy_id] ? 'field_with_errors' : '' }
-                = f.input :character_proxy_id, as: :radio, label: false, wrapper: false, collection: @available_characters.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}", cp.id]}
-              .select{ class: !!f.object.errors.messages[:supported_game_id] ? 'field_with_errors' : '' }
-                = f.input :supported_game_id, as: :radio, label: false, wrapper: false, collection: current_community.supported_games.includes(:community).collect{|sg| sg = [sg.smart_name, sg.id]}
+              = f.input :character_proxy_id, as: :radio, label: false, wrapper_tag: :div, wrapper_html: {class: 'select'}, collection: @available_characters.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}", cp.id]}
+              = f.input :supported_game_id, as: :radio, label: false, wrapper_tag: :div, wrapper_html: {class: 'select'}, collection: current_community.supported_games.includes(:community).collect{|sg| sg = [sg.smart_name, sg.id]}
               %button{ type: 'submit' } Add character
         %td
 - else

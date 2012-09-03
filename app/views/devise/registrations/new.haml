@@ -14,7 +14,7 @@
         = f.input :email, as: :email
         = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
         = f.input :password, label: 'New Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
-        %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'field_with_errors' : ''}" }
+        %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'with-errors' : ''}" }
           %label Birthday
           = f.input :birth_month, as: :radio, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: :div, wrapper_html: {class: 'select month', data: {placeholder: 'Month'}}
           = f.input :birth_day, as: :radio, label: false, collection: 1..31, wrapper_tag: :div, wrapper_html: {class: 'select day', data: {placeholder: 'Day'}}

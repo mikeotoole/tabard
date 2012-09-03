@@ -1,11 +1,11 @@
 = f.input :name, input_html: { maxlength: MinecraftCharacter::MAX_NAME_LENGTH }
 = f.input :about, as: :text, label: 'Optional Description', input_html: { rows: 5 }
-%li.avatar{ class: f.object.errors.any? ? 'field_with_errors' : '' }
+%li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
   - if !minecraft_character.persisted? or !minecraft_character.avatar_url.to_s or f.object.errors.any?
     = image_tag 'application/avatar@240.png'
   - else
     = image_tag(minecraft_character.avatar_url :large)
   %br
+  = f.input :remove_avatar, as: :boolean, label: "Remove avatar", wrapper: false unless minecraft_character[:avatar].blank?
   = f.input :avatar, wrapper: false, hint: 'Maxium file size of 2mb. GIF, JPG, PNG.'
   = f.input :remote_avatar_url, label: "or image URL", wrapper: false
-  = f.input :remove_avatar, as: :boolean, label: "Remove avatar" unless minecraft_character[:avatar].blank?

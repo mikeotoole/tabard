@@ -235,8 +235,9 @@ button,
   input[type="checkbox"],
   input[type="radio"]
     height: 1px
-    margin: 15px 0 0 10px
+    margin: 0
     position: absolute
+    top: -999em
     width: 1px
     z-index: 1
     + label
@@ -271,16 +272,21 @@ button,
     padding: 5px
     &:before
       content: '\27A5\00A0'
+  .check_boxes >ul,
   .radio_buttons >ul
-    padding: 0
+    padding: 5px 0 0
+    >li
+      margin-left: 0
+    >li:before
+      display: none
     >li:last-child
       padding-bottom: 5px
 
   .select
     +border_radius(3)
     border: 1px solid
-    margin: 0
-    min-height: 30px
+    margin: 10px 0
+    height: 30px
     padding: 0 25px 0 10px
     position: relative
     z-index: 3
@@ -289,13 +295,13 @@ button,
       display: block
       height: 30px
       line-height: 30px
+      z-index: 999
     &:after
       border: 5px solid transparent
       content: ''
       position: absolute
       right: 8px
       top: 12px
-      z-index: 1
     ul
       background: transparent
       border: 1px solid transparent
@@ -310,6 +316,7 @@ button,
       position: absolute
       right: -1px
       top: 0
+      z-index: 0
       >li
         display: inline
         margin: 0
@@ -321,58 +328,108 @@ button,
           position: absolute
         label
           border-top: 1px solid
+          clear: both
           display: none
           font-size: 15px
           line-height: 20px
           margin: 0
           padding: 5px 10px
           text-indent: 0
-          &:before,
-          &:after
+          &:before
             display: none
+          &:after
+            background: transparent
+            border: 0
+            +box_shadow(none)
+            clear: both
+            content: '.'
+            display: block
+            height: 0
+            position: static
+            visibility: hidden
           .avatar
             border: 1px solid transparent
             +border_radius(2)
             float: left
-            margin: -1px 6px 3px -6px
+            margin: 3px 10px 5px -2px
+          .big
+            float: left
+            margin: 0 10px 0 -5px
         input:checked + label
           border-top: 0
           cursor: default
           display: block
-          left: 1px
-          position: absolute
-          right: 25px
+          left: 0
+          margin: 0 1px
+          padding-right: 25px
+          position: relative
           top: 0
-          text-shadow: 0 1px 1px #fff
           .avatar
-            margin: 3px 5px 3px -5px
+            margin: -2px 10px 5px -7px
           .big
-            float: left
             height: 20px
-            margin: 3px 10px 0 0
             width: 30px
         &:last-child label
           +border_radius(0,0,2,2)
-    &:hover ul
-      bottom: auto
-      overflow: scroll
-      overflow-x: hidden
-      top: 100%
+    &.with-label
+      margin-top: 35px
+      >label
+        left: 0
+        margin: 0
+        padding: 0 0 10px
+        position: absolute
+        right: 0
+        top: -25px
+        z-index: 3
+    &.with-hint
+      margin-bottom: 30px
+      >dfn.hint
+        bottom: -20px
+        left: 0
+        margin: 0
+        padding: 10px 0 0
+        position: absolute
+        right: 0
+        z-index: 3
+    &:hover
       z-index: 11
-      >li label
-        display: block
-      >li:first-child label
-        border-top-width: 0 !important
-      >li input:checked + label
-        border-top: 1px solid #ccc
-        color: #999
-        position: static
-    &.month
-      width: 85px
+      ul
+        bottom: auto
+        margin-top: -2px
+        overflow: scroll
+        overflow-x: hidden
+        top: 100%
+        width: 100% !important
+        z-index: 12
+        >li label
+          display: block
+        >li:first-child label
+          border-top-width: 0 !important
+          margin: 0 !important
+        >li input:checked + label
+          border-top: 1px solid
+          margin: 0
+          position: static
+          width: 100% !important
+          .big
+            height: auto
+            width: auto
+          .avatar
+            margin: 3px 10px 5px -2px
     &.day
       width: 30px
+    &.game_type
+      width: 300px
+    &.faction
+      width: 150px
+    &.month
+      width: 85px
+    &.server
+      width: 300px
     &.year
       width: 45px
+  label ~ .select
+    margin-top: 5px
   .selects .select
     float: left
     margin: 5px 10px 5px 0
@@ -442,7 +499,8 @@ button,
       >li
         clear: both
         list-style: none
-        margin: 15px 0
+        margin: 0
+        padding: 15px 0
         > ul
           padding-left: 0
           > li
@@ -463,13 +521,13 @@ button,
           .input
             display: none
 
-  .field_with_errors
+  .with-errors
     > input,
     > textarea
       border-color: #AA381D !important
     mark.error
       background: #AA381D
-      +border_radius(4,4,3,3)
+      +border_radius(2)
       clear: both
       color: #fff
       display: block
@@ -484,12 +542,11 @@ button,
     &.radio_buttons > mark.error,
     .check_boxes + ul + mark.error,
     >.radio_buttons + ul + mark.error
-      margin-top: 0
       padding-top: 5px
     .check_boxes + ul + dfn.hint + mark.error,
     >.radio_buttons + ul + dfn.hint + mark.error
-      margin-bottom: 50px
-      margin-top: -50px
+      margin-bottom: 20px
+      margin-top: -45px
       padding-top: 5px
     &.select,
     .select

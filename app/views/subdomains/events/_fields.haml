@@ -6,14 +6,14 @@
   %ol
     = f.input :name
     = f.input :body
-    %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'field_with_errors' : ''}" }
+    %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'with-errors' : ''}" }
       %label Start
       %span= f.input :start_time_date, as: :hidden, wrapper: :none
       %span
         %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time_date.to_s != '' ? event.start_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
       = f.input :start_time_hm, as: :string, label: false, placeholder: 'Time', wrapper_tag: :span, wrapper_html: { class: 'time' }
       %mark.error= f.object.errors[:start_time].first
-    %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'field_with_errors' : ''}" }
+    %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'with-errors' : ''}" }
       %label End
       %span= f.input :end_time_date, as: :hidden, wrapper: :none
       %span

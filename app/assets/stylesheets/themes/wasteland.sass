@@ -277,7 +277,6 @@ button,
     border-color: #2A1E1D
     +box_shadow(0 0 3px #C23C22)
     color: #d1b786
-    
     &:focus
       background: #A78373
       +box_shadow(0 0 8px #EC8944)
@@ -285,34 +284,27 @@ button,
       
   input[type="checkbox"],
   input[type="radio"]
-    
     + label:before
       background: #813317
       +bg_gradient(#6D2D16,#943918)
       border-color: #2A1E1D
       +box_shadow(0 0 3px #C23C22)
-    
     &:focus + label:before
       background: #FACB63
       +box_shadow(0 0 8px #EC8944)
       +bg_gradient(#C33D1E,#f34d26)
-      
     &:focus + label,
     &:hover + label,
     + label:hover
-            
       &:after
         background: #7A200D
         border-color: #7A200D
         color: #000
-    
     &:checked
-
       + label:after
         background: #FACB63
         border-color: #fff
         +box_shadow(0 0 9px #000)
-    
     &:checked + label:hover:after,
     &:checked:focus + label:after
       background: #fff
@@ -327,42 +319,38 @@ button,
     color: #876354
   
   .select
-  
-    ul
-      background: #813317
-      +bg_gradient(#6D2D16,#943918)
+    background: #813317
+    +bg_gradient(#6D2D16,#943918)
+    border-color: #2A1E1D
+    +box_shadow(0 0 3px #C23C22)
+    &:before
+      color: #d1b786
+    &:after
+      border-top-color: #d1b786
+    ul > li
+      label
+        border-top-color: #8c6c5e
+        color: #000
+        .avatar
+          background: #614E2A
+          border-color: #0A0C0B
+          +box_shadow(0 0 5px #fff)
+        &:hover
+          background: #FCC85D
+          border-top-color: #ca993b
+          color: #000
+      input:checked + label
+        background: #813317
+        +bg_gradient(#6D2D16,#943918)
+        color: #d1b786
+    &:hover ul
+      background: #A78272
       border-color: #2A1E1D
       +box_shadow(0 0 3px #C23C22)
-          
-      &:before
-        border-top-color: #F38D41
-      
-      li
-        
-        label
-          background: #C33D1E
-          +bg_gradient(#C33D1E,#f34d26)
-          border-top-color: #7A200D
-        
-          .avatar
-            background: #F38D41
-            border-color: #C33D1E
-            +box_shadow(0 0 5px rgba(#000,.5))
-        
-        input:checked + label
-          color: #d1b786
-  
-      &:hover
-        background: #A03016
-        +box_shadow(0 0 8px #EC8944)
-        +bg_gradient(#A03016,#C33D1E)
-      
-        li label
-          color: #fff
-          
-          &:hover
-            background: #F9E56D
-            color: #000 !important
+      >li input:checked + label
+        background: #86675b
+        border-top-color: #715247
+        color: #000
 
   .slider
     background: #813317
@@ -370,50 +358,40 @@ button,
     border-color: #2A1E1D
     +box_shadow(0 0 3px #C23C22)
     color: #fbf0b1
-        
     label
       color: #F18E46
-
-    input
-      
-      &:checked + label
-        background: #FACB63
-        border-color: #602213
-        +box_shadow(0 0 5px rgba(#000,.5))
-        color: #000 !important
-  
+    input:checked + label
+      background: #FACB63
+      border-color: #602213
+      +box_shadow(0 0 5px rgba(#000,.5))
+      color: #000 !important
     &:hover
       background: #A03016
       background: #C33D1E
       +box_shadow(0 0 8px #EC8944)
       +bg_gradient(#A03016,#C33D1E)
-      
       label:hover
         background: #fbf0b1 !important
         border-color: #602213
         color: #000 !important
   
   .color
-
     .preview
       border: 0 !important
       +box_shadow(0 0 3px #C23C22)
       padding: 1px
-      
       &:before
         border-color: #301607 !important
-    
-    &.field_with_errors .preview
+    &.with-errors .preview
       border: 1px solid #fff !important
       padding: 0
-
     input:focus + .preview
       +box_shadow(0 0 8px #EC8944)
   
   dfn.hint
     color: #A78373
   
-  .field_with_errors
+  .with-errors
   
     input[type="url"],
     input[type="email"],

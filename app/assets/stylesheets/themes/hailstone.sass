@@ -277,7 +277,6 @@ button,
     border-color: #fff
     +box_shadow(0 0 3px #a3b1cc)
     color: #435f8f
-    
     &:focus
       background: #FAFCFE
       +bg_gradient(#FAFCFE,#DEEFF8)
@@ -286,37 +285,29 @@ button,
       
   input[type="checkbox"],
   input[type="radio"]
-    
     + label:before
       background: #cde1ed
       +bg_gradient(#e4eff6,#cde1ed)
       border-color: #fff
       +box_shadow(0 0 3px #a3b1cc)
-    
     &:hover + label:before,
     &:focus + label:before
       border-color: #4399ca
       +box_shadow(0 0 10px #31A1D7)
-    
     &:focus + label:before
       background: #d7eaf8
       +bg_gradient(#f2f8fd,#d7eaf8)
-    
     &:checked
-      
       + label:after
         background: #4F9AB5
         +bg_gradient(#4F9AB5,#266e88)
         border-color: #71bcd9
-      
       &:focus + label,
       &:hover + label,
       + label:hover
-      
         &:before
           border: 1px solid #4399ca
           +box_shadow(0 0 5px #31A1D7)
-        
         &:after
           background: #4399ca
           +bg_gradient(#4399ca,#146491)
@@ -333,98 +324,79 @@ button,
     color: #c2d7e3
   
   .select
-  
-    ul
-      background: #cde1ed
-      +bg_gradient(#e4eff6,#cde1ed)
-      +box_shadow(0 0 3px rgba(#000,.2))
+    background: #cde1ed
+    +bg_gradient(#e4eff6,#cde1ed)
+    border-color: #fff
+    +box_shadow(0 0 3px #a3b1cc)
+    &:before
+      color: #435f8f
+    &:after
+      border-top-color: #435f8f
+    ul > li
+      label
+        border-top-color: #BDD0E1
+        color: #435f8f
+        .avatar
+          background: #614E2A
+          border-color: #0A0C0B
+          +box_shadow(0 0 5px #fff)
+        &:hover
+          background: #0F81B6
+          +bg_gradient(#2c97c9,#1274a1)
+          border-top-color: #1274a1
+          color: #fff
+      input:checked + label
+        background: #cde1ed
+        +bg_gradient(#e4eff6,#cde1ed)
+        color: #435f8f
+    &:hover ul
+      background: #fff
       border-color: #fff
-          
-      &:before
-        border-top-color: #5199B7
-      
-      li
-        
-        label
-          background: #cde1ed
-          +bg_gradient(#cde1ed,#e4eff6)
-          border-top-color: #a7c3d5
-          color: #162840
-        
-          .avatar
-            background: #5598B6
-            border-color: #fff
-            +box_shadow(0 0 5px rgba(#000,.2))
-        
-        input:checked + label
-          color: #435f8f
-  
-      &:hover
-        background: #d7eaf8
-        +box_shadow(0 0 8px #2d7cb4)
-        +bg_gradient(#f2f8fd,#d7eaf8)
-          
-        &:before
-          border-top-color: #2D7CB4
-      
-        li
-        
-          label,
-          input:checked + label
-            color: #435f8f
-            
-            &:hover
-              background: #2F4A79
-              color: #fff
+      +box_shadow(0 0 3px #a3b1cc)
+      >li input:checked + label
+        background: #DFECF4
+        border-top-color: #BDD0E1
+        color: #82a8c0
 
   .slider
     background: #cde1ed
     +bg_gradient(#e4eff6,#cde1ed)
     border-color: #fff
     +box_shadow(0 0 3px #a3b1cc)
-        
     label
       color: #435f8f
-
     input
-      
       &:checked + label
         background: #2979A7
         border-color: #2F4A79
         +box_shadow(0 0 5px rgba(#000,.5))
         color: #fff !important
-  
     &:hover
       background: #FAFCFE
       +bg_gradient(#FAFCFE,#DEEFF8)
       +box_shadow(0 0 10px #31A1D7)
-      
       label:hover
         background: #48b3da !important
         border-color: #2F4A79
         color: #fff !important
   
   .color
-
     .preview
       border: 0 !important
       +box_shadow(0 0 3px #a3b1cc)
       padding: 1px
-      
       &:before
         border-color: #fff !important
-    
-    &.field_with_errors .preview
+    &.with-errors .preview
       border: 1px solid #A13A32 !important
       padding: 0
-
     input:focus + .preview
       +box_shadow(0 0 10px #31A1D7)
     
   dfn.hint
     color: #435f8f
   
-  .field_with_errors
+  .with-errors
   
     input[type="url"],
     input[type="email"],
