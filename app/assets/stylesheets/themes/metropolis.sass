@@ -28,63 +28,46 @@ body,
     background: rgba(#1A3C47,.9)
     +border_radius(3,3,0,0)
     +box_shadow(0 -5px 5px rgba(#06161F,.1))
-    
-    >li
-      
+    > ul > li
       >a
         border: 1px solid transparent
         color: #A9DAE6
-            
-        &:not(:only-child)
-          
-          &:after
-            border-top-color: #A9B795
-      
+        text-shadow: 0 -1px 1px #000
+        &:not(:only-child):after
+          border-top-color: #A9B795
       >ul >li >a
         border-color: #467f86 !important
         color: #06151F
-        
         &[meta]:before
           background: #2f8100
           +box_shadow(0 0 3px #71b2ba)
           color: #fff
-        
         &:hover
           background: #AAB694
-      
       &:hover
-        
-        >a[href]
+        >a
+          color: #fff !important
+        >a:not(:only-child)
           background: #5A969E
           border-color: #71b2ba
-          color: #fff !important
-          
           &:after
             border-top-color: #fff
-        
         >ul
           background: #5A969E
           border: 1px solid #71b2ba
           +box_shadow(0 0 5px rgba(#000,.5))
-      
       &.special
-      
         >a
           color: #fff
-          
         >ul >li >a
-        
           &:after
             background: #467F86
             color: #000
-          
           &:hover:after
             background: #AAB694
             color: #000
-      
       &.settings >a:before
         background-position: -90px -30px
-      
       &.signup >a:before
         background-position: -120px -30px
   

@@ -28,70 +28,53 @@ body,
     background: rgba(#acd3e6,.9)
     +border_radius(3,3,0,0)
     +box_shadow(0 -5px 5px rgba(#000,.1))
-    
-    >li
-      
+    > ul > li
       >a
         border: 1px solid transparent
-        color: #224676
-            
-        &:not(:only-child)
-          
-          &:after
-            border-top-color: #4D9AB8
-      
+        color: #386A9F
+        text-shadow: 0 1px 1px #fff
+        &:not(:only-child):after
+          border-top-color: #4D9AB8
       >ul >li >a
         border-color: #203b60 !important
         color: #acd3e6
-        
         &[meta]:before
           background: #fff
           color: #203b60
-        
         &:hover
           background: #5697a4
           color: #fff
-      
       &:hover
-        
-        >a[href]
+        >a
+          color: #000 !important
+        >a:not(:only-child)
           background: #2B4D7A
           border-color: #203b60
           color: #fff !important
-          
+          text-shadow: 0 -1px 1px #000
           &:after
             border-top-color: #fff
-        
         >ul
           background: #2B4D7A
           +bg_gradient(#2B4D7A,#406AA2)
           border: 1px solid #203b60
           +box_shadow(0 0 5px rgba(#000,.5))
-      
       &.special
-      
         >a
           color: #000
-          
         >ul >li >a
-        
           &:after
             background: #203B60
             color: #9DC3D7
-          
           &:hover:after
             background: #5697a4
             color: #fff
-      
       &.settings >a:before
         background-position: -90px 0
-      
       &.settings:hover >a[href]:before
         background-position: -90px -30px
-      
       &.signup >a:before
         background-position: -120px 0
-      
       &.signup:hover >a[href]:before
         background-position: -120px -30px
   
