@@ -93,7 +93,7 @@
         color: #ccc
         display: block
         float: left
-        height: 30px
+        height: 33px
         font-size: 14px
         line-height: 30px
         margin: 0 5px
@@ -104,52 +104,9 @@
       >span
         +border_radius(2,2,0,0)
         cursor: default
-
       >ul
-        background: #CF4527
-        +bg_gradient(#CF4527,#A03931)
-        +border_radius(2,0,2,2)
-        +box_shadow(-3px 5px 5px rgba(#000, .3))
-        padding: 10px
-        position: absolute
-        +opacity(0)
         right: 5px
-        text-align: left
-        top: -500em
-        +transition(opacity .1s linear)
-        a
-          border-bottom: 1px solid #862D20
-          color: #e9d9c4
-          display: block
-          font-size: 13px
-          line-height: 15px
-          padding: 0 50px 0 30px
-          position: relative
-          text-shadow: 0 -1px 1px #862D20
-          +transition(padding .1s linear)
-          white-space: nowrap
-          &:after
-            background: #993528
-            color: #d1b188
-            content: attr(icon)
-            height: 25px
-            left: 0
-            line-height: 25px
-            position: absolute
-            text-align: center
-            top: 5px
-            width: 25px
-          &.current
-            background: #993528
-          &:hover
-            background: #862D20
-            color: #fff
-            &:after
-              background: transparent
-              color: #fff
-        li:last-child a
-          border-bottom: 0
-
+        top: -999em
       &:hover
         >a,
         >span
@@ -160,11 +117,10 @@
           background: #CF4527
         >ul
           +opacity(1)
-          top: 30px
+          top: 33px
           a
             padding-bottom: 10px
             padding-top: 10px
-    
       .button
         background: #3F7696
         border: 0
@@ -175,44 +131,6 @@
         text-shadow: 0 -1px 1px #22506b
         &:hover
           background: #5288a8
-      
-      &.icon
-        margin: -5px 5px
-        padding: 5px 0
-        >a
-          background: image-url('bar/icons.png') no-repeat
-          border-color: transparent
-          margin: 0
-          +opacity(.8)
-          padding: 0
-          text-indent: -500em
-          +transition(opacity .1s linear)
-          width: 30px
-          &[meta]:before
-            background: #BC3F2B
-            +border_radius(2)
-            color: #e6d3ba
-            content: attr(meta)
-            font-size: 11px
-            height: 11px
-            right: 0
-            line-height: 12px
-            padding: 3px
-            position: absolute
-            text-align: right
-            text-indent: 0
-            top: -16px
-          &:hover
-            +opacity(1)
-            &[meta]:before
-              background: #CE442B
-              color: #fff
-      &.calendar > a
-        background-position: -45px -5px
-      &.notice > a
-        background-position: -85px -5px
-      &.envelope > a
-        background-position: -125px -5px
   
   .avatar
     background: #000
@@ -235,60 +153,65 @@
       top: 0
       width: 40px
       z-index: 2
-    ul
-      background: #CF4527
-      +bg_gradient(#CF4527,#A03931)
-      +border_radius(2,0,2,2)
-      +box_shadow(-3px 5px 5px rgba(#000, .3))
-      padding: 10px
-      position: absolute
-      +opacity(0)
+    >ul
       right: -9px
-      text-align: left
-      top: -500em
-      +transition(opacity .1s linear)
-      z-index: 1
-      a
-        border-bottom: 1px solid #862D20
-        color: #e9d9c4
-        display: block
-        font-size: 13px
-        line-height: 15px
-        padding: 0 50px 0 30px
-        position: relative
-        text-shadow: 0 -1px 1px #862D20
-        +transition(padding .1s linear)
-        white-space: nowrap
-        &:after
-          background: #993528
-          color: #d1b188
-          content: attr(icon)
-          height: 25px
-          left: 0
-          line-height: 25px
-          position: absolute
-          text-align: center
-          top: 5px
-          width: 25px
-        &:hover
-          background: #862D20
-          color: #fff
-          &:after
-            background: transparent
-            color: #fff
-      li:last-child a
-        border-bottom: 0
     &:hover
       border-color: #CF4527
       img
         border: 1px solid #d1b188
         outline: 1px solid #782A2A
-      ul
+      >ul
         +opacity(1)
         top: 35px
         a
           padding-bottom: 10px
           padding-top: 10px
+  
+  .menu > li > ul,
+  .avatar > ul
+    background: #CF4527
+    +bg_gradient(#CF4527,#A03931)
+    +border_radius(2,0,2,2)
+    +box_shadow(-3px 5px 5px rgba(#000, .3))
+    padding: 10px
+    position: absolute
+    +opacity(0)
+    text-align: left
+    top: -500em
+    +transition(opacity .1s linear)
+    z-index: 1
+    a
+      border-bottom: 1px solid #862D20
+      color: #e9d9c4
+      display: block
+      font-size: 12px
+      line-height: 15px
+      padding: 0 50px 0 30px
+      position: relative
+      text-shadow: 0 -1px 1px #862D20
+      +transition(padding .1s linear)
+      white-space: nowrap
+      &:after
+        background: #993528
+        color: #d1b188
+        content: attr(icon)
+        height: 25px
+        left: 0
+        line-height: 25px
+        position: absolute
+        text-align: center
+        top: 5px
+        width: 25px
+      &.current
+        background: #993528
+      &:hover
+        background: #862D20
+        color: #fff
+        &:after
+          background: transparent
+          color: #fff
+    li:last-child a
+      border-bottom: 0
 
 body.signed_in #bar .menu
   margin: 0 -250px 0 0
