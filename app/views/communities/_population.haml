@@ -1,0 +1,8 @@
+#population
+  - if can? :edit, community
+    = link_to 'Upgrade Subscription', edit_subscription_url(community), class: 'button'
+  - percent = 100.0 * community.current_number_of_users / (community.max_number_of_users)
+  - percent = 100 if percent > 100
+  - percent = number_to_percentage percent, precision: 1
+  .percentage{ data: {min: '0 members', max: pluralize(community.max_number_of_users, 'member', 'members')+' max'} }
+    .value{ style: "width:#{percent}", data: {width: percent, value: community.current_number_of_users} }

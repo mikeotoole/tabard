@@ -1,9 +1,9 @@
 - title "Members | #{current_community.name}"
 
-%h1 Community Members
+%h1 Membership Roster
 
-= render 'subdomains/communities/population', community: current_community
-= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
+= render 'communities/population', community: current_community
+-#= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
 = paginate @member_profiles
 = render 'table', member_profiles: @member_profiles, supported_game: nil
 = paginate @member_profiles
