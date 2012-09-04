@@ -9,6 +9,10 @@
   - # TODO Should add the abillity to change payment method.
   Credit card has been provided
 - else
+  = label_tag :card_name, "Name on card "
+  = text_field_tag :card_name, nil, name: nil
+  = label_tag :card_address_zip, "Zipcode/Postal Code"
+  = text_field_tag :card_address_zip, nil, name: nil
   = label_tag :card_number, "Credit Card Number "
   = text_field_tag :card_number, nil, name: nil
   = label_tag :card_code, "Security Code on Card (CVV)"
