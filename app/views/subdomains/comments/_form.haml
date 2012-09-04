@@ -13,6 +13,6 @@
         %label{ for: 'comment_character_proxy_id_'+proxy.id.to_s, meta: shorten_words(proxy.name) }
           = image_tag proxy.avatar_url(:tiny), class: 'avatar'
   = f.input :body, label: false, wrapper: false, input_html: { id: 'comment_body_'+unique, maxlength: Comment::MAX_BODY_LENGTH }
-  %button{ type: 'submit' }= (comment.id ? 'Save' : 'Post') + ' comment'
+  %button{ type: 'submit' }= comment.persisted? ? 'Save Changes' : 'Post Comment'
   - if can? :lock, comment
     = f.input :is_locked, label: 'Lock comment?', type: :boolean, wrapper: false, input_html: { id: 'comment_is_locked_'+unique }

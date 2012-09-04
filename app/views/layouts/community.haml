@@ -16,6 +16,7 @@
     = yield :controller_css
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = javascript_include_tag "application"
+    = javascript_include_tag "community"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
@@ -34,62 +35,63 @@
             %cite= shorten_words current_community.slogan
         = render 'layouts/action_items' if has_action_items?
         .menu
-          %li
-            = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
-          - if can? :index, PageSpace
+          %ul
             %li
-              = link_to 'Wiki', page_spaces_url
-              - if wiki_items.any?
-                %ul
-                  - wiki_items.each do |space|
-                    %li= link_to shorten_words(space.name), space if space.persisted?
-          - if user_signed_in? and current_user.is_member? current_community
-            %li
-              = link_to 'Discussions', discussion_spaces_url
-              - if discussion_items.any?
-                %ul
-                  - discussion_items.each do |space|
-                    %li= link_to shorten_words(space.name), space if space.persisted?
-          - if user_signed_in? and current_user.is_member? current_community
-            %li
-              = link_to 'Events', events_url
-          - if user_signed_in? and current_user.is_member? current_community
-            %li
-              = link_to 'Announcements', announcements_url
-              - if current_community.supported_games.any?
-                %ul
-                  %li= link_to 'Community Announcements', community_announcements_url
-                  - current_community.supported_games.includes(:community, :game).each do |supported_game|
-                    - if supported_game.persisted?
-                      %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
-          - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
-            %li
-              = link_to 'Members', roster_assignments_url
-              - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
-                %ul
-                  - supported_games.each do |supported_game|
-                    %li= link_to supported_game.smart_name, game_roster_assignments_url(supported_game)
-          - if user_signed_in? and current_user.is_member? current_community and form_items.any?
-            %li
-              = link_to 'Forms', custom_forms_url
-          - if user_signed_in? and current_user.communities.include?(current_community)
-            - if management_navigation_items.any?
-              %li{ class: 'special settings' }
-                = link_to 'Manage', can_manage?(current_community) ? edit_community_settings_url : my_roster_assignments_url
-                %ul
-                  - management_navigation_items.each do |item|
-                    %li{ class: item[:class] }= link_to item[:title], item[:link],  meta: (item[:meta] and item[:meta] > 0 ? item[:meta] : nil)
-                  - unless current_user.user_profile == current_community.admin_profile
-                    %li.leave= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), method: :delete, confirm: "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
-          - else
-            %li{ class: 'special signup' }
-              - if user_signed_in?
-                - if current_community.can_receive_application_from? current_user
-                  = link_to 'Apply Now', new_community_application_url
-                - elsif current_user.application_pending? current_community
-                  %a Application Pending
-              - else
-                = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id)
+              = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
+            - if user_signed_in? and current_user.is_member? current_community
+              %li
+                = link_to 'Events', events_url
+            - if user_signed_in? and current_user.is_member? current_community
+              %li
+                = link_to 'Discussions', discussion_spaces_url
+                - if discussion_items.any?
+                  %ul
+                    - discussion_items.each do |space|
+                      %li= link_to shorten_words(space.name), space if space.persisted?
+            - if user_signed_in? and current_user.is_member? current_community
+              %li
+                = link_to 'Announcements', announcements_url
+                - if current_community.supported_games.any?
+                  %ul
+                    %li= link_to 'Community Announcements', community_announcements_url
+                    - current_community.supported_games.includes(:community, :game).each do |supported_game|
+                      - if supported_game.persisted?
+                        %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
+            - if can? :index, PageSpace
+              %li
+                = link_to 'Wiki', page_spaces_url
+                - if wiki_items.any?
+                  %ul
+                    - wiki_items.each do |space|
+                      %li= link_to shorten_words(space.name), space if space.persisted?
+            - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
+              %li
+                = link_to 'Members', roster_assignments_url
+                - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
+                  %ul
+                    - supported_games.each do |supported_game|
+                      %li= link_to supported_game.smart_name, game_roster_assignments_url(supported_game)
+            - if user_signed_in? and current_user.is_member? current_community and form_items.any?
+              %li
+                = link_to 'Forms', custom_forms_url
+            - if user_signed_in? and current_user.communities.include?(current_community)
+              - if management_navigation_items.any?
+                %li{ class: 'special settings' }
+                  = link_to 'Manage', can_manage?(current_community) ? edit_community_settings_url : my_roster_assignments_url
+                  %ul
+                    - management_navigation_items.each do |item|
+                      %li{ class: item[:class] }= link_to item[:title], item[:link],  meta: (item[:meta] and item[:meta] > 0 ? item[:meta] : nil)
+                    - unless current_user.user_profile == current_community.admin_profile
+                      %li.leave= link_to 'Leave Community', community_profile_url(current_user.community_profiles.find{|cp| cp.community == current_community}), method: :delete, confirm: "If you leave this community, you will have to re-apply before coming back. Are you sure you want to leave?"
+            - else
+              %li{ class: 'special signup' }
+                - if user_signed_in?
+                  - if current_community.can_receive_application_from? current_user
+                    = link_to 'Apply Now', new_community_application_url
+                  - elsif current_user.application_pending? current_community
+                    %a Application Pending
+                - else
+                  = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id)
       #body
         = yield
         = render 'layouts/footer', current_layout: 'community'

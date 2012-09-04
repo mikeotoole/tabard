@@ -1,11 +1,10 @@
-= javascript_include_tag "subscriptions"
-
 - title "New Community"
+
+- content_for :header do
+  = javascript_include_tag "subscriptions"
 
 #body
   %h1 Create a community
-
-  #stripe_error
 
   = simple_form_for @community, html: {novalidate: true, id: "form_with_subscription"} do |f|
     %fieldset

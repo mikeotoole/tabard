@@ -1,8 +1,13 @@
 - title "Members | #{current_community.name}"
 
-%h1 Community Members
-= render 'shared/community_population', community: current_community
-= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
+%h1 Membership Roster
+
+- if can? :edit, current_community
+  #submenu
+    = link_to 'Upgrade Subscription', edit_subscription_url(current_community), class: 'button'
+
+= render 'communities/population', community: current_community
+-#= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
 = paginate @member_profiles
 = render 'table', member_profiles: @member_profiles, supported_game: nil
 = paginate @member_profiles

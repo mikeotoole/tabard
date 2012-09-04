@@ -205,8 +205,9 @@ class User < ActiveRecord::Base
       return true
     else
       # Find plan with this total cost.
-      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO: Handle any errors in creation.
-      if self.stripe_customer_token.present? # TODO: Just becouse the user has a stripe token does not mean they still have a subscription.
+      plan = StripePlan.find_or_create_by_amount(new_total_price)
+      return false unless plan.present?
+      if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?

@@ -13,15 +13,8 @@
     border-bottom-color: rgba(#fff,.3)
 
 body
+  background: image-url('main/bg.png') 50% 71px repeat-x #fff
   color: #251533
-
-body,
-#content
-  +bg_gradient(#dddddd,#ffffff)
-  background-attachment: fixed
-  background-color: #fff
-  background-position: top center
-  background-repeat: no-repeat
 
 #header
   
@@ -32,64 +25,48 @@ body,
     background: #3E3250
     +border_radius(3,3,0,0)
     +box_shadow(0 -5px 5px rgba(#000,.1))
-    
-    >li
-      
+    > ul > li
       >a
         border: 1px solid transparent
         color: #eee
-            
-        &:not(:only-child)
-          
-          &:after
-            border-top-color: #ccc
-      
+        text-shadow: 0 -1px 1px #000
+        &:not(:only-child):after
+          border-top-color: #ccc
       >ul >li >a
         border-color: #036C9F !important
         color: #A8E5FA
-        
         &[meta]:before
           background: #A33C2F
           +box_shadow(0 0 3px #D0AEAF)
           color: #fff
-        
         &:hover
           background: #429BD1
           color: #fff
-      
       &:hover
-        
-        >a[href]
+        >a
+          color: #78c0e1 !important
+        >a:not(:only-child)
           background: #227FB5
           border-color: #429BD1
           color: #fff !important
-          
           &:after
             border-top-color: #fff
-        
         >ul
           background: #227FB5
           border: 1px solid #429BD1
           +box_shadow(0 0 5px rgba(#000,.5))
-      
       &.special
-      
         >a
           color: #fff
-          
         >ul >li >a
-        
           &:after
             background: #005b87
             color: #85c2e7
-          
           &:hover:after
             background: #429BD1
             color: #fff
-      
       &.settings >a:before
         background-position: -90px -30px
-      
       &.signup >a:before
         background-position: -120px -30px
   
@@ -903,6 +880,20 @@ button,
       background: #A13A30
       border-color: #A13A30
       color: #fff
+
+
+// PERCENTAGE BAR
+
+.percentage
+  background: #eee
+  border-color: #ccc
+  +box_shadow(0 5px 10px rgba(0,0,0,.3) inset)
+  .value
+    background: #0F81B6
+    border-color: #0085B9
+    +box_shadow(0 5px 10px #5CB9DC inset)
+    color: #fff
+    text-shadow: 0 -1px 1px #000
 
 
 // JQUERY UI

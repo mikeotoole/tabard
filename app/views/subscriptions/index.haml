@@ -1,28 +1,33 @@
 - title 'Subscriptions'
 
 #body
-  %h1 Subscriptions#index
-  -if @owned_communities.size > 0
+  %h1 Subscriptions
+
+  #submenu
+    = link_to 'Add a Community', new_community_url, class: 'button'
+
+  - if @owned_communities.size > 0
     %table
       %thead
         %tr
-          %th Name
+          %th Item Name
           %th Plan
           %th Cost
           %th.actions
       %tbody
         - @owned_communities.each do |community|
           %tr
-            %td
-              = link_to shorten_words(community.name, 21), community
-            %td
-              = community.community_plan_title
-            %td
-              = number_to_currency(community.total_price_per_month_in_dollars)
+            %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
+            %td= community.community_plan_title
+            %td.r= number_to_currency(community.total_price_per_month_in_dollars)
             %td.actions
               %div
-                = link_to 'Edit', edit_subscription_path(community), meta: 'Edit community plan', class: 'edit'
+                = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'
+                = link_to 'Edit', edit_subscription_path(community), meta: 'Edit Subscription', class: 'edit'
       %tfoot
         %tr
-          %td{ colspan: 4 }
-            = "Total #{number_to_currency(current_user.total_price_per_month_in_dollars)}"
+          %td.r{ colspan: 2 } Monthly Total
+          %td.r= number_to_currency(current_user.total_price_per_month_in_dollars)
+          %td
+  - else
+    %p You don't have any active subscriptions.

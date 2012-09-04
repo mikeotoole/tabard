@@ -413,10 +413,8 @@ body.index.minecrafts #submenu .minecraft
         &.actions
           padding: 5px
           white-space: nowrap
-          
           div
             position: relative
-          
             a
               background: image-url('application/icons.png') no-repeat #aaa
               +border_radius(3)
@@ -429,13 +427,10 @@ body.index.minecrafts #submenu .minecraft
               text-indent: -500em
               +transition(background-color .2s linear, box-shadow .2s linear)
               width: 30px
-              
               &:hover
                 background: image-url('application/icons.png') no-repeat #be4124
                 +box_shadow(0 0 10px #333)
-              
                 &[meta]
-                
                   &:before
                     background: rgba(#251634,.8)
                     +border_radius(3)
@@ -450,7 +445,6 @@ body.index.minecrafts #submenu .minecraft
                     right: 100%
                     text-indent: 0
                     white-space: nowrap
-                  
                   &:after
                     border: 5px solid transparent
                     border-left: 5px solid rgba(#251634,.8)
@@ -460,23 +454,19 @@ body.index.minecrafts #submenu .minecraft
                     position: absolute
                     top: 10px
                     width: 0
-              
               &.apply
                 background-position: -120px -30px
-              
               &.close
                 background-position: -30px -30px
-              
               &.comment
                 background-position: -1170px -30px
-                
               &.delete
                 background-position: -30px -30px
-                
               &.edit
                 background-position: -60px -30px
-              
               &.recruit
+                background-position: -960px -30px
+              &.view
                 background-position: -960px -30px
         
         a
@@ -524,8 +514,8 @@ body.index.minecrafts #submenu .minecraft
     tfoot
     
       td
-        background: image-url('bar/bg.png') top center repeat-x #3d2753
-        border-top: 1px solid #fff
+        background: #2B2B2B
+        border-top: 8px solid #000
         color: #ddd
         line-height: 30px
         padding: 10px
@@ -992,6 +982,20 @@ form.edit_minecraft_character,
 form.edit_swtor_character,
 form.edit_wow_character
   width: 432px
+
+
+// PERCENTAGE BAR
+
+.percentage
+  background: #eee
+  border-color: #ccc
+  +box_shadow(0 5px 10px rgba(0,0,0,.3) inset)
+  .value
+    background: #0F81B6
+    border-color: #0085B9
+    +box_shadow(0 5px 10px #5CB9DC inset)
+    color: #fff
+    text-shadow: 0 -1px 1px #000
 
 
 // JQUERY UI

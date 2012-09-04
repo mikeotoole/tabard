@@ -18,6 +18,8 @@ subscription =
       cvc: $('#card_code').val()
       expMonth: $('#card_month').val()
       expYear: $('#card_year').val()
+      name: $('#card_name').val()
+      addressZip: $('#card_address_zip').val()
     Stripe.createToken card, @handleStripeResponse
 
   handleStripeResponse: (status, response) ->
@@ -25,5 +27,5 @@ subscription =
       $('#stripe_card_token').val(response.id)
       $('#form_with_subscription')[0].submit()
     else
-      $('#stripe_error').text(response.error.message)
+      $.flash 'error', response.error.message
       $('input[type=submit]').prop 'disabled', false

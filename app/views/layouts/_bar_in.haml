@@ -28,5 +28,5 @@
     %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), icon: 'Ξ'
     %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile), icon: '✎'
     %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
-    %li.settings= link_to 'Community Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+    %li.settings= link_to 'Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '$'
     %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete, icon: '✕'
