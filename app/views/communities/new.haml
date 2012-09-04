@@ -6,8 +6,6 @@
 #body
   %h1 Create a community
 
-  #stripe_error
-
   = simple_form_for @community, html: {novalidate: true, id: "form_with_subscription"} do |f|
     %fieldset
       %ol

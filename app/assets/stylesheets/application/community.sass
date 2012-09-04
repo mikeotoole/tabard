@@ -1661,10 +1661,10 @@ body.fixed-menu #header .menu
       border: 0
       +border_radius(2)
       display: inline
-      font-size: 1em
+      font-size: 12px
       height: auto
-      line-height: 1em
-      padding: 0 6px
+      line-height: 12px
+      padding: 3px 6px
       
   #breadcrumb + #submenu
     top: 61px
@@ -1812,54 +1812,6 @@ body.with_action_items
               content: '\2713'
             a
               color: #251533
-
-
-// PERCENTAGE SLIDER
-
-.percentage
-  border: 1px solid
-  +border_radius(10)
-  +box_sizing(border-box)
-  height: 20px
-  margin: 0 0 40px
-  padding: 1px
-  position: relative
-  width: 100%
-  &:before,
-  &:after
-    bottom: -25px
-    font-size: 12px
-    height: 20px
-    line-height: 15px
-    position: absolute
-  &:before
-    content: attr(data-min)
-    left: 5px
-  &:after
-    content: attr(data-max)
-    right: 5px
-  .value
-    border-top: 1px solid
-    +border_radius(8)
-    +box_sizing(border-box)
-    content: ''
-    display: block
-    float: left
-    height: 16px
-    min-width: 22px
-    position: relative
-    &:after
-      content: attr(data-value)
-      font-size: 12px
-      line-height: 15px
-      position: absolute
-      padding: 0 8px 0 0
-      right: 0
-      top: 0
-
-#population .button
-  float: right
-  margin: -40px 0 0
 
 
 // JQUERY UI
