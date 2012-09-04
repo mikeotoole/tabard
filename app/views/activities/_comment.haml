@@ -10,7 +10,7 @@
         - else
           %strong= link_to shorten_words(comment.poster_name, 17), user_profile_url(comment.user_profile), meta: shorten_words(comment.user_profile_display_name)
           = last_action_word(comment)
-        a comment —
+        a comment &mdash;
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
         - case comment.original_commentable_type
         - when 'Announcement'

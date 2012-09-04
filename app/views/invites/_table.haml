@@ -19,7 +19,7 @@
               %strong.day= l invite.event_start_time, format: :date_short
               at
               %strong.time= l invite.event_start_time, format: :time_12
-              = '—'
+              &mdash;
               - unless invite.event_start_time.day == invite.event_end_time.day
                 %strong.day= l invite.event_end_time, format: :date_short
                 at
