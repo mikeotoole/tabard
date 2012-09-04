@@ -1,9 +1,10 @@
 = hidden_field_tag :stripe_card_token
 = f.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
-= render "shared/community_population", community: community
+
 = f.simple_fields_for :current_community_upgrades do |cuf|
   = render cuf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cuf.object, upgrade: CommunityUpgrade.find_by_id(cuf.object.community_upgrade_id), form: cuf
 %hr
+
 - if stripe_card_token.present? or current_user.stripe_customer_token.present?
   - # TODO Should add the abillity to change payment method.
   Credit card has been provided
