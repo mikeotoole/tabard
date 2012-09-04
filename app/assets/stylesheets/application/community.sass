@@ -87,7 +87,7 @@ body
           height: 0
           padding: 0
           >a
-            border-top: 1px solid
+            border-bottom: 1px solid
             display: block
             font-size: 12px
             line-height: 15px
@@ -104,7 +104,7 @@ body
               right: 5px
               top: 5px
           &:last-child >a
-            border-bottom: 1px solid
+            border-bottom: 0
       &:hover
         >a
           +transition(color .2s linear)
@@ -185,7 +185,10 @@ body.fixed-menu #header .menu
   +transition(padding .1s linear)
   >ul
     margin: 0 auto
-    width: 950px
+    width: 960px
+    > li:first-child > a
+      margin-left: 0
+      padding-left: 0
 
 #body
   background: #fff
