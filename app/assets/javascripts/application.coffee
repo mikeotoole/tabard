@@ -102,7 +102,7 @@ root = exports ? this
 
 # Adjust page to accomodate flash messages
 adjustHeaderByFlash = (speed,rowOffset=0) ->
-  if $('body.fluid').length or $('#flash').length
+  if $('body').hasClass('fluid') and $('#flash').length
     messageCount = $('#flash li').length ? 0
     amount = (messageCount + rowOffset) * 40
     $('#header')
@@ -154,18 +154,6 @@ jQuery(document).ready ($) ->
     $(@)
       .attr('src', avatar)
       .unbind 'error'
-  
-  # Text box suggest
-  $('form input').each ->
-    $(@).data 'default', $(@).attr 'title'
-    $(@).removeAttr 'title'
-    $(@).focus ->
-      if $.trim($(@).attr 'value') is $(@).data('default')
-        $(@).val ''
-    $(@).blur ->
-      if $.trim($(@).attr 'value') is ''
-        $(@).val $(@).data 'default'
-    $(@).trigger 'blur'
   
   # Override rails allow action (for data-confirm)
   $.rails.allowAction = (element) ->

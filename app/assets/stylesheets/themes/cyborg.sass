@@ -27,71 +27,55 @@ body,
     background: #1E2F27
     background: rgba(#1E2F27,.9)
     +border_radius(3,3,0,0)
-    
-    >li
-      
+    > ul > li
       >a
         border: 1px solid transparent
         color: #8ac0b5
-            
-        &:not(:only-child)
-          
-          &:after
-            border-top-color: #fff
-      
+        text-shadow: 0 -1px 1px #000
+        &:not(:only-child):after
+          border-top-color: #fff
       >ul >li >a
         border-color: #E2B04D !important
         color: #0A0C0B
-        
         &[meta]:before
           background: #9D692D
           +box_shadow(0 0 3px #FFFF69)
           color: #fff
-        
         &:hover
           background: #E2B04D
           color: #000
-      
       &:hover
-        
-        >a[href]
+        >a
+          color: #fff !important
+        >a:not(:only-child)
           background: #FFFF69
           border-color: #313F2C
+          +border_radius(3,3,0,0)
           color: #0A0C0B !important
-          
+          text-shadow: 0 1px 1px #fff
           &:after
             border-top-color: #0A0C0B
-        
         >ul
           background: #FFFF69
           +bg_gradient(#FFFF69,#FDCC53)
           border: 1px solid #313F2C
           +box_shadow(0 0 5px rgba(#000,.5))
-      
       &.special
-      
         >a
           color: #fff
-          
         >ul >li >a
-        
           &:after
             background: #E2B04D
             color: #FFFF69
-          
           &:hover:after
             background: #E2B04D
             color: #000
-      
       &.settings >a:before
         background-position: -90px -30px
-      
       &.settings:hover >a[href]:before
         background-position: -90px 0
-      
       &.signup >a:before
         background-position: -120px -30px
-        
       &.signup:hover >a[href]:before
         background-position: -120px 0
   
@@ -315,7 +299,6 @@ button,
     border-color: #0A0C0B
     +box_shadow(0 0 3px #759c7d)
     color: #000
-    
     &:focus
       background: #D5E7D9
       +bg_gradient(#D5E7D9,#A8CDB0)
@@ -325,33 +308,26 @@ button,
       
   input[type="checkbox"],
   input[type="radio"]
-    
     + label:before
       background: #759c7d
       +bg_gradient(#759c7d,#5B7E62)
       border-color: #0A0C0B
       +box_shadow(0 0 3px #759c7d)
-    
     &:focus + label:before
       background: #D5E7D9
       +bg_gradient(#D5E7D9,#A8CDB0)
       border-color: #0A0C0B
       +box_shadow(0 0 8px #D5E7D9)
-      
     &:hover + label:after
       background: #537359
-    
     &:checked
-
       + label:after
         background: #FFFF69
         +bg_gradient(#FFFF69,#FDCC53)
         border-color: #313F2C
-      
       &:focus + label,
       &:hover + label,
       + label:hover
-              
         &:after
           +box_shadow(0 0 9px #000)
           color: #000
@@ -364,55 +340,41 @@ button,
     color: #527359
   input:focus::-webkit-input-placeholder
     color: #9EBEA8
-  
+
   .select
-  
-    ul
-      background: #759c7d
-      +bg_gradient(#759c7d,#5B7E62)
-      border-color: #0A0C0B
-      +box_shadow(0 0 3px #759c7d)
-      color: #000
-          
-      &:before
-        border-top-color: #fff
-      
-      li
-        
-        label
-          +bg_gradient(#BAD7C0,#D5E7D9)
-          border-top-color: #759C7D
-          color: #000
-        
-          .avatar
-            background: #614E2A
-            border-color: #0A0C0B
-            +box_shadow(0 0 5px #fff)
-        
-        input:checked + label
-          border-top: 0
-          color: inherit
-  
-      &:hover
-        background: #D5E7D9
-        +bg_gradient(#D5E7D9,#A8CDB0)
-        border-color: #0A0C0B
-        +box_shadow(0 0 8px #D5E7D9)
+    background: #759c7d
+    +bg_gradient(#759c7d,#5B7E62)
+    border-color: #0A0C0B
+    +box_shadow(0 0 3px #759c7d)
+    color: #000
+    &:before
+      color: #769B7C
+    &:after
+      border-top-color: #000
+    ul > li
+      label
+        border-top-color: #759C7D
         color: #000
-          
-        &:before
-          border-top-color: #000
-      
-        li
-        
-          label,
-          input:checked + label
-            color: #000
-            
-            &:hover
-              background: #FFFF69
-              +bg_gradient(#FFFF69,#FDCC53)
-              color: #000
+        .avatar
+          background: #614E2A
+          border-color: #0A0C0B
+          +box_shadow(0 0 5px #fff)
+        &:hover
+          background: #FFFF69
+          +bg_gradient(#FFFF69,#FDCC53)
+          border-top-color: #FFCA4B
+      input:checked + label
+        background: #759c7d
+        +bg_gradient(#759c7d,#5B7E62)
+        color: #000
+    &:hover ul
+      background: #BBD6BF
+      border-color: #0A0C0B
+      +box_shadow(0 0 8px #D5E7D9)
+      >li input:checked + label
+        background: #90AB95
+        border-top-color: #5C7E62
+        color: #3B513F
 
   .slider
     background: #759c7d
@@ -454,7 +416,7 @@ button,
       &:after
         color: #080A09
     
-    &.field_with_errors .preview
+    &.with-errors .preview
       border: 1px solid #A13A32 !important
       padding: 0
 
@@ -464,7 +426,7 @@ button,
   dfn.hint
     color: #5B7E62
   
-  .field_with_errors
+  .with-errors
   
     input[type="url"],
     input[type="email"],

@@ -39,6 +39,7 @@ class CharacterProxy < ActiveRecord::Base
   delegate :game_name, to: :character
   delegate :about, to: :character
   delegate :avatar_url, to: :character, allow_nil: true
+  delegate :display_name, to: :user_profile, prefix: true
   delegate :community, to: :roster_assignments, prefix: true
 
 ###
@@ -74,7 +75,7 @@ class CharacterProxy < ActiveRecord::Base
   # [Returns] A scoped query
   ###
   def self.search(search)
-    MinecraftCharacter.search(search).map{|c| c.character_proxy } + SwtorCharacter.search(search).map{|c| c.character_proxy } + WowCharacter.search(search).map{|c| c.character_proxy }
+    MinecraftCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy } + SwtorCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy } + WowCharacter.includes(:character_proxy).search(search).map{|c| c.character_proxy }
   end
 
 ###

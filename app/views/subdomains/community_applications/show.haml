@@ -35,7 +35,7 @@
             - if @community_application.is_pending? or @community_application.rejected? and can? :accept, @community_application
               = hidden_field_tag "proxy_hash[#{character_proxy.id}]", -1
               = f.simple_fields_for @community_application.character_proxies, character_proxy, index: character_proxy.id do |pf|
-                .select{ class: character_proxy.errors.any? ? 'field_with_errors' : '' }
+                .select{ class: character_proxy.errors.any? ? 'with-errors' : '' }
                   %ul
                     %li
                       = radio_button_tag "proxy_hash[#{character_proxy.id}]", ''

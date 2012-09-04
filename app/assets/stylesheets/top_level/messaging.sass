@@ -23,14 +23,14 @@ body
   
   >p
     color: #444
-    font: 14px DinLight, serif
+    font-size: 14px
     padding: 15px
   
   >dl
     
     dt
       color: #fff
-      font: 18px DinMedium, serif
+      font-size: 18px
       padding: 15px 15px 5px
   
     dd
@@ -114,7 +114,7 @@ body
       
       time
         color: #A03B32
-        font: 12px DinMedium, serif
+        font-size: 12px
         position: absolute
         right: 10px
         text-align: right
@@ -123,8 +123,8 @@ body
       
       h3
         color: #3f2656
-        font: 17px DinMedium, serif
-        padding: 0 50px
+        font-size: 18px
+        padding: 0 50px 10px
         
         a:before
           bottom: 0
@@ -177,16 +177,15 @@ body
           background: #3D2454 !important
       
       p.author
-        color: #327BB4
-        font: 13px DinLight, serif
+        color: #333
+        font-size: 12px
         padding: 0 0 10px 50px
-        
         strong
-          font-family: DinMedium, serif
+          color: #327BB4
       
       p.body
-        color: #666
-        font: 13px DinLight, serif
+        color: #777
+        font-size: 13px
       
       &.sent
         padding-left: 10px
@@ -197,6 +196,9 @@ body
       &:hover
         +box_shadow(0 0 50px rgba(#000,.5))
         z-index: 3
+        
+        p.body
+          color: #555
 
 #message
   background: image-url('main/bg.png') 0 0 repeat-x #fff
@@ -271,7 +273,7 @@ body
               +box_shadow(0 0 10px rgba(#000,.5))
               color: #fff
               content: attr(meta)
-              font: 14px DinLight, sans-serif
+              font-size: 14px
               height: 15px
               line-height: 15px
               padding: 4px 8px
@@ -300,7 +302,7 @@ body
       +bg_gradient(#ffffff,#eeeeee)
       border-bottom: 1px solid #fff
       color: #2B77AD
-      font: 21px DinMedium
+      font-size: 21px
       margin: 0
       padding: 10px 20px
       position: relative
@@ -317,7 +319,7 @@ body
       background: #eee
       border-bottom: 1px solid #fff
       color: #644b83
-      font: 13px DinLight
+      font-size: 13px
       margin: 0
       padding: 12px 20px 7px 17px
       position: relative
@@ -333,7 +335,7 @@ body
       a
         +border-radius(3)
         color: #A33C32
-        font: 14px DinMedium
+        font-size: 14px
         padding: 0 3px
         
         &:hover
@@ -342,7 +344,7 @@ body
       
       time,
       span
-        font: 14px DinMedium
+        font-size: 14px
       time
         color: #A33C32
     
@@ -357,14 +359,14 @@ body
       dd
         color: #644b83
         display: inline
-        font: 14px DinLight
+        font-size: 14px
         
         a,
         span
           +bg_gradient(#cccccc,#dddddd)
           border: 1px solid #ccc
           +border-radius(3)
-          font: 13px DinMedium
+          font-size: 13px
           padding: 1px 4px
           position: relative
           +transition(background .2s linear)
@@ -388,7 +390,7 @@ body
               +box_shadow(0 0 10px rgba(#000,.5))
               color: #fff
               content: attr(meta)
-              font: 14px DinLight, sans-serif
+              font-size: 14px
               height: 15px
               left: 0
               line-height: 15px
@@ -412,7 +414,7 @@ body
   article
     background: #eee
     +bg_gradient(#cccccc,#ffffff)
-    font: 15px DinLight
+    font-size: 15px
     line-height: 20px
     margin: -10px 0 0
     min-height: 310px
@@ -456,7 +458,7 @@ body
       +border_radius(5)
       color: #fff
       cursor: pointer
-      font: 13px DinMedium, sans-serif
+      font-size: 13px
       left: 93px
       margin: -34px 0 0
       padding: 5px 10px
@@ -476,7 +478,7 @@ body
       
       >fieldset
       
-        >ul
+        >ol
           background: #eee
           border-bottom: 1px solid #888
           +border_radius(0,0,10,10)
@@ -493,7 +495,7 @@ body
               border: 1px solid #ccc
               border-right-color: #eee
               +border_radius(5,0,0,5)
-              font: 14px DinMedium
+              font-size: 14px
               height: 30px
               line-height: 30px
               margin: 0 -90px 0 0
@@ -509,7 +511,7 @@ body
               background: #fff
               border: 1px solid #ccc
               +border_radius(0,5,5,0)
-              font: 18px DinLight
+              font-size: 18px
               height: 30px
               line-height: 30px
               padding: 0 10px
@@ -521,7 +523,6 @@ body
             ul
               margin: 0 -195px -5px 0
               padding: 0 0 0 80px
-            
               &:after
                 clear: both
                 content: ' '
@@ -529,44 +530,45 @@ body
                 height: 0
                 visibility: hidden
             
-              li
-              
-                label
-                  display: none
-                  +bg_gradient(#cddae4,#b1bfcb)
-                  border: 1px solid #bacbd8
+              li a
+                display: none
+                +bg_gradient(#cddae4,#b1bfcb)
+                border: 1px solid #bacbd8
+                +border-radius(3)
+                color: #3b5a72
+                display: block
+                float: left
+                font-size: 13px
+                margin: 5px 5px 5px 0
+                padding: 1px 30px 1px 4px
+                position: relative
+                white-space: nowrap
+                &:hover
+                  background: #227FB5
+                  border-color: #227FB5
+                  color: #fff
+                span.close
+                  background: #fff
                   +border-radius(3)
-                  color: #3b5a72
-                  float: left
-                  font: 13px DinMedium
-                  margin: 5px 5px 5px 0
-                  padding: 1px 30px 1px 4px
-                  position: relative
-                  white-space: nowrap
-                  
-                  &:after
-                    background: #778a98
-                    +border-radius(3)
-                    bottom: 1px
-                    color: #fff
-                    content: '\2716'
-                    float: right
-                    padding: 0 3px
-                    position: absolute
-                    right: 1px
-                    top: 1px
-                  
-                  &:hover
-                  
-                    &:after
-                      background: #A33C32
-                
-                input
-                  left: -500em
+                  bottom: 1px
+                  color: #778a98
+                  float: right
+                  padding: 0 3px
                   position: absolute
-                  
-                  &:checked + label
-                    display: block
+                  right: 1px
+                  text-indent: -500em
+                  top: 1px
+                  width: 10px
+                  &:before
+                    content: '\2716'
+                    left: 0
+                    position: absolute
+                    right: 0
+                    text-align: center
+                    text-indent: 0
+                    top: 0
+                  &:hover
+                    color: #A33C32
     
     article
       background: #fff
@@ -611,7 +613,7 @@ body
         background: transparent
         +border_radius(10)
         color: #644B83
-        font: 18px DinLight
+        font-size: 18px
         height: 100%
         line-height: 25px
         margin: -10px 0
@@ -622,56 +624,6 @@ body
           
           + mark
             +opacity(1)
-    
-    aside
-    
-      ul
-        background: #327BB4
-        +bg_gradient(#2c70a5,#3e8ac5)
-        +border_radius(0,0,5,5)
-        +box_shadow(0 0 15px rgba(#000,.5))
-        display: none
-        left: 90px
-        position: absolute
-        right: 108px
-        top: 83px
-        z-index: 3
-        
-        &:before
-          +bg_gradient(rgba(#000,.7),rgba(#327BB4,0))
-          content: ''
-          height: 20px
-          left: 0
-          pointer-events: none
-          position: absolute
-          right: 0
-          top: 0
-      
-        li
-        
-          label
-            border-top: 1px solid #1F699E
-            color: #CCEAFF
-            cursor: pointer
-            display: none
-            font: 13px DinLight, sans-serif
-            padding: 5px 10px
-            
-            &:hover
-              background: #4E98D0
-              color: #fff
-          
-          &.first,
-          &:first-child
-            
-            label
-              padding: 15px 10px 5px
-          
-          &.last,
-          &:last-child
-            
-            label
-              +border_radius(0,0,5,5)
     
     button
       border-color: #ddd
@@ -697,3 +649,15 @@ footer
   margin: 30px -40px
   position: relative
   width: auto
+
+.ui-autocomplete
+  border-color: #ccc
+  &:before
+    +bg_gradient(#FFFFFF,#D6EAF8)
+    content: ''
+    height: 10px
+    left: 0
+    padding-top: 10px
+    position: absolute
+    right: 0
+    top: 0

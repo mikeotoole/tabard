@@ -12,7 +12,7 @@ class CommunityInviteObserver < ActiveRecord::Observer
   ###
   def after_create(community_invite)
     unless Rails.env.test?
-      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "guild.io" : "lvh.me:3000"
+      default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "tabard.co" : "lvh.me:3000"
 
       if community_invite.applicant.blank?
         CommunityInviteObserver.delay.send_community_invite_email(community_invite.id)

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= raw yield_for(:title, 'Guild.io™')
+    %title= raw yield_for(:title, 'Tabard™')
     %link{ href: "/stylesheets/fonts.css", media: "screen", rel: "stylesheet", type: "text/css" }
     = stylesheet_link_tag "top_level/top_level"
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
@@ -15,9 +15,9 @@
     = render 'layouts/ie'
     = render 'layouts/analytics'
 
-  %body{ class: "#{params[:controller].gsub(/\//,' ')} #{params[:action]} #{current_community ? '' : 'top_level'} #{request.query_string.blank? ? '' : 'qstring'}" }
+  %body{ class: body_classes.join(' ') }
     #bar
-      = link_to 'Guild.io™', root_url(subdomain: false), class: 'logo'
+      = link_to 'Tabard™', root_url(subdomain: false), class: 'logo'
       = link_to 'load', bar_url(protocol: request.protocol, subdomain: request.subdomain, format: :js), remote: true, class: 'dynload', data: { type: :text, target: '#bar' }
     = render 'layouts/flash_messages' unless @page_caching
     #content

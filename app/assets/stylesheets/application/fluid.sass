@@ -25,38 +25,24 @@
 
   #bar
     background-position: 0 0
+    height: 69px
     min-width: 1px
-  
-    &:before
-      +bg_gradient(rgba(#000,.5),rgba(#000,0))
-      border-top: 1px solid #46335A
-    
-    &:after
-      background-position: -100px 0
-    
     .logo
-      left: 15px
+      left: 5px
       margin: 0
-    
-    >ul.menu
-      left: 180px
+    .menu
+      left: auto
       margin: 0
-      width: auto
-    
+      right: 230px
     >ul.dashboard
       margin: -2px 0 0
       right: 79px
-    
     .communities
       margin: 0
       right: 213px
-    
     .avatar
       margin: 0
-      right: 15px
-      
-      &:hover
-        margin: -9px -9px 0 0
+      right: 10px
 
   #flash li
     border-left: 0
@@ -81,7 +67,7 @@
     padding: 30px
     position: fixed
     right: 45%
-    top: 70px
+    top: 69px
     z-index: 4
     
     #wmd-fields
@@ -121,7 +107,7 @@
               right: 0
               top: 60px
               
-              &.field_with_errors
+              &.with-errors
                 bottom: 59px
               
               textarea
@@ -132,7 +118,7 @@
             + li + .wmd-panel
               top: 120px
             
-            &.field_with_errors
+            &.with-errors
             
               + .wmd-panel
                 top: 109px
@@ -195,7 +181,7 @@
           +border_radius(3)
           +box_shadow(-5px 0 15px rgba(#000,.7))
           color: #F8D5BB
-          font: 13px EurostyleStd, sans-serif
+          font-size: 13px
           height: 30px !important
           left: 68px !important
           letter-spacing: 0
@@ -250,14 +236,14 @@
     padding: 10px 0 0
     position: fixed
     text-align: center
-    top: 70px
+    top: 69px
     width: 59px
     z-index: 5
       
     dt
       border-bottom: 1px solid #000
       color: #999 !important
-      font: 13px DinLight, sans-serif !important
+      font-size: 13px !important
       margin: 0 0 20px
       padding: 10px 0 5px !important
     

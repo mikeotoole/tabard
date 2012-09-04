@@ -1,0 +1,5 @@
+%li
+  = link_to user_profile_url(user_profile), target: '_blank' do
+    = user_profile.display_name
+    %span.close
+  %input{ name: 'message[to][]', type: 'hidden', value: user_profile.id }

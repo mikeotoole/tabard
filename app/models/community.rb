@@ -218,7 +218,7 @@ class Community < ActiveRecord::Base
 
   # Returns all games that this community supports
   def games
-    self.supported_games.collect { |a| a.game }
+    self.supported_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
   end
 
   # This will return a collection of community profiles ordered by the users display name.

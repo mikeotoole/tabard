@@ -18,7 +18,7 @@ class UserProfileObserver < ActiveRecord::Observer
   def after_update(user_profile)
     if user_profile.changed?
 
-      change = user_profile.display_name_changed? ? "display name" : nil
+      change = user_profile.display_name_changed? ? "player name" : nil
       change = change ? "profile" : "description" if user_profile.description_changed?
       change = change ? "profile" : "title" if user_profile.title_changed?
       change = change ? "profile" : "avatar" if user_profile.avatar_changed?

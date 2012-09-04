@@ -12,7 +12,7 @@ class SupportCommentObserver < ActiveRecord::Observer
   def after_create(support_comment)
     unless Rails.env.test?
       if support_comment.user_profile.blank?
-        default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "guild.io" : "lvh.me:3000"
+        default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "tabard.co" : "lvh.me:3000"
         message = Message.create_system(subject: "Support ticket update",
                   body: "#{support_comment.admin_user_display_name} has made a new comment on your support ticket ##{support_comment.support_ticket_id}. [View Support Ticket](#{support_url(support_comment.support_ticket, anchor: "comment_#{support_comment.id}")})",
                   to: [support_comment.support_ticket_user_profile_id])
