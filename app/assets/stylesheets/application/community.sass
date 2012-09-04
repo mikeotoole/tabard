@@ -32,12 +32,10 @@ body
     left: 0
     position: absolute
     bottom: 90px
-    
     strong
       display: block
       font-size: 36px
       letter-spacing: -2px
-    
     cite
       display: block
       font-size: 24px
@@ -50,12 +48,10 @@ body
     padding: 15px 5px
     position: absolute
     right: 0
-    
-    >li
+    > ul > li
       float: left
       list-style: none
       position: relative
-      
       >a
         +border_radius(2)
         display: block
@@ -67,10 +63,8 @@ body
         position: relative
         +transition(color .2s linear, background .2s linear)
         z-index: 12
-            
         &:not(:only-child)
           padding: 0 30px 0 10px
-    
           &:after
             border: 5px solid transparent
             content: ''
@@ -79,7 +73,6 @@ body
             right: 10px
             top: 13px
             width: 0
-      
       >ul
         +border_radius(0,2,2,2)
         left: 10px
@@ -90,20 +83,17 @@ body
         position: absolute
         top: 25px
         z-index: 11
-        
         >li
           height: 0
           padding: 0
-        
           >a
-            border-top: 1px solid
+            border-bottom: 1px solid
             display: block
             font-size: 12px
             line-height: 15px
             padding: 0 40px 0 5px
             position: relative
             white-space: nowrap
-            
             &[meta]:before
               +border_radius(2)
               content: attr(meta)
@@ -113,42 +103,32 @@ body
               position: absolute
               right: 5px
               top: 5px
-          
           &:last-child >a
-            border-bottom: 1px solid
-      
+            border-bottom: 0
       &:hover
-        
         >a
           +transition(color .2s linear)
-          
           &:not(:only-child)
             border-bottom: 0
             +border_radius(2,2,0,0)
-        
         >ul
           +opacity(1)
           padding: 10px
           top: 30px
           +transition(opacity .2s linear, top .2s linear)
-          
           >li
             height: auto
-            
             >a
               padding-bottom: 10px
               padding-top: 10px
               +transition(padding .2s linear)
-      
       &.special
         float: right
-        
         >a
           float: right
           margin: 0 5px 0 0
           padding: 0 40px 0 10px
           +transition(none)
-          
           &:before
             background: image-url('application/icons.png') no-repeat
             content: ''
@@ -157,22 +137,17 @@ body
             right: 5px
             top: 0
             width: 30px
-          
           &:after
             display: none
-          
           &:not([href])
             background: transparent
             cursor: default
-        
         >ul
           +border-radius(2,0,2,2)
           left: auto
           right: 5px
-          
           >li >a
             padding-left: 35px
-            
             &:after
               display: block
               height: 25px
@@ -182,33 +157,38 @@ body
               text-align: center
               top: 5px
               width: 25px
-          
           >li.settings a:after
             content: '\2732'
-          
           >li.roster a:after
             content: '\22EF'
-          
           >li.myroster a:after
             content: '\039E'
-          
           >li.games a:after
             content: '\101C'
-          
           >li.forms a:after
             content: '\270E'
-          
           >li.roles a:after
             content: '\262F'
-          
           >li.recruit a:after
             content: '\270D'
-          
           >li.applications a:after
             content: '\2764'
-          
           >li.leave a:after
             content: '\2715'
+
+body.fixed-menu #header .menu
+  +border_radius(0)
+  bottom: auto
+  padding: 5px 0
+  position: fixed
+  top: 70px
+  +transition(padding .1s linear)
+  >ul
+    margin: 0 auto
+    width: 960px
+    > li:first-child > a
+      margin-left: 0
+      padding-left: 0
 
 #body
   background: #fff
