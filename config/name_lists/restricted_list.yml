@@ -82,19 +82,11 @@
 - :domain: true
   :company: true
   :administration: true
-  :word: Guild.io
+  :word: Tabard
 - :domain: true
   :company: true
   :administration: true
-  :word: guild.io
-- :domain: true
-  :company: true
-  :administration: true
-  :word: Guildio
-- :domain: true
-  :company: true
-  :administration: true
-  :word: guildio
+  :word: Tabard
 - :domain: true
   :company: true
   :administration: false

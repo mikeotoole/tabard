@@ -23,7 +23,7 @@ jQuery(document).ready ($) ->
       $('#recruits .submit button').removeClass('disabled').removeAttr('disabled') if $('#recruits li').length
 
     .autocomplete
-      autoFocus: true
+      autoFocus: false
       delay: 300
       focus: (e, ui) ->
         $(@).val ui.item.label

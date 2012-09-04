@@ -31,8 +31,8 @@
             %strong= invite.status ||= '—'
     %tfoot
       %tr
-        %td{ colspan: 4 }
-          .select.status
+        %td.status{ colspan: 4 }
+          .select{ data: {placeholder: 'Status'} }
             %ul
               - Invite::VALID_STATUSES.each do |status|
                 %li

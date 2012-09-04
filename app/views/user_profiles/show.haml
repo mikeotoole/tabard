@@ -63,11 +63,11 @@
               = link_to 'User Roles', roles_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.roles + dd', error: 'Error: unable to load user roles.' }
             %dd
           - if is_my_profile
-            %dt{ class: 'announcements' }
-              = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.announcements + dd', error: 'Error: unable to load announcements.' }
-            %dd
             %dt{ class: 'invites' }
               = link_to 'Invites', invites_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.invites + dd', error: 'Error: unable to load invites.' }
+            %dd
+            %dt{ class: 'announcements' }
+              = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: false, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.announcements + dd', error: 'Error: unable to load announcements.' }
             %dd
         - unless is_private
           %dt{ class: 'characters' }

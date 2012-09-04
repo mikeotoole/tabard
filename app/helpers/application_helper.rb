@@ -45,13 +45,34 @@ module ApplicationHelper
   end
 
   ###
-  # Provides a clean way to set the page title within a view and adds the text " | Guild.io".
+  # Provides a clean way to set the page title within a view and adds the text " | Tabard".
   # [Args]
   #   * +page_title+ -> The page title.
   # [Returns] :title for the yield.
   ###
   def title(page_title)
-    content_for(:title) { raw "#{page_title} | Guild.io&trade;" }
+    content_for(:title) { raw "#{page_title} | Tabard&trade;" }
+  end
+
+  ###
+  # Gives an array of classes to help view/css rendering on the body tag
+  # [Returns] Array of strings (class names)
+  ###
+  def body_classes
+    classes = [params[:controller].gsub(/\//,' '), params[:action]]
+    classes.push 'signed_in' if user_signed_in?
+    classes.push 'top_level' if current_community
+    classes.push 'qstring' unless request.query_string.blank?
+    classes.push 'with_action_items' if has_action_items?
+    return classes
+  end
+
+  ###
+  # Checks to see if the page is going to render action items for the community
+  # [Returns] True or False
+  ###
+  def has_action_items?
+    current_community and user_signed_in? and current_user.user_profile == current_community.admin_profile and current_community.action_items.any?
   end
 
   ###

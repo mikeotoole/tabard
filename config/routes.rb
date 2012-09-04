@@ -56,9 +56,9 @@ DaBvRails::Application.routes.draw do
   end
 
   # Games
-  get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
-  get "/world-of-warcraft" => 'wows#index', as: 'wows'
-  get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
+  #get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
+  #get "/world-of-warcraft" => 'wows#index', as: 'wows'
+  #get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
 
   # Characters
   resources :wow_characters, except: [:index, :create]
@@ -68,6 +68,7 @@ DaBvRails::Application.routes.draw do
 
   # Messaging
   resources :sent_messages, only: [:create]
+  get 'mail/sent/autocomplete' => "sent_messages#autocomplete", as: 'sent_autocomplete'
   get 'mail/sent/:id' => "sent_messages#show", as: "sent_mail"
   get 'mail/sent' => "sent_messages#index", as: "sent_mailbox"
   get 'mail/compose' => "sent_messages#new", as: "compose_mail"

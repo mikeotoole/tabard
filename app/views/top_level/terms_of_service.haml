@@ -1,5 +1,8 @@
 - title 'Terms of Service and User Agreement'
 
+- content_for :header do
+  = javascript_include_tag 'documents'
+
 #body
   %h1 Terms of Service and User Agreement
   .document.plain= render 'document', document: @document

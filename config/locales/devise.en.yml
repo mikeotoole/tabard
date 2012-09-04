@@ -21,7 +21,7 @@ en:
       invalid_token: 'Invalid authentication token.'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
-      admin_disabled: 'Your account has been deactivated by Guild.io.'
+      admin_disabled: 'Your account has been deactivated by Tabard.'
       user_disabled: 'Your account has been deactivated. Please reactivate your account first.'
     sessions:
       signed_in: 'Welcome. You are now signed in.'
@@ -36,8 +36,8 @@ en:
       send_paranoid_instructions: 'If your e-mail exists on our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
       confirmed: 'Your account was successfully confirmed. You are now signed in.'
     registrations:
-      signed_up: 'Welcome to Guild.io!'
-      signed_up_but_unconfirmed: 'Welcome to Guild.io! Before logging in, please check your email to confirm your account.'
+      signed_up: 'Welcome to Tabard!'
+      signed_up_but_unconfirmed: 'Welcome to Tabard! Before logging in, please check your email to confirm your account.'
       signed_up_but_inactive: 'You have signed up successfully. However, we could not sign you in because your account is not yet activated.'
       signed_up_but_locked: 'You have signed up successfully. However, we could not sign you in because your account is locked.'
       updated: 'You updated your account successfully.'
@@ -52,8 +52,8 @@ en:
       failure: 'Could not authorize you from %{kind} because "%{reason}".'
     mailer:
       confirmation_instructions:
-        subject: 'Guild.io - Account confirmation instructions'
+        subject: 'Tabard - Account confirmation instructions'
       reset_password_instructions:
-        subject: 'Guild.io - Reset password instructions'
+        subject: 'Tabard - Reset password instructions'
       unlock_instructions:
-        subject: 'Guild.io - Unlock instructions'
+        subject: 'Tabard - Unlock instructions'

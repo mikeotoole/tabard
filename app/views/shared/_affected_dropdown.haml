@@ -1,4 +1,4 @@
-%li{ class: "select affected #{field} #{f.object.errors[field].any? ? 'field_with_errors' : ''}", affected_by: affected_by }
+%li{ class: "affected #{field} #{f.object.errors[field].any? ? 'with-errors' : ''}", affected_by: affected_by }
   %label
     - if defined? required && required
       %abbr.required *

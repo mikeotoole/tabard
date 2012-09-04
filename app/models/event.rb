@@ -145,7 +145,7 @@ end
 
 # This messages the invited person
 def message_the_invites(text='')
-  default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.guild.io" : "#{community.subdomain}.lvh.me:3000"
+  default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{community.subdomain}.tabard.co" : "#{community.subdomain}.lvh.me:3000"
   Message.create_system(subject: "Event Changed",
       body: "The event, [#{name}](#{event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
       to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?

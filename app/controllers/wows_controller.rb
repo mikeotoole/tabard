@@ -12,15 +12,15 @@ class WowsController < ApplicationController
 ###
 # Before Filters
 ###
-  skip_before_filter :block_unauthorized_user!, only: [:index]
+  #skip_before_filter :block_unauthorized_user!, only: [:index]
 
 ###
 # REST Actions
 ###
   # GET /wows
-  def index
-    @communities = Community.search(params[:search]).includes(:supported_games).where{supported_games.game_type == "Wow"}.order("communities."+sort_column + " " + sort_direction).page params[:page]
-  end
+  #def index
+  #  @communities = Community.search(params[:search]).includes(:supported_games).where{supported_games.game_type == "Wow"}.order("communities."+sort_column + " " + sort_direction).page params[:page]
+  #end
 ###
 # Helper methods
 ###

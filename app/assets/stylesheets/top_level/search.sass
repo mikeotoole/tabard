@@ -43,12 +43,23 @@ body:not(.qstring)
         height: 0
         visibility: hidden
       h3
-        color: #251533
+        color: #56149C
         font-size: 16px
         margin-left: -2px
         padding: 0 0 10px
       q
         display: block
+      .games,
+      .communities
+        display: block
+        a
+          background: #e3e3e3
+          color: #666
+          font-size: 12px
+          text-decoration: none
+          &:hover
+            background: #BE4124
+            color: #fff
       &.user_profile,
       &.character
         >a,
@@ -71,20 +82,9 @@ body:not(.qstring)
             width: 60px
           &:hover
             +box_shadow(0 0 15px rgba(#000,.3))
-        .communities
-          display: block
-          a
-            background: #e3e3e3
-            color: #666
-            font-size: 12px
-            text-decoration: none
-            &:hover
-              background: #BE4124
-              color: #fff
-      &.user_profile + .character
-        margin-top: -10px
       &.character
-        padding: 0 0 20px 62px
+        margin: -10px 0 0
+        padding: 0 0 30px 62px
         &:before
           border: 1px dotted #ccc
           border-right: 0
@@ -99,18 +99,24 @@ body:not(.qstring)
         + .character:before
           top: -103px
           height: 110px
+        .avatar
+          height: 42px
+          width: 42px
+          img
+            height: 40px
+            width: 40px
         .attributes
           float: left
           font-size: 13px
           line-height: 15px
           dt
+            color: #000
             clear: left
             float: left
             width: 60px
           dd
             float: left
-            font-family: DinMedium, sans-serif
-            width: 160px
+            width: auto
       &.community
         q
           display: block

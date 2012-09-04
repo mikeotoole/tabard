@@ -1,5 +1,5 @@
 ActiveAdmin.register SupportTicket do
-  menu parent: "Guild.io"
+  menu parent: "Tabard"
   controller.authorize_resource except: :take
 
   actions :index, :show, :edit, :update

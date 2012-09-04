@@ -35,7 +35,7 @@ class SentMessagesController < MailboxController
 
   # GET /mail/compose(.:format)
   def new
-    to = [((params[:id] && current_user.address_book.collect{ |p| p.id.to_s }.flatten.include?(params[:id])) ? params[:id] : -1)]
+    to = ((params[:id] && current_user.address_book.collect{ |p| p.id.to_s }.flatten.include?(params[:id])) ? [params[:id]] : [])
     @message = current_user.sent_messages.build(to: to)
     authorize!(:create, @message)
     @mailbox_view_state = 'compose'
@@ -44,6 +44,7 @@ class SentMessagesController < MailboxController
 
   # POST /sent(.:format)
   def create
+    params[:message][:to].uniq!
     @message = current_user.sent_messages.build(params[:message])
     authorize!(:create, @message)
     if @message.save
@@ -58,6 +59,25 @@ class SentMessagesController < MailboxController
       end
       render 'new'
     end
+  end
+
+  # GET /sent/autocomplete(.:format)
+  def autocomplete
+    @user_profiles = current_user.address_book.active.search params[:term]
+    @character_proxies = CharacterProxy.search(params[:term]) & CharacterProxy.includes(:user_profile).where(user_profile_id: current_user.address_book.active)
+    render json:
+      @user_profiles.map{|up| {
+        label: "<a>#{view_context.image_tag(view_context.image_path(up.avatar_url(:icon)))} <strong>#{up.display_name}</strong></a>",
+        value: up.id,
+        html: render_to_string(partial: 'to', locals: {user_profile: up}),
+        display_name: up.display_name
+      }} +
+      @character_proxies.map{|cp| {
+        label: "<a>#{view_context.image_tag(view_context.image_path(cp.avatar_url(:icon)))} <strong>#{cp.name}</strong> (#{cp.user_profile_display_name})</a>",
+        value: cp.user_profile_id,
+        html: render_to_string(partial: 'to', locals: {user_profile: cp.user_profile}),
+        display_name: cp.user_profile_display_name
+      }}
   end
 
 end
