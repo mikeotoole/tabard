@@ -1,6 +1,8 @@
 class CommunityPlanUpgrade < ActiveRecord::Base
   belongs_to :community_plan, inverse_of: :community_plan_upgrades
   belongs_to :community_upgrade, inverse_of: :community_plan_upgrades
+
+  validates :community_plan_id, uniqueness: {scope: [:community_upgrade_id]}
 end
 
 # == Schema Information
