@@ -17,12 +17,13 @@
       %tbody
         - @owned_communities.each do |community|
           %tr
-            %td= link_to shorten_words(community.name, 21), community
+            %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
             %td= community.community_plan_title
             %td.r= number_to_currency(community.total_price_per_month_in_dollars)
             %td.actions
               %div
-                = link_to 'Edit', edit_subscription_path(community), meta: 'Edit community plan', class: 'edit'
+                = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'
+                = link_to 'Edit', edit_subscription_path(community), meta: 'Edit Subscription', class: 'edit'
       %tfoot
         %tr
           %td.r{ colspan: 2 } Monthly Total
