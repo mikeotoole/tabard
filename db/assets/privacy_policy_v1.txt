@@ -1,6 +1,6 @@
 **Applicability of this Policy**
 
-This Policy applies to the *Guild.io&trade;* service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts.  This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service.
+This Policy applies to the *Tabard&trade;* service (the "Service"), all websites operated by DigitalAugment Inc., (the "Company," "We," or "Us") and all social media sites or accounts utilized officially by the Company as to all persons lawfully accessing such services, websites or social media sites/accounts.  This Policy does not apply to persons who illegally access the Service or who access the Service in violation of the applicable Terms of Service.
 
 **Information We Receive about You**
 
@@ -30,7 +30,7 @@ Our use of cookies in provision of the Service is limited to the following: 1) T
 
 **Information from Children Under the Age of 13**
 
-None of the Company's services are intended to be available to children under the age of 13 and We never knowingly solicit or collect any information whatsoever from or about children under the age of 13.  If you become aware that your child under the age of 13 has been using the Company's services or has submitted information to Us, please let Us know by email at **[Underage@guild.io](mailto:underage@guild.io)**.  If We become aware that a child under the age of 13 has been using our services or submitting information to us, We will immediately terminate the child's account and will take reasonable steps to delete the submitted information.
+None of the Company's services are intended to be available to children under the age of 13 and We never knowingly solicit or collect any information whatsoever from or about children under the age of 13.  If you become aware that your child under the age of 13 has been using the Company's services or has submitted information to Us, please let Us know by email at **[Underage@tabard.co](mailto:underage@tabard.co)**.  If We become aware that a child under the age of 13 has been using our services or submitting information to us, We will immediately terminate the child's account and will take reasonable steps to delete the submitted information.
 
 **When We Will Disclose Your Information**
 
@@ -76,7 +76,7 @@ For purposes of the Can SPAM Act, our physical address is:
 > 202 N 3rd Ave  
 > Pasco, WA 99301
 
-Please contact Us immediately by email at **[Spam@guild.io](mailto:spam@guild.io)** if you believe that you have either received unwanted commercial solicitations or if you have tried, and have been unable to unsubscribe from commercial solicitations.
+Please contact Us immediately by email at **[Spam@tabard.co](mailto:spam@tabard.co)** if you believe that you have either received unwanted commercial solicitations or if you have tried, and have been unable to unsubscribe from commercial solicitations.
 
 **Aggregate Data**
 
@@ -88,7 +88,7 @@ If you decide to deactivate your account with the Service, We will continue to a
 
 **Reports of Privacy Concerns**
 
-We take your privacy concerns very seriously.  If you have questions about the policy or a concern about your privacy, or the application of this Privacy Policy, please contact **[Privacy@guild.io](mailto:privacy@guild.io)** and We will address your concern immediately.
+We take your privacy concerns very seriously.  If you have questions about the policy or a concern about your privacy, or the application of this Privacy Policy, please contact **[Privacy@tabard.co](mailto:privacy@tabard.co)** and We will address your concern immediately.
 
 **Changes to this Privacy Policy**
 

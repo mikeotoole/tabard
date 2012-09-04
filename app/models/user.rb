@@ -29,13 +29,13 @@ class User < ActiveRecord::Base
 ###
 # Attribute accessors
 ###
-  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code
+  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code, :email_confirmation
 
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
     :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement
 
@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
 ###
   after_save :update_document_acceptance
   before_validation :combine_birthday
+  before_create :accept_current_documents
 
 ###
 # Delegates
@@ -105,7 +106,6 @@ class User < ActiveRecord::Base
       format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
 
   validates :password,
-      confirmation: true,
       length: { within: 8..30 },
       presence: true,
       format: {
@@ -113,13 +113,13 @@ class User < ActiveRecord::Base
         message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       if: :password_required?
-
-  validates :accepted_current_terms_of_service,
-      acceptance: {accept: true},
-      on: :create
-  validates :accepted_current_privacy_policy,
-      acceptance: {accept: true},
-      on: :create
+#   validates :accepted_current_terms_of_service,
+#       acceptance: {accept: true},
+#       on: :create
+#   validates :accepted_current_privacy_policy,
+#       acceptance: {accept: true},
+#       on: :create
+  validate :email_matches_email_confirmation, on: :create
   validates :date_of_birth, presence: true
   validates :time_zone, presence: true, inclusion: { in: (-11..13).to_a, message: 'is not valid.' }
   validate :at_least_13_years_old
@@ -200,12 +200,13 @@ class User < ActiveRecord::Base
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         s = c.cancel_subscription(at_period_end: true) if c.subscription.present?
+        # TODO: Need to make sure stripe_subscription_date is set to nil when subscription expires.
       end
       return true
     else
       # Find plan with this total cost.
-      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO Handle any errors in creation.
-      if self.stripe_customer_token.present?
+      plan = StripePlan.find_or_create_by_amount(new_total_price) #TODO: Handle any errors in creation.
+      if self.stripe_customer_token.present? # TODO: Just becouse the user has a stripe token does not mean they still have a subscription.
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
@@ -219,9 +220,10 @@ class User < ActiveRecord::Base
         # Create new Stripe customer for community admin and subscribe to Stripe plan.
         customer = Stripe::Customer.create(description: "User ID: #{self.id}",
                                                  email: self.email,
-                                                 plan: plan.strip_id,
-                                                 card: stripe_card_token)
+                                                  plan: plan.strip_id,
+                                                  card: stripe_card_token)
         self.stripe_customer_token = customer.id
+        self.stripe_subscription_date = DateTime.now.utc
         self.save!
       end
       return true
@@ -281,7 +283,7 @@ class User < ActiveRecord::Base
   # This method overrides devise to add a password changed hook.
   def update_with_password(params, *options)
     if valid_password?(params[:current_password])
-      unless params[:password].blank? or params[:password_confirmation].blank?
+      unless params[:password].blank?
         #send out some emails, user is changing password
         UserMailer.delay.password_changed(self.id)
       end
@@ -402,10 +404,20 @@ protected
     end
   end
 
-  #This method updates the acceptance of documents
+  # This method updates the acceptance of documents
   def update_document_acceptance
     self.accepted_documents << TermsOfService.current if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
     self.accepted_documents << PrivacyPolicy.current if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+  end
+
+  ###
+  # _before_create_
+  #
+  # Markes documents as accepted when user is created.
+  ###
+  def accept_current_documents
+    self.accepted_current_terms_of_service = true
+    self.accepted_current_privacy_policy = true
   end
 
 ###
@@ -415,9 +427,18 @@ protected
   def at_least_13_years_old
     errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or (Time.zone.now - 13.years).to_date < self.date_of_birth
   end
+
   # This validates the beta code
   def valid_beta_key
     errors.add(:beta_code, "is invalid") if self.beta_code and self.beta_code.gsub(/\s+/,"").upcase != BETA_CODE
+  end
+
+  # This validates that email and email confirmation match.
+  def email_matches_email_confirmation
+    if self.email != self.email_confirmation
+      errors.add(:email, "does not match email confirmation")
+      errors.add(:email_confirmation, "does match not email")
+    end
   end
 end
 
@@ -451,5 +472,6 @@ end
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
+#  stripe_subscription_date          :date
 #
 

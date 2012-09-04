@@ -6,7 +6,7 @@
 # This class is a mailer used by the SupportTicket to send emails.
 ###
 class SupportTicketMailer < ActionMailer::Base
-  default from: "Guild.io <noreply@guild.io>",
+  default from: "Tabard <noreply@tabard.co>",
           content_type: "text/html"
   layout 'mailer'
 
@@ -16,7 +16,7 @@ class SupportTicketMailer < ActionMailer::Base
     if !!@support_ticket
       @user_profile = @support_ticket.user_profile
       @url = admin_support_ticket_url(@support_ticket)
-      mail(to: "support@guild.io", subject: "Guild.io - New Support Ticket") do |format|
+      mail(to: "support@tabard.co", subject: "Tabard - New Support Ticket") do |format|
          format.html { render "mailers/new_support_ticket" }
       end
     end

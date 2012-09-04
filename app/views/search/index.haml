@@ -7,10 +7,13 @@
 #body
   %h1 Find Communities & Players
 
+  - if @results.any?
+    = render 'submenu'
+
   #searchbox
     = form_tag search_url(subdomain: false), method: 'get' do
       %p
-        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community name, player, or game', data: {url: search_autocomplete_url}
+        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', autocomplete: 'off', data: {url: search_autocomplete_url}
         %button{ type: 'submit' } Search
 
   - unless params[:term].blank?

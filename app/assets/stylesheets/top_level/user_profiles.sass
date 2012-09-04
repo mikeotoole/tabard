@@ -4,54 +4,38 @@
 
   .activities
     padding: 10px 0
-    
     a
       color: #56149C
       text-decoration: none
-    
     li
-    
       &:after
         border-top-color: #eee
-      
       &.comment >blockquote
-          
         >.avatar
           background: #efe8de
           border-color: #ccc
           left: 0
-          
           &:before
             border-right-color: #fff
-          
           &:after
             border-top-color: #fff
-          
           >img
             border-color: #fff
-        
         >.meta
           border-bottom-color: #eee
-      
       time
         color: #3679B3
-    
     li.comment:hover >blockquote >.avatar
       +box_shadow(0 0 10px rgba(#000,.2))
-  
     li.activity
-      
       >a:first-child
         display: none
-    
       *[meta]:hover
-        
         &:before
           background: #3679B3
           border-color: #5196CF
           +box_shadow(0 0 15px rgba(#000,.4))
           color: #fff
-        
         &:after
           border-left-color: #5196CF
           border-top-color: #5196CF
@@ -74,13 +58,14 @@ body.user_profiles.dashboard
         padding: 0
         
         h1
-          font: 40px EurostyleStd, sans-serif
+          font-size: 40px
           line-height: 40px
           margin: 0
           padding: 0
+          text-shadow: 0 -2px 1px #fff
         
         p
-          font: 16px DinMedium, sans-serif
+          font-size: 16px
           line-height: 20px
           margin: 0
           padding: 0
@@ -121,7 +106,7 @@ body.user_profiles.dashboard
             width: 240px
           
         .actions
-          background: image-url('bar/bg.png') top center repeat-x #3d2753
+          background: #42324e
           border-top: 1px solid #fff
           +border_radius(0,0,3,3)
           color: #a89db5
@@ -231,6 +216,7 @@ body.user_profiles.dashboard
               +bg_gradient(#eeeeee,#ffffff)
               border-bottom: 1px solid #ccc
               +border_radius(0)
+              color: #AC371E
               display: block
               margin: 0
               padding: 5px 0 5px 30px
@@ -266,7 +252,7 @@ body.user_profiles.dashboard
               +border_radius(3)
         
         .stats
-          font: 13px DinMedium
+          font-size: 13px
           line-height: 15px
       
       >article
@@ -300,6 +286,7 @@ body.user_profiles.dashboard
               margin: 0
               padding: 10px
               position: relative
+              text-shadow: 0 -2px 1px #fff
               z-index: 2
               
               + h2
@@ -309,11 +296,12 @@ body.user_profiles.dashboard
                 background: #2D7CB4
                 +border_radius(2)
                 color: #fff
-                font: 14px DinLight, sans-serif
+                font-size: 14px
                 padding: 3px 9px
                 position: absolute
                 right: 7px
                 text-decoration: none
+                text-shadow: none
                 top: 7px
                 
                 &:hover
@@ -364,7 +352,7 @@ body.user_profiles.dashboard
                     margin: 0 -3px
                     
                     &:hover
-                      color: #fff
+                      color: #BE4124
                 
                 .attributes
                   font-size: 13px
@@ -376,8 +364,8 @@ body.user_profiles.dashboard
                     width: 60px
                   
                   dd
+                    color: #000
                     float: left
-                    font-family: DinMedium, sans-serif
                     width: 160px
             table
               
@@ -386,56 +374,54 @@ body.user_profiles.dashboard
                 +bg_gradient(#dae7ee,#dae7ee)
                 border-bottom: 1px solid #b1cada
                 color: #327BB4
-                font: 18px EurostyleStd, sans-serif
-                
+                font-size: 18px
+                text-shadow: 0 -1px 1px #fff
                 &.check a
                   background: #327BB4 !important
                   color: #fff
                   font-size: 14px
                   width: 10px
-                  
                   &:hover
                     background: #A03B32 !important
               
               tbody
-              
                 td
                   background: #fff
                   +bg_gradient(#ffffff,#ffffff)
                   border-color: #D1E1EB
                   font-size: 14px
                   padding: 10px
-                  
                   &.check
                     padding: 10px 14px
-                  
                   &.check input,
                   &.check label
                     margin-left: -9px
-                  
                   &.check label:before
                     +bg_gradient(#B2CADA,#DAE7EE)
                     +box_shadow(0 0 5px #B2CADA)
-                  
                   &.invitee
                     white-space: nowrap
-                
                 tr.read a
                   color: #56149C
-                  
                   &:hover
-                    color: #fff
+                    color: #BE4124
               
               tfoot td
                 background: #dae7ee
                 +bg_gradient(#dae7ee,#dae7ee)
                 color: #327BB4
-                
                 button
                   border: 0
-                  
                   &:hover
                     +box_shadow(0 0 10px #4486BA)
+                &.status
+                  .select
+                    float: left
+                    margin: 0 10px 0 0
+                    width: 140px
+                  button
+                    clear: none
+                    float: left
             
             .checkboxes li
               color: #aaa
@@ -460,7 +446,6 @@ body.user_profiles.dashboard
                 color: #aaa
                 display: block
                 float: left
-                font-family: DinMedium, sans-serif
                 margin: 0 -10px 0 -35px
                 padding: 0 10px 0 35px
                 position: relative

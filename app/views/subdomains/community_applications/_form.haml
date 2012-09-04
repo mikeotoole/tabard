@@ -6,7 +6,7 @@
         %ol
           - community_application.submission_answers.each do |answer|
             = sf.simple_fields_for :answers, answer do |af|
-              %li{ class: (af.object.errors.any? ? 'field_with_errors' : '') }
+              %li{ class: (af.object.errors.any? ? 'with-errors' : '') }
                 = af.input :question_id, as: :hidden, wrapper: false
                 = af.input :question_body, as: :hidden, wrapper: false
                 - case answer.question_style
@@ -16,7 +16,7 @@
                     = af.input :body, as: :text, wrapper: false, label: answer.question_body, required: answer.question_is_required, hint: answer.question_explanation
                   - when 'select_box_question'
                     - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.body]}
-                    .select= af.input :body, as: :radio, wrapper: false, label: false, collection: c, label: answer.question_body, required: answer.question_is_required, hint: answer.question_explanation
+                    = af.input :body, as: :radio, wrapper_tag: :div, wrapper_html: {class: 'select with-label'}, collection: c, label: answer.question_body, required: answer.question_is_required, hint: answer.question_explanation
                   - when 'radio_buttons_question'
                     - c = answer.question_predefined_answers.collect{|pa| pa = [pa.body, pa.body]}
                     = af.input :body, as: :radio, wrapper: false, collection: c, label: answer.question_body, required: answer.question_is_required, hint: answer.question_explanation

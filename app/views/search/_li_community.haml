@@ -1,4 +1,9 @@
 %li.community
-  %h3= link_to community.name, root_url(subdomain: community.subdomain)
-  - unless community.slogan.blank?
-    %q= community.slogan
+  %h3
+    = link_to community.name, root_url(subdomain: community.subdomain)
+    = " — #{pluralize community.community_profiles.size, 'member', 'members'}"
+  - if community.games
+    %span.games
+      %strong Games
+      - community.games.each do |game|
+        = link_to game.short_name, search_url(term: game.short_name)

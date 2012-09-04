@@ -194,7 +194,6 @@ ActiveRecord::Schema.define(:version => 20120830230422) do
     t.text     "action_items"
     t.string   "pitch"
     t.integer  "community_plan_id"
-    t.date     "community_subscription_date"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -714,6 +713,7 @@ ActiveRecord::Schema.define(:version => 20120830230422) do
     t.boolean  "is_email_on_message",                              :default => true
     t.boolean  "is_email_on_announcement",                         :default => true
     t.string   "stripe_customer_token"
+    t.date     "stripe_subscription_date"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

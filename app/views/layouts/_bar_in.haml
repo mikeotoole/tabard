@@ -1,28 +1,25 @@
-= link_to 'Guild.io™', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), class: 'logo'
+= link_to 'Tabard™', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), class: 'logo'
 
 %ul.menu
   %li
     = link_to 'Search', search_url
-    -#%ul
-    -#  %li= link_to 'Communities', communities_url(subdomain: false)
-    -#  %li= link_to 'Players', user_profiles_url(subdomain: false)
-
-.communities
-  %span= (current_community and current_user.communities.include? current_community) ? shorten_words(current_community.name) : 'My Communities'
-  %ol
-    - current_user.communities.includes(:admin_profile).each do |community|
-      %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : '', icon: current_user.user_profile == community.admin_profile ? '✭' : '◎'
-    - unless current_user.communities.any?
-      = link_to 'Find a community', communities_url(subdomain: false), icon: '◎'
-    - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-      %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
+  - if current_user.communities.any?
+    %li
+      %span My Communities
+      %ul
+        - current_user.communities.includes(:admin_profile).each do |community|
+          %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : '', icon: current_user.user_profile == community.admin_profile ? '✭' : '◎'
+        - unless current_user.communities.any?
+          = link_to 'Find a community', communities_url(subdomain: false), icon: '◎'
+        - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
+          %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
 
 %ul.dashboard
-  %li{ class: 'icon calendar' }
-    = link_to "Event Invites", user_profile_url(current_user.user_profile, subdomain: false, anchor: 'invites'), (current_user.invites.not_responded_to.fresh.size > 0 ? { meta: current_user.invites.not_responded_to.fresh.size } : {})
-  %li{ class: 'icon notice' }
+  %li.notice
     = link_to "Announcements", user_profile_url(current_user.user_profile, subdomain: false, anchor: 'announcements'), (current_user.unread_announcements.size > 0 ? { meta: current_user.unread_announcements.size } : {})
-  %li{ class: 'icon envelope' }
+  %li.calendar
+    = link_to "Event Invites", user_profile_url(current_user.user_profile, subdomain: false, anchor: 'invites'), (current_user.invites.not_responded_to.fresh.size > 0 ? { meta: current_user.invites.not_responded_to.fresh.size } : {})
+  %li.envelope
     = link_to "Messages", inbox_url(subdomain: false), (current_user.unread_messages.size > 0 ? { meta: current_user.unread_messages.size } : {})
 
 .avatar

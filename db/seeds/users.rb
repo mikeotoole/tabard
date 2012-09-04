@@ -7,7 +7,9 @@ def create_user(first_name, last_name, display_name=nil)
   puts "Creating User #{first_name} #{last_name}"
   display_name ||= "#{first_name} #{last_name}"
   user = User.new(accepted_current_terms_of_service: true, accepted_current_privacy_policy: true,
-      email: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com", password: "Password",
+      email: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com",
+      email_confirmation: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com",
+      password: "Password",
       time_zone: -8,
       user_profile_attributes: { first_name: first_name,
                                     last_name: last_name,
@@ -71,6 +73,7 @@ unless @dont_run
   mike = User.new(accepted_current_terms_of_service: true,
                   accepted_current_privacy_policy: true,
                   email: "mpotoole@gmail.com",
+                  email_confirmation: "mpotoole@gmail.com",
                   password: "Password",
                   date_of_birth: Date.new(1980,4,17),
                   user_profile_attributes: {first_name: "Mike", last_name: "O'Toole", display_name: "Subfighter13"},

@@ -36,6 +36,9 @@ class UserProfile < ActiveRecord::Base
 
   has_many :owned_communities, class_name: "Community", foreign_key: "admin_profile_id", dependent: :destroy
   has_many :community_profiles, dependent: :destroy
+  has_many :related_community_profiles, through: :communities, source: :community_profiles, readonly: true
+  has_many :related_user_profiles, through: :related_community_profiles, source: :user_profile, uniq: true, readonly: true
+
   has_many :roles, through: :community_profiles
   has_many :community_invite_applications, class_name: "CommunityInvite", foreign_key: "applicant_id", inverse_of: :applicant, dependent: :destroy
   has_many :invited_to_communities, through: :community_invite_applications, class_name: "Community", source: :community
@@ -308,11 +311,11 @@ class UserProfile < ActiveRecord::Base
 
   ###
   # This method gets an array of possible active profile options.
-  # [Returns] An array that user profile + all of their characters.
+  # [Returns] An activerecord collection that user profile.
   ###
   def address_book
-    comm_profiles = self.communities.includes(community_profiles: [:user_profile]).collect{|community| community.community_profiles}.flatten(1)
-    comm_profiles.collect{|comm_profile| comm_profile.user_profile}.uniq.delete_if{|user_profile| user_profile == self}
+    my_id = self.id
+    related_user_profiles.where{id != my_id}
   end
 
   ###

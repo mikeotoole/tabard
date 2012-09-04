@@ -7,8 +7,8 @@
   - when 'CharacterProxy'
     - case result.character_type
     - when 'MinecraftCharacter'
-      = render 'minecraft_characters/list', characters: [result.character]
+      = render 'minecraft_characters/list', characters: [result.character], show_game: true
     - when 'SwtorCharacter'
-      = render 'swtor_characters/list', characters: [result.character]
+      = render 'swtor_characters/list', characters: [result.character], show_game: true
     - when 'WowCharacter'
-      = render 'wow_characters/list', characters: [result.character]
+      = render 'wow_characters/list', characters: [result.character], show_game: true

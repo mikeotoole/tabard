@@ -1,7 +1,7 @@
 = simple_form_for invite do |f|
   %fieldset
     %ol
-      = f.input :status, as: :radio, label: "#{invite.invitee_name} is…", collection: Invite::VALID_STATUSES, wrapper_html: { class: 'select' }
+      = f.input :status, as: :radio, label: "#{invite.invitee_name} is…", collection: Invite::VALID_STATUSES, wrapper_html: {class: 'status select with-label', data: {placeholder: 'Status'}}
       = f.input :comment_body, as: :text, label: 'Optional Comment'
     %p.submit
       %button{ type: 'submit' }= invite.try('status') ? 'Update' : 'RSVP'
