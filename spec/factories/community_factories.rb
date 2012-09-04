@@ -5,7 +5,7 @@ FactoryGirl.define do
     slogan "Default Community Slogan"
     pitch "Default Community Pitch"
     admin_profile_id { FactoryGirl.create(:user_profile).id }
-    community_plan_id { CommunityPlan.default_plan.id }
+    community_plan
   end
   factory :community_with_supported_games, :parent => :community do
     sequence(:name) {|n| "Community #{n}"}

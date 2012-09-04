@@ -3,6 +3,9 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
   belongs_to :community, inverse_of: :current_community_upgrades
   belongs_to :community_upgrade, inverse_of: :current_community_upgrades
 
+  validates :community_id, uniqueness: {scope: [:community_upgrade_id]}
+  validate :upgrade_is_compatable
+
   before_save :update_amounts
 
   def update_amounts
@@ -36,6 +39,13 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
 
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
+  end
+
+  def upgrade_is_compatable
+    unless self.community.community_plan.community_upgrades.include? self.community_upgrade
+      errors.add(:community_upgrade, "is not compatable with the community's plan.")
+      return false 
+    end
   end
 end
 
