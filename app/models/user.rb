@@ -114,12 +114,6 @@ class User < ActiveRecord::Base
         message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       if: :password_required?
-#   validates :accepted_current_terms_of_service,
-#       acceptance: {accept: true},
-#       on: :create
-#   validates :accepted_current_privacy_policy,
-#       acceptance: {accept: true},
-#       on: :create
   validates :date_of_birth, presence: true
   validates :time_zone, presence: true, inclusion: { in: (-11..13).to_a, message: 'is not valid.' }
   validate :at_least_13_years_old
@@ -168,7 +162,7 @@ class User < ActiveRecord::Base
 # Instance Methods
 ###
 
-  # Returns the total cost for all users owned communities in cents.
+  # Returns the total cost for all user's owned communities in cents.
   def total_price_per_month_in_cents
     price = 0
     self.owned_communities.each do |community|
@@ -177,11 +171,15 @@ class User < ActiveRecord::Base
     price
   end
 
-  # Returns the total cost for all users owned communities in dollars.
+  # Returns the total cost for all user's owned communities in dollars.
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
   end
 
+  ###
+  # Returns the total cost for all user's owned communities in cents if the given community is saved.
+  # This is designed to be given a community with its plan and/or upgrades updated but not saved.
+  ###
   def new_total_price_per_month_in_cents(community)
     price = community.total_price_per_month_in_cents
     community_id = community.id
@@ -191,6 +189,12 @@ class User < ActiveRecord::Base
     price
   end
 
+  ###
+  # Used to update a community plan and bill the community admin using Stripe.
+  # [Args]
+  #   * +stripe_card_token+ A Stripe card token. This is not required if the user has a Stripe customer id.
+  # [Returns] True if the Stripe subscription was updated, false otherwise
+  ###
   def update_stripe(stripe_card_token, new_total_price)
     current_total_price = self.total_price_per_month_in_cents
     if current_total_price == new_total_price

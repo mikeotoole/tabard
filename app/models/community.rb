@@ -73,14 +73,13 @@ class Community < ActiveRecord::Base
 # Callbacks
 ###
   nilify_blanks only: [:pitch, :slogan]
+  before_validation :remove_incompatible_upgrades
   before_create :update_subdomain
   before_create :setup_action_items
   after_create :setup_community_application_form
   after_create :setup_member_role, :make_admin_a_member
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
-
-  before_validation :remove_incompatible_upgrades
 
 ###
 # Delegates
@@ -152,14 +151,6 @@ class Community < ActiveRecord::Base
     end
   end
 
-  def remove_incompatible_upgrades
-    if self.community_plan_id_changed?
-      self.current_community_upgrades.each do |current_upgrade|
-        current_upgrade.mark_for_destruction unless current_upgrade.community_upgrade.community_plans.include? self.community_plan
-      end
-    end
-  end
-
   ###
   # Check if the current community is on a paid plan.
   # [Returns] True if not on the free plan.
@@ -173,13 +164,7 @@ class Community < ActiveRecord::Base
   # This includes plan and upgrade amounts.
   ###
   def max_number_of_users
-    base_number_of_users = 0
-    if self.is_paid_community?
-      base_number_of_users = 100 # TODO: This should not be hard coded.
-    else
-      base_number_of_users = 20 # TODO: This should not be hard coded.
-    end
-    return base_number_of_users + self.user_pack_upgrade_amount
+    return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
   end
 
   # The current number of community members.
@@ -187,23 +172,28 @@ class Community < ActiveRecord::Base
     self.community_profiles.count
   end
 
+  # If the community is disabled for not paying or being over capacity.
   def is_disabled?
     # TODO add no pay here
     self.is_over_max_capacity?
   end
 
+  # If the community is over capacity.
   def is_over_max_capacity?
     self.current_number_of_users > self.max_number_of_users
   end
 
+  # If the community is at max capacity.
   def is_at_max_capacity?
     self.current_number_of_users == self.max_number_of_users
   end
 
+  # If the community is almost at max capacity.
   def is_at_almost_max_capacity?
     self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
   end
 
+  # The number of additional members allowed from upgrades.
   def user_pack_upgrade_amount
     total_bonus_users = 0
     self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
@@ -214,6 +204,7 @@ class Community < ActiveRecord::Base
     return total_bonus_users
   end
 
+  # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents
     price = self.community_plan.price_per_month_in_cents
     self.current_community_upgrades.each do |current_community_upgrade|
@@ -222,22 +213,35 @@ class Community < ActiveRecord::Base
     price
   end
 
+  # Total price for this communities plans and upgrades in dollars.
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
   end
 
+  ###
+  # Used to update a community plan and bill the community admin using Stripe.
+  # [Args]
+  #   * +community_attributes+ An attributes hash for the community.
+  #   * +stripe_card_token+ A Stripe card token. This is not required if the community admin has a Stripe customer id.
+  # [Returns] True if the Stripe subscription was updated and the community was updated, false otherwise
+  ###
   def update_attributes_with_payment(community_attributes, stripe_card_token)
-    self.attributes = community_attributes
-    if self.valid?
-      new_total_price = self.admin_profile_user.new_total_price_per_month_in_cents(self)
-      if self.admin_profile_user.update_stripe(stripe_card_token, new_total_price)
-        return self.save!
+    if stripe_card_token.blank? and self.admin_profile_user.stripe_customer_token.blank?
+      self.errors.add :base, "Payment information is required"
+      return false
+    else
+      self.attributes = community_attributes
+      if self.valid?
+        new_total_price = self.admin_profile_user.new_total_price_per_month_in_cents(self)
+        if self.admin_profile_user.update_stripe(stripe_card_token, new_total_price)
+          return self.save!
+        else
+          self.errors.add :base, "There was a problem with your credit card"
+          return false
+        end
       else
-        self.errors.add :base, "There was a problem with your credit card"
         return false
       end
-    else
-      return false
     end
   end
 
@@ -384,6 +388,19 @@ protected
 ###
 # Callback Methods
 ###
+  ###
+  # _before_validation_
+  #
+  # When the community plan is changed any upgrades that are not compatible with the new plan are removed.
+  ###
+  def remove_incompatible_upgrades
+    if self.community_plan_id_changed?
+      self.current_community_upgrades.each do |current_upgrade|
+        current_upgrade.mark_for_destruction unless current_upgrade.community_upgrade.community_plans.include? self.community_plan
+      end
+    end
+  end
+
   ###
   # _before_create_
   #

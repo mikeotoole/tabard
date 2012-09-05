@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is for community invites at the community scope.
+###
 class Subdomains::CommunityInvitesController < SubdomainsController
   respond_to :html, :js
   ###

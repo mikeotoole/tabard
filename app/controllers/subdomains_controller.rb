@@ -97,6 +97,7 @@ class SubdomainsController < ApplicationController
     return @form_items
   end
   helper_method :form_items
+
 ###
 # Protected Methods
 ###
@@ -147,6 +148,9 @@ protected
     end
   end
 
+  ###
+  # This method will enforce community is not disabled.
+  ###
   def enforce_community_features
     if current_community.is_disabled?
       if user_signed_in?
