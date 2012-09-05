@@ -31,7 +31,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1
   # GET /community_applications/1.json
   def show
-    flash[:alert] = "Your community is full and you will not be able to accept any more members" if current_community.is_at_max_capacity? and can? :edit, current_community 
+    flash[:alert] = "Your community is full and you will not be able to accept any more members." if current_community.is_at_max_capacity? and can? :edit, current_community 
     flash[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community 
     @supported_games = current_community.supported_games
     @comments = @community_application.comments.page params[:page]
@@ -86,9 +86,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
         redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
       else
         add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted.", 'success'
-        render :show
+        redirect_to @community_application
       end
     else
+      flash[:alert] = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
       @supported_games = current_community.supported_games
       @comments = @community_application.comments.page params[:page]
       render :show
