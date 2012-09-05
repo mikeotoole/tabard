@@ -6,7 +6,7 @@
   = javascript_include_tag "subscriptions"
 
 #body
-  %h1= "Subscription for #{@community.name}"
+  %h1= "Subscription for \"#{shorten_words @community.name}\""
   = render "communities/population", community: @community
 
   = simple_form_for @community, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|

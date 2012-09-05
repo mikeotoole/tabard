@@ -33,9 +33,18 @@ subscription =
 
 jQuery(document).ready ($) ->
 
-  $('body').on 'change', '.select[data-destroy] input', ->
+  $('body').on 'change', '.select.members_package input', ->
     selectEl = $(@).closest '.select'
     data = selectEl.data()
     val = selectEl.find('input:checked').val()
-    destroyEl = $("input[data-destroy='#{data.destroy}']")
-    destroyEl.val if parseInt(val) is 0 then 'true' else 'false'
+
+    # Update population percentage bar
+    newMax = 100 + val * 20
+    curVal = $('#population .value').data 'value'
+    $('#population').attr 'data-max', "#{newMax} Members Max"
+    $('#population .value').css minWidth: "#{Math.round(curVal / newMax * 1000) / 10}%"
+
+    # Destroy package on/off
+    if data.destroy?
+      destroyEl = $("input[data-destroy='#{data.destroy}']")
+      destroyEl.val if parseInt(val) is 0 then 'true' else 'false'
