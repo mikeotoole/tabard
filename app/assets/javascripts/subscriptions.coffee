@@ -33,16 +33,28 @@ subscription =
 
 jQuery(document).ready ($) ->
 
+  curMemberCount = $('#population .value').data 'value'
+  curMemberCount = 150
+  totNeededPacks = if curMemberCount <= 100 then 0 else Math.ceil (curMemberCount - 100) / 20
+
+  if totNeededPacks > 0
+    for input in $('body .select.members_package input')
+      $input = $(input)
+      if $input.val() < totNeededPacks
+        $input.closest('li').addClass 'warn'
+      else
+        break
+    
+
   $('body').on 'change', '.select.members_package input', ->
     selectEl = $(@).closest '.select'
     data = selectEl.data()
     val = selectEl.find('input:checked').val()
 
     # Update population percentage bar
-    newMax = 100 + val * 20
-    curVal = $('#population .value').data 'value'
-    $('#population').attr 'data-max', "#{newMax} Members Max"
-    $('#population .value').css minWidth: "#{Math.round(curVal / newMax * 1000) / 10}%"
+    newMemberMax = 100 + val * 20
+    $('#population').attr 'data-max', "#{newMemberMax} Members Max"
+    $('#population .value').css minWidth: "#{Math.round(curMemberCount / newMemberMax * 1000) / 10}%"
 
     # Destroy package on/off
     if data.destroy?
