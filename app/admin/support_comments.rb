@@ -1,16 +1,10 @@
 ActiveAdmin.register SupportComment do
-  belongs_to :support_ticket
   menu false
   controller.authorize_resource
-  form do |f|
-    f.inputs "Support Comment Details" do
-      f.input :body
-      f.actions
-    end
-  end
 
   actions :new, :create
 
+  # Override default controller actions.
   controller do
     # This overrides the default create
     def create
@@ -25,4 +19,10 @@ ActiveAdmin.register SupportComment do
     end
   end
 
+  form do |f|
+    f.inputs "Support Comment Details" do
+      f.input :body
+      f.actions
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830230422) do
+ActiveRecord::Schema.define(:version => 20120905182018) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20120830230422) do
     t.boolean  "is_available",             :default => true
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.integer  "max_number_of_users",      :default => 0
   end
 
   create_table "community_profiles", :force => true do |t|

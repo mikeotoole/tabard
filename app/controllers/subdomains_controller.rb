@@ -97,6 +97,7 @@ class SubdomainsController < ApplicationController
     return @form_items
   end
   helper_method :form_items
+
 ###
 # Protected Methods
 ###
@@ -147,6 +148,9 @@ protected
     end
   end
 
+  ###
+  # This method will ensure that the community members limit has not been reached.
+  ###
   def enforce_community_user_limit
     if current_community.community_profiles.count  > current_community.max_number_of_users
       if user_signed_in? and current_user.is_member? current_community

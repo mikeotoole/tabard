@@ -9,6 +9,7 @@
 #  is_available             :boolean          default(TRUE)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  max_number_of_users      :integer          default(0)
 #
 
 require 'spec_helper'

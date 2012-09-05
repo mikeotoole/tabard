@@ -1,3 +1,10 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This class represents a community upgrade.
+###
 class CommunityUpgrade < ActiveRecord::Base
 ###
 # Constants
@@ -26,13 +33,14 @@ class CommunityUpgrade < ActiveRecord::Base
   validates :type,
       presence: true,
       inclusion: { in: VALID_TYPES, message: "%{value} is not a valid upgrade type" }
-  validates :price_per_month_in_cents, 
-      presence: true, 
+  validates :price_per_month_in_cents,
+      presence: true,
       numericality: { only_integer: true, greater_than_or_equal_to: 0}
-  validates :max_number_of_upgrades, 
-      presence: true, 
+  validates :max_number_of_upgrades,
+      presence: true,
       numericality: { only_integer: true, greater_than_or_equal_to: 0}
 
+  # Cost per month for upgrade in dollars.
   def price_per_month_in_dollars
     self.price_per_month_in_cents/100.0
   end

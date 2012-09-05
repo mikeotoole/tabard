@@ -20,7 +20,6 @@ class CommunitiesController < ApplicationController
 ###
 # REST Actions
 ###
-
   # GET /communities/:id(.:format)
   def show
     redirect_to root_url(subdomain: @community.subdomain)
@@ -70,6 +69,7 @@ class CommunitiesController < ApplicationController
 
 protected
 
+  # Loads all available plans.
   def load_plans
     @available_plans = CommunityPlan.available
   end

@@ -1,14 +1,27 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# Controller used to manage community subscriptions.
+###
 class SubscriptionsController < ApplicationController
   respond_to :html, :js
+
+###
+# Callbacks
+###
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
   before_filter :load_variables, only: [:edit, :update]
 
+  # GET /subscriptions(.:format)
   def index
     @owned_communities = current_user.owned_communities
   end
 
+  # GET /subscriptions/:id/edit(.:format)
   def edit
     if @community.blank?
       redirect_to forbidden_url
@@ -18,6 +31,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  # PUT /subscriptions/:id(.:format)
   def update
     if @community.blank? or params[:community].blank?
       redirect_to forbidden_url
@@ -36,6 +50,16 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+###
+# Protected Methods
+###
+protected
+
+  ###
+  # _before_filter_
+  #
+  # Loads variables used by edit and update.
+  ###
   def load_variables
     @community = current_user.owned_communities.find_by_id(params[:id])
     @available_plans = CommunityPlan.available

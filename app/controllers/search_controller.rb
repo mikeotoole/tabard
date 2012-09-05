@@ -1,8 +1,22 @@
+###
+# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
+# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
+# License::   Proprietary Closed Source
+#
+# This controller is used for searching.
+###
 class SearchController < ApplicationController
   respond_to :html, :js
+  ###
+  # Before Filters
+  ###
   skip_before_filter :block_unauthorized_user!, only: [:index,:autocomplete]
   before_filter :basic_search_collection
 
+###
+# Actions
+###
+  # GET /search(.:format)
   def index
     unless params[:term].blank?
       @communities = Community.search params[:term]
@@ -29,6 +43,7 @@ class SearchController < ApplicationController
     end
   end
 
+  # GET /search/autocomplete(.:format)
   def autocomplete
     @results = @communities + @users + @character_proxies unless params[:term].blank?
 
@@ -55,6 +70,15 @@ class SearchController < ApplicationController
     }
   end
 
+###
+# Protected Methods
+###
+protected
+
+  ###
+  # _before_filter_
+  # Uses given term to search models.
+  ###
   def basic_search_collection
     if params[:term].blank?
       @results = []
