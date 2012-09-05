@@ -1,2 +1,11 @@
-.percentage{ data: {min: min, max: max} }
+- percentage = percent.to_f
+- if percentage > 100
+  - class_name = 'overage'
+- elsif percentage == 100
+  - class_name = 'full'
+- elsif percentage > 90
+  - class_name = 'lots'
+- else
+  - class_name = ''
+.percentage{ class: class_name, data: {min: min, max: max} }
   .value{ style: "width:#{percent}", data: {width: percent, value: value} }

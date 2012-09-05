@@ -921,7 +921,21 @@ button,
     +box_shadow(0 5px 10px #C53E11 inset)
     color: #fff
     text-shadow: 0 -1px 1px #000
-
+  &.overage
+    background: #FBC75D !important
+    border-color: #FBC75D !important
+    .value:before
+      background: #FBC75D !important
+      color: #000 !important
+      text-shadow: none !important
+  &.full,
+  &.lots
+    background: #B99B8E !important
+    border-color: #B99B8E !important
+    .value:before
+      background: #B99B8E !important
+      color: #000 !important
+      text-shadow: none !important
 
 // JQUERY UI
 

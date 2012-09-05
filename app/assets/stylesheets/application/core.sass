@@ -684,9 +684,9 @@ button,
 
 .percentage
   border: 1px solid
-  +border_radius(10)
+  +border_radius(12)
   +box_sizing(border-box)
-  height: 20px
+  height: 24px
   margin: 0 0 40px
   padding: 1px
   position: relative
@@ -706,30 +706,61 @@ button,
     right: 5px
   .value
     border-top: 1px solid
-    +border_radius(8)
+    +border_radius(10)
     +box_sizing(border-box)
     content: ''
     display: block
     float: left
-    height: 16px
+    height: 20px
     max-width: 100%
     min-width: 22px
     position: relative
     &:after
       content: attr(data-value)
-      font-size: 12px
-      line-height: 15px
+      font-size: 14px
+      line-height: 19px
       position: absolute
       padding: 0 8px 0 0
       right: 0
       top: 0
+  &.overage,
+  &.full,
+  &.lots
+    margin-top: 25px
+    .value:before
+      +border_radius(10)
+      color: #fff
+      font-size: 12px
+      height: 20px
+      line-height: 20px
+      padding: 0 10px
+      position: absolute
+      right: 0
+      text-shadow: 0 -1px 1px #000 !important
+      top: -25px
+  &.overage
+    background: #AA381D !important
+    border-color: #AA381D !important
+    .value:before
+      background: #AA381D
+      content: '\2717\00A0\00A0 Max Exceeded'
+  &.full,
+  &.lots
+    background: #DD8C00 !important
+    border-color: #DD8C00 !important
+    .value:before
+      background: #DD8C00
+  &.full .value:before
+    content: '\2717\00A0\00A0 Maxed Out'
+  &.lots .value:before
+    content: '\2717\00A0\00A0 Almost Max'
 
 
 // Pagination
 
 .pagination
   border-top: 1px solid #ccc
-  font-size: 10px
+  font-size: 13px
   padding: 5px 0 0
   + form,
   + table
