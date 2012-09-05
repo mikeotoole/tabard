@@ -8,6 +8,7 @@
 - if stripe_card_token.present? or current_user.stripe_customer_token.present?
   - # TODO Should add the abillity to change payment method.
   %p Credit card has been provided
+
 - else
   %fieldset
     %ol
