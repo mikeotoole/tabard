@@ -9,7 +9,7 @@
   %h1= "Subscription for #{@community.name}"
   = render "communities/population", community: @community
 
-  = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true, id: "form_with_subscription"} do |f|
+  = simple_form_for @community, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|
     = render 'fields', f: f, community: @community, available_plans: @available_plans, stripe_card_token: @stripe_card_token
     %p.submit
       = f.button :submit, 'Update Subscription'
