@@ -101,6 +101,7 @@ DaBvRails::Application.routes.draw do
     scope module: "subdomains" do
 
       # Community
+      get "/disabled" => "communities#disabled", as: "community_disabled"
       get "/community_settings" => "communities#edit", as: "edit_community_settings"
       match "/community_settings" => "communities#update", as: "update_community_settings", via: :put
       get "/remove_confirmation" => "communities#remove_confirmation", as: "community_remove_confirmation"

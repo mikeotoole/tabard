@@ -12,6 +12,7 @@ class Subdomains::CommunityProfilesController < SubdomainsController
 # Before Filters
 ###
   load_and_authorize_resource only: [:destroy]
+  skip_before_filter :enforce_community_features, only: [:destroy]
 
 ###
 # REST Actions

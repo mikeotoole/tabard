@@ -11,7 +11,6 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 ###
 # Before Filters
 ###
-  skip_before_filter :enforce_community_user_limit
   prepend_before_filter :block_unauthorized_user!, except: [:index, :game]
   before_filter :ensure_current_user_is_member, except: [:index, :game]
   before_filter :get_community_profile, except: [:index, :game]
@@ -204,6 +203,15 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   ###
   def ensure_roster_is_public
     raise CanCan::AccessDenied if (not current_community.is_public_roster) and (not user_signed_in? or not current_user.is_member?(current_community))
+  end
+
+  def enforce_community_features
+    if current_community.is_disabled? and can? :accept, CommunityApplication
+      flash[:alert] = "This community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}."
+      return true
+    else
+      super
+    end
   end
 
 ###
