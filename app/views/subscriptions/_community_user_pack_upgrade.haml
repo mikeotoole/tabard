@@ -5,4 +5,4 @@
 - collection.unshift(['None',0])
 - data = current_community_upgrade.persisted? ? {destroy: 'upgrade_pack'} : {}
 = cf.input :number_in_use, as: :radio, collection: collection, include_blank: false, label: label, hint: hint, wrapper_html: {class: 'select with-label', data: data}
-= cf.input :_destroy, as: :hidden, input_html: {disabled: 'disabled', data: data} if current_community_upgrade.persisted?
+= cf.input :_destroy, as: :hidden, input_html: {data: data} if current_community_upgrade.persisted?

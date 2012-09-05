@@ -38,7 +38,4 @@ jQuery(document).ready ($) ->
     data = selectEl.data()
     val = selectEl.find('input:checked').val()
     destroyEl = $("input[data-destroy='#{data.destroy}']")
-    if parseInt(val) is 0
-      destroyEl.removeAttr 'disabled'
-    else
-      destroyEl.attr 'disabled', 'disabled'
+    destroyEl.val if parseInt(val) is 0 then 'true' else 'false'
