@@ -5,7 +5,7 @@ class CommunityPlan < ActiveRecord::Base
   has_many :communities
   has_many :community_plan_upgrades
   has_many :community_upgrades, through: :community_plan_upgrades
-  
+
 ###
 # Validators
 ###
@@ -24,7 +24,7 @@ class CommunityPlan < ActiveRecord::Base
     plan = CommunityPlan.find_by_title(FREE_PLAN_TITLE)
     if plan == nil
       return CommunityPlan.create({
-        title: "Free",
+        title: FREE_PLAN_TITLE,
         description: "This is the default free plan.",
         price_per_month_in_cents: 0,
         is_available: true

@@ -36,10 +36,15 @@ class CommunitiesController < ApplicationController
   def create
     begin
       @stripe_card_token = params[:stripe_card_token]
-      @community = Community.new
+      @community = Community.new(params[:community])
       @community.admin_profile = current_user.user_profile
       authorize! :create, @community
-      add_new_flash_message("Your community has been created.", 'success') if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
+      if @community.is_paid_community?
+        success = @community.update_attributes_with_payment(params[:community], @stripe_card_token)
+      else
+        success = @community.save
+      end
+      add_new_flash_message("Your community has been created.", 'success') if success
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @community.errors.add :base, "An error has occurred while processing the image."
