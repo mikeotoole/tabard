@@ -52,7 +52,7 @@ body
       position: absolute
       top: 50%
       width: 30px
-      
+
     &.busy:after
       background: image-url('application/busy.gif') center center no-repeat rgba(#000,.5)
       bottom: 0
@@ -67,6 +67,9 @@ body
       border-bottom: 1px solid #fff
       &:after
         +border_radius(0,0,3,3)
+    
+    p a
+      text-decoration: underline
     
     &.alert
       background: #AB361E

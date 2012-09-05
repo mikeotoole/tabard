@@ -149,16 +149,16 @@ protected
 
   def enforce_community_features
     if current_community.is_disabled?
-      if user_signed_in? 
+      if user_signed_in?
+        overage_count = current_community.community_profiles.count - current_community.max_number_of_users
         if current_user.owned_communities.include?(current_community)
-          # TODO UPGRADE OR BOOT
-          flash[:alert] = "This community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}."
+          upgrade_link = edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+          flash[:alert] = "This community is over capacity by #{view_context.pluralize overage_count, 'member', 'members'}. #{view_context.link_to 'Upgrade your subscription', upgrade_link} or remove some of your members."
           redirect_to roster_assignments_url(subdomain: current_community.subdomain)
-        return false
+          return false
         else
           if current_user.is_member? current_community
-            # TODO YELL AT ADMIN
-          flash[:alert] = "This community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Your admin needs to update this community."
+          flash[:alert] = "This community is over capacity by #{view_context.pluralize overage_count, 'member', 'members'}. The community admin will need to update this account."
           end
         end
       end

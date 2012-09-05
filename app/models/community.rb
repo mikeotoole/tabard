@@ -189,6 +189,10 @@ class Community < ActiveRecord::Base
 
   def is_disabled?
     # TODO add no pay here
+    self.is_over_max_capacity?
+  end
+
+  def is_over_max_capacity?
     self.current_number_of_users > self.max_number_of_users
   end
 

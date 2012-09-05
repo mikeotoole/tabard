@@ -1,3 +1,13 @@
 - percent = number_to_percentage 100.0 * community.current_number_of_users / (community.max_number_of_users), precision: 1
 - max = pluralize(community.max_number_of_users, 'Member', 'Members')+' Max'
-= render 'shared/percentage_bar', min: '0 Members', max: max, percent: percent, value: community.current_number_of_users
+
+- if community.is_over_max_capacity?
+  - class_name = 'overage'
+- elsif community.is_at_max_capacity?
+  - class_name = 'full'
+- elsif community.is_at_almost_max_capacity?
+  - class_name = 'lots'
+- else
+  - class_name = ''
+
+= render 'shared/percentage_bar', min: '0 Members', max: max, percent: percent, class_name: class_name, value: community.current_number_of_users
