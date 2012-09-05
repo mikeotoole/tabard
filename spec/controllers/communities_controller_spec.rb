@@ -6,23 +6,27 @@ describe CommunitiesController do
   let(:user) { user_profile.user }
   let(:admin_user) { create(:community_admin) }
   let(:community) { admin_user.user_profile.owned_communities.first }
-  let(:community_att) { attributes_for(:community, :name => "TestName")}
+  let(:community_att) { attributes_for(:community, :name => "TestName", :community_plan_id => CommunityPlan.default_plan.id)}
   describe "GET 'index'" do
-    it "should be successful when authenticated as a user" do
-      sign_in user
-      get 'index'
-      response.should be_success
+    it "should throw routing error when user" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in user
+        get :index
+        assert_response :missing
+      end
     end
-
-    it "should be successful when authenticated as a community admin" do
-      sign_in admin_user
-      get 'index'
-      response.should be_success
+    it "should throw routing error when admin" do
+      assert_raises(ActionController::RoutingError) do
+        sign_in admin_user
+        get :index
+        assert_response :missing
+      end
     end
-
-    it "should be successful when not authenticated as a user" do
-      get 'index'
-      response.should be_success
+    it "should throw routing error when anon" do
+      assert_raises(ActionController::RoutingError) do
+        get :index
+        assert_response :missing
+      end
     end
   end
 
@@ -117,7 +121,7 @@ describe CommunitiesController do
       sign_in billy
       
       expect {
-        post 'create', :community => {:name => "New Community", :slogan => "My slogan"}
+        post 'create', :community => {:name => "New Community", :slogan => "My slogan", :community_plan_id => CommunityPlan.default_plan.id}
       }.to change(Activity, :count).by(1)
       
       activity = Activity.last
