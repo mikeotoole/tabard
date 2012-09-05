@@ -172,19 +172,23 @@ class Community < ActiveRecord::Base
     self.community_profiles.count
   end
 
+  # If the community is disabled for not paying or being over capacity.
   def is_disabled?
     # TODO add no pay here
     self.is_over_max_capacity?
   end
 
+  # If the community is over capacity.
   def is_over_max_capacity?
     self.current_number_of_users > self.max_number_of_users
   end
 
+  # If the community is at max capacity.
   def is_at_max_capacity?
     self.current_number_of_users == self.max_number_of_users
   end
 
+  # If the community is almost at max capacity.
   def is_at_almost_max_capacity?
     self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
   end
