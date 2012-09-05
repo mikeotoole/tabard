@@ -160,25 +160,34 @@ class Community < ActiveRecord::Base
     end
   end
 
-
+  ###
+  # Check if the current community is on a paid plan.
+  # [Returns] True if not on the free plan.
+  ###
   def is_paid_community?
-    not self.community_plan.title == "Free"
+    not self.community_plan.is_free_plan?
   end
 
+  ###
+  # The max number of users allowed in this community.
+  # This includes plan and upgrade amounts.
+  ###
   def max_number_of_users
     base_number_of_users = 0
     if self.is_paid_community?
-      base_number_of_users = 100
+      base_number_of_users = 100 # TODO: This should not be hard coded.
     else
-      base_number_of_users = 20
+      base_number_of_users = 20 # TODO: This should not be hard coded.
     end
     return base_number_of_users + self.user_pack_upgrade_amount
   end
 
+  # The current number of community members.
   def current_number_of_users
     self.community_profiles.count
   end
 
+  #
   def user_pack_upgrade_amount
     number_of_bonus_users = 0
     self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
