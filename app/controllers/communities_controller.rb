@@ -20,10 +20,6 @@ class CommunitiesController < ApplicationController
 ###
 # REST Actions
 ###
-  # GET /communities(.:format)
-  def index
-    @communities = Community.search(params[:search]).order("LOWER(#{sort_column}) #{sort_direction}").page params[:page]
-  end
 
   # GET /communities/:id(.:format)
   def show

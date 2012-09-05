@@ -86,7 +86,15 @@
 - :domain: true
   :company: true
   :administration: true
-  :word: Tabard
+  :word: tabard
+- :domain: true
+  :company: true
+  :administration: true
+  :word: Tabard.co
+- :domain: true
+  :company: true
+  :administration: true
+  :word: tabard.co
 - :domain: true
   :company: true
   :administration: false

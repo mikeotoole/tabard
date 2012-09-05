@@ -1,15 +1,15 @@
-= javascript_include_tag "subscriptions"
-
 - title 'Edit Subscription'
 
+- content_for :header do
+  %meta{ name: "stripe-key", content: STRIPE_PUBLIC_KEY }
+  = javascript_include_tag "https://js.stripe.com/v1/"
+  = javascript_include_tag "subscriptions"
+
 #body
-  %h1 Subscriptions#edit
+  %h1= "Subscription for #{@community.name}"
+  = render "communities/population", community: @community
 
-  #stripe_error
-
-  %h2= @community.name
   = simple_form_for @community, url: subscription_url(@community), html: {novalidate: true, id: "form_with_subscription"} do |f|
     = render 'fields', f: f, community: @community, available_plans: @available_plans, stripe_card_token: @stripe_card_token
-    = render "communities/population", community: @community
     %p.submit
       = f.button :submit, 'Update Subscription'

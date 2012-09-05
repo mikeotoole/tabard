@@ -56,6 +56,10 @@ describe User do
     it "should be required" do
       build(:user, :email => nil).should_not be_valid
     end
+
+    it "should have to be confirmed" do
+      build(:user, email: "herp@derp.com", email_confirmation: "LOLOLOLOLOLOL").should_not be_valid
+    end
   
     it "should accept valid format and length" do
       ok_emails = %w{ a@b.us vaild@email.com } # TESTING Valid emails for testing.
@@ -101,10 +105,6 @@ describe User do
     
     it "should be required" do
       build(:user, :password => "", :password_confirmation => "").should_not be_valid
-    end
-
-    it "should have matching password confirmation" do
-      build(:user, :password_confirmation => "invalid").should_not be_valid
     end
 
     it "should reject short values" do

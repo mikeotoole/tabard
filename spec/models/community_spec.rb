@@ -83,15 +83,15 @@ describe Community do
     end
     it "should allow up to max number of users" do
       while community.community_profiles.count < community.max_number_of_users do
-        add_a_user.accept_application(community.admin_profile).should be true
+        add_a_user.accept_application(community.admin_profile).should eq true
       end
-      add_a_user.accept_application(community.admin_profile).should be false
+      add_a_user.accept_application(community.admin_profile).should eq false
     end
     it "should be 20 for free" do
       while community.community_profiles.count < 20 do
-        add_a_user.accept_application(community.admin_profile).should be true
+        add_a_user.accept_application(community.admin_profile).should eq true
       end
-      add_a_user.accept_application(community.admin_profile).should be false
+      add_a_user.accept_application(community.admin_profile).should eq false
     end
     it "should be 100 for pro" do
       pro_plan = CommunityPlan.create({
@@ -103,9 +103,9 @@ describe Community do
       community.community_plan = pro_plan
       community.save!
       while community.community_profiles.count < 100 do
-        add_a_user.accept_application(community.admin_profile).should be true
+        add_a_user.accept_application(community.admin_profile).should eq true
       end
-      add_a_user.accept_application(community.admin_profile).should be false
+      add_a_user.accept_application(community.admin_profile).should eq false
     end
   end
 

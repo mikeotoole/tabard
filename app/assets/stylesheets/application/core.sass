@@ -680,6 +680,51 @@ button,
     border: 1px solid
 
 
+// Percentage bar
+
+.percentage
+  border: 1px solid
+  +border_radius(10)
+  +box_sizing(border-box)
+  height: 20px
+  margin: 0 0 40px
+  padding: 1px
+  position: relative
+  width: 100%
+  &:before,
+  &:after
+    bottom: -25px
+    font-size: 12px
+    height: 20px
+    line-height: 15px
+    position: absolute
+  &:before
+    content: attr(data-min)
+    left: 5px
+  &:after
+    content: attr(data-max)
+    right: 5px
+  .value
+    border-top: 1px solid
+    +border_radius(8)
+    +box_sizing(border-box)
+    content: ''
+    display: block
+    float: left
+    height: 16px
+    max-width: 100%
+    min-width: 22px
+    position: relative
+    &:after
+      content: attr(data-value)
+      font-size: 12px
+      line-height: 15px
+      position: absolute
+      padding: 0 8px 0 0
+      right: 0
+      top: 0
+
+
 // Pagination
 
 .pagination

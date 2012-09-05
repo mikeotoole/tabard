@@ -1,22 +1,30 @@
-= hidden_field_tag :stripe_card_token
-= f.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
-
-= f.simple_fields_for :current_community_upgrades do |cuf|
-  = render cuf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cuf.object, upgrade: CommunityUpgrade.find_by_id(cuf.object.community_upgrade_id), form: cuf
-%hr
+%fieldset
+  = hidden_field_tag :stripe_card_token
+  %ol
+    = f.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
+    = f.simple_fields_for :current_community_upgrades do |cf|
+      = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
 
 - if stripe_card_token.present? or current_user.stripe_customer_token.present?
   - # TODO Should add the abillity to change payment method.
-  Credit card has been provided
+  %p Credit card has been provided
+
 - else
-  = label_tag :card_name, "Name on card "
-  = text_field_tag :card_name, nil, name: nil
-  = label_tag :card_address_zip, "Zipcode/Postal Code"
-  = text_field_tag :card_address_zip, nil, name: nil
-  = label_tag :card_number, "Credit Card Number "
-  = text_field_tag :card_number, nil, name: nil
-  = label_tag :card_code, "Security Code on Card (CVV)"
-  = text_field_tag :card_code, nil, name: nil
-  = label_tag :card_month, "Card Expiration"
-  = select_month nil, {add_month_numbers_true: true}, {name: nil, id: "card_month"}
-  = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
+  %fieldset
+    %ol
+      %li
+        = label_tag :card_name, "Name on card "
+        = text_field_tag :card_name, nil, name: nil
+      %li
+        = label_tag :card_address_zip, "Zipcode/Postal Code"
+        = text_field_tag :card_address_zip, nil, name: nil
+      %li
+        = label_tag :card_number, "Credit Card Number "
+        = text_field_tag :card_number, nil, name: nil
+      %li
+        = label_tag :card_code, "Security Code on Card (CVV)"
+        = text_field_tag :card_code, nil, name: nil
+      %li
+        = label_tag :card_month, "Card Expiration"
+        = select_month nil, {add_month_numbers_true: true}, {name: nil, id: "card_month"}
+        = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
