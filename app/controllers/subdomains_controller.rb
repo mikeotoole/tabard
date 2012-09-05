@@ -15,8 +15,8 @@ class SubdomainsController < ApplicationController
 # Callbacks
 ###
   before_filter :find_community_by_subdomain
-  before_filter :enforce_community_features
   before_filter :apply_dynamic_permissions
+  before_filter :enforce_community_features
   before_filter :block_unauthorized_user!, except: [:index]
   before_filter :ensure_current_user_is_member, except: [:index]
   skip_before_filter :limit_subdomain_access
@@ -152,13 +152,13 @@ protected
       if user_signed_in? 
         if current_user.owned_communities.include?(current_community)
           # TODO UPGRADE OR BOOT
-          flash[:alert] = "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}."
+          flash[:alert] = "This community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Remove them or #{view_context.link_to 'upgrade to pro',edit_subscription_url(current_community,subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))}."
           redirect_to roster_assignments_url(subdomain: current_community.subdomain)
         return false
         else
           if current_user.is_member? current_community
             # TODO YELL AT ADMIN
-          flash[:alert] = "Your community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Your admin needs to update this community."
+          flash[:alert] = "This community has #{current_community.community_profiles.count  - current_community.max_number_of_users} too many users! Your admin needs to update this community."
           end
         end
       end
