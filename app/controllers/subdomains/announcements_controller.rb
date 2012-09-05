@@ -96,7 +96,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     if @announcement.save
       flash[:notice] = "Announcement was successfully locked."
     else
-      flash[:alert] = "Announcement was not locked, internal rails error.", 'alert'
+      flash[:alert] = "Announcement was not locked, internal rails error."
     end
     redirect_to :back
     return
