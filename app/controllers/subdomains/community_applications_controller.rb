@@ -31,6 +31,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1
   # GET /community_applications/1.json
   def show
+    flash[:alert] = "Your community is full and you will not be able to accept any more members" if current_community.is_at_max_capacity? and can? :edit, current_community 
+    flash[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community 
     @supported_games = current_community.supported_games
     @comments = @community_application.comments.page params[:page]
     params[:proxy_hash] ||= Hash.new
@@ -79,8 +81,13 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def accept
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
-      add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted. Assign roles to this user.", 'success'
-      redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
+      if can? :accept, Role
+        add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted. Assign roles to this user.", 'success'
+        redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
+      else
+        add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted.", 'success'
+        render :show
+      end
     else
       @supported_games = current_community.supported_games
       @comments = @community_application.comments.page params[:page]

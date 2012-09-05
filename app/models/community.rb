@@ -179,6 +179,14 @@ class Community < ActiveRecord::Base
     self.community_profiles.count
   end
 
+  def is_at_max_capacity?
+    self.current_number_of_users >= self.max_number_of_users
+  end
+
+  def is_at_almost_max_capacity?
+    self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
+  end
+
   def user_pack_upgrade_amount
     total_bonus_users = 0
     self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
